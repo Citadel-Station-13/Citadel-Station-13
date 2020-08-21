@@ -25,7 +25,7 @@ As the Captain, you have absolute access and control over the station, but this 
 As the Captain, you have a fancy pen that can be used as a holdout dagger or even as a scalpel in surgery!
 As the Captain, you can purchase a new emergency shuttle using a communications console. Some require credits, while others give you credits in exchange. Keep in mind that purchasing dangerous shuttles will incur the ire of your crew.
 As the Chief Medical Officer, your hypospray is like the ones that your Medical Doctors can buy, except it comes in a fancy box that can hold several more hypovials than the standard, and already comes preloaded with specially-made high-capacity hypovials that hold double the reagents the standard ones do.
-As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and geneticists during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
+As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and paramedics during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
 As a Medical Doctor, pester Research for improved surgical tools. They work faster, combine the purposes of several tools in one (scalpel/saw, retractor/hemostat, drill/cautery), and don't cost many materials to boot!
 As a Medical Doctor, the surgical saw and drill are both powerful weapons, the saw is sharp and can slice and dice, while the drill can quickly blind someone if aimed for the eyes. The laser scalpel is an upgraded version producible with Research's aid, and it has the highest force of most common place weapons, while still remaining sharp.
 As a Medical Doctor, your belt can hold a full set of surgical tools. Using sterilizine before each attempt during surgery will reduce your failure chance on tricky steps or when using less-than-optimal equipment.
@@ -34,11 +34,14 @@ As a Medical Doctor, while both heal toxin damage, the difference between charco
 As a Medical Doctor, you can surgically implant or extract things from people's chests by performing a cavity implant. This could range from inserting a suicide bomb to embedding the nuke disk into the Captain's chest.
 As a Medical Doctor, it's of utmost urgency that you tend to anyone who's been hugged by a facehugger. You only have a couple of minutes from the initial attachment to perform organ manipulation to their chest and remove the rapidly developing alien embryo before it bursts out and immediately kills your patient.
 As a Medical Doctor, you must target the correct limb and be on help intent when trying to perform surgery on someone. Using disarm attempt will intentionally fail the surgery step.
-As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them and aren't usually revivable or cloneable. However it may prove useful to be creative in your revivification techniques with these bodies.
+As a Medical Doctor, corpses with the "...and their soul has departed" description no longer have a ghost attached to them and can't be revived. However it may prove useful to be creative in your revivification techniques with these bodies.
 As a Medical Doctor, treating plasmamen is not impossible! Salbutamol and epinephrine stops them from suffocating due to lack of internals and showers stop them from burning alive. You can even perform surgery on them by doing the procedure on a roller bed under a shower.
 As a Medical Doctor, you can point your penlight at people to create a medical hologram. This lets them know that you're coming to treat them.
 As a Medical Doctor, you can extract implants by holding an empty implant case in your offhand while performing the extraction step.
 As a Medical Doctor, clone scanning people will implant them with a health tracker that displays their vitals in the clone records. Useful to check on crew members that didn't activate suit sensors!
+As a Medical Doctor, you can deal with patients who have absurd amounts of wounds by putting them in cryo. This will slowly treat all of their wounds simultaneously, but is much slower than direct treatment.
+As a Medical Doctor, Critical Slash wounds are one of the most dangerous conditions someone can have. Apply gauze, epipens, sutures, cauteries, whatever you can, as soon as possible!
+As a Medical Doctor, Saline-Glucose not only acts as a temporary boost to a patient's blood level, it also speeds regeneration! Perfect for drained patients!
 As a Medical Doctor, medical gauze is an incredibly underrated tool. It can be used to entirely halt a limb from bleeding or sling one that's been shattered until it can be given proper attention. This even works on the dead, too! Be sure to stop someone's bleeding whether they're in critical condition or a corpse, as dragging someone whom is bleeding will rapidly deplete them of all their blood.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. See which chemicals have the best synergy, both in healing, and in harming. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents in the chemical heater.
@@ -135,10 +138,10 @@ As a Security Officer, examining someone while wearing your security HUDglasses 
 As a Security Officer, you can take out the power cell on your baton to replace it with a better or fully charged one. Just use a screwdriver on your baton to remove the old cell.
 As a Security Officer, you can just about any firearm on your vest, this even works with other non-standard armor-substitutes like security winter coats!
 As the Detective, people leave fingerprints everywhere and on everything. With the exception of white latex, gloves will hide them. All is not lost, however, as gloves leave fibers specific to their kind such as black or nitrile, pointing to a general department.
-As the Detective, you can use your forensics scanner from a distance.
+As the Detective, you can use your forensics scanner from a distance. Use this to scan boxes or other storage containers.
 As the Detective, your revolver can be loaded with .357 ammunition. Use a screwdriver to permanently modify your revolver into using this type of ammunition, be warned however, firing it has a decent chance to cause the revolver to misfire and shoot you in the foot.
 As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
-As the Lawyer, you can try to convince the captain and Head of Security to hold trials for prisoners in the courtroom.
+As the Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
 As the Head of Personnel, you are not higher ranking than other heads of staff, even though you are expected to take the Captain's place first should he go missing. If the situation seems too rough for you, consider allowing another head to become temporary Captain.
 As the Head of Personnel, you are just as large a target as the Captain because of the potential power your ID and computer can hand out and your comparative vulnerability.
 As the Mime, your invisible wall power blocks people as well as projectiles. You can use it in a pinch to delay your pursuer.
@@ -187,7 +190,7 @@ As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to min
 As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit, mining hardsuits as well as Firefighter APLUs with them, greatly reducing incoming melee damage.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
 As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armour are just a few of them!
-As a Traitor, the cryptographic sequencer (emag) can not only open doors, but also lockers, crates, APCs and more. It can hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you may just be able to create some difficult to obtain substances, or contact your employers to request special objectives! Experiment!
+As a Traitor, the cryptographic sequencer (emag) can not only open lockers, crates, APCs and more. It can also do things like hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you can even contact the Syndicate. Experiment!
 As a Traitor, subverting the AI to serve you can make it an extremely powerful ally. However, be careful of the wording in the laws you give it, as it may use your poorly written laws against you!
 As a Traitor, the Captain and the Head of Security are two of the most difficult to kill targets on the station. If either one is your target, plan carefully.
 As a Traitor, you can manufacture and recycle revolver bullets at a hacked autolathe, making the revolver an extremely powerful tool if you manage to nab an autolathe for yourself.
@@ -235,6 +238,7 @@ As a Changeling, absorbing someone will give you their full memory. This can inc
 As a Changeling, absorbing another Changeling will permanently boost your chemical reserve, allow you to pick more abilities, and make the victim unable to revive. Be careful when exposing your identity to other Changelings, as they may be out of those wonderful benefits.
 As a Changeling, BZ gas will dramatically slow down or even halt your natural chemical regeneration, be sure to avoid it at all costs as some lunatics may try and flood portions of the station to deal with you.
 As a Changeling, death is not the end for you! You can revive after two minutes from being dead by triggering your stasis ability, and then waiting for the prompt to resurrect yourself to show up.
+As a Changeling, your Regenerate Limbs power will quickly heal all of your wounds, but they'll still leave scars. Changelings can use Fleshmend to get rid of scars, or you can ingest Carpotoxin to get rid of them like a normal person.
 As a Cultist, do not cause too much chaos before your objective is completed. If the shuttle gets called too soon, you may not have enough time to win.
 As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
 As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, stamina damage to Ratvarian scum, and some damage to fellow cultists of Nar-Sie nearby, but will create a fire where the rune stands on use.
@@ -281,12 +285,17 @@ As a Devil, you gain power for every three souls you control, however you also b
 As a Devil, as long as you control at least one other soul, you will automatically resurrect, as long as a banishment ritual is not performed.
 At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
-When hacking doors, cutting and mending the "test light wire" will restore power to the door.
-When hacking, remote singulars pulse when attached to a wire and pinged. This can allow you to hack things or set traps from far away.
+When hacking doors, cutting and mending a "test light wire" will restore power to the door.
 When crafting most items, you can either manually combine parts or use the crafting menu.
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
-Suit storage units entirely purge radiation from any carbon mob put inside of them when cycling, at the cost of some horrific burns, this is a very effective strategy to clean someone up after they bathed in the engine.
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
+You can light a cigar on a supermatter crystal.
+Using sticky tape on items can make them stick to people and walls! Be careful, grenades might stick to your hand during the moment of truth!
+In a pinch, stripping yourself naked will give you a sizeable resistance to being tackled. What do you value more, your freedom or your dignity?
+Wearing riot armor makes you significantly more effective at performing tackle takedowns, but will use extra stamina with each leap! It will also significantly protect you from other tackles!
+Epipens contain a powerful coagulant that drastically reduces bleeding on all bleeding wounds. If you don't have time to properly treat someone with lots of slashes or piercings, stick them with a pen to buy some time!
+Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
+Suit storage units entirely purge radiation from any carbon mob put inside of them when cycling, at the cost of some horrific burns, this is a very effective strategy to clean someone up after they bathed in the engine.
 Laser pointers can be upgraded by replacing its micro laser with a better one from RnD! Use a screwdriver on it to remove the old laser. Upgrading the laser pointer gives you better odds of stunning a cyborg, and even blinding people with sunglasses.
 Being out of combat mode makes makes you deal less damage to people and objects when attacking. This stacks with the penalty incurred by resting.
 Resting makes you deal less damage to people and objects when attacking. This stacks with the penalty incurred by being out of combat mode.
