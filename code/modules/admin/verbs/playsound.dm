@@ -152,7 +152,7 @@
 				M?.client?.tgui_panel?.stop_music()
 			return
 
-		if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
+		if(web_sound_input && !findtext(web_sound_input, GLOB.is_http_protocol))
 			to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
 			return
 
@@ -164,7 +164,7 @@
 			var/mob/M = m
 			var/client/C = M.client
 			if(C.prefs.toggles & SOUND_MIDI)
-				C.tgui_panel?.play_music(web_sound_url)
+				C.tgui_panel?.play_music(web_sound_input)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manual Play Internet Sound")
 
