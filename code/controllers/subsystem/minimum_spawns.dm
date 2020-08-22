@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(min_spawns)
 	name = "Minimum Spawns" // it should be more like "failsafe spawns" or "backup spawns" or something
 	init_order = INIT_ORDER_DEFAULT
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_NO_FIRE
 	wait = 2
 	var/snaxi_snowflake_check = FALSE
 	var/list/active_spawns = list() // lavaland, snaxi, etc. primary spawn list
