@@ -1,0 +1,8 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - balance: "Simplemobs no longer count in dynamic."
+  - balance: "\"Story\" storyteller no longer starts at a ludicrously low threat, always."
+  - balance: "Blob threat now scales with coverage."
+  - tweak: "One person with their pref on no longer overpowers 40 people who might not even know there is one."
+  - bugfix: "Negative-weight rulesets are no longer put into the list."

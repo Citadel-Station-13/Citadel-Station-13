@@ -252,6 +252,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/timestop
 	name = "temporal katana"
 	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
+	icon_state = "temporalkatana"
+	item_state = "temporalkatana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	block_chance = 0 // oops
 	force = 27.5 // oops
 	item_flags = ITEM_CAN_PARRY
@@ -262,6 +266,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/mob/living/carbon/human/flynn = owner
 		flynn.emote("smirk")
 	new /obj/effect/timestop/magic(get_turf(owner), 1, 50, list(owner)) // null roddies counter
+
+/obj/item/katana/timestop/suicide_act(mob/living/user) // stolen from hierophant staff
+	new /obj/effect/timestop/magic(get_turf(user), 1, 50, list(user)) // free usage for dying
+	user.visible_message("<span class='suicide'>[user] poses menacingly with the [src]! It looks like [user.p_theyre()] trying to teleport behind someone!</span>")
+	user.say("Heh.. Nothing personnel, kid..", forced = "temporal katana suicide")
+	sleep(20)
+	if(!user)
+		return
+	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and burning embers, likely off to style on some poor sod in the distance!</span>")
+	playsound(user,'sound/magic/blink.ogg', 75, TRUE)
+	for(var/obj/item/I in user)
+		if(I != src)
+			user.dropItemToGround(I)
+	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
+	qdel(user)
 
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
