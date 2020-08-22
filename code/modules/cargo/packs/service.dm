@@ -151,12 +151,16 @@
 	contains = list(/obj/item/sharpener, //Deluxe for a reason
 					/obj/item/kitchen/fork,
 					/obj/item/kitchen/fork,
+					/obj/item/kitchen/fork,
+					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/rollingpin,
 					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass,
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
 
