@@ -1,8 +1,9 @@
 SUBSYSTEM_DEF(min_spawns)
 	name = "Minimum Spawns" // it should be more like "failsafe spawns" or "backup spawns" or something
 	init_order = INIT_ORDER_DEFAULT
-	flags = SS_BACKGROUND | SS_NO_FIRE
+	flags = SS_BACKGROUND | SS_NO_FIRE | SS_ALWAYS_SHOW_STAT
 	wait = 2
+	var/where_we_droppin_boys_iterations = 0
 	var/snaxi_snowflake_check = FALSE
 	var/list/active_spawns = list() // lavaland, snaxi, etc. primary spawn list
 	var/list/active_spawns_2 = list() // snaxi underground, etc. secondary spawn list
@@ -89,8 +90,17 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 	return ..()
 
 /datum/controller/subsystem/min_spawns/proc/where_we_droppin_boys()
+	// let's figure out what megas we dont specifically need to spawn
+	if(!snaxi_snowflake_check) // all snaxi megas are spawned in specific ruins
+		for(var/mob/living/simple_animal/hostile/megafauna/M in GLOB.mob_list)
+			if(active_spawns.Find(M.type, 1, active_spawns.len))
+				var/tocut = active_spawns.Find(M.type, 1, active_spawns.len)
+				active_spawns.Cut(tocut,tocut+1)
 	while(active_spawns.len)
+		where_we_droppin_boys_iterations++
 		CHECK_TICK
+		if(where_we_droppin_boys >= 1250)
+			break
 		var/turf/RT = pick_n_take(valid_mining_turfs) //Pick a random mining Z-level turf
 		var/MS_tospawn = pick_n_take(active_spawns)
 		for(var/mob/living/simple_animal/hostile/H in urange(70,RT)) //prevents mob clumps
@@ -110,7 +120,10 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 			// man the overhead on this is gonna SUCK
 		new MS_tospawn(RT)
 	while(active_spawns_2.len)
+		where_we_droppin_boys_iterations++
 		CHECK_TICK
+		if(where_we_droppin_boys_iterations >= 1250)
+			break
 		var/turf/RT = pick_n_take(valid_mining_turfs_2) //Pick a random mining Z-level turf
 		var/MS2_tospawn = pick_n_take(active_spawns_2)
 		for(var/mob/living/simple_animal/hostile/H in urange(70,RT)) //prevents mob clumps
