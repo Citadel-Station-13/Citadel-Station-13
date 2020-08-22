@@ -267,6 +267,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
+	addtimer(CALLBACK(src, .proc/ensure_keys_set), 0)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -334,9 +335,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return
 
-	if(SSinput.initialized)
-		set_macros()
-		update_movement_keys()
+	// if(SSinput.initialized) placed here on tg.
+	// 	set_macros()
+	// 	update_movement_keys()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -473,6 +474,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// view_size.setZoomMode()
 	// fit_viewport()
 	Master.UpdateTickRate()
+
+/client/proc/ensure_keys_set()
+	if(SSinput.initialized)
+		set_macros()
+	update_movement_keys(prefs)
 
 //////////////
 //DISCONNECT//
