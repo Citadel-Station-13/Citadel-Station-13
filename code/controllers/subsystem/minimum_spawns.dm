@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 	while(active_spawns.len)
 		where_we_droppin_boys_iterations++
 		CHECK_TICK
-		if(where_we_droppin_boys >= 1250)
+		if(where_we_droppin_boys_iterations >= 1250)
 			break
 		var/turf/RT = pick_n_take(valid_mining_turfs) //Pick a random mining Z-level turf
 		var/MS_tospawn = pick_n_take(active_spawns)
