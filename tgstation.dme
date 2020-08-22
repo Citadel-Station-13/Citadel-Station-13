@@ -3714,6 +3714,7 @@
 #include "sandcode\code\modules\reagents\chemistry\reagents\other_reagents.dm"
 #include "sandcode\code\modules\reagents\chemistry\recipes\drugs.dm"
 #include "sandcode\code\modules\reagents\chemistry\recipes\fermi.dm"
+#include "sandcode\code\modules\reagents\chemistry\recipes\others.dm"
 #include "sandcode\code\modules\reagents\reagent_containers\bottle.dm"
 #include "sandcode\code\modules\reagents\reagent_containers\spray.dm"
 #include "sandcode\code\modules\research\designs\autolathe_designs.dm"
