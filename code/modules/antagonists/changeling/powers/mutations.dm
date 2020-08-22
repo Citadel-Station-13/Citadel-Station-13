@@ -722,5 +722,5 @@
 	if(!isliving(target))
 		return
 	var/mob/living/M = loc
-	M.SetNextAction(CLICK_CD_RANGE)
+	M.SetNextAction(CLICK_CD_RANGE) // fast punches
 	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION

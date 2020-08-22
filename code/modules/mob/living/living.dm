@@ -842,12 +842,12 @@
 		return
 	var/strip_mod = 1
 	var/strip_silence = FALSE
-	if (ishuman(src)) //carbon doesn't actually wear gloves
+	if(ishuman(src)) //carbon doesn't actually wear gloves
 		var/mob/living/carbon/C = src
-		var/obj/item/clothing/gloves/g = C.gloves
-		if (istype(g))
-			strip_mod = g.strip_mod
-			strip_silence = g.strip_silence
+		var/obj/item/clothing/gloves/G = C.gloves
+		if(istype(G))
+			strip_mod = G.strip_mod
+			strip_silence = G.strip_silence
 	if (!strip_silence)
 		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", target = src,
