@@ -1,0 +1,4 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - tweak: "Increases the majority of airlocks by 1 tile."
