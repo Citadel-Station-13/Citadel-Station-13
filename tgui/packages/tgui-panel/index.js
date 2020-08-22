@@ -103,8 +103,14 @@ const setupApp = () => {
     'is-visible': true,
     'is-disabled': false,
     'pos': '0x0',
-    'size': '0x0',
   });
+  // bad workaround for size.
+  const winget_output = Byond.winget('output');
+  if (winget_output["size"]) {
+    Byond.winset('browseroutput', {
+      'size': winget_output["size"],
+    });
+  }
 
   // Enable hot module reloading
   if (module.hot) {
