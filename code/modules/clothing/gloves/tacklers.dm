@@ -72,6 +72,25 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 
+/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator
+	name = "insidious guerrilla gloves"
+	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping and tackling knowledge to the user via the use of nanochips."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/carrytrait = TRAIT_QUICKER_CARRY
+
+/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLOVES)
+		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
+
+/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, carrytrait, GLOVE_TRAIT)
+
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"
 	desc = "The ultimate in high risk, high reward, perfect for when you need to stop a criminal from fifty feet away or die trying. Banned in most Spinward gridiron football and rugby leagues."
