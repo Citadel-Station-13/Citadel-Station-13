@@ -12,7 +12,7 @@
 	
 /datum/gear/gloves/midnight
 	name = "Midnight gloves"
-	pathe = /obj/item/clothing/gloves/evening/black
+	path = /obj/item/clothing/gloves/evening/black
 
 /datum/gear/gloves/goldring
 	name = "A gold ring"
