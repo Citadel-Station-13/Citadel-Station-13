@@ -52,13 +52,13 @@
 	if(has_shot)
 		recharge_newshot(TRUE)
 
-/obj/item/gun/energy/pumpaction/update_icon()	//adds racked indicators
+/obj/item/gun/energy/pumpaction/update_overlays()	//adds racked indicators
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(chambered)
-		add_overlay("[icon_state]_rack_[shot.select_name]")
+		. += "[icon_state]_rack_[shot.select_name]"
 	else
-		add_overlay("[icon_state]_rack_empty")
+		. += "[icon_state]_rack_empty"
 
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]

@@ -118,8 +118,7 @@
 
 // Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
-	damaged_clothes = CLOTHING_PRISTINE
-	update_clothes_damaged_state(FALSE)
+	update_clothes_damaged_state(CLOTHING_PRISTINE)
 	obj_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
@@ -196,7 +195,7 @@
 		if(3 to INFINITY) // take better care of your shit, dude
 			name = "tattered [initial(name)]"
 
-	update_clothes_damaged_state()
+	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
@@ -257,7 +256,7 @@
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
-	
+
 	if(LAZYLEN(armor_list))
 		armor_list.Cut()
 	if(armor.bio)
@@ -346,10 +345,16 @@
 		var/mob/M = loc
 		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
-/obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
-	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
-	var/static/list/damaged_clothes_icons = list()
-	if(damaging)
+//This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
+/obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
+	damaged_clothes = damaged_state
+	update_icon()
+
+/obj/item/clothing/update_overlays()
+	. = ..()
+	if(damaged_clothes)
+		var/index = "[REF(initial(icon))]-[initial(icon_state)]"
+		var/static/list/damaged_clothes_icons = list()
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 		if(!damaged_clothes_icon)
 			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
@@ -357,9 +362,7 @@
 			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 			damaged_clothes_icons[index] = damaged_clothes_icon
-		add_overlay(damaged_clothes_icon, TRUE)
-	else
-		cut_overlay(damaged_clothes_icons[index], TRUE)
+		. += damaged_clothes_icon
 
 /*
 SEE_SELF  // can see self, no matter what
