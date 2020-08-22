@@ -1,5 +1,5 @@
 
-//Reminders-
+// Reminders-
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 // cost = 700- Minimum cost, or infinite points are possible.
 //////////////////////////////////////////////////////////////////////////////
@@ -145,7 +145,7 @@
 
 /datum/supply_pack/service/cutlery
 	name = "Kitchen Cutlery Deluxe Set"
-	desc = "Need to slice and dice away those \"Tomatoes\"? Well we got what you need! From a nice set of knifes, forks, plates, glasses, and a whetstone for when you got some grizzle that is a bit harder to slice then normal."
+	desc = "Need to slice and dice away those \"tomatoes\"? This should do the trick! A nice set of cutlery and a whetstone to keep your blades sharp, along with a complimentary artisan drinking glass and shot glass."
 	cost = 10000
 	contraband = TRUE
 	contains = list(/obj/item/sharpener, //Deluxe for a reason
@@ -153,19 +153,10 @@
 					/obj/item/kitchen/fork,
 					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
-					/obj/item/kitchen/knife,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/knife/butcher,
 					/obj/item/kitchen/rollingpin,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
-					/obj/item/trash/plate,
 					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "kitchen cutlery deluxe set"
 
