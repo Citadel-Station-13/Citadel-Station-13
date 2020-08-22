@@ -31,8 +31,8 @@ export const Panel = (props, context) => {
       );
     }
   }
-  return (
-    <Pane theme={settings.theme}>
+  return ( // yes i know it's bad.
+    <Pane theme={settings.theme === 'default' ? 'light' : settings.theme}>
       <Flex
         direction="column"
         height="100%">
@@ -116,7 +116,7 @@ export const Panel = (props, context) => {
 const HoboIE8Panel = (props, context) => {
   const settings = useSettings(context);
   return (
-    <Pane theme={settings.theme}>
+    <Pane theme={settings.theme === 'default' ? 'light' : settings.theme}>
       <Pane.Content scrollable>
         <Button
           style={{
