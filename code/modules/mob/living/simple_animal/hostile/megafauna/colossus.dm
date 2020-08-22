@@ -24,7 +24,6 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
-	threat = 40
 	health = 2500
 	maxHealth = 2500
 	attack_verb_continuous = "judges"
@@ -603,7 +602,6 @@ Difficulty: Very Hard
 	icon_state = "lightgeist"
 	icon_living = "lightgeist"
 	icon_dead = "butterfly_dead"
-	threat = -0.7
 	turns_per_move = 1
 	response_help_continuous = "waves away"
 	response_help_simple = "wave away"

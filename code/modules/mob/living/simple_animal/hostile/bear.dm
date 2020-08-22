@@ -2,7 +2,6 @@
 /mob/living/simple_animal/hostile/bear
 	name = "space bear"
 	desc = "You don't need to be faster than a space bear, you just need to outrun your crewmates."
-	threat = 1
 	icon_state = "bear"
 	icon_living = "bear"
 	icon_dead = "bear_dead"
