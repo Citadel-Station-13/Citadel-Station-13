@@ -2,9 +2,15 @@
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER)
 
+/datum/sprite_accessory/spines/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	return (!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR))
+
 /datum/sprite_accessory/spines_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER)
+
+/datum/sprite_accessory/spines_animated/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	return ((!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)) || H.dna.species.mutant_bodyparts["tail"])
 
 /datum/sprite_accessory/spines/none
 	name = "None"

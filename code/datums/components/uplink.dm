@@ -29,8 +29,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/saved_player_population = 0
 	var/list/filters = list()
 
-	
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/ui_state/_checkstate, datum/traitor_class/traitor_class)
+
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20, datum/traitor_class/traitor_class)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -144,6 +144,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	return COMPONENT_NO_INTERACT
 
 /datum/component/uplink/ui_state(mob/user)
+	if(istype(parent, /obj/item/implant/uplink))
+		return GLOB.not_incapacitated_state
 	return GLOB.inventory_state
 
 /datum/component/uplink/ui_interact(mob/user, datum/tgui/ui)

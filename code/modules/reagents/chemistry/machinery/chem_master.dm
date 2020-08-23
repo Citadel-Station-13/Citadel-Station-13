@@ -1,5 +1,3 @@
-#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
-#define RANDOM_PILL_STYLE 22 //Dont change this one though
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"

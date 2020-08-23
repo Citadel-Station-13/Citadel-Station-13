@@ -252,6 +252,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/timestop
 	name = "temporal katana"
 	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
+	icon_state = "temporalkatana"
+	item_state = "temporalkatana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	block_chance = 0 // oops
 	force = 27.5 // oops
 	item_flags = ITEM_CAN_PARRY
@@ -262,6 +266,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/mob/living/carbon/human/flynn = owner
 		flynn.emote("smirk")
 	new /obj/effect/timestop/magic(get_turf(owner), 1, 50, list(owner)) // null roddies counter
+
+/obj/item/katana/timestop/suicide_act(mob/living/user) // stolen from hierophant staff
+	new /obj/effect/timestop/magic(get_turf(user), 1, 50, list(user)) // free usage for dying
+	user.visible_message("<span class='suicide'>[user] poses menacingly with the [src]! It looks like [user.p_theyre()] trying to teleport behind someone!</span>")
+	user.say("Heh.. Nothing personnel, kid..", forced = "temporal katana suicide")
+	sleep(20)
+	if(!user)
+		return
+	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and burning embers, likely off to style on some poor sod in the distance!</span>")
+	playsound(user,'sound/magic/blink.ogg', 75, TRUE)
+	for(var/obj/item/I in user)
+		if(I != src)
+			user.dropItemToGround(I)
+	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
+	qdel(user)
 
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
@@ -297,7 +316,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 1.5
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = 120
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(
@@ -306,13 +325,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_data = list(
 		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
-		)
+	)
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
 	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
 	parry_time_active = 5 // REALLY small parry window
 	parry_time_perfect = 2.5 // however...
-	parry_time_perfect_leeway = 2.5 // the entire time, the parry is perfect
+	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit

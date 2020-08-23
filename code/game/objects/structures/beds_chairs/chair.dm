@@ -487,7 +487,7 @@
 	desc = "A bronze bar stool with red silk for a pillow."
 	icon_state = "barbrass"
 	item_chair = /obj/item/chair/stool/bar/bronze
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 
 /obj/structure/chair/stool/brass
@@ -503,7 +503,7 @@
 	desc = "A bronze stool with a silk top for comfort."
 	icon_state = "stoolbrass"
 	item_chair = /obj/item/chair/stool/bronze
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 
 /obj/item/chair/stool/brass
@@ -603,7 +603,7 @@
 	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
 	anchored = FALSE
 	icon_state = "brass_chair"
-	buildstacktype = /obj/item/stack/tile/bronze
+	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
 

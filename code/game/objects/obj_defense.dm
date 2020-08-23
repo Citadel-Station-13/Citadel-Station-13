@@ -186,7 +186,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		if(!acid_level)
 			SSacid.processing[src] = src
-			add_overlay(GLOB.acid_overlay, TRUE)
+			update_icon()
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -224,7 +224,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		add_overlay(GLOB.fire_overlay, TRUE)
+		update_icon()
 		return 1
 
 //called when the obj is destroyed by fire
@@ -236,7 +236,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		cut_overlay(GLOB.fire_overlay, TRUE)
+		update_icon()
 		SSfire_burning.processing -= src
 
 /obj/zap_act(power, zap_flags, shocked_targets)
