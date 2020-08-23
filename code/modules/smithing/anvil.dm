@@ -14,7 +14,7 @@
 #define RECIPE_WAKI "dfsf" //draw shrink fold
 #define RECIPE_SCIMITAR "dfb" //draw fold bend
 #define RECIPE_SABRE "ddsf" //draw draw shrink fold
-#define RECIPE_RAPIER "sddf" //shrink draw draw fold
+#define RECIPE_RAPIER "sdfd" //shrink draw  fold draw
 #define RECIPE_BROADSWORD "dfuf" //draw fold upset fold
 #define RECIPE_ZWEIHANDER "udfsf" //upset draw fold shrink fold
 #define RECIPE_KATANA "fffff" //fold fold fold fold fold
@@ -165,6 +165,7 @@
 		outrightfailchance = 1
 		if(user.mind.skill_holder)
 			user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 25, 400, silent = FALSE)
+	for(var/i in smithrecipes)
 		if(i == stepsdone)
 			var/turf/T = get_turf(user)
 			var/obj/item/smithing/create = smithrecipes[stepsdone]
@@ -177,6 +178,8 @@
 			stepsdone = ""
 			currentsteps = 0
 			outrightfailchance = 1
+			if(user.mind.skill_holder)
+				user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 200, 10000000, silent = FALSE)
 			break
 
 /obj/structure/anvil/debugsuper
