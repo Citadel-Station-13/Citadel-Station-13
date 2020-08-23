@@ -370,6 +370,7 @@
 	new /obj/item/clothing/under/costume/maid(src)
 	new /obj/item/clothing/under/costume/maid/combat_maid(src) // located in syndicate.dm even if the typepath is different
 	new /obj/item/clothing/gloves/combat/evening(src) // also located in syndicate.dm
+	new /obj/item/clothing/head/maid(src)
 	new /obj/item/clothing/shoes/laceup(src)
 
 /obj/item/storage/box/syndie_kit/bee_grenades
