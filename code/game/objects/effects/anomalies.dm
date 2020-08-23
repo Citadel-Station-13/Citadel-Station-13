@@ -17,11 +17,15 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/Initialize(mapload, new_lifespan)
+	/// chance we drop a core when neutralized
+	var/core_drop_chance = 100
+
+/obj/effect/anomaly/Initialize(mapload, new_lifespan, core_drop_chance = 100)
 	. = ..()
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
+	src.core_drop_chance = core_drop_chance
 
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
@@ -54,6 +58,8 @@
 	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
+	if(aSignal)
+		QDEL_NULL(aSignal)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
@@ -70,11 +76,11 @@
 /obj/effect/anomaly/proc/anomalyNeutralize()
 	new /obj/effect/particle_effect/smoke/bad(loc)
 
-	for(var/atom/movable/O in src)
-		O.forceMove(drop_location())
+	if(prob(core_drop_chance))
+		aSignal.forceMove(drop_location())
+		aSignal = null
 
 	qdel(src)
-
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER) //revert if runtimed

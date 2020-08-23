@@ -16,3 +16,6 @@
 #define MAX_CORES_FLUX					8
 #define MAX_CORES_VORTEX				8
 #define MAX_CORES_PYRO					8
+
+/// chance supermatter anomalies drop real cores
+#define SUPERMATTER_ANOMALY_DROP_CHANCE 20
