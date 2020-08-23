@@ -196,7 +196,7 @@
 /obj/structure/anvil/obtainable/table
 	name = "table anvil"
 	desc = "A slightly reinforced table. Good luck."
-	icon_state = "anvil"
+	icon_state = "tablevil"
 	anvilquality = -2
 
 
