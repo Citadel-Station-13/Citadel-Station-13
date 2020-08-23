@@ -2,7 +2,7 @@
 	name = "basalt block"
 	desc = "A block of basalt."
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "unfinished"
+	icon_state = "sandvilnoir"
 
 
 /obj/item/smithing
