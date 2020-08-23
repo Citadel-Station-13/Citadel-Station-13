@@ -214,6 +214,7 @@
 	name = "zweihander"
 	icon_state = "zweihander"
 	overlay_state = "zweihilt"
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON * 2
 	force = 4
 	wielded_mult = 3 //affected more by quality. a -1 is 25% less damage, a +1 is 25% more. These bonuses are tripled when wielded.
 
