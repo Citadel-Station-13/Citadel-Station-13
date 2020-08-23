@@ -7014,9 +7014,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/crew_quarters/fitness/recreation)
-"amG" = (
-/turf/closed/wall,
-/area/space)
 "amH" = (
 /obj/machinery/door/airlock/external{
 	req_one_access_txt = "13,8"
@@ -46794,7 +46791,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/maintenance/starboard/fore)
 "bOZ" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo";
@@ -70554,7 +70551,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/maintenance/starboard/aft)
 "cJg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/bedsheet/medical,
@@ -81152,10 +81149,6 @@
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"evy" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "eEe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -81385,10 +81378,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"hKW" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/maintenance/aft)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -82834,10 +82823,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
-"wkz" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space)
 "wlH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -113085,7 +113070,7 @@ cCq
 cgN
 cMl
 bTs
-hKW
+lMJ
 aaf
 aaf
 aaf
@@ -113342,7 +113327,7 @@ cCq
 cLA
 bTs
 bTs
-hKW
+lMJ
 aaf
 aaa
 aaa
@@ -119762,9 +119747,9 @@ cEA
 aaf
 aaa
 aaa
-blx
+dvY
 cJf
-blx
+dvY
 aaa
 dbN
 gsT
@@ -120019,9 +120004,9 @@ blx
 aaa
 aaa
 aaa
-wkz
+ack
 uim
-wkz
+ack
 aaa
 aaf
 dbR
@@ -121287,7 +121272,7 @@ ciL
 cgs
 csc
 dvY
-evy
+dxk
 krD
 lsv
 txj
@@ -129695,8 +129680,8 @@ aaa
 aaa
 aaf
 aaa
-amG
-blx
+dnh
+dnh
 bOY
 dqT
 aaf
