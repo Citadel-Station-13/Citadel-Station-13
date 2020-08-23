@@ -147,14 +147,13 @@
 			stepsdone += "u"
 			currentsteps += 1
 			currentquality -= 1
-	to_chat(user, "You [stepdone] the metal.")
-	to_chat(user, stepsdone)
+	to_chat(user, "<span class='notice'?You [stepdone] the metal.</span>")
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
 	if(currentsteps > 10 || (rng && prob(outrightfailchance)))
-		to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
+		to_chat(user, "<span class='warning'?You overwork the metal, causing it to turn into useless slag!</span>")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
 		new /obj/item/stack/ore/slag(T)
@@ -164,8 +163,6 @@
 		outrightfailchance = 1
 		if(user.mind.skill_holder)
 			user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 25, 400, silent = FALSE)
-	for(var/i in smithrecipes)
-		to_chat(user, "comparing [i] to [stepsdone]")
 		if(i == stepsdone)
 			var/turf/T = get_turf(user)
 			var/obj/item/smithing/create = smithrecipes[stepsdone]
