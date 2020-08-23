@@ -266,7 +266,7 @@
 /datum/crafting_recipe/twinsheath
 	name = "Twin Sword Sheath"
 	result = /obj/item/storage/belt/sabre/twin
-	reqs = list(/obj/item/stack/sheet/wood = 3,
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
 				/obj/item/stack/sheet/leather = 8)
 	tools = list(TOOL_WIRECUTTER)
 	time = 70
