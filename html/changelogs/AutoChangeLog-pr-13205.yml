@@ -1,7 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Medbay now has a smartfridge for organ storage"
-  - rscadd: "Slight enhancements to the station's electrical wiring layout"
-  - rscadd: "Very small library renovation"
-  - bugfix: "Exterior airlocks have been given proper air systems for safety's sake"
