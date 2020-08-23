@@ -691,7 +691,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze bar stool",  /obj/structure/chair/stool/bar/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("bronze stool", /obj/structure/chair/stool/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("bronze anvil",/obj/structure/anvil/obtainable/bronze, 20, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("bronze anvil",/obj/structure/anvil/obtainable/bronze, 20, time = 110, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
 	new/datum/stack_recipe("bronze ingot", /obj/item/ingot/bronze, 6, time = 100), \
 	new/datum/stack_recipe("bronze floor tiles", /obj/item/stack/tile/bronze, 1, 4, 20), \

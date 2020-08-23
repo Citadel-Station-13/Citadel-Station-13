@@ -149,7 +149,7 @@
 			stepsdone += "u"
 			currentsteps += 1
 			currentquality -= 1
-	to_chat(user, "<span class='notice'?You [stepdone] the metal.</span>")
+	to_chat(user, "<span class='notice'>You [stepdone] the metal.</span>")
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 
@@ -179,7 +179,7 @@
 			currentsteps = 0
 			outrightfailchance = 1
 			if(user.mind.skill_holder)
-				user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 200, 10000000, silent = FALSE)
+				user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 50, 10000000, silent = FALSE)
 			break
 
 /obj/structure/anvil/debugsuper
