@@ -83,10 +83,6 @@
 	name = "brass ingnot"
 	desc = "On closer inspection, what appears to be wholly-unsuitable-for-smithing brass is actually more structurally stable bronze. Ratvar must have transformed the brass into bronze. Somehow."
 
-/obj/item/smithing/Initialize()
-	..()
-	desc = "A [src]. Hit it with a [finishingitem.name] to create a [finalitem.name]."
-
 
 /obj/item/smithing/attackby(obj/item/I, mob/user)
 	if(istype(I, finishingitem))
