@@ -29,7 +29,6 @@
 	var/charge_sections = 4
 	ammo_x_offset = 2
 	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
-	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
 	var/selfcharge = EGUN_NO_SELFCHARGE // EGUN_SELFCHARGE if true, EGUN_SELFCHARGE_BORG drains the cyborg's cell to recharge its own
 	var/charge_tick = 0
 	var/charge_delay = 4
@@ -64,8 +63,18 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/gun/energy/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/gun/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/gun/energy/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon()
 	return ..()
 
 /obj/item/gun/energy/examine(mob/user)
@@ -226,46 +235,47 @@
 #undef DECREMENT_OR_WRAP
 #undef IS_VALID_INDEX
 
-/obj/item/gun/energy/update_icon(force_update)
-	if(QDELETED(src))
+/obj/item/gun/energy/update_icon_state()
+	if(initial(item_state))
 		return
 	..()
+	var/ratio = get_charge_ratio()
+	var/new_item_state = ""
+	new_item_state = initial(icon_state)
+	if(modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
+		new_item_state += "[shot.select_name]"
+	new_item_state += "[ratio]"
+	item_state = new_item_state
+
+/obj/item/gun/energy/update_overlays()
+	. = ..()
+	if(QDELETED(src))
+		return
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = can_shoot() ? CEILING(clamp(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
-				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
-				// TG issues #5361 & #47908
-	if(ratio == old_ratio && !force_update)
-		return
-	old_ratio = ratio
-	cut_overlays()
-	var/iconState = "[icon_state]_charge"
-	var/itemState = null
-	if(!initial(item_state))
-		itemState = icon_state
+	var/overlay_icon_state  = "[icon_state]_charge"
+	var/ratio = get_charge_ratio()
 	if (modifystate)
 		var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
-		add_overlay("[icon_state]_[shot.select_name]")
-		iconState += "_[shot.select_name]"
-		if(itemState)
-			itemState += "[shot.select_name]"
+		. += "[icon_state]_[shot.select_name]"
+		overlay_icon_state += "_[shot.select_name]"
 	if(ratio == 0)
-		add_overlay("[icon_state]_empty")
+		. += "[icon_state]_empty"
 	else
 		if(!shaded_charge)
-			var/mutable_appearance/charge_overlay = mutable_appearance(icon, iconState)
+			var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
 			for(var/i = ratio, i >= 1, i--)
 				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
 				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
-				add_overlay(charge_overlay)
+				. += charge_overlay
 		else
-			add_overlay("[icon_state]_charge[ratio]")
-	if(itemState)
-		itemState += "[ratio]"
-		item_state = itemState
-	if(ismob(loc))		//forces inhands to update
-		var/mob/M = loc
-		M.update_inv_hands()
+			. += "[icon_state]_charge[ratio]"
+
+///Used by update_icon_state() and update_overlays()
+/obj/item/gun/energy/proc/get_charge_ratio()
+	return can_shoot() ? CEILING(clamp(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+	// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if its power cell is removed.
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))

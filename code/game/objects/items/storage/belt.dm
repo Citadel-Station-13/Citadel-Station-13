@@ -478,7 +478,7 @@
 		/obj/item/assembly/signaler,
 		/obj/item/lightreplacer,
 		/obj/item/rcd_ammo,
-		/obj/item/construction/rcd,
+		/obj/item/construction,
 		/obj/item/pipe_dispenser,
 		/obj/item/stack/rods,
 		/obj/item/stack/tile/plasteel,

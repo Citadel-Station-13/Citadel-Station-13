@@ -128,6 +128,7 @@
 	absorption_capacity = 5
 	splint_factor = 0.35
 	custom_price = PRICE_REALLY_CHEAP
+	grind_results = list(/datum/reagent/cellulose = 2)
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
