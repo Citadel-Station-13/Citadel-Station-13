@@ -44,6 +44,7 @@
 	var/outrightfailchance = 1 //todo: document this shit
 	var/stepsdone = ""
 	var/rng = FALSE
+	var/itemqualitymax = 2
 	var/list/smithrecipes = list(RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
 	RECIPE_SHOVEL = /obj/item/smithing/shovelhead,
@@ -171,7 +172,7 @@
 			var/obj/item/smithing/finisheditem = new create(T)
 			to_chat(user, "You finish your [finisheditem]!")
 			workpiece_state = FALSE
-			finisheditem.quality = currentquality
+			finisheditem.quality = min(currentquality, itemqualitymax)
 			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = anvilquality
 			stepsdone = ""
@@ -198,6 +199,7 @@
 	desc = "A slightly reinforced table. Good luck."
 	icon_state = "tablevil"
 	anvilquality = -2
+	itemqualitymax = 0
 
 
 /obj/structure/anvil/obtainable/table/do_shaping(mob/user, var/qualitychange)
@@ -214,6 +216,7 @@
 	custom_materials = list(/datum/material/bronze=8000)
 	icon_state = "ratvaranvil"
 	anvilquality = -1
+	itemqualitymax = 1
 
 /obj/structure/anvil/obtainable/sandstone
 	name = "sandstone brick anvil"
@@ -221,17 +224,20 @@
 	custom_materials = list(/datum/material/sandstone=8000)
 	icon_state = "sandvil"
 	anvilquality = -1
+	itemqualitymax = 2
 
 /obj/structure/anvil/obtainable/basalt
 	name = "basalt brick anvil"
 	desc = "A big block of basalt. Useable as an anvil, better than sandstone. Igneous!"
 	icon_state = "sandvilnoir"
 	anvilquality = -0.5
+	itemqualitymax = 4
 
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
 	anvilquality = 0
+	itemqualitymax = 5
 
 /obj/structure/anvil/obtainable/ratvar
 	name = "brass anvil"
@@ -239,6 +245,7 @@
 	custom_materials = list(/datum/material/bronze=8000)
 	icon_state = "ratvaranvil"
 	anvilquality = 1
+	itemqualitymax = 8
 
 /obj/structure/anvil/obtainable/ratvar/attackby(obj/item/I, mob/user)
 	if(is_servant_of_ratvar(user))
@@ -253,6 +260,7 @@
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "evil"
 	anvilquality = 1
+	itemqualitymax = 8
 
 /obj/structure/anvil/obtainable/narsie/attackby(obj/item/I, mob/user)
 	if(iscultist(user))
