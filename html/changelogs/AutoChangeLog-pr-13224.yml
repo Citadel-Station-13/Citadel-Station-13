@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Stops shielded hardsuits from slowly turning the wearer into a big glowing ball of stacked energy shield overlays."
-  - tweak: "the shielding overlay is merely visual as result. Aim your clicks."
