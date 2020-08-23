@@ -36,6 +36,7 @@
 				/obj/item/clothing/under/misc/keyholesweater = 2,
 				/obj/item/clothing/under/misc/stripper/mankini = 2,
 				/obj/item/clothing/under/costume/jabroni = 2,
+				/obj/item/clothing/gloves/evening/black = 2,
 				/obj/item/dildo/flared/huge = 3,
 				/obj/item/reagent_containers/glass/bottle/crocin = 5,
 				/obj/item/reagent_containers/glass/bottle/camphor = 5

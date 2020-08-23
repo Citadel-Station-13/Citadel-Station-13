@@ -243,10 +243,24 @@ LINEN BINS
 
 /obj/item/bedsheet/random/Initialize()
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
+	var/type = pick(typesof(/obj/item/bedsheet) - list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon))
 	new type(loc)
 	return INITIALIZE_HINT_QDEL
 
+/obj/item/bedsheet/chameleon //donator chameleon bedsheet
+	name = "chameleon bedsheet"
+	desc = "Bedsheet technology has truly gone too far."
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/bedsheet/chameleon/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/bedsheet
+	chameleon_action.chameleon_name = "Bedsheet"
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/bedsheet/chameleon, /obj/item/bedsheet/random), only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+
+//bedsheet bin
 /obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "It looks rather cosy."

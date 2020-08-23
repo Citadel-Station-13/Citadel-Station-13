@@ -845,7 +845,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!subcategories.Find(gear_subcategory))
 						gear_subcategory = subcategories[1]
 
-					var/firstsubcat = FALSE
+					var/firstsubcat = TRUE
 					for(var/subcategory in subcategories)
 						if(firstsubcat)
 							firstsubcat = FALSE
