@@ -29,6 +29,11 @@
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
 
+/datum/uplink_item/badass/costumes/maid
+	name = "Maid Outfit"
+	desc = "Show these loyalists that the only thing NT and the Syndicate share in common is a maid fetish."
+	item = /obj/item/storage/box/syndie_kit/maid_outfit
+
 /datum/uplink_item/badass/plastitanium_toolbox
 	name = "Plastitanium Toolbox"
 	desc = "A very high impact toolbox. Excels at destroying stationary structures."

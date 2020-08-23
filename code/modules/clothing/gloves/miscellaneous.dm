@@ -169,6 +169,11 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 	strip_mod = 1.5
 
+/obj/item/clothing/gloves/combat/evening
+	name = "combat evening gloves"
+	desc = "Not so thin, pretty gloves intended for use in combat maid attire. Insulated and fireproof."
+	icon_state = "evening"
+	item_state = "evening"
 
 /obj/item/clothing/gloves/bracer
 	name = "bone bracers"
