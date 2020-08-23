@@ -110,6 +110,8 @@
 	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
+	if(!do_after(user, 20, target = src))
+		return FALSE
 	switch(stepdone)
 		if("weak hit")
 			currentsteps += 1

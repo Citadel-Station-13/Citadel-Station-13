@@ -99,7 +99,6 @@
 	dofinish()
 
 /obj/item/smithing/proc/dofinish()
-	visible_message("The finishing of [src].")
 	var/qualname
 	switch(quality)
 		if(-1000 to -5)
@@ -124,6 +123,7 @@
 	mat = mat.name
 	finalitem.name = "[qualname] [mat] [finalitem.name]"
 	finalitem.forceMove(get_turf(src))
+	qdel(src)
 
 /obj/item/smithing/hammerhead
 	name = "smithed hammer head"
