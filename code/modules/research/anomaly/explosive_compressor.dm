@@ -13,6 +13,7 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "explosive_compressor"
 	density = TRUE
+	circuit = /obj/item/circuitboard/machine/explosive_compressor
 
 	/// The raw core inserted in the machine.
 	var/obj/item/raw_anomaly_core/inserted_core
@@ -81,6 +82,12 @@
 	return radius
 
 /obj/machinery/research/explosive_compressor/attackby(obj/item/I, mob/living/user, params)
+	if(default_unfasten_wrench(user, I))
+		return
+	if(default_deconstruction_screwdriver(user, "explosive_compressor", "explosive_compressor", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
 	. = ..()
 	if(istype(I, /obj/item/raw_anomaly_core))
 		if(inserted_core)
