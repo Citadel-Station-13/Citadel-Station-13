@@ -1,29 +1,3 @@
-//TODO: OBTAILABILITY, ANVIL TYPES, HAMMER TYPES, INGOTS
-
-/*
-sords:
-broadsword [x]
-gladius [x]
-dirk [x]
-zweihander [x]
-sabre
-rapier
-scimitar
-katana [x]
-
-polearms:
-halberd [x]
-glaive [x]
-javelin [x]
-pike
-
-misc:
-blacksmith's hammer [x]
-scythe [x]
-axe
-coghead club
-pickaxes [x]
-*/
 
 /obj/item/melee/smith
 	name = "base class obj/item/melee/smith" //tin. handles overlay and quality and shit.
@@ -32,6 +6,9 @@ pickaxes [x]
 	icon_state = "mace_greyscale"
 	item_state = "mace_greyscale"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -55,7 +32,7 @@ pickaxes [x]
 /obj/item/melee/smith/twohand
 	item_flags = NEEDS_PERMIT //it's a bigass sword/spear. beepsky is going to give you shit for it.
 	wielded_mult = 1.75
-
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/smith/twohand/ComponentInitialize()
 	. = ..()
@@ -125,6 +102,7 @@ pickaxes [x]
 	name = "halberd"
 	icon_state = "halberd"
 	overlay_state = "spearhandle"
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/melee/smith/twohand/halberd/ComponentInitialize()
 	. = ..()
@@ -135,6 +113,7 @@ pickaxes [x]
 	icon_state = "javelin"
 	overlay_state = "longhandle"
 	wielded_mult = 1.5
+	slot_flags = ITEM_SLOT_BACK
 
 
 /obj/item/melee/smith/twohand/javelin/ComponentInitialize()
@@ -145,17 +124,24 @@ pickaxes [x]
 	name = "glaive"
 	icon_state = "glaive"
 	overlay_state = "longhandle"
+	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/melee/smith/twohand/glaive/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/jousting)
+
+
+/obj/item/melee/smith/twohand/pike
+	name = "pike"
+	icon_state = "pike"
+	overlay_state = "longhandle"
+	reach = 2 //yeah ok
+	slot_flags = ITEM_SLOT_BACK
+
 //////////////////////////
 //      Other Melee     //
 ///////////////////////////
 
-/obj/item/melee/smith/axe
-	name = "axe"
-	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/smith/hammer//blacksmithing, not warhammer.
 	name = "hammer"
@@ -169,7 +155,9 @@ pickaxes [x]
 
 /obj/item/melee/smith/cogheadclub
 	name = "coghead club"
+	icon_state = "coghead"
 	item_flags = NEEDS_PERMIT
+	overlay_state = "stick"
 
 /obj/item/melee/smith/shortsword
 	name = "gladius"
@@ -177,11 +165,37 @@ pickaxes [x]
 	icon_state = "gladius"
 	overlay_state = "gladiushilt"
 
+/obj/item/melee/smith/shortsword/scimitar
+	name = "scimitar"
+	icon_state = "scimitar"
+	overlay_state = "scimitarhilt"
+
+/obj/item/melee/smith/wakizashi
+	name = "wakizashi"
+	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
+	icon_state = "waki"
+	overlay_state = "wakihilt"
+	block_parry_data = /datum/block_parry_data/waki
+
+/datum/block_parry_data/waki //like longbokken but worse reflect
+	parry_stamina_cost = 6
+	parry_time_windup = 0
+	parry_time_active = 15 //decent window
+	parry_time_spindown = 0
+	parry_time_perfect = 2
+	parry_time_perfect_leeway = 0.75
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 80
+	parry_efficiency_perfect = 120
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1.9)
+
 /obj/item/melee/smith/twohand/broadsword
 	name = "broadsword"
 	icon_state = "broadsword"
 	overlay_state = "broadhilt"
-	force = 11
+	force = 9
 	wielded_mult = 1.8
 
 /obj/item/melee/smith/twohand/zweihander
@@ -189,7 +203,7 @@ pickaxes [x]
 	icon_state = "zweihander"
 	overlay_state = "zweihilt"
 	force = 4
-	wielded_mult = 3
+	wielded_mult = 3 //affected more by quality. a -1 is 25% less damage, a +1 is 25% more. These bonuses are tripled when wielded.
 
 /obj/item/melee/smith/twohand/katana
 	name = "katana"
@@ -198,7 +212,40 @@ pickaxes [x]
 	force = 7
 	wielded_mult = 2
 	item_flags = ITEM_CAN_PARRY | UNIQUE_RENAME //want to name your katana "DEMON BLADE" or some shit? go ahead, idiot.
-	block_parry_data = /datum/block_parry_data/captain_saber
+	block_parry_data = /datum/block_parry_data/captain_saber //todo
+
+/obj/item/melee/smith/sabre
+	name = "sabre"
+	icon_state = "sabre"
+	overlay_state = "sabrehilt"
+	armour_penetration = 15
+	force = 9
+	hitsound = 'sound/weapons/rapierhit.ogg'
+	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
+	block_parry_data = /datum/block_parry_data/captain_saber //yeah this is fine i guess
+
+/obj/item/melee/smith/sabre/rapier
+	name = "rapier"
+	icon_state = "rapier"
+	overlay_state = "rapierhilt"
+	force = 6 //less force, stronger parry
+	armour_penetration = 30
+	block_parry_data = /datum/block_parry_data/smithrapier
+
+/datum/block_parry_data/smithrapier //parry into riposte. i am pretty sure this is going to be nearly fucking impossible to land.
+	parry_stamina_cost = 12 //dont miss
+	parry_time_active = 4
+	parry_time_perfect = 2
+	parry_time_perfect_leeway = 2
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 3 SECONDS
+	parry_time_windup = 0
+	parry_time_spindown = 0
+	parry_imperfect_falloff_percent = 0
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 120
+	parry_efficiency_perfect = 120
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 4)
 
 //unique hammers
 /obj/item/melee/smith/hammer/toolbox

@@ -7,12 +7,13 @@
 #define RECIPE_LARGEPICK "ddbp" //draw draw bend punch
 #define RECIPE_SHOVEL "dfup" //draw fold upset punch
 #define RECIPE_HAMMER "sfp" //shrink fold punch
-#define RECIPE_AXE "ufp" //upset fold punch
 
 
 #define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
 #define RECIPE_SHORTSWORD "dff" //draw fold fold
+#define RECIPE_SCIMITAR "dfb" //draw fold bend
 #define RECIPE_BROADSWORD "dfufd" //draw fold upset fold draw
+#define RECIPE_ZWEIHANDER "udfsf" //upset draw fold shrink fold
 #define RECIPE_KATANA "fffff" //fold fold fold fold fold
 
 
@@ -23,6 +24,7 @@
 #define RECIPE_JAVELIN "dbf" //draw bend fold
 #define RECIPE_HALBERD "duffp" //draw upset fold fold punch
 #define RECIPE_GLAIVE "usfp" //upset shrink fold punch
+#define RECIPE_PIKE "ddbf" //draw draw bend fold
 
 /obj/structure/anvil
 	name = "anvil"
@@ -39,8 +41,7 @@
 	var/outrightfailchance = 1 //todo: document this shit
 	var/stepsdone = ""
 	var/rng = FALSE
-	var/list/smithrecipes = list(RECIPE_AXE = /obj/item/smithing/axehead,
-	RECIPE_HAMMER = /obj/item/smithing/hammerhead,
+	var/list/smithrecipes = list(RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
 	RECIPE_SHOVEL = /obj/item/smithing/shovelhead,
 	RECIPE_COGHEAD = /obj/item/smithing/cogheadclubhead,
@@ -48,11 +49,14 @@
 	RECIPE_LARGEPICK = /obj/item/smithing/pickaxehead,
 	RECIPE_SMALLPICK = /obj/item/smithing/prospectingpickhead,
 	RECIPE_SHORTSWORD = /obj/item/smithing/shortswordblade,
+	RECIPE_SCIMITAR = /obj/item/smithing/scimitarblade,
 	RECIPE_SMALLKNIFE = /obj/item/smithing/knifeblade,
 	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
+	RECIPE_ZWEIHANDER = /obj/item/smithing/zweiblade,
+	RECIPE_KATANA = /obj/item/smithing/katanablade,
 	RECIPE_HALBERD = /obj/item/smithing/halberdhead,
 	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
-	RECIPE_KATANA = /obj/item/smithing/katanablade)
+	RECIPE_PIKE = /obj/item/smithing/pikehead)
 
 /obj/structure/anvil/Initialize()
 	..()
@@ -172,7 +176,6 @@
 /obj/structure/anvil/debugsuper
 	name = "super ultra epic anvil of debugging."
 	desc = "WOW. A DEBUG <del>ITEM</DEL> STRUCTURE. EPIC."
-	icon = 'icons/obj/smith.dmi'
 	icon_state = "anvil"
 	anvilquality = 10
 	outrightfailchance = 0
@@ -180,8 +183,6 @@
 /obj/structure/anvil/obtainable
 	name = "anvil"
 	desc = "Base class of anvil. This shouldn't exist, but is useable."
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
 	anvilquality = 0
 	outrightfailchance = 5
 	rng = TRUE
@@ -189,7 +190,6 @@
 /obj/structure/anvil/obtainable/table
 	name = "table anvil"
 	desc = "A slightly reinforced table. Good luck."
-	icon = 'icons/obj/smith.dmi'
 	icon_state = "anvil"
 	anvilquality = -2
 
@@ -206,38 +206,32 @@
 	name = "slab of bronze"
 	desc = "A big block of bronze. Useable as an anvil."
 	custom_materials = list(/datum/material/bronze=8000)
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
+	icon_state = "ratvaranvil"
 	anvilquality = -1
 
 /obj/structure/anvil/obtainable/sandstone
 	name = "sandstone brick anvil"
 	desc = "A big block of sandstone. Useable as an anvil."
 	custom_materials = list(/datum/material/sandstone=8000)
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
+	icon_state = "sandvil"
 	anvilquality = -1
 
 /obj/structure/anvil/obtainable/basalt
 	name = "basalt brick anvil"
 	desc = "A big block of basalt. Useable as an anvil, better than sandstone. Igneous!"
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
+	icon_state = "sandvilnoir"
 	anvilquality = -0.5
 
 /obj/structure/anvil/obtainable/basic
 	name = "anvil"
 	desc = "An anvil. It's got wheels bolted to the bottom."
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
 	anvilquality = 0
 
 /obj/structure/anvil/obtainable/ratvar
 	name = "brass anvil"
 	desc = "A big block of what appears to be brass. Useable as an anvil, if whatever's holding the brass together lets you."
 	custom_materials = list(/datum/material/bronze=8000)
-	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
+	icon_state = "ratvaranvil"
 	anvilquality = 1
 
 /obj/structure/anvil/obtainable/ratvar/attackby(obj/item/I, mob/user)
@@ -251,11 +245,11 @@
 	desc = "An anvil made of a strange, runic metal."
 	custom_materials = list(/datum/material/runedmetal=8000)
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "anvil"
+	icon_state = "evil"
 	anvilquality = 1
 
 /obj/structure/anvil/obtainable/narsie/attackby(obj/item/I, mob/user)
-	if(iscultistr(user))
+	if(iscultist(user))
 		return ..()
 	else
 		to_chat(user, "<span class='narsiesmall'>That is not yours to use!</span>")
