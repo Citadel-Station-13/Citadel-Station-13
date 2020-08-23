@@ -161,7 +161,7 @@
 
 /datum/crafting_recipe/basaltanvil
 	name = "Basalt Anvil"
-	result = /obj/structure/anvil/obtainable/sandstone
+	result = /obj/structure/anvil/obtainable/basalt
 	time = 200
 	reqs = list(/obj/item/basaltblock = 5)
 	tools = list(TOOL_CROWBAR)
