@@ -19,12 +19,12 @@
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "ingot"
 	material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX
-	var/workability = "cold"
+	var/workability = 0
 
 
 /obj/item/ingot/on_attack_hand(mob/user)
 	var/mob/living/carbon/human/H
-	if(!workability == "shapeable")
+	if(!workability)
 		return ..()
 	var/prot = 0
 	if(ishuman(user))

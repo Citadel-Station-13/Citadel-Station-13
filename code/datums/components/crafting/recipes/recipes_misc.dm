@@ -119,6 +119,17 @@
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 	always_availible = FALSE	// Disabled til learned
+	
+/datum/crafting_recipe/furnace
+	name = "Sandstone Furnace"
+	result = /obj/structure/furnace
+	time = 300
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 15,
+	/obj/item/stack/sheet/metal = 4,
+	/obj/item/stack/rods = 2)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 
 /datum/crafting_recipe/tableanvil
 	name = "Table Anvil"
@@ -134,7 +145,7 @@
 	name = "Sandstone Anvil"
 	result = /obj/structure/anvil/obtainable/sandstone
 	time = 300
-	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 4)
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 24)
 	tools = list(TOOL_CROWBAR)
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
