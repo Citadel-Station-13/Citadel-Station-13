@@ -16,6 +16,11 @@
 	name = "speed loader (.357 AP)"
 	ammo_type = /obj/item/ammo_casing/a357/ap
 
+/obj/item/ammo_box/a357/dumdum
+	name = "speed loader (.357 DumDum)"
+	desc = "Designed to quickly reload revolvers. Usage of these rounds will constitute a war crime in your area."
+	ammo_type = /obj/item/ammo_casing/a357/dumdum
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
 	desc = "Designed to quickly reload revolvers."
@@ -47,7 +52,7 @@
 
 /obj/item/ammo_box/c38/dumdum
 	name = "speed loader (.38 DumDum)"
-	desc = "Designed to quickly reload revolvers. DumDum bullets shatter on impact and shred the target's innards, likely getting caught inside."
+	desc = "Designed to quickly reload revolvers. These rounds expand on impact, allowing them to shred the target and cause massive bleeding. Very weak against armor and distant targets."
 	ammo_type = /obj/item/ammo_casing/c38/dumdum
 
 /obj/item/ammo_box/c38/match
@@ -148,6 +153,8 @@
 	max_ammo = 4
 	var/pixeloffsetx = 4
 	start_empty = TRUE
+	multiload = FALSE
+	load_delay = 6 //6ds
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()

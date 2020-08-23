@@ -1,10 +1,12 @@
 /*
 Asset cache quick users guide:
+
 Make a datum in asset_list_items.dm with your assets for your thing.
 Checkout asset_list.dm for the helper subclasses
 The simple subclass will most like be of use for most cases.
 Then call get_asset_datum() with the type of the datum you created and store the return
 Then call .send(client) on that stored return value. 
+
 Note: If your code uses output() with assets you will need to call asset_flush on the client and wait for it to return before calling output(). You only need do this if .send(client) returned TRUE
 */
 
@@ -92,9 +94,17 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 			var/list/stacktrace = gib_stack_trace()
 			log_asset("WARNING: dupe asset added to the asset cache: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]\n[stacktrace.Join("\n")]")
 	SSassets.cache[asset_name] = ACI
+	return ACI
+
+/// Returns the url of the asset, currently this is just its name, here to allow further work cdn'ing assets.
+/// 	Can be given an asset as well, this is just a work around for buggy edge cases where two assets may have the same name, doesn't matter now, but it will when the cdn comes.
+/proc/get_asset_url(asset_name, asset = null)
+	var/datum/asset_cache_item/ACI = SSassets.cache[asset_name]
+	return ACI?.url
 
 //Generated names do not include file extention.
 //Used mainly for code that deals with assets in a generic way
 //The same asset will always lead to the same asset name
 /proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
+

@@ -227,7 +227,7 @@
 /area/ruin/unpowered/xenonest)
 "ba" = (
 /obj/structure/stone_tile/slab,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bb" = (
 /obj/structure/stone_tile/cracked{
@@ -241,7 +241,7 @@
 	dir = 8
 	},
 /obj/item/flashlight/lantern,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bc" = (
 /obj/structure/stone_tile/block,
@@ -251,7 +251,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bd" = (
 /obj/structure/stone_tile/block,
@@ -262,7 +262,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/xeno,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "be" = (
 /obj/structure/stone_tile/block,
@@ -272,7 +272,7 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bf" = (
 /obj/structure/stone_tile,
@@ -286,7 +286,7 @@
 	dir = 4
 	},
 /obj/item/flashlight/lantern,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bg" = (
 /obj/structure/alien/weeds,
@@ -303,7 +303,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bi" = (
 /obj/structure/alien/weeds,
@@ -336,11 +336,11 @@
 	dir = 1
 	},
 /obj/structure/stone_tile,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bm" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bn" = (
 /obj/structure/stone_tile/block{
@@ -352,7 +352,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bo" = (
 /obj/structure/stone_tile/surrounding_tile{
@@ -383,7 +383,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood/xeno,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bs" = (
 /obj/structure/stone_tile/block{
@@ -416,7 +416,7 @@
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bw" = (
 /obj/structure/stone_tile/cracked{
@@ -430,7 +430,7 @@
 	dir = 8
 	},
 /obj/item/flashlight/lantern,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bx" = (
 /obj/structure/stone_tile/block{
@@ -441,7 +441,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/xeno,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "by" = (
 /obj/structure/stone_tile/block{
@@ -451,7 +451,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bz" = (
 /obj/structure/stone_tile/block/cracked{
@@ -461,7 +461,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bA" = (
 /obj/structure/stone_tile/cracked{
@@ -475,7 +475,7 @@
 	},
 /obj/structure/stone_tile,
 /obj/item/flashlight/lantern,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/xenonest)
 "bB" = (
 /obj/structure/alien/weeds,

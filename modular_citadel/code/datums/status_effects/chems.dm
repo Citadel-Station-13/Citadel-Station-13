@@ -53,7 +53,6 @@
 
 	if(last_checked_size != B.cached_size)
 		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy, multiplicative_slowdown = moveCalc)
-		sizeMoveMod(moveCalc)
 
 	if (B.size == "huge")
 		if(prob(1))
@@ -70,15 +69,7 @@
 	log_reagent("FERMICHEM: [owner]'s breasts has reduced to an acceptable size. ID: [owner.key]")
 	to_chat(owner, "<span class='notice'>Your expansive chest has become a more managable size, liberating your movements.</b></span>")
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/breast_hypertrophy)
-	sizeMoveMod(1)
 	return ..()
-
-/datum/status_effect/chem/breast_enlarger/proc/sizeMoveMod(var/value)
-	if(cachedmoveCalc == value)
-		return
-	owner.next_move_modifier /= cachedmoveCalc
-	owner.next_move_modifier *= value
-	cachedmoveCalc = value
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -230,7 +221,7 @@
 	var/mob/living/carbon/M = owner
 
 	//chem calculations
-	if(!owner.reagents.has_reagent(/datum/chemical_reaction/fermi/enthrall))
+	if(!owner.reagents.has_reagent(/datum/reagent/fermi/enthrall))
 		if (phase < 3 && phase != 0)
 			deltaResist += 3//If you've no chem, then you break out quickly
 			if(prob(5))
@@ -592,16 +583,6 @@
 				C.Stun(60)
 				to_chat(owner, "<span class='warning'><i>Your muscles seize up, then start spasming wildy!</i></span>")
 
-			//wah intensifies wah-rks
-			else if (lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-				if (lewd)
-					if(ishuman(C))
-						var/mob/living/carbon/human/H = C
-						H.mob_climax(forced_climax=TRUE)
-					C.SetStun(10)//We got your stun effects in somewhere, Kev.
-				else
-					C.throw_at(get_step_towards(hearing_args[HEARING_SPEAKER],C), 3, 1) //cut this if it's too hard to get working
-
 			//kneel (knockdown)
 			else if (lowertext(customTriggers[trigger]) == "kneel")//as close to kneeling as you can get, I suppose.
 				to_chat(owner, "<span class='notice'><i>You drop to the ground unsurreptitiously.</i></span>")
@@ -683,15 +664,6 @@
 		deltaResist *= 1.25
 	if (owner.reagents.has_reagent(/datum/reagent/medicine/neurine))
 		deltaResist *= 1.5
-	if (!(owner.client?.prefs.cit_toggles & NO_APHRO) && lewd)
-		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiac))
-			deltaResist *= 1.5
-		if (owner.reagents.has_reagent(/datum/reagent/drug/anaphrodisiacplus))
-			deltaResist *= 2
-		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiac))
-			deltaResist *= 0.75
-		if (owner.reagents.has_reagent(/datum/reagent/drug/aphrodisiacplus))
-			deltaResist *= 0.5
 	//Antag resistance
 	//cultists are already brainwashed by their god
 	if(iscultist(owner))

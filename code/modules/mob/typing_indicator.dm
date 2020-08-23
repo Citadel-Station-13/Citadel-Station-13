@@ -15,13 +15,23 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
 /mob/proc/get_typing_indicator_icon_state()
 	return typing_indicator_state
 
+/// Generates the mutable appearance for typing indicator. Should prevent stuck overlays.
+/mob/proc/generate_typing_indicator()
+	var/state = get_typing_indicator_icon_state()
+	if(ispath(state))
+		var/atom/thing = new state(null)
+		var/mutable_appearance/generated = new(thing)
+		return generated
+	else
+		CRASH("Unsupported typing indicator state: [state]")
+
 /**
   * Displays typing indicator.
   * @param timeout_override - Sets how long until this will disappear on its own without the user finishing their message or logging out. Defaults to src.typing_indicator_timeout
   * @param state_override - Sets the state that we will fetch. Defaults to src.get_typing_indicator_icon_state()
   * @param force - shows even if src.typing_indcator_enabled is FALSE.
   */
-/mob/proc/display_typing_indicator(timeout_override = TYPING_INDICATOR_TIMEOUT, state_override = get_typing_indicator_icon_state(), force = FALSE)
+/mob/proc/display_typing_indicator(timeout_override = TYPING_INDICATOR_TIMEOUT, state_override = generate_typing_indicator(), force = FALSE)
 	if((!typing_indicator_enabled && !force) || typing_indicator_current)
 		return
 	typing_indicator_current = state_override

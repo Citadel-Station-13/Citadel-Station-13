@@ -57,7 +57,7 @@
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
-	if (buckled || now_pushing)
+	if(buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
@@ -273,7 +273,7 @@
 			return
 		stop_pulling()
 
-	changeNext_move(CLICK_CD_GRABBING)
+	DelayNextAction(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
 		if(!supress_message)
@@ -605,40 +605,54 @@
 		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM)
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity())
+	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
-	var/blood_exists = FALSE
+	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
-		blood_exists = TRUE
-	if(isturf(start))
-		var/trail_type = getTrail()
-		if(trail_type)
-			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max((BLOOD_VOLUME_NORMAL*blood_ratio)*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(target_turf, start)
-				if(newdir != direction)
-					newdir = newdir | direction
-					if(newdir == 3) //N + S
-						newdir = NORTH
-					else if(newdir == 12) //E + W
-						newdir = EAST
-				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(target_turf, start), 180)
-				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+	var/trail_type = getTrail()
+	if(!trail_type)
+		return
 
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
-					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-						TH.existing_dirs += newdir
-						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-						TH.transfer_mob_blood_dna(src)
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+		return
+
+	var/bleed_amount = bleedDragAmount()
+	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	var/newdir = get_dir(target_turf, start)
+	if(newdir != direction)
+		newdir = newdir | direction
+		if(newdir == (NORTH|SOUTH))
+			newdir = NORTH
+		else if(newdir == (EAST|WEST))
+			newdir = EAST
+	if((newdir in GLOB.cardinals) && (prob(50)))
+		newdir = turn(get_dir(target_turf, start), 180)
+	if(!blood_exists)
+		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+
+	for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || bleedsuppress)
 		return
 	..()
+
+///Returns how much blood we're losing from being dragged a tile, from [mob/living/proc/makeTrail]
+/mob/living/proc/bleedDragAmount()
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	return max(1, brute_ratio * 2)
+
+/mob/living/carbon/bleedDragAmount()
+	var/bleed_amount = 0
+	for(var/i in all_wounds)
+		var/datum/wound/iter_wound = i
+		bleed_amount += iter_wound.drag_bleed_amount()
+	return bleed_amount
 
 /mob/living/proc/getTrail()
 	if(getBruteLoss() < 300)
@@ -676,7 +690,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || !CHECK_MOBILITY(src, MOBILITY_RESIST))
+	return CheckResistCooldown() && CHECK_MOBILITY(src, MOBILITY_RESIST)
 
 /// Resist verb for attempting to get out of whatever is restraining your motion. Gives you resist clickdelay if do_resist() returns true.
 /mob/living/verb/resist()
@@ -687,10 +701,12 @@
 		return
 
 	if(do_resist())
-		changeNext_move(CLICK_CD_RESIST)
+		MarkResistTime()
+		DelayNextAction(CLICK_CD_RESIST)
 
-/// The actual proc for resisting. Return TRUE to give clickdelay.
+/// The actual proc for resisting. Return TRUE to give CLICK_CD_RESIST clickdelay.
 /mob/living/proc/do_resist()
+	set waitfor = FALSE			// some of these sleep.
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	// only works if you're not cuffed.
@@ -701,7 +717,7 @@
 		return old_gs? TRUE : FALSE
 
 	// unbuckling yourself. stops the chain if you try it.
-	if(buckled && last_special <= world.time)
+	if(buckled)
 		log_combat(src, buckled, "resisted buckle")
 		return resist_buckle()
 
@@ -730,13 +746,12 @@
 
 	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
 		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
-		changeNext_move(CLICK_CD_MELEE)
+		DelayNextAction(CLICK_CD_MELEE)
 		return FALSE
 
-	if(last_special <= world.time)
-		resist_restraints() //trying to remove cuffs.
-		// DO NOT GIVE CLICKDELAY - last_special handles this.
-		return FALSE
+	resist_restraints() //trying to remove cuffs.
+	// DO NOT GIVE CLICKDELAY
+	return FALSE
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
 /mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)
@@ -802,7 +817,7 @@
 	else
 		throw_alert("gravity", /obj/screen/alert/weightless)
 	if(!override && !is_flying())
-		float(!has_gravity)
+		INVOKE_ASYNC(src, /atom/movable.proc/float, !has_gravity)
 
 /mob/living/float(on)
 	if(throwing)
@@ -1196,30 +1211,29 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if ("maxHealth")
+		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if("stat")
+		if(NAMEOF(src, stat))
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
 				GLOB.alive_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
 				GLOB.alive_mob_list -= src
 				GLOB.dead_mob_list += src
+		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
+			return FALSE
 	. = ..()
 	switch(var_name)
-		if("eye_blind")
+		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-		if("eye_damage")
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-			E?.setOrganDamage(var_value)
-		if("eye_blurry")
+		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-		if("maxHealth")
+		if(NAMEOF(src, maxHealth))
 			updatehealth()
-		if("resize")
+		if(NAMEOF(src, resize))
 			update_transform()
-		if("lighting_alpha")
+		if(NAMEOF(src, lighting_alpha))
 			sync_lighting_plane_alpha()
 
 /mob/living/proc/do_adrenaline(

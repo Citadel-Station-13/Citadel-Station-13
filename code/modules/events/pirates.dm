@@ -25,7 +25,7 @@
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce(fake)
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
+	priority_announce("A business proposition has been downloaded and printed out at all communication consoles.", "Incoming Business Proposition", "commandreport")
 	if(fake)
 		return
 	threat_message = new
@@ -49,6 +49,7 @@
 			else
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
+		priority_announce("You won't listen to reason? Then we'll take what's yours or die trying!",sender_override = ship_name)
 		spawn_shuttle()
 
 /datum/round_event/pirates/start()
@@ -83,8 +84,7 @@
 				announce_to_ghosts(M)
 			else
 				announce_to_ghosts(spawner)
-
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
+	priority_announce("Unidentified ship detected near the station.")
 
 //Shuttle equipment
 
@@ -95,14 +95,11 @@
 	icon_state = "dominator"
 	density = TRUE
 	var/active = FALSE
-	var/obj/item/gps/gps
 	var/credits_stored = 0
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	gps = new/obj/item/gps/internal/pirate(src)
-	gps.tracking = FALSE
 	update_icon()
 
 /obj/machinery/shuttle_scrambler/process()
@@ -112,6 +109,7 @@
 			if(D)
 				var/siphoned = min(D.account_balance,siphon_per_tick)
 				D.adjust_money(-siphoned)
+				credits_stored += siphoned
 			interrupt_research()
 		else
 			return
@@ -120,7 +118,7 @@
 
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
-	gps.tracking = TRUE
+	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
 	to_chat(user,"<span class='notice'>You toggle [src] [active ? "on":"off"].</span>")
 	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by GPS.</span>")
@@ -130,7 +128,7 @@
 	if(!active)
 		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
 			return
-		if(active || !user.canUseTopic(src))
+		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
 		toggle_on(user)
 		update_icon()
@@ -147,34 +145,30 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	new /obj/item/holochip(drop_location(), credits_stored)
-	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-	credits_stored = 0
+	if(credits_stored)	// Prevents spamming empty holochips
+		new /obj/item/holochip(drop_location(), credits_stored)
+		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+		credits_stored = 0
+	else
+		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
 
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)
-	gps.tracking = FALSE
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_overlays()
-	. = ..()
+/obj/machinery/shuttle_scrambler/update_icon_state()
 	if(active)
-		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
-		M.color = "#00FFFF"
-		. += M
+		icon_state = "dominator-blue"
+	else
+		icon_state = "dominator"
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
-	QDEL_NULL(gps)
 	return ..()
-
-/obj/item/gps/internal/pirate
-	gpstag = "Nautical Signal"
-	desc = "You can hear shanties over the static."
 
 /obj/machinery/computer/shuttle/pirate
 	name = "pirate shuttle console"
@@ -225,7 +219,8 @@
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/jetpack/void
+	storage_type = /obj/item/tank/internals/oxygen
+
 
 /obj/machinery/loot_locator
 	name = "Booty Locator"
@@ -280,8 +275,9 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
-	resistance_flags = INDESTRUCTIBLE
-	var/status_report = "Idle"
+	ui_x = 600
+	ui_y = 230
+	var/status_report = "Ready for delivery."
 	var/obj/machinery/piratepad/pad
 	var/warmup_time = 100
 	var/sending = FALSE
@@ -298,7 +294,6 @@
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		pad = I.buffer
-		updateDialog()
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/LateInitialize()
@@ -311,29 +306,42 @@
 	else
 		pad = locate() in range(4,src)
 
-/obj/machinery/computer/piratepad_control/ui_interact(mob/user)
-	. = ..()
-	var/list/t = list()
-	t += "<div class='statusDisplay'>Cargo Hold Control<br>"
-	t += "Current cargo value : [points]"
-	t += "</div>"
-	if(!pad)
-		t += "<div class='statusDisplay'>No pad located.</div><BR>"
-	else
-		t += "<br>[status_report]<br>"
-		if(!sending)
-			t += "<a href='?src=[REF(src)];recalc=1;'>Recalculate Value</a><a href='?src=[REF(src)];send=1'>Send</a>"
-		else
-			t += "<a href='?src=[REF(src)];stop=1'>Stop sending</a>"
+/obj/machinery/computer/piratepad_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CargoHoldTerminal", name)
+		ui.open()
 
-	var/datum/browser/popup = new(user, "piratepad", name, 300, 500)
-	popup.set_content(t.Join())
-	popup.open()
+/obj/machinery/computer/piratepad_control/ui_data(mob/user)
+	var/list/data = list()
+	data["points"] = points
+	data["pad"] = pad ? TRUE : FALSE
+	data["sending"] = sending
+	data["status_report"] = status_report
+	return data
+
+/obj/machinery/computer/piratepad_control/ui_act(action, params)
+	if(..())
+		return
+	if(!pad)
+		return
+
+	switch(action)
+		if("recalc")
+			recalc()
+			. = TRUE
+		if("send")
+			start_sending()
+			. = TRUE
+		if("stop")
+			stop_sending()
+			. = TRUE
 
 /obj/machinery/computer/piratepad_control/proc/recalc()
 	if(sending)
 		return
-	status_report = "Predicted value:<br>"
+	status_report = "Predicted value: "
+	var/value = 0
 	var/datum/export_report/ex = new
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
@@ -341,7 +349,12 @@
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
 
 	for(var/datum/export/E in ex.total_amount)
-		status_report += E.total_printout(ex,notes = FALSE) + "<br>"
+		status_report += E.total_printout(ex,notes = FALSE)
+		status_report += " "
+		value += ex.total_value[E]
+
+	if(!value)
+		status_report += "0"
 
 /obj/machinery/computer/piratepad_control/proc/send()
 	if(!sending)
@@ -354,14 +367,15 @@
 			continue
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
 
-	status_report = "Sold:<br>"
+	status_report = "Sold: "
 	var/value = 0
 	for(var/datum/export/E in ex.total_amount)
 		var/export_text = E.total_printout(ex,notes = FALSE) //Don't want nanotrasen messages, makes no sense here.
 		if(!export_text)
 			continue
 
-		status_report += export_text + "<br>"
+		status_report += export_text
+		status_report += " "
 		value += ex.total_value[E]
 
 	if(!total_report)
@@ -374,11 +388,12 @@
 
 	points += value
 
+	if(!value)
+		status_report += "Nothing"
 	pad.visible_message("<span class='notice'>[pad] activates!</span>")
 	flick(pad.sending_state,pad)
 	pad.icon_state = pad.idle_state
 	sending = FALSE
-	updateDialog()
 
 /obj/machinery/computer/piratepad_control/proc/start_sending()
 	if(sending)
@@ -396,20 +411,6 @@
 	status_report = "Idle"
 	pad.icon_state = pad.idle_state
 	deltimer(sending_timer)
-
-/obj/machinery/computer/piratepad_control/Topic(href, href_list)
-	if(..())
-		return
-	if(pad)
-		if(href_list["recalc"])
-			recalc()
-		if(href_list["send"])
-			start_sending()
-		if(href_list["stop"])
-			stop_sending()
-		updateDialog()
-	else
-		updateDialog()
 
 /datum/export/pirate
 	export_category = EXPORT_PIRATE
@@ -434,6 +435,8 @@
 /datum/export/pirate/ransom/get_cost(atom/movable/AM)
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
+		return 0
+	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
 	else
 		if(H.mind.assigned_role in GLOB.command_positions)

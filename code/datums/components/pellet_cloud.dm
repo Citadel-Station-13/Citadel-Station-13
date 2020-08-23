@@ -1,3 +1,8 @@
+// the following defines are used for [/datum/component/pellet_cloud/var/list/wound_info_by_part] to store the damage, wound_bonus, and bw_bonus for each bodypart hit
+#define CLOUD_POSITION_DAMAGE	1
+#define CLOUD_POSITION_W_BONUS	2
+#define CLOUD_POSITION_BW_BONUS	3
+
 /*
 	* This component is used when you want to create a bunch of shrapnel or projectiles (say, shrapnel from a fragmentation grenade, or buckshot from a shotgun) from a central point,
 	* without necessarily printing a separate message for every single impact. This component should be instantiated right when you need it (like the moment of firing), then activated
@@ -29,7 +34,10 @@
 	var/list/pellets = list()
 	/// An associated list with the atom hit as the key and how many pellets they've eaten for the value, for printing aggregate messages
 	var/list/targets_hit = list()
-	/// For grenades, any /mob/living's the grenade is moved onto, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
+
+	/// Another associated list for hit bodyparts on carbons so we can track how much wounding potential we have for each bodypart
+	var/list/wound_info_by_part = list()
+	/// For grenades, any /mob/living's the grenade is moved onto, see [/datum/component/pellet_cloud/proc/handle_martyrs]
 	var/list/bodies
 	/// For grenades, tracking people who die covering a grenade for achievement purposes, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
 	var/list/purple_hearts
@@ -64,6 +72,7 @@
 /datum/component/pellet_cloud/Destroy(force, silent)
 	purple_hearts = null
 	pellets = null
+	wound_info_by_part = null
 	targets_hit = null
 	bodies = null
 	return ..()
@@ -187,10 +196,26 @@
 			break
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
-/datum/component/pellet_cloud/proc/pellet_hit(obj/item/projectile/P, atom/movable/firer, atom/target, Angle)
+/datum/component/pellet_cloud/proc/pellet_hit(obj/item/projectile/P, atom/movable/firer, atom/target, Angle, hit_zone)
 	pellets -= P
 	terminated++
 	hits++
+	var/obj/item/bodypart/hit_part
+	if(iscarbon(target) && hit_zone)
+		var/mob/living/carbon/hit_carbon = target
+		hit_part = hit_carbon.get_bodypart(hit_zone)
+		if(hit_part)
+			target = hit_part
+			if(P.wound_bonus != CANT_WOUND) // handle wounding
+				// unfortunately, due to how pellet clouds handle finalizing only after every pellet is accounted for, that also means there might be a short delay in dealing wounds if one pellet goes wide
+				// while buckshot may reach a target or miss it all in one tick, we also have to account for possible ricochets that may take a bit longer to hit the target
+				if(isnull(wound_info_by_part[hit_part]))
+					wound_info_by_part[hit_part] = list(0, 0, 0)
+				wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE] += P.damage // these account for decay
+				wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS] += P.wound_bonus
+				wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS] += P.bare_wound_bonus
+				P.wound_bonus = CANT_WOUND // actual wounding will be handled aggregate
+
 	targets_hit[target]++
 	if(targets_hit[target] == 1)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
@@ -231,13 +256,23 @@
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
-		if(num_hits > 1)
-			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
-		else
-			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, "<span class='userdanger'>You're hit by a [proj_name]!</span>")
+		var/obj/item/bodypart/hit_part
+		if(isbodypart(target))
+			hit_part = target
+			target = hit_part.owner
+			var/damage_dealt = wound_info_by_part[hit_part][CLOUD_POSITION_DAMAGE]
+			var/w_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_W_BONUS]
+			var/bw_bonus = wound_info_by_part[hit_part][CLOUD_POSITION_BW_BONUS]
+			var/wound_type = (initial(P.damage_type) == BRUTE) ? WOUND_BLUNT : WOUND_BURN // sharpness is handled in the wound rolling
+			wound_info_by_part[hit_part] = null
+			hit_part.painless_wound_roll(wound_type, damage_dealt, w_bonus, bw_bonus, initial(P.sharpness))
 
+		if(num_hits > 1)
+			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s[hit_part ? " in the [hit_part.name]" : ""]!</span>")
+		else
+			target.visible_message("<span class='danger'>[target] is hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, "<span class='userdanger'>You're hit by a [proj_name][hit_part ? " in the [hit_part.name]" : ""]!</span>")
 	UnregisterSignal(parent, COMSIG_PARENT_PREQDELETED)
 	if(queued_delete)
 		qdel(parent)
@@ -281,3 +316,7 @@
 	targets_hit -= target
 	bodies -= target
 	purple_hearts -= target
+
+#undef CLOUD_POSITION_DAMAGE
+#undef CLOUD_POSITION_W_BONUS
+#undef CLOUD_POSITION_BW_BONUS

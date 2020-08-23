@@ -4,10 +4,10 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR,HAS_FLESH)
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutant_heart = /obj/item/organ/heart/slime
-	mutant_bodyparts = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
@@ -24,6 +24,10 @@
 	burnmod = 0.5 // = 1/2x generic burn damage
 	species_language_holder = /datum/language_holder/jelly
 	mutant_brain = /obj/item/organ/brain/jelly
+
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
+	species_type = "jelly"
 
 /obj/item/organ/brain/jelly
 	name = "slime nucleus"
@@ -127,33 +131,6 @@
 		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
-
-/datum/species/jelly/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/jelly/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/jelly/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/jelly/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/jelly/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/jelly/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
 
 
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
@@ -310,11 +287,16 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/datum/action/innate/swap_body/ui_host(mob/user)
+	return owner
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/action/innate/swap_body/ui_state(mob/user)
+	return GLOB.not_incapacitated_state
+
+/datum/action/innate/swap_body/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
+		ui = new(user, src, "SlimeBodySwapper", name)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)
@@ -384,7 +366,8 @@
 		return
 	switch(action)
 		if("swap")
-			var/mob/living/carbon/human/selected = locate(params["ref"])
+			var/datum/species/jelly/slime/SS = H.dna.species
+			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
 			SStgui.close_uis(src)
@@ -443,7 +426,7 @@
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	mutant_bodyparts = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 160 //a notch brighter so it blends better.
@@ -521,7 +504,7 @@
 	else if (select_alteration == "Ears")
 		var/list/snowflake_ears_list = list("Normal" = null)
 		for(var/path in GLOB.mam_ears_list)
-			var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
+			var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
@@ -535,7 +518,7 @@
 	else if (select_alteration == "Snout")
 		var/list/snowflake_snouts_list = list("Normal" = null)
 		for(var/path in GLOB.mam_snouts_list)
-			var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
+			var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.mam_snouts_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
@@ -566,7 +549,7 @@
 	else if (select_alteration == "Tail")
 		var/list/snowflake_tails_list = list("Normal" = null)
 		for(var/path in GLOB.mam_tails_list)
-			var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
+			var/datum/sprite_accessory/tails/mam_tails/instance = GLOB.mam_tails_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))

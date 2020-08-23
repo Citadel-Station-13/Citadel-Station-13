@@ -324,7 +324,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/weapon/gripper/medical,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
@@ -334,9 +334,11 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/stack/medical/bone_gel/cyborg,
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop,
 		/obj/item/sensor_device,
@@ -360,7 +362,7 @@
 		"Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinamed"),
 		"Eyebot" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "eyebotmed"),
 		"Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavymed"),
-		"Zoomba" = image(icon = 'icons/mob/robots.dmi', icon_state = "zoomba_med")
+		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakemedbox") 
 		)
 		var/list/L = list("Medihound" = "medihound", "Medihound Dark" = "medihounddark", "Vale" = "valemed")
 		for(var/a in L)
@@ -376,8 +378,6 @@
 	switch(med_borg_icon)
 		if("Default")
 			cyborg_base_icon = "medical"
-		if("Zoomba")
-			cyborg_base_icon = "zoomba_med"
 		if("Droid")
 			cyborg_base_icon = "medical"
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
@@ -423,6 +423,13 @@
 			moduleselect_icon = "medihound"
 			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
 			dogborg = TRUE
+		if("Drake")
+			cyborg_base_icon = "drakemed"
+			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakemedsleeper"
+			moduleselect_icon = "medihound"
+			moduleselect_alternate_icon = 'modular_citadel/icons/ui/screen_cyborg.dmi'
+			dogborg = TRUE
 		else
 			return FALSE
 	return ..()
@@ -444,7 +451,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/storage/part_replacer/cyborg,
-		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/combifan,
 		/obj/item/weapon/gripper,
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/geiger_counter/cyborg,
@@ -480,7 +487,7 @@
 		"Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinaeng"),
 		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "spidereng"),
 		"Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyeng"),
-		"Zoomba" = image(icon = 'icons/mob/robots.dmi', icon_state = "zoomba_engi")
+		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakeengbox") 
 		)
 		var/list/L = list("Pup Dozer" = "pupdozer", "Vale" = "valeeng")
 		for(var/a in L)
@@ -496,8 +503,6 @@
 	switch(engi_borg_icon)
 		if("Default")
 			cyborg_base_icon = "engineer"
-		if("Zoomba")
-			cyborg_base_icon = "zoomba_engi"
 		if("Default - Treads")
 			cyborg_base_icon = "engi-tread"
 			special_light_key = "engineer"
@@ -540,6 +545,11 @@
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			sleeper_overlay = "alinasleeper"
 			dogborg = TRUE
+		if("Drake")
+			cyborg_base_icon = "drakeeng"
+			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakesecsleeper"
+			dogborg = TRUE
 		else
 			return FALSE
 	return ..()
@@ -579,7 +589,7 @@
 		"Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinasec"),
 		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "spidersec"),
 		"Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavysec"),
-		"Zoomba" = image(icon = 'icons/mob/robots.dmi', icon_state = "zoomba_sec")
+		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakesecbox") 
 		)
 		var/list/L = list("K9" = "k9", "Vale" = "valesec", "K9 Dark" = "k9dark")
 		for(var/a in L)
@@ -595,8 +605,6 @@
 	switch(sec_borg_icon)
 		if("Default")
 			cyborg_base_icon = "sec"
-		if("Zoomba")
-			cyborg_base_icon = "zoomba_sec"
 		if("Default - Treads")
 			cyborg_base_icon = "sec-tread"
 			special_light_key = "sec"
@@ -636,6 +644,11 @@
 			cyborg_base_icon = "valesec"
 			sleeper_overlay = "valesecsleeper"
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
+			dogborg = TRUE
+		if("Drake")
+			cyborg_base_icon = "drakesec"
+			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakesecsleeper"
 			dogborg = TRUE
 		else
 			return FALSE
@@ -680,7 +693,8 @@
 	var/static/list/peace_icons = sortList(list(
 		"Default" = image(icon = 'icons/mob/robots.dmi', icon_state = "peace"),
 		"Borgi" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "borgi"),
-		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "whitespider")
+		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "whitespider"),
+		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakepeacebox") 
 		))
 	var/peace_borg_icon = show_radial_menu(R, R , peace_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(peace_borg_icon)
@@ -696,6 +710,11 @@
 			hat_offset = INFINITY
 			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 			has_snowflake_deadsprite = TRUE
+		if("Drake")
+			cyborg_base_icon = "drakepeace"
+			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakepeacesleeper"
+			dogborg = TRUE
 		else
 			return FALSE
 	return ..()
@@ -779,9 +798,8 @@
 		/obj/item/toy/crayon/spraycan/borg,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
-		/obj/item/rsf,
-		/obj/item/instrument/violin,
-		/obj/item/instrument/guitar,
+		/obj/item/rsf/cyborg,
+		/obj/item/instrument/piano_synth,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -836,7 +854,7 @@
 		"(Janitor) Sleek" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "sleekjan"),
 		"(Janitor) Can" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "canjan"),
 		"(Janitor) Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyjan"),
-		"Zoomba" = image(icon = 'icons/mob/robots.dmi', icon_state = "zoomba_jani")
+		"(Janitor) Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakejanitbox") 
 		)
 		var/list/L = list("(Service) DarkK9" = "k50", "(Service) Vale" = "valeserv", "(Service) ValeDark" = "valeservdark",
 						"(Janitor) Scrubpuppy" = "scrubpup")
@@ -851,8 +869,6 @@
 		service_icons = sortList(service_icons)
 	var/service_robot_icon = show_radial_menu(R, R , service_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(service_robot_icon)
-		if("Zoomba")
-			cyborg_base_icon = "zoomba_jani"
 		if("(Service) Waitress")
 			cyborg_base_icon = "service_f"
 			special_light_key = "service"
@@ -910,6 +926,11 @@
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			sleeper_overlay = "jsleeper"
 			dogborg = TRUE
+		if("(Janitor) Drake")
+			cyborg_base_icon = "drakejanit"
+			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakesecsleeper"
+			dogborg = TRUE
 		else
 			return FALSE
 	return ..()
@@ -956,7 +977,7 @@
 		"Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinamin"),
 		"Can" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "canmin"),
 		"Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavymin"),
-		"Zoomba" = image(icon = 'icons/mob/robots.dmi', icon_state = "zoomba_miner")
+		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakeminebox") 
 		)
 		var/list/L = list("Blade" = "blade", "Vale" = "valemine")
 		for(var/a in L)
@@ -1000,8 +1021,11 @@
 			cyborg_icon_override = 'modular_citadel/icons/mob/widerobot.dmi'
 			sleeper_overlay = "valeminesleeper"
 			dogborg = TRUE
-		if("Zoomba")
-			cyborg_base_icon = "zoomba_miner"
+		if("Drake")
+			cyborg_base_icon = "drakemine"
+			cyborg_icon_override = 'icons/mob/cyborg/drakemech.dmi'
+			sleeper_overlay = "drakeminesleeper"
+			dogborg = TRUE
 		else
 			return FALSE
 	return ..()
@@ -1051,6 +1075,8 @@
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
+		/obj/item/bonesetter,
+		/obj/item/stack/medical/bone_gel,
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/card/emag,

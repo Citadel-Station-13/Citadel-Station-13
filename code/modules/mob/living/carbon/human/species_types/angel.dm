@@ -2,13 +2,14 @@
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	no_equip = list(SLOT_BACK)
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	species_type = "human" //they're a kind of human
 
 	var/datum/action/innate/flight/fly
 

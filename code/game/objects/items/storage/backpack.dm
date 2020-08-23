@@ -369,6 +369,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
@@ -391,6 +392,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
@@ -485,6 +487,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
@@ -501,8 +504,8 @@
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
-	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
@@ -648,3 +651,9 @@ obj/item/storage/backpack/duffelbag/syndie/shredderbundle
 	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+
+/obj/item/storage/backpack/snail
+	name = "snail shell"
+	desc = "Worn by snails as armor and storage compartment."
+	icon_state = "snailshell"
+	item_state = "snailshell"

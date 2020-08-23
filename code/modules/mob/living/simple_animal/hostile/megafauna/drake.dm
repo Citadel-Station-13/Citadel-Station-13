@@ -4,6 +4,11 @@
 #define SWOOP_DAMAGEABLE 1
 #define SWOOP_INVULNERABLE 2
 
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_TEMP 500
+///used whenever the drake generates a hotspot
+#define DRAKE_FIRE_EXPOSURE 50
+
 /*
 
 ASH DRAKE
@@ -33,7 +38,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
-	threat = 30
 	health = 2500
 	maxHealth = 2500
 	spacewalk = TRUE
@@ -148,7 +152,7 @@ Difficulty: Medium
 			break
 		range--
 		new /obj/effect/hotspot(J)
-		J.hotspot_expose(700,50,1)
+		J.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 		for(var/mob/living/L in J.contents - hit_things)
 			if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 				continue
@@ -404,7 +408,7 @@ Difficulty: Medium
 		if(istype(T, /turf/closed))
 			break
 		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
 		for(var/mob/living/L in T.contents)
 			if(L in hit_list || L == source)
 				continue

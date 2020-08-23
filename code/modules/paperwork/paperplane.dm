@@ -123,6 +123,7 @@
 		H.DefaultCombatKnockdown(40)
 		H.emote("scream")
 
+
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"

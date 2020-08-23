@@ -80,11 +80,9 @@
 	foodtype = FRUIT
 	wine_power = 50
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	if(.)
-		return
-	if( ismob(loc) )
+	if(ishuman(loc))
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
 

@@ -77,10 +77,14 @@
 	description = "<span class='boldwarning'>Pull it out!</span>\n"
 	mood_change = -7
 
-/datum/mood_event/table
-	description = "<span class='warning'>Someone threw me on a table!</span>\n"
-	mood_change = -2
-	timeout = 2 MINUTES
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/table/add_effects()
 	if(ishuman(owner))
@@ -157,6 +161,11 @@
 	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
 	mood_change = -8
 	timeout = 3 MINUTES
+
+/datum/mood_event/gates_of_mansus
+	description = "<span class='boldwarning'>LIVING IN A PERFORMANCE IS WORSE THAN DEATH</span>\n"
+	mood_change = -25
+	timeout = 4 MINUTES
 
 //These are unused so far but I want to remember them to use them later
 
@@ -270,3 +279,13 @@
 	description = "<span class='warning'>I've produced better art than that from my ass.</span>\n"
 	mood_change = -2
 	timeout = 1200
+
+/datum/mood_event/tripped
+	description = "<span class='boldwarning'>I can't believe I fell for the oldest trick in the book!</span>\n"
+	mood_change = -6
+	timeout = 2 MINUTES
+
+/datum/mood_event/untied
+	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
+	mood_change = -3
+	timeout = 1 MINUTES

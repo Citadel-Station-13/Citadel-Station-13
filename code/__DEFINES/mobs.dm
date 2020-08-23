@@ -12,6 +12,8 @@
 #define MOVE_INTENT_RUN  "run"
 
 //Blood levels
+#define BLOOD_VOLUME_MAX_LETHAL		2150
+#define BLOOD_VOLUME_EXCESS			2100
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
@@ -57,6 +59,7 @@
 #define BODYPART_NOT_DISABLED 0
 #define BODYPART_DISABLED_DAMAGE 1
 #define BODYPART_DISABLED_PARALYSIS 2
+#define BODYPART_DISABLED_WOUND 3
 
 #define DEFAULT_BODYPART_ICON 'icons/mob/human_parts.dmi'
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
@@ -103,12 +106,14 @@
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
 #define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
-#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
+#define TRAUMA_RESILIENCE_WOUND 4    //Curable by healing the head wound
+#define TRAUMA_RESILIENCE_MAGIC 5      //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 6   //This is here to stay
 
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3
 #define TRAUMA_LIMIT_SURGERY 2
+#define TRAUMA_LIMIT_WOUND 2
 #define TRAUMA_LIMIT_LOBOTOMY 3
 #define TRAUMA_LIMIT_MAGIC 3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
@@ -170,6 +175,15 @@
 #define DISGUST_LEVEL_DISGUSTED 75
 #define DISGUST_LEVEL_VERYGROSS 50
 #define DISGUST_LEVEL_GROSS 25
+
+//Charge levels for Ethereals
+#define ETHEREAL_CHARGE_NONE 0
+#define ETHEREAL_CHARGE_LOWPOWER 20
+#define ETHEREAL_CHARGE_NORMAL 50
+#define ETHEREAL_CHARGE_ALMOSTFULL 75
+#define ETHEREAL_CHARGE_FULL 100
+#define ETHEREAL_CHARGE_OVERLOAD 125
+#define ETHEREAL_CHARGE_DANGEROUS 150
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -279,6 +293,7 @@
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
+#define	ETHEREAL_CHARGE_FACTOR	0.08 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -305,6 +320,7 @@
 #define GRAB_PIXEL_SHIFT_NECK 16
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define INTERACTING_WITH(X, Y) (Y in X.do_afters)
 
 /// Field of vision defines.
 #define FOV_90_DEGREES	90
@@ -316,3 +332,5 @@
 
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_TIME	1 SECONDS
+
+#define SILENCE_RANGED_MESSAGE (1<<0) 

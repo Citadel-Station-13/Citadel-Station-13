@@ -207,39 +207,11 @@
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
-/obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = NONE
-	invocation = "STI KALY"
-	invocation_type = "whisper"
-	message = "<span class='notice'>Your eyes cry out in pain!</span>"
-	cooldown_min = 50 //12 deciseconds reduction per rank
-
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
-
-	action_icon_state = "blind"
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
 	clothes_req = SPELL_CULT_GARB
 	charge_max = 5000
 	summon_amt = 2
-
-
-
-/obj/effect/proc_holder/spell/targeted/inflict_handler/blind
-	amt_eye_blind = 10
-	amt_eye_blurry = 20
-	sound = 'sound/magic/blind.ogg'
-
-/obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(BLINDMUT)
-	duration = 300
-	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
@@ -371,7 +343,7 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, SHOCK_ILLUSION)
+				M.electrocute_act(80, src, null, SHOCK_ILLUSION)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
