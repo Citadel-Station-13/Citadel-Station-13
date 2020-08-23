@@ -104,13 +104,8 @@ const setupApp = () => {
     'is-disabled': false,
     'pos': '0x0',
   });
-  // bad workaround for size.
-  const winget_output = Byond.winget('output');
-  if (winget_output["size"]) {
-    Byond.winset('browseroutput', {
-      'size': winget_output["size"],
-    });
-  }
+  // Absolutely shit workaround for chatbox visiblity.
+  based_winset();
 
   // Enable hot module reloading
   if (module.hot) {
@@ -128,6 +123,14 @@ const setupApp = () => {
       renderApp();
     });
   }
+};
+
+const based_winset = async (based_on_what = 'output') => {
+  // shitty workaround because winget is async.
+  const winget_output = await Byond.winget(based_on_what);
+  Byond.winset('browseroutput', {
+    'size': winget_output["size"],
+  });
 };
 
 setupApp();

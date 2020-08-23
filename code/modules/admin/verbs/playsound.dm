@@ -151,10 +151,28 @@
 				M = i
 				M?.client?.tgui_panel?.stop_music()
 			return
-
-		if(web_sound_input && !findtext(web_sound_input, GLOB.is_http_protocol))
-			to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
+		
+		var/list/music_extra_data = list()
+		web_sound_input = trim(web_sound_input)
+		if(web_sound_input && (findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol)))
+			to_chat(src, "<span class='boldwarning'>Non-http(s) URIs are not allowed.</span>", confidential = TRUE)
 			return
+
+		var/list/explode = splittext(web_sound_input, "/") //if url=="https://fixthisshit.com/pogchamp.ogg"then title="pogchamp.ogg"
+		var/title = "[explode[explode.len]]"
+
+		if(!findtext(title, ".mp3") && !findtext(title, ".mp4")) // IE sucks.
+			to_chat(src, "<span class='warning'>The format is not .mp3/.mp4, IE 8 and above can only support the .mp3/.mp4 format, the music might not play.</span>", confidential = TRUE)
+
+		music_extra_data["link"] = web_sound_input
+		music_extra_data["title"] = title
+
+		var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
+		switch(res)
+			if("Yes")
+				to_chat(world, "<span class='boldannounce'>An admin played: <a href=\"[web_sound_input]\">[title]</a></span>")
+			if("Cancel")
+				return
 
 		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
 		log_admin("[key_name(src)] played web sound: [web_sound_input]")
@@ -164,7 +182,7 @@
 			var/mob/M = m
 			var/client/C = M.client
 			if(C.prefs.toggles & SOUND_MIDI)
-				C.tgui_panel?.play_music(web_sound_input)
+				C.tgui_panel?.play_music(web_sound_input, music_extra_data)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manual Play Internet Sound")
 
