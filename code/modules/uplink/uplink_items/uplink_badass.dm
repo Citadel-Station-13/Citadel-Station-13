@@ -31,7 +31,7 @@
 
 /datum/uplink_item/badass/costumes/maid
 	name = "Maid Outfit"
-	desc = "Trick the crew into thinking you are here to clean their chambers, clean this sector of space from an NT station instead."
+	desc = "Trick the crew into thinking you are here to clean their chambers, clean this sector of space from their NT station instead."
 	item = /obj/item/storage/box/syndie_kit/maid_outfit
 
 /datum/uplink_item/badass/plastitanium_toolbox
