@@ -305,7 +305,7 @@
 	id = "rapidsyringe"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000)
-	build_path = /obj/item/gun/syringe/rapidsyringe
+	build_path = /obj/item/gun/syringe/rapidsyringe/nopin
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

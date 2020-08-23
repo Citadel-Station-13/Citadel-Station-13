@@ -69,6 +69,9 @@
 	icon_state = "rapidsyringegun"
 	max_syringes = 6
 
+/obj/item/gun/syringe/rapidsyringe/nopin
+	pin = null
+
 /obj/item/gun/syringe/syndicate
 	name = "dart pistol"
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
