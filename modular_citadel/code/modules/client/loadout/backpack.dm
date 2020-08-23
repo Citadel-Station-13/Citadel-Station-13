@@ -1,17 +1,17 @@
 /datum/gear/backpack
-	category = CATEGORY_BACKPACK
-	subcategory = SUBCATEGORY_BACKPACK_GENERAL
+	category = LOADOUT_CATEGORY_BACKPACK
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_GENERAL
 	slot = SLOT_IN_BACKPACK
 
 /datum/gear/backpack/plushbox
 	name = "Plushie Choice Box"
 	path = /obj/item/choice_beacon/box/plushie
-	subcategory = SUBCATEGORY_BACKPACK_TOYS
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 
 /datum/gear/backpack/tennis
 	name = "Classic Tennis Ball"
 	path = /obj/item/toy/tennis
-	subcategory = SUBCATEGORY_BACKPACK_TOYS
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 
 /datum/gear/backpack/tennis/red
 	name = "Red Tennis Ball"
@@ -40,12 +40,12 @@
 /datum/gear/backpack/dildo
 	name = "Customizable dildo"
 	path = /obj/item/dildo/custom
-	subcategory = SUBCATEGORY_BACKPACK_TOYS
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 
 /datum/gear/backpack/toykatana
 	name = "Toy Katana"
 	path = /obj/item/toy/katana
-	subcategory = SUBCATEGORY_BACKPACK_TOYS
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 	cost = 3
 
 /datum/gear/backpack/tapeplayer
@@ -63,7 +63,7 @@
 /datum/gear/backpack/crayons
 	name = "Box of crayons"
 	path = /obj/item/storage/crayons
-	subcategory = SUBCATEGORY_BACKPACK_TOYS
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 
 /datum/gear/backpack/multipen
 	name = "A multicolored pen"
@@ -98,3 +98,7 @@
 	name = "A diamond ring box"
 	path = /obj/item/storage/fancy/ringbox/diamond
 	cost = 5
+
+/datum/gear/backpack/necklace//this is here because loadout doesn't support proper accessories
+	name = "A renameable necklace"
+	path = /obj/item/clothing/accessory/necklace

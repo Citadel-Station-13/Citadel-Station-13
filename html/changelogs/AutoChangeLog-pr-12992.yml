@@ -1,7 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "You can now buy a toolbox's worth of Mosin-Nagant ammo for a fairly discounted price."
-  - rscadd: "Revolvers from the dedicated kit now have reskinning capabilities."
-  - bugfix: "You can now actually buy the riflery primer, which lets you pump shotguns and work the Mosin's bolt faster."
-  - imageadd: "Bulldog slug magazines now have a unique sprite."

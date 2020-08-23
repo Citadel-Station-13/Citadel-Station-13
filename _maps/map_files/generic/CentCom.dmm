@@ -13490,6 +13490,9 @@
 /obj/structure/table/wood,
 /obj/item/instrument/piano_synth,
 /obj/item/instrument/guitar,
+/obj/structure/sign/painting{
+	pixel_x = -32
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Fg" = (
@@ -13794,6 +13797,9 @@
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "FX" = (
+/obj/structure/sign/painting{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/stairs,
 /area/centcom/holding)
 "FZ" = (
@@ -14421,6 +14427,9 @@
 	dir = 8
 	},
 /obj/structure/musician/piano,
+/obj/structure/sign/painting{
+	pixel_x = -32
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Hk" = (
@@ -16225,6 +16234,12 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/structure/sign/painting{
+	pixel_x = -32
+	},
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "KU" = (
@@ -16303,6 +16318,14 @@
 /obj/item/storage/box/bodybags,
 /obj/item/storage/box/bodybags,
 /turf/open/floor/plasteel/white,
+/area/centcom/holding)
+"Ll" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXtwentythree,
+/turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Lm" = (
 /obj/machinery/shower{
@@ -16808,6 +16831,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
+"NA" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/nineteenXnineteen,
+/obj/item/canvas/nineteenXnineteen,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "NE" = (
 /obj/machinery/light{
 	dir = 4
@@ -16924,6 +16963,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/three)
+"On" = (
+/obj/structure/sign/painting{
+	pixel_x = 32
+	},
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "Op" = (
 /obj/structure/sink{
 	dir = 8;
@@ -17249,6 +17294,10 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/evac)
+"Qc" = (
+/obj/effect/landmark/mafia_game_area,
+/turf/open/space/basic,
+/area/space)
 "Qe" = (
 /turf/open/ai_visible,
 /area/ai_multicam_room)
@@ -17905,6 +17954,15 @@
 "TC" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
+/area/centcom/holding)
+"TD" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/sign/painting{
+	pixel_x = 32
+	},
+/turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "TF" = (
 /obj/effect/turf_decal/tile/red{
@@ -45453,8 +45511,8 @@ Nd
 AE
 CV
 Sd
-KT
-Sd
+Ll
+CV
 Sd
 Sd
 Sd
@@ -45710,7 +45768,7 @@ Nd
 QJ
 Sd
 Sd
-KT
+NA
 Sd
 Sd
 Sd
@@ -46222,8 +46280,8 @@ Fh
 Fh
 Wl
 Sd
-MR
-Sd
+TD
+On
 FX
 Sd
 Sd
@@ -58911,7 +58969,7 @@ aa
 aa
 aa
 aa
-aa
+Qc
 aa
 aa
 aa

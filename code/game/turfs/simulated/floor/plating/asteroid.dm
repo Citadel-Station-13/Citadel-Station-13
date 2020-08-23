@@ -149,6 +149,8 @@
 	var/list/megafauna_spawn_list
 	/// Flora that can spawn in the tunnel, weighted list
 	var/list/flora_spawn_list
+	//terrain to spawn weighted list
+	var/list/terrain_spawn_list
 	/// Turf type to choose when spawning in tunnel at 1% chance, weighted list
 	var/list/choose_turf_type
 	/// if the tunnel should keep being created
@@ -230,7 +232,8 @@
 		megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM)
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
-
+	if(!terrain_spawn_list)
+		terrain_spawn_list = list(/obj/structure/geyser/random = 1)
 	. = ..()
 	if(!has_data)
 		produce_tunnel_from_data()
@@ -334,7 +337,18 @@
 			spawned_flora = SpawnFlora(T)
 		if(!spawned_flora) // no rocks beneath mob spawners / mobs.
 			SpawnMonster(T)
+			SpawnTerrain(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
+
+/turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
+	if(prob(1))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
+			return
+		var/randumb = pickweight(terrain_spawn_list)
+		for(var/obj/structure/geyser/F in range(7, T))
+			if(istype(F, randumb))
+				return
+		new randumb(T)
 
 /// Spawns a random mob or megafauna in the tunnel
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)

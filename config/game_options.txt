@@ -116,6 +116,7 @@ CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
 CONTINUOUS BLOODSUCKER
+CONTINUOUS HERESY
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -445,6 +446,7 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 ROUNDSTART_RACES felinid
 ROUNDSTART_RACES dwarf
+ROUNDSTART_RACES ethereal
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly

@@ -1,5 +1,0 @@
-author: "Ludox235"
-delete-after: True
-changes: 
-  - rscdel: "Removed an abductee objective that told you to remove all oxygen."
-  - rscadd: "Added a new abductee objective to replace the removed one."

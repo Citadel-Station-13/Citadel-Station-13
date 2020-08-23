@@ -1,6 +1,6 @@
 /datum/gear/head
-	category = CATEGORY_HEAD
-	subcategory = SUBCATEGORY_HEAD_GENERAL
+	category = LOADOUT_CATEGORY_HEAD
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_GENERAL
 	slot = SLOT_HEAD
 
 /datum/gear/head/baseball
@@ -63,33 +63,33 @@
 /datum/gear/head/trekcap
 	name = "Federation Officer's Cap (White)"
 	path = /obj/item/clothing/head/caphat/formal/fedcover
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Captain","Head of Personnel")
 
 /datum/gear/head/trekcapcap
 	name = "Federation Officer's Cap (Black)"
 	path = /obj/item/clothing/head/caphat/formal/fedcover/black
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Captain","Head of Personnel")
 
 /datum/gear/head/trekcapmedisci
 	name = "Federation Officer's Cap (Blue)"
 	path = /obj/item/clothing/head/caphat/formal/fedcover/medsci
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer","Medical Doctor","Chemist","Virologist","Paramedic","Geneticist","Research Director","Scientist", "Roboticist")
 
 /datum/gear/head/trekcapeng
 	name = "Federation Officer's Cap (Yellow)"
 	path = /obj/item/clothing/head/caphat/formal/fedcover/eng
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
 /datum/gear/head/trekcapsec
 	name = "Federation Officer's Cap (Red)"
 	path = /obj/item/clothing/head/caphat/formal/fedcover/sec
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Engineering, Security, and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Warden","Detective","Security Officer","Head of Security","Cargo Technician", "Shaft Miner", "Quartermaster")
 
@@ -98,7 +98,7 @@
 	name = "Federation Kepi, command"
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi/command
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Heads of Staff"
 	restricted_roles = list("Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Research Director", "Chief Medical Officer", "Quartermaster")
 
@@ -106,7 +106,7 @@
 	name = "Federation Kepi, ops/sec"
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi/engsec
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Engineering, Security and Cargo"
 	restricted_roles = list("Chief Engineer", "Atmospheric Technician", "Station Engineer", "Warden", "Detective", "Security Officer", "Head of Security", "Cargo Technician", "Shaft Miner", "Quartermaster")
 
@@ -114,7 +114,7 @@
 	name = "Federation Kepi, medsci"
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi/medsci
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Medical and Science"
 	restricted_roles = list("Chief Medical Officer", "Medical Doctor", "Chemist", "Virologist", "Paramedic", "Geneticist", "Research Director", "Scientist", "Roboticist")
 
@@ -122,7 +122,7 @@
 	name = "Federation Kepi, service"
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi/service
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
 	restricted_roles = list("Assistant", "Bartender", "Botanist", "Cook", "Curator", "Janitor", "Chaplain")
 
@@ -130,7 +130,7 @@
 	name = "Federation Kepi, assistant"
 	description = "A visored cap. Intended to be used with ORV uniform."
 	path = /obj/item/clothing/head/kepi/orvi
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_roles = list("Assistant")
 
 /*Commenting out Until next Christmas or made automatic
@@ -165,7 +165,7 @@
 /datum/gear/head/cowboyhat/sec
 	name = "Cowboy Hat, Security"
 	path = /obj/item/clothing/head/cowboyhat/sec
-	subcategory = SUBCATEGORY_HEAD_JOBS
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
 	restricted_desc = "Security"
 	restricted_roles = list("Warden","Detective","Security Officer","Head of Security")
 

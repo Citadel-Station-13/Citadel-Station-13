@@ -18,6 +18,7 @@
 	var/canmove = TRUE
 	var/emulate_door_bumps = TRUE	//when bumping a door try to make occupants bump them to open them.
 	var/default_driver_move = TRUE	//handle driver movement instead of letting something else do it like riding datums.
+	var/enclosed = FALSE	// is the rider protected from bullets? assume no
 	var/list/autogrant_actions_passenger	//plain list of typepaths
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
@@ -166,3 +167,9 @@
 	if(trailer && .)
 		var/dir_to_move = get_dir(trailer.loc, newloc)
 		step(trailer, dir_to_move)
+
+/obj/vehicle/bullet_act(obj/item/projectile/Proj) //wrapper
+	if (!enclosed && length(occupants) && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit drivers
+		occupants[1].bullet_act(Proj) // driver dinkage
+		return BULLET_ACT_HIT
+	. = ..()

@@ -7,6 +7,7 @@
 	icon_state = "smoke0"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
+
 	var/efficiency = 10
 	var/on = FALSE
 	var/cooldown = 0
@@ -31,8 +32,17 @@
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
+	// AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
+
+/obj/machinery/smoke_machine/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/plumbing/simple_demand) //this SURELY	 CANT' LEAD TO BAD THINGS HAPPENING.
+
+/obj/machinery/smoke_machine/proc/can_be_rotated(mob/user, rotation_type)
+	return !anchored
 
 /obj/machinery/smoke_machine/update_icon_state()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
@@ -81,10 +91,9 @@
 	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
-		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
+		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this) //, transfered_by = user)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
-			log_combat(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
 			return
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
@@ -100,11 +109,10 @@
 	reagents.clear_reagents()
 	return ..()
 
-/obj/machinery/smoke_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/smoke_machine/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "SmokeMachine", name, 350, 350, master_ui, state)
+		ui = new(user, src, "SmokeMachine", name)
 		ui.open()
 
 /obj/machinery/smoke_machine/ui_data(mob/user)
