@@ -44,7 +44,7 @@
 	var/outrightfailchance = 1 //todo: document this shit
 	var/stepsdone = ""
 	var/rng = FALSE
-	var/itemqualitymax = 2
+	var/itemqualitymax = 20
 	var/list/smithrecipes = list(RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
 	RECIPE_SHOVEL = /obj/item/smithing/shovelhead,
@@ -185,6 +185,7 @@
 	desc = "WOW. A DEBUG <del>ITEM</DEL> STRUCTURE. EPIC."
 	icon_state = "anvil"
 	anvilquality = 10
+	itemqualitymax = 9001
 	outrightfailchance = 0
 
 /obj/structure/anvil/obtainable
