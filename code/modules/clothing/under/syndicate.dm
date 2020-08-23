@@ -114,3 +114,9 @@
 	name = "combat maid costume"
 	desc = "Maid for combat."
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+
+/obj/item/clothing/gloves/combat/evening
+	name = "combat evening gloves"
+	desc = "Not so thin, pretty gloves intended for use in combat maid attire. Insulated and fireproof."
+	icon_state = "evening"
+	item_state = "evening"
