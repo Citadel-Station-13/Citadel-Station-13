@@ -75,7 +75,6 @@
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
-	threat = 0.2
 	health = 30
 	maxHealth = 30
 	verb_say = "psychically pulses"
