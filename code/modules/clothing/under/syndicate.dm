@@ -110,3 +110,7 @@
 	alt_covers_chest = TRUE
 	mutantrace_variation = USE_TAUR_CLIP_MASK
 
+/obj/item/clothing/under/costume/maid/combat_maid
+	name = "combat maid costume"
+	desc = "Maid for combat."
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
