@@ -665,7 +665,7 @@ SUBSYSTEM_DEF(job)
 		message_admins(msg)
 		CRASH(msg)
 
-/datum/controller/subsystem/job/proc/equip_loadout(mob/dead/new_player/N, mob/living/M, equipbackpackstuff, bypass_prereqs = FALSE, force_equip = FALSE)
+/datum/controller/subsystem/job/proc/equip_loadout(mob/dead/new_player/N, mob/living/M, equipbackpackstuff, bypass_prereqs = FALSE)
 	var/mob/the_mob = N
 	if(!the_mob)
 		the_mob = M // cause this doesn't get assigned if player is a latejoiner
@@ -689,7 +689,7 @@ SUBSYSTEM_DEF(job)
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
-			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE, clothing_check = !force_equip)) // If the job's dresscode compliant, try to put it in its slot, first
+			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
 					var/obj/item/storage/backpack/B = C.back
