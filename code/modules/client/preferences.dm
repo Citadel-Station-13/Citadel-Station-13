@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon(current_tab != 2)
+	update_preview_icon(current_tab)
 	var/list/dat = list("<center>")
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
@@ -2544,6 +2544,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(custom_speech_verb != "default")
 		character.dna.species.say_mod = custom_speech_verb
 
+	//todo: make limb features copy to the person
 
 	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_COPIED_TO, src, icon_updates, roundstart_checks)
 
