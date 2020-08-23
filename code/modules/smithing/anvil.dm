@@ -11,8 +11,11 @@
 
 #define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
 #define RECIPE_SHORTSWORD "dff" //draw fold fold
+#define RECIPE_WAKI "dfsf" //draw shrink fold
 #define RECIPE_SCIMITAR "dfb" //draw fold bend
-#define RECIPE_BROADSWORD "dfufd" //draw fold upset fold draw
+#define RECIPE_SABRE "ddsf" //draw draw shrink fold
+#define RECIPE_RAPIER "sddf" //shrink draw draw fold
+#define RECIPE_BROADSWORD "dfuf" //draw fold upset fold
 #define RECIPE_ZWEIHANDER "udfsf" //upset draw fold shrink fold
 #define RECIPE_KATANA "fffff" //fold fold fold fold fold
 
@@ -50,6 +53,9 @@
 	RECIPE_SMALLPICK = /obj/item/smithing/prospectingpickhead,
 	RECIPE_SHORTSWORD = /obj/item/smithing/shortswordblade,
 	RECIPE_SCIMITAR = /obj/item/smithing/scimitarblade,
+	RECIPE_WAKI = /obj/item/smithing/wakiblade,
+	RECIPE_RAPIER = /obj/item/smithing/rapierblade,
+	RECIPE_SABRE = /obj/item/smithing/sabreblade,
 	RECIPE_SMALLKNIFE = /obj/item/smithing/knifeblade,
 	RECIPE_BROADSWORD = /obj/item/smithing/broadblade,
 	RECIPE_ZWEIHANDER = /obj/item/smithing/zweiblade,

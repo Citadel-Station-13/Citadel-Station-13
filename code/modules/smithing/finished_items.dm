@@ -9,7 +9,7 @@
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 10
+	force = 6
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	var/quality
@@ -31,6 +31,8 @@
 
 /obj/item/melee/smith/twohand
 	item_flags = NEEDS_PERMIT //it's a bigass sword/spear. beepsky is going to give you shit for it.
+	sharpness = SHARP_EDGED
+	force = 5
 	wielded_mult = 1.75
 	w_class = WEIGHT_CLASS_BULKY
 
@@ -49,6 +51,7 @@
 	desc = "A pickaxe that can sound rocks to find mineral deposits and stop gibtonite detonations."
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "pickaxe" //todo:sprite
+	sharpness = SHARP_POINTY//it doesnt have a blade it has a point
 
 /obj/item/mining_scanner/prospector/Initialize()
 	..()
@@ -65,6 +68,7 @@
 	desc = "A pickaxe."
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "pickaxe"
+	sharpness = SHARP_POINTY
 
 /obj/item/pickaxe/smithed/Initialize()
 	..()
@@ -81,6 +85,7 @@
 	desc = "A shovel."
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "shovel"
+	sharpness = SHARP_EDGED //it cuts through the earth
 
 /obj/item/shovel/smithed/Initialize()
 	..()
@@ -101,6 +106,7 @@
 /obj/item/melee/smith/twohand/halberd
 	name = "halberd"
 	icon_state = "halberd"
+	w_class = WEIGHT_CLASS_HUGE
 	overlay_state = "spearhandle"
 	slot_flags = ITEM_SLOT_BACK
 
@@ -114,6 +120,7 @@
 	overlay_state = "longhandle"
 	wielded_mult = 1.5
 	slot_flags = ITEM_SLOT_BACK
+	sharpness = SHARP_POINTY
 
 
 /obj/item/melee/smith/twohand/javelin/ComponentInitialize()
@@ -134,9 +141,11 @@
 /obj/item/melee/smith/twohand/pike
 	name = "pike"
 	icon_state = "pike"
+	w_class = WEIGHT_CLASS_HUGE
 	overlay_state = "longhandle"
 	reach = 2 //yeah ok
 	slot_flags = ITEM_SLOT_BACK
+	sharpness = SHARP_POINTY
 
 //////////////////////////
 //      Other Melee     //
@@ -162,16 +171,19 @@
 /obj/item/melee/smith/shortsword
 	name = "gladius"
 	item_flags = NEEDS_PERMIT
+	sharpness = SHARP_EDGED
 	icon_state = "gladius"
 	overlay_state = "gladiushilt"
 
 /obj/item/melee/smith/shortsword/scimitar
 	name = "scimitar"
+	sharpness = SHARP_EDGED
 	icon_state = "scimitar"
 	overlay_state = "scimitarhilt"
 
 /obj/item/melee/smith/wakizashi
 	name = "wakizashi"
+	sharpness = SHARP_EDGED
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
 	icon_state = "waki"
 	overlay_state = "wakihilt"
@@ -217,6 +229,7 @@
 /obj/item/melee/smith/sabre
 	name = "sabre"
 	icon_state = "sabre"
+	sharpness = SHARP_EDGED
 	overlay_state = "sabrehilt"
 	armour_penetration = 15
 	force = 9
@@ -227,8 +240,10 @@
 /obj/item/melee/smith/sabre/rapier
 	name = "rapier"
 	icon_state = "rapier"
+	sharpness = SHARP_EDGED
 	overlay_state = "rapierhilt"
 	force = 6 //less force, stronger parry
+	sharpness = SHARP_POINTY
 	armour_penetration = 30
 	block_parry_data = /datum/block_parry_data/smithrapier
 

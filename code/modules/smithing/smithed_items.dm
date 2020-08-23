@@ -256,6 +256,38 @@
 	finalitem.force += quality
 	..()
 
+/obj/item/smithing/wakiblade
+	name = "smithed wakizashi blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/wakizashi
+	icon_state = "waki"
+
+/obj/item/smithing/wakiblade/startfinish()
+	finalitem = new /obj/item/melee/smith/wakizashi(src)
+	finalitem.force += quality
+	..()
+
+/obj/item/smithing/sabreblade
+	name = "smithed sabre blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/sabre
+	icon_state = "sabre"
+
+/obj/item/smithing/sabrerblade/startfinish()
+	finalitem = new /obj/item/melee/smith/sabre(src)
+	finalitem.force += quality
+	..()
+
+/obj/item/smithing/rapierblade
+	name = "smithed rapier blade"
+	finishingitem = /obj/item/swordhandle
+	finalitem = /obj/item/melee/smith/sabre/rapier
+	icon_state = "rapier"
+
+/obj/item/smithing/rapierblade/startfinish()
+	finalitem = new /obj/item/melee/smith/sabre/rapier(src)
+	finalitem.force += quality
+	..()
 
 /obj/item/smithing/knifeblade
 	name = "smithed knife blade"
