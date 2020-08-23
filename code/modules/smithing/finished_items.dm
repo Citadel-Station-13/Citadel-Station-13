@@ -258,11 +258,11 @@
 
 /obj/item/melee/smith/hammer/narsie
 	name = "runemetal hammer"
-	custom_materials = list(datum/material/runedmetal = 12000)
+	custom_materials = list(/datum/material/runedmetal = 12000)
 	desc = "A metal hammer inscribed with geometeric runes."
 	qualitymod = 1
 
-/obj/item/melee/smith/hammer/narsie(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/smith/hammer/narsie/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
 		user.DefaultCombatKnockdown(100)
 		user.dropItemToGround(src, TRUE)
@@ -278,11 +278,11 @@
 
 /obj/item/melee/smith/hammer/ratvar
 	name = "brass hammer"
-	custom_materials = list(datum/material/bronze = 12000)
+	custom_materials = list(/datum/material/bronze = 12000)
 	desc = "A brass hammer inscribed with... writing? You can't read it."
 	qualitymod = 1
 
-/obj/item/melee/smith/hammer/ratvar(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/smith/hammer/ratvar/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_servant_of_ratvar(user))
 		user.DefaultCombatKnockdown(100)
 		user.dropItemToGround(src, TRUE)
