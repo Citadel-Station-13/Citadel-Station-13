@@ -305,7 +305,7 @@
 	finalitem.add_overlay(overlay)
 	if(finalitem.force < 0)
 		finalitem.force = 0
-	finalitem.MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	finalitem.material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	..()
 
 /obj/item/smithing/broadblade
