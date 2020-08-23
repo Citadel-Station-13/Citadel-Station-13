@@ -106,15 +106,15 @@
 	switch(stepdone)
 		if("weak hit")
 			currentsteps += 1
-			outrightfailchance += 10
+			outrightfailchance += 5
 			currentquality += 1
 		if("strong hit")
 			currentsteps += 2
-			outrightfailchance += 17.5
+			outrightfailchance += 9.5
 			currentquality += 2
 		if("heavy hit")
 			currentsteps += 3
-			outrightfailchance += 25
+			outrightfailchance += 12.5
 			currentquality += 3
 		if("fold")
 			stepsdone += "f"
@@ -146,7 +146,7 @@
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	if(currentsteps > 12 || (rng && prob(outrightfailchance)))
+	if(currentsteps > 10 || (rng && prob(outrightfailchance)))
 		to_chat(user, "You overwork the metal, causing it to turn into useless slag!")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE

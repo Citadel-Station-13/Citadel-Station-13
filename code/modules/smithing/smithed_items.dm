@@ -265,7 +265,15 @@
 
 /obj/item/smithing/knifehead/startfinish()
 	finalitem = new /obj/item/kitchen/knife(src)
-	finalitem.force += quality/2
+	finalitem.force = 4 + quality/2
+	finalitem.icon = 'icons/obj/smith.dmi'
+	finalitem.icon_state = "dagger"
+	var/mutable_appearance/overlay = mutable_appearance('icons/obj/smith.dmi', "daggerhilt")
+	overlay.appearance_flags = RESET_COLOR
+	finalitem.add_overlay(overlay)
+	if(finalitem.force < 0)
+		finalitem.force = 0
+	finalitem.MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	..()
 
 /obj/item/smithing/broadblade
