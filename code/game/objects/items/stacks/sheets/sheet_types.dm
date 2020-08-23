@@ -695,7 +695,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 
 	new/datum/stack_recipe("bronze ingot", /obj/item/ingot/bronze, 6, time = 100), \
 	new/datum/stack_recipe("bronze floor tiles", /obj/item/stack/tile/bronze, 1, 4, 20), \
-))
+)
 
 /obj/item/stack/sheet/bronze
 	name = "brass"
