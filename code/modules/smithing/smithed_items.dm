@@ -24,7 +24,7 @@
 
 /obj/item/ingot/on_attack_hand(mob/user)
 	var/mob/living/carbon/human/H
-	if(!workability == "shapeable")
+	if(!(workability == "shapeable"))
 		return ..()
 	var/prot = 0
 	if(ishuman(user))
