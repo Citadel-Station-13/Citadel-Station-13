@@ -11,7 +11,7 @@
 
 #define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
 #define RECIPE_SHORTSWORD "dff" //draw fold fold
-#define RECIPE_WAKI "dfsf" //draw shrink fold
+#define RECIPE_WAKI "dfsf" //draw  fold shrink fold
 #define RECIPE_SCIMITAR "dfb" //draw fold bend
 #define RECIPE_SABRE "ddsf" //draw draw shrink fold
 #define RECIPE_RAPIER "sdfd" //shrink draw  fold draw

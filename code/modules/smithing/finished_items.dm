@@ -50,8 +50,9 @@
 /obj/item/mining_scanner/prospector
 	name = "prospector's pickaxe"
 	desc = "A pickaxe that can sound rocks to find mineral deposits and stop gibtonite detonations."
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "pickaxe" //todo:sprite
+	icon_state = "minipick" //todo:sprite
 	sharpness = SHARP_POINTY//it doesnt have a blade it has a point
 
 /obj/item/mining_scanner/prospector/Initialize()
@@ -67,6 +68,7 @@
 /obj/item/pickaxe/smithed
 	name = "pickaxe"
 	desc = "A pickaxe."
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "pickaxe"
 	sharpness = SHARP_POINTY
@@ -81,10 +83,14 @@
 	if(force < 0)
 		force = 0
 
+/obj/item/pickaxe/smithed/attack_self(mob/user)
+		to_chat(user, "<span class='notice'>Tool does not have a configureable dig range.</span>")
+
 /obj/item/shovel/smithed
 	name = "shovel"
 	desc = "A shovel."
 	icon = 'icons/obj/smith.dmi'
+	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	icon_state = "shovel"
 	sharpness = SHARP_EDGED //it cuts through the earth
 
