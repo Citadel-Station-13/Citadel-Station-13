@@ -213,7 +213,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/paraplegic/on_spawn()
 	if(quirk_holder.client)
 		var/modified_limbs = quirk_holder.client.prefs.modified_limbs
-		if(!(modified_limbs[BODY_ZONE_L_LEG] == LOADOUT_LIMB_AMPUTATED && modified_limbs[BODY_ZONE_R_LEG] == LOADOUT_LIMB_AMPUTATED && !character.has_quirk(/datum/quirk/paraplegic) && !isjellyperson(character)))
+		if(!(modified_limbs[BODY_ZONE_L_LEG] == LOADOUT_LIMB_AMPUTATED && modified_limbs[BODY_ZONE_R_LEG] == LOADOUT_LIMB_AMPUTATED && !isjellyperson(quirk_holder)))
 			if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
 				quirk_holder.buckled.unbuckle_mob(quirk_holder)
 
