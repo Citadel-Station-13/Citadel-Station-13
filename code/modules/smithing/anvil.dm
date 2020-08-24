@@ -45,6 +45,7 @@
 	var/stepsdone = ""
 	var/rng = FALSE
 	var/debug = FALSE //vv this if you want an artifact
+	var/artifactrolled = FALSE
 	var/itemqualitymax = 20
 	var/list/smithrecipes = list(RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
@@ -163,13 +164,16 @@
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	var/artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
+	var/artifactchance = 0
+	if(!artifactrolled)
+		artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
+		artifactrolled = TRUE
 	var/artifact = max(prob(artifactchance), debug)
 	var/finalfailchance = outrightfailchance
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
 		finalfailchance = max(0, finalfailchance / skillmod) //lv 2 gives 20% less to fail, 3 30%, etc
-	if(currentsteps > 10 || (rng && prob(finalfailchance)) || !artifact)
+	if((currentsteps > 10 || (rng && prob(finalfailchance))) && !artifact)
 		to_chat(user, "<span class='warning'?You overwork the metal, causing it to turn into useless slag!</span>")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
@@ -178,6 +182,7 @@
 		stepsdone = ""
 		currentsteps = 0
 		outrightfailchance = 1
+		artifactrolled = FALSE
 		if(user.mind.skill_holder)
 			user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 25, 400, silent = FALSE)
 	for(var/i in smithrecipes)
@@ -199,6 +204,7 @@
 			stepsdone = ""
 			currentsteps = 0
 			outrightfailchance = 1
+			artifactrolled = FALSE
 			if(user.mind.skill_holder)
 				user.mind.auto_gain_experience(/datum/skill/level/dorfy/blacksmithing, 50, 10000000, silent = FALSE)
 			break
