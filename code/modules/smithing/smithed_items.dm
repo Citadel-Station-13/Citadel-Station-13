@@ -103,7 +103,7 @@
 			qualname = "shoddy"
 		if(-1000 to -1)
 			qualname =  "poor"
-		if(0)
+		if(-1 to 1)
 			qualname = "normal"
 		if(10 to INFINITY)
 			qualname = "legendary"
