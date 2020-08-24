@@ -3,15 +3,15 @@
 	name = "base class obj/item/melee/smith" //tin. handles overlay and quality and shit.
 	desc = "cringe"
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "mace_greyscale"
-	item_state = "mace_greyscale"
+	icon_state = "claymore"
+	item_state = "claymore"
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/quality
 	var/overlay_state = "stick"
 	var/mutable_appearance/overlay
