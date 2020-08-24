@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "wormhole jaunters work"
-  - tweak: "wormhole jaunters no longer get interference from bags of holding"
