@@ -197,7 +197,7 @@
 
 /obj/item/smithing/javelinhead/startfinish()
 	var/obj/item/melee/smith/twohand/javelin/finalforreal = new /obj/item/melee/smith/twohand/javelin(src)
-	finalforreal.force += *= 1+(quality/10)
+	finalforreal.force *= 1+(quality/10)
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalforreal.throwforce = finalforreal.force*2
