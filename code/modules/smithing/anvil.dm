@@ -163,7 +163,7 @@
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	var/artifactchance = (1+(get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
+	var/artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
 	var/artifact = max(prob(artifactchance), debug)
 	var/finalfailchance = outrightfailchance
 	if(user.mind.skill_holder)
