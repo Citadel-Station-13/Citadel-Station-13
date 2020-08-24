@@ -23,7 +23,7 @@
 	if(desc == "cringe")
 		desc = "A handmade [name]."
 	overlay = mutable_appearance(icon, overlay_state)
-	overlay.appearance_flags = RESET_COLOR
+	overlay.color = "FFFFFF"
 	add_overlay(overlay)
 	if(force < 0)
 		force = 0

@@ -101,7 +101,7 @@
 			qualname = "awful"
 		if(-1000 to -2)
 			qualname = "shoddy"
-		if(-1000 to 0)
+		if(-1000 to -1)
 			qualname =  "poor"
 		if(0)
 			qualname = "normal"
@@ -118,6 +118,7 @@
 	var/datum/material/mat = custom_materials[1]
 	mat = mat.name
 	finalitem.name = "[qualname] [mat] [finalitem.name]"
+	finalitem.desc = "A [qualname] [finalitem.name]."
 	finalitem.forceMove(get_turf(src))
 	qdel(src)
 
@@ -291,11 +292,13 @@
 	finalitem = /obj/item/kitchen/knife
 	icon_state = "dagger"
 
-/obj/item/smithing/knifehead/startfinish()
+/obj/item/smithing/knifeblade/startfinish()
 	finalitem = new /obj/item/kitchen/knife(src)
 	finalitem.force = 4 + quality/2
 	finalitem.icon = 'icons/obj/smith.dmi'
 	finalitem.icon_state = "dagger"
+	finalitem.name = "dagger"
+	finalitem.desc = "A dagger."
 	var/mutable_appearance/overlay = mutable_appearance('icons/obj/smith.dmi', "daggerhilt")
 	overlay.appearance_flags = RESET_COLOR
 	finalitem.add_overlay(overlay)

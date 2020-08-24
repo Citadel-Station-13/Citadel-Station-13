@@ -110,7 +110,11 @@
 	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
-	if(!do_after(user, 20, target = src))
+	var/steptime = 100
+	if(user.mind.skill_holder)
+		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
+		steptime = 100 / skillmod
+	if(!do_after(user, steptime, target = src))
 		return FALSE
 	switch(stepdone)
 		if("weak hit")
@@ -149,12 +153,20 @@
 			stepsdone += "u"
 			currentsteps += 1
 			currentquality -= 1
-	to_chat(user, "<span class='notice'>You [stepdone] the metal.</span>")
+	user.visible_message("<span class='notice'>[user] works the metal on the anvil with their hammer with a loud clang!</span>", \
+						"<span class='notice'>You [stepdone] the metal with a loud clang!</span>")
+	playsound(src, 'sound/effects/clang2.ogg',20, 2)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 20, 2), 15)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 20, 2), 30)
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	if(currentsteps > 10 || (rng && prob(outrightfailchance)))
+	var/finalfailchance = outrightfailchance
+	if(user.mind.skill_holder)
+		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
+		finalfailchance = max(0, finalfailchance / skillmod) //lv 2 gives 20% less to fail, 3 30%, etc
+	if(currentsteps > 10 || (rng && prob(finalfailchance)))
 		to_chat(user, "<span class='warning'?You overwork the metal, causing it to turn into useless slag!</span>")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
