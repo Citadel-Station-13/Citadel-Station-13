@@ -163,6 +163,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		)
 	var/custom_speech_verb = "default" //if your say_mod is to be something other than your races
 	var/custom_tongue = "default" //if your tongue is to be something other than your races
+	var/modified_limbs = list()
 
 	/// Security record note section
 	var/security_records
@@ -425,12 +426,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Gender:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			if(gender != NEUTER && pref_species.sexes)
 				dat += "<b>Body Model:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=body_model'>[features["body_model"] == MALE ? "Masculine" : "Feminine"]</a><BR>"
+			dat += "<b>Limb Modification:</b><BR>"
+			dat += "<a href='?_src_=prefs;preference=modify_limbs;task=input'>Modify Limbs</a><BR>"
+			for(var/modification in modified_limbs)
+				dat += "<b>[modification]: [modified_limbs[modification]]</b><BR>"
+			dat += "<BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
 			dat += "<b>Random Body:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=all;task=random'>Randomize!</A><BR>"
 			dat += "<b>Always Random Body:</b><a href='?_src_=prefs;preference=all'>[be_random_body ? "Yes" : "No"]</A><BR>"
 			dat += "<br><b>Cycle background:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cycle_bg;task=input'>[bgstate]</a><BR>"
-
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
 				dat += APPEARANCE_CATEGORY_COLUMN
@@ -1223,6 +1228,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
+	for(var/modification in modified_limbs)
+		if(modified_limbs[modification] == "Prosthetic")
+			return bal + 1 //max 1 point regardless of how many prosthetics
 	return bal
 
 /datum/preferences/proc/GetPositiveQuirkCount()
@@ -1474,6 +1482,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("cycle_bg")
 					bgstate = next_list_item(bgstate, bgstate_options)
+
+				if("modify_limbs")
+					var/limb_type = input(user, "Choose the limb to modify:", "Character Preference") as null|anything in LOADOUT_ALLOWED_LIMB_TARGETS
+					if(limb_type)
+						var/modification_type = input(user, "Choose the modification to the limb:", "Character Preference") as null|anything in LOADOUT_LIMBS
+						if(modification_type)
+							if(modification_type == LOADOUT_LIMB_PROSTHETIC)
+								var/number_of_prosthetics = 0
+								for(var/modification in modified_limbs)
+									if(modified_limbs[modification] == LOADOUT_LIMB_PROSTHETIC)
+										number_of_prosthetics += 1
+								if(number_of_prosthetics >= MAXIMUM_LOADOUT_PROSTHETICS)
+									to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
+									return
+							else
+								if(modification_type == LOADOUT_LIMB_NORMAL)
+									modified_limbs -= limb_type
+									ShowChoices(user)
+									return 1
+							modified_limbs[limb_type] = modification_type
 
 				if("underwear")
 					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
@@ -2544,6 +2572,27 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(custom_speech_verb != "default")
 		character.dna.species.say_mod = custom_speech_verb
 
+	//limb stuff
+	character.regenerate_limbs() //possible optimisation: check for changes before regenerating?
+	for(var/modified_limb in modified_limbs)
+		var/modification = modified_limbs[modified_limb]
+		var/obj/item/bodypart/old_part = character.get_bodypart(modified_limb)
+		if(modification == LOADOUT_LIMB_PROSTHETIC)
+			var/obj/item/bodypart/new_limb
+			switch(modified_limb)
+				if(BODY_ZONE_L_ARM)
+					new_limb = new/obj/item/bodypart/l_arm/robot/surplus(character)
+				if(BODY_ZONE_R_ARM)
+					new_limb = new/obj/item/bodypart/r_arm/robot/surplus(character)
+				if(BODY_ZONE_L_LEG)
+					new_limb = new/obj/item/bodypart/l_leg/robot/surplus(character)
+				if(BODY_ZONE_R_LEG)
+					new_limb = new/obj/item/bodypart/r_leg/robot/surplus(character)
+			new_limb.replace_limb(character)
+		qdel(old_part)
+
+	if(length(modified_limbs))
+		character.regenerate_icons()
 
 	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_COPIED_TO, src, icon_updates, roundstart_checks)
 
@@ -2551,6 +2600,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
+
+/datum/preferences/proc/post_copy_to(mob/living/carbon/human/character)
+	//if no legs, and not a paraplegic or a slime, give them a free wheelchair
+	if(modified_limbs[BODY_ZONE_L_LEG] == LOADOUT_LIMB_AMPUTATED && modified_limbs[BODY_ZONE_R_LEG] == LOADOUT_LIMB_AMPUTATED && !character.has_quirk(/datum/quirk/paraplegic) && !isjellyperson(character))
+		if(character.buckled)
+			character.buckled.unbuckle_mob(character)
+		var/turf/T = get_turf(character)
+		var/obj/structure/chair/spawn_chair = locate() in T
+		var/obj/vehicle/ridden/wheelchair/wheels = new(T)
+		if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
+			wheels.setDir(spawn_chair.dir)
+		wheels.buckle_mob(character)
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)
