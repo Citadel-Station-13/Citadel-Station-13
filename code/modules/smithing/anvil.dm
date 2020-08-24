@@ -44,6 +44,7 @@
 	var/outrightfailchance = 1 //todo: document this shit
 	var/stepsdone = ""
 	var/rng = FALSE
+	var/debug = FALSE //vv this if you want an artifact
 	var/itemqualitymax = 20
 	var/list/smithrecipes = list(RECIPE_HAMMER = /obj/item/smithing/hammerhead,
 	RECIPE_SCYTHE = /obj/item/smithing/scytheblade,
@@ -114,7 +115,7 @@
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
 		steptime = 100 / skillmod
-	playsound(src, 'sound/effects/clang2.ogg',20, 2)
+	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	if(!do_after(user, steptime, target = src))
 		return FALSE
 	switch(stepdone)
@@ -156,14 +157,14 @@
 			currentquality -= 1
 	user.visible_message("<span class='notice'>[user] works the metal on the anvil with their hammer with a loud clang!</span>", \
 						"<span class='notice'>You [stepdone] the metal with a loud clang!</span>")
-	playsound(src, 'sound/effects/clang2.ogg',20, 2)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 20, 2), 15)
+	playsound(src, 'sound/effects/clang2.ogg',40, 2)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 40, 2), 15)
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
-	var/artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
-	var/artifact = prob(artifactchance)
+	var/artifactchance = (1+(get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
+	var/artifact = max(prob(artifactchance), debug)
 	var/finalfailchance = outrightfailchance
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1

@@ -129,10 +129,10 @@
 
 
 /obj/item/smithing/proc/dwarfyartifact(var/obj/item/finalitem, var/mat)
-	var/finaldesc = "A [initial(finalitem.name)] made of [mat], all craftsmanship is of the highest quality. "
+	var/finaldesc = "A [initial(finalitem.name)] made of [mat], all craftsmanship is of the highest quality. It "
 	switch(pick(1,2,3,4,5))
 		if(1)
-			finaldesc += "It is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapiz lazuli")]."
+			finaldesc += "is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapiz lazuli")]."
 		if(2)
 			finaldesc += "is laced with studs of [pick("gold","silver","aluminium","titanium")]."
 		if(3)
@@ -140,7 +140,7 @@
 		if(4)
 			finaldesc += "menaces with spikes of [pick("ytterbium","uranium","white pearl","black steel")]."
 		if(5)
-			finaldesc += "It is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapiz lazuli")],laced with studs of [pick("gold","silver","aluminium","titanium")], encircled with bands of [pick("durasteel","metallic hydrogen","ferritic-alloy","plasteel","duranium")] and menaces with spikes of [pick("ytterbium","uranium","white pearl","black steel")]."
+			finaldesc += "is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapiz lazuli")],laced with studs of [pick("gold","silver","aluminium","titanium")], encircled with bands of [pick("durasteel","metallic hydrogen","ferritic-alloy","plasteel","duranium")] and menaces with spikes of [pick("ytterbium","uranium","white pearl","black steel")]."
 	finalitem.desc = finaldesc
 	finalitem.name = pick("Delersibnir", "Nekolangrir", "Zanoreshik","Öntakrítin", "Nogzatan", "Vunomam", "Nazushagsaldôbar", "Sergeb", "Zafaldastot", "Vudnis", "Dostust", "Shotom", "Mugshith", "Angzak", "Oltud", "Deleratîs", "Nökornomal") //one of these is literally BLOOD POOL CREATE.iirc its Nazushagsaldôbar.
 
@@ -347,7 +347,7 @@
 	name = "smithed zweihander blade"
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/melee/smith/twohand/zweihander
-	icon_state = "zweihander"
+	icon_state = "zwei"
 
 /obj/item/smithing/zweiblade/startfinish()
 	var/obj/item/melee/smith/twohand/zweihander/finalforreal = new /obj/item/melee/smith/twohand/zweihander(src)

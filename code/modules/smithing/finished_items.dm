@@ -220,7 +220,7 @@
 
 /obj/item/melee/smith/twohand/zweihander
 	name = "zweihander"
-	icon_state = "zweihander"
+	icon_state = "zwei"
 	overlay_state = "zweihilt"
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON * 2
 	force = 4
