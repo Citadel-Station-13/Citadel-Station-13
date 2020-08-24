@@ -5,6 +5,7 @@
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "mace_greyscale"
 	item_state = "mace_greyscale"
+	color = null
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
 	slot_flags = ITEM_SLOT_BELT
@@ -185,7 +186,7 @@
 /obj/item/melee/smith/wakizashi
 	name = "wakizashi"
 	sharpness = SHARP_EDGED
-	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
+	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY | UNIQUE_RENAME
 	icon_state = "waki"
 	overlay_state = "wakihilt"
 	block_parry_data = /datum/block_parry_data/waki
@@ -225,7 +226,7 @@
 	overlay_state = "katanahilt"
 	force = 7
 	wielded_mult = 2
-	item_flags = ITEM_CAN_PARRY | UNIQUE_RENAME //want to name your katana "DEMON BLADE" or some shit? go ahead, idiot.
+	item_flags = ITEM_CAN_PARRY | UNIQUE_RENAME | NEEDS_PERMIT //want to name your katana "DEMON BLADE" or some shit? go ahead, idiot.
 	block_parry_data = /datum/block_parry_data/captain_saber //todo
 
 /obj/item/melee/smith/sabre

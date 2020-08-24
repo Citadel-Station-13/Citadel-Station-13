@@ -117,8 +117,8 @@
 			qualname = "above-average"
 	var/datum/material/mat = custom_materials[1]
 	mat = mat.name
-	finalitem.name = "[qualname] [mat] [finalitem.name]"
-	finalitem.desc = "A [qualname] [finalitem.name]."
+	finalitem.name = "[qualname] [mat] [initial(finalitem.name)]"
+	finalitem.desc = "A [qualname] [initial(finalitem.name)]."
 	finalitem.forceMove(get_turf(src))
 	qdel(src)
 
@@ -248,7 +248,7 @@
 	finalitem = /obj/item/melee/smith/shortsword/scimitar
 	icon_state = "scimitar"
 
-/obj/item/smithing/shortswordblade/startfinish()
+/obj/item/smithing/scimitarblade/startfinish()
 	finalitem = new /obj/item/melee/smith/shortsword/scimitar(src)
 	finalitem.force += quality
 	..()

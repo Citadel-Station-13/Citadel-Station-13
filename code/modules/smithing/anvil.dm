@@ -114,6 +114,7 @@
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
 		steptime = 100 / skillmod
+	playsound(src, 'sound/effects/clang2.ogg',20, 2)
 	if(!do_after(user, steptime, target = src))
 		return FALSE
 	switch(stepdone)
@@ -157,7 +158,6 @@
 						"<span class='notice'>You [stepdone] the metal with a loud clang!</span>")
 	playsound(src, 'sound/effects/clang2.ogg',20, 2)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 20, 2), 15)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/clang2.ogg', 20, 2), 30)
 	if(length(stepsdone) >= 3)
 		tryfinish(user)
 
