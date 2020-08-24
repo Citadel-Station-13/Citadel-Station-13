@@ -330,13 +330,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/bokken/attack_self(mob/user)
 	harm = !harm
 	if(harm)
-		force -= 4
+		force -= stamina_damage_increment
 		damtype = BRUTE
 		attack_verb = list("bashed", "smashed", "attacked")
 		bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
 		wound_bonus = 0
 	else
-		force += 4
+		force += stamina_damage_increment
 		damtype = STAMINA
 		attack_verb = list("whacked", "smacked", "struck")
 		bare_wound_bonus = 0
