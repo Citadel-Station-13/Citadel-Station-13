@@ -169,7 +169,7 @@
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
 		finalfailchance = max(0, finalfailchance / skillmod) //lv 2 gives 20% less to fail, 3 30%, etc
-	if(currentsteps > 10 || (rng && prob(finalfailchance)) || artifact)
+	if(currentsteps > 10 || (rng && prob(finalfailchance)) || !artifact)
 		to_chat(user, "<span class='warning'?You overwork the metal, causing it to turn into useless slag!</span>")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
