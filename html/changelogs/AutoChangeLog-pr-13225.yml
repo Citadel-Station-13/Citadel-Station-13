@@ -1,0 +1,4 @@
+author: "raspy-on-osu"
+delete-after: True
+changes: 
+  - tweak: "Thermoelectric Generator power output"
