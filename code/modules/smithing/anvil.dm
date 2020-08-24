@@ -162,11 +162,13 @@
 		tryfinish(user)
 
 /obj/structure/anvil/proc/tryfinish(mob/user)
+	var/artifactchance = (1+(user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/4))/2500
+	var/artifact = prob(artifactchance)
 	var/finalfailchance = outrightfailchance
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
 		finalfailchance = max(0, finalfailchance / skillmod) //lv 2 gives 20% less to fail, 3 30%, etc
-	if(currentsteps > 10 || (rng && prob(finalfailchance)))
+	if(currentsteps > 10 || (rng && prob(finalfailchance)) || artifact)
 		to_chat(user, "<span class='warning'?You overwork the metal, causing it to turn into useless slag!</span>")
 		var/turf/T = get_turf(user)
 		workpiece_state = FALSE
@@ -183,8 +185,14 @@
 			var/obj/item/smithing/create = smithrecipes[stepsdone]
 			var/obj/item/smithing/finisheditem = new create(T)
 			to_chat(user, "You finish your [finisheditem]!")
+			if(artifact)
+				to_chat(user, "It is an artifact, a creation whose legacy shall live on forevermore.") //todo: SSblackbox
+				currentquality = max(currentquality, 2)
+				finisheditem.quality = currentquality * 3//this is insane i know it's 1/2500 for most of the time and 0.8% at best
+				finisheditem.artifact = TRUE
+			else
+				finisheditem.quality = min(currentquality, itemqualitymax)
 			workpiece_state = FALSE
-			finisheditem.quality = min(currentquality, itemqualitymax)
 			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = anvilquality
 			stepsdone = ""

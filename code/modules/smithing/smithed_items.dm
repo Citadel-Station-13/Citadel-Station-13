@@ -13,6 +13,7 @@
 	var/quality = 0 //quality. Changed by the smithing process.
 	var/obj/item/finishingitem = /obj/item/stick //What this item needs to be hit by to create finalitem
 	var/obj/item/finalitem
+	var/artifact = FALSE
 
 /obj/item/ingot
 	name = "ingot"
@@ -118,10 +119,30 @@
 	var/datum/material/mat = custom_materials[1]
 	finalitem.set_custom_materials(custom_materials)
 	mat = mat.name
-	finalitem.name = "[qualname] [mat] [initial(finalitem.name)]"
-	finalitem.desc = "A [qualname] [initial(finalitem.name)]."
+	if(artifact)
+		dwarfyartifact(finalitem, mat)
+	else
+		finalitem.name = "[qualname] [mat] [initial(finalitem.name)]"
+		finalitem.desc = "A [qualname] [initial(finalitem.name)]."
 	finalitem.forceMove(get_turf(src))
 	qdel(src)
+
+
+/obj/item/smithing/proc/dwarfyartifact(var/obj/item/finalitem, var/mat)
+	var/finaldesc = "A [initial(finalitem.name)] made of [mat], all craftsmanship is of the highest quality. "
+	switch(pick(1,2,3,4,5))
+		if(1)
+			finaldesc += "It is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapiz lazuli")]."
+		if(2)
+			finaldesc += "is laced with studs of [pick("gold","silver","aluminium","titanium")]."
+		if(3)
+			finaldesc += "is encircled with bands of [pick("durasteel","metallic hydrogen","ferritic-alloy","plasteel","duranium")]."
+		if(4)
+			finaldesc += "menaces with spikes of [pick("ytterbium","uranium","white pearl","black steel")]."
+		if(5)
+			finaldesc += "It is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapiz lazuli")],laced with studs of [pick("gold","silver","aluminium","titanium")], encircled with bands of [pick("durasteel","metallic hydrogen","ferritic-alloy","plasteel","duranium")] and menaces with spikes of [pick("ytterbium","uranium","white pearl","black steel")]."
+	finalitem.desc = finaldesc
+	finalitem.name = pick("Delersibnir", "Nekolangrir", "Zanoreshik","Öntakrítin", "Nogzatan", "Vunomam", "Nazushagsaldôbar", "Sergeb", "Zafaldastot", "Vudnis", "Dostust", "Shotom", "Mugshith", "Angzak", "Oltud", "Deleratîs", "Nökornomal") //one of these is literally BLOOD POOL CREATE.iirc its Nazushagsaldôbar.
 
 /obj/item/smithing/hammerhead
 	name = "smithed hammer head"
