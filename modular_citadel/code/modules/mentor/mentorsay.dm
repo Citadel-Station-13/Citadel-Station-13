@@ -16,4 +16,4 @@
 		msg = "<span class='mentorsay_admin filter_MSAY'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
 	else
 		msg = "<span class='mentorsay filter_MSAY'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
-	to_chat(GLOB.admins | GLOB.mentors, msg)
+	to_chat(GLOB.admins | GLOB.mentors, msg, confidential = TRUE)

@@ -164,15 +164,10 @@
 		if(!findtext(title, ".mp3") && !findtext(title, ".mp4")) // IE sucks.
 			to_chat(src, "<span class='warning'>The format is not .mp3/.mp4, IE 8 and above can only support the .mp3/.mp4 format, the music might not play.</span>", confidential = TRUE)
 
-		music_extra_data["link"] = web_sound_input
-		music_extra_data["title"] = title
+		if(title.len > 50) //kev no.
+			title = "Unknown.mp3"
 
-		var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
-		switch(res)
-			if("Yes")
-				to_chat(world, "<span class='boldannounce'>An admin played: <a href=\"[web_sound_input]\">[title]</a></span>")
-			if("Cancel")
-				return
+		music_extra_data["title"] = title
 
 		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
 		log_admin("[key_name(src)] played web sound: [web_sound_input]")
