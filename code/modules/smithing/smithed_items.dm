@@ -116,6 +116,7 @@
 		if(1,2,3)
 			qualname = "above-average"
 	var/datum/material/mat = custom_materials[1]
+	finalitem.set_custom_materials(custom_materials)
 	mat = mat.name
 	finalitem.name = "[qualname] [mat] [initial(finalitem.name)]"
 	finalitem.desc = "A [qualname] [initial(finalitem.name)]."

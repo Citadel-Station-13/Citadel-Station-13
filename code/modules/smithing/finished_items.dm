@@ -5,7 +5,6 @@
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "mace_greyscale"
 	item_state = "mace_greyscale"
-	color = null
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON //yeah ok
 	slot_flags = ITEM_SLOT_BELT
@@ -24,7 +23,7 @@
 	if(desc == "cringe")
 		desc = "A handmade [name]."
 	overlay = mutable_appearance(icon, overlay_state)
-	overlay.color = "FFFFFF"
+	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
 	if(force < 0)
 		force = 0
