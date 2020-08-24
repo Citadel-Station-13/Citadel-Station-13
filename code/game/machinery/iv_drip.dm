@@ -240,7 +240,7 @@
 
 /obj/machinery/iv_drip/telescopic
 	name = "telescopic IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down.Alt-Click with a beaker attached to change the transfer rate."
 	icon_state = "iv_drip"
 
 /obj/machinery/iv_drip/telescopic/update_icon_state()
