@@ -21,12 +21,21 @@
 	desc = "An expensive ring, studded with a diamond. Cultures have used these rings in courtship for a millenia."
 	icon_state = "ringdiamond"
 	item_state = "dring"
-	
+
 /obj/item/clothing/gloves/ring/diamond/attack_self(mob/user)
 	user.visible_message("<span class='warning'>\The [user] gets down on one knee, presenting \the [src].</span>","<span class='warning'>You get down on one knee, presenting \the [src].</span>")
 
 /obj/item/clothing/gloves/ring/silver
 	name = "silver ring"
 	desc = "A tiny silver ring, sized to wrap around a finger."
+	icon_state = "ringsilver"
+	item_state = "sring"
+
+/obj/item/clothing/gloves/ring/custom
+	name = "ring"
+	desc = "A ring."
+	gender = NEUTER
+	w_class = WEIGHT_CLASS_TINY
+	obj_flags = UNIQUE_RENAME
 	icon_state = "ringsilver"
 	item_state = "sring"

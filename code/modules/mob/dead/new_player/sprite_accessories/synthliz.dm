@@ -1,24 +1,24 @@
 //Synth snouts (This is the most important part)
-/datum/sprite_accessory/mam_snouts/synthliz
+/datum/sprite_accessory/snouts/mam_snouts/synthliz
 	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_snouts.dmi'
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard - Snout"
 	icon_state = "synthliz_basic"
 
-/datum/sprite_accessory/mam_snouts/synthliz/synthliz_under
+/datum/sprite_accessory/snouts/mam_snouts/synthliz/synthliz_under
 	icon = 'modular_citadel/icons/mob/synthliz_snouts.dmi'
 	color_src = MATRIXED
 	name = "Synthetic Lizard - Snout Under"
 	icon_state = "synthliz_under"
 
-/datum/sprite_accessory/mam_snouts/synthliz/synthliz_tert
+/datum/sprite_accessory/snouts/mam_snouts/synthliz/synthliz_tert
 	icon = 'modular_citadel/icons/mob/synthliz_snouts.dmi'
 	color_src = MATRIXED
 	name = "Synthetic Lizard - Snout Tertiary"
 	icon_state = "synthliz_tert"
 
-/datum/sprite_accessory/mam_snouts/synthliz/synthliz_tertunder
+/datum/sprite_accessory/snouts/mam_snouts/synthliz/synthliz_tertunder
 	icon = 'modular_citadel/icons/mob/synthliz_snouts.dmi'
 	color_src = MATRIXED
 	name = "Synthetic Lizard - Snout Tertiary Under"
@@ -42,14 +42,14 @@
 	icon_state = "synthlizpecslight"
 
 //Synth tails
-/datum/sprite_accessory/mam_tails/synthliz
+/datum/sprite_accessory/tails/mam_tails/synthliz
 	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_tails.dmi'
 	color_src = MUTCOLORS
 	name = "Synthetic Lizard"
 	icon_state = "synthliz"
 
-/datum/sprite_accessory/mam_tails_animated/synthliz
+/datum/sprite_accessory/tails_animated/mam_tails_animated/synthliz
 	recommended_species = list("synthliz")
 	icon = 'modular_citadel/icons/mob/synthliz_tails.dmi'
 	color_src = MUTCOLORS

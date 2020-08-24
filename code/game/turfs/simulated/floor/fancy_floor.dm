@@ -63,6 +63,11 @@
 				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
 
+/turf/open/floor/wood/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
+
 /turf/open/floor/wood/cold
 	temperature = 255.37
 

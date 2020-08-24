@@ -37,7 +37,6 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "hierophant"
 	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
-	threat = 30
 	health = 2500
 	maxHealth = 2500
 	attack_verb_continuous = "clubs"

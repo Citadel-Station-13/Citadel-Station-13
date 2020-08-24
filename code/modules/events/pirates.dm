@@ -25,7 +25,7 @@
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce(fake)
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
+	priority_announce("A business proposition has been downloaded and printed out at all communication consoles.", "Incoming Business Proposition", "commandreport")
 	if(fake)
 		return
 	threat_message = new
@@ -49,6 +49,7 @@
 			else
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
+		priority_announce("You won't listen to reason? Then we'll take what's yours or die trying!",sender_override = ship_name)
 		spawn_shuttle()
 
 /datum/round_event/pirates/start()
@@ -83,8 +84,7 @@
 				announce_to_ghosts(M)
 			else
 				announce_to_ghosts(spawner)
-
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
+	priority_announce("Unidentified ship detected near the station.")
 
 //Shuttle equipment
 
@@ -95,14 +95,11 @@
 	icon_state = "dominator"
 	density = TRUE
 	var/active = FALSE
-	var/obj/item/gps/gps
 	var/credits_stored = 0
 	var/siphon_per_tick = 5
 
 /obj/machinery/shuttle_scrambler/Initialize(mapload)
 	. = ..()
-	gps = new/obj/item/gps/internal/pirate(src)
-	gps.tracking = FALSE
 	update_icon()
 
 /obj/machinery/shuttle_scrambler/process()
@@ -112,6 +109,7 @@
 			if(D)
 				var/siphoned = min(D.account_balance,siphon_per_tick)
 				D.adjust_money(-siphoned)
+				credits_stored += siphoned
 			interrupt_research()
 		else
 			return
@@ -120,7 +118,7 @@
 
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
-	gps.tracking = TRUE
+	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
 	to_chat(user,"<span class='notice'>You toggle [src] [active ? "on":"off"].</span>")
 	to_chat(user,"<span class='warning'>The scrambling signal can be now tracked by GPS.</span>")
@@ -130,7 +128,7 @@
 	if(!active)
 		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
 			return
-		if(active || !user.canUseTopic(src))
+		if(active || !user.canUseTopic(src, BE_CLOSE))
 			return
 		toggle_on(user)
 		update_icon()
@@ -147,34 +145,30 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	new /obj/item/holochip(drop_location(), credits_stored)
-	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-	credits_stored = 0
+	if(credits_stored)	// Prevents spamming empty holochips
+		new /obj/item/holochip(drop_location(), credits_stored)
+		to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+		credits_stored = 0
+	else
+		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
 
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)
-	gps.tracking = FALSE
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_overlays()
-	. = ..()
+/obj/machinery/shuttle_scrambler/update_icon_state()
 	if(active)
-		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
-		M.color = "#00FFFF"
-		. += M
+		icon_state = "dominator-blue"
+	else
+		icon_state = "dominator"
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
-	QDEL_NULL(gps)
 	return ..()
-
-/obj/item/gps/internal/pirate
-	gpstag = "Nautical Signal"
-	desc = "You can hear shanties over the static."
 
 /obj/machinery/computer/shuttle/pirate
 	name = "pirate shuttle console"
@@ -312,11 +306,10 @@
 	else
 		pad = locate() in range(4,src)
 
-/obj/machinery/computer/piratepad_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/piratepad_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "CargoHoldTerminal", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "CargoHoldTerminal", name)
 		ui.open()
 
 /obj/machinery/computer/piratepad_control/ui_data(mob/user)

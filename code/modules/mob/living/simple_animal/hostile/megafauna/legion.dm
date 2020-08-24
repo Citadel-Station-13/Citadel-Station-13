@@ -18,7 +18,6 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-	threat = 30
 	health = 800
 	maxHealth = 800
 	spacewalk = TRUE

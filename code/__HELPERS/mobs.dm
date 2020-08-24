@@ -93,16 +93,16 @@
 	if(!GLOB.mam_body_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
 	if(!GLOB.mam_tails_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/mam_tails, GLOB.mam_tails_list)
 	if(!GLOB.mam_ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears/mam_ears, GLOB.mam_ears_list)
 	if(!GLOB.mam_snouts_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_snouts, GLOB.mam_snouts_list)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts/mam_snouts, GLOB.mam_snouts_list)
 
 	//snowflake check so people's ckey features don't get randomly put on unmonkeys/spawns
 	var/list/snowflake_mam_tails_list = list()
 	for(var/mtpath in GLOB.mam_tails_list)
-		var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[mtpath]
+		var/datum/sprite_accessory/tails/mam_tails/instance = GLOB.mam_tails_list[mtpath]
 		if(istype(instance, /datum/sprite_accessory))
 			var/datum/sprite_accessory/S = instance
 			if(intendedspecies && S.recommended_species && !S.recommended_species.Find(intendedspecies))
@@ -120,7 +120,7 @@
 				snowflake_markings_list[S.name] = mmpath
 	var/list/snowflake_ears_list = list()
 	for(var/mepath in GLOB.mam_ears_list)
-		var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[mepath]
+		var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[mepath]
 		if(istype(instance, /datum/sprite_accessory))
 			var/datum/sprite_accessory/S = instance
 			if(intendedspecies && S.recommended_species && !S.recommended_species.Find(intendedspecies))
@@ -129,7 +129,7 @@
 				snowflake_ears_list[S.name] = mepath
 	var/list/snowflake_mam_snouts_list = list()
 	for(var/mspath in GLOB.mam_snouts_list)
-		var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[mspath]
+		var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.mam_snouts_list[mspath]
 		if(istype(instance, /datum/sprite_accessory))
 			var/datum/sprite_accessory/S = instance
 			if(intendedspecies && S.recommended_species && !S.recommended_species.Find(intendedspecies))
@@ -138,7 +138,7 @@
 				snowflake_mam_snouts_list[S.name] = mspath
 	var/list/snowflake_ipc_antenna_list = list()
 	for(var/mspath in GLOB.ipc_antennas_list)
-		var/datum/sprite_accessory/mam_snouts/instance = GLOB.ipc_antennas_list[mspath]
+		var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.ipc_antennas_list[mspath]
 		if(istype(instance, /datum/sprite_accessory))
 			var/datum/sprite_accessory/S = instance
 			if(intendedspecies && S.recommended_species && !S.recommended_species.Find(intendedspecies))
@@ -260,6 +260,13 @@
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
 
 		if(!findname(.))
 			break
