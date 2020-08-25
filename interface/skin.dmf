@@ -208,7 +208,7 @@ window "outputwindow"
 		anchor2 = none
 		saved-params = "is-checked"
 		text = "Chat"
-		command = ".winset \"say.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
 		is-flat = true
 		button-type = pushbox
 	elem "browseroutput"
