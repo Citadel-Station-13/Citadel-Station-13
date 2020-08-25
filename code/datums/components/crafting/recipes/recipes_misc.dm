@@ -119,7 +119,7 @@
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 	always_availible = FALSE	// Disabled til learned
-	
+
 /datum/crafting_recipe/furnace
 	name = "Sandstone Furnace"
 	result = /obj/structure/furnace
@@ -422,7 +422,6 @@
 	name = "Stick"
 	time = 30
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1)
-	tools = list(/obj/item/hatchet)
 	result = /obj/item/stick
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
@@ -432,7 +431,6 @@
 	name = "Sword Hilt"
 	time = 30
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
-	tools = list(/obj/item/hatchet)
 	result = /obj/item/swordhandle
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
