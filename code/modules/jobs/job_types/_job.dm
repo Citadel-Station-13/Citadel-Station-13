@@ -80,6 +80,8 @@
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+	if(/datum/quirk/paraplegic in blacklisted_quirks)
+		H.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
