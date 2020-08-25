@@ -108,13 +108,13 @@
 			qualname = "normal"
 		if(10 to INFINITY)
 			qualname = "legendary"
-		if(8,9)
+		if(7.5 to 10)
 			qualname = "masterwork"
-		if(6,7)
+		if(5.5 to 7.5)
 			qualname = "excellent"
-		if(4,5)
+		if(3.5 to 5.5)
 			qualname = "good"
-		if(1,2,3)
+		if(0 to 3.5)
 			qualname = "above-average"
 	var/datum/material/mat = custom_materials[1]
 	finalitem.set_custom_materials(custom_materials)
@@ -123,7 +123,7 @@
 		dwarfyartifact(finalitem, mat)
 	else
 		finalitem.name = "[qualname] [mat] [initial(finalitem.name)]"
-		finalitem.desc = "A [qualname] [initial(finalitem.name)]."
+		finalitem.desc = "A [qualname] [initial(finalitem.name)]. Its quality is [quality]."
 	finalitem.forceMove(get_turf(src))
 	qdel(src)
 
@@ -176,8 +176,10 @@
 /obj/item/smithing/shovelhead/startfinish()
 	finalitem = new /obj/item/shovel/smithed(src)
 	finalitem.force *= 1+(quality/20)
-	if(quality)
+	if(quality > 0)
 		finalitem.toolspeed /= quality
+	else
+		finalitem.toolspeed *= (quality * -1)
 	..()
 
 /obj/item/smithing/cogheadclubhead
@@ -226,8 +228,10 @@
 /obj/item/smithing/pickaxehead/startfinish()
 	var/obj/item/pickaxe/smithed/finalforreal = new /obj/item/pickaxe/smithed(src)
 	finalforreal.force *= 1+(quality/20)
-	if(quality)
+	if(quality > 0)
 		finalforreal.toolspeed /= quality
+	else
+		finalforreal.toolspeed *= (quality * -1)
 	switch(quality)
 		if(10 to INFINITY)
 			finalforreal.digrange = 4
@@ -235,6 +239,8 @@
 			finalforreal.digrange = 3
 		if(3,4)
 			finalforreal.digrange = 2
+		else
+			finalforreal.digrange = 1
 	finalitem = finalforreal
 	..()
 
