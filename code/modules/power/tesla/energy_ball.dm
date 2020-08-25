@@ -91,6 +91,7 @@
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
+	contained=0
 	var/move_bias = pick(GLOB.alldirs)
 	var/move_dir
 	for(var/rod in GLOB.grounding_rods) // grounding rods pull the tesla ball, picks the nearest one
@@ -110,6 +111,8 @@
 			setDir(move_dir)
 			for(var/mob/living/carbon/C in loc)
 				dust_mobs(C)
+		else
+			contained=1
 
 
 /obj/singularity/energy_ball/proc/handle_energy()
