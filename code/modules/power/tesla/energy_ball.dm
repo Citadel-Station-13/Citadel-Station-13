@@ -96,7 +96,7 @@
 	var/rods = GLOB.grounding_rods
 	if(rods) // grounding rods pull the tesla ball, picks the nearest one
 		for(var/rod in rods) 
-			if(!rodtarget)
+			if(!rodtarget || get_dist(src,rod)<get_dist(src,rodtarget))
 				rodtarget=rod
 			
 			if(get_dist(src,rod)<get_dist(src,rodtarget))
