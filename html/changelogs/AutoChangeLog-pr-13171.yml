@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "hierophant vortex blasts now have 50% armor penetration vs mecha"
