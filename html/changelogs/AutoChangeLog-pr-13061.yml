@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "ventcrawling now kicks off every attached/buckled mob, even for non humans."
