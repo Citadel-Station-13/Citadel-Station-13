@@ -151,7 +151,7 @@
 
 /obj/item/smithing/hammerhead/startfinish()
 	var/obj/item/melee/smith/hammer/finalforreal = new /obj/item/melee/smith/hammer(src)
-	finalforreal.force *= 1+(quality/15)
+	finalforreal.force += quality/2
 	finalforreal.qualitymod = quality/4
 	finalitem = finalforreal
 	..()
@@ -165,7 +165,7 @@
 
 /obj/item/smithing/scytheblade/startfinish()
 	finalitem = new /obj/item/scythe/smithed(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/shovelhead
@@ -175,7 +175,7 @@
 
 /obj/item/smithing/shovelhead/startfinish()
 	finalitem = new /obj/item/shovel/smithed(src)
-	finalitem.force *= 1+(quality/20)
+	finalitem.force += quality/2
 	if(quality > 0)
 		finalitem.toolspeed /= quality
 	else
@@ -189,7 +189,7 @@
 
 /obj/item/smithing/cogheadclubhead/startfinish()
 	finalitem = new /obj/item/melee/smith/cogheadclub(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/javelinhead
@@ -199,7 +199,7 @@
 
 /obj/item/smithing/javelinhead/startfinish()
 	var/obj/item/melee/smith/twohand/javelin/finalforreal = new /obj/item/melee/smith/twohand/javelin(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalforreal.throwforce = finalforreal.force*2
@@ -213,7 +213,7 @@
 
 /obj/item/smithing/pikehead/startfinish()
 	var/obj/item/melee/smith/twohand/pike/finalforreal = new /obj/item/melee/smith/twohand/pike(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalforreal.throwforce = finalforreal.force/10 //its a pike not a javelin
@@ -227,7 +227,7 @@
 
 /obj/item/smithing/pickaxehead/startfinish()
 	var/obj/item/pickaxe/smithed/finalforreal = new /obj/item/pickaxe/smithed(src)
-	finalforreal.force *= 1+(quality/20)
+	finalforreal.force += quality/2
 	if(quality > 0)
 		finalforreal.toolspeed /= quality
 	else
@@ -267,7 +267,7 @@
 
 /obj/item/smithing/shortswordblade/startfinish()
 	finalitem = new /obj/item/melee/smith/shortsword(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/scimitarblade
@@ -278,7 +278,7 @@
 
 /obj/item/smithing/scimitarblade/startfinish()
 	finalitem = new /obj/item/melee/smith/shortsword/scimitar(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/wakiblade
@@ -289,7 +289,7 @@
 
 /obj/item/smithing/wakiblade/startfinish()
 	finalitem = new /obj/item/melee/smith/wakizashi(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/sabreblade
@@ -300,7 +300,7 @@
 
 /obj/item/smithing/sabrerblade/startfinish()
 	finalitem = new /obj/item/melee/smith/sabre(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/rapierblade
@@ -311,7 +311,7 @@
 
 /obj/item/smithing/rapierblade/startfinish()
 	finalitem = new /obj/item/melee/smith/sabre/rapier(src)
-	finalitem.force *= 1+(quality/10)
+	finalitem.force += quality
 	..()
 
 /obj/item/smithing/knifeblade
@@ -343,7 +343,7 @@
 
 /obj/item/smithing/broadblade/startfinish()
 	var/obj/item/melee/smith/twohand/broadsword/finalforreal = new /obj/item/melee/smith/twohand/broadsword(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
@@ -357,7 +357,7 @@
 
 /obj/item/smithing/zweiblade/startfinish()
 	var/obj/item/melee/smith/twohand/zweihander/finalforreal = new /obj/item/melee/smith/twohand/zweihander(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
@@ -370,7 +370,7 @@
 
 /obj/item/smithing/halberdhead/startfinish()
 	var/obj/item/melee/smith/twohand/halberd/finalforreal = new /obj/item/melee/smith/twohand/halberd(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.throwforce = finalforreal.force/3
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
@@ -382,9 +382,9 @@
 	finalitem = /obj/item/melee/smith/twohand/glaive
 	icon_state = "glaive"
 
-/obj/item/smithing/glaivehead/startfinish()
+/obj/item/smithing/glaive/startfinish()
 	var/obj/item/melee/smith/twohand/glaive/finalforreal = new /obj/item/melee/smith/twohand/glaive(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.throwforce = finalforreal.force
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
@@ -400,7 +400,7 @@
 
 /obj/item/smithing/katanablade/startfinish()
 	var/obj/item/melee/smith/twohand/katana/finalforreal = new /obj/item/melee/smith/twohand/katana(src)
-	finalforreal.force *= 1+(quality/10)
+	finalforreal.force += quality
 	finalforreal.wield_force = finalforreal.force*finalforreal.wielded_mult
 	finalforreal.AddComponent(/datum/component/two_handed, force_unwielded=finalforreal.force, force_wielded=finalforreal.wield_force, icon_wielded="[icon_state]")
 	finalitem = finalforreal
