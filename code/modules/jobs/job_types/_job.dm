@@ -82,6 +82,7 @@
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
 	if(/datum/quirk/paraplegic in blacklisted_quirks)
 		H.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
+		set_resting(FALSE, TRUE) //they probably shouldn't be on the floor because they had no legs then suddenly had legs
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
