@@ -346,9 +346,9 @@
 
 		var/obj/singularity/energy_ball/tesla = source
 		if(istype(tesla))
-			if(istype(closest_atom,/obj/machinery/power/grounding_rod) && tesla.energy>13)
-				qdel(closest_atom)
-				tesla.energy = round(tesla.energy/1.5)
+			if(istype(closest_atom,/obj/machinery/power/grounding_rod) && tesla.energy>13 && !tesla.contained)
+				qdel(closest_atom)							// each rod deletes two miniballs,
+				tesla.energy = round(tesla.energy/1.5625)	// if there are no miniballs the rod stays and continues to pull the ball in
 	if(prob(20))//I know I know
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
