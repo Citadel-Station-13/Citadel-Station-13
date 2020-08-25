@@ -298,7 +298,7 @@
 
 /obj/item/clothing/neck/petcollar/naomi
 	name = "worn pet collar"
-	desc = "a pet collar that looks well used."
+	desc = "A pet collar that looks well used."
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
