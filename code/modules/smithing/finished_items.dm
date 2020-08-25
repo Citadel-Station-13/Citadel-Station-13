@@ -177,6 +177,7 @@
 
 /obj/item/melee/smith/shortsword
 	name = "gladius"
+	force = 9
 	item_flags = NEEDS_PERMIT
 	sharpness = SHARP_EDGED
 	icon_state = "gladius"
@@ -191,6 +192,7 @@
 /obj/item/melee/smith/wakizashi
 	name = "wakizashi"
 	sharpness = SHARP_EDGED
+	force = 9
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
 	obj_flags = UNIQUE_RENAME
 	icon_state = "waki"
