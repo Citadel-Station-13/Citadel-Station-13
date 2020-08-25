@@ -31,6 +31,7 @@
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
+	var/rodtarget
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
 	miniball = is_miniball
@@ -91,8 +92,20 @@
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
+	var/rods = GLOB.grounding_rods
+	if(rods) // grounding rods pull the tesla ball, picks the nearest one
+		for(var/rod in rods) 
+			if(!rodtarget)
+				rodtarget=rod
+			
+			if(get_dist(src,rod)<get_dist(src,rodtarget))
+				rodtarget=rod
+
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
+		if(rods)
+			var/move_dir = pick(GLOB.alldirs + move_bias + rodtarget)
+		else
+			var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
 		if(target && prob(10))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
