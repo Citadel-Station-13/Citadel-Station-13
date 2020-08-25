@@ -8,8 +8,8 @@
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
-	coldmod = 1.5
-	heatmod = 0.67
+	coldmod = 1.2
+	heatmod = 0.8
 	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "mam_snouts" = "Round",
 							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
 							  "legs" = "Digitigrade", "taur" = "None", "deco_wings" = "None")
