@@ -31,7 +31,7 @@
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
-	var/rodtarget
+	var/obj/machinery/power/grounding_rod/rodtarget
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
 	miniball = is_miniball
