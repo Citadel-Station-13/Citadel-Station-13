@@ -343,6 +343,12 @@
 
 	else
 		power = closest_atom.zap_act(power, zap_flags, shocked_targets)
+
+		var/obj/singularity/energy_ball/tesla = source
+		if(istype(tesla))
+			if(istype(closest_atom,/obj/machinery/power/grounding_rod) && tesla.energy>13)
+				qdel(closest_atom)
+				tesla.energy = round(tesla.energy/1.5)
 	if(prob(20))//I know I know
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
 		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
