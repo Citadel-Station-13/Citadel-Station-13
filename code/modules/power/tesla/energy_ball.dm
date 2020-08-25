@@ -103,7 +103,7 @@
 				rodtarget=rod
 
 	for(var/i in 0 to move_amount)
-		if(rods)
+		if(rodtarget)
 			move_dir = pick(GLOB.alldirs + get_dir(src,rodtarget))
 		else
 			move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
