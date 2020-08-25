@@ -6,7 +6,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
-	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Intact. Loss of oxygen to eastern side of main corridor.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
+	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, damaged. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Intact. Loss of oxygen to eastern side of main corridor.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
 
 /obj/item/paper/fluff/ruins/oldstation/protosuit
 	name = "B01-RIG Hardsuit Report"
@@ -44,7 +44,7 @@
 * (1)Health Analyser
 * (1)Prototype Energy Gun
 * (1)Singularity Generation Disk
-__DO NOT REMOVE WITHOUT HE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION__
+__DO NOT REMOVE WITHOUT THE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION__
 "}
 
 
@@ -53,8 +53,35 @@ __DO NOT REMOVE WITHOUT HE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION__
 	info = "Artificial Program's report to surviving crewmembers.<br><br>Crew were placed into cryostasis on March 10th, 2445.<br><br>Crew were awoken from cryostasis around June, 2557.<br><br> \
 	<b>SIGNIFICANT EVENTS OF NOTE</b><br>1: The primary radiation detectors were taken offline after 112 years due to power failure, secondary radiation detectors showed no residual \
 	radiation on station. Deduction, primarily detector was malfunctioning and was producing a radiation signal when there was none.<br><br>2: A data burst from a nearby Nanotrasen Space \
-	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: Unknown invasion force has occupied Delta station."
+	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: Unknown alien lifeforms have occupied Delta station."
 
 /obj/item/paper/fluff/ruins/oldstation/generator_manual
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator manual"
-	info = "You can barely make out a faded sentence... <br><br> Wrench down the generator on top of a wire node connected to either a SMES input terminal or the power grid." 
+	info = "You can barely make out a faded sentence... <br><br> Wrench down the generator on top of a wire node connected to either a SMES input terminal or the power grid."
+
+/obj/item/paper/fluff/ruins/oldstation/xenobio
+	name = "Xenobio Report"
+	info = "The mining team brought back something interesting last week. An egg, completely organic and seemingly still able to hatch. We observed the egg opening and releasing a strange, spider-like creature. \
+	When we dropped a monkey into the cage to observe the effects, the creature latched onto the monkey's face immediately and knocked it out. Several hours later, the monkey awoke, but began to screech in agony as \
+	some sort of slug erupted from it's chest! We don't know what the strange larva creature is, but it looks as though we've discovered something with a lot of potential."
+
+/obj/item/paper/fluff/ruins/oldstation/xenobio2
+	name = "Xenobio Report 2"
+	info = "The results of our initial study have proven to be incredible. Within hours, the larva began to molt and evolve into a strange, bipedal creature that we have begun referring to as a Xenomorph, \
+	due to it's observed evolutionary prowess and alien anatomy. The creature has not proven itself to be actively hostile either, at least not yet. It's responded to our presence with curiosity, as if studying us! \
+	We'll be performing some experiments and tests with this being soon to see the full capability of it's power. In time, we may be able to weaponize this species entirely. I'm sure Nanotrasen can benefit from it."
+
+/obj/item/paper/fluff/ruins/oldstation/xenobio3
+	name = "Xenobio Report 3"
+	info = "The Xenomorph has performed through our tests with greater results than expected. But there are now concerns among my staff that the creature is evolving too rapidly for us to control, much less contain. \
+	Over the last few days, we've observed the subject grow larger, and stronger, getting to such a height and size that it can barely be contained in the cell we have it in. What's more concerning is that we've observed it \
+	laying more eggs similar to the one the mining team uncovered. We'll just have to keep constant vigil and keep security on alert. But that'll require declassification of the project..."
+
+/obj/item/paper/fluff/ruins/oldstation/death
+	name = "Captain Log"
+	info = "The monsters our xenobio team had contained are becoming a larger problem than anticipated. Most of the security team was decimated when the initial subject broke containment, and now I write this \
+	in the hopes of it acting as a confession for when I meet my maker. The creatures have taken over the Delta wing, and they have begun using the vents to travel through the station. There's so many of them now, \
+	and all I can do is try to cover this up. There will be no distress call, and we will put what employees we can into cryo stasis. No witnesses, no medi coverage. If word got out about this situation, Nanotrasen \
+	wouldn't survive. The company is too young to survive something this disastrous. Those employees that are left have been alerted of a radiation storm and told to get into cryostasis. They have no idea that it's a lie.\
+	God help us all."
+

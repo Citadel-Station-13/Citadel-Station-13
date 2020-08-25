@@ -748,6 +748,30 @@
 	assignment = "Charlie Station Engineer"
 	access = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_ENGINE)
 
+/obj/item/card/id/away/old/mine
+	name = "Charlie Station Miner's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Miner\"."
+	assignment = "Charlie Station Miner"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/card/id/away/old/med
+	name = "Charlie Station Doctor's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Medical Doctor\"."
+	assignment = "Charlie Station Doctor"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/card/id/away/old/ass
+	name = "Charlie Station Staff Assistant's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Staff Assistant\"."
+	assignment = "Charlie Station Staff Assistant"
+	access = list(ACCESS_AWAY_GENERAL)
+
+/obj/item/card/id/away/old/chaplain
+	name = "Charlie Station Chaplain's ID card"
+	desc = "A faded Charlie Station ID card. You can make out the rank \"Chaplain\"."
+	assignment = "Charlie Station Chaplain"
+	access = list(ACCESS_AWAY_GENERAL)
+
 /obj/item/card/id/away/old/apc
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
