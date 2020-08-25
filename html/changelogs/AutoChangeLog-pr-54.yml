@@ -1,5 +1,0 @@
-author: "ZombieTsar"
-delete-after: True
-changes: 
-  - rscadd: "Adds chemical recipe: sand: 5u silicon + 10u oxygen + 450C."
-  - rscadd: "Adds chemical recipe: iron ore: 50u iron + 1 carbon + 900C."

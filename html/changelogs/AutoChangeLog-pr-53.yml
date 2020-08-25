@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added a blacklist system for lewd interactions. Currently prevents lewding station pets only."
-  - bugfix: "Climaxing on lewd interactions will now spill only when appropriate."
-  - bugfix: "Dead mobs can no longer be lewded, even with a client."

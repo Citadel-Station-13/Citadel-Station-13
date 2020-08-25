@@ -1,7 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - tweak: "The bluespace miner can be deconstructed."
-  - bugfix: "Drake borgs should now have their text centered while speaking."
-  - imageadd: "Sprites for the bluespace miner."
-  - imagedel: "Old sprites."
