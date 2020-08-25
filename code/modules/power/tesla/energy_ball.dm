@@ -92,6 +92,7 @@
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
+	var/move_dir
 	var/rods = GLOB.grounding_rods
 	if(rods) // grounding rods pull the tesla ball, picks the nearest one
 		for(var/rod in rods) 
@@ -103,9 +104,9 @@
 
 	for(var/i in 0 to move_amount)
 		if(rods)
-			var/move_dir = pick(GLOB.alldirs + move_bias + rodtarget)
+			move_dir = pick(GLOB.alldirs + get_dir(src,rodtarget))
 		else
-			var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
+			move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
 		if(target && prob(10))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
