@@ -98,9 +98,6 @@
 		for(var/rod in rods) 
 			if(!rodtarget || get_dist(src,rod)<get_dist(src,rodtarget))
 				rodtarget=rod
-			
-			if(get_dist(src,rod)<get_dist(src,rodtarget))
-				rodtarget=rod
 
 	for(var/i in 0 to move_amount)
 		if(rodtarget)
