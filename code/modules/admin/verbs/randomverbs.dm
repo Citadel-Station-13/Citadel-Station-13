@@ -1298,7 +1298,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		ADMIN_PUNISHMENT_FRY,
     ADMIN_PUNISHMENT_CRACK,
     ADMIN_PUNISHMENT_BLEED,
-    ADMIN_PUNISHMENT_SCARIFY)
+    ADMIN_PUNISHMENT_SCARIFY,
+	ADMIN_PUNISHMENT_GOODBYE)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1464,6 +1465,13 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				to_chat(usr,"<span class='warning'>[C] does not have knottable shoes!</span>")
 				return
 			sick_kicks.adjust_laces(SHOES_KNOTTED)
+		if(ADMIN_PUNISHMENT_GOODBYE) //sandstorm punish :) it starts here
+			var/mob/living/C = target
+			if(C.stat == DEAD)
+				to_chat(usr, "<span class='warning'>[C] is dead!")
+				return
+			else
+				C.pregoodbye(C) //sandstorm punish and ends here.
 
 	punish_log(target, punishment)
 
