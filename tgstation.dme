@@ -3670,6 +3670,7 @@
 #include "sandcode\code\modules\mob\living\say.dm"
 #include "sandcode\code\modules\mob\living\ssd_indicator.dm"
 #include "sandcode\code\modules\mob\living\typing_indicator_overrides.dm"
+#include "sandcode\code\modules\mob\living\carbon\carbon.dm"
 #include "sandcode\code\modules\mob\living\carbon\give.dm"
 #include "sandcode\code\modules\mob\living\carbon\show.dm"
 #include "sandcode\code\modules\mob\living\carbon\human\human.dm"
