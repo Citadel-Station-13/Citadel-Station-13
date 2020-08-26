@@ -265,6 +265,10 @@
 	var/C = input(owner, "Select Color", "Select color", "#ffffff") as color|null
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
+	var/list/hsv = ReadHSV(RGBtoHSV(C))
+	if(hsv[2] > 125)
+		to_chat(user, "<span class='warning'>A color that saturated? Surely not!</span>")
+		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
 	if(!isnum(range))
 		return
