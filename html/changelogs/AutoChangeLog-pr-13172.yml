@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "goliath tentacles now do 20 damage to mechs at 25% ap"
