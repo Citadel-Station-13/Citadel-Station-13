@@ -151,7 +151,7 @@
 				M = i
 				M?.client?.tgui_panel?.stop_music()
 			return
-		
+
 		var/list/music_extra_data = list()
 		web_sound_input = trim(web_sound_input)
 		if(web_sound_input && (findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol)))
@@ -164,7 +164,7 @@
 		if(!findtext(title, ".mp3") && !findtext(title, ".mp4")) // IE sucks.
 			to_chat(src, "<span class='warning'>The format is not .mp3/.mp4, IE 8 and above can only support the .mp3/.mp4 format, the music might not play.</span>", confidential = TRUE)
 
-		if(title.len > 50) //kev no.
+		if(length(title) > 50) //kev no.
 			title = "Unknown.mp3"
 
 		music_extra_data["title"] = title

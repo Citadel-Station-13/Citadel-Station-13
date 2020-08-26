@@ -102,7 +102,7 @@
 	recipient_ticket = recipient.current_ticket
 
 	if(external)
-		if(!externalreplyamount)	//to prevent people from spamming irc/discord
+		if(!ircreplyamount)	//to prevent people from spamming irc/discord
 			return
 		if(!msg)
 			msg = input(src,"Message:", "Private message to Administrator") as message|null
@@ -160,7 +160,7 @@
 	if(external)
 		to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span></span>", confidential = TRUE)
 		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
-		externalreplyamount--
+		ircreplyamount--
 		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 
 	else
@@ -191,10 +191,10 @@
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-				var/already_logged = FALSE
+				//var/already_logged = FALSE
 				if(!recipient.current_ticket)
 					new /datum/admin_help(msg, recipient, TRUE)
-					already_logged = TRUE
+					//already_logged = TRUE
 					// SSblackbox.LogAhelp(recipient.current_ticket.id, "Ticket Opened", msg, recipient.ckey, src.ckey)
 
 				to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>", confidential = TRUE)
