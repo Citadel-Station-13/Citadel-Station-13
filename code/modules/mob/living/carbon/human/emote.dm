@@ -196,7 +196,7 @@
 //rock paper scissors emote handling
 /mob/living/carbon/human/proc/beginRockPaperScissors(var/chosen_move)
 	GLOB.rockpaperscissors_players[src] = list(chosen_move, ROCKPAPERSCISSORS_NOT_DECIDED)
-	do_after_advanced(src, ROCKPAPERSCISSORS_TIME_LIMIT, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_NO_PROGRESSBAR, CALLBACK(src, .proc/rockpaperscissors_tick))
+	do_after_advanced(src, ROCKPAPERSCISSORS_TIME_LIMIT, src, DO_AFTER_REQUIRES_USER_ON_TURF|DO_AFTER_NO_COEFFICIENT|DO_AFTER_NO_PROGRESSBAR|DO_AFTER_DISALLOW_MOVING_ABSOLUTE_USER, CALLBACK(src, .proc/rockpaperscissors_tick))
 	var/new_entry = GLOB.rockpaperscissors_players[src]
 	if(new_entry[2] == ROCKPAPERSCISSORS_NOT_DECIDED)
 		to_chat(src, "You put your hand back down.")
