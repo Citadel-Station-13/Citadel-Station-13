@@ -61,7 +61,6 @@
 		return //don't annnounce miniballs
 	..()
 
-
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
@@ -90,7 +89,6 @@
 	if(orbiting_balls.len)
 		. += "There are [orbiting_balls.len] mini-balls orbiting it."
 
-
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
@@ -113,7 +111,6 @@
 			for(var/mob/living/carbon/C in loc)
 				dust_mobs(C)
 
-
 /obj/singularity/energy_ball/proc/determine_containment()
 	contained=0
 	var/found
@@ -128,7 +125,6 @@
 				return // if one side is lacking a field it doesn't bother checking the others
 			tiletocheck=get_step(tiletocheck,direction)
 	contained=1
-
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
@@ -149,7 +145,7 @@
 		dissipate() //sing code has a much better system.
 
 		if(energy<=0)
-			investigate_log("fizzled.", INVESTIGATE_TESLA)
+			investigate_log("fizzled.", INVESTIGATE_SINGULO)
 			qdel(src)
 
 /obj/singularity/energy_ball/proc/new_mini_ball()
@@ -164,7 +160,6 @@
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
-
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
@@ -196,7 +191,6 @@
 	. = ..()
 	if (!QDELETED(src))
 		qdel(src)
-
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
 	if(isliving(A))
