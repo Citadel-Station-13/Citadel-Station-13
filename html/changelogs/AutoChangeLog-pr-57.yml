@@ -1,8 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added \"Their Final Message\""
-  - soundadd: "added changetheworld.ogg"
-  - soundadd: "added myfinalmessage.ogg"
-  - soundadd: "added goodbye.ogg"
-  - soundadd: "added endjingle.ogg"
