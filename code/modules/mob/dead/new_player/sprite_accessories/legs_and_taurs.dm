@@ -30,6 +30,9 @@
 	var/alt_taur_mode = NONE //Same as above.
 	var/hide_legs = USE_QUADRUPED_CLIP_MASK
 
+/datum/sprite_accessory/taur/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	return (!tauric || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
+
 /datum/sprite_accessory/taur/New()
 	switch(hide_legs)
 		if(USE_QUADRUPED_CLIP_MASK)

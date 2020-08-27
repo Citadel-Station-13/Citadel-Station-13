@@ -12,6 +12,9 @@ GLOBAL_LIST(topic_status_cache)
 	if (fexists(EXTOOLS))
 		call(EXTOOLS, "maptick_initialize")()
 	enable_debugger()
+#ifdef REFERENCE_TRACKING
+	enable_reference_tracking()
+#endif
 
 	world.Profile(PROFILE_START)
 

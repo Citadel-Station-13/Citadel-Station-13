@@ -117,18 +117,6 @@
 		if(!QDELETED(src))
 			update_inv_legcuffed()
 
-/mob/living/carbon/get_equipped_items(include_pockets = FALSE)
-	var/list/items = list()
-	if(back)
-		items += back
-	if(head)
-		items += head
-	if(wear_mask)
-		items += wear_mask
-	if(wear_neck)
-		items += wear_neck
-	return items
-
 //handle stuff to update when a mob equips/unequips a mask.
 /mob/living/proc/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	update_inv_wear_mask()

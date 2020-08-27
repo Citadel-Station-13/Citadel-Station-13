@@ -224,8 +224,7 @@ Credit where due:
 			qdel(S)
 	if(S && !QDELETED(S))
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
-		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='alloy italics'>If you want more information, you can read <a href=\"https://tgstation13.org/wiki/Clockwork_Cult\">the wiki page</a> to learn more.</span>")
+		as a servant, you can read <a href=\"https://citadel-station.net/wikimain/index.php?title=Clockwork_Cult\">the wiki page</a> to learn more.</span>")
 		return TRUE
 	return FALSE
 

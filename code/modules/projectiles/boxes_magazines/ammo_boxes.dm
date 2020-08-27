@@ -16,6 +16,11 @@
 	name = "speed loader (.357 AP)"
 	ammo_type = /obj/item/ammo_casing/a357/ap
 
+/obj/item/ammo_box/a357/dumdum
+	name = "speed loader (.357 DumDum)"
+	desc = "Designed to quickly reload revolvers. Usage of these rounds will constitute a war crime in your area."
+	ammo_type = /obj/item/ammo_casing/a357/dumdum
+
 /obj/item/ammo_box/c38
 	name = "speed loader (.38 rubber)"
 	desc = "Designed to quickly reload revolvers."
@@ -144,10 +149,15 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "shotgunclip"
 	caliber = "shotgun" // slapped in to allow shell mix n match
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
+	w_class = WEIGHT_CLASS_NORMAL
+	w_volume = ITEM_VOLUME_STRIPPER_CLIP
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 4
 	var/pixeloffsetx = 4
 	start_empty = TRUE
+	multiload = FALSE
+	load_delay = 6 //6ds
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()
