@@ -127,8 +127,6 @@
 				return // if one side is lacking a field it doesn't bother checking the others
 			tiletocheck=get_step(tiletocheck,direction)
 	contained=1
-	
-
 
 
 /obj/singularity/energy_ball/proc/handle_energy()
