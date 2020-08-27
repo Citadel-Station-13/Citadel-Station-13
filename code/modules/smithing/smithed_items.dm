@@ -177,9 +177,9 @@
 	finalitem = new /obj/item/shovel/smithed(src)
 	finalitem.force += quality/2
 	if(quality > 0)
-		finalforreal.toolspeed = max(0.05,(1-(quality/10)))
+		finalitem.toolspeed = max(0.05,(1-(quality/10)))
 	else
-		finalforreal.toolspeed *= max(1, (quality * -1))
+		finalitem.toolspeed *= max(1, (quality * -1)) 	
 	..()
 
 /obj/item/smithing/cogheadclubhead
