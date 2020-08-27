@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - tweak: "Traitor holoparasites can now only be bought once, because apparently you can only have one active holopara."
+  - balance: "PDA bombs can now only be bought once per uplink."
