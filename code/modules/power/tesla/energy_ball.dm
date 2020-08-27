@@ -62,10 +62,11 @@
 	..()
 
 
-/obj/singularity/energy_ball/process()
-	determine_containment()
+/obj/singularity/energy_ball/process()	
 	if(!orbiting)
 		handle_energy()
+
+		determine_containment()
 
 		move_the_basket_ball(4 + orbiting_balls.len * 1.5)
 
