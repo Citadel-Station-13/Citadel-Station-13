@@ -1,7 +1,6 @@
 /datum/species/synthliz
 	name = "Synthetic Lizardperson"
 	id = "synthliz"
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	say_mod = "beeps"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,NOTRANSSTING,EYECOLOR,LIPS,HAIR,HAS_FLESH,HAS_BONE)
