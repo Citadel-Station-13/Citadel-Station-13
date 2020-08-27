@@ -177,9 +177,11 @@
 	finalitem = new /obj/item/shovel/smithed(src)
 	finalitem.force += quality/2
 	if(quality > 0)
-		finalitem.toolspeed /= quality
+		finalforreal.toolspeed = max(0.05,(1-(quality/10)))
+	else if(quality = 0)
+		finalforreal.toolspeed = 1
 	else
-		finalitem.toolspeed *= (quality * -1)
+		finalforreal.toolspeed *= (quality * -1)
 	..()
 
 /obj/item/smithing/cogheadclubhead
@@ -229,7 +231,9 @@
 	var/obj/item/pickaxe/smithed/finalforreal = new /obj/item/pickaxe/smithed(src)
 	finalforreal.force += quality/2
 	if(quality > 0)
-		finalforreal.toolspeed /= quality
+		finalforreal.toolspeed = max(0.05,(1-(quality/10)))
+	else if(quality = 0)
+		finalforreal.toolspeed = 1
 	else
 		finalforreal.toolspeed *= (quality * -1)
 	switch(quality)
