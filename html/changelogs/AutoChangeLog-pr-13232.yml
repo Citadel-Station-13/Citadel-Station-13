@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "you can now choose a body sprite as an anthromorph or anthromorphic insect, and can choose from aquatic/avian and apid respectively (and obviously back to the defaults too)"

@@ -3,7 +3,6 @@
 	id = "ipc"
 	say_mod = "beeps"
 	default_color = "00FF00"
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	blacklisted = 0
 	sexes = 0
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,HAS_FLESH,HAS_BONE)
