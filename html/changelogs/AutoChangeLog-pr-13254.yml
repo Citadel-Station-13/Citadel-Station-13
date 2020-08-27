@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "eyebeam lighting can only have 128 maximum HSV saturation now."
