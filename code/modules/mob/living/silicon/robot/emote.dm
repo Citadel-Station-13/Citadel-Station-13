@@ -23,11 +23,13 @@
 	message = "buzzes."
 	message_param = "buzzes at %t."
 	sound = 'sound/machines/buzz-sigh.ogg'
+	unrestricted = TRUE
 
 /datum/emote/sound/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
 	sound = 'sound/machines/buzz-two.ogg'
+	unrestricted = TRUE
 
 /datum/emote/sound/silicon/chime
 	key = "chime"
@@ -48,6 +50,7 @@
 	message = "pings."
 	message_param = "pings at %t."
 	sound = 'sound/machines/ping.ogg'
+	unrestricted = TRUE
 
 /datum/emote/sound/silicon/chime
 	key = "chime"
