@@ -5,7 +5,7 @@
 /datum/emote/sound/silicon
 	mob_type_allowed_typecache = list(/mob/living/silicon, /mob/living/carbon/human)
 	emote_type = EMOTE_AUDIBLE
-	var/unrestricted = FALSE
+	var/unrestricted = TRUE
 
 /datum/emote/sound/silicon/run_emote(mob/user, params)
 	if(!unrestricted && !(issilicon(user) || isipcperson(user)))
@@ -23,13 +23,11 @@
 	message = "buzzes."
 	message_param = "buzzes at %t."
 	sound = 'sound/machines/buzz-sigh.ogg'
-	unrestricted = TRUE
 
 /datum/emote/sound/silicon/buzz2
 	key = "buzz2"
 	message = "buzzes twice."
 	sound = 'sound/machines/buzz-two.ogg'
-	unrestricted = TRUE
 
 /datum/emote/sound/silicon/chime
 	key = "chime"
@@ -50,7 +48,6 @@
 	message = "pings."
 	message_param = "pings at %t."
 	sound = 'sound/machines/ping.ogg'
-	unrestricted = TRUE
 
 /datum/emote/sound/silicon/chime
 	key = "chime"
