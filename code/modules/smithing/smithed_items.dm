@@ -178,10 +178,8 @@
 	finalitem.force += quality/2
 	if(quality > 0)
 		finalforreal.toolspeed = max(0.05,(1-(quality/10)))
-	else if(quality = 0)
-		finalforreal.toolspeed = 1
 	else
-		finalforreal.toolspeed *= (quality * -1)
+		finalforreal.toolspeed *= max(1, (quality * -1))
 	..()
 
 /obj/item/smithing/cogheadclubhead
@@ -232,10 +230,8 @@
 	finalforreal.force += quality/2
 	if(quality > 0)
 		finalforreal.toolspeed = max(0.05,(1-(quality/10)))
-	else if(quality = 0)
-		finalforreal.toolspeed = 1
 	else
-		finalforreal.toolspeed *= (quality * -1)
+		finalforreal.toolspeed *= max(1, (quality * -1))
 	switch(quality)
 		if(10 to INFINITY)
 			finalforreal.digrange = 4
