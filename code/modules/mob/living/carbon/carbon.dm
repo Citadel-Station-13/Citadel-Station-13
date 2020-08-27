@@ -87,7 +87,7 @@
 		if(user != src && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user,user.a_intent))
-					return 1
+					return STOP_ATTACK_PROC_CHAIN
 
 	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
 		return ..()
@@ -95,7 +95,7 @@
 	for(var/i in shuffle(all_wounds))
 		var/datum/wound/W = i
 		if(W.try_treating(I, user))
-			return 1
+			return STOP_ATTACK_PROC_CHAIN
 
 	return ..()
 

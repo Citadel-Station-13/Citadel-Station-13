@@ -11,7 +11,6 @@
 	robust_searching = TRUE
 	ranged_ignores_vision = TRUE
 	ranged = TRUE
-	threat = 5
 	obj_damage = 5
 	vision_range = 6
 	aggro_vision_range = 18

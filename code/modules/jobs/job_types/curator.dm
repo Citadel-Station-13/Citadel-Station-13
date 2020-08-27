@@ -10,6 +10,7 @@
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/curator
+	plasma_outfit = /datum/outfit/plasmaman/curator
 
 	access = list(ACCESS_LIBRARY)
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)

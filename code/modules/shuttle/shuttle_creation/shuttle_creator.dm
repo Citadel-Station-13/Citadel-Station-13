@@ -43,6 +43,7 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	. = ..()
 	internal_shuttle_creator = new()
 	internal_shuttle_creator.owner_rsd = src
+	desc += " Attention, the max size of the shuttle is [SHUTTLE_CREATOR_MAX_SIZE]."
 	overlay_holder = new()
 
 /obj/item/shuttle_creator/Destroy()
@@ -237,13 +238,13 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 
 	port.register()
 
-	icon_state = "rsd_used"
+	icon_state = "rsd_empty"
 
 	//Clear highlights
 	overlay_holder.clear_highlights()
 	GLOB.custom_shuttle_count ++
-	message_admins("[ADMIN_LOOKUPFLW(user)] created a new shuttle with a [src] at [ADMIN_VERBOSEJMP(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [CUSTOM_SHUTTLE_LIMIT])")
-	log_game("[key_name(user)] created a new shuttle with a [src] at [AREACOORD(user)] ([GLOB.custom_shuttle_count] custom shuttles, limit is [CUSTOM_SHUTTLE_LIMIT])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a new shuttle with a [src] at [ADMIN_VERBOSEJMP(user)] ([GLOB.custom_shuttle_count] custom shuttles)")
+	log_game("[key_name(user)] created a new shuttle with a [src] at [AREACOORD(user)] ([GLOB.custom_shuttle_count] custom shuttles)")
 	return TRUE
 
 /obj/item/shuttle_creator/proc/create_shuttle_area(mob/user)
@@ -350,7 +351,7 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 	loggedOldArea = get_area(get_turf(user))
 	loggedTurfs |= turfs
 	overlay_holder.highlight_area(turfs)
-	//TODO READD THIS SHIT: icon_state = "rsd_used"
+	//TODO READD THIS SHIT: icon_state = "rsd_empty"
 	to_chat(user, "<span class='notice'>You add the area into the buffer of the [src], you made add more areas or select an airlock to act as a docking port to complete the shuttle.</span>")
 	return turfs
 

@@ -24,7 +24,6 @@
 	icon_aggro = "legionnaire"
 	icon_dead = "legionnaire_dead"
 	icon_gib = "syndicate_gib"
-	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 30

@@ -19,16 +19,12 @@
 	cell_type = /obj/item/stock_parts/cell{charge = 600; maxcharge = 600}
 	ammo_x_offset = 2
 	charge_sections = 3
+	gunlight_state = "mini-light"
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/flashlight/seclite(src)
 	return ..()
-
-/obj/item/gun/energy/e_gun/mini/update_icon()
-	..()
-	if(gun_light && gun_light.on)
-		add_overlay("mini-light")
 
 /obj/item/gun/energy/e_gun/stun
 	name = "tactical energy gun"
@@ -138,15 +134,15 @@
 		return
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
-/obj/item/gun/energy/e_gun/nuclear/update_icon()
-	..()
+/obj/item/gun/energy/e_gun/nuclear/update_overlays()
+	. = ..()
 	if(crit_fail)
-		add_overlay("[icon_state]_fail_3")
+		. += "[icon_state]_fail_3"
 	else
 		switch(fail_tick)
 			if(0)
-				add_overlay("[icon_state]_fail_0")
+				. += "[icon_state]_fail_0"
 			if(1 to 150)
-				add_overlay("[icon_state]_fail_1")
+				. += "[icon_state]_fail_1"
 			if(151 to INFINITY)
-				add_overlay("[icon_state]_fail_2")
+				. += "[icon_state]_fail_2"

@@ -23,6 +23,7 @@
 	ADD_TRAIT(user, TRAIT_PIERCEIMMUNE, "fortitude")
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, "fortitude")
 	ADD_TRAIT(user, TRAIT_STUNIMMUNE, "fortitude")
+	ADD_TRAIT(user, TRAIT_NORUNNING, "fortitude")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		fortitude_resist = max(0.3, 0.7 - level_current * 0.1)
@@ -53,6 +54,7 @@
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, "fortitude")
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, "fortitude")
 	REMOVE_TRAIT(user, TRAIT_STUNIMMUNE, "fortitude")
+	REMOVE_TRAIT(user, TRAIT_NORUNNING, "fortitude")
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/H = owner
