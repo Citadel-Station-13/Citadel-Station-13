@@ -3,10 +3,8 @@
 	desc = "A portable device that dispenses and mixes chemicals. All necessary reagents need to be supplied with beakers. A label indicates that a screwdriver is required to open it for refills. This device can be worn on a belt. The letters 'S&T' are imprinted on the side."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
-//	worn_icon_state = "portable_chem_mixer"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
-//	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	custom_price = 2000
 	custom_premium_price = 2000
 
@@ -21,7 +19,7 @@
 	STR.max_combined_w_class = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
-	STR.set_holdable(list(
+	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/glass/beaker,
 	))
 
