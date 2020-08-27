@@ -50,10 +50,6 @@ Property weights are:
 	for(var/r in SSevents.running)
 		var/datum/round_event/R = r
 		threat += R.threat()
-	for(var/mob/living/simple_animal/hostile/H in GLOB.mob_living_list)
-		var/turf/T = get_turf(H)
-		if(H.stat != DEAD && is_station_level(T.z) && !("Station" in H.faction))
-			threat += H.threat()
 	for(var/obj/item/phylactery/P in GLOB.poi_list)
 		threat += 25 // can't be giving them too much of a break
 	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
@@ -91,6 +87,8 @@ Property weights are:
 							mean += 2.5
 						if(CHAOS_MAX)
 							mean += 5
+				else
+					voters += 0.5
 			if(voters)
 				GLOB.dynamic_curve_centre += (mean/voters)
 		if(flags & USE_PREV_ROUND_WEIGHTS)
@@ -128,7 +126,8 @@ Property weights are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() * property_weight)*rule.weight_mult
+				if(property_weight > 0)
+					drafted_rules[rule] = rule.get_weight() * property_weight * rule.weight_mult
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/midround_draft()
@@ -140,25 +139,26 @@ Property weights are:
 			if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 				continue
 			rule.trim_candidates()
-			var/threat_weight = 1
-			if(!(rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
-				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-				/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
-					pick this particular ruleset.
-					Let's use a toy example: there's 60 threat level and 10 threat spent.
-					We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
-					Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
-					When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
-					is 2.26 times as likely to be picked, all other things considered.
-					Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
-				*/
-				threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
-					if(property in rule.property_weights)
+					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
+				if(property_weight > 0)
+					var/threat_weight = 1
+					if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
+						var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+						/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
+							pick this particular ruleset.
+							Let's use a toy example: there's 60 threat level and 10 threat spent.
+							We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
+							Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
+							When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
+							is 2.26 times as likely to be picked, all other things considered.
+							Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
+						*/
+						threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+					drafted_rules[rule] = rule.get_weight() * property_weight * rule.weight_mult * threat_weight
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
@@ -175,28 +175,29 @@ Property weights are:
 
 			rule.candidates = list(newPlayer)
 			rule.trim_candidates()
-			var/threat_weight = 1
-			if(!(rule.flags & MINOR_RULESET))
-				var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-				threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
 			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
+				if(property_weight > 0)
+					var/threat_weight = 1
+					if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET))
+						var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+						threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+					drafted_rules[rule] = rule.get_weight() * property_weight * rule.weight_mult * threat_weight
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/event_draft()
 	var/list/drafted_rules = list()
 	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && (mode.threat_level - mode.threat) >= rule.cost)
-			if(rule.ready())
-				var/property_weight = 0
-				for(var/property in property_weights)
-					if(property in rule.property_weights)
-						property_weight += rule.property_weights[property] * property_weights[property]
-				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
+		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && (mode.threat_level + 20 - mode.threat) >= rule.cost && rule.ready())
+			var/property_weight = 0
+			for(var/property in property_weights)
+				if(property in rule.property_weights)
+					property_weight += rule.property_weights[property] * property_weights[property]
+			if(property_weight > 0)
+				drafted_rules[rule] = rule.get_weight() + property_weight * rule.weight_mult
 	return drafted_rules
 
 
@@ -313,9 +314,8 @@ Property weights are:
 /datum/dynamic_storyteller/random/event_draft()
 	var/list/drafted_rules = list()
 	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
-			if(rule.ready())
-				drafted_rules[rule] = 1
+		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && rule.ready())
+			drafted_rules[rule] = 1
 	return drafted_rules
 
 /datum/dynamic_storyteller/story
@@ -330,7 +330,7 @@ Property weights are:
 
 /datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
-	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
+	mode.threat_level = round((mode.initial_threat_level*(sin(current_time)/2)+0.75),0.1)
 	return ..()
 
 /datum/dynamic_storyteller/classic

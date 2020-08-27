@@ -7,6 +7,11 @@
 	message = "cries."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/human/cry/run_emote(mob/user, params)
+	. = ..()
+	if(. && isipcperson(user))
+		do_fake_sparks(5,FALSE,user)
+
 /datum/emote/living/carbon/human/dap
 	key = "dap"
 	key_third_person = "daps"

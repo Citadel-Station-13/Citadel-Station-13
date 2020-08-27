@@ -801,7 +801,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!subcategories.Find(gear_subcategory))
 						gear_subcategory = subcategories[1]
 
-					var/firstsubcat = FALSE
+					var/firstsubcat = TRUE
 					for(var/subcategory in subcategories)
 						if(firstsubcat)
 							firstsubcat = FALSE
@@ -2092,8 +2092,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["body_model"] = chosengender
 					gender = chosengender
-					facial_hair_style = random_facial_hair_style(gender)
-					hair_style = random_hair_style(gender)
 
 				if("body_size")
 					var/min = CONFIG_GET(number/body_size_min)
