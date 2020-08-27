@@ -62,7 +62,7 @@
 	..()
 
 
-/obj/singularity/energy_ball/process()	
+/obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
 
