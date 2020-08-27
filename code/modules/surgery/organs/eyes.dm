@@ -273,7 +273,7 @@
 	assume_rgb(C)
 
 #define MAX_SATURATION 192
-#define MAX_LIGHTNESS 192
+#define MAX_LIGHTNESS 256
 
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
 	eye_color = RGB2EYECOLORSTRING(newcolor)
