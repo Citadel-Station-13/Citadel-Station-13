@@ -6,6 +6,7 @@
 #define INVESTIGATE_GRAVITY			"gravity"
 #define INVESTIGATE_RECORDS			"records"
 #define INVESTIGATE_SINGULO			"singulo"
+#define INVESTIGATE_TESLA			"tesla"
 #define INVESTIGATE_SUPERMATTER		"supermatter"
 #define INVESTIGATE_TELESCI			"telesci"
 #define INVESTIGATE_WIRES			"wires"

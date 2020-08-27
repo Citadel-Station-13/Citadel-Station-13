@@ -148,6 +148,10 @@
 	else if(orbiting_balls.len)
 		dissipate() //sing code has a much better system.
 
+		if(energy<=0)
+			investigate_log("fizzled.", INVESTIGATE_TESLA)
+			qdel(src)
+
 /obj/singularity/energy_ball/proc/new_mini_ball()
 	if(!loc)
 		return
