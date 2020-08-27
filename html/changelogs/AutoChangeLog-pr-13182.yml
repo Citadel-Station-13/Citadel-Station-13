@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "airlocks now only shock on pulse/wirecutters instead of on tgui panel open."
