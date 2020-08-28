@@ -130,6 +130,10 @@
 /proc/get_sfx(soundin)
 	if(istext(soundin))
 		switch(soundin)
+			if ("explosion_creaking") // from skyrat-ss13/skyrat13/pull/3295
+				soundin = pick('sound/effects/explosioncreak1.ogg', 'sound/effects/explosioncreak2.ogg')
+			if ("hull_creaking") // from skyrat-ss13/skyrat13/pull/3295
+				soundin = pick('sound/effects/creak1.ogg', 'sound/effects/creak2.ogg', 'sound/effects/creak3.ogg')
 			if ("shatter")
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
 			if ("explosion")
