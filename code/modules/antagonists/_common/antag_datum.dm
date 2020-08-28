@@ -281,7 +281,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = CONFIG_GET(keyed_list/antag_threat)[lowertext(name)]
 	if(. == null)
 		return threat
-	return threat
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

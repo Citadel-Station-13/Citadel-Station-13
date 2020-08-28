@@ -16,7 +16,6 @@
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
-	threat = 0.3
 	gender = FEMALE
 	speak_emote = list("buzzes")
 	emote_hear = list("buzzes")

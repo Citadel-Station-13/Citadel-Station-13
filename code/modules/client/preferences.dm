@@ -246,6 +246,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
 	var/scars_index = 1
 
+	var/chosen_limb_id //body sprite selected to load for the users limbs, null means default, is sanitized when loaded
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -521,6 +523,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "</td>"
 						mutant_category = 0
 
+			if(length(pref_species.allowed_limb_ids))
+				if(!chosen_limb_id || !(chosen_limb_id in pref_species.allowed_limb_ids))
+					chosen_limb_id = pref_species.id
+				dat += "<h3>Body sprite</h3>"
+				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=bodysprite;task=input'>[chosen_limb_id]</a>"
+
 			if(mutant_category)
 				dat += "</td>"
 				mutant_category = 0
@@ -791,9 +799,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</b></center></td></tr>"
 				dat += "<tr><td colspan=4><hr></td></tr>"
-				
+
 				dat += "<tr><td colspan=4><center><b>"
-				
+
 				if(!length(GLOB.loadout_categories[gear_category]))
 					dat += "No subcategories detected. Something is horribly wrong!"
 				else
@@ -801,7 +809,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!subcategories.Find(gear_subcategory))
 						gear_subcategory = subcategories[1]
 
-					var/firstsubcat = FALSE
+					var/firstsubcat = TRUE
 					for(var/subcategory in subcategories)
 						if(firstsubcat)
 							firstsubcat = FALSE
@@ -1636,7 +1644,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("mam_tail")
 					var/list/snowflake_tails_list = list()
 					for(var/path in GLOB.mam_tails_list)
-						var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
+						var/datum/sprite_accessory/tails/mam_tails/instance = GLOB.mam_tails_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
 							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
@@ -1661,7 +1669,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("snout")
 					var/list/snowflake_snouts_list = list()
 					for(var/path in GLOB.snouts_list)
-						var/datum/sprite_accessory/mam_snouts/instance = GLOB.snouts_list[path]
+						var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.snouts_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
 							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
@@ -1678,7 +1686,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("mam_snouts")
 					var/list/snowflake_mam_snouts_list = list()
 					for(var/path in GLOB.mam_snouts_list)
-						var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
+						var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.mam_snouts_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
 							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
@@ -1827,7 +1835,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("mam_ears")
 					var/list/snowflake_ears_list = list()
 					for(var/path in GLOB.mam_ears_list)
-						var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
+						var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[path]
 						if(istype(instance, /datum/sprite_accessory))
 							var/datum/sprite_accessory/S = instance
 							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
@@ -2092,8 +2100,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["body_model"] = chosengender
 					gender = chosengender
-					facial_hair_style = random_facial_hair_style(gender)
-					hair_style = random_hair_style(gender)
 
 				if("body_size")
 					var/min = CONFIG_GET(number/body_size_min)
@@ -2119,6 +2125,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/selected_custom_speech_verb = input(user, "Choose your desired speech verb (none means your species speech verb)", "Character Preference") as null|anything in GLOB.speech_verbs
 					if(selected_custom_speech_verb)
 						custom_speech_verb = selected_custom_speech_verb
+
+				if("bodysprite")
+					var/selected_body_sprite = input(user, "Choose your desired body sprite", "Character Preference") as null|anything in pref_species.allowed_limb_ids
+					if(selected_body_sprite)
+						chosen_limb_id = selected_body_sprite //this gets sanitized before loading
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
@@ -2510,6 +2521,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	if(chosen_limb_id && (chosen_limb_id in character.dna.species.allowed_limb_ids))
+		character.dna.species.mutant_bodyparts["limbs_id"] = chosen_limb_id
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species

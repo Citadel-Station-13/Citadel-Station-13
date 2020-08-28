@@ -8,12 +8,12 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/pistol/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
@@ -28,6 +28,7 @@
 	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
 	icon_state = "cde"
 	can_unsuppress = TRUE
+	automatic_burst_overlay = FALSE
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "cde",
 						"N-99" = "n99",
@@ -38,20 +39,18 @@
 						"PX4 Storm" = "px4"
 						)
 
-/obj/item/gun/ballistic/automatic/pistol/modular/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/pistol/modular/update_icon_state()
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 	else
 		icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+
+/obj/item/gun/ballistic/automatic/pistol/modular/update_overlays()
+	. = ..()
 	if(magazine && suppressed)
-		cut_overlays()
-		add_overlay("[unique_reskin[current_skin]]-magazine-sup")	//Yes, this means the default iconstate can't have a magazine overlay
+		. += "[unique_reskin[current_skin]]-magazine-sup"	//Yes, this means the default iconstate can't have a magazine overlay
 	else if (magazine)
-		cut_overlays()
-		add_overlay("[unique_reskin[current_skin]]-magazine")
-	else
-		cut_overlays()
+		. += "[unique_reskin[current_skin]]-magazine"
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -77,14 +76,14 @@
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
+	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/pistol/deagle/update_overlays()
+	. = ..()
 	if(magazine)
-		cut_overlays()
-		add_overlay("deagle_magazine")
-	else
-		cut_overlays()
+		. += "deagle_magazine"
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
@@ -142,14 +141,14 @@
 	actions_types = list()
 	fire_sound = 'sound/weapons/blastcannon.ogg'
 	spread = 20		//damn thing has no rifling.
+	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/antitank/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/pistol/antitank/update_overlays()
+	. = ..()
 	if(magazine)
-		cut_overlays()
-		add_overlay("atp-mag")
-	else
-		cut_overlays()
+		. += "atp-mag"
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
