@@ -25,7 +25,8 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -110
 	bare_wound_bonus = 20
-	block_parry_data = /datum/block_parry_data/dual_esword
+	block_chance = 75
+	// block_parry_data = /datum/block_parry_data/dual_esword - Disabled for now
 	var/hacked = FALSE
 	/// Can this reflect all energy projectiles?
 	var/can_reflect = TRUE
@@ -123,7 +124,7 @@
 	START_PROCESSING(SSobj, src)
 	set_light(brightness_on)
 	AddElement(/datum/element/sword_point)
-	item_flags |= (ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
+	// item_flags |= (ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
 
 /// Triggered on unwield of two handed item
 /// switch hitsounds
@@ -137,7 +138,7 @@
 	STOP_PROCESSING(SSobj, src)
 	set_light(0)
 	RemoveElement(/datum/element/sword_point)
-	item_flags &= ~(ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
+	// item_flags &= ~(ITEM_CAN_BLOCK|ITEM_CAN_PARRY)
 
 /obj/item/dualsaber/Destroy()
 	STOP_PROCESSING(SSobj, src)
