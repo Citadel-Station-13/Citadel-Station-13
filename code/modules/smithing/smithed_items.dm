@@ -179,7 +179,7 @@
 	if(quality > 0)
 		finalitem.toolspeed = max(0.05,(1-(quality/10)))
 	else
-		finalitem.toolspeed *= max(1, (quality * -1)) 	
+		finalitem.toolspeed *= max(1, (quality * -1))
 	..()
 
 /obj/item/smithing/cogheadclubhead
@@ -298,7 +298,7 @@
 	finalitem = /obj/item/melee/smith/sabre
 	icon_state = "sabre"
 
-/obj/item/smithing/sabrerblade/startfinish()
+/obj/item/smithing/sabreblade/startfinish()
 	finalitem = new /obj/item/melee/smith/sabre(src)
 	finalitem.force += quality
 	..()
