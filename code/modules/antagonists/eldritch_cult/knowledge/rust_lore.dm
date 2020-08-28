@@ -34,8 +34,8 @@
 			var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/MG = X
 			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max)
 	target.rust_heretic_act()
-	target.emp_act(EMP_HEAVY)
 	return TRUE
+
 /datum/eldritch_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust to nearby turfs. Destroys already rusted walls."
