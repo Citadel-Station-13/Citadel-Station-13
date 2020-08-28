@@ -254,16 +254,11 @@
 	if(R == 0)
 		processing += T.contents
 	else
-		var/lum = T.luminosity
-		T.luminosity = 6
-		var/list/cached_view = view(R, T)
-		for(var/mob/M in cached_view)
-			processing += M
-		for(var/obj/O in cached_view)
-			processing += O
-		T.luminosity = lum
+		for(var/I in dview(R, T))
+			if(ismob(I) || isobj(I))
+				processing += I
 	var/i = 0
-	while(i < length(processing))
+	while(i < processing.len)
 		var/atom/A = processing[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
