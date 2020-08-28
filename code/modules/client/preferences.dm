@@ -95,7 +95,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/facial_hair_color = "000000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/use_custom_skin_tone = FALSE
-	var/eye_color = "000000"				//Eye color
+	var/left_eye_color = "000000"		//Eye color
+	var/right_eye_color = "000000"
+	var/split_eye_colors = FALSE
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFFFFF",
 		"mcolor2" = "FFFFFF",
@@ -462,15 +464,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
 
 			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
-
 				if(!use_skintones && !mutant_colors)
 					dat += APPEARANCE_CATEGORY_COLUMN
-
-				dat += "<h3>Eye Color</h3>"
-
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
-
-				dat += "</td>"
+				if(left_eye_color != right_eye_color)
+					split_eye_colors = TRUE
+				dat += "<h3>Heterochromia</h3>"
+				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=toggle_split_eyes;task=input'>[split_eye_colors ? "Enabled" : "Disabled"]</a><BR>"
+				if(!split_eye_colors)
+					dat += "<h3>Eye Color</h3>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
+					dat += "</td>"
+				else
+					dat += "<h3>Left Eye Color</h3>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_left;task=input'>Change</a>"
+					dat += "<h3>Right Eye Color</h3>"
+					dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
+					dat += "</td>"
 			else if(use_skintones || mutant_colors)
 				dat += "</td>"
 
@@ -1358,7 +1367,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					socks = random_socks()
 					socks_color = random_short_color()
 				if(BODY_ZONE_PRECISE_EYES)
-					eye_color = random_eye_color()
+					var/random_eye_color = random_eye_color()
+					left_eye_color = random_eye_color
+					right_eye_color = random_eye_color
 				if("s_tone")
 					skin_tone = random_skin_tone()
 					use_custom_skin_tone = null
@@ -1514,9 +1525,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						socks_color = sanitize_hexcolor(n_socks_color, 6)
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
+					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+left_eye_color) as color|null
 					if(new_eyes)
-						eye_color = sanitize_hexcolor(new_eyes, 6)
+						left_eye_color = sanitize_hexcolor(new_eyes, 6)
+						right_eye_color = sanitize_hexcolor(new_eyes, 6)
+
+				if("eye_left")
+					var/new_eyes = input(user, "Choose your character's left eye colour:", "Character Preference","#"+left_eye_color) as color|null
+					if(new_eyes)
+						left_eye_color = sanitize_hexcolor(new_eyes, 6)
+
+				if("eye_right")
+					var/new_eyes = input(user, "Choose your character's right eye colour:", "Character Preference","#"+right_eye_color) as color|null
+					if(new_eyes)
+						right_eye_color = sanitize_hexcolor(new_eyes, 6)
+
+				if("toggle_split_eyes")
+					split_eye_colors = !split_eye_colors
+					right_eye_color = left_eye_color
 
 				if("species")
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_race_names
@@ -2486,12 +2512,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.gender = gender
 	character.age = age
 
-	character.eye_color = eye_color
+	character.left_eye_color = left_eye_color
+	character.right_eye_color = right_eye_color
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
 	if(organ_eyes)
-		if(!initial(organ_eyes.eye_color))
-			organ_eyes.eye_color = eye_color
-		organ_eyes.old_eye_color = eye_color
+		if(!initial(organ_eyes.left_eye_color))
+			organ_eyes.left_eye_color = left_eye_color
+			organ_eyes.right_eye_color = right_eye_color
+		organ_eyes.old_left_eye_color = left_eye_color
+		organ_eyes.old_right_eye_color = right_eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
