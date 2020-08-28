@@ -103,14 +103,13 @@ GLOBAL_LIST_EMPTY(explosions)
 	// 3/7/14 will calculate to 80 + 35
 
 	var/far_dist = 0
-	far_dist += heavy_impact_range * 15 //from skyrat13/pull/3295; carry further
+	far_dist += heavy_impact_range * 15 // Large explosions carry further
 	far_dist += devastation_range * 20
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
 		var/sound/explosion_sound = sound(get_sfx("explosion"))
 		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
-		// skyrat-ss13/skyrat13/pull/3295
 		var/sound/creaking_explosion_sound = sound(get_sfx("explosion_creaking"))
 		var/sound/hull_creaking_sound = sound(get_sfx("hull_creaking"))
 		var/sound/explosion_echo_sound = sound('sound/effects/explosion_distant.ogg')
@@ -119,7 +118,6 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		if(prob(devastation_range*30+heavy_impact_range*5) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
 			creaking_explosion = TRUE // prob over 100 always returns true
-		// end port
 
 		for(var/mob/M in GLOB.player_list)
 			// Double check for client
