@@ -660,7 +660,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
-	. = "[dna.species.limbs_id]"
+	. = "[dna.species.mutant_bodyparts["limbs_id"]]"
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"
