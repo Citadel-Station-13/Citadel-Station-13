@@ -366,9 +366,7 @@
 		return ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		if(!current)
-			current = user
-		else if((user != loc) || (current != user))
+		if((user != loc) || (current != user))
 			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 			snap_back()
 
