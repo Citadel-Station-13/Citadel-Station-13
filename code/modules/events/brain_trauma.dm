@@ -14,7 +14,8 @@
 			continue
 		if(!H.getorgan(/obj/item/organ/brain)) // If only I had a brain
 			continue
-
+		if(HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
+			continue
 		traumatize(H)
 		break
 
