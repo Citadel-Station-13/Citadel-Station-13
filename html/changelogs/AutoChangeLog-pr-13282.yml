@@ -1,0 +1,6 @@
+author: "raspy-on-osu"
+delete-after: True
+changes: 
+  - rscadd: "new explosion echoes"
+  - tweak: "explosion echo range"
+  - soundadd: "5 new explosion related sounds"
