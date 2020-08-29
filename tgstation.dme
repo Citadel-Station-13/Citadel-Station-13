@@ -3744,6 +3744,8 @@
 #include "sandcode\code\modules\telescience\telepad.dm"
 #include "sandcode\code\modules\telescience\telesci.dm"
 #include "sandcode\code\modules\telescience\telesci_computer.dm"
+#include "sandcode\code\modules\tgs\chat_commands.dm"
+#include "sandcode\code\modules\tgs\custom_procs.dm"
 #include "sandcode\code\modules\uplink\uplink_items.dm"
 #include "sandcode\code\modules\uplink\uplink_roles.dm"
 #include "sandcode\tools\Redirector\textprocs.dm"
