@@ -22,14 +22,14 @@
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
-Property weights are:
+Property weights are added to the config weight of the ruleset. They are:
 "story_potential" -- essentially how many different ways the antag can be played.
 "trust" -- How much it makes the crew trust each other. Negative values means they're suspicious. Team antags are like this.
 "chaos" -- How chaotic it makes the round. Has some overlap with "valid" and somewhat contradicts "extended".
 "valid" -- How likely the non-antag-enemy crew are to get involved, e.g. nukies encouraging the warden to
            let everyone into the armory, wizard moving around and being a nuisance, nightmare busting lights.
 "extended" -- How much the antag is conducive to a long round. Nukies and cults are bad for this; Wizard is less bad; and so on.
-"conversion" -- Basically a bool. Conversion antags, well, convert. It's its own class for a good reason.
+"conversion" -- Basically a bool. Conversion antags, well, convert. It's in its own class 'cause people kinda hate conversion.
 */
 
 /datum/dynamic_storyteller/proc/start_injection_cooldowns()
