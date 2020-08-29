@@ -674,10 +674,10 @@
 	glove_name_simple = "bone gauntlets"
 
 /obj/item/clothing/gloves/fingerless/pugilist/bone
-	name = "hewn bone claws"
+	name = "hewn bone gauntlets"
 	icon_state = "ling_gauntlets"
 	item_state = "ling_gauntlets"
-	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching the shit out of people, but perhaps not so much for firearms."
+	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching people, not so much for firearms."
 	transfer_prints = TRUE
 	body_parts_covered = ARMS|HANDS
 	cold_protection = ARMS|HANDS
