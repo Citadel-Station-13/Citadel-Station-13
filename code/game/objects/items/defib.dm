@@ -281,6 +281,7 @@
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 	var/disarm_shock_time = 10
 	var/wielded = FALSE // track wielded status on item
+	var/mob/current
 
 /obj/item/shockpaddles/Initialize()
 	. = ..()
@@ -309,12 +310,15 @@
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
+	current = null
 	return ..()
 
 /obj/item/shockpaddles/equipped(mob/user, slot)
 	. = ..()
 	if(!req_defib)
 		return
+	if(!current)
+		current = user
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
 
 /obj/item/shockpaddles/Moved()
@@ -362,7 +366,9 @@
 		return ..()
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		if(user != loc)
+		if(!current)
+			current = user
+		else if((user != loc) || (current != user))
 			to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 			snap_back()
 
