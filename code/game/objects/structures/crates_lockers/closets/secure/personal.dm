@@ -4,11 +4,6 @@
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/examine(mob/user)
-	. = ..()
-	if(registered_name)
-		. += "<span class='notice'>The display reads, \"Owned by [registered_name]\".</span>"
-
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
 	if(prob(50))
