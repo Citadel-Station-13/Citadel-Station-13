@@ -115,6 +115,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	/// Our default override for typing indicator state
 	var/typing_indicator_state
 
+	//the ids you can use for your species, if empty, it means default only and not changeable
+	var/list/allowed_limb_ids
+
 ///////////
 // PROCS //
 ///////////
@@ -122,7 +125,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/New()
 
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
-		limbs_id = id
+		mutant_bodyparts["limbs_id"] = id //done this way to be non-intrusive to the existing system
+	else
+		mutant_bodyparts["limbs_id"] = limbs_id
 	..()
 
 	//update our mutant bodyparts to include unlocked ones

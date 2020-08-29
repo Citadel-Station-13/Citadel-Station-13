@@ -21,6 +21,8 @@
 
 	species_type = "plant"
 
+	allowed_limb_ids = list("pod","mush")
+
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.faction |= "plants"

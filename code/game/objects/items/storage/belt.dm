@@ -478,7 +478,7 @@
 		/obj/item/assembly/signaler,
 		/obj/item/lightreplacer,
 		/obj/item/rcd_ammo,
-		/obj/item/construction/rcd,
+		/obj/item/construction,
 		/obj/item/pipe_dispenser,
 		/obj/item/stack/rods,
 		/obj/item/stack/tile/plasteel,
@@ -492,7 +492,7 @@
 	icon_state = "grenadebeltnew"
 	item_state = "security"
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	
+
 /obj/item/storage/belt/grenade/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)

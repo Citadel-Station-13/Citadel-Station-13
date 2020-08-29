@@ -75,6 +75,7 @@
 #define VV_HK_MARK "mark"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
+#define VV_HK_VIEW_REFERENCES "viewreferences"
 
 // /datum/gas_mixture
 #define VV_HK_SET_MOLES "set_moles"

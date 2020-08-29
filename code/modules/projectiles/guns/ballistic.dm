@@ -53,6 +53,8 @@
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
+		if(AM.load_delay && !do_after(user, AM.load_delay, target = src))
+			return FALSE
 		if (!magazine && istype(AM, mag_type))
 			if(user.transferItemToLoc(AM, src))
 				magazine = AM

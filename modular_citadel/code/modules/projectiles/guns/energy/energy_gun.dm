@@ -14,16 +14,16 @@ obj/item/gun/energy/e_gun/cx
 	flight_y_offset = 10
 	var/body_color = "#252528"
 
-obj/item/gun/energy/e_gun/cx/update_icon()
-	..()
+obj/item/gun/energy/e_gun/cx/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+obj/item/gun/energy/e_gun/cx/update_overlays()
+	. = ..()
 	var/mutable_appearance/body_overlay = mutable_appearance('modular_citadel/icons/obj/guns/cit_guns.dmi', "cxegun_body")
 	if(body_color)
 		body_overlay.color = body_color
-	add_overlay(body_overlay)
-
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+	. += body_overlay
 
 obj/item/gun/energy/e_gun/cx/AltClick(mob/living/user)
 	. = ..()

@@ -252,6 +252,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/timestop
 	name = "temporal katana"
 	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
+	icon_state = "temporalkatana"
+	item_state = "temporalkatana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	block_chance = 0 // oops
 	force = 27.5 // oops
 	item_flags = ITEM_CAN_PARRY
@@ -263,6 +267,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		flynn.emote("smirk")
 	new /obj/effect/timestop/magic(get_turf(owner), 1, 50, list(owner)) // null roddies counter
 
+/obj/item/katana/timestop/suicide_act(mob/living/user) // stolen from hierophant staff
+	new /obj/effect/timestop/magic(get_turf(user), 1, 50, list(user)) // free usage for dying
+	user.visible_message("<span class='suicide'>[user] poses menacingly with the [src]! It looks like [user.p_theyre()] trying to teleport behind someone!</span>")
+	user.say("Heh.. Nothing personnel, kid..", forced = "temporal katana suicide")
+	sleep(20)
+	if(!user)
+		return
+	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and burning embers, likely off to style on some poor sod in the distance!</span>")
+	playsound(user,'sound/magic/blink.ogg', 75, TRUE)
+	for(var/obj/item/I in user)
+		if(I != src)
+			user.dropItemToGround(I)
+	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
+	qdel(user)
+
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
 	desc = "A space-Japanese training sword made of wood and shaped like a katana."
@@ -272,7 +291,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 9
+	force = 7 //how much harm mode damage we do
+	var/stamina_damage_increment = 4 //how much extra damage do we do when in non-harm mode
 	throwforce = 10
 	damtype = STAMINA
 	attack_verb = list("whacked", "smacked", "struck")
@@ -323,17 +343,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/bokken/Initialize()
 	. = ..()
 	AddElement(/datum/element/sword_point)
+	if(!harm) //if initialised in non-harm mode, setup force accordingly
+		force = force + stamina_damage_increment
 
 /obj/item/melee/bokken/attack_self(mob/user)
 	harm = !harm
 	if(harm)
-		force -= 2
+		force -= stamina_damage_increment
 		damtype = BRUTE
 		attack_verb = list("bashed", "smashed", "attacked")
 		bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
 		wound_bonus = 0
 	else
-		force += 2
+		force += stamina_damage_increment
 		damtype = STAMINA
 		attack_verb = list("whacked", "smacked", "struck")
 		bare_wound_bonus = 0
