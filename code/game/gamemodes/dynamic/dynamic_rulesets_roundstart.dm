@@ -160,6 +160,7 @@
 	cost = 25
 	scaling_cost = 15
 	requirements = list(60,60,60,55,50,50,50,50,50,50)
+	property_weights = list("story_potential" = 1, "trust" = -1, "chaos" = 2, "extended" = -1, "valid" = 2)
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 
 
