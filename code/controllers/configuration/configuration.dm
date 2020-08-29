@@ -112,7 +112,9 @@
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	var/list/postload_required = list()
+	var/linenumber = 0
 	for(var/L in lines)
+		linenumber++
 		L = trim(L)
 		if(!L)
 			continue
@@ -140,7 +142,7 @@
 
 		if(entry == "$include")
 			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
+				log_config("LINE [linenumber]: Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
 				++.
@@ -148,7 +150,7 @@
 
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			log_config("Unknown setting in configuration: '[entry]'")
+			log_config("LINE [linenumber]: Unknown setting in configuration: '[entry]'")
 			continue
 
 		if(lockthis)
@@ -158,7 +160,7 @@
 			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
 			var/new_value = E.DeprecationUpdate(value)
 			var/good_update = istext(new_value)
-			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
+			log_config("LINE [linenumber]: Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			if(!warned_deprecated_configs)
 				DelayedMessageAdmins("This server is using deprecated configuration settings. Please check the logs and update accordingly.")
 				warned_deprecated_configs = TRUE
@@ -170,10 +172,10 @@
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
-			log_config("Failed to validate setting \"[value]\" for [entry]")
+			log_config("LINE [linenumber]: Failed to validate setting \"[value]\" for [entry]")
 		else
 			if(E.modified && !E.dupes_allowed)
-				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+				log_config("LINE [linenumber]: Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 		if(E.postload_required)
 			postload_required[E] = TRUE
 
@@ -199,6 +201,20 @@
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 	stat("[name]:", statclick)
+
+/// Your typical GET but returns a config.
+/datum/controller/configuration/proc/GetEntryDatum(entry_type)
+	var/datum/config_entry/E = entry_type
+	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+	if(entry_is_abstract)
+		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+	E = entries_by_type[entry_type]
+	if(!E)
+		CRASH("Missing config entry for [entry_type]!")
+	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
+	return E
 
 /datum/controller/configuration/proc/Get(entry_type)
 	var/datum/config_entry/E = entry_type
