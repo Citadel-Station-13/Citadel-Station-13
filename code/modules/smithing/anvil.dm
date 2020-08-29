@@ -112,10 +112,10 @@
 	var/list/shapingsteps = list("weak hit", "strong hit", "heavy hit", "fold", "draw", "shrink", "bend", "punch", "upset") //weak/strong/heavy hit affect strength. All the other steps shape.
 	workpiece_state = WORKPIECE_INPROGRESS
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
-	var/steptime = 100
+	var/steptime = 50
 	if(user.mind.skill_holder)
 		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dorfy/blacksmithing)/10 + 1
-		steptime = 100 / skillmod
+		steptime = 50 / skillmod
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	if(!do_after(user, steptime, target = src))
 		return FALSE
