@@ -348,10 +348,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/revolver/doublebarrel/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/revolver/doublebarrel/improvised/update_overlays()
+	. = ..()
 	if(slung)
-		icon_state += "sling"
+		. += "[icon_state]sling"
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()

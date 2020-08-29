@@ -95,6 +95,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 	. = ..()
 	update_icon()
 
+/obj/machinery/newscaster/attack_ghost(mob/dead/observer/user)
+	if(istype(user))
+		user.read_news()
+
 /obj/machinery/newscaster/ui_interact(mob/user)
 	. = ..()
 	if(ishuman(user) || issilicon(user))

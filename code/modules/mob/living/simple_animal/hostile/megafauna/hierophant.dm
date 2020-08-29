@@ -37,7 +37,6 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "hierophant"
 	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
-	threat = 30
 	health = 2500
 	maxHealth = 2500
 	attack_verb_continuous = "clubs"
@@ -662,7 +661,7 @@ Difficulty: Normal
 				continue
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, BURN, 0, 0)
+		M.take_damage(damage, BURN, 0, 0, null, 50)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"

@@ -289,50 +289,57 @@
 		return FALSE
 	return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
 
-/mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
+/mob/living/silicon/robot/proc/attempt_welder_repair(obj/item/weldingtool/W, mob/user)
+	if (!getBruteLoss())
+		to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+		return
+	if (!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+		return
+	user.DelayNextAction(CLICK_CD_MELEE)
+	if(src == user)
+		to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
+		if(!W.use_tool(src, user, 50))
+			return
+		adjustBruteLoss(-10)
+	else
+		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+		if(!do_after(user, 30, target = src))
+			return
+		adjustBruteLoss(-30)
+	updatehealth()
+	add_fingerprint(user)
+	visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+
+/mob/living/silicon/robot/proc/attempt_cable_repair(obj/item/stack/cable_coil/W, mob/user)
+	if (getFireLoss() > 0 || getToxLoss() > 0)
 		user.DelayNextAction(CLICK_CD_MELEE)
-		if (!getBruteLoss())
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
-			return
-		if (!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
-			return
 		if(src == user)
 			to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
-			if(!W.use_tool(src, user, 50))
+			if(!W.use_tool(src, user, 50, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
+				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 				return
-			adjustBruteLoss(-10)
+			adjustFireLoss(-10)
+			adjustToxLoss(-10)
 		else
 			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-			if(!do_after(user, 30, target = src))
+			if(!W.use_tool(src, user, 30, 1))
+				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 				return
-			adjustBruteLoss(-30)
-		updatehealth()
-		add_fingerprint(user)
-		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+			adjustFireLoss(-30)
+			adjustToxLoss(-30)
+			updatehealth()
+			user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+	else
+		to_chat(user, "The wires seem fine, there's no need to fix them.")
+
+/mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
+		INVOKE_ASYNC(src, .proc/attempt_welder_repair, W, user)
 		return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
-		user.DelayNextAction(CLICK_CD_MELEE)
-		if (getFireLoss() > 0 || getToxLoss() > 0)
-			if(src == user)
-				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
-				if(!W.use_tool(src, user, 50, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
-					to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
-					return
-				adjustFireLoss(-10)
-				adjustToxLoss(-10)
-			else
-				to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-				if(!W.use_tool(src, user, 30, 1))
-					to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
-					return
-				adjustFireLoss(-30)
-				adjustToxLoss(-30)
-				updatehealth()
-				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
-		else
-			to_chat(user, "The wires seem fine, there's no need to fix them.")
+		INVOKE_ASYNC(src, .proc/attempt_cable_repair, W, user)
+		return
 
 	else if(istype(W, /obj/item/crowbar))	// crowbar means open or close the cover
 		if(opened)

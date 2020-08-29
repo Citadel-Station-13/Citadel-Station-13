@@ -58,6 +58,10 @@
 	dimension_y = 34
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
+/datum/sprite_accessory/deco_wings/atlas
+	name = "Atlas"
+	icon_state = "atlas"
+
 /datum/sprite_accessory/deco_wings/bat
 	name = "Bat"
 	icon_state = "bat"
@@ -66,6 +70,10 @@
 	name = "Bee"
 	icon_state = "bee"
 
+/datum/sprite_accessory/deco_wings/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
+
 /datum/sprite_accessory/deco_wings/fairy
 	name = "Fairy"
 	icon_state = "fairy"
@@ -73,14 +81,6 @@
 /datum/sprite_accessory/deco_wings/feathery
 	name = "Feathery"
 	icon_state = "feathery"
-
-/datum/sprite_accessory/deco_wings/atlas
-	name = "Atlas"
-	icon_state = "atlas"
-
-/datum/sprite_accessory/deco_wings/deathhead
-	name = "Deathshead"
-	icon_state = "deathhead"
 
 /datum/sprite_accessory/deco_wings/firewatch
 	name = "Firewatch"
@@ -150,6 +150,10 @@
 	icon_state = "none"
 	relevant_layers = null
 
+/datum/sprite_accessory/insect_wings/atlas
+	name = "Atlas"
+	icon_state = "atlas"
+
 /datum/sprite_accessory/insect_wings/bat
 	name = "Bat"
 	icon_state = "bat"
@@ -157,6 +161,10 @@
 /datum/sprite_accessory/insect_wings/bee
 	name = "Bee"
 	icon_state = "bee"
+
+/datum/sprite_accessory/insect_wings/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
 
 /datum/sprite_accessory/insect_wings/fairy
 	name = "Fairy"
@@ -166,14 +174,6 @@
 	name = "Feathery"
 	icon_state = "feathery"
 
-/datum/sprite_accessory/insect_wings/atlas
-	name = "Atlas"
-	icon_state = "atlas"
-
-/datum/sprite_accessory/insect_wings/deathhead
-	name = "Deathshead"
-	icon_state = "deathhead"
-
 /datum/sprite_accessory/insect_wings/firewatch
 	name = "Firewatch"
 	icon_state = "firewatch"
@@ -181,6 +181,10 @@
 /datum/sprite_accessory/insect_wings/gothic
 	name = "Gothic"
 	icon_state = "gothic"
+
+/datum/sprite_accessory/insect_wings/jungle
+	name = "Jungle"
+	icon_state = "jungle"
 
 /datum/sprite_accessory/insect_wings/lovers
 	name = "Lovers"
@@ -197,6 +201,10 @@
 /datum/sprite_accessory/insect_wings/moonfly
 	name = "Moon Fly"
 	icon_state = "moonfly"
+
+/datum/sprite_accessory/insect_wings/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
 
 /datum/sprite_accessory/insect_wings/plain
 	name = "Plain"
@@ -229,14 +237,6 @@
 /datum/sprite_accessory/insect_wings/whitefly
 	name = "White Fly"
 	icon_state = "whitefly"
-
-/datum/sprite_accessory/insect_wings/oakworm
-	name = "Oak Worm"
-	icon_state = "oakworm"
-
-/datum/sprite_accessory/insect_wings/jungle
-	name = "Jungle"
-	icon_state = "jungle"
 
 /datum/sprite_accessory/insect_wings/witchwing
 	name = "Witch Wing"

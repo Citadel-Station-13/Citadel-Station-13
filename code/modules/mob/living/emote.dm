@@ -9,6 +9,11 @@
 	key_third_person = "blushes"
 	message = "blushes."
 
+/datum/emote/living/blush/run_emote(mob/user, params)
+	. = ..()
+	if(. && isipcperson(user))
+		do_fake_sparks(5,FALSE,user)
+
 /datum/emote/living/bow
 	key = "bow"
 	key_third_person = "bows"

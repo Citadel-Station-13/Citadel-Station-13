@@ -199,12 +199,16 @@
 
 /obj/item/clothing/gloves/evening
 	name = "evening gloves"
-	desc = "Thin, pretty gloves intended for use in regal feminine attire, but knowing Space China these are just for some maid fetish."
+	desc = "Thin, pretty gloves intended for use in regal feminine attire. A tag on the hem claims they were 'maid' in Space China, these were probably intended for use in some maid fetish."
 	icon_state = "evening"
 	item_state = "evening"
-	strip_delay = 40
-	equip_delay_other = 20
+	transfer_prints = TRUE
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	strip_mod = 0.9
-	custom_price = PRICE_ALMOST_CHEAP
+
+/obj/item/clothing/gloves/evening/black
+	name = "midnight gloves"
+	desc = "Thin, pretty gloves intended for use in sexy feminine attire. A tag on the hem claims they pair great with black stockings."
+	icon_state = "eveningblack"
+	item_state = "eveningblack"
