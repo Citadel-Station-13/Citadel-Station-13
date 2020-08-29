@@ -63,7 +63,7 @@
 	// avoid an infinite loop, but allow falling a large distance
 	if(falling_atoms[AM] && falling_atoms[AM] > 30)
 		return FALSE
-	if(!isliving(AM) && !isobj(AM))
+	if(!isliving(AM) && (!isobj(AM) || AM.anchored))
 		return FALSE
 	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || (AM.movement_type & FLOATING))
 		return FALSE
