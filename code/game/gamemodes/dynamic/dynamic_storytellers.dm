@@ -147,7 +147,7 @@ Property weights are added to the config weight of the ruleset. They are:
 						property_weight += rule.property_weights[property] * property_weights[property]
 				var/threat_weight = 1
 				if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
-					var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+					var/cost_difference = rule.cost-(mode.threat_level-mode.threat)
 					/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
 						pick this particular ruleset.
 						Let's use a toy example: there's 60 threat level and 10 threat spent.
@@ -157,7 +157,9 @@ Property weights are added to the config weight of the ruleset. They are:
 						is 2.26 times as likely to be picked, all other things considered.
 						Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
 					*/
-					threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+					threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,abs(cost_difference),0)))
+					if(cost_difference > 0)
+						threat_weight /= (1+(cost_difference*0.1))
 				var/calced_weight =  (rule.get_weight() + property_weight) * rule.weight_mult * threat_weight
 				if(calced_weight > 0)
 					drafted_rules[rule] = calced_weight
@@ -184,8 +186,10 @@ Property weights are added to the config weight of the ruleset. They are:
 						property_weight += rule.property_weights[property] * property_weights[property]
 				var/threat_weight = 1
 				if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET))
-					var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
-					threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+					var/cost_difference = rule.cost-(mode.threat_level-mode.threat)
+					threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,abs(cost_difference),0)))
+					if(cost_difference > 0)
+						threat_weight /= (1+(cost_difference*0.1))
 				var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult * threat_weight
 				if(calced_weight > 0)
 					drafted_rules[rule] = calced_weight
