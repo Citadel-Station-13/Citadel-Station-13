@@ -514,6 +514,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["scars3"]							>> scars_list["3"]
 	S["scars4"]							>> scars_list["4"]
 	S["scars5"]							>> scars_list["5"]
+	S["chosen_limb_id"]					>> chosen_limb_id
 
 
 	//Custom names
@@ -843,6 +844,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 
 	WRITE_FILE(S["feature_ooc_notes"], features["ooc_notes"])
+
+	WRITE_FILE(S["chosen_limb_id"],   chosen_limb_id)
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

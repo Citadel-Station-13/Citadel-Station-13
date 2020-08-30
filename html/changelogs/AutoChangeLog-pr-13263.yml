@@ -1,0 +1,6 @@
+author: "raspy-on-osu"
+delete-after: True
+changes: 
+  - tweak: "tesla movement priorities"
+  - rscadd: "tesla counterplay"
+  - rscadd: "tesla containment check (containment variable now usable)"

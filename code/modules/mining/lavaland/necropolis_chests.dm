@@ -206,6 +206,8 @@
 			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
 			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
 			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
+    if(32)
+			new /obj/item/disk/tech_disk/illegal(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
