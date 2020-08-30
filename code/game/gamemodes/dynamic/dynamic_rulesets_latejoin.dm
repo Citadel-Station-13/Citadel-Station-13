@@ -193,6 +193,26 @@
 
 //////////////////////////////////////////////
 //                                          //
+//           HERETIC SMUGGLER          		//
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/heretic_smuggler
+	name = "Heretic Smuggler"
+	antag_datum = /datum/antagonist/heretic
+	antag_flag = "latejoin_heretic"
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	restricted_roles = list("AI","Cyborg")
+	required_candidates = 1
+	weight = 4
+	cost = 25
+	requirements = list(60,60,60,55,50,50,50,50,50,50)
+	high_population_requirement = 50
+	property_weights = list("story_potential" = 1, "trust" = -1, "chaos" = 2, "extended" = -1, "valid" = 2)
+	repeatable = TRUE
+
+//////////////////////////////////////////////
+//                                          //
 //               BLOODSUCKERS               //
 //                                          //
 //////////////////////////////////////////////

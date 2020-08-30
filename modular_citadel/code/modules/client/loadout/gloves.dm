@@ -9,6 +9,10 @@
 /datum/gear/gloves/evening
 	name = "Evening gloves"
 	path = /obj/item/clothing/gloves/evening
+	
+/datum/gear/gloves/midnight
+	name = "Midnight gloves"
+	path = /obj/item/clothing/gloves/evening/black
 
 /datum/gear/gloves/goldring
 	name = "A gold ring"
@@ -24,3 +28,7 @@
 	name = "A diamond ring"
 	path = /obj/item/clothing/gloves/ring/diamond
 	cost = 4
+
+/datum/gear/gloves/customring
+	name = "A ring, renameable"
+	path = /obj/item/clothing/gloves/ring/custom

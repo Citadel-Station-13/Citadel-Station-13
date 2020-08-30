@@ -1244,15 +1244,7 @@
 /turf/closed/wall,
 /area/maintenance/starboard/fore)
 "abM" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "abN" = (
@@ -23608,21 +23600,8 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aKB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
@@ -23645,14 +23624,23 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aKF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
-	pixel_y = 32
+/obj/machinery/door/airlock/external{
+	name = "External Airlock";
+	req_access_txt = "13"
 	},
-/turf/open/floor/plating,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/maintenance/port/aft)
 "aKG" = (
 /obj/structure/cable/white{
@@ -39608,9 +39596,17 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "edA" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/external{
+	name = "External Airlock";
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/fore)
 "eew" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -41988,6 +41984,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"saI" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/mob/living/simple_animal/opossum,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "scn" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -42866,9 +42872,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/rust,
 /area/maintenance/starboard)
-"sIO" = (
-/turf/open/space/basic,
-/area/space/nearstation)
 "sIP" = (
 /obj/machinery/vending/cola/random,
 /obj/effect/turf_decal/bot,
@@ -45205,6 +45208,10 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space/station_ruins)
+"uXV" = (
+/mob/living/simple_animal/opossum/poppy,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "ver" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
@@ -71447,7 +71454,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sdX
 uhz
 uhz
 oxn
@@ -71704,7 +71711,7 @@ aac
 aac
 aac
 aac
-aaa
+sdX
 uhz
 iye
 mJP
@@ -79446,7 +79453,7 @@ aFM
 aOH
 aOT
 aPV
-aRm
+uXV
 aSI
 aRC
 aKm
@@ -91206,7 +91213,7 @@ aaa
 aae
 aaa
 aaa
-aac
+bxZ
 abL
 bxZ
 swz
@@ -91463,7 +91470,7 @@ aaa
 aae
 aad
 aac
-bvg
+edA
 abM
 acu
 adt
@@ -91720,7 +91727,7 @@ aad
 aah
 aad
 aad
-aad
+bxZ
 bxZ
 adq
 bxZ
@@ -92526,7 +92533,7 @@ aSD
 aRz
 aRz
 aRz
-sGY
+saI
 aRz
 sIb
 bsD
@@ -93045,7 +93052,7 @@ aRz
 sIc
 sIv
 sFs
-sIO
+aaa
 sIU
 sJe
 sIU
@@ -98463,9 +98470,9 @@ aac
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aac
 aac
 aac
@@ -98720,9 +98727,9 @@ aac
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aac
 aaa
@@ -98977,9 +98984,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -99234,9 +99241,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -99491,9 +99498,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -99748,9 +99755,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -100005,9 +100012,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -100262,9 +100269,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -100519,9 +100526,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -100776,9 +100783,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -101033,9 +101040,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -101290,9 +101297,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -101547,9 +101554,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -101804,9 +101811,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -102061,9 +102068,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -102318,9 +102325,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -102575,9 +102582,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -102832,9 +102839,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -103089,9 +103096,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -103346,9 +103353,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -103603,9 +103610,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -103860,9 +103867,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -104117,9 +104124,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -104374,9 +104381,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -104631,9 +104638,9 @@ jFP
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -104888,9 +104895,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -105145,9 +105152,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa
@@ -105402,9 +105409,9 @@ aaa
 aaa
 aaa
 aaa
-edA
+sdX
 aaa
-edA
+sdX
 aaa
 aaa
 aaa

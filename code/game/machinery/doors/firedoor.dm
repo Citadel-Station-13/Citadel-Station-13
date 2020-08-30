@@ -74,12 +74,6 @@
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating || welded)
 		return
-	if(ismob(AM))
-		var/mob/user = AM
-		if(density && !welded && !operating && !(stat & NOPOWER) && (!density || allow_hand_open(user)))
-			add_fingerprint(user)
-			open()
-			return TRUE
 	return FALSE
 
 /obj/machinery/door/firedoor/power_change()
@@ -90,14 +84,6 @@
 		stat |= NOPOWER
 
 /obj/machinery/door/firedoor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if(!welded && !operating && !(stat & NOPOWER) && (!density || allow_hand_open(user)))
-		add_fingerprint(user)
-		if(density)
-			emergency_close_timer = world.time + 30 // prevent it from instaclosing again if in space
-			open()
-		else
-			close()
-		return TRUE
 	if(operating || !density)
 		return
 
@@ -298,7 +284,7 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
-	flags_1 = ON_BORDER_1
+	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
 	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/border_only/closed
@@ -320,7 +306,7 @@
 				to_chat(M, "<span class='notice'>You pull [M.pulling] through [src] right as it closes</span>")
 				M.pulling.forceMove(T1)
 				M.start_pulling(M2)
-				
+
 	for(var/mob/living/M in T2)
 		if(M.stat == CONSCIOUS && M.pulling && M.pulling.loc == T1 && !M.pulling.anchored && M.pulling.move_resist <= M.move_force)
 			var/mob/living/M2 = M.pulling

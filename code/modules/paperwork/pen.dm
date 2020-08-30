@@ -16,6 +16,8 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pen"
 	item_state = "pen"
+	// inhand_icon_state = "pen"
+	// worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -76,6 +78,22 @@
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 
+/obj/item/pen/charcoal
+	name = "charcoal stylus"
+	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write."
+	icon_state = "pen-charcoal"
+	colour = "dimgray"
+	font = CHARCOAL_FONT
+	custom_materials = null
+	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
+
+/datum/crafting_recipe/charcoal_stylus
+	name = "Charcoal Stylus"
+	result = /obj/item/pen/charcoal
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
+	time = 30
+	category = CAT_PRIMAL
+
 /obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
 	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
@@ -93,6 +111,7 @@
 						"Black and Silver" = "pen-fountain-b",
 						"Command Blue" = "pen-fountain-cb"
 						)
+	embedding = list("embed_chance" = 75)
 
 /obj/item/pen/fountain/captain/Initialize()
 	. = ..()
@@ -139,20 +158,18 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			if(oldname == input)
-				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
 			else
 				O.name = input
-				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
 				O.renamedByPlayer = TRUE
-				log_game("[user] [key_name(user)] has renamed [O] to [input]")
 
 		if(penchoice == "Change description")
 			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			O.desc = input
-			to_chat(user, "You have successfully changed \the [O.name]'s description.")
-			log_game("[user] [key_name(user)] has changed [O]'s description to to [input]")
+			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
 
 /*
  * Sleepypens
@@ -181,9 +198,10 @@
  */
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	// attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
+	// attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	var/on = FALSE
-	embedding = list(embed_chance = EMBED_CHANCE)
 
 /obj/item/pen/edagger/ComponentInitialize()
 	. = ..()
@@ -193,29 +211,38 @@
 /obj/item/pen/edagger/get_sharpness()
 	return on * sharpness
 
+/obj/item/pen/edagger/suicide_act(mob/user)
+	. = BRUTELOSS
+	if(on)
+		user.visible_message("<span class='suicide'>[user] forcefully rams the pen into their mouth!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		attack_self(user)
+
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
 		on = FALSE
 		force = initial(force)
+		throw_speed = initial(throw_speed)
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
-		embedding = null
+		embedding = list(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
-		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
-		updateEmbedding()
 	else
 		on = TRUE
 		force = 18
+		throw_speed = 4
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embedding = list(embed_chance = 100, fall_chance = 0) //rule of cool
+		embedding = list(embed_chance = 100) //rule of cool
 		throwforce = 35
-		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-		updateEmbedding()
+	updateEmbedding()
 	update_icon()
 
 /obj/item/pen/edagger/update_icon_state()
@@ -235,6 +262,8 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "digging_pen"
 	item_state = "pen"
+	// inhand_icon_state = "pen"
+	// worn_icon_state = "pen"
 	force = 3
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)

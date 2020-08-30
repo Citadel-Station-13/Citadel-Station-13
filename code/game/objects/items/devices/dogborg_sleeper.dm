@@ -163,12 +163,13 @@
 		return
 	ui_interact(user)
 
-/obj/item/dogborg/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+/obj/item/dogborg/sleeper/ui_state(mob/user)
+	return GLOB.notcontained_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/dogborg/sleeper/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "dogborg_sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, "dogborg_sleeper", name, 375, 550) //UI DOES NOT EXIST
 		ui.open()
 
 /obj/item/dogborg/sleeper/ui_data()

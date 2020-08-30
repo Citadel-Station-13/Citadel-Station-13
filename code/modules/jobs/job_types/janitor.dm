@@ -10,6 +10,7 @@
 	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/janitor
+	plasma_outfit = /datum/outfit/plasmaman/janitor
 
 	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)

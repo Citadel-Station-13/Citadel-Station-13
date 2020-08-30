@@ -35,18 +35,20 @@
 
 	return destinations
 
-/obj/item/wormhole_jaunter/proc/activate(mob/user, adjacent)
+/obj/item/wormhole_jaunter/proc/activate(mob/user, adjacent, force_entry = FALSE)
 	if(!turf_check(user))
 		return
 
 	var/list/L = get_destinations(user)
 	if(!L.len)
-		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
+		to_chat(user, "<span class='notice'>The [name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
+	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
 	if(adjacent)
 		try_move_adjacent(J)
+	if(force_entry)
+		J.teleport(user, force = TRUE)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
 
@@ -73,7 +75,7 @@
 	if(user.get_item_by_slot(SLOT_BELT) == src)
 		to_chat(user, "Your [name] activates, saving you from the chasm!</span>")
 		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
-		activate(user, FALSE)
+		activate(user, FALSE, TRUE)
 	else
 		to_chat(user, "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
@@ -84,9 +86,10 @@
 	icon_state = "bhole3"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 	mech_sized = TRUE //save your ripley
+	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 	innate_accuracy_penalty = 6
 
-/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M, force = FALSE)
 	. = ..()
 	if(.)
 		// KERPLUNK

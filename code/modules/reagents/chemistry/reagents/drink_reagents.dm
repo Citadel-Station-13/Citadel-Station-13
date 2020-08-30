@@ -329,7 +329,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "sweet red tea"
-	glass_icon_state = "teaglass"
+	glass_icon_state = "tea_red"
 	glass_name = "glass of red tea"
 	glass_desc = "A piping hot tea that helps with the digestion of food."
 
@@ -340,6 +340,7 @@
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.adjust_bodytemperature(23 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
 	. = 1
 
 /datum/reagent/consumable/tea/green
@@ -348,7 +349,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "tart green tea"
-	glass_icon_state = "teaglass"
+	glass_icon_state = "tea_green"
 	glass_name = "glass of tea"
 	glass_desc = "A calming glass of green tea to help get you through the day."
 
@@ -358,6 +359,7 @@
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
 	. = 1
 
 /datum/reagent/consumable/tea/forest
@@ -367,7 +369,7 @@
 	nutriment_factor = 0
 	quality = DRINK_NICE
 	taste_description = "sweet tea"
-	glass_icon_state = "teaglass"
+	glass_icon_state = "tea_forest"
 	glass_name = "glass of forest tea"
 	glass_desc = "A lovely glass of tea and honey."
 
@@ -379,6 +381,7 @@
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
 	. = 1
 
 /datum/reagent/consumable/tea/mush
@@ -388,7 +391,7 @@
 	nutriment_factor = 0
 	quality = DRINK_NICE
 	taste_description = "fungal infections"
-	glass_icon_state = "teaglass"
+	glass_icon_state = "tea_mush"
 	glass_name = "glass of mush tea"
 	glass_desc = "A cold merky brown tea."
 
@@ -398,6 +401,7 @@
 		M.Dizzy(10)
 	if(prob(10))
 		M.disgust = 0
+	..()
 	. = 1
 
 /datum/reagent/consumable/lemonade
@@ -1044,12 +1048,6 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "Backrubs would be nice.", "Mew")]</span>")
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/list/adjusted = H.adjust_arousal(5,aphro = TRUE)
-		for(var/g in adjusted)
-			var/obj/item/organ/genital/G = g
-			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
 	..()
 
 /datum/reagent/consumable/monkey_energy

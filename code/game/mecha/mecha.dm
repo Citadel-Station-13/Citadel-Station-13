@@ -153,6 +153,9 @@
 /obj/mecha/get_cell()
 	return cell
 
+/obj/mecha/rust_heretic_act()
+	take_damage(500,  BRUTE)
+
 /obj/mecha/Destroy()
 	go_out()
 	var/mob/living/silicon/ai/AI

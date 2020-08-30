@@ -61,7 +61,7 @@
 		mutant_organs = S.mutant_organs.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
-		limbs_id = S.limbs_id
+		limbs_id = S.mutant_bodyparts["limbs_id"]
 		use_skintones = S.use_skintones
 		fixed_mut_color = S.fixed_mut_color
 		hair_color = S.hair_color
@@ -100,13 +100,11 @@
 	else
 		return ..()
 
-
 /datum/species/synth/handle_body(mob/living/carbon/human/H)
 	if(fake_species)
 		fake_species.handle_body(H)
 	else
 		return ..()
-
 
 /datum/species/synth/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	if(fake_species)

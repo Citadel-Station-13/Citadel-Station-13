@@ -164,10 +164,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/shotgun/boltaction/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/shotgun/boltaction/improvised/update_overlays()
+	. = ..()
 	if(slung)
-		icon_state += "sling"
+		. += "[icon_state]sling"
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -272,7 +272,7 @@
 		spread = 2
 	update_icon()
 
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon()
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon_state()
 	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
 
 //Dual Feed Shotgun

@@ -4,10 +4,16 @@
 	antagpanel_category = "Blob"
 	show_to_ghosts = TRUE
 	job_rank = ROLE_BLOB
-	threat = 20
+	threat = 50
 	var/datum/action/innate/blobpop/pop_action
 	var/starting_points_human_blob = 60
 	var/point_rate_human_blob = 2
+
+/datum/antagonist/blob/threat()
+	. = ..()
+	if(isovermind(owner.current))
+		var/mob/camera/blob/overmind = owner.current
+		. *= (overmind.blobs_legit.len / overmind.max_count)
 
 /datum/antagonist/blob/roundend_report()
 	var/basic_report = ..()

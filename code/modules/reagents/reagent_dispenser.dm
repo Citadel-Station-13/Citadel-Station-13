@@ -24,7 +24,8 @@
 
 /obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
-	reagents.add_reagent(reagent_id, tank_volume)
+	if(reagent_id)
+		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
 
 /obj/structure/reagent_dispensers/proc/boom()
@@ -91,6 +92,38 @@
 	user.put_in_hands(S)
 	paper_cups--
 
+/obj/structure/reagent_dispensers/plumbed
+	name = "stationairy water tank"
+	anchored = TRUE
+	icon_state = "water_stationairy"
+	desc = "A stationairy, plumbed, water tank."
+
+/obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
+
+/obj/structure/reagent_dispensers/plumbed/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		user.visible_message("<span class='notice'>[user.name] [anchored ? "fasten" : "unfasten"] [src]</span>", \
+		"<span class='notice'>You [anchored ? "fasten" : "unfasten"] [src]</span>")
+		var/datum/component/plumbing/CP = GetComponent(/datum/component/plumbing)
+		if(anchored)
+			CP.enable()
+		else
+			CP.disable()
+
+/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/simple_supply)
+
+/obj/structure/reagent_dispensers/plumbed/storage
+	name = "stationairy storage tank"
+	icon_state = "tank_stationairy"
+	reagent_id = null //start empty
+
+/obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/tank)
+	
 //////////////
 //Fuel Tanks//
 //////////////
@@ -222,19 +255,6 @@
 	icon_state = "orangekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/mead
 
-/obj/structure/reagent_dispensers/keg/aphro
-	name = "keg of aphrodisiac"
-	desc = "A keg of aphrodisiac."
-	icon_state = "pinkkeg"
-	reagent_id = /datum/reagent/drug/aphrodisiac
-	tank_volume = 150
-
-/obj/structure/reagent_dispensers/keg/aphro/strong
-	name = "keg of strong aphrodisiac"
-	desc = "A keg of strong and addictive aphrodisiac."
-	reagent_id = /datum/reagent/drug/aphrodisiacplus
-	tank_volume = 120
-
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
 	desc = "A keg of pasteurised, homogenised, filtered and semi-skimmed space milk."
@@ -284,5 +304,3 @@
 	icon_state = "bluekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/neurotoxin
 	tank_volume = 100 //2.5x less than the other kegs because it's harder to get
-
-

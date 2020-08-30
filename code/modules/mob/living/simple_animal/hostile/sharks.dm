@@ -19,7 +19,6 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	speed = 0
-	threat = 1
 	maxHealth = 75
 	health = 75
 	harm_intent_damage = 18
