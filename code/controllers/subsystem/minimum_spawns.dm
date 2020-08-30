@@ -90,12 +90,6 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 	return ..()
 
 /datum/controller/subsystem/min_spawns/proc/where_we_droppin_boys()
-	// let's figure out what megas we dont specifically need to spawn
-	if(!snaxi_snowflake_check) // all snaxi megas are spawned in specific ruins
-		for(var/mob/living/simple_animal/hostile/megafauna/M in GLOB.mob_list)
-			if(active_spawns.Find(M.type, 1, active_spawns.len))
-				var/tocut = active_spawns.Find(M.type, 1, active_spawns.len)
-				active_spawns.Cut(tocut,tocut+1)
 	while(active_spawns.len)
 		where_we_droppin_boys_iterations++
 		CHECK_TICK
@@ -145,7 +139,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 				active_spawns_2.Add(MS2_tospawn)
 				return //let's try not to dump megas too close to each other?	
 			if((istype(MS2_tospawn, /obj/structure/spawner)) && get_dist(RT, LT) <= 40)
-				active_spawns.Add(MS2_tospawn)
+				active_spawns_2.Add(MS2_tospawn)
 				return //let's at least /try/ to space these out?
 			// man the overhead on this is gonna SUCK
 		new MS2_tospawn(RT)
