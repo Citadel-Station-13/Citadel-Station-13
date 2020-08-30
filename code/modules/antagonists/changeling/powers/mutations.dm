@@ -683,16 +683,18 @@
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	enhancement = 15 // it's not an armblade but it's Violence, alright
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+	enhancement = 15 // first, do harm. all of it. all of the harm. just fuck em up.
 	var/wound_enhancement = 20
 	inherited_trait = TRAIT_CHUNKYFINGERS // dummy thicc bone hands
 	secondary_trait = TRAIT_STRONG_GRABBER // grab them and then punch their head off
+	var/tertiary_trait = TRAIT_MAULER // stamina damage? no thanks, bro
 	var/fasthands = TRUE
 
 /obj/item/clothing/gloves/fingerless/pugilist/bone/examine(mob/user)
 	. = ..()
-	. += " [src] are throwing [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
-	. += " Alt-click them to change between rapid strikes and strong blows."
+	. += "[src] are attacking with [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
+	. += "Alt-click them to change between rapid strikes and strong blows."
 
 /obj/item/clothing/gloves/fingerless/pugilist/bone/AltClick(mob/user)
 	. = ..()
@@ -701,14 +703,9 @@
 		enhancement = initial(enhancement)
 		wound_enhancement = initial(enhancement)
 	else
-		enhancement = initial(enhancement) * 3 // punch the head off a man
-		wound_enhancement = initial(enhancement) * 3 // do it do it do it do it
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(locate(src) in H.gloves)
-			src.dropped(H)
-			src.equipped(H, SLOT_GLOVES)
-	to_chat(user, "<span class='notice'>With [src], you are now throwing [fasthands ? "fast, precise strikes" : "crippling, damaging blows"].</span>")
+		enhancement = initial(enhancement) * 2 // punch the head off a man
+		wound_enhancement = initial(enhancement) * 2 // do it do it do it do it
+	to_chat(user, "<span class='notice'>With [src], you are now attacking with [fasthands ? "fast, precise strikes" : "crippling, damaging blows"].</span>")
 
 /obj/item/clothing/gloves/fingerless/pugilist/bone/Initialize()
 	. = ..()
@@ -719,10 +716,12 @@
 	if(slot == SLOT_GLOVES)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
+			ADD_TRAIT(H, tertiary_trait, GLOVE_TRAIT)
 			H.dna.species.punchwoundbonus += wound_enhancement
 
 /obj/item/clothing/gloves/fingerless/pugilist/bone/dropped(mob/user)
 	. = ..()
+	REMOVE_TRAIT(user, tertiary_trait, GLOVE_TRAIT)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.dna.species.punchwoundbonus -= wound_enhancement
