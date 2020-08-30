@@ -36,26 +36,26 @@
     'border-color': #CFBA47,
   ));
   @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-background': #886a09,
+    'background-color': #886a09,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
     'border-color': #CFBA47,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': #2D1400, // 'border-color': #170800
+    'background-color': #2D1400, // 'border-color': #170800
   ));
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css('../components/Tooltip.scss', $with: (
-    'color-background': #2D1400,
+    'background-color': #2D1400,
   ));
 
   // Layouts
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'color-text': #CFBA47,
-    'color-background': #2D1400, // 'border-color': #170800
-    'color-shadow-core': #170800,
+    'text-color': #CFBA47,
+    'background-color': #2D1400, // 'border-color': #170800
+    'shadow-color-core': #170800,
   ));
 
   .Layout__content {
