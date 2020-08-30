@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - rscdel: "teleport-to-ark ability of the eminence, commented out"
+  - rscadd: "teleport-to-obelisk ability for the eminence"
