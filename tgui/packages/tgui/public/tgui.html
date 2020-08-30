@@ -223,6 +223,8 @@ window.onerror = function (msg, url, line, col, error) {
   // Prevent default action
   return true;
 };
+// Catch unhandled rejections
+window.onunhandledrejection = window.onerror;
 
 // Helper for augmenting stack traces on fatal errors
 window.__augmentStack__ = function (stack, error) {
