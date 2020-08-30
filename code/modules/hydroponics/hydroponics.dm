@@ -79,24 +79,6 @@
 
 	return ..()
 
-/obj/machinery/hydroponics/proc/FindConnected()
-	var/list/connected = list()
-	var/list/processing_atoms = list(src)
-
-	while(processing_atoms.len)
-		var/atom/a = processing_atoms[1]
-		for(var/step_dir in GLOB.cardinals)
-			var/obj/machinery/hydroponics/h = locate() in get_step(a, step_dir)
-			// Soil plots aren't dense
-			if(h && h.using_irrigation && h.density && !(h in connected) && !(h in processing_atoms))
-				processing_atoms += h
-
-		processing_atoms -= a
-		connected += a
-
-	return connected
-
-
 /obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
@@ -132,12 +114,15 @@
 			needs_update = 1
 
 //Nutrients//////////////////////////////////////////////////////////////
-			// Nutrients deplete slowly
-			if(prob(50))
-				adjustNutri(-1 / rating)
-
+			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
+			apply_chemicals(lastuser)
+			if(self_sustaining)
+				reagents.remove_any(min(0.5, nutridrain))
+			else
+				reagents.remove_any(nutridrain)
+			
 			// Lack of nutrients hurts non-weeds
-			if(nutrilevel <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-rand(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
@@ -163,7 +148,7 @@
 					adjustHealth(-rand(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
-			else if(waterlevel > 10 && nutrilevel > 0)
+			else if(waterlevel > 10 && reagents.total_volume > 0)
 				adjustHealth(rand(1,2) / rating)
 				if(myseed && prob(myseed.weed_chance))
 					adjustWeeds(myseed.weed_rate)
@@ -208,6 +193,21 @@
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-1 / rating)
 
+//This is where stability mutations exist now.
+			if(myseed.instability >= 80)
+				var/mutation_chance = myseed.instability - 75
+				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
+			if(myseed.instability >= 60)
+				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
+					mutatespecie()
+					myseed.instability = myseed.instability/2
+			if(myseed.instability >= 40)
+				if(prob(myseed.instability))
+					hardmutate()
+			if(myseed.instability >= 20 )
+				if(prob(myseed.instability))
+					mutate()
+
 //Health & Age///////////////////////////////////////////////////////////
 
 			// Plant dies if plant_health <= 0
@@ -250,25 +250,6 @@
 					selectedtrait.on_grow(src)
 	return
 
-/obj/machinery/hydroponics/proc/nutrimentMutation()
-	if (mutmod == 0)
-		return
-	if (mutmod == 1)
-		if(prob(80))		//80%
-			mutate()
-		else if(prob(75))	//15%
-			hardmutate()
-		return
-	if (mutmod == 2)
-		if(prob(50))		//50%
-			mutate()
-		else if(prob(50))	//25%
-			hardmutate()
-		else if(prob(50))	//12.5%
-			mutatespecie()
-		return
-	return
-
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
 	cut_overlays()
@@ -294,15 +275,6 @@
 			set_light(0)
 
 	return
-
-/obj/machinery/hydroponics/proc/update_icon_hoses()
-	var/n = 0
-	for(var/Dir in GLOB.cardinals)
-		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
-		if(t && t.using_irrigation && using_irrigation)
-			n += Dir
-
-	icon_state = "hoses-[n]"
 
 /obj/machinery/hydroponics/proc/update_icon_plant()
 	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
