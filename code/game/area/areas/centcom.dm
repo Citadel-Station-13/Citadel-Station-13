@@ -29,6 +29,18 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/holding/cafe
+	name = "Ghost Cafe"
+	noteleport = TRUE
+
+/area/centcom/holding/cafe/Initialize()
+	. = ..()
+	AddElement(/datum/element/area_adds_trait,TRAIT_PACIFISM,"cafe_pacifism")
+
+/area/centcom/holding/cafewar
+	noteleport = TRUE
+	name = "Ghost Cafe Combat Zone"
+
 /area/centcom/vip
 	name = "VIP Zone"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED

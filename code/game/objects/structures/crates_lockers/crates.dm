@@ -244,3 +244,40 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/coin/silver(src)
+
+/obj/structure/closet/crate/engineering/supply
+	name = "supply crate"
+	desc = "It's an emergency storage closet for repairs."
+
+/obj/structure/closet/crate/engineering/supply/PopulateContents()
+	var/list/resources = list(
+	/obj/item/stack/cable_coil,
+	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/mineral/gold,
+	/obj/item/stack/sheet/mineral/silver,
+	/obj/item/stack/sheet/mineral/plasma,
+	/obj/item/stack/sheet/mineral/uranium,
+	/obj/item/stack/sheet/mineral/sandstone,
+	/obj/item/stack/sheet/mineral/diamond,
+	/obj/item/stack/sheet/mineral/bananium,
+	/obj/item/stack/sheet/plasteel,
+	/obj/item/stack/sheet/mineral/titanium,
+	/obj/item/stack/sheet/mineral/plastitanium,
+	/obj/item/stack/rods,
+	/obj/item/stack/sheet/bluespace_crystal,
+	/obj/item/stack/sheet/mineral/abductor,
+	/obj/item/stack/sheet/plastic,
+	/obj/item/stack/sheet/mineral/wood,
+	/obj/item/stack/sheet/bronze,
+	/obj/item/stack/sheet/cloth,
+	/obj/item/stack/sheet/plastitaniumglass,
+	/obj/item/stack/sheet/plasmaglass,
+	/obj/item/stack/sheet/runed_metal,
+	/obj/item/stack/sheet/sandblock,
+	/obj/item/stack/sheet/titaniumglass,
+	)
+
+	for(var/res in resources)
+		var/obj/item/stack/R = res
+		new res(src, initial(R.max_amount))

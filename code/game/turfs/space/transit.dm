@@ -54,6 +54,25 @@
 	if(!locate(/obj/structure/lattice) in src)
 		throw_atom(AM)
 
+/turf/open/space/transit/ghost_cafe
+
+/turf/open/space/transit/ghost_cafe/Entered(atom/movable/AM, atom/OldLoc)
+	..()
+	throw_atom(AM)
+
+/turf/open/space/transit/ghost_cafe/Crossed(atom/movable/AM)
+	..()
+	throw_atom(AM)
+
+/turf/open/space/transit/ghost_cafe/throw_atom(atom/movable/AM)
+	if(!AM || istype(AM, /obj/docking_port))
+		return
+	if(AM.loc != src)
+		return
+	if(istype(AM, /mob/living))
+		to_chat(AM, "<span class='notice'>You blink and suddenly find yourself in the Ghost Cafe</span>")
+	AM.forceMove(get_turf(pick(GLOB.ghost_cafe_spawns)))
+
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
 	set waitfor = FALSE
 	if(!AM || istype(AM, /obj/docking_port))

@@ -442,6 +442,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "generic_event"
 	layer = HIGH_LANDMARK_LAYER
 
+/obj/effect/landmark/ghost_cafe
+	name = "ghost cafe"
+	icon_state = "city_of_cogs"
+
+/obj/effect/landmark/ghost_cafe/Initialize(mapload)
+	..()
+	GLOB.ghost_cafe_spawns += loc
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/event_spawn/New()
 	..()

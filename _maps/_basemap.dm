@@ -1,6 +1,7 @@
 //#define LOWMEMORYMODE //uncomment this to load centcom and runtime station and thats it.
 
 #include "map_files\generic\CentCom.dmm"
+#include "map_files\generic\Ghost_Cafe.dmm" //Cita change
 
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
