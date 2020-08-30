@@ -2,7 +2,13 @@
 	try
 		var/datum/preferences/P = new
 		P.load_path("test")
-		P.load_character(0)
+		P.features["flavor_text"] = "Foo"
+		P.features["ooc_notes"] = "Bar"
 		P.save_character()
+		P.load_character()
+		if(P.features["flavor_text"] != "Foo")
+			Fail("Flavor text is failing to save.")
+		if(P.features["ooc_notes"] != "Bar")
+			Fail("OOC text is failing to save.")
 	catch(exception/e)
 		Fail("Failed to save and load character due to exception [e.name]")
