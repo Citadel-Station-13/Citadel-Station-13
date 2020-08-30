@@ -76,7 +76,6 @@
 
 	var/datum/browser/popup = new(user, "cryopod_console", "General Storage System Control")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
@@ -320,7 +319,7 @@
 
 	var/mob/living/mob_occupant = occupant
 	var/list/obj/item/cryo_items = list()
-	
+
 	investigate_log("Despawning [key_name(mob_occupant)].", INVESTIGATE_CRYOGENICS)
 
 	//Handle Borg stuff first

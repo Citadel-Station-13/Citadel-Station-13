@@ -11,7 +11,8 @@
 	var/say_mod = null
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	maxHealth = TONGUE_MAX_HEALTH
-	var/modifies_speech = FALSE
+	var/list/initial_accents //the ones the tongue starts with, not what it currently has
+	var/list/accents //done in order of priority (please always apply abductor accent and stuttering last)
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
@@ -46,9 +47,12 @@
 	now_failing = "<span class='warning'>Your [name] feels like it's about to fall out!.</span>"
 	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
+	for(var/accent in initial_accents)
+		initial_accents += new accent
 
-/obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
-	return
+/obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args) //this wont proc unless there's initial_accents
+	for(var/datum/accent/speech_modifier in initial_accents)
+		speech_args = speech_modifier.modify_speech(speech_args, source, owner)
 
 /obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
@@ -61,7 +65,7 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
-	if (modifies_speech)
+	if(initial_accents)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
@@ -83,16 +87,7 @@
 	say_mod = "hisses"
 	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
 	maxHealth = 40 //extra sensitivity means tongue is more susceptible to damage
-	modifies_speech = TRUE
-
-/obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
-	var/static/regex/lizard_hiss = new("s+", "g")
-	var/static/regex/lizard_hiSS = new("S+", "g")
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = lizard_hiss.Replace(message, "sss")
-		message = lizard_hiSS.Replace(message, "SSS")
-	speech_args[SPEECH_MESSAGE] = message
+	initial_accents = list(/datum/accent/lizard)
 
 /obj/item/organ/tongue/fly
 	name = "proboscis"
@@ -101,16 +96,7 @@
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	maxHealth = 80 //years of eatting trash has made your tongue strong
-	modifies_speech = TRUE
-
-/obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
-	var/static/regex/fly_buzz = new("z+", "g")
-	var/static/regex/fly_buZZ = new("Z+", "g")
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = fly_buzz.Replace(message, "zzz")
-		message = fly_buZZ.Replace(message, "ZZZ")
-	speech_args[SPEECH_MESSAGE] = message
+	initial_accents = list(/datum/accent/fly)
 
 /obj/item/organ/tongue/abductor
 	name = "superlingual matrix"
@@ -119,7 +105,7 @@
 	say_mod = "gibbers"
 	taste_sensitivity = 101 // ayys cannot taste anything.
 	maxHealth = 120 //Ayys probe a lot
-	modifies_speech = TRUE
+	initial_accents = list(/datum/accent/abductor)
 	var/mothership
 
 /obj/item/organ/tongue/abductor/attack_self(mob/living/carbon/human/H)
@@ -147,26 +133,6 @@
 		else
 			. += "<span class='notice'>It is attuned to [mothership].</span>"
 
-/obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
-	//Hacks
-	var/message = speech_args[SPEECH_MESSAGE]
-	var/mob/living/carbon/human/user = source
-	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
-	user.log_talk(message, LOG_SAY, tag="abductor")
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		var/obj/item/organ/tongue/T = H.getorganslot(ORGAN_SLOT_TONGUE)
-		if(!T || T.type != type)
-			continue
-		if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(/datum/antagonist/abductor)
-			if(!A || !(H.mind in A.team.members))
-				continue
-		to_chat(H, rendered)
-	for(var/mob/M in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(M, user)
-		to_chat(M, "[link] [rendered]")
-	speech_args[SPEECH_MESSAGE] = ""
-
 /obj/item/organ/tongue/zombie
 	name = "rotting tongue"
 	desc = "Between the decay and the fact that it's just lying there you doubt a tongue has ever seemed less sexy."
@@ -174,23 +140,7 @@
 	say_mod = "moans"
 	taste_sensitivity = 32
 	maxHealth = 65 //Stop! It's already dead...!
-	modifies_speech = TRUE
-
-/obj/item/organ/tongue/zombie/handle_speech(datum/source, list/speech_args)
-	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
-
-		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
-			message_list[insertpos] = inserttext + "..."
-
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
-
-	speech_args[SPEECH_MESSAGE] = jointext(message_list, " ")
+	initial_accents = list(/datum/accent/zombie)
 
 /obj/item/organ/tongue/alien
 	name = "alien tongue"
@@ -199,7 +149,7 @@
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	maxHealth = 500 //They've a little mouth for a tongue, so it's pretty rhobust
-	modifies_speech = TRUE // not really, they just hiss
+	initial_accents = list(/datum/accent/alien)
 	var/static/list/languages_possible_alien = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
@@ -211,9 +161,6 @@
 	. = ..()
 	languages_possible = languages_possible_alien
 
-/obj/item/organ/tongue/alien/handle_speech(datum/source, list/speech_args)
-	playsound(owner, "hiss", 25, 1, 1)
-
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
 	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
@@ -223,14 +170,13 @@
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 	taste_sensitivity = 101 // skeletons cannot taste anything
 	maxHealth = 75 //Take brute damage instead
-	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
-	var/list/phomeme_types = list("sans", "papyrus")
+	var/list/phomeme_types = list(/datum/accent/bone/sans, /datum/accent/bone/papyrus)
 
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
-	phomeme_type = pick(phomeme_types)
+	initial_accents += pick(phomeme_types)
 
 /obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
 	if(d < 0)
@@ -243,19 +189,14 @@
 	return
 
 /obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
-	if (chattering)
+	if(chattering)
 		chatter(speech_args[SPEECH_MESSAGE], phomeme_type, source)
-	switch(phomeme_type)
-		if("sans")
-			speech_args[SPEECH_SPANS] |= SPAN_SANS
-		if("papyrus")
-			speech_args[SPEECH_SPANS] |= SPAN_PAPYRUS
+	..()
 
 /obj/item/organ/tongue/bone/plasmaman
 	name = "plasma bone \"tongue\""
 	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
 	icon_state = "tongueplasma"
-	modifies_speech = FALSE
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
@@ -265,7 +206,7 @@
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
-	modifies_speech = TRUE
+	initial_accents = list(/datum/accent/robot)
 	taste_sensitivity = 25 // not as good as an organic tongue
 	maxHealth = 100 //RoboTongue!
 	var/electronics_magic = TRUE
@@ -274,7 +215,7 @@
 	return ..() || electronics_magic
 
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
-	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
+	..()
 
 /obj/item/organ/tongue/fluffy
 	name = "fluffy tongue"
@@ -282,20 +223,7 @@
 	icon_state = "tonguefluffy"
 	taste_sensitivity = 10 // extra sensitive and inquisitive uwu
 	maxHealth = 35 //Sensitive tongue!
-	modifies_speech = TRUE
-
-/obj/item/organ/tongue/fluffy/handle_speech(datum/source, list/speech_args)
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = replacetext(message, "ne", "nye")
-		message = replacetext(message, "nu", "nyu")
-		message = replacetext(message, "na", "nya")
-		message = replacetext(message, "no", "nyo")
-		message = replacetext(message, "ove", "uv")
-		message = replacetext(message, "l", "w")
-		message = replacetext(message, "r", "w")
-	message = lowertext(message)
-	speech_args[SPEECH_MESSAGE] = message
+	initial_accents = list(/datum/accent/fluffy)
 
 /obj/item/organ/tongue/cybernetic
 	name = "cybernetic tongue"
@@ -314,6 +242,7 @@
 
 /obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
+	..()
 
 /obj/item/organ/tongue/robot/ipc
 	name = "positronic voicebox"

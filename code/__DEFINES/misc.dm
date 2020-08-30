@@ -116,6 +116,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define CRAYON_FONT "Comic Sans MS"
 #define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
+#define CHARCOAL_FONT "Candara"
 
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -318,9 +319,9 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
-#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "DEBUG: [msg]")
-#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "<span class=\"filter_debuglog\">DEBUG: [msg]</span>")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "<span class=\"filter_debuglog\">DEBUG: [msg]</span>")
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "<span class=\"filter_debuglog\">DEBUG: [msg]</span>")
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
