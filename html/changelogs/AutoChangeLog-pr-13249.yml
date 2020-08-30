@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "firedoors no longer automatically open on touch when there's no pressure differences."

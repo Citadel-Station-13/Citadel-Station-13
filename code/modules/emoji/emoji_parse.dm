@@ -17,7 +17,7 @@
 			if(search)
 				emoji = lowertext(copytext(text, pos + length(text[pos]), search))
 				var/isthisapath = (emoji[1] == "/") && text2path(emoji)
-				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/tag = sheet.icon_tag("emoji-[emoji]")
 				if(tag)
 					parsed += "<i style='width:16px !important;height:16px !important;'>[tag]</i>" //evil way of enforcing 16x16
