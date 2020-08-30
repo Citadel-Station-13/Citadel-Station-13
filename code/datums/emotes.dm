@@ -102,8 +102,9 @@
 
 /datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	. = TRUE
-	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
-		return FALSE
+	if(mob_type_allowed_typecache) //empty list = anyone can use it unless specifically blacklisted
+		if(!is_type_in_typecache(user, mob_type_allowed_typecache))
+			return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
