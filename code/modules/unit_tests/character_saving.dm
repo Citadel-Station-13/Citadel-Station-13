@@ -10,5 +10,5 @@
 			Fail("Flavor text is failing to save.")
 		if(P.features["ooc_notes"] != "Bar")
 			Fail("OOC text is failing to save.")
-	catch(exception/e)
+	catch(var/exception/e)
 		Fail("Failed to save and load character due to exception [e.name]")
