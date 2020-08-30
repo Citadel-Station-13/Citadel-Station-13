@@ -34,7 +34,7 @@
 
 	if(user.client)
 		var/datum/asset/simple/C = new/datum/asset/simple/tetris()
-		send_asset_list(user.client, C.assets)
+		SSassets.transport.send_assets(user.client, C.assets)
 
 	var/dat = {"
 	<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
