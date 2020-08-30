@@ -1,7 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Adds !tgs who, for checking on the online players."
-  - rscadd: "Adds !tgs awho, the \"better\" version of adminwho."
-  - rscadd: "Adds !tgs restart, which should basically restart the server without having to join."
-  - tweak: "!tgs check should now display the current round time."

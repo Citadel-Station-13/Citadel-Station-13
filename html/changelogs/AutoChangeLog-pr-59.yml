@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - tweak: "The ip that appears on `!tgs check` should be clickable now, allowing for a quick join."
