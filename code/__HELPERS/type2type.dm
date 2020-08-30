@@ -467,9 +467,9 @@
 		if(0 to 2)
 			return "stable, meaning that its heat will always increase."
 		if(2 to 3)
-			return "metastable, meaning that its heat tend upwards."
+			return "metastable, meaning that its heat will trend upwards."
 		if (3 to INFINITY)
-			return "unstable, meaning that its heat will tend downwards."
+			return "unstable, meaning that its heat will trend downwards."
 
 /proc/color2hex(color)	//web colors
 	if(!color)
