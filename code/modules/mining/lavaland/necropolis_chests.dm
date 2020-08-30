@@ -162,10 +162,7 @@
 			new /obj/item/bedsheet/cosmos(src)
 			new /obj/item/melee/skateboard/hoverboard(src)
 		if(11)
-			if(prob(50))
-				new /obj/item/malf_upgrade
-			else
-				new /obj/item/disk/tech_disk/illegal
+			new /obj/item/disk/tech_disk/illegal
 		if(15)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
 		if(16)
@@ -206,8 +203,6 @@
 			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
 			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
 			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
-    if(32)
-			new /obj/item/disk/tech_disk/illegal(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
