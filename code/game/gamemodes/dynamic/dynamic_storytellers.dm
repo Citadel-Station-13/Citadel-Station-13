@@ -331,12 +331,6 @@ Property weights are added to the config weight of the ruleset. They are:
 	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("story_potential" = 2)
 
-
-/datum/dynamic_storyteller/story/calculate_threat()
-	var/current_time = (world.time / SSautotransfer.targettime)*180
-	mode.threat_level = round((mode.initial_threat_level*(sin(current_time)/2)+0.75),0.1)
-	return ..()
-
 /datum/dynamic_storyteller/classic
 	name = "Classic"
 	config_tag = "classic"
