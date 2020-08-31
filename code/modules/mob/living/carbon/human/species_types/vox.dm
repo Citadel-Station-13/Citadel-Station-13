@@ -23,3 +23,4 @@
 	exotic_bloodtype = "VOX"
 	exotic_blood_color = BLOOD_COLOR_VOX
 	species_type = "vox"
+	
