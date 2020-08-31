@@ -18,3 +18,4 @@
 	default_priority = 80
 
 	icon_state = "vox"
+	
