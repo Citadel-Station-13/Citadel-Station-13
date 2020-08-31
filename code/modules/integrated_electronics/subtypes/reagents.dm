@@ -24,11 +24,6 @@
 	var/list/trays = list(tray)
 	var/visi_msg = "[acting_object] transfers fluid into [tray]"
 
-	if(amount > 30 && source.reagents.total_volume >= 30 && tray.using_irrigation)
-		trays = tray.FindConnected()
-		if (trays.len > 1)
-			visi_msg += ", setting off the irrigation system"
-
 	acting_object.visible_message("<span class='notice'>[visi_msg].</span>")
 	playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 

@@ -69,12 +69,7 @@
 		// handle opening the panel
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 			return
-
-		// handle deconstructing the machine, if permissible
-		if (I.tool_behaviour == TOOL_CROWBAR && using_irrigation)
-			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
-			return
-		else if(default_deconstruction_crowbar(I))
+		if(default_deconstruction_crowbar(I))
 			return
 
 	return ..()
@@ -97,7 +92,6 @@
 		myseed.forceMove(src)
 
 	if(self_sustaining)
-		adjustNutri(1)
 		adjustWater(rand(3,5))
 		adjustWeeds(-2)
 		adjustPests(-2)
@@ -229,7 +223,7 @@
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				adjustPests(1 / rating)
 		else
-			if(waterlevel > 10 && nutrilevel > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
+			if(waterlevel > 10 && reagents.total_volume > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
 				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
@@ -260,8 +254,6 @@
 		else
 			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
 		set_light(3)
-
-	update_icon_hoses()
 
 	if(myseed)
 		update_icon_plant()
@@ -318,7 +310,7 @@
 
 	if(!self_sustaining)
 		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>"
-		. += "<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"
+		. += "<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
 			. += "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>"
@@ -600,33 +592,40 @@
 	if (!unwrenchable)  // case also covered by NODECONSTRUCT checks in default_unfasten_wrench
 		return CANT_UNFASTEN
 
-	if (using_irrigation)
-		if (!silent)
-			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
-		return FAILED_UNFASTEN
-
 	return ..()
 
-/obj/machinery/hydroponics/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/machinery/hydroponics/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)
 		return myseed.harvest(user)
 
 	else if(dead)
-		dead = 0
+		dead = FALSE
 		to_chat(user, "<span class='notice'>You remove the dead plant from [src].</span>")
 		qdel(myseed)
 		myseed = null
 		update_icon()
-		name = initial(name)
-		desc = initial(desc)
+		TRAY_NAME_UPDATE
 	else
 		if(user)
 			examine(user)
 
+/obj/machinery/hydroponics/AltClick(mob/user)
+	. = ..()
+	if(!anchored)
+		update_icon()
+		return FALSE
+	var/warning = alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", "Yes", "No")
+	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		reagents.clear_reagents()
+		to_chat(user, "<span class='warning'>You empty [src]'s nutrient tank.</span>")
+
 /obj/machinery/hydroponics/proc/update_tray(mob/user)
-	harvest = 0
+	harvest = FALSE
 	lastproduce = age
 	if(istype(myseed, /obj/item/seeds/replicapod))
 		if(user)//runtimes
@@ -646,9 +645,6 @@
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
-/obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
-	nutrilevel = clamp(nutrilevel + adjustamt, 0, maxnutri)
-
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
 	waterlevel = clamp(waterlevel + adjustamt, 0, maxwater)
 
@@ -691,9 +687,6 @@
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 
-/obj/machinery/hydroponics/soil/update_icon_hoses()
-	return // Has no hoses
-
 /obj/machinery/hydroponics/soil/update_icon_lights()
 	return // Has no lights
 
@@ -703,3 +696,4 @@
 		qdel(src)
 	else
 		return ..()
+	
