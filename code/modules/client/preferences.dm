@@ -1741,6 +1741,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_spines)
 						features["spines"] = new_spines
 
+				if("quills")
+					var/new_quills
+					new_quills = input(user, "Choose your Vox's quills:", "Character Preference") as null|anything in GLOB.quills_list
+					if(new_quills)
+						features["quills"] = new_quills
+
 				if("body_markings")
 					var/new_body_markings
 					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in GLOB.body_markings_list

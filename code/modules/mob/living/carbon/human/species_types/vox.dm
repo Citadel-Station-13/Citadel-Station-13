@@ -1,11 +1,13 @@
 /datum/species/vox // shitbirds
 	name = "Vox"
 	id = "vox"
+	limbs_id= "swamp"
 	say_mod = "shrieks"
 	sexes = 0
 	species_traits = list(HAS_FLESH,HAS_BONE,NOEYES,NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
 	inherent_traits = list(TRAIT_VOXYGEN)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mutant_bodyparts = list("quills" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/nugget // lmao
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	disliked_food =  DAIRY | VEGETABLES
@@ -22,3 +24,5 @@
 
 	exotic_bloodtype = "VOX"
 	exotic_blood_color = BLOOD_COLOR_VOX
+
+	allowed_limb_ids = list("swamp","azure","rot","emerald","grassland","midnight")
