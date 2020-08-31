@@ -598,7 +598,7 @@
 
 		var/datum/species/S = H.dna.species
 		base_bp_icon = S?.icon_limbs || DEFAULT_BODYPART_ICON
-		species_id = S.limbs_id
+		species_id = S.mutant_bodyparts["limbs_id"]
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
@@ -613,7 +613,6 @@
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
-			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			skin_tone = ""
 
@@ -626,12 +625,8 @@
 				species_color = S.fixed_mut_color
 			else
 				species_color = H.dna.features["mcolor"]
-			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
-
-		if(base_bp_icon != DEFAULT_BODYPART_ICON)
-			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
 
 		if(S.mutant_bodyparts["legs"])
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
@@ -652,10 +647,15 @@
 				body_markings = "plain"
 				aux_marking = "plain"
 			markings_color = list(colorlist)
-
 		else
 			body_markings = null
 			aux_marking = null
+
+		if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
+			base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+
+		if(base_bp_icon != DEFAULT_BODYPART_ICON)
+			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"

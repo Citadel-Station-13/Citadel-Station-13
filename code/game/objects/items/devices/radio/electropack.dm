@@ -16,9 +16,6 @@
 	var/on = TRUE
 	var/shock_cooldown = FALSE
 
-	var/ui_x = 260
-	var/ui_y = 137
-
 /obj/item/electropack/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
@@ -201,17 +198,7 @@
 	else
 		return ..()
 
-/obj/item/electropack/shockcollar/ui_interact(mob/user) //note to src: use tgooey
-	var/dat = {"
-<TT>
-<B>Frequency/Code</B> for shock collar:<BR>
-Frequency:
-[format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
-Code:
-[src.code]
-<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
-</TT>"}
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
+/obj/item/electropack/ui_act(action, params)
+	if(action == "power") // DO. NOT.
+		return FALSE
+	return ..()
