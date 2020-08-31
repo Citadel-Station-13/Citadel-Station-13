@@ -642,4 +642,4 @@
 /proc/get_fake_ckey()
 	var/first = pick(GLOB.first_names)
 	var/second = pick(GLOB.last_names)
-	return lowertext(first + second + rand(1,99))
+	return lowertext(first + second + num2text(rand(1,99)))
