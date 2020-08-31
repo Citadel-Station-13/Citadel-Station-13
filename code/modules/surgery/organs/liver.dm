@@ -88,6 +88,11 @@
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
 
+/obj/item/organ/liver/vox
+	name = "vox liver"
+	icon_state = "liver-v"
+	desc = "A large mass of blue flesh capable of metabolizing and processing chemicals, although, it seems to almost writhe in agony when exposed to the air."
+
 /obj/item/organ/liver/ipc
 	name = "reagent processing liver"
 	icon_state = "liver-c"

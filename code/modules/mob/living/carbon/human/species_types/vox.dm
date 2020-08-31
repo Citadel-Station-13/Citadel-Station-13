@@ -13,9 +13,15 @@
 	disliked_food =  DAIRY | VEGETABLES
 	liked_food = MEAT | FRUIT
 	mutantlungs = /obj/item/organ/lungs/vox
+	mutantliver = /obj/item/organs/liver/vox
+	mutantstomach = /obj/item/organs/liver/vox
+	mutant_heart = /obj/item/organs/heart/vox
+	mutant_brain = /obj/item/organ/brain/vox
+
 	species_language_holder = /datum/language_holder/vox
 	exotic_bloodtype = "VOX"
 	exotic_blood_color = BLOOD_COLOR_VOX
+	damage_overlay_type = ""
 	attack_verb = "scratch"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -26,3 +32,8 @@
 	exotic_blood_color = BLOOD_COLOR_VOX
 
 	allowed_limb_ids = list("swamp","azure","rot","emerald","grassland","midnight")
+
+/obj/item/organ/brain/vox
+	name = "vox brain"
+	desc = "A mass of foul-smelling head-meat in a shade of patented Vox blue; the sheer odor this thing emanates as it writhes upon exposure to open air sours your senses."
+	icon_state = "brain-vox"

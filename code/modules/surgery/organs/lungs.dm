@@ -540,6 +540,7 @@
 /obj/item/organ/lungs/vox
 	name = "vox lungs"
 	desc = "Lungs of some poor bird-thing. They breath nitrogen, apparently."
+	icon_state = "lungs-v"
 	vox_oxytrip = 1
 
 	safe_oxygen_min = 0 // what's oxygen?

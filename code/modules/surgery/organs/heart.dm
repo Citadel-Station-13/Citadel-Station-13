@@ -187,6 +187,11 @@ obj/item/organ/heart/slime
 	priority = 100 //it's an indicator you're dieing, so it's very high priority
 	colour = "red"
 
+/obj/item/organ/heart/vox
+	name = "vox heart"
+	desc = "A large mass of blue flesh that crudely mimics the functions of an organic human heart."
+	icon_state = "heart-v"
+
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
