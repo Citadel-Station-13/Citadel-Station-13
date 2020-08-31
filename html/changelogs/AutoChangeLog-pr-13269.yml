@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Adds a pool to MetaStation"
-  - tweak: "Slight readjustments to the surrounding area"
-  - bugfix: "Fixes a handful of external airlocks"
