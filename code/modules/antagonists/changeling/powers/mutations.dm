@@ -711,7 +711,7 @@
 		enhancement = slow_enhancement // fuck em up kiddo
 		wound_enhancement = slow_wound_enhancement // really. fuck em up.
 	to_chat(user, "<span class='notice'>[src] are now formed to allow for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"].</span>")
-	addtimer(CALLBACK(use_buffs(user, TRUE)), 0.1) // go fuckin get em
+	addtimer(CALLBACK(src, .proc/use_buffs, user, TRUE), 0.1) // go fuckin get em
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/Initialize()
 	. = ..()
