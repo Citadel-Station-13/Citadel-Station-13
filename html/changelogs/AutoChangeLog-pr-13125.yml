@@ -1,4 +1,0 @@
-author: "Chiirno"
-delete-after: True
-changes: 
-  - bugfix: "Moves pill_bottles/dice to box/dice on CogStation."
