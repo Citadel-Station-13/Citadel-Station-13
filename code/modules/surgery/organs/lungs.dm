@@ -528,6 +528,18 @@
 
 	maxHealth = 250
 
+/obj/item/organ/lungs/vox
+	name = "vox lungs"
+	desc = "Lungs of some poor bird-thing. They breath nitrogen, apparently.
+
+	safe_oxygen_min = 0 // what's oxygen?
+	safe_oxygen_max = 1 // OW FUCK
+	safe_nitro_min = 16 // arbitrary value?
+
+	cold_level_1_threshold = 156 // vox don't mind the cold as much
+	cold_level_2_threshold = 120
+	cold_level_3_threshold = 72
+
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	. = ..()
 	if (breath)
