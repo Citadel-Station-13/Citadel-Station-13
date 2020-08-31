@@ -7,12 +7,14 @@
 	exclaim_verb = "shrieks"
 	whisper_verb = "crackles"
 	key = "V"
+	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
+	space_chance = 20
 	/datum/language/vox/syllables = list(
-	"ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah",
-	"ti-ti","hi-hi","ki-ki","ya-ya","ta-ta","ha-ha","ka-ka","chi-cha","cha-chi",
+	"ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah","ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah",
+	"ti-ti","hi-hi","ki-ki","ya-ya","ta-ta","ha-ha","ka-ka","chi-cha","cha-chi","ti-ti","hi-hi","ki-ki","ya-ya","ta-ta","ha-ha","ka-ka","chi-cha","cha-chi",
 	"TI-TI","HI-HI","KI-KI","YA-YA","TA-TA","HA-HA","KA-KA",
 	"SKRE","SKREE","ACK-ACK","EHK-EHK","RAW-RAWK","AAA-AA","AHK","EHK","RAWK","KRA","AAA","EEE","KI","II","KRI","KA"
 	)
-	default_priority = 90
+	default_priority = 80
 
 	icon_state = "vox"
