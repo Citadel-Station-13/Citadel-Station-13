@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "brooms now sweep objects on MOVABLE_PRE_MOVE rather than MOVABLE_MOVED"

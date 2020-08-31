@@ -1,6 +1,0 @@
-author: "Lynxless"
-delete-after: True
-changes: 
-  - tweak: "Changed anatomic panacea into a direct buff, instead of a chem injection"
-  - balance: "Changed the values of anatomic panacea"
-  - imageadd: "Added a new icon for panacea's buff alert"

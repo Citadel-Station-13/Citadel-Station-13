@@ -1,4 +1,0 @@
-author: "Couls, ported by NecromancerAnne"
-delete-after: True
-changes: 
-  - code_imp: "cleans up mech backstabbing code"
