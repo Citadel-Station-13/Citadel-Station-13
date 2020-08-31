@@ -866,6 +866,10 @@
 	taste_mult = 0 // oderless and tasteless
 	pH = 9.2//It's acutally a huge range and very dependant on the chemistry but pH is basically a made up var in it's implementation anyways
 
+/datum/reagent/oxygen/on_mob_life(mob/living/carbon/M)
+	if((HAS_TRAIT(M, TRAIT_VOXYGEN)))
+		M.adjustToxLoss(4)
+
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0

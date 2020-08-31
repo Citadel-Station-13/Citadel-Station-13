@@ -39,6 +39,7 @@
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
+	var/vox_oxytrip = 0
 	var/gas_stimulation_min = 0.002 //Nitryl and Stimulum
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
@@ -152,6 +153,8 @@
 		else if((O2_pp > safe_oxygen_max) && !(safe_oxygen_max == 0)) //Why yes, this is like too much CO2 and spahget. Dirty lizards.
 			if(!H.o2overloadtime)
 				H.o2overloadtime = world.time
+				if (vox_oxytrip == 1)
+					H.reagents.add_reagent(/datum/reagent/oxygen,1)
 			else if(world.time - H.o2overloadtime > 120)
 				H.Dizzy(10)	// better than a minute of you're fucked KO, but certainly a wake up call. Honk.
 				H.adjustOxyLoss(3)
@@ -528,9 +531,16 @@
 
 	maxHealth = 250
 
+/obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
+	. = ..()
+	if (breath)
+		var/plasma_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/plasma))
+		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+
 /obj/item/organ/lungs/vox
 	name = "vox lungs"
-	desc = "Lungs of some poor bird-thing. They breath nitrogen, apparently.
+	desc = "Lungs of some poor bird-thing. They breath nitrogen, apparently."
+	vox_oxytrip = 1
 
 	safe_oxygen_min = 0 // what's oxygen?
 	safe_oxygen_max = 1 // OW FUCK
@@ -540,11 +550,7 @@
 	cold_level_2_threshold = 120
 	cold_level_3_threshold = 72
 
-/obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
-	. = ..()
-	if (breath)
-		var/plasma_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/plasma))
-		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+	maxHealth = 250
 
 /obj/item/organ/lungs/yamerol
 	name = "Yamerol lungs"
