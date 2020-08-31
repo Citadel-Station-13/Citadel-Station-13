@@ -1,0 +1,20 @@
+/datum/species/vox //jewbirds
+	name = "Vox"
+	id = "vox"
+	say_mod = "screeches"
+	sexes = 0
+	species_traits = list(HAS_FLESH,HAS_BONE)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard // are vox really reptiles
+	gib_types = list(/obj/effect/gibspawner/lizard, /obj/effect/gibspawner/lizard/bodypartless)
+	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	disliked_food =  DAIRY | VEGETABLES
+	liked_food = MEAT | FRUIT
+	mutantlungs = /obj/item/organ/lungs/vox
+	exotic_bloodtype = "VOX"
+	exotic_blood_color = BLOOD_COLOR_VOX
+	attack_verb = "scratch"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	coldmod = 0.6
+	brutemod = 1.2
