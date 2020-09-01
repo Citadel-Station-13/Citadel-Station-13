@@ -63,6 +63,7 @@
 			genes += new /datum/plant_gene/core/production(production)
 		if(potency != -1)
 			genes += new /datum/plant_gene/core/potency(potency)
+			genes += new /datum/plant_gene/core/instability(instability)
 
 		for(var/p in genes)
 			if(ispath(p))
@@ -128,7 +129,7 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 	if(g)
 		g.mutability_flags &=  ~mutability
 
-/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
 	adjust_lifespan(rand(-lifemut,lifemut))
 	adjust_endurance(rand(-endmut,endmut))
 	adjust_production(rand(-productmut,productmut))
@@ -174,11 +175,17 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 
 
 /obj/item/seeds/proc/harvest(mob/user)
+	///Reference to the tray/soil the seeds are planted in.
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	///Count used for creating the correct amount of results to the harvest.
 	var/t_amount = 0
+	///List of plants all harvested from the same batch.
 	var/list/result = list()
+	///Tile of the harvester to deposit the growables.
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	///Name of the grown products.
 	var/product_name
+	///The Number of products produced by the plant, typically the yield. Modified by Densified Chemicals.
 	var/product_count = getYield()
 		while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod

@@ -16,16 +16,17 @@
 	var/mutmod = 1			//Nutriment's effect on mutations
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
-	var/dead = 0			//Is it dead?
+	var/dead = FALSE			//Is it dead?
 	var/plant_health		//Its health
 	var/lastproduce = 0		//Last time it was harvested
 	var/lastcycle = 0		//Used for timing of cycles.
 	var/cycledelay = 200	//About 10 seconds / cycle
-	var/harvest = 0			//Ready to harvest?
+	var/harvest = FALSE			//Ready to harvest?
 	var/obj/item/seeds/myseed = null	//The currently planted seed
 	var/rating = 1
-	var/unwrenchable = 1
+	var/unwrenchable = TRUE
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
+	var/mob/lastuser //Last user to add reagents to a tray. Mostly for logging.
 	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with earthsblood.
 	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
@@ -465,7 +466,8 @@
 		var/target = myseed ? myseed.plantname : src
 		var/visi_msg = ""
 		var/transfer_amount
-			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
+
+		if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks))
 				var/obj/item/reagent_containers/food/snacks/R = reagent_source
 				if (R.trash)
