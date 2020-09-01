@@ -112,10 +112,10 @@
 		return
 
 	if(!AM.reagents)
-		if(istype(AM, /obj/machinery/hydroponics) && direction_mode == SYRINGE_INJECT && reagents.total_volume && transfer_amount)//injection into tray.
-			inject_tray(AM, src, transfer_amount)
-			activate_pin(2)
-			return
+		//if(istype(AM, /obj/machinery/hydroponics) && direction_mode == SYRINGE_INJECT && reagents.total_volume && transfer_amount)//injection into tray.
+			//inject_tray(AM, src, transfer_amount)
+			//activate_pin(2)
+			//return
 		activate_pin(3)
 		return
 
@@ -241,10 +241,11 @@
 	if(!target.reagents)
 		// Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
 		// This is a dirty hack to make injecting reagents into them work.
-		if(istype(target, /obj/machinery/hydroponics) && source.reagents.total_volume)
-			inject_tray(target, source, transfer_amount)
-			activate_pin(2)
-		return
+		//Someone should redo this. Trays should hold reagents now.
+		//if(istype(target, /obj/machinery/hydroponics) && source.reagents.total_volume)
+			//inject_tray(target, source, transfer_amount)
+			//activate_pin(2)
+		//return
 
 	if(!source.is_drainable() || !target.is_refillable())
 		return
