@@ -72,9 +72,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/pda_color = "#808000"
 	var/pda_skin = PDA_SKIN_ALT
 
-	// SKYRAT CHANGE START
-	var/appear_in_round_end_report = TRUE //whether the player of the character is listed on the round-end report
-	// SKYRAT CHANGE END
 
 	var/uses_glasses_colour = 0
 
@@ -723,9 +720,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				p_chaos = preferred_chaos
 			dat += "<b>Preferred Chaos Amount:</b> <a href='?_src_=prefs;preference=preferred_chaos;task=input'>[p_chaos]</a><br>"
-//SKYRAT CHANGES
-			dat += "<b>Show name at round-end report:</b> <a href='?_src_=prefs;preference=appear_in_round_end_report'>[appear_in_round_end_report ? "Yes" : "No"]</a><br>"
-//END OF SKYRAT CHANGES
 			dat += "<br>"
 			dat += "</td>"
 			dat += "</tr></table>"
@@ -2457,9 +2451,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					see_chat_emotes = !see_chat_emotes
 				if("enable_personal_chat_color")
 					enable_personal_chat_color = !enable_personal_chat_color
-				if("appear_in_round_end_report")
-					appear_in_round_end_report = !appear_in_round_end_report
-					user.mind?.appear_in_round_end_report = appear_in_round_end_report
 				//End of skyrat changes
 				if("action_buttons")
 					buttons_locked = !buttons_locked
