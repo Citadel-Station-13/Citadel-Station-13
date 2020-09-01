@@ -617,7 +617,7 @@
 	if(chems.has_reagent(src,1))
 		mytray.adjustPests(-rand(2,5))
 		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
-		mytray.adjustpotency(round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent(/datum/reagent/consumable/sugar,1)
