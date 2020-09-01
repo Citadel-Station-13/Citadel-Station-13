@@ -11,6 +11,11 @@ GLOBAL_LIST(topic_status_cache)
 /world/New()
 	if (fexists(EXTOOLS))
 		call(EXTOOLS, "maptick_initialize")()
+	#ifdef EXTOOLS_LOGGING
+		call(EXTOOLS, "init_logging")()
+	else
+		CRASH("[EXTOOLS] does not exist!")
+	#endif
 	enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
