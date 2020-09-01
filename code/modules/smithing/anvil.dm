@@ -198,6 +198,17 @@
 				finisheditem.artifact = TRUE
 			else
 				finisheditem.quality = min(currentquality, itemqualitymax)
+			switch(finisheditem.quality)
+				if(-1000 to -8)
+						finisheditem.desc =  "It looks to be the most awfully made object you've ever seen."
+				if(-8)
+						finisheditem.desc =  "It looks to be the second most awfully made object you've ever seen."
+				if(-8 to 0)
+						finisheditem.desc =  "It looks to be barely passable as... whatever it's trying to pass for."
+				if(0)
+						finisheditem.desc =  "It looks to be totally average."
+				if(0 to INFINITY)
+						finisheditem.desc =  "It looks to be better than average."
 			workpiece_state = FALSE
 			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = anvilquality
@@ -245,8 +256,8 @@
 	desc = "A big block of bronze. Useable as an anvil."
 	custom_materials = list(/datum/material/bronze=8000)
 	icon_state = "ratvaranvil"
-	anvilquality = -1
-	itemqualitymax = 1
+	anvilquality = -0.5
+	itemqualitymax = 2
 
 /obj/structure/anvil/obtainable/sandstone
 	name = "sandstone brick anvil"
