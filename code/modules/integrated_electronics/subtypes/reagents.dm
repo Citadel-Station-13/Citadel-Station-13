@@ -238,7 +238,7 @@
 	if(!source.reagents)
 		return
 
-	if(!target.reagents)
+	//if(!target.reagents)
 		// Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
 		// This is a dirty hack to make injecting reagents into them work.
 		//Someone should redo this. Trays should hold reagents now.
