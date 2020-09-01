@@ -200,15 +200,15 @@
 				finisheditem.quality = min(currentquality, itemqualitymax)
 			switch(finisheditem.quality)
 				if(-1000 to -8)
-						finisheditem.desc =  "It looks to be the most awfully made object you've ever seen."
+					finisheditem.desc =  "It looks to be the most awfully made object you've ever seen."
 				if(-8)
-						finisheditem.desc =  "It looks to be the second most awfully made object you've ever seen."
+					finisheditem.desc =  "It looks to be the second most awfully made object you've ever seen."
 				if(-8 to 0)
-						finisheditem.desc =  "It looks to be barely passable as... whatever it's trying to pass for."
+					finisheditem.desc =  "It looks to be barely passable as... whatever it's trying to pass for."
 				if(0)
-						finisheditem.desc =  "It looks to be totally average."
+					finisheditem.desc =  "It looks to be totally average."
 				if(0 to INFINITY)
-						finisheditem.desc =  "It looks to be better than average."
+					finisheditem.desc =  "It looks to be better than average."
 			workpiece_state = FALSE
 			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = anvilquality
