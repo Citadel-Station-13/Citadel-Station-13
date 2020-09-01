@@ -33,7 +33,7 @@
 	item_flags = NEEDS_PERMIT //it's a bigass sword/spear. beepsky is going to give you shit for it.
 	sharpness = SHARP_EDGED
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	force = 5
+	force = 10
 	wielded_mult = 1.75
 	w_class = WEIGHT_CLASS_BULKY
 
@@ -116,6 +116,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	overlay_state = "spearhandle"
 	slot_flags = ITEM_SLOT_BACK
+	wielded_mult = 2.5
 
 /obj/item/melee/smith/twohand/halberd/ComponentInitialize()
 	. = ..()
@@ -139,6 +140,7 @@
 	icon_state = "glaive"
 	overlay_state = "longhandle"
 	slot_flags = ITEM_SLOT_BACK
+	wielded_mult = 2
 
 /obj/item/melee/smith/twohand/glaive/ComponentInitialize()
 	. = ..()
@@ -217,7 +219,6 @@
 	name = "broadsword"
 	icon_state = "broadsword"
 	overlay_state = "broadhilt"
-	force = 9
 	wielded_mult = 1.8
 
 /obj/item/melee/smith/twohand/zweihander
