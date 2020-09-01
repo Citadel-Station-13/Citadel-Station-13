@@ -13,8 +13,8 @@
 	disliked_food =  DAIRY | VEGETABLES
 	liked_food = MEAT | FRUIT
 	mutantlungs = /obj/item/organ/lungs/vox
-	mutantliver = /obj/item/organs/liver/vox
-	mutantstomach = /obj/item/organs/liver/vox
+	mutantliver = /obj/item/organ/liver/vox
+	mutantstomach = /obj/item/organ/liver/vox
 	mutant_heart = /obj/item/organ/heart/vox
 	mutant_brain = /obj/item/organ/brain/vox
 
