@@ -6,6 +6,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
+	idle_power_usage = 0
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutridrain = 1      // How many units of nutrient will be drained in the tray
@@ -92,11 +93,16 @@
 	if(myseed && (myseed.loc != src))
 		myseed.forceMove(src)
 
-	if(self_sustaining)
-		adjustWater(rand(3,5))
-		adjustWeeds(-2)
-		adjustPests(-2)
-		adjustToxic(-2)
+	if(!powered() && self_sustaining)
+		visible_message("<span class='warning'>[name]'s auto-grow functionality shuts off!</span>")
+		idle_power_usage = 0
+		self_sustaining = FALSE
+		update_icon()
+
+	else if(self_sustaining)
+		adjustWater(rand(1,2))
+		adjustWeeds(-1)
+		adjustPests(-1)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -107,6 +113,7 @@
 				lastproduce = age
 
 			needs_update = 1
+
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
@@ -617,6 +624,20 @@
 		if(user)
 			examine(user)
 
+/obj/machinery/hydroponics/CtrlClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(!powered())
+		to_chat(user, "<span class='warning'>[name] has no power.</span>")
+		return
+	if(!anchored)
+		return
+	self_sustaining = !self_sustaining
+	idle_power_usage = self_sustaining ? 2500 : 0
+	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
+	update_icon()
+
 /obj/machinery/hydroponics/AltClick(mob/user)
 	. = ..()
 	if(!anchored)
@@ -673,11 +694,6 @@
 	var/chosen = pick(livingplants)
 	var/mob/living/simple_animal/hostile/C = new chosen
 	C.faction = list("plants")
-
-/obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
-	visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
-	self_sustaining = TRUE
-	update_icon()
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!

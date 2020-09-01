@@ -13,6 +13,12 @@
 	shot_glass_icon_state = "shotglassred"
 	pH = 7.4
 
+// FEED ME,SEYMOUR!
+/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustPests(rand(2,3))
+
 /datum/reagent/blood/reaction_mob(mob/living/L, method = TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/thing in data["viruses"])
@@ -312,6 +318,13 @@
 /datum/reagent/water/overdose_start(mob/living/M)
 	metabolization_rate = 45 * REAGENTS_METABOLISM
 	. = 1
+
+///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
+/datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		//You don't belong in this world, monster!
+		chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(src.type))
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"
@@ -973,6 +986,15 @@
 	taste_description = "chlorine"
 	pH = 7.4
 
+// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+/datum/reagent/chlorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 1.5))
+		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjustWeeds(-rand(1,3))
+
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
 	M.take_bodypart_damage(1*REM, 0, 0, 0)
 	. = 1
@@ -985,6 +1007,15 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "acid"
 	pH = 2
+
+// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+/datum/reagent/fluorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2.5))
+		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjustWeeds(-rand(1,4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(1*REM, 0)
@@ -1036,6 +1067,12 @@
 	color = "#C7C7C7" // rgb: 199,199,199
 	taste_description = "the colour blue and regret"
 	pH = 10
+
+/datum/reagent/radium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/radium/on_mob_life(mob/living/carbon/M)
 	M.apply_effect(2*REM/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
@@ -1147,6 +1184,14 @@
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent(/datum/reagent/uranium, reac_volume)
+
+//Mutagenic chem side-effects.
+/datum/reagent/uranium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.mutation_roll(user)
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2))
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1406,12 +1451,31 @@
 	taste_description = "mordant"
 	pH = 11.6
 
+/datum/reagent/ammonia/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	// Ammonia is bad ass.
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.12))
+		if(myseed && prob(10))
+			myseed.adjust_yield(1)
+			myseed.adjust_instability(1)
+
 /datum/reagent/diethylamine
 	name = "Diethylamine"
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
 	taste_description = "iron"
 	pH = 12
+
+// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
+/datum/reagent/diethylamine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustPests(-rand(1,2))
+		if(myseed)
+			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
+			myseed.adjust_instability(-round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1723,6 +1787,13 @@
 	taste_description = "ash"
 	pH = 6.5
 
+// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
+/datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustWeeds(-1)
+
 /datum/reagent/acetone
 	name = "Acetone"
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
@@ -1842,6 +1913,16 @@
 	color = "#FFFFD6" // very very light yellow
 	taste_description = "alkali" //who put ACID for NaOH ????
 	pH = 11.9
+
+// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
+/datum/reagent/saltpetre/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		var/salt = chems.get_reagent_amount(src.type)
+		mytray.adjustHealth(round(salt * 0.18))
+		if(myseed)
+			myseed.adjust_production(-round(salt/10)-prob(salt%10))
+			myseed.adjust_potency(round(salt*1))
 
 /datum/reagent/drying_agent
 	name = "Drying agent"
