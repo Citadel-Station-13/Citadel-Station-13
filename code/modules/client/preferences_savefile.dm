@@ -529,7 +529,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["scars4"]							>> scars_list["4"]
 	S["scars5"]							>> scars_list["5"]
 	S["chosen_limb_id"]					>> chosen_limb_id
-
+	S["hide_ckey"]						>> hide_ckey //saved per-character
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -876,6 +876,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["joblessrole"]		, joblessrole)
 	//Write prefs
 	WRITE_FILE(S["job_preferences"] , job_preferences)
+	WRITE_FILE(S["hide_ckey"]		, hide_ckey)
 
 	//Quirks
 	WRITE_FILE(S["all_quirks"]			, all_quirks)
@@ -893,6 +894,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["scars3"]						, scars_list["3"])
 	WRITE_FILE(S["scars4"]						, scars_list["4"])
 	WRITE_FILE(S["scars5"]						, scars_list["5"])
+
 
 	//gear loadout
 	if(chosen_gear.len)

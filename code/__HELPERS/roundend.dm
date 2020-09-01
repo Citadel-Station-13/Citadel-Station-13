@@ -402,9 +402,7 @@
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
 		if(aiPlayer.mind)
-//SKYRAT CHANGES
-			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.appear_in_round_end_report ? aiPlayer.mind.key : "Unknown"]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
-//END OF SKYRAT CHANGES
+			parts += "<b>[aiPlayer.name]</b>[aiPlayer.mind.hide_ckey ? "" : " (Played by: <b>[aiPlayer.mind.key]</b>)"]'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
 		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
@@ -415,18 +413,14 @@
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
-//SKYRAT CHANGES
-					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.appear_in_round_end_report ? robo.mind.key : "Unknown"]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
-//END OF SKYRAT CHANGES
+					robolist += "<b>[robo.name]</b>[robo.mind.hide_ckey ? "" : " (Played by: <b>[robo.mind.key]</b>)"] [robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
 			parts += "[robolist]"
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
-//SKYRAT CHANGES
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.appear_in_round_end_report ? robo.mind.key : "Unknown"]</b>) [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
-//END OF SKYRAT CHANGES
+			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b>[robo.mind.hide_ckey ? "" : " (Played by: <b>[robo.mind.key]</b>)"] [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				parts += robo.laws.get_law_list(include_zeroth=TRUE)
@@ -535,7 +529,7 @@
 	var/jobtext = ""
 	if(ply.assigned_role)
 		jobtext = " the <b>[ply.assigned_role]</b>"
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	var/text = "<b>[ply.hide_ckey ? "<b>[ply.name]</b>[jobtext] " : "[ply.key]</b> was <b>[ply.name]</b>[jobtext] and "]"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += " <span class='redtext'>died</span>"
