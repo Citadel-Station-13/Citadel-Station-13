@@ -185,9 +185,10 @@ obj/item/seeds/proc/is_gene_forbidden(typepath)
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	///Name of the grown products.
 	var/product_name
-	///The Number of products produced by the plant, typically the yield. Modified by Densified Chemicals.
+	///The Number of products produced by the plant, typically the yield.
 	var/product_count = getYield()
-		while(t_amount < product_count)
+
+	while(t_amount < product_count)
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod
 		if(instability >= 30 && (seed_flags & MUTATE_EARLY) && LAZYLEN(mutatelist) && prob(instability/3))
 			var/obj/item/seeds/new_prod = pick(mutatelist)
