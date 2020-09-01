@@ -13,10 +13,11 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	exotic_bloodtype = "BUG"
 	exotic_blood_color = BLOOD_COLOR_BUG
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_type = "insect"
+
+	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")

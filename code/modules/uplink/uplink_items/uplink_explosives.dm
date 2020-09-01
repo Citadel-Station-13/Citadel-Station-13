@@ -80,6 +80,7 @@
 	item = /obj/item/cartridge/virus/syndicate
 	cost = 5
 	restricted = TRUE
+	limited_stock = 1
 
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"

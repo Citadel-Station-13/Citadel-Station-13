@@ -7,13 +7,18 @@
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.status == BODYPART_ROBOTIC)
 
-/datum/sprite_accessory/snouts/sharp
-	name = "Sharp"
-	icon_state = "sharp"
+/datum/sprite_accessory/snout/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	color_src = MATRIXED
 
 /datum/sprite_accessory/snouts/round
 	name = "Round"
 	icon_state = "round"
+
+/datum/sprite_accessory/snouts/sharp
+	name = "Sharp"
+	icon_state = "sharp"
 
 /datum/sprite_accessory/snouts/sharplight
 	name = "Sharp + Light"
@@ -22,11 +27,6 @@
 /datum/sprite_accessory/snouts/roundlight
 	name = "Round + Light"
 	icon_state = "roundlight"
-
-/datum/sprite_accessory/snout/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	color_src = MATRIXED
 
 //christ this was a mistake, but it's here just in case someone wants to selectively fix -- Pooj
 /************* Lizard compatable snoots ***********
@@ -192,11 +192,19 @@
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
 
-/datum/sprite_accessory/snouts/mam_snouts/skulldog
-	name = "Skulldog"
-	icon_state = "skulldog"
+/datum/sprite_accessory/snouts/mam_snouts/husky
+	name = "Husky"
+	icon_state = "husky"
+
+/datum/sprite_accessory/snouts/mam_snouts/rhino
+	name = "Horn"
+	icon_state = "rhino"
 	extra = TRUE
-	extra_color_src = MATRIXED
+	extra = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/mam_snouts/rodent
+	name = "Rodent"
+	icon_state = "rodent"
 
 /datum/sprite_accessory/snouts/mam_snouts/lcanid
 	name = "Mammal, Long"
@@ -226,31 +234,19 @@
 	name = "Mammal, Thick ALT"
 	icon_state = "wolfalt"
 
-/datum/sprite_accessory/snouts/mam_snouts/redpanda
-	name = "WahCoon"
-	icon_state = "wah"
-
-/datum/sprite_accessory/snouts/mam_snouts/redpandaalt
-	name = "WahCoon ALT"
-	icon_state = "wahalt"
-
-/datum/sprite_accessory/snouts/mam_snouts/rhino
-	name = "Horn"
-	icon_state = "rhino"
-	extra = TRUE
-	extra = MUTCOLORS3
-
-/datum/sprite_accessory/snouts/mam_snouts/rodent
-	name = "Rodent"
-	icon_state = "rodent"
-
-/datum/sprite_accessory/snouts/mam_snouts/husky
-	name = "Husky"
-	icon_state = "husky"
-
 /datum/sprite_accessory/snouts/mam_snouts/otie
 	name = "Otie"
 	icon_state = "otie"
+
+/datum/sprite_accessory/snouts/mam_snouts/round
+	name = "Round"
+	icon_state = "round"
+	color_src = MUTCOLORS
+
+/datum/sprite_accessory/snouts/mam_snouts/roundlight
+	name = "Round + Light"
+	icon_state = "roundlight"
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/snouts/mam_snouts/pede
 	name = "Scolipede"
@@ -268,18 +264,9 @@
 	name = "hShark"
 	icon_state = "hshark"
 
-/datum/sprite_accessory/snouts/mam_snouts/toucan
-	name = "Toucan"
-	icon_state = "toucan"
-
 /datum/sprite_accessory/snouts/mam_snouts/sharp
 	name = "Sharp"
 	icon_state = "sharp"
-	color_src = MUTCOLORS
-
-/datum/sprite_accessory/snouts/mam_snouts/round
-	name = "Round"
-	icon_state = "round"
 	color_src = MUTCOLORS
 
 /datum/sprite_accessory/snouts/mam_snouts/sharplight
@@ -287,11 +274,23 @@
 	icon_state = "sharplight"
 	color_src = MUTCOLORS
 
-/datum/sprite_accessory/snouts/mam_snouts/roundlight
-	name = "Round + Light"
-	icon_state = "roundlight"
-	color_src = MUTCOLORS
+/datum/sprite_accessory/snouts/mam_snouts/skulldog
+	name = "Skulldog"
+	icon_state = "skulldog"
+	extra = TRUE
+	extra_color_src = MATRIXED
 
+/datum/sprite_accessory/snouts/mam_snouts/toucan
+	name = "Toucan"
+	icon_state = "toucan"
+
+/datum/sprite_accessory/snouts/mam_snouts/redpanda
+	name = "WahCoon"
+	icon_state = "wah"
+
+/datum/sprite_accessory/snouts/mam_snouts/redpandaalt
+	name = "WahCoon ALT"
+	icon_state = "wahalt"
 
 /******************************************
 **************** Snouts *******************
@@ -317,6 +316,16 @@
 	icon_state = "felephant"
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/mam_snouts/frhino
+	name = "Horn (Top)"
+	icon_state = "frhino"
+	extra = TRUE
+	extra = MUTCOLORS3
+
+/datum/sprite_accessory/snouts/mam_snouts/fhusky
+	name = "Husky (Top)"
+	icon_state = "fhusky"
 
 /datum/sprite_accessory/snouts/mam_snouts/flcanid
 	name = "Mammal, Long (Top)"
@@ -346,27 +355,23 @@
 	name = "Mammal, Thick ALT (Top)"
 	icon_state = "fwolfalt"
 
-/datum/sprite_accessory/snouts/mam_snouts/fredpanda
-	name = "WahCoon (Top)"
-	icon_state = "fwah"
-
-/datum/sprite_accessory/snouts/mam_snouts/frhino
-	name = "Horn (Top)"
-	icon_state = "frhino"
-	extra = TRUE
-	extra = MUTCOLORS3
+/datum/sprite_accessory/snouts/mam_snouts/fotie
+	name = "Otie (Top)"
+	icon_state = "fotie"
 
 /datum/sprite_accessory/snouts/mam_snouts/frodent
 	name = "Rodent (Top)"
 	icon_state = "frodent"
 
-/datum/sprite_accessory/snouts/mam_snouts/fhusky
-	name = "Husky (Top)"
-	icon_state = "fhusky"
+/datum/sprite_accessory/snouts/mam_snouts/fround
+	name = "Round (Top)"
+	icon_state = "fround"
+	color_src = MUTCOLORS
 
-/datum/sprite_accessory/snouts/mam_snouts/fotie
-	name = "Otie (Top)"
-	icon_state = "fotie"
+/datum/sprite_accessory/snouts/mam_snouts/froundlight
+	name = "Round + Light (Top)"
+	icon_state = "froundlight"
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/snouts/mam_snouts/fpede
 	name = "Scolipede (Top)"
@@ -380,18 +385,9 @@
 	name = "Shark (Top)"
 	icon_state = "fshark"
 
-/datum/sprite_accessory/snouts/mam_snouts/ftoucan
-	name = "Toucan (Top)"
-	icon_state = "ftoucan"
-
 /datum/sprite_accessory/snouts/mam_snouts/fsharp
 	name = "Sharp (Top)"
 	icon_state = "fsharp"
-	color_src = MUTCOLORS
-
-/datum/sprite_accessory/snouts/mam_snouts/fround
-	name = "Round (Top)"
-	icon_state = "fround"
 	color_src = MUTCOLORS
 
 /datum/sprite_accessory/snouts/mam_snouts/fsharplight
@@ -399,7 +395,10 @@
 	icon_state = "fsharplight"
 	color_src = MUTCOLORS
 
-/datum/sprite_accessory/snouts/mam_snouts/froundlight
-	name = "Round + Light (Top)"
-	icon_state = "froundlight"
-	color_src = MUTCOLORS
+/datum/sprite_accessory/snouts/mam_snouts/ftoucan
+	name = "Toucan (Top)"
+	icon_state = "ftoucan"
+
+/datum/sprite_accessory/snouts/mam_snouts/fredpanda
+	name = "WahCoon (Top)"
+	icon_state = "fwah"

@@ -46,10 +46,11 @@ export const ClockworkSlab = (props, context) => {
             title="Recollection"
             buttons={(
               <Button
-                content="Recital"
                 icon="cog"
                 tooltipPosition={"left"}
-                onClick={() => act('toggle')} />
+                onClick={() => act('toggle')}>
+                Recital
+              </Button>
             )}>
             <Box>
               {HONOR_RATVAR ? (
@@ -96,12 +97,13 @@ export const ClockworkSlab = (props, context) => {
               <Fragment key={cat.name}>
                 <br />
                 <Button
-                  content={cat.name}
                   tooltip={cat.desc}
                   tooltipPosition={'right'}
                   onClick={() => act('rec_category', {
                     "category": cat.name,
-                  })} />
+                  })} >
+                  {cat.name}
+                </Button>
               </Fragment>
             ))}
             <Divider />
@@ -156,11 +158,12 @@ export const ClockworkSlab = (props, context) => {
             title="Power"
             buttons={(
               <Button
-                content="Recollection"
                 icon="book"
                 tooltip={"Tutorial"}
                 tooltipPosition={"left"}
-                onClick={() => act('toggle')} />
+                onClick={() => act('toggle')}>
+                Recollection
+              </Button>
             )}>
             <b>{power}</b> power is available for scripture
             and other consumers.
@@ -232,7 +235,6 @@ export const ClockworkSlab = (props, context) => {
                       collapsing
                       textAlign="right">
                       <Button
-                        content={`Recite ${script.required}`}
                         disabled={
                           script.required_unformatted >= power_unformatted
                         }
@@ -240,22 +242,25 @@ export const ClockworkSlab = (props, context) => {
                         tooltipPosition={'left'}
                         onClick={() => act('recite', {
                           'script': script.type,
-                        })} />
+                        })} >
+                        {`Recite ${script.required}`}
+                      </Button>
                     </Table.Cell>
                     <Table.Cell
                       collapsing
                       textAlign="center">
                       <Button
                         fluid
+                        disabled={!script.quickbind}
+                        onClick={() => act('bind', {
+                          'script': script.type,
+                        })}>
                         content={script.bound ? (
                           `Unbind ${script.bound}`
                         ) : (
                           'Quickbind'
                         )}
-                        disabled={!script.quickbind}
-                        onClick={() => act('bind', {
-                          'script': script.type,
-                        })} />
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
                 ))}

@@ -304,18 +304,20 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	var/dat = "<b>Reskin options for [name]:</b>\n"
-	for(var/V in unique_reskin)
-		var/output = icon2html(src, M, unique_reskin[V])
-		dat += "[V]: <span class='reallybig'>[output]</span>\n"
-	to_chat(M, dat)
-
-	var/choice = input(M, always_reskinnable ? "Choose the a reskin for [src]" : "Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(QDELETED(src) || !choice || (current_skin && !always_reskinnable) || M.incapacitated() || !in_range(M,src) || !unique_reskin[choice] || unique_reskin[choice] == current_skin)
-		return
-	current_skin = choice
+	var/list/skins = list()
+	for(var/S in unique_reskin)
+		skins[S] = image(icon = icon, icon_state = unique_reskin[S])
+	var/choice = show_radial_menu(M, src, skins, custom_check = CALLBACK(src, .proc/check_skinnable, M), radius = 40, require_near = TRUE)
+	if(!choice)
+		return FALSE
 	icon_state = unique_reskin[choice]
-	to_chat(M, "[src] is now skinned as '[choice]'.")
+	current_skin = choice
+	return
+
+/obj/proc/check_skinnable(/mob/M)
+	if(current_skin || !always_reskinnable)
+		return FALSE
+	return TRUE
 
 /obj/update_overlays()
 	. = ..()
