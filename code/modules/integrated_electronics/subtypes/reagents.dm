@@ -19,25 +19,26 @@
 // Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
 // This is a dirty hack to make injecting reagents into them work.
 // TODO: refactor that.
-/obj/item/integrated_circuit/reagent/proc/inject_tray(obj/machinery/hydroponics/tray, atom/movable/source, amount)
-	var/atom/movable/acting_object = get_object()
-	var/list/trays = list(tray)
-	var/visi_msg = "[acting_object] transfers fluid into [tray]"
+//Time for someone to refactor this. Trays can now hold reagents.
+//obj/item/integrated_circuit/reagent/proc/inject_tray(obj/machinery/hydroponics/tray, atom/movable/source, amount)
+	//var/atom/movable/acting_object = get_object()
+	//var/list/trays = list(tray)
+	//var/visi_msg = "[acting_object] transfers fluid into [tray]"
 
-	acting_object.visible_message("<span class='notice'>[visi_msg].</span>")
-	playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+	//acting_object.visible_message("<span class='notice'>[visi_msg].</span>")
+	//playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-	var/split = round(amount/trays.len)
+	//var/split = round(amount/trays.len)
 
-	for(var/obj/machinery/hydroponics/H in trays)
-		var/datum/reagents/temp_reagents = new /datum/reagents()
-		temp_reagents.my_atom = H
+	//for(var/obj/machinery/hydroponics/H in trays)
+		//var/datum/reagents/temp_reagents = new /datum/reagents()
+		//temp_reagents.my_atom = H
 
-		source.reagents.trans_to(temp_reagents, split)
-		H.on_hydroponics_apply(temp_reagents)
+		//source.reagents.trans_to(temp_reagents, split)
+		//H.on_hydroponics_apply(temp_reagents)
 
-		temp_reagents.clear_reagents()
-		qdel(temp_reagents)
+		//temp_reagents.clear_reagents()
+		//qdel(temp_reagents)
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
