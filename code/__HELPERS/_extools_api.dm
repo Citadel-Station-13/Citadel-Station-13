@@ -15,7 +15,7 @@
 		world << result
 	call_cb("sample.dll", "do_work", /proc/print_result, "arg1", "arg2")
 	 - Calls do_work with 2 arguments. The callback is invoked with the result as the single argument. Execution resumes immediately.
-*/
+
 
 /proc/tffi_initialize()
 	return call(EXTOOLS, "tffi_initialize")()
@@ -77,6 +77,7 @@ var/next_promise_id = 0
 
 /proc/call_wait()
 	return call_async(arglist(args)).resolve()
+*/
 
 /*
 	Logging -- same exact interface as rust_g logging, but threaded and doesn't go through call()().
