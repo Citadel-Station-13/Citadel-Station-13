@@ -41,7 +41,7 @@
 
 /obj/machinery/hydroponics/constructable/automagic/process()
 	if(reagents)
-		on_hydroponics_apply(reagents)
+		reagents.add_reagent(reagents)
 		reagents.clear_reagents()
 	if(dead)
 		dead = 0
