@@ -521,11 +521,12 @@
 			plant_health = myseed.endurance
 			lastcycle = world.time
 			update_icon()
+			return
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 			return
 
-		else if(istype(O, /obj/item/plant_analyzer))
+	else if(istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/P_analyzer = O
 		if(myseed)
 			if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
