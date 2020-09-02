@@ -72,8 +72,8 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 
-	verbs += /mob/living/proc/lay_down //CITADEL EDIT gimmie rest verb kthx
-	verbs += /mob/living/silicon/robot/proc/rest_style
+	add_verb(src, /mob/living/proc/lay_down) //CITADEL EDIT gimmie rest verb kthx
+	add_verb(src, /mob/living/silicon/robot/proc/rest_style)
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
@@ -222,19 +222,19 @@
 	if(thruster_button)
 		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
-/mob/living/silicon/robot/Stat()
-	..()
-	if(statpanel("Status"))
-		if(cell)
-			stat("Charge Left:", "[cell.charge]/[cell.maxcharge]")
-		else
-			stat(null, text("No Cell Inserted!"))
+/mob/living/silicon/robot/get_status_tab_items()
+	. = ..()
+	. += ""
+	if(cell)
+		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+	else
+		. += text("No Cell Inserted!")
 
-		if(module)
-			for(var/datum/robot_energy_storage/st in module.storages)
-				stat("[st.name]:", "[st.energy]/[st.max_energy]")
-		if(connected_ai)
-			stat("Master AI:", connected_ai.name)
+	if(module)
+		for(var/datum/robot_energy_storage/st in module.storages)
+			. += "[st.name]: [st.energy]/[st.max_energy]"
+	if(connected_ai)
+		. += "Master AI: [connected_ai.name]"
 
 /mob/living/silicon/robot/restrained(ignore_grab)
 	. = 0

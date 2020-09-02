@@ -8,7 +8,7 @@
 /obj/item/gun/ballistic/revolver/Initialize()
 	. = ..()
 	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
-		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+		remove_verb(src, /obj/item/gun/ballistic/revolver/verb/spin)
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
 	if(spin)
@@ -60,7 +60,7 @@
 	if(do_spin())
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
-		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+		remove_verb(src, /obj/item/gun/ballistic/revolver/verb/spin)
 
 /obj/item/gun/ballistic/revolver/proc/do_spin()
 	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine

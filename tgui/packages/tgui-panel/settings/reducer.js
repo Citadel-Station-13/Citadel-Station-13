@@ -11,7 +11,7 @@ const initialState = {
   version: 1,
   fontSize: 13,
   lineHeight: 1.2,
-  theme: 'default',
+  theme: 'light',
   adminMusicVolume: 0.5,
   highlightText: '',
   highlightColor: '#ffdd44',

@@ -307,7 +307,7 @@
 				F = S
 				update_icon()
 				update_helmlight(user)
-				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
+				add_verb(user, /obj/item/clothing/head/helmet/proc/toggle_helmlight)
 				var/datum/action/A = new /datum/action/item_action/toggle_helmet_flashlight(src)
 				if(loc == user)
 					A.Grant(user)
@@ -323,7 +323,7 @@
 				S.update_brightness(user)
 				update_icon()
 				usr.update_inv_head()
-				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
+				remove_verb(src, /obj/item/clothing/head/helmet/proc/toggle_helmlight)
 			for(var/datum/action/item_action/toggle_helmet_flashlight/THL in actions)
 				qdel(THL)
 			return
