@@ -161,7 +161,7 @@
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWeeds(rand(1,2))
+		mytray.adjustWeeds(rand(2,3))
 		mytray.adjustPests(rand(1,2))
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
@@ -173,10 +173,6 @@
 	M.AdjustSleeping(40, FALSE)
 	..()
 	. = 1
-
-/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	. = ..()
-	mytray.adjustWeeds(rand(2,3))
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"

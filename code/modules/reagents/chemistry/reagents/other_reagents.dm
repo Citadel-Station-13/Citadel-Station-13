@@ -182,10 +182,6 @@
 		. = 1
 	..()
 
-/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
-	. = ..()
-	mytray.adjustPests(rand(2,3))
-
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
 	color = BLOOD_COLOR_HUMAN

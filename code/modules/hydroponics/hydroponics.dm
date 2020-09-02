@@ -50,7 +50,7 @@
 		tmp_capacity += M.rating
 	for (var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
-	maxwater = tmp_capacity * 50 // Up to 300
+	maxwater = tmp_capacity * 50 // Up to 400
 	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
@@ -634,7 +634,7 @@
 	if(!anchored)
 		return
 	self_sustaining = !self_sustaining
-	idle_power_usage = self_sustaining ? 2500 : 0
+	idle_power_usage = self_sustaining ? 4000 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
 	update_icon()
 
