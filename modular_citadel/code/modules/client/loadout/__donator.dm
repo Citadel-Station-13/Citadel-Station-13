@@ -40,12 +40,6 @@
 	path = /obj/item/bikehorn/airhorn
 	ckeywhitelist = list("kevinz000")
 
-/datum/gear/donator/cebusoap
-	name = "Cebutris' soap"
-	slot = SLOT_IN_BACKPACK
-	path = /obj/item/custom/ceb_soap
-	ckeywhitelist = list("cebutris")
-
 /datum/gear/donator/kiaracloak
 	name = "Kiara's cloak"
 	slot = SLOT_NECK
