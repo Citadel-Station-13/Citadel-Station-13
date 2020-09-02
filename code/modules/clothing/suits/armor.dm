@@ -80,7 +80,9 @@
 	item_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
-	unique_reskin = list("Coat" = "hostrench", "Cloak" = "trenchcloak")
+	unique_reskin = list("Coat" = "hostrench",
+						"Cloak" = "trenchcloak"
+						)
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"

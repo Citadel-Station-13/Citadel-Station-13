@@ -14,13 +14,13 @@
 	name = "Standard"
 	icon_state = "standard"
 
-/datum/sprite_accessory/xeno_dorsal/royal
-	name = "Royal"
-	icon_state = "royal"
-
 /datum/sprite_accessory/xeno_dorsal/down
 	name = "Dorsal Down"
 	icon_state = "down"
+
+/datum/sprite_accessory/xeno_dorsal/royal
+	name = "Royal"
+	icon_state = "royal"
 
 /******************************************
 ************* Xeno Tails ******************
@@ -57,13 +57,13 @@
 	name = "Standard"
 	icon_state = "standard"
 
-/datum/sprite_accessory/xeno_head/royal
-	name = "royal"
-	icon_state = "royal"
-
 /datum/sprite_accessory/xeno_head/hollywood
 	name = "hollywood"
 	icon_state = "hollywood"
+
+/datum/sprite_accessory/xeno_head/royal
+	name = "royal"
+	icon_state = "royal"
 
 /datum/sprite_accessory/xeno_head/warrior
 	name = "warrior"

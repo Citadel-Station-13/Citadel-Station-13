@@ -45,11 +45,11 @@ export const TelecommsInteraction = (props, context) => {
             <LabeledList>
               <LabeledList.Item label="Power Status">
                 <Button
-                  content={power ? 'On' : 'Off'}
                   icon={power ? 'power-off' : 'times'}
                   color={power ? 'good' : 'bad'}
-                  onClick={() => act('toggle')}
-                />
+                  onClick={() => act('toggle')}>
+                  {power ? 'On' : 'Off'}
+                </Button>
               </LabeledList.Item>
               {power ? (
                 <Fragment>
@@ -80,40 +80,40 @@ export const TelecommsInteraction = (props, context) => {
                     <Fragment>
                       <LabeledList.Item label="Broadcasting">
                         <Button
-                          content={machine.broadcast ? 'YES' : 'NO'}
                           icon={machine.broadcast ? 'check' : 'times'}
                           color={machine.broadcast ? 'good' : 'bad'}
                           onClick={() => act('relay', {
                             'broadcast': true,
-                          })}
-                        />
+                          })}>
+                          {machine.broadcast ? 'YES' : 'NO'}
+                        </Button>
                       </LabeledList.Item>
                       <LabeledList.Item label="Receiving">
                         <Button
-                          content={machine.receiving ? 'YES' : 'NO'}
                           icon={machine.receiving ? 'check' : 'times'}
                           color={machine.receiving ? 'good' : 'bad'}
                           onClick={() => act('relay', {
                             'receiving': true,
-                          })}
-                        />
+                          })}>
+                          {machine.receiving ? 'YES' : 'NO'}
+                        </Button>
                       </LabeledList.Item>
                     </Fragment>
                   )}
                   {!!isbus && (
                     <LabeledList.Item label="Change Signal Frequency">
                       <Button
-                        content={machine.chang_frequency ? (
-                          'Enabled'
-                        ) : (
-                          'Disabled'
-                        )}
                         icon={machine.chang_frequency ? 'power-off' : 'times'}
                         color={machine.chang_frequency ? 'good' : 'bad'}
                         onClick={() => act('frequency', {
                           'toggle': true,
-                        })}
-                      />
+                        })}>
+                        {machine.chang_frequency ? (
+                          'Enabled'
+                        ) : (
+                          'Disabled'
+                        )}
+                      </Button>
                       {!!machine.chang_frequency && (
                         <NumberInput
                           animate
@@ -141,25 +141,25 @@ export const TelecommsInteraction = (props, context) => {
                       buttons={multitool_buf ? (
                         <Fragment>
                           <Button
-                            content="Link"
                             onClick={() => act('multitool', {
                               'Link': true,
-                            })}
-                          />
+                            })}>
+                            Link
+                          </Button>
                           <Button
-                            content="Flush"
                             onClick={() => act('multitool', {
                               'Flush': true,
-                            })}
-                          />
+                            })}>
+                            Flush
+                          </Button>
                         </Fragment>
                       ) : (
                         <Button
-                          content="Add Machine"
                           onClick={() => act('multitool', {
                             'Add': true,
-                          })}
-                        />
+                          })}>
+                          Add Machine
+                        </Button>
                       )}>
                       {!!multitool_buf && (
                         `${multitool_buf.name} (${multitool_buf.id})`
@@ -183,11 +183,11 @@ export const TelecommsInteraction = (props, context) => {
                         label={entity.ref}
                         buttons={(
                           <Button
-                            content="Remove"
                             onClick={() => act('unlink', {
                               'value': entity.ref,
-                            })}
-                          />
+                            })}>
+                            Remove
+                          </Button>
                         )}>
                         {`${entity.name} (${entity.id})`}
                       </LabeledList.Item>
@@ -198,11 +198,11 @@ export const TelecommsInteraction = (props, context) => {
                   title="Filtering Frequencies"
                   level={2}>
                   <Button
-                    content="Add Filter"
                     onClick={() => act('freq', {
                       'add': true,
-                    })}
-                  />
+                    })}>
+                    Add Filter
+                  </Button>
                   <br />
                   <br />
                   {(freq_listening && freq_listening.length) ? (
@@ -213,17 +213,17 @@ export const TelecommsInteraction = (props, context) => {
                         <Button
                           key={thing}
                           icon="times"
-                          content={valid ? (
+                          onClick={() => act('freq', {
+                            'remove': thing,
+                          })}>
+                          {valid ? (
                             <span style={`color: ${valid.color}`}>
                               {`${thing} (${valid.name})`}
                             </span>
                           ) : (
                             thing
                           )}
-                          onClick={() => act('freq', {
-                            'remove': thing,
-                          })}
-                        />
+                        </Button>
                       );
                     })
                   ) : (
