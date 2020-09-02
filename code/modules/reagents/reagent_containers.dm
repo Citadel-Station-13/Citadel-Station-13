@@ -22,7 +22,7 @@
 	if(isnum(vol) && vol > 0)
 		volume = vol
 	if(container_flags & APTFT_VERB && length(possible_transfer_amounts))
-		add_verb(src, /obj/item/reagent_containers/proc/set_APTFT)
+		verbs += /obj/item/reagent_containers/proc/set_APTFT
 	create_reagents(volume, reagent_flags, reagent_value)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
