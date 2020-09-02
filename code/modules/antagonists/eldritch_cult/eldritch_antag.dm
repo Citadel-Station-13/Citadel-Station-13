@@ -6,6 +6,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
+	threat = 10
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
@@ -207,6 +208,14 @@
 
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
+
+/datum/antagonist/heretic/threat()
+	. = ..()
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		. += EK.cost
+	if(ascended)
+		. += 20
 
 ////////////////
 // Objectives //

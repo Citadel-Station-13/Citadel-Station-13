@@ -103,6 +103,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
+	attack_speed = CLICK_CD_MELEE
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
@@ -125,9 +126,12 @@
 			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
+/obj/item/scythe/pre_attack(atom/A, mob/living/user, params, attackchain_flags, damage_multiplier)
+	. = ..()
+	if(. & STOP_ATTACK_PROC_CHAIN)
+		return
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
-		return ..()
+		return
 	else
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(A))
@@ -138,11 +142,12 @@
 			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
 			for(var/obj/structure/spacevine/V in T)
 				if(user.Adjacent(V))
-					melee_attack_chain(user, V)
+					melee_attack_chain(user, V, attackchain_flags = ATTACK_IGNORE_CLICKDELAY)
 					stam_gain += 5					//should be hitcost
 		swiping = FALSE
 		stam_gain += 2								//Initial hitcost
 		user.adjustStaminaLoss(-stam_gain)
+		user.DelayNextAction()
 
 // *************************************
 // Nutrient defines for hydroponics

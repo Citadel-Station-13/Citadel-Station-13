@@ -1,3 +1,15 @@
+#define STATE_DEFAULT 1
+#define STATE_CALLSHUTTLE 2
+#define STATE_CANCELSHUTTLE 3
+#define STATE_MESSAGELIST 4
+#define STATE_VIEWMESSAGE 5
+#define STATE_DELMESSAGE 6
+#define STATE_STATUSDISPLAY 7
+#define STATE_ALERT_LEVEL 8
+#define STATE_CONFIRM_LEVEL 9
+#define STATE_TOGGLE_EMERGENCY 10
+#define STATE_PURCHASE 11
+
 // The communications computer
 /obj/machinery/computer/communications
 	name = "communications console"
@@ -6,6 +18,7 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_HEADS)
 	circuit = /obj/item/circuitboard/computer/communications
+	light_color = LIGHT_COLOR_BLUE
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/datum/comm_message/messages = list()
 	var/datum/comm_message/currmsg
@@ -16,22 +29,10 @@
 	var/ai_message_cooldown = 0
 	var/tmp_alertlevel = 0
 	var/static/security_level_cd // used to stop mass spam.
-	var/const/STATE_DEFAULT = 1
-	var/const/STATE_CALLSHUTTLE = 2
-	var/const/STATE_CANCELSHUTTLE = 3
-	var/const/STATE_MESSAGELIST = 4
-	var/const/STATE_VIEWMESSAGE = 5
-	var/const/STATE_DELMESSAGE = 6
-	var/const/STATE_STATUSDISPLAY = 7
-	var/const/STATE_ALERT_LEVEL = 8
-	var/const/STATE_CONFIRM_LEVEL = 9
-	var/const/STATE_TOGGLE_EMERGENCY = 10
-	var/const/STATE_PURCHASE = 11
 
 	var/stat_msg1
 	var/stat_msg2
 
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/communications/proc/checkCCcooldown()
 	var/obj/item/circuitboard/computer/communications/CM = circuit
@@ -46,7 +47,7 @@
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
 		return
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
 	if(!is_station_level(z) && !is_reserved_level(z)) //Can only use in transit and on SS13
 		to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
@@ -132,15 +133,20 @@
 
 		if("crossserver")
 			if(authenticated==2)
+				var/dest = href_list["cross_dest"]
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
-				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				var/warning = dest == "all" ? "Please choose a message to transmit to allied stations." : "Please choose a message to transmit to [dest] sector station."
+				var/input = stripped_multiline_input(usr, "[warning]  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-				send2otherserver("[station_name()]", input,"Comms_Console")
+				if(dest == "all")
+					send2otherserver("[station_name()]", input,"Comms_Console")
+				else
+					send2otherserver("[station_name()]", input,"Comms_Console", list(dest))
 				minor_announce(input, title = "Outgoing message to allied station")
 				usr.log_talk(input, LOG_SAY, tag="message to the other server")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server.")
@@ -156,12 +162,12 @@
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
-						to_chat(usr, "It's a bit late to buy a new shuttle, don't you think?")
+						to_chat(usr, "<span class='alert'>It's a bit late to buy a new shuttle, don't you think?</span>")
 						return
 					if(SSshuttle.shuttle_purchased)
-						to_chat(usr, "A replacement shuttle has already been purchased.")
+						to_chat(usr, "<span class='alert'>A replacement shuttle has already been purchased.</span>")
 					else if(!S.prerequisites_met())
-						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
+						to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
 					else
 						var/points_to_check
 						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -183,7 +189,7 @@
 
 		if("callshuttle")
 			state = STATE_DEFAULT
-			if(authenticated)
+			if(authenticated && SSshuttle.canEvac(usr))
 				state = STATE_CALLSHUTTLE
 		if("callshuttle2")
 			if(authenticated)
@@ -284,12 +290,12 @@
 		if("MessageCentCom")
 			if(authenticated)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to CentCom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to CentCom.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 				CentCom_announce(input, usr)
 				to_chat(usr, "<span class='notice'>Message transmitted to Central Command.</span>")
 				for(var/client/X in GLOB.admins)
@@ -302,7 +308,7 @@
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((authenticated==2) && (obj_flags & EMAGGED))
+			if((authenticated) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
@@ -332,7 +338,7 @@
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
-				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
+				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self-Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				Nuke_request(input, usr)
@@ -347,7 +353,9 @@
 			aicurrmsg = null
 			aistate = STATE_DEFAULT
 		if("ai-callshuttle")
-			aistate = STATE_CALLSHUTTLE
+			aistate = STATE_DEFAULT
+			if(SSshuttle.canEvac(usr))
+				aistate = STATE_CALLSHUTTLE
 		if("ai-callshuttle2")
 			SSshuttle.requestEvac(usr, href_list["call"])
 			aistate = STATE_DEFAULT
@@ -460,9 +468,8 @@
 
 
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 
-	if(issilicon(user) || (hasSiliconAccessInArea(user) && !in_range(user,src)))
+	if(issilicon(user))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
@@ -493,9 +500,15 @@
 				if (authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
-					var/cross_servers_count = length(CONFIG_GET(keyed_list/cross_server))
-					if(cross_servers_count)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to [cross_servers_count == 1 ? "an " : ""]allied station[cross_servers_count > 1 ? "s" : ""]</A> \]"
+					var/list/cross_servers = CONFIG_GET(keyed_list/cross_server)
+					var/our_id = CONFIG_GET(string/cross_comms_name)
+					if(cross_servers.len)
+						for(var/server in cross_servers)
+							if(server == our_id)
+								continue
+							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver=all;cross_dest=[server]'>Send a message to station in [server] sector.</A> \]"
+						if(cross_servers.len > 2)
+							dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver;cross_dest=all'>Send a message to all allied stations</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
@@ -721,8 +734,13 @@
 		to_chat(user, "<span class='alert'>Intercomms recharging. Please stand by.</span>")
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
-	if(!input || !user.canUseTopic(src))
+	if(!input || !user.canUseTopic(src, !issilicon(usr)))
 		return
+	if(!(user.can_speak())) //No more cheating, mime/random mute guy!
+		input = "..."
+		to_chat(user, "<span class='warning'>You find yourself unable to speak.</span>")
+	else
+		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
 	SScommunications.make_announcement(user, is_silicon, input)
 	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> made an priority announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", user)
 
@@ -771,3 +789,15 @@
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
+
+#undef STATE_DEFAULT
+#undef STATE_CALLSHUTTLE
+#undef STATE_CANCELSHUTTLE
+#undef STATE_MESSAGELIST
+#undef STATE_VIEWMESSAGE
+#undef STATE_DELMESSAGE
+#undef STATE_STATUSDISPLAY
+#undef STATE_ALERT_LEVEL
+#undef STATE_CONFIRM_LEVEL
+#undef STATE_TOGGLE_EMERGENCY
+#undef STATE_PURCHASE
