@@ -66,6 +66,7 @@
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>{Log Out}</A>"
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 

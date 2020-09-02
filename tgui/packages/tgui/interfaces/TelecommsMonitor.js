@@ -54,17 +54,15 @@ export const TelecommsMonitor = (props, context) => {
                 buttons={(
                   <Fragment>
                     <Button
+                      content="Flush Buffer"
                       icon="minus-circle"
                       disabled={!servers.length || !!selected}
-                      onClick={() => act('release')}>
-                      Flush Buffer
-                    </Button>
+                      onClick={() => act('release')} />
                     <Button
+                      content="Probe Network"
                       icon="sync"
                       disabled={selected}
-                      onClick={() => act('probe')}>
-                      Probe Network
-                    </Button>
+                      onClick={() => act('probe')} />
                   </Fragment>
                 )}>
                 {!selected ? (

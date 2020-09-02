@@ -25,7 +25,7 @@
 
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
+				to_chat(usr, "This can only be used on instances of type /mob")
 				return
 
 			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
@@ -43,7 +43,7 @@
 
 			var/atom/A = locate(href_list["rotatedatum"])
 			if(!istype(A))
-				to_chat(usr, "This can only be done to instances of type /atom", confidential = TRUE)
+				to_chat(usr, "This can only be done to instances of type /atom")
 				return
 
 			switch(href_list["rotatedir"])
@@ -60,13 +60,13 @@
 
 			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
 			if(!istype(Mo))
-				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey", confidential = TRUE)
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey")
 				return
 
 			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!Mo)
-				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
+				to_chat(usr, "Mob doesn't exist anymore")
 				return
 			holder.Topic(href, list("humanone"=href_list["makehuman"]))
 
@@ -80,13 +80,10 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
-
-			if (isnull(amount))
-				return
+			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
 
 			if(!L)
-				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
+				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
 			var/newamt
@@ -113,7 +110,7 @@
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
 				else
-					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
+					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
 
 			if(amount != 0)
@@ -127,5 +124,5 @@
 	//Finally, refresh if something modified the list.
 	if(href_list["datumrefresh"])
 		var/datum/DAT = locate(href_list["datumrefresh"])
-		if(istype(DAT, /datum) || istype(DAT, /client) || islist(DAT))
+		if(istype(DAT, /datum) || istype(DAT, /client))
 			debug_variables(DAT)

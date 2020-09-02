@@ -1,10 +1,11 @@
 /datum/computer_file/program/alarm_monitor
 	filename = "alarmmonitor"
-	filedesc = "Canary"
+	filedesc = "Alarm Monitor"
 	ui_header = "alarm_green.gif"
 	program_icon_state = "alert-green"
-	extended_desc = "This program provides visual interface for a station's alarm system."
+	extended_desc = "This program provides visual interface for station's alarm system."
 	requires_ntnet = 1
+	network_destination = "alarm monitoring network"
 	size = 5
 	tgui_id = "NtosStationAlertConsole"
 	var/has_alert = 0

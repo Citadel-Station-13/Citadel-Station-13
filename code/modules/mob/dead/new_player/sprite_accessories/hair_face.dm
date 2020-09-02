@@ -6,10 +6,6 @@
 	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
 
 // please make sure they're sorted alphabetically and categorized
-/datum/sprite_accessory/facial_hair/shaved //this is exempt from the alphabetical sort
-	name = "Shaved"
-	icon_state = null
-	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/threeoclock
 	name = "Beard (3 o\'Clock)"
@@ -138,6 +134,11 @@
 /datum/sprite_accessory/facial_hair/muttonmus
 	name = "Mutton Chops with Moustache"
 	icon_state = "facial_muttonmus"
+
+/datum/sprite_accessory/facial_hair/shaved
+	name = "Shaved"
+	icon_state = null
+	gender = NEUTER
 
 /datum/sprite_accessory/facial_hair/sideburn
 	name = "Sideburns"

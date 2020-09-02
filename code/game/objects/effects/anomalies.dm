@@ -285,7 +285,7 @@
 	S.rabid = TRUE
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
 	S.Evolve()
-	offer_control(S,POLL_IGNORE_SENTIENCE_POTION)
+	offer_control(S)
 
 /////////////////////
 

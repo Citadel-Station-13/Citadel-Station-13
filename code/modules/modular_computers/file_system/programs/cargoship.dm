@@ -1,8 +1,9 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
-	filedesc = "GrandArk Exporter"
+	filedesc = "Nanotrasen Shipping Scanner"
 	program_icon_state = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
+	network_destination = "ship scanner"
 	size = 6
 	tgui_id = "NtosShipping"
 	///Account used for creating barcodes.

@@ -9,10 +9,6 @@
 	// try to spell
 	// you do not need to define _s or _l sub-states, game automatically does this for you
 
-/datum/sprite_accessory/hair/bald //this is exempt from the alphabetical sort
-	name = "Bald"
-	icon_state = "bald"
-
 /datum/sprite_accessory/hair/afro
 	name = "Afro"
 	icon_state = "hair_afro"
@@ -28,6 +24,10 @@
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
+
+/datum/sprite_accessory/hair/bald
+	name = "Bald"
+	icon_state = "bald"
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"

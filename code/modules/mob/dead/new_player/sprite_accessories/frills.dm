@@ -11,10 +11,6 @@
 	icon_state = "none"
 	relevant_layers = null
 
-/datum/sprite_accessory/frills/aquatic
-	name = "Aquatic"
-	icon_state = "aqua"
-
 /datum/sprite_accessory/frills/simple
 	name = "Simple"
 	icon_state = "simple"
@@ -22,3 +18,7 @@
 /datum/sprite_accessory/frills/short
 	name = "Short"
 	icon_state = "short"
+
+/datum/sprite_accessory/frills/aquatic
+	name = "Aquatic"
+	icon_state = "aqua"

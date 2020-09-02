@@ -35,7 +35,7 @@
 	. = ..()
 	if(mapload)
 		for(var/obj/item/I in loc)
-			if(I.w_class < WEIGHT_CLASS_NORMAL) //there probably shouldn't be anything placed ontop of filing cabinets in a map that isn't meant to go in them
+			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
 				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
@@ -46,12 +46,7 @@
 	qdel(src)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_WRENCH && user.a_intent != INTENT_HELP)
-		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
-		if(P.use_tool(src, user, 20, volume=50))
-			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
-			anchored = !anchored
-	else if(P.w_class < WEIGHT_CLASS_NORMAL)
+	if(istype(P, /obj/item/paper) || istype(P, /obj/item/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
@@ -59,6 +54,11 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
+	else if(istype(P, /obj/item/wrench))
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+		if(P.use_tool(src, user, 20, volume=50))
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
 	else
@@ -67,6 +67,9 @@
 
 /obj/structure/filingcabinet/ui_interact(mob/user)
 	. = ..()
+	if(isobserver(user))
+		return
+
 	if(contents.len <= 0)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
@@ -97,17 +100,16 @@
 	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
 /obj/structure/filingcabinet/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
-		return
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(istype(P) && in_range(src, usr))
+		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
+		if(istype(P) && P.loc == src && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"
-			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
+			sleep(5)
+			icon_state = initial(icon_state)
 
 
 /*
@@ -168,7 +170,6 @@
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/filingcabinet/medical/on_attack_hand()
 	populate()
 	. = ..()

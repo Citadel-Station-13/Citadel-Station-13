@@ -20,9 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
 	(if specified in the link). ie locate(hsrc).Topic()
-
 	Such links can be spoofed.
-
 	Because of this certain things MUST be considered whenever adding a Topic() for something:
 		- Can it be fed harmful values which could cause runtimes?
 		- Is the Topic call an admin-only thing?
@@ -40,7 +38,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/asset_cache_job
 	if(href_list["asset_cache_confirm_arrival"])
 		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
-		if (!asset_cache_job)
+		if(!asset_cache_job)
 			return
 
 	// Rate limiting
@@ -102,7 +100,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	// Tgui Topic middleware
-	if(tgui_Topic(href_list))
+	if(!tgui_Topic(href_list))
 		return
 
 	// Admin PM
@@ -110,9 +108,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
-	// Mentor PM (cit.)
+	// CITADEL Start - Mentor PM
 	if (citadel_client_procs(href_list))
 		return
+	// CITADEL End
 
 	switch(href_list["_src_"])
 		if("holder")
@@ -120,7 +119,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if("usr")
 			hsrc = mob
 		if("mentor") // CITADEL
-			hsrc = mentor_datum
+			hsrc = mentor_datum // CITADEL END
 		if("prefs")
 			if (inprefs)
 				return
@@ -130,6 +129,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
+		if("chat")
+			return chatOutput.Topic(href, href_list)
 
 	switch(href_list["action"])
 		if("openLink")
@@ -146,6 +147,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return 0
 	return 1
+
 /*
  * Call back proc that should be checked in all paths where a client can send messages
  *
@@ -208,10 +210,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	///////////
 	//CONNECT//
 	///////////
+#if (PRELOAD_RSC == 0)
+GLOBAL_LIST_EMPTY(external_rsc_urls)
+#endif
 
 /client/New(TopicData)
-	world.SetConfig("APP/admin", ckey, "role=admin")
+	world.SetConfig("APP/admin", ckey, "role=admin")			//CITADEL EDIT - Allows admins to reboot in OOM situations
 	var/tdata = TopicData //save this for later use
+	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -219,9 +225,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
-
-	// Instantiate tgui panel
-	tgui_panel = new(src)
 
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
@@ -263,6 +266,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			new /datum/admins(localhost_rank, ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
+
 	if(prefs)
 		prefs.parent = src
 	else
@@ -272,7 +276,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = prefs.clientfps //(prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
+	fps = prefs.clientfps
 
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
@@ -297,26 +301,22 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					alert_mob_dupe_login = TRUE
 				if(matches)
 					if(C)
-						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</span>")
-						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</font>")
+						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
 					else
-						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
-						log_admin_private("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
+						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
+						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
 	if(GLOB.player_details[ckey])
 		player_details = GLOB.player_details[ckey]
 		player_details.byond_version = full_version
 	else
-		player_details = new(ckey)
+		player_details = new
 		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
 
 	. = ..()	//calls mob.Login()
-	// if (length(GLOB.stickybanadminexemptions))
-	// 	GLOB.stickybanadminexemptions -= ckey
-	// 	if (!length(GLOB.stickybanadminexemptions))
-	// 		restore_stickybans()
 
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
@@ -336,12 +336,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return
 
-	// if(SSinput.initialized) placed here on tg.
-	// 	set_macros()
-	// 	update_movement_keys()
-
-	// Initialize tgui panel
-	tgui_panel.initialize()
+	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -352,13 +347,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	var/cev = CONFIG_GET(number/client_error_version)
-	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev || (byond_version == cev && byond_build < ceb))		//Out of date client.
+	if (byond_version < cev)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
-		to_chat(src, "Your version: [byond_version].[byond_build]")
-		to_chat(src, "Required version: [cev].[ceb] or later")
+		to_chat(src, "Your version: [byond_version]")
+		to_chat(src, "Required version: [cev] or later")
 		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
@@ -470,10 +464,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	// view_size = new(src, getScreenSize(prefs.widescreenpref))
-	// view_size.resetFormat()
-	// view_size.setZoomMode()
-	// fit_viewport()
 	Master.UpdateTickRate()
 
 /client/proc/ensure_keys_set()
@@ -487,17 +477,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/Del()
 	if(!gc_destroyed)
-		Destroy() //Clean up signals and timers.
+		Destroy()
 	return ..()
 
 /client/Destroy()
-	GLOB.clients -= src
-	GLOB.directory -= ckey
-	log_access("Logout: [key_name(src)]")
-	GLOB.ahelp_tickets.ClientLogout(src)
-	// SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
+	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -519,13 +505,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
+
+	GLOB.ahelp_tickets.ClientLogout(src)
+	GLOB.directory -= ckey
+	GLOB.clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
-	// seen_messages = null
 	Master.UpdateTickRate()
-	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
+	. = ..()
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -627,9 +616,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	qdel(query_log_connection)
-
-	// SSserver_maint.UpdateHubStatus()
-
 	if(new_player)
 		player_age = -1
 	. = player_age
@@ -871,29 +857,38 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return inactivity
 	return FALSE
 
-/// Send resources to the client.
-/// Sends both game resources and browser assets.
+//send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 #if (PRELOAD_RSC == 0)
 	var/static/next_external_rsc = 0
-	var/list/external_rsc_urls = CONFIG_GET(keyed_list/external_rsc_urls)
-	if(length(external_rsc_urls))
-		next_external_rsc = WRAP(next_external_rsc+1, 1, external_rsc_urls.len+1)
-		preload_rsc = external_rsc_urls[next_external_rsc]
+	if(GLOB.external_rsc_urls && GLOB.external_rsc_urls.len)
+		next_external_rsc = WRAP(next_external_rsc+1, 1, GLOB.external_rsc_urls.len+1)
+		preload_rsc = GLOB.external_rsc_urls[next_external_rsc]
 #endif
-
+	//get the common files
+	getFiles(
+		'html/search.js',
+		'html/panels.css',
+		'html/browser/common.css',
+		'html/browser/scannernew.css',
+		'html/browser/playeroptions.css',
+		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		if (CONFIG_GET(flag/asset_simple_preload))
-			addtimer(CALLBACK(SSassets.transport, /datum/asset_transport.proc/send_assets_slow, src, SSassets.transport.preload), 5 SECONDS)
+		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/getFilesSlow, src, SSassets.preload, FALSE), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
 			var/file = GLOB.vox_sounds[name]
+			Export("##action=load_rsc", file)
+			stoplag()
+		for (var/name in GLOB.vox_sounds_male)
+			var/file = GLOB.vox_sounds_male[name]
 			Export("##action=load_rsc", file)
 			stoplag()
 		#endif

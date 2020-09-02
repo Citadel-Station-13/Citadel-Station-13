@@ -41,8 +41,6 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	var/hide_ckey = FALSE //hide ckey from round-end report
-
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/linglink
@@ -70,7 +68,6 @@
 
 	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
-
 
 /datum/mind/New(var/key)
 	skill_holder = new(src)
@@ -139,8 +136,6 @@
 		var/mob/living/L = new_character
 		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
 			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
-
-	hide_ckey = current.client?.prefs?.hide_ckey
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
@@ -785,7 +780,6 @@
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
-	mind.hide_ckey = client?.prefs?.hide_ckey
 
 /mob/living/carbon/mind_initialize()
 	..()

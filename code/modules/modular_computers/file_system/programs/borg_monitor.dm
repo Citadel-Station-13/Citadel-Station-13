@@ -1,11 +1,12 @@
 /datum/computer_file/program/borg_monitor
-	filename = "siliconnect"
-	filedesc = "SiliConnect"
+	filename = "cyborgmonitor"
+	filedesc = "Cyborg Remote Monitoring"
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
 	transfer_access = ACCESS_ROBOTICS
+	network_destination = "cyborg remote monitoring"
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 
@@ -31,7 +32,7 @@
 
 		var/list/cyborg_data = list(
 			name = R.name,
-			locked_down = R.locked_down,
+			locked_down = R.lockcharge,
 			status = R.stat,
 			shell_discon = shell,
 			charge = R.cell ? round(R.cell.percent()) : null,
@@ -80,8 +81,8 @@
 	return ID.registered_name
 
 /datum/computer_file/program/borg_monitor/syndicate
-	filename = "roboverlord"
-	filedesc = "Roboverlord"
+	filename = "scyborgmonitor"
+	filedesc = "Mission-Specific Cyborg Remote Monitoring"
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
@@ -89,6 +90,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	transfer_access = null
+	network_destination = "cyborg remote monitoring"
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)

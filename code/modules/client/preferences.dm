@@ -163,7 +163,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		)
 	var/custom_speech_verb = "default" //if your say_mod is to be something other than your races
 	var/custom_tongue = "default" //if your tongue is to be something other than your races
-	var/chosen_limb_id //body sprite selected to load for the users limbs, null means default, is sanitized when loaded
 
 	/// Security record note section
 	var/security_records
@@ -246,8 +245,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/scars_list = list("1" = "", "2" = "", "3" = "", "4" = "", "5" = "")
 	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
 	var/scars_index = 1
-
-	var/hide_ckey = FALSE //pref for hiding if your ckey shows round-end or not
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -373,7 +370,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "[medical_records]"
 			else
 				dat += "[TextPreview(medical_records)]...<BR>"
-			dat += "<br><a href='?_src_=prefs;preference=hide_ckey;task=input'><b>Hide ckey: [hide_ckey ? "Enabled" : "Disabled"]</b></a><br>"
 			dat += "</tr></table>"
 
 		//Character Appearance
@@ -524,12 +520,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(mutant_category >= MAX_MUTANT_ROWS)
 						dat += "</td>"
 						mutant_category = 0
-
-			if(length(pref_species.allowed_limb_ids))
-				if(!chosen_limb_id || !(chosen_limb_id in pref_species.allowed_limb_ids))
-					chosen_limb_id = pref_species.id
-				dat += "<h3>Body sprite</h3>"
-				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=bodysprite;task=input'>[chosen_limb_id]</a>"
 
 			if(mutant_category)
 				dat += "</td>"
@@ -859,8 +849,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Fetish content prefs</h2>"
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-			dat += "<b>Genital examine text</b>:<a href='?_src_=prefs;preference=genital_examine'>[(cit_toggles & GENITAL_EXAMINE) ? "Enabled" : "Disabled"]</a><BR>"
-			dat += "<b>Vore examine text</b>:<a href='?_src_=prefs;preference=vore_examine'>[(cit_toggles & VORE_EXAMINE) ? "Enabled" : "Disabled"]</a><BR>"
 			dat += "<b>Voracious MediHound sleepers:</b> <a href='?_src_=prefs;preference=hound_sleeper'>[(cit_toggles & MEDIHOUND_SLEEPER) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Sounds:</b> <a href='?_src_=prefs;preference=toggleeatingnoise'>[(cit_toggles & EATING_NOISES) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Hear Vore Digestion Sounds:</b> <a href='?_src_=prefs;preference=toggledigestionnoise'>[(cit_toggles & DIGESTION_NOISES) ? "Yes" : "No"]</a><br>"
@@ -1449,11 +1437,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/msg = stripped_multiline_input(usr, "Set always-visible OOC notes related to content preferences. THIS IS NOT FOR CHARACTER DESCRIPTIONS!", "OOC notes", html_decode(features["ooc_notes"]), MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
 						features["ooc_notes"] = msg
-
-				if("hide_ckey")
-					hide_ckey = !hide_ckey
-					if(user)
-						user.mind?.hide_ckey = hide_ckey
 
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
@@ -2109,6 +2092,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["body_model"] = chosengender
 					gender = chosengender
+					facial_hair_style = random_facial_hair_style(gender)
+					hair_style = random_hair_style(gender)
 
 				if("body_size")
 					var/min = CONFIG_GET(number/body_size_min)
@@ -2134,11 +2119,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/selected_custom_speech_verb = input(user, "Choose your desired speech verb (none means your species speech verb)", "Character Preference") as null|anything in GLOB.speech_verbs
 					if(selected_custom_speech_verb)
 						custom_speech_verb = selected_custom_speech_verb
-
-				if("bodysprite")
-					var/selected_body_sprite = input(user, "Choose your desired body sprite", "Character Preference") as null|anything in pref_species.allowed_limb_ids
-					if(selected_body_sprite)
-						chosen_limb_id = selected_body_sprite //this gets sanitized before loading
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
@@ -2362,13 +2342,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
 				// Citadel edit - Prefs don't work outside of this. :c
-
-				if("genital_examine")
-					cit_toggles ^= GENITAL_EXAMINE
-
-				if("vore_examine")
-					cit_toggles ^= VORE_EXAMINE
-
 				if("hound_sleeper")
 					cit_toggles ^= MEDIHOUND_SLEEPER
 
@@ -2537,8 +2510,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
-	if(chosen_limb_id && (chosen_limb_id in character.dna.species.allowed_limb_ids))
-		character.dna.species.mutant_bodyparts["limbs_id"] = chosen_limb_id
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species

@@ -33,10 +33,7 @@
 	if(contents.len)
 		. += "folder_paper"
 
-
 /obj/item/folder/attackby(obj/item/W, mob/user, params)
-	if(burn_paper_product_attackby_check(W, user))
-		return
 	if(istype(W, /obj/item/paper) || istype(W, /obj/item/photo) || istype(W, /obj/item/documents))
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -46,14 +43,11 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
 			return
-
 		var/inputvalue = stripped_input(user, "What would you like to label the folder?", "Folder Labelling", "", MAX_NAME_LEN)
-
 		if(!inputvalue)
 			return
-
 		if(user.canUseTopic(src, BE_CLOSE))
-			name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
+			name = "folder - '[inputvalue]'"
 
 
 /obj/item/folder/Destroy()
@@ -82,14 +76,14 @@
 	if(usr.contents.Find(src))
 
 		if(href_list["remove"])
-			var/obj/item/I = locate(href_list["remove"]) in src
-			if(istype(I))
+			var/obj/item/I = locate(href_list["remove"])
+			if(istype(I) && I.loc == src)
 				I.forceMove(usr.loc)
 				usr.put_in_hands(I)
 
 		if(href_list["read"])
-			var/obj/item/I = locate(href_list["read"]) in src
-			if(istype(I))
+			var/obj/item/I = locate(href_list["read"])
+			if(istype(I) && I.loc == src)
 				usr.examinate(I)
 
 		//Update everything

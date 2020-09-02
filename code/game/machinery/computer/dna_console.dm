@@ -217,6 +217,9 @@
 	//  already discovered mutations
 	stored_research = SSresearch.science_tech
 
+/obj/machinery/computer/scan_consolenew/examine(mob/user)
+	. = ..()
+
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	// Most of ui_interact is spent setting variables for passing to the tgui
 	//  interface.
@@ -263,10 +266,6 @@
 	if(!ui)
 		ui = new(user, src, "DnaConsole")
 		ui.open()
-		
-/obj/machinery/computer/scan_consolenew/ui_assets()
-	. = ..() || list()
-	. += get_asset_datum(/datum/asset/simple/genetics)
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
 	var/list/data = list()
@@ -358,7 +357,7 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
+/obj/machinery/computer/scan_consolenew/ui_act(action, var/list/params)
 	if(..())
 		return TRUE
 
@@ -483,7 +482,6 @@
 			// Resolve mutation's BYOND path from the alias
 			var/alias = params["alias"]
 			var/path = GET_MUTATION_TYPE_FROM_ALIAS(alias)
-
 			// Make sure the occupant still has this mutation
 			if(!(path in scanner_occupant.dna.mutation_index))
 				return

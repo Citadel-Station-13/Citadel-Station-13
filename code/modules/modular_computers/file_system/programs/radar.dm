@@ -7,6 +7,7 @@
 	transfer_access = null
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	network_destination = "tracking program"
 	size = 5
 	tgui_id = "NtosRadar"
 	///List of trackable entities. Updated by the scan() proc.
@@ -206,7 +207,7 @@
 
 ///A program that tracks crew members via suit sensors
 /datum/computer_file/program/radar/lifeline
-	filename = "lifeline"
+	filename = "Lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
 	requires_ntnet = TRUE
@@ -251,9 +252,9 @@
 //Nuke Disk Finder App//
 ////////////////////////
 
-///A program that tracks nukes and nuclear accessories
+///A program that tracks crew members via suit sensors
 /datum/computer_file/program/radar/fission360
-	filename = "fission360"
+	filename = "Fission360"
 	filedesc = "Fission360"
 	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
@@ -275,6 +276,8 @@
 	objects = list()
 	for(var/i in GLOB.nuke_list)
 		var/obj/machinery/nuclearbomb/nuke = i
+		if(!trackable(nuke))
+			continue
 
 		var/list/nukeinfo = list(
 			ref = REF(nuke),
@@ -282,8 +285,9 @@
 			)
 		objects += list(nukeinfo)
 	var/obj/item/disk/nuclear/disk = locate() in GLOB.poi_list
-	var/list/nukeinfo = list(
-		ref = REF(disk),
-		name = "Nuke Auth. Disk",
-		)
-	objects += list(nukeinfo)
+	if(trackable(disk))
+		var/list/nukeinfo = list(
+			ref = REF(disk),
+			name = disk.name,
+			)
+		objects += list(nukeinfo)

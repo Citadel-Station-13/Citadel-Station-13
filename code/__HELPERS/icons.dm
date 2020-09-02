@@ -1103,26 +1103,15 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		alpha += 25
 		obj_flags &= ~FROZEN
 
-/// Save file used in icon2base64. Used for converting icons to base64.
-GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of icons for the browser output
 
-
-/// Generate a filename for this asset
-/// The same asset will always lead to the same asset name
-/// (Generated names do not include file extention.)
-/proc/generate_asset_name(file)
-	return "asset.[md5(fcopy_rsc(file))]"
-
-/**
-  * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-  * exporting it as text, and then parsing the base64 from that.
-  * (This relies on byond automatically storing icons in savefiles as base64)
-  */
-/proc/icon2base64(icon/icon)
+//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
+// exporting it as text, and then parsing the base64 from that.
+// (This relies on byond automatically storing icons in savefiles as base64)
+/proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon))
 		return FALSE
-	WRITE_FILE(GLOB.dummySave["dummy"], icon)
-	var/iconData = GLOB.dummySave.ExportText("dummy")
+	WRITE_FILE(GLOB.iconCache[iconKey], icon)
+	var/iconData = GLOB.iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext_char(partial[2], 3, -5), "\n", "")
 
@@ -1148,10 +1137,10 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 		if (isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
 			if(!SSassets.cache[name])
-				SSassets.transport.register_asset(name, thing)
+				register_asset(name, thing)
 			for (var/thing2 in targets)
-				SSassets.transport.send_assets(thing2, name)
-			return "<img class='icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
+				send_asset(thing2, key)
+			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
 		var/atom/A = thing
 		if (isnull(dir))
 			dir = A.dir
@@ -1173,11 +1162,11 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 
 	key = "[generate_asset_name(I)].png"
 	if(!SSassets.cache[key])
-		SSassets.transport.register_asset(key, I)
+		register_asset(key, I)
 	for (var/thing2 in targets)
-		SSassets.transport.send_assets(thing2, key)
+		send_asset(thing2, key)
 
-	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
+	return "<img class='icon icon-[icon_state]' src=\"[url_encode(key)]\">"
 
 /proc/icon2base64html(thing)
 	if (!thing)

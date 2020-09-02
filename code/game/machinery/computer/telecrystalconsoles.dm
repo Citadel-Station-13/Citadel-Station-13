@@ -103,6 +103,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Receive Station", 700, 500)
 	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/telecrystals/uplinker/Topic(href, href_list)
@@ -184,6 +185,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)
 	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/telecrystals/boss/Topic(href, href_list)

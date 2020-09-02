@@ -106,7 +106,6 @@
 	set_colour(new_colour)
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
-	set_nutrition(rand(650, 800))
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)

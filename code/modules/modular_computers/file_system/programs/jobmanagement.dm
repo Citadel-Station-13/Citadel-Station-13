@@ -1,10 +1,10 @@
 /datum/computer_file/program/job_management
-	filename = "plexagoncore"
-	filedesc = "Plexagon HR Core"
+	filename = "job_manage"
+	filedesc = "Job Manager"
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and changing job slot avalibility."
 	transfer_access = ACCESS_HEADS
-	requires_ntnet = TRUE
+	requires_ntnet = 0
 	size = 4
 	tgui_id = "NtosJobManager"
 

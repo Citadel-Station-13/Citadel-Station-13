@@ -22,14 +22,14 @@
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
-Property weights are added to the config weight of the ruleset. They are:
+Property weights are:
 "story_potential" -- essentially how many different ways the antag can be played.
 "trust" -- How much it makes the crew trust each other. Negative values means they're suspicious. Team antags are like this.
 "chaos" -- How chaotic it makes the round. Has some overlap with "valid" and somewhat contradicts "extended".
 "valid" -- How likely the non-antag-enemy crew are to get involved, e.g. nukies encouraging the warden to
            let everyone into the armory, wizard moving around and being a nuisance, nightmare busting lights.
 "extended" -- How much the antag is conducive to a long round. Nukies and cults are bad for this; Wizard is less bad; and so on.
-"conversion" -- Basically a bool. Conversion antags, well, convert. It's in its own class 'cause people kinda hate conversion.
+"conversion" -- Basically a bool. Conversion antags, well, convert. It's its own class for a good reason.
 */
 
 /datum/dynamic_storyteller/proc/start_injection_cooldowns()
@@ -126,9 +126,8 @@ Property weights are added to the config weight of the ruleset. They are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-				var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult
-				if(calced_weight > 0) // negatives in the list might cause problems
-					drafted_rules[rule] = calced_weight
+				if(property_weight > 0)
+					drafted_rules[rule] = rule.get_weight() * property_weight * rule.weight_mult
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/midround_draft()
@@ -145,24 +144,21 @@ Property weights are added to the config weight of the ruleset. They are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-				var/threat_weight = 1
-				if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
-					var/cost_difference = rule.cost-(mode.threat_level-mode.threat)
-					/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
-						pick this particular ruleset.
-						Let's use a toy example: there's 60 threat level and 10 threat spent.
-						We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
-						Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
-						When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
-						is 2.26 times as likely to be picked, all other things considered.
-						Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
-					*/
-					threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,abs(cost_difference),0)))
-					if(cost_difference > 0)
-						threat_weight /= (1+(cost_difference*0.1))
-				var/calced_weight =  (rule.get_weight() + property_weight) * rule.weight_mult * threat_weight
-				if(calced_weight > 0)
-					drafted_rules[rule] = calced_weight
+				if(property_weight > 0)
+					var/threat_weight = 1
+					if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
+						var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+						/*	Basically, the closer the cost is to the current threat-level-away-from-threat, the more likely it is to
+							pick this particular ruleset.
+							Let's use a toy example: there's 60 threat level and 10 threat spent.
+							We want to pick a ruleset that's close to that, so we run the below equation, on two rulesets.
+							Ruleset 1 has 30 cost, ruleset 2 has 5 cost.
+							When we do the math, ruleset 1's threat_weight is 0.538, and ruleset 2's is 0.238, meaning ruleset 1
+							is 2.26 times as likely to be picked, all other things considered.
+							Of course, we don't want it to GUARANTEE the closest, that's no fun, so it's just a weight.
+						*/
+						threat_weight = abs(1-abs(1-LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+					drafted_rules[rule] = rule.get_weight() * property_weight * rule.weight_mult * threat_weight
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
@@ -184,15 +180,12 @@ Property weights are added to the config weight of the ruleset. They are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-				var/threat_weight = 1
-				if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET))
-					var/cost_difference = rule.cost-(mode.threat_level-mode.threat)
-					threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,abs(cost_difference),0)))
-					if(cost_difference > 0)
-						threat_weight /= (1+(cost_difference*0.1))
-				var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult * threat_weight
-				if(calced_weight > 0)
-					drafted_rules[rule] = calced_weight
+				if(property_weight > 0)
+					var/threat_weight = 1
+					if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET))
+						var/cost_difference = abs(rule.cost-(mode.threat_level-mode.threat))
+						threat_weight = 1-abs(1-(LOGISTIC_FUNCTION(2,0.05,cost_difference,0)))
+					drafted_rules[rule] = rule.get_weight() * property_weight * rule.weight_mult * threat_weight
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/event_draft()
@@ -203,9 +196,8 @@ Property weights are added to the config weight of the ruleset. They are:
 			for(var/property in property_weights)
 				if(property in rule.property_weights)
 					property_weight += rule.property_weights[property] * property_weights[property]
-			var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult
-			if(calced_weight > 0)	
-				drafted_rules[rule] = calced_weight
+			if(property_weight > 0)
+				drafted_rules[rule] = rule.get_weight() + property_weight * rule.weight_mult
 	return drafted_rules
 
 
@@ -334,6 +326,12 @@ Property weights are added to the config weight of the ruleset. They are:
 	curve_width = 2
 	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("story_potential" = 2)
+
+
+/datum/dynamic_storyteller/story/calculate_threat()
+	var/current_time = (world.time / SSautotransfer.targettime)*180
+	mode.threat_level = round((mode.initial_threat_level*(sin(current_time)/2)+0.75),0.1)
+	return ..()
 
 /datum/dynamic_storyteller/classic
 	name = "Classic"

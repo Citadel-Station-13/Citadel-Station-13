@@ -95,17 +95,15 @@ export const TelecommsPDALog = (props, context) => {
                 buttons={(
                   <Fragment>
                     <Button
+                      content="Flush Buffer"
                       icon="minus-circle"
                       disabled={!servers.length}
-                      onClick={() => act('release')}>
-                      Flush Buffer
-                    </Button>
+                      onClick={() => act('release')} />
                     <Button
+                      content="Probe Network"
                       icon="sync"
                       disabled={servers.length}
-                      onClick={() => act('probe')}>
-                      Probe Network
-                    </Button>
+                      onClick={() => act('probe')} />
                   </Fragment>
                 )}>
                 {servers ? (
@@ -120,17 +118,17 @@ export const TelecommsPDALog = (props, context) => {
                 buttons={(
                   <Fragment>
                     <Button
+                      content="Change Password"
                       disabled={!authenticated || !selected}
-                      onClick={() => act('change_auth')}>
-                      Change Password
-                    </Button>
-                    {!!canhack && (
+                      onClick={() => act('change_auth')}
+                    />
+                    {canhack && (
                       <Button
+                        content="Brute Force"
                         color="bad"
                         disabled={authenticated || !selected}
-                        onClick={() => act('hack')}>
-                        Brute Force
-                      </Button>
+                        onClick={() => act('hack')}
+                      />
                     )}
                   </Fragment>
                 )}>
@@ -141,18 +139,18 @@ export const TelecommsPDALog = (props, context) => {
                 buttons={(
                   <Fragment>
                     <Button
+                      content={!authenticated ? 'Login' : 'Logout'}
                       icon={authenticated ? 'unlock' : 'lock'}
                       color={authenticated ? 'good' : 'bad'}
                       disabled={!selected}
-                      onClick={() => act('auth')}>
-                      {!authenticated ? 'Login' : 'Logout'}
-                    </Button>
+                      onClick={() => act('auth')}
+                    />
                     <Button
+                      content="Disconnect"
                       icon="minus-circle"
                       disabled={!selected}
-                      onClick={() => act('mainmenu')}>
-                      Disconnect
-                    </Button>
+                      onClick={() => act('mainmenu')}
+                    />
                   </Fragment>
                 )}>
                 {selected ? (
@@ -216,13 +214,12 @@ export const TelecommsPDALog = (props, context) => {
                       label={`${server.ref}`}
                       buttons={(
                         <Button
+                          content="Connect"
                           selected={data.selected
                             && (server.ref === data.selected.ref)}
                           onClick={() => act('viewmachine', {
                             'value': server.id,
-                          })}>
-                          Connect
-                        </Button>
+                          })} />
                       )}>
                       {`${server.name} (${server.id})`}
                     </LabeledList.Item>
@@ -270,18 +267,18 @@ export const TeleLogs = (props, context) => {
   return (
     <Section title="Logs">
       <Button
+        content="Refresh"
         icon="sync"
-        onClick={() => act('refresh')}>
-        Refresh
-      </Button>
+        onClick={() => act('refresh')}
+      />
       <Button.Confirm
+        content="Delete All Logs"
         icon="trash"
         disabled={!log_to_use || !(log_to_use && log_to_use.length)}
         onClick={() => act('clear_log', {
           'value': msgs_log ? 'rc_msgs' : 'pda_logs',
-        })}>
-        Delete All Logs
-      </Button.Confirm>
+        })}
+      />
       <Section
         title="Messages"
         level={2}>
@@ -292,11 +289,11 @@ export const TeleLogs = (props, context) => {
                 label={msgs_log ? "Sending Dep." : "Sender"}
                 buttons={(
                   <Button
+                    content="Delete"
                     onClick={() => act('del_log', {
                       'ref': message.ref,
-                    })}>
-                    Delete
-                  </Button>
+                    })}
+                  />
                 )}>
                 {message.sender}
               </LabeledList.Item>
@@ -308,14 +305,14 @@ export const TeleLogs = (props, context) => {
                 label="Message"
                 buttons={(
                   !!message.picture && ( // don't send img over req
-                    <Button
+                    <Button // Had to use _act for this.
+                      content="Image"
                       icon="image"
                       onClick={() => Byond.topic({
                         'src': message.ref,
                         'photo': 1,
-                      })}>
-                      Image
-                    </Button>
+                      })}
+                    />
                   )
                 )}>
                 {message.message}
@@ -365,7 +362,7 @@ export const TeleLogs = (props, context) => {
   );
 };
 
-export const CustomMsg = context => {
+export const CustomMsg = (props, context) => {
   const { act, data } = useBackend(context);
   const fake_message = data.fake_message || {
     'sender': 'System Administrator',
@@ -376,19 +373,19 @@ export const CustomMsg = context => {
   return (
     <Section title="Custom Message">
       <Button
+        content="Reset"
         icon="sync"
         onClick={() => act('fake', {
           'reset': true,
-        })}>
-        Reset
-      </Button>
+        })}
+      />
       <Button
+        content="Send"
         disabled={!fake_message.recepient || !fake_message.message}
         onClick={() => act('fake', {
           'send': true,
-        })}>
-        Send
-      </Button>
+        })}
+      />
       <br /><br />
       <LabeledList>
         <LabeledList.Item label="Sender">
@@ -413,16 +410,16 @@ export const CustomMsg = context => {
         </LabeledList.Item>
         <LabeledList.Item label="Recipient">
           <Button
-            selected={fake_message.recepient}
-            onClick={() => act('fake', {
-              'recepient': true,
-            })}>
-            {fake_message.recepient ? (
+            content={fake_message.recepient ? (
               fake_message.recepient
             ) : (
               'Select'
             )}
-          </Button>
+            selected={fake_message.recepient}
+            onClick={() => act('fake', {
+              'recepient': true,
+            })}
+          />
         </LabeledList.Item>
         <LabeledList.Item label="Message">
           <Input

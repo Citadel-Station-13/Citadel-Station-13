@@ -20,36 +20,34 @@ export const Cargo = (props, context) => {
       resizable>
       <Window.Content scrollable>
         <CargoStatus />
-        <Section fitted>
-          <Tabs>
+        <Tabs>
+          <Tabs.Tab
+            icon="list"
+            selected={tab === 'catalog'}
+            onClick={() => setTab('catalog')}>
+            Catalog
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="envelope"
+            textColor={tab !== 'requests'
+              && requests.length > 0
+              && 'yellow'}
+            selected={tab === 'requests'}
+            onClick={() => setTab('requests')}>
+            Requests ({requests.length})
+          </Tabs.Tab>
+          {!requestonly && (
             <Tabs.Tab
-              icon="list"
-              selected={tab === 'catalog'}
-              onClick={() => setTab('catalog')}>
-              Catalog
-            </Tabs.Tab>
-            <Tabs.Tab
-              icon="envelope"
-              textColor={tab !== 'requests'
-                && requests.length > 0
+              icon="shopping-cart"
+              textColor={tab !== 'cart'
+                && cart.length > 0
                 && 'yellow'}
-              selected={tab === 'requests'}
-              onClick={() => setTab('requests')}>
-              Requests ({requests.length})
+              selected={tab === 'cart'}
+              onClick={() => setTab('cart')}>
+              Checkout ({cart.length})
             </Tabs.Tab>
-            {!requestonly && (
-              <Tabs.Tab
-                icon="shopping-cart"
-                textColor={tab !== 'cart'
-                  && cart.length > 0
-                  && 'yellow'}
-                selected={tab === 'cart'}
-                onClick={() => setTab('cart')}>
-                Checkout ({cart.length})
-              </Tabs.Tab>
-            )}
-          </Tabs>
-        </Section>
+          )}
+        </Tabs>
         {tab === 'catalog' && (
           <CargoCatalog />
         )}
@@ -145,7 +143,7 @@ export const CargoCatalog = (props, context) => {
         </Fragment>
       )}>
       <Flex>
-        <Flex.Item ml={-1} mr={1}>
+        <Flex.Item>
           <Tabs vertical>
             {supplies.map(supply => (
               <Tabs.Tab
