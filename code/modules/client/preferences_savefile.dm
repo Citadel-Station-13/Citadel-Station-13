@@ -514,7 +514,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["scars3"]							>> scars_list["3"]
 	S["scars4"]							>> scars_list["4"]
 	S["scars5"]							>> scars_list["5"]
-	json_decode(S["modified_limbs"])					>> modified_limbs
+	if(S["modified_limbs"])
+		json_decode(S["modified_limbs"])					>> modified_limbs
 	S["chosen_limb_id"]					>> chosen_limb_id
 
 	//Custom names
@@ -871,7 +872,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["scars3"]						, scars_list["3"])
 	WRITE_FILE(S["scars4"]						, scars_list["4"])
 	WRITE_FILE(S["scars5"]						, scars_list["5"])
-	WRITE_FILE(S["modified_limbs"]				, json_encode(modified_limbs))
+	if(modified_limbs)
+		WRITE_FILE(S["modified_limbs"]				, json_encode(modified_limbs))
 	WRITE_FILE(S["chosen_limb_id"],   chosen_limb_id)
 
 	//gear loadout

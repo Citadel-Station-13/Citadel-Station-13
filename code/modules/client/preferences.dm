@@ -431,7 +431,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Limb Modification:</b><BR>"
 			dat += "<a href='?_src_=prefs;preference=modify_limbs;task=input'>Modify Limbs</a><BR>"
 			for(var/modification in modified_limbs)
-				dat += "<b>[modification]: [modified_limbs[modification]]</b><BR>"
+				if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
+					dat += "<b>[modification]: prosthetic - [modified_limbs[modification][2]]</b><BR>"
+				else
+					dat += "<b>[modification]: [modified_limbs[modification]]</b><BR>"
 			dat += "<BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
@@ -1237,7 +1240,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
 	for(var/modification in modified_limbs)
-		if(modified_limbs[modification] == "Prosthetic")
+		if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
 			return bal + 1 //max 1 point regardless of how many prosthetics
 	return bal
 
@@ -1497,19 +1500,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/modification_type = input(user, "Choose the modification to the limb:", "Character Preference") as null|anything in LOADOUT_LIMBS
 						if(modification_type)
 							if(modification_type == LOADOUT_LIMB_PROSTHETIC)
-								var/number_of_prosthetics = 0
-								for(var/modification in modified_limbs)
-									if(modified_limbs[modification] == LOADOUT_LIMB_PROSTHETIC)
-										number_of_prosthetics += 1
-								if(number_of_prosthetics >= MAXIMUM_LOADOUT_PROSTHETICS)
-									to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
-									return
+								var/prosthetic_type = input(user, "Choose the type of prosthetic", "Character Preference") as null|anything in (list("old_prosthetic") + GLOB.prosthetic_limb_types)
+								if(prosthetic_type)
+									var/number_of_prosthetics = 0
+									for(var/modification in modified_limbs)
+										if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
+											number_of_prosthetics += 1
+									if(number_of_prosthetics >= MAXIMUM_LOADOUT_PROSTHETICS)
+										to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
+									else
+										//save the actual prosthetic data
+										modified_limbs[limb_type] = list(modification_type, prosthetic_type)
 							else
 								if(modification_type == LOADOUT_LIMB_NORMAL)
 									modified_limbs -= limb_type
-									ShowChoices(user)
-									return 1
-							modified_limbs[limb_type] = modification_type
+								else
+									modified_limbs[limb_type] = list(modification_type)
 
 				if("underwear")
 					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
@@ -2588,7 +2594,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//limb stuff
 	character.regenerate_limbs() //possible optimisation: check for changes before regenerating?
 	for(var/modified_limb in modified_limbs)
-		var/modification = modified_limbs[modified_limb]
+		var/modification = modified_limbs[modified_limb][1]
 		var/obj/item/bodypart/old_part = character.get_bodypart(modified_limb)
 		if(modification == LOADOUT_LIMB_PROSTHETIC)
 			var/obj/item/bodypart/new_limb
@@ -2601,6 +2607,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_limb = new/obj/item/bodypart/l_leg/robot/surplus(character)
 				if(BODY_ZONE_R_LEG)
 					new_limb = new/obj/item/bodypart/r_leg/robot/surplus(character)
+			var/prosthetic_type = modified_limbs[modified_limb][2]
+			if(prosthetic_type != "old_prosthetic") //lets just leave the old sprites as they are
+				new_limb.icon = 'icons/mob/augmentation/customized_prosthetics.dmi'
+				new_limb.icon_state = "[prosthetic_type]_[modified_limb]"
 			new_limb.replace_limb(character)
 		qdel(old_part)
 
