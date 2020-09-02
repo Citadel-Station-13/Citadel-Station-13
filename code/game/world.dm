@@ -279,6 +279,7 @@ GLOBAL_LIST(topic_status_cache)
 		GM.__gasmixture_unregister()
 		num_deleted++
 	log_world("Deallocated [num_deleted] gas mixtures")
+	shutdown_logging() // makes sure the thread is closed before end, else we terminate
 	..()
 
 /world/proc/update_status()
