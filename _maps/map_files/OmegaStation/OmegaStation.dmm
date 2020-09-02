@@ -22876,8 +22876,7 @@
 /obj/machinery/requests_console{
 	department = "Genetics";
 	name = "Genetics RC";
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28	
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -31915,7 +31914,6 @@
 /obj/machinery/requests_console{
 	department = "Virology";
 	name = "Virology RC";
-	pixel_x = 0;
 	pixel_y = -32;
 	receive_ore_updates = 1
 	},
