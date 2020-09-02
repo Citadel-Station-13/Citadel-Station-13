@@ -18,6 +18,15 @@
 	SSblackbox.record_feedback("tally", "jaunter", 1, "User") // user activated
 	activate(user, TRUE)
 
+/obj/item/wormhole_jaunter/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_BELT)
+		RegisterSignal(user, COMSIG_MOVABLE_CHASM_DROP, .proc/chasm_react)
+
+/obj/item/wormhole_jaunter/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_CHASM_DROP)
+
 /obj/item/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf || is_centcom_level(device_turf.z) || is_reserved_level(device_turf.z))
@@ -71,13 +80,14 @@
 			SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 			activate(M)
 
-/obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
-	if(user.get_item_by_slot(SLOT_BELT) == src)
-		to_chat(user, "Your [name] activates, saving you from the chasm!</span>")
-		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
-		activate(user, FALSE, TRUE)
-	else
-		to_chat(user, "[src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
+/obj/item/wormhole_jaunter/proc/chasm_react(mob/source, datum/component/chasm/C)
+	to_chat(source, "Your [name] activates, saving you from the chasm!</span>")
+	SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
+	activate(source, FALSE, TRUE)
+	if(C)
+		var/atom/A = C.parent
+		A.visible_message("<span class='boldwarning'>[source] falls into [A]!</span>")
+	return TRUE
 
 //jaunter tunnel
 /obj/effect/portal/jaunt_tunnel
