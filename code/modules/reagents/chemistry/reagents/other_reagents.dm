@@ -182,6 +182,10 @@
 		. = 1
 	..()
 
+/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	mytray.adjustPests(rand(2,3))
+
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
 	color = BLOOD_COLOR_HUMAN
@@ -342,6 +346,14 @@
 	glass_desc = "A glass of holy water."
 	pH = 7.5 //God is alkaline
 
+	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
+/datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
+		if(myseed)
+			myseed.adjust_instability(round(chems.get_reagent_amount(src.type) * 0.15))
+
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	. = ..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
@@ -413,6 +425,13 @@
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
 	T.Bless()
+
+/datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+	mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
+	if(myseed)
+		myseed.adjust_instability(round(chems.get_reagent_amount(src.type) * 0.15))
 
 /datum/reagent/fuel/unholywater	//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
