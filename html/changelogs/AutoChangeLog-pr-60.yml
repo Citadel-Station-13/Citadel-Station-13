@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - tweak: "Allows admins to upload higher file sizes."
+  - tweak: "Reduces players upload file size."
