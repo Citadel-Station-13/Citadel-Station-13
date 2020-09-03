@@ -177,6 +177,7 @@
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 15
+	limited_stock = 1 // you can only have one holopara apparently?
 	refundable = TRUE
 	cant_discount = TRUE
 	surplus = 0

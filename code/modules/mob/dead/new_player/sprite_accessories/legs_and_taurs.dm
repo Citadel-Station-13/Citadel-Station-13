@@ -49,6 +49,13 @@
 	relevant_layers = null
 	hide_legs = FALSE
 
+/datum/sprite_accessory/taur/canine
+	name = "Canine"
+	icon_state = "canine"
+	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE
+
 /datum/sprite_accessory/taur/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -95,6 +102,13 @@
 	color_src = MUTCOLORS
 	extra = TRUE
 
+/datum/sprite_accessory/taur/feline
+	name = "Feline"
+	icon_state = "feline"
+	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE
+
 /datum/sprite_accessory/taur/horse
 	name = "Horse"
 	icon_state = "horse"
@@ -126,17 +140,3 @@
 	taur_mode = STYLE_SNEK_TAURIC
 	color_src = MUTCOLORS
 	hide_legs = USE_SNEK_CLIP_MASK
-
-/datum/sprite_accessory/taur/canine
-	name = "Canine"
-	icon_state = "canine"
-	taur_mode = STYLE_PAW_TAURIC
-	color_src = MUTCOLORS
-	extra = TRUE
-
-/datum/sprite_accessory/taur/feline
-	name = "Feline"
-	icon_state = "feline"
-	taur_mode = STYLE_PAW_TAURIC
-	color_src = MUTCOLORS
-	extra = TRUE
