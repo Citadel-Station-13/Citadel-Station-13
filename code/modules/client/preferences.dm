@@ -432,7 +432,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=modify_limbs;task=input'>Modify Limbs</a><BR>"
 			for(var/modification in modified_limbs)
 				if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
-					dat += "<b>[modification]: prosthetic - [modified_limbs[modification][2]]</b><BR>"
+					dat += "<b>[modification]: [modified_limbs[modification][2]]</b><BR>"
 				else
 					dat += "<b>[modification]: [modified_limbs[modification][1]]</b><BR>"
 			dat += "<BR>"
@@ -1500,13 +1500,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/modification_type = input(user, "Choose the modification to the limb:", "Character Preference") as null|anything in LOADOUT_LIMBS
 						if(modification_type)
 							if(modification_type == LOADOUT_LIMB_PROSTHETIC)
-								var/prosthetic_type = input(user, "Choose the type of prosthetic", "Character Preference") as null|anything in (list("old_prosthetic") + GLOB.prosthetic_limb_types)
+								var/prosthetic_type = input(user, "Choose the type of prosthetic", "Character Preference") as null|anything in (list("prosthetic") + GLOB.prosthetic_limb_types)
 								if(prosthetic_type)
 									var/number_of_prosthetics = 0
 									for(var/modification in modified_limbs)
 										if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
 											number_of_prosthetics += 1
-									if(number_of_prosthetics >= MAXIMUM_LOADOUT_PROSTHETICS)
+									if(number_of_prosthetics >= MAXIMUM_LOADOUT_PROSTHETICS && !(limb_type in modified_limbs && modified_limbs[limb_type][1] == LOADOUT_LIMB_PROSTHETIC))
 										to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
 									else
 										//save the actual prosthetic data
@@ -2613,7 +2613,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(BODY_ZONE_R_LEG)
 						new_limb = new/obj/item/bodypart/r_leg/robot/surplus(character)
 				var/prosthetic_type = modified_limbs[modified_limb][2]
-				if(prosthetic_type != "old_prosthetic") //lets just leave the old sprites as they are
+				if(prosthetic_type != "prosthetic") //lets just leave the old sprites as they are
 					new_limb.icon = file("icons/mob/augmentation/cosmetic_prosthetic/[prosthetic_type].dmi")
 				new_limb.replace_limb(character)
 			qdel(old_part)
