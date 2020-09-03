@@ -11,4 +11,4 @@
 		if(P.features["ooc_notes"] != "Bar")
 			Fail("OOC text is failing to save.")
 	catch(var/exception/e)
-		Fail("Failed to save and load character due to exception [e.name]")
+		Fail("Failed to save and load character due to exception [e.file]:[e.line], [e.name]")
