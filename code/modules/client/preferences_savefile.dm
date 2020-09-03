@@ -875,7 +875,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["scars4"]						, scars_list["4"])
 	WRITE_FILE(S["scars5"]						, scars_list["5"])
 	if(modified_limbs)
-		WRITE_FILE(S["modified_limbs"]				, json_encode(modified_limbs))
+		WRITE_FILE(S["modified_limbs"]				, safe_json_encode(modified_limbs))
 	WRITE_FILE(S["chosen_limb_id"],   chosen_limb_id)
 
 
