@@ -415,7 +415,7 @@
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
 		if(humanc.client)
-			humanc.client.prefs.post_copy_to(humanc)
+			humanc.client.prefs.post_copy_to(humanc, initial_spawn = TRUE)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character

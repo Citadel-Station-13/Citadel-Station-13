@@ -434,7 +434,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
 					dat += "<b>[modification]: prosthetic - [modified_limbs[modification][2]]</b><BR>"
 				else
-					dat += "<b>[modification]: [modified_limbs[modification]]</b><BR>"
+					dat += "<b>[modification]: [modified_limbs[modification][1]]</b><BR>"
 			dat += "<BR>"
 			dat += "<b>Species:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			dat += "<b>Custom Species Name:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=custom_species;task=input'>[custom_species ? custom_species : "None"]</a><BR>"
@@ -2496,7 +2496,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, initial_spawn = FALSE)
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
@@ -2591,28 +2591,32 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(custom_speech_verb != "default")
 		character.dna.species.say_mod = custom_speech_verb
 
-	//limb stuff
-	character.regenerate_limbs() //possible optimisation: check for changes before regenerating?
-	for(var/modified_limb in modified_limbs)
-		var/modification = modified_limbs[modified_limb][1]
-		var/obj/item/bodypart/old_part = character.get_bodypart(modified_limb)
-		if(modification == LOADOUT_LIMB_PROSTHETIC)
-			var/obj/item/bodypart/new_limb
-			switch(modified_limb)
-				if(BODY_ZONE_L_ARM)
-					new_limb = new/obj/item/bodypart/l_arm/robot/surplus(character)
-				if(BODY_ZONE_R_ARM)
-					new_limb = new/obj/item/bodypart/r_arm/robot/surplus(character)
-				if(BODY_ZONE_L_LEG)
-					new_limb = new/obj/item/bodypart/l_leg/robot/surplus(character)
-				if(BODY_ZONE_R_LEG)
-					new_limb = new/obj/item/bodypart/r_leg/robot/surplus(character)
-			var/prosthetic_type = modified_limbs[modified_limb][2]
-			if(prosthetic_type != "old_prosthetic") //lets just leave the old sprites as they are
-				new_limb.icon = 'icons/mob/augmentation/customized_prosthetics.dmi'
-				new_limb.icon_state = "[prosthetic_type]_[modified_limb]"
-			new_limb.replace_limb(character)
-		qdel(old_part)
+	//limb stuff, only done when initially spawning in
+	if(initial_spawn)
+		//delete any existing prosthetic limbs to make sure no remnant prosthetics are left over
+		for(var/obj/item/bodypart/part in character.bodyparts)
+			if(part.status == BODYPART_ROBOTIC)
+				qdel(part)
+		character.regenerate_limbs() //regenerate limbs so now you only have normal limbs
+		for(var/modified_limb in modified_limbs)
+			var/modification = modified_limbs[modified_limb][1]
+			var/obj/item/bodypart/old_part = character.get_bodypart(modified_limb)
+			if(modification == LOADOUT_LIMB_PROSTHETIC)
+				var/obj/item/bodypart/new_limb
+				switch(modified_limb)
+					if(BODY_ZONE_L_ARM)
+						new_limb = new/obj/item/bodypart/l_arm/robot/surplus(character)
+					if(BODY_ZONE_R_ARM)
+						new_limb = new/obj/item/bodypart/r_arm/robot/surplus(character)
+					if(BODY_ZONE_L_LEG)
+						new_limb = new/obj/item/bodypart/l_leg/robot/surplus(character)
+					if(BODY_ZONE_R_LEG)
+						new_limb = new/obj/item/bodypart/r_leg/robot/surplus(character)
+				var/prosthetic_type = modified_limbs[modified_limb][2]
+				if(prosthetic_type != "old_prosthetic") //lets just leave the old sprites as they are
+					new_limb.icon = file("icons/mob/augmentation/cosmetic_prosthetic/[prosthetic_type].dmi")
+				new_limb.replace_limb(character)
+			qdel(old_part)
 
 	if(length(modified_limbs))
 		character.regenerate_icons()
