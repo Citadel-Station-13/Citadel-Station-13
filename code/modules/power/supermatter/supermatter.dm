@@ -985,6 +985,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
 
+/obj/machinery/power/supermatter_crystal/shard/examine(mob/user)
+	. = ..()
+	if(anchored)
+		. += "<span class='notice'>[src] is <b>anchored</b> to the floor.</span>"
+	else
+		. += "<span class='notice'>[src] is <i>unanchored</i>, but can be <b>bolted</b> down.</span>"
+
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
 	is_main_engine = TRUE
