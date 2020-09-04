@@ -270,7 +270,7 @@
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
-
+	archive()
 	if(conductivity_directions)
 		//Conduct with tiles around me
 		for(var/direction in GLOB.cardinals)
