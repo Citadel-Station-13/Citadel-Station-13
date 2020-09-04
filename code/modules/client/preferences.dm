@@ -696,16 +696,43 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Antag OOC Color:</b> <span style='border: 1px solid #161616; background-color: [aooccolor ? aooccolor : GLOB.normal_aooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=aooccolor;task=input'>Change</a><br>"
 
 			dat += "</td>"
-			if(user.client.holder)
-				dat +="<td width='300px' height='300px' valign='top'>"
+
+			dat +="<td width='300px' height='300px' valign='top'>"
+
+			dat += "<h2>Special Role Settings</h2>"
+
+			if(jobban_isbanned(user, ROLE_SYNDICATE))
+				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
+				src.be_special = list()
+
+
+			for (var/i in GLOB.special_roles)
+				if(jobban_isbanned(user, i))
+					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
+				else
+					var/days_remaining = null
+					if(ispath(GLOB.special_roles[i]) && CONFIG_GET(flag/use_age_restriction_for_jobs)) //If it's a game mode antag, check if the player meets the minimum age
+						var/mode_path = GLOB.special_roles[i]
+						var/datum/game_mode/temp_mode = new mode_path
+						days_remaining = temp_mode.get_remaining_days(user.client)
+
+					if(days_remaining)
+						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
+					else
+						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
+			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Enabled" : "Disabled"]</a><br>"
+
+			dat += "</td>"
+
+			dat +="<td width='300px' height='300px' valign='top'>"
+
+			if(user.client.holder) // sandstorm start - moves admin prefs to the right
 				dat += "<h2>Admin Settings</h2>"
 				dat += "<b>Adminhelp Sounds:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"Enabled":"Disabled"]</a><br>"
 				dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"Enabled":"Disabled"]</a><br>"
 				dat += "<br>"
-				dat += "<b>Combo HUD Lighting:</b> <a href = '?_src_=prefs;preference=combohud_lighting'>[(toggles & COMBOHUD_LIGHTING)?"Full-bright":"No Change"]</a><br>"
-				dat += "</td>"
+				dat += "<b>Combo HUD Lighting:</b> <a href = '?_src_=prefs;preference=combohud_lighting'>[(toggles & COMBOHUD_LIGHTING)?"Full-bright":"No Change"]</a><br>" // sandstorm end - moves admins prefs to the right
 
-			dat +="<td width='300px' height='300px' valign='top'>"
 			dat += "<h2>Citadel Preferences</h2>" //Because fuck me if preferences can't be fucking modularized and expected to update in a reasonable timeframe.
 			dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled (15x15)"]</a><br>"
 			dat += "<b>Auto stand:</b> <a href='?_src_=prefs;preference=autostand'>[autostand ? "Enabled" : "Disabled"]</a><br>"
@@ -788,32 +815,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(CONFIG_GET(flag/allow_map_voting))
 					dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
-			dat += "</td><td width='300px' height='300px' valign='top'>"
-
-			dat += "<h2>Special Role Settings</h2>"
-
-			if(jobban_isbanned(user, ROLE_SYNDICATE))
-				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
-				src.be_special = list()
-
-
-			for (var/i in GLOB.special_roles)
-				if(jobban_isbanned(user, i))
-					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
-				else
-					var/days_remaining = null
-					if(ispath(GLOB.special_roles[i]) && CONFIG_GET(flag/use_age_restriction_for_jobs)) //If it's a game mode antag, check if the player meets the minimum age
-						var/mode_path = GLOB.special_roles[i]
-						var/datum/game_mode/temp_mode = new mode_path
-						days_remaining = temp_mode.get_remaining_days(user.client)
-
-					if(days_remaining)
-						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
-					else
-						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Enabled" : "Disabled"]</a><br>"
-
-			dat += "<br>"
+			dat += "</td>"
 
 		if(3)
 			dat += "<table align='center' width='100%'>"
