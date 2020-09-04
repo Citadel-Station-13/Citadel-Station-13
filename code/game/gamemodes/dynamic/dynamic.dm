@@ -204,10 +204,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
 		if(!threatadd)
 			return
-		if(threatadd > 0)
-			create_threat(threatadd)
-		else
-			remove_threat(threatadd)
+		create_threat(threatadd)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
