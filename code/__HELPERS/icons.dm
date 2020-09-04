@@ -1106,12 +1106,18 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 /// Save file used in icon2base64. Used for converting icons to base64.
 GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of icons for the browser output
 
+GLOBAL_LIST_EMPTY(asset_names)
 
 /// Generate a filename for this asset
 /// The same asset will always lead to the same asset name
 /// (Generated names do not include file extention.)
 /proc/generate_asset_name(file)
-	return "asset.[md5(fcopy_rsc(file))]"
+	if(file in asset_names)
+		return asset_names[file]
+	else
+		var/name = "asset.[md5(fcopy_rsc(file))]"
+		asset_names[file] = name
+		return name
 
 /**
   * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
