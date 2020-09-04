@@ -1,6 +1,6 @@
 /turf
 	//used for temperature calculations
-	var/thermal_conductivity = 0.05
+	var/thermal_conductivity = 0.005
 	var/heat_capacity = 1
 	var/temperature_archived
 
