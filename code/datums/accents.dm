@@ -94,6 +94,7 @@
 
 /datum/accent/robot/modify_speech(list/speech_args)
 	speech_args[SPEECH_SPANS] = SPAN_ROBOT
+	return speech_args
 
 /datum/accent/dullahan/modify_speech(list/speech_args, datum/source, mob/living/carbon/owner)
 	if(owner)
