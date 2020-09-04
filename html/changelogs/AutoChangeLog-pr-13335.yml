@@ -1,0 +1,4 @@
+author: "Bhijn"
+delete-after: True
+changes: 
+  - rscadd: "Readded the old method of temperature notifications in the form of a new pair of shivering/sweating notifications."

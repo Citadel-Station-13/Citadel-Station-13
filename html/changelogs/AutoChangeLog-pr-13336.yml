@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - admin: "admins can now actually reduce threat level in dynamic"
