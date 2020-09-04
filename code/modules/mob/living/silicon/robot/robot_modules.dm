@@ -487,7 +487,7 @@
 		"Marina" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "marinaeng"),
 		"Spider" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "spidereng"),
 		"Heavy" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "heavyeng"),
-		"Roger" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "rogerborg")
+		"Roger" = image(icon = 'modular_citadel/icons/mob/robots.dmi', icon_state = "rogerborg"),
 		"Drake" = image(icon = 'icons/mob/cyborg/drakemech.dmi', icon_state = "drakeengbox")
 		)
 		var/list/L = list("Pup Dozer" = "pupdozer", "Vale" = "valeeng")
