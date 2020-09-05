@@ -285,6 +285,17 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 
+/datum/material/brass
+	name = "brass"
+	desc = "Tybel gb-Ratvar"
+	color = "#9B7E24"
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
+	strength_modifier = 1.2
+	sheet_type = /obj/item/stack/tile/brass
+	value_per_unit = 0.75
+	armor_modifiers = list("melee" = 1.4, "bullet" = 1.4, "laser" = 0, "energy" = 0, "bomb" = 1.4, "bio" = 1.2, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5) //Brass has.. a few problems that can't easily be compensated for.
+	beauty_modifier = 0.3 //It really beats the cold plain plating of the station, doesn't it?
+
 /datum/material/bronze
 	name = "bronze"
 	desc = "Clock Cult? Never heard of it."

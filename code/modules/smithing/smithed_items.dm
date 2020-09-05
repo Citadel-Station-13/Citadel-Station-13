@@ -79,10 +79,10 @@
 /obj/item/ingot/bronze
 	custom_materials = list(/datum/material/bronze=12000)
 
-/obj/item/ingot/bronze/ratvar
+/obj/item/ingot/ratvar
 	material_flags = MATERIAL_COLOR
 	name = "brass ingnot"
-	desc = "On closer inspection, what appears to be wholly-unsuitable-for-smithing brass is actually more structurally stable bronze. Ratvar must have transformed the brass into bronze. Somehow."
+	desc = "On closer inspection, what appears to be wholly-unsuitable-for-smithing brass is actually primarily replicant alloy. Nezbere must have switched it while you weren't looking."
 
 
 /obj/item/smithing/attackby(obj/item/I, mob/user)
