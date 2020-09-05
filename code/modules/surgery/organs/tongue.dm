@@ -39,10 +39,10 @@
 	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
 	for(var/accent in initial_accents)
-		initial_accents += new accent
+		accents += new accent
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args) //this wont proc unless there's initial_accents
-	for(var/datum/accent/speech_modifier in initial_accents)
+	for(var/datum/accent/speech_modifier in accents)
 		speech_args = speech_modifier.modify_speech(speech_args, source, owner)
 
 /obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
@@ -166,8 +166,8 @@
 	var/list/phomeme_types = list(/datum/accent/span/sans, /datum/accent/span/papyrus)
 
 /obj/item/organ/tongue/bone/Initialize()
-	. = ..()
 	initial_accents += pick(phomeme_types)
+	. = ..()
 
 /obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
 	if(d < 0)
@@ -205,9 +205,6 @@
 /obj/item/organ/tongue/robot/could_speak_language(language)
 	return ..() || electronics_magic
 
-/obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
-	..()
-
 /obj/item/organ/tongue/fluffy
 	name = "fluffy tongue"
 	desc = "OwO what's this?"
@@ -220,6 +217,7 @@
 	name = "cybernetic tongue"
 	desc = "A state of the art robotic tongue that can detect the pH of anything drank."
 	icon_state = "tonguecybernetic"
+	initial_accents = list(/datum/accent/span/robot)
 	taste_sensitivity = 10
 	maxHealth = 60 //It's robotic!
 	organ_flags = ORGAN_SYNTHETIC
@@ -230,10 +228,6 @@
 		return
 	var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
 	owner.say("The pH is appropriately [pick(errormessage)].", forced = "EMPed synthetic tongue")
-
-/obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
-	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
-	..()
 
 /obj/item/organ/tongue/robot/ipc
 	name = "positronic voicebox"
