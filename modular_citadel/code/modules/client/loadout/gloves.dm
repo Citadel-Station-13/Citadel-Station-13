@@ -9,6 +9,10 @@
 /datum/gear/gloves/evening
 	name = "Evening gloves"
 	path = /obj/item/clothing/gloves/evening
+	
+/datum/gear/gloves/midnight
+	name = "Midnight gloves"
+	path = /obj/item/clothing/gloves/evening/black
 
 /datum/gear/gloves/goldring
 	name = "A gold ring"

@@ -28,39 +28,37 @@
 /// triggered on wield of two handed item
 /obj/item/broom/proc/on_wield(obj/item/source, mob/user)
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/sweep)
 
 /// triggered on unwield of two handed item
 /obj/item/broom/proc/on_unwield(obj/item/source, mob/user)
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 /obj/item/broom/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	sweep(user, A, FALSE)
+	sweep(user, A)
 
-/obj/item/broom/proc/sweep(mob/user, atom/A, moving = TRUE)
-	var/turf/target
-	if (!moving)
-		if (isturf(A))
-			target = A
-		else
-			target = A.loc
-	else
-		target = user.loc
-	if (!isturf(target))
+/obj/item/broom/proc/sweep(datum/source, atom/newLoc)
+	if(!ismob(source) || !isturf(newLoc) || (get_dist(source, newLoc) > 1))
 		return
-	if (locate(/obj/structure/table) in target.contents)
+	var/turf/target = newLoc
+	var/atom/movable/AM
+	var/sweep_dir = get_dir(source, target)
+	if(!sweep_dir)
 		return
+	for(var/i in target.contents)
+		AM = i
+		if(AM.density)		// eh good enough heuristic check
+			return
 	var/i = 0
 	for(var/obj/item/garbage in target.contents)
 		if(!garbage.anchored)
-			garbage.Move(get_step(target, user.dir), user.dir)
-		i++
-		if(i >= 20)
+			step(garbage, sweep_dir)
+		if(++i > 20)
 			break
-	if(i >= 1)
+	if(i)
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 /obj/item/broom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta

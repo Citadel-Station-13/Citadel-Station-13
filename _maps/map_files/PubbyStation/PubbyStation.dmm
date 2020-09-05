@@ -2822,7 +2822,7 @@
 	req_access_txt = "65"
 	},
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/ai_monitored/turret_protected/aisat_interior)
 "ahi" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -2923,8 +2923,15 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "ahr" = (
-/turf/closed/wall/r_wall,
-/area/space)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Security External Airlock";
+	req_access_txt = "63"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "ahs" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/transit_tube,
@@ -4686,7 +4693,7 @@
 	pixel_y = 20
 	},
 /turf/open/space,
-/area/space)
+/area/space/nearstation)
 "alc" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigars,
@@ -6629,13 +6636,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apn" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Security External Airlock";
-	req_access_txt = "63"
-	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apo" = (
@@ -8698,9 +8698,18 @@
 /turf/closed/wall,
 /area/bridge)
 "atZ" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space)
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard)
 "aua" = (
 /obj/structure/closet/secure_closet/freezer/money,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
@@ -23763,18 +23772,12 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bcO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 9
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars/starboard)
+/turf/open/space,
+/area/space/nearstation)
 "bcQ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -39888,12 +39891,6 @@
 /area/science/mixing)
 "bMp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	req_access_txt = "8"
-	},
 /turf/open/floor/plating,
 /area/science/mixing)
 "bMq" = (
@@ -40373,11 +40370,10 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bNq" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 6
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating/airless,
 /area/science/mixing)
 "bNr" = (
 /obj/structure/window/reinforced{
@@ -40813,10 +40809,11 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "bOu" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 6
 	},
-/turf/open/floor/plating/airless,
+/turf/open/space,
 /area/science/mixing)
 "bOv" = (
 /obj/structure/window/reinforced{
@@ -41104,12 +41101,15 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bPl" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 9
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
-/turf/open/space,
-/area/space/nearstation)
+/obj/machinery/door/airlock/external{
+	req_access_txt = "8"
+	},
+/turf/open/floor/plating,
+/area/science/mixing)
 "bPn" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel"
@@ -53174,10 +53174,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"dhS" = (
-/obj/structure/window/reinforced,
-/turf/open/space/basic,
-/area/space)
 "dir" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -59590,7 +59586,7 @@
 	},
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/space/nearstation)
+/area/chapel/asteroid/monastery)
 "rBh" = (
 /obj/structure/mopbucket,
 /obj/item/mop,
@@ -77801,7 +77797,7 @@ aiu
 aiu
 axC
 axB
-rKr
+azN
 axB
 aaa
 aaa
@@ -82501,8 +82497,8 @@ aht
 aaa
 aaa
 abI
-dhS
-cqS
+bGI
+bNs
 rzF
 bNs
 bOw
@@ -90640,9 +90636,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-ahi
-ahi
+aoz
+ahr
+aoz
 aqG
 arD
 asO
@@ -90898,8 +90894,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+cdm
+cdm
 aqG
 arE
 arA
@@ -94741,7 +94737,7 @@ ags
 adX
 adX
 adX
-ahr
+adX
 aaa
 aaa
 aaa
@@ -94997,7 +94993,7 @@ cnC
 adX
 adX
 adX
-shH
+adX
 alb
 aaa
 aaa
@@ -95255,7 +95251,7 @@ agt
 agD
 agR
 ahh
-atZ
+ahi
 aaa
 aaa
 aaa
@@ -95511,7 +95507,7 @@ agg
 adX
 adX
 adX
-shH
+adX
 alb
 aaa
 aaa
@@ -95769,7 +95765,7 @@ ags
 adX
 adX
 adX
-shH
+adX
 aFj
 aht
 aht
@@ -105617,9 +105613,9 @@ bIN
 dAF
 bCV
 bCV
-bNq
+bCV
 bOu
-aht
+bNq
 aaa
 aaa
 aaa
@@ -105875,8 +105871,8 @@ bJT
 wOS
 bMp
 bPl
-mZE
-aht
+bcO
+aaa
 aaa
 aaa
 aaa
@@ -106131,8 +106127,8 @@ fBz
 bCV
 bCV
 bCV
+bCV
 ahi
-aht
 aht
 abI
 abI
@@ -109182,7 +109178,7 @@ aXC
 aYF
 baG
 sut
-bcO
+oCX
 rWE
 baG
 dsv
@@ -109439,7 +109435,7 @@ aEl
 aEl
 baG
 rWE
-oCX
+atZ
 rWE
 baG
 aEj

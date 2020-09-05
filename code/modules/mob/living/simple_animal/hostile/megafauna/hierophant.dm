@@ -661,7 +661,7 @@ Difficulty: Normal
 				continue
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, BURN, 0, 0)
+		M.take_damage(damage, BURN, 0, 0, null, 50)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"

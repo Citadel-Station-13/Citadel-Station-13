@@ -47,8 +47,11 @@
 	spawn_option(stored_options[choice],M)
 	qdel(src)
 
-/obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
-	var/obj/new_item = new choice()
+/obj/item/choice_beacon/proc/create_choice_atom(atom/choice, mob/owner)
+	return new choice()
+
+/obj/item/choice_beacon/proc/spawn_option(atom/choice,mob/living/M)
+	var/obj/new_item = create_choice_atom(choice, M)
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 	pod.explosionSize = list(0,0,0,0)
 	new_item.forceMove(pod)
@@ -152,10 +155,50 @@
 			augment_list[initial(A.name)] = A
 	return augment_list
 
-/obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
+/obj/item/choice_beacon/augments/spawn_option(atom/choice,mob/living/M)
 	new choice(get_turf(M))
 	to_chat(M, "<span class='hear'>You hear something crackle from the beacon for a moment before a voice speaks. \"Please stand by for a message from S.E.L.F. Message as follows: <b>Item request received. Your package has been transported, use the autosurgeon supplied to apply the upgrade.</b> Message ends.\"</span>")
 
+/obj/item/choice_beacon/pet //donator beacon that summons a small friendly animal
+	name = "pet beacon"
+	desc = "Straight from the outerspace pet shop to your feet."
+	var/static/list/pets = list("Crab" = /mob/living/simple_animal/crab,
+		"Cat" = /mob/living/simple_animal/pet/cat,
+		"Space cat" = /mob/living/simple_animal/pet/cat/space,
+		"Kitten" = /mob/living/simple_animal/pet/cat/kitten,
+		"Dog" = /mob/living/simple_animal/pet/dog,
+		"Corgi" = /mob/living/simple_animal/pet/dog/corgi,
+		"Pug" = /mob/living/simple_animal/pet/dog/pug,
+		"Exotic Corgi" = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi,
+		"Fox" = /mob/living/simple_animal/pet/fox,
+		"Red Panda" = /mob/living/simple_animal/pet/redpanda,
+		"Possum" = /mob/living/simple_animal/opossum)
+	var/pet_name
+
+/obj/item/choice_beacon/pet/generate_display_names()
+	return pets
+
+/obj/item/choice_beacon/pet/create_choice_atom(atom/choice, mob/owner)
+	var/mob/living/simple_animal/new_choice = new choice()
+	new_choice.butcher_results = null //please don't eat your pet, chef
+	var/obj/item/pet_carrier/donator/carrier = new() //a donator pet carrier is just a carrier that can't be shoved in an autolathe for metal
+	carrier.add_occupant(new_choice)
+	new_choice.mob_size = MOB_SIZE_TINY //yeah we're not letting you use this roundstart pet to hurt people / knock them down
+	new_choice.pass_flags = PASSTABLE | PASSMOB //your pet is not a bullet/person shield
+	new_choice.density = FALSE
+	new_choice.blood_volume = 0 //your pet cannot be used to drain blood from for a bloodsucker
+	new_choice.desc = "A pet [initial(choice.name)], owned by [owner]!"
+	new_choice.can_have_ai = FALSE //no it cant be sentient damnit
+	if(pet_name)
+		new_choice.name = pet_name
+		new_choice.unique_name = TRUE
+	return carrier
+
+/obj/item/choice_beacon/pet/spawn_option(atom/choice,mob/living/M)
+	pet_name = input(M, "What would you like to name the pet? (leave blank for default name)", "Pet Name")
+	..()
+
+//choice boxes (they just open in your hand instead of making a pod)
 /obj/item/choice_beacon/box
 	name = "choice box (default)"
 	desc = "Think really hard about what you want, and then rip it open!"
@@ -163,21 +206,17 @@
 	icon_state = "deliverypackage3"
 	item_state = "deliverypackage3"
 
-/obj/item/choice_beacon/box/spawn_option(obj/choice,mob/living/M)
-	to_chat(M, "<span class='hear'>The box opens, revealing the [choice]!</span>")
+/obj/item/choice_beacon/box/spawn_option(atom/choice,mob/living/M)
+	var/choice_text = choice
+	if(ispath(choice_text))
+		choice_text = initial(choice.name)
+	to_chat(M, "<span class='hear'>The box opens, revealing the [choice_text]!</span>")
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	M.temporarilyRemoveItemFromInventory(src, TRUE)
 	M.put_in_hands(new choice)
 	qdel(src)
 
-/obj/item/choice_beacon/box/plushie
-	name = "choice box (plushie)"
-	desc = "Using the power of quantum entanglement, this box contains every plush, until the moment it is opened!"
-	icon = 'icons/obj/plushes.dmi'
-	icon_state = "box"
-	item_state = "box"
-
-/obj/item/choice_beacon/box/spawn_option(choice,mob/living/M)
+/obj/item/choice_beacon/box/plushie/spawn_option(choice,mob/living/M)
 	if(ispath(choice, /obj/item/toy/plush))
 		..() //regular plush, spawn it naturally
 	else
@@ -187,6 +226,31 @@
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
 		M.put_in_hands(new choice)
 		qdel(src)
+
+/obj/item/choice_beacon/box/carpet //donator carpet beacon
+	name = "choice box (carpet)"
+	desc = "Contains 50 of a selected carpet inside!"
+	var/static/list/carpet_list = list(/obj/item/stack/tile/carpet/black/fifty = "Black Carpet",
+		"Black & Red Carpet" = /obj/item/stack/tile/carpet/blackred/fifty,
+		"Monochrome Carpet" = /obj/item/stack/tile/carpet/monochrome/fifty,
+		"Blue Carpet" = /obj/item/stack/tile/carpet/blue/fifty,
+		"Cyan Carpet" = /obj/item/stack/tile/carpet/cyan/fifty,
+		"Green Carpet" = /obj/item/stack/tile/carpet/green/fifty,
+		"Orange Carpet" = /obj/item/stack/tile/carpet/orange/fifty,
+		"Purple Carpet" = /obj/item/stack/tile/carpet/purple/fifty,
+		"Red Carpet" = /obj/item/stack/tile/carpet/red/fifty,
+		"Royal Black Carpet" = /obj/item/stack/tile/carpet/royalblack/fifty,
+		"Royal Blue Carpet" = /obj/item/stack/tile/carpet/royalblue/fifty)
+
+/obj/item/choice_beacon/box/carpet/generate_display_names()
+	return carpet_list
+
+/obj/item/choice_beacon/box/plushie
+	name = "choice box (plushie)"
+	desc = "Using the power of quantum entanglement, this box contains every plush, until the moment it is opened!"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "box"
+	item_state = "box"
 
 /obj/item/choice_beacon/box/plushie/generate_display_names()
 	var/list/plushie_list = list()

@@ -32,7 +32,7 @@
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
 /// sent to the component itself when unregistered from a parent
-#define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent" 
+#define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent"
 /// sent to the component itself when registered to a parent
 #define COMSIG_COMPONENT_REGISTER_PARENT "component_register_parent"
 
@@ -184,6 +184,7 @@
 //	#define HEARING_SOURCE 8
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
+#define COMSIG_MOVABLE_CHASM_DROP "movable_chasm_drop"			//from base of /datum/component/chasm/drop() (/datum/component/chasm)
 
 // /mind signals
 #define  COMSIG_PRE_MIND_TRANSFER "pre_mind_transfer"			//from base of mind/transfer_to() before it's done: (new_character, old_character)

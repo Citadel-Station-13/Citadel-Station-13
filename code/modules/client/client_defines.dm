@@ -75,11 +75,12 @@
 
 	var/inprefs = FALSE
 	var/list/topiclimiter
+
+	///Used for limiting the rate of clicks sends by the client to avoid abuse
 	var/list/clicklimiter
 
-	var/datum/chatOutput/chatOutput
-
-	var/list/credits //lazy list of all credit object bound to this client
+	///lazy list of all credit object bound to this client
+	var/list/credits
 
 	var/datum/player_details/player_details //these persist between logins/logouts during the same round.
 
