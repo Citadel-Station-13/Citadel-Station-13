@@ -39,9 +39,6 @@ Property weights are added to the config weight of the ruleset. They are:
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
 	mode.midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
 
-	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	mode.event_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max)) + world.time)
-
 /datum/dynamic_storyteller/proc/calculate_threat()
 	var/threat = 0
 	for(var/datum/antagonist/A in GLOB.antagonists)
@@ -98,10 +95,6 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/proc/get_midround_cooldown()
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
 	return round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max))
-
-/datum/dynamic_storyteller/proc/get_event_cooldown()
-	var/event_injection_cooldown_middle = 0.5*(GLOB.dynamic_event_delay_max + GLOB.dynamic_event_delay_min)
-	return round(clamp(EXP_DISTRIBUTION(event_injection_cooldown_middle), GLOB.dynamic_event_delay_min, GLOB.dynamic_event_delay_max))
 
 /datum/dynamic_storyteller/proc/get_latejoin_cooldown()
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
@@ -195,20 +188,6 @@ Property weights are added to the config weight of the ruleset. They are:
 					drafted_rules[rule] = calced_weight
 	return drafted_rules
 
-/datum/dynamic_storyteller/proc/event_draft()
-	var/list/drafted_rules = list()
-	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && (mode.threat_level + 20 - mode.threat) >= rule.cost && rule.ready())
-			var/property_weight = 0
-			for(var/property in property_weights)
-				if(property in rule.property_weights)
-					property_weight += rule.property_weights[property] * property_weights[property]
-			var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult
-			if(calced_weight > 0)	
-				drafted_rules[rule] = calced_weight
-	return drafted_rules
-
-
 /datum/dynamic_storyteller/chaotic
 	name = "Chaotic"
 	config_tag = "chaotic"
@@ -271,9 +250,6 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/random/get_midround_cooldown()
 	return rand(GLOB.dynamic_midround_delay_min/2, GLOB.dynamic_midround_delay_max*2)
 
-/datum/dynamic_storyteller/random/get_event_cooldown()
-	return rand(GLOB.dynamic_event_delay_min/2, GLOB.dynamic_event_delay_max*2)
-
 /datum/dynamic_storyteller/random/get_latejoin_cooldown()
 	return rand(GLOB.dynamic_latejoin_delay_min/2, GLOB.dynamic_latejoin_delay_max*2)
 
@@ -319,13 +295,6 @@ Property weights are added to the config weight of the ruleset. They are:
 				drafted_rules[rule] = 1
 	return drafted_rules
 
-/datum/dynamic_storyteller/random/event_draft()
-	var/list/drafted_rules = list()
-	for(var/datum/dynamic_ruleset/event/rule in mode.events)
-		if(rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level) && rule.ready())
-			drafted_rules[rule] = 1
-	return drafted_rules
-
 /datum/dynamic_storyteller/story
 	name = "Story"
 	config_tag = "story"
@@ -365,7 +334,7 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/no_antag
 	name = "Extended"
 	config_tag = "semiextended"
-	desc = "No standard antags. Threatening events may still spawn."
+	desc = "No standard antags."
 	curve_centre = -5
 	curve_width = 0.5
 	flags = NO_ASSASSIN | FORCE_IF_WON
@@ -377,15 +346,3 @@ Property weights are added to the config weight of the ruleset. They are:
 
 /datum/dynamic_storyteller/no_antag/get_injection_chance(dry_run)
 	return 0
-
-/datum/dynamic_storyteller/extended
-	name = "Super Extended"
-	config_tag = "extended"
-	desc = "No antags. No dangerous events."
-	curve_centre = -20
-	weight = 0
-	curve_width = 0.5
-
-/datum/dynamic_storyteller/extended/on_start()
-	..()
-	GLOB.dynamic_forced_extended = TRUE
