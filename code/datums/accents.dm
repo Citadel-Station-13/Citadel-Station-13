@@ -82,7 +82,7 @@
 	var/span_flag
 
 /datum/accent/span/modify_speech(list/speech_args)
-	speech_args[SPEECH_SPANS] = span_flag
+	speech_args[SPEECH_SPANS] |= span_flag
 	return speech_args
 
 //bone tongues either have the sans accent or the papyrus accent
