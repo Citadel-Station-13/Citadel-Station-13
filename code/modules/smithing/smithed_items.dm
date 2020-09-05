@@ -80,8 +80,8 @@
 	custom_materials = list(/datum/material/bronze=12000)
 
 /obj/item/ingot/ratvar
-	material_flags = MATERIAL_COLOR
-	name = "brass ingnot"
+	custom_materials = list(/datum/material/brass=12000)
+	name = "brass ingot"
 	desc = "On closer inspection, what appears to be wholly-unsuitable-for-smithing brass is actually primarily replicant alloy. Nezbere must have switched it while you weren't looking."
 
 
