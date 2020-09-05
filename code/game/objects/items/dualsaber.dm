@@ -26,6 +26,7 @@
 	wound_bonus = -110
 	bare_wound_bonus = 20
 	block_parry_data = /datum/block_parry_data/dual_esword
+	block_chance = 60
 	var/hacked = FALSE
 	/// Can this reflect all energy projectiles?
 	var/can_reflect = TRUE
@@ -38,7 +39,8 @@
 	var/wielded = FALSE // track wielded status on item
 	var/slowdown_wielded = 0
 
-/datum/block_parry_data/dual_esword
+/datum/block_parry_data/dual_esword // please run at the man going apeshit with his funny doublesword
+	can_block_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST | BLOCK_DIR_WEST | BLOCK_DIR_EAST
 	block_damage_absorption = 2
 	block_damage_multiplier = 0.15
 	block_damage_multiplier_override = list(
@@ -50,10 +52,10 @@
 	block_lock_sprinting = TRUE
 	// no attacking while blocking
 	block_lock_attacking = TRUE
-	block_projectile_mitigation = 75
+	block_projectile_mitigation = 85
 	// more efficient vs projectiles
 	block_stamina_efficiency_override = list(
-		TEXT_ATTACK_TYPE_PROJECTILE = 4
+		TEXT_ATTACK_TYPE_PROJECTILE = 6
 	)
 
 	parry_time_windup = 0
