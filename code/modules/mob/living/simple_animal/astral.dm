@@ -24,6 +24,7 @@
 	incorporeal_move = 1
 	alpha = 50
 	speak_emote = list("echos")
+	rad_flags = RAD_NO_CONTAMINATE
 	movement_type = FLYING
 	var/pseudo_death = FALSE
 	var/posses_safe = FALSE
