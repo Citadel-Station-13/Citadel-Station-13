@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - refactor: "Added an extools proc hook alternative to rust_g logging."
