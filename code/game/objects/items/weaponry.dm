@@ -237,6 +237,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
+/obj/item/katana/lavaland
+	desc = "Woefully underpowered in Lavaland."
+	block_chance = 30
+	force = 25 //Like a fireaxe but one handed and can block!
+
 /obj/item/katana/cursed
 	slot_flags = null
 

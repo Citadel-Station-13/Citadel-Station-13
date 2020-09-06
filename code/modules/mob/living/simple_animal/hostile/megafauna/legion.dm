@@ -141,7 +141,7 @@ Difficulty: Medium
 			loot = list(/obj/item/staff/storm)
 			elimination = 0
 		else if(prob(20))
-			loot = list(/obj/structure/closet/crate/necropolis/tendril)
+			loot = list(/obj/structure/closet/crate/necropolis/tendril/random) //This one spawns a chest that could be any of the three types
 		..()
 
 /obj/item/gps/internal/legion
