@@ -30,6 +30,8 @@
 	decay_factor = STANDARD_ORGAN_DECAY/2
 
 /obj/item/organ/tongue/Initialize(mapload)
+	for(var/accent in initial_accents)
+		accents += new accent
 	. = ..()
 	low_threshold_passed = "<span class='info'>Your [name] feels a little sore.</span>"
 	low_threshold_cleared = "<span class='info'>Your [name] soreness has subsided.</span>"
@@ -38,8 +40,6 @@
 	now_failing = "<span class='warning'>Your [name] feels like it's about to fall out!.</span>"
 	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
-	for(var/accent in initial_accents)
-		accents += new accent
 
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args) //this wont proc unless there's initial_accents
 	for(var/datum/accent/speech_modifier in accents)
@@ -56,7 +56,7 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
-	if(initial_accents)
+	if(length(accents))
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
