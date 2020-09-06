@@ -12,7 +12,7 @@
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	maxHealth = TONGUE_MAX_HEALTH
 	var/list/initial_accents //the ones the tongue starts with, not what it currently has
-	var/list/accents //done in order of priority (please always apply abductor accent and stuttering last)
+	var/list/accents = list() //done in order of priority (please always apply abductor accent and stuttering last)
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
