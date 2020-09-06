@@ -47,7 +47,7 @@
 	var/obj/item/master = comp.parent
 	var/list/dat = list(/datum/element/tactical)
 	master._AddElement(dat)
-	comp.appliedElements[len+1] = dat
+	comp.appliedElements += list(dat)
 	return "tactical [newName]"
 
 /datum/fantasy_affix/pyromantic
