@@ -41,13 +41,13 @@
 	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
 
-/obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args) //this wont proc unless there's initial_accents on the tongue
 	for(var/datum/accent/speech_modifier in accents)
 		speech_args = speech_modifier.modify_speech(speech_args, source, owner)
 
 /obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
-	if (damage >= maxHealth)
+	if(damage >= maxHealth)
 		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
@@ -56,7 +56,8 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	if(length(initial_accents) || length(accents))
+		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/organ/tongue/Remove(special = FALSE)
