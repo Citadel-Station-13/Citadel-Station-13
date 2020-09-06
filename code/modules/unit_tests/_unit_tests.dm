@@ -28,7 +28,7 @@
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
-#include "say.dm"
+// #include "say.dm" //no saymods, someone update saycode please.
 // #include "siunit.dm"
 #include "spawn_humans.dm"
 // #include "species_whitelists.dm"
