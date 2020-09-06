@@ -156,8 +156,6 @@
 	max_ammo = 4
 	var/pixeloffsetx = 4
 	start_empty = TRUE
-	multiload = FALSE
-	load_delay = 6 //6ds
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()
