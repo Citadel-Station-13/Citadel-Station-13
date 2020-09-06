@@ -27,8 +27,8 @@ if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     st=1
 fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
-    echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
-    st=1
+    echo "WARNING: Vareditted /area path use detected in maps, please replace with proper paths."
+    #st=1
 fi;
 if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
     echo "ERROR: base /turf path use detected in maps, please replace with proper paths."
@@ -45,7 +45,7 @@ while read f; do
     t=$(tail -c2 "$f"; printf x); r1="${nl}$"; r2="${nl}${r1}"
     if [[ ! ${t%x} =~ $r1 ]]; then
         echo "file $f is missing a trailing newline"
-        st=1
+        #st=1
     fi;
 done < <(find . -type f -name '*.dm')
 if grep -i 'centcomm' code/**/*.dm; then
