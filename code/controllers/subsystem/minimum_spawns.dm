@@ -36,13 +36,13 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 // step 5: snaxi support - done?
 
 /datum/controller/subsystem/min_spawns/Initialize(start_timeofday)
-	if(SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS))
+	if(SSmapping.levels_by_trait(ZTRAIT_ICE_RUINS).len)
 		active_spawns = GLOB.minimum_snow_surface_spawns
 		active_spawns_2 = GLOB.minimum_snow_under_spawns
 		snaxi_snowflake_check = TRUE
-	else if(SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS)) //todo: recognizing maps that aren't lavaland mining but are also not snaxi
+	else if(SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS).len) //todo: recognizing maps that aren't lavaland mining but are also not snaxi
 		active_spawns = GLOB.minimum_lavaland_spawns
-	if(!active_spawns && !active_spawns_2)
+	else
 		return ..() // call it a day i guess
 	// borrowing this from auxbase code - see code\modules\mining\aux_base.dm
 	if(snaxi_snowflake_check)
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 				if(typesof(/turf/open/lava) in orange(9, TT))
 					continue
 				valid_mining_turfs.Add(TT)
-	if(!valid_mining_turfs)
+	if(!valid_mining_turfs.len)
 		return ..() // call it a day i guess
 	// if we're at this point we might as well fucking hit it
 	where_we_droppin_boys()
