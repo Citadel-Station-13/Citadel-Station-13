@@ -32,7 +32,7 @@
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
 /// sent to the component itself when unregistered from a parent
-#define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent" 
+#define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent"
 /// sent to the component itself when registered to a parent
 #define COMSIG_COMPONENT_REGISTER_PARENT "component_register_parent"
 
@@ -43,6 +43,8 @@
 // /atom signals
 //from base of atom/proc/Initialize(): sent any time a new atom is created
 #define COMSIG_ATOM_CREATED "atom_created"
+//from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
+#define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
