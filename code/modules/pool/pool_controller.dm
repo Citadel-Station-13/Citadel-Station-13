@@ -210,7 +210,7 @@
 			for(var/datum/reagent/R in reagents.reagent_list)
 				if(R.reagent_state == SOLID)
 					R.reagent_state = LIQUID
-				if(!swimee.reagents.has_reagent(POOL_NO_OVERDOSE_MEDICINE_MAX))
+				if(!swimee.reagents.has_reagent(R.type,POOL_NO_OVERDOSE_MEDICINE_MAX))
 					swimee.reagents.add_reagent(R.type, 0.5) //osmosis
 			reagents.reaction(swimee, VAPOR, 0.03) //3 percent. Need to find a way to prevent this from stacking chems at some point like the above.
 		for(var/obj/objects in W)
