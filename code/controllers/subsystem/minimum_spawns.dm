@@ -100,24 +100,19 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		var/MS_tospawn = pick_n_take(active_spawns)
 		for(var/mob/living/simple_animal/hostile/megafauna/H in urange(70,RT)) //prevents mob clumps
 			if((istype(MS_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(RT, H) <= 70)
-				// INIT_ANNOUNCE("MSTS failed - [MS_tospawn] too close to [H], [get_dist(RT, H)] tiles distance, [RT.x] [RT.y] [RT.z]")
 				active_spawns.Add(MS_tospawn)
 				continue //let's try not to dump megas too close to each other?	
 			if((istype(MS_tospawn, /obj/structure/spawner)) && get_dist(RT, H) <= 40)
-				// INIT_ANNOUNCE("MSTS failed - [MS_tospawn] too close to [H], [get_dist(RT, H)] tiles distance, [RT.x] [RT.y] [RT.z]")
 				active_spawns.Add(MS_tospawn)
 				continue //let's at least /try/ to space these out?
 		for(var/obj/structure/spawner/LT in urange(70,RT)) //prevents tendril/mega clumps
 			if((istype(MS_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(RT, LT) <= 70)
-				// INIT_ANNOUNCE("MSTS failed - [MS_tospawn] too close to [LT], [get_dist(RT, LT)] tiles distance, [RT.x] [RT.y] [RT.z]")
 				active_spawns.Add(MS_tospawn)
 				continue //let's try not to dump megas too close to each other?	
 			if((istype(MS_tospawn, /obj/structure/spawner)) && get_dist(RT, LT) <= 40)
-				// INIT_ANNOUNCE("MSTS failed - [MS_tospawn] too close to [LT], [get_dist(RT, LT)] tiles distance, [RT.x] [RT.y] [RT.z]")
 				active_spawns.Add(MS_tospawn)
 				continue //let's at least /try/ to space these out?
 			// man the overhead on this is gonna SUCK
-		// INIT_ANNOUNCE("MSTS succeeded! - [MS_tospawn] spawning at [RT.x] [RT.y] [RT.z]")
 		new MS_tospawn(RT)
 	while(active_spawns_2.len)
 		where_we_droppin_boys_iterations++
@@ -129,25 +124,19 @@ GLOBAL_LIST_INIT(minimum_snow_under_spawns, list(
 		var/MS2_tospawn = pick_n_take(active_spawns_2)
 		for(var/mob/living/simple_animal/hostile/H in urange(70,RT2)) //prevents mob clumps
 			if((istype(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna) || ismegafauna(H)) && get_dist(RT2, H) <= 70)
-				// INIT_ANNOUNCE("MS2TS failed - [MS2_tospawn] too close to [H], [get_dist(RT2, H)] tiles distance, [RT2.x] [RT2.y] [RT2.z]")
 				active_spawns_2.Add(MS2_tospawn)
 				continue //let's try not to dump megas too close to each other?	
 			if((istype(MS2_tospawn, /obj/structure/spawner)) && get_dist(RT2, H) <= 40)
-				// INIT_ANNOUNCE("MS2TS failed - [MS2_tospawn] too close to [H], [get_dist(RT2, H)] tiles distance, [RT2.x] [RT2.y] [RT2.z]")
 				active_spawns_2.Add(MS2_tospawn)
 				continue //let's at least /try/ to space these out?
 		for(var/obj/structure/spawner/LT in urange(70,RT2)) //prevents tendril/mega clumps
 			if((istype(MS2_tospawn, /mob/living/simple_animal/hostile/megafauna)) && get_dist(RT2, LT) <= 70)
-				// INIT_ANNOUNCE("MS2TS failed - [MS2_tospawn] too close to [LT], [get_dist(RT2, LT)] tiles distance, [RT2.x] [RT2.y] [RT2.z]")
 				active_spawns_2.Add(MS2_tospawn)
 				continue //let's try not to dump megas too close to each other?
 			if((istype(MS2_tospawn, /obj/structure/spawner)) && get_dist(RT2, LT) <= 40)
-				// INIT_ANNOUNCE("MS2TS failed - [MS2_tospawn] too close to [LT], [get_dist(RT2, LT)] tiles distance, [RT2.x] [RT2.y] [RT2.z]")
 				active_spawns_2.Add(MS2_tospawn)
 				continue //let's at least /try/ to space these out?
 			// man the overhead on this is gonna SUCK
-		// INIT_ANNOUNCE("MS2TS succeeded! - [MS2_tospawn] spawning at [RT2.x] [RT2.y] [RT2.z]")
 		new MS2_tospawn(RT2)
 	if(!active_spawns.len && !active_spawns_2.len)
-		// INIT_ANNOUNCE("Wrapping up! AS [active_spawns] AS2 [active_spawns_2]")
 		return // we're done here
