@@ -81,7 +81,6 @@
 
 /obj/item/ingot/ratvar
 	custom_materials = list(/datum/material/brass=12000)
-	name = "brass ingot"
 	desc = "On closer inspection, what appears to be wholly-unsuitable-for-smithing brass is actually primarily replicant alloy. Nezbere must have switched it while you weren't looking."
 
 
