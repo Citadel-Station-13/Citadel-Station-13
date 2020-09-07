@@ -35,7 +35,7 @@
 			if(G.max_heat_protection_temperature)
 				prot = (G.max_heat_protection_temperature > 360)
 		else
-			prot = 1
+			prot = 0
 	if(prot > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		to_chat(user, "<span class='notice'>You pick up the [src].</span>")
 		return ..()
