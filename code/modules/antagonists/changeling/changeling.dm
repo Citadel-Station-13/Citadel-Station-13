@@ -227,7 +227,7 @@
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 			geneticdamage = max(0, geneticdamage-1)
 		owner.current.hud_used?.lingchemdisplay?.invisibility = 0
-		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
+		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
