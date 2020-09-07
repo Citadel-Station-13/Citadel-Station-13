@@ -57962,9 +57962,6 @@
 /turf/open/space,
 /area/solar/port/aft)
 "qVP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
