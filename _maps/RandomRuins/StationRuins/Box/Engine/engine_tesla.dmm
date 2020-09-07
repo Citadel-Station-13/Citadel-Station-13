@@ -172,7 +172,7 @@
 /area/engine/engineering)
 "fr" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Southwest";
+	c_tag = "Engineering - Engine - Port Quarter";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -221,7 +221,7 @@
 /area/space/nearstation)
 "js" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine East";
+	c_tag = "Singularity Engine East";
 	dir = 8;
 	network = list("ss13","engine")
 	},
@@ -353,7 +353,7 @@
 "tc" = (
 /obj/machinery/light,
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine South";
+	c_tag = "Engineering - Engine - Aft";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -442,7 +442,7 @@
 /area/space/nearstation)
 "yj" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine West";
+	c_tag = "Engineering - Engine - Port";
 	dir = 4;
 	network = list("ss13","engine")
 	},
@@ -511,16 +511,16 @@
 	dir = 1;
 	light_color = "#c1caff"
 	},
-/obj/machinery/camera/emp_proof{
-	c_tag = "Particle Accelerator";
-	network = list("ss13","engine")
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/the_singularitygen/tesla,
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
+	},
+/obj/machinery/camera/emp_proof{
+	c_tag = "Engineering - Particle Accelerator";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -704,7 +704,7 @@
 /area/engine/engineering)
 "LJ" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Southeast";
+	c_tag = "Engineering - Engine - Starboard Quarter";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -815,11 +815,11 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Qk" = (
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Northeast";
+	c_tag = "Engineering - Engine - Starboard Bow";
 	network = list("ss13","engine")
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "Ra" = (
@@ -897,7 +897,7 @@
 /area/template_noop)
 "UL" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Tesla Engine Northwest";
+	c_tag = "Engineering - Engine - Port Bow";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,

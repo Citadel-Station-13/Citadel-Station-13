@@ -340,7 +340,7 @@
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/machinery/camera{
-	c_tag = "TEG - South East";
+	c_tag = "Engineering - TEG - Starboard Quarter";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -922,7 +922,7 @@
 /obj/item/multitool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
-	c_tag = "TEG - North West";
+	c_tag = "Engineering - TEG - Port Bow";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1062,7 +1062,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "TEG - East";
+	c_tag = "Engineering - TEG - Starboard";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -1267,7 +1267,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/meter,
 /obj/machinery/camera{
-	c_tag = "TEG - South Center";
+	c_tag = "Engineering - TEG - Central Aft";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -1641,7 +1641,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/camera{
-	c_tag = "TEG - North Center";
+	c_tag = "Engineering - TEG - Central Fore";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -1702,7 +1702,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "TEG - North"
+	c_tag = "Engineering - TEG - Fore"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1755,7 +1755,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
-	c_tag = "TEG - West";
+	c_tag = "Engineering - TEG - Port";
 	dir = 4
 	},
 /turf/open/floor/plasteel,

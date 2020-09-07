@@ -256,7 +256,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Port";
+	c_tag = "Engineering - Supermatter - Port";
 	dir = 4;
 	network = list("ss13","engine")
 	},
@@ -592,7 +592,7 @@
 /area/engine/engineering)
 "na" = (
 /obj/machinery/camera{
-	c_tag = "Supermatter Chamber";
+	c_tag = "Engineering - Supermatter - Chamber";
 	network = list("engine");
 	pixel_x = 23
 	},
@@ -1244,7 +1244,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Starboard";
+	c_tag = "Engineering - Supermatter - Starboard";
 	dir = 8;
 	network = list("ss13","engine")
 	},
@@ -1312,7 +1312,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Aft";
+	c_tag = "Engineering - Supermatter - Aft";
 	network = list("ss13","engine");
 	pixel_x = 23
 	},
@@ -1949,7 +1949,7 @@
 	pixel_y = -26
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering Supermatter Fore";
+	c_tag = "Engineering - Supermatter - Fore";
 	dir = 1;
 	network = list("ss13","engine");
 	pixel_x = 23

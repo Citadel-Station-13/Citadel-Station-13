@@ -265,7 +265,7 @@
 	light_color = "#c1caff"
 	},
 /obj/machinery/camera/emp_proof{
-	c_tag = "Particle Accelerator";
+	c_tag = "Engineering - Particle Accelerator";
 	network = list("ss13","engine")
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

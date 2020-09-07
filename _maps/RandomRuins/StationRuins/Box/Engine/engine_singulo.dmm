@@ -136,7 +136,7 @@
 /area/engine/engineering)
 "fr" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine Southwest";
+	c_tag = "Engineering - Engine - Port Quarter";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -295,7 +295,7 @@
 "sr" = (
 /obj/machinery/light,
 /obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine South";
+	c_tag = "Engineering - Engine - Aft";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -448,7 +448,7 @@
 	light_color = "#c1caff"
 	},
 /obj/machinery/camera/emp_proof{
-	c_tag = "Particle Accelerator";
+	c_tag = "Engineering - Particle Accelerator";
 	network = list("ss13","engine")
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -496,7 +496,7 @@
 /area/engine/engineering)
 "DK" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine West";
+	c_tag = "Engineering - Engine - Port";
 	dir = 4;
 	network = list("ss13","engine")
 	},
@@ -638,7 +638,7 @@
 /area/engine/engineering)
 "LJ" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine Southeast";
+	c_tag = "Engineering - Engine - Starboard Quarter";
 	dir = 1;
 	network = list("ss13","engine")
 	},
@@ -727,7 +727,7 @@
 /area/engine/engineering)
 "Qk" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine Northeast";
+	c_tag = "Engineering - Engine - Starboard Bow";
 	network = list("ss13","engine")
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
@@ -773,7 +773,7 @@
 /area/template_noop)
 "UL" = (
 /obj/machinery/camera/emp_proof{
-	c_tag = "Singularity Engine Northwest";
+	c_tag = "Engineering - Engine - Port Bow";
 	network = list("ss13","engine")
 	},
 /turf/open/floor/plating/airless,

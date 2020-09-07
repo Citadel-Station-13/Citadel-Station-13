@@ -73,11 +73,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"o" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/arrival)
 "p" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
@@ -162,7 +157,7 @@
 (1,1,1) = {"
 a
 B
-o
+d
 d
 d
 B
