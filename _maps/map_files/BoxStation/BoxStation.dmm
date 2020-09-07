@@ -41516,6 +41516,9 @@
 	name = "Shuttle Bay Bridge Control";
 	pixel_x = 27
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bWz" = (
@@ -46156,6 +46159,7 @@
 	name = "Cargo Bay Bridge Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "ciR" = (
@@ -53925,6 +53929,7 @@
 /area/bridge/meeting_room)
 "hrF" = (
 /obj/item/wrench,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "hsb" = (
@@ -54029,6 +54034,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"hKU" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "hLG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
@@ -54259,6 +54271,9 @@
 "inR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "iou" = (
@@ -56081,6 +56096,18 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"mhy" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Cargo Bay Bridge"
+	},
+/obj/machinery/button/door{
+	id = "supplybridge";
+	name = "Shuttle Bay Bridge Control";
+	pixel_x = 27
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "mhN" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -57092,6 +57119,16 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/grass,
 /area/hydroponics/garden)
+"oPG" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Cargo Bay Bridge Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "oRV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -57158,6 +57195,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"oZt" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "oZJ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -76362,9 +76405,9 @@ aSg
 aSg
 aSg
 aSg
-bWy
+mhy
 chS
-ciQ
+oPG
 csl
 csl
 csl
@@ -78681,8 +78724,8 @@ aaa
 aaa
 bkF
 aSg
-aWv
-nLu
+oZt
+hKU
 hrF
 inR
 aSg
