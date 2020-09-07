@@ -324,6 +324,10 @@
 /mob/proc/AltClickOn(atom/A)
 	if(!A.AltClick(src))
 		altclick_listed_turf(A)
+	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
+	A.AltClick(src)
 
 /mob/proc/altclick_listed_turf(atom/A)
 	var/turf/T = get_turf(A)

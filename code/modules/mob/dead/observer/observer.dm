@@ -409,9 +409,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.change_view(CONFIG_GET(string/default_view))
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
-	mind.current.client.init_verbs()
+	transfer_ckey(mind.current, FALSE)
 	return TRUE
-
+	
 /mob/dead/observer/verb/stay_dead()
 	set category = "Ghost"
 	set name = "Do Not Resuscitate"

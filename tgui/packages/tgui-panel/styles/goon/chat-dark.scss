@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-em {
+ em {
   font-style: normal;
   font-weight: bold;
 }
@@ -287,6 +287,16 @@ em {
   font-weight: bold;
 }
 
+.looc {
+  color: #6699CC;
+  font-weight: bold;
+}
+
+.antagooc {
+  color: #b8002e;
+  font-weight: bold;
+}
+
 .adminobserverooc {
   color: #0099cc;
   font-weight: bold;
@@ -302,8 +312,25 @@ em {
   font-weight: bold;
 }
 
+/* @adminobserver compatability*/
+.adminobserver {
+  color: #996600;
+  font-weight: bold;
+}
+
 .admin {
   color: #5975da;
+  font-weight: bold;
+}
+
+/* cit-specific mentorsay*/
+.mentorsay {
+  color: #E236D8;
+  font-weight: bold;
+}
+
+.mentorsay_admin {
+  color: #8A2BE2;
   font-weight: bold;
 }
 
@@ -449,21 +476,11 @@ em {
 
 .tinynotice {
   color: #6685f5;
-  font-size: 85%;
-}
-
-.tinynoticeital {
-  color: #6685f5;
   font-style: italic;
   font-size: 85%;
 }
 
 .smallnotice {
-  color: #6685f5;
-  font-size: 90%;
-}
-
-.smallnoticeital {
   color: #6685f5;
   font-style: italic;
   font-size: 90%;
@@ -515,40 +532,40 @@ em {
 }
 
 .cult {
-  color: #973e3b;
+  color: #aa1c1c;
 }
 
 .cultitalic {
-  color: #973e3b;
+  color: #aa1c1c;
   font-style: italic;
 }
 
 .cultbold {
-  color: #973e3b;
+  color: #aa1c1c;
   font-style: italic;
   font-weight: bold;
 }
 
 .cultboldtalic {
-  color: #973e3b;
+  color: #aa1c1c;
   font-weight: bold;
   font-size: 185%;
 }
 
 .cultlarge {
-  color: #973e3b;
+  color: #aa1c1c;
   font-weight: bold;
   font-size: 185%;
 }
 
 .narsie {
-  color: #973e3b;
+  color: #aa1c1c;
   font-weight: bold;
   font-size: 925%;
 }
 
 .narsiesmall {
-  color: #973e3b;
+  color: #aa1c1c;
   font-weight: bold;
   font-size: 370%;
 }
@@ -607,10 +624,153 @@ em {
   font-size: 185%;
 }
 
+.umbra {
+  color: #5000A0;
+}
+
+.umbra_emphasis {
+  color: #5000A0;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.umbra_large {
+  color: #5000A0;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 3;
+}
+
 .deconversion_message {
-  color: #a947ff;
+  color: #5000A0;
   font-size: 185%;
   font-style: italic;
+}
+
+/* coggers dosen't exist on tg :( */
+/* from decon_msg: font-size: 185% == font-size 3*/
+.brass {
+  color: #BE8700;
+}
+
+.heavy_brass {
+  color: #BE8700;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.large_brass {
+  color: #BE8700;
+  font-size: 185%;
+ }
+
+.big_brass {
+  color: #BE8700;
+  font-size: 185%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.ratvar {
+  color: #BE8700;
+  font-size: 6;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.alloy {
+  color: #42474D;
+}
+
+.heavy_alloy {
+  color: #42474D;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.nezbere_large {
+  color: #42474D;
+  font-size: 185%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.nezbere {
+  color: #42474D;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.nezbere_small {
+  color: #42474D;
+}
+
+.sevtug_large {
+  color: #AF0AAF;
+  font-size: 185%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.sevtug	{
+  color: #AF0AAF;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.sevtug_small {
+  color: #AF0AAF;
+}
+
+.inathneq_large {
+  color: #1E8CE1;
+  font-size: 185%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.inathneq	{
+  color: #1E8CE1;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.inathneq_small {
+  color: #1E8CE1;
+}
+
+.nzcrentr_large {
+  color: #DAAA18;
+  font-size: 185%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.nzcrentr {
+  color: #DAAA18;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.nzcrentr_small {
+  color: #DAAA18;
+}
+
+.neovgre_large {
+  color: #6E001A;
+  font-size: 185%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.neovgre {
+  color: #6E001A;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.neovgre_small {
+  color: #6E001A;
 }
 
 .ghostalert {
@@ -696,6 +856,11 @@ em {
   font-size: 185%;
 }
 
+.yellowtext	{
+  color: #FFCC00;
+  font-size: 185%;
+}
+
 .clown {
   color: #ff70c1;
   font-size: 160%;
@@ -740,6 +905,31 @@ em {
 
   100% {
     color: #7adbf3;
+  }
+}
+
+.velvet	{
+  color: #660015;
+  font-weight: bold;
+  animation: velvet 5000ms infinite;
+  animation-direction: alternate;
+}
+
+@keyframes velvet {
+	0% {
+    color: #400020;
+  }
+	40% {
+    color: #FF0000;
+  }
+	50% {
+    color: #FF8888;
+  }
+	60% {
+    color: #FF0000;
+  }
+	100% {
+    color: #400020;
   }
 }
 
