@@ -53,7 +53,6 @@
 	desc = "A satchel that opens into a localized pocket of Blue Space."
 	icon_state = "holdingsat"
 	item_state = "holdingsat"
-	species_exception = list(/datum/species/angel)
 
 /obj/item/storage/backpack/holding/duffel
 	name = "duffel bag of holding"
@@ -190,7 +189,6 @@
 	name = "satchel"
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
-	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"

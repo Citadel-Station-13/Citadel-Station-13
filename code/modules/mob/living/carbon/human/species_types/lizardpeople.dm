@@ -30,6 +30,7 @@
 	tail_type = "tail_lizard"
 	wagging_type = "waggingtail_lizard"
 	species_type = "lizard"
+	wings_icon = "Dragon" //sandstorm code -- tg port wings
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)

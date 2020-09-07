@@ -15,14 +15,6 @@
 /datum/sprite_accessory/wings_open/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	return (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception)) || H.dna.species.mutant_bodyparts["wings"])
 
-/datum/sprite_accessory/wings_open/angel
-	name = "Angel"
-	icon_state = "angel"
-	color_src = 0
-	dimension_x = 46
-	center = TRUE
-	dimension_y = 34
-
 /datum/sprite_accessory/wings
 	icon = 'icons/mob/wings.dmi'
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
@@ -35,6 +27,31 @@
 	center = TRUE
 	dimension_y = 34
 	locked = TRUE
+
+/datum/sprite_accessory/wings_open/angel
+	name = "Angel"
+	icon_state = "angel"
+	color_src = 0
+	dimension_x = 46
+	center = TRUE
+	dimension_y = 34
+
+/datum/sprite_accessory/wings/dragon
+	name = "Dragon"
+	icon_state = "dragon"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+	icon = 'sandcode/icons/mob/wings.dmi'
+
+/datum/sprite_accessory/wings_open/dragon
+	name = "Dragon"
+	icon_state = "dragon"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	icon = 'sandcode/icons/mob/wings.dmi'
 
 // Decorative wings
 
