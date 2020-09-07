@@ -1,0 +1,4 @@
+author: "KeRSedChaplain"
+delete-after: True
+changes: 
+  - soundadd: "added borg_deathsound.ogg and android_scream.ogg"
