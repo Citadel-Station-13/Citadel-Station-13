@@ -14,125 +14,131 @@ export const IMAGE_RETRY_DELAY = 250;
 export const IMAGE_RETRY_LIMIT = 10;
 export const IMAGE_RETRY_MESSAGE_AGE = 60000;
 
-// Default message type
-export const MESSAGE_TYPE_UNKNOWN = 'unknown';
-
-// Internal message type
-export const MESSAGE_TYPE_INTERNAL = 'internal';
-
-// Must match the set of defines in code/__DEFINES/chat.dm
-export const MESSAGE_TYPE_SYSTEM = 'system';
-export const MESSAGE_TYPE_LOCALCHAT = 'localchat';
-export const MESSAGE_TYPE_RADIO = 'radio';
-export const MESSAGE_TYPE_INFO = 'info';
-export const MESSAGE_TYPE_WARNING = 'warning';
-export const MESSAGE_TYPE_DEADCHAT = 'deadchat';
-export const MESSAGE_TYPE_OOC = 'ooc';
-export const MESSAGE_TYPE_ADMINPM = 'adminpm';
-export const MESSAGE_TYPE_COMBAT = 'combat';
-export const MESSAGE_TYPE_ADMINCHAT = 'adminchat';
-export const MESSAGE_TYPE_MODCHAT = 'modchat';
-export const MESSAGE_TYPE_EVENTCHAT = 'eventchat';
-export const MESSAGE_TYPE_ADMINLOG = 'adminlog';
-export const MESSAGE_TYPE_ATTACKLOG = 'attacklog';
-export const MESSAGE_TYPE_DEBUG = 'debug';
-
-// Metadata for each message type
 export const MESSAGE_TYPES = [
   // Always-on types
   {
-    type: MESSAGE_TYPE_SYSTEM,
+    type: 'system',
     name: 'System Messages',
     description: 'Messages from your client, always enabled',
-    selector: '.boldannounce',
+    selector: '.boldannounce, .filter_system',
     important: true,
   },
   // Basic types
   {
-    type: MESSAGE_TYPE_LOCALCHAT,
+    type: 'localchat',
     name: 'Local',
     description: 'In-character local messages (say, emote, etc)',
-    selector: '.say, .emote',
+    selector: '.filter_say, .say, .emote',
   },
   {
-    type: MESSAGE_TYPE_RADIO,
+    type: 'radio',
     name: 'Radio',
     description: 'All departments of radio messages',
-    selector: '.alert, .syndradio, .centradio, .airadio, .entradio, .comradio, .secradio, .engradio, .medradio, .sciradio, .supradio, .srvradio, .expradio, .radio, .deptradio, .newscaster',
+    selector: '.filter_radio, .alert, .syndradio, .centradio, .airadio, .entradio, .comradio, .secradio, .engradio, .medradio, .sciradio, .supradio, .srvradio, .expradio, .radio, .deptradio, .newscaster',
   },
   {
-    type: MESSAGE_TYPE_INFO,
+    type: 'info',
     name: 'Info',
     description: 'Non-urgent messages from the game and items',
-    selector: '.notice:not(.pm), .adminnotice, .info, .sinister, .cult',
+    selector: '.filter_notice, .notice:not(.pm), .adminnotice, .info, .sinister, .cult',
   },
   {
-    type: MESSAGE_TYPE_WARNING,
+    type: 'warning',
     name: 'Warnings',
     description: 'Urgent messages from the game and items',
-    selector: '.warning:not(.pm), .critical, .userdanger, .italics',
+    selector: '.filter_warning, .warning:not(.pm), .critical, .userdanger, .italics',
   },
   {
-    type: MESSAGE_TYPE_DEADCHAT,
+    type: 'deadchat',
     name: 'Deadchat',
     description: 'All of deadchat',
-    selector: '.deadsay',
+    selector: '.filter_deadsay, .deadsay',
   },
   {
-    type: MESSAGE_TYPE_OOC,
+    type: 'ooc',
     name: 'OOC',
     description: 'The bluewall of global OOC messages',
-    selector: '.ooc, .adminooc',
+    selector: '.filter_ooc, .ooc, .adminooc',
   },
   {
-    type: MESSAGE_TYPE_ADMINPM,
+    type: 'looc',
+    name: 'LOOC',
+    description: 'Local OOC Chat. Less of a bluewall',
+    selector: '.filter_looc, .looc',
+  },
+  {
+    type: 'antagooc',
+    name: 'AOOC',
+    description: 'Antag OOC Chat.',
+    selector: '.filter_aooc, .antagooc',
+  },
+  {
+    type: 'adminpm',
     name: 'Admin PMs',
     description: 'Messages to/from admins (adminhelp)',
-    selector: '.pm, .adminhelp',
+    selector: '.filter_pm, .pm',
   },
   {
-    type: MESSAGE_TYPE_COMBAT,
+    type: 'combat',
     name: 'Combat Log',
     description: 'Urist McTraitor has stabbed you with a knife!',
-    selector: '.danger',
+    selector: '.filter_combat, .danger',
   },
   {
-    type: MESSAGE_TYPE_UNKNOWN,
+    type: 'unknown',
     name: 'Unsorted',
     description: 'Everything we could not sort, always enabled',
   },
+  // Semi-admin stuff.
+  {
+    type: 'mentorchat',
+    name: 'Mentor Chat',
+    description: 'Mhelp how do i not die?',
+    selector: '.filter_MSAY, .mentor_channel',
+  },
   // Admin stuff
   {
-    type: MESSAGE_TYPE_ADMINCHAT,
+    type: 'adminchat',
     name: 'Admin Chat',
     description: 'ASAY messages',
-    selector: '.admin_channel, .adminsay',
+    selector: '.filter_ASAY, .admin_channel',
     admin: true,
   },
+  /*
   {
-    type: MESSAGE_TYPE_MODCHAT,
+    type: 'modchat',
     name: 'Mod Chat',
     description: 'MSAY messages',
-    selector: '.mod_channel',
+    selector: '.filter_MSAY, .mod_channel',
+    admin: true,
+  },
+  */
+  {
+    type: 'eventchat',
+    name: 'Event Chat',
+    description: 'ESAY messages',
+    selector: '.filter_ESAY, .event_channel',
     admin: true,
   },
   {
-    type: MESSAGE_TYPE_ADMINLOG,
+    type: 'adminlog',
     name: 'Admin Log',
     description: 'ADMIN LOG: Urist McAdmin has jumped to coordinates X, Y, Z',
-    selector: '.log_message',
+    selector: '.filter_adminlog, .log_message',
     admin: true,
   },
   {
-    type: MESSAGE_TYPE_ATTACKLOG,
+    type: 'attacklog',
     name: 'Attack Log',
     description: 'Urist McTraitor has shot John Doe',
+    selector: '.filter_attacklog',
     admin: true,
   },
   {
-    type: MESSAGE_TYPE_DEBUG,
+    type: 'debuglog',
     name: 'Debug Log',
     description: 'DEBUG: SSPlanets subsystem Recover().',
+    selector: '.filter_debuglog',
     admin: true,
   },
 ];
