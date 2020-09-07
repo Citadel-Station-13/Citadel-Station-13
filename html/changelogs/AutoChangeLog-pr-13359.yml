@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - spellcheck: "fixed names of the Electrical Toolbox goodie pack and green croptop christmas suit."
+  - bugfix: "Fixed turf visuals for real. Original PR by AnturK on tgstation."
