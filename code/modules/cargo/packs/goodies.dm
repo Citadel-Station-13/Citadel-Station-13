@@ -52,8 +52,8 @@
 	cost = 300
 	contains = list(/obj/item/storage/toolbox/mechanical)
 
-/datum/supply_pack/goody/electrical_toolbox // mostly just to water down coupon probability
-	name = "Mechanical Toolbox"
+/datum/supply_pack/goody/electrical_toolbox
+	name = "Electrical Toolbox"
 	desc = "A fully stocked electrical toolbox, for when you're too lazy to just print them out."
 	cost = 300
 	contains = list(/obj/item/storage/toolbox/electrical)
