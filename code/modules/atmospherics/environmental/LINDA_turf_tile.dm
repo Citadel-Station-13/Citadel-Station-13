@@ -1,6 +1,6 @@
 /turf
 	//used for temperature calculations
-	var/thermal_conductivity = 0.05
+	var/thermal_conductivity = 0.005
 	var/heat_capacity = 1
 	var/temperature_archived
 
@@ -270,7 +270,7 @@
 
 /turf/proc/super_conduct()
 	var/conductivity_directions = conductivity_directions()
-
+	archive()
 	if(conductivity_directions)
 		//Conduct with tiles around me
 		for(var/direction in GLOB.cardinals)
