@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "the flight potion now works with lizards."
-  - bugfix: "Race changing while from a race with wings to one without them now properly removes the effects."
-  - code_imp: "Grabs tg station's new wing openning procs (cit's don't work)."

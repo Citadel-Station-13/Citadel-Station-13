@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Re-adds drakeborgs and all their stuff, including licenses and does not cry about a simple credit sprite."
-  - bugfix: "Fixes sergal plushies."
-  - bugfix: "Goat king plushies were never meant to be obtainable (easily) but thanks to ports and stuffs they were."
