@@ -109,10 +109,10 @@
 
 /obj/item/airlock_painter/decal/proc/choose_dir(user)
 	var/choose_dir = list(
-		"North" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 1),
-		"East" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 4),
-		"South" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 2),
-		"West"  = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 8)
+		"North" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 2),
+		"East" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 8),
+		"South" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 1),
+		"West"  = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = 4)
 	)
 	var/choice =  show_radial_menu(user,src,choose_dir, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
