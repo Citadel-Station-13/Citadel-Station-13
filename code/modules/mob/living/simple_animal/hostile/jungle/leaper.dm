@@ -11,7 +11,6 @@
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	threat = 2
 	maxHealth = 300
 	health = 300
 	ranged = TRUE
@@ -81,7 +80,7 @@
 
 /obj/structure/leaper_bubble/Initialize()
 	. = ..()
-	float(on = TRUE)
+	INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 	QDEL_IN(src, 100)
 
 /obj/structure/leaper_bubble/Destroy()
@@ -136,7 +135,7 @@
 	target = A
 	if(!isturf(loc))
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		return
 	if(hopping)
 		return

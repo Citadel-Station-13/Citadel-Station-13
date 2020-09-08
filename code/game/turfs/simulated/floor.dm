@@ -13,7 +13,7 @@
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.004
 	heat_capacity = 10000
 	intact = 1
 	var/broken = 0
@@ -162,7 +162,7 @@
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	return intact ? pry_tile(I, user) : FALSE
+	return intact ? FORCE_BOOLEAN(pry_tile(I, user)) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)

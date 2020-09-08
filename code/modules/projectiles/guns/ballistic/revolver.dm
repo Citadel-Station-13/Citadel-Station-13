@@ -84,6 +84,11 @@
 	. = ..()
 	. += "[get_ammo(0,0)] of those are live rounds."
 
+/obj/item/gun/ballistic/revolver/syndicate
+	unique_reskin = list("Default" = "revolver",
+						"Silver" = "russianrevolver",
+						"Robust" = "revolvercit")
+
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
@@ -343,10 +348,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/revolver/doublebarrel/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/revolver/doublebarrel/improvised/update_overlays()
+	. = ..()
 	if(slung)
-		icon_state += "sling"
+		. += "[icon_state]sling"
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()

@@ -10,27 +10,24 @@
 //
 // Show as dead when...
 
-/datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
-	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
-	var/notice_healing
-	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
-		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
-			AddBloodVolume(passive_blood_drain) // -.1 currently
-		if(HandleHealing(1)) 		// Heal
-			if(!notice_healing && owner.current.blood_volume > 0)
-				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
-				notice_healing = TRUE
-		else if(notice_healing == TRUE)
-			notice_healing = FALSE 	// Apply Low Blood Effects
-		HandleStarving()  // Death
-		HandleDeath() // Standard Update
-		update_hud()// Daytime Sleep in Coffin
-		if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
-			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
-				Torpor_Begin()
-					// Wait before next pass
-		sleep(10)
-	FreeAllVassals() 	// Free my Vassals! (if I haven't yet)
+/datum/antagonist/bloodsucker/proc/LifeTick()  //Runs from BiologicalLife, handles all the bloodsucker constant proccesses
+	if(!owner || AmFinalDeath())
+		return
+	if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
+		AddBloodVolume(passive_blood_drain) // -.1 currently
+	if(HandleHealing(1)) 		// Heal
+		if(!notice_healing && owner.current.blood_volume > 0)
+			to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
+			notice_healing = TRUE
+	else if(notice_healing)
+		notice_healing = FALSE 	// Apply Low Blood Effects
+	HandleStarving()  // Death
+	HandleDeath() // Standard Update
+	update_hud()// Daytime Sleep in Coffin
+	if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
+		if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+			Torpor_Begin()
+				// Wait before next pass
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -272,13 +269,15 @@
 
 /datum/antagonist/bloodsucker/AmFinalDeath()
  	return owner && owner.AmFinalDeath()
-/datum/antagonist/changeling/AmFinalDeath()
- 	return owner && owner.AmFinalDeath()
 
 /datum/mind/proc/AmFinalDeath()
  	return !current || QDELETED(current) || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
+		//Dont bother if we are already supposed to be dead
+	if(FinalDeath)
+		return 
+	FinalDeath = TRUE //We are now supposed to die. Lets not spam it.
 	if(!iscarbon(owner.current)) //Check for non carbons.
 		owner.current.gib()
 		return
@@ -305,6 +304,7 @@
 			 "<span class='italics'>You hear a wet, bursting sound.</span>")
 		owner.current.gib(TRUE, FALSE, FALSE) //Brain cloning is wierd and allows hellbounds. Lets destroy the brain for safety.
 	playsound(owner.current, 'sound/effects/tendril_destroyed.ogg', 40, TRUE)
+
 
 
 

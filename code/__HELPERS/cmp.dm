@@ -85,9 +85,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
 
-/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
-	return A.display_order - B.display_order
-
 /proc/cmp_uplink_items_dsc(datum/uplink_item/A, datum/uplink_item/B)
 	return sorttext(initial(B.name), initial(A.name))
 
@@ -96,9 +93,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_numbered_displays_name_dsc(datum/numbered_display/A, datum/numbered_display/B)
 	return sorttext(B.sample_object.name, A.sample_object.name)
-
-/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
-	return sorttext(initial(b.name),initial(a.name))
 
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
 	var/a_sign = num2sign(initial(A.value) * -1)
@@ -133,3 +127,16 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		return A.required_temp - B.required_temp		//return coldest
 	else
 		return B.required_temp - A.required_temp		//return hottest
+
+
+/proc/cmp_mob_realname_dsc(mob/A,mob/B)
+	return sorttext(A.real_name,B.real_name)
+
+/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
+	return A.display_order - B.display_order
+
+/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
+	return sorttext(initial(b.name),initial(a.name))
+
+/proc/cmp_typepaths_asc(A, B)
+	return sorttext("[B]","[A]")

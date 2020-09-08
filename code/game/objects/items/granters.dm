@@ -79,7 +79,7 @@
 	ADD_TRAIT(user, granted_trait, BOOK_TRAIT)
 
 /obj/item/book/granter/trait/rifleman
-	name = "\proper the Neo-Russian Rifleman\'s Primer"
+	name = "The Neo-Russian Rifleman\'s Primer"
 	desc = "A book with stains of vodka and...blood? The back is hard to read, but says something about bolt-actions. Or pump-actions. Both, maybe."
 	oneuse = FALSE
 	granted_trait = TRAIT_FAST_PUMP
@@ -253,7 +253,7 @@
 		user.set_nutrition(NUTRITION_LEVEL_STARVING + 50)
 
 /obj/item/book/granter/spell/blind
-	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spell = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	spellname = "blind"
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
@@ -265,7 +265,7 @@
 	user.blind_eyes(10)
 
 /obj/item/book/granter/spell/mindswap
-	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
@@ -289,7 +289,7 @@
 	if(stored_swap == user)
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
 	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
 		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
 		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
@@ -324,7 +324,7 @@
 	user.DefaultCombatKnockdown(40)
 
 /obj/item/book/granter/spell/barnyard
-	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
@@ -472,6 +472,23 @@
 
 /obj/item/book/granter/martial/plasma_fist/onlearned(mob/living/carbon/user)
 	..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
+/obj/item/book/granter/martial/krav_maga
+	martial = /datum/martial_art/krav_maga
+	name = "parchment scroll"
+	martialname = "krav maga"
+	desc = "A worn parchment scrap written in an ancient language. Somehow you can still understand the lessons!"
+	greet = "<span class='sciradio'>You have learned the ancient martial art of Krav Maga. You have special attacks with which to take down your foes.</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	remarks = list("Sweep the legs...", "Chop the throat...", "Punch the lungs...", "Get the gold...", "Where are my sick gloves..?")
+
+/obj/item/book/granter/martial/krav_maga/onlearned(mob/living/carbon/user)
+	. = ..()
 	if(oneuse == TRUE)
 		desc = "It's completely blank."
 		name = "empty scroll"

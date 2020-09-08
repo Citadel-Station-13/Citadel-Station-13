@@ -52,8 +52,8 @@
 	cost = 300
 	contains = list(/obj/item/storage/toolbox/mechanical)
 
-/datum/supply_pack/goody/electrical_toolbox // mostly just to water down coupon probability
-	name = "Mechanical Toolbox"
+/datum/supply_pack/goody/electrical_toolbox
+	name = "Electrical Toolbox"
 	desc = "A fully stocked electrical toolbox, for when you're too lazy to just print them out."
 	cost = 300
 	contains = list(/obj/item/storage/toolbox/electrical)
@@ -75,3 +75,9 @@
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
 	cost = 200
 	contains = list(/obj/item/toy/beach_ball)
+
+/datum/supply_pack/goody/medipen_twopak
+	name = "Medipen Two-Pak"
+	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
+	cost = 500
+	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)

@@ -14,8 +14,12 @@
 /obj/item/ammo_casing/a357/match
 	name = ".357 match bullet casing"
 	desc = "A .357 bullet casing, manufactured to exceedingly high standards."
-	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/a357/match
+
+/obj/item/ammo_casing/a357/dumdum
+	name = ".357 DumDum bullet casing"
+	desc = "A .357 bullet casing. Usage of this ammunition will constitute a war crime in your area."
+	projectile_type = /obj/item/projectile/bullet/a357/dumdum
 
 // 7.62x38mmR (Nagant Revolver)
 

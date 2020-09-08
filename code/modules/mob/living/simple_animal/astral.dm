@@ -24,6 +24,7 @@
 	incorporeal_move = 1
 	alpha = 50
 	speak_emote = list("echos")
+	rad_flags = RAD_NO_CONTAMINATE
 	movement_type = FLYING
 	var/pseudo_death = FALSE
 	var/posses_safe = FALSE
@@ -41,7 +42,11 @@
 	to_chat(src, "<span class='notice'>Your astral projection is interrupted and your mind is sent back to your body with a shock!</span>")
 
 /mob/living/simple_animal/astral/ClickOn(var/atom/A, var/params)
-	..()
+	. = ..()
+	attempt_possess(A)
+
+/mob/living/simple_animal/astral/proc/attempt_possess(atom/A)
+	set waitfor = FALSE
 	if(pseudo_death == FALSE)
 		if(isliving(A))
 			if(ishuman(A))

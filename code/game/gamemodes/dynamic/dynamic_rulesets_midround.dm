@@ -538,7 +538,7 @@
 	name = "Slaughter Demon"
 	config_tag = "slaughter_demon"
 	antag_flag = ROLE_ALIEN
-	enemy_roles = list("Security Officer","Shaft Miner","Head of Security","Captain","Janitor","AI","Cyborg")
+	enemy_roles = list("Security Officer","Shaft Miner","Head of Security","Captain","Janitor","AI","Cyborg","Bartender")
 	required_enemies = list(3,2,2,2,2,1,1,1,1,0)
 	required_candidates = 1
 	weight = 4

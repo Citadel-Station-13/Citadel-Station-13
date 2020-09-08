@@ -24,7 +24,6 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
-	threat = 40
 	health = 2500
 	maxHealth = 2500
 	attack_verb_continuous = "judges"
@@ -385,10 +384,7 @@ Difficulty: Very Hard
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
 
-/obj/machinery/anomalous_crystal/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/anomalous_crystal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
@@ -606,7 +602,6 @@ Difficulty: Very Hard
 	icon_state = "lightgeist"
 	icon_living = "lightgeist"
 	icon_dead = "butterfly_dead"
-	threat = -0.7
 	turns_per_move = 1
 	response_help_continuous = "waves away"
 	response_help_simple = "wave away"

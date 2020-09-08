@@ -12,7 +12,7 @@
 
 /obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
 	cell.use(round(cell.charge / severity))
-	chambered = 0 //we empty the chamber
+	chambered = null //we empty the chamber
 	update_icon()
 
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
@@ -20,7 +20,7 @@
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
-		charge_tick = 0
+		charge_tick = null
 		if(selfcharge == EGUN_SELFCHARGE_BORG)
 			var/atom/owner = loc
 			if(istype(owner, /obj/item/robot_module))
@@ -44,7 +44,7 @@
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		cell.use(shot.e_cost)//... drain the cell cell
-	chambered = 0 //either way, released the prepared shot
+	chambered = null //either way, released the prepared shot
 
 /obj/item/gun/energy/pumpaction/post_set_firemode()
 	var/has_shot = chambered
@@ -52,13 +52,13 @@
 	if(has_shot)
 		recharge_newshot(TRUE)
 
-/obj/item/gun/energy/pumpaction/update_icon()	//adds racked indicators
+/obj/item/gun/energy/pumpaction/update_overlays()	//adds racked indicators
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(chambered)
-		add_overlay("[icon_state]_rack_[shot.select_name]")
+		. += "[icon_state]_rack_[shot.select_name]"
 	else
-		add_overlay("[icon_state]_rack_empty")
+		. += "[icon_state]_rack_empty"
 
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]

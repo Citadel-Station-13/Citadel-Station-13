@@ -50,6 +50,7 @@
 	destination.dna.skin_tone_override = skin_tone_override
 	destination.dna.features = features.Copy()
 	destination.set_species(species.type, icon_update=0)
+	destination.dna.species.say_mod = species.say_mod
 	destination.dna.real_name = real_name
 	destination.dna.nameless = nameless
 	destination.dna.custom_species = custom_species
@@ -74,6 +75,7 @@
 	new_dna.skin_tone_override = skin_tone_override
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
+	new_dna.species.say_mod = species.say_mod
 	new_dna.real_name = real_name
 	new_dna.nameless = nameless
 	new_dna.custom_species = custom_species
@@ -131,14 +133,14 @@
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"])
-		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"])
-		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"])
+		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"], 6)
+		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"], 6)
+		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"], 6)
 		if(!GLOB.mam_tails_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/mam_tails, GLOB.mam_tails_list)
 		L[DNA_MUTANTTAIL_BLOCK] = construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
 		if(!GLOB.mam_ears_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, GLOB.mam_ears_list)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/ears/mam_ears, GLOB.mam_ears_list)
 		L[DNA_MUTANTEAR_BLOCK] = construct_block(GLOB.mam_ears_list.Find(features["mam_ears"]), GLOB.mam_ears_list.len)
 		if(!GLOB.mam_body_markings_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
@@ -239,11 +241,11 @@
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 		if(DNA_COLOR_ONE_BLOCK)
-			sanitize_hexcolor(features["mcolor"])
+			sanitize_hexcolor(features["mcolor"], 6)
 		if(DNA_COLOR_TWO_BLOCK)
-			sanitize_hexcolor(features["mcolor2"])
+			sanitize_hexcolor(features["mcolor2"], 6)
 		if(DNA_COLOR_THREE_BLOCK)
-			sanitize_hexcolor(features["mcolor3"])
+			sanitize_hexcolor(features["mcolor3"], 6)
 		if(DNA_MUTANTTAIL_BLOCK)
 			construct_block(GLOB.mam_tails_list.Find(features["mam_tail"]), GLOB.mam_tails_list.len)
 		if(DNA_MUTANTEAR_BLOCK)

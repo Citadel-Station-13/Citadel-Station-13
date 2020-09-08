@@ -50,6 +50,18 @@
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
 	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 
+/datum/chemical_reaction/baked_banana_peel
+	results = list(/datum/reagent/consumable/baked_banana_peel = 1)
+	required_temp = 413.15 // if it's good enough for caramel it's good enough for this
+	required_reagents = list(/datum/reagent/consumable/banana_peel = 1)
+	mix_message = "The pulp dries up and takes on a powdery state!"
+	mob_react = FALSE
+
+/datum/chemical_reaction/coagulant_weak
+	results = list(/datum/reagent/medicine/coagulant/weak = 3)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 2, /datum/reagent/consumable/baked_banana_peel = 1)
+	mob_react = FALSE
+
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = /datum/reagent/medicine/mine_salve
@@ -207,6 +219,12 @@
 	results = list(/datum/reagent/medicine/strange_reagent = 3)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
 
+/datum/chemical_reaction/strange_reagent/alt
+	name = "Strange Reagent"
+	id = /datum/reagent/medicine/strange_reagent
+	results = list(/datum/reagent/medicine/strange_reagent = 2)
+	required_reagents = list(/datum/reagent/medicine/omnizine/protozine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
+
 /datum/chemical_reaction/mannitol
 	name = "Mannitol"
 	id = /datum/reagent/medicine/mannitol
@@ -334,3 +352,19 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/advanced(location)
+
+/datum/chemical_reaction/suture
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/medicine/styptic_powder = 2)
+
+/datum/chemical_reaction/suture/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/suture/(location)
+
+/datum/chemical_reaction/mesh
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/medicine/silver_sulfadiazine = 2)
+
+/datum/chemical_reaction/mesh/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/mesh/(location)

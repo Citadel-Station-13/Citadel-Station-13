@@ -113,9 +113,9 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
-	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the effect, but reduces its frequency.<br>\
-					  <b>Stage Speed 8:</b> Increases explosion radius when the host is wet.<br>\
-					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host."
+	threshold_desc = list("Resistance 9" = "Doubles the intensity of the effect, but reduces its frequency.",
+					  "Stage Speed 8" = "Increases explosion radius when the host is wet.",
+					  "Transmission 8" = "Additionally synthesizes chlorine trifluoride and napalm inside the host.")
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
 	if(!..())

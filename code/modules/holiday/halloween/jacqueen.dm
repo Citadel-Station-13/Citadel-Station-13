@@ -76,7 +76,7 @@
 	health = 25
 	poof()
 
-/mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/jacq/on_attack_hand(mob/living/carbon/human/M)
 	if(!active)
 		say("Hello there [gender_check(M)]!")
 		return ..()
@@ -334,8 +334,7 @@
 			to_chat(C, "<span class='big warning'> You feel an overwhelming desire to [message]")
 		if(2)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"If only you had a better upbringing, your ears are now full of my singing!\"</span>")
-			var/client/C2 = C.client
-			C2.chatOutput.sendMusic("https://puu.sh/ExBbv.mp4", 1)//I hope this works!
+			C.client.tgui_panel?.play_music("https://puu.sh/ExBbv.mp4")
 		if(3)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
 			if(C.head)
@@ -406,14 +405,14 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/clothing/suit/ghost_sheet/sticky/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return
 	else
 		..()
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+/obj/item/clothing/suit/ghost_sheet/sticky/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return

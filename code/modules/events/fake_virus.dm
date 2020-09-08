@@ -6,7 +6,7 @@
 /datum/round_event/fake_virus/start()
 	var/list/fake_virus_victims = list()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
-		if(!H.client || H.stat == DEAD || H.InCritical())
+		if(!H.client || H.stat == DEAD || H.InCritical() || HAS_TRAIT(H,TRAIT_EXEMPT_HEALTH_EVENTS))
 			continue
 		fake_virus_victims += H
 

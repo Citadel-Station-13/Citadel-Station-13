@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(mapping)
 		// needs to be whitelisted for underground too so place_below ruins work
 		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), ice_ruins_templates)
 		for (var/ice_z in ice_ruins)
-			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+			spawn_rivers(ice_z, 4, /turf/open/transparent/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
@@ -469,11 +469,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		else
 			return
 
-	possible_options = "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 
-	var/answer = input("What kind ? ","Away/VR") as null|anything in possible_options
+	var/answer = input("What kind ? ","Away/VR") as null|anything in list(possible_options + "Custom")
 	switch(answer)
 		if(null)
 			return

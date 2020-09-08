@@ -5,7 +5,9 @@ import { Window } from '../layouts';
 export const VrSleeper = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window>
+    <Window
+      width={475}
+      height={340}>
       <Window.Content>
         {!!data.emagged && (
           <Section>
@@ -16,7 +18,7 @@ export const VrSleeper = (props, context) => {
         )}
 
         <Section title={"Virtual Avatar"}>
-          {!!data.vr_avatar && (
+          {data.vr_avatar ? (
             <LabeledList>
               <LabeledList.Item
                 label={"Name"} >
@@ -39,39 +41,42 @@ export const VrSleeper = (props, context) => {
                 </LabeledList.Item>
               )}
             </LabeledList>
-          ) || (
+          ) : (
             "No Virtual Avatar detected"
           )}
         </Section>
-
         <Section title="VR Commands">
           <Button
-            content={data.toggle_open
-              ? 'Close VR Sleeper'
-              : 'Open VR Sleeper'}
             icon={data.toggle_open ? 'unlock' : 'lock'}
             disabled={data.stored < data.max}
-            onClick={() => act('toggle_open')} />
+            onClick={() => act('toggle_open')}>
+            {data.toggle_open
+              ? 'Close VR Sleeper'
+              : 'Open VR Sleeper'}
+          </Button>
           <Section>
-            {!!data.isoccupant && (
+            {data.isoccupant ? (
               <Button.Confirm
                 color={'blue'}
-                content={'Connect to VR'}
                 onClick={() => {
                   act('vr_connect');
                   act('tgui:close');
                 }}
-                icon={'unlock'} />
-            )
-          || ("You need to be inside the VR sleeper to connect to VR")}
+                icon={'unlock'}>
+                Connect to VR
+              </Button.Confirm>
+            ) : (
+              "You need to be inside the VR sleeper to connect to VR"
+            )}
           </Section>
           {!!data.vr_avatar && (
             <Button
-              content={"Delete VR avatar"}
               icon={'recycle'}
               onClick={() => {
                 act('delete_avatar');
-              }} />
+              }}>
+              Delete VR avatar
+            </Button>
           )}
         </Section>
       </Window.Content>

@@ -29,7 +29,12 @@
 					/obj/item/storage/hypospraykit/brute = 2,
 					/obj/item/storage/hypospraykit/enlarge = 2,
 					/obj/item/reagent_containers/glass/bottle/vial/small = 5,
-					/obj/item/storage/briefcase/medical = 2)
+					/obj/item/storage/briefcase/medical = 2,
+					/obj/item/stack/sticky_tape/surgical = 3,
+					/obj/item/healthanalyzer/wound = 4,
+					/obj/item/stack/medical/ointment = 2,
+					/obj/item/stack/medical/suture = 2,
+					/obj/item/stack/medical/bone_gel = 4)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
 					/obj/item/reagent_containers/pill/morphine = 4,
 					/obj/item/reagent_containers/pill/charcoal = 6)
@@ -41,7 +46,8 @@
 					/obj/item/wrench/medical = 1,
 					/obj/item/storage/belt/medolier/full = 2,
 					/obj/item/gun/syringe/dart = 2,
-					/obj/item/storage/briefcase/medical = 2)
+					/obj/item/storage/briefcase/medical = 2,
+					/obj/item/plunger/reinforced = 2)
 
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF

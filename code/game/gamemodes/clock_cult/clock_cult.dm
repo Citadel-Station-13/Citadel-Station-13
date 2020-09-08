@@ -38,7 +38,8 @@ Credit where due:
 5. Xhuis from /tg/ for coding the first iteration of the mode, and the new, reworked version
 6. ChangelingRain from /tg/ for maintaining the gamemode for months after its release prior to its rework
 7. Clockwork cult code as of now, at least the one being pulled from Citadel Station's master branch, is being, or already is, fixed by Coolgat3 and Avunia.
-
+8. Modern clockwork cult code mixed with original clockwork code, with various changes to make it less of a fustercluck, done by KeRSe. \
+	Fixes and assistance done by TimothyTeakettle, Kevinz000, and Deltafire15. -Very glad for the help they gave.
 */
 
 ///////////
@@ -133,7 +134,7 @@ Credit where due:
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
-	required_players = 35
+	required_players = 24 //Fixing this directly for now since apparently config machine for forcing modes broke.
 	required_enemies = 3
 	recommended_enemies = 5
 	enemy_minimum_age = 7
@@ -143,13 +144,12 @@ Credit where due:
 	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
 	<span class='brass'>Servants</span>: Construct defenses to protect the Ark. Sabotage the station!\n\
 	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
-	var/servants_to_serve = list()
+	var/list/servants_to_serve = list() //Yes this list is made out of list
 	var/roundstart_player_count
-	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
 
 	var/datum/team/clockcult/main_clockcult
 
-/datum/game_mode/clockwork_cult/pre_setup()
+/datum/game_mode/clockwork_cult/pre_setup() //Gamemode and job code is pain. Have fun codediving all of that stuff, whoever works on this next - Delta
 	var/list/errorList = list()
 	var/list/reebes = SSmapping.LoadGroup(errorList, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE, silent = TRUE)
 	if(errorList.len)	// reebe failed to load
@@ -162,38 +162,36 @@ Credit where due:
 		restricted_jobs += protected_jobs
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
-	var/starter_servants = 4 //Guaranteed four servants
+	var/starter_servants = 4 //Try to go for at least four
 	var/number_players = num_players()
 	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 10 players above 30
 		number_players -= 30
 		starter_servants += round(number_players / 10)
-	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
-	GLOB.clockwork_vitality += 50 * starter_servants //some starter Vitality to help recover from initial fuck ups
+		starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
 	while(starter_servants)
+		if(!antag_candidates.len)
+			break //Skip setup, DO NOT RUNTIME
 		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
-		servant.assigned_role = ROLE_SERVANT_OF_RATVAR
 		servant.special_role = ROLE_SERVANT_OF_RATVAR
+		servant.restricted_roles = restricted_jobs
 		starter_servants--
-	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
-	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
-	return 1
+	if(!servants_to_serve.len) //Uh oh, something went wrong
+		setup_error = "There are no clockcult candidates! (Or something went very wrong)"
+		return FALSE
+	GLOB.clockwork_vitality += 50 * servants_to_serve.len //some starter Vitality to help recover from initial fuck ups
+	return TRUE //Haha yes it works time to not touch it any more than that.
 
 /datum/game_mode/clockwork_cult/post_setup()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
 		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
-		var/turf/T = pick(GLOB.servant_spawns)
-		L.forceMove(T)
-		GLOB.servant_spawns -= T
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
-	G.final_countdown(ark_time)
 	..()
 	return 1
 
@@ -201,22 +199,23 @@ Credit where due:
 	if(!M)
 		return 0
 	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
-	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
-	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant.</span>")
-	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked halfway until the Ark's activation.</span>")
+	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant or when 35kw of power is reached.</span>")
+	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked when 50kw of power is reached.</span>")
 	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
 	return 1
 
-/datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob, with one of each component
+/datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob
 	if(!M || !ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/L = M
-	L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
-	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_IN_BACKPACK, "On your belt" = SLOT_BELT)
+	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_IN_BACKPACK)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
+		var/obj/item/clockwork/replica_fabricator/F = new
+		if(H.equip_to_slot_or_del(F, SLOT_IN_BACKPACK))
+			to_chat(H, "<span class='brass'>You have been equipped with a replica fabricator, an advanced tool that can convert objects like doors, tables or even coats into clockwork equivalents.</span>")
 		slot = H.equip_in_one_of_slots(S, slots)
 		if(slot == "In your backpack")
 			slot = "In your [H.back.name]"
@@ -224,10 +223,8 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
-		to_chat(L, "<span class='bold large_brass'>There is a paper in your backpack! It'll tell you if anything's changed, as well as what to expect.</span>")
 		to_chat(L, "<span class='alloy'>[slot] is a <b>clockwork slab</b>, a multipurpose tool used to construct machines and invoke ancient words of power. If this is your first time \
-		as a servant, you can find a concise tutorial in the Recollection category of its interface.</span>")
-		to_chat(L, "<span class='alloy italics'>If you want more information, you can read <a href=\"https://tgstation13.org/wiki/Clockwork_Cult\">the wiki page</a> to learn more.</span>")
+		as a servant, you can read <a href=\"https://citadel-station.net/wikimain/index.php?title=Clockwork_Cult\">the wiki page</a> to learn more.</span>")
 		return TRUE
 	return FALSE
 
@@ -278,7 +275,7 @@ Credit where due:
 	gloves = /obj/item/clothing/gloves/color/yellow
 	belt = /obj/item/storage/belt/utility/servant
 	backpack_contents = list(/obj/item/storage/box/engineer = 1, \
-	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/paper/servant_primer = 1, /obj/item/reagent_containers/food/drinks/bottle/holyoil = 1)
+	/obj/item/clockwork/replica_fabricator = 1, /obj/item/stack/tile/brass/fifty = 1, /obj/item/reagent_containers/food/drinks/bottle/holyoil = 1)
 	id = /obj/item/pda
 	var/plasmaman //We use this to determine if we should activate internals in post_equip()
 
@@ -305,54 +302,3 @@ Credit where due:
 	PDA.update_label()
 	PDA.id_check(H, W)
 	H.sec_hud_set_ID()
-
-
-//This paper serves as a quick run-down to the cult as well as a changelog to refer to.
-//Check strings/clockwork_cult_changelog.txt for the changelog, and update it when you can!
-/obj/item/paper/servant_primer
-	name = "The Ark And You: A Primer On Servitude"
-	color = "#DAAA18"
-	info = "<b>DON'T PANIC.</b><br><br>\
-	Here's a quick primer on what you should know here.\
-	<ol>\
-	<li>You're in a place called Reebe right now. The crew can't get here normally.</li>\
-	<li>In the north is your base camp, with supplies, consoles, and the Ark. In the south is an inaccessible area that the crew can walk between \
-	once they arrive (more on that later.) Everything between that space is an open area.</li>\
-	<li>Your job as a servant is to build fortifications and defenses to protect the Ark and your base once the Ark activates. You can do this \
-	however you like, but work with your allies and coordinate your efforts.</li>\
-	<li>Once the Ark activates, the station will be alerted. Portals to Reebe will open up in nearly every room. When they take these portals, \
-	the crewmembers will arrive in the area that you can't access, but can get through it freely - whereas you can't. Treat this as the \"spawn\" of the \
-	crew and defend it accordingly.</li>\
-	</ol>\
-	<hr>\
-	Here is the layout of Reebe, from left to right:\
-	<ul>\
-	<li><b>Dressing Room:</b> Contains clothing, a dresser, and a mirror. There are spare slabs and absconders here.</li>\
-	<li><b>Listening Station:</b> Contains intercoms, a telecomms relay, and a list of frequencies.</li>\
-	<li><b>Ark Chamber:</b> Houses the Ark.</li>\
-	<li><b>Observation Room:</b> Contains five camera observers. These can be used to watch the station through its cameras, as well as to teleport down \
-	to most areas. To do this, use the Warp action while hovering over the tile you want to warp to.</li>\
-	<li><b>Infirmary:</b> Contains sleepers and basic medical supplies for superficial wounds. The sleepers can consume Vitality to heal any occupants. \
-	This room is generally more useful during the preparation phase; when defending the Ark, scripture is more useful.</li>\
-	</ul>\
-	<hr>\
-	<h2>Things that have changed:</h2>\
-	<ul>\
-	CLOCKCULTCHANGELOG\
-	</ul>\
-	<hr>\
-	<b>Good luck!</b>"
-
-/obj/item/paper/servant_primer/Initialize()
-	. = ..()
-	var/changelog = world.file2list("strings/clockwork_cult_changelog.txt")
-	var/changelog_contents = ""
-	for(var/entry in changelog)
-		changelog_contents += "<li>[entry]</li>"
-	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
-/*
-/obj/item/paper/servant_primer/oui_getcontent(mob/target)
-	if(!is_servant_of_ratvar(target) && !isobserver(target))
-		return "<HTML><HEAD><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"
-	return ..()
-*/
