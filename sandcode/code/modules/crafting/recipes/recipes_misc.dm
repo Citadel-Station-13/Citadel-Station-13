@@ -27,3 +27,12 @@
 	tools = list(TOOL_WELDER)
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
+
+/datum/crafting_recipe/case_cosmos
+	name = "Cosmos Compartment Case"
+	reqs = list(/obj/item/storage/backpack/case = 1,
+				/obj/item/bedsheet/cosmos = 1)
+	result = /obj/item/storage/backpack/case/cosmos
+	tools = list(TOOL_SCREWDRIVER)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC

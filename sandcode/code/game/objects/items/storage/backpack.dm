@@ -36,3 +36,21 @@
 	desc = "A large case for holding tools and supplies for large constructions."
 	icon_state = "infiltrator_case_engineering"
 	item_state = "infiltrator_case_engineering"
+
+/obj/item/storage/backpack/case/mining
+	name = "mining compartment case"
+	desc = "A large case for holding both loot and equipment."
+	icon_state = "infiltrator_case_mining"
+	item_state = "infiltrator_case_mining"
+
+/obj/item/storage/backpack/case/science
+	name = "science compartment case"
+	desc = "A large case for holding science supplies."
+	icon_state = "infiltrator_case_science"
+	item_state = "infiltrator_case_science"
+
+/obj/item/storage/backpack/case/cosmos
+	name = "cosmos compartment case"
+	desc = "A large compartment case for holding lots of things.\nThis one has been designed to look like space, neat."
+	icon_state = "infiltrator_case_cosmos"
+	item_state = "infiltrator_case_cosmos"
