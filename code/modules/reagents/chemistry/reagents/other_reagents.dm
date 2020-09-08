@@ -2285,8 +2285,8 @@
 
 //body bluids
 /datum/reagent/consumable/semen
-	name = "Semen"
-	description = "Sperm from some animal. Useless for anything but insemination, really."
+	name = "?"
+	description = "?"
 	taste_description = "something salty"
 	taste_mult = 2 //Not very overpowering flavor
 	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
@@ -2309,7 +2309,7 @@
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /obj/effect/decal/cleanable/semen
-	name = "semen"
+	name = "?"
 	desc = null
 	gender = PLURAL
 	density = 0
@@ -2329,14 +2329,14 @@
 	return ..()
 
 /datum/reagent/consumable/semen/femcum
-	name = "Female Ejaculate"
+	name = "?"
 	description = "Vaginal lubricant found in most mammals and other animals of similar nature. Where you found this is your own business."
 	taste_description = "something with a tang" // wew coders who haven't eaten out a girl.
 	color = "#AAAAAA77"
 	decal_path = /obj/effect/decal/cleanable/semen/femcum
 
 /obj/effect/decal/cleanable/semen/femcum
-	name = "female ejaculate"
+	name = "?"
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
 	blood_state = null
