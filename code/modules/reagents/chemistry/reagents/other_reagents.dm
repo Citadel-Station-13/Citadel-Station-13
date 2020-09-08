@@ -2511,3 +2511,4 @@ datum/reagent/eldritch
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	..()
+
