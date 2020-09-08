@@ -163,7 +163,7 @@
 	maxHealth = 75 //Take brute damage instead
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
-	var/list/phomeme_types = list(/datum/accent/bone/sans, /datum/accent/bone/papyrus)
+	var/list/phomeme_types = list(/datum/accent/span/sans, /datum/accent/span/papyrus)
 
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
@@ -197,7 +197,7 @@
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
-	initial_accents = list(/datum/accent/robot)
+	initial_accents = list(/datum/accent/span/robot)
 	taste_sensitivity = 25 // not as good as an organic tongue
 	maxHealth = 100 //RoboTongue!
 	var/electronics_magic = TRUE

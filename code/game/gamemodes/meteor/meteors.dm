@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		if(prob(10) && !isspaceturf(T) && !istype(T, /turf/closed/mineral) && !istype(T, /turf/open/floor/plating/asteroid))//randomly takes a 'hit' from ramming
 			get_hit()
 
 /obj/effect/meteor/Destroy()
@@ -136,7 +136,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if(A)
 		ram_turf(get_turf(A))
 		playsound(src.loc, meteorsound, 40, 1)
-		get_hit()
+		if(!istype(A, /turf/closed/mineral) && !istype(A, /turf/open/floor/plating/asteroid))
+			get_hit()
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf

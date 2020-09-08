@@ -78,22 +78,22 @@
 	speech_args[SPEECH_MESSAGE] = lowertext(message)
 	return speech_args
 
-/datum/accent/bone
+/datum/accent/span
 	var/span_flag
 
-/datum/accent/bone/modify_speech(list/speech_args)
-	speech_args[SPEECH_SPANS] = span_flag
+/datum/accent/span/modify_speech(list/speech_args)
+	speech_args[SPEECH_SPANS] |= span_flag
 	return speech_args
 
 //bone tongues either have the sans accent or the papyrus accent
-/datum/accent/bone/sans
+/datum/accent/span/sans
 	span_flag = SPAN_SANS
 
-/datum/accent/bone/papyrus
+/datum/accent/span/papyrus
 	span_flag = SPAN_PAPYRUS
 
-/datum/accent/robot/modify_speech(list/speech_args)
-	speech_args[SPEECH_SPANS] = SPAN_ROBOT
+/datum/accent/span/robot
+	span_flag = SPAN_ROBOT
 
 /datum/accent/dullahan/modify_speech(list/speech_args, datum/source, mob/living/carbon/owner)
 	if(owner)
