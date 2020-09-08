@@ -37,3 +37,19 @@
 	materials = list(/datum/material/iron = 2500)
 	build_path = /obj/item/storage/backpack/case/engineering
 	category = list("initial","Tools")
+
+/datum/design/infiltrator_case_mining
+	name = "Mining Compartment Case"
+	id = "infiltrator_case_mining"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 2500)
+	build_path = /obj/item/storage/backpack/case/mining
+	category = list("initial","Tools")
+
+/datum/design/infiltrator_case_science
+	name = "Science Compartment Case"
+	id = "infiltrator_case_science"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 2500)
+	build_path = /obj/item/storage/backpack/case/science
+	category = list("initial","Tools")
