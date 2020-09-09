@@ -70,7 +70,7 @@
 	desc = "Empowers your Mansus Grasp to be able to create a single ghoul out of a dead player. You cannot raise the same person twice. Ghouls have only 50 HP and look like husks."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_ghoul)
-	var/ghoul_amt = 6
+	var/ghoul_amt = 4
 	var/list/spooky_scaries
 	route = PATH_FLESH
 
@@ -177,7 +177,7 @@
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/reagent_containers/food/snacks/grown/poppy,/obj/item/pen,/obj/item/paper)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
-	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/final/flesh_final)
+	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/flesh_blade_upgrade_2)
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/summon/ashy
@@ -250,3 +250,28 @@
 			carbon_user.gib()
 
 	return ..()
+
+/datum/eldritch_knowledge/flesh_blade_upgrade_2
+	name = "Remembrance"
+	gain_text = "Pain isn't something easily forgotten."
+	desc = "Your blade remembers more, and remembers how easily bones broke just as its flesh did, guaranteeing dislocated, or broken bones."
+	cost = 2
+	next_knowledge = list(/datum/eldritch_knowledge/spell/touch_of_madness)
+	route = PATH_FLESH
+
+/datum/eldritch_knowledge/flesh_blade_upgrade_2/on_eldritch_blade(target,user,proximity_flag,click_parameters)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+		var/datum/wound/blunt/moderate/moderate_wound = new
+		moderate_wound.apply_wound(bodypart)
+
+/datum/eldritch_knowledge/spell/touch_of_madness
+	name = "Touch of Madness"
+	gain_text = "The ignorant mind that inhabits their feeble bodies will crumble when they acknowledge - willingly or not, the truth."
+	desc = "By forcing the knowledge of the Mansus upon my foes, I can show them things that would drive any normal man insane."
+	cost = 2
+	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mad_touch
+	next_knowledge = list(/datum/eldritch_knowledge/final/flesh_final)
+	route = PATH_FLESH

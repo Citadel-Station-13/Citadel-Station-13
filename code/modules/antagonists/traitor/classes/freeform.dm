@@ -1,7 +1,7 @@
 /datum/traitor_class/human/freeform
 	name = "Waffle Co Agent"
 	employer = "Waffle Company"
-	weight = 16
+	weight = 0 // should not spawn in unless admins bus something in the traitor panel with setting traitor classes
 	chaos = 0
 
 /datum/traitor_class/human/freeform/forge_objectives(datum/antagonist/traitor/T)

@@ -41,7 +41,7 @@
 	extra = TRUE
 	extra_color_src = NONE
 
-/datum/sprite_accessory/ears/human/bigwolfdark
+/datum/sprite_accessory/ears/human/bigwolfdark //ignore alphabetical sort here for ease-of-use
 	name = "Dark Big Wolf"
 	icon_state = "bigwolfdark"
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
@@ -54,6 +54,12 @@
 	color_src = MATRIXED
 	extra = TRUE
 	extra_color_src = NONE
+
+/datum/sprite_accessory/ears/bunny
+	name = "Bunny"
+	icon_state = "bunny"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
@@ -73,6 +79,12 @@
 	icon_state = "horn1"
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/ears/lab
+	name = "Dog, Floppy"
+	icon_state = "lab"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/eevee
 	name = "Eevee"
@@ -115,12 +127,6 @@
 	icon_state = "jellyfish"
 	color_src = HAIR
 
-/datum/sprite_accessory/ears/lab
-	name = "Dog, Floppy"
-	icon_state = "lab"
-	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
-
 /datum/sprite_accessory/ears/murid
 	name = "Murid"
 	icon_state = "murid"
@@ -133,17 +139,17 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
-/datum/sprite_accessory/ears/human/pede
-	name = "Scolipede"
-	icon_state = "pede"
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
-	color_src = MATRIXED
-
 /datum/sprite_accessory/ears/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+
+/datum/sprite_accessory/ears/human/pede
+	name = "Scolipede"
+	icon_state = "pede"
+	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
+	color_src = MATRIXED
 
 /datum/sprite_accessory/ears/human/sergal
 	name = "Sergal"
@@ -166,12 +172,6 @@
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
-
-/datum/sprite_accessory/ears/bunny
-	name = "Bunny"
-	icon_state = "bunny"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
@@ -216,7 +216,7 @@
 	extra = TRUE
 	extra_color_src = NONE
 
-/datum/sprite_accessory/ears/mam_ears/bigwolfdark
+/datum/sprite_accessory/ears/mam_ears/bigwolfdark //alphabetical sort ignored here for ease-of-use
 	name = "Dark Big Wolf"
 	icon_state = "bigwolfdark"
 
@@ -225,6 +225,10 @@
 	icon_state = "bigwolfinnerdark"
 	extra = TRUE
 	extra_color_src = NONE
+
+/datum/sprite_accessory/ears/mam_ears/bunny
+	name = "Bunny"
+	icon_state = "bunny"
 
 /datum/sprite_accessory/ears/mam_ears/cat
 	name = "Cat"
@@ -256,12 +260,10 @@
 	name = "Eevee"
 	icon_state = "eevee"
 
-
 /datum/sprite_accessory/ears/mam_ears/elf
 	name = "Elf"
 	icon_state = "elf"
 	color_src = MUTCOLORS3
-
 
 /datum/sprite_accessory/ears/mam_ears/elephant
 	name = "Elephant"
@@ -283,14 +285,14 @@
 	name = "Husky"
 	icon_state = "wolf"
 
-/datum/sprite_accessory/ears/mam_ears/kangaroo
-	name = "kangaroo"
-	icon_state = "kangaroo"
-
 /datum/sprite_accessory/ears/mam_ears/jellyfish
 	name = "Jellyfish"
 	icon_state = "jellyfish"
 	color_src = HAIR
+
+/datum/sprite_accessory/ears/mam_ears/kangaroo
+	name = "kangaroo"
+	icon_state = "kangaroo"
 
 /datum/sprite_accessory/ears/mam_ears/lab
 	name = "Dog, Long"
@@ -304,17 +306,13 @@
 	name = "Otusian"
 	icon_state = "otie"
 
-/datum/sprite_accessory/ears/mam_ears/squirrel
-	name = "Squirrel"
-	icon_state = "squirrel"
+/datum/sprite_accessory/ears/mam_ears/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
 
 /datum/sprite_accessory/ears/mam_ears/pede
 	name = "Scolipede"
 	icon_state = "pede"
-
-/datum/sprite_accessory/ears/mam_ears/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
 
 /datum/sprite_accessory/ears/mam_ears/sergal
 	name = "Sergal"
@@ -324,10 +322,10 @@
 	name = "skunk"
 	icon_state = "skunk"
 
+/datum/sprite_accessory/ears/mam_ears/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
+
 /datum/sprite_accessory/ears/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-
-/datum/sprite_accessory/ears/mam_ears/bunny
-	name = "Bunny"
-	icon_state = "bunny"

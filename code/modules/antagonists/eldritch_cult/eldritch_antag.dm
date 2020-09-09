@@ -6,6 +6,7 @@
 	job_rank = ROLE_HERETIC
 	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
+	threat = 10
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
@@ -29,6 +30,7 @@
 
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
+	owner.teach_crafting_recipe(/datum/crafting_recipe/heretic/codex)
 	if(ishuman(current))
 		forge_primary_objectives()
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
@@ -40,7 +42,6 @@
 	START_PROCESSING(SSprocessing,src)
 	if(give_equipment)
 		equip_cultist()
-	owner.teach_crafting_recipe(/datum/crafting_recipe/heretic/codex)
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -110,16 +111,11 @@
 				P.find_target(owners,assasination)
 				protection += P.target
 				objectives += P
-			
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
 	SE.update_explanation_text()
 	objectives += SE
-
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = owner
-	objectives += escape_objective
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -207,6 +203,14 @@
 
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
+
+/datum/antagonist/heretic/threat()
+	. = ..()
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		. += EK.cost
+	if(ascended)
+		. += 20
 
 ////////////////
 // Objectives //

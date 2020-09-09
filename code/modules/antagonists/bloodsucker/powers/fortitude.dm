@@ -54,7 +54,7 @@
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, "fortitude")
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, "fortitude")
 	REMOVE_TRAIT(user, TRAIT_STUNIMMUNE, "fortitude")
-	REMOVE_TRAIT(user, TRAIT_STUNIMMUNE, "fortitude")
+	REMOVE_TRAIT(user, TRAIT_NORUNNING, "fortitude")
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/H = owner
