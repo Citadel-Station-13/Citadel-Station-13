@@ -65,6 +65,9 @@
 	detonate(user)
 
 /datum/component/killerqueen/proc/bump_detonate(datum/source, atom/A)
+	var/atom/A = parent
+	if(!A.density)
+		return
 	detonate(A)
 
 /datum/component/killerqueen/proc/touch_detonate(datum/source, mob/user)
