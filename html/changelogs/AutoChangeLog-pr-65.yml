@@ -1,6 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added the mining compartment case."
-  - rscadd: "Added the science compartment case."
-  - rscadd: "Added the *cosmos compartment case*."
