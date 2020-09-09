@@ -920,6 +920,7 @@
 		apc.malfhack = TRUE
 		apc.locked = TRUE
 		apc.coverlocked = TRUE
+		apc.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 
 		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
 		to_chat(src, "Hack complete. \The [apc] is now under your exclusive control.")
