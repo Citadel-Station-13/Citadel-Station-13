@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /datum/gateway_destination
 	var/name = "Unknown Destination"
 	var/wait = 0 /// How long after roundstart this destination becomes active
-	var/enabled = TRUE /// If disabled, the destination won't be availible
+	var/enabled = TRUE /// If disabled, the destination won't be available
 	var/hidden = FALSE /// Will not show on gateway controls at all.
 
 /* Can a gateway link to this destination right now. */
@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	return enabled && (world.time - SSticker.round_start_time >= wait)
 
 /* Returns user-friendly description why you can't connect to this destination, displayed in UI */
-/datum/gateway_destination/proc/get_availible_reason()
+/datum/gateway_destination/proc/get_available_reason()
 	. = "Unreachable"
 	if(world.time - SSticker.round_start_time < wait)
 		. = "Connection desynchronized. Recalibration in progress."
@@ -52,8 +52,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = list()
 	.["ref"] = REF(src)
 	.["name"] = name
-	.["availible"] = is_available()
-	.["reason"] = get_availible_reason()
+	.["available"] = is_available()
+	.["reason"] = get_available_reason()
 	if(wait)
 		.["timeout"] = max(1 - (wait - (world.time - SSticker.round_start_time)) / wait, 0)
 
@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /datum/gateway_destination/gateway/is_available()
 	return ..() && target_gateway.calibrated && !target_gateway.target && target_gateway.powered()
 
-/datum/gateway_destination/gateway/get_availible_reason()
+/datum/gateway_destination/gateway/get_available_reason()
 	. = ..()
 	if(!target_gateway.calibrated)
 		. = "Exit gateway malfunction. Manual recalibration required."
@@ -217,8 +217,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	target = D
 	target.activate(destination)
 	generate_bumper()
-	if(use_power == IDLE_POWER_USE)
-		use_power = ACTIVE_POWER_USE
+	use_power = ACTIVE_POWER_USE
 	update_icon()
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
@@ -261,8 +260,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		if(!GLOB.the_gateway)
 			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
 		if(GLOB.the_gateway.target)
-			to_chat(user,"<span class='warning'>Home gateway already in use!</span>")
-			return
+			GLOB.the_gateway.deactivate() //this will turn the home gateway off so that it's free for us to connect to
 		activate(GLOB.the_gateway.destination)
 	else
 		deactivate()

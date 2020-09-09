@@ -8,7 +8,9 @@
 /mob/living/carbon/human/Initialize()
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/lay_down)
-
+	add_verb(src, /mob/living/carbon/human/verb/underwear_toggle)
+	add_verb(src, /mob/living/verb/subtle)
+	add_verb(src, /mob/living/verb/subtler)
 	//initialize limbs first
 	create_bodyparts()
 
