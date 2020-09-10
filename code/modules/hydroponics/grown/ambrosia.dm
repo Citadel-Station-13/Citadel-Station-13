@@ -40,6 +40,7 @@
 	icon_state = "seed-ambrosiadeus"
 	species = "ambrosiadeus"
 	plantname = "Ambrosia Deus"
+	foodtype = VEGETABLES | ANTITOXIC
 	product = /obj/item/reagent_containers/food/snacks/grown/ambrosia/deus
 	mutatelist = list(/obj/item/seeds/ambrosia/gaia)
 	reagents_add = list(/datum/reagent/medicine/omnizine = 0.15, /datum/reagent/medicine/synaptizine = 0.15, /datum/reagent/drug/space_drugs = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)

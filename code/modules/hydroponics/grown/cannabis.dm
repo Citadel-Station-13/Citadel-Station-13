@@ -104,6 +104,7 @@
 	seed = /obj/item/seeds/cannabis/death
 	name = "death cannabis leaf"
 	desc = "Looks a bit dark. Oh well."
+	foodtype = VEGETABLES | TOXIC
 	icon_state = "blackcannabis"
 	wine_power = 40
 
@@ -111,6 +112,7 @@
 	seed = /obj/item/seeds/cannabis/white
 	name = "white cannabis leaf"
 	desc = "It feels smooth and nice to the touch."
+	foodtype = VEGETABLES | ANTITOXIC
 	icon_state = "whitecannabis"
 	wine_power = 10
 
