@@ -646,12 +646,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/power = input("Power.", text("Input"))  as num|null
-	if(!power)
+	var/range = input("Range.", text("Input"))  as num|null
+	if(!range)
 		return
-	log_admin("[key_name(usr)] created an EM Pulse - log below")
-	message_admins("[key_name_admin(usr)] created an EM Pulse at [AREACOORD(O)] with power [power]")
-	empulse(O, power, TRUE) //its details get shown too
+	log_admin("[key_name(usr)] created an EM Pulse - log below") //because we'll just log the empulse itself
+	message_admins("[key_name_admin(usr)] created an EM Pulse at [AREACOORD(O)] with range [range]")
+	empulse_using_range(O, range, TRUE) //its details get shown too
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "EM Pulse") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

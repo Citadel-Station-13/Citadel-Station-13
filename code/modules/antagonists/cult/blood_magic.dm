@@ -165,7 +165,7 @@
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-	empulse(owner, 140)
+	empulse_using_range(owner, 8)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)

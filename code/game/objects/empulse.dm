@@ -23,5 +23,6 @@
 		T.emp_act(severity)
 	return 1
 
-/proc/empulse_power_from_range(range) //work out the power required for an emp of a given wanted range
-	return (7*(range^(1/0.7)))
+/proc/empulse_using_range(turf/epicenter, range, log=0) //make an emp using range instead of power
+	var/power_from_range = (7*(range^(1/0.7)))
+	empulse(epicenter, power_from_range, log)
