@@ -331,6 +331,7 @@
 			var/heat = thermal_conductivity*delta_temperature* \
 				(heat_capacity*HEAT_CAPACITY_VACUUM/(heat_capacity+HEAT_CAPACITY_VACUUM))
 			temperature -= heat/heat_capacity
+			temperature = max(temperature,T0C) //otherwise we just sorta get stuck at super cold temps forever
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
 	sharer.temperature = air.temperature_share(null, sharer.thermal_conductivity, sharer.temperature, sharer.heat_capacity)
@@ -344,3 +345,5 @@
 
 		temperature -= heat/heat_capacity
 		sharer.temperature += heat/sharer.heat_capacity
+		temperature = max(temperature,T0C)
+		sharer.temperature = max(sharer.temperature,T0C)
