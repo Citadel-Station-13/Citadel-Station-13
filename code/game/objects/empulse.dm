@@ -14,7 +14,7 @@
 	if(power > 100)
 		new /obj/effect/temp_visual/emp/pulse(epicenter)
 
-	for(var/A in spiral_range(light_range, epicenter))
+	for(var/A in spiral_range(max_distance, epicenter))
 		var/atom/T = A
 		var/distance = get_dist(epicenter, T)
 		var/severity = 100
