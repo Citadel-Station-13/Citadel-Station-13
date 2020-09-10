@@ -415,7 +415,6 @@
 			L.receive_damage(0,severity/10)
 			Stun(severity*2)
 
-
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
