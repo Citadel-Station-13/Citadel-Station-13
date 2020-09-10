@@ -412,9 +412,8 @@
 			if(!informed)
 				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
 				informed = TRUE
-			if(1)
-				L.receive_damage(0,severity/10)
-				Stun(severity*2)
+			L.receive_damage(0,severity/10)
+			Stun(severity*2)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()
