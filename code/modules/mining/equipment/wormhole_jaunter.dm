@@ -68,14 +68,11 @@
 
 	var/mob/M = loc
 	if(istype(M))
-		var/triggered = FALSE
 		if(M.get_item_by_slot(SLOT_BELT) == src)
 			if(prob(severity))
-
-		if(triggered)
-			M.visible_message("<span class='warning'>[src] overloads and activates!</span>")
-			SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
-			activate(M)
+				M.visible_message("<span class='warning'>[src] overloads and activates!</span>")
+				SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
+				activate(M)
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/source, datum/component/chasm/C)
 	to_chat(source, "Your [name] activates, saving you from the chasm!</span>")

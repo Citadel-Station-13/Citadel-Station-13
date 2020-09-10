@@ -534,7 +534,7 @@ Class Procs:
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
-			emp_act(EMP_LIGHT)
+			emp_act(50)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
