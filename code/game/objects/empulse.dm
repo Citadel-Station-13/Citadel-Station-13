@@ -1,4 +1,4 @@
-/proc/c(turf/epicenter, power, log=0)
+/proc/empulse(turf/epicenter, power, log=0)
 	if(!epicenter)
 		return
 
