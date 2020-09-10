@@ -17,6 +17,6 @@
 	for(var/A in spiral_range(light_range, epicenter))
 		var/atom/T = A
 		var/distance = get_dist(epicenter, T)
-		var/severity = min(100 * (1 - log(max_distance, distance)), 1) //if it goes below 1 stuff gets bad
+		var/severity = min(max((max_distance / distance^0.3) * (100/max_distance), 1),100) //if it goes below 1 or above 100 stuff gets bad
 		T.emp_act(severity)
 	return 1
