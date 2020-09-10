@@ -1,11 +1,11 @@
-/proc/empulse(turf/epicenter, power, log=0)
+/proc/c(turf/epicenter, power, log=0)
 	if(!epicenter)
 		return
 
 	if(!isturf(epicenter))
 		epicenter = get_turf(epicenter.loc)
 
-	var/max_distance = round((power/7)^0.7)
+	var/max_distance = max(round((power/7)^0.7), 1)
 
 	if(log)
 		message_admins("EMP with power [power], max distance [max_distance] in area [epicenter.loc.name] ")
@@ -17,6 +17,8 @@
 	for(var/A in spiral_range(light_range, epicenter))
 		var/atom/T = A
 		var/distance = get_dist(epicenter, T)
-		var/severity = min(100 * (1 - log(max_distance, distance)), 1) //if it goes below 1 stuff gets bad
+		var/severity = 100
+		if(distance != 0) //please dont log 0 thank you
+			severity = min(100 * (1 - log(max_distance, distance)), 1) //if it goes below 1 stuff gets bad
 		T.emp_act(severity)
 	return 1

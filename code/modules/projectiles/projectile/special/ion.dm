@@ -10,7 +10,7 @@
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
-	empulse(target, emp_radius, emp_radius)
+	empulse(target, emp_radius * 7)
 	return BULLET_ACT_HIT
 
 /obj/item/projectile/ion/weak
