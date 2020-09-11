@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - bugfix: "Race based drinks will no longer stay inside your blood for ever."

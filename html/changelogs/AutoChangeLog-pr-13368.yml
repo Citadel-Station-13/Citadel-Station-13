@@ -1,0 +1,13 @@
+author: "Tupinambis"
+delete-after: True
+changes: 
+  - tweak: "Redid Cogstation atmos pipes to make it less cluttered."
+  - tweak: "Removed a few doors from the main hallway to mitigate chokepoint issues"
+  - bugfix: "All belt hell conveyers are now on by default, so that belt hell actually works."
+  - bugfix: "IDs for poddoors and belts and the like. Everything is now properly hooked and should work as expected (except for the pressure triggered mass drivers)"
+  - bugfix: "addresses most if not all roundstart active turfs."
+  - bugfix: "Issue where wires were connected to the SMES improperly, and SMES were not properly precharged, resulting in power failure earlier than intended."
+  - bugfix: "various rogue turfs and wirings."
+  - bugfix: "security office APC being hooked to maintenance for some reason."
+  - bugfix: "TEG is now directly wired to the SMES."
+  - code_imp: "adds a subtype of mass drivers that is triggered by things being on it. TODO: Make these mass drivers trigger poddoors, to make belt hell fully functional."

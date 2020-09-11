@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "The Polychromic winter coat's hoodie will now polychrome, alongside any other new polychromic items with toggleable headwear."

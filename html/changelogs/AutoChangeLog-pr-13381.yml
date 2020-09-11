@@ -1,0 +1,4 @@
+author: "Sonic121x"
+delete-after: True
+changes: 
+  - bugfix: "Fixed pill button on chemical press"
