@@ -60,6 +60,8 @@ SUBSYSTEM_DEF(air)
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
+	msg += "GA:[get_amt_gas_mixes()]|"
+	msg += "MG:[get_max_gas_mixes()]|"
 	msg += "AT/MS:[round((cost ? active_turfs_len/cost : 0),0.1)]"
 	..(msg)
 
@@ -301,6 +303,8 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/process_excited_groups_extools()
 /datum/controller/subsystem/air/proc/get_amt_excited_groups()
 /datum/controller/subsystem/air/proc/get_amt_active_turfs()
+/datum/controller/subsystem/air/proc/get_amt_gas_mixes()
+/datum/controller/subsystem/air/proc/get_max_gas_mixes()
 /datum/controller/subsystem/air/proc/add_to_active_extools()
 /datum/controller/subsystem/air/proc/remove_from_active_extools()
 /datum/controller/subsystem/air/proc/get_active_turfs()

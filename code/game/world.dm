@@ -273,12 +273,6 @@ GLOBAL_LIST(topic_status_cache)
 	..()
 
 /world/Del()
-	// memory leaks bad
-	var/num_deleted = 0
-	for(var/datum/gas_mixture/GM)
-		GM.__gasmixture_unregister()
-		num_deleted++
-	log_world("Deallocated [num_deleted] gas mixtures")
 	shutdown_logging() // makes sure the thread is closed before end, else we terminate
 	..()
 
