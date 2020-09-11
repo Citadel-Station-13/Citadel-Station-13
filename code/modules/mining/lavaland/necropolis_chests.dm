@@ -120,10 +120,7 @@
 			new /obj/item/bedsheet/cosmos(src)
 			new /obj/item/melee/skateboard/hoverboard(src)
 		if(11)
-			if(prob(50))
-				new /obj/item/malf_upgrade(src)
-			else
-				new /obj/item/disk/tech_disk/illegal(src)
+			new /obj/item/disk/tech_disk/illegal(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(13)
