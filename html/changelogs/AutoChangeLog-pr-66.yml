@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Added chemistry reactions for anomalies."
