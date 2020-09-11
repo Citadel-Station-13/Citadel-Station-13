@@ -19,7 +19,7 @@
 		var/distance = get_dist(epicenter, T)
 		var/severity = 100
 		if(distance != 0) //please dont divide by 0
-			severity = min(max((max_distance / distance^0.3) * (100/max_distance), 1),100) //if it goes below 1 or above 100 stuff gets bad
+			severity = min(max((max_distance / distance^0.2) * (100/max_distance), 1),100) //if it goes below 1 or above 100 stuff gets bad
 		T.emp_act(severity)
 	return 1
 
