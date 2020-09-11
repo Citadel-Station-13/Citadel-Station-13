@@ -15607,7 +15607,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
 "aIv" = (
-/obj/machinery/cryopod/tele,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aIw" = (
@@ -16466,11 +16468,13 @@
 	name = "Research Sector"
 	})
 "aJW" = (
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
 	},
-/obj/machinery/cryopod/tele,
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aJX" = (
@@ -21194,9 +21198,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 6
 	},
-/obj/machinery/computer/cryopod{
-	pixel_y = 28
-	},
 /turf/open/floor/circuit/green,
 /area/crew_quarters/cryopod)
 "aTM" = (
@@ -21774,6 +21775,9 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/fitness/cogpool)
 "aVg" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 28
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -102593,7 +102597,7 @@ aaa
 aaU
 aHY
 aIv
-ePg
+aIv
 aJW
 aHY
 aRQ
