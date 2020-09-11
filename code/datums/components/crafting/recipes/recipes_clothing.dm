@@ -368,3 +368,27 @@
 	category = CAT_CLOTHING
 	tools = list(TOOL_WIRECUTTER)
 	time = 20
+
+/datum/crafting_recipe/boh
+	name = "Bag of Holding"
+	reqs = list(
+            /obj/item/boh_inert = 1,
+            /obj/item/assembly/signaler/anomaly/bluespace = 1)
+	result = /obj/item/storage/backpack/holding
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/boh
+	name = "Satchel of Holding"
+	reqs = list(
+            /obj/item/boh_inert = 1,
+            /obj/item/assembly/signaler/anomaly/bluespace = 1)
+	result = /obj/item/storage/backpack/holding/satchel
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/boh
+	name = "Duffelbag of Holding"
+	reqs = list(
+            /obj/item/boh_inert = 1,
+            /obj/item/assembly/signaler/anomaly/bluespace = 1)
+	result = /obj/item/storage/backpack/holding/duffel
+	category = CAT_CLOTHING
