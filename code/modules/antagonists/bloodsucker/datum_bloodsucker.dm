@@ -138,7 +138,7 @@
 		if(owner.current.gender == MALE)
 			if(prob(10)) // Gender override
 				bloodsucker_reputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
-		else
+		else if(owner.current.gender == FEMALE)
 			if(prob(10)) // Gender override
 				bloodsucker_reputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 
@@ -341,10 +341,12 @@
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/LifeTick)
 	return
 
 //This handles the removal of antag huds/special abilities
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 //Assign default team and creates one for one of a kind team antagonists
