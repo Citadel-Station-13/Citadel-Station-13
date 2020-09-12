@@ -34,7 +34,7 @@
 	chameleon_action.initialize_disguises()
 
 	projectile_copy_vars = list("name", "icon", "icon_state", "item_state", "speed", "color", "hitsound", "forcedodge", "impact_effect_type", "range", "suppressed", "hitsound_wall", "impact_effect_type", "pass_flags", "tracer_type", "muzzle_type", "impact_type")
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/item/projectiles.dmi', "icon_state" = "laser")
 	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay")
 	chameleon_gun_vars = list()
 	ammo_copy_vars = list("firing_effect_type")
@@ -77,7 +77,7 @@
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/item/projectile/P)
 	if(!istype(P))
 		CRASH("[P] is not /obj/item/projectile!")
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/item/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
 	for(var/V in projectile_copy_vars)
 		if(P.vars.Find(V))
 			chameleon_projectile_vars[V] = P.vars[V]

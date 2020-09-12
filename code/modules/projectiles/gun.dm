@@ -554,11 +554,11 @@
 	. = ..()
 	if(!.)
 		var/obj/item/gun/G = target
-		G.zoom(owner, user.dir)
+		G.zoom(owner, owner.dir)
 
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
 	var/obj/item/gun/G = target
-	G.zoom(L, user.dir)
+	G.zoom(L, L.dir)
 	return ..()
 
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)

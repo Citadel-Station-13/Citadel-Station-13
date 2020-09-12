@@ -161,6 +161,9 @@
 	ready = TRUE
 
 /obj/machinery/ticket_machine/on_attack_hand(mob/living/carbon/user)
+	attempt_ticket(user)
+
+/obj/machinery/ticket_machine/proc/attempt_ticket(mob/living/carbon/user)
 	if(!ready)
 		to_chat(user,"<span class='warning'>You press the button, but nothing happens...</span>")
 		return

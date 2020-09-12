@@ -8,7 +8,7 @@
 
 /obj/item/projectile
 	name = "projectile"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/item/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
