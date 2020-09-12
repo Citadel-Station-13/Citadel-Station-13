@@ -64,7 +64,7 @@
 /mob/living/simple_animal/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/setClosed), 50)
+	addtimer(CALLBACK(src, /atom.proc/setClosed), 50)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE
