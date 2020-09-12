@@ -18,7 +18,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/Life()
 	return
 
-/mob/living/carbon/human/dummy/update_resting()
+/mob/living/carbon/human/dummy/update_mobility()
 	return
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
