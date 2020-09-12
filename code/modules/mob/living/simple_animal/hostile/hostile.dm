@@ -657,8 +657,11 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 			var/blocked = FALSE
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/H = hit_atom
-				if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+				var/list/return_list = list()
+				if(H.mob_run_block(src, 0, "the [name]", ATTACK_TYPE_TACKLE, 0, src, null, return_list) & BLOCK_SUCCESS)
 					blocked = TRUE
+				if(!blocked)
+					blocked = return_list[BLOCK_RETURN_MITIGATION_PERCENT]
 			if(!blocked)
 				L.visible_message("<span class='danger'>[src] charges on [L]!</span>", "<span class='userdanger'>[src] charges into you!</span>")
 				L.Knockdown(knockdown_time)

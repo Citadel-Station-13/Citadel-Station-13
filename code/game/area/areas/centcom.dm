@@ -37,6 +37,10 @@
 	name = "winterball Zone"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+/area/centcom/supplypod/supplypod_temp_holding
+	name = "Supplypod Shipping lane"
+	icon_state = "supplypod_flight"
+
 /area/centcom/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
