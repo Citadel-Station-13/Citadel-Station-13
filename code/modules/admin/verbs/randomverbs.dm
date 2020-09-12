@@ -1328,7 +1328,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					if(!delivery)
 						alert("ERROR: Incorrect / improper path given.")
 				new delivery(pod)
-			new /obj/effect/abstract/pod_landingzone(get_turf(target), pod)
+			new /obj/effect/pod_landingzone(get_turf(target), pod)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
 			var/datum/centcom_podlauncher/plaunch  = new(usr)
 			if(!holder)

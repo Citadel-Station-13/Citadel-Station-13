@@ -39,7 +39,7 @@
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 		return FALSE
 	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
-		delay *= user.cached_multiplicative_actions_slowdown
+		delay *= living_user.cached_multiplicative_actions_slowdown
 	var/starttime = world.time
 	var/endtime = world.time + delay
 	var/obj/item/initially_held_item = mob_redirect?.get_active_held_item()
