@@ -22,6 +22,14 @@
 #define POD_NAME 7
 #define POD_DESC 8
 
+#define RUBBLE_NONE 1
+#define RUBBLE_NORMAL 2
+#define RUBBLE_WIDE 3
+#define RUBBLE_THIN 4
+
+#define POD_SHAPE_NORML 1
+#define POD_SHAPE_OTHER 2
+
 #define SUPPLYPOD_X_OFFSET -16
 
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
