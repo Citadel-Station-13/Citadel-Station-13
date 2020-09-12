@@ -144,14 +144,12 @@
 			var/datum/chatmessage/m = msg
 			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
 			combined_height += m.approx_lines
+
 			// When choosing to update the remaining time we have to be careful not to update the
 			// scheduled time once the EOL completion time has been set.
 			var/sched_remaining = m.scheduled_destruction - world.time
-			if (sched_remaining > CHAT_MESSAGE_SPAWN_TIME)
 			if (!m.eol_complete)
 				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
-				m.scheduled_destruction = world.time + remaining_time
-				addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 				m.enter_subsystem(world.time + remaining_time) // push updated time to runechat SS
 
 	// Reset z index if relevant
