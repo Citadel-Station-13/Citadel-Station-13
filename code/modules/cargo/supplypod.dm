@@ -374,10 +374,14 @@
 			return FALSE
 		if(istype(obj_to_insert, /obj/effect/supplypod_rubble))
 			return FALSE
+		if(obj_to_insert.level == 1)
+			return FALSE	// underfloor, until we get hide components.
+/*
 		if((obj_to_insert.comp_lookup && obj_to_insert.comp_lookup[COMSIG_OBJ_HIDE]) && reverseOptionList["Underfloor"])
 			return TRUE
 		else if ((obj_to_insert.comp_lookup && obj_to_insert.comp_lookup[COMSIG_OBJ_HIDE]) && !reverseOptionList["Underfloor"])
 			return FALSE
+*/
 		if(isProbablyWallMounted(obj_to_insert) && reverseOptionList["Wallmounted"])
 			return TRUE
 		else if (isProbablyWallMounted(obj_to_insert) && !reverseOptionList["Wallmounted"])
@@ -645,5 +649,4 @@
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cargodisk"
-	inhand_icon_state = "card-id"
 	w_class = WEIGHT_CLASS_SMALL
