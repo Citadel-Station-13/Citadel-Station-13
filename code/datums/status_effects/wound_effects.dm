@@ -153,8 +153,6 @@
 	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
 /datum/status_effect/wound/blunt/proc/on_swap_hands()
-	SIGNAL_HANDLER
-
 	var/mob/living/carbon/wound_owner = owner
 	if(wound_owner.get_active_hand() == linked_limb)
 		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
