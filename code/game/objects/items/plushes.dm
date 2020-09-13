@@ -781,11 +781,9 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 		return
 	to_chat(user, "<span class='warning'>You try to pet the plushie, but recoil as it bites your hand instead! OW!</span>")
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plush_bite", /datum/mood_event/plush_bite)
-	if(!ishuman(user))
-		return
 	var/mob/living/carbon/human/H = user
 	if(!H)
-		return //Too much type safety? There is no such thing as too much type safety.
+		return //Type safety.
 	H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	addtimer(CALLBACK(H, /mob/living/carbon/human.proc/dropItemToGround, src, TRUE), 1)
 
