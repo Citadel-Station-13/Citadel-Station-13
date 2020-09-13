@@ -775,8 +775,8 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	var/check_interval = 20
 	var/next_check = 0
 
+//Overrides parent proc
 /obj/item/toy/plush/plushling/attack_self(mob/user)
-	. = ..()
 	if(!user) //hmmmmm
 		return
 	to_chat(user, "<span class='warning'>You try to pet the plushie, but recoil as it bites your hand instead! OW!</span>")
