@@ -512,7 +512,7 @@
 	ckeywhitelist = list("grunnyyy")
 
 /datum/gear/donator/hisakaki
-	name = "cosmic space bedsheet"
+	name = "halo"
 	slot = SLOT_HEAD
 	path = 	/obj/item/clothing/head/halo
 	ckeywhitelist = list("hisakaki")
