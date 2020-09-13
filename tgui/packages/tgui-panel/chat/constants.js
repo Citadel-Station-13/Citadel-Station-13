@@ -85,6 +85,12 @@ export const MESSAGE_TYPES = [
     selector: '.filter_combat, .danger',
   },
   {
+    type: 'lovetype',
+    name: 'Lewd messages',
+    description: 'You came!',
+    selector: '.userlove, .love',
+  },
+  {
     type: 'unknown',
     name: 'Unsorted',
     description: 'Everything we could not sort, always enabled',
