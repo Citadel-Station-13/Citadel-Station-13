@@ -636,7 +636,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("brass flask", /obj/item/reagent_containers/food/drinks/bottle/holyoil/empty), \
 	new/datum/stack_recipe("brass smith's hammer", /obj/item/melee/smith/hammer/ratvar, 6), \
-	new/datum/stack_recipe("brass ingot", /obj/item/ingot/bronze/ratvar, 6, time = 100), \
+	new/datum/stack_recipe("brass ingot", /obj/item/ingot/ratvar, 6, time = 100), \
 ))
 
 /obj/item/stack/tile/brass
