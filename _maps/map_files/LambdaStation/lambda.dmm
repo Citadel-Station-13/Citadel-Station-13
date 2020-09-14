@@ -38317,6 +38317,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/paramedic)
 "bDC" = (
@@ -38330,6 +38333,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/paramedic)
@@ -38569,6 +38575,15 @@
 "bEm" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/medical/paramedic";
+	dir = 1;
+	name = "Paramedic's Office APC";
+	pixel_y = 26
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/paramedic)
@@ -42095,6 +42110,9 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 1
 	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bMK" = (
@@ -42353,6 +42371,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/paramedic)
 "bNs" = (
@@ -65762,10 +65783,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"hwV" = (
-/obj/structure/transit_tube/diagonal/crossing,
-/turf/open/space/basic,
-/area/space)
 "hxz" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -68794,10 +68811,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"nEw" = (
-/obj/structure/transit_tube/diagonal,
-/turf/open/space/basic,
-/area/space)
 "nFt" = (
 /obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -69518,6 +69531,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"pkz" = (
+/obj/structure/transit_tube/diagonal,
+/turf/open/space/basic,
+/area/space)
 "pkI" = (
 /obj/structure/window/reinforced/spawner,
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
@@ -70981,6 +70998,10 @@
 	},
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
+"sVb" = (
+/obj/structure/transit_tube/diagonal/crossing,
+/turf/open/space/basic,
+/area/space)
 "sVY" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -99956,7 +99977,7 @@ aab
 aab
 aab
 aab
-nEw
+pkz
 aav
 aab
 aab
@@ -100212,7 +100233,7 @@ aab
 aab
 aab
 aab
-hwV
+sVb
 aab
 aav
 aab
@@ -100468,7 +100489,7 @@ aab
 aab
 aab
 aab
-nEw
+pkz
 aab
 aab
 aav
@@ -100724,7 +100745,7 @@ caV
 aab
 aab
 aab
-nEw
+pkz
 aab
 aab
 aab
@@ -100980,7 +101001,7 @@ aab
 caV
 aab
 aab
-nEw
+pkz
 aab
 aab
 aab
@@ -101236,7 +101257,7 @@ aab
 aab
 caV
 aab
-hwV
+sVb
 aab
 aab
 aab
@@ -101492,7 +101513,7 @@ aab
 aab
 aab
 caV
-nEw
+pkz
 aab
 aab
 aab
