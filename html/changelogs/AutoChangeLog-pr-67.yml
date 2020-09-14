@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added a pref for the lewd messages to the chat."
-  - bugfix: "fixed .userlove and .love chat strings."
