@@ -5988,18 +5988,31 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "amy" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/transit_tube/curved/flipped{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=central2";
+	location = "central1"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "amz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/white,
@@ -33529,8 +33542,8 @@
 	dir = 5
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=central2";
-	location = "central1"
+	codes_txt = "patrol;next_patrol=central3";
+	location = "central2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
@@ -36606,7 +36619,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=aft1";
-	location = "starboard6"
+	location = "starboard5"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -38042,7 +38055,7 @@
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=bridge1";
-	location = "central3"
+	location = "centrala"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -38082,8 +38095,8 @@
 	dir = 8
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=starboard5";
-	location = "starboard4"
+	codes_txt = "patrol;next_patrol=starboard4";
+	location = "starboard3"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -41265,8 +41278,8 @@
 	dir = 1
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=central3";
-	location = "central2"
+	codes_txt = "patrol;next_patrol=centrala";
+	location = "central3"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -46535,7 +46548,7 @@
 	dir = 6
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=aft7";
+	codes_txt = "patrol;next_patrol=central1";
 	location = "aft6"
 	},
 /turf/open/floor/plasteel,
@@ -47117,9 +47130,18 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cbi" = (
-/obj/structure/transit_tube/diagonal,
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/transit_tube/curved/flipped{
+	dir = 4
+	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "cbq" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -63010,8 +63032,8 @@
 	dir = 4
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=starboard6";
-	location = "starboard5"
+	codes_txt = "patrol;next_patrol=starboard5";
+	location = "starboard4"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -64862,10 +64884,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
-"gak" = (
-/obj/structure/transit_tube/diagonal/crossing,
-/turf/open/space/basic,
-/area/space)
 "gar" = (
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/space,
@@ -65744,6 +65762,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"hwV" = (
+/obj/structure/transit_tube/diagonal/crossing,
+/turf/open/space/basic,
+/area/space)
 "hxz" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -68772,6 +68794,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"nEw" = (
+/obj/structure/transit_tube/diagonal,
+/turf/open/space/basic,
+/area/space)
 "nFt" = (
 /obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -99930,7 +99956,7 @@ aab
 aab
 aab
 aab
-cbi
+nEw
 aav
 aab
 aab
@@ -100186,7 +100212,7 @@ aab
 aab
 aab
 aab
-gak
+hwV
 aab
 aav
 aab
@@ -100442,7 +100468,7 @@ aab
 aab
 aab
 aab
-cbi
+nEw
 aab
 aab
 aav
@@ -100698,7 +100724,7 @@ caV
 aab
 aab
 aab
-cbi
+nEw
 aab
 aab
 aab
@@ -100954,7 +100980,7 @@ aab
 caV
 aab
 aab
-cbi
+nEw
 aab
 aab
 aab
@@ -101210,7 +101236,7 @@ aab
 aab
 caV
 aab
-gak
+hwV
 aab
 aab
 aab
@@ -101466,7 +101492,7 @@ aab
 aab
 aab
 caV
-cbi
+nEw
 aab
 aab
 aab
@@ -101722,7 +101748,7 @@ aab
 aab
 aab
 aab
-amy
+cbi
 aab
 aab
 aab
@@ -113784,7 +113810,7 @@ bOl
 bPb
 bjV
 cWN
-tiF
+amy
 vJb
 bIM
 cbe
