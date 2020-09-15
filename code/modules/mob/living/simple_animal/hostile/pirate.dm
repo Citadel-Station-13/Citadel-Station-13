@@ -10,7 +10,6 @@
 	turns_per_move = 5
 	response_help_continuous = "pushes"
 	response_help_simple = "push"
-	threat = 3
 	speed = 0
 	maxHealth = 115
 	health = 115

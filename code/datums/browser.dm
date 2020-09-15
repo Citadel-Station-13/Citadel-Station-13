@@ -8,14 +8,14 @@
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
-	var/title_image
 	var/head_elements
 	var/body_elements
 	var/head_content = ""
 	var/content = ""
+	var/static/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 
 
-/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null)
+/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
 
 	user = nuser
 	window_id = nwindow_id
@@ -27,7 +27,6 @@
 		height = nheight
 	if (nref)
 		ref = nref
-	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -35,22 +34,21 @@
 /datum/browser/proc/set_window_options(nwindow_options)
 	window_options = nwindow_options
 
-/datum/browser/proc/set_title_image(ntitle_image)
-	//title_image = ntitle_image
-
 /datum/browser/proc/add_stylesheet(name, file)
 	if(istype(name, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/sheet = name
 		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
 	else
 		var/asset_name = "[name].css"
+
 		stylesheets[asset_name] = file
-		if(!SSassets.cache[asset_name])
-			register_asset(asset_name, file)
+
+		if (!SSassets.cache[asset_name])
+			SSassets.transport.register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
 	scripts["[ckey(name)].js"] = file
-	register_asset("[ckey(name)].js", file)
+	SSassets.transport.register_asset("[ckey(name)].js", file)
 
 /datum/browser/proc/set_content(ncontent)
 	content = ncontent
@@ -60,15 +58,13 @@
 
 /datum/browser/proc/get_header()
 	var/file
+	head_content += "<link rel='stylesheet' type='text/css' href='[common_asset.get_url_mappings()["common.css"]]'>"
 	for (file in stylesheets)
-		head_content += "<link rel='stylesheet' type='text/css' href='[file]'>"
+		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
+
 
 	for (file in scripts)
-		head_content += "<script type='text/javascript' src='[file]'></script>"
-
-	var/title_attributes = "class='uiTitle'"
-	if (title_image)
-		title_attributes = "class='uiTitle icon' style='background-image: url([title_image]);'"
+		head_content += "<script type='text/javascript' src='[SSassets.transport.get_asset_url(file)]'></script>"
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -79,7 +75,7 @@
 	</head>
 	<body scroll=auto>
 		<div class='uiWrapper'>
-			[title ? "<div class='uiTitleWrapper'><div [title_attributes]><tt>[title]</tt></div></div>" : ""]
+			[title ? "<div class='uiTitleWrapper'><div class='uiTitle'><tt>[title]</tt></div></div>" : ""]
 			<div class='uiContent'>
 	"}
 //" This is here because else the rest of the file looks like a string in notepad++.
@@ -105,10 +101,11 @@
 	var/window_size = ""
 	if(width && height)
 		window_size = "size=[width]x[height];"
+	common_asset.send(user)
 	if(stylesheets.len)
-		send_asset_list(user, stylesheets)
+		SSassets.transport.send_assets(user, stylesheets)
 	if(scripts.len)
-		send_asset_list(user, scripts)
+		SSassets.transport.send_assets(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if(use_onclose)
 		setup_onclose()
@@ -169,7 +166,7 @@
 			return Button3
 
 //Same shit, but it returns the button number, could at some point support unlimited button amounts.
-/proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+/proc/askuser(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -188,7 +185,7 @@
 	var/selectedbutton = 0
 	var/stealfocus
 
-/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null, StealFocus = 1, Timeout = 6000)
+/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null, StealFocus = 1, Timeout = 6000)
 	..()
 	stealfocus = StealFocus
 	if (!StealFocus)

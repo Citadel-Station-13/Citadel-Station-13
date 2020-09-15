@@ -3,6 +3,7 @@
 
 #ifdef UNIT_TESTS
 #include "anchored_mobs.dm"
+#include "character_saving.dm"
 #include "component_tests.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"

@@ -237,6 +237,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	resistance_flags = FIRE_PROOF
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
+/obj/item/katana/lavaland
+	desc = "Woefully underpowered in Lavaland."
+	block_chance = 30
+	force = 25 //Like a fireaxe but one handed and can block!
+
 /obj/item/katana/cursed
 	slot_flags = null
 
@@ -252,6 +257,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/katana/timestop
 	name = "temporal katana"
 	desc = "Delicately balanced, this finely-crafted blade hums with barely-restrained potential."
+	icon_state = "temporalkatana"
+	item_state = "temporalkatana"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	block_chance = 0 // oops
 	force = 27.5 // oops
 	item_flags = ITEM_CAN_PARRY
@@ -263,6 +272,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		flynn.emote("smirk")
 	new /obj/effect/timestop/magic(get_turf(owner), 1, 50, list(owner)) // null roddies counter
 
+/obj/item/katana/timestop/suicide_act(mob/living/user) // stolen from hierophant staff
+	new /obj/effect/timestop/magic(get_turf(user), 1, 50, list(user)) // free usage for dying
+	user.visible_message("<span class='suicide'>[user] poses menacingly with the [src]! It looks like [user.p_theyre()] trying to teleport behind someone!</span>")
+	user.say("Heh.. Nothing personnel, kid..", forced = "temporal katana suicide")
+	sleep(20)
+	if(!user)
+		return
+	user.visible_message("<span class='hierophant_warning'>[user] vanishes into a cloud of falling dust and burning embers, likely off to style on some poor sod in the distance!</span>")
+	playsound(user,'sound/magic/blink.ogg', 75, TRUE)
+	for(var/obj/item/I in user)
+		if(I != src)
+			user.dropItemToGround(I)
+	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
+	qdel(user)
+
 /obj/item/melee/bokken // parrying stick
 	name = "bokken"
 	desc = "A space-Japanese training sword made of wood and shaped like a katana."
@@ -272,7 +296,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 9
+	force = 7 //how much harm mode damage we do
+	var/stamina_damage_increment = 4 //how much extra damage do we do when in non-harm mode
 	throwforce = 10
 	damtype = STAMINA
 	attack_verb = list("whacked", "smacked", "struck")
@@ -297,7 +322,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect = 1.5
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = 120
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(
@@ -306,13 +331,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_data = list(
 		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
-		)
+	)
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
 	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
 	parry_time_active = 5 // REALLY small parry window
 	parry_time_perfect = 2.5 // however...
-	parry_time_perfect_leeway = 2.5 // the entire time, the parry is perfect
+	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
 	parry_failed_stagger_duration = 1 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS // more forgiving punishments for missed parries
 	// still, don't fucking miss your parries or you're down stamina and staggered to shit
@@ -323,17 +348,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/bokken/Initialize()
 	. = ..()
 	AddElement(/datum/element/sword_point)
+	if(!harm) //if initialised in non-harm mode, setup force accordingly
+		force = force + stamina_damage_increment
 
 /obj/item/melee/bokken/attack_self(mob/user)
 	harm = !harm
 	if(harm)
-		force -= 2
+		force -= stamina_damage_increment
 		damtype = BRUTE
 		attack_verb = list("bashed", "smashed", "attacked")
 		bare_wound_bonus = 15 // having your leg smacked by a wooden stick is probably not great for it if it's naked
 		wound_bonus = 0
 	else
-		force += 2
+		force += stamina_damage_increment
 		damtype = STAMINA
 		attack_verb = list("whacked", "smacked", "struck")
 		bare_wound_bonus = 0

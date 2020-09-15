@@ -183,7 +183,6 @@
 	attack_verb = list("stabbed", "diced", "sliced", "cleaved", "chopped", "lacerated", "cut", "jabbed", "punctured")
 	icon_state = "crusher-glaive"
 	item_state = "crusher0-glaive"
-	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/crusherglaive
 	//ideas: altclick that lets you pummel people with the handguard/handle?
 	//parrying functionality?
@@ -216,6 +215,16 @@
 /obj/item/kinetic_crusher/glaive/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
 	if(owner.Adjacent(attacker) && (!attacker.anchored || ismegafauna(attacker))) // free backstab, if you perfect parry
 		attacker.dir = get_dir(owner,attacker)
+
+/// triggered on wield of two handed item
+/obj/item/kinetic_crusher/glaive/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+	item_flags |= (ITEM_CAN_PARRY)
+
+/// triggered on unwield of two handed item
+/obj/item/kinetic_crusher/glaive/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+	item_flags &= ~(ITEM_CAN_PARRY)
 
 /obj/item/kinetic_crusher/glaive/update_icon_state()
 	item_state = "crusher[wielded]-glaive" // this is not icon_state and not supported by 2hcomponent

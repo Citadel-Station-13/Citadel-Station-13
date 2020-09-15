@@ -304,18 +304,27 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	var/dat = "<b>Reskin options for [name]:</b>\n"
-	for(var/V in unique_reskin)
-		var/output = icon2html(src, M, unique_reskin[V])
-		dat += "[V]: <span class='reallybig'>[output]</span>\n"
-	to_chat(M, dat)
-
-	var/choice = input(M, always_reskinnable ? "Choose the a reskin for [src]" : "Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(QDELETED(src) || !choice || (current_skin && !always_reskinnable) || M.incapacitated() || !in_range(M,src) || !unique_reskin[choice] || unique_reskin[choice] == current_skin)
-		return
-	current_skin = choice
+	var/list/skins = list()
+	for(var/S in unique_reskin)
+		skins[S] = image(icon = icon, icon_state = unique_reskin[S])
+	var/choice = show_radial_menu(M, src, skins, custom_check = CALLBACK(src, .proc/check_skinnable, M), radius = 40, require_near = TRUE)
+	if(!choice)
+		return FALSE
 	icon_state = unique_reskin[choice]
-	to_chat(M, "[src] is now skinned as '[choice]'.")
+	current_skin = choice
+	return
+
+/obj/proc/check_skinnable(/mob/M)
+	if(current_skin || !always_reskinnable)
+		return FALSE
+	return TRUE
+
+/obj/update_overlays()
+	. = ..()
+	if(acid_level)
+		. += GLOB.acid_overlay
+	if(resistance_flags & ON_FIRE)
+		. += GLOB.fire_overlay
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
@@ -329,3 +338,6 @@
 	. = ..()
 	if(. && ricochet_damage_mod)
 		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet
+
+/obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	return

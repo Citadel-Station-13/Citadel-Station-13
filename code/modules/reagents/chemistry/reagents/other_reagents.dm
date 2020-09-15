@@ -313,6 +313,13 @@
 	metabolization_rate = 45 * REAGENTS_METABOLISM
 	. = 1
 
+/datum/reagent/water/hollowwater
+	name = "Hollow Water"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen, but it looks kinda hollow."
+	color = "#88878777"
+	taste_description = "emptyiness"
+
+
 /datum/reagent/water/holywater
 	name = "Holy Water"
 	description = "Water blessed by some deity."
@@ -883,7 +890,7 @@
 	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		reac_volume = min(reac_volume, M.amount)
-		new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
+		new/obj/item/stack/sheet/bronze(get_turf(M), reac_volume)
 		M.use(reac_volume)
 
 /datum/reagent/nitrogen
@@ -950,6 +957,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 	taste_description = "sour chalk"
 	pH = 5
+	material = /datum/material/diamond
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
@@ -1072,6 +1080,7 @@
 	pH = 6
 	overdose_threshold = 30
 	color = "#c2391d"
+	material = /datum/material/iron
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
@@ -1103,6 +1112,7 @@
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
 	taste_description = "expensive metal"
+	material = /datum/material/gold
 
 /datum/reagent/silver
 	name = "Silver"
@@ -1110,6 +1120,7 @@
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
+	material = /datum/material/silver
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_SILVER))
@@ -1123,6 +1134,7 @@
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
 	pH = 4
+	material = /datum/material/uranium
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
 	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
@@ -1144,6 +1156,7 @@
 	taste_description = "fizzling blue"
 	pH = 12
 	value = REAGENT_VALUE_RARE
+	material = /datum/material/bluespace
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1182,6 +1195,7 @@
 	color = "#A8A8A8" // rgb: 168, 168, 168
 	taste_mult = 0
 	pH = 10
+	material = /datum/material/glass
 
 /datum/reagent/fuel
 	name = "Welding fuel"
@@ -2207,6 +2221,68 @@
 	metabolization_rate = REAGENTS_METABOLISM * 0.25
 
 
+/datum/reagent/wittel
+	name = "Wittel"
+	description = "An extremely rare metallic-white substance only found on demon-class planets."
+	color = "#FFFFFF" // rgb: 255, 255, 255
+	taste_mult = 0 // oderless and tasteless
+
+/datum/reagent/metalgen
+	name = "Metalgen"
+	data = list("material"=null)
+	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
+	color = "#b000aa"
+	taste_mult = 0 // oderless and tasteless
+	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	var/minumum_material_amount = 100
+
+/datum/reagent/metalgen/reaction_obj(obj/O, volume)
+	metal_morph(O)
+	return
+
+/datum/reagent/metalgen/reaction_turf(turf/T, volume)
+	metal_morph(T)
+	return
+
+///turn an object into a special material
+/datum/reagent/metalgen/proc/metal_morph(atom/A)
+	var/metal_ref = data["material"]
+	if(!metal_ref)
+		return
+	var/metal_amount = 0
+
+	for(var/B in A.custom_materials) //list with what they're made of
+		metal_amount += A.custom_materials[B]
+
+	if(!metal_amount)
+		metal_amount = minumum_material_amount //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesnt exist
+
+	var/list/metal_dat = list()
+	metal_dat[metal_ref] = metal_amount //if we pass the list directly, byond turns metal_ref into "metal_ref" kjewrg8fwcyvf
+
+	A.material_flags = applied_material_flags
+	A.set_custom_materials(metal_dat)
+
+/datum/reagent/gravitum
+	name = "Gravitum"
+	description = "A rare kind of null fluid, capable of temporalily removing all weight of whatever it touches." //i dont even
+	color = "#050096" // rgb: 5, 0, 150
+	taste_mult = 0 // oderless and tasteless
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
+	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
+
+/datum/reagent/gravitum/reaction_obj(obj/O, volume)
+	O.AddElement(/datum/element/forced_gravity, 0)
+
+	addtimer(CALLBACK(O, .proc/_RemoveElement, /datum/element/forced_gravity, 0), volume * time_multiplier)
+
+/datum/reagent/gravitum/on_mob_add(mob/living/L)
+	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
+
+/datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
+	L.RemoveElement(/datum/element/forced_gravity, 0)
+
+
 //body bluids
 /datum/reagent/consumable/semen
 	name = "Semen"
@@ -2218,6 +2294,7 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	can_synth = FALSE
 	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	var/decal_path = /obj/effect/decal/cleanable/semen
 
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!istype(T))
@@ -2227,7 +2304,7 @@
 
 	var/obj/effect/decal/cleanable/semen/S = locate() in T
 	if(!S)
-		S = new(T)
+		S = new decal_path(T)
 	if(data["blood_DNA"])
 		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -2251,50 +2328,19 @@
 		blood_DNA |= S.blood_DNA
 	return ..()
 
-/datum/reagent/consumable/femcum
+/datum/reagent/consumable/semen/femcum
 	name = "Female Ejaculate"
 	description = "Vaginal lubricant found in most mammals and other animals of similar nature. Where you found this is your own business."
 	taste_description = "something with a tang" // wew coders who haven't eaten out a girl.
-	taste_mult = 2
-	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
-	reagent_state = LIQUID
 	color = "#AAAAAA77"
-	can_synth = FALSE
-	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	decal_path = /obj/effect/decal/cleanable/semen/femcum
 
-/obj/effect/decal/cleanable/femcum
+/obj/effect/decal/cleanable/semen/femcum
 	name = "female ejaculate"
-	desc = null
-	gender = PLURAL
-	density = 0
-	layer = ABOVE_NORMAL_TURF_LAYER
-	icon = 'icons/obj/genitals/effects.dmi'
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
 	blood_state = null
 	bloodiness = null
-
-/obj/effect/decal/cleanable/femcum/Initialize(mapload)
-	. = ..()
-	dir = GLOB.cardinals
-	add_blood_DNA(list("Non-human DNA" = "A+"))
-
-/obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	if(F.blood_DNA)
-		blood_DNA |= F.blood_DNA
-	return ..()
-
-/datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
-	if(!istype(T))
-		return
-	if(reac_volume < 10)
-		return
-
-	var/obj/effect/decal/cleanable/femcum/S = locate() in T
-	if(!S)
-		S = new(T)
-	if(data["blood_DNA"])
-		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/determination
 	name = "Determination"
@@ -2331,12 +2377,39 @@
 		M.adjustStaminaLoss(-0.25*REM) // the more wounds, the more stamina regen
 	..()
 
+datum/reagent/eldritch
+	name = "Eldritch Essence"
+	description = "Strange liquid that defies the laws of physics"
+	taste_description = "Ag'hsj'saje'sh"
+	color = "#1f8016"
+
+/datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
+	if(IS_HERETIC(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.AdjustAllImmobility(-40, FALSE)
+		M.adjustStaminaLoss(-15, FALSE)
+		M.adjustToxLoss(-3, FALSE)
+		M.adjustOxyLoss(-3, FALSE)
+		M.adjustBruteLoss(-3, FALSE)
+		M.adjustFireLoss(-3, FALSE)
+		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume += 3
+	else
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
+		M.adjustToxLoss(2, FALSE)
+		M.adjustFireLoss(2, FALSE)
+		M.adjustOxyLoss(2, FALSE)
+		M.adjustBruteLoss(2, FALSE)
+	holder.remove_reagent(type, 1)
+	return TRUE
+
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"
 	description = "A crystaline polydextrose polymer, plants swear by this stuff."
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
+
 
 /datum/reagent/hairball
 	name = "Hairball"
@@ -2384,5 +2457,58 @@
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "cleared_stomach", /datum/mood_event/cleared_stomach, name)
 			M.reagents.del_reagent(/datum/reagent/hairball)
 			return
+	..()
+
+/datum/reagent/red_ichor
+	name = "Red Ichor"
+	can_synth = FALSE
+	description = "A unknown red liquid, linked to healing of most moral wounds."
+	color = "#c10000"
+	metabolization_rate = REAGENTS_METABOLISM * 2.5
+
+/datum/reagent/red_ichor/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-50)
+	M.adjustOxyLoss(-50)
+	M.adjustBruteLoss(-50)
+	M.adjustFireLoss(-50)
+	M.adjustToxLoss(-50, TRUE) //heals TOXINLOVERs
+	M.adjustCloneLoss(-50)
+	M.adjustStaminaLoss(-50)
+	..()
+
+/datum/reagent/green_ichor
+	name = "Green Ichor"
+	can_synth = FALSE
+	description = "A unknown green liquid, linked to healing of most internal wounds."
+	color = "#158c00"
+	metabolization_rate = REAGENTS_METABOLISM * 2.5
+
+/datum/reagent/green_ichor/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_TONGUE, -100)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, -100)
+	..()
+
+/datum/reagent/blue_ichor
+	name = "Blue Ichor"
+	can_synth = FALSE
+	description = "A unknown blue liquid, linked to healing the mind."
+	color = "#0914e0"
+	metabolization_rate = REAGENTS_METABOLISM * 2.5
+
+/datum/reagent/blue_ichor/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -100)
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	M.hallucination = 0
+	M.dizziness = 0
+	M.disgust = 0
+	M.drowsyness = 0
+	M.stuttering = 0
+	M.confused = 0
+	M.SetSleeping(0, 0)
 	..()
 

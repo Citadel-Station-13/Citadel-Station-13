@@ -1,31 +1,17 @@
 /mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, clothing_check, return_warning)
 
+/**
+ * Used to return a list of equipped items on a human mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
+
 /mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	var/list/items = ..()
-	if(belt)
-		items += belt
-	if(ears)
-		items += ears
-	if(glasses)
-		items += glasses
-	if(gloves)
-		items += gloves
-	if(shoes)
-		items += shoes
-	if(wear_id)
-		items += wear_id
-	if(wear_suit)
-		items += wear_suit
-	if(w_uniform)
-		items += w_uniform
-	if(include_pockets)
-		if(l_store)
-			items += l_store
-		if(r_store)
-			items += r_store
-		if(s_store)
-			items += s_store
+	if(!include_pockets)
+		items -= list(l_store, r_store, s_store)
 	return items
 
 // Return the item currently in the slot ID

@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	min_players = 10
 	earliest_start = 30 MINUTES
-	gamemode_blacklist = list("nuclear","dynamic")
+	gamemode_blacklist = list("nuclear")
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
@@ -25,7 +25,7 @@
 	ship_name = pick(strings(PIRATE_NAMES_FILE, "ship_names"))
 
 /datum/round_event/pirates/announce(fake)
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
+	priority_announce("A business proposition has been downloaded and printed out at all communication consoles.", "Incoming Business Proposition", "commandreport")
 	if(fake)
 		return
 	threat_message = new
@@ -49,6 +49,7 @@
 			else
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
+		priority_announce("You won't listen to reason? Then we'll take what's yours or die trying!",sender_override = ship_name)
 		spawn_shuttle()
 
 /datum/round_event/pirates/start()
@@ -83,8 +84,7 @@
 				announce_to_ghosts(M)
 			else
 				announce_to_ghosts(spawner)
-
-	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") //CITADEL EDIT also metabreak here too
+	priority_announce("Unidentified ship detected near the station.")
 
 //Shuttle equipment
 

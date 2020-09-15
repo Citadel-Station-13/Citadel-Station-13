@@ -128,6 +128,10 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	else
 		return B.required_temp - A.required_temp		//return hottest
 
+
+/proc/cmp_mob_realname_dsc(mob/A,mob/B)
+	return sorttext(A.real_name,B.real_name)
+
 /proc/cmp_job_display_asc(datum/job/A, datum/job/B)
 	return A.display_order - B.display_order
 

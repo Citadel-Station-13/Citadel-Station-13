@@ -27,9 +27,9 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
+	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/toy/pistol/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/toy/pistol/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/toy/pistol/riot

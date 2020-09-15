@@ -109,7 +109,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/medicine/omnizine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/donkpocket
 	name = "donkpocket pizza slice"
@@ -117,7 +117,7 @@
 	icon_state = "donkpocketpizzaslice"
 	filling_color = "#FFA500"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/pizza/dank
 	name = "dank pizza"
@@ -127,7 +127,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
-	foodtype = GRAIN | VEGETABLES | FRUIT | DAIRY
+	foodtype = GRAIN | VEGETABLES | FRUIT | DAIRY | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/dank
 	name = "dank pizza slice"
@@ -135,7 +135,7 @@
 	icon_state = "dankpizzaslice"
 	filling_color = "#2E8B57"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
-	foodtype = GRAIN | VEGETABLES | FRUIT | DAIRY
+	foodtype = GRAIN | VEGETABLES | FRUIT | DAIRY | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/pizza/sassysage
 	name = "sassysage pizza"
@@ -187,6 +187,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/iron = 10, /datum/reagent/medicine/omnizine = 30)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
+	
 
 /obj/item/reagent_containers/food/snacks/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
 	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)

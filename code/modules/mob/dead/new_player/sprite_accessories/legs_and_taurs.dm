@@ -30,6 +30,9 @@
 	var/alt_taur_mode = NONE //Same as above.
 	var/hide_legs = USE_QUADRUPED_CLIP_MASK
 
+/datum/sprite_accessory/taur/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	return (!tauric || (H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR)))
+
 /datum/sprite_accessory/taur/New()
 	switch(hide_legs)
 		if(USE_QUADRUPED_CLIP_MASK)
@@ -45,6 +48,13 @@
 	recommended_species = null
 	relevant_layers = null
 	hide_legs = FALSE
+
+/datum/sprite_accessory/taur/canine
+	name = "Canine"
+	icon_state = "canine"
+	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE
 
 /datum/sprite_accessory/taur/cow
 	name = "Cow"
@@ -92,6 +102,13 @@
 	color_src = MUTCOLORS
 	extra = TRUE
 
+/datum/sprite_accessory/taur/feline
+	name = "Feline"
+	icon_state = "feline"
+	taur_mode = STYLE_PAW_TAURIC
+	color_src = MUTCOLORS
+	extra = TRUE
+
 /datum/sprite_accessory/taur/horse
 	name = "Horse"
 	icon_state = "horse"
@@ -123,17 +140,3 @@
 	taur_mode = STYLE_SNEK_TAURIC
 	color_src = MUTCOLORS
 	hide_legs = USE_SNEK_CLIP_MASK
-
-/datum/sprite_accessory/taur/canine
-	name = "Canine"
-	icon_state = "canine"
-	taur_mode = STYLE_PAW_TAURIC
-	color_src = MUTCOLORS
-	extra = TRUE
-
-/datum/sprite_accessory/taur/feline
-	name = "Feline"
-	icon_state = "feline"
-	taur_mode = STYLE_PAW_TAURIC
-	color_src = MUTCOLORS
-	extra = TRUE

@@ -394,8 +394,6 @@
 			to_chat(user, "<span class='warning'>[src] are recharging!</span>")
 		return
 
-	user.stop_pulling() //User has hands full, and we don't care about anyone else pulling on it, their problem. CLEAR!!
-
 	if(user.a_intent == INTENT_DISARM)
 		do_disarm(M, user)
 		return
@@ -447,8 +445,7 @@
 	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, target = M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
-		M.adjustStaminaLoss(50)
-		M.DefaultCombatKnockdown(100)
+		M.DefaultCombatKnockdown(140)
 		M.updatehealth() //forces health update before next life tick
 		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 		M.emote("gasp")

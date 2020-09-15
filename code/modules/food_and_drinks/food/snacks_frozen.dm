@@ -103,7 +103,7 @@
 	icon_state = "lime_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/limejuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "limes" = 5)
-	foodtype = FRUIT
+	foodtype = FRUIT | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/snowcones/lemon
 	name = "lemon snowcone"
@@ -191,7 +191,7 @@
 	icon_state = "fruitsalad_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/limejuice = 5, /datum/reagent/consumable/orangejuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "oranges" = 5, "limes" = 5, "lemons" = 5, "citrus" = 5, "salad" = 5)
-	foodtype = FRUIT
+	foodtype = FRUIT | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/snowcones/pineapple
 	name = "pineapple snowcone"
