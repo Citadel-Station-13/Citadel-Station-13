@@ -1,4 +1,5 @@
 SUBSYSTEM_DEF(explosions)
+	name = "Explosions"
 	wait = 1
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_EXPLOSIONS

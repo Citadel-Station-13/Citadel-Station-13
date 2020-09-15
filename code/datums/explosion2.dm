@@ -62,8 +62,7 @@
 		cycle = 1
 	SSexplosions.active_wave_explosions += src
 	running = TRUE
-	last_cycle = world.time - speed		// force one cycle
-	process()		// ditto
+	tick()
 
 /datum/explosion2/proc/stop()
 	SSexplosions.active_wave_explosions -= src
@@ -90,10 +89,26 @@
 	var/new_power = round((victim.wave_ex_act(current_power, src) * power_falloff_factor) - power_falloff_constant, 0.1)
 	if(new_power < 0)
 		return
+	var/vx = victim.x
+	var/vy = victim.y
+	var/vz = victim.z
+	var/turf/expanding
+#define RUN(xmod, ymod) expanding=locate(vx+xmod,vy+ymod,vz);if(!exploding[expanding]){exploding_next[expanding]=max(exploding_next[expanding],new_power);}
+	RUN(0,1)
+	RUN(1,1)
+	RUN(1,0)
+	RUN(1,-1)
+	RUN(0,-1)
+	RUN(-1,-1)
+	RUN(-1,0)
+	RUN(-1,1)
+#undef RUN
+	exploding -= victim
+/*
 	for(var/i in RANGE_TURFS(victim, 1))
 		if(!exploding[i])
 			exploding_next[i] = max(exploding_next[i], new_power)
-
+*/
 
 /*
 /datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)

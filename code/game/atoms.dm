@@ -24,9 +24,9 @@
 	var/explosion_block = 0
 
 	/// Amount to decrease wave explosions by
-	var/wave_explosion_block = 1
+	var/wave_explosion_block = 0
 	/// Amount to multiply wave explosions by
-	var/wave_explosion_multiply = 0.99
+	var/wave_explosion_multiply = 1
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
