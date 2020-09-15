@@ -227,43 +227,7 @@
 		E.set_up(epicenter)
 		E.start()
 
-		if(reactionary)
-			var/turf/Trajectory = T
-			while(Trajectory != epicenter)
-				Trajectory = get_step_towards(Trajectory, epicenter)
-				dist += cached_exp_block[Trajectory]
-
-		var/flame_dist = dist < flame_range
 		var/throw_dist = dist
-
-		if(dist < devastation_range)
-			dist = EXPLODE_DEVASTATE
-		else if(dist < heavy_impact_range)
-			dist = EXPLODE_HEAVY
-		else if(dist < light_impact_range)
-			dist = EXPLODE_LIGHT
-		else
-			dist = EXPLODE_NONE
-
-		//------- EX_ACT AND TURF FIRES -------
-
-		if((T == epicenter) && !QDELETED(explosion_source) && ismovable(explosion_source) && (get_turf(explosion_source) == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
-			var/list/atoms = list()
-			for(var/atom/A in explosion_source.loc)		// the ismovableatom check 2 lines above makes sure we don't nuke an /area
-				atoms += A
-			for(var/i in atoms)
-				var/atom/A = i
-				if(!QDELETED(A))
-					A.ex_act(dist)
-
-		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
-			new /obj/effect/hotspot(T) //Mostly for ambience!
-
-		if(dist > EXPLODE_NONE)
-			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
-			T.explosion_id = id
-			T.ex_act(dist)
-			exploded_this_tick += T
 
 		//--- THROW ITEMS AROUND ---
 
@@ -274,15 +238,6 @@
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
-
-		//wait for the lists to repop
-		var/break_condition
-		if(reactionary)
-			//If we've caught up to the density checker thread and there are no more turfs to process
-			break_condition = iteration == expBlockLen && iteration < affTurfLen
-		else
-			//If we've caught up to the turf gathering thread and it's still running
-			break_condition = iteration == affTurfLen && !stopped
 
 	if(running)	//if we aren't in a hurry
 		//Machines which report explosions.
