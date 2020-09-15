@@ -29,6 +29,7 @@
 	seed = /obj/item/seeds/lime
 	name = "lime"
 	desc = "It's so sour, your face will twist."
+	foodtype = FRUIT | ANTITOXIC
 	icon_state = "lime"
 	filling_color = "#00FF00"
 	juice_results = list(/datum/reagent/consumable/limejuice = 0)

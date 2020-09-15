@@ -20,6 +20,7 @@
 	desc = "A sleek box containing a brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers, and an extra speedloader."
 	item = /obj/item/storage/box/syndie_kit/revolver
 	cost = 13
+	player_minimum = 15
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
