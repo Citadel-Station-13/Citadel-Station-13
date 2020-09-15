@@ -510,3 +510,9 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/bedsheet/cosmos
 	ckeywhitelist = list("grunnyyy")
+
+/datum/gear/donator/customskirt
+	name = "custom atmos skirt"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/suit/customskirt
+	ckeywhitelist = list("")

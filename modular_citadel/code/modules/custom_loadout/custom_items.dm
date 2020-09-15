@@ -550,3 +550,12 @@
 	desc = "A fancy cloak embroidered with polychromatic thread in a pattern that reminds one of the wielders of unlimited power."
 	icon_state = "polyce"
 	poly_colors = list("#808080", "#8CC6FF", "#FF3535")
+
+/obj/item/clothing/suit/customskirt
+	name = "unzipped atmos skirt"
+	desc = " atmos jumpsuit skirt with the top half zipped down and wrapped around the waist."
+	icon_state = "atmos_skirt"
+	item_state = "atmos_skirt"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE
