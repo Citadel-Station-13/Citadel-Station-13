@@ -23,6 +23,11 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	/// Amount to decrease wave explosions by
+	var/wave_explosion_block = 1
+	/// Amount to multiply wave explosions by
+	var/wave_explosion_multiply = 0.99
+
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 
@@ -435,6 +440,16 @@
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
+
+/**
+  * Called when a wave explosion hits this atom.
+  *
+  * Returns explosion power to "allow through".
+  */
+/atom/proc/wave_ex_act(power, datum/explosion2/explosion)
+	SHOULD_NOT_SLEEP(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
+	return power * wave_explosion_multiply - wave_explosion_block
 
 /atom/proc/blob_act(obj/structure/blob/B)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
