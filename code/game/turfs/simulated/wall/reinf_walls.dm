@@ -12,6 +12,8 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
+	wave_explosion_block = 20
+	wave_explosion_multiply = 0.65
 	rad_insulation = RAD_HEAVY_INSULATION
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)

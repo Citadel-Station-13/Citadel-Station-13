@@ -36,8 +36,12 @@
 	var/list/turf/exploding = list()
 	/// [exploding] but for the next ring
 	var/list/turf/exploding_next = list()
+	/// [exploding] but for the last ring
+	var/list/turf/exploding_last = list()
 	/// What cycle are we on?
 	var/cycle
+	/// Current index for list
+	var/index = 0
 
 /datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT)
 	id = ++next_id
@@ -69,6 +73,7 @@
 	SSexplosions.currentrun -= src
 	exploding = list()
 	exploding_next = list()
+	exploding_last = list()
 	cycle = null
 	running = FALSE
 
@@ -76,24 +81,27 @@
   * Called by SSexplosions to propagate this.
   */
 /datum/explosion2/proc/tick()
-	if(!length(exploding))
+	if(++index > length(exploding))
 		if(!length(exploding_next))
 			finished = TRUE
 			stop()
 			return
+		// shift everything down
+		exploding_last = exploding
 		exploding = exploding_next
 		exploding_next = list()
 		cycle++
-	var/turf/victim = exploding[1]
+		index = 1
+	var/turf/victim = exploding[index]
 	var/current_power = exploding[victim]
 	var/new_power = round((victim.wave_ex_act(current_power, src) * power_falloff_factor) - power_falloff_constant, 0.1)
-	if(new_power < 0)
+	if(new_power < power_considered_dead)
 		return
 	var/vx = victim.x
 	var/vy = victim.y
 	var/vz = victim.z
 	var/turf/expanding
-#define RUN(xmod, ymod) expanding=locate(vx+xmod,vy+ymod,vz);if(!exploding[expanding]){exploding_next[expanding]=max(exploding_next[expanding],new_power);}
+#define RUN(xmod, ymod) expanding=locate(vx+xmod,vy+ymod,vz);if(!exploding[expanding] && !exploding_last[expanding]){exploding_next[expanding]=max((exploding_next[expanding]+new_power)*0.5,new_power);}
 	RUN(0,1)
 	RUN(1,1)
 	RUN(1,0)
@@ -103,7 +111,7 @@
 	RUN(-1,0)
 	RUN(-1,1)
 #undef RUN
-	exploding -= victim
+
 /*
 	for(var/i in RANGE_TURFS(victim, 1))
 		if(!exploding[i])

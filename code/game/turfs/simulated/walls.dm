@@ -15,6 +15,13 @@
 
 	baseturfs = /turf/open/floor/plating
 
+	/// Explosion power to disintegrate the wall
+	var/explosion_power_to_scrape = 50
+	/// Explosion power to dismantle the wall
+	var/explosion_power_to_dismantle = 25
+	/// Explosion power to potentially dismantle the wall
+	var/explosion_power_minimum_chance_dismantle = 10
+
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -91,6 +98,16 @@
 	if(!density)
 		..()
 
+/turf/closed/wall/wave_ex_act(power, datum/explosion2/explosion)
+	. = ..()
+	if(power >= explosion_power_to_scrape)
+		ScrapeAway()
+		return
+	else if((power >= explosion_power_to_dismantle) || ((power >= explosion_power_minimum_chance_dismantle) && prob((power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle)))))
+		dismantle_wall(FALSE, TRUE)
+		return
+	else
+		return 0	//completely blocked
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))

@@ -43,6 +43,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
+	wave_explosion_block = 5
+	wave_explosion_multiply = 0.95
+
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
 	/// Electrochromatic ID. Set the first character to ! to replace with a SSmapping generated pseudorandom obfuscated ID for mapping purposes.
@@ -520,6 +523,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	max_integrity = 50
 	explosion_block = 1
+	wave_explosion_block = 7.5
+	wave_explosion_multiply = 0.8
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
 	ricochet_chance_mod = 0.8

@@ -8,6 +8,8 @@
 	closingLayer = CLOSED_BLASTDOOR_LAYER
 	sub_door = TRUE
 	explosion_block = 3
+	wave_explosion_block = 15
+	wave_explosion_multiply = 0.75
 	heat_proof = TRUE
 	safe = FALSE
 	max_integrity = 600

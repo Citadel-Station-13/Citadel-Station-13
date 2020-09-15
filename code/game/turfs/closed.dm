@@ -6,6 +6,8 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	wave_explosion_block = 10
+	wave_explosion_multiply = 0.75
 
 /turf/closed/Initialize()
 	. = ..()
