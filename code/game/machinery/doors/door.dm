@@ -19,7 +19,7 @@
 	wave_explosion_block = EXPLOSION_BLOCK_DENSE_FILLER
 	wave_explosion_multiply = EXPLOSION_DAMPEN_DENSE_FILLER
 
-	explosion_flags = EXPLOSION_HARD_OBSTACLE | EXPLOSION_BLOCK_DENSITY_DEPENDENT
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE | EXPLOSION_FLAG_DENSITY_DEPENDENT
 
 	var/secondsElectrified = 0
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close

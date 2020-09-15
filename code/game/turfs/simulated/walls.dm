@@ -17,7 +17,7 @@
 
 	baseturfs = /turf/open/floor/plating
 
-	explosion_flags = EXPLOSION_BLOCK_HARD_OBSTACLE
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE
 	/// Explosion power to disintegrate the wall
 	var/explosion_power_to_scrape = EXPLOSION_POWER_WALL_SCRAPE
 	/// Explosion power to dismantle the wall

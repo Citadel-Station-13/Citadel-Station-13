@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
-	explosion_flags = EXPLOSION_BLOCK_HARD_OBSTACLE
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE
 	wave_explosion_block = EXPLOSION_BLOCK_WINDOW
 	wave_explosion_multiply = EXPLOSION_DAMPEN_WINDOW
 

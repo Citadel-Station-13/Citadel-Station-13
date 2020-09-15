@@ -33,7 +33,7 @@
 /// Explosion power to object damage (without taking into consideration armor)
 #define EXPLOSION_POWER_STANDARD_SCALE_OBJECT_DAMAGE(power, multiplier)			(35*(power**0.4)*multiplier)
 /// Explosion power to object damage for hard obstacles
-#define EXPLOSION_POWER_STANDARD_SCALE_HARD_OBSTACLE(power, multiplier)			(45*(power**0.4)*multiplier)
+#define EXPLOSION_POWER_STANDARD_SCALE_HARD_OBSTACLE_DAMAGE(power, multiplier)	(45*(power**0.4)*multiplier)
 /// Explosion power to object damage for windows
 #define EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, multiplier)			(45*(power**0.4)*multiplier)
 

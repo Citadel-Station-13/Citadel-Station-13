@@ -1,12 +1,12 @@
 /// Creates a wave explosion at a certain place
-/proc/explosion2(turf/target, power, factor = 0.95, constant = 3.5, flash = 0, fire = 0, bypass_logging = FALSE)
+/proc/explosion2(turf/target, power, factor = 0.95, constant = 3.5, flash = 0, fire = 0, bypass_logging = FALSE, atom/source)
 	if(!istype(target) || (power <= EXPLOSION_POWER_DEAD))
 		return
 	if(!bypass_logging)
 		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant]/[flash]/[fire] initial/factor/constant/flash/fire"
 		log_game(logstring)
 		message_admins(logstring)
-	new /datum/explosion2(target, power, factor, constant)
+	new /datum/explosion2(target, power, factor, constant, flash, fire, source)
 
 /**
   * New force-blastwave explosion system
@@ -22,6 +22,8 @@
 	var/running = FALSE
 	/// Are we currently finished?
 	var/finished = FALSE
+	/// What atom we originated from, if any
+	var/atom/source
 	
 	/// Explosion power at which point to consider to be a dead expansion
 	var/power_considered_dead = EXPLOSION_POWER_DEAD
@@ -67,7 +69,7 @@
 	/// Current index for list
 	var/index = 0
 
-/datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash, fire)
+/datum/explosion2/New(turf/initial, power, factor, constant, flash, fire, atom/source)
 	id = ++next_id
 	if(next_id > SHORT_REAL_LIMIT)
 		next_id = 0
@@ -77,6 +79,7 @@
 	src.power_falloff_constant = constant
 	src.flash_range = flash
 	src.fire_probability = fire
+	src.source = source
 	if(istype(initial))
 		start(initial)
 	else
