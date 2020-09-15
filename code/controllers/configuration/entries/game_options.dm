@@ -535,3 +535,9 @@
 
 /datum/config_entry/number/max_shuttle_size
 	config_entry_value = 500
+
+//wound config stuff (increases the max injury roll, making injuries more likely)
+/datum/config_entry/number/wound_exponent
+	config_entry_value = 1.225
+	min_val = 0
+	integer = FALSE
