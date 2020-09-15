@@ -96,7 +96,7 @@
 		return
 	if(is_species(L, /datum/species/lizard/ashwalker))
 		if(L.getStaminaLoss() < (STAMINA_CRIT - 40))
-			L.adjustStaminaLos(4)
+			L.adjustStaminaLoss(4)
 		return
 	L.adjustFireLoss(4)
 

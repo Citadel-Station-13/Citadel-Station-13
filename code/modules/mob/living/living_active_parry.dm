@@ -68,12 +68,13 @@
 	// can always implement it later, whatever.
 	if((data.parry_respect_clickdelay && !CheckActionCooldown()) || ((parry_end_time_last + data.parry_cooldown) > world.time))
 		to_chat(src, "<span class='warning'>You are not ready to parry (again)!</span>")
-		return
+		return FALSE
 	// Point of no return, make sure everything is set.
 	parrying = method
 	if(method == ITEM_PARRY)
 		active_parry_item = using_item
-	adjustStaminaLossBuffered(data.parry_stamina_cost)
+	if(!UseStaminaBuffer(data.parry_stamina_cost, TRUE))
+		return FALSE
 	parry_start_time = world.time
 	successful_parries = list()
 	addtimer(CALLBACK(src, .proc/end_parry_sequence), full_parry_duration)

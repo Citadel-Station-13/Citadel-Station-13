@@ -77,7 +77,7 @@
 		to_chat(user, "<span class='warning'>\The [src] can't operate without a source of gas!</span>")
 		return FALSE
 	var/weight = getweight(user, STAM_COST_ATTACK_MOB_MULT)
-	if(!UseStaminaBuffer(weight, warn = TRUE))
+	if(!user.UseStaminaBuffer(weight, warn = TRUE))
 		return FALSE
 	var/datum/gas_mixture/gasused = tank.air_contents.remove(gasperfist * fisto_setting)
 	var/turf/T = get_turf(src)
