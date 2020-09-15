@@ -453,9 +453,9 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
 	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
-	if((explosion_flags & EXPLOSION_BLOCK_DENSITY_DEPENDENT) && !density)
+	if((explosion_flags & EXPLOSION_FLAG_DENSITY_DEPENDENT) && !density)
 		return power	// no block
-	else if((explosion_flags & EXPLOSION_BLOCK_HARD_OBSTACLE) && !QDELETED(src))
+	else if((explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE) && !QDELETED(src))
 		return 0		// fully blocked
 
 /**

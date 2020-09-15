@@ -34,7 +34,7 @@
 	/// Flash range
 	var/flash_range = 0
 	/// Fire probability per tile
-	var/fire_prob = 0
+	var/fire_probability = 0
 
 	// Modifications
 	/// Object damage mod
@@ -96,7 +96,7 @@
 	tick()
 	// Flash mobs
 	if(flash_range)
-		for(var/mob/living/L in viewers(starting, epicenter))
+		for(var/mob/living/L in viewers(flash_range, starting))
 			L.flash_act()
 
 /datum/explosion2/proc/stop(delete = TRUE)

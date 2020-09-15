@@ -10,9 +10,9 @@
 
 // [explosion_flags] variable on /atom
 /// No blocking if we're not dense
-#define EXPLOSION_BLOCK_DENSITY_DEPENDENT			(1<<0)
+#define EXPLOSION_FLAG_DENSITY_DEPENDENT			(1<<0)
 /// If we survive the explosion, we block ALL the power and ignore the results of wave_ex_act().
-#define EXPLOSION_BLOCK_HARD_OBSTACLE				(1<<1)
+#define EXPLOSION_FLAG_HARD_OBSTACLE				(1<<1)
 
 // Standardized explosion powers
 /// Maxcap
