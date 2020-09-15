@@ -553,7 +553,7 @@
 
 /obj/item/clothing/suit/customskirt
 	name = "unzipped atmos skirt"
-	desc = " atmos jumpsuit skirt with the top half zipped down and wrapped around the waist."
+	desc = "atmos jumpsuit skirt with the top half zipped down and wrapped around the waist."
 	icon_state = "atmos_skirt"
 	item_state = "atmos_skirt"
 	icon = 'icons/obj/custom.dmi'
