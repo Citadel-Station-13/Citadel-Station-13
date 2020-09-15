@@ -169,13 +169,16 @@
 	scheduled_destruction = world.time + (lifespan - CHAT_MESSAGE_EOL_FADE)
 	addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	//dogborg check sandstorm thingy thing.
-	var/mob/living/silicon/robot/R = owner
-	if(iscyborg(R)) //without this it would check for module on every mob speaking, and you would NOT remove this unless you love runtimes
-		if(R.module.dogborg == TRUE || R.dogborg == TRUE) //BOYS, WHAT THE HELL, GREAT INCONSISTENCY!
-			message.pixel_x = 16
-		else
-			message.pixel_x = 0
+	//sandstorm speech alignment, WILL ALWAYS CENTER TEXT TO YOUR ACTUAL POSITION + 32 above it
+	var/mob/living/person = owner
+	if(isliving(person))
+		if(owner.pixel_x != 0)
+			var/flip = -owner.pixel_x
+			message.pixel_x = flip
+
+		if(owner.pixel_y != 0)
+			var/flip = -owner.pixel_y + 32
+			message.pixel_y = flip
 
 /**
   * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion
