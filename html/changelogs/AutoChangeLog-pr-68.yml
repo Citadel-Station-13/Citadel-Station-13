@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "chaged the dogborg fix to be simpler + apply for all mobs."
