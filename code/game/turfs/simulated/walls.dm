@@ -6,6 +6,8 @@
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_WALL
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WALL
 	flags_1 = DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_HARD
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -15,12 +17,13 @@
 
 	baseturfs = /turf/open/floor/plating
 
+	explosion_flags = EXPLOSION_BLOCK_HARD_OBSTCALE
 	/// Explosion power to disintegrate the wall
-	var/explosion_power_to_scrape = 50
+	var/explosion_power_to_scrape = EXPLOSION_POWER_WALL_SCRAPE
 	/// Explosion power to dismantle the wall
-	var/explosion_power_to_dismantle = 25
+	var/explosion_power_to_dismantle = EXPLOSION_POWER_WALL_DISMANTLE
 	/// Explosion power to potentially dismantle the wall
-	var/explosion_power_minimum_chance_dismantle = 10
+	var/explosion_power_minimum_chance_dismantle = EXPLOSION_POWER_WALL_MINIMUM_DISMANTLE
 
 	var/hardness = 40 //lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -100,14 +103,11 @@
 
 /turf/closed/wall/wave_ex_act(power, datum/explosion2/explosion)
 	. = ..()
-	if(power >= explosion_power_to_scrape)
+	var/resultant_power = power * explosion.wall_destroy_mod
+	if(resultant_power >= explosion_power_to_scrape)
 		ScrapeAway()
-		return
-	else if((power >= explosion_power_to_dismantle) || ((power >= explosion_power_minimum_chance_dismantle) && prob((power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle)))))
-		dismantle_wall(FALSE, TRUE)
-		return
-	else
-		return 0	//completely blocked
+	else if((resultant_power >= explosion_power_to_dismantle) || ((resultant_power >= explosion_power_minimum_chance_dismantle) && prob((resultant_power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle)))))
+		dismantle_wall(prob((resultant_power - explosion_power_to_dismantle)/(explosion_power_to_scrape - explosion_power_to_dismantle)), TRUE)
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
 	if(prob(50))

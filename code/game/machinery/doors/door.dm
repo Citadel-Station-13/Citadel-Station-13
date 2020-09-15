@@ -16,6 +16,11 @@
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
+	wave_explosion_block = EXPLOSION_BLOCK_DENSE_FILLER
+	wave_explosion_multiply = EXPLOSION_DAMPEN_DENSE_FILLER
+
+	explosion_flags = EXPLOSION_RIGID_OBSTACLE | EXPLOSION_BLOCK_DENSITY_DEPENDENT
+
 	var/secondsElectrified = 0
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/shockedby
@@ -412,11 +417,6 @@
 /obj/machinery/door/ex_act(severity, target)
 	//if it blows up a wall it should blow up a door
 	..(severity ? max(1, severity - 1) : 0, target)
-
-/obj/machinery/door/wave_ex_act(power, datum/explosion2/explosion)
-	. = ..()
-	if(!density)
-		return power // no block
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0

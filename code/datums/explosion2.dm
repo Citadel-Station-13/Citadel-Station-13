@@ -1,9 +1,9 @@
 /// Creates a wave explosion at a certain place
-/proc/explosion2(turf/target, power, factor, constant, bypass_logging = FALSE)
-	if(!istype(target))
+/proc/explosion2(turf/target, power, factor = 0.95, constant = 3.5, flash = 0, fire = 0, bypass_logging = FALSE)
+	if(!istype(target) || (power <= EXPLOSION_POWER_DEAD))
 		return
 	if(!bypass_logging)
-		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant] initial/factor/constant"
+		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant]/[flash]/[fire] initial/factor/constant/flash/fire"
 		log_game(logstring)
 		message_admins(logstring)
 	new /datum/explosion2(target, power, factor, constant)
@@ -31,6 +31,26 @@
 	var/power_falloff_factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY
 	/// Base explosion power falloff subtract (applied second)
 	var/power_falloff_constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT
+	/// Flash range
+	var/flash_range = 0
+	/// Fire probability per tile
+	var/fire_prob = 0
+
+	// Modifications
+	/// Object damage mod
+	var/object_damage_mod = 1
+	/// Hard obstcales get this mod INSTEAD of object damage mod
+	var/hard_obstacle_mod = 1
+	/// Window shatter mod. Overrides both [hard_obstcale_mod] and [object_damage_mod]
+	var/window_shatter_mod = 1
+	/// Wall destruction mod
+	var/wall_destroy_mod = 1
+	/// Mob damage mod
+	var/mob_damage_mod = 1
+	/// Mob gib mod
+	var/mob_gib_mod = 1
+	/// Mob deafen mod
+	var/mob_deafen_mod = 1
 
 	/// List of turfs mapped to their powers.
 	var/list/turf/exploding = list()
@@ -43,7 +63,7 @@
 	/// Current index for list
 	var/index = 0
 
-/datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT)
+/datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash, fire)
 	id = ++next_id
 	if(next_id > SHORT_REAL_LIMIT)
 		next_id = 0
@@ -51,13 +71,16 @@
 	src.power_initial = power
 	src.power_falloff_factor = factor
 	src.power_falloff_constant = constant
+	src.flash_range = flash
+	src.fire_probability = fire
 	if(istype(initial))
 		start(initial)
 	else
 		stack_trace("Wave explosion created without a turf. This better be for debugging purposes.")
 
 /datum/explosion2/Destroy()
-	stop()
+	if(running)
+		stop(FALSE)
 	return ..()
 
 /datum/explosion2/proc/start(turf/starting)
@@ -67,8 +90,12 @@
 	SSexplosions.active_wave_explosions += src
 	running = TRUE
 	tick()
+	// Flash mobs
+	if(flash_range)
+		for(var/mob/living/L in viewers(starting, epicenter))
+			L.flash_act()
 
-/datum/explosion2/proc/stop()
+/datum/explosion2/proc/stop(delete = TRUE)
 	SSexplosions.active_wave_explosions -= src
 	SSexplosions.currentrun -= src
 	exploding = list()
@@ -76,6 +103,7 @@
 	exploding_last = list()
 	cycle = null
 	running = FALSE
+	qdel(src)
 
 /**
   * Called by SSexplosions to propagate this.
@@ -84,7 +112,7 @@
 	if(++index > length(exploding))
 		if(!length(exploding_next))
 			finished = TRUE
-			stop()
+			stop(TRUE)
 			return
 		// shift everything down
 		exploding_last = exploding
@@ -94,7 +122,7 @@
 		index = 1
 	var/turf/victim = exploding[index]
 	var/current_power = exploding[victim]
-	var/new_power = round((victim.wave_ex_act(current_power, src) * power_falloff_factor) - power_falloff_constant, 0.1)
+	var/new_power = round((victim.wave_ex_act(current_power, src) * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
 	if(new_power < power_considered_dead)
 		return
 	var/vx = victim.x
@@ -111,6 +139,8 @@
 	RUN(-1,0)
 	RUN(-1,1)
 #undef RUN
+	if(prob(fire_probability))
+		new /obj/effect/hotspot(victim)
 
 /*
 	for(var/i in RANGE_TURFS(victim, 1))
@@ -219,10 +249,6 @@
 
 	EX_PREPROCESS_CHECK_TICK
 
-	//flash mobs
-	if(flash_range)
-		for(var/mob/living/L in viewers(flash_range, epicenter))
-			L.flash_act()
 
 	EX_PREPROCESS_CHECK_TICK
 

@@ -43,8 +43,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
-	wave_explosion_block = 5
-	wave_explosion_multiply = 0.95
+	explosion_flags = EXPLOSION_BLOCK_HARD_OBSTACLE
+	wave_explosion_block = EXPLOSION_BLOCK_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WINDOW
 
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
@@ -113,6 +114,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/obj/structure/window/wave_explosion_damage(power, datum/explosion2/explosion)
+	return EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, explosion.window_shatter_mod)
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
@@ -523,8 +527,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	max_integrity = 50
 	explosion_block = 1
-	wave_explosion_block = 7.5
-	wave_explosion_multiply = 0.8
+	wave_explosion_block = EXPLOSION_BLOCK_REINFORCED_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_REINFORCED_WINDOW
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
 	ricochet_chance_mod = 0.8
@@ -550,6 +554,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 150
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_BOROSILICATE_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_BOROSILICATE_WINDOW
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	cleanable_type = /obj/effect/decal/cleanable/glass/plasma
 	rad_insulation = RAD_NO_INSULATION
@@ -575,6 +581,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 500
 	explosion_block = 2
+	wave_explosion_block = EXPLOSION_BLOCK_EXTREME
+	wave_explosion_multiply = EXPLOSION_BLOCK_EXTREME
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/window/plasma/reinforced/spawner/east
@@ -744,6 +752,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 80
 	armor = list("melee" = 60, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+	wave_explosion_block = EXPLOSION_BLOCK_BOROSILICATE_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_BOROSILICATE_WINDOW
 	decon_speed = 40
 	glass_type = /obj/item/stack/tile/brass
 	glass_amount = 1
