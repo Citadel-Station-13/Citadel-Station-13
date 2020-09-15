@@ -72,9 +72,11 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
+	extools_update_reactions()
 	return ..()
 
 /datum/controller/subsystem/air/proc/extools_update_ssair()
+/datum/controller/subsystem/air/proc/extools_update_reactions()
 
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
@@ -454,6 +456,8 @@ SUBSYSTEM_DEF(air)
 		qdel(temp)
 
 	return pipe_init_dirs_cache[type]["[dir]"]
+
+/proc/get_extools_benchmarks()
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
