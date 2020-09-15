@@ -556,6 +556,6 @@
 	desc = "An oddly shaped halo that magically hovers above the head."
 	icon_state = "halo"
 	item_state = "halo"
-	icon = 'icons/obj/custom_w.dmi'
+	icon = 'icons/mob/clothing/custom_w.dmi' //look for something that exists for now
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
