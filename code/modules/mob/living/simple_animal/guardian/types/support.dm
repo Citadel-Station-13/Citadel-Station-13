@@ -105,7 +105,7 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
 	if(!istype(A))
-		altclick_listed_turf(A)
+		AltClickNoInteract(src, A)
 		return
 	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")

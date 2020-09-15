@@ -322,18 +322,10 @@
 	Used as an alternate way to interact with things.
 */
 /mob/proc/AltClickOn(atom/A)
-	
-	if(!A.AltClick(src))
-		altclick_listed_turf(A)
-
-/mob/proc/altclick_listed_turf(atom/A)
-	var/turf/T = get_turf(A)
-	if(T == A.loc || T == A)
-		if(T == listed_turf)
-			listed_turf = null
-		else if(TurfAdjacent(T))
-			listed_turf = T
-			client.statpanel = T.name
+	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
+	A.AltClick(src)
 
 /mob/living/carbon/AltClickOn(atom/A)
 	if(!stat && mind && iscarbon(A) && A != src)
