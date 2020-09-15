@@ -71,7 +71,7 @@
 		if(3)
 			take_damage(rand(10, 90), BRUTE, "bomb", 0)
 
-/obj/wave_ex_act(power, datum/explosion2/explosion)
+/obj/wave_ex_act(power, datum/explosion2/explosion, dir)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	. = ..()

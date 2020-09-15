@@ -8,6 +8,12 @@
 /// Explosion power quantization
 #define EXPLOSION_POWER_QUANTIZATION_ACCURACY	0.1
 
+// [explosion_flags] variable on /atom
+/// No blocking if we're not dense
+#define EXPLOSION_BLOCK_DENSITY_DEPENDENT			(1<<0)
+/// If we survive the explosion, we block ALL the power and ignore the results of wave_ex_act().
+#define EXPLOSION_BLOCK_HARD_OBSTACLE				(1<<1)
+
 // Standardized explosion powers
 /// Maxcap
 #define EXPLOSION_POWER_MAXCAP					100
@@ -20,7 +26,7 @@
 #define EXPLOSION_POWER_WALL_MINIMUM_DISMANTLE	10
 
 #define EXPLOSION_POWER_RWALL_SCRAPE				75
-#define EXPLOSIOn_POWER_RWALL_DISMANTLE				40
+#define EXPLOSION_POWER_RWALL_DISMANTLE				40
 #define EXPLOSION_POWER_RWALL_MINIMUM_DISMANTLE		25
 
 // Helpers

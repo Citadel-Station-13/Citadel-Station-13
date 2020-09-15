@@ -448,11 +448,11 @@
   *
   * Returns explosion power to "allow through".
   */
-/atom/proc/wave_explode(power, datum/explosion2/explosion)
+/atom/proc/wave_explode(power, datum/explosion2/explosion, dir)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
-	. = wave_ex_act(power, explosion)		// this must happen first for stuff like destruction/damage to tick.
+	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
 	if((explosion_flags & EXPLOSION_BLOCK_DENSITY_DEPENDENT) && !density)
 		return power	// no block
 	else if((explosion_flags & EXPLOSION_BLOCK_HARD_OBSTACLE) && !QDELETED(src))
@@ -463,7 +463,7 @@
   *
   * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
   */
-/atom/proc/wave_ex_act(power, datum/explosion2/explosion)
+/atom/proc/wave_ex_act(power, datum/explosion2/explosion, dir)
 	SHOULD_NOT_SLEEP(TRUE)
 	return power * wave_explosion_multiply - wave_explosion_block
 

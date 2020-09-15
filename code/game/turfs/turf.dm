@@ -450,7 +450,7 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
-/turf/wave_ex_act(power, datum/explosion2/explosion)
+/turf/wave_ex_act(power, datum/explosion2/explosion, dir)
 	. = ..()
 	var/affecting_level
 	if(is_shielded())

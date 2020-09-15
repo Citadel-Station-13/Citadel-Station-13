@@ -54,8 +54,12 @@
 
 	/// List of turfs mapped to their powers.
 	var/list/turf/exploding = list()
+	/// [exploding] but dirs rather than powers
+	var/list/turf/exploding_dirs = list()
 	/// [exploding] but for the next ring
 	var/list/turf/exploding_next = list()
+	/// [exploding_next] but dirs rather than powers
+	var/list/turf/exploding_next_dirs = list()
 	/// [exploding] but for the last ring
 	var/list/turf/exploding_last = list()
 	/// What cycle are we on?
@@ -117,53 +121,37 @@
 		// shift everything down
 		exploding_last = exploding
 		exploding = exploding_next
+		exploding_dirs = exploding_next_dirs
 		exploding_next = list()
+		exploding_next_dirs = list()
 		cycle++
 		index = 1
 	var/turf/victim = exploding[index]
 	var/current_power = exploding[victim]
-	var/new_power = round((victim.wave_ex_act(current_power, src) * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
+	var/new_power = round((victim.wave_ex_act(current_power, src, exploding_dirs[victim]) * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
 	if(new_power < power_considered_dead)
 		return
 	var/vx = victim.x
 	var/vy = victim.y
 	var/vz = victim.z
 	var/turf/expanding
-#define RUN(xmod, ymod) expanding=locate(vx+xmod,vy+ymod,vz);if(!exploding[expanding] && !exploding_last[expanding]){exploding_next[expanding]=max((exploding_next[expanding]+new_power)*0.5,new_power);}
-	RUN(0,1)
-	RUN(1,1)
-	RUN(1,0)
-	RUN(1,-1)
-	RUN(0,-1)
-	RUN(-1,-1)
-	RUN(-1,0)
-	RUN(-1,1)
+#define RUN(xmod, ymod, dir) expanding=locate(vx+xmod,vy+ymod,vz);if(!exploding[expanding] && !exploding_last[expanding]){exploding_next[expanding]=max((exploding_next[expanding]+new_power)*0.5,new_power);exploding_next_dirs[expanding]=dir;}
+	RUN(0,1,NORTH)
+	RUN(1,1,NORTHEAST)
+	RUN(1,0,EAST)
+	RUN(1,-1,SOUTHEAST)
+	RUN(0,-1,SOUTH)
+	RUN(-1,-1,SOUTHWEST)
+	RUN(-1,0,WEST)
+	RUN(-1,1,NORTHWEST)
 #undef RUN
 	if(prob(fire_probability))
 		new /obj/effect/hotspot(victim)
 
 /*
-	for(var/i in RANGE_TURFS(victim, 1))
-		if(!exploding[i])
-			exploding_next[i] = max(exploding_next[i], new_power)
-*/
-
-/*
 /datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 	set waitfor = FALSE
 
-	var/id = ++id_counter
-	explosion_id = id
-	explosion_source = epicenter
-
-	epicenter = get_turf(epicenter)
-	if(!epicenter)
-		return
-
-	if(isnull(flame_range))
-		flame_range = light_impact_range
-	if(isnull(flash_range))
-		flash_range = devastation_range
 
 	// Archive the uncapped explosion for the doppler array
 	var/orig_dev_range = devastation_range
@@ -181,14 +169,8 @@
 		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier, devastation_range)
 		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, heavy_impact_range)
 		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier, light_impact_range)
-		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier, flash_range)
-		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier, flame_range)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
-
-	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
@@ -233,11 +215,6 @@
 						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
 			EX_PREPROCESS_CHECK_TICK
 
-	//postpone processing for a bit
-	var/postponeCycles = max(round(devastation_range/8),1)
-	SSlighting.postpone(postponeCycles)
-	SSmachines.postpone(postponeCycles)
-
 	if(heavy_impact_range > 1)
 		var/datum/effect_system/explosion/E
 		if(smoke)
@@ -246,31 +223,6 @@
 			E = new
 		E.set_up(epicenter)
 		E.start()
-
-	EX_PREPROCESS_CHECK_TICK
-
-
-	EX_PREPROCESS_CHECK_TICK
-
-	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
-	var/list/affected_turfs = GatherSpiralTurfs(max_range, epicenter)
-
-	var/reactionary = CONFIG_GET(flag/reactionary_explosions)
-	var/list/cached_exp_block
-
-	if(reactionary)
-		cached_exp_block = CaculateExplosionBlock(affected_turfs)
-
-	//lists are guaranteed to contain at least 1 turf at this point
-
-	var/iteration = 0
-	var/affTurfLen = affected_turfs.len
-	var/expBlockLen = cached_exp_block.len
-	for(var/TI in affected_turfs)
-		var/turf/T = TI
-		++iteration
-		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-		var/dist = init_dist
 
 		if(reactionary)
 			var/turf/Trajectory = T
@@ -329,52 +281,6 @@
 			//If we've caught up to the turf gathering thread and it's still running
 			break_condition = iteration == affTurfLen && !stopped
 
-		if(break_condition || TICK_CHECK)
-			stoplag()
-
-			if(!running)
-				break
-
-			//update the trackers
-			affTurfLen = affected_turfs.len
-			expBlockLen = cached_exp_block.len
-
-			if(break_condition)
-				if(reactionary)
-					//until there are more block checked turfs than what we are currently at
-					//or the explosion has stopped
-					UNTIL(iteration < affTurfLen || !running)
-				else
-					//until there are more gathered turfs than what we are currently at
-					//or there are no more turfs to gather/the explosion has stopped
-					UNTIL(iteration < expBlockLen || stopped)
-
-				if(!running)
-					break
-
-				//update the trackers
-				affTurfLen = affected_turfs.len
-				expBlockLen = cached_exp_block.len
-
-			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
-			if(exploded_this_tick.len > circumference)	//only do this every revolution
-				for(var/Unexplode in exploded_this_tick)
-					var/turf/UnexplodeT = Unexplode
-					UnexplodeT.explosion_level = 0
-				exploded_this_tick.Cut()
-
-	//unfuck the shit
-	for(var/Unexplode in exploded_this_tick)
-		var/turf/UnexplodeT = Unexplode
-		UnexplodeT.explosion_level = 0
-	exploded_this_tick.Cut()
-
-	var/took = (REALTIMEOFDAY - started_at) / 10
-
-	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes to explosion code using this please so we can compare
-	if(GLOB.Debug2)
-		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
-
 	if(running)	//if we aren't in a hurry
 		//Machines which report explosions.
 		for(var/array in GLOB.doppler_arrays)
@@ -383,93 +289,4 @@
 
 	++stopped
 	qdel(src)
-
-/client/proc/check_bomb_impacts()
-	set name = "Check Bomb Impact"
-	set category = "Debug"
-
-	var/newmode = alert("Use reactionary explosions?","Check Bomb Impact", "Yes", "No")
-	var/turf/epicenter = get_turf(mob)
-	if(!epicenter)
-		return
-
-	var/dev = 0
-	var/heavy = 0
-	var/light = 0
-	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = input("Bomb Size?") in choices
-	switch(choice)
-		if(null)
-			return 0
-		if("Small Bomb")
-			dev = 1
-			heavy = 2
-			light = 3
-		if("Medium Bomb")
-			dev = 2
-			heavy = 3
-			light = 4
-		if("Big Bomb")
-			dev = 3
-			heavy = 5
-			light = 7
-		if("Custom Bomb")
-			dev = input("Devastation range (Tiles):") as num
-			heavy = input("Heavy impact range (Tiles):") as num
-			light = input("Light impact range (Tiles):") as num
-
-	var/max_range = max(dev, heavy, light)
-	var/x0 = epicenter.x
-	var/y0 = epicenter.y
-	var/list/wipe_colours = list()
-	for(var/turf/T in spiral_range_turfs(max_range, epicenter))
-		wipe_colours += T
-		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-
-		if(newmode == "Yes")
-			var/turf/TT = T
-			while(TT != epicenter)
-				TT = get_step_towards(TT,epicenter)
-				if(TT.density)
-					dist += TT.explosion_block
-
-				for(var/obj/O in T)
-					var/the_block = O.explosion_block
-					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
-
-		if(dist < dev)
-			T.color = "red"
-			T.maptext = "Dev"
-		else if (dist < heavy)
-			T.color = "yellow"
-			T.maptext = "Heavy"
-		else if (dist < light)
-			T.color = "blue"
-			T.maptext = "Light"
-		else
-			continue
-
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/wipe_color_and_text, wipe_colours), 100)
-
-/proc/wipe_color_and_text(list/atom/wiping)
-	for(var/i in wiping)
-		var/atom/A = i
-		A.color = null
-		A.maptext = ""
-
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
-	if(!power)
-		return
-	var/range = 0
-	range = round((2 * power)**GLOB.DYN_EX_SCALE)
-	explosion(epicenter, round(range * 0.25), round(range * 0.5), round(range), flash_range*range, adminlog, ignorecap, flame_range*range, silent, smoke)
-
-// Using default dyn_ex scale:
-// 100 explosion power is a (5, 10, 20) explosion.
-// 75 explosion power is a (4, 8, 17) explosion.
-// 50 explosion power is a (3, 7, 14) explosion.
-// 25 explosion power is a (2, 5, 10) explosion.
-// 10 explosion power is a (1, 3, 6) explosion.
-// 5 explosion power is a (0, 1, 3) explosion.
-// 1 explosion power is a (0, 0, 1) explosion.
 */

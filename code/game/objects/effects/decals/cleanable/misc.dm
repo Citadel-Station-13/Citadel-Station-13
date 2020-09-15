@@ -46,7 +46,7 @@
 /obj/effect/decal/cleanable/glass/ex_act()
 	qdel(src)
 
-/obj/effect/decal/cleanable/glass/wave_ex_act(power, datum/explosion2/explosion)
+/obj/effect/decal/cleanable/glass/wave_ex_act(power, datum/explosion2/explosion, dir)
 	qdel(src)
 	return power
 
@@ -106,7 +106,7 @@
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
 
-/obj/effect/decal/cleanable/greenglow/wave_ex_act(power, datum/explosion2/explosion)
+/obj/effect/decal/cleanable/greenglow/wave_ex_act(power, datum/explosion2/explosion, dir)
 	return power
 
 /obj/effect/decal/cleanable/cobweb
@@ -212,7 +212,7 @@
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 
-/obj/effect/decal/cleanable/shreds/wave_ex_act(power, datum/explosion2/explosion)
+/obj/effect/decal/cleanable/shreds/wave_ex_act(power, datum/explosion2/explosion, dir)
 	if(power > EXPLOSION_POWER_ERASE_SHREDS)
 		qdel(src)
 	return power		// no block

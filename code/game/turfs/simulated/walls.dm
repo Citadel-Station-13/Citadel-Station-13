@@ -17,7 +17,7 @@
 
 	baseturfs = /turf/open/floor/plating
 
-	explosion_flags = EXPLOSION_BLOCK_HARD_OBSTCALE
+	explosion_flags = EXPLOSION_BLOCK_HARD_OBSTACLE
 	/// Explosion power to disintegrate the wall
 	var/explosion_power_to_scrape = EXPLOSION_POWER_WALL_SCRAPE
 	/// Explosion power to dismantle the wall
@@ -101,12 +101,12 @@
 	if(!density)
 		..()
 
-/turf/closed/wall/wave_ex_act(power, datum/explosion2/explosion)
+/turf/closed/wall/wave_ex_act(power, datum/explosion2/explosion, dir)
 	. = ..()
 	var/resultant_power = power * explosion.wall_destroy_mod
 	if(resultant_power >= explosion_power_to_scrape)
 		ScrapeAway()
-	else if((resultant_power >= explosion_power_to_dismantle) || ((resultant_power >= explosion_power_minimum_chance_dismantle) && prob((resultant_power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle)))))
+	else if((resultant_power >= explosion_power_to_dismantle) || ((resultant_power >= explosion_power_minimum_chance_dismantle) && prob((resultant_power - explosion_power_minimum_chance_dismantle) / (explosion_power_to_dismantle - explosion_power_minimum_chance_dismantle))))
 		dismantle_wall(prob((resultant_power - explosion_power_to_dismantle)/(explosion_power_to_scrape - explosion_power_to_dismantle)), TRUE)
 
 /turf/closed/wall/blob_act(obj/structure/blob/B)
