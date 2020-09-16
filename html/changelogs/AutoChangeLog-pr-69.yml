@@ -1,0 +1,7 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Added ghost cafe spawn for borgs (skyrat port)."
+  - rscadd: "Added many modules for borgs (skyrat port)."
+  - imageadd: "added the sprite for the ghost cafe spawn (skyrat port)."
+  - refactor: "changed borg material code (skyrat port)."
