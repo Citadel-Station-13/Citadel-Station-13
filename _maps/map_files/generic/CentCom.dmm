@@ -16621,9 +16621,7 @@
 /turf/open/floor/grass,
 /area/centcom/holding)
 "Ms" = (
-/obj/effect/mob_spawn/human/ghostcafe{
-	dir = 8
-	},
+/obj/effect/mob_spawn/human/ghostcafe,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding)
 "Mt" = (
@@ -18702,6 +18700,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership)
+"XJ" = (
+/obj/effect/mob_spawn/robot/ghostcafe,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "XL" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
@@ -48091,7 +48093,7 @@ Sd
 GY
 NT
 Tw
-Ms
+Sd
 Ro
 NT
 vt
@@ -48347,9 +48349,9 @@ Nd
 Nd
 Nd
 Nd
-Nd
-Nd
-Nd
+Ms
+Sd
+XJ
 Nd
 Nd
 Nd
@@ -48603,10 +48605,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+Nd
+Nd
+Nd
+Nd
 Nd
 vv
 VA

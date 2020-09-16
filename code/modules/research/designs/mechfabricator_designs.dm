@@ -796,6 +796,7 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/* moved to sandcode
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"
@@ -804,6 +805,7 @@
 	materials = list(/datum/material/iron=200000, /datum/material/titanium=5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
+*/
 
 /datum/design/boris_ai_controller
 	name = "B.O.R.I.S. AI-Cyborg Remote Control Module"

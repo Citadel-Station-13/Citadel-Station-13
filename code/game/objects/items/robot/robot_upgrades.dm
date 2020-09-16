@@ -547,6 +547,7 @@
 	desc = "A cyborg resizer, it makes a cyborg huge."
 	icon_state = "cyborg_upgrade3"
 
+/* moved to sandcode
 /obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
@@ -573,6 +574,7 @@
 		R.resize = 2
 		R.hasExpanded = TRUE
 		R.update_transform()
+*/
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
