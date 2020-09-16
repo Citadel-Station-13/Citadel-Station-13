@@ -400,6 +400,7 @@ SUBSYSTEM_DEF(ticker)
 				if(ishuman(N.new_character))
 					SSlanguage.AssignLanguage(N.new_character, N.client)
 				//	
+			N.client.prefs.post_copy_to(player)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)

@@ -279,7 +279,8 @@ GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
 //parts in either of the above two lists that require a second option that allows them to be coloured
 GLOBAL_LIST_INIT(colored_mutant_parts, list("insect_wings" = "wings_color", "deco_wings" = "wings_color", "horns" = "horns_color"))
 
-//species ids that have greyscale sprites
+//body ids that have greyscale sprites
 GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","lum","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
 
-//species ids that need snowflake coloring applied
+//body ids that have prosthetic sprites
+GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))

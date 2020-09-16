@@ -500,7 +500,7 @@
 			return FALSE
 
 		if(require_ooc_consent)
-			if(target.client && target.client.prefs.toggles & VERB_CONSENT)
+			if((!target.ckey) || (target.client && target.client.prefs.toggles & VERB_CONSENT)) //sneaky change, let hell go through earth
 				return TRUE
 		return FALSE
 	return FALSE
