@@ -165,7 +165,7 @@
 	// Broadcast Message
 	if(amSilent)
 		//if (!iscarbon(target))
-		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>", \
+		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>",
 		//					 	 "<span class='notice'>You secretly slip your fangs into [target]'s flesh.</span>", \
 		//					 	 vision_distance = 2, ignored_mobs=target) // Only people who AREN'T the target will notice this action.
 		//else
