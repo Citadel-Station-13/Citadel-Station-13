@@ -16,16 +16,19 @@
 		return
 	var/dist = get_dist(user.loc,target.loc)
 	var/dir = get_dir(user.loc,target.loc)
-
-	switch(dist)
-		if(0 to 15)
-			to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [dir2text(dir)] of you!</span>")
-		if(16 to 31)
-			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty. They are to the [dir2text(dir)] of you!</span>")
-		if(32 to 127)
-			to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!</span>")
-		else
-			to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
+	
+	if(user.z != target.z)
+		to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
+	else
+		switch(dist)
+			if(0 to 15)
+				to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [dir2text(dir)] of you!</span>")
+			if(16 to 31)
+				to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty. They are to the [dir2text(dir)] of you!</span>")
+			if(32 to 127)
+				to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!</span>")
+			else
+				to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
 
 	if(target.stat == DEAD)
 		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
@@ -86,8 +89,8 @@
 	desc = "A crescent blade born from a fleshwarped creature. Keenly aware, it seeks to spread to others the excruciations it has endured from dead origins."
 	icon_state = "flesh_blade"
 	item_state = "flesh_blade"
-	wound_bonus = 5
-	bare_wound_bonus = 15
+	wound_bonus = 10
+	bare_wound_bonus = 20
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "warm eldritch medallion"

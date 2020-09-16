@@ -10,6 +10,12 @@
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
 
+/obj/item/retractor/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
+
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
@@ -55,6 +61,12 @@
 	tool_behaviour = TOOL_HEMOSTAT
 	toolspeed = 1
 
+/obj/item/hemostat/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
+
 /obj/item/hemostat/augment
 	name = "hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
@@ -78,6 +90,12 @@
 	attack_verb = list("burnt")
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
+
+/obj/item/cautery/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/cautery/augment
 	name = "cautery"
@@ -106,6 +124,12 @@
 	attack_verb = list("drilled")
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
+
+/obj/item/surgicaldrill/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/surgicaldrill/advanced
 	name = "searing tool"
@@ -171,6 +195,12 @@
 /obj/item/scalpel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+
+/obj/item/scalpel/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
@@ -255,6 +285,11 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
+/obj/item/circular_saw/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/circular_saw/augment
 	name = "circular saw"
@@ -392,3 +427,9 @@
 	attack_verb = list("corrected", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+
+/obj/item/bonesetter/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()

@@ -224,7 +224,7 @@
 	name = "Break of Dawn"
 	desc = "Starts your journey in the mansus. Allows you to select a target using a living heart on a transmutation rune."
 	gain_text = "Gates of Mansus open up to your mind."
-	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh)
+	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/spell/silence)
 	cost = 0
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	required_atoms = list(/obj/item/living_heart)
@@ -301,3 +301,11 @@
 	required_atoms = list(/obj/item/shard,/obj/item/stack/rods)
 	result_atoms = list(/obj/item/melee/sickly_blade)
 	route = "Start"
+
+/datum/eldritch_knowledge/spell/silence
+	name = "Silence"
+	desc = "Allows you to use the power of the Mansus to force an individual's tongue to be held down for up to twenty seconds. They'll notice quickly, however."
+	gain_text = "They must hold their tongues, for they do not understand."
+	cost = 1
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/trigger/mute/eldritch
+	route = PATH_SIDE

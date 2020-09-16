@@ -61,7 +61,7 @@
 			A.AddElement(/datum/element/update_icon_updates_onmob)
 			RegisterSignal(A, COMSIG_ITEM_WORN_OVERLAYS, .proc/apply_worn_overlays)
 			if(suits_with_helmet_typecache[A.type])
-				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, .proc/register_helmet)
+				RegisterSignal(A, COMSIG_SUIT_MADE_HELMET, .proc/register_helmet) //you better work now you slut
 	else if(_flags & POLYCHROMIC_ACTION && ismob(A)) //in the event mob update icon procs are ever standarized.
 		var/datum/action/polychromic/P = new(A)
 		RegisterSignal(P, COMSIG_ACTION_TRIGGER, .proc/activate_action)
@@ -166,6 +166,15 @@
 	examine_list += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /datum/element/polychromic/proc/register_helmet(atom/source, obj/item/clothing/head/H)
+	if(!isitem(H)) //backup in case if it messes up somehow
+		if(istype(source,/obj/item/clothing/suit/hooded)) //so how come it be like this, where toggleable headslots are named separately (helmet/hood) anyways?
+			var/obj/item/clothing/suit/hooded/sourcesuit = source
+			H = sourcesuit.hood
+		else if(istype(source,/obj/item/clothing/suit/space/hardsuit)) 
+			var/obj/item/clothing/suit/space/hardsuit/sourcesuit = source
+			H = sourcesuit.helmet
+		else
+			return
 	suit_by_helmet[H] = source
 	helmet_by_suit[source] = H
 	colors_by_atom[H] = colors_by_atom[source]

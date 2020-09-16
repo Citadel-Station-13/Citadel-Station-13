@@ -5,7 +5,7 @@
 /datum/emote/sound/silicon
 	mob_type_allowed_typecache = list(/mob/living/silicon, /mob/living/carbon/human)
 	emote_type = EMOTE_AUDIBLE
-	var/unrestricted = FALSE
+	var/unrestricted = TRUE
 
 /datum/emote/sound/silicon/run_emote(mob/user, params)
 	if(!unrestricted && !(issilicon(user) || isipcperson(user)))

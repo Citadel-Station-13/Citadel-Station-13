@@ -43,8 +43,9 @@
 /obj/item/melee/touch_attack/mansus_fist
 	name = "Mansus Grasp"
 	desc = "A sinister looking aura that distorts the flow of reality around it. Causes knockdown, major stamina damage aswell as some Brute. It gains additional beneficial effects with certain knowledges you can research."
-	icon_state = "disintegrate"
-	item_state = "disintegrate"
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "mansus_grasp"
+	item_state = "mansus"
 	catchphrase = "T'IESA SIE'KTI VISATA"
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -118,6 +119,7 @@
 /obj/item/melee/touch_attack/blood_siphon
 	name = "Blood Siphon"
 	desc = "A sinister looking aura that distorts the flow of reality around it."
+	color = RUNE_COLOR_RED
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
 	catchphrase = "SUN'AI'KINI'MAS"
@@ -260,41 +262,82 @@
 /obj/effect/proc_holder/spell/pointed/cleave/long
 	charge_max = 650
 
-/obj/effect/proc_holder/spell/pointed/touch/mad_touch
+/obj/effect/proc_holder/spell/targeted/touch/mad_touch
 	name = "Touch of Madness"
-	desc = "Touch spell that drains your enemies sanity."
-	school = "transmutation"
-	charge_max = 150
+	desc = "Touch spell that allows you to force the knowledge of the mansus upon your foes."
+	hand_path = /obj/item/melee/touch_attack/mad_touch
+	school = "evocation"
+	charge_max = 1800
 	clothes_req = FALSE
-	invocation_type = "none"
-	range = 2
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mad_touch"
 	action_background_icon_state = "bg_ecult"
 
-/obj/effect/proc_holder/spell/pointed/touch/mad_touch/can_target(atom/target, mob/user, silent)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(!istype(target,/mob/living/carbon/human))
-		if(!silent)
-			to_chat(user, "<span class='warning'>You are unable to touch [target]!</span>")
-		return FALSE
-	return TRUE
+/obj/item/melee/touch_attack/mad_touch
+	name = "Touch of Madness"
+	desc = "A sinister looking aura that shatters your enemies minds."
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "mad_touch"
+	item_state = "madness"
+	catchphrase = "SUNA'IKINTI PROTA"
 
-/obj/effect/proc_holder/spell/pointed/touch/mad_touch/cast(list/targets, mob/user)
-	. = ..()
-	for(var/mob/living/carbon/target in targets)
-		if(ishuman(targets))
-			var/mob/living/carbon/human/tar = target
-			if(tar.anti_magic_check())
-				tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
-				return
-		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/heretic))
-			to_chat(user,"<span class='warning'>[target.name] has been cursed!</span>")
-			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+/obj/item/melee/touch_attack/mad_touch/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 
-/obj/effect/proc_holder/spell/pointed/ash_final
+	if(!proximity_flag || target == user)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/tar = target
+		if(tar.anti_magic_check())
+			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			return ..()
+
+	if(iscarbon(target))
+		playsound(user, 'sound/effects/curseattack.ogg', 75, TRUE)
+		var/mob/living/carbon/C = target
+		C.adjustOrganLoss(ORGAN_SLOT_BRAIN,35)
+		C.DefaultCombatKnockdown(50, override_stamdmg = 0)
+		C.gain_trauma(/datum/brain_trauma/mild/phobia)
+		to_chat(user,"<span class='warning'>[target.name] has been cursed!</span>")
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		return ..()
+
+/obj/effect/proc_holder/spell/targeted/touch/grasp_of_decay
+	name = "Grasp of Decay"
+	desc = "A sinister looking touch that rots your foes from the inside out for twenty seconds."
+	hand_path = /obj/item/melee/touch_attack/grasp_of_decay
+	school = "evocation"
+	charge_max = 1200
+	clothes_req = FALSE
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "mansus_grasp"
+	action_background_icon_state = "bg_ecult"
+
+/obj/item/melee/touch_attack/grasp_of_decay
+	name = "Grasp of Decay"
+	desc = "A sinister looking aura that rots your foes from the inside out."
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "mansus_grasp"
+	item_state = "mansus"
+	catchphrase = "SKILI'EDUONIS"
+
+/obj/item/melee/touch_attack/grasp_of_decay/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+
+	if(!proximity_flag || target == user)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/tar = target
+		if(tar.anti_magic_check())
+			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			return ..()
+
+	if(iscarbon(target))
+		playsound(user, 'sound/effects/curseattack.ogg', 75, TRUE)
+		var/mob/living/carbon/C = target
+		C.DefaultCombatKnockdown(50, override_stamdmg = 0)
+		C.apply_status_effect(/datum/status_effect/corrosion_curse/lesser)
+		return ..()
+
+/obj/effect/proc_holder/spell/pointed/nightwatchers_rite
 	name = "Nightwatcher's Rite"
 	desc = "Powerful spell that releases 5 streams of fire away from you."
 	school = "transmutation"
@@ -307,7 +350,7 @@
 	action_icon_state = "flames"
 	action_background_icon_state = "bg_ecult"
 
-/obj/effect/proc_holder/spell/pointed/ash_final/cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/pointed/nightwatchers_rite/cast(list/targets, mob/user)
 	for(var/X in targets)
 		var/T
 		T = line_target(-25, range, X, user)
@@ -322,11 +365,12 @@
 		INVOKE_ASYNC(src, .proc/fire_line, user,T)
 	return ..()
 
-/obj/effect/proc_holder/spell/pointed/ash_final/proc/line_target(offset, range, atom/at , atom/user)
+/obj/effect/proc_holder/spell/pointed/nightwatchers_rite/proc/line_target(offset, range, atom/at , atom/user)
 	if(!at)
 		return
 	var/angle = ATAN2(at.x - user.x, at.y - user.y) + offset
 	var/turf/T = get_turf(user)
+	playsound(user,'sound/magic/fireball.ogg', 200, 1)
 	for(var/i in 1 to range)
 		var/turf/check = locate(user.x + cos(angle) * i, user.y + sin(angle) * i, user.z)
 		if(!check)
@@ -334,7 +378,7 @@
 		T = check
 	return (getline(user, T) - get_turf(user))
 
-/obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(atom/source, list/turfs)
+/obj/effect/proc_holder/spell/pointed/nightwatchers_rite/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
@@ -347,8 +391,8 @@
 			if(L in hit_list || L == source)
 				continue
 			hit_list += L
-			L.adjustFireLoss(20)
-			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
+			L.adjustFireLoss(15)
+			to_chat(L, "<span class='userdanger'>You're hit by a blast of fire!</span>")
 
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
@@ -368,7 +412,7 @@
 	possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp,\
-		/mob/living/simple_animal/bot/secbot, \
+		/mob/living/simple_animal/bot/secbot,\
 		/mob/living/simple_animal/pet/fox,\
 		/mob/living/simple_animal/pet/cat )
 
@@ -430,7 +474,7 @@
 	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE
-	charge_max = 700
+	charge_max = 1200
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "fire_ring"
 	///how long it lasts
@@ -594,6 +638,39 @@
 	range = 10
 	invocation = "AK'LIS"
 	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/pointed/trigger/mute/eldritch
+	name = "Silence"
+	desc = "Using the power of the mansus, silences a selected unbeliever for twenty seconds."
+	school = "transmutation"
+	charge_max = 1800
+	clothes_req = FALSE
+	invocation = "VIS'TIEK TAVO'LIZUVIS"
+	invocation_type = "whisper"
+	message = "<span class='userdanger'>It feels as if your tongue is being held down by an unseen force!</span>"
+	starting_spells = list("/obj/effect/proc_holder/spell/targeted/genetic/mute")
+	ranged_mousepointer = 'icons/effects/mouse_pointers/mute_target.dmi'
+	action_background_icon_state = "bg_ecult"
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "mute"
+	active_msg = "You prepare to silence a target..."
+
+/obj/effect/proc_holder/spell/targeted/genetic/mute
+	mutations = list(MUT_MUTE)
+	duration = 200
+	charge_max = 1200 // needs to be higher than the duration or it'll be permanent
+	sound = 'sound/magic/blind.ogg'
+
+/obj/effect/proc_holder/spell/pointed/trigger/mute/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!isliving(target))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You can only silence living beings!</span>")
+		return FALSE
+	return TRUE
+
 
 /obj/effect/temp_visual/dir_setting/entropic
 	icon = 'icons/effects/160x160.dmi'

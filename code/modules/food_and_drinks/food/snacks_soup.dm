@@ -89,7 +89,7 @@
 	icon_state = "nettlesoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("nettles" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/soup/mystery
 	name = "mystery soup"

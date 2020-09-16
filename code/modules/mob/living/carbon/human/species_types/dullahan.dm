@@ -83,17 +83,7 @@
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
-	modifies_speech = TRUE
-
-/obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(isdullahan(H))
-			var/datum/species/dullahan/D = H.dna.species
-			if(isobj(D.myhead.loc))
-				var/obj/O = D.myhead.loc
-				O.say(speech_args[SPEECH_MESSAGE])
-	speech_args[SPEECH_MESSAGE] = ""
+	accents = list(/datum/accent/dullahan)
 
 /obj/item/organ/ears/dullahan
 	zone = "abstract"

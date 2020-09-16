@@ -120,6 +120,53 @@
 	category = CAT_MISC
 	always_availible = FALSE	// Disabled til learned
 
+/datum/crafting_recipe/furnace
+	name = "Sandstone Furnace"
+	result = /obj/structure/furnace
+	time = 300
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 15,
+	/obj/item/stack/sheet/metal = 4,
+	/obj/item/stack/rods = 2)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/tableanvil
+	name = "Table Anvil"
+	result = /obj/structure/anvil/obtainable/table
+	time = 300
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+		        /obj/item/stack/rods = 2)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/sandvil
+	name = "Sandstone Anvil"
+	result = /obj/structure/anvil/obtainable/sandstone
+	time = 300
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 24)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/basaltblock
+	name = "Sintered Basalt Block"
+	result = /obj/item/basaltblock
+	time = 200
+	reqs = list(/obj/item/stack/ore/glass/basalt = 50)
+	tools = list(TOOL_WELDER)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/basaltanvil
+	name = "Basalt Anvil"
+	result = /obj/structure/anvil/obtainable/basalt
+	time = 200
+	reqs = list(/obj/item/basaltblock = 5)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 ///////////////////
 //Tools & Storage//
 ///////////////////
@@ -171,6 +218,17 @@
 				/obj/item/stack/cable_coil = 10,
 				/obj/item/stack/sheet/mineral/gold = 1,
 				/datum/reagent/water  = 15)
+	time = 40
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
+/datum/crafting_recipe/toolboxhammer
+	name = "Toolbox Hammer"
+	result = /obj/item/melee/smith/hammer/toolbox
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	reqs = list(/obj/item/storage/toolbox = 1,
+							/obj/item/stack/sheet/metal = 4,
+							/obj/item/stack/rods = 2)
 	time = 40
 	subcategory = CAT_TOOL
 	category = CAT_MISC
@@ -357,6 +415,25 @@
 ////////////
 //Unsorted//
 ////////////
+
+
+
+/datum/crafting_recipe/stick
+	name = "Stick"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1)
+	result = /obj/item/stick
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+
+/datum/crafting_recipe/swordhilt
+	name = "Sword Hilt"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
+	result = /obj/item/swordhandle
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"

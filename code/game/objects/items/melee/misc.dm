@@ -234,6 +234,9 @@
 /obj/item/melee/rapier/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(iscarbon(target))
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			visible_message("<span class='warning'>[user] gently taps [target] with [src].</span>",null,null,COMBAT_MESSAGE_RANGE)
+		log_combat(user, target, "slept", src)
 		var/mob/living/carbon/H = target
 		H.Dizzy(10)
 		H.adjustStaminaLoss(30)
