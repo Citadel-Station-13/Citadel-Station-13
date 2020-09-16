@@ -94,6 +94,7 @@
 			B.decoy_override = FALSE
 	remove_changeling_powers()
 	owner.special_role = null
+	owner.current.hud_used?.lingchemdisplay?.invisibility = INVISIBILITY_ABSTRACT
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()
@@ -225,6 +226,8 @@
 		else //not dead? no chem/geneticdamage caps.
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 			geneticdamage = max(0, geneticdamage-1)
+		owner.current.hud_used?.lingchemdisplay?.invisibility = 0
+		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
@@ -357,10 +360,12 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/regenerate)
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 

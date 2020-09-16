@@ -49,6 +49,7 @@
 	seed = /obj/item/seeds/ambrosia/deus
 	name = "ambrosia deus branch"
 	desc = "Eating this makes you feel immortal!"
+	foodtype = VEGETABLES | ANTITOXIC
 	icon_state = "ambrosiadeus"
 	filling_color = "#008B8B"
 	wine_power = 50

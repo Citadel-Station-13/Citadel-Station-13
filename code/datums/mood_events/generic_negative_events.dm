@@ -204,6 +204,11 @@
 	mood_change = -1
 	timeout = 2 MINUTES
 
+/datum/mood_event/plush_bite
+	description = "<span class='warning'>IT BIT ME!! OW!</span>\n"
+	mood_change = -3
+	timeout = 2 MINUTES
+
 //Cursed stuff below
 
 /datum/mood_event/emptypred
