@@ -24,7 +24,6 @@
 			assembly = null
 			new /obj/item/stack/cable_coil(loc, 2)
 		else
-			new /obj/structure/fan_assembly (loc)
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
