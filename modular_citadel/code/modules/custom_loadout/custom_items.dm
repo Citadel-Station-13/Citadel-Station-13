@@ -559,3 +559,12 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/clothing/head/halo
+	name = "transdimensional halo"
+	desc = "An oddly shaped halo that magically hovers above the head."
+	icon_state = "halo"
+	item_state = "halo"
+	icon = 'icons/mob/clothing/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE

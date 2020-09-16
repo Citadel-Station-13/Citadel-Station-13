@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - rscadd: "Failing the plushmium reaction can now create peculiar plushies, depending on reaction volume."
+  - bugfix: "The mood-buff from petting a plushie now works properly again."
