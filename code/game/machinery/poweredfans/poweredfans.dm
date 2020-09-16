@@ -4,13 +4,15 @@
 	name = "micro powered fan"
 	desc = "A handmade fan, releasing a thin gust of air."
 	use_power = ACTIVE_POWER_USE
+	power_channel = ENVIRON
 	idle_power_usage = 5
 	active_power_usage = 10
+	max_integrity = 150
 	layer = ABOVE_NORMAL_TURF_LAYER
 	anchored = TRUE
 	density = FALSE
 	CanAtmosPass = ATMOS_PASS_NO
-	var/obj/structure/fan_assembly/assembly = null
+	var/obj/machinery/fan_assembly/assembly = null
 
 /obj/machinery/poweredfans/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -34,7 +36,7 @@
 		deconstruct()
 	return TRUE
 
-/obj/machinery/poweredfans/Initialize(mapload, obj/structure/fan_assembly/FA)
+/obj/machinery/poweredfans/Initialize(mapload, obj/machinery/fan_assembly/FA)
 	. = ..()
 	if(FA)
 		assembly = FA
