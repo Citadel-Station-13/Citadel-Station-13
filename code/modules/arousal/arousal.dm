@@ -69,7 +69,7 @@
 		R.reaction(turfing ? target : target.loc, TOUCH, 1, 0)
 	if(!turfing)
 		R.trans_to(target, R.total_volume * (spill ? G.fluid_transfer_factor : 1))
-	G.time_since_last_orgasm = 0
+	G.last_orgasmed = world.time
 	R.clear_reagents()
 	//skyrat edit - chock i am going to beat you to death
 	//this is not a joke i am actually going to break your
