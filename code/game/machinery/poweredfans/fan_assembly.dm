@@ -12,7 +12,7 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	anchored = FALSE
 	density = FALSE
-	CanAtmosPass = ATMOS_PASS_NO
+	CanAtmosPass = ATMOS_PASS_YES
 	var/state = 1
 	var/buildstacktype = /obj/item/stack/sheet/plasteel
 	var/buildstackamount = 5
