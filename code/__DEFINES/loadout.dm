@@ -54,3 +54,16 @@
 
 //donator items
 #define LOADOUT_CATEGORY_DONATOR	"Donator"
+
+//how many prosthetics can we have
+#define MAXIMUM_LOADOUT_PROSTHETICS	2
+
+//what limbs can be amputated or be prosthetic
+#define LOADOUT_ALLOWED_LIMB_TARGETS	list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
+
+//options for modifiying limbs
+#define LOADOUT_LIMB_NORMAL			"Normal"
+#define LOADOUT_LIMB_PROSTHETIC		"Prosthetic"
+#define LOADOUT_LIMB_AMPUTATED		"Amputated"
+
+#define LOADOUT_LIMBS		 		list(LOADOUT_LIMB_NORMAL,LOADOUT_LIMB_PROSTHETIC,LOADOUT_LIMB_AMPUTATED) //you can amputate your legs/arms though
