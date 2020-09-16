@@ -55,7 +55,7 @@
 		for(var/y in 1 to world.maxy)
 			if(check_tick)
 				CHECK_TICK
-			potential = locate(x, y)
+			potential = locate(x, y, zlevel)	
 			p_area = potential.loc
 			if(!p_area.considered_hull_exterior)
 				continue
@@ -63,23 +63,3 @@
 				l_area = looking.loc
 				if(!l_area.considered_hull_exterior)
 					outlist += potential
-
-/proc/debug1(area/A)
-	for(var/turf/T in hull_shielding_get_tiles_around_area(A, FALSE))
-		T.maptext = "Found"
-		T.plane = 50
-		T.layer = 50
-		spawn(100)
-			T.maptext = null
-			T.plane = initial(T.plane)
-			T.layer = initial(T.layer)
-
-/proc/debug2(z)
-	for(var/turf/T in hull_shielding_get_tiles_in_z(z, FALSE, TRUE))
-		T.maptext = "Found"
-		T.plane = 50
-		T.layer = 50
-		spawn(100)
-			T.maptext = null
-			T.plane = initial(T.plane)
-			T.layer = initial(T.layer)
