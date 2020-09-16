@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(statpanels)
 			var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
 			target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
 			if(!length(GLOB.sdql2_queries))
-				target << output("", "statbrowser:remove_sqdl2")
+				target << output("", "statbrowser:remove_sdql2")
 			else
 				var/list/sqdl2A = list()
 				sqdl2A[++sqdl2A.len] = list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj))
@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(statpanels)
 					var/datum/SDQL2_query/Q = i
 					sqdl2B = Q.generate_stat()
 				sqdl2A += sqdl2B
-				target << output(url_encode(json_encode(sqdl2A)), "statbrowser:update_sqdl2")
+				target << output(url_encode(json_encode(sqdl2A)), "statbrowser:update_sdql2")
 		var/list/proc_holders = target.mob.get_proc_holders()
 		target.spell_tabs.Cut()
 		for(var/phl in proc_holders)
