@@ -209,7 +209,7 @@
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
 
 	for(var/wire in possible_wires)
-		if(prob(10 + severity/5))
+		if(prob(10 + severity/3.5))
 			pulse(wire)
 			remaining_pulses--
 			if(!remaining_pulses)
