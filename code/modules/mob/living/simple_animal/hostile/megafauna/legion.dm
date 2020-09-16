@@ -18,7 +18,6 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-	threat = 30
 	health = 800
 	maxHealth = 800
 	spacewalk = TRUE
@@ -52,6 +51,8 @@ Difficulty: Medium
 	elimination = 1
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
+	wound_bonus = -40
+	bare_wound_bonus = 20
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()

@@ -1,5 +1,5 @@
 /datum/export/tool
-	k_elasticity = 1/500 //Tool selling almost allways fine a target
+	k_elasticity = 1/500 //Tool selling almost always find a target
 
 /datum/export/tool/toolbox
 	cost = 6

@@ -40,13 +40,23 @@
 	reqs = list(/obj/item/paper = 20)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/balaclavabreath
+	name = "Breathaclava"
+	result = /obj/item/clothing/mask/balaclava/breath
+	time = 10
+	reqs = list(/obj/item/clothing/mask/balaclava = 1,
+				/obj/item/clothing/mask/breath = 1)
+	category = CAT_CLOTHING
+
+
+
 /datum/crafting_recipe/armwraps
 	name = "Armwraps"
 	result = /obj/item/clothing/gloves/fingerless/pugilist
 	time = 60
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/stack/sheet/cloth = 4,
-				/obj/item/stack/sheet/durathread = 2,
+				/obj/item/stack/sticky_tape = 2,
 				/obj/item/stack/sheet/leather = 2)
 	category = CAT_CLOTHING
 
@@ -261,6 +271,14 @@
 	/obj/item/stack/sheet/cloth = 3,
 	/obj/item/stack/sheet/plastic = 4)
 	time = 30
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_reinforcement_kit
+	name = "Durathread Reinforcement Kit"
+	result = /obj/item/armorkit
+	reqs = list(/obj/item/stack/sheet/durathread = 4)
+	tools = list(/obj/item/stack/sheet/mineral/titanium, TOOL_WIRECUTTER) // tough needle for a tough fabric
+	time = 40
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_duffelbag

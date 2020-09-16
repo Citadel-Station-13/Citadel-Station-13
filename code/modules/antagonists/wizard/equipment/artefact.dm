@@ -234,7 +234,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/spear(H), SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -259,7 +259,7 @@
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
-		else if(is_pointed(I))
+		else if(I.get_sharpness() == SHARP_POINTY)
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.DefaultCombatKnockdown(40)
 			GiveHint(target)
@@ -369,7 +369,7 @@
 	var/mob/living/carbon/last_user
 
 /obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
-	if(!user || QDELETED(src) || user.notransform)
+	if(!user || QDELETED(src) || user.mob_transforming)
 		on_cooldown = FALSE
 		return TRUE
 	return FALSE

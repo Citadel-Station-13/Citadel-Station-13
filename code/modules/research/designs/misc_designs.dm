@@ -343,7 +343,7 @@
 	id = "broom"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 600)
-	build_path = /obj/item/twohanded/broom
+	build_path = /obj/item/broom
 	category = list("initial", "Equipment", "Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

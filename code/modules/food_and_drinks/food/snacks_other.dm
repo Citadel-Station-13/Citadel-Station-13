@@ -136,6 +136,17 @@
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN
 
+/obj/item/reagent_containers/food/snacks/chilicheesefries
+	name = "chili cheese fries"
+	desc = "Fries smothered in cheese -and- chilli."
+	icon_state = "chilicheesefries"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#FFD700"
+	tastes = list("fries" = 3, "cheese" = 1)
+	foodtype = VEGETABLES | GRAIN
+
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
 	desc = "Someone should be demoted from cook for this."
@@ -536,6 +547,35 @@
 	filling_color = "#FFD700"
 	tastes = list("butter" = 1)
 	foodtype = DAIRY
+
+/obj/item/reagent_containers/food/snacks/butter/margarine
+	name = "stick of margarine"
+	desc = "A stick of lightly salted vegetable oil."
+	icon_state = "marge"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/cornoil = 2, /datum/reagent/consumable/sodiumchloride = 1)
+	filling_color = "#FFD700"
+	tastes = list("butter" = 1)
+	foodtype = JUNKFOOD
+
+/obj/item/reagent_containers/food/snacks/mashedpotato
+	name = "mashed potatoes"
+	desc = "A diced and smashed potato, served with sour cream."
+	icon_state = "mashedpotato"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#FFD700"
+	tastes = list("butter" = 1, "sour cream" = 1)
+	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/butteredpotato
+	name = "buttered potatoes"
+	desc = "Mashed potatoes served with an ample serving of butter, and sour cream."
+	icon_state = "buttermash"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#FFD700"
+	tastes = list("potatoes" = 1, "sour cream" = 1, "butter" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/onionrings
 	name = "onion rings"

@@ -36,7 +36,8 @@
 	new /obj/item/stack/sheet/metal(src, 2)
 
 /turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
-	M.changeNext_move(CLICK_CD_MELEE)
+	if(!M.CheckActionCooldown())
+		return
 	M.do_attack_animation(src)
 	if(!M.environment_smash)
 		return
@@ -46,6 +47,7 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
+	M.DelayNextAction()
 
 /turf/closed/wall/r_wall/try_destroy(obj/item/I, mob/user, turf/T)
 	if(istype(I, /obj/item/pickaxe/drill/jackhammer))
@@ -232,6 +234,13 @@
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(the_rcd.canRturf)
 		return ..()
+
+/turf/closed/wall/r_wall/rust_heretic_act()
+	if(prob(50))
+		return
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/closed/wall/r_wall/rust)
 
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"

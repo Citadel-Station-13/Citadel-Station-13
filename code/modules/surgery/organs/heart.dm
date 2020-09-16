@@ -61,10 +61,10 @@
 		return "a healthy"
 	return "<span class='danger'>an unstable</span>"
 
-/obj/item/organ/heart/prepare_eat()
-	var/obj/S = ..()
-	S.icon_state = "[icon_base]-off"
-	return S
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
+	. = ..()
+	beating = FALSE
+	update_icon()
 
 /obj/item/organ/heart/on_life()
 	. = ..()

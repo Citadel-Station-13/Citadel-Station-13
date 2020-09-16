@@ -30,6 +30,7 @@
 	verb_yell = "buzzes intensely"
 	emote_see = list("buzzes.", "makes a loud buzz.", "rolls several times.", "buzzes happily.")
 	speak_chance = 1
+	unique_name = TRUE
 
 /mob/living/simple_animal/pet/bumbles/Initialize()
 	. = ..()

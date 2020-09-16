@@ -19,10 +19,6 @@
 		A.move_camera_by_click()
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(!can_interact_with(A))
 		return
 
@@ -74,16 +70,16 @@
 		CtrlClickOn(A)
 		return
 
-	if(world.time <= next_move)
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(pixel_turf, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		waypoint_mode = 0
-		set_waypoint(A)
+		waypoint_mode = FALSE
+		INVOKE_ASYNC(src, .proc/set_waypoint, A)
 		return
 
 	A.attack_ai(src)
@@ -94,8 +90,9 @@
 	The below is only really for safety, or you can alter the way
 	it functions and re-insert it above.
 */
-/mob/living/silicon/ai/UnarmedAttack(atom/A)
+/mob/living/silicon/ai/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	A.attack_ai(src)
+
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 

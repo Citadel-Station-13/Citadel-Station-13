@@ -3,11 +3,11 @@
 	id = "ipc"
 	say_mod = "beeps"
 	default_color = "00FF00"
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	blacklisted = 0
 	sexes = 0
-	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,ROBOTIC_LIMBS)
+	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,ROBOTIC_LIMBS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	mutant_bodyparts = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
@@ -26,6 +26,8 @@
 	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
 
 	exotic_bloodtype = "HF"
+	exotic_blood_color = BLOOD_COLOR_OIL
+	species_type = "robotic"
 
 	var/datum/action/innate/monitor_change/screen
 

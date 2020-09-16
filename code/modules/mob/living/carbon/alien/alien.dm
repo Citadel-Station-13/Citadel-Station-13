@@ -25,7 +25,7 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5
+	heat_protection = 0.5
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = 1

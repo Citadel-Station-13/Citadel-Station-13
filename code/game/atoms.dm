@@ -26,7 +26,6 @@
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 
-	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 	var/list/remove_overlays // a very temporary list of overlays to remove
 	var/list/add_overlays // a very temporary list of overlays to add
 
@@ -48,6 +47,7 @@
 	var/rad_insulation = RAD_NO_INSULATION
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	///The list referenced by this var can be shared by multiple objects and should not be directly modified. Instead, use [set_custom_materials][/atom/proc/set_custom_materials].
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
@@ -68,6 +68,9 @@
 	var/chat_color
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
+
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -100,6 +103,8 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	if(loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
@@ -114,11 +119,8 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	var/temp_list = list()
-	for(var/i in custom_materials)
-		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
-	custom_materials = null //Null the list to prepare for applying the materials properly
-	set_custom_materials(temp_list)
+	// apply materials properly from the default custom_materials value
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 
@@ -142,7 +144,11 @@
 		qdel(reagents)
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
+
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+	targeted_by = null
 
 	QDEL_NULL(light)
 
@@ -219,7 +225,7 @@
 /atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		log_combat(user, src, "punched", "hulk powers")
 		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
@@ -368,6 +374,20 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
+/**
+  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_TIME (default 1.5 seconds)
+  *
+  * This is where you can put extra information on something that may be superfluous or not important in critical gameplay
+  * moments, while allowing people to manually double-examine to take a closer look
+  *
+  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
+  */
+/atom/proc/examine_more(mob/user)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	if(!LAZYLEN(.)) // lol ..length
+		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
+
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	// I expect we're going to need more return flags and options in this proc
@@ -438,7 +458,7 @@
 	var/blood_id = get_blood_id()
 	if(!(blood_id in GLOB.blood_reagent_types))
 		return
-	return list("ANIMAL DNA" = "Y-")
+	return list("color" = BLOOD_COLOR_HUMAN, "ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	var/blood_id = get_blood_id()
@@ -446,13 +466,15 @@
 		return
 	var/list/blood_dna = list()
 	if(dna)
+		blood_dna["color"] = dna.species.exotic_blood_color //so when combined, the list grows with the number of colors
 		blood_dna[dna.unique_enzymes] = dna.blood_type
 	else
+		blood_dna["color"] = BLOOD_COLOR_HUMAN
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
+	return list("color" = BLOOD_COLOR_XENO, "UNKNOWN DNA" = "X*")
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -463,18 +485,33 @@
 	LAZYINITLIST(blood_DNA)	//if our list of DNA doesn't exist yet, initialise it.
 	var/old_length = blood_DNA.len
 	blood_DNA |= new_blood_dna
+	var/changed = FALSE
+	if(!blood_DNA["color"])
+		blood_DNA["color"] = new_blood_dna["color"]
+		changed = TRUE
+	else
+		var/old = blood_DNA["color"]
+		blood_DNA["color"] = BlendRGB(blood_DNA["color"], new_blood_dna["color"])
+		changed = old != blood_DNA["color"]
 	if(blood_DNA.len == old_length)
 		return FALSE
-	return TRUE
+	return changed
 
 //to add blood dna info to the object's blood_DNA list
 /atom/proc/transfer_blood_dna(list/blood_dna, list/datum/disease/diseases)
 	LAZYINITLIST(blood_DNA)
+
 	var/old_length = blood_DNA.len
 	blood_DNA |= blood_dna
 	if(blood_DNA.len > old_length)
-		return TRUE
+		. = TRUE
 		//some new blood DNA was added
+		if(!blood_dna["color"])
+			return
+		if(!blood_DNA["color"])
+			blood_DNA["color"] = blood_dna["color"]
+		else
+			blood_DNA["color"] = BlendRGB(blood_DNA["color"], blood_dna["color"])
 
 //to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/M)
@@ -543,28 +580,7 @@
 	return TRUE
 
 /atom/proc/blood_DNA_to_color()
-	var/list/colors = list()//first we make a list of all bloodtypes present
-	for(var/bloop in blood_DNA)
-		if(colors[blood_DNA[bloop]])
-			colors[blood_DNA[bloop]]++
-		else
-			colors[blood_DNA[bloop]] = 1
-
-	var/final_rgb = BLOOD_COLOR_HUMAN	//a default so we don't have white blood graphics if something messed up
-
-	if(colors.len)
-		var/sum = 0 //this is all shitcode, but it works; trust me
-		final_rgb = bloodtype_to_color(colors[1])
-		sum = colors[colors[1]]
-		if(colors.len > 1)
-			var/i = 2
-			while(i <= colors.len)
-				var/tmp = colors[colors[i]]
-				final_rgb = BlendRGB(final_rgb, bloodtype_to_color(colors[i]), tmp/(tmp+sum))
-				sum += tmp
-				i++
-
-	return final_rgb
+	return (blood_DNA && blood_DNA["color"]) || BLOOD_COLOR_HUMAN
 
 /atom/proc/clean_blood()
 	. = blood_DNA? TRUE : FALSE
@@ -733,7 +749,7 @@
 		flags_1 |= ADMIN_SPAWNED_1
 	. = ..()
 	switch(var_name)
-		if("color")
+		if(NAMEOF(src, color))
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
 /atom/vv_get_dropdown()
@@ -922,6 +938,8 @@
 			log_game(log_text)
 		if(LOG_GAME)
 			log_game(log_text)
+		if(LOG_SHUTTLE)
+			log_shuttle(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
@@ -942,15 +960,16 @@
 	if(source != target)
 		target.log_talk(message, message_type, tag="[tag] from [key_name(source)]", log_globally=FALSE)
 
-/*
-Proc for attack log creation, because really why not
-1 argument is the actor performing the action
-2 argument is the target of the action
-3 is a verb describing the action (e.g. punched, throwed, kicked, etc.)
-4 is a tool with which the action was made (usually an item)
-5 is any additional text, which will be appended to the rest of the log line
-*/
-
+/**
+  * Log a combat message in the attack log
+  *
+  * Arguments:
+  * * atom/user - argument is the actor performing the action
+  * * atom/target - argument is the target of the action
+  * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
+  * * atom/object - is a tool with which the action was made (usually an item)
+  * * addition - is any additional text, which will be appended to the rest of the log line
+  */
 /proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
@@ -973,6 +992,39 @@ Proc for attack log creation, because really why not
 	if(user != target)
 		var/reverse_message = "has been [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
+
+/**
+  * log_wound() is for when someone is *attacked* and suffers a wound. Note that this only captures wounds from damage, so smites/forced wounds aren't logged, as well as demotions like cuts scabbing over
+  *
+  * Note that this has no info on the attack that dealt the wound: information about where damage came from isn't passed to the bodypart's damaged proc. When in doubt, check the attack log for attacks at that same time
+  * TODO later: Add logging for healed wounds, though that will require some rewriting of healing code to prevent admin heals from spamming the logs. Not high priority
+  *
+  * Arguments:
+  * * victim- The guy who got wounded
+  * * suffered_wound- The wound, already applied, that we're logging. It has to already be attached so we can get the limb from it
+  * * dealt_damage- How much damage is associated with the attack that dealt with this wound.
+  * * dealt_wound_bonus- The wound_bonus, if one was specified, of the wounding attack
+  * * dealt_bare_wound_bonus- The bare_wound_bonus, if one was specified *and applied*, of the wounding attack. Not shown if armor was present
+  * * base_roll- Base wounding ability of an attack is a random number from 1 to (dealt_damage ** WOUND_DAMAGE_EXPONENT). This is the number that was rolled in there, before mods
+  */
+/proc/log_wound(atom/victim, datum/wound/suffered_wound, dealt_damage, dealt_wound_bonus, dealt_bare_wound_bonus, base_roll)
+	if(QDELETED(victim) || !suffered_wound)
+		return
+	var/message = "has suffered: [suffered_wound][suffered_wound.limb ? " to [suffered_wound.limb.name]" : null]"// maybe indicate if it's a promote/demote?
+
+	if(dealt_damage)
+		message += " | Damage: [dealt_damage]"
+		// The base roll is useful since it can show how lucky someone got with the given attack. For example, dealing a cut
+		if(base_roll)
+			message += " (rolled [base_roll]/[dealt_damage ** WOUND_DAMAGE_EXPONENT])"
+
+	if(dealt_wound_bonus)
+		message += " | WB: [dealt_wound_bonus]"
+
+	if(dealt_bare_wound_bonus)
+		message += " | BWB: [dealt_bare_wound_bonus]"
+
+	victim.log_message(message, LOG_ATTACK, color="blue")
 
 // Filter stuff
 /atom/proc/add_filter(name,priority,list/params)
@@ -1006,26 +1058,21 @@ Proc for attack log creation, because really why not
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
-
-	if(!materials)
-		materials = custom_materials
-
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	if(!length(materials))
+		custom_materials = null
 		return
 
-	custom_materials = list() //Reset the list
+	if(material_flags)
+		for(var/x in materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
-	for(var/x in materials)
-		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
-
-		if(material_flags & MATERIAL_EFFECTS)
-			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
-		custom_materials[custom_material] += materials[x] * multiplier
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
 /**
   * Returns true if this atom has gravity for the passed in turf
@@ -1072,3 +1119,11 @@ Proc for attack log creation, because really why not
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
+
+/**
+  * Causes effects when the atom gets hit by a rust effect from heretics
+  *
+  * Override this if you want custom behaviour in whatever gets hit by the rust
+  */
+/atom/proc/rust_heretic_act()
+	return

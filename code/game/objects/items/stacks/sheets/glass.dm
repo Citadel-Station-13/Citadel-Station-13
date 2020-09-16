@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
 			return
-		CC.use_tool(src, user, 0, 5, max_level = JOB_SKILL_BASIC)
+		CC.use_tool(src, user, 0, 5, skill_gain_mult = TRIVIAL_USE_TOOL_MULT)
 		use(1)
 		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 100, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	max_integrity = 40
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/icon_prefix
 	embedding = list("embed_chance" = 65)
 

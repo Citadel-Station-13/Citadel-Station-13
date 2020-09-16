@@ -45,12 +45,14 @@
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/ui_state(mob/user)
+	return GLOB.human_adjacent_state
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, datum/tgui/ui)
+
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "emergency_shuttle_console", name,
-			400, 350, master_ui, state)
+		ui = new(user, src, "EmergencyShuttleConsole", name)
 		ui.open()
 
 /obj/machinery/computer/emergency_shuttle/ui_data()
@@ -66,8 +68,8 @@
 		var/job = ID.assignment
 
 		if(obj_flags & EMAGGED)
-			name = Gibberish(name, 0)
-			job = Gibberish(job, 0)
+			name = Gibberish(name)
+			job = Gibberish(job)
 		A += list(list("name" = name, "job" = job))
 	data["authorizations"] = A
 
@@ -145,7 +147,7 @@
 	authorized += ID
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch")
-	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
+	log_shuttle("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
 	process()
@@ -251,7 +253,7 @@
 
 	var/time = TIME_LEFT
 	message_admins("[ADMIN_LOOKUPFLW(user.client)] has emagged the emergency shuttle [time] seconds before launch.")
-	log_game("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
+	log_shuttle("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new

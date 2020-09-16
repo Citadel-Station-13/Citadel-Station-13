@@ -108,6 +108,8 @@
 #define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
+#define TR_KEEPREAGENTS	(1<<10)
+#define TR_KEEPSTUNS	(1<<9)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -141,7 +143,10 @@
 #define HORNCOLOR		25
 #define WINGCOLOR		26
 #define ROBOTIC_LIMBS	27 //has robotic limbs that render like organic ones
-
+#define CAN_SCAR		28 // If this species can be scarred (fleshy)
+/// Used for determining which wounds are applicable to this species.
+#define HAS_FLESH	29 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
+#define HAS_BONE	30 /// if we have bones (can suffer bone wounds)
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

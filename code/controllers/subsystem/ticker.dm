@@ -409,7 +409,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			living.mob_transforming = TRUE
 			if(living.client)
 				if (living.client.prefs && living.client.prefs.auto_ooc)
 					if (living.client.prefs.chat_toggles & CHAT_OOC)
@@ -423,7 +423,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE
+		L.mob_transforming = FALSE
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -711,7 +711,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/gondolabridge.ogg',
-		'sound/roundend/haveabeautifultime.ogg'\
+		'sound/roundend/haveabeautifultime.ogg',
+		'sound/roundend/CitadelStationHasSeenBetterDays.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

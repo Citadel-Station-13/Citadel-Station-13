@@ -48,6 +48,13 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/medipen_refiller
+	name = "Medipen Refiller (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medipen_refiller
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1)
+
 /obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
@@ -60,6 +67,14 @@
 /obj/item/circuitboard/machine/clonepod/experimental
 	name = "Experimental Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod/experimental
+
+/obj/item/circuitboard/machine/sheetifier
+	name = "Sheet-meister 2000 (Machine Board)"
+	icon_state = "supply"
+	build_path = /obj/machinery/sheetifier
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
@@ -503,6 +518,10 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/hydroponics/automagic
+	name = "Automatic Hydroponics Tray (Machine Board)"
+	build_path = /obj/machinery/hydroponics/constructable/automagic
 
 /obj/item/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"

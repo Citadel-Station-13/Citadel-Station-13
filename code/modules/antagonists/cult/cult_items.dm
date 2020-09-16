@@ -34,6 +34,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
+	wound_bonus = -30
+	bare_wound_bonus = 30
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 
@@ -51,10 +53,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
-	force = 30
+	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
+	wound_bonus = -80
+	bare_wound_bonus = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
@@ -100,7 +104,7 @@
 			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src)
 
-/obj/item/twohanded/required/cult_bastard
+/obj/item/cult_bastard
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
@@ -110,7 +114,7 @@
 	armour_penetration = 45
 	throw_speed = 1
 	throw_range = 3
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	light_color = "#ff0000"
 	attack_verb = list("cleaved", "slashed", "torn", "hacked", "ripped", "diced", "carved")
 	icon_state = "cultbastard"
@@ -127,31 +131,35 @@
 	var/spin_cooldown = 250
 	var/dash_toggled = TRUE
 
-/obj/item/twohanded/required/cult_bastard/Initialize()
+/obj/item/cult_bastard/Initialize()
 	. = ..()
 	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
-	AddComponent(/datum/component/butchering, 50, 80)
 
-/obj/item/twohanded/required/cult_bastard/examine(mob/user)
+/obj/item/cult_bastard/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 50, 80)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
+/obj/item/cult_bastard/examine(mob/user)
 	. = ..()
 	if(contents.len)
 		. += "<br><b>There are [contents.len] souls trapped within the sword's core.</b>"
 	else
 		. += "<br>The sword appears to be quite lifeless."
 
-/obj/item/twohanded/required/cult_bastard/can_be_pulled(user)
+/obj/item/cult_bastard/can_be_pulled(user)
 	return FALSE
 
-/obj/item/twohanded/required/cult_bastard/attack_self(mob/user)
+/obj/item/cult_bastard/attack_self(mob/user)
 	dash_toggled = !dash_toggled
 	if(dash_toggled)
 		to_chat(loc, "<span class='notice'>You raise [src] and prepare to jaunt with it.</span>")
 	else
 		to_chat(loc, "<span class='notice'>You lower [src] and prepare to swing it normally.</span>")
 
-/obj/item/twohanded/required/cult_bastard/pickup(mob/living/user)
+/obj/item/cult_bastard/pickup(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
@@ -171,13 +179,13 @@
 	linked_action.Grant(user, src)
 	user.update_icons()
 
-/obj/item/twohanded/required/cult_bastard/dropped(mob/user)
+/obj/item/cult_bastard/dropped(mob/user)
 	. = ..()
 	linked_action.Remove(user)
 	jaunt.Remove(user)
 	user.update_icons()
 
-/obj/item/twohanded/required/cult_bastard/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/cult_bastard/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(spinning && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
 		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
 		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
@@ -192,7 +200,7 @@
 			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
 	return BLOCK_NONE
 
-/obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
+/obj/item/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
 	if(dash_toggled && !proximity)
 		jaunt.Teleport(user, target)
@@ -235,7 +243,7 @@
 	button_icon_state = "sintouch"
 	var/cooldown = 0
 	var/mob/living/carbon/human/holder
-	var/obj/item/twohanded/required/cult_bastard/sword
+	var/obj/item/cult_bastard/sword
 
 /datum/action/innate/cult/spin2win/Grant(mob/user, obj/bastard)
 	. = ..()
@@ -250,7 +258,7 @@
 
 /datum/action/innate/cult/spin2win/Activate()
 	cooldown = world.time + sword.spin_cooldown
-	holder.changeNext_move(50)
+	holder.DelayNextAction(50)
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
 	sword.block_chance = 100
@@ -687,7 +695,7 @@
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
 
-/obj/item/twohanded/cult_spear
+/obj/item/cult_spear
 	name = "blood halberd"
 	desc = "A sickening spear composed entirely of crystallized blood."
 	icon_state = "bloodspear0"
@@ -695,30 +703,44 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	slot_flags = 0
 	force = 17
-	force_unwielded = 17
-	force_wielded = 24
 	throwforce = 40
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
 	attack_verb = list("attacked", "impaled", "stabbed", "torn", "gored")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
+	var/wielded = FALSE // track wielded status on item
 
-/obj/item/twohanded/cult_spear/Initialize()
+
+/obj/item/cult_spear/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/cult_spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_wielded="bloodspear1")
 
-/obj/item/twohanded/cult_spear/Destroy()
+/// triggered on wield of two handed item
+/obj/item/cult_spear/proc/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/cult_spear/proc/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+
+/obj/item/cult_spear/update_icon_state()
+	icon_state = "bloodspear0"
+
+/obj/item/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
 	..()
 
-/obj/item/twohanded/cult_spear/update_icon_state()
-	icon_state = "bloodspear[wielded]"
-
-/obj/item/twohanded/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
@@ -741,7 +763,7 @@
 	else
 		..()
 
-/obj/item/twohanded/cult_spear/proc/break_spear(turf/T)
+/obj/item/cult_spear/proc/break_spear(turf/T)
 	if(src)
 		if(!T)
 			T = get_turf(src)
@@ -752,7 +774,7 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/twohanded/cult_spear/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/cult_spear/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
@@ -771,7 +793,7 @@
 	desc = "Call the blood spear back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
-	var/obj/item/twohanded/cult_spear/spear
+	var/obj/item/cult_spear/spear
 	var/cooldown = 0
 
 /datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)

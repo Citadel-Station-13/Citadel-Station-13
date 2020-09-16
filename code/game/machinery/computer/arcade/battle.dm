@@ -184,6 +184,15 @@
 	blocked = FALSE
 	return
 
+/obj/machinery/computer/arcade/battle/examine_more(mob/user)
+	to_chat(user, "<span class='notice'>Scribbled on the side of the Arcade Machine you notice some writing...\
+	\nmagical -> >=50 power\
+	\nsmart -> defend, defend, light attack\
+	\nshotgun -> defend, defend, power attack\
+	\nshort temper -> counter, counter, counter\
+	\npoisonous -> light attack, light attack, light attack\
+	\nchonker -> power attack, power attack, power attack</span>")
+	return ..()
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	. = ..()

@@ -118,7 +118,7 @@
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
-				if(W.use_tool(src, user, 0, 1, max_level = JOB_SKILL_TRAINED))
+				if(W.use_tool(src, user, 0, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \
@@ -595,11 +595,9 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+/obj/machinery/light/on_attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
@@ -612,7 +610,18 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
+			var/datum/species/ethereal/eth_species = H.dna?.species
+			if(istype(eth_species))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+					if(istype(stomach))
+						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+						stomach.adjust_charge(2)
+					else
+						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
+				return
+				
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -812,11 +821,11 @@
 	return
 
 /obj/item/light/attack(mob/living/M, mob/living/user, def_zone)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/attack_obj(obj/O, mob/living/user)
-	..()
+	. = ..()
 	shatter()
 
 /obj/item/light/proc/shatter()

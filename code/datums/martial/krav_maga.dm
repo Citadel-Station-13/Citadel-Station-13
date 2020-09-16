@@ -196,9 +196,8 @@
 	var/datum/martial_art/krav_maga/style = new
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
-	if(!ishuman(user))
-		return
-	if(slot == SLOT_GLOVES)
+	. = ..()
+	if(ishuman(user) && slot == SLOT_GLOVES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 
@@ -224,8 +223,8 @@
 /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	name = "combat gloves plus"
 	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
-	icon_state = "combat"
-	item_state = "blackgloves"
+	icon_state = "fightglovesblack"
+	item_state = "fightglovesblack"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	strip_delay = 80

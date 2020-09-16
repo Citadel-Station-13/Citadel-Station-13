@@ -3,11 +3,13 @@
 /obj/item/projectile/bullet/c9mm
 	name = "9mm bullet"
 	damage = 20
+	embedding = list(embed_chance=15, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 
 /obj/item/projectile/bullet/c9mm_ap
 	name = "9mm armor-piercing bullet"
 	damage = 15
 	armour_penetration = 40
+	embedding = null
 
 /obj/item/projectile/bullet/incendiary/c9mm
 	name = "9mm incendiary bullet"
@@ -48,15 +50,3 @@
 			L.Sleeping(300)
 		else
 			L.adjustStaminaLoss(25)
-
-// .32 ACP (Improvised Pistol)
-
-/obj/item/projectile/bullet/c32acp
-	name = ".32 bullet"
-	damage = 13
-
-/obj/item/projectile/bullet/r32acp
-	name = ".32 rubber bullet"
-	damage = 3
-	eyeblur = 1
-	stamina = 20

@@ -62,9 +62,10 @@
 	SLEEP_CHECK_DEATH(8)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
-	. = ..()
-	if(!. || target)
+/mob/living/simple_animal/hostile/asteroid/ice_demon/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(target)
 		return
 	adjustHealth(-maxHealth*0.025)
 

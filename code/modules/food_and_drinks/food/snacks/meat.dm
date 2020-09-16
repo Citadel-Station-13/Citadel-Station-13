@@ -1,6 +1,7 @@
 /obj/item/reagent_containers/food/snacks/meat
 	var/subjectname = ""
 	var/subjectjob = null
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
@@ -82,6 +83,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/chicken
 	name = "chicken meat"
 	desc = "A slab of raw chicken. Remember to wash your hands!"
+	icon_state = "chickenbreast"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/chicken
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken
 	tastes = list("chicken" = 1)
@@ -158,6 +160,14 @@
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
 	tastes = list("brains" = 1, "meat" = 1)
+	foodtype = RAW | MEAT | TOXIC
+
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
+	icon_state = "etherealmeat"
+	desc = "So shiny you feel like ingesting it might make you shine too"
+	filling_color = "#97ee63"
+	list_reagents = list(/datum/reagent/consumable/liquidelectricity = 3)
+	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
 /obj/item/reagent_containers/food/snacks/carpmeat/aquatic
@@ -340,7 +350,13 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/chicken
 	name = "chicken steak" //Can you have chicken steaks? Maybe this should be renamed once it gets new sprites.
+	icon_state = "chickenbreast_cooked"
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/steak/fish
+	name = "fish fillet"
+	icon_state = "grilled_carp_slice"
+	tastes = list("charred sushi" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/plain
 	foodtype = MEAT
@@ -360,6 +376,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	name = "bear steak"
+	icon_state = "bearcook"
 	tastes = list("meat" = 1, "salmon" = 1)
 
 /obj/item/reagent_containers/food/snacks/meat/steak/xeno

@@ -3,7 +3,6 @@
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
-	var/threat = 0 // for dynamic
 	var/atom/target
 	var/ranged = FALSE
 	var/rapid = 0 //How many shots per volley.
@@ -67,11 +66,10 @@
 	foes = null
 	return ..()
 
-/mob/living/simple_animal/hostile/Life()
-	. = ..()
-	if(!.) //dead
+/mob/living/simple_animal/hostile/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		walk(src, 0) //stops walking
-		return 0
+		return
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -524,9 +522,9 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
-	..()
-
-
+		DelayNextAction()
+	. = ..()
+	return TRUE
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)
@@ -601,6 +599,3 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 				. += M
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
-
-/mob/living/simple_animal/hostile/proc/threat()
-	return threat

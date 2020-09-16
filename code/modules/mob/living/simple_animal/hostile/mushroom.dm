@@ -48,8 +48,9 @@
 	else
 		. += "<span class='info'>It looks like it's been roughed up.</span>"
 
-/mob/living/simple_animal/hostile/mushroom/Life()
-	..()
+/mob/living/simple_animal/hostile/mushroom/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!stat)//Mushrooms slowly regenerate if conscious, for people who want to save them from being eaten
 		adjustBruteLoss(-2)
 
@@ -169,7 +170,7 @@
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mushroom/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) // the attack was blocked
 		return

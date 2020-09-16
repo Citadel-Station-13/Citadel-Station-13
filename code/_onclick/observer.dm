@@ -37,7 +37,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(world.time <= next_move)
+	if(!CheckActionCooldown())
 		return
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
@@ -63,18 +63,9 @@
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
-	if(awaygate)
-		user.forceMove(awaygate.loc)
-	else
-		to_chat(user, "[src] has no destination.")
-	return ..()
-
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
-	if(stationgate)
-		user.forceMove(stationgate.loc)
-	else
-		to_chat(user, "[src] has no destination.")
+/obj/effect/gateway_portal_bumper/attack_ghost(mob/user)
+	if(gateway)
+		gateway.Transfer(user)
 	return ..()
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)

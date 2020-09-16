@@ -46,9 +46,10 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
-	. = ..()
-	if(.)
+/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(stat == CONSCIOUS)
 		//chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))
 			Retaliate()
@@ -57,7 +58,6 @@
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat == CONSCIOUS)
 		udder.generateMilk(milk_reagent)
 		eat_plants()
 		if(!pulledby)
@@ -160,12 +160,13 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/Life()
-	. = ..()
+/mob/living/simple_animal/cow/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stat == CONSCIOUS)
 		udder.generateMilk(milk_reagent)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/cow/on_attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
@@ -191,13 +192,22 @@
 	else
 		..()
 
+//a cow that produces a random reagent in its udder
+/mob/living/simple_animal/cow/random
+	name = "strange cow"
+	desc = "Something seems off about the milk this cow is producing."
+
+/mob/living/simple_animal/cow/random/Initialize()
+	milk_reagent = get_random_reagent_id() //this has a blacklist so don't worry about romerol cows, etc
+	..()
+
 //Wisdom cow, speaks and bestows great wisdoms
 /mob/living/simple_animal/cow/wisdom
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow = 1) //truly the best meat
 	gold_core_spawnable = FALSE
-	speak_chance = 30 //the cow is eager to share its wisdom!
+	speak_chance = 10 //the cow is eager to share its wisdom! //but is wise enough to not lag  the server too bad
 	milk_reagent = /datum/reagent/medicine/liquid_wisdom
 
 /mob/living/simple_animal/cow/wisdom/Initialize()
@@ -244,9 +254,8 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/chick/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)
@@ -254,8 +263,9 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life()
-	..()
+/mob/living/simple_animal/chick/holo/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	amount_grown = 0
 
 /mob/living/simple_animal/chicken
@@ -328,9 +338,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chicken/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
@@ -403,9 +412,8 @@
 	. = ..()
 	++kiwi_count
 
-/mob/living/simple_animal/kiwi/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("[src] [pick(layMessage)]")
@@ -478,9 +486,8 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/babyKiwi/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)

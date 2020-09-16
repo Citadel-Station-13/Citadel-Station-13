@@ -29,10 +29,13 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	can_turret = FALSE
+	can_circuit = FALSE
 	//Cit changes: beam rifle stats.
 	slowdown = 1
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | NEEDS_PERMIT
 	pin = null
+	automatic_charge_overlays = FALSE
 	var/aiming = FALSE
 	var/aiming_time = 14
 	var/aiming_time_fire_threshold = 5
@@ -150,13 +153,13 @@
 	current_zoom_x = 0
 	current_zoom_y = 0
 
-/obj/item/gun/energy/beam_rifle/update_icon()
-	cut_overlays()
+/obj/item/gun/energy/beam_rifle/update_overlays()
+	. = ..()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
 	if(!QDELETED(cell) && (cell.charge > primary_ammo.e_cost))
-		add_overlay(charged_overlay)
+		. += charged_overlay
 	else
-		add_overlay(drained_overlay)
+		. += drained_overlay
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	if(!structure_piercing)
@@ -418,10 +421,10 @@
 	var/wall_devastate = 0
 	var/aoe_structure_range = 0
 	var/aoe_structure_damage = 0
-	var/aoe_fire_range = 0
-	var/aoe_fire_chance = 0
-	var/aoe_mob_range = 0
-	var/aoe_mob_damage = 0
+	var/aoe_fire_range = 2
+	var/aoe_fire_chance = 100
+	var/aoe_mob_range = 2
+	var/aoe_mob_damage = 30
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
 	var/turf/cached

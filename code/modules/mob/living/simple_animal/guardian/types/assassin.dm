@@ -19,8 +19,9 @@
 	. = ..()
 	stealthcooldown = 0
 
-/mob/living/simple_animal/hostile/guardian/assassin/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/assassin/PhysicalLife()
+	if(!(. = ..()))
+		return
 	updatestealthalert()
 	if(loc == summoner && toggle)
 		ToggleMode(0)

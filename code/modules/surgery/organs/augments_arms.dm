@@ -132,6 +132,7 @@
 		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	return TRUE
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
 	if(crit_fail || (organ_flags & ORGAN_FAILING) || (!holder && !contents.len))
@@ -273,11 +274,28 @@
 	desc = "A deployable riot shield to help deal with civil unrest."
 	contents = newlist(/obj/item/shield/riot/implant)
 
-/obj/item/organ/cyberimp/arm/shield/Extend(obj/item/I)
+/obj/item/organ/cyberimp/arm/shield/Extend(obj/item/I, silent = FALSE)
 	if(I.obj_integrity == 0)				//that's how the shield recharge works
-		to_chat(owner, "<span class='warning'>[I] is still too unstable to extend. Give it some time!</span>")
+		if(!silent)
+			to_chat(owner, "<span class='warning'>[I] is still too unstable to extend. Give it some time!</span>")
 		return FALSE
 	return ..()
+
+/obj/item/organ/cyberimp/arm/shield/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	if(.)
+		RegisterSignal(M, COMSIG_LIVING_ACTIVE_BLOCK_START, .proc/on_signal)
+
+/obj/item/organ/cyberimp/arm/shield/Remove(special = FALSE)
+	UnregisterSignal(owner, COMSIG_LIVING_ACTIVE_BLOCK_START)
+	return ..()
+
+/obj/item/organ/cyberimp/arm/shield/proc/on_signal(datum/source, obj/item/blocking_item, list/other_items)
+	if(!blocking_item)		//if they don't have something
+		var/obj/item/shield/S = locate() in contents
+		if(!Extend(S, TRUE))
+			return
+		other_items += S
 
 /obj/item/organ/cyberimp/arm/shield/emag_act()
 	. = ..()

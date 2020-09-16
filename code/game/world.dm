@@ -9,10 +9,12 @@ GLOBAL_LIST(topic_status_cache)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || "./byond-extools.dll"
-	if (fexists(extools))
-		call(extools, "maptick_initialize")()
+	if (fexists(EXTOOLS))
+		call(EXTOOLS, "maptick_initialize")()
 	enable_debugger()
+#ifdef REFERENCE_TRACKING
+	enable_reference_tracking()
+#endif
 
 	world.Profile(PROFILE_START)
 
@@ -120,6 +122,7 @@ GLOBAL_LIST(topic_status_cache)
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
+	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
@@ -131,11 +134,13 @@ GLOBAL_LIST(topic_status_cache)
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
+	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
 	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
 	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
 	GLOB.click_log = "[GLOB.log_directory]/click.log"
+	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 
 
 #ifdef UNIT_TESTS
@@ -275,6 +280,15 @@ GLOBAL_LIST(topic_status_cache)
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
+/world/Del()
+	// memory leaks bad
+	var/num_deleted = 0
+	for(var/datum/gas_mixture/GM)
+		GM.__gasmixture_unregister()
+		num_deleted++
+	log_world("Deallocated [num_deleted] gas mixtures")
+	..()
+
 /world/proc/update_status()
 
 	var/list/features = list()
@@ -343,3 +357,6 @@ GLOBAL_LIST(topic_status_cache)
 	maxz++
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
+	world.refresh_atmos_grid()
+
+/world/proc/refresh_atmos_grid()

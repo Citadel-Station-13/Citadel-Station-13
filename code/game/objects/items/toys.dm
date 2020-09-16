@@ -272,7 +272,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
-			var/obj/item/twohanded/dualsaber/toy/newSaber = new /obj/item/twohanded/dualsaber/toy(user.loc)
+			var/obj/item/dualsaber/toy/newSaber = new /obj/item/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = TRUE
 			qdel(W)
@@ -363,7 +363,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
-			new /obj/item/twohanded/dualsaber/hypereutactic/toy(user.loc)
+			new /obj/item/dualsaber/hypereutactic/toy(user.loc)
 			qdel(W)
 			qdel(src)
 	else
@@ -437,41 +437,44 @@
 /*
  * Subtype of Double-Bladed Energy Swords
  */
-/obj/item/twohanded/dualsaber/toy
+/obj/item/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	force_unwielded = 0
-	force_wielded = 0
 	block_parry_data = null
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 
-/obj/item/twohanded/dualsaber/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/dualsaber/toy/ComponentInitialize()
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+
+/obj/item/dualsaber/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy
+/obj/item/dualsaber/hypereutactic/toy
 	name = "\improper DX Hyper-Euplastic LightSword"
 	desc = "A supermassive toy envisioned to cleave the very fabric of space and time itself in twain. Realistic visuals and sounds! Ages 8 and up."
 	force = 0
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	force_unwielded = 0
-	force_wielded = 0
+
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	slowdown_wielded = 0
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/dualsaber/hypereutactic/toy/ComponentInitialize()
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
+
+/obj/item/dualsaber/hypereutactic/toy/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	return BLOCK_NONE
 
-/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow
+/obj/item/dualsaber/hypereutactic/toy/rainbow
 	name = "\improper Hyper-Euclidean Reciprocating Trigonometric Zweihander"
 	desc = "A custom-built toy with fancy rainbow lights built-in."
 	hacked = TRUE
@@ -571,10 +574,7 @@
 	else
 		. = ..()
 
-/obj/item/toy/prize/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/toy/prize/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		attack_self(user)
 
@@ -808,9 +808,8 @@
 	cards += "Ace of Clubs"
 	cards += "Ace of Diamonds"
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
@@ -823,12 +822,11 @@
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
 	if(holo)
 		holo.spawned += H // track them leaving the holodeck
-	choice = cards[1]
+	choice = popleft(cards)
 	H.cardname = choice
 	H.parentdeck = src
 	var/O = src
 	H.apply_card_vars(H,O)
-	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
@@ -1232,7 +1230,7 @@
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "dread_ipad"
+	icon_state = "clockwork_slab"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0

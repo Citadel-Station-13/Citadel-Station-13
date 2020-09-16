@@ -20,6 +20,18 @@
 	var/list/original_values
 	var/list/original_affinities
 	var/list/original_levels
+	/// The mind datum this skill is associated with, only used for the check_skills UI
+	var/datum/mind/owner
+	/// For UI updates.
+	var/need_static_data_update = TRUE
+	/// Whether modifiers and final skill values or only base values are displayed.
+	var/see_skill_mods = TRUE
+	/// The current selected skill category.
+	var/selected_category
+
+/datum/skill_holder/New(owner)
+	..()
+	src.owner = owner
 
 /**
   * Grabs the value of a skill.
@@ -82,6 +94,7 @@
 	if(!isnull(value))
 		LAZYINITLIST(skill_holder.skills)
 		S.set_skill_value(skill_holder, value, src, silent)
+		skill_holder.need_static_data_update = TRUE
 		return TRUE
 	return FALSE
 
@@ -107,11 +120,9 @@
 		CRASH("You cannot auto increment a non numerical(experience skill!")
 	var/current = get_skill_value(skill, FALSE)
 	var/affinity = get_skill_affinity(skill)
-	var/target_value = current + (value * affinity)
-	if(maximum)
-		target_value = min(target_value, maximum)
-		if(target_value == maximum) //no more experience to gain, early return.
-			return
+	var/target_value = round(current + (value * affinity), S.skill_gain_quantisation)
+	if(maximum && target_value >= maximum) //no more experience to gain, early return.
+		return
 	boost_skill_value_to(skill, target_value, silent, current)
 
 /**
@@ -183,18 +194,3 @@
 		divisor++
 	if(divisor)
 		. = modifier_is_multiplier ? value*(sum/divisor) : value/(sum/divisor)
-
-/**
-  * Generates a HTML readout of our skills.
-  * Port to tgui-next when?
-  */
-/datum/mind/proc/skill_html_readout()
-	var/list/out = list("<center><h1>Skills</h1></center><hr>")
-	out += "<table style=\"width:100%\"><tr><th><b>Skill</b><th><b>Value</b></tr>"
-	for(var/path in GLOB.skill_datums)
-		var/datum/skill/S = GLOB.skill_datums[path]
-		var/skill_value = get_skill_value(path)
-		var/skill_level = get_skill_level(path, round = TRUE)
-		out += "<tr><td><font color='[S.name_color]'>[S.name]</font></td><td>[S.standard_render_value(skill_value, skill_level)]</td></tr>"
-	out += "</table>"
-	return out.Join("")

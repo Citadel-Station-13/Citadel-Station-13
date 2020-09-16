@@ -30,6 +30,6 @@ table.matrixbrak td.lbrak {
 	border-right: none;
 }
 table.matrixbrak td.rbrak {
-	border-right: solid 0.5exrgb(95, 61, 61)k;
+	border-right: solid 0.5ex black;
 	border-left: none;
 }

@@ -32,7 +32,7 @@
 	if(!n || !direction || !mob?.loc)
 		return FALSE
 	//GET RID OF THIS SOON AS MOBILITY FLAGS IS DONE
-	if(mob.notransform)
+	if(mob.mob_transforming)
 		return FALSE
 
 	if(mob.control_object)

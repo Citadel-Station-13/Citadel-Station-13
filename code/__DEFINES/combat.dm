@@ -108,7 +108,6 @@
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
-#define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
 #define CLICK_CD_RESIST 20
 #define CLICK_CD_GRABBING 10
@@ -155,9 +154,10 @@
 #define SHOVE_KNOCKDOWN_HUMAN 30
 #define SHOVE_KNOCKDOWN_TABLE 30
 #define SHOVE_KNOCKDOWN_COLLATERAL 10
-//for the shove slowdown, see __DEFINES/movespeed_modification.dm
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+/// how long they're staggered for
+#define SHOVE_STAGGER_DURATION 35
+/// how long they're off balance for
+#define SHOVE_OFFBALANCE_DURATION 30
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
@@ -209,9 +209,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define GUN_AIMING_TIME (2 SECONDS)
 
 //Object/Item sharpness
-#define IS_BLUNT			0
-#define IS_SHARP			1
-#define IS_SHARP_ACCURATE	2
+#define SHARP_NONE			0
+#define SHARP_EDGED			1
+#define SHARP_POINTY		2
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
@@ -269,20 +269,27 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //stamina cost defines.
 #define STAM_COST_ATTACK_OBJ_MULT	1.2
-#define STAM_COST_ATTACK_MOB_MULT	0.8
+#define STAM_COST_ATTACK_MOB_MULT	1
 #define STAM_COST_BATON_MOB_MULT	1
 #define STAM_COST_NO_COMBAT_MULT	1.25
 #define STAM_COST_W_CLASS_MULT		1.25
 #define STAM_COST_THROW_MULT		2
+#define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
 
 ///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
 #define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
 /// changeNext_move penalty multiplier of the above.
 #define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
 /// Damage penalty when fighting prone.
-#define LYING_DAMAGE_PENALTY			0.5
+#define LYING_DAMAGE_PENALTY			0.7
 /// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
 #define STAM_CRIT_GUN_DELAY			2.75
+
+//stamina recovery defines. Blocked if combat mode is on.
+#define STAM_RECOVERY_STAM_CRIT		-7.5
+#define STAM_RECOVERY_RESTING		-6
+#define STAM_RECOVERY_NORMAL		-3
+#define STAM_RECOVERY_LIMB			4 //limbs recover stamina separately from handle_status_effects(), and aren't blocked by combat mode.
 
 /**
   * should the current-attack-damage be lower than the item force multiplied by this value,

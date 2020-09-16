@@ -20,6 +20,7 @@
 	var/caliber
 	var/multiload = 1
 	var/start_empty = 0
+	var/load_delay = 0 //how long do we take to load (deciseconds)
 	var/list/bullet_cost
 	var/list/base_cost// override this one as well if you override bullet_cost
 
@@ -75,12 +76,19 @@
 	return 1
 
 /obj/item/ammo_box/attackby(obj/item/A, mob/user, params, silent = FALSE, replace_spent = 0)
+	if(INTERACTING_WITH(user, src) || INTERACTING_WITH(user, A))
+		to_chat(user, "<span class='notice'>You're already doing that!</span>")
+		return FALSE
 	var/num_loaded = 0
 	if(!can_load(user))
 		return
 	if(istype(A, /obj/item/ammo_box))
 		var/obj/item/ammo_box/AM = A
 		for(var/obj/item/ammo_casing/AC in AM.stored_ammo)
+			if(load_delay || AM.load_delay)
+				var/loadtime = max(AM.load_delay, load_delay)
+				if(!do_after(user, loadtime, target = src))
+					return FALSE
 			var/did_load = give_round(AC, replace_spent)
 			if(did_load)
 				AM.stored_ammo -= AC
@@ -114,11 +122,13 @@
 /obj/item/ammo_box/update_icon()
 	. = ..()
 	desc = "[initial(desc)] There [stored_ammo.len == 1 ? "is" : "are"] [stored_ammo.len] shell\s left!"
-	for (var/material in bullet_cost)
-		var/material_amount = bullet_cost[material]
-		material_amount = (material_amount*stored_ammo.len) + base_cost[material]
-		custom_materials[material] = material_amount
-	set_custom_materials(custom_materials)//make sure we setup the correct properties again
+	if(length(bullet_cost))
+		var/temp_materials = custom_materials.Copy()
+		for (var/material in bullet_cost)
+			var/material_amount = bullet_cost[material]
+			material_amount = (material_amount*stored_ammo.len) + base_cost[material]
+			temp_materials[material] = material_amount
+		set_custom_materials(temp_materials)
 
 /obj/item/ammo_box/update_icon_state()
 	switch(multiple_sprites)

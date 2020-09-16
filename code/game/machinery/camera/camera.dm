@@ -72,6 +72,11 @@
 	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
 
+/obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in network)
+		network -= i
+		network += "[idnum][i]"
+
 /obj/machinery/camera/Destroy()
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks
@@ -230,7 +235,7 @@
 			itemname = P.name
 			info = P.notehtml
 		to_chat(U, "<span class='notice'>You hold \the [itemname] up to the camera...</span>")
-		U.changeNext_move(CLICK_CD_MELEE)
+		U.DelayNextAction(CLICK_CD_MELEE)
 		for(var/mob/O in GLOB.player_list)
 			if(isAI(O))
 				var/mob/living/silicon/ai/AI = O

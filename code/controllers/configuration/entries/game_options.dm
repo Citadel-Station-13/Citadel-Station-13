@@ -98,6 +98,11 @@
 	config_entry_value = 6
 	min_val = 1
 
+/datum/config_entry/number/ecult_scaling_coeff		//how much does the amount of players get divided by to determine e_cult
+	config_entry_value = 6
+	integer = FALSE
+	min_val = 1
+
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
 	config_entry_value = 8
 	min_val = 1
@@ -168,11 +173,13 @@
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
-/datum/config_entry/flag/no_summon_guns	//No
+/datum/config_entry/flag/no_summon_guns		//No
 
 /datum/config_entry/flag/no_summon_magic	//Fun
 
 /datum/config_entry/flag/no_summon_events	//Allowed
+
+/datum/config_entry/flag/no_summon_traumas	//!
 
 /datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
 
@@ -527,4 +534,4 @@
 	config_entry_value = 6
 
 /datum/config_entry/number/max_shuttle_size
-	config_entry_value = 250
+	config_entry_value = 500
