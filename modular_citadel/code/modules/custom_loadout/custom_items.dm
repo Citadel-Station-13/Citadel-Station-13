@@ -551,7 +551,7 @@
 	icon_state = "polyce"
 	poly_colors = list("#808080", "#8CC6FF", "#FF3535")
 
-/obj/item/clothing/suit/customskirt
+/obj/item/clothing/under/custom/customskirt
 	name = "unzipped atmos skirt"
 	desc = "atmos jumpsuit skirt with the top half zipped down and wrapped around the waist."
 	icon_state = "atmos_skirt"
