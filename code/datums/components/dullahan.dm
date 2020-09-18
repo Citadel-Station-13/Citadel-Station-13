@@ -9,47 +9,50 @@
 	var/obj/item/dullahan_relay/relay
 
 /datum/component/dullahan/Initialize()
-	if(ishuman(parent) && parent.health > 0)
+	if(ishuman(parent))
 		owner = parent
-		DISABLE_BITFIELD(H.flags_1, HEAR_1)
-		var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
-	if(head)
-		//give the new organs
-		var/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-		if(brain)
-			brain.Remove(TRUE,TRUE)
-			QDEL_NULL(brain)
-			new_brain = new /obj/item/organ/brain/dullahan
-			new_brain.Insert(owner, TRUE, TRUE)
-		var/tongue = owner.getorganslot(ORGAN_SLOT_BRAIN)
-		if(tongue)
-			tongue.accents += new /datum/accent/dullahan
-		var/ears = owner.getorganslot(ORGAN_SLOT_EARS)
-		if(ears)
-			ears.Remove(TRUE,TRUE)
-			QDEL_NULL(ears)
-			new_ears = new /obj/item/organ/ears/dullahan
-			new_ears.Insert(owner, TRUE, TRUE)
-		var/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
-		if(eyes)
-			eyes.Remove(TRUE,TRUE)
-			QDEL_NULL(eyes)
-			new_eyes = new /obj/item/organ/eyes/dullahan
-			new_eyes.Insert(owner, TRUE, TRUE)
+		if(owner.health > 0)
+			DISABLE_BITFIELD(owner.flags_1, HEAR_1)
+			var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
+			if(head)
+				//give the new organs
+				var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+				if(brain)
+					brain.Remove(TRUE,TRUE)
+					QDEL_NULL(brain)
+					var/obj/item/organ/brain/new_brain = new /obj/item/organ/brain/dullahan
+					new_brain.Insert(owner, TRUE, TRUE)
+				var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_BRAIN)
+				if(tongue)
+					tongue.accents += new /datum/accent/dullahan
+				var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
+				if(ears)
+					ears.Remove(TRUE,TRUE)
+					QDEL_NULL(ears)
+					var/obj/item/organ/ears/new_ears = new /obj/item/organ/ears/dullahan
+					new_ears.Insert(owner, TRUE, TRUE)
+				var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+				if(eyes)
+					eyes.Remove(TRUE,TRUE)
+					QDEL_NULL(eyes)
+					var/obj/item/organ/eyes/new_eyes = new /obj/item/organ/eyes/dullahan
+					new_eyes.Insert(owner, TRUE, TRUE)
 
-		//handle the head
-		if(has_custom_head())
-			head.icon = custom_head_icon
-			head.icon_state = custom_head_icon_state
-			head.custom_head = TRUE
-		head.drop_limb()
-		if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
-			head.throwforce = 25
-			myhead = new /obj/item/dullahan_relay (head, H)
-			H.put_in_hands(head)
-			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-			for(var/datum/action/item_action/organ_action/OA in E.actions)
-				OA.Trigger()
+				//handle the head
+				if(has_custom_head())
+					head.icon = custom_head_icon
+					head.icon_state = custom_head_icon_state
+					head.custom_head = TRUE
+				head.drop_limb()
+				if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
+					head.throwforce = 25
+					relay = new /obj/item/dullahan_relay (head, owner)
+					owner.put_in_hands(head)
+					var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
+					for(var/datum/action/item_action/organ_action/OA in E.actions)
+						OA.Trigger()
+		else
+			RemoveComponent()
 	else
 		//they shouldn't have this component!
 		RemoveComponent()
@@ -58,7 +61,7 @@
 	//delete their organs and regenerate them to their species specific ones, remove accent from tongue, place head on body
 	..()
 
-/datum/component/dullahan/has_custom_head()
+/datum/component/dullahan/proc/has_custom_head()
 	return (custom_head_icon && custom_head_icon_state)
 
 //dullahan vision
@@ -69,7 +72,7 @@
 		if(eyes.tint)
 			H.reset_perspective(H)
 		else
-			H.reset_perspective(myhead)
+			H.reset_perspective(relay)
 
 //dullahan organs
 /obj/item/organ/brain/dullahan
@@ -154,7 +157,7 @@
 		var/mob/living/carbon/human/H = owner
 		if(isdullahan(H))
 			var/datum/component/dullahan/D = H.GetComponent(/datum/component/dullahan)
-			D.myhead = null
+			D.relay = null
 			owner.gib()
 	owner = null
 	..()

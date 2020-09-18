@@ -96,14 +96,12 @@
 	speech_args[SPEECH_SPANS] = SPAN_ROBOT
 	return speech_args
 
-/*
 /datum/accent/dullahan/modify_speech(list/speech_args, datum/source, mob/living/carbon/owner)
 	if(owner)
 		if(isdullahan(owner))
-			var/datum/species/dullahan/D = owner.dna.species
-			if(isobj(D.myhead.loc))
-				var/obj/O = D.myhead.loc
+			var/datum/component/dullahan/D = owner.GetComponent(/datum/component/dullahan)
+			if(isobj(D.relay.loc))
+				var/obj/O = D.relay.loc
 				O.say(speech_args[SPEECH_MESSAGE])
 	speech_args[SPEECH_MESSAGE] = ""
 	return speech_args
-*/
