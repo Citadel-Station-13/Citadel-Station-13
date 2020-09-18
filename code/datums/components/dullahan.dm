@@ -23,8 +23,15 @@
 					var/obj/item/organ/brain/new_brain = new /obj/item/organ/brain/dullahan
 					new_brain.Insert(owner, TRUE, TRUE)
 				var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_TONGUE)
+				var/list/accents
 				if(tongue)
-					tongue.accents += new /datum/accent/dullahan
+					accents = tongue.accents
+					tongue.Remove(TRUE,TRUE)
+					QDEL_NULL(tongue)
+					var/obj/item/organ/tongue/new_tongue = new /obj/item/organ/tongue/dullahan
+					if(accents)
+						new_tongue.accents += accents
+					new_tongue.Insert(owner, TRUE, TRUE)
 				var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
 				if(ears)
 					ears.Remove(TRUE,TRUE)
@@ -81,7 +88,7 @@
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
-	accents = list(/datum/accent/dullahan)
+	initial_accents = list(/datum/accent/dullahan)
 
 /obj/item/organ/ears/dullahan
 	zone = "abstract"
