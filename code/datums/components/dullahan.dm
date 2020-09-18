@@ -22,7 +22,7 @@
 					QDEL_NULL(brain)
 					var/obj/item/organ/brain/new_brain = new /obj/item/organ/brain/dullahan
 					new_brain.Insert(owner, TRUE, TRUE)
-				var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_BRAIN)
+				var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_TONGUE)
 				if(tongue)
 					tongue.accents += new /datum/accent/dullahan
 				var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
