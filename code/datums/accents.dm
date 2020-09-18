@@ -96,6 +96,7 @@
 	speech_args[SPEECH_SPANS] = SPAN_ROBOT
 	return speech_args
 
+/*
 /datum/accent/dullahan/modify_speech(list/speech_args, datum/source, mob/living/carbon/owner)
 	if(owner)
 		if(isdullahan(owner))
@@ -105,3 +106,4 @@
 				O.say(speech_args[SPEECH_MESSAGE])
 	speech_args[SPEECH_MESSAGE] = ""
 	return speech_args
+*/

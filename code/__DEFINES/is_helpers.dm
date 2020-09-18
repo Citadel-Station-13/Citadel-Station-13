@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
-#define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define isdullahan(A) (A.GetComponent(/datum/component/dullahan))
 #define isangel(A) (is_species(A, /datum/species/angel))
 #define isvampire(A) (is_species(A, /datum/species/vampire))
 #define ismush(A) (is_species(A, /datum/species/mush))

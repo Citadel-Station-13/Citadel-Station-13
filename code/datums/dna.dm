@@ -684,7 +684,7 @@
 					else
 						gib()
 				else
-					set_species(/datum/species/dullahan)
+					//set_species(/datum/species/dullahan)
 
 /datum/dna/proc/update_body_size(old_size)
 	if(!holder || features["body_size"] == old_size)
