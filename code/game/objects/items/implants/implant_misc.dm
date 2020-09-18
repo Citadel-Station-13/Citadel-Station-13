@@ -40,13 +40,17 @@
 
 /obj/item/implant/warp
 	name = "warp implant"
-	desc = "Saves your position somewhere, and then warps you back to it after five seconds."
+	desc = "Warps you to where you were 10 seconds before when activated."
 	icon_state = "warp"
 	uses = -1
 	var/total_delay = 10 SECONDS
 	var/cooldown = 10 SECONDS
 	var/last_use = 0
 	var/list/positions = list()
+
+/obj/item/implant/warp/Destroy()
+	positions = null
+	return ..()
 
 /obj/item/implant/warp/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
