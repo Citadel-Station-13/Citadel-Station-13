@@ -558,7 +558,6 @@
 	item_state = "atmos_skirt"
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
-	mutantrace_variation = NONE
 
 /obj/item/clothing/head/halo
 	name = "transdimensional halo"
@@ -567,4 +566,3 @@
 	item_state = "halo"
 	icon = 'icons/mob/clothing/custom_w.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
-	mutantrace_variation = NONE
