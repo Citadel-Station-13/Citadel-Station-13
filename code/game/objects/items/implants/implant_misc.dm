@@ -66,9 +66,7 @@
 /obj/item/implant/warp/proc/update_position(datum/source)
 	if(!isatom(imp_in.loc))
 		return
-	var/time = num2text(world.time)
-	positions.Insert(time, 1)
-	positions[time] = imp_in.loc
+	positions[num2text(world.time)] = imp_in.loc
 	if(!((++next_prune) % 10))
 		prune()
 
@@ -82,10 +80,13 @@
 /obj/item/implant/warp/proc/do_teleport_effects()
 	var/safety = 100
 	var/list/done = list()
+	var/time
+	var/turf/target
 	for(var/i in 1 to positions.len)
 		if(!--safety)
 			break
-		var/turf/target = positions[positions[i]]
+		time = positions[i]
+		target = positions[time]
 		if(done[target])
 			continue
 		done[target] = TRUE
@@ -98,16 +99,20 @@
 	if(last_use + cooldown > world.time)
 		to_chat(imp_in, "<span class=warning'>[src] is still recharging!</span>")
 		return
+	prune()
 	do_teleport_effects()		//first.
 	do_teleport(imp_in, get_tele_position(), 0, TRUE, null, null, null, null, null, TELEPORT_CHANNEL_QUANTUM, TRUE)
 
 /obj/item/implant/warp/proc/prune()
 	var/minimum_time = world.time - total_delay
-	for(var/i in positions.len to 1 step -1)
+	var/remove = 0
+	for(var/i in 1 to length(positions))
 		if(text2num(positions[i]) < minimum_time)
-			positions.len--
+			remove++
 		else
 			break
+	if(remove)
+		positions.Cut(1, remove + 1)
 
 /obj/item/implanter/warp
 	name = "implanter (warp)"
