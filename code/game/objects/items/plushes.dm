@@ -167,7 +167,7 @@
 					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushpet", /datum/mood_event/plushpet)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plushpet", /datum/mood_event/plushpet)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plush_nostuffing", /datum/mood_event/plush_nostuffing)
@@ -754,8 +754,8 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	attack_verb = list("headbutt", "scritched", "bit")
 	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
 	can_random_spawn = FALSE
-	
-	
+
+
 /obj/item/toy/plush/hairball
 	name = "Hairball"
 	desc = "A bundle of undigested fibers and scales. Yuck."
@@ -765,3 +765,78 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	squeak_override = list('sound/misc/splort.ogg'=1)
 	attack_verb = list("sploshed", "splorted", "slushed")
 	can_random_spawn = FALSE
+
+/obj/item/toy/plush/plushling
+	name = "peculiar plushie"
+	desc = "An adorable stuffed toy- wait, did it just move?"
+	can_random_spawn = FALSE
+	var/absorb_cooldown = 100 //ticks cooldown between absorbs
+	var/next_absorb = 0 //When can it absorb another plushie
+	var/check_interval = 20
+	var/next_check = 0
+
+//Overrides parent proc
+/obj/item/toy/plush/plushling/attack_self(mob/user)
+	if(!user) //hmmmmm
+		return
+	to_chat(user, "<span class='warning'>You try to pet the plushie, but recoil as it bites your hand instead! OW!</span>")
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"plush_bite", /datum/mood_event/plush_bite)
+	var/mob/living/carbon/human/H = user
+	if(!H)
+		return //Type safety.
+	H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	addtimer(CALLBACK(H, /mob/living/carbon/human.proc/dropItemToGround, src, TRUE), 1)
+
+/obj/item/toy/plush/plushling/New()
+	var/initial_state = pick("plushie_lizard", "plushie_snake", "plushie_slime", "fox")
+	icon_state = initial_state
+	item_state = initial_state
+	START_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/toy/plush/plushling/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/toy/plush/plushling/process()
+	if(world.time < next_absorb || world.time < next_check)
+		return
+	next_check = world.time + check_interval
+	var/obj/item/toy/plush/target
+	for(var/obj/item/toy/plush/possible_target in loc) //First, it tries to get anything in its same location, be it a tile or a backpack
+		if(possible_target == src || istype(possible_target, /obj/item/toy/plush/plushling))
+			continue
+		target = possible_target
+		break
+	if(!target)
+		if(!isturf(loc))
+			return
+		for(var/obj/item/toy/plush/P in oview(1, src)) //If that doesn't work, it hunts for plushies adjacent to its own tile
+			if(istype(P, /obj/item/toy/plush/plushling)) //These do not hunt their own kind
+				continue
+			src.throw_at(P, 1, 2)
+			visible_message("<span class='danger'>[src] leaps at [P]!</span>")
+			break
+		return
+	if(istype(target, /obj/item/toy/plush/plushling)) //These do not consume their own.
+		return
+	next_absorb = world.time + absorb_cooldown
+	plushie_absorb(target)
+
+/obj/item/toy/plush/plushling/proc/plushie_absorb(obj/item/toy/plush/victim)
+	if(!victim)
+		return
+	visible_message("<span class='warning'>[src] gruesomely mutilliates [victim], leaving nothing more than dust!</span>")
+	name = victim.name
+	desc = victim.desc + " Wait, did it just move..?"
+	icon_state = victim.icon_state
+	item_state = victim.item_state
+	squeak_override = victim.squeak_override
+	attack_verb = victim.attack_verb
+	new /obj/effect/decal/cleanable/ash(get_turf(victim))
+	qdel(victim)
+
+/obj/item/toy/plush/plushling/love(obj/item/toy/plush/Kisser, mob/living/user) //You shouldn't have come here, poor plush.
+	if(!Kisser)
+		return
+	plushie_absorb(Kisser)
