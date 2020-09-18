@@ -47,6 +47,7 @@
 	var/cooldown = 10 SECONDS
 	var/last_use = 0
 	var/list/positions = list()
+	var/next_prune = 0
 
 /obj/item/implant/warp/Destroy()
 	positions = null
@@ -65,9 +66,11 @@
 /obj/item/implant/warp/proc/update_position(datum/source)
 	if(!isatom(imp_in.loc))
 		return
-	var/time = text2num(world.time)
+	var/time = num2text(world.time)
 	positions.Insert(time, 1)
 	positions[time] = imp_in.loc
+	if(!((++next_prune) % 10))
+		prune()
 
 /obj/item/implant/warp/proc/clear_positions()
 	positions = list()
