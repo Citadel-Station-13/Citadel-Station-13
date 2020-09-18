@@ -75,7 +75,7 @@
 
 /obj/item/implant/warp/proc/get_tele_position()
 	prune()
-	return positions[positions[positions.len]]
+	return positions[positions[1]]
 
 /obj/item/implant/warp/proc/do_teleport_effects()
 	var/safety = 100
@@ -99,6 +99,7 @@
 	if(last_use + cooldown > world.time)
 		to_chat(imp_in, "<span class=warning'>[src] is still recharging!</span>")
 		return
+	last_use = world.time
 	prune()
 	do_teleport_effects()		//first.
 	do_teleport(imp_in, get_tele_position(), 0, TRUE, null, null, null, null, null, TELEPORT_CHANNEL_QUANTUM, TRUE)
