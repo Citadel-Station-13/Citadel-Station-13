@@ -147,23 +147,23 @@
 		to_chat(user, "<span class='warning'>There is not enough of [src] left!</span>")
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	// tgui is a plague upon this codebase
+/obj/item/toy/crayon/ui_state(mob/user)
+	return GLOB.hands_state
 
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/toy/crayon/ui_interact(mob/user, datum/tgui/ui)
+	// tgui is a plague upon this codebase
+	// no u
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Crayon", name, 600, 600,
-			master_ui, state)
+		ui = new(user, src, "Crayon", name)
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(has_cap)
 			is_capped = !is_capped
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 			update_icon()
-			return TRUE
 
 /obj/item/toy/crayon/CtrlClick(mob/user)
 	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -735,7 +735,11 @@
 	if(isobj(target))
 		if(actually_paints)
 			var/list/hsl = rgb2hsl(hex2num(copytext(paint_color,2,4)),hex2num(copytext(paint_color,4,6)),hex2num(copytext(paint_color,6,8)))
-			if(hsl[3] < 0.25 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
+			var/static/whitelisted = typecacheof(list(/obj/structure/window,
+										/obj/effect/decal/cleanable/crayon,
+										/obj/machinery/door/window)
+									)
+			if(hsl[3] < 0.25 && !whitelisted[target]) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
 

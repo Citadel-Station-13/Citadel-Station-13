@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscdel: "acid no longer degrades armor"

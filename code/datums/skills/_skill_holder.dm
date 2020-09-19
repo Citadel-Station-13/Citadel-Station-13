@@ -110,7 +110,7 @@
 
 /**
   * Automatic skill increase, multiplied by skill affinity if existing.
-  * Only works if skill is numerical.
+  * Only works if skill is numerical or levelled..
   */
 /datum/mind/proc/auto_gain_experience(skill, value, maximum, silent = FALSE)
 	if(!ispath(skill, /datum/skill))

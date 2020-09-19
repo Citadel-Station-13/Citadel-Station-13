@@ -97,7 +97,7 @@
 	desc = "Charges your slab with divine energy, allowing you to overwhelm a target with Ratvar's light."
 	invocations = list("Divinity, show them your light!")
 	whispered = TRUE
-	channel_time = 10 // I think making kindle channel a third of the time less is a good make up for the fact that it silences people for such a little amount of time.
+	channel_time = 25 //2.5 seconds should be a okay compromise between being able to use it when needed, and not being able to just pause in combat for a second and hardstunning your enemy
 	power_cost = 125
 	usage_tip = "The light can be used from up to two tiles away. Damage taken will GREATLY REDUCE the stun's duration."
 	tier = SCRIPTURE_DRIVER
@@ -137,6 +137,30 @@
 	quickbind_desc = "Applies handcuffs to a struck target."
 
 
+//Belligerent: Channeled for up to fifteen times over thirty seconds. Forces non-servants that can hear the chant to walk, doing minor damage. Nar-Sian cultists are burned.
+/datum/clockwork_scripture/channeled/belligerent
+	descname = "Channeled, Area Slowdown"
+	name = "Belligerent"
+	desc = "Forces all nearby non-servants to walk rather than run, doing minor damage. Chanted every two seconds for up to thirty seconds."
+	chant_invocations = list("Punish their blindness!", "Take time, make slow!", "Kneel before The Justiciar!", "Halt their charges!", "Cease the tides!")
+	chant_amount = 15
+	chant_interval = 20
+	channel_time = 20
+	power_cost = 300
+	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
+	tier = SCRIPTURE_DRIVER
+	primary_component = BELLIGERENT_EYE
+	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
+
+/datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
+	for(var/mob/living/carbon/C in hearers(7, invoker))
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
+	new /obj/effect/temp_visual/ratvar/belligerent(get_turf(invoker))
+	return TRUE
+
+
 //Vanguard: Provides twenty seconds of greatly increased stamina regeneration and stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed aswell as 50% of healed stamloss are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
@@ -149,7 +173,7 @@
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 7
+	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Allows you to temporarily have quickly regenerating stamina and absorb stuns. Part of the stuns absorbed and staminaloss healed will affect you when disabled."
 
@@ -181,7 +205,7 @@
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
-	sort_priority = 8
+	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Allows you to convert a Servant's brute, burn, and oxygen damage to half toxin damage.<br><b>Click your slab to disable.</b>"
 	slab_overlay = "compromise"
@@ -255,7 +279,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 10
+	sort_priority = 11
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a new Clockwork Slab."
@@ -276,7 +300,7 @@
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 11
+	sort_priority = 12
 	quickbind = TRUE
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
@@ -295,7 +319,7 @@
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 9
+	sort_priority = 10
 	quickbind = TRUE
 	quickbind_desc = "Allows you to create a one-way Spatial Gateway to a living Servant or Clockwork Obelisk."
 

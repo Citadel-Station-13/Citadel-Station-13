@@ -96,7 +96,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/meson/eyepatch
 	name = "eyepatch mesons"
@@ -149,6 +149,30 @@
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 
+/obj/item/clothing/glasses/eyepatch/syndicate
+	name = "cybernetic eyepatch"
+	desc = "An eyepatch used to enhance one's aim with guns."
+	icon_state = "syndicatepatch"
+	item_state = "syndicatepatch"
+	resistance_flags = ACID_PROOF
+
+/obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		user.visible_message("<span class='warning'>Circuitry from the eyepatch links itself to your brain as you put on the eyepatch.")
+		if(HAS_TRAIT(user, TRAIT_POOR_AIM))
+			user.visible_message("<span class='warning'>You hear a fizzing noise from the circuit. That can't be good.")
+		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
+
+/obj/item/clothing/glasses/eyepatch/syndicate/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.applyOrganDamage(30)
+		user.visible_message("<span class='warning'>Your eye stings as the circuitry is removed from your eye!")
+
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
@@ -180,7 +204,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
@@ -237,7 +261,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	name = "black giga gar glasses"
@@ -257,7 +281,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar

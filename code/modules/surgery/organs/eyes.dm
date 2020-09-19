@@ -272,13 +272,23 @@
 	set_distance(clamp(range, 0, max_light_beam_distance))
 	assume_rgb(C)
 
+#define MAX_SATURATION 192
+#define MAX_LIGHTNESS 256
+
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
-	current_color_string = newcolor
-	eye_color = RGB2EYECOLORSTRING(current_color_string)
+	eye_color = RGB2EYECOLORSTRING(newcolor)
+	var/list/hsv = ReadHSV(RGBtoHSV(newcolor))
+	hsv[2] = clamp(hsv[2], 0, MAX_SATURATION)
+	hsv[3] = clamp(hsv[3], 0, MAX_LIGHTNESS)
+	var/new_hsv = hsv(hsv[1], hsv[2], hsv[3])
+	current_color_string = HSVtoRGB(new_hsv)
 	sync_light_effects()
 	cycle_mob_overlay()
 	if(!QDELETED(owner) && ishuman(owner))		//Other carbon mobs don't have eye color.
 		owner.dna.species.handle_body(owner)
+
+#undef MAX_SATURATION
+#undef MAX_LIGHTNESS
 
 /obj/item/organ/eyes/robotic/glow/proc/cycle_mob_overlay()
 	remove_mob_overlay()

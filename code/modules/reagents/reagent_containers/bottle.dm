@@ -417,24 +417,19 @@
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
 
-//Lewd Stuff
+//Ichors
+/obj/item/reagent_containers/glass/bottle/ichor
+	possible_transfer_amounts = list(1)
+	volume = 1
 
-/obj/item/reagent_containers/glass/bottle/crocin
-	name = "Crocin bottle"
-	desc = "A bottle of mild aphrodisiac. Increases libido."
-	list_reagents = list(/datum/reagent/drug/aphrodisiac = 30)
+/obj/item/reagent_containers/glass/bottle/ichor/red
+	name = "healing potion"
+	list_reagents = list(/datum/reagent/red_ichor = 1)
 
-/obj/item/reagent_containers/glass/bottle/hexacrocin
-	name = "Hexacrocin bottle"
-	desc = "A bottle of strong aphrodisiac. Increases libido."
-	list_reagents = list(/datum/reagent/drug/aphrodisiacplus = 30)
+/obj/item/reagent_containers/glass/bottle/ichor/blue
+	name = "blue potion"
+	list_reagents = list(/datum/reagent/blue_ichor = 1)
 
-/obj/item/reagent_containers/glass/bottle/camphor
-	name = "Camphor bottle"
-	desc = "A bottle of mild anaphrodisiac. Reduces libido."
-	list_reagents = list(/datum/reagent/drug/anaphrodisiac = 30)
-
-/obj/item/reagent_containers/glass/bottle/hexacamphor
-	name = "Hexacamphor bottle"
-	desc = "A bottle of strong anaphrodisiac. Reduces libido."
-	list_reagents = list(/datum/reagent/drug/anaphrodisiacplus = 30)
+/obj/item/reagent_containers/glass/bottle/ichor/green
+	name = "green potion"
+	list_reagents = list(/datum/reagent/green_ichor = 1)

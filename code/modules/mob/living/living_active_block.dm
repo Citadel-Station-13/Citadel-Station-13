@@ -13,7 +13,7 @@
 	DelayNextAction(data.block_end_click_cd_add)
 	return TRUE
 
-/mob/living/proc/ACTIVE_BLOCK_START(obj/item/I)
+/mob/living/proc/active_block_start(obj/item/I)
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		return FALSE
 	if(!(I in held_items))
@@ -109,7 +109,7 @@
 		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN, ANIMATION_END_NOW)
 		return
 	combat_flags &= ~(COMBAT_FLAG_ACTIVE_BLOCK_STARTING)
-	ACTIVE_BLOCK_START(I)
+	active_block_start(I)
 
 /**
   * Gets the first item we can that can block, but if that fails, default to active held item.COMSIG_ENABLE_COMBAT_MODE
@@ -180,6 +180,12 @@
 
 /// Apply the stamina damage to our user, notice how damage argument is stamina_amount.
 /obj/item/proc/active_block_do_stamina_damage(mob/living/owner, atom/object, stamina_amount, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(istype(object, /obj/item/projectile))
+		var/obj/item/projectile/P = object
+		if(P.stamina)
+			var/blocked = active_block_calculate_final_damage(owner, object, P.stamina, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+			var/stam = active_block_stamina_cost(owner, object, blocked, attack_text, ATTACK_TYPE_PROJECTILE, armour_penetration, attacker, def_zone, final_block_chance, block_return)
+			stamina_amount += stam
 	var/datum/block_parry_data/data = get_block_parry_data()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner

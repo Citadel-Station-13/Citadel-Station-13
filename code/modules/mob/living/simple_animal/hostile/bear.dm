@@ -2,7 +2,6 @@
 /mob/living/simple_animal/hostile/bear
 	name = "space bear"
 	desc = "You don't need to be faster than a space bear, you just need to outrun your crewmates."
-	threat = 1
 	icon_state = "bear"
 	icon_living = "bear"
 	icon_dead = "bear_dead"
@@ -33,7 +32,7 @@
 	melee_damage_upper = 15
 	wound_bonus = -5
 	bare_wound_bonus = 10 // BEAR wound bonus am i right
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'

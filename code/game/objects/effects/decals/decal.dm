@@ -46,4 +46,5 @@
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	T.AddElement(/datum/element/decal, icon, icon_state, turn(dir, -dir2angle(T.dir)), CLEAN_GOD, color, null, null, alpha)
+	var/turn_dir = 180 - dir2angle(T.dir) //Turning a dir by 0 results in a roulette of random dirs.
+	T.AddElement(/datum/element/decal, icon, icon_state, turn_dir ? turn(dir, turn_dir) : dir, CLEAN_GOD, color, null, null, alpha)

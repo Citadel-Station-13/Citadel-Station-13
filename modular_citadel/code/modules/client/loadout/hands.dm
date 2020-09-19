@@ -1,67 +1,54 @@
-/datum/gear/cane
+/datum/gear/hands
+	category = LOADOUT_CATEGORY_HANDS
+	slot = SLOT_HANDS
+
+/datum/gear/hands/cane
 	name = "Cane"
-	category = SLOT_HANDS
 	path = /obj/item/cane
 
-/datum/gear/cigarettes
+/datum/gear/hands/cigarettes
 	name = "Cigarette pack"
-	category = SLOT_HANDS
 	path = /obj/item/storage/fancy/cigarettes
 
-/datum/gear/dice
+/datum/gear/hands/dice
 	name = "Dice bag"
-	category = SLOT_HANDS
 	path = /obj/item/storage/box/dice
 
-/datum/gear/eightball
+/datum/gear/hands/eightball
 	name = "Magic eightball"
-	category = SLOT_HANDS
 	path = /obj/item/toy/eightball
 
-/datum/gear/matches
+/datum/gear/hands/matches
 	name = "Matchbox"
-	category = SLOT_HANDS
 	path = /obj/item/storage/box/matches
 
-/datum/gear/cheaplighter
+/datum/gear/hands/cheaplighter
 	name = "Cheap lighter"
-	category = SLOT_HANDS
 	path = /obj/item/lighter/greyscale
 
-/datum/gear/cards
+/datum/gear/hands/cards
 	name = "Playing cards"
-	category = SLOT_HANDS
 	path = /obj/item/toy/cards/deck
 
-/datum/gear/skub
+/datum/gear/hands/skub
 	name = "Skub"
-	category = SLOT_HANDS
 	path = /obj/item/skub
 
-/datum/gear/carpplushie
-	name = "Space carp plushie"
-	category = SLOT_HANDS
-	path = /obj/item/toy/plush/carpplushie
-
-/datum/gear/wallet
+/datum/gear/hands/wallet
 	name = "Wallet"
-	category = SLOT_HANDS
 	path = /obj/item/storage/wallet
 
-/datum/gear/flask
+/datum/gear/hands/flask
 	name = "Flask"
-	category = SLOT_HANDS
 	path = /obj/item/reagent_containers/food/drinks/flask
 	cost = 2
 
-/datum/gear/zippolighter
+/datum/gear/hands/zippolighter
 	name = "Zippo Lighter"
-	category = SLOT_HANDS
 	path = /obj/item/lighter
 	cost = 2
 
-/datum/gear/cigar
+/datum/gear/hands/cigar
 	name = "Cigar"
-	category = SLOT_HANDS
 	path = /obj/item/clothing/mask/cigarette/cigar
 	cost = 4 //smoking is bad mkay

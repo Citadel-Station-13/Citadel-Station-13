@@ -106,8 +106,8 @@
 	var/disarming = (target_downed && (shield_flags & SHIELD_BASH_GROUND_SLAM_DISARM)) || (shield_flags & SHIELD_BASH_ALWAYS_DISARM) || (wallhit && (shield_flags & SHIELD_BASH_WALL_DISARM))
 	var/knockdown = !target_downed && ((shield_flags & SHIELD_BASH_ALWAYS_KNOCKDOWN) || (wallhit && (shield_flags & SHIELD_BASH_WALL_KNOCKDOWN)))
 	if(shieldbash_stagger_duration || knockdown)
-		target.visible_message("<span class='warning'>[target] is knocked [knockdown? "to the floor" : "off balanace"]!</span>",
-		"<span class='userdanger'>You are knocked [knockdown? "to the floor" : "off balanace"]!</span>")
+		target.visible_message("<span class='warning'>[target] is knocked [knockdown? "to the floor" : "off balance"]!</span>",
+		"<span class='userdanger'>You are knocked [knockdown? "to the floor" : "off balance"]!</span>")
 	if(knockdown)
 		target.KnockToFloor(disarming)
 	else if(disarming)

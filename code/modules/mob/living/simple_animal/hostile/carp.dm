@@ -7,7 +7,6 @@
 	icon_living = "carp"
 	icon_dead = "carp_dead"
 	icon_gib = "carp_gib"
-	threat = 0.1
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
@@ -74,7 +73,6 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
-	threat = 3
 	regen_amount = 6
 
 	maxHealth = 30
@@ -98,7 +96,6 @@
 	name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
-	threat = 5
 	regen_amount = 8
 
 	speak_emote = list("squeaks")

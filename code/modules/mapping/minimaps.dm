@@ -4,7 +4,7 @@
 	// The map icons
 	var/icon/map_icon
 	var/icon/meta_icon
-	
+
 	var/list/color_area_names = list()
 
 	var/minx
@@ -33,7 +33,7 @@
 	meta_icon = new('html/blank.png')
 	map_icon.Scale(x2 - x1 + 1, y2 - y1 + 1) // arrays start at 1
 	meta_icon.Scale(x2 - x1 + 1, y2 - y1 + 1)
-	
+
 	var/list/area_to_color = list()
 	for(var/turf/T in block(locate(x1, y1, z_level), locate(x2, y2, z_level)))
 		var/area/A = T.loc
@@ -44,7 +44,7 @@
 			crop_x2 = max(crop_x2, T.x)
 			crop_y1 = min(crop_y1, T.y)
 			crop_y2 = max(crop_y2, T.y)
-		
+
 		var/meta_color = area_to_color[A]
 		if(!meta_color)
 			meta_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255)) // technically conflicts could happen but it's like very unlikely and it's not that big of a deal if one happens
@@ -73,13 +73,15 @@
 	overlay_icon = new(map_icon)
 	overlay_icon.Scale(16, 16)
 	//we're done baking, now we ship it.
-	register_asset("minimap-[id].png", map_icon)
-	register_asset("minimap-[id]-meta.png", meta_icon)
+	if (!SSassets.cache["minimap-[id].png"])
+		SSassets.transport.register_asset("minimap-[id].png", map_icon)
+	if (!SSassets.cache["minimap-[id]-meta.png"])
+		SSassets.transport.register_asset("minimap-[id]-meta.png", meta_icon)
 
 /datum/minimap/proc/send(mob/user)
 	if(!id)
 		CRASH("ERROR: send called, but the minimap id is null/missing. ID: [id]")
-	send_asset_list(user, list("minimap-[id].png" = map_icon, "minimap-[id]-meta.png" = meta_icon))
+	SSassets.transport.send_assets(user, list("minimap-[id].png" = map_icon, "minimap-[id]-meta.png" = meta_icon))
 
 /datum/minimap_group
 	var/list/minimaps = list()
@@ -100,15 +102,17 @@
 
 	var/list/datas = list()
 	var/list/info = list()
-	
+
 	for(var/i in 1 to length(minimaps))// OLD: for(var/i in 1 to length(minimaps))
 		var/datum/minimap/M = minimaps[i]
+		var/map_name = "minimap-[M.id].png"
+		var/meta_name = "minimap-[M.id]-meta.png"
 		M.send(user)
 		info += {"
 			<div class="block">
 				<div> <!-- The div is in here to fit it both in the block div -->
-					<img id='map-[i]' src='minimap-[M.id].png' />
-					<img id='map-[i]-meta' src='minimap-[M.id]-meta.png' style='display: none' />
+					<img id='map-[i]' src='[SSassets.transport.get_asset_url(map_name)]' />
+					<img id='map-[i]-meta' src='[SSassets.transport.get_asset_url(meta_name)]' style='display: none' />
 				</div>
 				<div class="statusDisplay" id='label-[i]'></div>
 			</div>
@@ -183,6 +187,4 @@
 	var/datum/browser/popup = new(user, "minimap_[id]", name, 500, 700)
 	popup.add_head_content(headerJS) //set the head
 	popup.set_content(info)
-	var/datum/minimap/MICO = minimaps[1]
-	popup.set_title_image(MICO.overlay_icon)
 	popup.open(FALSE)

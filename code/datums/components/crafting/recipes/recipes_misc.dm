@@ -2,6 +2,15 @@
 //Large Objects//
 /////////////////
 
+/datum/crafting_recipe/plunger
+	name = "Plunger"
+	result = /obj/item/plunger
+	time = 1
+	reqs = list(/obj/item/stack/sheet/plastic = 1,
+				/obj/item/stack/sheet/mineral/wood = 1)
+	category = CAT_MISC
+	subcategory = CAT_TOOL
+
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
 	reqs = 	list(/obj/item/stack/sheet/cloth = 2,
@@ -111,6 +120,53 @@
 	category = CAT_MISC
 	always_availible = FALSE	// Disabled til learned
 
+/datum/crafting_recipe/furnace
+	name = "Sandstone Furnace"
+	result = /obj/structure/furnace
+	time = 300
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 15,
+	/obj/item/stack/sheet/metal = 4,
+	/obj/item/stack/rods = 2)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/tableanvil
+	name = "Table Anvil"
+	result = /obj/structure/anvil/obtainable/table
+	time = 300
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+		        /obj/item/stack/rods = 2)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/sandvil
+	name = "Sandstone Anvil"
+	result = /obj/structure/anvil/obtainable/sandstone
+	time = 300
+	reqs = list(/obj/item/stack/sheet/mineral/sandstone = 24)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/basaltblock
+	name = "Sintered Basalt Block"
+	result = /obj/item/basaltblock
+	time = 200
+	reqs = list(/obj/item/stack/ore/glass/basalt = 50)
+	tools = list(TOOL_WELDER)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+/datum/crafting_recipe/basaltanvil
+	name = "Basalt Anvil"
+	result = /obj/structure/anvil/obtainable/basalt
+	time = 200
+	reqs = list(/obj/item/basaltblock = 5)
+	tools = list(TOOL_CROWBAR)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 ///////////////////
 //Tools & Storage//
 ///////////////////
@@ -126,7 +182,7 @@
 
 /datum/crafting_recipe/brute_pack
 	name = "Suture Pack"
-	result = /obj/item/stack/medical/suture/one
+	result = /obj/item/stack/medical/suture/five
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
@@ -135,7 +191,7 @@
 
 /datum/crafting_recipe/burn_pack
 	name = "Regenerative Mesh"
-	result = /obj/item/stack/medical/mesh/one
+	result = /obj/item/stack/medical/mesh/five
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
@@ -166,6 +222,17 @@
 	subcategory = CAT_TOOL
 	category = CAT_MISC
 
+/datum/crafting_recipe/toolboxhammer
+	name = "Toolbox Hammer"
+	result = /obj/item/melee/smith/hammer/toolbox
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	reqs = list(/obj/item/storage/toolbox = 1,
+							/obj/item/stack/sheet/metal = 4,
+							/obj/item/stack/rods = 2)
+	time = 40
+	subcategory = CAT_TOOL
+	category = CAT_MISC
+
 /datum/crafting_recipe/papersack
 	name = "Paper Sack"
 	result = /obj/item/storage/box/papersack
@@ -188,7 +255,7 @@
 	result = /obj/item/screwdriver/bronze
 	reqs = list(/obj/item/screwdriver = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -200,7 +267,7 @@
 	result = /obj/item/weldingtool/bronze
 	reqs = list(/obj/item/weldingtool = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -212,7 +279,7 @@
 	result = /obj/item/wirecutters/bronze
 	reqs = list(/obj/item/wirecutters = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -224,7 +291,7 @@
 	result = /obj/item/crowbar/bronze
 	reqs = list(/obj/item/crowbar = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -236,7 +303,7 @@
 	result = /obj/item/wrench/bronze
 	reqs = list(/obj/item/wrench = 1,
 				/obj/item/stack/cable_coil = 10,
-				/obj/item/stack/tile/bronze = 1,
+				/obj/item/stack/sheet/bronze = 1,
 				/datum/reagent/water  = 15)
 	time = 40
 	subcategory = CAT_TOOL
@@ -268,6 +335,19 @@
 	time = 5
 	subcategory = CAT_TOOL
 	category = CAT_MISC
+
+/datum/crafting_recipe/heretic/codex
+	name = "Codex Cicatrix"
+	result = /obj/item/forbidden_book
+	tools = list(/obj/item/pen)
+	reqs = list(/obj/item/paper = 5,
+				/obj/item/organ/eyes = 1,
+				/obj/item/organ/heart = 1,
+				/obj/item/stack/sheet/animalhide/human = 1)
+	time = 150
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+	always_availible = FALSE
 
 ////////////
 //Vehicles//
@@ -324,7 +404,7 @@
 	result = /obj/item/toy/sword/cx
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/catgirlplushie
 	name = "Catgirl Plushie"
 	reqs = list(/obj/item/toy/plush/hairball = 3)
@@ -335,6 +415,25 @@
 ////////////
 //Unsorted//
 ////////////
+
+
+
+/datum/crafting_recipe/stick
+	name = "Stick"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1)
+	result = /obj/item/stick
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+
+/datum/crafting_recipe/swordhilt
+	name = "Sword Hilt"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
+	result = /obj/item/swordhandle
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
 
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"

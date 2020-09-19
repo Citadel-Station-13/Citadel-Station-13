@@ -3,7 +3,7 @@
 	name = "Anthromorphic Plant"
 	id = "pod"
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR,CAN_SCAR)
+	species_traits = list(MUTCOLORS,EYECOLOR,CAN_SCAR,HAS_FLESH,HAS_BONE)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -20,6 +20,8 @@
 	var/light_bruteheal = -1
 
 	species_type = "plant"
+
+	allowed_limb_ids = list("pod","mush")
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

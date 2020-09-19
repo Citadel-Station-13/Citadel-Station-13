@@ -89,17 +89,17 @@
 	creation_message = "<span class='alloy bold'>The cogscarab clicks and whirrs as it hops up and springs to life!</span>"
 	construct_type = /mob/living/simple_animal/drone/cogscarab
 	w_class = WEIGHT_CLASS_SMALL
-	var/infinite_resources = TRUE
+	var/infinite_resources = FALSE //No.
 	var/static/obj/item/seasonal_hat //Share it with all other scarabs, since we're from the same cult!
 
 /obj/item/clockwork/construct_chassis/cogscarab/Initialize()
 	. = ..()
 	if(GLOB.servants_active)
-		infinite_resources = FALSE //For any that are somehow spawned in late
+		infinite_resources = FALSE //This check is relatively irrelevant until *someone* makes the infinite resources var default to true again, so, leaving it in.
 
 /obj/item/clockwork/construct_chassis/cogscarab/pre_spawn()
 	if(infinite_resources)
-		//During rounds where they can't interact with the station, let them experiment with builds
+		//During rounds where they can't interact with the station, let them experiment with builds, if an admin allows them to.
 		construct_type = /mob/living/simple_animal/drone/cogscarab/ratvar
 	if(!seasonal_hat)
 		var/obj/item/drone_shell/D = locate() in GLOB.poi_list

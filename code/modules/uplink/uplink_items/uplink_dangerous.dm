@@ -20,6 +20,7 @@
 	desc = "A sleek box containing a brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers, and an extra speedloader."
 	item = /obj/item/storage/box/syndie_kit/revolver
 	cost = 13
+	player_minimum = 15
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
@@ -177,6 +178,7 @@
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 15
+	limited_stock = 1 // you can only have one holopara apparently?
 	refundable = TRUE
 	cant_discount = TRUE
 	surplus = 0
@@ -184,6 +186,17 @@
 	player_minimum = 25
 	restricted = TRUE
 	refund_path = /obj/item/guardiancreator/tech/choose/traitor
+
+/datum/uplink_item/dangerous/nukieguardian // just like the normal holoparasites but without the support or deffensive stands because nukies shouldnt turtle
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
+	item = /obj/item/storage/box/syndie_kit/nukieguardian
+	cost = 15
+	refundable = TRUE
+	surplus = 50
+	refund_path = /obj/item/guardiancreator/tech/choose/nukie
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"

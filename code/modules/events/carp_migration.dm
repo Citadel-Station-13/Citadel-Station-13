@@ -5,7 +5,6 @@
 	min_players = 2
 	earliest_start = 10 MINUTES
 	max_occurrences = 6
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/carp_migration
 	announceWhen	= 3

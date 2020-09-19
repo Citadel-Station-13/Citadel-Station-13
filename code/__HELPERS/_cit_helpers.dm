@@ -17,7 +17,7 @@
 	var/matrix/mtrx=new()
 	return mtrx.Scale(0.65)
 
-proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user' has available to them. It searches the list of ckeys attached to the 'whitelist' var for a species and also checks if they're an admin.
+/proc/get_racelist(mob/user)//This proc returns a list of species that 'user' has available to them. It searches the list of ckeys attached to the 'whitelist' var for a species and also checks if they're an admin.
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		var/list/wlist = S.whitelist

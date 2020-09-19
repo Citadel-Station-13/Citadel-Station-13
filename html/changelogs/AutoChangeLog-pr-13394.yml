@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Sutures work on simplemobs again."
+  - bugfix: "Attacking dismembered bodyparts now targets the chest instead, for weapons aswell as unarmed attacks."

@@ -18,7 +18,6 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-	threat = 30
 	health = 800
 	maxHealth = 800
 	spacewalk = TRUE
@@ -142,7 +141,7 @@ Difficulty: Medium
 			loot = list(/obj/item/staff/storm)
 			elimination = 0
 		else if(prob(20))
-			loot = list(/obj/structure/closet/crate/necropolis/tendril)
+			loot = list(/obj/structure/closet/crate/necropolis/tendril/random) //This one spawns a chest that could be any of the three types
 		..()
 
 /obj/item/gps/internal/legion

@@ -26,7 +26,8 @@
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	return pry_tile(I, user)
+	. = STOP_ATTACK_PROC_CHAIN
+	pry_tile(I, user)
 
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -61,6 +62,11 @@
 			if(user && !silent)
 				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
+
+/turf/open/floor/wood/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/wood/cold
 	temperature = 255.37

@@ -16,13 +16,12 @@
 	spread = 20
 	actions_types = list()
 
-/obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_overlays()
+	. = ..()
 	if(magazine)
-		cut_overlays()
-		add_overlay("foamsp-magazine")
-	else
-		cut_overlays()
+		. += "foamsp-magazine"
+
+/obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /////////RAYGUN MEMES/////////

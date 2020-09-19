@@ -64,6 +64,7 @@
 	toxpwr = 3
 	pH = 4
 	value = REAGENT_VALUE_RARE //sheets are worth more
+	material = /datum/material/plasma
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
@@ -372,6 +373,14 @@
 	toxpwr = 0.5
 	pH = 4.9
 	value = REAGENT_VALUE_VERY_COMMON
+
+/datum/reagent/toxin/teapowder/red
+	name = "Ground Red Tea Leaves"
+	toxpwr = 0.4
+
+/datum/reagent/toxin/teapowder/green
+	name = "Ground Green Tea Leaves"
+	toxpwr = 0.6
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"

@@ -184,13 +184,22 @@
 
 /obj/screen/alert/hot
 	name = "Too Hot"
-	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	desc = "The air around you is pretty toasty! Consider putting on some insulating clothing, or moving to a cooler area."
 	icon_state = "hot"
 
 /obj/screen/alert/cold
 	name = "Too Cold"
-	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
+	desc = "The air around you is pretty cold! Consider wearing a coat, or moving to a warmer area."
 	icon_state = "cold"
+
+/obj/screen/alert/sweat
+	name = "Sweating"
+	desc = "You're sweating! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	icon_state = "sweat"
+
+/obj/screen/alert/shiver
+	name = "Shivering"
+	desc = "You're shivering! Get somewhere warmer and take off any insulating clothing like a space suit." 
 
 /obj/screen/alert/lowpressure
 	name = "Low Pressure"
@@ -492,6 +501,16 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "lowcell"
+
+/obj/screen/alert/etherealcharge
+	name = "Low Blood Charge"
+	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
+	icon_state = "etherealcharge"
+
+/obj/screen/alert/ethereal_overcharge
+	name = "Blood Overcharge"
+	desc = "Your blood's electric charge is becoming dangerously high, find an outlet for your energy. Use Grab Intent on an APC to channel your energy into it."
+	icon_state = "ethereal_overcharge"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /obj/screen/alert/hacked

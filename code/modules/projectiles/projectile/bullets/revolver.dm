@@ -19,8 +19,9 @@
 	ricochet_chance = 50
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
-	wound_bonus = -35
-	sharpness = TRUE
+	wound_bonus = -20
+	bare_wound_bonus = 10
+	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
 
 /obj/item/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -43,13 +44,21 @@
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
 	shrapnel_type = NONE
+	sharpness = SHARP_NONE
+	embedding = null
 
+// premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/item/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
 	damage = 15
 	armour_penetration = -30
 	ricochets_max = 0
-	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
+	sharpness = SHARP_EDGED
+	wound_bonus = 20
+	bare_wound_bonus = 20
+	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	wound_falloff_tile = -5
+	embed_falloff_tile = -15
 
 /obj/item/projectile/bullet/c38/rubber
 	name = ".38 rubber bullet"
@@ -102,6 +111,7 @@
 /obj/item/projectile/bullet/a357
 	name = ".357 bullet"
 	damage = 60
+	wound_bonus = -70
 
 /obj/item/projectile/bullet/a357/ap
 	name = ".357 armor-piercing bullet"
@@ -117,3 +127,14 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
+
+/obj/item/projectile/bullet/a357/dumdum
+	name = ".357 DumDum bullet" // the warcrime bullet
+	damage = 40
+	armour_penetration = -20
+	wound_bonus = 45
+	bare_wound_bonus = 45
+	sharpness = SHARP_EDGED
+	embedding = list(embed_chance=90, fall_chance=2, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	wound_falloff_tile = -1
+	embed_falloff_tile = -5

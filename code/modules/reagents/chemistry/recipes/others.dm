@@ -1,3 +1,34 @@
+/datum/chemical_reaction/metalgen
+	name = "metalgen"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mutagen = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/metalgen_imprint
+	name = "metalgen imprint"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/holywater
+	name = "Holy Water"
+	id = /datum/reagent/water/holywater
+	results = list(/datum/reagent/water/holywater = 1)
+	required_reagents = list(/datum/reagent/water/hollowwater = 1)
+	required_catalysts = list(/datum/reagent/water/holywater = 1)
+
+/datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.material && R.volume >= 40)
+			MM.data["material"] = R.material
+			holder.remove_reagent(R.type, 40)
+
+/datum/chemical_reaction/gravitum
+	name = "gravitum"
+	id = /datum/reagent/gravitum
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
+	results = list(/datum/reagent/gravitum = 10)
 
 /datum/chemical_reaction/sterilizine
 	name = "Sterilizine"
@@ -684,10 +715,10 @@
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/cat
-	name = "felined mutation toxic"
+	name = "felinid mutation toxic"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1) // Maybe aphro+ if it becomes a shitty meme
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/mutationtoxin = 1)
 	required_temp = 450
 
 /datum/chemical_reaction/moff
@@ -711,7 +742,7 @@
 /datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
-	
+
 // Liquid Carpets
 
 /datum/chemical_reaction/carpet

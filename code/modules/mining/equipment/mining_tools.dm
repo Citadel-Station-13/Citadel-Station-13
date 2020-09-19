@@ -66,6 +66,16 @@
 	force = 19
 	custom_materials = list(/datum/material/diamond=4000)
 
+/obj/item/pickaxe/rosegold
+	name = "rose gold pickaxe"
+	icon_state = "rgpickaxe"
+	item_state = "rgpickaxe"
+	toolspeed = 0.1
+	desc = "A pickaxe with a light rose gold head and some red glowing runes. Extremely robust at cracking rock walls and digging up dirt."
+	force = 19
+	custom_materials = list(/datum/material/gold=4000)
+	digrange = 3
+
 /obj/item/pickaxe/plasteel
 	name = "plasteel-tipped pickaxe"
 	icon_state = "titaxe"
@@ -143,7 +153,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=350)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/shovel/Initialize()
 	. = ..()
@@ -181,4 +191,4 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	attack_verb = list("slashed", "impaled", "stabbed", "sliced")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED

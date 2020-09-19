@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/openspace
+	/turf/open/transparent/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -43,6 +43,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ischasm(A) (istype(A, /turf/open/chasm))
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
+
+#define istransparentturf(A) (istype(A, /turf/open/transparent))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -74,6 +76,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define isethereal(A) (is_species(A, /datum/species/ethereal))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
@@ -198,14 +201,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isorgan(A) (istype(A, /obj/item/organ))
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
-
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 

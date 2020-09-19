@@ -1,8 +1,4 @@
 /mob/living/carbon/BiologicalLife(seconds, times_fired)
-	//Updates the number of stored chemicals for powers
-	handle_changeling()
-	//Handles the unique mentabolism of bloodsuckers, look at /datum/antagonist/bloodsucker/proc/LifeTick()
-	handle_bloodsucker()
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
 	. = ..()		// if . is false, we are dead.
@@ -410,25 +406,7 @@
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
 		if(W.processes) // meh
-			W.handle_process()
-
-//todo generalize this and move hud out
-/mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used && hud_used.lingchemdisplay)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.regenerate()
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
-
-
-/mob/living/carbon/proc/handle_bloodsucker()
-	if(mind && AmBloodsucker(src))
-		var/datum/antagonist/bloodsucker/B = mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		B.LifeTick()
-	
+			W.handle_process()	
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)

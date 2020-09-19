@@ -29,6 +29,9 @@
 	var/has_lock_sprites = TRUE //whether to load the lock overlays or not
 	var/allows_hostiles = FALSE //does the pet carrier allow hostile entities to be held within it?
 
+/obj/item/pet_carrier/donator
+	custom_materials = null //you cant just use the loadout item to get free metal!
+
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
 		for(var/V in occupants)
@@ -240,7 +243,31 @@
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
 	escape_time = 200 //equal to the time of a bluespace bodybag
 	alternate_escape_time = 100
+
+	///gas supply for simplemobs so they don't die
 	var/datum/gas_mixture/occupant_gas_supply
+	///level until the reagent gets INGEST ed instead of TOUCH
+	var/sipping_level = 150
+	///prob50 level of sipping
+	var/sipping_probably = 99
+	///chem transfer rate / second
+	var/transfer_rate = 5
+
+/obj/item/pet_carrier/bluespace/Initialize()
+	. = ..()
+	create_reagents(300, OPENCONTAINER, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
+
+/obj/item/pet_carrier/bluespace/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/pet_carrier/bluespace/attack_self(mob/living/user)
+	..()
+	if(reagents)
+		if(open)
+			reagents.reagents_holder_flags = OPENCONTAINER
+		else
+			reagents.reagents_holder_flags = NONE
 
 /obj/item/pet_carrier/bluespace/update_icon_state()
 	if(open)
@@ -248,11 +275,28 @@
 	else
 		icon_state = "bluespace_jar"
 
-/obj/item/pet_carrier/bluespace/throw_impact()
+/obj/item/pet_carrier/bluespace/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	//delete the item upon impact, releasing the creature inside (this is handled by its deletion)
 	if(occupants.len)
 		loc.visible_message("<span class='warning'>The bluespace jar smashes, releasing [occupants[1]]!</span>")
+
+	if(reagents?.total_volume && ismob(hit_atom) && hit_atom.reagents)
+		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+		var/mob/M = hit_atom
+		var/R = reagents.log_list()
+		hit_atom.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
+						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		var/turf/TT = get_turf(hit_atom)
+		var/throwerstring
+		if(thrownby)
+			log_combat(thrownby, M, "splashed", R)
+			var/turf/AT = get_turf(thrownby)
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		log_reagent("SPLASH: [src] mob throw_impact() onto [key_name(hit_atom)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
+		reagents.reaction(hit_atom, TOUCH)
+		reagents.clear_reagents()
+
 	playsound(src, "shatter", 70, 1)
 	qdel(src)
 
@@ -260,21 +304,24 @@
 	. = ..()
 	if(!occupant_gas_supply)
 		occupant_gas_supply = new
+
 	if(isanimal(occupant))
 		var/mob/living/simple_animal/animal = occupant
 		occupant_gas_supply[/datum/gas/oxygen] = 0.0064 //make sure it has some gas in so it isn't depressurized
 		occupant_gas_supply.set_temperature(animal.minbodytemp) //simple animals only care about temperature/pressure when their turf isnt a location
-	else
-		if(ishuman(occupant)) //humans require resistance to cold/heat and living in no air while inside, and lose this when outside
-			ADD_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
-			ADD_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
-			ADD_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
-			ADD_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
-			ADD_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
+
+	if(ishuman(occupant)) //humans require resistance to cold/heat and living in no air while inside, and lose this when outside
+		START_PROCESSING(SSobj, src)
+		ADD_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
+		ADD_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
+		ADD_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
+		ADD_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
+		ADD_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 
 /obj/item/pet_carrier/bluespace/remove_occupant(mob/living/occupant)
 	. = ..()
 	if(ishuman(occupant))
+		STOP_PROCESSING(SSobj, src)
 		REMOVE_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
 		REMOVE_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
 		REMOVE_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
@@ -286,6 +333,18 @@
 	if(!occupant_gas_supply)
 		occupant_gas_supply = new
 	return occupant_gas_supply
+
+/obj/item/pet_carrier/bluespace/process()
+	if(!reagents)
+		return
+	for(var/mob/living/L in occupants)
+		if(!ishuman(L))
+			continue
+		if((reagents.total_volume >= sipping_level) || ((reagents.total_volume >= sipping_probably) && prob(50))) //sipp
+			reagents.reaction(L, INGEST) //consume
+			reagents.trans_to(L, transfer_rate)
+		else
+			reagents.reaction(L, TOUCH, show_message = FALSE)
 
 /obj/item/pet_carrier/bluespace/load_occupant(mob/living/user, mob/living/target)
 	if(..())

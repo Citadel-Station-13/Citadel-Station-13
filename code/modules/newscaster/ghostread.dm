@@ -3,7 +3,7 @@
 	set desc = "Open a list of available news channels"
 	set category = "Ghost"
 
-	var/datum/browser/B = new(src, "ghost_news_list", "Chanenl List", 450, 600)
+	var/datum/browser/B = new(src, "ghost_news_list", "Channel List", 450, 600)
 	B.set_content(render_news_channel_list())
 	B.open()
 

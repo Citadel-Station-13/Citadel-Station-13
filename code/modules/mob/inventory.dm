@@ -382,10 +382,20 @@
 
 	return 0
 
-//Outdated but still in use apparently. This should at least be a human proc.
-//Daily reminder to murder this - Remie.
+/**
+ * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
+
 /mob/living/proc/get_equipped_items(include_pockets = FALSE)
-	return
+	var/list/items = list()
+	for(var/obj/item/I in contents)
+		if(I.item_flags & IN_INVENTORY)
+			items += I
+	items -= held_items
+	return items
 
 /mob/living/proc/unequip_everything()
 	var/list/items = list()
@@ -475,6 +485,20 @@
 			bodyparts += BP
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
+
+
+//GetAllContents that is reasonable and not stupid
+/mob/living/carbon/proc/get_all_gear()
+	var/list/processing_list = get_equipped_items(include_pockets = TRUE) + held_items
+	listclearnulls(processing_list) // handles empty hands
+	var/i = 0
+	while(i < length(processing_list) )
+		var/atom/A = processing_list[++i]
+		if(SEND_SIGNAL(A, COMSIG_CONTAINS_STORAGE))
+			var/list/item_stuff = list()
+			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, item_stuff)
+			processing_list += item_stuff
+	return processing_list
 
 /mob/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
 	return ..() && (user == src)

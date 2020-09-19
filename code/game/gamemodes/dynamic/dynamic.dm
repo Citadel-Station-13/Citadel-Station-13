@@ -6,10 +6,6 @@ GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (30 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_min, (10 MINUTES))
 GLOBAL_VAR_INIT(dynamic_midround_delay_max, (30 MINUTES))
 
-GLOBAL_VAR_INIT(dynamic_event_delay_min, (10 MINUTES))
-GLOBAL_VAR_INIT(dynamic_event_delay_max, (30 MINUTES)) // this is on top of regular events, so can't be quite as often
-
-
 // -- Roundstart injection delays
 GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_min, (2 MINUTES))
 GLOBAL_VAR_INIT(dynamic_first_latejoin_delay_max, (30 MINUTES))
@@ -58,7 +54,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	// Threat logging vars
 	/// Starting threat level, for things that increase it but can bring it back down.
 	var/initial_threat_level = 0
-	/// Target threat level right now. Events and antags will try to keep the round at this level.
+	/// Target threat level right now. Antags will try to keep the round at this level.
 	var/threat_level = 0
 	/// The current antag threat. Recalculated every time a ruletype starts or ends.
 	var/threat = 0
@@ -80,8 +76,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/list/latejoin_rules = list()
 	/// List of midround rules used for selecting the rules.
 	var/list/midround_rules = list()
-	/// List of events used for reducing threat without causing antag injection (necessarily).
-	var/list/events = list()
 	/** # Pop range per requirement.
 	  * If the value is five the range is:
 	  * 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-54, 45+
@@ -119,8 +113,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/latejoin_injection_cooldown = 0
 	/// When world.time is over this number the mode tries to inject a midround ruleset.
 	var/midround_injection_cooldown = 0
-	/// When wor.dtime is over this number the mode tries to do an event.
-	var/event_injection_cooldown = 0
 	/// When TRUE GetInjectionChance returns 100.
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
@@ -184,7 +176,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	dat += "<br>Injection Timers: (<b>[storyteller.get_injection_chance(TRUE)]%</b> chance)<BR>"
 	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
-	dat += "Event: [(event_injection_cooldown-world.time)>60*10 ? "[round((event_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(event_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];forceevent=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -204,10 +195,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		var/threatadd = input("Specify how much threat to add (negative to subtract). This can inflate the threat level.", "Adjust Threat", 0) as null|num
 		if(!threatadd)
 			return
-		if(threatadd > 0)
-			create_threat(threatadd)
-		else
-			remove_threat(threatadd)
+		create_threat(threatadd)
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
@@ -216,10 +204,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		midround_injection_cooldown = 0
 		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.", 1)
-	else if (href_list["forceevent"])
-		event_injection_cooldown = 0
-		// events always happen anyway
-		message_admins("[key_name(usr)] forced an event.", 1)
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
@@ -377,8 +361,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		generate_threat()
 
 	storyteller.start_injection_cooldowns()
-	SSevents.frequency_lower = storyteller.event_frequency_lower // 6 minutes by default
-	SSevents.frequency_upper = storyteller.event_frequency_upper // 20 minutes by default
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	initial_threat_level = threat_level
 	return TRUE
@@ -397,9 +379,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			if ("Midround")
 				if (ruleset.weight)
 					midround_rules += ruleset
-			if("Event")
-				if(ruleset.weight)
-					events += ruleset
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			roundstart_pop_ready++
@@ -596,8 +575,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.ruletype == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
-		else if(rule.ruletype == "Event")
-			events = remove_from_list(events,rule.type)
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
 	return TRUE
 
@@ -705,17 +682,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
 				picking_midround_latejoin_rule(drafted_rules)
 		// get_injection_chance can do things on fail
-
-	if(event_injection_cooldown < world.time)
-		SSblackbox.record_feedback("tally","dynamic",1,"Attempted event injections")
-		event_injection_cooldown = storyteller.get_event_cooldown() + world.time
-		message_admins("DYNAMIC: Doing event injection.")
-		log_game("DYNAMIC: Doing event injection.")
-		update_playercounts()
-		var/list/drafted_rules = storyteller.event_draft()
-		if(drafted_rules.len > 0)
-			SSblackbox.record_feedback("tally","dynamic",1,"Successful event injections")
-			picking_midround_latejoin_rule(drafted_rules)
 
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()

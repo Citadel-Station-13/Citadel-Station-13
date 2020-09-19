@@ -90,7 +90,7 @@
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	thermal_conductivity = 0.04
+	thermal_conductivity = 0.004
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
@@ -192,6 +192,7 @@
 	icon_state = "map-shuttle"
 	explosion_block = 3
 	flags_1 = CAN_BE_DIRTY_1 | DEFAULT_RICOCHET_1
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
