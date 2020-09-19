@@ -206,7 +206,8 @@
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
-		adjustStaminaLossBuffered(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST))
+		if(!UseStaminaBuffer(I.getweight(src, STAM_COST_THROW_MULT, SKILL_THROW_STAM_COST), warn = TRUE))
+			return
 
 	if(thrown_thing)
 		var/power_throw = 0
@@ -594,12 +595,6 @@
 
 /mob/living/carbon/update_stamina()
 	var/total_health = getStaminaLoss()
-	if(total_health >= STAMINA_SOFTCRIT)
-		if(!(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT))
-			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
-	else
-		if(combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)
-			DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SOFT_STAMCRIT)
 	if(total_health)
 		if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
@@ -610,7 +605,7 @@
 			update_mobility()
 	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_SOFTCRIT)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
-		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT | COMBAT_FLAG_SOFT_STAMCRIT)
+		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	update_health_hud()

@@ -166,7 +166,6 @@
 	if(turned_on)
 		if(baton_stun(M, user, disarming))
 			user.do_attack_animation(M)
-			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
 		M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
@@ -193,6 +192,9 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
+
+	if(!user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
+		return FALSE
 
 	if(!disarming)
 		if(knockdown)

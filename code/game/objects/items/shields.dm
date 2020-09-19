@@ -146,7 +146,7 @@
 	// Directional sweep!
 	last_shieldbash = world.time
 	if(!user.UseStaminaBuffer(shieldbash_stamcost, warn = TRUE))
-		return FLASE
+		return FALSE
 	// Since we are in combat mode, we can probably safely use the user's dir instead of getting their mouse pointing cardinal dir.
 	var/bashdir = user.dir
 	do_shieldbash_effect(user, bashdir, harmful)
