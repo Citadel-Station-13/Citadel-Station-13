@@ -514,7 +514,7 @@
 /datum/gear/donator/customskirt
 	name = "custom atmos skirt"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/clothing/suit/customskirt
+	path = /obj/item/clothing/under/custom/customskirt
 	ckeywhitelist = list("thakyz")
 
 /datum/gear/donator/hisakaki
