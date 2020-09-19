@@ -269,8 +269,8 @@
 			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
 			return FALSE
 		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
-		return heal_carbon(M, user, heal_brute, heal_burn)
-
+		M.heal_bodypart_damage(heal_brute)
+		return TRUE
 	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 /obj/item/stack/medical/ointment
