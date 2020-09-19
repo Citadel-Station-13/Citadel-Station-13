@@ -153,7 +153,8 @@
 	id = "ufo-crash"
 	description = "Turns out that keeping your abductees unconscious is really important. Who knew?"
 	suffix = "lavaland_surface_ufo_crash.dmm"
-	cost = 5
+	always_place = TRUE
+	allow_duplicates = FALSE //sandstorm changy thing, always spawn.
 
 /* Replaced with Alien Nest Ruins
 /datum/map_template/ruin/lavaland/xeno_nest
