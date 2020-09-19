@@ -1411,6 +1411,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
 
+		if(!affecting) //Maybe the bodypart is missing? Or things just went wrong..
+			affecting = target.get_bodypart(BODY_ZONE_CHEST) //target chest instead, as failsafe. Or hugbox? You decide.
+
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)
 			miss_chance = 0
@@ -1626,6 +1629,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = H.pre_attacked_by(I, user) * damage_multiplier
+
+	if(!affecting) //Something went wrong. Maybe the limb is missing?
+		affecting = H.get_bodypart(BODY_ZONE_CHEST) //If the limb is missing, or something went terribly wrong, just hit the chest instead
+
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		var/list/block_return = list()
@@ -1637,8 +1644,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return 0
 
 	var/hit_area
-	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		affecting = H.bodyparts[1]
 
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone

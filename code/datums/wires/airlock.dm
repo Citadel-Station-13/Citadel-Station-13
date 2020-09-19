@@ -71,7 +71,7 @@
 /datum/wires/airlock/on_pulse(wire)
 	set waitfor = FALSE
 	var/obj/machinery/door/airlock/A = holder
-	if(!A.hasSiliconAccessInArea(usr) && A.isElectrified() && A.shock(usr, 100))
+	if(usr && !A.hasSiliconAccessInArea(usr) && A.isElectrified() && A.shock(usr, 100))
 		return FALSE
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Pulse to loose power.
@@ -127,7 +127,7 @@
 
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
-	if(!A.hasSiliconAccessInArea(usr) && A.isElectrified() && A.shock(usr, 100))
+	if(usr && !A.hasSiliconAccessInArea(usr) && A.isElectrified() && A.shock(usr, 100))
 		return FALSE
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
