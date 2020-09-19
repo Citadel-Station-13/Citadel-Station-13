@@ -50,7 +50,12 @@
 					head.icon = custom_head_icon
 					head.icon_state = custom_head_icon_state
 					head.custom_head = TRUE
+				for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
+					var/obj/item/I = X
+					if(I)
+						I.forceMove(head)
 				head.drop_limb()
+				head.update_dismembered_accessory_overlays(owner)
 				if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
 					head.throwforce = 25
 					relay = new /obj/item/dullahan_relay (head, owner)
@@ -168,3 +173,37 @@
 			owner.gib()
 	owner = null
 	..()
+
+//proc that grabs clothing items inside a head and renders them on the head
+/obj/item/bodypart/head/proc/update_dismembered_accessory_overlays(mob/living/carbon/human/the_dullahan)
+	if(!owner) //why are you doing this if it's not dismembered
+		cut_overlays()
+		for(var/obj/item/head_accessory in contents)
+			if(head_accessory.slot_flags)
+				var/accessory_layer
+				var/accessory_offset
+				var/accessory_icon_file
+				switch(current_equipped_slot)
+					if(2) //mask
+						accessory_layer = FACEMASK_LAYER
+						accessory_offset = OFFSET_FACEMASK
+						accessory_icon_file = 'icons/mob/clothing/mask.dmi'
+					if(7) //ears
+						accessory_layer = EARS_LAYER
+						accessory_offset = OFFSET_EARS
+						accessory_icon_file = 'icons/mob/ears.dmi'
+					if(8) //eyes
+						accessory_layer = GLASSES_LAYER
+						accessory_offset = OFFSET_GLASSES
+						accessory_icon_file = 'icons/mob/clothing/eyes.dmi'
+					if(11) //head
+						accessory_layer = HEAD_LAYER
+						accessory_offset = OFFSET_HEAD
+						accessory_icon_file = 'icons/mob/clothing/head.dmi'
+				overlays[accessory_layer] = head_accessory.build_worn_icon(default_layer = accessory_layer, default_icon_file = accessory_icon_file, override_state = head_accessory.icon_state)
+				var/mutable_appearance/accessory_overlay = overlays[accessory_layer]
+				if(accessory_overlay)
+					if(accessory_offset in the_dullahan.dna.species.offset_features)
+						accessory_overlay.pixel_x += the_dullahan.dna.species.offset_features[accessory_offset][1]
+						accessory_overlay.pixel_y += the_dullahan.dna.species.offset_features[accessory_offset][2]
+					overlays[accessory_layer] = accessory_overlay
