@@ -24,9 +24,11 @@
 	. = ..()
 	radio = new(src)
 	radio.frequency = FREQ_COMMON
+	GLOB.ic_speakers += src
 
 /obj/item/integrated_circuit/output/text_to_radio/Destroy()
 	qdel(radio)
+	GLOB.ic_speakers -= src
 	..()
 
 /obj/item/integrated_circuit/output/text_to_radio/on_data_written()
@@ -79,3 +81,41 @@
 		to_chat(user, "<span class='notice'>There are no encryption keys to remove from the mechanism.</span>")
 
 /obj/item/radio/headset/integrated
+
+//sandstorm original - pointer
+/obj/item/integrated_circuit/output/pointer
+	name = "pointer circuit"
+	desc = "Takes a reference and points to it upon activation."
+	extended_desc = "This machine points at something for everyone to see."
+	icon_state = "pull_claw"
+	complexity = 2
+	inputs = list("target" = IC_PINTYPE_REF)
+	activators = list("point" = IC_PINTYPE_PULSE_IN, "on pointed" = IC_PINTYPE_PULSE_OUT, "on failure" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 10
+	cooldown_per_use = 0.1
+
+/obj/item/integrated_circuit/output/pointer/do_work()
+	if(!get_pin_data(IC_INPUT, 1))
+		activate_pin(3)
+		return
+	else
+		assembly.point(get_pin_data(IC_INPUT, 1))
+		activate_pin(2)
+
+/obj/item/electronic_assembly/proc/point(atom/A as mob|obj|turf in view())
+	if(!src || !(A in view(src.loc)))
+		return FALSE
+	if(istype(A, /obj/effect/temp_visual/point))
+		return FALSE
+
+	var/turf/tile = get_turf(A)
+	if(!tile)
+		return FALSE
+
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = new /obj/effect/temp_visual/point(our_tile, invisibility)
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + A.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + A.pixel_y, time = 1.7, easing = EASE_OUT)
+	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
+
+	return TRUE

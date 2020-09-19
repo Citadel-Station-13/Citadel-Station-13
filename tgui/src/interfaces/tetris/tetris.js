@@ -5,17 +5,17 @@ Delay=new Array(828,620,464,348,260,196,148,112,84,64,48,36,27);
 Fld = new Array(MaxX);
 for (i=0; i < MaxX; i++)
 { Fld[i]=new Array(MaxY);
-} 
+}
 RFld=new Array(MaxY);
 Pic= new Array(8);
 for (i=0; i<8; i++)
-{ Pic[i] = new Image(); 
-  Pic[i].src = "tetris_"+i+".gif"; 
+{ Pic[i] = new Image();
+  Pic[i].src = "tetris_"+i+".gif";
 }
 PrePic= new Array(8);
 for (i=0; i<8; i++)
-{ PrePic[i] = new Image(); 
-  PrePic[i].src = "tetrisp"+i+".gif"; 
+{ PrePic[i] = new Image();
+  PrePic[i].src = "tetrisp"+i+".gif";
 }
 PatternX=new Array(7);
 PatternY=new Array(7);
@@ -53,7 +53,7 @@ function KeyDown(whichkey)
   if (whichkey == 65461) Down();
   if (whichkey == 65462) Right();
   if (whichkey == 65464) Rotate();
-}  
+}
 function Pause()
 { IsOver=true;
   alert("Click OK to continue!");
@@ -108,15 +108,15 @@ function Go()
     for (nn=0; nn<4; nn++)
     { Fld[PosX[nn]][PosY[nn]]=Col+1;
       document.images[PosX[nn]+MaxX*PosY[nn]].src = Pic[Col+1].src;
-    }  
+    }
   }
   else
   { for (nn=0; nn<4; nn++)
       Fld[PosX[nn]][PosY[nn]]=0;
-    if (CanShift(0,1)) 
+    if (CanShift(0,1))
     { for (nn=0; nn<4; nn++)
         Fld[PosX[nn]][PosY[nn]]=Col+1;
-      Shift(0,1); 
+      Shift(0,1);
     }
     else
     { for (nn=0; nn<4; nn++)
@@ -139,7 +139,7 @@ function CanShift(xx, yy)
     if (PosY[nn]+yy>=MaxY) return(false);
     if (Fld[PosX[nn]+xx][PosY[nn]+yy]>0) return(false);
   }
-  return(true); 
+  return(true);
 }
 function GetFld(xx, yy)
 { if (xx<0) return(-1);
@@ -158,7 +158,7 @@ function Rotate()
   { for (nn=0; nn<4; nn++)
       Fld[PosX[nn]][PosY[nn]]=Col+1;
     return;
-  }  
+  }
   for (nn=0; nn<4; nn++)
     document.images[PosX[nn]+MaxX*PosY[nn]].src = Pic[0].src;
   if (Col==0)
@@ -191,11 +191,11 @@ function Rotate()
     PosX[0]=PosX[1]-nn;
     nn=PosY[1]-PosY[2];
     PosY[2]=PosY[1]+(PosX[1]-PosX[2]);
-    PosX[2]=PosX[1]-nn;  
+    PosX[2]=PosX[1]-nn;
     nn=PosY[1]-PosY[3];
     PosY[3]=PosY[1]+(PosX[1]-PosX[3]);
-    PosX[3]=PosX[1]-nn;      
-  }  
+    PosX[3]=PosX[1]-nn;
+  }
   for (nn=0; nn<4; nn++)
     document.images[PosX[nn]+MaxX*PosY[nn]].src = Pic[Col+1].src;
 }
@@ -203,19 +203,19 @@ function CanRotate()
 { var ii, jj, iim, jjm, dd=3;
   if (Col==3) return(false);
   if (Col==0)
-  { iim=PosX[2]-2; 
+  { iim=PosX[2]-2;
     jjm=PosY[2]-1;
     dd=4;
   }
   else
-  { iim=PosX[1]-1; 
+  { iim=PosX[1]-1;
     jjm=PosY[1]-1;
   }
   for (ii=iim; ii<iim+dd; ii++)
   { for (jj=jjm; jj<jjm+dd; jj++)
     { if (GetFld(ii,jj)!=0) return(false);
     }
-  } 
+  }
   return(true);
 }
 function Left()
@@ -245,7 +245,7 @@ function Right()
   }
   else
   { for (nn=0; nn<4; nn++)
-      Fld[PosX[nn]][PosY[nn]]=Col+1;  
+      Fld[PosX[nn]][PosY[nn]]=Col+1;
   }
 }
 function Down()
@@ -292,9 +292,9 @@ function Remove()
       { for (xx=0; xx<MaxX; xx++)
         { Fld[xx][yy+nn]=Fld[xx][yy];
           Fld[xx][yy]=0;
-        }  
+        }
       }
-    }   
+    }
   }
   Score+=100*nn;
   Lines+=nn;
@@ -304,7 +304,7 @@ function Remove()
 function RefreshScreen()
 { for (i=0; i < MaxX; i++)
   { for (j=0; j < MaxY; j++)
-      window.document.images[i+MaxX*j].src = Pic[Fld[i][j]].src; 
+      window.document.images[i+MaxX*j].src = Pic[Fld[i][j]].src;
   }
 }
 function HideFocus()
@@ -318,4 +318,4 @@ function IncreaseDifficulty()
   { window.document.ScoreForm.Level.value = Level
 	Level++;
   }
-} 
+}

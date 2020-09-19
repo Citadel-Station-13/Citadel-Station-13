@@ -33,8 +33,8 @@
 		return
 
 	if(user.client)
-		var/datum/asset/simple/C = new/datum/asset/simple/tetris()
-		SSassets.transport.send_assets(user.client, C.assets)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/tetris)
+		assets.send(user)
 
 	var/dat = {"
 	<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>

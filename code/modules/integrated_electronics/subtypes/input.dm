@@ -849,11 +849,11 @@
 	The first activation pin is always pulsed when the circuit hears someone talk, while the second one \
 	is only triggered if it hears someone speaking a language other than Galactic Common."
 	icon_state = "recorder"
-	complexity = 8
+	complexity = 4 //cuts complexity in half, you'll need to use a ref to string for the name
 	inputs = list()
 	flags_1 = CONDUCT_1 | HEAR_1
 	outputs = list(
-	"speaker" = IC_PINTYPE_STRING,
+	"speaker" = IC_PINTYPE_REF,
 	"message" = IC_PINTYPE_STRING
 	)
 	activators = list("on message received" = IC_PINTYPE_PULSE_OUT, "on translation" = IC_PINTYPE_PULSE_OUT)
@@ -867,7 +867,7 @@
 		if(raw_message)
 			if(message_langs != get_selected_language())
 				translated = TRUE
-		set_pin_data(IC_OUTPUT, 1, speaker.GetVoice())
+		set_pin_data(IC_OUTPUT, 1, speaker)
 		set_pin_data(IC_OUTPUT, 2, raw_message)
 
 	push_data()
