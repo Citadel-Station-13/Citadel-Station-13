@@ -8,12 +8,11 @@
 	power_channel = ENVIRON
 	idle_power_usage = 0
 	active_power_usage = 0
-	max_integrity = 150
 	layer = ABOVE_NORMAL_TURF_LAYER
 	anchored = FALSE
 	density = FALSE
 	CanAtmosPass = ATMOS_PASS_YES
-	var/state = 1
+	stat = 1
 	var/buildstacktype = /obj/item/stack/sheet/plasteel
 	var/buildstackamount = 5
 	/*
@@ -22,27 +21,19 @@
 			3 = Wires attached to it, this makes it change to the full thing.
 	*/
 
-/obj/machinery/fan_assembly/Initialize(mapload, ndir, building)
-	. = ..()
-	if(building)
-		setDir(ndir)
-
-/obj/machinery/fan_assembly/Destroy()
-	return ..()
-
 /obj/machinery/fan_assembly/attackby(obj/item/W, mob/living/user, params)
-	switch(state)
+	switch(stat)
 		if(1)
-			// State 1
+			// Stat 1
 			if(istype(W, /obj/item/weldingtool))
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You weld the fan assembly securely into place.</span>")
 					setAnchored(TRUE)
-					state = 2
-					update_icon()
+					stat = 2
+					update_icon_state()
 				return
 		if(2)
-			// State 2
+			// Stat 2
 			if(istype(W, /obj/item/stack/cable_coil))
 				if(!W.tool_start_check(user, amount=2))
 					to_chat(user, "<span class='warning'>You need two lengths of cable to wire the fan assembly!</span>")
@@ -50,7 +41,7 @@
 				to_chat(user, "<span class='notice'>You start to add wires to the assembly...</span>")
 				if(W.use_tool(src, user, 30, volume=50, amount=2))
 					to_chat(user, "<span class='notice'>You add wires to the fan assembly.</span>")
-					state = 3
+					stat = 3
 					var/obj/machinery/poweredfans/F = new(loc, src)
 					forceMove(F)
 					F.setDir(src.dir)
@@ -58,14 +49,14 @@
 			else if(istype(W, /obj/item/weldingtool))
 				if(weld(W, user))
 					to_chat(user, "<span class='notice'>You unweld the fan assembly from its place.</span>")
-					state = 1
-					update_icon()
+					stat = 1
+					update_icon_state()
 					setAnchored(FALSE)
 				return
 	return ..()
 
 /obj/machinery/fan_assembly/wrench_act(mob/user, obj/item/I)
-	if(state != 1)
+	if(stat != 1)
 		return FALSE
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
 		"<span class='notice'>You start to disassemble [src]...</span>", "You hear wrenching noises.")
@@ -76,7 +67,7 @@
 /obj/machinery/fan_assembly/proc/weld(obj/item/weldingtool/W, mob/living/user)
 	if(!W.tool_start_check(user, amount=0))
 		return FALSE
-	switch(state)
+	switch(stat)
 		if(1)
 			to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
 		if(2)
@@ -91,11 +82,8 @@
 	qdel(src)
 
 /obj/machinery/fan_assembly/examine(mob/user)
-	..()
-	deconstruction_hints(user)
-
-/obj/machinery/fan_assembly/proc/deconstruction_hints(mob/user)
-	switch(state)
+	. = ..()
+	switch(stat)
 		if(1)
 			to_chat(user, "<span class='notice'>The fan assembly seems to be <b>unwelded</b> and loose.</span>")
 		if(2)
@@ -103,8 +91,9 @@
 		if(3)
 			to_chat(user, "<span class='notice'>The outer plating is <b>wired</b> firmly in place.</span>")
 
-/obj/machinery/fan_assembly/update_icon()
-	switch(state)
+/obj/machinery/fan_assembly/update_icon_state()
+	. = ..()
+	switch(stat)
 		if(1)
 			icon_state = "mfan_assembly"
 		if(2)

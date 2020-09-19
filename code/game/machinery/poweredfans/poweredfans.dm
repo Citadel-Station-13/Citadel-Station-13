@@ -12,21 +12,18 @@
 	anchored = TRUE
 	density = FALSE
 	CanAtmosPass = ATMOS_PASS_NO
-	var/obj/machinery/fan_assembly/assembly = null
+	var/obj/machinery/fan_assembly/assembly
 
 /obj/machinery/poweredfans/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(disassembled)
-			if(!assembly)
-				assembly = new()
-			assembly.forceMove(drop_location())
-			assembly.state = 2
-			assembly.setAnchored(TRUE)
-			assembly.setDir(dir)
-			assembly = null
-			new /obj/item/stack/cable_coil(loc, 2)
-		else
-			new /obj/item/stack/cable_coil(loc, 2)
+		if(!assembly)
+			assembly = new()
+		assembly.forceMove(drop_location())
+		assembly.stat = 2
+		assembly.setAnchored(TRUE)
+		assembly.setDir(dir)
+		assembly = null
+		new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
 /obj/machinery/poweredfans/wirecutter_act(mob/living/user, obj/item/I)
@@ -42,22 +39,18 @@
 		assembly = FA
 	else
 		assembly = new(src)
-		assembly.state = 3
+		assembly.stat = 3
 	air_update_turf(1)
 
 /obj/machinery/poweredfans/power_change()
 	..()
-	update_icon()
-
-/obj/machinery/poweredfans/update_icon()
-	//if(state & NOPOWER)
 	if(powered())
 		icon_state = "mfan_powered"
 		CanAtmosPass = ATMOS_PASS_NO
 		air_update_turf(1)
-		return
 	else
 		icon_state = "mfan_unpowered"
 		CanAtmosPass = ATMOS_PASS_YES
 		air_update_turf(1)
-		return
+	update_icon_state()
+	
