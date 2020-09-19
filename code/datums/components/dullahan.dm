@@ -30,7 +30,7 @@
 					QDEL_NULL(tongue)
 					var/obj/item/organ/tongue/new_tongue = new /obj/item/organ/tongue/dullahan
 					if(accents)
-						new_tongue.accents += accents
+						new_tongue.accents = accents + new_tongue.accents //dullahan accent needs to be last applied
 					new_tongue.Insert(owner, TRUE, TRUE)
 				var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
 				if(ears)

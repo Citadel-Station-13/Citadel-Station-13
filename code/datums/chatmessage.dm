@@ -119,8 +119,8 @@
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers
-	message_loc = target
-	if (owned_by.seen_messages)
+	message_loc = get_turf(target)
+	if(owned_by.seen_messages)
 		var/idx = 1
 		var/combined_height = approx_lines
 		for(var/msg in owned_by.seen_messages[message_loc])
