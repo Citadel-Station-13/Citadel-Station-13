@@ -20,9 +20,11 @@
 	if(!is_in_use)
 		INVOKE_ASYNC(src, .proc/activate , user)
 
-/obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
+/obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I,/obj/item/nullrod))
+	if(istype(I, /obj/item/storage/book/bible) || istype(I, /obj/item/nullrod))
+		user.say("BEGONE FOUL MAGICKS!!", forced = "bible")
+		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
