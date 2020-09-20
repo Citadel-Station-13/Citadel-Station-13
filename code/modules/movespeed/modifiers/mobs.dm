@@ -124,7 +124,6 @@
 /datum/movespeed_modifier/sprinting
 	flags = IGNORE_NOSLOW
 	blacklisted_movetypes = FLOATING
-	required_mobility_flags = MOBILITY_STAND
 	priority = -100
 
 /// for speed reasons this is sorta copypasty.
