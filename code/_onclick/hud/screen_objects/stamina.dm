@@ -29,6 +29,7 @@
 		icon_state = "stamina[clamp(FLOOR(user.getStaminaLoss() /20, 1), 0, 6)]"
 
 /obj/screen/staminas/update_overlays()
+	. = ..()
 	var/mob/living/carbon/user = hud?.mymob
 	if(!user)
 		return

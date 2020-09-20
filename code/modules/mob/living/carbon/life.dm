@@ -502,8 +502,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(getStaminaLoss() && !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
-		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL)
+	var/combat_mode = SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
+	if(getStaminaLoss())
+		adjustStaminaLoss((!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL) * (combat_mode? 0.25 : 1))
 
 	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
