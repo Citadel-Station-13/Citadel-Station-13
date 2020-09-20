@@ -460,6 +460,7 @@
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process(wait)
+	set waitfor = FALSE
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
 		return PROCESS_KILL
