@@ -1255,7 +1255,7 @@
 		SetUnconscious(clamp_unconscious_to)
 	HealAllImmobilityUpTo(clamp_immobility_to)
 	adjustStaminaLoss(min(0, -stamina_boost))
-	RechargeStaminaBuffer(stamina_buffer_boost)
+	RechargeStaminaBuffer(stamina_buffer_boost)		// this MUST GO AFTER ADJUSTSTAMINALOSS.
 	if(scale_stamina_loss_recovery)
 		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)

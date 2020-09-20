@@ -608,6 +608,7 @@
 		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
+	UpdateStaminaBuffer()
 	update_health_hud()
 	
 /mob/living/carbon/update_sight()

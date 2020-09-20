@@ -133,7 +133,7 @@
 
 	if(I.used_skills && user.mind)
 		if(totitemdamage)
-			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_trait)
+			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ)
 		for(var/skill in I.used_skills)
 			if(!(SKILL_TRAIN_ATTACK_OBJ in I.used_skills[skill]))
 				continue

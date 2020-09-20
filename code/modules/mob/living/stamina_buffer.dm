@@ -28,3 +28,10 @@
 	var/combat_mode = !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)
 	stamina_buffer += min((stamina_buffer_max - stamina_buffer), (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY)) * (time * 0.1 * ((combat_mode? stamina_buffer_regen_combat : stamina_buffer_regen) * stamina_buffer_regen_mod)))
 	hud_used?.staminabuffer?.update_icon()
+
+/**
+  * Boosts our stamina buffer by this much.
+  */
+/mob/living/proc/RechargeStaminaBuffer(amount)
+	var/stamina_buffer_max = src.stamina_buffer_max * (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY))
+	stamina_buffer += min(amount, stamina_buffer_max - stamina_buffer)
