@@ -1,7 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Added pointer circuit."
-  - rscadd: "Added activator circuits. (carpstation port)"
-  - rscadd: "Added tcomm interceptor. (hippie port)"
-  - tweak: "Microphone circuit returns a ref for the speaker and has lower complexity cost + power usage."
