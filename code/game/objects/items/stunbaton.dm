@@ -171,7 +171,7 @@
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	return disarming || (user.a_intent != INTENT_HARM)
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/living/user, disarming = FALSE)
 	var/list/return_list = list()
 	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)

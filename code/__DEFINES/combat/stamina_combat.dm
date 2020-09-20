@@ -2,13 +2,13 @@
 /// Stamina buffer amount
 #define STAMINA_BUFFER_CAPACITY 35
 /// Stamina buffer regen per decisecond
-#define STAMINA_BUFFER_REGEN_DS 0.1
+#define STAMINA_BUFFER_REGEN_PER_SECOND 1
 /// Stamina buffer regen multiplier while in combat mode
-#define STAMINA_BUFFER_REGEN_COMBAT_MULT 3
-/// Linear scaling minimum for stamina buffer regen in percentage at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_PENALTY_REGEN 0.75
-/// Linear scaling minimum for stamina buffer capacity in percentage at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_PENALTY_CAPACITY 0.5
+#define STAMINA_BUFFER_REGEN_PER_SECOND_COMBAT 3
+/// percent of regen to take away at stamcrit
+#define STAMINA_BUFFER_STAMCRIT_REGEN_PENALTY_PERCENT 0.5
+/// percent of capacity to take away at stamcrit
+#define STAMINA_BUFFER_STAMCRIT_CAPACITY_PENALTY_PERCENT 0.5
 
 // Standard amounts for stamina usage
 

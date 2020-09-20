@@ -38,24 +38,17 @@
 	if(!user)
 		return
 	if(user.stat == DEAD || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2))
-		icon_state = "stambuffer7"
-	else if(user.hal_screwyhud == 5)
 		icon_state = "stambuffer0"
+	else if(user.hal_screwyhud == 5)
+		icon_state = "stambuffer29"
 	else
-		switch(user.bufferedstam / user.stambuffer)
-			if(0.95 to INFINITY)
-				icon_state = "stambuffer7"
-			if(0.9 to 0.95)
-				icon_state = "stambuffer6"
-			if(0.8 to 0.9)
-				icon_state = "stambuffer5"
-			if(0.6 to 0.8)
-				icon_state = "stambuffer4"
-			if(0.4 to 0.6)
-				icon_state = "stambuffer3"
-			if(0.2 to 0.4)
-				icon_state = "stambuffer2"
-			if(0.05 to 0.2)
-				icon_state = "stambuffer1"
-			else
-				icon_state = "stambuffer0"
+		icon_state = "stambuffer[FLOOR((stamina_buffer / stamina_buffer_max) * 29, 1)]"
+
+/obj/screen/staminabuffer/update_overlays()
+	var/level = FLOOR((stamina_buffer / stamina_buffer_max) * 29, 1)
+	if((user.stat == DEAD) || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2) || (level <= 5))
+		. = list("stamina_alert3")
+	else if(level <= 8)
+		. = list("stamina_alert2")
+	else if(level <= 12)
+		. = list("stamina_alert1")

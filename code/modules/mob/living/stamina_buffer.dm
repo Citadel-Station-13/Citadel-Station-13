@@ -20,7 +20,11 @@
   */
 /mob/living/proc/UpdateStaminaBuffer(updating_hud = TRUE)
 	var/time = world.time - stamina_buffer_regen_last
-	if(time <= 0)
+	var/missing_stamina_percent = getStaminaLoss() / STAMINA_CRIT
+	var/stamina_buffer_max = src.stamina_buffer_max * (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY))
+	if(stamina_buffer > stamina_buffer_max)
+		stamina_buffer = stamina_buffer_max
 		return
-	stamina_buffer_regen_last = time
-	var/penalized 
+	var/combat_mode = !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)
+	stamina_buffer += min((stamina_buffer_max - stamina_buffer), (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY)) * (time * 0.1 * ((combat_mode? stamina_buffer_regen_combat : stamina_buffer_regen) * stamina_buffer_regen_mod)))
+	hud_used?.staminabuffer?.update_icon()
