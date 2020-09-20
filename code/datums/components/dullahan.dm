@@ -45,28 +45,27 @@
 					var/obj/item/organ/eyes/new_eyes = new /obj/item/organ/eyes/dullahan
 					new_eyes.Insert(owner, TRUE, TRUE)
 
+				var/obj/item/bodypart/head/dullahan/dullahan_head = new
 				//handle the head
 				if(has_custom_head())
-					head.icon = custom_head_icon
-					head.icon_state = custom_head_icon_state
-					head.custom_head = TRUE
-				var/list/items_to_move = list()
+					dullahan_head.icon = custom_head_icon
+					dullahan_head.icon_state = custom_head_icon_state
+					dullahan_head.custom_head = TRUE
 				for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 					var/obj/item/I = X
 					if(I)
-						items_to_move[num2text(I.current_equipped_slot)] = I
-						I.forceMove(head)
-				head.drop_limb()
-				for(var/obj/item/I in items_to_move)
-					items_to_move[text2num(items_to_move[I])] = I
-				head.update_dismembered_accessory_overlays(owner)
-				if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
-					head.throwforce = 25
-					relay = new /obj/item/dullahan_relay (head, owner)
-					owner.put_in_hands(head)
-					var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
-					for(var/datum/action/item_action/organ_action/OA in E.actions)
-						OA.Trigger()
+						I.forceMove(dullahan_head)
+				dullahan_head.dullahan_eyes = owner.glasses
+				dullahan_head.dullahan_ears = owner.ears
+				dullahan_head.dullahan_mask = owner.wear_mask
+				dullahan_head.dullahan_hat = owner.head
+				qdel(head)
+				dullahan_head.update_all_overlays(owner)
+				relay = new /obj/item/dullahan_relay (dullahan_head, owner)
+				owner.put_in_hands(dullahan_head)
+				var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
+				for(var/datum/action/item_action/organ_action/OA in E.actions)
+					OA.Trigger()
 		else
 			RemoveComponent()
 	else
@@ -178,37 +177,61 @@
 	owner = null
 	..()
 
+//custom dullahan head that makes this shitcode easier to do
+/obj/item/bodypart/head/dullahan
+	//accessories the head can wear
+	var/obj/item/dullahan_hat
+	var/obj/item/dullahan_mask
+	var/obj/item/dullahan_ears
+	var/obj/item/dullahan_eyes
+
 //proc that grabs clothing items inside a head and renders them on the head
-/obj/item/bodypart/head/proc/update_dismembered_accessory_overlays(mob/living/carbon/human/the_dullahan)
+/obj/item/bodypart/head/dullahan/proc/update_dismembered_accessory_overlays(mob/living/carbon/human/the_dullahan, item_type)
+	//make sure we physically have enough slots in the overlays for it
+	while(length(overlays) < TOTAL_LAYERS)
+		overlays += null
 	if(!owner) //why are you doing this if it's not dismembered
-		cut_overlays()
-		for(var/obj/item/head_accessory in contents)
-			if(head_accessory.slot_flags)
-				var/accessory_layer
-				var/accessory_offset
-				var/accessory_icon_file
-				switch(head_accessory.current_equipped_slot)
-					if(2) //mask
-						accessory_layer = FACEMASK_LAYER
-						accessory_offset = OFFSET_FACEMASK
-						accessory_icon_file = 'icons/mob/clothing/mask.dmi'
-					if(4) //head
-						accessory_layer = HEAD_LAYER
-						accessory_offset = OFFSET_HEAD
-						accessory_icon_file = 'icons/mob/clothing/head.dmi'
-					if(7) //ears
-						accessory_layer = EARS_LAYER
-						accessory_offset = OFFSET_EARS
-						accessory_icon_file = 'icons/mob/ears.dmi'
-					if(8) //eyes
-						accessory_layer = GLASSES_LAYER
-						accessory_offset = OFFSET_GLASSES
-						accessory_icon_file = 'icons/mob/clothing/eyes.dmi'
-				message_admins("the index is [accessory_layer]")
-				overlays[accessory_layer] = head_accessory.build_worn_icon(default_layer = accessory_layer, default_icon_file = accessory_icon_file, override_state = head_accessory.icon_state)
-				var/mutable_appearance/accessory_overlay = overlays[accessory_layer]
-				if(accessory_overlay)
-					if(accessory_offset in the_dullahan.dna.species.offset_features)
-						accessory_overlay.pixel_x += the_dullahan.dna.species.offset_features[accessory_offset][1]
-						accessory_overlay.pixel_y += the_dullahan.dna.species.offset_features[accessory_offset][2]
-					overlays[accessory_layer] = accessory_overlay
+		var/obj/item/head_accessory
+		var/accessory_layer
+		var/accessory_offset
+		var/accessory_icon_file
+		switch(item_type) //these go off the worn item slot number
+			if(SLOT_WEAR_MASK) //mask
+				head_accessory = dullahan_mask
+				accessory_layer = FACEMASK_LAYER
+				accessory_offset = OFFSET_FACEMASK
+				accessory_icon_file = 'icons/mob/clothing/mask.dmi'
+			if(SLOT_HEAD) //head
+				head_accessory = dullahan_hat
+				accessory_layer = HEAD_LAYER
+				accessory_offset = OFFSET_HEAD
+				accessory_icon_file = 'icons/mob/clothing/head.dmi'
+			if(SLOT_EARS) //ears
+				head_accessory = dullahan_ears
+				accessory_layer = EARS_LAYER
+				accessory_offset = OFFSET_EARS
+				accessory_icon_file = 'icons/mob/ears.dmi'
+			if(SLOT_GLASSES) //eyes
+				head_accessory = dullahan_eyes
+				accessory_layer = GLASSES_LAYER
+				accessory_offset = OFFSET_GLASSES
+				accessory_icon_file = 'icons/mob/clothing/eyes.dmi'
+		if(head_accessory)
+			message_admins("the index is [accessory_layer]")
+			var/mutable_appearance/accessory_overlay = head_accessory.build_worn_icon(default_layer = accessory_layer, default_icon_file = accessory_icon_file, override_state = head_accessory.icon_state)
+			if(accessory_overlay)
+				if(accessory_offset in the_dullahan.dna.species.offset_features)
+					accessory_overlay.pixel_x += the_dullahan.dna.species.offset_features[accessory_offset][1]
+					accessory_overlay.pixel_y += the_dullahan.dna.species.offset_features[accessory_offset][2]
+				add_overlay(list(accessory_overlay))
+
+/obj/item/bodypart/head/dullahan/proc/update_all_overlays(mob/living/carbon/human/the_dullahan)
+	cut_overlays()
+	if(dullahan_mask)
+		update_dismembered_accessory_overlays(the_dullahan, SLOT_WEAR_MASK)
+	if(dullahan_hat)
+		update_dismembered_accessory_overlays(the_dullahan, SLOT_HEAD)
+	if(dullahan_ears)
+		update_dismembered_accessory_overlays(the_dullahan, SLOT_EARS)
+	if(dullahan_eyes)
+		update_dismembered_accessory_overlays(the_dullahan, SLOT_GLASSES)
