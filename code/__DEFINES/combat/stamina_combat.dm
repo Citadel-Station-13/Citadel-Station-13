@@ -1,6 +1,6 @@
 // Stamina Buffer
 /// Stamina buffer amount
-#define STAMINA_BUFFER_CAPACITY 35
+#define STAMINA_BUFFER_CAPACITY 30
 /// Stamina buffer regen per decisecond
 #define STAMINA_BUFFER_REGEN_PER_SECOND 1
 /// Stamina buffer regen multiplier while in combat mode
@@ -10,7 +10,7 @@
 /// Penalty regen multiplier
 #define STAMINA_BUFFER_REGEN_ACTION_PENALTY_FACTOR 0.5
 /// percent of regen to take away at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY 0.5
+#define STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY 0.75
 /// percent of capacity to take away at stamcrit
 #define STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY 0.5
 
@@ -39,9 +39,9 @@
 #define TOTAL_MASS_TOY_SWORD 1.5
 
 //stamina cost defines.
-#define STAM_COST_ATTACK_OBJ_MULT	1.2
+#define STAM_COST_ATTACK_OBJ_MULT	0.75
 #define STAM_COST_ATTACK_MOB_MULT	1
-#define STAM_COST_BATON_MOB_MULT	1
+#define STAM_COST_BATON_MOB_MULT	0.85
 #define STAM_COST_THROW_MULT		2
 #define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
 

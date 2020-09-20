@@ -73,7 +73,7 @@
 		icon_state = "stambuffer29"
 		return FALSE
 	else if(user.stamina_buffer >= user.stamina_buffer_max)
-		icon_state = "staminabuffer29"
+		icon_state = "stambuffer29"
 		return FALSE
 	else
 		icon_state = "stambuffer[FLOOR((user.stamina_buffer / user.stamina_buffer_max) * 29, 1)]"
