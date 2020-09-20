@@ -6,9 +6,9 @@
 /// Stamina buffer regen multiplier while in combat mode
 #define STAMINA_BUFFER_REGEN_PER_SECOND_COMBAT 3
 /// percent of regen to take away at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_REGEN_PENALTY_PERCENT 0.5
+#define STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY 0.5
 /// percent of capacity to take away at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_CAPACITY_PENALTY_PERCENT 0.5
+#define STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY 0.5
 
 // Standard amounts for stamina usage
 
