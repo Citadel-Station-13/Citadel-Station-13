@@ -33,5 +33,6 @@
   * Boosts our stamina buffer by this much.
   */
 /mob/living/proc/RechargeStaminaBuffer(amount)
+	var/missing_stamina_percent = getStaminaLoss() / STAMINA_CRIT
 	var/stamina_buffer_max = src.stamina_buffer_max * (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY))
 	stamina_buffer += min(amount, stamina_buffer_max - stamina_buffer)
