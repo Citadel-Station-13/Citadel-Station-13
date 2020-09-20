@@ -50,11 +50,15 @@
 					head.icon = custom_head_icon
 					head.icon_state = custom_head_icon_state
 					head.custom_head = TRUE
+				var/list/items_to_move = list()
 				for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 					var/obj/item/I = X
 					if(I)
+						items_to_move[num2text(I.current_equipped_slot)] = I
 						I.forceMove(head)
 				head.drop_limb()
+				for(var/obj/item/I in items_to_move)
+					items_to_move[text2num(items_to_move[I])] = I
 				head.update_dismembered_accessory_overlays(owner)
 				if(!QDELETED(head)) //drop_limb() deletes the limb if it's no drop location and dummy humans used for rendering icons are located in nullspace. Do the math.
 					head.throwforce = 25
@@ -183,11 +187,15 @@
 				var/accessory_layer
 				var/accessory_offset
 				var/accessory_icon_file
-				switch(current_equipped_slot)
+				switch(head_accessory.current_equipped_slot)
 					if(2) //mask
 						accessory_layer = FACEMASK_LAYER
 						accessory_offset = OFFSET_FACEMASK
 						accessory_icon_file = 'icons/mob/clothing/mask.dmi'
+					if(4) //head
+						accessory_layer = HEAD_LAYER
+						accessory_offset = OFFSET_HEAD
+						accessory_icon_file = 'icons/mob/clothing/head.dmi'
 					if(7) //ears
 						accessory_layer = EARS_LAYER
 						accessory_offset = OFFSET_EARS
@@ -196,10 +204,7 @@
 						accessory_layer = GLASSES_LAYER
 						accessory_offset = OFFSET_GLASSES
 						accessory_icon_file = 'icons/mob/clothing/eyes.dmi'
-					if(11) //head
-						accessory_layer = HEAD_LAYER
-						accessory_offset = OFFSET_HEAD
-						accessory_icon_file = 'icons/mob/clothing/head.dmi'
+				message_admins("the index is [accessory_layer]")
 				overlays[accessory_layer] = head_accessory.build_worn_icon(default_layer = accessory_layer, default_icon_file = accessory_icon_file, override_state = head_accessory.icon_state)
 				var/mutable_appearance/accessory_overlay = overlays[accessory_layer]
 				if(accessory_overlay)
