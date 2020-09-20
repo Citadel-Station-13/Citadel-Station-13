@@ -280,6 +280,12 @@
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
 
+/datum/config_entry/number/movedelay/sprint_max_tiles_increase
+	config_entry_value = 5
+
+/datum/config_entry/number/movedelay/sprint_absolute_max_tiles
+	config_entry_value = 13
+
 /datum/config_entry/number/movedelay/sprint_buffer_max
 	config_entry_value = 24
 

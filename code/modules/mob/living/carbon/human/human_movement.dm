@@ -11,11 +11,6 @@
 
 /mob/living/carbon/human/movement_delay()
 	. = ..()
-	if(CHECK_MOBILITY(src, MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
-		var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
-		if(!SSI)
-			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
-		. -= SSI.config_entry_value
 	if (m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_SPEEDY_STEP))
 		. -= 1.5
 

@@ -120,3 +120,32 @@
 /datum/movespeed_modifier/active_block
 	variable = TRUE
 	flags = IGNORE_NOSLOW
+
+/datum/movespeed_modifier/sprinting
+	flags = IGNORE_NOSLOW
+	blacklisted_movetypes = FLOATING
+	required_mobility_flags = MOBILITY_STAND
+	priority = -100
+
+/// for speed reasons this is sorta copypasty.
+/datum/movespeed_modifier/sprinting/apply_multiplicative(existing, mob/target)
+	. = existing
+	if(target.m_intent != MOVE_INTENT_RUN)
+		return
+	if(isliving(target))
+		var/mob/living/L = target
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
+	var/static/datum/config_entry/number/movedelay/sprint_max_tiles_increase/SSMTI
+	if(!SSMTI)
+		SSMTI = CONFIG_GET_ENTRY(number/movedelay/sprint_max_tiles_increase)
+	var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
+	if(!SSI)
+		SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
+	var/static/datum/config_entry/number/movedelay/sprint_absolute_max_tiles/SAMT
+	if(!SAMT)
+		SAMT = CONFIG_GET_ENTRY(number/movedelay/sprint_absolute_max_tiles)
+	var/current_tiles = 10 / existing
+	var/minimum_speed = 10 / min(SAMT.config_entry_value, ((current_tiles) + SSMTI.config_entry_value))
+	. = max(minimum_speed, (existing - SSI.config_entry_value))
+

@@ -38,6 +38,12 @@ Key procs
 
 	/// Multiplicative slowdown
 	var/multiplicative_slowdown = 0
+	/// Next two variables depend on this: Should we do advanced calculations?
+	var/complex_calculation = FALSE
+	/// Absolute max tiles we can boost to
+	var/absolute_max_tiles_per_second
+	/// Max tiles per second we can boost
+	var/max_tiles_per_second_boost
 
 	/// Movetypes this applies to
 	var/movetypes = ALL
@@ -52,6 +58,16 @@ Key procs
 	. = ..()
 	if(!id)
 		id = "[type]" //We turn the path into a string.
+
+/**
+  * Returns new multiplicative movespeed after modification.
+  */
+/datum/movespeed_modifier/proc/apply_multiplicative(existing, mob/target)
+	if(!complex_calculation || (multiplicative_slowdown > 0))		// we aren't limiting how much things can slowdown.. yet.
+		return existing + multiplicative_slowdown
+	var/current_tiles = 10 / existing
+	var/minimum_speed = 10 / min(current_tiles + max_tiles_per_second_boost, max(current_tiles, absolute_max_tiles_per_second))
+	return max(minimum_speed, existing + multiplicative_slowdown)
 
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
@@ -198,7 +214,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 				conflict_tracker[conflict] = amt
 			else
 				continue
-		. += amt
+		. = M.apply_multiplicative(., src)
 	var/old = cached_multiplicative_slowdown		// CITAEDL EDIT - To make things a bit less jarring, when in situations where
 	// your delay decreases, "give" the delay back to the client
 	cached_multiplicative_slowdown = .
