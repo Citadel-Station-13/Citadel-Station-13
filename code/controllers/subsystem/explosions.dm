@@ -11,7 +11,12 @@ SUBSYSTEM_DEF(explosions)
 	if(!resumed)
 		currentrun = active_wave_explosions.Copy()
 	var/datum/explosion2/E
+	var/ran = 0
 	while(length(currentrun) && !MC_TICK_CHECK)
+		ran = 0
 		for(var/i in currentrun)
 			E = i
 			E.tick()
+			ran++
+		if(!ran)
+			break
