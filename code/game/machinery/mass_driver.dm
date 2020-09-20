@@ -38,3 +38,14 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	drive()
+
+/obj/machinery/mass_driver/pressure_plate
+	name = "pressure plated mass driver"
+	var/drive_delay = 10
+
+/obj/machinery/mass_driver/pressure_plate/Crossed(atom/movable/O)
+	. = ..()
+	if(isliving(O))
+		var/mob/living/L = O
+		to_chat(L, "<span class='warning'>You feel something click beneath you!</span>")
+	addtimer(CALLBACK(src, .proc/drive), drive_delay)

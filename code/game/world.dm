@@ -11,6 +11,11 @@ GLOBAL_LIST(topic_status_cache)
 /world/New()
 	if (fexists(EXTOOLS))
 		call(EXTOOLS, "maptick_initialize")()
+	#ifdef EXTOOLS_LOGGING
+		call(EXTOOLS, "init_logging")()
+	else
+		CRASH("[EXTOOLS] does not exist!")
+	#endif
 	enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
@@ -274,6 +279,7 @@ GLOBAL_LIST(topic_status_cache)
 		GM.__gasmixture_unregister()
 		num_deleted++
 	log_world("Deallocated [num_deleted] gas mixtures")
+	shutdown_logging() // makes sure the thread is closed before end, else we terminate
 	..()
 
 /world/proc/update_status()
