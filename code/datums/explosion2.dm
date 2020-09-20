@@ -1,12 +1,12 @@
 /// Creates a wave explosion at a certain place
-/proc/explosion2(turf/target, power, factor = 0.95, constant = 3.5, flash = 0, fire = 0, bypass_logging = FALSE, atom/source, speed)
+/proc/explosion2(turf/target, power, factor = 0.95, constant = 3.5, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE, bypass_logging = FALSE, block_resistance = 1)
 	if(!istype(target) || (power <= EXPLOSION_POWER_DEAD))
 		return
 	if(!bypass_logging)
 		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant]/[flash]/[fire]/[speed] initial/factor/constant/flash/fire/speed"
 		log_game(logstring)
 		message_admins(logstring)
-	new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed)
+	new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed, silent, TRUE, block_resistance)
 
 /**
   * New force-blastwave explosion system
@@ -55,6 +55,8 @@
 	var/mob_gib_mod = 1
 	/// Mob deafen mod
 	var/mob_deafen_mod = 1
+	/// block = block / this, if 0 any block is absolute
+	var/block_resistance = 1
 
 	/// List of turfs mapped to their powers.
 	var/list/turf/exploding = list()
@@ -68,14 +70,14 @@
 	var/list/turf/exploding_last = list()
 	/// What cycle are we on?
 	var/cycle
-	/// Last time we finished a cycle
-	var/last_cycle
+	/// When we started the current cycle
+	var/cycle_start
 	/// Time to wait between cycles
 	var/cycle_speed = 0
 	/// Current index for list
 	var/index = 0
 
-/datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE)
+/datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE, autostart = TRUE, block_resistance = 1)
 	id = ++next_id
 	if(next_id > SHORT_REAL_LIMIT)
 		next_id = 0
@@ -88,10 +90,12 @@
 	src.source = source
 	src.cycle_speed = speed
 	src.silent = silent
-	if(istype(initial))
-		start(initial)
-	else
+	src.block_resistance = block_resistance
+	if(!istype(initial))
 		stack_trace("Wave explosion created without a turf. This better be for debugging purposes.")
+		return
+	if(autostart)
+		start(initial)
 
 /datum/explosion2/Destroy()
 	if(running)
@@ -111,7 +115,7 @@
 		cycle = 1
 	SSexplosions.active_wave_explosions += src
 	running = TRUE
-	last_cycle = world.time
+	cycle_start = world.time
 	tick()
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
@@ -150,7 +154,7 @@
 
 	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
-		A.sense_wave_explosion(starting, power, speed)
+		A.sense_wave_explosion(starting, power_initial, cycle_speed)
 
 	// Flash mobs
 	if(flash_range)
@@ -176,21 +180,28 @@
 		if(!length(exploding_next))
 			finished = TRUE
 			stop(TRUE)
-			return
+			return TRUE
+		if((cycle_start + cycle_speed) > world.time)		// postpone
+			return TRUE
 		// shift everything down
 		exploding_last = exploding
 		exploding = exploding_next
 		exploding_dirs = exploding_next_dirs
 		exploding_next = list()
 		exploding_next_dirs = list()
-		last_cycle = world.time
+		cycle_start = world.time
 		cycle++
 		index = 1
-		if(world.time - last_cycle < cycle_speed)
-			return TRUE	//POSTPONE
 	var/turf/victim = exploding[index]
 	var/current_power = exploding[victim]
-	var/new_power = round((victim.wave_ex_act(current_power, src, exploding_dirs[victim]) * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
+	var/returned = victim.wave_ex_act(current_power, src, exploding_dirs[victim])
+	if(block_resistance <= 0)
+		returned = 0
+	else
+		var/diff = current_power - returned
+		if(diff >= 0)
+			returned = current_power - (diff / block_resistance)
+	var/new_power = round((returned * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
 	if(new_power < power_considered_dead)
 		return
 	var/vx = victim.x

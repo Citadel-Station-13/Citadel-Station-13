@@ -16,7 +16,8 @@ SUBSYSTEM_DEF(explosions)
 		ran = 0
 		for(var/i in currentrun)
 			E = i
-			E.tick()
+			if(E.tick())
+				currentrun -= E
 			ran++
 		if(!ran)
 			break
