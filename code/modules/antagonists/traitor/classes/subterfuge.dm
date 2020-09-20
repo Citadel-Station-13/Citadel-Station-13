@@ -28,7 +28,7 @@
 			download_objective.owner = T.owner
 			download_objective.gen_amount_goal()
 			T.add_objective(download_objective)
-		else if(prob(70)) // cum. not counting download: 40%.
+		else if(prob(90))
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = T.owner
 			steal_objective.find_target()
