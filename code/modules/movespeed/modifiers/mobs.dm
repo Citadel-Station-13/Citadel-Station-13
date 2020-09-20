@@ -124,7 +124,7 @@
 /datum/movespeed_modifier/sprinting
 	flags = IGNORE_NOSLOW
 	blacklisted_movetypes = FLOATING
-	priority = -100
+	priority = 100
 
 /// for speed reasons this is sorta copypasty.
 /datum/movespeed_modifier/sprinting/apply_multiplicative(existing, mob/target)
@@ -135,16 +135,15 @@
 		var/mob/living/L = target
 		if(!(L.mobility_flags & MOBILITY_STAND))
 			return
-	var/static/datum/config_entry/number/movedelay/sprint_max_tiles_increase/SSMTI
-	if(!SSMTI)
-		SSMTI = CONFIG_GET_ENTRY(number/movedelay/sprint_max_tiles_increase)
+	var/static/datum/config_entry/number/movedelay/sprint_max_tiles_increase/SMTI
+	if(!SMTI)
+		SMTI = CONFIG_GET_ENTRY(number/movedelay/sprint_max_tiles_increase)
 	var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
 	if(!SSI)
 		SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
 	var/static/datum/config_entry/number/movedelay/sprint_absolute_max_tiles/SAMT
 	if(!SAMT)
 		SAMT = CONFIG_GET_ENTRY(number/movedelay/sprint_absolute_max_tiles)
-	var/current_tiles = 10 / existing
-	var/minimum_speed = 10 / min(SAMT.config_entry_value, ((current_tiles) + SSMTI.config_entry_value))
-	. = max(minimum_speed, (existing - SSI.config_entry_value))
-
+	var/current_tiles = 10 / max(existing, world.tick_lag)
+	var/minimum_speed = 10 / min(max(SAMT.config_entry_value, current_tiles), current_tiles + SMTI.config_entry_value)
+	. = min(., max(minimum_speed, existing - SSI.config_entry_value))

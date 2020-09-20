@@ -65,7 +65,7 @@ Key procs
 /datum/movespeed_modifier/proc/apply_multiplicative(existing, mob/target)
 	if(!complex_calculation || (multiplicative_slowdown > 0))		// we aren't limiting how much things can slowdown.. yet.
 		return existing + multiplicative_slowdown
-	var/current_tiles = 10 / existing
+	var/current_tiles = 10 / max(existing, world.tick_lag)
 	var/minimum_speed = 10 / min(current_tiles + max_tiles_per_second_boost, max(current_tiles, absolute_max_tiles_per_second))
 	return max(minimum_speed, existing + multiplicative_slowdown)
 

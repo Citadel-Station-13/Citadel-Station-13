@@ -13,6 +13,7 @@
 			return
 		return FALSE
 	stamina_buffer -= amount
+	UpdateStaminaBuffer()
 	return TRUE
 
 /**
@@ -22,12 +23,16 @@
 	var/time = world.time - stamina_buffer_regen_last
 	var/missing_stamina_percent = getStaminaLoss() / STAMINA_CRIT
 	var/stamina_buffer_max = src.stamina_buffer_max * (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY))
+	stamina_buffer_regen_last = world.time
 	if(stamina_buffer > stamina_buffer_max)
 		stamina_buffer = stamina_buffer_max
 		return
 	var/combat_mode = !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)
-	stamina_buffer += min((stamina_buffer_max - stamina_buffer), (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY)) * (time * 0.1 * ((combat_mode? stamina_buffer_regen_combat : stamina_buffer_regen) * stamina_buffer_regen_mod)))
-	hud_used?.staminabuffer?.update_icon()
+	var/action_penalty = (((world.time - last_action) >= STAMINA_BUFFER_ACTION_PENALTY_TIME) && STAMINA_BUFFER_ACTION_PENALTY_FACTOR) || 1
+	var/stamina_penalty = 1 - (missing_stamina_perent * STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY)
+	var/regen = (time * 0.1 * ((combat_mode? stamina_buffer_regen_combat : stamina_buffer_regen) * stamina_buffer_regen_mod)
+	stamina_buffer += min((stamina_buffer_max - stamina_buffer), action_penalty * stamina_penalty * regen))
+	hud_used?.staminabuffer?.mark_dirty()
 
 /**
   * Boosts our stamina buffer by this much.
@@ -36,3 +41,4 @@
 	var/missing_stamina_percent = getStaminaLoss() / STAMINA_CRIT
 	var/stamina_buffer_max = src.stamina_buffer_max * (1 - (missing_stamina_percent * STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY))
 	stamina_buffer += min(amount, stamina_buffer_max - stamina_buffer)
+	hud_used?.staminabuffer?.mark_dirty()
