@@ -5,7 +5,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/water_source/puddle,
+/obj/structure/sink/puddle,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "ay" = (
@@ -885,7 +885,7 @@
 	pixel_y = 10;
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/monkeycube{
+/obj/item/reagent_containers/food/snacks/cube/monkey{
 	pixel_x = 5
 	},
 /obj/item/paicard{
@@ -1065,7 +1065,7 @@
 /area/shuttle/escape)
 "Nu" = (
 /obj/effect/turf_decal/weather/dirt,
-/obj/item/hatchet/wooden,
+/obj/item/hatchet,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "Ob" = (
