@@ -1,5 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - tweak: "Jackboots *and combat boots* make a distinct sound now."
-  - soundadd: "added jackboot1 and jackboot2, straight from paradise."
