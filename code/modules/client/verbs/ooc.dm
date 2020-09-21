@@ -280,3 +280,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
+
+/client/verb/fix_stat_panel()
+	set name = "Fix Stat Panel"
+	set hidden = TRUE
+
+	init_verbs()
