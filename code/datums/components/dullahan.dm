@@ -48,15 +48,20 @@
 
 				var/obj/item/bodypart/head/dullahan/dullahan_head = new
 				//handle the head
+				dullahan_head.name = owner.name
+				dullahan_head.dullahan_body = owner
 				if(has_custom_head())
 					dullahan_head.icon = custom_head_icon
 					dullahan_head.icon_state = custom_head_icon_state
 					dullahan_head.custom_head = TRUE
 				else
-					dullahan_head.icon = head.icon
-					dullahan_head.icon_state = head.icon_state
 					dullahan_head.custom_head = head.custom_head
-					dullahan_head.add_overlay(head.get_limb_icon())
+					var/head_icon = head.get_limb_icon()
+					if(head_icon)
+						dullahan_head.add_overlay(head_icon)
+					else
+						dullahan_head.icon = head.icon //one or the other, both causes two heads to appear sometimes, which is not wanted
+						dullahan_head.icon_state = head.icon_state
 				//now add eyes, horns, hair, and then a bunch of other snowflakey bits - consider making this not copypasta
 				var/overlays_to_add = list()
 				//first find the eyes overlay
@@ -108,8 +113,8 @@
 				for(var/X in list(dullahan_head.dullahan_eyes, dullahan_head.dullahan_ears, dullahan_head.dullahan_mask, dullahan_head.dullahan_hat))
 					var/obj/item/I = X
 					if(I)
-						I.forceMove(X)
-				dullahan_head.update_dismembered_accessory_overlays(owner)
+						I.forceMove(dullahan_head)
+				dullahan_head.update_dismembered_accessory_overlays(owner, list(SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_EARS))
 				relay = new /obj/item/dullahan_relay (dullahan_head, owner)
 				owner.put_in_hands(dullahan_head)
 				var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
@@ -229,11 +234,15 @@
 
 //custom dullahan head that makes this shitcode easier to do
 /obj/item/bodypart/head/dullahan
+	var/mob/living/carbon/human/dullahan_body
 	//accessories the head can wear
 	var/obj/item/dullahan_hat
 	var/obj/item/dullahan_mask
 	var/obj/item/dullahan_ears
 	var/obj/item/dullahan_eyes
+	//the appearances that are used as overlays for the head (so we can easily fetch them and cut them)
+	var/list/stored_appearances = list(null, null, null, null) //we index them with 1-4 so they need items in to initially index them
+
 	slot_flags = ITEM_SLOT_HEAD
 
 /obj/item/bodypart/head/dullahan/MouseDrop(atom/thing)
@@ -253,6 +262,8 @@
 	onclose(user, "mob[REF(src)]")
 
 /obj/item/bodypart/head/dullahan/Topic(href, href_list)
+
+
 	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		usr << browse(null, "window=mob[REF(src)]")
 		usr.unset_machine()
@@ -266,7 +277,7 @@
 				if(dullahan_hat)
 					usr.put_in_hands(dullahan_hat)
 					dullahan_hat = null
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_HEAD))
 				else
 					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!.</span>")
 					return
@@ -274,7 +285,7 @@
 				if(dullahan_mask)
 					usr.put_in_hands(dullahan_mask)
 					dullahan_mask = null
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_WEAR_MASK))
 				else
 					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!</span>")
 					return
@@ -282,7 +293,7 @@
 				if(dullahan_ears)
 					usr.put_in_hands(dullahan_ears)
 					dullahan_ears = null
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_EARS))
 				else
 					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!</span>")
 					return
@@ -290,7 +301,7 @@
 				if(dullahan_eyes)
 					usr.put_in_hands(dullahan_eyes)
 					dullahan_eyes = null
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_GLASSES))
 				else
 					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!</span>")
 					return
@@ -319,7 +330,7 @@
 
 					dullahan_hat = item_to_add
 					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_HEAD))
 			if("mask")
 				if(dullahan_mask)
 					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
@@ -337,7 +348,7 @@
 
 					dullahan_mask = item_to_add
 					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_WEAR_MASK))
 			if("ears")
 				if(dullahan_ears)
 					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
@@ -355,7 +366,7 @@
 
 					dullahan_ears = item_to_add
 					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_EARS))
 			if("eyes")
 				if(dullahan_eyes)
 					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
@@ -373,47 +384,66 @@
 
 					dullahan_eyes = item_to_add
 					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays()
+					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_GLASSES))
 
 		show_inv(usr)
 	else
 		return ..()
 
 //proc that grabs clothing items inside a head and renders them on the head
-/obj/item/bodypart/head/dullahan/proc/update_dismembered_accessory_overlays(mob/living/carbon/human/the_dullahan)
+/obj/item/bodypart/head/dullahan/proc/update_dismembered_accessory_overlays(mob/living/carbon/human/the_dullahan, list/slots_to_render)
 	if(!owner) //why are you doing this if it's not dismembered
-		for(var/item_type in list(SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_EARS))
+		for(var/item_type in slots_to_render)
 			var/obj/item/head_accessory
 			var/accessory_layer
 			var/accessory_offset
 			var/accessory_icon_file
+			var/appearance_storage_index
 			switch(item_type) //these go off the worn item slot number
 				if(SLOT_WEAR_MASK) //mask
 					head_accessory = dullahan_mask
 					accessory_layer = FACEMASK_LAYER
 					accessory_offset = OFFSET_FACEMASK
 					accessory_icon_file = 'icons/mob/clothing/mask.dmi'
+					appearance_storage_index = 1
 				if(SLOT_HEAD) //head
 					head_accessory = dullahan_hat
 					accessory_layer = HEAD_LAYER
 					accessory_offset = OFFSET_HEAD
 					accessory_icon_file = 'icons/mob/clothing/head.dmi'
+					appearance_storage_index = 2
 				if(SLOT_EARS) //ears
 					head_accessory = dullahan_ears
 					accessory_layer = EARS_LAYER
 					accessory_offset = OFFSET_EARS
 					accessory_icon_file = 'icons/mob/ears.dmi'
+					appearance_storage_index = 3
 				if(SLOT_GLASSES) //eyes
 					head_accessory = dullahan_eyes
 					accessory_layer = GLASSES_LAYER
 					accessory_offset = OFFSET_GLASSES
 					accessory_icon_file = 'icons/mob/clothing/eyes.dmi'
+					appearance_storage_index = 4
 			if(head_accessory)
 				var/mutable_appearance/accessory_overlay = head_accessory.build_worn_icon(default_layer = accessory_layer, default_icon_file = accessory_icon_file, override_state = head_accessory.icon_state)
 				if(accessory_overlay)
-					//everything is about 10 pixels higher than it should be
-					//accessory_overlay.pixel_y -= 10
+					//cut the old overlay, if any
+					if(stored_appearances[appearance_storage_index])
+						cut_overlay(list(stored_appearances[appearance_storage_index]))
 					if(accessory_offset in the_dullahan.dna.species.offset_features)
 						accessory_overlay.pixel_x += the_dullahan.dna.species.offset_features[accessory_offset][1]
 						accessory_overlay.pixel_y += the_dullahan.dna.species.offset_features[accessory_offset][2]
 					add_overlay(list(accessory_overlay))
+					//and now assign it to the right part of the storage list
+					stored_appearances[appearance_storage_index] = accessory_overlay
+			else
+				if(list(stored_appearances[appearance_storage_index]))
+					cut_overlay(list(stored_appearances[appearance_storage_index]))
+				stored_appearances[appearance_storage_index] = null
+
+//make sure the head can be equipped
+/obj/item/bodypart/head/dullahan/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
+	if(dullahan_body == equipper)
+		return !dullahan_body.head //only yes if there's nothing in the way (although this should never be the case)
+	else
+		return ..()
