@@ -17,6 +17,8 @@
 	var/explosion_power_break_turf = EXPLOSION_POWER_FLOOR_TURF_BREAK
 	//// Minimum explosion power to scrape away the floor
 	var/explosion_power_turf_scrape = EXPLOSION_POWER_FLOOR_TURF_SCRAPE
+	//// Shielded turfs are completely protected from anything under this
+	var/explosion_power_protect_shielded = EXPLOSION_POWER_FLOOR_SHIELDED_IMMUNITY
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -109,13 +111,15 @@
 	. = ..()
 	if(shielded && (power < explosion_power_protect_shielded))
 		return
+	else
+		power -= explosion_power_protect_shielded
 	hotspot_expose(1000, CELL_VOLUME)
 	if(power < explosion_power_break_tile)
 		return
 	else if(power < explosion_power_break_turf)
 		if(prob(33 + ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_break_tile))))
 			break_tile()
-	else if(power < explosion_power_scrape_turf)
+	else if(power < explosion_power_turf_scrape)
 		switch(pick(1, 2;75, 3))
 			if(1)
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
