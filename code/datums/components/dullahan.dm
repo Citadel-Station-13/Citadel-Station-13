@@ -1,5 +1,10 @@
 //Dullahan Component (because why the hell was it a species?)
 //turns the user into a dullahan by popping their head off and applying a bunch of snowflakey code to keep their sprite accessories and stuff
+#define DULLAHAN_MASK_INDEX 1
+#define DULLAHAN_HEAD_INDEX 2
+#define DULLAHAN_EARS_INDEX 3
+#define DULLAHAN_EYES_INDEX 4
+
 /datum/component/dullahan
 	//who is the person who is going to lose their head
 	var/mob/living/carbon/human/owner
@@ -59,6 +64,8 @@
 					var/head_icon = head.get_limb_icon()
 					if(head_icon)
 						dullahan_head.add_overlay(head_icon)
+						dullahan_head.icon = null
+						dullahan_head.icon_state = null
 					else
 						dullahan_head.icon = head.icon //one or the other, both causes two heads to appear sometimes, which is not wanted
 						dullahan_head.icon_state = head.icon_state
@@ -105,12 +112,12 @@
 						if(accepted)
 							overlays_to_add += some_overlay
 				dullahan_head.add_overlay(overlays_to_add)
-				dullahan_head.dullahan_eyes = owner.glasses
-				dullahan_head.dullahan_ears = owner.ears
-				dullahan_head.dullahan_mask = owner.wear_mask
-				dullahan_head.dullahan_hat = owner.head
+				dullahan_head.stored_items[DULLAHAN_EYES_INDEX] = owner.glasses
+				dullahan_head.stored_items[DULLAHAN_EARS_INDEX] = owner.ears
+				dullahan_head.stored_items[DULLAHAN_MASK_INDEX] = owner.wear_mask
+				dullahan_head.stored_items[DULLAHAN_HEAD_INDEX] = owner.head
 				qdel(head)
-				for(var/X in list(dullahan_head.dullahan_eyes, dullahan_head.dullahan_ears, dullahan_head.dullahan_mask, dullahan_head.dullahan_hat))
+				for(var/X in dullahan_head.stored_items)
 					var/obj/item/I = X
 					if(I)
 						I.forceMove(dullahan_head)
@@ -236,12 +243,9 @@
 /obj/item/bodypart/head/dullahan
 	var/mob/living/carbon/human/dullahan_body
 	//accessories the head can wear
-	var/obj/item/dullahan_hat
-	var/obj/item/dullahan_mask
-	var/obj/item/dullahan_ears
-	var/obj/item/dullahan_eyes
+	var/list/stored_items = list(null, null, null, null) //mask/head/ears/eyes indexed with 1-4
 	//the appearances that are used as overlays for the head (so we can easily fetch them and cut them)
-	var/list/stored_appearances = list(null, null, null, null) //we index them with 1-4 so they need items in to initially index them
+	var/list/stored_appearances = list(null, null, null, null) //we index them with 1-4 so they need items in to initially index them, same order as stored_items
 
 	slot_flags = ITEM_SLOT_HEAD
 
@@ -253,17 +257,15 @@
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	var/dat = "<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[dullahan_hat ? "remove_inv=head'>[dullahan_hat]" : "add_inv=head'>Nothing"]</A>"
-	dat += "<br><B>Mask:</B> <A href='?src=[REF(src)];[dullahan_mask ? "remove_inv=mask'>[dullahan_mask]" : "add_inv=mask'>Nothing"]</A>"
-	dat += "<br><B>Ears:</B> <A href='?src=[REF(src)];[dullahan_ears ? "remove_inv=ears'>[dullahan_ears]" : "add_inv=ears'>Nothing"]</A>"
-	dat += "<br><B>Glasses:</B> <A href='?src=[REF(src)];[dullahan_eyes ? "remove_inv=eyes'>[dullahan_eyes]" : "add_inv=eyes'>Nothing"]</A>"
+	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_HEAD_INDEX] ? "remove_inv=[SLOT_HEAD]'>[stored_items[DULLAHAN_HEAD_INDEX]]" : "add_inv=[SLOT_HEAD]'>Nothing"]</A>"
+	dat += "<br><B>Mask:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_MASK_INDEX] ? "remove_inv=[SLOT_WEAR_MASK]'>[stored_items[DULLAHAN_MASK_INDEX]]" : "add_inv=[SLOT_WEAR_MASK]'>Nothing"]</A>"
+	dat += "<br><B>Ears:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_EARS_INDEX] ? "remove_inv=[SLOT_EARS]'>[stored_items[DULLAHAN_EARS_INDEX]]" : "add_inv=[SLOT_EARS]'>Nothing"]</A>"
+	dat += "<br><B>Glasses:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_EYES_INDEX] ? "remove_inv=[SLOT_GLASSES]'>[stored_items[DULLAHAN_EYES_INDEX]]" : "add_inv=[SLOT_GLASSES]'>Nothing"]</A>"
 	user.set_machine(src)
 	user << browse(dat, "window=mob[REF(src)];size=325x500")
 	onclose(user, "mob[REF(src)]")
 
-/obj/item/bodypart/head/dullahan/Topic(href, href_list)
-
-
+/obj/item/bodypart/head/dullahan/Topic(href, href_list) //taken from corgi inventory, edited to be cleaner
 	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		usr << browse(null, "window=mob[REF(src)]")
 		usr.unset_machine()
@@ -271,121 +273,60 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		var/remove_from = href_list["remove_inv"]
+		var/remove_from = text2num(href_list["remove_inv"])
+		var/item_index
 		switch(remove_from)
-			if("head")
-				if(dullahan_hat)
-					usr.put_in_hands(dullahan_hat)
-					dullahan_hat = null
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_HEAD))
-				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!.</span>")
-					return
-			if("mask")
-				if(dullahan_mask)
-					usr.put_in_hands(dullahan_mask)
-					dullahan_mask = null
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_WEAR_MASK))
-				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!</span>")
-					return
-			if("ears")
-				if(dullahan_ears)
-					usr.put_in_hands(dullahan_ears)
-					dullahan_ears = null
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_EARS))
-				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!</span>")
-					return
-			if("eyes")
-				if(dullahan_eyes)
-					usr.put_in_hands(dullahan_eyes)
-					dullahan_eyes = null
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_GLASSES))
-				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from that area!</span>")
-					return
+			if(SLOT_HEAD)
+				item_index = DULLAHAN_HEAD_INDEX
+			if(SLOT_WEAR_MASK)
+				item_index = DULLAHAN_MASK_INDEX
+			if(SLOT_EARS)
+				item_index = DULLAHAN_EARS_INDEX
+			if(SLOT_GLASSES)
+				item_index = DULLAHAN_EYES_INDEX
+		var/item_to_remove = stored_items[item_index]
+		if(item_to_remove)
+			usr.put_in_hands(item_to_remove)
+			stored_items[item_index] = null
+			update_dismembered_accessory_overlays(dullahan_body, list(remove_from))
+		else
+			to_chat(usr, "<span class='danger'>There is nothing to remove from that area!.</span>")
+			return
 		show_inv(usr)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-
-		var/add_to = href_list["add_inv"]
-
+		var/add_to = text2num(href_list["add_inv"])
+		message_admins("[add_to]")
+		var/item_index
 		switch(add_to)
-			if("head")
-				if(dullahan_hat)
-					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
-					return
-				else
-					var/obj/item/item_to_add = usr.get_active_held_item()
-
-					if(!item_to_add)
-						usr.visible_message("There's nothing in your hand to place on it!")
-						return
-
-					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
-						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
-						return
-
-					dullahan_hat = item_to_add
-					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_HEAD))
-			if("mask")
-				if(dullahan_mask)
-					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
-					return
-				else
-					var/obj/item/item_to_add = usr.get_active_held_item()
-
-					if(!item_to_add)
-						usr.visible_message("There's nothing in your hand to place on it!")
-						return
-
-					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
-						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
-						return
-
-					dullahan_mask = item_to_add
-					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_WEAR_MASK))
-			if("ears")
-				if(dullahan_ears)
-					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
-					return
-				else
-					var/obj/item/item_to_add = usr.get_active_held_item()
-
-					if(!item_to_add)
-						usr.visible_message("There's nothing in your hand to place on it!")
-						return
-
-					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
-						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
-						return
-
-					dullahan_ears = item_to_add
-					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_EARS))
-			if("eyes")
-				if(dullahan_eyes)
-					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
-					return
-				else
-					var/obj/item/item_to_add = usr.get_active_held_item()
-
-					if(!item_to_add)
-						usr.visible_message("There's nothing in your hand to place on it!")
-						return
-
-					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
-						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
-						return
-
-					dullahan_eyes = item_to_add
-					item_to_add.forceMove(src)
-					update_dismembered_accessory_overlays(dullahan_body, list(SLOT_GLASSES))
-
+			if(SLOT_HEAD)
+				item_index = DULLAHAN_HEAD_INDEX
+			if(SLOT_WEAR_MASK)
+				item_index = DULLAHAN_MASK_INDEX
+			if(SLOT_EARS)
+				item_index = DULLAHAN_EARS_INDEX
+			if(SLOT_GLASSES)
+				item_index = DULLAHAN_EYES_INDEX
+		if(stored_items[item_index])
+			to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+			return
+		if(!item_index)
+			to_chat(usr, "<span class='warning'>That's not a valid option!</span>")
+			return
+		var/obj/item/item_to_add = usr.get_active_held_item()
+		if(!item_to_add)
+			usr.visible_message("There's nothing in your hand to place on it!")
+			return
+		if(!(item_to_add.slot_flags & add_to))
+			usr.visible_message("This doesn't go here!")
+			return
+		if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
+			to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
+			return
+		stored_items[item_index] = item_to_add
+		item_to_add.forceMove(src)
+		update_dismembered_accessory_overlays(dullahan_body, list(add_to))
 		show_inv(usr)
 	else
 		return ..()
@@ -401,29 +342,29 @@
 			var/appearance_storage_index
 			switch(item_type) //these go off the worn item slot number
 				if(SLOT_WEAR_MASK) //mask
-					head_accessory = dullahan_mask
+					head_accessory = stored_items[DULLAHAN_MASK_INDEX]
 					accessory_layer = FACEMASK_LAYER
 					accessory_offset = OFFSET_FACEMASK
 					accessory_icon_file = 'icons/mob/clothing/mask.dmi'
-					appearance_storage_index = 1
+					appearance_storage_index = DULLAHAN_MASK_INDEX
 				if(SLOT_HEAD) //head
-					head_accessory = dullahan_hat
+					head_accessory = stored_items[DULLAHAN_HEAD_INDEX]
 					accessory_layer = HEAD_LAYER
 					accessory_offset = OFFSET_HEAD
 					accessory_icon_file = 'icons/mob/clothing/head.dmi'
-					appearance_storage_index = 2
+					appearance_storage_index = DULLAHAN_HEAD_INDEX
 				if(SLOT_EARS) //ears
-					head_accessory = dullahan_ears
+					head_accessory = stored_items[DULLAHAN_EARS_INDEX]
 					accessory_layer = EARS_LAYER
 					accessory_offset = OFFSET_EARS
 					accessory_icon_file = 'icons/mob/ears.dmi'
-					appearance_storage_index = 3
+					appearance_storage_index = DULLAHAN_EARS_INDEX
 				if(SLOT_GLASSES) //eyes
-					head_accessory = dullahan_eyes
+					head_accessory = stored_items[DULLAHAN_EYES_INDEX]
 					accessory_layer = GLASSES_LAYER
 					accessory_offset = OFFSET_GLASSES
 					accessory_icon_file = 'icons/mob/clothing/eyes.dmi'
-					appearance_storage_index = 4
+					appearance_storage_index = DULLAHAN_EYES_INDEX
 			if(head_accessory)
 				var/mutable_appearance/accessory_overlay = head_accessory.build_worn_icon(default_layer = accessory_layer, default_icon_file = accessory_icon_file, override_state = head_accessory.icon_state)
 				if(accessory_overlay)
@@ -447,3 +388,8 @@
 		return !dullahan_body.head //only yes if there's nothing in the way (although this should never be the case)
 	else
 		return ..()
+
+#undef DULLAHAN_MASK_INDEX
+#undef DULLAHAN_HEAD_INDEX
+#undef DULLAHAN_EARS_INDEX
+#undef DULLAHAN_EYES_INDEX
