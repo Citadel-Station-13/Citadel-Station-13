@@ -6,7 +6,7 @@
 		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant]/[flash]/[fire]/[speed] initial/factor/constant/flash/fire/speed"
 		log_game(logstring)
 		message_admins(logstring)
-	new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed, silent, TRUE, block_resistance)
+	return new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed, silent, TRUE, block_resistance)
 
 /**
   * New force-blastwave explosion system

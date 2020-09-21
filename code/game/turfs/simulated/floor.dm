@@ -11,6 +11,13 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+	/// Minimum explosion power to break tile
+	var/explosion_power_break_tile = EXPLOSION_POWER_FLOOR_TILE_BREAK
+	/// Minimum explosion power to break turf
+	var/explosion_power_break_turf = EXPLOSION_POWER_FLOOR_TURF_BREAK
+	//// Minimum explosion power to scrape away the floor
+	var/explosion_power_turf_scrape = EXPLOSION_POWER_FLOOR_TURF_SCRAPE
+
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.004
@@ -96,6 +103,40 @@
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
+
+/turf/open/floor/wave_ex_act(power, datum/explosion2/explosion, dir)
+	var/shielded = is_shielded()
+	. = ..()
+	if(shielded && (power < explosion_power_protect_shielded))
+		return
+	hotspot_expose(1000, CELL_VOLUME)
+	if(power < explosion_power_break_tile)
+		return
+	else if(power < explosion_power_break_turf)
+		if(prob(33 + ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_break_tile))))
+			break_tile()
+	else if(power < explosion_power_scrape_turf)
+		switch(pick(1, 2;75, 3))
+			if(1)
+				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					ReplaceWithLattice()
+				else
+					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+				if(prob(33))
+					new /obj/item/stack/sheet/metal(src)
+			if(2)
+				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+			if(3)
+				if(prob(80))
+					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+				else
+					break_tile()
+				hotspot_expose(1000,CELL_VOLUME)
+				if(prob(33))
+					new /obj/item/stack/sheet/metal(src)
+	else
+		ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)

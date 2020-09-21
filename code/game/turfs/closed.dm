@@ -30,6 +30,7 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+	wave_explosion_block = INFINITY
 
 /turf/closed/indestructible/rust_heretic_act()
 	return

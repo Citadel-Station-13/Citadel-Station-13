@@ -31,6 +31,11 @@
 #define EXPLOSION_POWER_RWALL_DISMANTLE				40
 #define EXPLOSION_POWER_RWALL_MINIMUM_DISMANTLE		25
 
+// Floors
+#define EXPLOSION_POWER_FLOOR_TILE_BREAK		5
+#define EXPLOSION_POWER_FLOOR_TURF_BREAK		25
+#define EXPLOSION_POWER_FLOOR_TURF_SCRAPE		50
+
 // Helpers
 /// Explosion power to object damage (without taking into consideration armor)
 #define EXPLOSION_POWER_STANDARD_SCALE_OBJECT_DAMAGE(power, multiplier)			(35*(power**0.4)*multiplier)
@@ -52,11 +57,11 @@
 
 // Standardized explosion factor blocks
 #define EXPLOSION_DAMPEN_MACHINE					0.95
+#define EXPLOSION_DAMPEN_SPACE						0.95
 #define EXPLOSION_DAMPEN_WINDOW						0.95
 #define EXPLOSION_DAMPEN_REINFORCED_WINDOW			0.9
 #define EXPLOSION_DAMPEN_DENSE_FILLER				0.85
 #define EXPLOSION_DAMPEN_WALL						0.8
-#define EXPLOSION_DAMPEN_SPACE						0.8
 #define EXPLOSION_DAMPEN_BOROSILICATE_WINDOW		0.65
 #define EXPLOSION_DAMPEN_BLAST_PROOF				0.65
 #define EXPLOSION_DAMPEN_EXTREME					0.5

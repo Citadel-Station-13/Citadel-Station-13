@@ -73,7 +73,7 @@
 
 /obj/wave_ex_act(power, datum/explosion2/explosion, dir)
 	if(resistance_flags & INDESTRUCTIBLE)
-		return
+		return power
 	. = ..()
 	if(explosion.source == src)
 		obj_integrity = 0
