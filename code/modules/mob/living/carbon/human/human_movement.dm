@@ -58,8 +58,8 @@
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
 			var/datum/movespeed_modifier/equipment_speedmod/MM = get_movespeed_modifier_datum(/datum/movespeed_modifier/equipment_speedmod)
 			var/amount = 1
-			if(MM)
-				amount *= (1 + (1 - (1 / MM.multiplicative_slowdown)))
+			if(MM?.multiplicative_slowdown >= 1)
+				amount *= (1 + (6 - (3 / MM.multiplicative_slowdown)))
 			doSprintLossTiles(amount)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
