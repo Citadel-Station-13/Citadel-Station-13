@@ -236,6 +236,13 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		var/datum/movespeed_modifier/M = movespeed_modification[id]
 		. += M.multiplicative_slowdown
 
+/**
+  * Gets the movespeed modifier datum of a modifier on a mob. Returns null if not found.
+  * DANGER: IT IS UP TO THE PERSON USING THIS TO MAKE SURE THE MODIFIER IS NOT MODIFIED IF IT HAPPENS TO BE GLOBAL/CACHED.
+  */
+/mob/proc/get_movespeed_modifier_datum(id)
+	return movespeed_modification[id]
+
 /// Checks if a move speed modifier is valid and not missing any data
 /proc/movespeed_data_null_check(datum/movespeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.
 	. = TRUE

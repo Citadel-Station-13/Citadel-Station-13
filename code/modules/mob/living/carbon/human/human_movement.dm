@@ -56,7 +56,11 @@
 		HM.on_move(NewLoc)
 	if(. && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && (!pulledby || (pulledby.pulledby == src)))
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
-			doSprintLossTiles(1)
+			var/datum/movespeed_modifier/equipment_speedmod/MM = get_movespeed_modifier_datum(/datum/movespeed_modifier/equipment_speedmod)
+			var/amount = 1
+			if(MM)
+				amount *= (1 + (1 - (1 / MM.multiplicative_slowdown)))
+			doSprintLossTiles(amount)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
 			for(var/obj/item/I in held_items)
