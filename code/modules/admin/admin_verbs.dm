@@ -315,7 +315,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(/client/proc/hide_most_verbs, GLOB.admin_verbs_hideable)
+	remove_verb(src, GLOB.admin_verbs_hideable)
+	remove_verb(src, /client/proc/hide_most_verbs)
 	add_verb(src, /client/proc/show_verbs)
 
 	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
