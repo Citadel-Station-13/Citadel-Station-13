@@ -15,8 +15,11 @@ SUBSYSTEM_DEF(statpanels)
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
 			cached ? "Next Map: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"[SStime_track.stat_time_text]",
-			"Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]",
+			//"[SStime_track.stat_time_text]",
+			"[SStime_track.server_time_text]",
+			"[SStime_track.round_time_text]",
+			"[SStime_track.station_time_text]",
+			//"Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]",
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
 		)
 
