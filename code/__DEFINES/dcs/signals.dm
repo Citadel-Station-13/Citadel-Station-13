@@ -246,6 +246,8 @@
 	#define COMPONENT_BLOCK_SWAP 1
 
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
+///from base of mob/AltClickOn(): (atom/A)
+#define COMSIG_MOB_ALTCLICKON "mob_altclickon"
 
 // /client signals
 #define COMSIG_MOB_CLIENT_LOGIN "mob_client_login"					//sent when a mob/login() finishes: (client)

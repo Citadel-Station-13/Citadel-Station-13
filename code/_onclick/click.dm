@@ -319,20 +319,13 @@
 		return ..()
 /*
 	Alt click
-	Unused except for AI
+	Used as an alternate way to interact with things.
 */
 /mob/proc/AltClickOn(atom/A)
-	if(!A.AltClick(src))
-		altclick_listed_turf(A)
-
-/mob/proc/altclick_listed_turf(atom/A)
-	var/turf/T = get_turf(A)
-	if(T == A.loc || T == A)
-		if(T == listed_turf)
-			listed_turf = null
-		else if(TurfAdjacent(T))
-			listed_turf = T
-			client.statpanel = T.name
+	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
+	A.AltClick(src)
 
 /mob/living/carbon/AltClickOn(atom/A)
 	if(!stat && mind && iscarbon(A) && A != src)
@@ -344,7 +337,18 @@
 	..()
 
 /atom/proc/AltClick(mob/user)
-	. = SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
+	var/turf/T = get_turf(src)
+	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T))
+		user.listed_turf = T
+		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
+
+/// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
+/atom/proc/AltClickNoInteract(mob/user, atom/A)
+	var/turf/T = get_turf(A)
+	if(T && user.TurfAdjacent(T))
+		user.listed_turf = T
+		user.client << output("[url_encode(json_encode(T.name))];", "statbrowser:create_listedturf")
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)

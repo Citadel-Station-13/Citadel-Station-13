@@ -7,6 +7,9 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
+	/// hides the byond verb panel as we use our own custom version
+	show_verb_panel = FALSE
+	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
 	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
 	var/AI_Interact		= 0
@@ -125,6 +128,11 @@
 	var/list/seen_messages
 	/// viewsize datum for holding our view size
 	var/datum/viewData/view_size
+
+	/// list of tabs containing spells and abilities
+	var/list/spell_tabs = list()
+	/// list of tabs containing verbs
+	var/list/verb_tabs = list()
 	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
 	var/list/recent_examines
 	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
@@ -162,3 +170,4 @@
 
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay
+
