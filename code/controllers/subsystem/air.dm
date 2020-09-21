@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(air)
 	msg += "GA:[get_amt_gas_mixes()]|"
 	msg += "MG:[get_max_gas_mixes()]|"
 	msg += "AT/MS:[round((cost ? active_turfs_len/cost : 0),0.1)]"
-	..(msg)
+	return ..()
 
 /datum/controller/subsystem/air/Initialize(timeofday)
 	extools_update_ssair()

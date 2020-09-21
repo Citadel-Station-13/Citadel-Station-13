@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/pet/bumbles/Initialize()
 	. = ..()
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/lay_down)
 
 /mob/living/simple_animal/pet/bumbles/ComponentInitialize()
 	. = ..()
