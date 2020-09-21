@@ -255,7 +255,7 @@
 /obj/item/choice_beacon/box/plushie/generate_display_names()
 	var/list/plushie_list = list()
 	//plushie set 1: just subtypes of /obj/item/toy/plush
-	var/list/plushies_set_one = subtypesof(/obj/item/toy/plush) - list(/obj/item/toy/plush/narplush, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random_snowflake, /obj/item/toy/plush/random) //don't allow these special ones (you can still get narplush/hugbox)
+	var/list/plushies_set_one = subtypesof(/obj/item/toy/plush) - list(/obj/item/toy/plush/narplush, /obj/item/toy/plush/awakenedplushie, /obj/item/toy/plush/random_snowflake, /obj/item/toy/plush/plushling, /obj/item/toy/plush/random) //don't allow these special ones (you can still get narplush/hugbox)
 	for(var/V in plushies_set_one)
 		var/atom/A = V
 		plushie_list[initial(A.name)] = A
@@ -272,4 +272,3 @@
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
-

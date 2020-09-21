@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Minesweeper will no longer blow up the player's ears when they select \"Play on the same board\""

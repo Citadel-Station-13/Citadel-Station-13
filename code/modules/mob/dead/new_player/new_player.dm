@@ -414,6 +414,8 @@
 			give_magic(humanc)
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
+		if(humanc.client)
+			humanc.client.prefs.post_copy_to(humanc)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
@@ -567,7 +569,7 @@
 
 		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
 		client.prefs.save_character()
-	client.prefs.copy_to(H)
+	client.prefs.copy_to(H, initial_spawn = TRUE)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)

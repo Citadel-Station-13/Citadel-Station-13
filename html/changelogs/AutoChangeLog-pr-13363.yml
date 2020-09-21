@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - refactor: "replaced handle_changeling and handle_bloodsucker with signal registration"

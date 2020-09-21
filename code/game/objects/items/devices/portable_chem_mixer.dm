@@ -114,7 +114,6 @@
 		return ..()
 	if(SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 		INVOKE_ASYNC(src, /datum.proc/ui_interact, user)
-		return
 
 /obj/item/storage/portable_chem_mixer/attack_self(mob/user)
 	if(loc == user)

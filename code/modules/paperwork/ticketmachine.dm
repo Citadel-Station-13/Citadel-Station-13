@@ -161,7 +161,7 @@
 	ready = TRUE
 
 /obj/machinery/ticket_machine/on_attack_hand(mob/living/carbon/user)
-	attempt_ticket(user)
+	INVOKE_ASYNC(src, .proc/attempt_ticket, user)
 
 /obj/machinery/ticket_machine/proc/attempt_ticket(mob/living/carbon/user)
 	if(!ready)
@@ -197,7 +197,11 @@
 
 /obj/item/ticket_machine_ticket
 	name = "Ticket"
+<<<<<<< HEAD
 	desc = "A ticket which shows your place in the Head of Personnel's line. Made from Nanotrasen patented NanoPaper�. Though solid, its form seems to shimmer slightly. Feels (and burns) just like the real thing."
+=======
+	desc = "A ticket which shows your place in the Head of Personnel's line. Made from Nanotrasen patented NanoPaper®. Though solid, its form seems to shimmer slightly. Feels (and burns) just like the real thing."
+>>>>>>> citadel/master
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "ticket"
 	maptext_x = 7
