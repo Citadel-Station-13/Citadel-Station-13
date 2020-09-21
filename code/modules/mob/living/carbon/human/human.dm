@@ -6,10 +6,11 @@
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 
 /mob/living/carbon/human/Initialize()
-	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
-	verbs += /mob/living/carbon/human/proc/underwear_toggle //fwee
-
+	add_verb(src, /mob/living/proc/mob_sleep)
+	add_verb(src, /mob/living/proc/lay_down)
+	add_verb(src, /mob/living/carbon/human/verb/underwear_toggle)
+	add_verb(src, /mob/living/verb/subtle)
+	add_verb(src, /mob/living/verb/subtler)
 	//initialize limbs first
 	create_bodyparts()
 
@@ -61,55 +62,51 @@
 	//...and display them.
 	add_to_all_human_data_huds()
 
-/mob/living/carbon/human/Stat()
-	..()
-
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		if (internal)
-			if (!internal.air_contents)
-				qdel(internal)
-			else
-				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.return_pressure())
-				stat("Distribution Pressure", internal.distribute_pressure)
-
-		if(mind)
-			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-			if(changeling)
-				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
-				stat("Absorbed DNA", changeling.absorbedcount)
-
-
+/mob/living/carbon/human/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
+	. += "Move Mode: [m_intent]"
+	if(internal)
+		if(!internal.air_contents)
+			qdel(internal)
+		else
+			. += ""
+			. += "Internal Atmosphere Info: [internal.name]"
+			. += "Tank Pressure: [internal.air_contents.return_pressure()]"
+			. += "Distribution Pressure: [internal.distribute_pressure]"
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			. += ""
+			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
+			. += "Absorbed DNA: [changeling.absorbedcount]"
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
 		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
-		if(statpanel("SpiderOS"))
-			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
-			stat("Current Time:", "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]")
-			if(SN.s_initialized)
-				//Suit gear
-				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
-				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
-				//Ninja status
-				stat("Fingerprints:", "[md5(dna.uni_identity)]")
-				stat("Unique Identity:", "[dna.unique_enzymes]")
-				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
-				stat("Nutrition Status:", "[nutrition]")
-				stat("Oxygen Loss:", "[getOxyLoss()]")
-				stat("Toxin Levels:", "[getToxLoss()]")
-				stat("Burn Severity:", "[getFireLoss()]")
-				stat("Brute Trauma:", "[getBruteLoss()]")
-				stat("Radiation Levels:","[radiation] rad")
-				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
+		. += "SpiderOS Status: [SN.s_initialized ? "Initialized" : "Disabled"]"
+		. += "Current Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
+		if(SN.s_initialized)
+			//Suit gear
+			. += "Energy Charge: [round(SN.cell.charge/100)]%"
+			. += "Smoke Bombs: \Roman [SN.s_bombs]"
+			//Ninja status
+			. += "Fingerprints: [md5(dna.uni_identity)]"
+			. += "Unique Identity: [dna.unique_enzymes]"
+			. += "Overall Status: [stat > 1 ? "dead" : "[health]% healthy"]"
+			. += "Nutrition Status: [nutrition]"
+			. += "Oxygen Loss: [getOxyLoss()]"
+			. += "Toxin Levels: [getToxLoss()]"
+			. += "Burn Severity: [getFireLoss()]"
+			. += "Brute Trauma: [getBruteLoss()]"
+			. += "Radiation Levels: [radiation] rad"
+			. += "Body Temperature: [bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)"
 
-				//Diseases
-				if(diseases.len)
-					stat("Viruses:", null)
-					for(var/thing in diseases)
-						var/datum/disease/D = thing
-						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
+			//Diseases
+			if(length(diseases))
+				. += "Viruses:"
+				for(var/thing in diseases)
+					var/datum/disease/D = thing
+					. += "* [D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]"
 
 
 /mob/living/carbon/human/show_inv(mob/user)

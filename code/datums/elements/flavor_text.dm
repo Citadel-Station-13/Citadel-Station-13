@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		LAZYREMOVE(GLOB.mobs_with_editable_flavor_text[M], src)
 		if(!GLOB.mobs_with_editable_flavor_text[M])
 			GLOB.mobs_with_editable_flavor_text -= M
-			M.verbs -= /mob/proc/manage_flavor_tests
+			remove_verb(M, /mob/proc/manage_flavor_tests)
 
 /datum/element/flavor_text/proc/show_flavor(atom/target, mob/user, list/examine_list)
 	if(!always_show && isliving(target))

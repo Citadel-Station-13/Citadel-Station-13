@@ -18,11 +18,10 @@
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
 
-/mob/living/simple_animal/hostile/guardian/healer/Stat()
-	..()
-	if(statpanel("Status"))
-		if(beacon_cooldown >= world.time)
-			stat(null, "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/healer/get_status_tab_items()
+	. = ..()
+	if(beacon_cooldown >= world.time)
+		. += "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
@@ -106,7 +105,7 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
 	if(!istype(A))
-		altclick_listed_turf(A)
+		AltClickNoInteract(src, A)
 		return
 	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")
