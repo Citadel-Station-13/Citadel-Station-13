@@ -194,13 +194,13 @@
 		index = 1
 	var/turf/victim = exploding[index]
 	var/current_power = exploding[victim]
-	var/returned = victim.wave_ex_act(current_power, src, exploding_dirs[victim])
+	var/returned = max(0, victim.wave_ex_act(current_power, src, exploding_dirs[victim]))
+	var/blocked = current_power - returned
 	if(block_resistance <= 0)
-		returned = 0
-	else
-		var/diff = current_power - returned
-		if(diff >= 0)
-			returned = current_power - (diff / block_resistance)
+		if(blocked > EXPLOSION_POWER_NO_RESIST_THRESHOLD)
+			returned = 0
+	else if(blocked > 0)
+		returned = current_power - (blocked / block_resistance)
 	var/new_power = round((returned * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
 	if(new_power < power_considered_dead)
 		return

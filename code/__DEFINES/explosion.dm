@@ -4,6 +4,8 @@
 #define EXPLOSION_DEFAULT_FALLOFF_MULTIPLY		0.95
 /// Default explosion constant falloff
 #define EXPLOSION_DEFAULT_FALLOFF_SUBTRACT		3.5
+/// Block amount at which point having 0 block resistance will result in a full block
+#define EXPLOSION_POWER_NO_RESIST_THRESHOLD		5
 
 /// Explosion power quantization
 #define EXPLOSION_POWER_QUANTIZATION_ACCURACY	0.1
@@ -40,6 +42,7 @@
 // Standardized explosion constant blocks
 #define EXPLOSION_BLOCK_WINDOW							2.5
 #define EXPLOSION_BLOCK_MACHINE							5
+#define EXPLOSION_BLOCK_SPACE							5
 #define EXPLOSION_BLOCK_REINFORCED_WINDOW				7.5
 #define EXPLOSION_BLOCK_DENSE_FILLER					7.5
 #define EXPLOSION_BLOCK_WALL							10
@@ -53,6 +56,7 @@
 #define EXPLOSION_DAMPEN_REINFORCED_WINDOW			0.9
 #define EXPLOSION_DAMPEN_DENSE_FILLER				0.85
 #define EXPLOSION_DAMPEN_WALL						0.8
+#define EXPLOSION_DAMPEN_SPACE						0.8
 #define EXPLOSION_DAMPEN_BOROSILICATE_WINDOW		0.65
 #define EXPLOSION_DAMPEN_BLAST_PROOF				0.65
 #define EXPLOSION_DAMPEN_EXTREME					0.5

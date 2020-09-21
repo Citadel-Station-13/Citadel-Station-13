@@ -536,10 +536,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/fire = input(src, "Probability per tile of fire?", "Fire Probability", 0) as num|null
 	if(isnull(fire))
 		return
-	var/speed = input(src, "Speed in ticks to wait between cycles? 0 for fast as possible", 0) as num|null
+	var/speed = input(src, "Speed in ticks to wait between cycles? 0 for fast as possible", "Wait", 0) as num|null
 	if(isnull(speed))
 		return
-	var/block_resistance = input(src, "DANGEROUS: Block resistance? USE 1 IF YOU DO NOT KNOW WHAT YOU ARE DOING.", 1) as num|null
+	var/block_resistance = input(src, "DANGEROUS: Block resistance? USE 1 IF YOU DO NOT KNOW WHAT YOU ARE DOING.", "Block Negation", 1) as num|null
 	if(isnull(block_resistance))
 		return
 	block_resistance = max(0, block_resistance)
@@ -548,9 +548,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		if(sure != "Yes")
 			return
 	// point of no return
-	var/turf/target = mob.loc
-	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
-	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
+	var/turf/target = get_turf(mob)
+	if(!target)
+		to_chat(src, "<span class='danger'>Cannot proceed. Not on turf.</span>")
+		return
+	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [target.loc].")
+	log_admin("[key_name(usr)] created an admin explosion at [target.loc].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Wave Explosion") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	explosion2(target, power, falloff, constant, null, fire, speed = speed, block_resistance = block_resistance)
 

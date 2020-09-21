@@ -461,6 +461,8 @@
 		affecting_level = 1
 	var/atom/A
 	for(var/i in contents)
+		if(. <= 0)
+			break
 		A = i
 		if(!QDELETED(A) && A.level >= affecting_level)
 			.  = A.wave_ex_act(., explosion)
