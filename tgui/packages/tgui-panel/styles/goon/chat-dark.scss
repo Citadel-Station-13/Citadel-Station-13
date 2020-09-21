@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-em {
+ em {
   font-style: normal;
   font-weight: bold;
 }
@@ -212,6 +212,7 @@ a.popt {
 .motd {
   color: #a4bad6;
   font-family: Verdana, sans-serif;
+  white-space: normal;
 }
 
 .motd h1,
@@ -531,16 +532,16 @@ em {
 }
 
 .userlove {
-  color: #FF1493;
+  color: #ff42a6;
   font-style: italic;
   font-weight: bold;
-  text-shadow: 0 0 6px #ff6dbc;
+  text-shadow: 0 0 6px #82365e;
 }
 
 .love {
-  color: #ff006a;
+  color: #ff4591;
   font-style: italic;
-  text-shadow: 0 0 6px #ff6d6d;
+  text-shadow: 0 0 6px #994449;
 }
 
 .cult {

@@ -2822,8 +2822,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				new_limb.replace_limb(character)
 			qdel(old_part)
 
-	if(length(modified_limbs))
-		character.regenerate_icons()
+	character.regenerate_icons()
 
 	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_COPIED_TO, src, icon_updates, roundstart_checks)
 
