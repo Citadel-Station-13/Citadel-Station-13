@@ -1,9 +1,9 @@
 /// Default explosion power to consider an explosion over
 #define EXPLOSION_POWER_DEAD			2.5
 /// Default explosion falloff
-#define EXPLOSION_DEFAULT_FALLOFF_MULTIPLY		0.95
+#define EXPLOSION_DEFAULT_FALLOFF_MULTIPLY		0.98
 /// Default explosion constant falloff
-#define EXPLOSION_DEFAULT_FALLOFF_SUBTRACT		3.5
+#define EXPLOSION_DEFAULT_FALLOFF_SUBTRACT		5
 /// Block amount at which point having 0 block resistance will result in a full block
 #define EXPLOSION_POWER_NO_RESIST_THRESHOLD		5
 
@@ -18,43 +18,44 @@
 
 // Standardized explosion powers
 /// Maxcap
-#define EXPLOSION_POWER_MAXCAP					100
+#define EXPLOSION_POWER_MAXCAP					500
 /// erases shreds from explosions/item damage
-#define EXPLOSION_POWER_ERASE_SHREDS			75
+#define EXPLOSION_POWER_ERASE_SHREDS			400
 
 // Walls
-#define EXPLOSION_POWER_WALL_SCRAPE				50
-#define EXPLOSION_POWER_WALL_DISMANTLE			25
-#define EXPLOSION_POWER_WALL_MINIMUM_DISMANTLE	10
+#define EXPLOSION_POWER_WALL_SCRAPE				400
+#define EXPLOSION_POWER_WALL_DISMANTLE			300
+#define EXPLOSION_POWER_WALL_MINIMUM_DISMANTLE	200
 
-#define EXPLOSION_POWER_RWALL_SCRAPE				75
-#define EXPLOSION_POWER_RWALL_DISMANTLE				40
-#define EXPLOSION_POWER_RWALL_MINIMUM_DISMANTLE		25
+#define EXPLOSION_POWER_RWALL_SCRAPE				450
+#define EXPLOSION_POWER_RWALL_DISMANTLE				400
+#define EXPLOSION_POWER_RWALL_MINIMUM_DISMANTLE		300
 
 // Floors
-#define EXPLOSION_POWER_FLOOR_TILE_BREAK			5
-#define EXPLOSION_POWER_FLOOR_TURF_BREAK			25
-#define EXPLOSION_POWER_FLOOR_TURF_SCRAPE			50
-#define EXPLOSION_POWER_FLOOR_SHIELDED_IMMUNITY		25
+#define EXPLOSION_POWER_FLOOR_TILE_BREAK			50
+#define EXPLOSION_POWER_FLOOR_MINIMUM_TURF_BREAK	100
+#define EXPLOSION_POWER_FLOOR_TURF_BREAK			300
+#define EXPLOSION_POWER_FLOOR_TURF_SCRAPE			400
+#define EXPLOSION_POWER_FLOOR_SHIELDED_IMMUNITY		150
 
 // Helpers
 /// Explosion power to object damage (without taking into consideration armor)
-#define EXPLOSION_POWER_STANDARD_SCALE_OBJECT_DAMAGE(power, multiplier)			(35*(power**0.4)*multiplier)
+#define EXPLOSION_POWER_STANDARD_SCALE_OBJECT_DAMAGE(power, multiplier)			(power>500)?(10*(power**0.6)*multiplier):(0.1*(power**1.3)*multiplier)
 /// Explosion power to object damage for hard obstacles
-#define EXPLOSION_POWER_STANDARD_SCALE_HARD_OBSTACLE_DAMAGE(power, multiplier)	(45*(power**0.4)*multiplier)
+#define EXPLOSION_POWER_STANDARD_SCALE_HARD_OBSTACLE_DAMAGE(power, multiplier)	(power>500)?(10*(power**0.6)*multiplier):(0.15*(power**1.3)*multiplier)
 /// Explosion power to object damage for windows
-#define EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, multiplier)			(45*(power**0.4)*multiplier)
+#define EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, multiplier)			(power>500)?(10*(power**0.6)*multiplier):(0.2*(power**1.3)*multiplier)
 
 // Standardized explosion constant blocks
-#define EXPLOSION_BLOCK_WINDOW							2.5
-#define EXPLOSION_BLOCK_MACHINE							5
-#define EXPLOSION_BLOCK_SPACE							5
-#define EXPLOSION_BLOCK_REINFORCED_WINDOW				7.5
-#define EXPLOSION_BLOCK_DENSE_FILLER					7.5
-#define EXPLOSION_BLOCK_WALL							10
-#define EXPLOSION_BLOCK_BLAST_PROOF						20
-#define EXPLOSION_BLOCK_BOROSILICATE_WINDOW				25
-#define EXPLOSION_BLOCK_EXTREME							35
+#define EXPLOSION_BLOCK_WINDOW							10
+#define EXPLOSION_BLOCK_MACHINE							20
+#define EXPLOSION_BLOCK_SPACE							20
+#define EXPLOSION_BLOCK_REINFORCED_WINDOW				50
+#define EXPLOSION_BLOCK_DENSE_FILLER					50
+#define EXPLOSION_BLOCK_WALL							75
+#define EXPLOSION_BLOCK_BLAST_PROOF						250
+#define EXPLOSION_BLOCK_BOROSILICATE_WINDOW				250
+#define EXPLOSION_BLOCK_EXTREME							250
 
 // Standardized explosion factor blocks
 #define EXPLOSION_DAMPEN_MACHINE					0.95

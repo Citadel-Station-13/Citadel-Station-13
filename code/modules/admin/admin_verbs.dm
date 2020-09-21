@@ -543,7 +543,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(isnull(block_resistance))
 		return
 	block_resistance = max(0, block_resistance)
-	if(power >= 200)
+	if(power > 500)
 		var/sure = alert(src, "Explosion power is extremely high. Are you absolutely sure?", "Uhh...", "No", "Yes")
 		if(sure != "Yes")
 			return

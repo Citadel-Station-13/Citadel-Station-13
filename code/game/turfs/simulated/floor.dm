@@ -19,6 +19,8 @@
 	var/explosion_power_turf_scrape = EXPLOSION_POWER_FLOOR_TURF_SCRAPE
 	//// Shielded turfs are completely protected from anything under this
 	var/explosion_power_protect_shielded = EXPLOSION_POWER_FLOOR_SHIELDED_IMMUNITY
+	/// Starting from here, there's a chance for this to break
+	var/explosion_power_minimum_chance_break = EXPLOSION_POWER_FLOOR_MINIMUM_TURF_BREAK
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -109,17 +111,18 @@
 /turf/open/floor/wave_ex_act(power, datum/explosion2/explosion, dir)
 	var/shielded = is_shielded()
 	. = ..()
-	if(shielded && (power < explosion_power_protect_shielded))
-		return
-	else
-		power -= explosion_power_protect_shielded
+	if(shielded)
+		if(power < explosion_power_protect_shielded)
+			return
+		else
+			power -= explosion_power_protect_shielded
 	hotspot_expose(1000, CELL_VOLUME)
 	if(power < explosion_power_break_tile)
 		return
-	else if(power < explosion_power_break_turf)
+	else if(power < explosion_power_minimum_chance_break)
 		if(prob(33 + ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_break_tile))))
 			break_tile()
-	else if(power < explosion_power_turf_scrape)
+	else if(((power < explosion_power_break_turf) && prob(((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_minimum_chance_break)) * 100)) || ((power >= explosion_power_break_turf) &&  (power < explosion_power_turf_scrape)))
 		switch(pick(1, 2;75, 3))
 			if(1)
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))

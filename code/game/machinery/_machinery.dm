@@ -96,6 +96,10 @@ Class Procs:
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.3
 
+	explosion_flags = EXPLOSION_FLAG_DENSITY_DEPENDENT
+	wave_explosion_block = EXPLOSION_BLOCK_MACHINE
+	wave_explosion_multiply = EXPLOSION_DAMPEN_MACHINE
+
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 

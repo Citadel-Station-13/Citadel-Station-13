@@ -194,7 +194,7 @@
 		index = 1
 	var/turf/victim = exploding[index]
 	var/current_power = exploding[victim]
-	var/returned = max(0, victim.wave_ex_act(current_power, src, exploding_dirs[victim]))
+	var/returned = max(0, victim.wave_explode(current_power, src, exploding_dirs[victim]))
 	var/blocked = current_power - returned
 	if(block_resistance <= 0)
 		if(blocked > EXPLOSION_POWER_NO_RESIST_THRESHOLD)
