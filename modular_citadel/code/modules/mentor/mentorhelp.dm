@@ -3,12 +3,12 @@
 	set name = "Mentorhelp"
 
 	//clean the input msg
-	if(!msg)	return
+	if(!msg)	
+		return
 
 	//remove out mentorhelp verb temporarily to prevent spamming of mentors.
-	verbs -= /client/verb/mentorhelp
-	spawn(300)
-		verbs += /client/verb/mentorhelp	// 30 second cool-down for mentorhelp
+	remove_verb(src, /client/verb/mentorhelp)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/add_verb, src, /client/verb/mentorhelp), 30 SECONDS)
 
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg || !mob)

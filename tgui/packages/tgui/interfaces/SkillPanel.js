@@ -43,7 +43,7 @@ export const SkillPanel = (props, context) => {
                 )}
                 Total Experience: [{skill.value_base} XP]
                 <br />
-                XP To Next Level: 
+                XP To Next Level:
                 {skill.level_based ? (
                   <span>
                     {skill.xp_next_lvl_base}
@@ -123,3 +123,4 @@ const XPToNextLevel = props => {
     <span>XP to next level: [{xp_prog} / {xp_req}]</span>
   );
 };
+
