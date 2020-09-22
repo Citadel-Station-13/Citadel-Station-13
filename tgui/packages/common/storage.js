@@ -64,7 +64,6 @@ class MemoryBackend {
 class LocalStorageBackend {
   constructor() {
     this.impl = IMPL_LOCAL_STORAGE;
-    this.store = {};
   }
 
   get(key) {
