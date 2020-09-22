@@ -524,8 +524,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(isnull(falloff))
 		return
 	falloff = max(0, falloff)
-	if(falloff >= 1)
-		to_chat(src, "<span class='danger'>Aborting: Falloff cannot be 1 or higher.")
+	if(falloff > 1)
+		to_chat(src, "<span class='danger'>Aborting: Falloff cannot be higher tahn 1.")
 		return
 	var/constant = input(src, "Wave innate falloff constant", "Constant", EXPLOSION_DEFAULT_FALLOFF_SUBTRACT) as num|null
 	if(isnull(constant))

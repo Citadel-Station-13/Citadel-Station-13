@@ -1,12 +1,13 @@
 /// Creates a wave explosion at a certain place
-/proc/explosion2(turf/target, power, factor = 0.95, constant = 3.5, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE, bypass_logging = FALSE, block_resistance = 1)
+/proc/explosion2(turf/target, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0,
+	silent = FALSE, bypass_logging = FALSE, block_resistance = 1, start_immediately = TRUE)
 	if(!istype(target) || (power <= EXPLOSION_POWER_DEAD))
 		return
 	if(!bypass_logging)
 		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant]/[flash]/[fire]/[speed] initial/factor/constant/flash/fire/speed"
 		log_game(logstring)
 		message_admins(logstring)
-	return new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed, silent, TRUE, block_resistance)
+	return new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed, silent, start_immediately, block_resistance)
 
 /**
   * New force-blastwave explosion system

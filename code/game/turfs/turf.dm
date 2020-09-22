@@ -465,7 +465,7 @@
 			break
 		A = i
 		if(!QDELETED(A) && A.level >= affecting_level)
-			.  = A.wave_ex_act(., explosion)
+			.  = A.wave_explode(., explosion, dir)
 	maptext = "[.]"
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
