@@ -4,11 +4,11 @@
 
 /// Maximum stamina buffer
 /datum/config_entry/number/stamina_combat/buffer_max
-	config_entry_value = 45
+	config_entry_value = 75
 
 /// Seconds until percent_regeneration_out_of_combat kicks in
 /datum/config_entry/number/stamina_combat/out_of_combat_timer
-	config_entry_value = 5
+	config_entry_value = 8
 
 /// Base regeneration per second
 /datum/config_entry/number/stamina_combat/base_regeneration

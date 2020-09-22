@@ -39,7 +39,7 @@
 	var/base_regen = (SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))? base_regeneration : combat_regeneration
 	var/time_since_last_action = world.time - last_action
 	var/action_penalty = (((time_since_last_action) < (post_action_penalty_delay * 10)) && post_action_penalty_factor) || 1
-	var/out_of_combat_bonus = (time_since_last_action < (out_of_combat_timer * 10))? 0 : ((buffer_max * missing_percent_regeneration_out_of_combat * 0.01))
+	var/out_of_combat_bonus = (time_since_last_action < (out_of_combat_timer * 10))? 0 : ((buffer_max * percent_regeneration_out_of_combat * 0.01))
 	var/regen = ((base_regen * action_penalty) + out_of_combat_bonus) * time * 0.1 * stamina_buffer_regen_mod
 	stamina_buffer += min((buffer_max - stamina_buffer), regen)
 	if(updating_hud)
