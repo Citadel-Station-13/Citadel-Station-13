@@ -37,16 +37,16 @@
 			sound = 'modular_citadel/sound/voice/scream_monkey.ogg'
 		if(istype(user, /mob/living/simple_animal/hostile/gorilla))
 			sound = 'sound/creatures/gorilla.ogg'
-		if(ishuman(user)) 
+		if(ishuman(user))
 			user.adjustOxyLoss(5)
-			sound = pick('modular_citadel/sound/voice/scream_m1.ogg', 'modular_citadel/sound/voice/scream_m2.ogg') 
+			sound = pick('modular_citadel/sound/voice/scream_m1.ogg', 'modular_citadel/sound/voice/scream_m2.ogg')
 			if(user.gender == FEMALE)
 				sound = pick('modular_citadel/sound/voice/scream_f1.ogg', 'modular_citadel/sound/voice/scream_f2.ogg')
-			if(is_species(user, datum/species/jelly))
+			if(is_species(user, /datum/species/jelly))
 				if(user.gender == FEMALE)
 					sound = pick('modular_citadel/sound/voice/scream_jelly_f1.ogg', 'modular_citadel/sound/voice/scream_jelly_f2.ogg')
 				else
-					sound = pick('modular_citadel/sound/voice/scream_jelly_m1.ogg', 'modular_citadel/sound/voice/scream_jelly_m2.ogg') 
+					sound = pick('modular_citadel/sound/voice/scream_jelly_m1.ogg', 'modular_citadel/sound/voice/scream_jelly_m2.ogg')
 			if(is_species(user, /datum/species/android) || is_species(user, /datum/species/synth) || is_species(user, /datum/species/ipc))
 				sound = 'modular_citadel/sound/voice/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
