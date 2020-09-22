@@ -1,18 +1,4 @@
 // Stamina Buffer
-/// Stamina buffer amount
-#define STAMINA_BUFFER_CAPACITY 30
-/// Stamina buffer regen per decisecond
-#define STAMINA_BUFFER_REGEN_PER_SECOND 1
-/// Stamina buffer regen multiplier while in combat mode
-#define STAMINA_BUFFER_REGEN_PER_SECOND_COMBAT 3
-/// Penalty time after an action (clickdelay counting action) ends for stamina buffer regeneration
-#define STAMINA_BUFFER_REGEN_ACTION_PENALTY_TIME 8
-/// Penalty regen multiplier
-#define STAMINA_BUFFER_REGEN_ACTION_PENALTY_FACTOR 0.5
-/// percent of regen to take away at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY 0.75
-/// percent of capacity to take away at stamcrit
-#define STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY 0.5
 
 // Standard amounts for stamina usage
 

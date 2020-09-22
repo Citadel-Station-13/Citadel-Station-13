@@ -11,11 +11,9 @@
 /obj/screen/staminas/Click(location,control,params)
 	if(isliving(usr))
 		var/mob/living/L = usr
+		CONFIG_CACHE_ENTRY_AND_FETCH_VALUE(number/stamina_combat/buffer_max, buffer_max)
 		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>\
-		Your stamina buffer is currently [L.stamina_buffer]/[L.stamina_buffer_max], and recharges at [L.stamina_buffer_regen] and [L.stamina_buffer_regen_combat] (combat mode on) per second.<br>\
-		Your stamina buffer will have its capacity reduced by up to [STAMINA_BUFFER_STAMCRIT_CAPACITY_PERCENT_PENALTY * 100]% from stamina damage, up until stamcrit, and similarly will be impacted in regeneration by \
-		[STAMINA_BUFFER_STAMCRIT_REGEN_PERCENT_PENALTY * 100]% from said damage.\
-		<br>Your stamina buffer is <b>[round((L.stamina_buffer / L.stamina_buffer_max) * 100, 0.1)]%</b> full.</span>")
+		<br>Your stamina buffer is <b>[round((L.stamina_buffer / buffer_max) * 100, 0.1)]%</b> full.</span>")
 
 /obj/screen/staminas/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
@@ -65,6 +63,7 @@
 /obj/screen/staminabuffer/proc/update_to_mob()
 	var/mob/living/carbon/user = hud?.mymob
 	user.UpdateStaminaBuffer(FALSE)
+	CONFIG_CACHE_ENTRY_AND_FETCH_VALUE(number/stamina_combat/buffer_max, buffer_max)
 	if(!user?.client)
 		return FALSE
 	if(user.stat == DEAD || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2))
@@ -73,9 +72,9 @@
 	else if(user.hal_screwyhud == 5)
 		icon_state = "stambuffer29"
 		return FALSE
-	else if(user.stamina_buffer >= user.stamina_buffer_max)
+	else if(user.stamina_buffer >= buffer_max)
 		icon_state = "stambuffer29"
 		return FALSE
 	else
-		icon_state = "stambuffer[FLOOR((user.stamina_buffer / user.stamina_buffer_max) * 29, 1)]"
+		icon_state = "stambuffer[FLOOR((user.stamina_buffer / buffer_max) * 29, 1)]"
 		return TRUE

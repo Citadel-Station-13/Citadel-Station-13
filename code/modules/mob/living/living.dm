@@ -8,6 +8,8 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
+	stamina_buffer = INFINITY
+	UpdateStaminaBuffer()
 	GLOB.mob_living_list += src
 
 /mob/living/prepare_huds()

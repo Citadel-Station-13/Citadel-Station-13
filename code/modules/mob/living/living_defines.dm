@@ -159,15 +159,9 @@
 	//---End
 
 	// Stamina Buffer---
-	/// Our maximum stamina buffer
-	var/stamina_buffer_max = STAMINA_BUFFER_CAPACITY
 	/// Our stamina buffer
-	var/stamina_buffer = STAMINA_BUFFER_CAPACITY
+	var/stamina_buffer
 	/// Stamina buffer regen modifier
 	var/stamina_buffer_regen_mod = 1
-	/// Standard stamina buffer regen per second
-	var/stamina_buffer_regen = STAMINA_BUFFER_REGEN_PER_SECOND
-	/// Standard stamina buffer regen per second with combat mode
-	var/stamina_buffer_regen_combat = STAMINA_BUFFER_REGEN_PER_SECOND_COMBAT
 	/// Last time stamina buffer regen was done
 	var/stamina_buffer_regen_last = 0
