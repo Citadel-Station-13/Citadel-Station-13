@@ -362,10 +362,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(H.client && has_field_of_vision && CONFIG_GET(flag/use_field_of_vision))
 			H.LoadComponent(/datum/component/field_of_vision, H.field_of_vision_type)
 
-	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
-
+	update_species_slowdown(C)
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
+/datum/species/proc/update_species_slowdown(mob/living/carbon/human/H)
+	H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
 // EDIT ENDS
 
