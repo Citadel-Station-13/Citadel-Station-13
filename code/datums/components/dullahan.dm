@@ -101,13 +101,10 @@
 				else
 					overlays_to_view = owner.overlays_standing[BODY_ADJ_LAYER]
 				for(var/mutable_appearance/some_overlay in overlays_to_view)
-					message_admins("we have [some_overlay] and are going to look at [some_overlay.icon]")
 					if(some_overlay.icon in icons_to_accept)
-						message_admins("we might accept this!")
 						var/accepted = TRUE
 						for(var/thing_to_not_accept in things_to_not_accept)
 							if(findtext(some_overlay.icon_state, thing_to_not_accept))
-								message_admins("it violated the law!")
 								accepted = FALSE
 						if(accepted)
 							overlays_to_add += some_overlay
@@ -257,10 +254,10 @@
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	var/dat = "<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_HEAD_INDEX] ? "remove_inv=[SLOT_HEAD]'>[stored_items[DULLAHAN_HEAD_INDEX]]" : "add_inv=[SLOT_HEAD]'>Nothing"]</A>"
-	dat += "<br><B>Mask:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_MASK_INDEX] ? "remove_inv=[SLOT_WEAR_MASK]'>[stored_items[DULLAHAN_MASK_INDEX]]" : "add_inv=[SLOT_WEAR_MASK]'>Nothing"]</A>"
-	dat += "<br><B>Ears:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_EARS_INDEX] ? "remove_inv=[SLOT_EARS]'>[stored_items[DULLAHAN_EARS_INDEX]]" : "add_inv=[SLOT_EARS]'>Nothing"]</A>"
-	dat += "<br><B>Glasses:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_EYES_INDEX] ? "remove_inv=[SLOT_GLASSES]'>[stored_items[DULLAHAN_EYES_INDEX]]" : "add_inv=[SLOT_GLASSES]'>Nothing"]</A>"
+	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_HEAD_INDEX] ? "remove_inv=[ITEM_SLOT_HEAD]'>[stored_items[DULLAHAN_HEAD_INDEX]]" : "add_inv=[ITEM_SLOT_HEAD]'>Nothing"]</A>"
+	dat += "<br><B>Mask:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_MASK_INDEX] ? "remove_inv=[ITEM_SLOT_MASK]'>[stored_items[DULLAHAN_MASK_INDEX]]" : "add_inv=[ITEM_SLOT_MASK]'>Nothing"]</A>"
+	dat += "<br><B>Ears:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_EARS_INDEX] ? "remove_inv=[ITEM_SLOT_EARS]'>[stored_items[DULLAHAN_EARS_INDEX]]" : "add_inv=[ITEM_SLOT_EARS]'>Nothing"]</A>"
+	dat += "<br><B>Glasses:</B> <A href='?src=[REF(src)];[stored_items[DULLAHAN_EYES_INDEX] ? "remove_inv=[ITEM_SLOT_EYES]'>[stored_items[DULLAHAN_EYES_INDEX]]" : "add_inv=[ITEM_SLOT_EYES]'>Nothing"]</A>"
 	user.set_machine(src)
 	user << browse(dat, "window=mob[REF(src)];size=325x500")
 	onclose(user, "mob[REF(src)]")
@@ -275,20 +272,25 @@
 	if(href_list["remove_inv"])
 		var/remove_from = text2num(href_list["remove_inv"])
 		var/item_index
+		var/corresponding_slot
 		switch(remove_from)
-			if(SLOT_HEAD)
+			if(ITEM_SLOT_HEAD)
 				item_index = DULLAHAN_HEAD_INDEX
-			if(SLOT_WEAR_MASK)
+				corresponding_slot = SLOT_HEAD
+			if(ITEM_SLOT_MASK)
 				item_index = DULLAHAN_MASK_INDEX
-			if(SLOT_EARS)
+				corresponding_slot = SLOT_WEAR_MASK
+			if(ITEM_SLOT_EARS)
 				item_index = DULLAHAN_EARS_INDEX
-			if(SLOT_GLASSES)
+				corresponding_slot = SLOT_EARS
+			if(ITEM_SLOT_EYES)
 				item_index = DULLAHAN_EYES_INDEX
+				corresponding_slot = SLOT_GLASSES
 		var/item_to_remove = stored_items[item_index]
 		if(item_to_remove)
 			usr.put_in_hands(item_to_remove)
 			stored_items[item_index] = null
-			update_dismembered_accessory_overlays(dullahan_body, list(remove_from))
+			update_dismembered_accessory_overlays(dullahan_body, list(corresponding_slot))
 		else
 			to_chat(usr, "<span class='danger'>There is nothing to remove from that area!.</span>")
 			return
@@ -297,17 +299,21 @@
 	//Adding things to inventory
 	else if(href_list["add_inv"])
 		var/add_to = text2num(href_list["add_inv"])
-		message_admins("[add_to]")
 		var/item_index
+		var/corresponding_slot
 		switch(add_to)
-			if(SLOT_HEAD)
+			if(ITEM_SLOT_HEAD)
 				item_index = DULLAHAN_HEAD_INDEX
-			if(SLOT_WEAR_MASK)
+				corresponding_slot = SLOT_HEAD
+			if(ITEM_SLOT_MASK)
 				item_index = DULLAHAN_MASK_INDEX
-			if(SLOT_EARS)
+				corresponding_slot = SLOT_WEAR_MASK
+			if(ITEM_SLOT_EARS)
 				item_index = DULLAHAN_EARS_INDEX
-			if(SLOT_GLASSES)
+				corresponding_slot = SLOT_EARS
+			if(ITEM_SLOT_EYES)
 				item_index = DULLAHAN_EYES_INDEX
+				corresponding_slot = SLOT_GLASSES
 		if(stored_items[item_index])
 			to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
 			return
@@ -326,7 +332,7 @@
 			return
 		stored_items[item_index] = item_to_add
 		item_to_add.forceMove(src)
-		update_dismembered_accessory_overlays(dullahan_body, list(add_to))
+		update_dismembered_accessory_overlays(dullahan_body, list(corresponding_slot))
 		show_inv(usr)
 	else
 		return ..()
@@ -383,9 +389,10 @@
 				stored_appearances[appearance_storage_index] = null
 
 //make sure the head can be equipped
-/obj/item/bodypart/head/dullahan/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
-	if(dullahan_body == equipper)
-		return !dullahan_body.head //only yes if there's nothing in the way (although this should never be the case)
+/obj/item/bodypart/head/dullahan/attack_self(mob/user)
+	if(user == dullahan_body)
+		dullahan_body.equip_to_slot(src, SLOT_HEAD)
+		return TRUE
 	else
 		return ..()
 
