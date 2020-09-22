@@ -13,6 +13,8 @@
 	var/custom_head_icon_state
 	//keep track of your relay
 	var/obj/item/dullahan_relay/relay
+	//also keep track of your damn head
+	var/obj/item/bodypart/head/dullahan/stored_head
 
 /datum/component/dullahan/Initialize()
 	if(ishuman(parent))
@@ -53,6 +55,8 @@
 
 				var/obj/item/bodypart/head/dullahan/dullahan_head = new
 				//handle the head
+				stored_head = dullahan_head
+				RegisterSignal(owner, COMSIG_HUMAN_ICONS_REGENERATED, .proc/attempt_render_head_on_body) //regenerating icons removes it because they dont actually have a head, yeah
 				dullahan_head.name = owner.name
 				dullahan_head.dullahan_body = owner
 				if(has_custom_head())
@@ -75,20 +79,24 @@
 				if(islist(owner.overlays_standing[BODY_LAYER]))
 					for(var/mutable_appearance/some_overlay in owner.overlays_standing[BODY_LAYER])
 						if(some_overlay.icon == 'icons/mob/human_face.dmi')
+							message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 							overlays_to_add += some_overlay
 				else
 					var/mutable_appearance/some_overlay = owner.overlays_standing[BODY_LAYER]
 					if(some_overlay.icon == 'icons/mob/human_face.dmi')
+						message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 						overlays_to_add += some_overlay
 				//next, add any horns
 				if(islist(owner.overlays_standing[HORNS_LAYER]))
 					for(var/mutable_appearance/some_overlay in owner.overlays_standing[HORNS_LAYER])
+						message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 						overlays_to_add += some_overlay
 				else
 					overlays_to_add += owner.overlays[HORNS_LAYER]
 				//next, add any hair
 				if(islist(owner.overlays_standing[HAIR_LAYER]))
 					for(var/mutable_appearance/some_overlay in owner.overlays_standing[HAIR_LAYER])
+						message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 						overlays_to_add += some_overlay
 				else
 					overlays_to_add += owner.overlays_standing[HAIR_LAYER]
@@ -107,6 +115,7 @@
 							if(findtext(some_overlay.icon_state, thing_to_not_accept))
 								accepted = FALSE
 						if(accepted)
+							message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 							overlays_to_add += some_overlay
 				dullahan_head.add_overlay(overlays_to_add)
 				dullahan_head.stored_items[DULLAHAN_EYES_INDEX] = owner.glasses
@@ -130,6 +139,10 @@
 	else
 		//they shouldn't have this component!
 		RemoveComponent()
+
+/datum/component/dullahan/proc/attempt_render_head_on_body()
+	if(stored_head)
+		stored_head.attempt_render_head_on_body()
 
 /datum/component/dullahan/RemoveComponent()
 	//delete their organs and regenerate them to their species specific ones, remove accent from tongue, place head on body
@@ -291,6 +304,7 @@
 			usr.put_in_hands(item_to_remove)
 			stored_items[item_index] = null
 			update_dismembered_accessory_overlays(dullahan_body, list(corresponding_slot))
+			regenerate_icons()
 		else
 			to_chat(usr, "<span class='danger'>There is nothing to remove from that area!.</span>")
 			return
@@ -333,6 +347,7 @@
 		stored_items[item_index] = item_to_add
 		item_to_add.forceMove(src)
 		update_dismembered_accessory_overlays(dullahan_body, list(corresponding_slot))
+		regenerate_icons()
 		show_inv(usr)
 	else
 		return ..()
@@ -396,9 +411,28 @@
 	else
 		return ..()
 
+/obj/item/bodypart/head/dullahan/equipped(mob/user, slot)
+	if(user == dullahan_body) //forcibly render it if possible
+		attempt_render_head_on_body()
+	..()
+
+/obj/item/bodypart/head/dullahan/proc/attempt_render_head_on_body()
+	if(dullahan_body.head == src)
+		dullahan_body.overlays_standing[HEAD_LAYER] = build_worn_icon(HEAD_LAYER, 'icons/mob/clothing/head.dmi', FALSE, NO_FEMALE_UNIFORM, dullahan_body.icon_state, NONE, FALSE)
+		dullahan_body.add_overlay(dullahan_body.overlays_standing[HEAD_LAYER])
+
 //make sure it renders properly
 /obj/item/bodypart/head/dullahan/worn_overlays()
-	return overlays
+	if(dullahan_body.head == src)
+		return overlays
+	else
+		return ..()
+
+//we need a proc for refreshing the head incase its being worn while we change the items
+/obj/item/bodypart/head/dullahan/proc/regenerate_icons()
+	if(dullahan_body.head == src) //this is the edgecase where it's important
+		dullahan_body.cut_overlay(dullahan_body.overlays_standing[HEAD_LAYER])
+		attempt_render_head_on_body()
 
 #undef DULLAHAN_MASK_INDEX
 #undef DULLAHAN_HEAD_INDEX

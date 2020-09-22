@@ -96,6 +96,8 @@ There are several things that need to be remembered:
 		//damage overlays
 		update_damage_overlays()
 
+		SEND_SIGNAL(src, COMSIG_HUMAN_ICONS_REGENERATED)
+
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
@@ -329,7 +331,7 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
 		inv.update_icon()
 
-	if(get_bodypart(BODY_ZONE_HEAD) || head) //if we have a hat and no head, roll with it because something funky is happening
+	if(get_bodypart(BODY_ZONE_HEAD) && head)
 		head.screen_loc = ui_head
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)
