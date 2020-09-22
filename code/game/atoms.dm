@@ -446,7 +446,7 @@
   *
   * Returns explosion power to "allow through".
   */
-/atom/proc/wave_explode(power, datum/explosion2/explosion, dir)
+/atom/proc/wave_explode(power, datum/wave_explosion/explosion, dir)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
@@ -461,7 +461,7 @@
   *
   * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
   */
-/atom/proc/wave_ex_act(power, datum/explosion2/explosion, dir)
+/atom/proc/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	SHOULD_NOT_SLEEP(TRUE)
 	return power * wave_explosion_multiply - wave_explosion_block
 

@@ -555,7 +555,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [target.loc].")
 	log_admin("[key_name(usr)] created an admin explosion at [target.loc].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Wave Explosion") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	explosion2(target, power, falloff, constant, null, fire, speed = speed, block_resistance = block_resistance)
+	wave_explosion(target, power, falloff, constant, null, fire, speed = speed, block_resistance = block_resistance)
 
 /client/proc/drop_dynex_bomb()
 	set category = "Special Verbs"

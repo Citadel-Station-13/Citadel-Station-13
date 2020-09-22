@@ -242,7 +242,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	loc = null
 	loc = T
 
-/obj/item/wave_ex_act(power, datum/explosion2/explosion, dir)
+/obj/item/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	. = ..()
 	if(!anchored)
 		var/throw_dist = round(rand(3, max(3, 2.5 * sqrt(power))), 1)

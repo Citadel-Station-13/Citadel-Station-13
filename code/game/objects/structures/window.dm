@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return TRUE
 	return FALSE
 
-/obj/structure/window/wave_explosion_damage(power, datum/explosion2/explosion)
+/obj/structure/window/wave_explosion_damage(power, datum/wave_explosion/explosion)
 	return EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, explosion.window_shatter_mod)
 
 /obj/structure/window/narsie_act()

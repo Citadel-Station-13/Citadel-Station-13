@@ -3,14 +3,14 @@ SUBSYSTEM_DEF(explosions)
 	wait = 1
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_EXPLOSIONS
-	var/static/list/datum/explosion2/wave_explosions = list()
-	var/static/list/datum/explosion2/active_wave_explosions = list()
-	var/static/list/datum/explosion2/currentrun = list()
+	var/static/list/datum/wave_explosion/wave_explosions = list()
+	var/static/list/datum/wave_explosion/active_wave_explosions = list()
+	var/static/list/datum/wave_explosion/currentrun = list()
 
 /datum/controller/subsystem/explosions/fire(resumed)
 	if(!resumed)
 		currentrun = active_wave_explosions.Copy()
-	var/datum/explosion2/E
+	var/datum/wave_explosion/E
 	var/ran = 0
 	while(length(currentrun) && !MC_TICK_CHECK)
 		ran = 0

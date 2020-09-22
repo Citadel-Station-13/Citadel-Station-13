@@ -110,7 +110,7 @@
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)
 
-/turf/open/floor/wave_ex_act(power, datum/explosion2/explosion, dir)
+/turf/open/floor/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	var/shielded = is_shielded()
 	. = ..()
 	if(shielded)

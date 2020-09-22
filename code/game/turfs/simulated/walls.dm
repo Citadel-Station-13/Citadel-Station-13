@@ -101,7 +101,7 @@
 	if(!density)
 		..()
 
-/turf/closed/wall/wave_ex_act(power, datum/explosion2/explosion, dir)
+/turf/closed/wall/wave_ex_act(power, datum/wave_explosion/explosion, dir)
 	. = ..()
 	var/resultant_power = power * explosion.wall_destroy_mod
 	if(resultant_power >= explosion_power_to_scrape)

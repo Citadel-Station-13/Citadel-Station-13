@@ -1,5 +1,5 @@
 /// Creates a wave explosion at a certain place
-/proc/explosion2(turf/target, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0,
+/proc/wave_explosion(turf/target, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0,
 	silent = FALSE, bypass_logging = FALSE, block_resistance = 1, start_immediately = TRUE)
 	if(!istype(target) || (power <= EXPLOSION_POWER_DEAD))
 		return
@@ -7,12 +7,12 @@
 		var/logstring = "Wave explosion at [COORD(target)]: [power]/[factor]/[constant]/[flash]/[fire]/[speed] initial/factor/constant/flash/fire/speed"
 		log_game(logstring)
 		message_admins(logstring)
-	return new /datum/explosion2(target, power, factor, constant, flash, fire, source, speed, silent, start_immediately, block_resistance)
+	return new /datum/wave_explosion(target, power, factor, constant, flash, fire, source, speed, silent, start_immediately, block_resistance)
 
 /**
   * New force-blastwave explosion system
   */
-/datum/explosion2
+/datum/wave_explosion
 	/// Next unique numerical ID
 	var/static/next_id = 0
 	/// Our unique nuumerical ID
@@ -78,7 +78,7 @@
 	/// Current index for list
 	var/index = 0
 
-/datum/explosion2/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE, autostart = TRUE, block_resistance = 1)
+/datum/wave_explosion/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE, autostart = TRUE, block_resistance = 1)
 	id = ++next_id
 	if(next_id > SHORT_REAL_LIMIT)
 		next_id = 0
@@ -98,12 +98,12 @@
 	if(autostart)
 		start(initial)
 
-/datum/explosion2/Destroy()
+/datum/wave_explosion/Destroy()
 	if(running)
 		stop(FALSE)
 	return ..()
 
-/datum/explosion2/proc/start(turf/starting)
+/datum/wave_explosion/proc/start(turf/starting)
 	exploding[starting] = power_initial
 
 	var/x0 = starting.x
@@ -162,7 +162,7 @@
 		for(var/mob/living/L in viewers(flash_range, starting))
 			L.flash_act()
 
-/datum/explosion2/proc/stop(delete = TRUE)
+/datum/wave_explosion/proc/stop(delete = TRUE)
 	SSexplosions.active_wave_explosions -= src
 	SSexplosions.currentrun -= src
 	exploding = list()
@@ -176,7 +176,7 @@
   * Called by SSexplosions to propagate this.
   * Return TRUE if postponed
   */
-/datum/explosion2/proc/tick()
+/datum/wave_explosion/proc/tick()
 	if(++index > length(exploding))
 		if(!length(exploding_next))
 			finished = TRUE
