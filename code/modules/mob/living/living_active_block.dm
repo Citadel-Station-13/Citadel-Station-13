@@ -8,6 +8,8 @@
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_STAMINA_BUFFER_REGENERATION, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	DelayNextAction(data.block_end_click_cd_add)
@@ -27,6 +29,10 @@
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
 	if(data.block_lock_sprinting)
 		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
+	if(data.block_no_stamina_regeneration)
+		ADD_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION, ACTIVE_BLOCK_TRAIT)
+	if(data.block_no_stambuffer_regeneration)
+		ADD_TRAIT(src, TRAIT_NO_STAMINA_BUFFER_REGENERATION, ACTIVE_BLOCK_TRAIT)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/active_block, multiplicative_slowdown = data.block_slowdown)
 	active_block_effect_start()
 	return TRUE

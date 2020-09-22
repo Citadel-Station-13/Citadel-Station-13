@@ -165,3 +165,5 @@
 	var/stamina_buffer_regen_mod = 1
 	/// Last time stamina buffer regen was done
 	var/stamina_buffer_regen_last = 0
+	/// Last time we used stamina buffer
+	var/stamina_buffer_last_use = 0

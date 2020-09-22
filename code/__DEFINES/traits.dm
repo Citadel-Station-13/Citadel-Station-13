@@ -206,6 +206,10 @@
 #define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 #define TRAIT_FAST_PUMP				"fast_pump"
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good...
+/// Prevents stamina buffer regeneration
+#define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen"
+/// Prevents stamina regeneration
+#define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)

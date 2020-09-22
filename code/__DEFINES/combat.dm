@@ -73,8 +73,10 @@
 #define CHECK_STAMCRIT(mob)					(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 
 //stamina stuff
-///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+/// crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_CRIT						140
+/// Threshold under for which you are unable to draw from stamina health to replace stamina buffer
+#define STAMINA_NO_OVERDRAW_THRESHOLD		100
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
