@@ -325,14 +325,11 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
-		return
-
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_HEAD]
 		inv.update_icon()
 
-	if(head)
+	if(get_bodypart(BODY_ZONE_HEAD) || head) //if we have a hat and no head, roll with it because something funky is happening
 		head.screen_loc = ui_head
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)

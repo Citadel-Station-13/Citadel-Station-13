@@ -391,10 +391,14 @@
 //make sure the head can be equipped
 /obj/item/bodypart/head/dullahan/attack_self(mob/user)
 	if(user == dullahan_body)
-		dullahan_body.equip_to_slot(src, SLOT_HEAD)
+		dullahan_body.equip_to_slot(src, SLOT_HEAD, TRUE)
 		return TRUE
 	else
 		return ..()
+
+//make sure it renders properly
+/obj/item/bodypart/head/dullahan/worn_overlays()
+	return overlays
 
 #undef DULLAHAN_MASK_INDEX
 #undef DULLAHAN_HEAD_INDEX
