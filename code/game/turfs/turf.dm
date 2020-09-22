@@ -462,11 +462,10 @@
 	var/atom/A
 	for(var/i in contents)
 		if(. <= 0)
-			break
+			return 0
 		A = i
 		if(!QDELETED(A) && A.level >= affecting_level)
 			.  = A.wave_explode(., explosion, dir)
-	maptext = "[.]"
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
