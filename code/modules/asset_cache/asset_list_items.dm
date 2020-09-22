@@ -3,21 +3,21 @@
 /datum/asset/simple/tgui_common
 	keep_local_name = TRUE
 	assets = list(
-		"tgui-common.chunk.js" = 'tgui/packages/tgui/public/tgui-common.chunk.js',
+		"tgui-common.chunk.js" = 'tgui/public/tgui-common.chunk.js',
 	)
 
 /datum/asset/simple/tgui
 	keep_local_name = TRUE
 	assets = list(
-		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
+		"tgui.bundle.js" = 'tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui/public/tgui.bundle.css',
 	)
 
 /datum/asset/simple/tgui_panel
 	keep_local_name = TRUE
 	assets = list(
-		"tgui-panel.bundle.js" = 'tgui/packages/tgui/public/tgui-panel.bundle.js',
-		"tgui-panel.bundle.css" = 'tgui/packages/tgui/public/tgui-panel.bundle.css',
+		"tgui-panel.bundle.js" = 'tgui/public/tgui-panel.bundle.js',
+		"tgui-panel.bundle.css" = 'tgui/public/tgui-panel.bundle.css',
 	)
 
 /datum/asset/simple/headers
@@ -113,15 +113,15 @@
 	)
 
 
-/datum/asset/simple/IRV
+/datum/asset/simple/irv
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
 	)
 
-/datum/asset/group/IRV
+/datum/asset/group/irv
 	children = list(
 		/datum/asset/simple/jquery,
-		/datum/asset/simple/IRV
+		/datum/asset/simple/irv
 	)
 
 /datum/asset/simple/namespaced/changelog
@@ -247,6 +247,7 @@
 		"clownthanks" = 'icons/UI_Icons/Achievements/Misc/clownthanks.png',
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
 		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
+		"ascension" = 'icons/UI_Icons/Achievements/Misc/ascension.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
 		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
@@ -263,7 +264,8 @@
 		"psychologist" = 'icons/UI_Icons/Achievements/Mafia/psychologist.png',
 		"thoughtfeeder" = 'icons/UI_Icons/Achievements/Mafia/thoughtfeeder.png',
 		"traitor" = 'icons/UI_Icons/Achievements/Mafia/traitor.png',
-		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png'
+		"basemafia" ='icons/UI_Icons/Achievements/basemafia.png',
+		"frenching" = 'icons/UI_Icons/Achievements/Misc/frenchingthebubble.png'
 	)
 */
 
@@ -447,11 +449,9 @@
 	Insert("polycrystal", 'icons/obj/telescience.dmi', "polycrystal")
 	..()
 
-
 /datum/asset/spritesheet/mafia
 	name = "mafia"
 
 /datum/asset/spritesheet/mafia/register()
 	InsertAll("", 'icons/obj/mafia.dmi')
 	..()
-

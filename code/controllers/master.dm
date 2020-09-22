@@ -615,13 +615,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		skip_ticks = 1
 
 
-/datum/controller/master/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
+/datum/controller/master/stat_entry(msg)
+	msg = "(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"
+	return msg
 
-	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)")
-	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"))
-	stat("Misc Subsystems", misc_statclick)
 
 /datum/controller/master/StartLoadingMap()
 	//disallow more than one map to load at once, multithreading it will just cause race conditions

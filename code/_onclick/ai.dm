@@ -112,8 +112,8 @@
 /mob/living/silicon/ai/CtrlClickOn(var/atom/A)
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(var/atom/A)
-	if(!A.AIAltClick(src))
-		altclick_listed_turf(A)
+	A.AIAltClick(src)
+	
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
