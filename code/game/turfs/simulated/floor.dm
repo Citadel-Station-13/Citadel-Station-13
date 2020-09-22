@@ -125,7 +125,7 @@
 		if(prob(33 + ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_break_tile))))
 			break_tile()
 		return
-	if((power < explosion_power_turf_scrape) && ((power >= explosion_power_break_turf) || prob((1 - ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_minimum_chance_break))) * 100 + ((power > explosion_power_break_turf_bouns)? 20 : 0))))
+	if((power < explosion_power_turf_scrape) && ((power >= explosion_power_break_turf) || prob((1 - ((explosion_power_break_turf - power) / (explosion_power_break_turf - explosion_power_minimum_chance_break))) * 100 + ((power > explosion_power_break_turf_bonus)? 20 : 0))))
 		switch(pick(1, 2;75, 3))
 			if(1)
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))

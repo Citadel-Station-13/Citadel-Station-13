@@ -47,6 +47,10 @@
 /// Explosion power to object damage for windows
 #define EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, multiplier)			(power>500)?(10*(power**0.6)*multiplier):(0.2*(power**1.3)*multiplier)
 
+// Damage factors
+/// Factor to multiply damage to a door by if it's open (and therefore not blocking the explosion)
+#define EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR			0.25
+
 // Standardized explosion constant blocks
 #define EXPLOSION_BLOCK_WINDOW							10
 #define EXPLOSION_BLOCK_MACHINE							20

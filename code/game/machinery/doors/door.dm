@@ -420,3 +420,8 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/wave_explosion_damage(power, datum/explosion2/explosion)
+	. = ..()
+	if(!density)
+		return . * EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR
