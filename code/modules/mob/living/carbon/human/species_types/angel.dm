@@ -1,4 +1,4 @@
-/datum/species/angel
+t/datum/species/angel
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
@@ -142,3 +142,4 @@
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+	update_species_slowdown(H)
