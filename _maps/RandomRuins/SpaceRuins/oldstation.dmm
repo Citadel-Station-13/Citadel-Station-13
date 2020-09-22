@@ -2470,8 +2470,7 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "kk" = (
 /obj/structure/safe,
-/obj/item/ammo_box/n762,
-/obj/item/gun/ballistic/revolver/nagant,
+/obj/item/retractor/alien,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "kl" = (
@@ -3476,6 +3475,7 @@
 "rv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/solar_control{
+	dir = 1;
 	name = "Station Solar Control Computer"
 	},
 /obj/item/paper/guides/jobs/engi/solars,
