@@ -267,7 +267,7 @@
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		var/obj/item/mecha_parts/mecha_tracking/tracker = W
-		tracker.try_attack_part(user, src)
+		tracker.try_attach_part(user, src)
 		return
 	else
 		return ..()
