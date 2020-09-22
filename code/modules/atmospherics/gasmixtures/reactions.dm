@@ -275,7 +275,7 @@
 	for (var/gas_id in air.get_gases())
 		gas_power += (gas_fusion_powers[gas_id]*air.get_moles(gas_id))
 	var/instability = MODULUS((gas_power*INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
-	cached_scan_results[id] = instability//used for analyzer feedback
+	cached_scan_results["fusion"] = instability//used for analyzer feedback
 
 	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
 	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
