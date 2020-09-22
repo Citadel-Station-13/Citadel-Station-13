@@ -4,7 +4,7 @@
 
 /// Maximum stamina buffer
 /datum/config_entry/number/stamina_combat/buffer_max
-	config_entry_value = 75
+	config_entry_value = 45
 
 /// Seconds until percent_regeneration_out_of_combat kicks in
 /datum/config_entry/number/stamina_combat/out_of_combat_timer
@@ -18,8 +18,8 @@
 /datum/config_entry/number/stamina_combat/combat_regeneration
 	config_entry_value = 5
 
-/// After out_of_combat_timer elapses, additionally regenerate this percent of missing stamina per second. Unaffected by combat mode.
-/datum/config_entry/number/stamina_combat/missing_percent_regeneration_out_of_combat
+/// After out_of_combat_timer elapses, additionally regenerate this percent of total stamina per second. Unaffected by combat mode.
+/datum/config_entry/number/stamina_combat/percent_regeneration_out_of_combat
 	config_entry_value = 30
 
 /// Seconds after an action for which your regeneration is penalized
