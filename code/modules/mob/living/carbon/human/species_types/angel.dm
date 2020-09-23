@@ -1,4 +1,4 @@
-t/datum/species/angel
+/datum/species/angel
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
