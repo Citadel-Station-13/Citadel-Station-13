@@ -22,18 +22,8 @@ SUBSYSTEM_DEF(time_track)
 	var/stat_time_text
 	var/time_dilation_text
 
-	//sandstorm stuff, meant to separate lines on the status display.
-	var/server_time_text
-	var/round_time_text
-	var/station_time_text
-
 /datum/controller/subsystem/time_track/fire()
 	stat_time_text = "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]\n\nRound Time: [DisplayTimeText(world.time - SSticker.round_start_time, 1)] \n\nStation Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]\n\n[time_dilation_text]"
-
-	//sandstorm stuff, meant to separate lines on the status display.
-	server_time_text = "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]"
-	round_time_text = "Round Time: [DisplayTimeText(world.time - SSticker.round_start_time, 1)]"
-	station_time_text = "Station Time: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]"
 
 	if(++last_measurement == measurement_delay)
 		last_measurement = 0
