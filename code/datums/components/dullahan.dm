@@ -398,9 +398,9 @@
 					//and now assign it to the right part of the storage list
 					stored_appearances[appearance_storage_index] = accessory_overlay
 			else
-				if(list(stored_appearances[appearance_storage_index]))
+				if(stored_appearances[appearance_storage_index])
 					cut_overlay(list(stored_appearances[appearance_storage_index]))
-				stored_appearances[appearance_storage_index] = null
+					stored_appearances[appearance_storage_index] = null
 
 //make sure the head can be equipped
 /obj/item/bodypart/head/dullahan/attack_self(mob/user)
