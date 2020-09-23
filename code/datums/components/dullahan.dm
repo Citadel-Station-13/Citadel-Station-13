@@ -79,24 +79,23 @@
 				if(islist(owner.overlays_standing[BODY_LAYER]))
 					for(var/mutable_appearance/some_overlay in owner.overlays_standing[BODY_LAYER])
 						if(some_overlay.icon == 'icons/mob/human_face.dmi')
-							message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 							overlays_to_add += some_overlay
 				else
 					var/mutable_appearance/some_overlay = owner.overlays_standing[BODY_LAYER]
 					if(some_overlay.icon == 'icons/mob/human_face.dmi')
-						message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 						overlays_to_add += some_overlay
 				//next, add any horns
-				if(islist(owner.overlays_standing[HORNS_LAYER]))
-					for(var/mutable_appearance/some_overlay in owner.overlays_standing[HORNS_LAYER])
-						message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
-						overlays_to_add += some_overlay
+				var/list/horns_overlays
+				if(!islist(owner.overlays_standing[HORNS_LAYER]))
+					horns_overlays = list(owner.overlays_standing[HORNS_LAYER])
 				else
-					overlays_to_add += owner.overlays[HORNS_LAYER]
+					horns_overlays = owner.overlays_standing[HORNS_LAYER]
+				for(var/mutable_appearance/some_overlay in horns_overlays)
+					if(!findtext(some_overlay.icon_state, "hand_behind"))
+						overlays_to_add += some_overlay
 				//next, add any hair
 				if(islist(owner.overlays_standing[HAIR_LAYER]))
 					for(var/mutable_appearance/some_overlay in owner.overlays_standing[HAIR_LAYER])
-						message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
 						overlays_to_add += some_overlay
 				else
 					overlays_to_add += owner.overlays_standing[HAIR_LAYER]
