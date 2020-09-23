@@ -28,8 +28,8 @@
 #define STAM_COST_ATTACK_OBJ_MULT	0.75
 #define STAM_COST_ATTACK_MOB_MULT	1
 #define STAM_COST_BATON_MOB_MULT	0.85
-#define STAM_COST_THROW_MULT		2
-#define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
+#define STAM_COST_THROW_MULT		0.75
+#define STAM_COST_THROW_MOB			1.25 //multiplied by (mob size + 1)^2.
 
 /// Damage penalty when fighting prone.
 #define LYING_DAMAGE_PENALTY			0.7
