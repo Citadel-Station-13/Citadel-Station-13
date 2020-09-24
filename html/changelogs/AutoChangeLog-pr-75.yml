@@ -1,0 +1,15 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscdel: "Sprite accessory underwear is gone, replaced by proper underwear items."
+  - rscdel: "Wardrobe no longer has any functionality until i can find a way to restore it."
+  - rscadd: "Added underwear to the loadout."
+  - rscadd: "Added underwear slots."
+  - rscadd: "Added wrist slot."
+  - rscadd: "Added extra ear slot."
+  - rscadd: "Added toggle for extra inventory slots."
+  - rscadd: "Clothing vendors now sell underwear."
+  - balance: "Prayer beads can now be equipped in the wrist slot."
+  - refactor: "Uniforms can now have multiple accessories."
+  - bugfix: "You no longer wear underwear like trevor phillips or something."
+  - tweak: "Underwear should respect clothing that's over them (can't take socks off while wearing shoes)."
