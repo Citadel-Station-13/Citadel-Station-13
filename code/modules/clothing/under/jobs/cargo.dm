@@ -36,7 +36,7 @@
 /obj/item/clothing/under/rank/cargo/tech/long
 	name = "cargo technician's jumpsuit (trousers)"
 	desc = "A variant of the cargo technician's uniform with proper trousers, suited for colder climates and modest workers."
-	icon_state = "cargo_long"
+	icon_state = "cargo"
 	item_state = "lb_suit"
 	alt_covers_chest = TRUE
 
