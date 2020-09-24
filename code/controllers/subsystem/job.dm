@@ -689,6 +689,11 @@ SUBSYSTEM_DEF(job)
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
+			//skyrat edit
+			if(G.has_colors)
+				if(the_mob.client.prefs.color_gear[G.name])
+					I.color = the_mob.client.prefs.color_gear[G.name]
+			//
 			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M

@@ -48,6 +48,11 @@
 		var/damage = rand(min_damage, max_damage)
 		if(HAS_TRAIT(H, TRAIT_LIGHT_STEP))
 			damage *= 0.75
+		//skyrat edit
+		if(H.w_socks)
+			if(H.w_socks.body_parts_covered & FEET)
+				damage *= 0.75
+		//
 		H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.

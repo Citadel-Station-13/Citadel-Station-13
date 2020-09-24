@@ -54,7 +54,7 @@
 	desc = "A miniature battery for an energy weapon."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "mws_batt"
-	slot_flags = SLOT_BELT | SLOT_EARS
+	slot_flags = SLOT_BELT | SLOT_EARS_LEFT | SLOT_EARS_RIGHT //skyrat edit
 	throwforce = 1
 
 	caliber = "mws"

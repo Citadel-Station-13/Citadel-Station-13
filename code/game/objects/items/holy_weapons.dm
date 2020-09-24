@@ -803,6 +803,9 @@
 	force = 4
 	throwforce = 0
 	attack_verb = list("whipped", "repented", "lashed", "flagellated")
+	//skyrat edit - wowie the first wrist slot item
+	slot_flags = ITEM_SLOT_WRISTS
+	//
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 

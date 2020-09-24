@@ -412,6 +412,14 @@
 				H.update_inv_wear_suit()
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
+			//skyrat edit
+			else if(H.w_underwear && wash_obj(H.w_underwear))
+				H.update_inv_w_underwear()
+			else if(H.w_socks && wash_obj(H.w_socks))
+				H.update_inv_w_socks()
+			else if(H.w_underwear && wash_obj(H.w_shirt))
+				H.update_inv_w_shirt()
+			//
 			if(washgloves)
 				H.clean_blood()
 				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
@@ -424,8 +432,11 @@
 				H.update_body()
 			if(H.glasses && washglasses && wash_obj(H.glasses))
 				H.update_inv_glasses()
-			if(H.ears && washears && wash_obj(H.ears))
+			if(H.ears && washears && wash_obj(H.ears) && wash_obj(H.ears_extra)) //skyrat edit
 				H.update_inv_ears()
+				//skyrat edit
+				H.update_inv_ears_extra()
+				//
 			if(H.belt && wash_obj(H.belt))
 				H.update_inv_belt()
 		else

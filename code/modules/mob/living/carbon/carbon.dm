@@ -1176,7 +1176,8 @@
 		if(head.flags_inv & HIDEEYES)
 			LAZYOR(., SLOT_GLASSES)
 		if(head.flags_inv & HIDEEARS)
-			LAZYOR(., SLOT_EARS)
+			LAZYOR(., SLOT_EARS_LEFT)
+			LAZYOR(., SLOT_EARS_RIGHT)
 
 	if(wear_mask)
 		if(wear_mask.flags_inv & HIDEEYES)

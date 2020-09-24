@@ -131,7 +131,7 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		L = get_equipped_items()
 	for(var/A in L)
 		var/obj/item/I = A
-		if(I.body_parts_covered & GROIN)
+		if(istype(I) && (I.body_parts_covered & GROIN))
 			return FALSE
 	return TRUE
 

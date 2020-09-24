@@ -15,10 +15,22 @@
 	//More slots in humans.
 	if(ears)
 		add_screams(ears.alternate_screams)
+	//skyrat edit
+	if(ears_extra)
+		add_screams(ears_extra.alternate_screams)
+	//
 	if(wear_suit)
 		add_screams(wear_suit.alternate_screams)
 	if(w_uniform)
 		add_screams(w_uniform.alternate_screams)
+	//skyrat edit
+	if(w_underwear)
+		add_screams(w_underwear.alternate_screams)
+	if(w_socks)
+		add_screams(w_socks.alternate_screams)
+	if(w_shirt)
+		add_screams(w_shirt.alternate_screams)
+	//
 	if(glasses)
 		add_screams(glasses.alternate_screams)
 	if(gloves)

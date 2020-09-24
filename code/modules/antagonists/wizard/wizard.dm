@@ -207,7 +207,7 @@
 	if(!istype(master_mob) || !istype(H))
 		return
 	if(master_mob.ears)
-		H.equip_to_slot_or_del(new master_mob.ears.type, SLOT_EARS)
+		H.equip_to_slot_or_del(new master_mob.ears.type, SLOT_EARS_LEFT) //skyrat edit
 	if(master_mob.w_uniform)
 		H.equip_to_slot_or_del(new master_mob.w_uniform.type, SLOT_W_UNIFORM)
 	if(master_mob.shoes)

@@ -155,6 +155,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
+	//SKYRAT CHANGE
+	var/hide_underwear_examine = FALSE
+	//and no, i'm not taking self-equip delays, period.
 
 /obj/item/Initialize()
 
@@ -365,7 +368,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
+		if(!user.temporarilyRemoveItemFromInventory(I = src))
 			return
 
 	pickup(user)
@@ -699,6 +702,18 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		owner.update_inv_wear_suit()
 	if(flags & ITEM_SLOT_ICLOTHING)
 		owner.update_inv_w_uniform()
+	//skyrat edit
+	if(flags & ITEM_SLOT_UNDERWEAR)
+		owner.update_inv_w_underwear()
+	if(flags & ITEM_SLOT_SOCKS)
+		owner.update_inv_w_socks()
+	if(flags & ITEM_SLOT_SHIRT)
+		owner.update_inv_w_shirt()
+	if(flags & ITEM_SLOT_EARS)
+		owner.update_inv_ears_extra()
+	if(flags & ITEM_SLOT_WRISTS)
+		owner.update_inv_wrists()
+	//
 	if(flags & ITEM_SLOT_GLOVES)
 		owner.update_inv_gloves()
 	if(flags & ITEM_SLOT_EYES)

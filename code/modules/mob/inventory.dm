@@ -365,16 +365,23 @@
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
+		//skyrat edit
 		slot_priority = list( \
 			SLOT_BACK, SLOT_WEAR_ID,\
-			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
+			SLOT_W_UNDERWEAR,\
+			SLOT_W_SOCKS,\
+			SLOT_W_SHIRT,\
+			SLOT_W_UNIFORM,\
+			SLOT_WEAR_SUIT,\
 			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
-			SLOT_SHOES, SLOT_GLOVES,\
-			SLOT_EARS, SLOT_GLASSES,\
+			SLOT_SHOES, SLOT_WRISTS, SLOT_GLOVES,\
+			SLOT_EARS_LEFT, SLOT_EARS_RIGHT,\
+			SLOT_GLASSES,\
 			SLOT_BELT, SLOT_S_STORE,\
 			SLOT_L_STORE, SLOT_R_STORE,\
 			SLOT_GENERC_DEXTROUS_STORAGE\
 		)
+		//
 
 	for(var/slot in slot_priority)
 		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, clothing_check)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1

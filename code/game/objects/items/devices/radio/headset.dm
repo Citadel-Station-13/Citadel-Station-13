@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/ComponentInitialize()
 	. = ..()
 	if (bowman)
-		AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS_LEFT, SLOT_EARS_RIGHT)) //skyrat edit
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
@@ -76,6 +76,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
+		//skyrat edit
+		else if(H.ears_extra == src)
+			return ..(freq, level)
+		//
 	else if(AIuser)
 		return ..(freq, level)
 	return FALSE
@@ -364,4 +368,4 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = replacetext(name,"headset", "bowman headset")
 	desc = "[desc] Protects ears from flashbangs."
 	bowman = TRUE
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS_LEFT, SLOT_EARS_RIGHT)) //skyrat edit

@@ -99,12 +99,8 @@
 				for(var/obj/item/W in M)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if(W == H.w_uniform)
+						if(W == H.w_uniform || W == H.shoes || W == H.w_underwear || W == H.w_socks || W == H.w_shirt) //skyrat edit
 							continue //So all they're left with are shoes and uniform.
-						if(W == H.shoes)
-							continue
-
-
 					M.transferItemToLoc(W)
 					victim_belongings.Add(W)
 
@@ -190,10 +186,8 @@
 		for(var/obj/item/W in M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(W == H.w_uniform)
+				if(W == H.w_uniform || W == H.shoes || W == H.w_underwear || W == H.w_socks || W == H.w_shirt) //skyrat edit
 					continue //So all they're left with are shoes and uniform.
-				if(W == H.shoes)
-					continue
 			M.dropItemToGround(W)
 		for(var/obj/item/W in victim_belongings)
 			W.forceMove(return_pod)

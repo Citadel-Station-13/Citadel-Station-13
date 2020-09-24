@@ -53,7 +53,7 @@ It is possible to destroy the net by the occupant or someone else.
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
 		for(var/obj/item/W in H)
-			if(W == H.w_uniform || W == H.shoes)
+			if(W == H.w_uniform || W == H.shoes || W == H.w_underwear) //skyrat edit
 				continue//So all they're left with are shoes and uniform.
 			H.dropItemToGround(W)
 		H.dna.species.give_important_for_life(H)	// After we remove items, at least give them what they need to live.

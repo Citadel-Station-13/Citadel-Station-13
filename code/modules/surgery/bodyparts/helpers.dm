@@ -269,6 +269,14 @@
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
+		//skyrat edit
+		if(H.w_shirt)
+			H.update_inv_w_shirt()
+		if(H.w_socks)
+			H.update_inv_w_socks()
+		if(H.w_underwear)
+			H.update_inv_w_underwear()
+		//
 		if(H.w_uniform)
 			H.update_inv_w_uniform()
 		if(H.shoes)

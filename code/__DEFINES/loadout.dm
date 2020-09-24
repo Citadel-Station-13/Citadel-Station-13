@@ -67,3 +67,11 @@
 #define LOADOUT_LIMB_AMPUTATED		"Amputated"
 
 #define LOADOUT_LIMBS		 		list(LOADOUT_LIMB_NORMAL,LOADOUT_LIMB_PROSTHETIC,LOADOUT_LIMB_AMPUTATED) //you can amputate your legs/arms though
+
+//Special thing that i had to make it myself because skyrat uses old loadout
+//Underwear Sandcode changes
+#define LOADOUT_CATEGORY_GENERAL_UNDER			"General Underwear"
+#define LOADOUT_SUBCATEGORY_UNDERWEAR		"Underwear"
+#define LOADOUT_SUBCATEGORY_SHIRT		"Shirt"
+#define LOADOUT_SUBCATEGORY_SOCKS		"Socks"
+//

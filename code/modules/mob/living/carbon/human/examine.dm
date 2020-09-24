@@ -25,10 +25,25 @@
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
+	//Skyrat changes - edited that to only show the extra species tidbit if it's unknown or he's got a custom species
+	//and also underwear slots :)
 	if(skipface || get_visible_name() == "Unknown")
 		. += "You can't make out what species they are."
 	else
 		. += "[t_He] [t_is] a [dna.custom_species ? dna.custom_species : dna.species.name]!"
+
+	//Underwear
+	var/undies_hidden = underwear_hidden()
+	if(w_underwear && !undies_hidden)
+		. += "[t_He] [t_is] wearing [w_underwear.get_examine_string(user)]."
+	if(w_socks && !undies_hidden)
+		. += "[t_He] [t_is] wearing [w_socks.get_examine_string(user)]."
+	if(w_shirt && !undies_hidden)
+		. += "[t_He] [t_is] wearing [w_shirt.get_examine_string(user)]."
+	//Wrist slot because you're epic
+	if(wrists && !(SLOT_WRISTS in obscured))
+		. += "[t_He] [t_is] wearing [wrists.get_examine_string(user)]."
+	//End of skyrat changes
 
 	//uniform
 	if(w_uniform && !(SLOT_W_UNIFORM in obscured))
@@ -36,8 +51,21 @@
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
-			if(U.attached_accessory && !(U.attached_accessory.flags_inv & HIDEACCESSORY) && !(U.flags_inv & HIDEACCESSORY))
-				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
+			if(length(U.attached_accessories) && !(U.flags_inv & HIDEACCESSORY))
+				var/list/weehoo = list()
+				var/dumb_icons = ""
+				for(var/obj/item/clothing/accessory/attached_accessory in U.attached_accessories)
+					if(!(attached_accessory.flags_inv & HIDEACCESSORY))
+						weehoo += "\a [attached_accessory]"
+						dumb_icons = "[dumb_icons][icon2html(attached_accessory, user)]"
+				if(length(weehoo))
+					accessory_msg += " with [dumb_icons]"
+					if(length(U.attached_accessories) >= 2)
+						accessory_msg += jointext(weehoo, ", ", 1, length(weehoo) - 1)
+						accessory_msg += " and [weehoo[length(weehoo)]]"
+					else
+						accessory_msg += weehoo[1]
+
 
 		. += "[t_He] [t_is] wearing [w_uniform.get_examine_string(user)][accessory_msg]."
 	//head
@@ -100,8 +128,18 @@
 				. += "<b><font color=orange>[t_His] eyes are flickering a bright yellow!</font></b>"
 
 	//ears
-	if(ears && !(SLOT_EARS in obscured))
-		. += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] ears."
+	if(ears && !(SLOT_EARS_LEFT in obscured)) //skyrat edit
+		. += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] left ear."
+
+	//skyrat edit - extra ear slot haha
+	if(ears_extra && !(SLOT_EARS_RIGHT in obscured))
+		. += "[t_He] [t_has] [ears_extra.get_examine_string(user)] on [t_his] right ear."
+
+	//wearing two ear items makes you look like an idiot
+	if((istype(ears, /obj/item/radio/headset) && !(SLOT_EARS_LEFT in obscured)) && (istype(ears_extra, /obj/item/radio/headset) && !(SLOT_EARS_RIGHT in obscured)))
+		. += "<span class='warning'>[t_He] looks quite tacky wearing both \an [ears.name] and \an [ears_extra.name] on [t_his] head.</span>"
+
+	//
 
 	//ID
 	if(wear_id)
