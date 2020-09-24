@@ -49,13 +49,16 @@ There are several things that need to be remembered:
 */
 
 //HAIR OVERLAY
-/mob/living/carbon/human/update_hair()
+/mob/living/carbon/human/update_hair(send_signal = TRUE)
 	dna.species.handle_hair(src)
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "hair")
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
-/mob/living/carbon/human/proc/update_mutant_bodyparts()
+/mob/living/carbon/human/proc/update_mutant_bodyparts(send_signal = TRUE)
 	dna.species.handle_mutant_bodyparts(src)
-
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "mutant")
 
 /mob/living/carbon/human/update_body(update_genitals = FALSE)
 	remove_overlay(BODY_LAYER)
@@ -95,8 +98,6 @@ There are several things that need to be remembered:
 		update_mutations_overlay()
 		//damage overlays
 		update_damage_overlays()
-
-		SEND_SIGNAL(src, COMSIG_HUMAN_ICONS_REGENERATED)
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
@@ -210,7 +211,11 @@ There are several things that need to be remembered:
 	apply_overlay(GLOVES_LAYER)
 
 
-/mob/living/carbon/human/update_inv_glasses()
+/mob/living/carbon/human/update_inv_glasses(send_signal = TRUE)
+	//send signal early incase the proc returns early for some reason
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "glasses")
+
 	remove_overlay(GLASSES_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
@@ -237,7 +242,11 @@ There are several things that need to be remembered:
 	apply_overlay(GLASSES_LAYER)
 
 
-/mob/living/carbon/human/update_inv_ears()
+/mob/living/carbon/human/update_inv_ears(send_signal = TRUE)
+	//send signal early incase the proc returns early for some reason
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "ears")
+
 	remove_overlay(EARS_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
@@ -324,7 +333,11 @@ There are several things that need to be remembered:
 	apply_overlay(SUIT_STORE_LAYER)
 
 
-/mob/living/carbon/human/update_inv_head()
+/mob/living/carbon/human/update_inv_head(send_signal = TRUE)
+	//send signal early incase the proc returns early for some reason
+	if(send_signal)
+		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "head")
+
 	remove_overlay(HEAD_LAYER)
 
 	if(client && hud_used)
@@ -358,7 +371,7 @@ There are several things that need to be remembered:
 			head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD][2]
 		overlays_standing[HEAD_LAYER] = head_overlay
 	apply_overlay(HEAD_LAYER)
-	update_mutant_bodyparts()
+	update_mutant_bodyparts(send_signal)
 
 /mob/living/carbon/human/update_inv_belt()
 	remove_overlay(BELT_LAYER)

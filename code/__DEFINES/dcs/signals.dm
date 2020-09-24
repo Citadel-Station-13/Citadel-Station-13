@@ -513,4 +513,4 @@
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
 //overlays
-#define COMSIG_HUMAN_ICONS_REGENERATED "human_icons_regenerated"			//from human regenerate_icons(): (/mob/carbon/living/human)
+#define COMSIG_HUMAN_HEAD_ICONS_UPDATED "human_head_icons_updated"			//from procs that update human icons specifically based around their head

@@ -23,40 +23,12 @@
 			DISABLE_BITFIELD(owner.flags_1, HEAR_1)
 			var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 			if(head)
-				//give the new organs
-				var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-				if(brain)
-					brain.Remove(TRUE,TRUE)
-					QDEL_NULL(brain)
-					var/obj/item/organ/brain/new_brain = new /obj/item/organ/brain/dullahan
-					new_brain.Insert(owner, TRUE, TRUE)
-				var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_TONGUE)
-				var/list/accents
-				if(tongue)
-					accents = tongue.accents
-					tongue.Remove(TRUE,TRUE)
-					QDEL_NULL(tongue)
-					var/obj/item/organ/tongue/new_tongue = new /obj/item/organ/tongue/dullahan
-					if(accents)
-						new_tongue.accents = accents + new_tongue.accents //dullahan accent needs to be last applied
-					new_tongue.Insert(owner, TRUE, TRUE)
-				var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
-				if(ears)
-					ears.Remove(TRUE,TRUE)
-					QDEL_NULL(ears)
-					var/obj/item/organ/ears/new_ears = new /obj/item/organ/ears/dullahan
-					new_ears.Insert(owner, TRUE, TRUE)
-				var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
-				if(eyes)
-					eyes.Remove(TRUE,TRUE)
-					QDEL_NULL(eyes)
-					var/obj/item/organ/eyes/new_eyes = new /obj/item/organ/eyes/dullahan
-					new_eyes.Insert(owner, TRUE, TRUE)
+				//give them dullahan organs, remove the old ones
+				handle_organs()
 
+				//give them a new head
 				var/obj/item/bodypart/head/dullahan/dullahan_head = new
-				//handle the head
 				stored_head = dullahan_head
-				RegisterSignal(owner, COMSIG_HUMAN_ICONS_REGENERATED, .proc/attempt_render_head_on_body) //regenerating icons removes it because they dont actually have a head, yeah
 				dullahan_head.name = owner.name
 				dullahan_head.dullahan_body = owner
 				if(has_custom_head())
@@ -73,50 +45,16 @@
 					else
 						dullahan_head.icon = head.icon //one or the other, both causes two heads to appear sometimes, which is not wanted
 						dullahan_head.icon_state = head.icon_state
-				//now add eyes, horns, hair, and then a bunch of other snowflakey bits - consider making this not copypasta
-				var/overlays_to_add = list()
-				//first find the eyes overlay
-				if(islist(owner.overlays_standing[BODY_LAYER]))
-					for(var/mutable_appearance/some_overlay in owner.overlays_standing[BODY_LAYER])
-						if(some_overlay.icon == 'icons/mob/human_face.dmi')
-							overlays_to_add += some_overlay
-				else
-					var/mutable_appearance/some_overlay = owner.overlays_standing[BODY_LAYER]
-					if(some_overlay.icon == 'icons/mob/human_face.dmi')
-						overlays_to_add += some_overlay
-				//next, add any horns
-				var/list/horns_overlays
-				if(!islist(owner.overlays_standing[HORNS_LAYER]))
-					horns_overlays = list(owner.overlays_standing[HORNS_LAYER])
-				else
-					horns_overlays = owner.overlays_standing[HORNS_LAYER]
-				for(var/mutable_appearance/some_overlay in horns_overlays)
-					if(!findtext(some_overlay.icon_state, "hand_behind"))
-						overlays_to_add += some_overlay
-				//next, add any hair
-				if(islist(owner.overlays_standing[HAIR_LAYER]))
-					for(var/mutable_appearance/some_overlay in owner.overlays_standing[HAIR_LAYER])
-						overlays_to_add += some_overlay
-				else
-					overlays_to_add += owner.overlays_standing[HAIR_LAYER]
-				//and now add any extra snowflakey bits that go on the head (this is shitcode and also the best way to do it due to species shitcode)
-				var/icons_to_accept = list('modular_citadel/icons/mob/ipc_screens.dmi', 'modular_citadel/icons/mob/ipc_antennas.dmi', 'modular_citadel/icons/mob/mam_ears.dmi', 'modular_citadel/icons/mob/mam_snouts.dmi', 'modular_citadel/icons/mob/mam_snouts.dmi')
-				var/things_to_not_accept = list("wing","frill","tail","spine","markings") //any states with these in? don't accept 100% they do NOT go on heads
-				var/list/overlays_to_view
-				if(!islist(owner.overlays_standing[BODY_ADJ_LAYER]))
-					overlays_to_view = list(owner.overlays_standing[BODY_ADJ_LAYER])
-				else
-					overlays_to_view = owner.overlays_standing[BODY_ADJ_LAYER]
-				for(var/mutable_appearance/some_overlay in overlays_to_view)
-					if(some_overlay.icon in icons_to_accept)
-						var/accepted = TRUE
-						for(var/thing_to_not_accept in things_to_not_accept)
-							if(findtext(some_overlay.icon_state, thing_to_not_accept))
-								accepted = FALSE
-						if(accepted)
-							message_admins("ADDING OVERLAY WITH ICON [some_overlay.icon] AND STATE [some_overlay.icon_state]")
-							overlays_to_add += some_overlay
-				dullahan_head.add_overlay(overlays_to_add)
+
+				//relay for hearing
+				relay = new /obj/item/dullahan_relay (dullahan_head, owner)
+				var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
+				for(var/datum/action/item_action/organ_action/OA in E.actions)
+					OA.Trigger()
+
+				//now add eyes, horns, hair, and then a bunch of other snowflakey bits
+				copy_mutant_overlays()
+
 				dullahan_head.stored_items[DULLAHAN_EYES_INDEX] = owner.glasses
 				dullahan_head.stored_items[DULLAHAN_EARS_INDEX] = owner.ears
 				dullahan_head.stored_items[DULLAHAN_MASK_INDEX] = owner.wear_mask
@@ -127,17 +65,119 @@
 					if(I)
 						I.forceMove(dullahan_head)
 				dullahan_head.update_dismembered_accessory_overlays(owner, list(SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_EARS))
-				relay = new /obj/item/dullahan_relay (dullahan_head, owner)
 				owner.put_in_hands(dullahan_head)
-				var/obj/item/organ/eyes/E = owner.getorganslot(ORGAN_SLOT_EYES)
-				for(var/datum/action/item_action/organ_action/OA in E.actions)
-					OA.Trigger()
+
 				owner.regenerate_icons()
+				RegisterSignal(owner, COMSIG_HUMAN_HEAD_ICONS_UPDATED, .proc/refresh_head_appearance) //updating icons removes it because they dont actually have a head, yeah
 		else
 			RemoveComponent()
 	else
 		//they shouldn't have this component!
 		RemoveComponent()
+
+/datum/component/dullahan/proc/handle_organs()
+	//give the new organs
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.Remove(TRUE,TRUE)
+		QDEL_NULL(brain)
+		var/obj/item/organ/brain/new_brain = new /obj/item/organ/brain/dullahan
+		new_brain.Insert(owner, TRUE, TRUE)
+	var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_TONGUE)
+	var/list/accents
+	if(tongue)
+		accents = tongue.accents
+		tongue.Remove(TRUE,TRUE)
+		QDEL_NULL(tongue)
+		var/obj/item/organ/tongue/new_tongue = new /obj/item/organ/tongue/dullahan
+		if(accents)
+			new_tongue.accents = accents + new_tongue.accents //dullahan accent needs to be last applied
+		new_tongue.Insert(owner, TRUE, TRUE)
+	var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
+	if(ears)
+		ears.Remove(TRUE,TRUE)
+		QDEL_NULL(ears)
+		var/obj/item/organ/ears/new_ears = new /obj/item/organ/ears/dullahan
+		new_ears.Insert(owner, TRUE, TRUE)
+	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.Remove(TRUE,TRUE)
+		QDEL_NULL(eyes)
+		var/obj/item/organ/eyes/new_eyes = new /obj/item/organ/eyes/dullahan
+		new_eyes.Insert(owner, TRUE, TRUE)
+
+//get the most up to date mutant overlays by regenerating the head if needed, updating its overlays, then copying them over
+/datum/component/dullahan/proc/copy_mutant_overlays()
+	message_admins("so this is starting wat")
+	var/list/overlays_standing
+	if(!owner.get_bodypart(BODY_ZONE_HEAD))
+		owner.regenerate_limb(TRUE, BODY_ZONE_HEAD)
+	message_admins("regenerated")
+	//do NOT send a signal here, else you will cause an infinite loop and a crash
+	owner.update_hair(send_signal = FALSE)
+	message_admins("hair done")
+	//owner.update_mutant_bodyparts(send_signal = FALSE) this gets updated by update_inv_head
+	owner.update_inv_glasses(send_signal = FALSE)
+	message_admins("glasses done")
+	owner.update_inv_ears(send_signal = FALSE)
+	message_admins("ears done")
+	owner.update_inv_head(send_signal = FALSE)
+	message_admins("head done")
+	overlays_standing = owner.overlays_standing
+	message_admins("oh no there's [length(overlays_standing)]")
+	qdel(owner.get_bodypart(BODY_ZONE_HEAD))
+	message_admins("oh no there's [length(overlays_standing)]")
+
+	var/overlays_to_add = list()
+	//first find the eyes overlay
+	if(islist(overlays_standing[BODY_LAYER]))
+		for(var/mutable_appearance/some_overlay in overlays_standing[BODY_LAYER])
+			if(some_overlay.icon == 'icons/mob/human_face.dmi')
+				overlays_to_add += some_overlay
+	else
+		var/mutable_appearance/some_overlay = overlays_standing[BODY_LAYER]
+		if(some_overlay.icon == 'icons/mob/human_face.dmi')
+			overlays_to_add += some_overlay
+	//next, add any horns
+	var/list/horns_overlays
+	if(!islist(overlays_standing[HORNS_LAYER]))
+		horns_overlays = list(owner.overlays_standing[HORNS_LAYER])
+	else
+		horns_overlays = overlays_standing[HORNS_LAYER]
+	for(var/mutable_appearance/some_overlay in horns_overlays)
+		if(!findtext(some_overlay.icon_state, "hand_behind"))
+			overlays_to_add += some_overlay
+	//next, add any hair
+	if(islist(overlays_standing[HAIR_LAYER]))
+		for(var/mutable_appearance/some_overlay in overlays_standing[HAIR_LAYER])
+			overlays_to_add += some_overlay
+	else
+		overlays_to_add += overlays_standing[HAIR_LAYER]
+	//and now add any extra snowflakey bits that go on the head (this is shitcode and also the best way to do it due to species shitcode)
+	var/icons_to_accept = list('modular_citadel/icons/mob/ipc_screens.dmi', 'modular_citadel/icons/mob/ipc_antennas.dmi', 'modular_citadel/icons/mob/mam_ears.dmi', 'modular_citadel/icons/mob/mam_snouts.dmi', 'modular_citadel/icons/mob/mam_snouts.dmi')
+	var/things_to_not_accept = list("wing","frill","tail","spine","markings") //any states with these in? don't accept 100% they do NOT go on heads
+	var/list/overlays_to_view
+	if(!islist(overlays_standing[BODY_ADJ_LAYER]))
+		overlays_to_view = list(overlays_standing[BODY_ADJ_LAYER])
+	else
+		overlays_to_view = overlays_standing[BODY_ADJ_LAYER]
+	for(var/mutable_appearance/some_overlay in overlays_to_view)
+		if(some_overlay.icon in icons_to_accept)
+			var/accepted = TRUE
+			for(var/thing_to_not_accept in things_to_not_accept)
+				if(findtext(some_overlay.icon_state, thing_to_not_accept))
+					accepted = FALSE
+			if(accepted)
+				overlays_to_add += some_overlay
+	if(length(stored_head.stored_mutant_overlays))
+		stored_head.cut_overlay(stored_head.stored_mutant_overlays)
+	stored_head.stored_mutant_overlays = overlays_to_add
+	stored_head.add_overlay(overlays_to_add)
+
+//when you need to update the heads appearance to be that of the characters current appearance
+/datum/component/dullahan/proc/refresh_head_appearance()
+	copy_mutant_overlays()
+	stored_head.regenerate_icons()
 
 /datum/component/dullahan/proc/attempt_render_head_on_body()
 	if(stored_head)
@@ -255,8 +295,7 @@
 	var/list/stored_items = list(null, null, null, null) //mask/head/ears/eyes indexed with 1-4
 	//the appearances that are used as overlays for the head (so we can easily fetch them and cut them)
 	var/list/stored_appearances = list(null, null, null, null) //we index them with 1-4 so they need items in to initially index them, same order as stored_items
-
-	slot_flags = ITEM_SLOT_HEAD
+	var/list/stored_mutant_overlays = list()
 
 /obj/item/bodypart/head/dullahan/MouseDrop(atom/thing)
 	if(iscarbon(thing) && Adjacent(thing))
