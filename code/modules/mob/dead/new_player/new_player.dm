@@ -295,6 +295,7 @@
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.real_name
 		observer.name = observer.real_name
+		observer.client.init_verbs()
 	observer.update_icon()
 	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	QDEL_NULL(mind)
@@ -392,7 +393,7 @@
 	job.standard_assign_skills(character.mind)
 
 	SSticker.minds += character.mind
-
+	character.client.init_verbs() // init verbs for the late join
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,
@@ -414,6 +415,8 @@
 			give_magic(humanc)
 		if(GLOB.curse_of_madness_triggered)
 			give_madness(humanc, GLOB.curse_of_madness_triggered)
+		if(humanc.client)
+			humanc.client.prefs.post_copy_to(humanc)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
@@ -567,7 +570,7 @@
 
 		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
 		client.prefs.save_character()
-	client.prefs.copy_to(H)
+	client.prefs.copy_to(H, initial_spawn = TRUE)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
@@ -577,7 +580,7 @@
 		mind.original_character = H
 
 	H.name = real_name
-
+	client.init_verbs()
 	. = H
 	new_character = .
 	if(transfer_after)

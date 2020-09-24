@@ -267,7 +267,7 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON|USE_TAUR_CLIP_MASK
 
 /obj/item/clothing/under/costume/christmas/croptop/green
-	name = "green feminine christmas suit"
+	name = "green croptop christmas suit"
 	desc = "A simple green christmas suit. Smells minty!"
 	icon_state = "christmasfemaleg"
 	item_state = "christmasfemaleg"

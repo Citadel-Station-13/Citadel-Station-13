@@ -250,7 +250,6 @@
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 

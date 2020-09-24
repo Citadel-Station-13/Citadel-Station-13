@@ -42,7 +42,7 @@
 	for (var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
-		SL["htmltag"] = assets.icon_tag("pill[x]")
+		SL["class_name"] = assets.icon_class_name("pill[x]")
 		pill_styles += list(SL)
 
 

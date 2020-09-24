@@ -38,7 +38,7 @@
 	deathsound = 'sound/magic/demon_dies.ogg'
 	deathmessage = "begins to shudder as it becomes transparent..."
 	loot_drop = /obj/item/clothing/neck/cloak/herald_cloak
-
+	crate_type = /obj/structure/closet/crate/necropolis/tendril/magic
 	can_talk = 1
 
 	attack_action_types = list(/datum/action/innate/elite_attack/herald_trishot,

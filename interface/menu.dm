@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(menulist)
 		return
 	M.Set_checked(src, verbpath)
 
-
 /datum/verbs/menu/Icon/Load_checked(client/C) //So we can be lazy, we invoke the "checked" menu item on menu load.
 	var/procpath/verbpath = Get_checked(C)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
@@ -115,4 +114,3 @@ GLOBAL_LIST_EMPTY(menulist)
 /datum/verbs/menu/Icon/Scaling/verb/BL()
 	set name = "@.winset \"mapwindow.map.zoom-mode=blur\""
 	set desc = "Bilinear"
-
