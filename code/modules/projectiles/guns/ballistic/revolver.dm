@@ -8,7 +8,7 @@
 /obj/item/gun/ballistic/revolver/Initialize()
 	. = ..()
 	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
-		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+		verbs += /obj/item/gun/ballistic/revolver/verb/spin
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
 	if(spin)
