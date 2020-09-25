@@ -1112,11 +1112,11 @@ GLOBAL_LIST_EMPTY(asset_names)
 /// The same asset will always lead to the same asset name
 /// (Generated names do not include file extention.)
 /proc/generate_asset_name(file)
-	if(file in asset_names)
-		return asset_names[file]
+	if(file in GLOB.asset_names)
+		return GLOB.asset_names[file]
 	else
 		var/name = "asset.[md5(fcopy_rsc(file))]"
-		asset_names[file] = name
+		GLOB.asset_names[file] = name
 		return name
 
 /**
