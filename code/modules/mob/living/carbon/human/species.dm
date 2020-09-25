@@ -98,6 +98,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
+	var/datum/gas/sweat_gas = /datum/gas/water_vapor
 	var/override_float = FALSE
 
 	//Citadel snowflake
@@ -1946,19 +1947,28 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/natural = 0
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
-		var/thermal_protection = 1
-		if(loc_temp < H.bodytemperature) //Place is colder than we are
-			thermal_protection -= H.get_thermal_protection(loc_temp, TRUE) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(H.bodytemperature < BODYTEMP_NORMAL) //we're cold, insulation helps us retain body heat and will reduce the heat we lose to the environment
-				H.adjust_bodytemperature((thermal_protection+1)*natural + max(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX))
-			else //we're sweating, insulation hinders our ability to reduce heat - and it will reduce the amount of cooling you get from the environment
-				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + max((thermal_protection * (loc_temp - H.bodytemperature) + BODYTEMP_NORMAL - H.bodytemperature) / BODYTEMP_COLD_DIVISOR , BODYTEMP_COOLING_MAX)) //Extra calculation for hardsuits to bleed off heat
-		else //Place is hotter than we are
-			thermal_protection -= H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(H.bodytemperature < BODYTEMP_NORMAL) //and we're cold, insulation enhances our ability to retain body heat but reduces the heat we get from the environment
-				H.adjust_bodytemperature((thermal_protection+1)*natural + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
-			else //we're sweating, insulation hinders out ability to reduce heat - but will reduce the amount of heat we get from the environment
-				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
+
+		var/thermal_protection = H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+		var/approx_heat_capacity = (H.nutrition+400)*0.001
+		if(H.bodytemperature < BODYTEMP_NORMAL)
+			var/delta = (thermal_protection+1)*natural
+			H.bodytemperature += delta
+			H.adjust_nutrition(delta*-0.01)
+		else
+			var/delta = natural*(1/(thermal_protection+1))
+			var/sweat_made = (approx_heat_capacity*delta)/(initial(sweat_gas.specific_heat)*H.bodytemperature)
+			var/max_vapor_capacity = (environment.return_volume())/(environment.return_temperature()*R_IDEAL_GAS_EQUATION)
+			// implicit 1* at the start there--i'm just using "1 kilopascal partial pressure" for this
+			var/original_sweat_made = sweat_made
+			sweat_made = min(sweat_made,(sweat_made+environment.get_moles(sweat_gas))-max_vapor_capacity)
+			H.bodytemperature += delta * (original_sweat_made/sweat_made)
+			if(sweat_made > 0.0000001)
+				var/datum/gas_mixture/sweat = new
+				sweat.set_moles(sweat_gas,sweat_made)
+				sweat.set_temperature(H.bodytemperature)
+				environment.merge(sweat)
+				H.nutrition -= sweat_made
+		H.bodytemperature = environment.temperature_share(null,(1-thermal_protection)*0.1,H.bodytemperature,approx_heat_capacity)
 		switch((loc_temp - H.bodytemperature)*thermal_protection)
 			if(-INFINITY to -50)
 				H.throw_alert("tempfeel", /obj/screen/alert/cold, 3)

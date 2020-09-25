@@ -132,7 +132,8 @@
 		return FALSE
 
 	var/gas_breathed = 0
-
+	var/datum/gas_mixture/exhalation = new
+	exhalation.set_temperature(H.bodytemperature)
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/oxygen))+(8*breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/pluoxium)))
 	var/N2_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/nitrogen))
@@ -179,7 +180,9 @@
 
 	//Exhale
 	breath.adjust_moles(/datum/gas/oxygen, -gas_breathed)
-	breath.adjust_moles(/datum/gas/carbon_dioxide, gas_breathed)
+	exhalation.set_moles(/datum/gas/carbon_dioxide,gas_breathed)
+	breath.merge(exhalation)
+	exhalation.clear()
 	gas_breathed = 0
 
 	//-- Nitrogen --//
@@ -208,7 +211,9 @@
 
 	//Exhale
 	breath.adjust_moles(/datum/gas/nitrogen, -gas_breathed)
-	breath.adjust_moles(/datum/gas/carbon_dioxide, gas_breathed)
+	exhalation.set_moles(/datum/gas/carbon_dioxide,gas_breathed)
+	breath.merge(exhalation)
+	exhalation.clear()
 	gas_breathed = 0
 
 	//-- CO2 --//
@@ -245,7 +250,9 @@
 
 	//Exhale
 	breath.adjust_moles(/datum/gas/carbon_dioxide, -gas_breathed)
-	breath.adjust_moles(/datum/gas/oxygen, gas_breathed)
+	exhalation.set_moles(/datum/gas/oxygen,gas_breathed)
+	breath.merge(exhalation)
+	exhalation.clear()
 	gas_breathed = 0
 
 
@@ -275,7 +282,9 @@
 
 	//Exhale
 	breath.adjust_moles(/datum/gas/plasma, -gas_breathed)
-	breath.adjust_moles(/datum/gas/carbon_dioxide, gas_breathed)
+	exhalation.set_moles(/datum/gas/carbon_dioxide,gas_breathed)
+	breath.merge(exhalation)
+	exhalation.clear()
 	gas_breathed = 0
 
 
