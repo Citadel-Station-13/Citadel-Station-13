@@ -95,6 +95,7 @@ Class Procs:
 	flags_1 = DEFAULT_RICOCHET_1
 	flags_ricochet = RICOCHET_HARD
 	ricochet_chance_mod = 0.3
+	rad_flags = RAD_NO_CONTAMINATE
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
