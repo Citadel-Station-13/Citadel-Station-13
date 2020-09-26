@@ -566,3 +566,5 @@
 	item_state = "halo"
 	icon = 'icons/mob/clothing/custom_w.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	dynamic_hair_suffix = ""
+	
