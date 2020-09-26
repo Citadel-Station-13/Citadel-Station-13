@@ -204,7 +204,6 @@
 	desc = "A \"\"\"tactical\"\"\" security jumpsuit with the legs replaced by a skirt. No matter how you adjust it, it always feels a little too small."
 	icon_state = "shortsecskirt"
 	item_state = "shortsecskirt"
-	item_color = null
 
 /obj/item/clothing/under/rank/security/skirt/short/pink
 	desc = "A \"\"\"tactical\"\"\" security jumpsuit with the legs replaced by a skirt. No matter how you adjust it, it always feels a little too small. This one seems to have an experimental color scheme."
