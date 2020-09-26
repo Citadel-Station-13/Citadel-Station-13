@@ -71,30 +71,27 @@
 
 /datum/gear/uniform/pinksec
 	name = "Security Jumpsuit (Pink)"
-	category = SLOT_W_UNIFORM
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	path = /obj/item/clothing/under/rank/security/pink
-	cost = 1
 	restricted_roles = list("Security Officer","Warden","Head of Security")
 
 /datum/gear/uniform/pinksecskirt
 	name = "Short Security Jumpskirt (Pink)"
-	category = SLOT_W_UNIFORM
 	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	path = /obj/item/clothing/under/rank/security/skirt/short/pink
-	cost = 1
 	restricted_roles = list("Security Officer","Warden","Head of Security")
 
 /datum/gear/suit/coat/secwintercoat
 	name = "Security Winter Coat"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/security
-	cost = 1
 	restricted_roles = list("Security Officer","Warden","Head of Security")
 
 /datum/gear/suit/coat/pinksecwintercoat
 	name = "Security Winter Coat (Pink)"
-	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/security/pink
-	cost = 1
+	restricted_roles = list("Security Officer","Warden","Head of Security")
+
+/datum/gear/gloves/secsleeves
+	name = "Security latex sleeves"
+	path = /obj/item/clothing/gloves/latexsleeves/security
 	restricted_roles = list("Security Officer","Warden","Head of Security")
