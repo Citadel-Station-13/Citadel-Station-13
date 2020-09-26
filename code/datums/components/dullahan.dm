@@ -106,70 +106,15 @@
 		var/obj/item/organ/eyes/new_eyes = new /obj/item/organ/eyes/dullahan
 		new_eyes.Insert(owner, TRUE, TRUE)
 
-//get the most up to date mutant overlays by regenerating the head if needed, updating its overlays, then copying them over
 /datum/component/dullahan/proc/copy_mutant_overlays()
-	message_admins("so this is starting wat")
-	var/list/overlays_standing
+	message_admins("copying mutant overlays")
 	if(!owner.get_bodypart(BODY_ZONE_HEAD))
 		owner.regenerate_limb(BODY_ZONE_HEAD, TRUE)
-	message_admins("regenerated")
-	if(owner.get_bodypart(BODY_ZONE_HEAD))
-		message_admins("yeah we regenerated his head and he has [length(owner.overlays_standing[HAIR_LAYER])]")
-	//do NOT send a signal here, else you will cause an infinite loop and a crash
-	owner.update_hair(send_signal = FALSE)
-	//owner.update_mutant_bodyparts(send_signal = FALSE) this gets updated by update_inv_head
-	owner.update_inv_glasses(send_signal = FALSE)
-	owner.update_inv_ears(send_signal = FALSE)
-	owner.update_inv_head(send_signal = FALSE)
-	overlays_standing = owner.overlays_standing
-	qdel(owner.get_bodypart(BODY_ZONE_HEAD))
-	message_admins("now he has [length(owner.overlays_standing[HAIR_LAYER])]")
-
-	var/overlays_to_add = list()
-	//first find the eyes overlay
-	if(islist(overlays_standing[BODY_LAYER]))
-		for(var/mutable_appearance/some_overlay in overlays_standing[BODY_LAYER])
-			if(some_overlay.icon == 'icons/mob/human_face.dmi')
-				overlays_to_add += some_overlay
-	else
-		var/mutable_appearance/some_overlay = overlays_standing[BODY_LAYER]
-		if(some_overlay.icon == 'icons/mob/human_face.dmi')
-			overlays_to_add += some_overlay
-	//next, add any horns
-	var/list/horns_overlays
-	if(!islist(overlays_standing[HORNS_LAYER]))
-		horns_overlays = list(owner.overlays_standing[HORNS_LAYER])
-	else
-		horns_overlays = overlays_standing[HORNS_LAYER]
-	for(var/mutable_appearance/some_overlay in horns_overlays)
-		if(!findtext(some_overlay.icon_state, "hand_behind"))
-			overlays_to_add += some_overlay
-	//next, add any hair
-	if(islist(overlays_standing[HAIR_LAYER]))
-		for(var/mutable_appearance/some_overlay in overlays_standing[HAIR_LAYER])
-			overlays_to_add += some_overlay
-	else
-		overlays_to_add += overlays_standing[HAIR_LAYER]
-	//and now add any extra snowflakey bits that go on the head (this is shitcode and also the best way to do it due to species shitcode)
-	var/icons_to_accept = list('modular_citadel/icons/mob/ipc_screens.dmi', 'modular_citadel/icons/mob/ipc_antennas.dmi', 'modular_citadel/icons/mob/mam_ears.dmi', 'modular_citadel/icons/mob/mam_snouts.dmi', 'modular_citadel/icons/mob/mam_snouts.dmi')
-	var/things_to_not_accept = list("wing","frill","tail","spine","markings") //any states with these in? don't accept 100% they do NOT go on heads
-	var/list/overlays_to_view
-	if(!islist(overlays_standing[BODY_ADJ_LAYER]))
-		overlays_to_view = list(overlays_standing[BODY_ADJ_LAYER])
-	else
-		overlays_to_view = overlays_standing[BODY_ADJ_LAYER]
-	for(var/mutable_appearance/some_overlay in overlays_to_view)
-		if(some_overlay.icon in icons_to_accept)
-			var/accepted = TRUE
-			for(var/thing_to_not_accept in things_to_not_accept)
-				if(findtext(some_overlay.icon_state, thing_to_not_accept))
-					accepted = FALSE
-			if(accepted)
-				overlays_to_add += some_overlay
-	if(length(stored_head.stored_mutant_overlays))
-		stored_head.cut_overlay(stored_head.stored_mutant_overlays)
-	stored_head.stored_mutant_overlays = overlays_to_add
-	stored_head.add_overlay(overlays_to_add)
+		message_admins("we added a head for you")
+	var/datum/species/dullahan_species = owner.dna.species
+	var/list/hair_overlays = dullahan_species.get_hair()
+	if(hair_overlays)
+		message_admins("found hair overlays with length [length(hair_overlays)]")
 
 //when you need to update the heads appearance to be that of the characters current appearance
 /datum/component/dullahan/proc/refresh_head_appearance()
