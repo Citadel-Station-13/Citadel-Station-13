@@ -979,6 +979,7 @@
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF"
+	alpha = 77
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
