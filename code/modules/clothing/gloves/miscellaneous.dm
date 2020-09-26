@@ -212,3 +212,10 @@
 	desc = "Thin, pretty gloves intended for use in sexy feminine attire. A tag on the hem claims they pair great with black stockings."
 	icon_state = "eveningblack"
 	item_state = "eveningblack"
+
+//latex gloves for security
+/obj/item/clothing/gloves/latexsleeves/security
+	name = "security sleeves"
+	desc = "A pair of latex sleeves, with a band of red above the elbows denoting that the wearer is part of the security team."
+	icon_state = "latexsec"
+	item_state = "latexsec"

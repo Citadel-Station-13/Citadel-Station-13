@@ -604,6 +604,15 @@
 	desc = "A red, armor-padded winter hood."
 	icon_state = "winterhood_security"
 
+/obj/item/clothing/suit/hooded/wintercoat/security/pink
+	name = "pink security winter coat"
+	icon_state = "coatsecuritypink"
+	item_state = "coatsecuritypink"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/pink
+
+/obj/item/clothing/head/hooded/winterhood/security/pink
+	icon_state = "winterhood_securitypink"
+
 /obj/item/clothing/suit/hooded/wintercoat/hos
 	name = "head of security's winter coat"
 	desc = "A red, armor-padded winter coat, lovingly woven with a Kevlar interleave and reinforced with semi-ablative polymers and a silver azide fill material. The zipper tab looks like a tiny replica of Beepsky."
