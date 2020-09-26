@@ -11,7 +11,7 @@
 	var/hidden_socks = FALSE
 
 //Mob procs
-/mob/living/carbon/human/proc/underwear_toggle()
+/mob/living/carbon/human/verb/underwear_toggle()
 	set name = "Toggle undergarments"
 	set category = "IC"
 
