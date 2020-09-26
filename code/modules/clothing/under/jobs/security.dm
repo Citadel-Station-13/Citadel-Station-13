@@ -198,7 +198,6 @@
 	desc = "A tactical security jumpsuit for officers that screw up their laundry."
 	icon_state = "rsecuritypink"
 	item_state = "r_suit"
-	item_color = "rsecuritypink"
 
 /obj/item/clothing/under/rank/security/skirt/short
 	name = "short security jumpskirt"
@@ -206,7 +205,6 @@
 	icon_state = "shortsecskirt"
 	item_state = "shortsecskirt"
 	item_color = null
-	mutantrace_variation = NO_MUTANTRACE_VARIATION //look at the first two comments in vg_under.dm
 
 /obj/item/clothing/under/rank/security/skirt/short/pink
 	desc = "A \"\"\"tactical\"\"\" security jumpsuit with the legs replaced by a skirt. No matter how you adjust it, it always feels a little too small. This one seems to have an experimental color scheme."
