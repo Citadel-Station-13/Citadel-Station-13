@@ -1,0 +1,4 @@
+author: "Tupinambis"
+delete-after: True
+changes: 
+  - imageadd: "Updates TEG, Antimatter, Jetpack sprites (CO2 and Oxy from Eris)."
