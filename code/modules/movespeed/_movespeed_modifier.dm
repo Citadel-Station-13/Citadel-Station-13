@@ -187,13 +187,15 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /// Set or update the global movespeed config on a mob
 /mob/proc/update_config_movespeed()
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/mob_config_speedmod, multiplicative_slowdown = get_config_multiplicative_speed())
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/mob_config_speedmod_floating, multiplicative_slowdown = get_config_multiplicative_speed(TRUE))
 
 /// Get the global config movespeed of a mob by type
-/mob/proc/get_config_multiplicative_speed()
-	if(!islist(GLOB.mob_config_movespeed_type_lookup) || !GLOB.mob_config_movespeed_type_lookup[type])
+/mob/proc/get_config_multiplicative_speed(floating = FALSE)
+	var/list/read = floating? GLOB.mob_config_movespeed_type_lookup_floating : GLOB.mob_config_movespeed_type_lookup
+	if(!islist(read) || !read[type])
 		return 0
 	else
-		return GLOB.mob_config_movespeed_type_lookup[type]
+		return read[type]
 
 /// Go through the list of movespeed modifiers and calculate a final movespeed. ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
 /mob/proc/update_movespeed()

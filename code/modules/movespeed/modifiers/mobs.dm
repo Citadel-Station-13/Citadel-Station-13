@@ -111,6 +111,12 @@
 
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
+	blacklisted_movetypes = FLOATING
+	flags = IGNORE_NOSLOW
+
+/datum/movespeed_modifier/mob_config_speedmod_floating
+	variable = TRUE
+	movetypes = FLOATING
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/liver_cirrhosis
