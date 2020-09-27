@@ -12,9 +12,9 @@
 		))
 	var/list/processing_list = list(location)
 	. = list()
-	while(processing_list.len)
-		var/atom/thing = processing_list[1]
-		processing_list -= thing
+	var/i = 0
+	while(i < length(processing_list))
+		var/atom/thing = processing_list[++i]
 		if(ignored_things[thing.type])
 			continue
 		. += thing
