@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	if(!heirloom_type)
 		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
 		if(!job_heirloom_entry)
-			heirloom_type = pick(species_heirloom_entry["NO_JOB"]) //consider: should this be a define?
+			heirloom_type = pick(GLOB.job_heirlooms["NO_JOB"]) //consider: should this be a define?
 		else
 			heirloom_type = pick(job_heirloom_entry)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
