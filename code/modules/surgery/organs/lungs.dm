@@ -324,21 +324,21 @@
 		if(CH4_pp > safe_methane_max) //Same effect as excess nitrogen, generally nontoxic
 			var/ratio = (breath.get_moles(/datum/gas/methane)/safe_methane_max) * 10
 			H.apply_damage_type(clamp(ratio, methane_breath_dam_min, methane_breath_dam_max), methane_damage_type)
-			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+			H.throw_alert("too_much_ch4", /obj/screen/alert/too_much_ch4)
 			H.losebreath += 2
 		else
-			H.clear_alert("too_much_tox")
+			H.clear_alert("too_much_ch4")
 	//Too little methane!
 	if(safe_methane_min)
 		if(CH4_pp < safe_methane_min)
 			gas_breathed = handle_too_little_breath(H, CH4_pp, safe_methane_min, breath.get_moles(/datum/gas/methane))
-			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			H.throw_alert("not_enough_ch4", /obj/screen/alert/not_enough_ch4)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
 				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath.get_moles(/datum/gas/methane)
-			H.clear_alert("not_enough_tox")
+			H.clear_alert("not_enough_ch4")
 
 	//Exhale
 	breath.adjust_moles(/datum/gas/methane, -gas_breathed)
