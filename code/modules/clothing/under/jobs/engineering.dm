@@ -45,9 +45,17 @@
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"
 	desc = "A high visibility jumpsuit made from heat and radiation resistant materials."
-	icon_state = "hazard"
-	item_state = "suit-orange"
+	icon_state = "hazard_orange"
+	item_state = "engi_suit"
 	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/engineering/engineer/hazard/green
+	icon_state = "hazard_green"
+	item_state = "g_suit"
+
+/obj/item/clothing/under/rank/engineering/engineer/hazard/white
+	icon_state = "hazard_white"
+	item_state = "gy_suit"
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"
