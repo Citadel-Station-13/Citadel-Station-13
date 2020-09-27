@@ -5,7 +5,7 @@ Tries to keep the round at a certain level of action, based on the round's "thre
 ## ROUNDSTART
 
 Dynamic rolls threat based on a special sauce formula:
-"dynamic_curve_width \* tan((3.1416 \* (rand() - 0.5) \* 57.2957795)) + dynamic_curve_centre"
+"dynamic_curve_width \* tan((rand() - 0.5) \* 180) + dynamic_curve_centre"
 
 Midround injection cooldowns are set using exponential distribution between 15 minutes and 35 minutes. This value is then added to world.time and assigned to the injection cooldown variables.
 
