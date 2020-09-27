@@ -193,9 +193,9 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 6
-	distribute_pressure = 13
+	distribute_pressure = 14
 	volume = 10
 
 /obj/item/tank/internals/methyl_bromide/populate_gas()
 	air_contents.set_moles(/datum/gas/methyl_bromide, (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
-	return 
+	return
