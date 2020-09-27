@@ -136,6 +136,8 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else if(safe_nitro_min)
 			H.throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+		else if(safe_ch3br_min)
+			H.throw_alert("not_enough_ch3br", /obj/screen/alert/not_enough_ch3br)
 		return FALSE
 
 	var/gas_breathed = 0
@@ -297,20 +299,20 @@
 				if(prob(CH3Br_pp/2))
 					to_chat(H, "<span class='alert'>Your throat closes up!</span>")
 					H.silent = max(H.silent, 3)
-			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+			H.throw_alert("too_much_ch3br", /obj/screen/alert/too_much_ch3br)
 		else
-			H.clear_alert("too_much_tox")
+			H.clear_alert("too_much_ch3br")
 	//Too little methyl bromide!
 	if(safe_ch3br_min)
 		if(CH3Br_pp < safe_ch3br_min)
 			gas_breathed = handle_too_little_breath(H, CH3Br_pp, safe_ch3br_min, breath.get_moles(/datum/gas/methyl_bromide))
-			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			H.throw_alert("not_enough_ch3br", /obj/screen/alert/not_enough_ch3br)
 		else
 			H.failed_last_breath = FALSE
 			if(H.health >= H.crit_threshold)
 				H.adjustOxyLoss(-breathModifier)
 			gas_breathed = breath.get_moles(/datum/gas/methyl_bromide)
-			H.clear_alert("not_enough_tox")
+			H.clear_alert("not_enough_ch3br")
 
 	//Exhale
 	breath.adjust_moles(/datum/gas/methyl_bromide, -gas_breathed)
