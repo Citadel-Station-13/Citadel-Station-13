@@ -155,7 +155,7 @@
 
 /obj/machinery/portable_atmospherics/canister/methyl_bromide
 	name = "methyl bromide canister"
-	desc = "Methyl bromide. A potent toxin to most, essential to live for the Kharmaani."
+	desc = "Methyl bromide. A potent toxin to most, essential for the Kharmaan to live."
 	icon_state = "purplecyan"
 	gas_type = /datum/gas/methyl_bromide
 
