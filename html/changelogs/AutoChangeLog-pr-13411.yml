@@ -1,0 +1,6 @@
+author: "Tupinambis"
+delete-after: True
+changes: 
+  - imageadd: "Replaced old chair sprites with new ones ported and modified from eris."
+  - tweak: "Beds can now be placed both right and left."
+  - tweak: "Subtle changes to stool legs to give them more of a shine."

@@ -43,6 +43,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	outdoors = TRUE
 	ambientsounds = SPACE
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
+	considered_hull_exterior = TRUE
 
 /area/space/nearstation
 	icon_state = "space_near"
