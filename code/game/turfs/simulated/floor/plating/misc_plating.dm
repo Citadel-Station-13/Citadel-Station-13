@@ -3,6 +3,10 @@
 	icon_state = "plating"
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/plating/airmore
+	icon_state = "plating"
+	initial_gas_mix = "o2=88;n2=328;TEMP=293.15"
+
 /turf/open/floor/plating/icemoon
 	icon_state = "plating"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

@@ -119,7 +119,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "maint_monastery"
 
 /area/maintenance/department/crew_quarters/bar
-	name = "Bar Maintenance"
+	name = "Service Maintenance"
+	icon_state = "maint_bar"
+
+/area/maintenance/department/crew_quarters/theatre
+	name = "Theatre Maintenance"
 	icon_state = "maint_bar"
 
 /area/maintenance/department/crew_quarters/dorms
@@ -190,6 +194,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
 
+/area/maintenance/arrivals/south
+	name = "Arrivals South Maintenance"
+	icon_state = "fpmaint"
+
 /area/maintenance/aft
 	name = "Aft Maintenance"
 	icon_state = "amaint"
@@ -204,6 +212,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/central/secondary
 	name = "Central Maintenance"
+	icon_state = "maintcentral"
+
+/area/maintenance/hallway
+	name = "Hallway Maintenance"
 	icon_state = "maintcentral"
 
 /area/maintenance/fore
@@ -459,6 +471,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Restrooms"
 	icon_state = "toilet"
 
+/area/crew_quarters/toilet/engineering
+	name = "Engineering Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/bridge
+	name = "Bridge Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/departures
+	name = "Departures Toilets"
+	icon_state = "toilet"
+
+/area/crew_quarters/toilet/security
+	name = "Security Toilets"
+	icon_state = "toilet"
+
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
@@ -604,8 +632,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "atmos"
 	flags_1 = NONE
 
+/area/engine/tesla
+	name = "Tesla Engine"
+	icon_state = "engine"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	valid_territory = FALSE
+	blob_allowed = FALSE
+	flags_1 = NONE
+	ambientsounds = ENGINEERING
+
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
+	icon_state = "atmos_engine"
+
+/area/engine/atmospherics_engine/aux
+	name = "Aux Atmospherics Engine"
 	icon_state = "atmos_engine"
 
 /area/engine/supermatter
@@ -936,12 +978,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "checkpoint1"
 
 /area/security/checkpoint/auxiliary
+	name = "Auxiliary Security Checkpoint"
 	icon_state = "checkpoint_aux"
 
 /area/security/checkpoint/tertiary
+	name = "Tertiary Security Checkpoint"
 	icon_state = "checkpoint_tert"
 
 /area/security/checkpoint/escape
+	name = "Departures Security Checkpoint"
 	icon_state = "checkpoint_esc"
 
 /area/security/checkpoint/supply

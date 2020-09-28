@@ -91,6 +91,8 @@
 	icon_state = "freezerfloor"
 /turf/open/floor/plasteel/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
+/turf/open/floor/plasteel/freezer/cold
+	initial_gas_mix = "o2=20;n2=80;TEMP=268.15"
 
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"

@@ -253,6 +253,19 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/datum/looping_sound/showering/soundloop
 
+/obj/machinery/shower/north
+	dir = NORTH
+
+/obj/machinery/shower/east
+	dir = EAST
+
+/obj/machinery/shower/west
+	dir = WEST
+
+/obj/machinery/shower/south
+	dir = SOUTH
+	pixel_y = 14
+
 /obj/machinery/shower/Initialize()
 	. = ..()
 	soundloop = new(list(src), FALSE)
@@ -489,6 +502,22 @@
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
+
+/obj/structure/sink/directional/north
+	pixel_y = 20
+	dir = SOUTH
+
+/obj/structure/sink/directional/south
+	pixel_y = -20
+	dir = NORTH
+
+/obj/structure/sink/directional/east
+	pixel_x = -16
+	dir = WEST
+
+/obj/structure/sink/directional/west
+	pixel_x = 16
+	dir = EAST
 
 /obj/structure/sink/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()

@@ -35,3 +35,8 @@
 	name = "invisible blockade"
 	desc = "You're gonna be here awhile."
 	timeleft = 600
+
+/obj/effect/forcefield/mime/perma
+	name = "permanent invisible wall"
+	timeleft = 0
+	CanAtmosPass = ATMOS_PASS_NO

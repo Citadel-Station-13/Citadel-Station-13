@@ -239,6 +239,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
 
+/obj/item/storage/box/beakers/large
+	name = "box of large beakers"
+	illustration = "beaker"
+
+/obj/item/storage/box/beakers/large/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/glass/beaker/large(src)
+
 /obj/item/storage/box/beakers/bluespace
 	name = "box of bluespace beakers"
 	illustration = "beaker"

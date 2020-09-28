@@ -40,6 +40,10 @@ map snaxi
 	minplayers 25
 endmap
 
+map burgerstation
+	minplayers 40
+endmap
+
 map runtimestation
 endmap
 
