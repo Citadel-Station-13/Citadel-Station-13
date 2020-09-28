@@ -1,4 +1,4 @@
-//wrist items (currently we have none har har)
+//wrist items (now we do, ha ha!)
 /obj/item/clothing/wrists
 	name = "slap bracelet"
 	desc = "oh no."

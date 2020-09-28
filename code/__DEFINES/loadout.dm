@@ -75,3 +75,7 @@
 #define LOADOUT_SUBCATEGORY_SHIRT		"Shirt"
 #define LOADOUT_SUBCATEGORY_SOCKS		"Socks"
 //
+
+//And wrists!
+#define LOADOUT_CATEGORY_WRISTS			"Wrists"
+#define LOADOUT_SUBCATEGORY_WATCHES		"Watches"
