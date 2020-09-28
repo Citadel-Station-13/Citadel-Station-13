@@ -3725,6 +3725,8 @@
 #include "sandcode\code\modules\mob\living\carbon\give.dm"
 #include "sandcode\code\modules\mob\living\carbon\show.dm"
 #include "sandcode\code\modules\mob\living\carbon\human\human.dm"
+#include "sandcode\code\modules\mob\living\carbon\human\species_types\ipc.dm"
+#include "sandcode\code\modules\mob\living\carbon\human\species_types\synthliz.dm"
 #include "sandcode\code\modules\mob\living\silicon\silicon.dm"
 #include "sandcode\code\modules\mob\living\silicon\robot\robot.dm"
 #include "sandcode\code\modules\mob\living\silicon\robot\robot_modules.dm"
