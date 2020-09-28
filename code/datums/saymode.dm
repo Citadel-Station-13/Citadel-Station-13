@@ -71,6 +71,15 @@
 		user.alien_talk(message)
 	return FALSE
 
+/datum/saymode/controller
+	key = "w"
+	mode = MODE_CONTROLLER
+
+//Check augments_internal.dm for the organ that handles the controller prok.
+/datum/saymode/controller/handle_message(mob/living/user, message, datum/language/language)
+	if(user.controllercheck())
+		user.controller_talk(message)
+	return FALSE
 
 /datum/saymode/vocalcords
 	key = MODE_KEY_VOCALCORDS

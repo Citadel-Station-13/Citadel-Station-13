@@ -526,6 +526,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			. = BLOOD_COLOR_SLIME
 		if("BUG")// yellowish, like, y'know bug guts I guess.
 			. = BLOOD_COLOR_BUG
+		if("KHA")//Cyan alien color.
+			. = BLOOD_COLOR_KHARMAANI
 		//add more stuff to the switch if you have more blood colors for different types
 		// the defines are in _DEFINES/misc.dm
 

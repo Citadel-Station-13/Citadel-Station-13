@@ -142,6 +142,9 @@
 /mob/proc/hivecheck()
 	return 0
 
+/mob/proc/controllercheck()
+	return 0
+
 /mob/proc/lingcheck()
 	return LINGHIVE_NONE
 

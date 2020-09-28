@@ -306,6 +306,11 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/sylvan = list(LANGUAGE_ATOM))
 
+/datum/language_holder/ascent
+	understood_languages = list(/datum/language/ascent_voc = list(LANGUAGE_ATOM),
+								/datum/language/slime = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/ascent_voc = list(LANGUAGE_ATOM),
+								/datum/language/slime = list(LANGUAGE_ATOM))
 
 /datum/language_holder/synthetic
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
