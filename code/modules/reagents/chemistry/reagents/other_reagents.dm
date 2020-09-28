@@ -1838,6 +1838,11 @@
 	color = "#363636"
 	carpet_type = /turf/open/floor/carpet/black
 
+/datum/reagent/carpet/arcade
+	name = "Liquid Arcade Carpet"
+	color = "#b51d05"
+	carpet_type = /turf/open/floor/carpet/arcade
+
 /datum/reagent/carpet/blackred
 	name = "Liquid Red Black Carpet"
 	color = "#342125"
