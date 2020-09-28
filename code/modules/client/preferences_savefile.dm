@@ -481,7 +481,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
 	S["left_eye_color"]			>> left_eye_color
-	S["right_eye_color"]		>> left_eye_color
+	S["right_eye_color"]		>> right_eye_color
 	S["use_custom_skin_tone"]	>> use_custom_skin_tone
 	S["skin_tone"]				>> skin_tone
 	S["hair_style_name"]		>> hair_style
