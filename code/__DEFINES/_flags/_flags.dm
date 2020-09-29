@@ -13,7 +13,7 @@
 	do{
 		var/_old = a & ~(flags);\
 		var/_cleaned = b & (flags);\
-		a = _old | _cleaned
+		a = _old | _cleaned;\
 	} while(0);
 #define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) (((flagvar) & (flags)) == (flags))
 
