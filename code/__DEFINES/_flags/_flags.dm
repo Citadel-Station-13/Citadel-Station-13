@@ -10,7 +10,7 @@
 #define CHECK_BITFIELD(variable, flag) (variable & (flag))
 #define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
 #define COPY_SPECIFIC_BITFIELDS(a,b,flags)\
-	do{
+	do{\
 		var/_old = a & ~(flags);\
 		var/_cleaned = b & (flags);\
 		a = _old | _cleaned;\
