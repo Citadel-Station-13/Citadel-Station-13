@@ -46,6 +46,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/liked_food = NONE
 	var/disliked_food = GROSS
 	var/toxic_food = TOXIC
+	var/bodytemp_normal = BODYTEMP_NORMAL
+	var/heat_damage_limit = BODYTEMP_NORMAL + 1.3
+	var/cold_damage_limit = BODYTEMP_NORMAL - 2.0
+	var/specific_heat = 4.184
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
@@ -364,7 +368,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.LoadComponent(/datum/component/field_of_vision, H.field_of_vision_type)
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
-
+	C.bodytemp_normal = bodytemp_normal
+	C.heat_damage_limit = heat_damage_limit
+	C.cold_damage_limit = cold_damage_limit
+	C.specific_heat = specific_heat
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 
@@ -1949,25 +1956,26 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			natural = H.natural_bodytemperature_stabilization()
 
 		var/thermal_protection = H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-		var/approx_heat_capacity = (H.nutrition+400)*0.001
-		if(H.bodytemperature < BODYTEMP_NORMAL)
-			var/delta = (thermal_protection+1)*natural
-			H.bodytemperature += delta
-			H.adjust_nutrition(delta*-0.01)
-		else
-			var/delta = natural*(1/(thermal_protection+1))
-			var/sweat_made = (approx_heat_capacity*delta)/(initial(sweat_gas.specific_heat)*H.bodytemperature)
-			var/max_vapor_capacity = (environment.return_volume())/(environment.return_temperature()*R_IDEAL_GAS_EQUATION)
-			// implicit 1* at the start there--i'm just using "1 kilopascal partial pressure" for this
-			var/original_sweat_made = sweat_made
-			sweat_made = min(sweat_made,(sweat_made+environment.get_moles(sweat_gas))-max_vapor_capacity)
-			H.bodytemperature += delta * (original_sweat_made/sweat_made)
-			if(sweat_made > 0.0000001)
-				var/datum/gas_mixture/sweat = new
-				sweat.set_moles(sweat_gas,sweat_made)
-				sweat.set_temperature(H.bodytemperature)
-				environment.merge(sweat)
-				H.nutrition -= sweat_made
+		var/approx_heat_capacity = ((H.nutrition+400)/10)*H.specific_heat
+		if(natural)
+			if(H.bodytemperature < H.bodytemp_normal)
+				var/delta = (thermal_protection+1)*natural
+				H.bodytemperature += delta
+				H.adjust_nutrition(delta*-0.01)
+			else
+				var/delta = natural*(1-thermal_protection)
+				var/sweat_made = (approx_heat_capacity*delta)/(initial(sweat_gas.specific_heat)*H.bodytemperature)
+				var/max_vapor_capacity = (environment.return_volume())/(environment.return_temperature()*R_IDEAL_GAS_EQUATION)
+				// implicit 1* at the start there--i'm just using "1 kilopascal partial pressure" for this
+				var/original_sweat_made = sweat_made
+				sweat_made = min(sweat_made,(sweat_made+environment.get_moles(sweat_gas))-max_vapor_capacity)
+				H.bodytemperature += delta * (original_sweat_made/sweat_made)
+				if(sweat_made > 0.0000001)
+					var/datum/gas_mixture/sweat = new
+					sweat.set_moles(sweat_gas,sweat_made)
+					sweat.set_temperature(H.bodytemperature)
+					environment.merge(sweat)
+					H.nutrition -= sweat_made
 		H.bodytemperature = environment.temperature_share(null,(1-thermal_protection)*0.1,H.bodytemperature,approx_heat_capacity)
 		switch((loc_temp - H.bodytemperature)*thermal_protection)
 			if(-INFINITY to -50)
@@ -1986,7 +1994,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				H.throw_alert("tempfeel", /obj/screen/alert/hot, 3)
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTHEAT))
+	if(loc_temp > bodytemp_normal + 20 && !!HAS_TRAIT(H, TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
 
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
@@ -2014,11 +2022,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
+	else if(loc_temp < bodytemp_normal - 50 && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		//Apply cold slowdown
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/shiver, 1)
@@ -2035,7 +2041,31 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		H.clear_alert("temp")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
-
+	if(H.bodytemperature > H.hyperthermia_limit)
+		var/severity = 1+((H.bodytemperature - H.hyperthermia_limit) / (H.hyperthermia_limit - H.bodytemp_normal))
+		M.confused += round(rand(0,severity))
+		if(prob(severity*10))
+			M.hallucination += 5
+		if(prob(severity*20))
+			M.vomiting += 5
+		for(var/obj/item/organ/O in H.internal_organs)
+			if(O && !(status_flags & GODMODE) || !prob(50))
+				continue
+			var/maximum = O.maxhealth
+			O.applyOrganDamage(severity, maximum)
+			O.onDamage(severity, maximum)
+	else if(H.body_temperature < H.hypothermia_limit)
+		var/severity = 1+((H.hypothermia_limit - H.bodytemperature) / (H.bodytemp_normal - H.hypothermia_limit))
+		if(prob(severity*50))
+			M.applyOrganDamage(ORGAN_SLOT_LIVER,5)
+		if(prob(severity*20))
+			M.hallucination += 5
+		if(prob(severity*10))
+			M.confused += 5
+		if(prob(severity*5))
+			M.applyOrganDamage(ORGAN_SLOT_HEART,10)
+		//Apply cold slowdown
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((H.cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)

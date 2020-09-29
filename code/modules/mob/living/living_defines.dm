@@ -18,6 +18,11 @@
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
 
+	var/bodytemp_normal = BODYTEMP_NORMAL	// the baseline that it wants to get to
+	var/heat_damage_limit = BODYTEMP_NORMAL + 1.3 // how high core body temp can go before symptoms
+	var/cold_damage_limit = BODYTEMP_NORMAL - 2 // how low core body temp can go before symptoms
+	var/specific_heat = 4.184 // how much heat the body holds per kilogram
+
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
 	var/oxyloss = 0		//Oxygen depravation damage (no air in lungs)
