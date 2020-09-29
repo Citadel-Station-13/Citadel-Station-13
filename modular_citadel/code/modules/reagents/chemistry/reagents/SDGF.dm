@@ -113,7 +113,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				var/policy = policies[POLICYCONFIG_SDGF]
 				if(policy)
 					to_chat(SM,policy)
-				if(prob((purity) * 60)) // 60% chance at 100% purity, 0% chance at 0 purity
+				if(prob((purity**3) * 80)) // 80% chance at 100% purity, 0% chance at 0 purity
 					policy = policies[POLICYCONFIG_SDGF_GOOD]
 					if(policy)
 						to_chat(SM,policy)
