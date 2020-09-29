@@ -186,6 +186,10 @@
 	name = "Cafeteria"
 	icon_state = "cafeteria"
 
+/area/ruin/space/has_grav/skelter/med
+	name = "Med Bay"
+	icon_state = "medbay3"
+
 /area/ruin/space/has_grav/skelter/crew
 	name = "Crew Quarters"
 	icon_state = "crew_quarters"
@@ -196,7 +200,7 @@
 
 /area/ruin/space/has_grav/skelter/hall
 	name = "Forward Hall"
-	icon_state = "chall"
+	icon_state = "hallF"
 
 /area/ruin/space/has_grav/skelter/shields
 	name = "Shields"
