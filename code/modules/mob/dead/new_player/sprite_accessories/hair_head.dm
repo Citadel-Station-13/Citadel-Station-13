@@ -226,8 +226,8 @@
 	icon_state = "hair_curly"
 
 /datum/sprite_accessory/hair/curlybangs
-	name = "Curly Bangs
-	icon_state = "hair_curlybangs
+	name = "Curly Bangs"
+	icon_state = "hair_curlybangs"
 
 /datum/sprite_accessory/hair/cut
 	name = "Cut Hair"
