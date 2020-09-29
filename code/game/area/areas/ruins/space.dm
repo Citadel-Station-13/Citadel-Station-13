@@ -198,6 +198,10 @@
 	name = "Forward Hall"
 	icon_state = "chall"
 
+/area/ruin/space/has_grav/skelter/shields
+	name = "Shields"
+	icon_state = "green"
+
 //Ruin of Derelict Oupost
 
 /area/ruin/space/has_grav/derelictoutpost
