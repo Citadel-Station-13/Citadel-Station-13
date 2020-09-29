@@ -37,8 +37,8 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 */
 
 #define POLICYCONFIG_SDGF "SDGF"
-#define POLICYCONFIG_SDGF_GOOD "SDGF"
-#define POLICYCONFIG_SDGF_BAD "SDGF"
+#define POLICYCONFIG_SDGF_GOOD "SDGF_ALIGNED"
+#define POLICYCONFIG_SDGF_BAD "SDGF_UNALIGNED"
 
 
 //Clone serum #chemClone
@@ -190,7 +190,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 
 							//clone
 							var/typepath = M.type
-							var/mob/living/SM = new typepath(M.loc)
+							var/mob/living/fermi_Clone = new typepath(M.loc)
 							var/mob/living/carbon/human/SM = fermi_Clone
 
 							if(istype(SM) && istype(M))
