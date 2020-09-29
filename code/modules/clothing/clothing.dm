@@ -49,8 +49,13 @@
 	//Basically syntax is species_restricted = list("Species Name","Species Name")
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects
-
-
+	/*
+		Sprites used when the clothing item is refit. This is done by setting icon_override.
+		For best results, if this is set then sprite_sheets should be null and vice versa, but that is by no means necessary.
+		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits),
+		while sprite_sheets should be used for "flexible" clothing items that do not need to be refitted (e.g. aliens wearing jumpsuits).
+	*/
+	var/list/sprite_sheets_refit = null
 
 	// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
@@ -477,10 +482,51 @@ BLIND     // can't see anything
 	return TRUE
 
 
-
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)
 	if(!istype(L))
 		return
 	if(prob(0.2))
 		to_chat(L, "<span class='warning'>The damaged threads on your [src.name] chafe!</span>")
+
+
+/obj/item/clothing/proc/refit_for_species(var/target_species)
+	if(!species_restricted)
+		return	// This item doesn't use the species_restricted system
+
+	// Set species_restricted list
+	switch(target_species)
+		if(SPECIES_HUMAN, SPECIES_SKRELL)	// Humanoid bodytypes
+			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_PROMETHEAN)	// humans and most species can wear each other's suits
+		else
+			species_restricted = list(target_species)
+
+	// Set icon
+	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+		sprite_sheets[target_species] = sprite_sheets_refit[target_species]
+
+	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+		icon = sprite_sheets_obj[target_species]
+	else
+		icon = initial(icon)
+
+/obj/item/clothing/head/helmet/refit_for_species(var/target_species)
+	if(!species_restricted)
+		return	// This item doesn't use the species_restricted system
+
+	// Set species_restricted list
+	switch(target_species)
+		if(SPECIES_SKRELL)
+			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_PROMETHEAN) //skrell helmets fit humans too
+
+		else
+			species_restricted = list(target_species)
+
+	// Set icon
+	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
+		sprite_sheets[target_species] = sprite_sheets_refit[target_species]
+
+	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
+		icon = sprite_sheets_obj[target_species]
+	else
+		icon = initial(icon)

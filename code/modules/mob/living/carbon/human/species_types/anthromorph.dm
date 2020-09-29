@@ -1,5 +1,5 @@
 /datum/species/mammal
-	name = "Anthromorph"
+	name = SPECIES_ANTHROMORPH
 	id = "mammal"
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)

@@ -98,7 +98,7 @@
 
 // Your skin falls off
 /datum/species/krokodil_addict
-	name = "Human"
+	name = SPECIES_HUMAN
 	id = "goofzombies"
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0

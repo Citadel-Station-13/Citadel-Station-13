@@ -1,5 +1,5 @@
 /datum/species/synthliz
-	name = "Synthetic Lizardperson"
+	name = SPECIES_SYNTH_LIZARD
 	id = "synthliz"
 	say_mod = "beeps"
 	default_color = "00FF00"

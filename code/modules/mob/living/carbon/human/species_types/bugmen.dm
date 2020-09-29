@@ -1,5 +1,5 @@
 /datum/species/insect
-	name = "Anthromorphic Insect"
+	name = SPECIES_BUGMAN
 	id = "insect"
 	say_mod = "chitters"
 	default_color = "00FF00"

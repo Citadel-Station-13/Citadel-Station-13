@@ -156,6 +156,34 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/canMouseDown = FALSE
 
 
+	///Species Sprite Overrides
+	var/icon_override = null	// Used to override hardcoded clothing dmis in human clothing proc.
+
+	//** These specify item/icon overrides for _slots_
+
+	var/list/item_state_slots = list()	// Overrides the default item_state for particular slots.
+
+	// Used to specify the icon file to be used when the item is worn. If not set the default icon for that slot will be used.
+	// If icon_override or sprite_sheets are set they will take precendence over this, assuming they apply to the slot in question.
+	// Only slot_l_hand/slot_r_hand are implemented at the moment. Others to be implemented as needed.
+	var/list/item_icons = list()
+
+	//** These specify item/icon overrides for _species_
+
+	/* Species-specific sprites, concept stolen from Paradise//vg/.
+	ex:
+	sprite_sheets = list(
+		SPECIES_FELINID = 'icons/cat/are/bad'
+		)
+	If index term exists and icon_override is not set, this sprite sheet will be used.
+	*/
+	var/list/sprite_sheets = list()
+
+	// Species-specific sprite sheets for inventory sprites
+	// Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
+	var/list/sprite_sheets_obj = list()
+
+
 /obj/item/Initialize()
 
 	if(attack_verb)

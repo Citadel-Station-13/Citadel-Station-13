@@ -1,5 +1,5 @@
 /datum/species/plasmaman
-	name = "Plasmaman"
+	name = SPECIES_PLASMAMAN
 	id = "plasmaman"
 	say_mod = "rattles"
 	sexes = 0

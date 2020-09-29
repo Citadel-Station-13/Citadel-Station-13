@@ -1,5 +1,5 @@
 /datum/species/vampire
-	name = "Vampire"
+	name = SPECIES_VAMPIRE
 	id = "vampire"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD,HAS_FLESH,HAS_BONE)

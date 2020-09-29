@@ -1,5 +1,5 @@
 /datum/species/skeleton
-	name = "Skeleton"
+	name = SPECIES_SKELETON
 	id = "skeleton"
 	say_mod = "rattles"
 	blacklisted = 0

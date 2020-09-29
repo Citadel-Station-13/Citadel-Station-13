@@ -1,5 +1,5 @@
 /datum/species/human
-	name = "Human"
+	name = SPECIES_HUMAN
 	id = "human"
 	default_color = "FFFFFF"
 

@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(dwarf_first, world.file2list("strings/names/dwarf_first.txt")) 
 GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //textfiles with last
 
 /datum/species/dwarf //not to be confused with the genetic manlets
-	name = "Dwarf"
+	name = SPECIES_DWARF
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)

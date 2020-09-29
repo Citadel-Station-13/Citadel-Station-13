@@ -421,7 +421,7 @@
 ////////////////////////////////////////////////////////Round Start Slimes///////////////////////////////////////////////////////////////////
 
 /datum/species/jelly/roundstartslime
-	name = "Xenobiological Slime Hybrid"
+	name = SPECIES_JELLYHYBRID
 	id = "slimeperson"
 	limbs_id = "slime"
 	default_color = "00FFFF"
