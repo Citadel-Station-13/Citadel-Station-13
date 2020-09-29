@@ -16,7 +16,8 @@
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
+	var/datum/action/innate/slime_change/slime_change
+	var/datum/action/innate/slime_puddle/slime_puddle
 	liked_food = TOXIC | MEAT
 	disliked_food = null
 	toxic_food = ANTITOXIC
@@ -35,12 +36,13 @@
 	desc = "A slimey membranous mass from a slime person"
 	icon_state = "brain-slime"
 
-
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	if(slime_change)	//CIT CHANGE
-		slime_change.Remove(C)	//CIT CHANGE
+	if(slime_change)
+		slime_change.Remove(C)
+	if(slime_puddle)
+		slime_puddle.Remove(C)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
@@ -50,14 +52,22 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
-		slime_change = new	//CIT CHANGE
-		slime_change.Grant(C)	//CIT CHANGE
+		slime_change = new
+		slime_change.Grant(C)
+		slime_puddle = new
+		slime_puddle.Grant(C)
 	C.faction |= "slime"
 
 /datum/species/jelly/handle_body(mob/living/carbon/human/H)
 	. = ..()
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
+
+/datum/species/jelly/should_render()
+	if(slime_puddle && slime_puddle.is_puddle)
+		return FALSE
+	else
+		return ..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
@@ -641,6 +651,21 @@
 	else
 		return
 
+/datum/action/innate/slime_puddle
+	name = "Puddle Transformation"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimepuddle"
+	icon_icon = 'modular_citadel/icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	var/is_puddle = FALSE
+
+/datum/action/innate/slime_puddle/Activate()
+	if(!is_puddle)
+		is_puddle = TRUE
+		owner.cut_overlays()
+	else
+		is_puddle = FALSE
+		owner.regenerate_icons()
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
