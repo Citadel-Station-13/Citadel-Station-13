@@ -881,10 +881,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
 	var/vr_path = "data/player_saves/[parent.ckey[1]]/[parent.ckey]/vore/character[default_slot]_v2.json"
-	var/belly_prefs = safe_json_encode(list("belly_prefs" = belly_prefs))
+	var/belly_prefs_json = safe_json_encode(list("belly_prefs" = belly_prefs))
 	if(fexists(vr_path))
 		fdel(path)
-	text2file(belly_prefs,path)
+	text2file(belly_prefs_json,path)
 
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
 	WRITE_FILE(S["scars1"]						, scars_list["1"])
