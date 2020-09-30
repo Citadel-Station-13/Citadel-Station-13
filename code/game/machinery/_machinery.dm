@@ -381,6 +381,7 @@ Class Procs:
 /obj/machinery/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -551,4 +552,4 @@ Class Procs:
 	AM.pixel_y = -8 + (round( . / 3)*8)
 
 /obj/machinery/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1) 
+	take_damage(500, BRUTE, "melee", 1)

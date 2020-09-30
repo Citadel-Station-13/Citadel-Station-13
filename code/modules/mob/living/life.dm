@@ -1,5 +1,5 @@
 /**
-  * Called by SSmobs at (hopefully) an interval of 1 second.
+  * Called by SSmobs at an interval of 2 seconds.
   * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
   */
 /mob/living/proc/Life(seconds, times_fired)
@@ -43,6 +43,7 @@
   * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
   */
 /mob/living/proc/BiologicalLife(seconds, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, seconds, times_fired)
 	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
 	handle_wounds()
@@ -78,6 +79,7 @@
   * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
   */
 /mob/living/proc/PhysicalLife(seconds, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_PHYSICAL_LIFE, seconds, times_fired)
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 

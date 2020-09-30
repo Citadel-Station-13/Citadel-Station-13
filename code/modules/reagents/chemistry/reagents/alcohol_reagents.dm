@@ -2280,6 +2280,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		quality = RACE_DRINK
 	else
 		C.adjust_disgust(disgust)
+	return ..()
 
 /datum/reagent/consumable/ethanol/species_drink/coldscales
 	name = "Coldscales"
@@ -2289,7 +2290,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "coldscales"
 	glass_name = "glass of Coldscales"
 	glass_desc = "A soft green drink that looks inviting!"
-
 	species_required = "lizard"
 
 /datum/reagent/consumable/ethanol/species_drink/oil_drum
@@ -2301,7 +2301,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "oil_drum"
 	glass_name = "Drum of oil"
 	glass_desc = "A gray can of booze and oil..."
-
 	species_required = "robot"
 
 /datum/reagent/consumable/ethanol/species_drink/nord_king
@@ -2312,7 +2311,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "nord_king"
 	glass_name = "Keg of Nord King"
 	glass_desc = "A dripping keg of red mead."
-
 	species_required = "basic"
 
 /datum/reagent/consumable/ethanol/species_drink/velvet_kiss
@@ -2324,7 +2322,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "velvet_kiss"
 	glass_name = "glass of Velvet Kiss"
 	glass_desc = "Red and white drink for the upper classes or undead."
-
 	species_required = "undead"
 
 /datum/reagent/consumable/ethanol/species_drink/abduction_fruit
@@ -2336,7 +2333,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "abduction_fruit"
 	glass_name = "glass of Abduction Fruit"
 	glass_desc = "Mixed fruits that were never meant to be mixed..."
-
 	species_required = "alien"
 
 /datum/reagent/consumable/ethanol/species_drink/bug_zapper
@@ -2348,7 +2344,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "bug_zapper"
 	glass_name = "glass of Bug Zapper"
 	glass_desc = "An odd mix of copper, lemon juice and power meant for non-human consumption."
-
 	species_required = "bug"
 
 /datum/reagent/consumable/ethanol/species_drink/mush_crush
@@ -2360,7 +2355,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mush_crush"
 	glass_name = "glass of Mush Crush"
 	glass_desc = "Popular among people that want to grow their own food rather than drink the soil."
-
 	species_required = "plant"
 
 /datum/reagent/consumable/ethanol/species_drink/darkbrew
@@ -2372,7 +2366,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "darkbrew"
 	glass_name = "glass of Darkbrew"
 	glass_desc = "A pitch black drink that's commonly confused with a type of coffee."
-
 	species_required = "shadow"
 
 /datum/reagent/consumable/ethanol/species_drink/hollow_bone
@@ -2384,7 +2377,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "hollow_bone"
 	glass_name = "skull of Hollow Bone"
 	glass_desc = "Mixing of milk and bone hurting juice for the enjoyment of rather skinny people."
-
 	species_required = "skeleton"
 
 /datum/reagent/consumable/ethanol/species_drink/frisky_kitty
@@ -2396,7 +2388,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "frisky_kitty"
 	glass_name = "cup of Drisky Kitty"
 	glass_desc = "Warm milk and some catnip."
-
 	species_required = "furry"
 
 /datum/reagent/consumable/ethanol/species_drink/jell_wyrm
@@ -2408,7 +2399,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "jell_wyrm"
 	glass_name = "glass of Jell Wyrm"
 	glass_desc = "A bubbly drink that is rather inviting to those that don't know who it's meant for."
-
 	species_required = "jelly"
 
 /datum/reagent/consumable/ethanol/species_drink/laval_spit //Yes Laval
@@ -2420,7 +2410,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "laval_spit"
 	glass_name = "glass of Laval Spit"
 	glass_desc = "Piping hot drink for those who can stomach the heat of lava."
-
 	species_required = "golem"
 
 ///////////////

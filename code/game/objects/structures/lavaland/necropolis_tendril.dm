@@ -10,6 +10,7 @@
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
+	var/loot_type = /obj/structure/closet/crate/necropolis/tendril/all
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
@@ -41,7 +42,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 
 /obj/structure/spawner/lavaland/deconstruct(disassembled)
 	new /obj/effect/collapse(loc)
-	new /obj/structure/closet/crate/necropolis/tendril(loc)
+	new loot_type(loc)
 	return ..()
 
 

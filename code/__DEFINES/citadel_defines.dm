@@ -47,7 +47,7 @@
 #define BALLS_SIZE_DEF		2
 #define BALLS_SIZE_MAX		3
 
-#define CUM_RATE			2 // holy shit what a really shitty define name - relates to units per arbitrary measure of time?
+#define CUM_RATE			2 // units per 10 seconds
 #define CUM_RATE_MULT		1
 #define CUM_EFFICIENCY		1 //amount of nutrition required per life()
 
@@ -58,7 +58,7 @@
 
 #define DEF_BREASTS_SHAPE	"Pair"
 
-#define MILK_RATE			5
+#define MILK_RATE			3
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
 
@@ -99,7 +99,8 @@
 #define NO_ASS_SLAP			(1<<10)
 #define BIMBOFICATION		(1<<11)
 #define NO_AUTO_WAG			(1<<12)
-
+#define GENITAL_EXAMINE		(1<<13)
+#define VORE_EXAMINE		(1<<14)
 #define TOGGLES_CITADEL 0
 
 //belly sound pref things
