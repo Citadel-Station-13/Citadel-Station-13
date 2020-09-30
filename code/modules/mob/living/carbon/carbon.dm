@@ -999,10 +999,10 @@
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
-/mob/living/carbon/proc/update_disabled_bodyparts()
+/mob/living/carbon/proc/update_disabled_bodyparts(silent = FALSE)
 	for(var/B in bodyparts)
 		var/obj/item/bodypart/BP = B
-		BP.update_disabled()
+		BP.update_disabled(silent)
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
