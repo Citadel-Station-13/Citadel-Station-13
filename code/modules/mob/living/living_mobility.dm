@@ -10,11 +10,12 @@
 
 //Force-set resting variable, without needing to resist/etc.
 /mob/living/proc/set_resting(new_resting, silent = FALSE, updating = TRUE)
-	if(new_resting != resting)
-		resting = new_resting
-		if(!silent)
-			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
-		update_resting(updating)
+	if(!HAS_TRAIT(src, TRAIT_REST_LOCKED))
+		if(new_resting != resting)
+			resting = new_resting
+			if(!silent)
+				to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
+			update_resting(updating)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)
 	if(update_mobility)

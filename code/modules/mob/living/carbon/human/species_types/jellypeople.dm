@@ -671,18 +671,18 @@
 		var/mob/living/carbon/human/H = owner
 		var/mutcolor = "#" + H.dna.features["mcolor"]
 		if(!is_puddle)
-			//traits used here to disable their arms
-			ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
-			ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, "SLIME_PUDDLE_PARALYSIS_R_ARM")
-			ADD_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
-			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, "SLIME_PUDDLE_SPRINT_LOCK")
-			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, "SLIME_PUDDLE_COMBAT_LOCK")
 			is_puddle = TRUE
 			owner.cut_overlays()
 			var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
 			H.Stun(in_transformation_duration, ignore_canstun = TRUE)
-			H.KnockToFloor(TRUE, TRUE, TRUE)
+			H.KnockToFloor(TRUE, TRUE, TRUE) //disarms and you cant pickup after
+			ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, "SLIME_PUDDLE_NO_PICKUP")
+			ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, "SLIME_PUDDLE_NO_ITEMUSE")
+			ADD_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
+			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, "SLIME_PUDDLE_SPRINT_LOCK")
+			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, "SLIME_PUDDLE_COMBAT_LOCK")
+			ADD_TRAIT(H, TRAIT_REST_LOCKED, "SLIME_PUDDLE_CANNOT_STAND")
 			sleep(in_transformation_duration)
 			var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
 			puddle_overlay.color = mutcolor
@@ -694,11 +694,12 @@
 			puddle_effect.color = mutcolor
 			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 			sleep(out_transformation_duration)
-			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
-			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, "SLIME_PUDDLE_PARALYSIS_R_ARM")
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, "SLIME_PUDDLE_NO_PICKUP")
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOUSE, "SLIME_PUDDLE_NO_ITEMUSE")
 			REMOVE_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
 			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, "SLIME_PUDDLE_SPRINT_LOCK")
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, "SLIME_PUDDLE_COMBAT_LOCK")
+			REMOVE_TRAIT(H, TRAIT_REST_LOCKED, "SLIME_PUDDLE_CANNOT_STAND")
 			is_puddle = FALSE
 			owner.regenerate_icons()
 
