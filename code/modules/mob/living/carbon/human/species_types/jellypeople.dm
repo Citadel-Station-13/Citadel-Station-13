@@ -658,14 +658,41 @@
 	icon_icon = 'modular_citadel/icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	var/is_puddle = FALSE
+	var/in_transformation_duration = 12
+	var/out_transformation_duration = 7
+	var/puddle_into_effect = /obj/effect/temp_visual/slime_puddle
+	var/puddle_from_effect = /obj/effect/temp_visual/slime_puddle/reverse
+	var/puddle_icon = 'icons/mob/mob.dmi'
+	var/puddle_state = "puddle"
+	var/tracked_overlay
 
 /datum/action/innate/slime_puddle/Activate()
-	if(!is_puddle)
-		is_puddle = TRUE
-		owner.cut_overlays()
-	else
-		is_puddle = FALSE
-		owner.regenerate_icons()
+	if(isjellyperson(owner))
+		var/mob/living/carbon/human/H = owner
+		var/mutcolor = "#" + H.dna.features["mcolor"]
+		if(!is_puddle)
+			ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
+			ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, "SLIME_PUDDLE_PARALYSIS_R_ARM")
+			is_puddle = TRUE
+			owner.cut_overlays()
+			var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
+			puddle_effect.color = mutcolor
+			H.Stun(in_transformation_duration, ignore_canstun = TRUE)
+			sleep(in_transformation_duration)
+			var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
+			puddle_overlay.color = mutcolor
+			tracked_overlay = puddle_overlay
+			owner.add_overlay(puddle_overlay)
+		else
+			owner.cut_overlay(tracked_overlay)
+			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
+			puddle_effect.color = mutcolor
+			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
+			sleep(out_transformation_duration)
+			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
+			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, "SLIME_PUDDLE_PARALYSIS_R_ARM")
+			is_puddle = FALSE
+			owner.regenerate_icons()
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
