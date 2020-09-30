@@ -677,7 +677,10 @@
 			var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
 			H.Stun(in_transformation_duration, ignore_canstun = TRUE)
+			H.rotate_on_lying = FALSE
 			H.KnockToFloor(TRUE, TRUE, TRUE) //disarms and you cant pickup after
+			ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
+			ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, "SLIME_PUDDLE_PARALYSIS_R_ARM")
 			ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, "SLIME_PUDDLE_NO_PICKUP")
 			ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, "SLIME_PUDDLE_NO_ITEMUSE")
 			ADD_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
@@ -694,8 +697,11 @@
 			owner.cut_overlay(tracked_overlay)
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
+			H.rotate_on_lying = FALSE
 			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 			sleep(out_transformation_duration)
+			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
+			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, "SLIME_PUDDLE_PARALYSIS_R_ARM")
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, "SLIME_PUDDLE_NO_PICKUP")
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOUSE, "SLIME_PUDDLE_NO_ITEMUSE")
 			REMOVE_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
