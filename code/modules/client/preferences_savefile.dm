@@ -212,6 +212,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!ckey)
 		return
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
+	vr_path = "data/player_saves/[ckey[1]]/[ckey]/vore"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)
@@ -609,9 +610,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["vore_flags"]						>> vore_flags
 	S["vore_taste"]						>> vore_taste
-	var/vr_path = "data/player_saves/[parent.ckey[1]]/[parent.ckey]/vore/character[default_slot]_v2.json"
-	if(fexists(vr_path))
-		var/list/json_from_file = json_decode(file2text(vr_path))
+	var/char_vr_path = "[vr_path]/character_[default_slot]_v2.json"
+	if(fexists(char_vr_path))
+		var/list/json_from_file = json_decode(file2text(char_vr_path))
 		if(json_from_file)
 			belly_prefs = json_from_file["belly_prefs"]
 	//gear loadout
@@ -880,11 +881,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["vore_flags"]			, vore_flags)
 	WRITE_FILE(S["vore_taste"]			, vore_taste)
-	var/vr_path = "data/player_saves/[parent.ckey[1]]/[parent.ckey]/vore/character[default_slot]_v2.json"
+	var/char_vr_path = "[vr_path]/character_[default_slot]_v2.json"
 	var/belly_prefs_json = safe_json_encode(list("belly_prefs" = belly_prefs))
-	if(fexists(vr_path))
-		fdel(path)
-	text2file(belly_prefs_json,path)
+	if(fexists(char_vr_path))
+		fdel(char_vr_path)
+	text2file(belly_prefs_json,char_vr_path)
 
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
 	WRITE_FILE(S["scars1"]						, scars_list["1"])
