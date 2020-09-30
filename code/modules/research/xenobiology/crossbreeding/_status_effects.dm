@@ -220,7 +220,7 @@
 	if(prob(50))
 		owner.adjustFireLoss(1)
 		owner.Jitter(3)
-		owner.adjust_bodytemperature(-10)
+		owner.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
@@ -251,7 +251,7 @@ datum/status_effect/rebreathing/tick()
 
 /datum/status_effect/firecookie/on_apply()
 	ADD_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
-	owner.adjust_bodytemperature(110)
+	owner.adjust_bodytemperature(110 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	return ..()
 
 /datum/status_effect/firecookie/on_remove()
@@ -494,8 +494,8 @@ datum/status_effect/rebreathing/tick()
 	colour = "orange"
 
 /datum/status_effect/stabilized/orange/tick()
-	var/body_temperature_difference = BODYTEMP_NORMAL - owner.bodytemperature
-	owner.adjust_bodytemperature(min(5,body_temperature_difference))
+	var/body_temperature_difference = owner.bodytemp_normal - owner.bodytemperature
+	owner.adjust_bodytemperature(min(5,body_temperature_difference) * TEMPERATURE_DAMAGE_COEFFICIENT)
 	return ..()
 
 /datum/status_effect/stabilized/purple

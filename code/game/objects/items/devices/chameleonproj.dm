@@ -159,13 +159,13 @@
 	if(can_move < world.time)
 		var/amount
 		switch(user.bodytemperature)
-			if(300 to INFINITY)
+			if(308 to INFINITY)
 				amount = 10
-			if(295 to 300)
+			if(305 to 308)
 				amount = 13
-			if(280 to 295)
+			if(300 to 305)
 				amount = 16
-			if(260 to 280)
+			if(290 to 300)
 				amount = 20
 			else
 				amount = 25

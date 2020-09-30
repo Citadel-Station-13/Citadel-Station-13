@@ -32,7 +32,7 @@
 	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
-
+	var/breath_time = 5 // how much time until next breath; can vary depending on controlling gas breath levels
 	var/co2overloadtime = null
 	var/o2overloadtime = null	//for Ash walker's weaker lungs, and future atmosia hazards
 	var/temperature_resistance = T0C+75

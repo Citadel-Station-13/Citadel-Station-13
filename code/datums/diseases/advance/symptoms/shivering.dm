@@ -49,13 +49,15 @@ Bonus
 		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
 	else
 		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
-	if(M.bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT || unsafe)
-		Chill(M, A)
-
-/datum/symptom/shivering/proc/Chill(mob/living/M, datum/disease/advance/A)
-	var/get_cold = 6 * power
-	var/limit = BODYTEMP_COLD_DAMAGE_LIMIT + 1
-	if(unsafe)
-		limit = 0
-	M.adjust_bodytemperature(-get_cold * A.stage, limit)
+	var/get_cold = M.bodytemp_normal + ((power*A.stage)*(M.hypothermia_limit/A.max_stages))
+	if(!unsafe)
+		M.thermoregulation_baseline = max(M.hypothermia_limit+0.1, -get_cold)
+	else
+		M.thermoregulation_baseline(-get_cold)
 	return 1
+
+/datum/symptom/shivering/End(datum/disease/advance/A)
+	. = ..()
+	if(.)
+		var/mob/living/L = A.affected_mob
+		L.thermoregulation_baseline = L.bodytemp_normal

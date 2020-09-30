@@ -72,9 +72,22 @@
 	var/heat_level_3_damage = HEAT_GAS_DAMAGE_LEVEL_3
 	var/heat_damage_type = BURN
 
+	var/datum/gas_mixture/lung_air
+	var/lung_volume = 3
+	var/list/expected_gas_pps = list(
+		/datum/gas/oxygen = 13,
+		/datum/gas/carbon_dioxide = 5.3
+	)
+	var/controlling_gas = /datum/gas/carbon_dioxide // exhale if this is too high, inhale at next opportunity
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
-
+/obj/item/organ/lungs/Initialize()
+	. = ..()
+	lung_air = new
+	lung_air.set_volume(alveolar_volume)
+	lung_air.set_temperature(T20C)
+	for(var/gas in expected_gas_pps)
+		lung_air.set_moles(gas,(expected_gas_pps[gas]*lung_volume)/(T20C*R_IDEAL_GAS_EQUATION))
 
 //TODO: lung health affects lung function
 /obj/item/organ/lungs/onDamage(damage_mod) //damage might be too low atm.
@@ -104,13 +117,18 @@
 		owner.emote("cough")
 		owner.Dizzy(1)
 
+/obj/item/organs/lungs/proc/tick_breath(mob/living/carbon/human/H)
+	. = FALSE
+	if(CHECK_BITFIELD(H.status_flags,GODMODE) || HAS_TRAIT(H, TRAIT_NOBREATH))
+		return
+	var/list/homeostatic_gases = H.gas_exchange()
+	for(var/gas in homeostatic_gases)
+		lung_air.adjust_moles(gas,homeostatic_gases[gas])
+	return expected_gas_pps[controlling_gas] - lung_air.partial_pressure(controlling_gas) 
+
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 //TODO: add lung damage = less oxygen gains
 	var/breathModifier = (5-(5*(damage/maxHealth)/2)) //range 2.5 - 5
-	if((H.status_flags & GODMODE))
-		return
-	if(HAS_TRAIT(H, TRAIT_NOBREATH))
-		return
 
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent))
@@ -132,8 +150,6 @@
 		return FALSE
 
 	var/gas_breathed = 0
-	var/datum/gas_mixture/exhalation = new
-	exhalation.set_temperature(H.bodytemperature)
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/oxygen))+(8*breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/pluoxium)))
 	var/N2_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/nitrogen))

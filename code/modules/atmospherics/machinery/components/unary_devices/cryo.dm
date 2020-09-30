@@ -201,9 +201,9 @@
 	var/datum/gas_mixture/air1 = airs[1]
 
 	if(air1.total_moles())
-		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+		if(mob_occupant.bodytemperature < mob_occupant.hypothermia_limit) // Sleepytime. Why? More cryo magic.
 			// temperature factor goes from 1 to about 2.5
-			var/amount = max(1, (4 * log(T0C - mob_occupant.bodytemperature)) - 20) * knockout_factor * base_knockout
+			var/amount = max(1, (4 * log(mob_occupant.hypothermia_limit - mob_occupant.bodytemperature)) - 20) * knockout_factor * base_knockout
 			mob_occupant.Sleeping(amount)
 			mob_occupant.Unconscious(amount)
 		if(beaker)
@@ -232,21 +232,11 @@
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
-		var/temperature_delta = air1.return_temperature() - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
-
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
 			cold_protection = H.get_thermal_protection(air1.return_temperature(), TRUE)
 
-		if(abs(temperature_delta) > 1)
-			var/air_heat_capacity = air1.heat_capacity()
-
-			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
-
-			air1.set_temperature(max(air1.return_temperature() - heat / air_heat_capacity, TCMB))
-			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
-
-		air1.set_temperature(max(air1.return_temperature() - 0.5 / efficiency)) // Magically consume gas? Why not, we run on cryo magic.
+		mob_occupant.bodytemperature = air1.temperature_share(null,(1 - cold_protection) * 0.1 + conduction_coefficient,mob_occupant.bodytemperature,mob_occupant.heat_capacity())
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()
@@ -375,7 +365,7 @@
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 		if(mob_occupant.bodytemperature < TCRYO)
 			data["occupant"]["temperaturestatus"] = "good"
-		else if(mob_occupant.bodytemperature < T0C)
+		else if(mob_occupant.bodytemperature < mob_occupant.hypothermia_limit)
 			data["occupant"]["temperaturestatus"] = "average"
 		else
 			data["occupant"]["temperaturestatus"] = "bad"

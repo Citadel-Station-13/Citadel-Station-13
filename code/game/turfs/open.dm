@@ -229,7 +229,7 @@
 		if(!(I.obj_flags & FROZEN))
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
+		if(L.bodytemperature <= T0C)
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 50)
 	return 1

@@ -49,13 +49,15 @@ Bonus
 		to_chat(M, "<span class='warning'>[pick("You feel hot.", "You feel like you're burning.")]</span>")
 	else
 		to_chat(M, "<span class='userdanger'>[pick("You feel too hot.", "You feel like your blood is boiling.")]</span>")
-	if(M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT(M) || unsafe)
-		Heat(M, A)
-
-/datum/symptom/fever/proc/Heat(mob/living/M, datum/disease/advance/A)
-	var/get_heat = 6 * power
+	var/get_heat = M.bodytemp_normal + ((power*A.stage)*(M.hyperthermia_limit/A.max_stages))
 	if(!unsafe)
-		M.adjust_bodytemperature(get_heat * A.stage, 0, BODYTEMP_HEAT_DAMAGE_LIMIT(M) - 0.1)
+		M.thermoregulation_baseline = min(M.hyperthermia_limit-0.1, get_heat)
 	else
-		M.adjust_bodytemperature(get_heat * A.stage)
+		M.thermoregulation_baseline(get_heat)
 	return 1
+
+/datum/symptom/fever/End(datum/disease/advance/A)
+	. = ..()
+	if(.)
+		var/mob/living/L = A.affected_mob
+		L.thermoregulation_baseline = L.bodytemp_normal

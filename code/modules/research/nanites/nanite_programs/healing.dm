@@ -32,19 +32,19 @@
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
 	desc = "The nanites adjust the host's internal temperature to an ideal level."
-	use_rate = 3.5
+	use_rate = 1.5
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > (BODYTEMP_NORMAL - 30) && host_mob.bodytemperature < (BODYTEMP_NORMAL + 30))
+	if(host_mob.bodytemperature > ((host_mob.bodytemperature+host_mob.hypothermia_limit)/2) && host_mob.bodytemperature < ((host_mob.hyperthermia_limit+host_mob.bodytemperature)/2))
 		return FALSE
 	return ..()
 
 /datum/nanite_program/temperature/active_effect()
-	if(host_mob.bodytemperature > BODYTEMP_NORMAL)
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	else if(host_mob.bodytemperature < (BODYTEMP_NORMAL + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(host_mob.bodytemperature > M.bodytemp_normal)
+		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.bodytemp_normal)
+	else if(host_mob.bodytemperature < (M.bodytemp_normal + 1))
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
 
 /datum/nanite_program/purging
 	name = "Blood Purification"

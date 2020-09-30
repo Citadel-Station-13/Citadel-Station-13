@@ -59,6 +59,8 @@
 	var/draining = FALSE
 	/// Reagent blacklisting
 	var/respect_reagent_blacklist = TRUE
+	/// Gas mixture representing water in the pool
+	var/datum/gas_mixture/water_gas_holder
 
 /obj/machinery/pool/controller/examine(mob/user)
 	. = ..()
@@ -72,6 +74,9 @@
 		reagents.reagents_holder_flags |= NO_REACT
 	wires = new /datum/wires/poolcontroller(src)
 	scan_things()
+	water_gas_holder = new
+	water_gas_holder.set_temperature(300)
+	water_gas_holder.set_moles(/datum/gas/water_vapor,55500*length(linked_turfs))
 
 /obj/machinery/pool/controller/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -230,19 +235,24 @@
 /obj/machinery/pool/controller/proc/process_pool()
 	if(drained)
 		return
-	for(var/mob/living/M in mobs_in_pool)
-		switch(temperature) //Apply different effects based on what the temperature is set to.
-			if(POOL_SCALDING) //Scalding
-				M.adjust_bodytemperature(50,0,500)
-			if(POOL_WARM) //Warm
-				M.adjust_bodytemperature(20,0,360) //Heats up mobs till the termometer shows up
-			//Normal temp does nothing, because it's just room temperature water.
+	if(powered())
+		var/target_temperature
+		switch(temperature)
+			if(POOL_SCALDING)
+				target_temperature = 330
+			if(POOL_WARM)
+				target_temperature = 310
+			if(POOL_NORMAL)
+				target_temperature = 300
 			if(POOL_COOL)
-				M.adjust_bodytemperature(-20,250) //Cools mobs till the termometer shows up
-			if(POOL_FRIGID) //Freezing
-				M.adjust_bodytemperature(-60) //cool mob at -35k per cycle, less would not affect the mob enough.
-				if(M.bodytemperature <= 50 && !M.stat)
-					M.apply_status_effect(/datum/status_effect/freon)
+				target_temperature = 290
+			if(POOL_FREEZING)
+				target_temperature = 270
+		var/heat = clamp((water_gas_holder.return_temperature() - target_temperature) * water_gas_holder.heat_capacity(),-10000,10000)
+		water_gas_holder.set_temperature(water_gas_holder.return_temperature() + heat/water_gas_holder.heat_capacity())
+		use_power(abs(heat))
+	for(var/mob/living/M in mobs_in_pool)
+		M.bodytemperature = water_gas_holder.temperature_share(null,0.4,M.bodytemperature,M.heat_capacity())
 		if(ishuman(M))
 			var/mob/living/carbon/human/drownee = M
 			if(!drownee || drownee.stat == DEAD)
@@ -254,6 +264,8 @@
 					drownee.adjustOxyLoss(4)
 					if(prob(35))
 						to_chat(drownee, "<span class='danger'>You're drowning!</span>")
+		if(M.bodytemperature <= 273.15 && !M.stat)
+			M.apply_status_effect(/datum/status_effect/freon)
 
 /obj/machinery/pool/controller/proc/set_bloody(state)
 	if(bloody == state)

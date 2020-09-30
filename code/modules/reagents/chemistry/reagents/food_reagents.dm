@@ -390,7 +390,7 @@
 	glass_desc = "Tasty."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
 	..()
 
 /datum/reagent/drug/mushroomhallucinogen
@@ -532,7 +532,7 @@
 	taste_description = "wet and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
 	..()
 
 /datum/reagent/consumable/hell_ramen

@@ -84,8 +84,8 @@
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
 	. = ..()
 	var/slow = 0
-	if (bodytemperature < 283.222)
-		slow += (283.222 - bodytemperature) / 10 * 1.75
+	if (bodytemperature < 308.15)
+		slow += (308.15 - bodytemperature) * 4
 	if(slow <= 0)
 		return
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod, TRUE, slow)

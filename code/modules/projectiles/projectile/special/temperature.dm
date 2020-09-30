@@ -5,7 +5,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	flag = "energy"
-	var/temperature = 100
+	var/temperature = 250
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -15,9 +15,9 @@
 
 /obj/item/projectile/temp/hot
 	name = "heat beam"
-	temperature = 400
+	temperature = 330
 
 /obj/item/projectile/temp/cryo
 	name = "cryo beam"
 	range = 3
-	temperature = -240 // Single slow shot reduces temp greatly
+	temperature = 250 // Single slow shot reduces temp greatly

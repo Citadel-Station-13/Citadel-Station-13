@@ -65,5 +65,5 @@
 			F.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
-				L.adjust_bodytemperature(-230)
+				L.adjust_bodytemperature(-230 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	qdel(src)

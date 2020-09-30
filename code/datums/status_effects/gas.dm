@@ -22,7 +22,7 @@
 
 /datum/status_effect/freon/tick()
 	owner.update_mobility()
-	if(can_melt && owner.bodytemperature >= BODYTEMP_NORMAL)
+	if(can_melt && owner.bodytemperature >= M.bodytemp_normal)
 		qdel(src)
 
 /datum/status_effect/freon/proc/owner_resist()
@@ -37,7 +37,7 @@
 	if(!owner.stat)
 		to_chat(owner, "The cube melts!")
 	owner.cut_overlay(cube)
-	owner.adjust_bodytemperature(100)
+	owner.adjust_bodytemperature(100 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	owner.update_mobility()
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	return ..()

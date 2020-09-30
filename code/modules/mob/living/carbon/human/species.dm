@@ -47,9 +47,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/disliked_food = GROSS
 	var/toxic_food = TOXIC
 	var/bodytemp_normal = BODYTEMP_NORMAL
-	var/heat_damage_limit = BODYTEMP_NORMAL + 1.3
-	var/cold_damage_limit = BODYTEMP_NORMAL - 2.0
-	var/specific_heat = 4.184
+	var/heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
+	var/cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
+	var/hyperthermia_limit = BODYTEMP_NORMAL + 1.3
+	var/hypothermia_limit = BODYTEMP_NORMAL - 2.0
+	var/base_mass = 70
+	var/specific_heat = 3.47 // kilojoules/kilogram-kelvin
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
@@ -372,6 +375,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	C.heat_damage_limit = heat_damage_limit
 	C.cold_damage_limit = cold_damage_limit
 	C.specific_heat = specific_heat
+	C.mass = base_mass
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 
@@ -443,9 +447,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			facialhair_hidden = TRUE
 
 	if(H.wear_mask && istype(H.wear_mask))
-		var/obj/item/clothing/mask/M = H.wear_mask
-		dynamic_fhair_suffix = M.dynamic_fhair_suffix //mask > head in terms of facial hair
-		if(M.flags_inv & HIDEFACIALHAIR)
+		var/obj/item/clothing/mask/H = H.wear_mask
+		dynamic_fhair_suffix = H.dynamic_fhair_suffix //mask > head in terms of facial hair
+		if(H.flags_inv & HIDEFACIALHAIR)
 			facialhair_hidden = TRUE
 
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
@@ -497,10 +501,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			hair_hidden = TRUE
 
 	if(H.wear_mask && istype(H.wear_mask))
-		var/obj/item/clothing/mask/M = H.wear_mask
+		var/obj/item/clothing/mask/H = H.wear_mask
 		if(!dynamic_hair_suffix) //head > mask in terms of head hair
-			dynamic_hair_suffix = M.dynamic_hair_suffix
-		if(M.flags_inv & HIDEHAIR)
+			dynamic_hair_suffix = H.dynamic_hair_suffix
+		if(H.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
 	if(!hair_hidden || dynamic_hair_suffix)
@@ -937,6 +941,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/takes_crit_damage = !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE)
 		if((H.health < H.crit_threshold) && takes_crit_damage)
 			H.adjustBruteLoss(1)
+	if(dna?.species && GAINS_WEIGHT_WITH_NUTRITION in dna.species.species_traits)
+		H.mass = base_mass + ((nutrition-300)/10)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -1578,30 +1584,30 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, attackchain_flags)
-	if(!istype(M))
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/H, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, attackchain_flags)
+	if(!istype(H))
 		return
-	CHECK_DNA_AND_SPECIES(M)
+	CHECK_DNA_AND_SPECIES(H)
 	CHECK_DNA_AND_SPECIES(H)
 
-	if(!istype(M)) //sanity check for drones.
+	if(!istype(H)) //sanity check for drones.
 		return
-	if(M.mind)
-		attacker_style = M.mind.martial_art
-		if(attacker_style?.pacifism_check && HAS_TRAIT(M, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
+	if(H.mind)
+		attacker_style = H.mind.martial_art
+		if(attacker_style?.pacifism_check && HAS_TRAIT(H, TRAIT_PACIFISM)) // most martial arts are quite harmful, alas.
 			attacker_style = null
 	switch(act_intent)
 		if("help")
-			help(M, H, attacker_style)
+			help(H, H, attacker_style)
 
 		if("grab")
-			grab(M, H, attacker_style)
+			grab(H, H, attacker_style)
 
 		if("harm")
-			harm(M, H, attacker_style, attackchain_flags)
+			harm(H, H, attacker_style, attackchain_flags)
 
 		if("disarm")
-			disarm(M, H, attacker_style)
+			disarm(H, H, attacker_style)
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = H.pre_attacked_by(I, user) * damage_multiplier
@@ -1709,33 +1715,33 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/alt_spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	if(!istype(M))
+/datum/species/proc/alt_spec_attack_hand(mob/living/carbon/human/H, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+	if(!istype(H))
 		return TRUE
-	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
-	if(!M.CheckActionCooldown())
+	CHECK_DNA_AND_SPECIES(H)
+	if(!H.CheckActionCooldown())
 		return
-	M.DelayNextAction(CLICK_CD_MELEE)
+	H.DelayNextAction(CLICK_CD_MELEE)
 
-	if(!istype(M)) //sanity check for drones.
+	if(!istype(H)) //sanity check for drones.
 		return TRUE
-	if(M.mind)
-		attacker_style = M.mind.martial_art
-	if((M != H) && M.a_intent != INTENT_HELP && (H.mob_run_block(M, 0, "[M]", ATTACK_TYPE_UNARMED, 0, M, M.zone_selected, null) & BLOCK_SUCCESS))
-		log_combat(M, H, "attempted to touch")
-		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>", \
-			"<span class='warning'>[M] attempted to touch you!</span>", target = M, \
+	if(H.mind)
+		attacker_style = H.mind.martial_art
+	if((H != H) && H.a_intent != INTENT_HELP && (H.mob_run_block(H, 0, "[H]", ATTACK_TYPE_UNARMED, 0, H, H.zone_selected, null) & BLOCK_SUCCESS))
+		log_combat(H, H, "attempted to touch")
+		H.visible_message("<span class='warning'>[H] attempted to touch [H]!</span>", \
+			"<span class='warning'>[H] attempted to touch you!</span>", target = H, \
 			target_message = "<span class='warning'>You attempted to touch [H]!</span>")
 		return TRUE
-	switch(M.a_intent)
+	switch(H.a_intent)
 		if(INTENT_HELP)
-			if(M == H)
-				althelp(M, H, attacker_style)
+			if(H == H)
+				althelp(H, H, attacker_style)
 				return TRUE
 			return FALSE
 		if(INTENT_DISARM)
-			altdisarm(M, H, attacker_style)
+			altdisarm(H, H, attacker_style)
 			return TRUE
 	return FALSE
 
@@ -1947,7 +1953,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return
 
 	var/loc_temp = H.get_temperature(environment)
-
+	var/thermal_protection = H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+	
+	var/temp_variation = (loc_temp - H.bodytemperature)*thermal_protection
 	//Body temperature is adjusted in two parts: first there your body tries to naturally preserve homeostasis (shivering/sweating), then it reacts to the surrounding environment
 	//Thermal protection (insulation) has mixed benefits in two situations (hot in hot places, cold in hot places)
 	if(!H.on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
@@ -1955,8 +1963,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(H.stat != DEAD)
 			natural = H.natural_bodytemperature_stabilization()
 
-		var/thermal_protection = H.get_thermal_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-		var/approx_heat_capacity = ((H.nutrition+400)/10)*H.specific_heat
+		var/approx_heat_capacity = H.heat_capacity()
 		if(natural)
 			if(H.bodytemperature < H.bodytemp_normal)
 				var/delta = (thermal_protection+1)*natural
@@ -1977,95 +1984,98 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					environment.merge(sweat)
 					H.nutrition -= sweat_made
 		H.bodytemperature = environment.temperature_share(null,(1-thermal_protection)*0.1,H.bodytemperature,approx_heat_capacity)
-		switch((loc_temp - H.bodytemperature)*thermal_protection)
-			if(-INFINITY to -50)
+		var/temp_good = TRUE
+		switch(temp_variation)
+			if(-INFINITY to H.cold_damage_limit)
+				temp_good = FALSE
 				H.throw_alert("tempfeel", /obj/screen/alert/cold, 3)
-			if(-50 to -35)
+				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+				if(!HAS_TRAIT(H,TRAIT_RESISTCOLD))
+					switch(temp_variation)
+						if(BODYTEMP_COLD_DAMAGE_LIMIT*2 to BODYTEMP_COLD_DAMAGE_LIMIT)
+							H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
+						if(BODYTEMP_COLD_DAMAGE_LIMIT*3 to BODYTEMP_COLD_DAMAGE_LIMIT*2)
+							H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
+						else
+							H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
+			if(H.cold_damage_limit to H.cold_damage_limit*0.7)
 				H.throw_alert("tempfeel", /obj/screen/alert/cold, 2)
-			if(-35 to -20)
+			if(H.cold_damage_limit*0.7 to H.cold_damage_limit*0.4)
 				H.throw_alert("tempfeel", /obj/screen/alert/cold, 1)
-			if(-20 to 0) //This is the sweet spot where air is considered normal
+			if(H.cold_damage_limit*0.4 to 0) //This is the sweet spot where air is considered normal
 				H.clear_alert("tempfeel")
-			if(0 to 15) //When the air around you matches your body's temperature, you'll start to feel warm.
+			if(0 to H.heat_damage_limit*0.5) //When the air around you matches your body's temperature, you'll start to feel warm.
 				H.throw_alert("tempfeel", /obj/screen/alert/hot, 1)
-			if(15 to 30)
+			if(H.heat_damage_limit*0.5 to H.heat_damage_limit)
 				H.throw_alert("tempfeel", /obj/screen/alert/hot, 2)
-			if(30 to INFINITY)
+			if(H.heat_damage_limit to INFINITY)
+				temp_good = FALSE
 				H.throw_alert("tempfeel", /obj/screen/alert/hot, 3)
+				if(!!HAS_TRAIT(H, TRAIT_RESISTHEAT))
+					SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+					SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
-	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	if(loc_temp > bodytemp_normal + 20 && !!HAS_TRAIT(H, TRAIT_RESISTHEAT))
-		//Body temperature is too hot.
+					H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
+					var/burn_damage
+					var/firemodifier = H.fire_stacks / 50
+					if (H.on_fire)
+						burn_damage = max(log(2-firemodifier,temp_variation)-5,0)
+					else
+						firemodifier = min(firemodifier, 0)
+						burn_damage = max(log(2-firemodifier,temp_variation)-5,0) // this can go below 5 at log 2.5
+					burn_damage = burn_damage * heatmod * H.physiology.heat_mod
+					if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
+						H.emote("scream")
+					H.apply_damage(burn_damage, BURN)
+		if(temp_good)
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
-		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-
-		var/burn_damage
-		var/firemodifier = H.fire_stacks / 50
-		if (H.on_fire)
-			burn_damage = max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0)
-		else
-			firemodifier = min(firemodifier, 0)
-			burn_damage = max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0) // this can go below 5 at log 2.5
-		if (burn_damage)
-			switch(burn_damage)
-				if(0 to 2)
-					H.throw_alert("temp", /obj/screen/alert/sweat, 1)
-				if(2 to 4)
-					H.throw_alert("temp", /obj/screen/alert/sweat, 2)
-				else
-					H.throw_alert("temp", /obj/screen/alert/sweat, 3)
-		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
-		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4) //40% for level 3 damage on humans
-			H.emote("scream")
-		H.apply_damage(burn_damage, BURN)
-
-	else if(loc_temp < bodytemp_normal - 50 && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		switch(H.bodytemperature)
-			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
+	if(H.bodytemperature > H.hyperthermia_limit && !HAS_TRAIT(H,TRAIT_HYPERTHERMIA_IMMUNE))
+		var/severity = 1+((H.bodytemperature - H.hyperthermia_limit) / (H.hyperthermia_limit - H.bodytemp_normal))
+		switch(severity)
+			if(0 to 1)
+				H.throw_alert("temp", /obj/screen/alert/sweat, 1)
+			if(1 to 2)
+				H.throw_alert("temp", /obj/screen/alert/sweat, 2)
+			else
+				H.throw_alert("temp", /obj/screen/alert/sweat, 3)
+		if(prob(severity*50))
+			H.confused += 5
+		if(prob(severity*50))
+			H.hallucination += 5
+		if(prob(severity*20))
+			H.vomiting += 5
+		for(var/obj/item/organ/O in H.internal_organs)
+			if(!(O?.status_flags & GODMODE) || !prob(severity*50))
+				continue
+			var/maximum = O.maxHealth
+			O.applyOrganDamage(severity, maximum)
+			O.onDamage(severity, maximum)
+	else if(H.body_temperature < H.hypothermia_limit && !HAS_TRAIT(H,TRAIT_HYPOTHERMIA_IMMUNE))
+		var/severity = 1+((H.hypothermia_limit - H.bodytemperature) / (H.bodytemp_normal - H.hypothermia_limit))
+		switch(severity)
+			if(0 to 1)
 				H.throw_alert("temp", /obj/screen/alert/shiver, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod, BURN)
-			if(120 to 200)
+			if(1 to 2)
 				H.throw_alert("temp", /obj/screen/alert/shiver, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod, BURN)
 			else
 				H.throw_alert("temp", /obj/screen/alert/shiver, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod, BURN)
-
+		if(prob(severity*100))
+			H.hallucination += 5
+		if(prob(severity*50))
+			H.confused += 5
+		if(prob(severity*30))
+			H.applyOrganDamage(ORGAN_SLOT_LIVER,5)
+		if(prob(severity*5))
+			H.applyOrganDamage(ORGAN_SLOT_HEART,10)
+		//Apply cold slowdown
+		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((H.cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 	else
 		H.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		H.clear_alert("temp")
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
-	if(H.bodytemperature > H.hyperthermia_limit)
-		var/severity = 1+((H.bodytemperature - H.hyperthermia_limit) / (H.hyperthermia_limit - H.bodytemp_normal))
-		M.confused += round(rand(0,severity))
-		if(prob(severity*10))
-			M.hallucination += 5
-		if(prob(severity*20))
-			M.vomiting += 5
-		for(var/obj/item/organ/O in H.internal_organs)
-			if(O && !(status_flags & GODMODE) || !prob(50))
-				continue
-			var/maximum = O.maxhealth
-			O.applyOrganDamage(severity, maximum)
-			O.onDamage(severity, maximum)
-	else if(H.body_temperature < H.hypothermia_limit)
-		var/severity = 1+((H.hypothermia_limit - H.bodytemperature) / (H.bodytemp_normal - H.hypothermia_limit))
-		if(prob(severity*50))
-			M.applyOrganDamage(ORGAN_SLOT_LIVER,5)
-		if(prob(severity*20))
-			M.hallucination += 5
-		if(prob(severity*10))
-			M.confused += 5
-		if(prob(severity*5))
-			M.applyOrganDamage(ORGAN_SLOT_HEART,10)
-		//Apply cold slowdown
-		H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((H.cold_damage_limit - H.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 	switch(adjusted_pressure)
@@ -2155,9 +2165,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 			return
 		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			H.adjust_bodytemperature(11)
+			H.adjust_bodytemperature(11 * TEMPERATURE_DAMAGE_COEFFICIENT)
 		else
-			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
+			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12) * TEMPERATURE_DAMAGE_COEFFICIENT)
+			H.adjustFireLoss(H.fire_stacks/2)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)

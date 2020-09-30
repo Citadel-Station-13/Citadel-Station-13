@@ -18,9 +18,13 @@
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
 
-	var/bodytemp_normal = BODYTEMP_NORMAL	// the baseline that it wants to get to
-	var/heat_damage_limit = BODYTEMP_NORMAL + 1.3 // how high core body temp can go before symptoms
-	var/cold_damage_limit = BODYTEMP_NORMAL - 2 // how low core body temp can go before symptoms
+	var/bodytemp_normal = BODYTEMP_NORMAL	// the baseline healthy temperature, hypothermia + hyperthermia are compared to this
+	var/thermoregulation_baseline = BODYTEMP_NORMAL //can deviate for fever, shiver, similar
+	var/heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT // environment temperature above which damage is taken
+	var/cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT // environment temperature below which damage is taken
+	var/hyperthermia_limit = BODYTEMP_NORMAL + 1.3 // how high core body temp can go before symptoms
+	var/hypothermia_limit = BODYTEMP_NORMAL - 2 // how low core body temp can go before symptoms
+	var/mass = 10 // kilograms, used only for heat calculations right now
 	var/specific_heat = 4.184 // how much heat the body holds per kilogram
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS

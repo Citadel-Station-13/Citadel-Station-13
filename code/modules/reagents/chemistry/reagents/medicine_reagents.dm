@@ -22,10 +22,10 @@
 	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(M.bodytemperature > M.bodytemp_normal)
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.bodytemp_normal)
+	else if(M.bodytemperature < (M.bodytemp_normal + 1))
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.bodytemp_normal)
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
@@ -136,9 +136,17 @@
 	pH = 11
 	value = REAGENT_VALUE_COMMON
 
+/datum/reagent/medicine/cryoxadone/on_mob_metabolize(mob/living/L)
+	ADD_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	..()
+
+/datum/reagent/medicine/cryoxadone/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	..()
+
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
-	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
-	if(M.bodytemperature < T0C)
+	var/power = -0.00006 * (M.bodytemperature ** 2) + 6
+	if(M.bodytemperature < M.hypothermia_limit)
 		M.adjustOxyLoss(-3 * power, 0)
 		M.adjustBruteLoss(-power, 0)
 		M.adjustFireLoss(-power, 0)
@@ -161,9 +169,17 @@
 	pH = 13
 	value = REAGENT_VALUE_COMMON
 
+/datum/reagent/medicine/clonexadone/on_mob_metabolize(mob/living/L)
+	ADD_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	..()
+
+/datum/reagent/medicine/clonexadone/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_HYPOTHERMIA_IMMUNE)
+	..()
+
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/carbon/M)
-	if(M.bodytemperature < T0C)
-		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
+	if(M.bodytemperature < M.hypothermia_limit)
+		M.adjustCloneLoss(0.00012 * (M.bodytemperature ** 2) - 12, 0)
 		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
@@ -177,13 +193,21 @@
 	pH = 12
 	value = REAGENT_VALUE_UNCOMMON
 
+/datum/reagent/medicine/pyroxadone/on_mob_metabolize(mob/living/L)
+	ADD_TRAIT(L,TRAIT_HYPERTHERMIA_IMMUNE)
+	..()
+
+/datum/reagent/medicine/pyroxadone/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L,TRAIT_HYPERTHERMIA_IMMUNE)
+	..()
+
 /datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/carbon/M)
-	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+	if(M.bodytemperature > M.hyperthermia_limit)
 		var/power = 0
 		switch(M.bodytemperature)
-			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
+			if(M.hyperthermia_limit to 320)
 				power = 2
-			if(400 to 460)
+			if(320 to 350)
 				power = 3
 			else
 				power = 5

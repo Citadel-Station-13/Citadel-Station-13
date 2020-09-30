@@ -574,7 +574,7 @@
 	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
 		owner.adjustFireLoss(-25)
 	owner.remove_CC()
-	owner.bodytemperature = BODYTEMP_NORMAL
+	owner.bodytemperature = M.bodytemp_normal
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()

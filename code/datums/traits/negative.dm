@@ -417,6 +417,31 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	mob_trait = TRAIT_COLDBLOODED
 	gain_text = "<span class='notice'>You feel cold-blooded.</span>"
 	lose_text = "<span class='notice'>You feel more warm-blooded.</span>"
+	var/original_hypo_limit
+	var/original_hyper_limit
+	var/original_normal
+
+/datum/quirk/coldblooded/post_add()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	original_hypo_limit = H.hypothermia_limit
+	original_hyper_limit = H.hyperthermia_limit
+	original_normal = H.bodytemp_normal
+	H.bodytemp_normal = T20C
+	H.thermoregulation_baseline = T20C
+	H.hypothermia_limit = T20C - 2
+	H.hyperthermia_limit = T20C + 2
+	H.bodytemperature = T20C // otherwise they'll start dying instantly, whoops
+
+/datum/quirk/coldblooded/remove()
+	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.hypothermia_limit = original_hypo_limit
+	H.hyperthermia_limit = original_hyper_limit
+	H.bodytemp_normal = original_normal
+	H.thermoregulation_baseline = original_normal
+	H.bodytemperature = H.bodytemp_normal
+
 
 /datum/quirk/monophobia
 	name = "Monophobia"

@@ -96,7 +96,7 @@
 /obj/item/projectile/bullet/c38/iceblox //see /obj/item/projectile/temp for the original code
 	name = ".38 Iceblox bullet"
 	damage = 20
-	var/temperature = 100
+	var/temperature = 270
 	ricochets_max = 0
 
 /obj/item/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = FALSE)

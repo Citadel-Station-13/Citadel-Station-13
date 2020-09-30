@@ -569,7 +569,7 @@
 	SetSleeping(0, FALSE)
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = BODYTEMP_NORMAL
+	bodytemperature = bodytemp_normal
 	set_blindness(0)
 	set_blurriness(0)
 	cure_nearsighted()
@@ -975,6 +975,9 @@
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection(list/target_zones)
 	return 0
+
+/mob/living/proc/heat_capacity()
+	return mass*specific_heat
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return

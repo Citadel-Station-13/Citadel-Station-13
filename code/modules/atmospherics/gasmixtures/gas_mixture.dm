@@ -312,6 +312,9 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 10 = 2.5/5*20
 */
 
+/datum/gas_mixture/proc/partial_pressure(gas)
+	return (get_moles(gas) * R_IDEAL_GAS_EQUATION * return_temperature()) / return_volume()
+
 /datum/gas_mixture/turf
 
 /*

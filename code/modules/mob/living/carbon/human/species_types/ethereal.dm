@@ -20,10 +20,12 @@
 	sexes = FALSE
 	toxic_food = NONE
 	// Body temperature for ethereals is much higher then humans as they like hotter environments
+	specific_heat = 1
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)
-	heat_damage_limit = (BODYTEMP_NORMAL + 51)  // about 150C
+	heat_damage_limit = (BODYTEMP_NORMAL + 70)  // about 150C
 	// Cold temperatures hurt faster as it is harder to move with out the heat energy
 	cold_damage_limit = (BODYTEMP_NORMAL - 10) // about 10c
+	//sweat_gas = /datum/gas/hydrogen
 	hair_color = "mutcolor"
 	hair_alpha = 140
 	var/current_color

@@ -56,7 +56,7 @@
 	handle_mutations_and_radiation()
 
 	//Breathing, if applicable
-	handle_breathing(times_fired)
+	handle_breathing(times_fired,seconds)
 
 	if (QDELETED(src)) // diseases can qdel the mob via transformations
 		return FALSE
