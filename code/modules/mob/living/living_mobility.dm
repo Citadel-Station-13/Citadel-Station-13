@@ -5,17 +5,17 @@
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOMOVE), .proc/update_mobility)
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOPICKUP), .proc/update_mobility)
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOUSE), .proc/update_mobility)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOSTAND), .proc/update_mobility)
 
 //Stuff like mobility flag updates, resting updates, etc.
 
 //Force-set resting variable, without needing to resist/etc.
 /mob/living/proc/set_resting(new_resting, silent = FALSE, updating = TRUE)
-	if(!HAS_TRAIT(src, TRAIT_REST_LOCKED))
-		if(new_resting != resting)
-			resting = new_resting
-			if(!silent)
-				to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
-			update_resting(updating)
+	if(new_resting != resting)
+		resting = new_resting
+		if(!silent)
+			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
+		update_resting(updating)
 
 /mob/living/proc/update_resting(update_mobility = TRUE)
 	if(update_mobility)
@@ -85,7 +85,7 @@
 	else
 		mobility_flags &= ~MOBILITY_RESIST
 
-	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && !(HAS_TRAIT(src, TRAIT_MOBILITY_NOSTAND))
 	var/canstand = canstand_involuntary && !resting
 
 	var/should_be_lying = !canstand

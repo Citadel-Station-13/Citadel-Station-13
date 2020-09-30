@@ -665,6 +665,7 @@
 	var/puddle_icon = 'icons/mob/mob.dmi'
 	var/puddle_state = "puddle"
 	var/tracked_overlay
+	var/datum/component/squeak/squeak
 
 /datum/action/innate/slime_puddle/Activate()
 	if(isjellyperson(owner))
@@ -682,7 +683,8 @@
 			ADD_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
 			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, "SLIME_PUDDLE_SPRINT_LOCK")
 			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, "SLIME_PUDDLE_COMBAT_LOCK")
-			ADD_TRAIT(H, TRAIT_REST_LOCKED, "SLIME_PUDDLE_CANNOT_STAND")
+			ADD_TRAIT(H, TRAIT_MOBILITY_NOSTAND, "SLIME_PUDDLE_CANNOT_STAND")
+			squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
 			sleep(in_transformation_duration)
 			var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
 			puddle_overlay.color = mutcolor
@@ -699,8 +701,10 @@
 			REMOVE_TRAIT(H, TRAIT_PASSTABLE, "SLIME_PUDDLE_TABLE_PASS")
 			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, "SLIME_PUDDLE_SPRINT_LOCK")
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, "SLIME_PUDDLE_COMBAT_LOCK")
-			REMOVE_TRAIT(H, TRAIT_REST_LOCKED, "SLIME_PUDDLE_CANNOT_STAND")
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOSTAND, "SLIME_PUDDLE_CANNOT_STAND")
 			is_puddle = FALSE
+			if(squeak)
+				squeak.RemoveComponent()
 			owner.regenerate_icons()
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////

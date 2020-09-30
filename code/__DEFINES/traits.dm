@@ -219,7 +219,7 @@
 /// Disallow item use
 #define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
 ///Disallow resting/unresting
-#define TRAIT_REST_LOCKED			"mobility_notogglerest"
+#define TRAIT_MOBILITY_NOSTAND		"mobility_nostand"
 
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
