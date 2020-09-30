@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	35
+#define SAVEFILE_VERSION_MAX	36
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -203,6 +203,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 35)
 		if(S["species"] == "lizard")
 			features["mam_snouts"] = features["snout"]
+
+	if(current_version < 36)
+		left_eye_color = S["eye_color"]
+		right_eye_color = S["eye_color"]
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -476,7 +480,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["age"]					>> age
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
-	S["eye_color"]				>> eye_color
+	S["left_eye_color"]			>> left_eye_color
+	S["right_eye_color"]		>> right_eye_color
 	S["use_custom_skin_tone"]	>> use_custom_skin_tone
 	S["skin_tone"]				>> skin_tone
 	S["hair_style_name"]		>> hair_style
@@ -654,7 +659,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	age								= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color						= sanitize_hexcolor(hair_color, 6, FALSE)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 6, FALSE)
-	eye_color						= sanitize_hexcolor(eye_color, 6, FALSE)
+	left_eye_color					= sanitize_hexcolor(left_eye_color, 6, FALSE)
+	right_eye_color					= sanitize_hexcolor(right_eye_color, 6, FALSE)
 
 	var/static/allow_custom_skintones
 	if(isnull(allow_custom_skintones))
@@ -783,7 +789,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["age"]						, age)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
-	WRITE_FILE(S["eye_color"]				, eye_color)
+	WRITE_FILE(S["left_eye_color"]			, left_eye_color)
+	WRITE_FILE(S["right_eye_color"]			, right_eye_color)
 	WRITE_FILE(S["use_custom_skin_tone"]	, use_custom_skin_tone)
 	WRITE_FILE(S["skin_tone"]				, skin_tone)
 	WRITE_FILE(S["hair_style_name"]			, hair_style)
