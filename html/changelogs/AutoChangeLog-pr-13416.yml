@@ -1,0 +1,5 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - soundadd: "Slimepeople are given unique laughs and screams."
+  - tweak: "Adds \"warbles\", \"chimpers\", and \"puffs\" to the customizable speech verbs for character."
