@@ -118,6 +118,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"insect_wings" = "Plain",
 		"insect_fluff" = "None",
 		"insect_markings" = "None",
+		"spider_legs" = "Plain",
+		"spider_spinneret" = "Plain",
+		"spider_mandibles" = "Plain",
 		"mam_body_markings" = "Plain",
 		"mam_ears" = "None",
 		"mam_snouts" = "None",
@@ -1681,6 +1684,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_ipc_antenna)
 						features["ipc_antenna"] = new_ipc_antenna
 
+				if("spider_legs")
+					var/new_spider_legs
+					new_spider_legs = input(user, "Choose your character's variant of spider legs:", "Character Preference") as null|anything in GLOB.spider_legs_list
+					if(new_spider_legs)
+						features["spider_legs"] = new_spider_legs
+
+				if("spider_spinneret")
+					var/new_spider_spinneret
+					new_spider_spinneret = input(user, "Choose your character's spinneret markings:", "Character Preference") as null|anything in GLOB.spider_spinneret_list
+					if(new_spider_spinneret)
+						features["spider_spinneret"] = new_spider_spinneret
+
+				if("spider_mandibles")
+					var/new_spider_mandibles
+					new_spider_mandibles = input(user, "Choose your character's variant of mandibles:", "Character Preference") as null|anything in GLOB.spider_mandibles_list
+					if (new_spider_mandibles)
+						features["spider_mandibles"] = new_spider_mandibles
+
 				if("tail_lizard")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_lizard
@@ -1846,6 +1867,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_insect_markings)
 						features["insect_markings"] = new_insect_markings
 
+				if("spider_legs")
+					var/new_spider_legs
+					new_spider_legs = input(user, "Choose your character's variant of spider legs:", "Character Preference") as null|anything in GLOB.spider_legs_list
+					if(new_spider_legs)
+						features["spider_legs"] = new_spider_legs
+
+				if("spider_spinneret")
+					var/new_spider_spinneret
+					new_spider_spinneret = input(user, "Choose your character's spinneret markings:", "Character Preference") as null|anything in GLOB.spider_spinneret_list
+					if(new_spider_spinneret)
+						features["spider_spinneret"] = new_spider_spinneret
+
+				if("spider_mandibles")
+					var/new_spider_mandibles
+					new_spider_mandibles = input(user, "Choose your character's variant of mandibles:", "Character Preference") as null|anything in GLOB.spider_mandibles_list
+					if (new_spider_mandibles)
+						features["spider_mandibles"] = new_spider_mandibles
+
 				if("s_tone")
 					var/list/choices = GLOB.skin_tones - GLOB.nonstandard_skin_tones
 					if(CONFIG_GET(flag/allow_custom_skintones))
@@ -1885,6 +1924,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["xenotail"] = "None"
 							features["tail_human"] = "None"
 							features["tail_lizard"] = "None"
+							features["spider_spinneret"] = "None"
 
 				if("ears")
 					var/list/snowflake_ears_list = list()

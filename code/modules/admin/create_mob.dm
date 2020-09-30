@@ -43,6 +43,9 @@
 	H.dna.features["insect_wings"] = pick(GLOB.insect_wings_list)
 	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
 	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)
+	H.dna.features["spider_legs"] = pick(GLOB.spider_legs_list)
+	H.dna.features["spider_spinneret"] = pick(GLOB.spider_spinneret_list)
+	H.dna.features["spider_mandibles"] = pick(GLOB.spider_mandibles_list)
 	H.dna.features["flavor_text"] = "" //Oh no.
 	H.dna.features["body_model"] = H.gender
 

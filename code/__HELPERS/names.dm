@@ -16,6 +16,9 @@
 /proc/moth_name()
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
+/proc/spider_name()
+	return "[pick(GLOB.spider_first)] [pick(GLOB.spider_last)]"
+
 /proc/church_name()
 	var/static/church_name
 	if (church_name)
