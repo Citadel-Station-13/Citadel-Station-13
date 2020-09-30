@@ -668,9 +668,16 @@
 	var/datum/component/squeak/squeak
 	var/transforming = FALSE
 
+/datum/action/innate/slime_puddle/IsAvailable()
+	if(!transforming)
+		return ..()
+	else
+		return FALSE
+
 /datum/action/innate/slime_puddle/Activate()
-	if(isjellyperson(owner) && !transforming)
+	if(isjellyperson(owner) && IsAvailable())
 		transforming = TRUE
+		UpdateButtonIcon()
 		var/mob/living/carbon/human/H = owner
 		var/mutcolor = "#" + H.dna.features["mcolor"]
 		if(!is_puddle)
@@ -702,6 +709,7 @@
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
 			H.rotate_on_lying = FALSE
+			H.set_resting(0, TRUE, TRUE) // yes, it's 0, not FALSE
 			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 			sleep(out_transformation_duration)
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, "SLIME_PUDDLE_PARALYSIS_L_ARM")
