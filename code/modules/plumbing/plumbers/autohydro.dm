@@ -3,7 +3,6 @@
 	desc = "The bane of botanists everywhere. Accepts chemical reagents via plumbing, automatically harvests and removes dead plants."
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics/automagic
-	self_sufficiency_req = 400 //automating hydroponics makes gaia sad so she needs more drugs to turn they tray godly.
 
 
 /obj/machinery/hydroponics/constructable/automagic/attackby(obj/item/O, mob/user, params)
