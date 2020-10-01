@@ -131,4 +131,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	damage += 40/severity
+	damage += 0.5 * severity

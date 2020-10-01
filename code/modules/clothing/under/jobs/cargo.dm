@@ -41,6 +41,13 @@
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/under/rank/cargo/tech/long
+	name = "cargo technician's jumpsuit (trousers)"
+	desc = "A variant of the cargo technician's uniform with proper trousers, suited for colder climates and modest workers."
+	icon_state = "cargo_long"
+	item_state = "lb_suit"
+	alt_covers_chest = TRUE
+
 /obj/item/clothing/under/rank/cargo/miner
 	name = "shaft miner's jumpsuit"
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

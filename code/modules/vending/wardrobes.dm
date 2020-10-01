@@ -188,6 +188,7 @@
 					/obj/item/clothing/under/rank/cargo/tech/skirt = 5,
 					/obj/item/clothing/under/rank/cargo/util = 5,
 					/obj/item/clothing/suit/toggle/labcoat/depjacket/sup = 5,
+					/obj/item/clothing/under/rank/cargo/tech/long = 5,
 					/obj/item/clothing/shoes/sneakers/black = 5,
 					/obj/item/clothing/gloves/fingerless = 5,
 					/obj/item/clothing/head/soft = 5,
