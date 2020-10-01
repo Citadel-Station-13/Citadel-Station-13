@@ -8,6 +8,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	//doohickeys for savefiles
 	var/path
+	var/vr_path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/max_save_slots = 16
 
