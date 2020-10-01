@@ -266,12 +266,8 @@
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>")
-			return
-		trackers += W
-		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
-		diag_hud_set_mechtracking()
+		var/obj/item/mecha_parts/mecha_tracking/tracker = W
+		tracker.try_attach_part(user, src)
 		return
 	else
 		return ..()
