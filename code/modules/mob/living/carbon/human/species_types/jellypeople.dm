@@ -710,9 +710,9 @@
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
 			H.rotate_on_lying = FALSE
-			H.set_resting(0, TRUE, TRUE) // yes, it's 0, not FALSE
 			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 			sleep(out_transformation_duration)
+			H.set_resting(0, TRUE, TRUE) // yes, it's 0, not FALSE
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
@@ -725,8 +725,8 @@
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
-			H.rotate_on_lying = TRUE
 			owner.regenerate_icons()
+			H.rotate_on_lying = TRUE
 			transforming = FALSE
 			UpdateButtonIcon()
 
