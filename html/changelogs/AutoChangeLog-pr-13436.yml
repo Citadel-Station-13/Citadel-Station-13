@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - tweak: "Added a brute-force check-every-single-tile step to SSair when it has enough time to run."
