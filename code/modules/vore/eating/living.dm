@@ -11,13 +11,11 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/preyloop_refresh
-	M.verbs += /mob/living/proc/lick
-	M.verbs += /mob/living/proc/escapeOOC
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
-	M.verbs += /mob/living/proc/insidePanel
+	add_verb(M, /mob/living/proc/insidePanel)
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	spawn(2 SECONDS) // long delay because the server delays in its startup. just on the safe side.

@@ -385,6 +385,7 @@ Class Procs:
 /obj/machinery/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)

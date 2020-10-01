@@ -114,6 +114,14 @@
 
 #undef VAMP_DRAIN_AMOUNT
 
+
+/mob/living/carbon/get_status_tab_items()
+	. = ..()
+	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+	if(darkheart)
+		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
+
+
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
 	actions_types = list(/datum/action/item_action/organ_action/vampire_heart)
