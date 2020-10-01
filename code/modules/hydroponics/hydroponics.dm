@@ -893,7 +893,8 @@
 	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)
-		return myseed.harvest(user)
+		myseed.harvest(user)
+		return
 
 	else if(dead)
 		dead = 0
