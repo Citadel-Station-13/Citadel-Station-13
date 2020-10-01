@@ -657,7 +657,7 @@
 	button_icon_state = "slimepuddle"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
-	required_mobility_flags = MOBILITY_USE | MOBILITY_STAND
+	required_mobility_flags = MOBILITY_STAND
 	var/is_puddle = FALSE
 	var/in_transformation_duration = 12
 	var/out_transformation_duration = 7
@@ -695,6 +695,7 @@
 			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
+			H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 			H.update_disabled_bodyparts(silent = TRUE)
 			squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
 			sleep(in_transformation_duration)
@@ -721,6 +722,7 @@
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
+			H.remove(/datum/movespeed_modifier/slime_puddle)
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
@@ -747,6 +749,8 @@
 	var/extract_cooldown = 0
 
 /datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
+	if(slime_puddle && slime_puddle.is_puddle)
+		slime_puddle.Activate()
 	..()
 	if(current_extract)
 		current_extract.forceMove(C.drop_location())
