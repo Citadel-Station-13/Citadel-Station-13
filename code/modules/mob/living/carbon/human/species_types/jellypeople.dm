@@ -722,7 +722,7 @@
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
-			H.remove(/datum/movespeed_modifier/slime_puddle)
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
