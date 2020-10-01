@@ -694,6 +694,7 @@
 			ADD_TRAIT(H, TRAIT_PASSTABLE, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
+			ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
 			squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
 			sleep(in_transformation_duration)
@@ -718,6 +719,7 @@
 			REMOVE_TRAIT(H, TRAIT_PASSTABLE, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
 			is_puddle = FALSE
 			if(squeak)
