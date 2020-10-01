@@ -154,12 +154,30 @@
 
 //Wood
 /obj/item/stack/tile/wood
-	name = "wood floor tile"
+	name = "wooden plank floor tile"
 	singular_name = "wood floor tile"
 	desc = "An easy to fit wood floor tile."
 	icon_state = "tile-wood"
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
+
+/obj/item/stack/tile/wood/wood_large
+	name = "large wooden plank floor tile"
+	singular_name = "large wooden plank floor tile"
+	icon_state = "tile-wood_large"
+	turf_type = /turf/open/floor/wood/wood_large
+
+/obj/item/stack/tile/wood/wood_tiled
+	name = "tiled wooden plank floor tile"
+	singular_name = "tiled wooden plank floor tile"
+	icon_state = "tile-wood_tile"
+	turf_type = /turf/open/floor/wood/wood_tiled
+
+/obj/item/stack/tile/wood/wood_diagonal
+	name = "diagonal wooden plank floor tile"
+	singular_name = "diagonal wooden plank floor tile"
+	icon_state = "tile-wood_diagonal"
+	turf_type = /turf/open/floor/wood/wood_diagonal
 
 //Cloth Floors
 

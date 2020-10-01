@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Shivering now has thresholds and fever's thresholds now work."
