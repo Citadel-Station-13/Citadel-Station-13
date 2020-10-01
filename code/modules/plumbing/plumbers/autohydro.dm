@@ -4,8 +4,6 @@
 	icon_state = "hydrotray4"
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics/automagic
-	self_sufficiency_req = 400 //automating hydroponics makes gaia sad so she needs more drugs to turn they tray godly.
-	canirrigate = FALSE
 
 
 /obj/machinery/hydroponics/constructable/automagic/attackby(obj/item/O, mob/user, params)
@@ -44,7 +42,7 @@
 
 /obj/machinery/hydroponics/constructable/automagic/process()
 	if(reagents)
-		applyChemicals(reagents)
+		reagents.add_reagent(reagents)
 		reagents.clear_reagents()
 	if(dead)
 		dead = 0
