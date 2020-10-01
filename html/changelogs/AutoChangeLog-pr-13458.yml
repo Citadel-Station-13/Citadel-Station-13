@@ -1,0 +1,5 @@
+author: "lolman360"
+delete-after: True
+changes: 
+  - bugfix: "smonk machine runtimes"
+  - bugfix: "automatic hydro tray has a unique sprite now (fancy robot arm)"

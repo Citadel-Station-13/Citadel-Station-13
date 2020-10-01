@@ -408,29 +408,15 @@
 		return
 	var/informed = FALSE
 	if(isrobotic(src))
-		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, 2.5 * severity)
+		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, severity / 20)
+    severity *= 0.5
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
 			if(!informed)
 				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
 				informed = TRUE
-			switch(severity)
-				if(1)
-					if(!isrobotic(src))
-						L.receive_damage(0,10)
-						Stun(200)
-					else
-						// robotic species take far less damage and get combat mode lock over longer stuns
-						// this is to stop emps outright killing them, and also because their organs have emp acts
-						L.receive_damage(0,5)
-						Stun(50)
-				if(2)
-					if(!isrobotic(src))
-						L.receive_damage(0,5)
-						Stun(100)
-					else
-						L.receive_damage(0,3)
-						Stun(25) //4x shorter stun because every limb is robotic, and their organs get emp'd, and they get a combat lock
+			L.receive_damage(0,severity/10)
+			Stun(severity*2)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()

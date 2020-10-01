@@ -131,7 +131,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	damage += 40/severity
+	damage += 0.15 * severity
 
 /obj/item/organ/ears/ipc
 	name = "auditory sensors"
@@ -158,3 +158,4 @@
 			owner.Jitter(15)
 			owner.Dizzy(15)
 			owner.DefaultCombatKnockdown(40)
+	damage += 0.15 * severity
