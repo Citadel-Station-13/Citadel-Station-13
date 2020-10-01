@@ -470,7 +470,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			if(istype(A,T))
 				. += A
 	else
-		var/i = 0
 		while(i < lim)
 			var/atom/A = processing_list[++i]
 			processing_list += A.contents
