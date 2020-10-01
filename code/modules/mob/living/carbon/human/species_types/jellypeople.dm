@@ -668,6 +668,7 @@
 	var/tracked_overlay
 	var/datum/component/squeak/squeak
 	var/transforming = FALSE
+	var/last_use
 
 /datum/action/innate/slime_puddle/IsAvailable()
 	if(!transforming)
@@ -682,30 +683,31 @@
 		var/mob/living/carbon/human/H = owner
 		var/mutcolor = "#" + H.dna.features["mcolor"]
 		if(!is_puddle)
-			is_puddle = TRUE
-			owner.cut_overlays()
-			var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
-			puddle_effect.color = mutcolor
-			H.Stun(in_transformation_duration, ignore_canstun = TRUE)
-			ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_PASSTABLE, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
-			H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-			H.update_disabled_bodyparts(silent = TRUE)
-			squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
-			sleep(in_transformation_duration)
-			H.pass_flags &= PASSMOB
-			var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
-			puddle_overlay.color = mutcolor
-			tracked_overlay = puddle_overlay
-			owner.add_overlay(puddle_overlay)
-			transforming = FALSE
-			UpdateButtonIcon()
+			if(CHECK_MOBILITY(H, MOBILITY_USE))
+				is_puddle = TRUE
+				owner.cut_overlays()
+				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
+				puddle_effect.color = mutcolor
+				H.Stun(in_transformation_duration, ignore_canstun = TRUE)
+				ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_PASSTABLE, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
+				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
+				H.update_disabled_bodyparts(silent = TRUE)
+				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
+				sleep(in_transformation_duration)
+				H.pass_flags &= PASSMOB
+				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
+				puddle_overlay.color = mutcolor
+				tracked_overlay = puddle_overlay
+				owner.add_overlay(puddle_overlay)
+				transforming = FALSE
+				UpdateButtonIcon()
 		else
 			owner.cut_overlay(tracked_overlay)
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
