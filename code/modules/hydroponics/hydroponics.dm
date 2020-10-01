@@ -28,8 +28,6 @@
 	var/unwrenchable = TRUE
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/mob/lastuser //Last user to add reagents to a tray. Mostly for logging.
-	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with earthsblood.
-	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 	// Here lies irrigation. You won't be missed, because you were never used.
 
@@ -634,7 +632,7 @@
 	if(!anchored)
 		return
 	self_sustaining = !self_sustaining
-	idle_power_usage = self_sustaining ? 4000 : 0
+	idle_power_usage = self_sustaining ? 2500 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
 	update_icon()
 
@@ -716,4 +714,6 @@
 		qdel(src)
 	else
 		return ..()
-	
+
+/obj/machinery/hydroponics/soil/CtrlClick(mob/user)
+	return //Dirt doesn't have electricity, last I checked.
