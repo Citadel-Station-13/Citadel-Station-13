@@ -435,6 +435,8 @@
 	heatmod = 1
 	burnmod = 1
 
+	allowed_limb_ids = list("slime","stargazer","lum")
+
 /datum/action/innate/slime_change
 	name = "Alter Form"
 	check_flags = AB_CHECK_CONSCIOUS
