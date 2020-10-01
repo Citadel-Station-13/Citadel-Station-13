@@ -30,7 +30,7 @@
 /datum/cinematic
 	var/id = CINEMATIC_DEFAULT
 	var/list/watching = list() //List of clients watching this
-	var/list/locked = list() //Who had notransform set during the cinematic
+	var/list/locked = list() //Who had mob_transforming  set during the cinematic
 	var/is_global = FALSE //Global cinematics will override mob-specific ones
 	var/obj/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
@@ -54,7 +54,7 @@
 		if(!MM)
 			continue
 		var/mob/M = MM
-		M.notransform = FALSE
+		M.mob_transforming  = FALSE
 	locked = null
 	return ..()
 
@@ -103,9 +103,9 @@
 /datum/cinematic/proc/show_to(mob/M, client/C)
 	//SIGNAL_HANDLER //must not wait.
 
-	if(!M.notransform)
+	if(!M.mob_transforming)
 		locked += M
-		M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
+		M.mob_transforming = TRUE //Should this be done for non-global cinematics or even at all ?
 	if(!C)
 		return
 	watching += C
