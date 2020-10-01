@@ -1,0 +1,5 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - tweak: "wound exponent lowered slightly from 1.225 to 1.2"
+  - config: "wound exponent and limb damage multiplier are now config values"
