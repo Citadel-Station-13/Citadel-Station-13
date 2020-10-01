@@ -140,8 +140,8 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
-		take_damage(30 / severity, BURN, "energy", 1)
+		use_power(cell.charge*severity/100)
+		take_damage(severity/3, BURN, "energy", 1)
 	mecha_log_message("EMP detected", color="red")
 
 	if(istype(src, /obj/mecha/combat))
@@ -309,7 +309,7 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
-	emp_act(EMP_HEAVY)
+	emp_act(100)
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)
