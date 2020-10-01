@@ -37,6 +37,8 @@
 	icon_state = "brain-slime"
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
+	if(slime_puddle && slime_puddle.is_puddle)
+		slime_puddle.Activate()
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
 	if(slime_change)
@@ -751,8 +753,6 @@
 	var/extract_cooldown = 0
 
 /datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
-	if(slime_puddle && slime_puddle.is_puddle)
-		slime_puddle.Activate()
 	..()
 	if(current_extract)
 		current_extract.forceMove(C.drop_location())
