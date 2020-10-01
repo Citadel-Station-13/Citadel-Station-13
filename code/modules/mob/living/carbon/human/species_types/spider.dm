@@ -17,6 +17,7 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/spider
 	mutanttongue = /obj/item/organ/tongue/spider
 	species_language_holder = /datum/language_holder/spider
+	brutemod = 1.1
 	var/web_cooldown = 200
 	var/web_ready = TRUE
 	var/spinner_rate = 25
