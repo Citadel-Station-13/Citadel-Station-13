@@ -126,12 +126,7 @@
 		return
 
 	var/empprize = null
-	var/num_of_prizes = 0
-	switch(severity)
-		if(1)
-			num_of_prizes = rand(1,4)
-		if(2)
-			num_of_prizes = rand(0,2)
+	var/num_of_prizes = rand(round(severity/50),round(severity/100))
 	for(var/i = num_of_prizes; i > 0; i--)
 		empprize = pickweight(prizes)
 		new empprize(loc)

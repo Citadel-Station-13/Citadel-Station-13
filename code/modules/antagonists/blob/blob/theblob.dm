@@ -204,7 +204,7 @@
 	if(severity > 0)
 		if(overmind)
 			overmind.blobstrain.emp_reaction(src, severity)
-		if(prob(100 - severity * 30))
+		if(prob(severity/1.5))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/zap_act(power)

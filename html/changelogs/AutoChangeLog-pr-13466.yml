@@ -1,0 +1,8 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - tweak: "SDGF clones now naked."
+  - balance: "SDGF is now way more likely to make a clone that will align with the creator's goals, with purity, making it a better antagging tool."
+  - bugfix: "SDGF clones now have the same traits as the original."
+  - bugfix: "transfer_ckey now resets view, preventing things like SDGF clones with much larger view range."
+  - config: "Policy configs have been added for SDGF, currently unused: SDGF, SDGF_ALIGNED, SDGF_UNALIGNED."

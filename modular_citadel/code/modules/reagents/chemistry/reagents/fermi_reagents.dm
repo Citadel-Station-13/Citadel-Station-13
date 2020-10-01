@@ -221,7 +221,7 @@
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
@@ -233,7 +233,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(O == active_obj)
 			return
 	react_objs += O
-	O.emp_act(EMP_HEAVY)
+	O.emp_act(80)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
@@ -248,7 +248,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(50))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
 	..()
 

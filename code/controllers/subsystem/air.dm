@@ -77,7 +77,6 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/extools_update_ssair()
 /datum/controller/subsystem/air/proc/extools_update_reactions()
-/datum/controller/subsystem/air/proc/scan_for_active_turfs()
 
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
@@ -165,8 +164,6 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-	if(get_amt_active_turfs() < 3000 && !TICK_CHECK)
-		scan_for_active_turfs()
 	currentpart = SSAIR_REBUILD_PIPENETS
 
 
@@ -369,7 +366,7 @@ SUBSYSTEM_DEF(air)
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
 		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
-		var/list/turfs_to_check = get_amt_active_turfs()
+		var/list/turfs_to_check = get_active_turfs()
 		for(var/T in turfs_to_check)
 			GLOB.active_turfs_startlist += T
 
