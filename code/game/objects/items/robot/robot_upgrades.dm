@@ -28,8 +28,8 @@
 	return TRUE
 
 /*
-This proc gets called by upgrades after installing them. Use this for things that for example need to be moved into a specific borg module,
-as performing this in action() will cause the module to end up in the borg instead of its intended location due to forceMove() being called afterwards..
+This proc gets called by upgrades after installing them. Use this for things that for example need to be moved into a specific borg item,
+as performing this in action() will cause the upgrade to end up in the borg instead of its intended location due to forceMove() being called afterwards..
 */
 /obj/item/borg/upgrade/proc/afterInstall(mob/living/silicon/robot/R, user = usr)
 	return
