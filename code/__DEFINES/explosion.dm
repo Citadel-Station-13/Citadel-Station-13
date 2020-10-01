@@ -21,6 +21,8 @@
 #define EXPLOSION_POWER_MAXCAP					500
 /// erases shreds from explosions/item damage
 #define EXPLOSION_POWER_ERASE_SHREDS			400
+/// Gibs most mobs
+#define EXPLOSION_POWER_NORMAL_MOB_GIB			400
 
 // Walls
 #define EXPLOSION_POWER_WALL_SCRAPE				400
@@ -46,6 +48,8 @@
 #define EXPLOSION_POWER_STANDARD_SCALE_HARD_OBSTACLE_DAMAGE(power, multiplier)	(power>500)?(10*(power**0.6)*multiplier):(0.15*(power**1.3)*multiplier)
 /// Explosion power to object damage for windows
 #define EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, multiplier)			(power>500)?(10*(power**0.6)*multiplier):(0.2*(power**1.3)*multiplier)
+/// Default brute damage to do to living things
+#define EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, multiplier)			((power / 2) * multiplier)
 
 // Damage factors
 /// Factor to multiply damage to a door by if it's open (and therefore not blocking the explosion)

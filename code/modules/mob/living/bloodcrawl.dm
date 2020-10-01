@@ -13,6 +13,10 @@
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
 	return
+
+/obj/effect/dummy/phased_mob/slaughter/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
+
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE
 

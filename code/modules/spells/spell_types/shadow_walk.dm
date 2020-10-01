@@ -90,6 +90,9 @@
 /obj/effect/dummy/phased_mob/shadow/ex_act()
 	return
 
+/obj/effect/dummy/phased_mob/shadow/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	return power
+
 /obj/effect/dummy/phased_mob/shadow/bullet_act()
 	return BULLET_ACT_FORCE_PIERCE
 

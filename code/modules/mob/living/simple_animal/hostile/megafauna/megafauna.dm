@@ -143,6 +143,9 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
+/mob/living/simple_animal/hostile/megafauna/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod) / 2)
+
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = max(ranged_cooldown, world.time + buffer_time)		// CITADEL BANDAID FIX FOR MEGAFAUNA NOT RESPECTING RECOVERY TIME.

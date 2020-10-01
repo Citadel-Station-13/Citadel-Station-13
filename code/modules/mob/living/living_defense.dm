@@ -438,6 +438,12 @@
 		return
 	..()
 
+/mob/living/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	if(power > EXPLOSION_POWER_NORMAL_MOB_GIB)
+		gib()
+	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod))
+	return power
+
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
 /mob/living/acid_act(acidpwr, acid_volume)
