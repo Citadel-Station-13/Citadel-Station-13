@@ -8,6 +8,8 @@
 	key = "r"
 	flags = NO_STUTTER | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 
+	icon_state = "spider"
+
 /datum/language/spider/scramble(input)
 	. = prob(65) ? "<i>wiff</i>" : "<i>thump</i>"
 	. += (copytext(input, length(input)) == "?") ? "?" : "!"
