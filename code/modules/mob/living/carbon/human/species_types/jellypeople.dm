@@ -704,6 +704,7 @@
 			tracked_overlay = puddle_overlay
 			owner.add_overlay(puddle_overlay)
 			transforming = FALSE
+			UpdateButtonIcon()
 		else
 			owner.cut_overlay(tracked_overlay)
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
@@ -724,8 +725,10 @@
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
+			H.rotate_on_lying = TRUE
 			owner.regenerate_icons()
 			transforming = FALSE
+			UpdateButtonIcon()
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
