@@ -147,6 +147,7 @@
 #define SSAIR_REBUILD_PIPENETS 7
 #define SSAIR_EQUALIZE 8
 #define SSAIR_ACTIVETURFS 9
+#define SSAIR_RESCAN 10
 
 // |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\

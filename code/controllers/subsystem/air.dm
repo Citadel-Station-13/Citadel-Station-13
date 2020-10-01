@@ -6,15 +6,12 @@ SUBSYSTEM_DEF(air)
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
-	var/cost_turfs = 0
-	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
 	var/cost_rebuilds = 0
 	var/cost_atmos_machinery = 0
-	var/cost_equalize = 0
 
 	var/list/hotspots = list()
 	var/list/networks = list()
@@ -44,25 +41,18 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "EQ:[round(cost_equalize,1)]|"
-	msg += "AT:[round(cost_turfs,1)]|"
-	msg += "EG:[round(cost_groups,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
-	var/active_turfs_len = get_amt_active_turfs()
-	msg += "AT:[active_turfs_len]|"
-	msg += "EG:[get_amt_excited_groups()]|"
 	msg += "HS:[hotspots.len]|"
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
 	msg += "AS:[active_super_conductivity.len]|"
 	msg += "GA:[get_amt_gas_mixes()]|"
 	msg += "MG:[get_max_gas_mixes()]|"
-	msg += "AT/MS:[round((cost ? active_turfs_len/cost : 0),0.1)]"
 	return ..()
 
 /datum/controller/subsystem/air/Initialize(timeofday)
@@ -107,33 +97,6 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_atmos_machinery(resumed)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
-		currentpart = monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
-
-	if(currentpart == SSAIR_EQUALIZE)
-		timer = TICK_USAGE_REAL
-		process_turf_equalize(resumed)
-		cost_equalize = MC_AVERAGE(cost_equalize, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
-		currentpart = SSAIR_ACTIVETURFS
-
-	if(currentpart == SSAIR_ACTIVETURFS)
-		timer = TICK_USAGE_REAL
-		process_active_turfs(resumed)
-		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
-		currentpart = SSAIR_EXCITEDGROUPS
-
-	if(currentpart == SSAIR_EXCITEDGROUPS)
-		timer = TICK_USAGE_REAL
-		process_excited_groups(resumed)
-		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -240,8 +203,8 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	return process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+/datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0,fire_count = 0)
+	return process_turf_equalize_extools(resumed, fire_count, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -259,8 +222,8 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0)
-	return process_active_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0,fire_count = 0)
+	return process_active_turfs_extools(resumed, fire_count, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -308,6 +271,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/remove_from_active_extools()
 /datum/controller/subsystem/air/proc/get_active_turfs()
 /datum/controller/subsystem/air/proc/clear_active_turfs()
+/datum/controller/subsystem/air/proc/rescan_active_turfs()
 
 /datum/controller/subsystem/air/proc/remove_from_active(turf/open/T)
 	remove_from_active_extools(T)
@@ -458,11 +422,3 @@ SUBSYSTEM_DEF(air)
 	return pipe_init_dirs_cache[type]["[dir]"]
 
 /proc/get_extools_benchmarks()
-
-#undef SSAIR_PIPENETS
-#undef SSAIR_ATMOSMACHINERY
-#undef SSAIR_ACTIVETURFS
-#undef SSAIR_EXCITEDGROUPS
-#undef SSAIR_HIGHPRESSURE
-#undef SSAIR_HOTSPOTS
-#undef SSAIR_SUPERCONDUCTIVITY
