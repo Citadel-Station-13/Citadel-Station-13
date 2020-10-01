@@ -1,12 +1,12 @@
-/datum/species/spider
+/datum/species/arachnid
 	name = "Arachnid"
-	id = "rachnid"
-	override_bp_icon = 'icons/mob/spider_parts.dmi'
+	id = "arachnid"
+	override_bp_icon = 'icons/mob/arachnid_parts.dmi'
 	say_mod = "chitters"
 	default_color = "00FF00"
 	species_traits = list(LIPS, NOEYES, NO_UNDERWEAR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("spider_legs" = "Plain", "spider_spinneret" = "Plain", "spider_mandibles" = "Plain")
+	mutant_bodyparts = list("arachnid_legs" = "Plain", "arachnid_spinneret" = "Plain", "arachnid_mandibles" = "Plain")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -14,44 +14,44 @@
 	liked_food = MEAT | RAW
 	disliked_food = FRUIT | GROSS
 	toxic_food = VEGETABLES | DAIRY
-	mutanteyes = /obj/item/organ/eyes/night_vision/spider
-	mutanttongue = /obj/item/organ/tongue/spider
-	species_language_holder = /datum/language_holder/spider
+	mutanteyes = /obj/item/organ/eyes/night_vision/arachnid
+	mutanttongue = /obj/item/organ/tongue/arachnid
+	species_language_holder = /datum/language_holder/arachnid
 	brutemod = 1.1
 	var/web_cooldown = 200
 	var/web_ready = TRUE
 	var/spinner_rate = 25
 
-/datum/species/spider/random_name(gender,unique,lastname)
+/datum/species/arachnid/random_name(gender,unique,lastname)
 	if(unique)
-		return random_unique_spider_name()
+		return random_unique_arachnid_name()
 
-	var/randname = spider_name()
+	var/randname = arachnid_name()
 
 	if(lastname)
 		randname += " [lastname]"
 
 	return randname
 
-/datum/species/spider/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+/datum/species/arachnid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
 	if(chem.type == /datum/reagent/toxin/pestkiller)
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 
-/datum/species/spider/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/arachnid/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(weapon, /obj/item/melee/flyswatter))
-		return 9 //flyswatters deal 10x damage to spiders
+		return 9 //flyswatters deal 10x damage to arachnids
 	return 0
 
-/datum/species/spider/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
+/datum/species/arachnid/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	var/datum/action/innate/spin_web/SW = new
 	var/datum/action/innate/spin_cocoon/SC = new
 	SC.Grant(H)
 	SW.Grant(H)
 
-/datum/species/spider/on_species_loss(mob/living/carbon/human/H)
+/datum/species/arachnid/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
 	var/datum/action/innate/spin_web/SW = locate(/datum/action/innate/spin_web) in H.actions
 	var/datum/action/innate/spin_cocoon/SC = locate(/datum/action/innate/spin_cocoon) in H.actions
@@ -71,8 +71,8 @@
 	button_icon_state = "wrap_0"
 
 /datum/action/innate/spin_web/Activate()
-	var/mob/living/carbon/human/species/spider/H = owner
-	var/datum/species/spider/E = H.dna.species
+	var/mob/living/carbon/human/species/arachnid/H = owner
+	var/datum/species/arachnid/E = H.dna.species
 	if(H.stat == "DEAD")
 		return
 	if(E.web_ready == FALSE)
@@ -83,7 +83,7 @@
 		to_chat(H, "<span class='warning'>There's no room to spin your web here!</span>")
 		return
 	var/obj/structure/spider/stickyweb/W = locate() in T
-	var/obj/structure/spider_player/W2 = locate() in T
+	var/obj/structure/arachnid/W2 = locate() in T
 	if(W || W2)
 		to_chat(H, "<span class='warning'>There's already a web here!</span>")
 		return
@@ -97,7 +97,7 @@
 		H.adjust_nutrition(-E.spinner_rate)
 		addtimer(VARSET_CALLBACK(E, web_ready, TRUE), E.web_cooldown)
 		to_chat(H, "<i>You use up a fair amount of energy weaving a web on the ground with your spinneret!</i>")
-		new /obj/structure/spider_player(T, owner)
+		new /obj/structure/arachnid(T, owner)
 
 	else
 		to_chat(H, "<span class='warning'>You're too hungry to spin web right now, eat something first!</span>")
@@ -111,8 +111,8 @@
 	5) if you're not interrupted, force move the target to the cocoon created at their location.
 */
 /datum/action/innate/spin_cocoon/Activate()
-	var/mob/living/carbon/human/species/spider/H = owner
-	var/datum/species/spider/E = H.dna.species
+	var/mob/living/carbon/human/species/arachnid/H = owner
+	var/datum/species/arachnid/E = H.dna.species
 	if(H.stat == "DEAD")
 		return
 	if(E.web_ready == FALSE)
@@ -130,10 +130,10 @@
 		to_chat(H, "<span class='warning'>You're too hungry to spin web right now, eat something first!</span>")
 		return
 
-/datum/action/innate/spin_cocoon/proc/cocoonAtom(mob/living/carbon/human/species/spider/H, atom/movable/A)
+/datum/action/innate/spin_cocoon/proc/cocoonAtom(mob/living/carbon/human/species/arachnid/H, atom/movable/A)
 	UnregisterSignal(H, list(COMSIG_MOB_ALTCLICKON))
-	var/datum/species/spider/E = H.dna.species
-	if (!H || !isspiderperson(H))
+	var/datum/species/arachnid/E = H.dna.species
+	if (!H || !isarachnid(H))
 		return COMSIG_MOB_CANCEL_CLICKON
 	else
 		if(E.web_ready == FALSE)
@@ -143,7 +143,7 @@
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
 		H.adjust_nutrition(E.spinner_rate * -3)
-		var/obj/structure/spider_player/cocoon/C = new(A.loc)
+		var/obj/structure/arachnid/cocoon/C = new(A.loc)
 		if(isliving(A))
 			C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
 			A.forceMove(C)

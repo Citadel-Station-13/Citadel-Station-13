@@ -259,7 +259,7 @@
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
-/obj/item/organ/tongue/spider
+/obj/item/organ/tongue/arachnid
 	name = "inner mandible"
 	desc = "A set of soft, spoon-esque mandibles closer to the mouth opening, that allow for basic speech, and the ability to speak Rachnidian."
 	say_mod = "chitters"
@@ -271,9 +271,9 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/aphasia,
-		/datum/language/spider,
+		/datum/language/arachnid,
 	))
 
-/obj/item/organ/tongue/spider/Initialize(mapload)
+/obj/item/organ/tongue/arachnid/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_arachnid

@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(traumas)
 						  "anime" = typecacheof(list(/datum/species/human/felinid)),
 						  "cats" = typecacheof(list(/datum/species/human/felinid)),
 						  "syndicate" = typecacheof(list(/datum/species/corporate, /datum/species/zombie/infectious)),
-						  "spiders" = typecacheof(list(/datum/species/spider))
+						  "arachnid" = typecacheof(list(/datum/species/arachnid))
 						 )
 
 	return ..()

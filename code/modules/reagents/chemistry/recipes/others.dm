@@ -729,7 +729,7 @@
 	required_temp = 320
 
 /datum/chemical_reaction/mutationtoxin/arachnid
-	name = "spiderperson mutation toxin"
+	name = "arachnid mutation toxin"
 	id = /datum/reagent/mutationtoxin/arachnid
 	results = list(/datum/reagent/mutationtoxin/arachnid = 1)
 	required_reagents = list(/datum/reagent/mutationtoxin/insect = 1, /datum/reagent/toxin/heparin = 10)

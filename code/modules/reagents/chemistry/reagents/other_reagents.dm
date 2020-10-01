@@ -785,7 +785,7 @@
 	name = "Arachnid Mutation Toxin"
 	description = "A glowing toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/spider
+	race = /datum/species/arachnid
 	mutationtext = "<span class='danger'>The pain subsides. You feel... silky.</span>"
 
 //DANGEROUS RACES

@@ -430,8 +430,8 @@
 	if(severity >= 70)
 		owner.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
 
-/obj/item/organ/eyes/night_vision/spider
-	name = "spider eyes"
+/obj/item/organ/eyes/night_vision/arachnid
+	name = "arachnid eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, offset by basic night vision."
 	see_in_dark = 4
 	flash_protect = -1
