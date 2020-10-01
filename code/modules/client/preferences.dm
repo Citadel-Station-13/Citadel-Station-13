@@ -516,16 +516,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!split_eye_colors)
 					dat += "<h3>Eye Color</h3>"
 					dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
-					dat += "</td>"
 				else
 					dat += "<h3>Left Eye Color</h3>"
 					dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_left;task=input'>Change</a>"
 					dat += "<h3>Right Eye Color</h3>"
 					dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
-					dat += "</td>"
-			/*	dat += "</td>"
-			else if(use_skintones || mutant_colors)
-				dat += "</td>" */ //sandstorm change, speech and body colors stay together
 
 			dat += "<h2>Speech preferences</h2>"
 			dat += "<b>Custom Speech Verb:</b><BR>"
@@ -534,6 +529,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=tongue;task=input'>[custom_tongue]</a><BR>"
 			//SKYRAT EDIT
 			dat += "<b>Custom runechat color:</b> <a href='?_src_=prefs;preference=enable_personal_chat_color'>[enable_personal_chat_color ? "Enabled" : "Disabled"]</a><br> [enable_personal_chat_color ? "<span style='border: 1px solid #161616; background-color: [personal_chat_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=personal_chat_color;task=input'>Change</a>" : ""]<br>"
+			dat += "</td>"
 			//END OF SKYRAT EDIT	
 
 			if(HAIR in pref_species.species_traits)
