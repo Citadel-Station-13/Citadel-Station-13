@@ -540,3 +540,9 @@
 /datum/gear/uniform/kimono/sakura
 	name = "Sakura kimono"
 	path = /obj/item/clothing/under/costume/kimono/sakura
+
+/datum/gear/uniform/ctlong
+	name = "cargo tech's jumpsuit (long pants)"
+	path = /obj/item/clothing/under/rank/cargo/tech/long
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Cargo Technician")
