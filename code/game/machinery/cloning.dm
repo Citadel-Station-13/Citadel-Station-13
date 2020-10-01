@@ -431,7 +431,7 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant && prob(100/(severity*efficiency)))
+		if(mob_occupant && prob((25+severity/1.34)/efficiency))
 			connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
 			SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of, ERROR: John Doe, prematurely." ,0))
 			mob_occupant.copy_from_prefs_vr()

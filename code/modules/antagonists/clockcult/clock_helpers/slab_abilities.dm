@@ -223,7 +223,7 @@
 				L.flash_act(1, 1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 			else //for Nar'sian weaklings
 				to_chat(L, "<span class='heavy_brass'>\"How does it feel to see the light, dog?\"</span>")
 				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \
