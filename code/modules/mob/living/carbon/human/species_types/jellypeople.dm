@@ -657,6 +657,7 @@
 	button_icon_state = "slimepuddle"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
+	required_mobility_flags = MOBILITY_USE | MOBILITY_STAND
 	var/is_puddle = FALSE
 	var/in_transformation_duration = 12
 	var/out_transformation_duration = 7
@@ -686,8 +687,6 @@
 			var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
 			H.Stun(in_transformation_duration, ignore_canstun = TRUE)
-			H.rotate_on_lying = FALSE
-			H.KnockToFloor(TRUE, TRUE, TRUE) //disarms and you cant pickup after
 			ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
@@ -695,10 +694,10 @@
 			ADD_TRAIT(H, TRAIT_PASSTABLE, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 			ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-			ADD_TRAIT(H, TRAIT_MOBILITY_NOSTAND, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
 			squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
 			sleep(in_transformation_duration)
+			H.pass_flags &= PASSMOB
 			var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
 			puddle_overlay.color = mutcolor
 			tracked_overlay = puddle_overlay
@@ -709,10 +708,9 @@
 			owner.cut_overlay(tracked_overlay)
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
-			H.rotate_on_lying = FALSE
 			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 			sleep(out_transformation_duration)
-			H.set_resting(0, TRUE, TRUE) // yes, it's 0, not FALSE
+			H.pass_flags ^= PASSMOB
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
@@ -720,15 +718,15 @@
 			REMOVE_TRAIT(H, TRAIT_PASSTABLE, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOSTAND, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
 			owner.regenerate_icons()
-			H.rotate_on_lying = TRUE
 			transforming = FALSE
 			UpdateButtonIcon()
+	else
+		to_chat(owner, "<span class='warning'>You need to be standing up to do this!") //just assume they're a slime because it's such a weird edgecase to have it and not be one (it shouldn't even be possible)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
