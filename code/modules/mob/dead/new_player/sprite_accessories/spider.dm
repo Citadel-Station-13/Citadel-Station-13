@@ -4,6 +4,11 @@
 	mutant_part_string = "spider_legs"
 	color_src = 0
 
+/datum/sprite_accessory/spider_legs/none
+	name = "None"
+	icon_state = null
+	relevant_layers = null
+
 /datum/sprite_accessory/spider_legs/plain
 	name = "Plain"
 	icon_state = "plain"
@@ -22,6 +27,11 @@
 	mutant_part_string = "spinneret"
 	color_src = 0
 
+/datum/sprite_accessory/spider_spinneret/none
+	name = "None"
+	icon_state = null
+	relevant_layers = null
+
 /datum/sprite_accessory/spider_spinneret/plain
 	name = "Plain"
 	icon_state = "plain"
@@ -39,6 +49,11 @@
 	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 	mutant_part_string = "mandibles"
 	color_src = 0
+
+/datum/sprite_accessory/spider_mandibles/none
+	name = "None"
+	icon_state = null
+	relevant_layers = null
 
 /datum/sprite_accessory/spider_mandibles/plain
 	name = "Plain"
