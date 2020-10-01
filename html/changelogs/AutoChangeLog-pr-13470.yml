@@ -1,0 +1,5 @@
+author: "EmeraldSundisk"
+delete-after: True
+changes: 
+  - rscadd: "Adds the \"Skelter\" space ruin"
+  - code_imp: "Creates a few new area designations for the Skelter"

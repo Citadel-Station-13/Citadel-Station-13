@@ -95,8 +95,7 @@
 
 	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
 		ImpureTot *= volume
-		var/empVol = clamp(volume/10, 0, 15)
-		empulse(T, empVol, ImpureTot/10, 1)
+		empulse(T, volume, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
 	return

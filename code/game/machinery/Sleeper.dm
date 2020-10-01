@@ -96,7 +96,7 @@
 		inject_chem(R.type, occupant)
 		open_machine()
 	//Is this too much? Cit specific
-	if(severity == EMP_HEAVY)
+	if(severity >= 80)
 		var/chem = pick(available_chems)
 		available_chems -= chem
 		available_chems += get_random_reagent_id()

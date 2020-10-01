@@ -180,13 +180,17 @@
 			. += lips_overlay
 
 		// eyes
-		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes", -BODY_LAYER, SOUTH)
-		. += eyes_overlay
-		if(!eyes)
-			eyes_overlay.icon_state = "eyes_missing"
-
-		else if(eyes.eye_color)
-			eyes_overlay.color = "#" + eyes.eye_color
+		if(eyes)
+			var/image/left_eye = image('icons/mob/human_face.dmi', "left_eye", -BODY_LAYER, SOUTH)
+			var/image/right_eye = image('icons/mob/human_face.dmi', "right_eye", -BODY_LAYER, SOUTH)
+			if(eyes.left_eye_color && eyes.right_eye_color)
+				left_eye.color = "#" + eyes.left_eye_color
+				right_eye.color = "#" + eyes.right_eye_color
+			. += left_eye
+			. += right_eye
+		else
+			var/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
+			. += eyes_overlay
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

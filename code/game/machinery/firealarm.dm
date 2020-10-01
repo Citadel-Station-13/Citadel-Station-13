@@ -113,7 +113,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	if(prob(50 / severity))
+	if(prob(severity/1.8))
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)

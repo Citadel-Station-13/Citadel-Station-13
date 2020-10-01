@@ -250,6 +250,8 @@
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
+	spare.undershirt = "Nude"
+	spare.socks = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
 	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
@@ -435,6 +437,8 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
+
+	allowed_limb_ids = list("slime","stargazer","lum")
 
 /datum/action/innate/slime_change
 	name = "Alter Form"

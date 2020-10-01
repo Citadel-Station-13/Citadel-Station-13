@@ -36,4 +36,4 @@
 			// at all
 			P.ex_act(EXPLODE_DEVASTATE)
 		else
-			P.emp_act(EMP_HEAVY)
+			P.emp_act(80)
