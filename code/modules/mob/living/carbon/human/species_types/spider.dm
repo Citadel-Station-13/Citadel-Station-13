@@ -6,7 +6,7 @@
 	default_color = "00FF00"
 	species_traits = list(LIPS, NOEYES, NO_UNDERWEAR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
-	mutant_bodyparts = list("spider_legs", "spider_spinneret", "spider_mandibles")
+	mutant_bodyparts = list("spider_legs" = "Plain", "spider_spinneret" = "Plain", "spider_mandibles" = "Plain")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -17,9 +17,9 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/spider
 	mutanttongue = /obj/item/organ/tongue/spider
 	species_language_holder = /datum/language_holder/spider
-	var/web_cooldown = 30
+	var/web_cooldown = 200
 	var/web_ready = TRUE
-	var/spinner_rate = 75
+	var/spinner_rate = 25
 
 /datum/species/spider/random_name(gender,unique,lastname)
 	if(unique)
@@ -75,7 +75,7 @@
 	if(H.stat == "DEAD")
 		return
 	if(E.web_ready == FALSE)
-		to_chat(H, "<span class='warning'>You need to wait awhile to regenerate web fluid.</span>")
+		to_chat(H, "<span class='warning'>You need to wait a while to regenerate web fluid.</span>")
 		return
 	var/turf/T = get_turf(H)
 	if(!T)
@@ -93,12 +93,10 @@
 		if(!do_after(H, 10 SECONDS, 1, T))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
-		if(prob(75))
-			H.adjust_nutrition(-E.spinner_rate)
-			addtimer(VARSET_CALLBACK(E, web_ready, TRUE), E.web_cooldown)
-			to_chat(H, "<i>You use up a fair amount of energy spinning the web.</i>")
+		H.adjust_nutrition(-E.spinner_rate)
+		addtimer(VARSET_CALLBACK(E, web_ready, TRUE), E.web_cooldown)
+		to_chat(H, "<i>You use up a fair amount of energy weaving a web on the ground with your spinneret!</i>")
 		new /obj/structure/spider_player(T, owner)
-		to_chat(H, "<i>You weave a web on the ground with your spinneret!</i>")
 
 	else
 		to_chat(H, "<span class='warning'>You're too hungry to spin web right now, eat something first!</span>")
@@ -122,7 +120,7 @@
 	var/nutrition_threshold = NUTRITION_LEVEL_FED
 	if (H.nutrition >= nutrition_threshold)
 		to_chat(H, "<span class='warning'>You pull out a strand from your spinneret, ready to wrap a target. <BR>\
-		 (Press ALT+CLICK or MMB on the target to start wrapping.)</span>")
+		 (Press ALT+CLICK on the target to start wrapping.)</span>")
 		H.adjust_nutrition(E.spinner_rate * -0.5)
 		addtimer(VARSET_CALLBACK(E, web_ready, TRUE), E.web_cooldown)
 		RegisterSignal(H, list(COMSIG_MOB_ALTCLICKON), .proc/cocoonAtom)

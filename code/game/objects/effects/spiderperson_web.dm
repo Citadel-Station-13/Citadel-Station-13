@@ -37,7 +37,7 @@
 		if(isspiderperson(mover.pulledby))
 
 			return TRUE
-		if(prob(50))
+		if(prob(20))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
 
@@ -54,7 +54,7 @@
 	. = ..()
 
 /obj/structure/spider_player/cocoon/container_resist(mob/living/user)
-	var/breakout_time = 1000 // DECI not DECA ffs
+	var/breakout_time = 150 // DECI not DECA ffs
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
 	visible_message("<span class='notice'>You see something struggling and writhing in \the [src]!</span>")
 	if(do_after(user,(breakout_time), target = src))

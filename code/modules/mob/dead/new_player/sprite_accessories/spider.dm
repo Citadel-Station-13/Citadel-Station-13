@@ -1,6 +1,8 @@
 /datum/sprite_accessory/spider_legs
 	icon = 'icons/mob/spider_legs.dmi'
-	color_src = MUTCOLORS
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	mutant_part_string = "spider_legs"
+	color_src = 0
 
 /datum/sprite_accessory/spider_legs/plain
 	name = "Plain"
@@ -16,7 +18,9 @@
 
 /datum/sprite_accessory/spider_spinneret
 	icon = 'icons/mob/spider_spinneret.dmi'
-	color_src = MUTCOLORS
+	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	mutant_part_string = "spinneret"
+	color_src = 0
 
 /datum/sprite_accessory/spider_spinneret/plain
 	name = "Plain"
@@ -32,7 +36,9 @@
 
 /datum/sprite_accessory/spider_mandibles
 	icon = 'icons/mob/spider_mandibles.dmi'
-	color_src = MUTCOLORS
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	mutant_part_string = "mandibles"
+	color_src = 0
 
 /datum/sprite_accessory/spider_mandibles/plain
 	name = "Plain"
