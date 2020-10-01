@@ -117,6 +117,27 @@
 	icon_state = "greydet"
 	item_state = "greydet"
 
+/obj/item/clothing/suit/det_suit/forensicsred
+	name = "red forensics coat"
+	icon_state = "forensics_red"
+	item_state = "forensics_red"
+
+/obj/item/clothing/suit/det_suit/forensicsred/long
+	name = "long red forensics coat"
+	icon_state = "forensics_red_long"
+	item_state = "forensics_red_long"
+
+/obj/item/clothing/suit/det_suit/forensicsblue
+	name = "blue forensics coat"
+	icon_state = "forensics_blue"
+	item_state = "forensics_blue"
+
+/obj/item/clothing/suit/det_suit/forensicsblue/long
+	name = "long blue forensics coat"
+	icon_state = "forensics_blue_long"
+	item_state = "forensics_blue_long"
+
+
 //Engineering
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"
@@ -223,3 +244,15 @@
 	icon_state = "labcoat_emt"
 	item_state = "labcoat_emt"
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/emt/red
+	name = "red emt vest"
+	desc = "A red vest with reflective strips for emergency medical technicians."
+	icon_state = "labcoat_emtred"
+	item_state = "labcoat_emtred"
+
+/obj/item/clothing/suit/toggle/labcoat/emt/highvis
+	name = "high visibility emt vest"
+	desc = "a high visibility vest for emergency medical technicians."
+	icon_state = "labcoat_highvis"
+	item_state = "labcoat_highvis"

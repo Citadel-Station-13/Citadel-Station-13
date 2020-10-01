@@ -535,3 +535,15 @@
 
 /datum/config_entry/number/max_shuttle_size
 	config_entry_value = 500
+
+//wound config stuff (increases the max injury roll, making injuries more likely)
+/datum/config_entry/number/wound_exponent
+	config_entry_value = WOUND_DAMAGE_EXPONENT
+	min_val = 0
+	integer = FALSE
+
+//adds a set amount to any injury rolls on a limb using get_damage() multiplied by this number
+/datum/config_entry/number/wound_damage_multiplier
+	config_entry_value = 0.333
+	min_val = 0
+	integer = FALSE

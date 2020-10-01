@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - refactor: "emps now work from 1-100 severity instead of 1/2 and the severity reduces as you move from the epicentre"

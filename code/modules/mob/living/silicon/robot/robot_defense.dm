@@ -85,12 +85,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			Paralyze(160)
-		if(2)
-			Paralyze(60)
-
+	Paralyze(10 + severity/1.2)
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
