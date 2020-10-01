@@ -72,6 +72,7 @@
 
 /datum/component/killerqueen/proc/touch_detonate(datum/source, mob/user)
 	detonate(user)
+	return COMPONENT_NO_ATTACK_HAND
 
 /datum/component/killerqueen/proc/on_examine(datum/source, mob/examiner, list/examine_return)
 	if(examine_message)
