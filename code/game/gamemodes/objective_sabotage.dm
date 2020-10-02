@@ -56,7 +56,7 @@
 	<li>There are many other ways; be creative!</li>\
 	</ul>"
 
-/datum/sabotage_objective/processing/supermatter
+/*/datum/sabotage_objective/processing/supermatter
 	name = "Sabotage the supermatter so that it goes under 50% integrity. If it is delaminated, you will fail."
 	sabotage_type = "supermatter"
 	special_equipment = list(/obj/item/paper/guides/antag/supermatter_sabotage)
@@ -77,7 +77,7 @@
 
 /datum/sabotage_objective/processing/supermatter/can_run()
 	return (locate(/obj/machinery/power/supermatter_crystal) in GLOB.machines)
-/*
+
 /datum/sabotage_objective/station_integrity
 	name = "Make sure the station is at less than 80% integrity by the end. Smash walls, windows etc. to reach this goal."
 	sabotage_type = "integrity"

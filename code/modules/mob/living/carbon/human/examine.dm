@@ -92,7 +92,7 @@
 	if(!(SLOT_GLASSES in obscured))
 		if(glasses)
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
-		else if(eye_color == BLOODCULT_EYE && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
+		else if((left_eye_color == BLOODCULT_EYE || right_eye_color == BLOODCULT_EYE) && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
 		else if(HAS_TRAIT(src, TRAIT_HIJACKER))
 			var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)

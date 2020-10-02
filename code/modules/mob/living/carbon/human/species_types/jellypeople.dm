@@ -18,7 +18,8 @@
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
 	liked_food = TOXIC | MEAT
-	toxic_food = null
+	disliked_food = null
+	toxic_food = ANTITOXIC
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
@@ -248,6 +249,8 @@
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
+	spare.undershirt = "Nude"
+	spare.socks = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
 	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
@@ -433,6 +436,8 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
+
+	allowed_limb_ids = list("slime","stargazer","lum")
 
 /datum/action/innate/slime_change
 	name = "Alter Form"

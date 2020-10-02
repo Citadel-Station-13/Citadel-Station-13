@@ -11,13 +11,11 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/preyloop_refresh
-	M.verbs += /mob/living/proc/lick
-	M.verbs += /mob/living/proc/escapeOOC
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
-	M.verbs += /mob/living/proc/insidePanel
+	add_verb(M, /mob/living/proc/insidePanel)
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	spawn(2 SECONDS) // long delay because the server delays in its startup. just on the safe side.
@@ -275,16 +273,7 @@
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 	ENABLE_BITFIELD(vore_flags,VOREPREF_INIT)
-
-	// garbage data coming back the other way or breaking absorbed would be bad, so instead we do this
-	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,DIGESTABLE) // set to 1 if prefs is 1
-	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,DEVOURABLE)
-	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,FEEDING)
-
-	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,DIGESTABLE) // set to 0 if prefs is 0
-	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,DEVOURABLE)
-	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,FEEDING)
-
+	COPY_SPECIFIC_BITFIELDS(vore_flags,client.prefs.vore_flags,DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE)
 	vore_taste = client.prefs.vore_taste
 
 	release_vore_contents(silent = TRUE)

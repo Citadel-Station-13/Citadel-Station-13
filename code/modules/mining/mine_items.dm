@@ -76,7 +76,7 @@
 	circuit = /obj/item/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
-	no_destination_swap = 1
+	no_destination_swap = TRUE
 	var/static/list/dumb_rev_heads = list()
 
 /obj/machinery/computer/shuttle/mining/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)

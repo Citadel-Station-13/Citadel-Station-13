@@ -34,10 +34,9 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/stun_amount = 200/severity
+	var/stun_amount = 2*severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
-
 
 /obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
@@ -68,12 +67,11 @@
 		release_items()
 		to_chat(owner, "<span class='notice'>Your hands relax...</span>")
 
-
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/range = severity ? 10 : 5
+	var/range = severity/10
 	var/atom/A
 	if(active)
 		release_items()
@@ -114,7 +112,7 @@
 		return
 	crit_fail = TRUE
 	organ_flags |= ORGAN_FAILING
-	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
+	addtimer(CALLBACK(src, .proc/reboot), 0.9 * severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
@@ -136,6 +134,6 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	if(prob(60/severity))
+	if(prob(0.6*severity))
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2

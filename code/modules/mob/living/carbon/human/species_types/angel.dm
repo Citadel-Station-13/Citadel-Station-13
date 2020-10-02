@@ -142,3 +142,4 @@
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+	update_species_slowdown(H)

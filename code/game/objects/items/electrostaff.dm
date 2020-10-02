@@ -261,4 +261,4 @@
 	if (!(. & EMP_PROTECT_SELF))
 		turn_off()
 		if(!iscyborg(loc))
-			deductcharge(1000 / severity, TRUE, FALSE)
+			deductcharge(severity*10, TRUE, FALSE)

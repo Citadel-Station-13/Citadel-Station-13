@@ -639,7 +639,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(produces_gas)
 		env.merge(removed)
 		air_update_turf()
-	
+
 	/*********
 	END CITADEL CHANGES
 	*********/
@@ -1033,12 +1033,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(L)
 		switch(type)
 			if(FLUX_ANOMALY)
-				var/obj/effect/anomaly/flux/A = new(L, 300, FALSE)
+				var/obj/effect/anomaly/flux/A = new(L, 300, SUPERMATTER_ANOMALY_DROP_CHANCE)
 				A.explosive = FALSE
 			if(GRAVITATIONAL_ANOMALY)
-				new /obj/effect/anomaly/grav(L, 250, FALSE)
+				new /obj/effect/anomaly/grav(L, 250, SUPERMATTER_ANOMALY_DROP_CHANCE)
 			if(PYRO_ANOMALY)
-				new /obj/effect/anomaly/pyro(L, 200, FALSE)
+				new /obj/effect/anomaly/pyro(L, 200, SUPERMATTER_ANOMALY_DROP_CHANCE)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list())
 	if(QDELETED(zapstart))

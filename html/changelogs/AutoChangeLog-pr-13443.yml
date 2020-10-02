@@ -1,0 +1,6 @@
+author: "ItzGabby"
+delete-after: True
+changes: 
+  - rscadd: "Three new turf tiles."
+  - imageadd: "Turf icons with multiple damage icons, with in-hand icons for each tile."
+  - spellcheck: "Edited the name and description to wooden."

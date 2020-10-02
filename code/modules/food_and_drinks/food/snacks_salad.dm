@@ -20,7 +20,7 @@
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"
@@ -38,7 +38,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
-	foodtype = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
+	foodtype = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/salad/oatmeal
 	name = "oatmeal"
@@ -133,7 +133,7 @@
 	trash = /obj/item/reagent_containers/glass/bowl
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
 	tastes = list("hope" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/salad/gumbo
 	name = "black eyed gumbo"
