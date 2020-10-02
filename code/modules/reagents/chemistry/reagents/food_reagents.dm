@@ -17,8 +17,9 @@
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
-	current_cycle++
-	M.adjust_nutrition(nutriment_factor, max_nutrition)
+	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
+		current_cycle++
+		M.adjust_nutrition(nutriment_factor, max_nutrition)
 	M.CheckBloodsuckerEatFood(nutriment_factor)
 	holder.remove_reagent(type, metabolization_rate)
 
@@ -49,10 +50,11 @@
 	var/burn_heal = 0
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
-	if(prob(50))
-		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
-		. = 1
-	..()
+	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
+		if(prob(50))
+			M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+			. = 1
+		..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)
@@ -157,6 +159,13 @@
 	taste_description = "sweetness"
 	value = REAGENT_VALUE_NONE
 
+// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
+/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWeeds(rand(2,3))
+		mytray.adjustPests(rand(1,2))
+
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
 	M.AdjustSleeping(600, FALSE)
@@ -173,6 +182,12 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
+
+// Compost for EVERYTHING
+/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"

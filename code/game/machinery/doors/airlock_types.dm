@@ -612,7 +612,7 @@
 			. += "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
-	if(prob(80/severity))
+	if(prob(severity/1.25))
 		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)

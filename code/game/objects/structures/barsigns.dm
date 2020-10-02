@@ -104,9 +104,6 @@
 	set_sign(new /datum/barsign/hiddensigns/empbarsign)
 	broken = TRUE
 
-
-
-
 /obj/structure/sign/barsign/emag_act(mob/user)
 	. = ..()
 	if(broken || (obj_flags & EMAGGED))
@@ -128,8 +125,6 @@
 		return
 	set_sign(picked_name)
 
-
-
 //Code below is to define useless variables for datums. It errors without these
 
 
@@ -140,94 +135,76 @@
 	var/desc = "desc"
 	var/hidden = FALSE
 
-
 //Anything below this is where all the specific signs are. If people want to add more signs, add them below.
-
-
-
 /datum/barsign/maltesefalcon
 	name = "Maltese Falcon"
 	icon = "maltesefalcon"
 	desc = "The Maltese Falcon, Space Bar and Grill."
-
 
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
 	desc = "Ian's bar of choice."
 
-
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
 	desc = "A great dining experience for both security members and assistants."
-
 
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
 	desc = "Where people go that'd rather not be called by their name."
 
-
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
 	desc = "Don't drink and swim."
-
 
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
 	desc = "Willy sure moved up in the world from clown to bartender."
 
-
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
 	desc = "Man eat a dong, these drinks are great."
-
 
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
 	desc = "Fine drinks while listening to some fine tunes."
 
-
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
 	desc = "This bar isn't actually located in outer space."
-
 
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon = "slipperyshots"
 	desc = "Slippery slope to drunkeness with our shots!"
 
-
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
 	icon = "thegreytide"
 	desc = "Abandon your toolboxing ways and enjoy a lazy beer!"
-
 
 /datum/barsign/honkednloaded
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"
 	desc = "Honk."
 
-
 /datum/barsign/thenest
 	name = "The Nest"
 	icon = "thenest"
 	desc = "A good place to retire for a drink after a long night of crime fighting."
 
-
 /datum/barsign/thecoderbus
 	name = "The Coderbus"
 	icon = "thecoderbus"
 	desc = "A very controversial bar known for its wide variety of constantly-changing drinks."
-
 
 /datum/barsign/theadminbus
 	name = "The Adminbus"
@@ -313,7 +290,6 @@
 	hidden = TRUE
 
 //Hidden signs list below this point
-
 /datum/barsign/hiddensigns/empbarsign
 	name = "Haywire Barsign"
 	icon = "empbarsign"

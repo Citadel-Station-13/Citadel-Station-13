@@ -284,10 +284,18 @@
 	QDEL_LIST(traumas)
 	return ..()
 
+//other types of brains
+
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
+
+/obj/item/organ/brain/ipc
+	name = "positronic brain"
+	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves. It has an IPC serial number engraved on the top. It is usually slotted into the head of synthetic crewmembers."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "posibrain-ipc"
 
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////

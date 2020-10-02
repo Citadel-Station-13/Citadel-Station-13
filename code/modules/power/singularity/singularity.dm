@@ -434,7 +434,7 @@
 
 
 /obj/singularity/proc/emp_area()
-	empulse(src, 8, 10)
+	empulse_using_range(src, 10)
 	return
 
 /obj/singularity/singularity_act()
