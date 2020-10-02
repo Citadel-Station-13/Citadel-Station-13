@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(min_spawns)
-	name = "Minimum Spawns" // it should be more like "failsafe spawns" or "backup spawns" or something
+	name = "Minimum Spawns" /// this hot steaming pile of garbage makes sure theres a minimum of tendrils scattered around
 	init_order = INIT_ORDER_DEFAULT
 	flags = SS_BACKGROUND | SS_NO_FIRE | SS_ALWAYS_SHOW_STAT
 	wait = 2
