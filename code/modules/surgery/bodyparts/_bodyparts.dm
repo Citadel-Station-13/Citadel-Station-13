@@ -619,7 +619,10 @@
 			skin_tone = ""
 
 		body_gender = H.dna.features["body_model"]
-		should_draw_gender = S.sexes
+		if(GLOB.nongendered_limb_types[species_id])
+			should_draw_gender = FALSE
+		else
+			should_draw_gender = S.sexes
 
 		var/mut_colors = (MUTCOLORS in S.species_traits)
 		if(mut_colors)
