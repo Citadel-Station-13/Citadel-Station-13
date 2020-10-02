@@ -1,6 +1,6 @@
 /datum/species/synthliz
-	name = SPECIES_SYNTH_LIZARD
-	id = "synthliz"
+	name = "Synthetic Lizardperson"
+	id = SPECIES_SYNTH_LIZARD
 	say_mod = "beeps"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,NOTRANSSTING,EYECOLOR,LIPS,HAIR,HAS_FLESH,HAS_BONE)
@@ -21,4 +21,4 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
-	species_type = "robotic"
+	species_category = SPECIES_CATEGORY_ROBOT

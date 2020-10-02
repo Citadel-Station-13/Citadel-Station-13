@@ -1,7 +1,7 @@
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "Xenobiological Jelly Entity"
-	id = "jelly"
+	id = SPECIES_JELLY
 	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR,HAS_FLESH)
@@ -28,7 +28,7 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
-	species_type = "jelly"
+	species_category = SPECIES_CATEGORY_JELLY
 
 /obj/item/organ/brain/jelly
 	name = "slime nucleus"
@@ -140,7 +140,7 @@
 
 /datum/species/jelly/slime
 	name = "Xenobiological Slime Entity"
-	id = "slime"
+	id = SPECIES_SLIME
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	say_mod = "says"
@@ -421,8 +421,8 @@
 ////////////////////////////////////////////////////////Round Start Slimes///////////////////////////////////////////////////////////////////
 
 /datum/species/jelly/roundstartslime
-	name = SPECIES_JELLYHYBRID
-	id = "slimeperson"
+	name = "Xenobiological Slime Hybrid"
+	id = SPECIES_SLIME_HYBRID
 	limbs_id = "slime"
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
@@ -648,7 +648,7 @@
 
 /datum/species/jelly/luminescent
 	name = "Luminescent Slime Entity"
-	id = "lum"
+	id = SPECIES_SLIME_LUMI
 	say_mod = "says"
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
@@ -815,7 +815,7 @@
 
 /datum/species/jelly/stargazer
 	name = "Stargazer Slime Entity"
-	id = "stargazer"
+	id = SPECIES_STARGAZER
 	var/datum/action/innate/project_thought/project_thought
 	var/datum/action/innate/link_minds/link_minds
 	var/list/mob/living/linked_mobs = list()

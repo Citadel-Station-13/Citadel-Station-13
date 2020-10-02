@@ -11,32 +11,6 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
 
-// Species defines ---------------------------
-
-#define SPECIES_ABDUCTOR		"Abductor"
-#define SPECIES_ANDROID			"Android"
-#define SPECIES_ANGEL			"Angel"
-#define SPECIES_ANTHROMORPH		"Anthromorph"
-#define SPECIES_BUGMAN			"Anthromorphic Insect"
-#define SPECIES_DULLAHAN		"Dullahan"
-#define SPECIES_DWARF			"Dwarf"
-#define SPECIES_ETHEREAL		"Ethereal"
-#define SPECIES_FELINID			"Felinid"
-#define SPECIES_FLYPEOPLE		"Anthromorphic Fly"
-#define SPECIES_GOLEM			"Golem"
-#define SPECIES_HUMAN			"Human"
-#define SPECIES_IPC				"I.P.C."
-#define SPECIES_JELLYHYBRID		"Xenobiological Slime Hybrid"
-#define SPECIES_LIZARD			"Anthromorphic Lizard"
-#define SPECIES_ANTHRO_MUSH		"Anthromorphic Mushroom"
-#define SPECIES_PLASMAMAN		"Plasmaman"
-#define SPECIES_POD				"Anthromorphic Plant"
-#define SPECIES_SKELETON		"Skeleton"
-#define SPECIES_SYNTH_LIZARD	"Synthetic Lizardperson"
-#define SPECIES_SYNTH			"Synthetic"
-#define SPECIES_VAMPIRE			"Vampire"
-#define SPECIES_XENOHYBRID		"Xenomorph Hybrid"
-
 // Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL		2150
 #define BLOOD_VOLUME_EXCESS			2100

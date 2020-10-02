@@ -3,8 +3,8 @@ GLOBAL_LIST_INIT(dwarf_first, world.file2list("strings/names/dwarf_first.txt")) 
 GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //textfiles with last
 
 /datum/species/dwarf //not to be confused with the genetic manlets
-	name = SPECIES_DWARF
-	id = "dwarf" //Also called Homo sapiens pumilionis
+	name = "Dwarf"
+	id = SPECIES_DWARF //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_DWARF,TRAIT_SNOB)
@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	mutant_organs = list(/obj/item/organ/dwarfgland) //Dwarven alcohol gland, literal gland warrior
 	mutantliver = /obj/item/organ/liver/dwarf //Dwarven super liver (Otherwise they r doomed)
 	species_language_holder = /datum/language_holder/dwarf
-	species_type = "human" //a kind of human
+	species_category = SPECIES_CATEGORY_BASIC //a kind of human
 
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.

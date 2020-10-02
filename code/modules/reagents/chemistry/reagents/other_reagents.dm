@@ -786,8 +786,8 @@
 
 	if(isjellyperson(H))
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
-		var/species_type = pick(subtypesof(/datum/species/jelly))
-		H.set_species(species_type)
+		var/species_category = pick(subtypesof(/datum/species/jelly))
+		H.set_species(species_category)
 		H.reagents.del_reagent(type)
 
 	switch(current_cycle)
@@ -801,8 +801,8 @@
 			if(prob(10))
 				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
 		if(20 to INFINITY)
-			var/species_type = pick(subtypesof(/datum/species/jelly))
-			H.set_species(species_type)
+			var/species_category = pick(subtypesof(/datum/species/jelly))
+			H.set_species(species_category)
 			H.reagents.del_reagent(type)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
 

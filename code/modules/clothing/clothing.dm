@@ -494,13 +494,14 @@ BLIND     // can't see anything
 	if(!species_restricted)
 		return	// This item doesn't use the species_restricted system
 
+/*	//TODO - Implement when ready.  P.S. It isn't ready.
 	// Set species_restricted list
 	switch(target_species)
-		if(SPECIES_HUMAN, SPECIES_SKRELL)	// Humanoid bodytypes
-			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_PROMETHEAN)	// humans and most species can wear each other's suits
+		if(SPECIES_CATEGORY_BASIC)	// Humanoid bodytypes
+			species_restricted = list(SPECIES_CATEGORY_BASIC)
 		else
 			species_restricted = list(target_species)
-
+*/
 	// Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		sprite_sheets[target_species] = sprite_sheets_refit[target_species]
@@ -514,14 +515,15 @@ BLIND     // can't see anything
 	if(!species_restricted)
 		return	// This item doesn't use the species_restricted system
 
+/*	//TODO - Implement when ready.  P.S. It isn't ready.
 	// Set species_restricted list
 	switch(target_species)
-		if(SPECIES_SKRELL)
-			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_PROMETHEAN) //skrell helmets fit humans too
+		if(SPECIES_CATEGORY_BASIC)
+			species_restricted = list(SPECIES_CATEGORY_BASIC)
 
 		else
 			species_restricted = list(target_species)
-
+*/
 	// Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		sprite_sheets[target_species] = sprite_sheets_refit[target_species]
