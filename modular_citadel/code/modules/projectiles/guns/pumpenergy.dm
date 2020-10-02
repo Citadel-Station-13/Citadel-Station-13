@@ -11,7 +11,7 @@
 	var/recentpump = 0 // to prevent spammage
 
 /obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
-	cell.use(round(cell.charge / severity))
+	cell.use(round(cell.charge * severity/100))
 	chambered = null //we empty the chamber
 	update_icon()
 
