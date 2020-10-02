@@ -1,5 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Cargo techs now have access to a \"long pants\" variant of their standard work uniform"
-  - rscadd: "Adds said uniform to CargoDrobes and the loadout menu"
