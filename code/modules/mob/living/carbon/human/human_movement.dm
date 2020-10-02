@@ -103,6 +103,6 @@
 	return ..()
 
 /mob/living/carbon/human/CanPass(atom/movable/mover, turf/target)
-	if(human_owner.dna.species.species_pass_check())
+	if(dna.species.species_pass_check())
 		return TRUE
 	return ..()
