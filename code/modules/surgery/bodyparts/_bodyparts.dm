@@ -71,8 +71,6 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "peeling away"
 
-	var/render_like_organic = FALSE // forces limb to render as if it were an organic limb
-
 	/// The wounds currently afflicting this body part
 	var/list/wounds
 
@@ -357,7 +355,7 @@
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
-	var/base_roll = rand(max(damage/1.5,25), round(damage ** CONFIG_GET(number/wound_exponent))) + (get_damage()*CONFIG_GET(number/wound_damage_multiplier))
+	var/base_roll = rand(max(damage/1.5,25), round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
@@ -483,12 +481,12 @@
 //Checks disabled status thresholds
 
 //Checks disabled status thresholds
-/obj/item/bodypart/proc/update_disabled()
+/obj/item/bodypart/proc/update_disabled(silent = FALSE)
 	if(!owner)
 		return
-	set_disabled(is_disabled())
+	set_disabled(is_disabled(silent), silent)
 
-/obj/item/bodypart/proc/is_disabled()
+/obj/item/bodypart/proc/is_disabled(silent = FALSE)
 	if(!owner)
 		return
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS))
@@ -500,7 +498,7 @@
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
-			if(!last_maxed)
+			if(!last_maxed && !silent)
 				owner.emote("scream")
 				last_maxed = TRUE
 			if(!is_organic_limb() || stamina_dam >= max_damage)
@@ -557,7 +555,7 @@
 		if(status == BODYPART_ORGANIC)
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
-			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner)
 		owner.updatehealth()
@@ -619,7 +617,10 @@
 			skin_tone = ""
 
 		body_gender = H.dna.features["body_model"]
-		should_draw_gender = S.sexes
+		if(GLOB.nongendered_limb_types[species_id])
+			should_draw_gender = FALSE
+		else
+			should_draw_gender = S.sexes
 
 		var/mut_colors = (MUTCOLORS in S.species_traits)
 		if(mut_colors)
@@ -671,9 +672,8 @@
 
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"
-		if(!render_like_organic)
-			body_markings = null
-			aux_marking = null
+		body_markings = null
+		aux_marking = null
 
 	if(dropping_limb)
 		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
@@ -739,7 +739,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb() || render_like_organic)
+	if(is_organic_limb())
 		limb.icon = base_bp_icon || 'icons/mob/human_parts.dmi'
 		if(should_draw_gender)
 			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
