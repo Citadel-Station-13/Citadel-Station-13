@@ -23,6 +23,14 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/cargo/util
+	name = "cargo utility uniform"
+	desc = "a utility uniform for cargo personnel"
+	icon_state = "utilsupply"
+	item_state = "utilsupply"
+	can_adjust = FALSE
+
+
 /obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's jumpskirt"
 	desc = "Skiiiiirts! They're comfy and easy to wear"

@@ -334,8 +334,7 @@
 /area/crew_quarters/fitness/pool)
 "aaM" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
-	dir = 8;
-	icon_state = "yellowcornersiding"
+	dir = 8
 	},
 /area/crew_quarters/fitness/pool)
 "aaN" = (
@@ -354,8 +353,7 @@
 /area/crew_quarters/fitness/pool)
 "aaP" = (
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 8;
-	icon_state = "yellowsiding"
+	dir = 8
 	},
 /area/crew_quarters/fitness/pool)
 "aaQ" = (
@@ -433,8 +431,7 @@
 /area/crew_quarters/fitness/pool)
 "aaW" = (
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 1;
-	icon_state = "yellowsiding"
+	dir = 1
 	},
 /area/crew_quarters/fitness/pool)
 "aaX" = (
@@ -550,8 +547,7 @@
 "abm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 4;
-	icon_state = "yellowsiding"
+	dir = 4
 	},
 /area/crew_quarters/fitness/pool)
 "abn" = (
@@ -580,8 +576,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 4;
-	icon_state = "yellowsiding"
+	dir = 4
 	},
 /area/crew_quarters/fitness/pool)
 "abr" = (
@@ -595,8 +590,7 @@
 "abt" = (
 /obj/structure/pool/Rboard,
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 8;
-	icon_state = "yellowsiding"
+	dir = 8
 	},
 /area/crew_quarters/fitness/pool)
 "abu" = (
@@ -659,8 +653,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellowsiding/corner{
-	dir = 4;
-	icon_state = "yellowcornersiding"
+	dir = 4
 	},
 /area/crew_quarters/fitness/pool)
 "abB" = (
@@ -670,21 +663,18 @@
 	pixel_y = -27
 	},
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 1;
-	icon_state = "yellowsiding"
+	dir = 1
 	},
 /area/crew_quarters/fitness/pool)
 "abC" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/yellowsiding{
-	dir = 1;
-	icon_state = "yellowsiding"
+	dir = 1
 	},
 /area/crew_quarters/fitness/pool)
 "abD" = (
 /turf/open/floor/plasteel/yellowsiding/corner{
-	dir = 1;
-	icon_state = "yellowcornersiding"
+	dir = 1
 	},
 /area/crew_quarters/fitness/pool)
 "abE" = (
@@ -2757,8 +2747,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plating,
@@ -54861,6 +54850,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"gQo" = (
+/obj/machinery/vending/wardrobe/det_wardrobe,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "gSH" = (
 /turf/closed/wall,
 /area/lawoffice)
@@ -57232,8 +57225,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -59202,8 +59194,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /turf/open/floor/plating,
 /area/security/execution/transfer)
@@ -85513,7 +85504,7 @@ aCo
 aCk
 aEr
 aGa
-aCk
+gQo
 oEA
 uoS
 uoS

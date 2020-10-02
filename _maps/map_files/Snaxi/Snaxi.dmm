@@ -197,12 +197,10 @@
 /obj/structure/closet/emcloset/anchored,
 /obj/structure/sign/directions/medical{
 	dir = 8;
-	icon_state = "direction_med";
 	pixel_y = 36
 	},
 /obj/structure/sign/directions/science{
 	dir = 8;
-	icon_state = "direction_sci";
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel,
@@ -247,7 +245,6 @@
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = -28
 	},
@@ -285,7 +282,6 @@
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_y = 40
 	},
 /turf/open/floor/plasteel,
@@ -349,7 +345,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 32
 	},
@@ -384,12 +379,10 @@
 "aaC" = (
 /obj/structure/sign/directions/medical{
 	dir = 8;
-	icon_state = "direction_med";
 	pixel_y = 36
 	},
 /obj/structure/sign/directions/science{
 	dir = 8;
-	icon_state = "direction_sci";
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel,
@@ -397,12 +390,10 @@
 "aaD" = (
 /obj/structure/sign/directions/engineering{
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_y = 36
 	},
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel,
@@ -444,12 +435,10 @@
 	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
-	icon_state = "direction_med";
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/science{
 	dir = 8;
-	icon_state = "direction_sci";
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/security{
@@ -470,12 +459,10 @@
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_y = 32
 	},
 /obj/structure/sign/directions/evac{
@@ -525,12 +512,10 @@
 	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
-	icon_state = "direction_med";
 	pixel_y = 36
 	},
 /obj/structure/sign/directions/science{
 	dir = 8;
-	icon_state = "direction_sci";
 	pixel_y = 28
 	},
 /obj/structure/sign/directions/science{
@@ -561,12 +546,10 @@
 /obj/machinery/computer/shuttle/snow_taxi,
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_y = 36
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel,
@@ -600,16 +583,13 @@
 "aaV" = (
 /obj/structure/sign/directions/evac{
 	dir = 1;
-	icon_state = "direction_evac";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/security{
-	dir = 8;
-	icon_state = "direction_sec"
+	dir = 8
 	},
 /obj/structure/sign/directions/command{
 	dir = 8;
-	icon_state = "direction_bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall/r_wall,
@@ -686,7 +666,6 @@
 	},
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	icon_state = "direction_supply";
 	pixel_x = 32;
 	pixel_y = -24
 	},
@@ -787,7 +766,6 @@
 	},
 /obj/structure/sign/directions/evac{
 	dir = 8;
-	icon_state = "direction_evac";
 	pixel_x = 32;
 	pixel_y = 32
 	},
@@ -1158,13 +1136,11 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/directions/evac{
 	dir = 8;
-	icon_state = "direction_evac";
 	pixel_x = 32;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 24
 	},
@@ -3934,7 +3910,7 @@
 	name = "Privacy Shutters";
 	pixel_y = 24
 	},
-/obj/machinery/computer/med_data,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aMR" = (
@@ -20405,7 +20381,6 @@
 "iXZ" = (
 /obj/machinery/computer/security/telescreen/toxins{
 	dir = 1;
-	network = list("toxins");
 	pixel_y = -28
 	},
 /obj/structure/chair{
@@ -43135,6 +43110,7 @@
 	pixel_x = 6;
 	pixel_y = 36
 	},
+/obj/machinery/computer/med_data/laptop,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "wtY" = (

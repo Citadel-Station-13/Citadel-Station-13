@@ -6,6 +6,13 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/obj/item/clothing/under/rank/captain/util
+	name = "Command Utiltiy Uniform"
+	desc = "A utility uniform for command personnel."
+	icon_state = "utilcom"
+	item_state = "utilcom"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/captain/skirt
 	name = "captain's jumpskirt"
 	desc = "It's a blue jumpskirt with some gold markings denoting the rank of \"Captain\"."
