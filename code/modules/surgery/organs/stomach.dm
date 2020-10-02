@@ -89,9 +89,20 @@
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 
 /obj/item/organ/stomach/ipc
-	name = "ipc stomach"
+	name = "ipc cell"
 	icon_state = "stomach-ipc"
 
+/obj/item/organ/stomach/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	switch(severity)
+		if(1)
+			owner.nutrition = min(owner.nutrition - 50, 0)
+			to_chat(owner, "<span class='warning'>Alert: Detected severe battery discharge!</span>")
+		if(2)
+			owner.nutrition = min(owner.nutrition - 100, 0)
+			to_chat(owner, "<span class='warning'>Alert: Minor battery discharge!</span>")
 
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"

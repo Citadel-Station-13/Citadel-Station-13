@@ -184,7 +184,7 @@
 	else if(isliving(AM))
 		var/mob/living/L = AM
 		if(isethereal(AM))
-			AM.emp_act(EMP_LIGHT)
+			AM.emp_act(50)
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)
