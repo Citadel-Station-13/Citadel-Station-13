@@ -71,6 +71,12 @@
 	else
 		return ..()
 
+/datum/species/jelly/species_pass_check()
+	if(slime_puddle && slime_puddle.is_puddle)
+		return TRUE
+	else
+		return ..()
+
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
 		return
@@ -701,9 +707,9 @@
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 				H.update_disabled_bodyparts(silent = TRUE)
+				H.layer -= 1 //go one layer down so people go over you
 				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
 				sleep(in_transformation_duration)
-				H.pass_flags &= PASSMOB
 				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
 				puddle_overlay.color = mutcolor
 				tracked_overlay = puddle_overlay
@@ -716,7 +722,6 @@
 			puddle_effect.color = mutcolor
 			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 			sleep(out_transformation_duration)
-			H.pass_flags ^= PASSMOB
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
@@ -727,6 +732,7 @@
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
+			H.layer += 1 //go one layer back above!
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
