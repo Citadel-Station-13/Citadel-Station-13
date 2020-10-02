@@ -712,6 +712,7 @@
 				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 				H.update_disabled_bodyparts(silent = TRUE)
 				H.layer -= 1 //go one layer down so people go over you
+				H.pass_flags &= PASSMOB
 				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
 				sleep(in_transformation_duration)
 				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
@@ -737,6 +738,7 @@
 			H.update_disabled_bodyparts(silent = TRUE)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 			H.layer += 1 //go one layer back above!
+			H.pass_flags ^= PASSMOB
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
