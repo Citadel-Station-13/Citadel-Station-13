@@ -738,7 +738,7 @@
 			H.update_disabled_bodyparts(silent = TRUE)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 			H.layer += 1 //go one layer back above!
-			REMOVE_BITFIELD(H.pass_flags, PASSMOB)
+			DISABLE_BITFIELD(H.pass_flags, PASSMOB)
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
