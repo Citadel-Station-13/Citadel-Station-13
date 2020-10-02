@@ -242,8 +242,7 @@
 
 	H.mob_transforming = FALSE
 
-/datum/action/innate/split_body/proc/make_
-()
+/datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/H = owner
 	CHECK_DNA_AND_SPECIES(H)
 
