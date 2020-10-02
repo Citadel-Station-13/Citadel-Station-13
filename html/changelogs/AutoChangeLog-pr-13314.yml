@@ -1,8 +1,0 @@
-author: "ArcaneMusic, with minor tweaks by TheObserver-sys"
-delete-after: True
-changes: 
-  - rscadd: "Adds and modifies fertilizers, as well as a new stat, Instability."
-  - rscdel: "Removes the rather disused functionality of irrigation hoses, temporarily disables circuit use on hydroponics trays."
-  - tweak: "Plant Analyzer have been upgraded. Using one in hand will now switch between a stat view of your plant, and a chemical view of your plant.
-tweak:Trays now accept and store reagents, as well as coming with an autogrow mode. However, these upgrades came at the cost of old self sufficiency, meaning you must attend to your plants a bit more often."
-  - tweak: "Earthsblood, while not being able to gild trays anymore, has been found to still be quite powerful as a fertilizer."
