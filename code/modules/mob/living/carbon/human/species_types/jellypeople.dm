@@ -242,7 +242,8 @@
 
 	H.mob_transforming = FALSE
 
-/datum/action/innate/split_body/proc/make_dupe()
+/datum/action/innate/split_body/proc/make_
+()
 	var/mob/living/carbon/human/H = owner
 	CHECK_DNA_AND_SPECIES(H)
 
@@ -278,7 +279,7 @@
 		// transfer the swap-body ui if it's open
 		var/datum/action/innate/swap_body/this_swap = origin_datum.swap_body
 		var/datum/action/innate/swap_body/other_swap = spare_datum.swap_body
-		var/datum/tgui/ui = SStgui.get_open_ui(old, this_swap, "main") || SStgui.get_open_ui(dupe, this_swap, "main")
+		var/datum/tgui/ui = SStgui.get_open_ui(H, this_swap, "main") || SStgui.get_open_ui(spare, this_swap, "main")
 		if(ui)
 			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
 			ui.user = spare
