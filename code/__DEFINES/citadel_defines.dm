@@ -105,3 +105,6 @@
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4
+
+//special species definitions
+#define MINIMUM_MUTANT_COLOR	"#202020" //this is how dark players mutant parts and skin can be
