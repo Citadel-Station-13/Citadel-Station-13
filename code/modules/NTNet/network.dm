@@ -133,14 +133,14 @@
 	return FALSE
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)
-	logs += "[STATION_TIME_TIMESTAMP("hh:mm:ss")] - [data.generate_netlog()]"
+	logs += "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] - [data.generate_netlog()]"
 	if(logs.len > setting_maxlogcount)
 		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
 	return
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
 /datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
-	var/log_text = "[STATION_TIME_TIMESTAMP("hh:mm:ss")] - "
+	var/log_text = "[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)] - "
 	if(source)
 		log_text += "[source.get_network_tag()] - "
 	else
@@ -201,6 +201,11 @@
 		var/datum/computer_file/program/P = N
 		if(filename == P.filename)
 			return P
+
+/datum/ntnet/proc/get_chat_channel_by_id(id)
+	for(var/datum/ntnet_conversation/chan in chat_channels)
+		if(chan.id == id)
+			return chan
 
 // Resets the IDS alarm
 /datum/ntnet/proc/resetIDS()

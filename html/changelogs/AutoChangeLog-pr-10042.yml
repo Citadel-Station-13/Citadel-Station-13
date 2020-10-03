@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed sofa overlays doing nothing, because their layer wasn't properly set."

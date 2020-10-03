@@ -132,7 +132,7 @@
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
 	density = FALSE
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0

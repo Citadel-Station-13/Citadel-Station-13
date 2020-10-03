@@ -105,10 +105,7 @@
 				if (length(code) > 5)
 					code = "ERROR"
 		add_fingerprint(usr)
-		for(var/mob/M in viewers(1, loc))
-			if ((M.client && M.machine == src))
-				attack_self(M)
-			return
+		attack_self(usr)
 	return
 
 
@@ -150,6 +147,35 @@
 	for(var/i = 0, i < STR.max_items - 2, i++)
 		new /obj/item/stack/spacecash/c1000(src)
 
+/obj/item/storage/secure/briefcase/mws_pack
+	name = "\improper \'MWS\' gun kit"
+	desc = "A storage case for a multi-purpose handgun. Variety hour!"
+
+/obj/item/storage/secure/briefcase/mws_pack/PopulateContents()
+	new /obj/item/gun/ballistic/revolver/mws(src)
+	new /obj/item/ammo_box/magazine/mws_mag(src)
+	for(var/path in subtypesof(/obj/item/ammo_casing/mws_batt))
+		new path(src)
+
+/obj/item/storage/secure/briefcase/hos/mws_pack_hos
+	name = "\improper \'MWS\' gun kit"
+	desc = "A storage case for a multi-purpose handgun. Variety hour!"
+
+/obj/item/storage/secure/briefcase/hos/mws_pack_hos/PopulateContents()
+	new /obj/item/gun/ballistic/revolver/mws(src)
+	new /obj/item/ammo_box/magazine/mws_mag(src)
+	new /obj/item/ammo_casing/mws_batt/lethal(src)
+	new /obj/item/ammo_casing/mws_batt/lethal(src)
+	new /obj/item/ammo_casing/mws_batt/stun(src)
+	new /obj/item/ammo_casing/mws_batt/stun(src)
+	new /obj/item/ammo_casing/mws_batt/ion(src)
+
+/obj/item/storage/secure/briefcase/hos/multiphase_box
+	name = "\improper X-01 Multiphase energy gun box"
+	desc = "A storage case for a high-tech energy firearm."
+
+/obj/item/storage/secure/briefcase/hos/multiphase_box/PopulateContents()
+	new /obj/item/gun/energy/e_gun/hos(src)
 
 // -----------------------------
 //        Secure Safe
@@ -158,6 +184,7 @@
 /obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
+	plane = ABOVE_WALL_PLANE
 	icon_state = "safe"
 	icon_opened = "safe0"
 	icon_locking = "safeb"
@@ -178,10 +205,7 @@
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
 
-/obj/item/storage/secure/safe/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/storage/secure/safe/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return attack_self(user)
 
 /obj/item/storage/secure/safe/HoS

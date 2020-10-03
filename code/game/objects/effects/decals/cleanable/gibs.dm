@@ -5,8 +5,9 @@
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
+	bloodiness = 0				//This isn't supposed to be bloody.
 	var/body_colors = "#e3ba84"	//a default color just in case.
-	var/gibs_reagent_id = "liquidgibs"
+	var/gibs_reagent_id = /datum/reagent/liquidgibs
 	var/gibs_bloodtype = "A+"
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
@@ -16,9 +17,8 @@
 	if(gibs_reagent_id)
 		reagents.add_reagent(gibs_reagent_id, 5)
 	if(gibs_bloodtype)
-		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype, diseases))
+		add_blood_DNA(list("Non-human DNA" = gibs_bloodtype), diseases)
 	update_icon()
-
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
 	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
@@ -44,13 +44,18 @@
 	var/list/diseases = list()
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, diseases)
 	var/direction = pick(directions)
-	for(var/i in 0 to pick(0, 200; 1, 150; 2, 50))
-		sleep(2)
-		if(i > 0)
+	var/dist = 0
+	if(prob(50))		//yes this and the one below are different for a reason.
+		if(prob(25))
+			dist = 2
+		else
+			dist = 1
+	if(dist)
+		for(var/i in 1 to dist)
 			var/obj/effect/decal/cleanable/blood/splatter/splat = new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
 			splat.transfer_blood_dna(blood_DNA, diseases)
-		if(!step_to(src, get_step(src, direction), 0))
-			break
+			if(!step_to(src, get_step(src, direction), 0))
+				break
 
 /obj/effect/decal/cleanable/blood/gibs/up
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
@@ -120,7 +125,6 @@
 //Lizards
 /obj/effect/decal/cleanable/blood/gibs/human/lizard
 	body_colors = "117720"
-	gibs_reagent_id = "liquidgibs"
 	gibs_bloodtype = "L"
 
 /obj/effect/decal/cleanable/blood/gibs/human/lizard/Initialize(mapload, list/datum/disease/diseases)
@@ -148,7 +152,7 @@
 // Slime Gibs
 /obj/effect/decal/cleanable/blood/gibs/slime
 	desc = "They look gooey and gruesome."
-	gibs_reagent_id = "liquidslimegibs"
+	gibs_reagent_id = /datum/reagent/liquidgibs/slime
 	gibs_bloodtype = "GEL"
 
 /obj/effect/decal/cleanable/blood/gibs/slime/Initialize(mapload, list/datum/disease/diseases)
@@ -187,7 +191,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/synth
 	desc = "They look sludgy and disgusting."
-	gibs_reagent_id = "liquidsyntheticgibs"
+	gibs_reagent_id = /datum/reagent/liquidgibs/synth
 	gibs_bloodtype = "SY"
 
 /obj/effect/decal/cleanable/blood/gibs/synth/Initialize(mapload, list/datum/disease/diseases)
@@ -198,7 +202,7 @@
 /obj/effect/decal/cleanable/blood/gibs/ipc
 	desc = "They look sharp yet oozing."
 	body_colors = "00ff00"
-	gibs_reagent_id = "liquidoilgibs"
+	gibs_reagent_id = /datum/reagent/liquidgibs/oil
 	gibs_bloodtype = "HF"
 
 /obj/effect/decal/cleanable/blood/gibs/ipc/Initialize(mapload, list/datum/disease/diseases)

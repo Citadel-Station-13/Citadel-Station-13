@@ -27,6 +27,7 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	update_air_ref()
 	vis_contents.Cut() //removes inherited overlays
 	visibilityChanged()
 
@@ -88,8 +89,9 @@
 /turf/open/space/proc/CanBuildHere()
 	return TRUE
 
-/turf/open/space/handle_slip()
-	return
+/turf/open/space/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+	if(lube & FLYING_DOESNT_HELP)
+		return ..()
 
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
@@ -125,16 +127,19 @@
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
-				PlaceOnTop(/turf/open/floor/plating)
+				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
-/turf/open/space/Entered(atom/movable/A)
-	..()
-	if ((!(A) || src != A.loc))
-		return
+/turf/open/space/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	
+	var/turf/old = get_turf(OldLoc)
+	if(!isspaceturf(old) && ismob(A))
+		var/mob/M = A
+		M.update_gravity(M.mob_has_gravity())
 
 	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.can_be_z_moved))
 		var/tx = destination_x
@@ -168,6 +173,12 @@
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
+/turf/open/space/Exited(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	var/turf/old = get_turf(OldLoc)
+	if(!isspaceturf(old) && ismob(AM))
+		var/mob/M = AM
+		M.update_gravity(M.mob_has_gravity())
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -212,7 +223,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			PlaceOnTop(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 

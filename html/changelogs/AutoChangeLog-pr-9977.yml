@@ -1,5 +1,0 @@
-author: "Useroth"
-delete-after: True
-changes: 
-  - rscadd: "extradimensional oranges now contain haloperidol"
-  - bugfix: "extradimensional oranges now actually grow properly and give proper seeds."

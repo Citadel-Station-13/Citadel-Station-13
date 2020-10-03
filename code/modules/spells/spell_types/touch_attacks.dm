@@ -1,6 +1,8 @@
 /obj/effect/proc_holder/spell/targeted/touch
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
+	var/drawmessage = "You channel the power of the spell to your hand."
+	var/dropmessage = "You draw the power out of your hand."
 	invocation_type = "none" //you scream on connecting, not summoning
 	include_user = 1
 	range = -1
@@ -21,9 +23,9 @@
 /obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
 	if(!QDELETED(attached_hand))
 		remove_hand(TRUE)
-		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
+		to_chat(user, "<span class='notice'>[dropmessage]</span>")
 		return
-	
+
 	for(var/mob/living/carbon/C in targets)
 		if(!attached_hand)
 			if(ChargeHand(C))
@@ -43,7 +45,7 @@
 		remove_hand(TRUE)
 		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
-	to_chat(user, "<span class='notice'>You channel the power of the spell to your hand.</span>")
+	to_chat(user, "<span class='notice'>[drawmessage]</span>")
 	return TRUE
 
 
@@ -54,7 +56,6 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -66,8 +67,19 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/nuclear_fist
+	name = "Nuclear Fist"
+	desc = "This spell channels raw manliness, allowing you punch your enemies across the galaxy, causing them to detonate violently if hitting any other living being midflight. Does not work while laying down."
+	hand_path = /obj/item/melee/touch_attack/nuclearfist
+
+	school = "evocation"
+	charge_max = 100
+	clothes_req = NONE
+	cooldown_min = 20
+
+	action_icon_state = "nuclearfist"

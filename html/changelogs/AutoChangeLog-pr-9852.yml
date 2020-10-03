@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Wizards can use the teleport spell from their den once again."
-  - tweak: "Wizards will now receive feedback messages when attempting to cast teleport or use the warp whistle while in a no-teleport area."

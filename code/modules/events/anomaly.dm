@@ -8,7 +8,7 @@
 
 /datum/round_event/anomaly
 	var/area/impact_area
-	var/obj/effect/anomaly/newAnomaly
+	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
 	announceWhen	= 1
 
 
@@ -27,7 +27,7 @@
 
 		//Subtypes from the above that actually should explode.
 		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
-		
+
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 
 	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
@@ -44,6 +44,9 @@
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = safepick(get_area_turfs(impact_area))
+	var/turf/T = pick(get_area_turfs(impact_area))
+	var/newAnomaly
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T)
+		newAnomaly = new anomaly_path(T)
+	if (newAnomaly)
+		announce_to_ghosts(newAnomaly)

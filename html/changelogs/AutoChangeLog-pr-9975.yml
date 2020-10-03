@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscdel: "Removed a few useless supply packs: \"Siezed\" power cells, means of production and promiscous organs."
-  - tweak: "Merged the synthetic blood supply pack into the standard blood supply pack, effectively removing a random type blood pack in favor of two synthetic ones."
-  - tweak: "Merged together premium carpet pack n°1 and n°2 to hold one of each standard pattern."

@@ -68,8 +68,8 @@
 
 /obj/item/clockwork/replica_fabricator/pre_attack(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/storage))
-		return TRUE
-	return fabricate(target, user)
+		return ..()
+	return !fabricate(target, user)
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
 /obj/item/clockwork/replica_fabricator/proc/fabricate(atom/target, mob/living/user, silent, no_table_check)
@@ -139,7 +139,7 @@
 	var/new_thing_type = fabrication_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
-		T.ChangeTurf(new_thing_type)
+		T.ChangeTurf(new_thing_type, flags = CHANGETURF_INHERIT_AIR)
 	else
 		if(new_thing_type)
 			if(fabrication_values["dir_in_new"])

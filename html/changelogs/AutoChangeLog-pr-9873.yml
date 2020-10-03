@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed closing the aux base construction RCD's door access settings window throwing you out of camera mode when closed."
-  - rscdel: "Removed not functional aux base RCD's door type menu. Use airlock painters, maybe."

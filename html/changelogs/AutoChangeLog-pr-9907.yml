@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - bugfix: "VR mobs can no longer be dynamic midround antags."

@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - bugfix: "Personal closets can use anything that holds an ID card now."

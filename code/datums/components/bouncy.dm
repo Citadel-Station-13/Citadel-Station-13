@@ -4,7 +4,7 @@
 	var/list/bounce_signals = list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_HIT_REACT, COMSIG_ITEM_ATTACK)
 
 /datum/component/bouncy/Initialize(_bouncy_mod, list/_bounce_signals)
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(_bouncy_mod)
 		bouncy_mod = _bouncy_mod
@@ -21,9 +21,11 @@
 			RegisterSignal(parent, bounce, .proc/bounce_up)
 
 /datum/component/bouncy/RegisterWithParent()
+	. = ..()
 	RegisterSignal(parent, bounce_signals, .proc/bounce_up)
 
 /datum/component/bouncy/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, bounce_signals)
 
 /datum/component/bouncy/proc/bounce_up(datum/source)

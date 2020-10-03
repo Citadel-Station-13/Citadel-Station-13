@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - tweak: "Moved the `Stealth and Camouflage Items` uplink category next to `Devices and Tools`."
-  - bugfix: "Deleted a duplicate phatom thief mask entry from the uplink."

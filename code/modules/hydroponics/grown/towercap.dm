@@ -16,6 +16,7 @@
 	icon_dead = "towercap-dead"
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
+	reagents_add = list(/datum/reagent/cellulose = 0.05)
 
 /obj/item/seeds/tower/steel
 	name = "pack of steel-cap mycelium"
@@ -25,10 +26,8 @@
 	plantname = "Steel Caps"
 	product = /obj/item/grown/log/steel
 	mutatelist = list()
+	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
 	rarity = 20
-
-
-
 
 /obj/item/grown/log
 	seed = /obj/item/seeds/tower
@@ -98,6 +97,49 @@
 /obj/item/grown/log/steel/CheckAccepted(obj/item/I)
 	return FALSE
 
+/obj/item/seeds/bamboo
+	name = "pack of bamboo seeds"
+	desc = "A plant known for its flexible and resistant logs."
+	icon_state = "seed-bamboo"
+	species = "bamboo"
+	plantname = "Bamboo"
+	product = /obj/item/grown/log/bamboo
+	lifespan = 80
+	endurance = 70
+	maturation = 15
+	production = 2
+	yield = 5
+	potency = 50
+	growthstages = 2
+	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	icon_dead = "bamboo-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+
+/obj/item/grown/log/bamboo
+	seed = /obj/item/seeds/bamboo
+	name = "bamboo log"
+	desc = "A long and resistant bamboo log."
+	icon_state = "bamboo"
+	plank_type = /obj/item/stack/sheet/mineral/bamboo
+	plank_name = "bamboo sticks"
+
+/obj/item/grown/log/bamboo/CheckAccepted(obj/item/I)
+	return FALSE
+
+/obj/structure/punji_sticks
+	name = "punji sticks"
+	desc = "Don't step on this."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "punji"
+	resistance_flags = FLAMMABLE
+	max_integrity = 30
+	density = FALSE
+	anchored = TRUE
+
+/obj/structure/punji_sticks/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, 20, 30, 100, CALTROP_BYPASS_SHOES)
+
 /////////BONFIRES//////////
 
 /obj/structure/bonfire
@@ -159,16 +201,13 @@
 				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				W.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-				W.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 		else
 			return ..()
 
 
-/obj/structure/bonfire/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/bonfire/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(burning)
 		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!</span>")
 		return
@@ -186,8 +225,8 @@
 	if(isopenturf(loc))
 		var/turf/open/O = loc
 		if(O.air)
-			var/loc_gases = O.air.gases
-			if(loc_gases[/datum/gas/oxygen] > 13)
+			var/datum/gas_mixture/loc_air = O.air
+			if(loc_air.get_moles(/datum/gas/oxygen) > 13)
 				return TRUE
 	return FALSE
 
@@ -232,6 +271,9 @@
 		else if(istype(A, /obj/item) && prob(20))
 			var/obj/item/O = A
 			O.microwave_act()
+		else if(istype(A, /obj/item/grown/log))
+			qdel(A)
+			new /obj/item/stack/sheet/mineral/coal(loc, 1)
 
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())

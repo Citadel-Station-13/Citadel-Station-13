@@ -19,6 +19,11 @@
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
+/obj/machinery/telecomms/hub/RefreshParts()
+	idle_power_usage = 80
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 5) //Has 2 manipulators
+
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(!is_freq_listening(signal))
 		return

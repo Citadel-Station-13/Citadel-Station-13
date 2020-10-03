@@ -1,6 +1,5 @@
 /mob/living/simple_animal/hostile/megafauna/dragon
 	vore_active = TRUE
-	no_vore = FALSE
 	isPredator = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()

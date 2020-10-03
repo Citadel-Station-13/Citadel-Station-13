@@ -2,10 +2,19 @@
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
+//This proc has been butchered into a proc that overrides borg item holding for the sake of making grippers work.
+//I'd be immensely thankful if anyone can figure out a less obtuse way of making grippers work without breaking functionality.
 /mob/living/silicon/robot/get_active_held_item()
+	var/item = module_active
+	if(istype(item, /obj/item/weapon/gripper))
+		var/obj/item/weapon/gripper/G = item
+		if(G.wrapped)
+			if(G.wrapped.loc != G)
+				G.wrapped = null
+				return module_active
+			item = G.wrapped
+			return item
 	return module_active
-
-
 
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
@@ -21,7 +30,7 @@
 	if(istype(O,/obj/item/gun/energy/laser/cyborg))
 		laser = FALSE
 		update_icons()
-	else if(istype(O,/obj/item/gun/energy/disabler/cyborg))
+	else if(istype(O,/obj/item/gun/energy/disabler/cyborg) || istype(O,/obj/item/gun/energy/e_gun/advtaser/cyborg))
 		disabler = FALSE
 		update_icons() //PUT THE GUN AWAY
 	else if(istype(O,/obj/item/dogborg/sleeper))
@@ -63,22 +72,22 @@
 	if(istype(O,/obj/item/gun/energy/laser/cyborg))
 		laser = TRUE
 		update_icons() //REEEEEEACH FOR THE SKY
-	if(istype(O,/obj/item/gun/energy/disabler/cyborg))
+	if(istype(O,/obj/item/gun/energy/disabler/cyborg) || istype(O,/obj/item/gun/energy/e_gun/advtaser/cyborg))
 		disabler = TRUE
 		update_icons()
 	//END CITADEL EDIT
 	if(activated(O))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
-	if(!held_items[1])
+	if(!held_items[1] && health >= -maxHealth*0.5)
 		held_items[1] = O
 		O.screen_loc = inv1.screen_loc
 		. = TRUE
-	else if(!held_items[2])
+	else if(!held_items[2] && health >= 0)
 		held_items[2] = O
 		O.screen_loc = inv2.screen_loc
 		. = TRUE
-	else if(!held_items[3])
+	else if(!held_items[3] && health >= maxHealth*0.5)
 		held_items[3] = O
 		O.screen_loc = inv3.screen_loc
 		. = TRUE

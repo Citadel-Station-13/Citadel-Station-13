@@ -22,7 +22,7 @@
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	repeatable = TRUE
 	time = 75
-	chems_needed = list("synthtissue")
+	chems_needed = list(/datum/reagent/synthtissue)
 	var/obj/item/organ/chosen_organ
 	var/health_restored = 10
 
@@ -41,7 +41,7 @@
 			chosen_organ = organs[chosen_organ]
 			if(!chosen_organ)
 				return -1
-			if(!target.reagents.has_reagent("synthtissue"))
+			if(!target.reagents.has_reagent(/datum/reagent/synthtissue))
 				to_chat(user, "<span class='notice'>There's no synthtissue available for use on [chosen_organ]</span>")
 				return -1
 			var/datum/reagent/synthtissue/Sf = locate(/datum/reagent/synthtissue) in target.reagents.reagent_list
@@ -58,7 +58,7 @@
 			health_restored += (Sf.data["grown_volume"]/10)
 
 	user.visible_message("[user] begins to graft synthtissue onto [chosen_organ].</span>")
-	target.reagents.remove_reagent("synthtissue", 10)
+	target.reagents.remove_reagent(/datum/reagent/synthtissue, 10)
 
 /datum/surgery_step/graft_synthtissue/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully grafts synthtissue to [chosen_organ].", "<span class='notice'>You succeed in grafting 10u of the synthflesh to the [chosen_organ].</span>")

@@ -4,7 +4,7 @@
 	mid_sounds = list('sound/machines/shower/shower_mid1.ogg'=1,'sound/machines/shower/shower_mid2.ogg'=1,'sound/machines/shower/shower_mid3.ogg'=1)
 	mid_length = 10
 	end_sound = 'sound/machines/shower/shower_end.ogg'
-	volume = 20
+	volume = 10
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,7 +32,7 @@
 	mid_sounds = list('sound/machines/fryer/deep_fryer_1.ogg' = 1, 'sound/machines/fryer/deep_fryer_2.ogg' = 1)
 	mid_length = 2
 	end_sound = 'sound/machines/fryer/deep_fryer_emerge.ogg'
-	volume = 15
+	volume = 5
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,3 +43,12 @@
 	mid_length = 10
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/grill
+	mid_length = 2
+	mid_sounds = list('sound/machines/fryer/deep_fryer_1.ogg' = 1, 'sound/machines/fryer/deep_fryer_2.ogg' = 1)
+	volume = 10
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

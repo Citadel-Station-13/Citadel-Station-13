@@ -3,13 +3,14 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/fix_eyes, /datum/surgery_step/close)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
-	requires_bodypart_type = 0
+	requires_bodypart_type = BODYPART_ORGANIC
+
 //fix eyes
 /datum/surgery_step/fix_eyes
 	name = "fix eyes"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 45, /obj/item/pen = 25)
 	time = 64
-/datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		to_chat(user, "It's hard to do surgery on someone's eyes when [target.p_they()] [target.p_do()]n't have any.")
@@ -22,6 +23,7 @@
 		"[user] begins to perform surgery on [target]'s eyes.")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	var/obj/item/organ/eyes/E = target.getorganslot(ORGAN_SLOT_EYES)
 	display_results(user, target, "<span class='notice'>You succeed in fixing [target]'s eyes.</span>",
 		"[user] successfully fixes [target]'s eyes!",
 		"[user] completes the surgery on [target]'s eyes.")
@@ -29,7 +31,7 @@
 	target.set_blindness(0)
 	target.cure_nearsighted(list(EYE_DAMAGE))
 	target.blur_eyes(35)	//this will fix itself slowly.
-	target.set_eye_damage(0)
+	E.setOrganDamage(0)
 	return TRUE
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

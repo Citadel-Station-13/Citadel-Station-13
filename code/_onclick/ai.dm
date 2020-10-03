@@ -19,10 +19,6 @@
 		A.move_camera_by_click()
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(!can_interact_with(A))
 		return
 
@@ -49,6 +45,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [ADMIN_VERBOSEJMP(pixel_turf)]))")
 		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A] (Turf Loc: [AREACOORD(pixel_turf)]))"
 		log_admin(message)
+		to_chat(src, "<span class='warning'>You're experiencing a bug. Reconnect immediately to fix it. Admins have been notified.</span>")
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
 			send2irc_adminless_only("NOCHEAT", message)
@@ -73,16 +70,16 @@
 		CtrlClickOn(A)
 		return
 
-	if(world.time <= next_move)
+	if(!CheckActionCooldown(immediate = TRUE))
 		return
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(pixel_turf, usr)
+		INVOKE_ASYNC(aicamera, /obj/item/camera.proc/captureimage, pixel_turf, usr)
 		return
 	if(waypoint_mode)
-		waypoint_mode = 0
-		set_waypoint(A)
+		waypoint_mode = FALSE
+		INVOKE_ASYNC(src, .proc/set_waypoint, A)
 		return
 
 	A.attack_ai(src)
@@ -93,8 +90,9 @@
 	The below is only really for safety, or you can alter the way
 	it functions and re-insert it above.
 */
-/mob/living/silicon/ai/UnarmedAttack(atom/A)
+/mob/living/silicon/ai/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	A.attack_ai(src)
+
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
@@ -115,6 +113,7 @@
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(var/atom/A)
 	A.AIAltClick(src)
+	
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
@@ -125,9 +124,10 @@
 /* Atom Procs */
 /atom/proc/AICtrlClick()
 	return
+
 /atom/proc/AIAltClick(mob/living/silicon/ai/user)
-	AltClick(user)
-	return
+	return AltClick(user)
+
 /atom/proc/AIShiftClick()
 	return
 /atom/proc/AICtrlShiftClick()
@@ -138,10 +138,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(locked)
-		bolt_raise(usr)
-	else
-		bolt_drop(usr)
+	toggle_bolt(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(obj_flags & EMAGGED)
@@ -151,6 +148,7 @@
 		shock_perm(usr)
 	else
 		shock_restore(usr)
+	return TRUE
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(obj_flags & EMAGGED)
@@ -162,10 +160,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(!emergency)
-		emergency_on(usr)
-	else
-		emergency_off(usr)
+	toggle_emergency(usr)
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
@@ -185,10 +180,12 @@
 		return
 	toggle_on()
 	add_fingerprint(usr)
+	return TRUE
 
 /* Holopads */
 /obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
 	hangup_all_calls()
+	return TRUE
 
 //
 // Override TurfAdjacent for AltClicking

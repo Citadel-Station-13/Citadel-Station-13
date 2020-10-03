@@ -7,12 +7,12 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = 0
+	requires_bodypart_type = BODYPART_ORGANIC
 
 /datum/surgery_step/embalming
 	name = "embalming body"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35)
-	chems_needed = list("drying_agent", "sterilizine")
+	chems_needed = list(/datum/reagent/drying_agent, /datum/reagent/space_cleaner/sterilizine)
 	require_all_chems = FALSE
 
 /datum/surgery_step/embalming/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

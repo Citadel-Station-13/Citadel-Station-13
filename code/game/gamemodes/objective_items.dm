@@ -36,6 +36,7 @@
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list("Head Of Security")
+	altitems = list(/obj/item/gun/ballistic/revolver/mws, /obj/item/choice_beacon/hosgun) //We now look for either the alt verson of the hos gun or the beacon picker.
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter."
@@ -93,6 +94,11 @@
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
 
+/datum/objective_item/steal/blackbox
+	name = "the black box from the onboard blackbox recording device. Take care to wear the proper safety equipment when extracting the black box as the telecommunications array is likely to be under inhospitable conditions."
+	targetitem = /obj/item/blackbox //steal the forbidden ssblackbox
+	difficulty = 10
+
 /datum/objective_item/steal/nuke_core
 	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core!"
 	targetitem = /obj/item/nuke_core
@@ -124,7 +130,7 @@
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
-	found_amount += T.air_contents.gases[/datum/gas/plasma]
+	found_amount += T.air_contents.get_moles(/datum/gas/plasma)
 	return found_amount>=target_amount
 
 
@@ -205,13 +211,18 @@
 	difficulty = 10
 
 /datum/objective_item/special/boh
-	name = "a bag of holding."
+	name = "a type of bag of holding."
 	targetitem = /obj/item/storage/backpack/holding
 	difficulty = 10
 
-/datum/objective_item/special/hypercell
-	name = "a hyper-capacity power cell."
-	targetitem = /obj/item/stock_parts/cell/hyper
+/datum/objective_item/special/adv_surgical_drapes
+	name = "a set of smart surgical drapes."
+	targetitem = /obj/item/surgical_drapes/advanced
+	difficulty = 10 //would be 15 but cmo rarely have it on themselfs and leave it in their lockers...
+
+/datum/objective_item/special/bluespace
+	name = "a bluespace power cell."
+	targetitem = /obj/item/stock_parts/cell/bluespace
 	difficulty = 5
 
 /datum/objective_item/special/laserpointer

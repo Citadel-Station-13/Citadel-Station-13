@@ -1,32 +1,45 @@
-/datum/gear/stethoscope
+/datum/gear/hands/medicbriefcase
 	name = "Medical Briefcase"
-	category = SLOT_HANDS
 	path = /obj/item/storage/briefcase/medical
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+	restricted_desc = "MD, CMO"
 
-/datum/gear/stethoscope
+/datum/gear/neck/stethoscope
 	name = "Stethoscope"
-	category = SLOT_NECK
 	path = /obj/item/clothing/neck/stethoscope
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
 
-/datum/gear/bluescrubs
+/datum/gear/uniform/bluescrubs
 	name = "Blue Scrubs"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/medical/blue
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
-	restricted_desc = "Medical"
-	
-/datum/gear/greenscrubs
-	name = "Green Scrubs"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/medical/green
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	path = /obj/item/clothing/under/rank/medical/doctor/blue
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
 	restricted_desc = "Medical"
 
-/datum/gear/purplescrubs
+/datum/gear/uniform/greenscrubs
+	name = "Green Scrubs"
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	path = /obj/item/clothing/under/rank/medical/doctor/green
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/uniform/purplescrubs
 	name = "Purple Scrubs"
-	category = SLOT_W_UNIFORM
-	path = /obj/item/clothing/under/rank/medical/purple
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	path = /obj/item/clothing/under/rank/medical/doctor/purple
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/head/nursehat
+	name = "Nurse Hat"
+	path = /obj/item/clothing/head/nursehat
+	subcategory = LOADOUT_SUBCATEGORY_HEAD_JOBS
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
+	restricted_desc = "Medical"
+
+/datum/gear/uniform/nursesuit
+	name = "Nurse Suit"
+	path = /obj/item/clothing/under/rank/medical/doctor/nurse
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Geneticist", "Chemist", "Virologist")
 	restricted_desc = "Medical"

@@ -8,18 +8,49 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
+	automatic_burst_overlay = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/pistol/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
 	var/obj/item/suppressor/S = new(src)
 	install_suppressor(S)
+
+//(reskinnable stetchkin)
+/obj/item/gun/ballistic/automatic/pistol/modular
+	name = "modular pistol"
+	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "cde"
+	can_unsuppress = TRUE
+	automatic_burst_overlay = FALSE
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Default" = "cde",
+						"N-99" = "n99",
+						"Stealth" = "stealthpistol",
+						"HKVP-78" = "vp78",
+						"Luger" = "p08b",
+						"Mk.58" = "secguncomp",
+						"PX4 Storm" = "px4"
+						)
+
+/obj/item/gun/ballistic/automatic/pistol/modular/update_icon_state()
+	if(current_skin)
+		icon_state = "[unique_reskin[current_skin]][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	else
+		icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+
+/obj/item/gun/ballistic/automatic/pistol/modular/update_overlays()
+	. = ..()
+	if(magazine && suppressed)
+		. += "[unique_reskin[current_skin]]-magazine-sup"	//Yes, this means the default iconstate can't have a magazine overlay
+	else if (magazine)
+		. += "[unique_reskin[current_skin]]-magazine"
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -45,14 +76,14 @@
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
+	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/pistol/deagle/update_overlays()
+	. = ..()
 	if(magazine)
-		cut_overlays()
-		add_overlay("deagle_magazine")
-	else
-		cut_overlays()
+		. += "deagle_magazine"
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
@@ -79,9 +110,11 @@
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
 	desc = "A 2 dimensional gun.. what?"
+	can_suppress = FALSE
 	icon_state = "flatgun"
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
+	. = ..()
 	to_chat(user, "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>")
 	if(prob(50))
 		to_chat(user, "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>")
@@ -91,3 +124,34 @@
 		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
 
+////////////Anti Tank Pistol////////////
+
+/obj/item/gun/ballistic/automatic/pistol/antitank
+	name = "Anti Tank Pistol"
+	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate your wrist."
+	icon = 'modular_citadel/icons/obj/guns/cit_guns.dmi'
+	icon_state = "atp"
+	item_state = "pistol"
+	recoil = 4
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	fire_delay = 50
+	burst_size = 1
+	can_suppress = 0
+	w_class = WEIGHT_CLASS_NORMAL
+	actions_types = list()
+	fire_sound = 'sound/weapons/blastcannon.ogg'
+	spread = 20		//damn thing has no rifling.
+	automatic_burst_overlay = FALSE
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/update_overlays()
+	. = ..()
+	if(magazine)
+		. += "atp-mag"
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/update_icon_state()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
+	name = "Syndicate Anti Tank Pistol"
+	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
+	pin = /obj/item/firing_pin/implant/pindicate

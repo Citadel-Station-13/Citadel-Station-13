@@ -1,7 +1,8 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = INTENT_HARM
-	friendly = "heals"
+	friendly_verb_continuous = "heals"
+	friendly_verb_simple = "heal"
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you have 30% damage reduction and may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
@@ -17,11 +18,10 @@
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
 
-/mob/living/simple_animal/hostile/guardian/healer/Stat()
-	..()
-	if(statpanel("Status"))
-		if(beacon_cooldown >= world.time)
-			stat(null, "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/healer/get_status_tab_items()
+	. = ..()
+	if(beacon_cooldown >= world.time)
+		. += "Beacon Cooldown Remaining: [DisplayTimeText(beacon_cooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
@@ -32,8 +32,8 @@
 		C.adjustOxyLoss(-5)
 		C.adjustToxLoss(-5, forced = TRUE)
 		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(C))
-		if(namedatum)
-			H.color = namedatum.colour
+		if(guardiancolor)
+			H.color = guardiancolor
 		if(C == summoner)
 			update_health_hud()
 			med_hud_set_health()
@@ -96,8 +96,8 @@
 
 /obj/structure/receiving_pad/New(loc, mob/living/simple_animal/hostile/guardian/healer/G)
 	. = ..()
-	if(G.namedatum)
-		add_atom_colour(G.namedatum.colour, FIXED_COLOUR_PRIORITY)
+	if(G.guardiancolor)
+		add_atom_colour(G.guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/receiving_pad/proc/disappear()
 	visible_message("[src] vanishes!")
@@ -105,8 +105,9 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
 	if(!istype(A))
+		AltClickNoInteract(src, A)
 		return
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")
 		return
 	if(!beacon)

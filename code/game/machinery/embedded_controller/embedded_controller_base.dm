@@ -29,11 +29,8 @@
 	. = ..()
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(return_text())
 	popup.open()
-
-/obj/machinery/embedded_controller/update_icon()
 
 /obj/machinery/embedded_controller/proc/return_text()
 

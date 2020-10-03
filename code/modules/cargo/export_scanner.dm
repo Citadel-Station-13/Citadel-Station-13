@@ -36,6 +36,8 @@
 		var/price = 0
 		for(var/x in ex.total_amount)
 			price += ex.total_value[x]
+		for(var/x in ex.reagents_value)
+			price += ex.reagents_value[x]
 
 		if(price)
 			to_chat(user, "<span class='notice'>Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""].</span>")

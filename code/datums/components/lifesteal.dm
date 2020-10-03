@@ -10,6 +10,7 @@
 	src.flat_heal = flat_heal
 
 /datum/component/lifesteal/RegisterWithParent()
+	. = ..()
 	if(isgun(parent))
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(parent))
@@ -18,6 +19,7 @@
 		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
 /datum/component/lifesteal/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/lifesteal/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

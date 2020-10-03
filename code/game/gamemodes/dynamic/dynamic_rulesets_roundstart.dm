@@ -21,6 +21,8 @@
 	requirements = list(50,50,50,50,50,50,50,50,50,50)
 	high_population_requirement = 40
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
+	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1, "valid" = 1)
+	always_max_weight = TRUE
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
@@ -60,6 +62,7 @@
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	antag_cap = list(2,2,2,2,2,2,2,2,2,2)	// Can pick 3 per team, but rare enough it doesn't matter.
+	property_weights = list("story_potential" = 1, "trust" = -1, "extended" = 1, "valid" = 1)
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
 
@@ -107,6 +110,7 @@
 	cost = 15
 	scaling_cost = 15
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	property_weights = list("trust" = -2, "valid" = 2)
 	high_population_requirement = 10
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
 	var/team_mode_probability = 30
@@ -141,6 +145,48 @@
 
 //////////////////////////////////////////////
 //                                          //
+//              ELDRITCH CULT               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/heretics
+	name = "Heretics"
+	antag_flag = "heretic"
+	antag_datum = /datum/antagonist/heretic
+	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("AI", "Cyborg")
+	required_candidates = 1
+	weight = 3
+	cost = 25
+	scaling_cost = 15
+	requirements = list(60,60,60,55,50,50,50,50,50,50)
+	property_weights = list("story_potential" = 1, "trust" = -1, "chaos" = 2, "extended" = -1, "valid" = 2)
+	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
+	high_population_requirement = 50
+
+
+/datum/dynamic_ruleset/roundstart/heretics/pre_execute()
+	. = ..()
+	var/num_ecult = antag_cap[indice_pop] * (scaled_times + 1)
+
+	for (var/i = 1 to num_ecult)
+		var/mob/picked_candidate = pick_n_take(candidates)
+		assigned += picked_candidate.mind
+		picked_candidate.mind.restricted_roles = restricted_roles
+		picked_candidate.mind.special_role = ROLE_HERETIC
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/heretics/execute()
+
+	for(var/c in assigned)
+		var/datum/mind/cultie = c
+		var/datum/antagonist/heretic/new_antag = new antag_datum()
+		cultie.add_antag_datum(new_antag)
+
+	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
 //               WIZARDS                    //
 //                                          //
 //////////////////////////////////////////////
@@ -159,6 +205,7 @@
 	cost = 30
 	requirements = list(101,101,101,60,50,50,50,50,50,50)
 	high_population_requirement = 50
+	property_weights = list("story_potential" = 2, "trust" = 1, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
@@ -221,6 +268,7 @@
 	weight = 3
 	cost = 30
 	requirements = list(101,101,101,80,70,60,50,50,50,50)
+	property_weights = list("story_potential" = -1, "trust" = -1, "chaos" = 1, "conversion" = 1, "extended" = -2, "valid" = 2)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,2,2,3,3,4,4,4,4,4)
@@ -282,6 +330,7 @@
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(1,1,2,3,4,5,5,5,5,5)
+	property_weights = list("story_potential" = 2, "trust" = 2, "chaos" = 2, "extended" = -2, "valid" = 2)
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
@@ -372,6 +421,7 @@
 	flags = HIGHLANDER_RULESET
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
+	property_weights = list("trust" = -2, "chaos" = 2, "extended" = -2, "valid" = 2, "conversion" = 1)
 	var/datum/team/revolution/revolution
 	var/finished = FALSE
 
@@ -489,6 +539,7 @@
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	property_weights = list("extended" = 2)
 	high_population_requirement = 101
 
 /datum/dynamic_ruleset/roundstart/extended/pre_execute()
@@ -516,6 +567,7 @@
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	antag_cap = list(2,3,3,4,4,4,4,4,4,4)
+	property_weights = list("trust" = 2, "chaos" = 2, "extended" = -2, "conversion" = 1, "valid" = 2)
 	var/ark_time
 
 /datum/dynamic_ruleset/roundstart/clockcult/pre_execute()
@@ -613,8 +665,9 @@
 	config_tag = "clownops"
 	antag_datum = /datum/antagonist/nukeop/clownop
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
-	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	high_population_requirement = 101
+	weight = 1
+	property_weights = list("trust" = 2, "chaos" = 2, "extended" = -2, "story_potential" = 2, "valid" = 2)
+
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
@@ -646,6 +699,7 @@
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
 	antag_cap = list(1,1,1,2,2,2,3,3,3,4)
+	property_weights = list("extended" = 1)
 
 /datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	var/num_devils = antag_cap[indice_pop]
@@ -697,6 +751,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
+	property_weights = list("extended" = -2, "chaos" = 2, "conversion" = 1, "valid" = 2)
 	var/players_per_carrier = 30
 	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
@@ -758,6 +813,7 @@
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 	high_population_requirement = 101
+	property_weights = list("extended" = -2, "chaos" = 2, "trust" = 2)
 	var/meteordelay = 2000
 	var/nometeors = 0
 	var/rampupdelta = 5
@@ -775,6 +831,45 @@
 	if (prob(meteorminutes/2))
 		wavetype = GLOB.meteors_catastrophic
 
-	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
+	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
+
+//////////////////////////////////////////////
+//                                          //
+//              BLOODSUCKERS                //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/bloodsucker
+	name = "Bloodsuckers"
+	config_tag = "bloodsucker"
+	antag_flag = ROLE_BLOODSUCKER
+	antag_datum = ANTAG_DATUM_BLOODSUCKER
+	minimum_required_age = 0
+	protected_roles = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	restricted_roles = list("Cyborg", "AI")
+	required_candidates = 1
+	weight = 2
+	cost = 15
+	scaling_cost = 10
+	property_weights = list("story_potential" = 1, "extended" = 1, "trust" = -2, "valid" = 1)
+	requirements = list(70,65,60,55,50,50,50,50,50,50)
+	high_population_requirement = 50
+	antag_cap = list(1,1,1,1,1,2,2,2,2,2)
+
+/datum/dynamic_ruleset/roundstart/bloodsucker/pre_execute()
+	var/num_bloodsuckers = antag_cap[indice_pop] * (scaled_times + 1)
+	for (var/i = 1 to num_bloodsuckers)
+		var/mob/M = pick_n_take(candidates)
+		assigned += M.mind
+		M.mind.special_role = ROLE_BLOODSUCKER
+		M.mind.restricted_roles = restricted_roles
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/bloodsucker/execute()
+	mode.check_start_sunlight()
+	for(var/datum/mind/M in assigned)
+		if(mode.make_bloodsucker(M))
+			mode.bloodsuckers += M
+	return TRUE

@@ -27,13 +27,14 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/zombie_infection/Remove(special = FALSE)
+	if(owner)
+		if(iszombie(owner) && old_species)
+			owner.set_species(old_species)
+		if(timer_id)
+			deltimer(timer_id)
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
-	if(iszombie(M) && old_species)
-		M.set_species(old_species)
-	if(timer_id)
-		deltimer(timer_id)
+	STOP_PROCESSING(SSobj, src) //Required to be done after the parent call to avoid conflicts with organ decay.
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
@@ -45,6 +46,8 @@
 		return
 	if(!(src in owner.internal_organs))
 		Remove(owner)
+	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
+		return
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
 		owner.adjustToxLoss(1)
 		if (prob(10))
@@ -90,7 +93,8 @@
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	owner.do_jitter_animation(living_transformation_time)
 	owner.Stun(living_transformation_time)
-	to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")
+	to_chat(owner, "<span class='alertalien'>You are now a zombie! You claw and bite, turning your fellow crewmembers into friends that help spread the plague.</span>")
+	to_chat(owner, "<span class='alertwarning'>You are a zombie. Please act like one. Letting the crew remove the tumor inside your brain is a dick move to whoever infected you. Please do not do it.</span>")
 
 /obj/item/organ/zombie_infection/nodamage
 	causes_damage = FALSE

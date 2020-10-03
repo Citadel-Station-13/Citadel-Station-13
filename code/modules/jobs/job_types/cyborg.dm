@@ -5,12 +5,14 @@
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 0
-	spawn_positions = 1
+	spawn_positions = 3
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
 	minimal_player_age = 21
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 

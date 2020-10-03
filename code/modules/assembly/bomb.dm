@@ -19,15 +19,17 @@
 /obj/item/onetankbomb/examine(mob/user)
 	bombtank.examine(user)
 
-/obj/item/onetankbomb/update_icon()
-	cut_overlays()
+/obj/item/onetankbomb/update_icon_state()
 	if(bombtank)
 		icon = bombtank.icon
 		icon_state = bombtank.icon_state
+
+/obj/item/onetankbomb/update_overlays()
+	. = ..()
 	if(bombassembly)
-		add_overlay(bombassembly.icon_state)
-		copy_overlays(bombassembly)
-		add_overlay("bomb_assembly")
+		. += bombassembly.icon_state
+		. += bombassembly.overlays
+		. += "bomb_assembly"
 
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
@@ -51,8 +53,8 @@
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
-		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.return_temperature()-T0C]"
+		message_admins("[ADMIN_LOOKUPFLW(user)] welded a single tank bomb. Temp: [bombtank.air_contents.return_temperature()-T0C]")
 		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
 		add_fingerprint(user)
 		return TRUE
@@ -60,6 +62,7 @@
 
 /obj/item/onetankbomb/analyzer_act(mob/living/user, obj/item/I)
 	bombtank.analyzer_act(user, I)
+	return TRUE
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
@@ -88,7 +91,7 @@
 	if(bombassembly)
 		bombassembly.on_found(finder)
 
-/obj/item/onetankbomb/attack_hand() //also for mousetraps
+/obj/item/onetankbomb/on_attack_hand() //also for mousetraps
 	. = ..()
 	if(.)
 		return
@@ -101,10 +104,10 @@
 		bombassembly.setDir(dir)
 		bombassembly.Move()
 
-/obj/item/onetankbomb/dropped()
+/obj/item/onetankbomb/dropped(mob/user)
 	. = ..()
 	if(bombassembly)
-		bombassembly.dropped()
+		bombassembly.dropped(user)
 
 
 
@@ -143,8 +146,7 @@
 	return
 
 /obj/item/tank/proc/ignite()	//This happens when a bomb is told to explode
-	var/fuel_moles = air_contents.gases[/datum/gas/plasma] + air_contents.gases[/datum/gas/oxygen]/6
-	GAS_GARBAGE_COLLECT(air_contents.gases)
+	var/fuel_moles = air_contents.get_moles(/datum/gas/plasma) + air_contents.get_moles(/datum/gas/oxygen)/6
 	var/datum/gas_mixture/bomb_mixture = air_contents.copy()
 	var/strength = 1
 
@@ -154,7 +156,7 @@
 		qdel(master)
 	qdel(src)
 
-	if(bomb_mixture.temperature > (T0C + 400))
+	if(bomb_mixture.return_temperature() > (T0C + 400))
 		strength = (fuel_moles/15)
 
 		if(strength >=1)
@@ -167,7 +169,7 @@
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(bomb_mixture.temperature > (T0C + 250))
+	else if(bomb_mixture.return_temperature() > (T0C + 250))
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
@@ -178,7 +180,7 @@
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
 
-	else if(bomb_mixture.temperature > (T0C + 100))
+	else if(bomb_mixture.return_temperature() > (T0C + 100))
 		strength = (fuel_moles/25)
 
 		if (strength >=1)

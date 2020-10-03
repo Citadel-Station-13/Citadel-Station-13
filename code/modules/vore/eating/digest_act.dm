@@ -71,14 +71,6 @@
 /////////////
 // Some special treatment
 /////////////
-/*
-//PDAs need to lose their ID to not take it with them, so we can get a digested ID
-/obj/item/pda/digest_act(var/atom/movable/item_storage = null)
-	if(id)
-		id = null
-
-	. = ..()
-*/
 
 /obj/item/reagent_containers/food/digest_act(var/atom/movable/item_storage = null)
 	if(isbelly(item_storage))
@@ -91,15 +83,6 @@
 			R.cell.charge += 150
 
 	. = ..()
-
-/*
-/obj/item/holder/digest_act(var/atom/movable/item_storage = null)
-	for(var/mob/living/M in contents)
-		if(item_storage)
-			M.forceMove(item_storage)
-	held_mob = null
-
-	. = ..() */
 
 /obj/item/organ/digest_act(var/atom/movable/item_storage = null)
 	if((. = ..()))

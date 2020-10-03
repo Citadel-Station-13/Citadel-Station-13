@@ -11,8 +11,9 @@
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/charger/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
@@ -44,20 +45,18 @@
 	if(!charging)
 		..()
 
-/mob/living/simple_animal/hostile/guardian/charger/throw_impact(atom/A)
+/mob/living/simple_animal/hostile/guardian/charger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charging)
 		return ..()
 
-	else if(A)
-		if(isliving(A) && A != summoner)
-			var/mob/living/L = A
+	else if(hit_atom)
+		if(isliving(hit_atom) && hit_atom != summoner)
+			var/mob/living/L = hit_atom
 			var/blocked = FALSE
-			if(hasmatchingsummoner(A)) //if the summoner matches don't hurt them
+			if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(ishuman(A))
-				var/mob/living/carbon/human/H = A
-				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
-					blocked = TRUE
+			if(L.mob_run_block(src, 90, "[name]", ATTACK_TYPE_TACKLE, 0, src, null, null) & BLOCK_SUCCESS)
+				blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()
 				L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")

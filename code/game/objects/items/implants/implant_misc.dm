@@ -33,11 +33,28 @@
 /obj/item/implant/adrenalin/activate()
 	. = ..()
 	uses--
-	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list("inaprovaline" = 3, "synaptizine" = 10, "regen_jelly" = 10, "stimulants" = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
+	imp_in.do_adrenaline(150, TRUE, 0, 0, TRUE, list(/datum/reagent/medicine/inaprovaline = 3, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/regen_jelly = 10, /datum/reagent/medicine/stimulants = 10), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	if(!uses)
 		qdel(src)
 
+/obj/item/implant/warp
+	name = "warp implant"
+	desc = "Saves your position somewhere, and then warps you back to it after five seconds."
+	icon_state = "warp"
+	uses = 15
+
+/obj/item/implant/warp/activate()
+	. = ..()
+	uses--
+	imp_in.do_adrenaline(20, TRUE, 0, 0, TRUE, list(/datum/reagent/fermi/eigenstate = 1.2), "<span class='boldnotice'>You feel an internal prick as as the bluespace starts ramping up!</span>")
+	to_chat(imp_in, "<span class='notice'>You feel an internal prick as as the bluespace starts ramping up!</span>")
+	if(!uses)
+		qdel(src)
+
+/obj/item/implanter/warp
+	name = "implanter (warp)"
+	imp_type = /obj/item/implant/warp
 
 /obj/item/implant/emp
 	name = "emp implant"
@@ -48,7 +65,7 @@
 /obj/item/implant/emp/activate()
 	. = ..()
 	uses--
-	empulse(imp_in, 3, 5)
+	empulse_using_range(imp_in, 7)
 	if(!uses)
 		qdel(src)
 

@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 /mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
 		return
+	. = TRUE //return value to stop the client from being shown the turf contents stat tab on alt-click.
 	if(stat)
 		to_chat(src, "You must be conscious to do this!")
 		return
@@ -18,8 +19,11 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		to_chat(src, "You can't vent crawl while you're restrained!")
 		return
 	if(has_buckled_mobs())
-		to_chat(src, "You can't vent crawl with other creatures on you!")
-		return
+		// attempt once
+		unbuckle_all_mobs()
+		if(has_buckled_mobs())
+			to_chat(src, "You can't vent crawl with other creatures on you!")
+			return
 	if(buckled)
 		to_chat(src, "You can't vent crawl while buckled!")
 		return
@@ -49,7 +53,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 
-			if(!do_after(src, 25, target = vent_found))
+			if(!do_after(src, 25, target = vent_found, required_mobility_flags = MOBILITY_MOVE))
 				return
 
 			if(!client)

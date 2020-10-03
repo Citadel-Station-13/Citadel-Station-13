@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "limb id entry in mutant bodyparts now supports switching to/from species with gendered body parts"

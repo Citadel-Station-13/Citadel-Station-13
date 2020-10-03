@@ -38,22 +38,27 @@
 	health = 25
 	density = FALSE
 	speech_span = "spooky"
-	friendly = "pets"
-	response_help  = "chats with"
+	friendly_verb_continuous = "pets"
+	friendly_verb_simple = "pet"
+	response_help_continuous = "chats with"
+	response_help_simple = "chat with"
 	light_range = 3
 	light_color = "#ff9842"
 	var/last_poof
 	var/progression = list() //Keep track of where people are in the story.
 	var/active = TRUE //Turn this to false to keep normal mob behavour
 	var/cached_z
+	/// I'm busy chatting, don't move.
+	var/busy_chatting = FALSE
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
 	cached_z = z
 	poof()
 
-/mob/living/simple_animal/jacq/Life()
-	..()
+/mob/living/simple_animal/jacq/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!ckey)
 		if((last_poof+3 MINUTES) < world.realtime)
 			poof()
@@ -71,14 +76,14 @@
 	health = 25
 	poof()
 
-/mob/living/simple_animal/jacq/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/jacq/on_attack_hand(mob/living/carbon/human/M)
 	if(!active)
 		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
-		canmove = FALSE
+		busy_chatting = FALSE
 		chit_chat(M)
-		canmove = TRUE
+		busy_chatting = TRUE
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
@@ -86,20 +91,20 @@
 		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
-		canmove = FALSE
+		busy_chatting = FALSE
 		chit_chat(M)
-		canmove = TRUE
+		busy_chatting = TRUE
 	..()
 
 /mob/living/simple_animal/jacq/proc/poof()
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
-	R.add_reagent("secretcatchem", 10)
+	R.add_reagent(/datum/reagent/fermi/secretcatchem, 10)
 	s.set_up(R, 0, loc)
 	s.start()
 	visible_message("<b>[src]</b> disappears in a puff of smoke!")
-	canmove = TRUE
+	busy_chatting = TRUE
 	health = 25
 
 	//Try to go to populated areas
@@ -181,7 +186,7 @@
 				visible_message("<b>[src]</b> raises an eyebrown, <span class='spooky'>\"It's 4 candies for that [gender]! Thems the rules!\"</span>")
 				return
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"Off comes your head, a pumpkin taking it's stead!\"</span>")
-			C.reagents.add_reagent("pumpkinmutationtoxin", 5)
+			C.reagents.add_reagent(/datum/reagent/mutationtoxin/pumpkinhead, 5)
 			sleep(20)
 			poof()
 			return
@@ -329,8 +334,7 @@
 			to_chat(C, "<span class='big warning'> You feel an overwhelming desire to [message]")
 		if(2)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"If only you had a better upbringing, your ears are now full of my singing!\"</span>")
-			var/client/C2 = C.client
-			C2.chatOutput.sendMusic("https://puu.sh/ExBbv.mp4", 1)//I hope this works!
+			C.client.tgui_panel?.play_music("https://puu.sh/ExBbv.mp4")
 		if(3)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"You're cute little bumpkin, On your head is a pumpkin!\"</span>")
 			if(C.head)
@@ -340,7 +344,7 @@
 			C.equip_to_slot(jaqc_latern, SLOT_HEAD, 1, 1)
 		if(4)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"In your body there's something amiss, you'll find it's a chem made by my sis!\"</span>")
-			C.reagents.add_reagent("eigenstate", 30)
+			C.reagents.add_reagent(/datum/reagent/fermi/eigenstate, 30)
 		if(5)
 			visible_message("<b>[src]</b> waves their arms around, <span class='spooky'>\"A new familiar for me, and you'll see it's thee!\"</span>")
 			C.reagents.add_reagent("secretcatchem", 30)
@@ -377,12 +381,18 @@
 	sleep(20)
 	poof()
 
+/mob/living/simple_animal/jacq/update_mobility()
+	. = ..()
+	if(busy_chatting)
+		DISABLE_BITFIELD(., MOBILITY_MOVE)
+		mobility_flags = .
+
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 	name = "Jacq o' latern"
 	desc = "A jacqueline o' lantern! You can't seem to get rid of it."
 	icon_state = "hardhat0_pumpkin_j"
 	item_state = "hardhat0_pumpkin_j"
-	item_color = "pumpkin_j"
+	hat_type = "pumpkin_j"
 	brightness_on = 4
 
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc/Initialize()
@@ -395,14 +405,14 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, GLUED_ITEM_TRAIT)
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user)
+/obj/item/clothing/suit/ghost_sheet/sticky/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return
 	else
 		..()
 
-/obj/item/clothing/suit/ghost_sheet/sticky/attack_hand(mob/user)
+/obj/item/clothing/suit/ghost_sheet/sticky/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user))
 		to_chat(user, "<span class='spooky'><i>Boooooo~!</i></span>")
 		return
@@ -411,7 +421,6 @@
 
 /datum/reagent/mutationtoxin/pumpkinhead
 	name = "Pumpkin head mutation toxin"
-	id = "pumpkinmutationtoxin"
 	race = /datum/species/dullahan/pumpkin
 	mutationtext = "<span class='spooky'>The pain subsides. You feel your head roll off your shoulders... and you smell pumpkin."
 	//I couldn't get the replace head sprite with a pumpkin to work so, it is what it is.
@@ -451,7 +460,7 @@
 	reagents.add_reagent(R, 30)
 	name = "[R] Potion"
 
-/obj/item/reagent_containers/potion_container/throw_impact(atom/target)
+/obj/item/reagent_containers/potion_container/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	sleep(20)
 	var/datum/effect_system/smoke_spread/chem/s = new()
