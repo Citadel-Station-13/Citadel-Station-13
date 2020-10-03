@@ -5,7 +5,14 @@
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// Enable stamina combat
+	combat_flags = COMBAT_FLAGS_DEFAULT
+	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
+	has_field_of_vision = FALSE //Handled by species.
+
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -16,10 +23,6 @@
 
 	//Eye colour
 	var/eye_color = "000"
-
-	var/horn_color = "85615a"	//specific horn colors, because why not?
-
-	var/wing_color = "fff"		//wings too
 
 	var/skin_tone = "caucasian1"	//Skin tone
 
@@ -34,8 +37,6 @@
 	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
 	var/socks_color = "FFFFFF"
-	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
-	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -61,7 +62,6 @@
 
 	var/custom_species = null
 
-	var/datum/personal_crafting/handcrafting
 	var/datum/physiology/physiology
 
 	var/list/datum/bioware = list()
@@ -69,4 +69,5 @@
 	var/creamed = FALSE //to use with creampie overlays
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
+	var/account_id
 	var/last_fire_update

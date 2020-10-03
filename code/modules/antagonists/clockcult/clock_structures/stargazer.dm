@@ -25,11 +25,11 @@
 	. = ..()
 
 /obj/structure/destructible/clockwork/stargazer/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user))
-		to_chat(user, "<span class='nzcrentr_small'>Generates <b>[DisplayPower(STARGAZER_POWER)]</b> per second while viewing starlight within [STARGAZER_RANGE] tiles.</span>")
+		. += "<span class='nzcrentr_small'>Generates <b>[DisplayPower(STARGAZER_POWER)]</b> per second while viewing starlight within [STARGAZER_RANGE] tiles.</span>"
 	if(star_light_star_bright)
-		to_chat(user, "[is_servant_of_ratvar(user) ? "<span class='nzcrentr_small'>It can see starlight!</span>" : "It's shining brilliantly!"]")
+		. += "[is_servant_of_ratvar(user) ? "<span class='nzcrentr_small'>It can see starlight!</span>" : "It's shining brilliantly!"]"
 
 /obj/structure/destructible/clockwork/stargazer/process()
 	star_light_star_bright = check_starlight()

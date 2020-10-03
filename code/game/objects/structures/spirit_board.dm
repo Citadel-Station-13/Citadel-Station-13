@@ -12,7 +12,7 @@
 
 /obj/structure/spirit_board/examine()
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
-	..()
+	return ..()
 
 /obj/structure/spirit_board/attack_hand(mob/user)
 	. = ..()

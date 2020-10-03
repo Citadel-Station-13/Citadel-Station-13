@@ -16,7 +16,7 @@
 
 /obj/structure/fermenting_barrel/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>")
+	. += "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>"
 
 /obj/structure/fermenting_barrel/proc/makeWine(obj/item/reagent_containers/food/snacks/grown/fruit)
 	if(fruit.reagents)
@@ -33,7 +33,7 @@
 			data["tastes"] = list(fruit.wine_flavor = 1)
 		else
 			data["tastes"] = list(fruit.tastes[1] = 1)
-		reagents.add_reagent("fruit_wine", amount, data)
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, amount, data)
 	qdel(fruit)
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 
@@ -49,6 +49,10 @@
 		to_chat(user, "<span class='notice'>You place [I] into [src] to start the fermentation process.</span>")
 		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speed_multiplier)
 		return TRUE
+	var/obj/item/W = I
+	if(W)
+		if(W.is_refillable())
+			return FALSE //so we can refill them via their afterattack.
 	else
 		return ..()
 
@@ -64,7 +68,7 @@
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
 
-/obj/structure/fermenting_barrel/update_icon()
+/obj/structure/fermenting_barrel/update_icon_state()
 	if(open)
 		icon_state = "barrel_open"
 	else

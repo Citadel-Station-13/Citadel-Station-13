@@ -6,6 +6,7 @@
 	max_integrity = 350
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 30, "acid" = 30)
 	layer = ABOVE_WINDOW_LAYER
+	plane = GAME_PLANE
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
@@ -15,8 +16,8 @@
 	var/volume = 100
 
 	var/efficiency = 1
-	var/sleep_factor = 0.00125
-	var/unconscious_factor = 0.001
+	var/base_knockout = 30 SECONDS
+	var/knockout_factor = 1
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
@@ -32,6 +33,9 @@
 	var/escape_in_progress = FALSE
 	var/message_cooldown
 	var/breakout_time = 300
+
+	fair_market_price = 10
+	payment_department = ACCOUNT_MED
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -50,12 +54,16 @@
 	var/C
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		C += M.rating
-
+	// 2 bins total, so C ranges from 2 to 8.
 	efficiency = initial(efficiency) * C
-	sleep_factor = initial(sleep_factor) * C
-	unconscious_factor = initial(unconscious_factor) * C
+	knockout_factor = initial(knockout_factor) / max(1, (C * 0.33))
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better matter bin, better results"
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
@@ -144,6 +152,9 @@
 	add_overlay("cover-on")
 	addtimer(CALLBACK(src, .proc/run_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/nap_violation(mob/violator)
+	open_machine()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
 
@@ -157,7 +168,8 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
-
+	if(!check_nap_violations())
+		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
 
@@ -176,8 +188,10 @@
 
 	if(air1.gases.len)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 2000)
-			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
+			// temperature factor goes from 1 to about 2.5
+			var/amount = max(1, (4 * log(T0C - mob_occupant.bodytemperature)) - 20) * knockout_factor * base_knockout
+			mob_occupant.Sleeping(amount)
+			mob_occupant.Unconscious(amount)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
 				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
@@ -239,13 +253,14 @@
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
+		reagent_transfer = 0
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
@@ -262,19 +277,19 @@
 		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
-	..()
+	. = ..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			. += "Someone's inside [src]!"
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			. += "You can barely make out a form floating in [src]."
 	else
-		to_chat(user, "[src] seems empty.")
+		. += "[src] seems empty."
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+/obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/living/carbon/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !istype(target) || !user.IsAdvancedToolUser())
 		return
-	if (target.IsKnockdown() || target.IsStun() || target.IsSleeping() || target.IsUnconscious())
+	if(!CHECK_MOBILITY(target, MOBILITY_MOVE))
 		close_machine(target)
 	else
 		user.visible_message("<b>[user]</b> starts shoving [target] inside [src].", "<span class='notice'>You start shoving [target] inside [src].</span>")
@@ -399,13 +414,14 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		if(state_open)
 			close_machine()
 		else
 			open_machine()
 		update_icon()
-	return ..()
+		return TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.
@@ -440,6 +456,6 @@
 		if(node)
 			node.atmosinit()
 			node.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 
 #undef CRYOMOBS

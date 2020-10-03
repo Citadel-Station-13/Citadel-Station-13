@@ -1,10 +1,20 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
 GLOBAL_VAR(restart_counter)
+GLOBAL_VAR_INIT(tgs_initialized, FALSE)
+
+GLOBAL_VAR(topic_status_lastcache)
+GLOBAL_LIST(topic_status_cache)
 
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
+	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || "./byond-extools.dll"
+	if (fexists(extools))
+		call(extools, "maptick_initialize")()
+	enable_debugger()
+
+	world.Profile(PROFILE_START)
 
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
@@ -14,9 +24,10 @@ GLOBAL_VAR(restart_counter)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	TgsNew()
 
 	GLOB.revdata = new
+
+	InitTgs()
 
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
@@ -31,10 +42,12 @@ GLOBAL_VAR(restart_counter)
 #endif
 
 	load_admins()
+	load_mentors()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
+	initialize_global_loadout_items()
 	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -46,12 +59,19 @@ GLOBAL_VAR(restart_counter)
 	if(NO_INIT_PARAMETER in params)
 		return
 
-	cit_initialize()
-
 	Master.Initialize(10, FALSE, TRUE)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
+
+/world/proc/InitTgs()
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
+	GLOB.revdata.load_tgs_info()
+#ifdef USE_CUSTOM_ERROR_HANDLER
+	if (TgsAvailable())
+		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
+#endif
+	GLOB.tgs_initialized = TRUE
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
@@ -108,9 +128,16 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
+	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
+	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
+	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
+	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
+	GLOB.click_log = "[GLOB.log_directory]/click.log"
+
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
@@ -125,6 +152,11 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_qdel_log)
 	start_log(GLOB.world_runtime_log)
 	start_log(GLOB.world_job_debug_log)
+	start_log(GLOB.tgui_log)
+	start_log(GLOB.subsystem_log)
+	start_log(GLOB.reagent_log)
+	start_log(GLOB.world_crafting_log)
+	start_log(GLOB.click_log)
 
 	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
@@ -142,6 +174,14 @@ GLOBAL_VAR(restart_counter)
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
 
+	if(!SSfail2topic)
+		return "Server not initialized."
+	else if(SSfail2topic.IsRateLimited(addr))
+		return "Rate limited."
+
+	if(length(T) > CONFIG_GET(number/topic_max_size))
+		return "Payload too large!"
+
 	var/static/list/topic_handlers = TopicHandlers()
 
 	var/list/input = params2list(T)
@@ -158,7 +198,7 @@ GLOBAL_VAR(restart_counter)
 		return
 
 	handler = new handler()
-	return handler.TryRun(input)
+	return handler.TryRun(input, addr)
 
 /world/proc/AnnouncePR(announcement, list/payload)
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
@@ -196,15 +236,16 @@ GLOBAL_VAR(restart_counter)
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	TgsReboot()
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
+		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request.</span>")
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	TgsReboot()
 
 	if(TEST_RUN_PARAMETER in params)
 		FinishTestRun()
@@ -274,8 +315,8 @@ GLOBAL_VAR(restart_counter)
 	if(SSmapping.config) // this just stops the runtime, honk.
 		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
 
-	if(get_security_level())//CIT CHANGE - makes the hub entry show the security level
-		features += "[get_security_level()] alert"
+	if(NUM2SECLEVEL(GLOB.security_level))//CIT CHANGE - makes the hub entry show the security level
+		features += "[NUM2SECLEVEL(GLOB.security_level)] alert"
 
 	if (n > 1)
 		features += "~[n] players"

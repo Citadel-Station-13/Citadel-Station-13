@@ -2,15 +2,14 @@
 
 /datum/export/robotics
 	include_subtypes = FALSE
-	k_elasticity = 0 //ALWAYS worth selling upgrades
+	k_elasticity = 1/50
 
 /datum/export/implant
 	include_subtypes = FALSE
-	k_elasticity = 0 //ALWAYS worth selling upgrades
+	k_elasticity = 1/50
 
 /datum/export/organs
 	include_subtypes = TRUE
-	k_elasticity = 0 //ALWAYS worth selling orgains
 
 /datum/export/implant/autodoc
 	cost = 150
@@ -54,11 +53,6 @@
 	cost = 350
 	unit_name = "reviver implant"
 	export_types = list(/obj/item/organ/cyberimp/chest/reviver)
-
-/datum/export/implant/thrusters
-	cost = 150
-	unit_name = "thrusters set implant"
-	export_types = list(/obj/item/organ/cyberimp/chest/thrusters)
 
 /datum/export/implant/thrusters
 	cost = 150

@@ -34,6 +34,7 @@
 
 /datum/round_event_control/wizard
 	wizardevent = 1
+	var/can_be_midround_wizard = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
@@ -53,6 +54,13 @@
 	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
 	return TRUE
+
+/datum/round_event_control/wizard/canSpawnEvent(var/players_amt, var/gamemode)
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		if (locate(/datum/dynamic_ruleset/midround/from_ghosts/wizard) in mode.executed_rules)
+			return can_be_midround_wizard && ..()
+	return ..()
 
 /datum/round_event_control/proc/preRunEvent()
 	if(!ispath(typepath, /datum/round_event))
@@ -113,7 +121,8 @@
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
-	var/fakeable = TRUE		//Can be faked by fake news event.
+	var/threat			= 0
+	var/fakeable 		= TRUE //Can be faked by fake news event.
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -153,7 +162,9 @@
 /datum/round_event/proc/end()
 	return
 
-
+// Returns threat; used for dynamic. Used for custom stuff, just returns the threat var by default.
+/datum/round_event/proc/threat()
+	return threat
 
 //Do not override this proc, instead use the appropiate procs.
 //This proc will handle the calls to the appropiate procs.

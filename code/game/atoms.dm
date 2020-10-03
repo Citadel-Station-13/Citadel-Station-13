@@ -24,17 +24,30 @@
 	var/list/add_overlays // a very temporary list of overlays to add
 
 	var/list/managed_vis_overlays //vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	var/list/managed_overlays
 
 	var/datum/proximity_monitor/proximity_monitor
-	var/buckle_message_cooldown = 0
 	var/fingerprintslast
 
 	var/list/filter_data //For handling persistent filters
+
+	var/custom_price
+	var/custom_premium_price
 
 	var/datum/component/orbiter/orbiters
 
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
+
+	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
+	var/list/custom_materials
+	///Bitfield for how the atom handles materials.
+	var/material_flags = NONE
+	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
+	var/material_modifier = 1
+
+	var/datum/wires/wires = null
 
 	var/icon/blood_splatter_icon
 	var/list/fingerprints
@@ -42,10 +55,17 @@
 	var/list/blood_DNA
 	var/list/suit_fibers
 
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		GLOB._preloader.load(src)
+		world.preloader_load(src)
 
 	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
@@ -86,6 +106,12 @@
 
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+
+	var/temp_list = list()
+	for(var/i in custom_materials)
+		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
+	custom_materials = null //Null the list to prepare for applying the materials properly
+	set_custom_materials(temp_list)
 
 	ComponentInitialize()
 
@@ -164,7 +190,7 @@
 
 	return FALSE
 
-/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/atom/proc/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 	if(does_attack_animation)
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -178,7 +204,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(ismovableatom(A))
+		else if(ismovable(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -280,44 +306,79 @@
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	. = "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
+	return "[icon2html(src, user)] [thats? "That's ":""][get_examine_name(user)]"
 
 /atom/proc/examine(mob/user)
-	to_chat(user, "[get_examine_string(user, TRUE)].")
+	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
-		to_chat(user, desc)
+		. += desc
 
+	if(custom_materials)
+		var/list/materials_list = list()
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			materials_list += "[M.name]"
+		. += "<u>It is made out of [english_list(materials_list)]</u>."
 	if(reagents)
 		if(reagents.reagents_holder_flags & TRANSPARENT)
-			to_chat(user, "It contains:")
-			if(reagents.reagent_list.len)
+			. += "It contains:"
+			if(length(reagents.reagent_list))
 				if(user.can_see_reagents()) //Show each individual reagent
 					for(var/datum/reagent/R in reagents.reagent_list)
-						to_chat(user, "[R.volume] units of [R.name]")
+						. += "[R.volume] units of [R.name]"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
-					to_chat(user, "[total_volume] units of various reagents")
+					. += "[total_volume] units of various reagents"
 			else
-				to_chat(user, "Nothing.")
+				. += "Nothing."
 		else if(reagents.reagents_holder_flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+				. += "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>"
 			else
-				to_chat(user, "<span class='danger'>It's empty.</span>")
+				. += "<span class='danger'>It's empty.</span>"
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
-/atom/proc/relaymove(mob/user)
-	if(buckle_message_cooldown <= world.time)
-		buckle_message_cooldown = world.time + 50
+/// Updates the icon of the atom
+/atom/proc/update_icon()
+	// I expect we're going to need more return flags and options in this proc
+	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	. = FALSE
+
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
+		update_icon_state()
+		. = TRUE
+
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
+		var/list/new_overlays = update_overlays()
+		if(managed_overlays)
+			cut_overlay(managed_overlays)
+			managed_overlays = null
+		if(length(new_overlays))
+			managed_overlays = new_overlays
+			add_overlay(new_overlays)
+		. = TRUE
+
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
+
+/// Updates the icon state of the atom
+/atom/proc/update_icon_state()
+
+/// Updates the overlays of the atom
+/atom/proc/update_overlays()
+	SHOULD_CALL_PARENT(1)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
+
+/atom/proc/relaymove(mob/living/user)
+	if(!istype(user))
+		return				//why are you buckling nonliving mobs to atoms?
+	if(user.buckle_message_cooldown <= world.time)
+		user.buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
-	return
-
-/atom/proc/prevent_content_explosion()
-	return FALSE
 
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
@@ -335,7 +396,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
-/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
+/atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
 		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
 
@@ -349,13 +410,13 @@
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
 	var/blood_id = get_blood_id()
-	if(!(blood_id =="blood" || blood_id == "jellyblood"))
+	if(!(blood_id in GLOB.blood_reagent_types))
 		return
 	return list("ANIMAL DNA" = "Y-")
 
 /mob/living/carbon/get_blood_dna_list()
 	var/blood_id = get_blood_id()
-	if(!(blood_id =="blood" || blood_id == "jellyblood"))
+	if(!(blood_id in GLOB.blood_reagent_types))
 		return
 	var/list/blood_dna = list()
 	if(dna)
@@ -480,9 +541,8 @@
 	return final_rgb
 
 /atom/proc/clean_blood()
-	if(islist(blood_DNA))
-		blood_DNA = null
-		return TRUE
+	. = blood_DNA? TRUE : FALSE
+	blood_DNA = null
 
 /atom/proc/wash_cream()
 	return TRUE
@@ -524,6 +584,14 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
 
+/**
+  * Respond to a electric bolt action on our item
+  *
+  * Default behaviour is to return, we define here to allow for cleaner code later on
+  */
+/atom/proc/zap_act(power, zap_flags, shocked_targets)
+	return
+
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(GetComponent(/datum/component/storage))
 		return component_storage_contents_dump_act(src_object, user)
@@ -537,11 +605,8 @@
 		stoplag(1)
 	qdel(progress)
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
-	STR.orient2hud(user)
-	src_object.orient2hud(user)
 	if(user.active_storage) //refresh the HUD to show the transfered contents
-		user.active_storage.close(user)
-		user.active_storage.show_to(user)
+		user.active_storage.ui_show(user)
 	return TRUE
 
 /atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
@@ -647,20 +712,73 @@
 
 /atom/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	var/turf/curturf = get_turf(src)
-	if (curturf)
-		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
-	.["Modify Transform"] = "?_src_=vars;[HrefToken()];modtransform=[REF(src)]"
-	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
-	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
-	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
+	VV_DROPDOWN_OPTION("", "---------")
+	if(!ismovable(src))
+		var/turf/curturf = get_turf(src)
+		if(curturf)
+			. += "<option value='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]'>Jump To</option>"
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
+	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
+	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
+	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
+
+/atom/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
+		if(!reagents)
+			var/amount = input(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50) as num
+			if(amount)
+				create_reagents(amount)
+
+		if(reagents)
+			var/chosen_id = choose_reagent_id(usr)
+			if(chosen_id)
+				var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume) as num
+				if(amount)
+					reagents.add_reagent(chosen_id, amount)
+					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
+					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to [src]</span>")
+	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
+		usr.client.cmd_admin_explosion(src)
+	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
+		usr.client.cmd_admin_emp(src)
+	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
+		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/matrix/M = transform
+		switch(result)
+			if("Scale")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(!isnull(x) && !isnull(y))
+					transform = M.Scale(x,y)
+			if("Translate")
+				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
+				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				if(!isnull(x) && !isnull(y))
+					transform = M.Translate(x,y)
+			if("Rotate")
+				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+				if(!isnull(angle))
+					transform = M.Turn(angle)
+	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
+		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
+		if(newname)
+			vv_auto_rename(newname)
+
+/atom/vv_get_header()
+	. = ..()
+	var/refid = REF(src)
+	. += "[VV_HREF_TARGETREF(refid, VV_HK_AUTO_RENAME, "<b id='name'>[src]</b>")]"
+	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 /atom/proc/drop_location()
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
+
+/atom/proc/vv_auto_rename(newname)
+	name = newname
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -703,6 +821,13 @@
 /atom/proc/multitool_act(mob/living/user, obj/item/I)
 	return
 
+/atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
+	if(!istype(I, /obj/item/multitool))
+		if(user && !silent)
+			to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
+		return FALSE
+	return TRUE
+
 /atom/proc/screwdriver_act(mob/living/user, obj/item/I)
 	SEND_SIGNAL(src, COMSIG_ATOM_SCREWDRIVER_ACT, user, I)
 
@@ -736,6 +861,8 @@
 			log_whisper(log_text)
 		if(LOG_EMOTE)
 			log_emote(log_text)
+		if(LOG_SUBTLER)
+			log_subtler(log_text)
 		if(LOG_DSAY)
 			log_dsay(log_text)
 		if(LOG_PDA)
@@ -811,28 +938,27 @@ Proc for attack log creation, because really why not
 		target.log_message(reverse_message, LOG_ATTACK, color="orange", log_globally=FALSE)
 
 // Filter stuff
-/atom/movable/proc/add_filter(name,priority,list/params)
-	if(!filter_data)
-		filter_data = list()
+/atom/proc/add_filter(name,priority,list/params)
+	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
 	update_filters()
 
-/atom/movable/proc/update_filters()
+/atom/proc/update_filters()
 	filters = null
-	sortTim(filter_data,associative = TRUE)
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
 
-/atom/movable/proc/get_filter(name)
+/atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/movable/proc/remove_filter(name)
+/atom/proc/remove_filter(name)
 	if(filter_data && filter_data[name])
 		filter_data -= name
 		update_filters()
@@ -840,3 +966,72 @@ Proc for attack log creation, because really why not
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
+
+///Sets the custom materials for an item.
+/atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+
+	if(!materials)
+		materials = custom_materials
+
+	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
+		for(var/i in custom_materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
+			custom_material.on_removed(src, material_flags) //Remove the current materials
+
+	if(!length(materials))
+		return
+
+	custom_materials = list() //Reset the list
+
+	for(var/x in materials)
+		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+
+		if(material_flags & MATERIAL_EFFECTS)
+			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
+		custom_materials[custom_material] += materials[x] * multiplier
+
+/**
+  * Returns true if this atom has gravity for the passed in turf
+  *
+  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
+  * the forced gravity var
+  *
+  * Gravity situations:
+  * * No gravity if you're not in a turf
+  * * No gravity if this atom is in is a space turf
+  * * Gravity if the area it's in always has gravity
+  * * Gravity if there's a gravity generator on the z level
+  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
+  * * otherwise no gravity
+  */
+/atom/proc/has_gravity(turf/T)
+	if(!T || !isturf(T))
+		T = get_turf(src)
+
+	if(!T)
+		return 0
+
+	var/list/forced_gravity = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	if(!forced_gravity.len)
+		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(forced_gravity.len)
+		var/max_grav
+		for(var/i in forced_gravity)
+			max_grav = max(max_grav, i)
+		return max_grav
+
+	if(isspaceturf(T)) // Turf never has gravity
+		return 0
+
+	var/area/A = get_area(T)
+	if(A.has_gravity) // Areas which always has gravity
+		return A.has_gravity
+	else
+		// There's a gravity generator on our z level
+		if(GLOB.gravity_generators["[T.z]"])
+			var/max_grav = 0
+			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
+				max_grav = max(G.setting,max_grav)
+			return max_grav
+	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)

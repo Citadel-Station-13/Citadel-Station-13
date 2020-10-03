@@ -8,12 +8,16 @@
 	max_integrity = 1
 	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
+	var/init_vis_overlay = TRUE
 
-/obj/structure/holosign/New(loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
+	. = ..()
 	if(source_projector)
 		projector = source_projector
 		projector.signs += src
-	..()
+	if(init_vis_overlay)
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, alpha, RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+		alpha = 0
 
 /obj/structure/holosign/Destroy()
 	if(projector)
@@ -67,17 +71,49 @@
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo firelock"
-	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
-	icon_state = "holo_firelock"
+	name = "holo fan"
+	desc = "A holographic barrier resembling a tiny fan. Though it does not prevent solid objects from passing through, gas is kept out. Somehow."
+	icon_state = "holo_fan"
 	density = FALSE
-	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
-	layer = ABOVE_MOB_LAYER
 	alpha = 150
+	init_vis_overlay = FALSE
 
 /obj/structure/holosign/barrier/atmos/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
+/obj/structure/holosign/barrier/firelock
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects or gas from passing through, temperature changes are kept out."
+	icon_state = "holo_firelock"
+	density = FALSE
+	anchored = TRUE
+	alpha = 150
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/firelock/blocksTemperature()
+	return TRUE
+
+/obj/structure/holosign/barrier/combifan
+	name = "holo combifan"
+	desc = "A holographic barrier resembling a blue-accented tiny fan. Though it does not prevent solid objects from passing through, gas and temperature changes are kept out."
+	icon_state = "holo_combifan"
+	max_integrity = 30
+	density = FALSE
+	anchored = TRUE
+	layer = ABOVE_NORMAL_TURF_LAYER
+	alpha = 150
+	init_vis_overlay = FALSE
+	CanAtmosPass = ATMOS_PASS_NO
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/holosign/barrier/combifan/blocksTemperature()
+	return TRUE
+
+/obj/structure/holosign/barrier/combifan/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
 
@@ -94,19 +130,19 @@
 		take_damage(10, BRUTE, "melee", 1)	//Tasers aren't harmful.
 	if(istype(P, /obj/item/projectile/beam/disabler))
 		take_damage(5, BRUTE, "melee", 1)	//Disablers aren't harmful.
+	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/medical
 	name = "\improper PENLITE holobarrier"
 	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
-	layer = ABOVE_MOB_LAYER
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
-	..()
-	to_chat(user,"<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
 
 /obj/structure/holosign/barrier/medical/CanPass(atom/movable/mover, turf/target)
 	icon_state = "holo_medical"
@@ -141,6 +177,7 @@
 
 /obj/structure/holosign/barrier/cyborg/hacked/bullet_act(obj/item/projectile/P)
 	take_damage(P.damage, BRUTE, "melee", 1)	//Yeah no this doesn't get projectile resistance.
+	return BULLET_ACT_HIT
 
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE
@@ -152,7 +189,7 @@
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
-			M.electrocute_act(15,"Energy Barrier", safety=1)
+			M.electrocute_act(15,"Energy Barrier", flags = SHOCK_NOGLOVES)
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
 
@@ -164,6 +201,6 @@
 		return
 
 	var/mob/living/M = AM
-	M.electrocute_act(15,"Energy Barrier", safety=1)
+	M.electrocute_act(15,"Energy Barrier", flags = SHOCK_NOGLOVES)
 	shockcd = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), 5)

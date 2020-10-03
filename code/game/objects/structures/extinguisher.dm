@@ -3,10 +3,11 @@
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "extinguisher_closed"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
@@ -22,8 +23,8 @@
 		stored_extinguisher = new /obj/item/extinguisher(src)
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>"
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -102,9 +103,11 @@
 	return attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	toggle_cabinet(user)
+	return TRUE
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user)
 	if(opened && broken)
@@ -114,7 +117,7 @@
 		opened = !opened
 		update_icon()
 
-/obj/structure/extinguisher_cabinet/update_icon()
+/obj/structure/extinguisher_cabinet/update_icon_state()
 	if(!opened)
 		icon_state = "extinguisher_closed"
 		return

@@ -64,7 +64,7 @@
 /obj/item/integrated_circuit/time/delay/custom/do_work()
 	var/delay_input = get_pin_data(IC_INPUT, 1)
 	if(delay_input && isnum(delay_input) )
-		var/new_delay = CLAMP(delay_input ,1 ,36000) //An hour.
+		var/new_delay = clamp(delay_input ,1 ,36000) //An hour.
 		delay = new_delay
 
 	..()
@@ -119,7 +119,7 @@
 /obj/item/integrated_circuit/time/ticker/custom/on_data_written()
 	var/delay_input = get_pin_data(IC_INPUT, 2)
 	if(delay_input && isnum(delay_input) )
-		var/new_delay = CLAMP(delay_input ,1 ,1 HOURS)
+		var/new_delay = clamp(delay_input ,1 ,1 HOURS)
 		delay = new_delay
 	..()
 
@@ -175,7 +175,7 @@
 	desc = "Tells you what the time is, in terms and adjusted for your local station or planet"
 
 /obj/item/integrated_circuit/time/clock/station/get_time()
-	return STATION_TIME(FALSE)
+	return STATION_TIME(FALSE, world.time)
 
 /obj/item/integrated_circuit/time/clock/bluespace
 	name = "integrated clock (Bluespace Absolute Time)"

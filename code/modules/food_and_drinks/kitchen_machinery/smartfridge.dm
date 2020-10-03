@@ -33,11 +33,16 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
+/obj/machinery/smartfridge/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
+
 /obj/machinery/smartfridge/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/update_icon()
+/obj/machinery/smartfridge/update_icon_state()
 	if(!stat)
 		if(visible_contents)
 			switch(contents.len)
@@ -144,7 +149,7 @@
 		else
 			O.forceMove(src)
 			return TRUE
-		
+
 ///Really simple proc, just moves the object "O" into the hands of mob "M" if able, done so I could modify the proc a little for the organ fridge
 /obj/machinery/smartfridge/proc/dispense(obj/item/O, var/mob/M)
 	if(!M.put_in_hands(O))
@@ -284,13 +289,12 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/smartfridge/drying_rack/update_overlays()
+	. = ..()
 	if(drying)
-		add_overlay("drying_rack_drying")
+		. += "drying_rack_drying"
 	if(contents.len)
-		add_overlay("drying_rack_filled")
+		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()
@@ -388,11 +392,17 @@
 /obj/machinery/smartfridge/organ
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
-	max_n_of_items = 20	//vastly lower to prevent processing too long
+	max_n_of_items = 25	//vastly lower to prevent processing too long
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	if(istype(O, /obj/item/organ))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/syringe))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/glass/bottle))
+		return TRUE
+	if(istype(O, /obj/item/reagent_containers/medspray))
 		return TRUE
 	return FALSE
 
@@ -400,8 +410,9 @@
 	. = ..()
 	if(!.)	//if the item loads, clear can_decompose
 		return
-	var/obj/item/organ/organ = O
-	organ.organ_flags |= ORGAN_FROZEN
+	if(istype(O, /obj/item/organ))
+		var/obj/item/organ/organ = O
+		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -419,6 +430,17 @@
 	. = ..()
 	if(istype(AM))
 		AM.organ_flags &= ~ORGAN_FROZEN
+
+/obj/machinery/smartfridge/organ/preloaded
+	initial_contents = list(
+		/obj/item/reagent_containers/medspray/synthtissue = 1,
+		/obj/item/reagent_containers/medspray/sterilizine = 1)
+
+/obj/machinery/smartfridge/organ/preloaded/Initialize()
+	..()
+	var/list = list(/obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tail, /obj/item/organ/stomach)
+	var/newtype = pick(list)
+	load(new newtype(src.loc))
 
 // -----------------------------
 // Chemistry Medical Smartfridge

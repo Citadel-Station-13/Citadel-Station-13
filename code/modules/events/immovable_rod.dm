@@ -43,8 +43,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
 	throwforce = 100
+	move_force = INFINITY
+	move_resist = INFINITY
+	pull_force = INFINITY
 	density = TRUE
 	anchored = TRUE
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/mob/living/wizard
 	var/z_original = 0
 	var/destination
@@ -99,9 +103,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
-
-/obj/structure/closet/supplypod/prevent_content_explosion()
-	return TRUE
 
 /obj/effect/immovablerod/singularity_act()
 	return

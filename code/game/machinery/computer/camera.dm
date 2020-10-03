@@ -17,13 +17,7 @@
 		network += lowertext(i)
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if(CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !in_view_range(user, src) || !user.canUseTopic(src, !issilicon(user), FALSE))
-		user.unset_machine()
-		return
-	if(!(user in watchers))
-		user.unset_machine()
-		return
-	if(!watchers[user])
+	if(!can_interact(user) || !(user in watchers) || !watchers[user])
 		user.unset_machine()
 		return
 	var/obj/machinery/camera/C = watchers[user]
@@ -41,55 +35,50 @@
 			M.unset_machine() //to properly reset the view of the users if the console is deleted.
 	return ..()
 
-/obj/machinery/computer/security/attack_hand(mob/user)
+/obj/machinery/computer/security/can_interact(mob/user)
+	if((!hasSiliconAccessInArea(user) && !Adjacent(user)) || is_blind(user) || !in_view_range(user, src))
+		return FALSE
+	return ..()
+
+/obj/machinery/computer/security/interact(mob/user, special_state)
 	. = ..()
-	if(.)
-		return
-	if(stat)
+	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
-		throw EXCEPTION("No camera network")
+		stack_trace("No camera network")
 		user.unset_machine()
-		return
+		return FALSE
 	if (!(islist(network)))
-		throw EXCEPTION("Camera network is not a list")
+		stack_trace("Camera network is not a list")
 		user.unset_machine()
-		return
-	if(..())
-		user.unset_machine()
-		return
+		return FALSE
 
 	var/list/camera_list = get_available_cameras()
 	if(!(user in watchers))
 		for(var/Num in camera_list)
 			var/obj/machinery/camera/CAM = camera_list[Num]
-			if(istype(CAM))
-				if(CAM.can_use())
-					watchers[user] = CAM //let's give the user the first usable camera, and then let him change to the camera he wants.
-					break
+			if(istype(CAM) && CAM.can_use())
+				watchers[user] = CAM //let's give the user the first usable camera, and then let him change to the camera he wants.
+				break
 		if(!(user in watchers))
 			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
-			return
+			return FALSE
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
 	var/list/camera_list = get_available_cameras()
 	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
-	if(user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
+	if(!src || user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
 		return
-	if(!t)
+	if(!t || t == "Cancel")
 		user.unset_machine()
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
 		return
 
 	var/obj/machinery/camera/C = camera_list[t]
 
-	if(t == "Cancel")
-		user.unset_machine()
-		playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
-		return
-	if(!C || !C.can_use() || CHECK_BITFIELD(stat, NOPOWER|BROKEN) || is_blind(user) || !in_view_range(user, src) || !user.canUseTopic(src, !issilicon(user), FALSE))
+	if(!C || !C.can_use() || !can_interact(user))
 		user.unset_machine()
 		return FALSE
 
@@ -186,11 +175,16 @@
 	clockwork = TRUE //it'd look very weird
 	light_power = 0
 
-/obj/machinery/computer/security/telescreen/update_icon()
+/obj/machinery/computer/security/telescreen/Initialize()
+	. = ..()
+	var/turf/T = get_turf_pixel(src)
+	if(iswallturf(T))
+		plane = ABOVE_WALL_PLANE
+
+/obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-	return
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"

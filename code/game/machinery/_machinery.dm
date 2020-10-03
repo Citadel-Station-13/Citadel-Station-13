@@ -110,11 +110,21 @@ Class Procs:
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
-	var/atom/movable/occupant = null
+	var/atom/movable/occupant
+	var/new_occupant_dir = SOUTH //The direction the occupant will be set to look at when entering the machine.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+		// For storing and overriding ui id and dimensions
+	var/tgui_id // ID of TGUI interface
+	var/ui_style // ID of custom TGUI style (optional)
+	var/ui_x
+	var/ui_y
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+
+	var/fair_market_price = 69
+	var/market_verb = "Customer"
+	var/payment_department = ACCOUNT_ENG
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -180,9 +190,10 @@ Class Procs:
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
-	SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
-	occupant = null
+			L.update_mobility()
+	if(occupant)
+		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
+		occupant = null
 
 /obj/machinery/proc/can_be_occupant(atom/movable/am)
 	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
@@ -207,6 +218,7 @@ Class Procs:
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		occupant = target
 		target.forceMove(src)
+		target.setDir(new_occupant_dir)
 	updateUsrDialog()
 	update_icon()
 
@@ -223,7 +235,7 @@ Class Procs:
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
 /obj/machinery/can_interact(mob/user)
-	var/silicon = issiliconoradminghost(user)
+	var/silicon = hasSiliconAccessInArea(user) || IsAdminGhost(user)
 	if((stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
 		return FALSE
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
@@ -241,6 +253,36 @@ Class Procs:
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
 	return TRUE
+
+/obj/machinery/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+	if(occupant && !state_open)
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			var/obj/item/card/id/I = H.get_idcard()
+			if(I)
+				var/datum/bank_account/insurance = I.registered_account
+				if(!insurance)
+					say("[market_verb] NAP Violation: No bank account found.")
+					nap_violation()
+					return FALSE
+				else
+					if(!insurance.adjust_money(-fair_market_price))
+						say("[market_verb] NAP Violation: Unable to pay.")
+						nap_violation()
+						return FALSE
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+					if(D)
+						D.adjust_money(fair_market_price)
+			else
+				say("[market_verb] NAP Violation: No ID card found.")
+				nap_violation()
+				return FALSE
+	return TRUE
+
+/obj/machinery/proc/nap_violation(mob/violator)
+	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -454,20 +496,20 @@ Class Procs:
 /obj/machinery/examine(mob/user)
 	. = ..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='notice'>It looks broken and non-functional.</span>")
+		. += "<span class='notice'>It looks broken and non-functional.</span>"
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			to_chat(user, "<span class='warning'>It's on fire!</span>")
+			. += "<span class='warning'>It's on fire!</span>"
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				to_chat(user, "It looks slightly damaged.")
+				. += "It looks slightly damaged."
 			if(25 to 50)
-				to_chat(user, "It appears heavily damaged.")
+				. += "It appears heavily damaged."
 			if(0 to 25)
-				to_chat(user, "<span class='warning'>It's falling apart!</span>")
+				. += "<span class='warning'>It's falling apart!</span>"
 	if(user.research_scanner && component_parts)
-		to_chat(user, display_parts(user, TRUE))
+		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/on_construction()
@@ -480,11 +522,11 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
-	..()
-	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+/obj/machinery/zap_act(power, zap_flags, shocked_objects)
+	. = ..()
+	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	if(tesla_flags & TESLA_OBJ_DAMAGE)
+	else if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
 			emp_act(EMP_LIGHT)

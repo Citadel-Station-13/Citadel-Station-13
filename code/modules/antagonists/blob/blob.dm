@@ -3,7 +3,7 @@
 	roundend_category = "blobs"
 	antagpanel_category = "Blob"
 	job_rank = ROLE_BLOB
-
+	threat = 20
 	var/datum/action/innate/blobpop/pop_action
 	var/starting_points_human_blob = 60
 	var/point_rate_human_blob = 2

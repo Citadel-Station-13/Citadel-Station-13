@@ -26,8 +26,8 @@
 	slot = "hivecore"
 	force = 0
 	actions_types = list(/datum/action/item_action/organ_action/use)
-	var/inert = 0
-	var/preserved = 0
+	var/inert
+	var/preserved
 
 /obj/item/organ/regenerative_core/Initialize()
 	. = ..()
@@ -38,7 +38,9 @@
 		go_inert()
 
 /obj/item/organ/regenerative_core/proc/preserved(implanted = 0)
-	inert = FALSE
+	if(inert)
+		name = initial(name)
+		inert = FALSE
 	preserved = TRUE
 	update_icon()
 	desc = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
@@ -59,32 +61,43 @@
 		to_chat(owner, "<span class='notice'>[src] breaks down as it tries to activate.</span>")
 	else
 		owner.revive(full_heal = 1)
+		owner.log_message("[owner] used an implanted [src] to heal themselves! Keep fighting, it's just a flesh wound!", LOG_ATTACK, color="green") //Logging for implanted legion core use
 	qdel(src)
 
 /obj/item/organ/regenerative_core/on_life()
-	..()
+	. = ..()
 	if(owner.health < owner.crit_threshold)
 		ui_action_click()
 
 /obj/item/organ/regenerative_core/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(proximity_flag && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(inert)
-			to_chat(user, "<span class='notice'>[src] has decayed and can no longer be used to heal.</span>")
-			return
-		else
-			if(H.stat == DEAD)
-				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
-				return
-			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
-				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
-			else
-				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
-			H.revive(full_heal = 1)
-			qdel(src)
+	if(proximity_flag)
+		apply_healing_core(target, user)
+
+/obj/item/organ/regenerative_core/proc/apply_healing_core(atom/target, mob/user)
+	if(!user || !ishuman(target))
+		return
+	var/mob/living/carbon/human/H = target
+	if(inert)
+		to_chat(user, "<span class='notice'>[src] has decayed and can no longer be used to heal.</span>")
+		return
+	if(H.stat == DEAD)
+		to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
+		return
+	if(H != user)
+		H.visible_message("[user] forces [H] to apply [src]... Black tendrils entangle and reinforce [H.p_them()]!")
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
+	else
+		to_chat(user, "<span class='notice'>You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?</span>")
+		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
+	H.apply_status_effect(STATUS_EFFECT_REGENERATIVE_CORE)
+	qdel(src)
+	user.log_message("[user] used [src] to heal [H == user ? "[H.p_them()]self" : H]! Wake the fuck up, Samurai!", LOG_ATTACK, color="green") //Logging for 'old' style legion core use, when clicking on a sprite of yourself or another.
+
+/obj/item/organ/regenerative_core/attack_self(mob/user) //Knouli's first hack! Allows for the use of the core in hand rather than needing to click on the target, yourself, to selfheal. Its a rip of the proc just above - but skips on distance check and only uses 'user' rather than 'target'
+	. = ..()
+	apply_healing_core(user, user)
+
 
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()
@@ -92,8 +105,8 @@
 		preserved(TRUE)
 		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
 
-/obj/item/organ/regenerative_core/Remove(mob/living/carbon/M, special = 0)
-	if(!inert && !special)
+/obj/item/organ/regenerative_core/Remove(special = FALSE)
+	if(!inert && !special && !QDELETED(owner))
 		owner.visible_message("<span class='notice'>[src] rapidly decays as it's removed.</span>")
 		go_inert()
 	return ..()
@@ -110,14 +123,13 @@
 	. = ..()
 	update_icon()
 
-/obj/item/organ/regenerative_core/update_icon()
+/obj/item/organ/regenerative_core/update_icon_state()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	cut_overlays()
+
+/obj/item/organ/regenerative_core/update_overlays()
+	. = ..()
 	if(!inert && !preserved)
-		add_overlay("legion_soul_crackle")
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		. += "legion_soul_crackle"
 
 /obj/item/organ/regenerative_core/legion/go_inert()
 	..()

@@ -55,17 +55,15 @@
 	return automatic
 
 /obj/item/pneumatic_cannon/examine(mob/user)
-	..()
-	var/list/out = list()
+	. = ..()
 	if(!in_range(user, src))
-		out += "<span class='notice'>You'll need to get closer to see any more.</span>"
+		. += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		out += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
+		. += "<span class='info'>[icon2html(I, user)] It has \a [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		out += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
-	to_chat(user, out.Join("<br>"))
+		. += "<span class='notice'>[icon2html(tank, user)] It has \a [tank] mounted onto it.</span>"
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -170,7 +168,7 @@
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
-		C.Knockdown(60)
+		C.DefaultCombatKnockdown(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
 	if(fire_mode == PCANNON_FIREALL)
@@ -203,8 +201,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
@@ -215,7 +213,7 @@
 		loadedWeightClass -= I.w_class
 	else if (A == tank)
 		tank = null
-		update_icons()
+		update_icon()
 
 /obj/item/pneumatic_cannon/ghetto //Obtainable by improvised methods; more gas per use, less capacity, but smaller
 	name = "improvised pneumatic cannon"
@@ -241,14 +239,13 @@
 			return
 		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
 		tank = thetank
-	update_icons()
+	update_icon()
 
-/obj/item/pneumatic_cannon/proc/update_icons()
-	cut_overlays()
+/obj/item/pneumatic_cannon/update_overlays()
+	. = ..()
 	if(!tank)
 		return
-	add_overlay(tank.icon_state)
-	update_icon()
+	. += tank.icon_state
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
 	if(!ispath(type, /obj) && !ispath(type, /mob))

@@ -21,7 +21,7 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
 	max_integrity = 100
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
 
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
@@ -71,16 +71,16 @@
 		Leap(M)
 
 /obj/item/clothing/mask/facehugger/examine(mob/user)
-	..()
+	. = ..()
 	if(!real)//So that giant red text about probisci doesn't show up.
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			to_chat(user, "<span class='boldannounce'>[src] is not moving.</span>")
+			. += "<span class='boldannounce'>[src] is not moving.</span>"
 		if(CONSCIOUS)
-			to_chat(user, "<span class='boldannounce'>[src] seems to be active!</span>")
+			. += "<span class='boldannounce'>[src] seems to be active!</span>"
 	if (sterile)
-		to_chat(user, "<span class='boldannounce'>It looks like the proboscis has been removed.</span>")
+		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
 
 
 /obj/item/clothing/mask/facehugger/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -115,7 +115,7 @@
 	if(icon_state == "[initial(icon_state)]_thrown")
 		icon_state = "[initial(icon_state)]"
 
-/obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
+/obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"
@@ -247,12 +247,14 @@
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(M.stat == DEAD)
-		return 0
+		return FALSE
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
-		return 0
-
+		return FALSE
+	if(AmBloodsucker(M))
+		return FALSE
+		
 	if(ismonkey(M))
 		return 1
 
@@ -260,9 +262,9 @@
 	if(ishuman(C) && !(SLOT_WEAR_MASK in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

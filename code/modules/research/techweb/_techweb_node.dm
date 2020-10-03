@@ -7,13 +7,13 @@
 	var/display_name = "Errored Node"
 	var/description = "Why are you seeing this?"
 	var/hidden = FALSE			//Whether it starts off hidden.
+	var/experimental = FALSE	//If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
 	var/starting_node = FALSE	//Whether it's available without any research.
 	var/list/prereq_ids = list()
 	var/list/design_ids = list()
 	var/list/unlock_ids = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
 	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
 	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
-	var/export_price = 0					//Cargo export price.
 	var/list/research_costs = list()		//Point cost to research. type = amount
 	var/category = "Misc"				//Category
 
@@ -46,7 +46,6 @@
 	VARSET_TO_LIST(., assoc_list_strip_value(unlock_ids))
 	VARSET_TO_LIST(., boost_item_paths)
 	VARSET_TO_LIST(., autounlock_by_boost)
-	VARSET_TO_LIST(., export_price)
 	VARSET_TO_LIST(., research_costs)
 	VARSET_TO_LIST(., category)
 
@@ -62,7 +61,6 @@
 	VARSET_FROM_LIST(input, unlock_ids)
 	VARSET_FROM_LIST(input, boost_item_paths)
 	VARSET_FROM_LIST(input, autounlock_by_boost)
-	VARSET_FROM_LIST(input, export_price)
 	VARSET_FROM_LIST(input, research_costs)
 	VARSET_FROM_LIST(input, category)
 	Initialize()
@@ -81,6 +79,9 @@
 	prereq_ids -= node_id
 	unlock_ids -= node_id
 
+/datum/techweb_node/proc/price_display(datum/techweb/TN)
+	return techweb_point_display_generic(get_price(TN))
+
 /datum/techweb_node/proc/get_price(datum/techweb/host)
 	if(host)
 		var/list/actual_costs = research_costs
@@ -93,5 +94,15 @@
 	else
 		return research_costs
 
-/datum/techweb_node/proc/price_display(datum/techweb/TN)
-	return techweb_point_display_generic(get_price(TN))
+//Base Nodes, everything starts from here.
+
+/datum/techweb_node/base
+	id = "base"
+	starting_node = TRUE
+	display_name = "Basic Research Technology"
+	description = "NT default research technologies."
+	// Default research tech, prevents bricking
+	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "handlabel", "packagewrap",
+	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab", "paystand",
+	"space_heater", "beaker", "large_beaker", "bucket", "xlarge_beaker", "sec_shellclip", "sec_beanbag", "sec_rshot", "sec_bshot", "sec_slug", "sec_islug", "sec_dart", "sec_38", "sec_38lethal",
+	"rglass","plasteel","plastitanium","plasmaglass","plasmareinforcedglass","titaniumglass","plastitaniumglass")

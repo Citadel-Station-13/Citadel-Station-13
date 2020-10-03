@@ -101,7 +101,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 115px;
+	right: 135px;
 	width: 45px;
 	background: #d0d0d0;
 	height: 30px;
@@ -131,13 +131,13 @@ a.popt {text-decoration: none;}
 }
 #userBar .subCell:hover {background: #ccc;}
 #userBar .toggle {
-	width: 40px;
+	width: 45px;
     background: #ccc;
     border-top: 0;
     float: right;
     text-align: center;
 }
-#userBar .sub {clear: both; display: none; width: 160px;}
+#userBar .sub {clear: both; display: none; width: 180px;}
 #userBar .sub.scroll {overflow-y: scroll;}
 #userBar .sub.subCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
 #userBar .sub span {
@@ -403,6 +403,12 @@ h1.alert, h2.alert		{color: #000000;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
 .spooky					{color: #FF6100;}
 .velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
+
+.lethal					{color: #bf3d3d;	font-weight: bold;}
+.stun					{color: #0f81bc;	font-weight: bold;}
+.ion					{color: #d084d6;	font-weight: bold;}
+.xray					{color: #32c025;	font-weight: bold;}
+
 @keyframes velvet {
 	0% { color: #400020; }
 	40% { color: #FF0000; }

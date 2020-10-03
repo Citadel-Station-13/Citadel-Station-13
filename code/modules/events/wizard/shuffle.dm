@@ -7,6 +7,7 @@
 	typepath = /datum/round_event/wizard/shuffleloc
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
+	can_be_midround_wizard = FALSE // not removing it completely yet
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
@@ -43,6 +44,7 @@
 	typepath = /datum/round_event/wizard/shufflenames
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
+	can_be_midround_wizard = FALSE // not removing it completely yet
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
@@ -77,6 +79,7 @@
 	typepath = /datum/round_event/wizard/shuffleminds
 	max_occurrences = 3
 	earliest_start = 0 MINUTES
+	can_be_midround_wizard = FALSE // not removing it completely yet
 
 /datum/round_event/wizard/shuffleminds/start()
 	var/list/mobs	 = list()

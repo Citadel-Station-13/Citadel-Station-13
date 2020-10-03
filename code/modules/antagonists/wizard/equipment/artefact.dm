@@ -159,7 +159,7 @@
 /obj/item/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	user.ghostize(1)
+	user.ghostize(1, voluntary = TRUE)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
@@ -230,7 +230,7 @@
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
@@ -246,7 +246,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null
-	var/list/mob/living/carbon/human/possible = list()
+	var/list/mob/living/carbon/human/possible
 	var/obj/item/voodoo_link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
@@ -261,7 +261,7 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Knockdown(40)
+			target.DefaultCombatKnockdown(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -284,7 +284,7 @@
 		user.unset_machine()
 
 /obj/item/voodoo/attack_self(mob/user)
-	if(!target && possible.len)
+	if(!target && length(possible))
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
@@ -324,12 +324,12 @@
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()
-	LAZYINITLIST(possible)
+	possible = null
 	if(!voodoo_link)
 		return
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(md5(H.dna.uni_identity) in voodoo_link.fingerprints)
-			possible |= H
+			LAZYOR(possible, H)
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
 	if(prob(50) || force)
@@ -377,18 +377,26 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.canmove = TRUE
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOMOVE, src)
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOUSE, src)
+	REMOVE_TRAIT(user, TRAIT_MOBILITY_NOPICKUP, src)
+	user.update_mobility()
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
 		return
 	var/turf/T = get_turf(user)
-	if(!T)
+	var/area/A = get_area(user)
+	if(!T || !A || A.noteleport)
+		to_chat(user, "<span class='warning'>You play \the [src], yet no sound comes out of it... Looks like it won't work here.</span>")
 		return
 	on_cooldown = TRUE
 	last_user = user
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = FALSE
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOMOVE, src)
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOUSE, src)
+	ADD_TRAIT(user, TRAIT_MOBILITY_NOPICKUP, src)
+	user.update_mobility()
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -410,7 +418,6 @@
 			return
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
-			user.canmove = 0
 			T = potential_T
 			break
 		breakout += 1

@@ -4,7 +4,7 @@
 	say_mod = "gibbers"
 	sexes = FALSE
 	species_traits = list(NOBLOOD,NOEYES,NOGENITALS,NOAROUSAL)
-	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NOGUNS,TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_CHUNKYFINGERS,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutanttongue = /obj/item/organ/tongue/abductor
 
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)

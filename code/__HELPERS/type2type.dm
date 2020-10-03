@@ -542,17 +542,17 @@
 
 //assumes format #RRGGBB #rrggbb
 /proc/color_hex2num(A)
-	if(!A)
+	if(!A || length(A) != length_char(A))
 		return 0
-	var/R = hex2num(copytext(A,2,4))
-	var/G = hex2num(copytext(A,4,6))
-	var/B = hex2num(copytext(A,6,0))
+	var/R = hex2num(copytext(A, 2, 4))
+	var/G = hex2num(copytext(A, 4, 6))
+	var/B = hex2num(copytext(A, 6, 0))
 	return R+G+B
 
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
 /proc/color_hex2color_matrix(string)
 	var/length = length(string)
-	if(length != 7 && length != 9)
+	if((length != 7 && length != 9) || length != length_char(string))
 		return color_matrix_identity()
 	var/r = hex2num(copytext(string, 2, 4))/255
 	var/g = hex2num(copytext(string, 4, 6))/255
@@ -629,3 +629,45 @@
 			return null
 		r += ascii2text(c)
 	return r
+
+/proc/slot_to_string(slot)
+	switch(slot)
+		if(SLOT_BACK)
+			return "Backpack"
+		if(SLOT_WEAR_MASK)
+			return "Mask"
+		if(SLOT_HANDS)
+			return "Hands"
+		if(SLOT_BELT)
+			return "Belt"
+		if(SLOT_EARS)
+			return "Ears"
+		if(SLOT_GLASSES)
+			return "Glasses"
+		if(SLOT_GLOVES)
+			return "Gloves"
+		if(SLOT_NECK)
+			return "Neck"
+		if(SLOT_HEAD)
+			return "Head"
+		if(SLOT_SHOES)
+			return "Shoes"
+		if(SLOT_WEAR_SUIT)
+			return "Suit"
+		if(SLOT_W_UNIFORM)
+			return "Uniform"
+		if(SLOT_IN_BACKPACK)
+			return "In backpack"
+
+/proc/tg_ui_icon_to_cit_ui(ui_style)
+	switch(ui_style)
+		if('icons/mob/screen_plasmafire.dmi')
+			return 'modular_citadel/icons/ui/screen_plasmafire.dmi'
+		if('icons/mob/screen_slimecore.dmi')
+			return 'modular_citadel/icons/ui/screen_slimecore.dmi'
+		if('icons/mob/screen_operative.dmi')
+			return 'modular_citadel/icons/ui/screen_operative.dmi'
+		if('icons/mob/screen_clockwork.dmi')
+			return 'modular_citadel/icons/ui/screen_clockwork.dmi'
+		else
+			return 'modular_citadel/icons/ui/screen_midnight.dmi'

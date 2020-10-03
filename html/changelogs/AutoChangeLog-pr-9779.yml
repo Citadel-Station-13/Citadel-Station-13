@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Clock cult starts with some spare vitality matrix charge scaled of the number of starter servants."
-  - balance: "Made the vitality matrix sigil slighty more visible, also allowed conversion runes to heal fresh converts at the cost of some vitality charge."
-  - bugfix: "Crawling won't save you from the wrath of ocular wardens and pressure sensors anymore, heretics. fix: Pressure sensors are no more triggered by floating/flying mobs."

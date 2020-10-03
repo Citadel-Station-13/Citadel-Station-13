@@ -15,6 +15,14 @@
 	if(!allowed)
 		allowed = GLOB.security_vest_allowed
 
+/obj/item/clothing/suit/armor/navyblue
+	name = "security officer's jacket"
+	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
+	icon_state = "officerbluejacket"
+	item_state = "officerbluejacket"
+	body_parts_covered = CHEST|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "A slim Type I armored vest that provides decent protection against most types of damage."
@@ -22,6 +30,7 @@
 	item_state = "armoralt"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
@@ -40,6 +49,7 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	custom_premium_price = 750
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -51,9 +61,19 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 80
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/armor/hos/navyblue
+	name = "head of security's jacket"
+	desc = "This piece of clothing was specifically designed for asserting superior authority."
+	icon_state = "hosbluejacket"
+	item_state = "hosbluejacket"
+	body_parts_covered = CHEST|ARMS
+	cold_protection = CHEST|ARMS
+	heat_protection = CHEST|ARMS
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
-	name = "armored trenchoat"
+	name = "armored trenchcoat"
 	desc = "A trenchcoat enhanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
@@ -72,11 +92,20 @@
 	strip_delay = 70
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_jacket"
+
+/obj/item/clothing/suit/armor/vest/warden/navyblue
+	name = "warden's jacket"
+	desc = "Perfectly suited for the warden that wants to leave an impression of style on those who visit the brig."
+	icon_state = "wardenbluejacket"
+	item_state = "wardenbluejacket"
+	body_parts_covered = CHEST|ARMS
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -102,6 +131,7 @@
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
@@ -140,6 +170,7 @@
 	armor = list("melee" = 15, "bullet" = 60, "laser" = 10, "energy" = 10, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 70
 	equip_delay_other = 50
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
@@ -149,13 +180,15 @@
 	blood_overlay_type = "armor"
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/hit_reflect_chance = 40
+	var/list/protected_zones = list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN)
 
-/obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
-	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN))) //If not shot where ablative is covering you, you don't get the reflection bonus!
-		return 0
-	if (prob(hit_reflect_chance))
-		return 1
+/obj/item/clothing/suit/armor/laserproof/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(def_zone in protected_zones)
+		if(prob(hit_reflect_chance))
+			return BLOCK_SHOULD_REDIRECT | BLOCK_REDIRECTED | BLOCK_SUCCESS | BLOCK_PHYSICAL_INTERNAL
+	return ..()
 
 /obj/item/clothing/suit/armor/vest/det_suit
 	name = "detective's armor vest"
@@ -167,6 +200,15 @@
 /obj/item/clothing/suit/armor/vest/det_suit/Initialize()
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
+
+/obj/item/clothing/suit/armor/vest/infiltrator
+	name = "insidious combat vest"
+	desc = "An insidious combat vest designed using Syndicate nanofibers to absorb the supreme majority of kinetic blows. Although it doesn't look like it'll do too much for energy impacts."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	armor = list("melee" = 30, "bullet" = 40, "laser" = 20, "energy" = 30, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	strip_delay = 80
 
 //All of the armor below is mostly unused
 
@@ -238,6 +280,14 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
+/obj/item/clothing/suit/armor/riot/knight/greyscale
+	name = "knight armour"
+	desc = "A classic suit of armour, able to be made from many different materials."
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS //Can change color and add prefix
+
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "makeshift vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
@@ -248,3 +298,21 @@
 	max_integrity = 200
 	resistance_flags = FLAMMABLE
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+
+/obj/item/clothing/suit/armor/vest/russian
+	name = "russian vest"
+	desc = "A bulletproof vest with forest camo. Good thing there's plenty of forests to hide in around here, right?"
+	icon_state = "rus_armor"
+	item_state = "rus_armor"
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 0, "energy" = 15, "bomb" = 10, "bio" = 0, "rad" = 20, "fire" = 20, "acid" = 50)
+
+/obj/item/clothing/suit/armor/vest/russian_coat
+	name = "russian battle coat"
+	desc = "Used in extremly cold fronts, made out of real bears."
+	icon_state = "rus_coat"
+	item_state = "rus_coat"
+	clothing_flags = THICKMATERIAL
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)

@@ -7,15 +7,15 @@ GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/faci
 GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
 GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear/bottom indexed by name
+GLOBAL_LIST_EMPTY_TYPED(underwear_list, /datum/sprite_accessory/underwear/bottom)		//stores bottoms indexed by name
 GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
 GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
 	//Undershirts
-GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/underwear/top indexed by name
+GLOBAL_LIST_EMPTY_TYPED(undershirt_list, /datum/sprite_accessory/underwear/top) 	//stores tops indexed by name
 GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
 GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
-GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/underwear/socks indexed by name
+GLOBAL_LIST_EMPTY_TYPED(socks_list, /datum/sprite_accessory/underwear/socks)		//stores socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
 GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)
@@ -37,6 +37,7 @@ GLOBAL_LIST_EMPTY(deco_wings_list)
 GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(insect_wings_list)
 GLOBAL_LIST_EMPTY(insect_fluffs_list)
+GLOBAL_LIST_EMPTY(insect_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
@@ -46,10 +47,15 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	":thinking:",
 	"Alien",
 	"Angel",
+	"Angryface",
+	"AtlantisCZE",
 	"Banned",
 	"Bliss",
 	"Blue",
-	"Clown",
+	"Boy",
+	"Boy-Malf",
+	"Girl",
+	"Girl-Malf",
 	"Database",
 	"Dorf",
 	"Firewall",
@@ -61,26 +67,44 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Hades",
 	"Heartline",
 	"Helios",
+	"Hotdog",
+	"Hourglass",
 	"House",
 	"Inverted",
+	"Jack",
 	"Matrix",
 	"Monochrome",
+	"Mothman",
 	"Murica",
 	"Nanotrasen",
 	"Not Malf",
+	"Patriot",
+	"Pirate",
 	"President",
-	"Random",
 	"Rainbow",
-	"Red",
+	"Clown",
+	"Random",
+	"Ravensdale",
 	"Red October",
+	"Red",
+	"Royal",
+	"Searif",
+	"Serithi",
+	"SilveryFerret",
+	"Smiley",
 	"Static",
 	"Syndicat Meow",
 	"TechDemon",
+	"Terminal",
 	"Text",
 	"Too Deep",
 	"Triumvirate",
 	"Triumvirate-M",
-	"Weird"))
+	"Wasp",
+	"Weird",
+	"Xerxes",
+	"Yes-Man"
+	))
 
 /proc/resolve_ai_icon(input)
 	if(!input || !(input in GLOB.ai_core_display_screens))
@@ -113,8 +137,8 @@ GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 #define UPLINK_PEN		"Pen" //like a real spy!
 GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
 
-	//Female Uniforms
-GLOBAL_LIST_EMPTY(female_clothing_icons)
+//List of cached alpha masked icons.
+GLOBAL_LIST_EMPTY(alpha_masked_worn_icons)
 
 	//radical shit
 GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))
@@ -197,3 +221,5 @@ GLOBAL_LIST_INIT(numbers_as_words, world.file2list("strings/numbers_as_words.txt
 GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings())
 
 GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))
+
+GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARCHIVED\]", "\[EXPLETIVE DELETED\]", "\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]", "\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]", "\[ACCESS DENIED\]"))

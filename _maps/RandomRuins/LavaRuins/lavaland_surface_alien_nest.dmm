@@ -70,7 +70,7 @@
 /obj/structure/alien/weeds,
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/glasses/night,
-/obj/item/clothing/gloves/combat,
+/obj/item/clothing/gloves/tackler/combat/insulated,
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/under/syndicate/tacticool,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

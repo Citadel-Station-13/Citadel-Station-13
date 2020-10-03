@@ -63,10 +63,10 @@
 	if(attached_device)
 		attached_device.holder_movement()
 
-/obj/item/transfer_valve/dropped()
+/obj/item/transfer_valve/dropped(mob/user)
 	. = ..()
 	if(attached_device)
-		attached_device.dropped()
+		attached_device.dropped(user)
 
 /obj/item/transfer_valve/on_found(mob/finder)
 	if(attached_device)
@@ -224,7 +224,7 @@
 
 		merge_gases()
 		for(var/i in 1 to 6)
-			addtimer(CALLBACK(src, .proc/update_icon), 20 + (i - 1) * 10)
+			addtimer(CALLBACK(src, /atom/.proc/update_icon), 20 + (i - 1) * 10)
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()

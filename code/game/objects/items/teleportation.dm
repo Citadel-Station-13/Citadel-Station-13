@@ -24,7 +24,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=400)
+	custom_materials = list(/datum/material/iron=400)
 
 /obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
@@ -104,7 +104,7 @@
 		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
-			for(var/mob/M in viewers(1, src))
+			for(var/mob/M in fov_viewers(1, src))
 				if (M.client)
 					src.attack_self(M)
 	return
@@ -125,7 +125,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=10000)
+	custom_materials = list(/datum/material/iron=10000)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
@@ -138,14 +138,17 @@
 
 /obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))
-		return FALSE
+		return TRUE
 	return ..()
 
-/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
-	if(is_parent_of_portal(target))
+/obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user, delay = 30)
+	var/datum/beam/B = user.Beam(target, icon_state = "rped_upgrade", maxdistance = 50)
+	if(is_parent_of_portal(target) && (!delay || do_after(user, delay, target = target)))
 		qdel(target)
 		to_chat(user, "<span class='notice'>You dispel [target] with \the [src]!</span>")
+		qdel(B)
 		return TRUE
+	qdel(B)
 	return FALSE
 
 /obj/item/hand_tele/afterattack(atom/target, mob/user)
@@ -201,7 +204,7 @@
 	if(!current_location || current_area.noteleport || is_away_level(current_location.z) || !isturf(user.loc))//If turf was not found or they're on z level 2 or >7 which does not currently exist. or if user is not located on a turf
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
-	user.show_message("<span class='notice'>Locked In.</span>", 2)
+	user.show_message("<span class='notice'>Locked In.</span>", MSG_AUDIBLE)
 	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1, null, atmos_link_override)
 	if(!(LAZYLEN(created) == 2))
 		return

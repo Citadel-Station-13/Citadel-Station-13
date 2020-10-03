@@ -7,7 +7,8 @@
 	icon_state = "arachnid"
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
+	threat = 2
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	maxHealth = 300
@@ -24,7 +25,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	alpha = 50
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
 	..()

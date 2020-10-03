@@ -87,7 +87,7 @@
 /obj/machinery/computer/prisoner/management/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr))
 		usr.set_machine(src)
 
 		if(href_list["id"])
@@ -125,7 +125,7 @@
 				to_chat(usr, "<span class='danger'>Unauthorized access.</span>")
 
 		else if(href_list["warn"])
-			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
+			var/warning = stripped_input(usr, "Message:", "Enter your message here!", "", MAX_MESSAGE_LEN)
 			if(!warning)
 				return
 			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants

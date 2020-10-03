@@ -8,14 +8,15 @@
 			index = findtext(t, char)
 	return t
 
-proc/TextPreview(var/string,var/len=40)
-	if(length(string) <= len)
-		if(!length(string))
+/proc/TextPreview(string, len = 40)
+	var/char_len = length_char(string)
+	if(char_len <= len)
+		if(char_len)
 			return "\[...\]"
 		else
 			return string
 	else
-		return "[copytext(string, 1, 37)]..."
+		return "[copytext_char(string, 1, 37)]..."
 
 GLOBAL_LIST_EMPTY(mentorlog)
 GLOBAL_PROTECT(mentorlog)

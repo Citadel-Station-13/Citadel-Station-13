@@ -14,7 +14,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(stat || lockcharge || IsKnockdown() || IsStun() || IsUnconscious())
+	if(stat || locked_down || IsParalyzed() || IsStun() || IsUnconscious())
 		return
 
 	var/list/modifiers = params2list(params)
@@ -66,7 +66,7 @@
 				if(C.user_unbuckle_mob(C.buckled_mobs[1],src))
 					return
 
-	if(!W && get_dist(src,A) <= interaction_range)
+	if(!W && (get_dist(src,A) <= interaction_range))
 		A.attack_robot(src)
 		return
 
@@ -110,7 +110,8 @@
 /mob/living/silicon/robot/CtrlClickOn(atom/A)
 	A.BorgCtrlClick(src)
 /mob/living/silicon/robot/AltClickOn(atom/A)
-	A.BorgAltClick(src)
+	if(!A.BorgAltClick(src))
+		altclick_listed_turf(A)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overridden
 	CtrlShiftClick(user)
@@ -154,20 +155,17 @@
 		..()
 
 /atom/proc/BorgAltClick(mob/living/silicon/robot/user)
-	AltClick(user)
-	return
+	return AltClick(user)
 
 /obj/machinery/door/airlock/BorgAltClick(mob/living/silicon/robot/user) // Eletrifies doors. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
-	else
-		..()
+		return AIAltClick()
+	return ..()
 
 /obj/machinery/turretid/BorgAltClick(mob/living/silicon/robot/user) //turret lethal on/off. Forwards to AI code.
 	if(get_dist(src,user) <= user.interaction_range)
-		AIAltClick()
-	else
-		..()
+		return AIAltClick()
+	return ..()
 
 /*
 	As with AI, these are not used in click code,

@@ -2,9 +2,13 @@
 // Underwear Definitions //
 ///////////////////////////
 
+/datum/sprite_accessory/underwear/bottom
+	covers_groin = TRUE
+
 /datum/sprite_accessory/underwear/bottom/nude
 	name = "Nude"
 	icon_state = null
+	covers_groin = FALSE
 
 /datum/sprite_accessory/underwear/bottom/mankini
 	name = "Mankini"
@@ -28,41 +32,49 @@
 	name = "Boxers"
 	icon_state = "boxers"
 	has_color = TRUE
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/male_bee
 	name = "Boxers - Bee"
 	icon_state = "bee_shorts"
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/male_hearts
 	name = "Boxers - Heart"
 	icon_state = "boxers_heart"
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/male_stripe
 	name = "Boxers - Striped"
 	icon_state = "boxers_striped"
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/male_commie
 	name = "Boxers - Striped Communist"
 	icon_state = "boxers_commie"
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/male_usastripe
 	name = "Boxers - Striped Freedom"
 	icon_state = "boxers_assblastusa"
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/male_uk
 	name = "Boxers - Striped UK"
 	icon_state = "boxers_uk"
+	has_digitigrade = TRUE
 	gender = MALE
 
 /datum/sprite_accessory/underwear/bottom/boxer_briefs
 	name = "Boxer Briefs"
 	icon_state = "boxer_briefs"
+	has_digitigrade = TRUE
 	has_color = TRUE
 
 /datum/sprite_accessory/underwear/bottom/panties
@@ -140,22 +152,26 @@
 /datum/sprite_accessory/underwear/bottom/longjon
 	name = "Long John Bottoms"
 	icon_state = "ljonb"
+	has_digitigrade = TRUE
 	has_color = TRUE
 
 /datum/sprite_accessory/underwear/bottom/swimsuit_red
 	name = "Swimsuit, One Piece - Red"
 	icon_state = "swimming_red"
 	gender = FEMALE
+	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/swimsuit
 	name = "Swimsuit, One Piece - Black"
 	icon_state = "swimming_black"
 	gender = FEMALE
+	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/swimsuit_blue
 	name = "Swimsuit, One Piece - Striped Blue"
 	icon_state = "swimming_blue"
 	gender = FEMALE
+	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/thong
 	name = "Thong"

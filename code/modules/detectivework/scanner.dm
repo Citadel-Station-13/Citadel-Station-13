@@ -123,7 +123,7 @@
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		var/found_something = FALSE
-		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss")][get_timestamp()] - [target_name]</B>", 0)
+		add_log("<B>[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
 		if(length(fingerprints))
@@ -187,9 +187,11 @@
 	return time2text(world.time + 432000, ":ss")
 
 /obj/item/detective_scanner/AltClick(mob/living/user)
+	. = ..()
 	// Best way for checking if a player can use while not incapacitated, etc
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
+	. = TRUE
 	if(!LAZYLEN(log))
 		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
 		return
@@ -200,9 +202,9 @@
 	log = list()
 
 /obj/item/detective_scanner/examine(mob/user)
-	..()
+	. = ..()
 	if(LAZYLEN(log) && !scanning)
-		to_chat(user, "<span class='notice'>Alt-click to clear scanner logs.</span>")
+		. += "<span class='notice'>Alt-click to clear scanner logs.</span>"
 
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks

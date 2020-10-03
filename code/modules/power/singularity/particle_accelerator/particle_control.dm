@@ -60,7 +60,7 @@
 		active = 0
 		connected_parts.Cut()
 
-/obj/machinery/particle_accelerator/control_box/update_icon()
+/obj/machinery/particle_accelerator/control_box/update_icon_state()
 	if(active)
 		icon_state = "control_boxp1"
 	else
@@ -257,14 +257,14 @@
 	popup.open()
 
 /obj/machinery/particle_accelerator/control_box/examine(mob/user)
-	..()
+	. = ..()
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			to_chat(user, "Looks like it's not attached to the flooring.")
+			. += "Looks like it's not attached to the flooring."
 		if(PA_CONSTRUCTION_UNWIRED)
-			to_chat(user, "It is missing some cables.")
+			. += "It is missing some cables."
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "The panel is open.")
+			. += "The panel is open."
 
 
 /obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user, params)
@@ -288,8 +288,7 @@
 				construction_state = PA_CONSTRUCTION_UNSECURED
 				did_something = TRUE
 			else if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/CC = W
-				if(CC.use(1))
+				if(W.use_tool(src, user, 0, 1))
 					user.visible_message("[user.name] adds wires to the [name].", \
 						"You add some wires.")
 					construction_state = PA_CONSTRUCTION_PANEL_OPEN

@@ -30,11 +30,11 @@
 		return
 
 	var/list/undergarment_choices = list("Underwear", "Underwear Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")
-	if(!UNDIE_COLORABLE(GLOB.underwear_list[H.underwear]))
+	if(!(GLOB.underwear_list[H.underwear]?.has_color))
 		undergarment_choices -= "Underwear Color"
-	if(!UNDIE_COLORABLE(GLOB.undershirt_list[H.undershirt]))
+	if(!(GLOB.undershirt_list[H.undershirt]?.has_color))
 		undergarment_choices -= "Undershirt Color"
-	if(!UNDIE_COLORABLE(GLOB.socks_list[H.socks]))
+	if(!(GLOB.socks_list[H.socks]?.has_color))
 		undergarment_choices -= "Socks Color"
 
 	var/choice = input(H, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in undergarment_choices
@@ -73,7 +73,7 @@
 		H.socks_color = recolor_undergarment(H, "socks", H.socks_color)
 
 	add_fingerprint(H)
-	H.update_body()
+	H.update_body(TRUE)
 
 /obj/structure/dresser/proc/recolor_undergarment(mob/living/carbon/human/H, garment_type = "underwear", default_color)
 	var/n_color = input(H, "Choose your [garment_type]'\s color.", "Character Preference", default_color) as color|null

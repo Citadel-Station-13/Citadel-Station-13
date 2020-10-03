@@ -5,7 +5,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		AltClickNoInteract(src, A)
+		altclick_listed_turf(A)
 		return
 
 	if(ishuman(A))
@@ -117,7 +117,7 @@
 	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -135,7 +135,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge = FALSE, silent = FALSE)
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.
@@ -213,7 +213,7 @@
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
 		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
@@ -353,7 +353,7 @@
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
-					mob.reagents.add_reagent("plasma", 5)
+					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.

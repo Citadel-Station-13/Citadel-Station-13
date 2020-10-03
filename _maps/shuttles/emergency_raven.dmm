@@ -56,7 +56,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ah" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ai" = (

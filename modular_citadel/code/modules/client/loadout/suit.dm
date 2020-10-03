@@ -64,58 +64,75 @@
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat
 
-/* Commented out until it is "balanced"
-/datum/gear/coat/sec
-	name = "Security winter coat"
+/datum/gear/coat/aformal
+	name = "Assistant's formal winter coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/security
-	restricted_roles = list("Head of Security", "Warden", "Detective", "Security Officer") // Reserve it to the Security Departement
-*/
+	path = /obj/item/clothing/suit/hooded/wintercoat/aformal
+
+/datum/gear/coat/runed
+	name = "Runed winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/narsie/fake
+
+/datum/gear/coat/brass
+	name = "Brass winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/ratvar/fake
+
+/datum/gear/coat/polycoat
+	name = "Polychromic winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
+	cost = 4 //too many people with neon green coats is hard on the eyes
 
 /datum/gear/coat/med
 	name = "Medical winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/medical
 	restricted_roles = list("Chief Medical Officer", "Medical Doctor") // Reserve it to Medical Doctors and their boss, the Chief Medical Officer
-	
-/* Commented out until there is a Chemistry Winter Coat
-/datum/gear/coat/med/chem
-	name = "Chemistry winter coat"
+
+/datum/gear/coat/paramedic
+	name = "Paramedic winter coat"
 	category = SLOT_WEAR_SUIT
-	path = /obj/item/clothing/suit/hooded/wintercoat/medical/chemistry
-	restricted_roles = list("Chief Medical Officer", "Chemist") // Reserve it to Chemists and their boss, the Chief Medical Officer
-*/	
+	path = /obj/item/clothing/suit/hooded/wintercoat/paramedic
+	restricted_roles = list("Chief Medical Officer", "Paramedic") // Reserve it to Paramedics and their boss, the Chief Medical Officer
+
+/datum/gear/coat/robotics
+	name = "Robotics winter coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/robotics
+	restricted_roles = list("Research Director", "Roboticist")
 
 /datum/gear/coat/sci
 	name = "Science winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/science
 	restricted_roles = list("Research Director", "Scientist", "Roboticist") // Reserve it to the Science Departement
-	
+
 /datum/gear/coat/eng
 	name = "Engineering winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/engineering
 	restricted_roles = list("Chief Engineer", "Station Engineer") // Reserve it to Station Engineers and their boss, the Chief Engineer
-	
+
 /datum/gear/coat/eng/atmos
 	name = "Atmospherics winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	restricted_roles = list("Chief Engineer", "Atmospheric Technician") // Reserve it to Atmos Techs and their boss, the Chief Engineer
-	
+
 /datum/gear/coat/hydro
 	name = "Hydroponics winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/hydro
 	restricted_roles = list("Head of Personnel", "Botanist") // Reserve it to Botanists and their boss, the Head of Personnel
-	
+
 /datum/gear/coat/cargo
 	name = "Cargo winter coat"
 	category = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/hooded/wintercoat/cargo
 	restricted_roles = list("Quartermaster", "Cargo Technician") // Reserve it to Cargo Techs and their boss, the Quartermaster
-	
+
 /datum/gear/coat/miner
 	name = "Mining winter coat"
 	category = SLOT_WEAR_SUIT
@@ -201,3 +218,18 @@
 	path = /obj/item/clothing/suit/storage/fluff/modernfedcoat/eng
 	restricted_desc = "Engineering and Cargo"
 	restricted_roles = list("Chief Engineer","Atmospheric Technician","Station Engineer","Cargo Technician", "Shaft Miner", "Quartermaster")
+
+/datum/gear/christmascoatr
+	name = "Red Christmas Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatr
+
+/datum/gear/christmascoatg
+	name = "Green Christmas Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatg
+
+/datum/gear/christmascoatrg
+	name = "Red and Green Christmas Coat"
+	category = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/hooded/wintercoat/christmascoatrg

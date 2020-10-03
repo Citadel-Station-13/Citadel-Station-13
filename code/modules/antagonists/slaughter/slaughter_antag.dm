@@ -3,6 +3,7 @@
 	show_name_in_check_antagonists = TRUE
 	var/objective_verb = "Kill"
 	var/datum/mind/summoner
+	threat = 10
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 

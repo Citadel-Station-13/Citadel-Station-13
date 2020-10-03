@@ -11,7 +11,7 @@
 	cooldown_min = 300
 	level_max = 0
 
-/obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
+/obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr, skipcharge = FALSE, silent = FALSE)
 	if(ready)
 		return ..()
 	return FALSE

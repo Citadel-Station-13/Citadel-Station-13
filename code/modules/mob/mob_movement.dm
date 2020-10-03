@@ -1,15 +1,3 @@
-/mob/CanPass(atom/movable/mover, turf/target)
-	if((mover.pass_flags & PASSMOB))
-		return TRUE
-	if(istype(mover, /obj/item/projectile) || mover.throwing)
-		return (!density || lying)
-	if(buckled == mover)
-		return TRUE
-	if(ismob(mover))
-		if (mover in buckled_mobs)
-			return TRUE
-	return (!mover.density || !density || lying || (mover.throwing && mover.throwing.thrower == src && !ismob(mover)))
-
 //DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
 //See mob_movespeed.dm
 /mob/proc/movement_delay()	//update /living/movement_delay() if you change this
@@ -21,37 +9,36 @@
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
 
-/client/proc/Move_object(direct)
+/client/proc/Move_object(direction)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
-			step(mob.control_object,direct)
+			step(mob.control_object,direction)
 			if(!mob.control_object)
 				return
-			mob.control_object.setDir(direct)
+			mob.control_object.setDir(direction)
 		else
-			mob.control_object.forceMove(get_step(mob.control_object,direct))
+			mob.control_object.forceMove(get_step(mob.control_object,direction))
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 
-/client/Move(n, direct)
+/client/Move(n, direction)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
 	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
+		next_move_dir_add = next_move_dir_sub = NONE
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
-	if(!mob || !mob.loc)
+	if(!n || !direction || !mob?.loc)
 		return FALSE
-	if(!n || !direct)
-		return FALSE
+	//GET RID OF THIS SOON AS MOBILITY FLAGS IS DONE
 	if(mob.notransform)
-		return FALSE	//This is sota the goto stop mobs from moving var
+		return FALSE
+
 	if(mob.control_object)
-		return Move_object(direct)
+		return Move_object(direction)
 	if(!isliving(mob))
-		return mob.Move(n, direct)
+		return mob.Move(n, direction)
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
@@ -60,29 +47,29 @@
 
 	var/mob/living/L = mob  //Already checked for isliving earlier
 	if(L.incorporeal_move)	//Move though walls
-		Process_Incorpmove(direct)
+		Process_Incorpmove(direction)
 		return FALSE
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
-		return mob.remote_control.relaymove(mob, direct)
+		return mob.remote_control.relaymove(mob, direction)
 
 	if(isAI(mob))
-		return AIMove(n,direct,mob)
+		return AIMove(n,direction,mob)
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
-		return mob.buckled.relaymove(mob, direct)
+		return mob.buckled.relaymove(mob, direction)
 
-	if(!mob.canmove)
+	if(!CHECK_MOBILITY(L, MOBILITY_MOVE))
 		return FALSE
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+		return O.relaymove(mob, direction)
 
-	if(!mob.Process_Spacemove(direct))
+	if(!mob.Process_Spacemove(direction))
 		return FALSE
 	//We are now going to move
 	var/add_delay = mob.movement_delay()
@@ -93,39 +80,37 @@
 	var/oldloc = mob.loc
 
 	if(L.confused)
-		var/newdir = 0
-		if(L.confused > 40)
+		var/newdir = NONE
+		if((L.confused > 50) && prob(min(L.confused * 0.5, 50)))
 			newdir = pick(GLOB.alldirs)
-		else if(prob(L.confused * 1.5))
-			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-		else if(prob(L.confused * 3))
-			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
+		else if(prob(L.confused))
+			newdir = angle2dir(dir2angle(direction) + pick(90, -90))
+		else if(prob(L.confused * 2))
+			newdir = angle2dir(dir2angle(direction) + pick(45, -45))
 		if(newdir)
-			direct = newdir
-			n = get_step(L, direct)
+			direction = newdir
+			n = get_step(L, direction)
 
 	. = ..()
 
-	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
-	if(mob.loc != oldloc)
-		move_delay += add_delay
+	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direct, mob, n, oldloc)
+	var/atom/movable/AM = L.pulling
+	if(AM && AM.density && !SEND_SIGNAL(L, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) && !ismob(AM))
+		L.setDir(turn(L.dir, 180))
 
-	var/atom/movable/P = mob.pulling
-	if(P && !ismob(P) && P.density)
-		mob.setDir(turn(mob.dir, 180))
+	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc, add_delay)
 
-///Process_Grab()
-///Called by client/Move()
-///Checks to see if you are being grabbed and if so attemps to break it
+/// Process_Grab(): checks for grab, attempts to break if so. Return TRUE to prevent movement.
 /client/proc/Process_Grab()
 	if(mob.pulledby)
+		if((mob.pulledby == mob.pulling) && (mob.pulledby.grab_state == GRAB_PASSIVE))			//Don't autoresist passive grabs if we're grabbing them too.
+			return
 		if(mob.incapacitated(ignore_restraints = 1))
 			move_delay = world.time + 10
 			return TRUE
@@ -134,27 +119,27 @@
 			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return TRUE
 		else
-			return mob.resist_grab(1)
+			return !mob.attempt_resist_grab(TRUE)
 
 ///Process_Incorpmove
 ///Called by client/Move()
 ///Allows mobs to run though walls
-/client/proc/Process_Incorpmove(direct)
+/client/proc/Process_Incorpmove(direction)
 	var/turf/mobloc = get_turf(mob)
 	if(!isliving(mob))
 		return
 	var/mob/living/L = mob
 	switch(L.incorporeal_move)
 		if(INCORPOREAL_MOVE_BASIC)
-			var/T = get_step(L,direct)
+			var/T = get_step(L,direction)
 			if(T)
 				L.forceMove(T)
-			L.setDir(direct)
+			L.setDir(direction)
 		if(INCORPOREAL_MOVE_SHADOW)
 			if(prob(50))
 				var/locx
 				var/locy
-				switch(direct)
+				switch(direction)
 					if(NORTH)
 						locx = mobloc.x
 						locy = (mobloc.y+2)
@@ -188,12 +173,12 @@
 							break
 			else
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
-				var/T = get_step(L,direct)
+				var/T = get_step(L,direction)
 				if(T)
 					L.forceMove(T)
-			L.setDir(direct)
+			L.setDir(direction)
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
-			var/turf/open/floor/stepTurf = get_step(L, direct)
+			var/turf/open/floor/stepTurf = get_step(L, direction)
 			if(stepTurf)
 				for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 					to_chat(L, "<span class='warning'>[S] bars your passage!</span>")
@@ -210,7 +195,7 @@
 					return
 
 				L.forceMove(stepTurf)
-			L.setDir(direct)
+			L.setDir(direction)
 	return TRUE
 
 
@@ -265,8 +250,12 @@
 /mob/proc/slip(s_amount, w_amount, obj/O, lube)
 	return
 
-/mob/proc/update_gravity()
-	return
+/mob/proc/update_gravity(has_gravity, override=FALSE)
+	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
+	if(!speed_change)
+		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
+	else
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown = speed_change)
 
 //bodypart selection - Cyberboss
 //8 toggles through head - eyes - mouth
@@ -366,10 +355,13 @@
 	if(m_intent == MOVE_INTENT_RUN)
 		m_intent = MOVE_INTENT_WALK
 	else
+		if (HAS_TRAIT(src,TRAIT_NORUNNING))
+			to_chat(src, "You find yourself unable to run.")
+			return FALSE
 		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_icon(src)
+			selector.update_icon()
 
 /mob/verb/up()
 	set name = "Move Upwards"

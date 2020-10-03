@@ -10,7 +10,7 @@
 	organ_flags = ORGAN_VITAL
 	attack_verb = list("attacked", "slapped", "whacked")
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
-	decay_factor = STANDARD_ORGAN_DECAY	/ 4		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
+	decay_factor = STANDARD_ORGAN_DECAY	/ 2		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise
 	healing_factor = STANDARD_ORGAN_HEALING / 2
 
 	maxHealth	= BRAIN_DAMAGE_DEATH
@@ -51,20 +51,30 @@
 		var/datum/brain_trauma/BT = X
 		BT.owner = owner
 		BT.on_gain()
+	if(damage > BRAIN_DAMAGE_MILD)
+		var/datum/skill_modifier/S
+		ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/brain_damage, null, C, S)
+	if(damage > BRAIN_DAMAGE_SEVERE)
+		var/datum/skill_modifier/S
+		ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/heavy_brain_damage, null, C, S)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
-/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
-	..()
+/obj/item/organ/brain/Remove(special = FALSE, no_id_transfer = FALSE)
+	. = ..()
+	var/mob/living/carbon/C = .
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
+	if((!QDELETED(src) || C) && !no_id_transfer)
 		transfer_identity(C)
-	C.update_hair()
+	if(C)
+		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/brain_damage, null, C)
+		REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/heavy_brain_damage, null, C)
+		C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.
@@ -86,7 +96,7 @@
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
 		if(HAS_TRAIT(L, TRAIT_NOCLONE))
-			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
+			LAZYSET(brainmob.status_traits, TRAIT_NOCLONE, L.status_traits[TRAIT_NOCLONE])
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
@@ -102,16 +112,16 @@
 	if(istype(O, /obj/item/organ_storage)) //BUG_PROBABLE_CAUSE
 		return //Borg organ bags shouldn't be killing brains
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("neurine")) //Neurine fixes dead brains
+	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/neurine)) //Neurine fixes dead brains
 		. = TRUE //don't do attack animation.
 		var/cached_Bdamage = brainmob?.health
-		var/datum/reagent/medicine/neurine/N = reagents.has_reagent("neurine")
-		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent("mannitol")
+		var/datum/reagent/medicine/neurine/N = reagents.has_reagent(/datum/reagent/medicine/neurine)
+		var/datum/reagent/medicine/mannitol/M1 = reagents.has_reagent(/datum/reagent/medicine/mannitol)
 
-		if(O.reagents.has_reagent("mannitol"))//Just a quick way to bolster the effects if someone mixes up a batch.
+		if(O.reagents.has_reagent(/datum/reagent/medicine/mannitol))//Just a quick way to bolster the effects if someone mixes up a batch.
 			N.volume *= (M1.volume*0.5)
 
-		if(!O.reagents.has_reagent("neurine", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/neurine, 10))
 			to_chat(user, "<span class='warning'>There's not enough neurine in [O] to restore [src]!</span>")
 			return
 
@@ -127,21 +137,21 @@
 		if(cached_Bdamage <= HEALTH_THRESHOLD_DEAD) //Fixing dead brains yeilds a trauma
 			if((cached_Bdamage <= HEALTH_THRESHOLD_DEAD) && (brainmob.health > HEALTH_THRESHOLD_DEAD))
 				if(prob(80))
-					gain_trauma_type(BRAIN_TRAUMA_MILD)
+					gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 				else if(prob(50))
-					gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+					gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
 				else
-					gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+					gain_trauma_type(BRAIN_TRAUMA_SPECIAL, natural_gain = TRUE)
 		return
 
-	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
+	if((organ_flags & ORGAN_FAILING) && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
-		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent("mannitol")
+		var/datum/reagent/medicine/mannitol/M = reagents.has_reagent(/datum/reagent/medicine/mannitol)
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
 			to_chat(user, "<span class='warning'>[src] is far too damaged, you'll have to use neurine on it!</span>")
 			return
 
-		if(!O.reagents.has_reagent("mannitol", 10))
+		if(!O.reagents.has_reagent(/datum/reagent/medicine/mannitol, 10))
 			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
 			return
 
@@ -157,7 +167,7 @@
 
 
 
-/obj/item/organ/brain/examine(mob/user)//BUG_PROBABLE_CAUSE to_chats changed to . +=
+/obj/item/organ/brain/examine(mob/user)
 	. = ..()
 
 	if(user.suiciding)
@@ -217,66 +227,45 @@
 		Insert(C)
 	else
 		..()
-/* TO BE REMOVED, KEPT IN CASE OF BUGS
-/obj/item/organ/brain/proc/get_brain_damage()
-	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
-	var/offset_integrity = obj_integrity - (max_integrity - brain_damage_threshold)
-	. = round((1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH, DAMAGE_PRECISION)
-
-/obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)
-	var/adjusted_amount
-	if(amount >= 0 && maximum)
-		var/brainloss = get_brain_damage()
-		var/new_brainloss = CLAMP(brainloss + amount, 0, maximum)
-		if(brainloss > new_brainloss) //brainloss is over the cap already
-			return 0
-		adjusted_amount = new_brainloss - brainloss
-	else
-		adjusted_amount = amount
-
-	adjusted_amount = round(adjusted_amount * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER, DAMAGE_PRECISION)
-	if(adjusted_amount)
-		if(adjusted_amount >= DAMAGE_PRECISION)
-			take_damage(adjusted_amount)
-		else if(adjusted_amount <= -DAMAGE_PRECISION)
-			obj_integrity = min(max_integrity, obj_integrity-adjusted_amount)
-	. = adjusted_amount
-*/
-
-/obj/item/organ/brain/on_life()
-	if(damage >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
-		owner.death()
-		brain_death = TRUE
-		return
-	..()
-
-/obj/item/organ/brain/on_death()
-	if(damage <= BRAIN_DAMAGE_DEATH) //rip
-		brain_death = FALSE
-	..()
-
 
 /obj/item/organ/brain/applyOrganDamage(var/d, var/maximum = maxHealth)
-	..()
-
+	. = ..()
+	if(!. || !owner)
+		return
+	if(damage >= BRAIN_DAMAGE_DEATH) //rip
+		if(owner.stat != DEAD)
+			to_chat(owner, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
+			owner.death()
+		brain_death = TRUE
+	else
+		brain_death = FALSE
 
 /obj/item/organ/brain/check_damage_thresholds(mob/M)
 	. = ..()
 	//if we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
+		if(damage < prev_damage && owner)
+			if(prev_damage > BRAIN_DAMAGE_MILD && damage <= BRAIN_DAMAGE_MILD)
+				REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/brain_damage, null, owner)
+			if(prev_damage > BRAIN_DAMAGE_SEVERE && damage <= BRAIN_DAMAGE_SEVERE)
+				REMOVE_SKILL_MODIFIER_BODY(/datum/skill_modifier/heavy_brain_damage, null, owner)
 		return
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
-			gain_trauma_type(BRAIN_TRAUMA_MILD)
+			gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
+			if(prev_damage <= BRAIN_DAMAGE_MILD && owner)
+				var/datum/skill_modifier/S
+				ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/brain_damage, null, owner, S)
 	if(damage > BRAIN_DAMAGE_SEVERE)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
 			if(prob(20))
-				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+				gain_trauma_type(BRAIN_TRAUMA_SPECIAL, natural_gain = TRUE)
 			else
-				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
-
+				gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
+			if(prev_damage <= BRAIN_DAMAGE_SEVERE && owner)
+				var/datum/skill_modifier/S
+				ADD_SKILL_MODIFIER_BODY(/datum/skill_modifier/heavy_brain_damage, null, owner, S)
 	if (owner)
 		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
 			var/brain_message
@@ -319,7 +308,7 @@
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			. += BT
 
-/obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience)
+/obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience, natural_gain = FALSE)
 	if(!ispath(trauma))
 		trauma = trauma.type
 	if(!initial(trauma.can_gain))
@@ -352,7 +341,7 @@
 		if(TRAUMA_RESILIENCE_ABSOLUTE)
 			max_traumas = TRAUMA_LIMIT_ABSOLUTE
 
-	if(resilience_tier_count >= max_traumas)
+	if(natural_gain && resilience_tier_count >= max_traumas)
 		return FALSE
 	return TRUE
 
@@ -389,13 +378,14 @@
 	if(resilience)
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
+	return actual_trauma
 
 //Add a random trauma of a certain subtype
-/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
+/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, natural_gain = FALSE)
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
 		var/datum/brain_trauma/BT = T
-		if(can_gain_trauma(BT, resilience) && initial(BT.random_gain))
+		if(can_gain_trauma(BT, resilience, natural_gain) && initial(BT.random_gain))
 			possible_traumas += BT
 
 	if(!LAZYLEN(possible_traumas))

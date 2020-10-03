@@ -12,7 +12,7 @@
 	var/obj/item/clockwork/weapon/weapon_type //The type of weapon to create
 	var/obj/item/clockwork/weapon/weapon
 
-/datum/action/innate/call_weapon/IsAvailable()
+/datum/action/innate/call_weapon/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		qdel(src)
 		return

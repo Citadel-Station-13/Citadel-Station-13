@@ -34,3 +34,17 @@
 	name = "10mm incendiary bullet"
 	damage = 15
 	fire_stacks = 2
+
+/obj/item/projectile/bullet/c10mm/soporific
+	name ="10mm soporific bullet"
+	nodamage = TRUE
+
+/obj/item/projectile/bullet/c10mm/soporific/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.blur_eyes(6)
+		if(L.getStaminaLoss() >= 60)
+			L.Sleeping(300)
+		else
+			L.adjustStaminaLoss(25)

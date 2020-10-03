@@ -12,7 +12,7 @@
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
-/datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
@@ -41,7 +41,7 @@
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
-	switch(rand(1,4))//Now let's see what hopefully-not-important part of the brain we cut off
+	switch(rand(1,6))//Now let's see what hopefully-not-important part of the brain we cut off
 		if(1)
 			target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 		if(2)

@@ -1,0 +1,35 @@
+body {
+	font-family: Verdana, sans-serif;
+	font-size: 9pt;
+}
+.value {
+	font-family: "consolas", monospace; /* consolas is better!! (was "Courier New") */
+	font-size: 8pt;
+	display: inline-block;
+}
+
+table.matrix {
+	border-collapse: collapse; border-spacing: 0;
+	font-size: 7pt;
+}
+table.matrix td{
+	text-align: center;
+	padding: 0 1ex 0ex 1ex;
+}
+table.matrixbrak {
+	border-collapse: collapse; border-spacing: 0;
+}
+table.matrixbrak td.lbrak, table.matrixbrak td.rbrak{
+	width: 0.8ex;
+	font-size: 50%;
+	border-top: solid 0.25ex black;
+	border-bottom: solid 0.25ex black;
+}
+table.matrixbrak td.lbrak {
+	border-left: solid 0.5ex black;
+	border-right: none;
+}
+table.matrixbrak td.rbrak {
+	border-right: solid 0.5exrgb(95, 61, 61)k;
+	border-left: none;
+}

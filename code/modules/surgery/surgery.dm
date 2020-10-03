@@ -37,7 +37,7 @@
 	return ..()
 
 
-/datum/surgery/proc/can_start(mob/user, mob/living/patient) //FALSE to not show in list
+/datum/surgery/proc/can_start(mob/user, mob/living/patient, obj/item/tool) //FALSE to not show in list
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
@@ -55,27 +55,26 @@
 	if(requires_tech)
 		. = FALSE
 
+	var/list/advanced_surgeries = list()
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
 		if(SP)
-			if (replaced_by in SP.advanced_surgeries)
-				return .
-			if(type in SP.advanced_surgeries)
-				return TRUE
-
+			advanced_surgeries |= SP.advanced_surgeries
 
 	var/turf/T = get_turf(patient)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
-	if(table)
-		if(!table.computer)
-			return .
-		if(table.computer.stat & (NOPOWER|BROKEN))
-			return .
-		if(replaced_by in table.computer.advanced_surgeries)
-			return FALSE
-		if(type in table.computer.advanced_surgeries)
-			return TRUE
+	if(table?.computer && !CHECK_BITFIELD(table.computer.stat, NOPOWER|BROKEN))
+		advanced_surgeries |= table.computer.advanced_surgeries
+
+	if(istype(tool, /obj/item/surgical_drapes/advanced))
+		var/obj/item/surgical_drapes/advanced/A = tool
+		advanced_surgeries |= A.get_advanced_surgeries()
+
+	if(replaced_by in advanced_surgeries)
+		return FALSE
+	if(type in advanced_surgeries)
+		return TRUE
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(step_in_progress)
@@ -132,14 +131,14 @@
 	name = "Surgery Procedure Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
 	name = "Debug Surgery Disk"
 	desc = "A disk that contains all existing surgery procedures."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
 /obj/item/disk/surgery/debug/Initialize()
 	. = ..()

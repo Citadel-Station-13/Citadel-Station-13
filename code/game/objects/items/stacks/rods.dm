@@ -16,7 +16,8 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=1000)
+	custom_materials = list(/datum/material/iron=1000)
+	mats_per_stack = 1000
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
@@ -25,16 +26,18 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
 	return BRUTELOSS
-	
+
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-
-	recipes = GLOB.rod_recipes
 	update_icon()
 
-/obj/item/stack/rods/update_icon()
+/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.rod_recipes
+
+/obj/item/stack/rods/update_icon_state()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
+	if(amount <= 5)
 		icon_state = "rods-[amount]"
 	else
 		icon_state = "rods"
@@ -70,12 +73,13 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 
-/obj/item/stack/rods/cyborg/update_icon()
-	return
+/obj/item/stack/rods/cyborg/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/stack/rods/ten
 	amount = 10
@@ -85,3 +89,19 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/fifty
 	amount = 50
+
+/obj/item/stack/rods/lava
+	name = "heat resistant rod"
+	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	singular_name = "heat resistant rod"
+	icon_state = "rods"
+	item_state = "rods"
+	color = "#5286b9ff"
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	max_amount = 30
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+
+/obj/item/stack/rods/lava/thirty
+	amount = 30

@@ -4,7 +4,9 @@
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-#define WRITE_LOG(log, text) rustg_log_write(log, text)
+//This is an external call, "true" and "false" are how rust parses out booleans
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
@@ -52,6 +54,8 @@
 	if (CONFIG_GET(flag/log_adminchat))
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: DSAY: [text]")
 
+/proc/log_consent(text)
+	WRITE_LOG(GLOB.world_game_log,"CONSENT: [text]")
 
 /* All other items are public. */
 /proc/log_game(text)
@@ -78,7 +82,6 @@
 	if (CONFIG_GET(flag/log_manifest))
 		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
 
-
 /proc/log_say(text)
 	if (CONFIG_GET(flag/log_say))
 		WRITE_LOG(GLOB.world_game_log, "SAY: [text]")
@@ -94,6 +97,10 @@
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
 		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
+
+/proc/log_subtler(text)
+	if (CONFIG_GET(flag/log_emote))
+		WRITE_LOG(GLOB.world_game_log, "EMOTE (SUBTLER): [text]")
 
 /proc/log_prayer(text)
 	if (CONFIG_GET(flag/log_prayer))
@@ -121,6 +128,9 @@
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
 
+/proc/log_craft(text)
+	if (CONFIG_GET(flag/log_craft))
+		WRITE_LOG(GLOB.world_crafting_log, "CRAFT: [text]")
 
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
@@ -141,6 +151,12 @@
 	if (CONFIG_GET(flag/log_job_debug))
 		WRITE_LOG(GLOB.world_job_debug_log, "JOB: [text]")
 
+/proc/log_subsystem(subsystem, text)
+	WRITE_LOG(GLOB.subsystem_log, "[subsystem]: [text]")
+
+/proc/log_click(atom/object, atom/location, control, params, client/C, event = "clicked", unexpected)
+	WRITE_LOG(GLOB.click_log, "[unexpected? "ERROR" :"CLICK"]: [C.ckey] - [event] : [istype(object)? "[object] ([COORD(object)])" : object] | [istype(location)? "[location] ([COORD(location)])" : location] | [control] | [params]")
+
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
 #ifdef USE_CUSTOM_ERROR_HANDLER
@@ -157,10 +173,23 @@
 	WRITE_LOG(GLOB.config_error_log, text)
 	SEND_TEXT(world.log, text)
 
+/proc/log_mapping(text)
+	WRITE_LOG(GLOB.world_map_error_log, text)
+
+/proc/log_reagent(text)
+	WRITE_LOG(GLOB.reagent_log, text)
+
+/proc/log_reagent_transfer(text)
+	log_reagent("TRANSFER: [text]")
 
 /* For logging round startup. */
 /proc/start_log(log)
 	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")
+
+/* ui logging */
+
+/proc/log_tgui(text)
+	WRITE_LOG(GLOB.tgui_log, text)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()

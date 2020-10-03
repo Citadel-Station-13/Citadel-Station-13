@@ -28,6 +28,16 @@ GLOBAL_VAR(world_job_debug_log)
 GLOBAL_PROTECT(world_job_debug_log)
 GLOBAL_VAR(world_virus_log)
 GLOBAL_PROTECT(world_virus_log)
+GLOBAL_VAR(world_map_error_log)
+GLOBAL_PROTECT(world_map_error_log)
+GLOBAL_VAR(subsystem_log)
+GLOBAL_PROTECT(subsystem_log)
+GLOBAL_VAR(reagent_log)
+GLOBAL_PROTECT(reagent_log)
+GLOBAL_VAR(world_crafting_log)
+GLOBAL_PROTECT(world_crafting_log)
+GLOBAL_VAR(click_log)
+GLOBAL_PROTECT(click_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)
@@ -37,6 +47,9 @@ GLOBAL_LIST_EMPTY(lastsignalers)	//keeps last 100 signals here in format: "[src]
 GLOBAL_PROTECT(lastsignalers)
 GLOBAL_LIST_EMPTY(lawchanges) //Stores who uploaded laws to which silicon-based lifeform, and what the law was
 GLOBAL_PROTECT(lawchanges)
+
+GLOBAL_VAR(tgui_log)
+GLOBAL_PROTECT(tgui_log)
 
 GLOBAL_LIST_EMPTY(combatlog)
 GLOBAL_PROTECT(combatlog)

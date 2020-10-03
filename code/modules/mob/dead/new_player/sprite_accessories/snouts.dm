@@ -1,5 +1,7 @@
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	mutant_part_string = "snout"
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/snouts/sharp
 	name = "Sharp"
@@ -151,11 +153,15 @@
 /datum/sprite_accessory/mam_snouts
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
+	recommended_species = list("mammal", "slimeperson", "insect", "podweak")
+	mutant_part_string = "snout"
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/mam_snouts/none
 	name = "None"
 	icon_state = "none"
-
+	recommended_species = null
+	relevant_layers = null
 
 /datum/sprite_accessory/mam_snouts/bird
 	name = "Beak"
@@ -243,6 +249,10 @@
 /datum/sprite_accessory/mam_snouts/shark
 	name = "Shark"
 	icon_state = "shark"
+
+/datum/sprite_accessory/mam_snouts/hshark
+	name = "hShark"
+	icon_state = "hshark"
 
 /datum/sprite_accessory/mam_snouts/toucan
 	name = "Toucan"

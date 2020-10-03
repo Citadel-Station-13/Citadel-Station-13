@@ -15,7 +15,7 @@
 
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
-	var/datum/comm_message/threat
+	var/datum/comm_message/threat_message
 	var/payoff = 0
 	var/paid_off = FALSE
 	var/ship_name = "Space Privateers Association"
@@ -28,23 +28,26 @@
 	priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", "commandreport") // CITADEL EDIT metabreak
 	if(fake)
 		return
-	threat = new
-	payoff = round(SSshuttle.points * 0.80)
-	threat.title = "Business proposition"
-	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
-	threat.possible_answers = list("We'll pay.","No way.")
-	threat.answer_callback = CALLBACK(src,.proc/answered)
-	SScommunications.send_message(threat,unique = TRUE)
+	threat_message = new
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		payoff = round(D.account_balance * 0.80)
+	threat_message.title = "Business proposition"
+	threat_message.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
+	threat_message.possible_answers = list("We'll pay.","No way.")
+	threat_message.answer_callback = CALLBACK(src,.proc/answered)
+	SScommunications.send_message(threat_message,unique = TRUE)
 
 /datum/round_event/pirates/proc/answered()
-	if(threat && threat.answered == 1)
-		if(SSshuttle.points >= payoff)
-			SSshuttle.points -= payoff
-			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
-			paid_off = TRUE
-			return
-		else
-			priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+	if(threat_message && threat_message.answered == 1)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(D.adjust_money(-payoff))
+				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
+				paid_off = TRUE
+				return
+			else
+				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
@@ -57,6 +60,9 @@
 
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
+
+	if(!SSmapping.empty_space)
+		SSmapping.empty_space = SSmapping.add_new_zlevel("Empty Area For Pirates", list(ZTRAIT_LINKAGE = SELFLOOPING))
 
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
@@ -101,9 +107,10 @@
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
 		if(is_station_level(z))
-			var/siphoned = min(SSshuttle.points,siphon_per_tick)
-			SSshuttle.points -= siphoned
-			credits_stored += siphoned
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				var/siphoned = min(D.account_balance,siphon_per_tick)
+				D.adjust_money(-siphoned)
 			interrupt_research()
 		else
 			return
@@ -139,12 +146,7 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	if(credits_stored < 200)
-		to_chat(user,"<span class='notice'>Not enough credits to retrieve.</span>")
-		return
-	while(credits_stored >= 200)
-		new /obj/item/stack/spacecash/c200(drop_location())
-		credits_stored -= 200
+	new /obj/item/holochip(drop_location(), credits_stored)
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
 	credits_stored = 0
 
@@ -157,11 +159,12 @@
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
 
-/obj/machinery/shuttle_scrambler/update_icon()
+/obj/machinery/shuttle_scrambler/update_overlays()
+	. = ..()
 	if(active)
-		icon_state = "dominator-blue"
-	else
-		icon_state = "dominator"
+		var/mutable_appearance/M = mutable_appearance(icon, "dominator-overlay")
+		M.color = "#00FFFF"
+		. += M
 
 /obj/machinery/shuttle_scrambler/Destroy()
 	toggle_off()
@@ -177,6 +180,7 @@
 	shuttleId = "pirateship"
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
+	resistance_flags = INDESTRUCTIBLE
 	light_color = LIGHT_COLOR_RED
 	possible_destinations = "pirateship_away;pirateship_home;pirateship_custom"
 
@@ -184,6 +188,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
+	resistance_flags = INDESTRUCTIBLE
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	x_offset = 9
@@ -226,6 +231,7 @@
 	desc = "This sophisticated machine scans the nearby space for items of value."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
+	resistance_flags = INDESTRUCTIBLE
 	density = TRUE
 	var/cooldown = 300
 	var/next_use = 0
@@ -259,6 +265,7 @@
 	name = "cargo hold pad"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle-o"
+	resistance_flags = INDESTRUCTIBLE
 	var/idle_state = "lpad-idle-o"
 	var/warmup_state = "lpad-idle"
 	var/sending_state = "lpad-beam"
@@ -272,6 +279,7 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	resistance_flags = INDESTRUCTIBLE
 	var/status_report = "Idle"
 	var/obj/machinery/piratepad/pad
 	var/warmup_time = 100
@@ -451,3 +459,12 @@
 /datum/export/pirate/cash/get_amount(obj/O)
 	var/obj/item/stack/spacecash/C = O
 	return ..() * C.amount * C.value
+
+/datum/export/pirate/holochip
+	cost = 1
+	unit_name = "holochip"
+	export_types = list(/obj/item/holochip)
+
+/datum/export/pirate/holochip/get_cost(atom/movable/AM)
+	var/obj/item/holochip/H = AM
+	return H.credits

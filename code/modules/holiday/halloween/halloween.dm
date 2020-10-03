@@ -132,7 +132,7 @@
 	speak_emote = list("howls")
 	emote_hear = list("wails","screeches")
 	density = FALSE
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	incorporeal_move = 1
 	layer = 4
 	var/timer = 0
@@ -190,6 +190,7 @@
 	icon_dead = "scary_clown"
 	icon_gib = "scary_clown"
 	speak = list("...", ". . .")
+	threat = 3
 	maxHealth = 120
 	health = 120
 	emote_see = list("silently stares")
@@ -252,12 +253,11 @@
 // Spooky Uplink Items //
 /////////////////////////
 
-/datum/uplink_item/dangerous/crossbow/candy
+/datum/uplink_item/stealthy_weapons/crossbow/candy
 	name = "Candy Corn Crossbow"
 	desc = "A standard miniature energy crossbow that uses a hard-light projector to transform bolts into candy corn. Happy Halloween!"
 	category = "Holiday"
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
-	cost = 12
 	surplus = 0
 
 /datum/uplink_item/device_tools/emag/hack_o_lantern

@@ -8,20 +8,20 @@
 	invocation_emote_self = "<span class='notice'>You form a wall in front of yourself.</span>"
 	summon_lifespan = 300
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = NONE
 	range = 0
 	cast_sound = null
-	human_req = 1
+	mobs_whitelist = list(/mob/living/carbon/human)
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
-	if(usr && usr.mind)
-		if(!usr.mind.miming)
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Trigger(mob/user, skip_can_cast = TRUE)
+	if(user.mind)
+		if(!user.mind.miming)
 			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
-		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
+		invocation = "<B>[user.real_name]</B> looks as if a wall is in front of [user.p_them()]."
 	else
 		invocation_type ="none"
 	..()
@@ -32,8 +32,8 @@
 	desc = "Make or break a vow of silence."
 	school = "mime"
 	panel = "Mime"
-	clothes_req = 0
-	human_req = 1
+	clothes_req = NONE
+	mobs_whitelist = list(/mob/living/carbon/human)
 	charge_max = 3000
 	range = -1
 	include_user = 1
@@ -41,17 +41,12 @@
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
 
-/obj/effect/proc_holder/spell/targeted/mime/speak/Click()
-	if(!usr)
-		return
-	if(!ishuman(usr))
-		return
-	var/mob/living/carbon/human/H = usr
-	if(H.mind.miming)
+/obj/effect/proc_holder/spell/targeted/mime/speak/Trigger(mob/user, skip_can_cast = TRUE)
+	if(user.mind?.miming)
 		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
 	else
 		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
-	..()
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
@@ -75,22 +70,22 @@
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
 	sound =  null
-	clothes_req = 0
+	clothes_req = NONE
 	range = -1
 	include_user = 1
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
 
-/obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
-	if(usr && usr.mind)
-		if(!usr.mind.miming)
+/obj/effect/proc_holder/spell/targeted/forcewall/mime/Trigger(mob/user, skip_can_cast = TRUE)
+	if(user.mind)
+		if(!user.mind.miming)
 			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
-		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
+		invocation = "<B>[user.real_name]</B> looks as if a blockade is in front of [user.p_them()]."
 	else
 		invocation_type ="none"
-	..()
+	return ..()
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
@@ -98,7 +93,7 @@
 	school = "mime"
 	panel = "Mime"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = NONE
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
@@ -114,20 +109,62 @@
 	base_icon_state = "mime"
 
 
-/obj/effect/proc_holder/spell/aimed/finger_guns/Click()
-	var/mob/living/carbon/human/owner = usr
-	if(owner.incapacitated())
-		to_chat(owner, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
+/obj/effect/proc_holder/spell/aimed/finger_guns/Trigger(mob/user, skip_can_cast = TRUE)
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
 		return
-	if(usr && usr.mind)
+	if(user.mind)
+		if(!user.mind.miming)
+			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			return
+		invocation = "<B>[user.real_name]</B> fires [user.p_their()] finger gun!"
+	else
+		invocation_type ="none"
+	return ..()
+
+/obj/effect/proc_holder/spell/targeted/touch/mimerope
+	name = "Invisible Rope"
+	desc = "Form an invisible rope to tie people or trip people with."
+	school = "mime"
+	panel = "Mime"
+	invocation_type = "emote"
+	invocation_emote_self = "<span class='notice'>You start fabricate an invisible rope.</span>"
+	charge_max = 700
+	sound =  null
+	clothes_req = 0
+	range = -1
+	include_user = 1
+	action_icon_state = "mime"
+	action_background_icon_state = "bg_mime"
+	hand_path = /obj/item/melee/touch_attack/mimerope
+
+/obj/effect/proc_holder/spell/targeted/touch/mimerope/Trigger(mob/user, skip_can_cast = TRUE)
+	if(user.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
 			return
-		invocation = "<B>[usr.real_name]</B> fires [usr.p_their()] finger gun!"
+		if (usr.get_active_held_item())
+			to_chat(usr, "<span class='notice'>Your hands must be free to create the invisible rope.</span>")
+			return
+		invocation = "<B>[usr.real_name]</B> is twirling an invisible rope in [usr.p_their()] hands."
 	else
 		invocation_type ="none"
-	..()
 
+/obj/effect/proc_holder/spell/targeted/touch/mimerope/cast(list/targets,mob/user = usr)
+
+	usr.put_in_hands()
+
+/obj/item/melee/touch_attack/mimerope
+	item_state = ""
+	icon_state = ""
+	name = "mime rope"
+	desc = "An invisible rope."
+
+/obj/item/restraints/handcuffs/cable/mime
+	name = "mime restraints"
+	desc = "An invisible rope."
+	item_state = ""
+	icon_state = ""
 
 /obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime

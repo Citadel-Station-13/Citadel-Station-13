@@ -44,8 +44,8 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	else
 		to_chat(user, "<span class='notice'>[I] doesn't appear to be an uplink...</span>")
 
-/obj/machinery/computer/telecrystals/uplinker/update_icon()
-	..()
+/obj/machinery/computer/telecrystals/uplinker/update_overlays()
+	. = ..()
 	if(uplinkholder)
 		add_overlay("[initial(icon_state)]-closed")
 
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/list/transferlog = list()
 
 /obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
-	transferlog += ("<b>[STATION_TIME_TIMESTAMP("hh:mm:ss")]</b> [logmessage]")
+	transferlog += ("<b>[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))

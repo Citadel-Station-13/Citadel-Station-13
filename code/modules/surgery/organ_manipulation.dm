@@ -136,7 +136,7 @@
 				"[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
 				"[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!")
 			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
-			I.Remove(target)
+			I.Remove()
 			I.forceMove(get_turf(target))
 		else
 			display_results(user, target, "<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",

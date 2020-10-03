@@ -91,22 +91,18 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/craft
-	using.icon = ui_style
-	if(!widescreenlayout) // CIT CHANGE
-		using.screen_loc = ui_boxcraft // CIT CHANGE
-	static_inventory += using
-
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
 	if(!widescreenlayout) // CIT CHANGE
 		using.screen_loc = ui_boxlang // CIT CHANGE
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/area_creator
 	using.icon = ui_style
 	if(!widescreenlayout) // CIT CHANGE
 		using.screen_loc = ui_boxarea // CIT CHANGE
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/voretoggle() //We fancy Vore now
@@ -114,36 +110,41 @@
 	using.screen_loc = ui_voremode
 	if(!widescreenlayout)
 		using.screen_loc = ui_boxvore
+	using.hud = src
 	static_inventory += using
 
 	action_intent = new /obj/screen/act_intent/segmented
 	action_intent.icon_state = mymob.a_intent
+	action_intent.hud = src
 	static_inventory += action_intent
 
 	using = new /obj/screen/mov_intent
 	using.icon = tg_ui_icon_to_cit_ui(ui_style) // CIT CHANGE - overrides mov intent icon
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
+	using.hud = src
 	static_inventory += using
 
 	//CITADEL CHANGES - sprint button
 	using = new /obj/screen/sprintbutton
 	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.icon_state = (owner.sprinting ? "act_sprint_on" : "act_sprint")
+	using.icon_state = ((owner.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) ? "act_sprint_on" : "act_sprint")
 	using.screen_loc = ui_movi
+	using.hud = src
 	static_inventory += using
 	//END OF CITADEL CHANGES
 
 	//same as above but buffer.
-	using = new /obj/screen/sprint_buffer
-	using.screen_loc = ui_sprintbufferloc
-	sprint_buffer = using
-	static_inventory += using
+	sprint_buffer = new /obj/screen/sprint_buffer
+	sprint_buffer.screen_loc = ui_sprintbufferloc
+	sprint_buffer.hud = src
+	static_inventory += sprint_buffer
 
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
+	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -168,12 +169,14 @@
 	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand_position(owner,1)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
+	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -235,28 +238,26 @@
 	using = new /obj/screen/resist()
 	using.icon = ui_style
 	using.screen_loc = ui_overridden_resist // CIT CHANGE - changes this to overridden resist
+	using.hud = src
 	hotkeybuttons += using
 
-	//CIT CHANGES - rest and combat mode buttons
-	using = new /obj/screen/restbutton()
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
+	using = new /obj/screen/rest()
+	using.icon = ui_style
 	using.screen_loc = ui_pull_resist
-	static_inventory += using
-
-	using = new /obj/screen/combattoggle()
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.screen_loc = ui_combat_toggle
+	using.hud = src
 	static_inventory += using
 	//END OF CIT CHANGES
 
 	using = new /obj/screen/human/toggle()
 	using.icon = ui_style
 	using.screen_loc = ui_inventory
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/human/equip()
 	using.icon = ui_style
 	using.screen_loc = ui_equip_position(mymob)
+	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -311,47 +312,66 @@
 	throw_icon = new /obj/screen/throw_catch()
 	throw_icon.icon = ui_style
 	throw_icon.screen_loc = ui_drop_throw
+	throw_icon.hud = src
 	hotkeybuttons += throw_icon
 
 	internals = new /obj/screen/internals()
+	internals.hud = src
 	infodisplay += internals
 
 	healths = new /obj/screen/healths()
+	healths.hud = src
 	infodisplay += healths
-	//CIT CHANGE - adds arousal and stamina to hud
-	arousal = new /obj/screen/arousal()
-	arousal.icon_state = (owner.canbearoused == 1 ? "arousal0" : "")
-	infodisplay += arousal
 
 	staminas = new /obj/screen/staminas()
+	staminas.hud = src
 	infodisplay += staminas
 
 	if(!CONFIG_GET(flag/disable_stambuffer))
 		staminabuffer = new /obj/screen/staminabuffer()
+		staminabuffer.hud = src
 		infodisplay += staminabuffer
 	//END OF CIT CHANGES
 
 	healthdoll = new /obj/screen/healthdoll()
+	healthdoll.hud = src
 	infodisplay += healthdoll
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon(mymob)
+	pull_icon.hud = src
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_pull_resist
 	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()
+	lingchemdisplay.hud = src
 	infodisplay += lingchemdisplay
 
 	lingstingdisplay = new /obj/screen/ling/sting()
+	lingstingdisplay.hud = src
 	infodisplay += lingstingdisplay
 
 	devilsouldisplay = new /obj/screen/devil/soul_counter
+	devilsouldisplay.hud = src
 	infodisplay += devilsouldisplay
+
+	blood_display = new /obj/screen/bloodsucker/blood_counter	// Blood Volume
+	blood_display.hud = src
+	infodisplay += blood_display
+
+	vamprank_display = new /obj/screen/bloodsucker/rank_counter	// Bloodsucker Rank
+	vamprank_display.hud = src
+	infodisplay += vamprank_display
+
+	sunlight_display = new /obj/screen/bloodsucker/sunlight_counter	// Sunlight
+	sunlight_display.hud = src
+	infodisplay += sunlight_display
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.update_icon(mymob)
+	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))

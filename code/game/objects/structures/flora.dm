@@ -41,14 +41,14 @@
 	pixel_x = -16
 
 /obj/structure/flora/stump/attackby(obj/item/W, mob/user, params)
-	if((W.tool_behaviour == TOOL_SHOVEL) && params)
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-		if(do_after(user, 20))
-			new /obj/item/grown/log/tree(get_turf(src))
-			user.visible_message("[user] digs up [src].", "<span class='notice'>You dig up [src].</span>")
-			qdel(src)
-	else
-		return ..()
+if((W.tool_behaviour == TOOL_SHOVEL) && params)
+	playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+	if(do_after(user, 20))
+		new /obj/item/grown/log/tree(get_turf(src))
+		user.visible_message("[user] digs up [src].", "<span class='notice'>You dig up [src].</span>")
+		qdel(src)
+else
+	return ..()
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
@@ -312,7 +312,8 @@
 
 /obj/item/twohanded/required/kirbyplants/Initialize()
 	. = ..()
-	AddComponent(/datum/component/tactical)
+	AddElement(/datum/element/tactical)
+	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, 500)), 0)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
@@ -360,10 +361,27 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
+	/// Itemstack that is dropped when a rock is mined with a pickaxe
+	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
+	/// Amount of the itemstack to drop
+	var/mineAmount = 20
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()
 	icon_state = "[icon_state][rand(1,3)]"
+
+/obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
+	if(!mineResult || W.tool_behaviour != TOOL_MINING)
+		return ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+	to_chat(user, "<span class='notice'>You start mining...</span>")
+	if(W.use_tool(src, user, 40, volume=50))
+		to_chat(user, "<span class='notice'>You finish mining the rock.</span>")
+		if(mineResult && mineAmount)
+			new mineResult(get_turf(src), mineAmount)
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+		qdel(src)
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"

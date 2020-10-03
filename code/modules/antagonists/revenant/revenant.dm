@@ -16,7 +16,7 @@
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
 	var/stasis = FALSE
-	mob_biotypes = list(MOB_SPIRIT)
+	mob_biotypes = MOB_SPIRIT
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -26,24 +26,30 @@
 	spacewalk = TRUE
 	sight = SEE_SELF
 	throwforce = 0
+	blood_volume = 0
+	has_field_of_vision = FALSE //we are a spoopy ghost
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	response_help   = "passes through"
-	response_disarm = "swings through"
-	response_harm   = "punches through"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "swings through"
+	response_disarm_simple = "swing through"
+	response_harm_continuous = "punches through"
+	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
-	friendly = "touches"
+	friendly_verb_continuous = "touches"
+	friendly_verb_simple = "touch"
 	status_flags = 0
 	wander = FALSE
 	density = FALSE
 	movement_type = FLYING
-	anchored = TRUE
+	move_resist = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	speed = 1
@@ -360,7 +366,7 @@
 	user.dropItemToGround(src)
 	scatter()
 
-/obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom)
+/obj/item/ectoplasm/revenant/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(inert)
 		return
@@ -368,11 +374,11 @@
 	scatter()
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
-	..()
+	. = ..()
 	if(inert)
-		to_chat(user, "<span class='revennotice'>It seems inert.</span>")
+		. += "<span class='revennotice'>It seems inert.</span>"
 	else if(reforming)
-		to_chat(user, "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>")
+		. += "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>"
 
 /obj/item/ectoplasm/revenant/proc/reform()
 	if(QDELETED(src) || QDELETED(revenant) || inert)
@@ -396,7 +402,7 @@
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		C.transfer_ckey(revenant.key, FALSE)
 		if(!revenant.key)
 			qdel(revenant)

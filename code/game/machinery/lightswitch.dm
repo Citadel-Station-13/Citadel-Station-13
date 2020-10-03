@@ -5,6 +5,7 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
+	plane = ABOVE_WALL_PLANE
 	desc = "Make dark."
 	var/on = TRUE
 	var/area/area = null
@@ -21,9 +22,9 @@
 		name = "light switch ([area.name])"
 
 	on = area.lightswitch
-	updateicon()
+	update_icon()
 
-/obj/machinery/light_switch/proc/updateicon()
+/obj/machinery/light_switch/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "light-p"
 	else
@@ -33,19 +34,19 @@
 			icon_state = "light0"
 
 /obj/machinery/light_switch/examine(mob/user)
-	..()
-	to_chat(user, "It is [on? "on" : "off"].")
+	. = ..()
+	. += "It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
 	on = !on
 
 	area.lightswitch = on
-	area.updateicon()
+	area.update_icon()
 
 	for(var/obj/machinery/light_switch/L in area)
 		L.on = on
-		L.updateicon()
+		L.update_icon()
 
 	area.power_change()
 
@@ -57,7 +58,7 @@
 		else
 			stat |= NOPOWER
 
-		updateicon()
+		update_icon()
 
 /obj/machinery/light_switch/emp_act(severity)
 	. = ..()

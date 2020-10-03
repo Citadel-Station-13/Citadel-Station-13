@@ -4,6 +4,16 @@
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
+/obj/item/clothing/glasses/hud/CheckParts(list/parts_list)
+	. = ..()
+	if(vision_correction)
+		return
+	for(var/obj/item/clothing/glasses/G in parts_list)
+		if(G.vision_correction)
+			vision_correction = TRUE
+			name = "prescription [name]"
+			return
+
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_type && slot == SLOT_GLASSES)
@@ -32,6 +42,10 @@
 	desc = "[desc] The display is flickering slightly."
 	return TRUE
 
+////////////
+//Med Huds//
+////////////
+
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
@@ -49,12 +63,19 @@
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
-	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
+	desc = "An advanced medical heads-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+	
+/obj/item/clothing/glasses/hud/health/night/syndicate
+	name = "combat night vision health scanner HUD"
+	desc = "An advanced shielded medical heads-up display that allows soldiers to approximate how much lead poisoning their allies have suffered in complete darkness."
+	flash_protect = 1
+	vision_correction = 1
 
 /obj/item/clothing/glasses/hud/health/sunglasses
 	name = "medical HUDSunglasses"
@@ -65,12 +86,34 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
+/obj/item/clothing/glasses/hud/health/sunglasses/prescription
+	name = "prescription medical HUDSunglasses"
+	vision_correction = 1
+
+/obj/item/clothing/glasses/hud/health/eyepatch
+	name = "eyepatch medHUD"
+	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "medpatch"
+
+///////////////////
+//Diagnostic Huds//
+///////////////////
+
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
+
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	name = "diagnostic HUDSunglasses"
+	desc = "Sunglasses with a diagnostic HUD."
+	icon_state = "sunhuddiag"
+	item_state = "glasses"
+	darkness_view = 1
+	flash_protect = 1
+	tint = 1
 
 /obj/item/clothing/glasses/hud/diagnostic/prescription
 	name = "prescription diagnostic HUD"
@@ -80,14 +123,28 @@
 	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses/prescription
+	name = "prescription diagnostic HUDSunglasses"
+	vision_correction = 1
+
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "night vision diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/diagnostic/eyepatch
+	name = "eyepatch diagnostic HUD"
+	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "diagpatch"
+
+////////////
+//Sec Huds//
+////////////
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -127,12 +184,6 @@
 		return
 	chameleon_action.emp_randomise()
 
-
-/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
-	name = "eyepatch HUD"
-	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
-	icon_state = "hudpatch"
-
 /obj/item/clothing/glasses/hud/security/sunglasses
 	name = "security HUDSunglasses"
 	desc = "Sunglasses with a security HUD."
@@ -142,11 +193,21 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
+/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch // why was this defined *before* the sunglasses it is a subtype of.
+	name = "eyepatch HUD"
+	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "hudpatch"
+
+/obj/item/clothing/glasses/hud/security/sunglasses/prescription
+	name = "prescription security HUDSunglasses"
+	vision_correction = 1
+
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
 	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	darkness_view = 8
+	flash_protect = -2 //You either are flashproof or you can see in the dark, pick one.
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -169,6 +230,8 @@
 	item_state = "garb"
 	force = 12
 	throwforce = 12
+
+//Hud Toggle
 
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle HUD"
@@ -196,6 +259,8 @@
 	if (hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
+
+//Thermal Huds
 
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"

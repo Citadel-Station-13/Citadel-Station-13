@@ -64,6 +64,9 @@
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
+		if(HAS_TRAIT(user, TRAIT_PACIFISM) && L.stat != DEAD)
+			to_chat(user, "<span class='warning'>You don't want to hurt a living creature!</span>")
+			return
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
@@ -136,7 +139,7 @@
 	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
-	M.AdjustKnockdown(20)
+	M.DefaultCombatKnockdown(20)
 
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())

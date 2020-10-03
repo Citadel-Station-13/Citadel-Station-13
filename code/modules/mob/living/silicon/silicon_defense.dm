@@ -1,3 +1,5 @@
+/mob/living/silicon/KnockToFloor(disarm_items = FALSE, silent = TRUE, updating = TRUE)
+	return
 
 /mob/living/silicon/grippedby(mob/living/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
@@ -6,13 +8,17 @@
 	return 2
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent
+	. = ..()
+	if(!.) // the attack was blocked or was help/grab intent
+		return
+	if(M.a_intent == INTENT_HARM)
 		var/damage = 20
 		if (prob(90))
 			log_combat(M, src, "attacked")
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-							"<span class='userdanger'>[M] has slashed at [src]!</span>")
+							"<span class='userdanger'>[M] has slashed at you!</span>", target = M, \
+							target_message = "<span class='danger'>You have slashed at [src]!</span>")
 			if(prob(8))
 				flash_act(affect_silicon = 1)
 			log_combat(M, src, "attacked")
@@ -20,8 +26,9 @@
 			updatehealth()
 		else
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
+			visible_message("<span class='danger'>[M] take a swipe at [src]!</span>", \
+							"<span class='userdanger'>[M] take a swipe at you!</span>", target = M, \
+							target_message = "<span class='danger'>You take a swipe at [src]!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
@@ -29,9 +36,10 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(prob(damage))
 			for(var/mob/living/N in buckled_mobs)
-				N.Knockdown(20)
+				N.DefaultCombatKnockdown(20)
 				unbuckle_mob(N)
-				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>")
+				N.visible_message("<span class='boldwarning'>[N] is knocked off of [src] by [M]!</span>",
+					"<span class='boldwarning'>You are knocked off of [src] by [M]!</span>")
 		switch(M.melee_damage_type)
 			if(BRUTE)
 				adjustBruteLoss(damage)
@@ -49,45 +57,47 @@
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == INTENT_HELP)
-		visible_message("[L.name] rubs its head against [src].")
-
-/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
 	if(user.a_intent == INTENT_HARM)
-		..(user, 1)
+		. = ..(user, TRUE)
+		if(.)
+			return
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
-				"<span class='userdanger'>[user] has punched [src]!</span>")
-		return 1
-	return 0
+				"<span class='userdanger'>[user] has punched you!</span>", target = user, \
+				target_message = "<span class='danger'>You have punched [src]!</span>")
+		return TRUE
+	return FALSE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(.) //the attack was blocked
+		return
 	switch(M.a_intent)
-		if ("help")
+		if (INTENT_HELP)
 			M.visible_message("[M] pets [src].", \
-							"<span class='notice'>You pet [src].</span>")
-		if("grab")
+							"<span class='notice'>You pet [src].</span>", target = src,
+							target_message = "[M] pets you.")
+		if(INTENT_GRAB)
 			grabbedby(M)
 		else
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='danger'>[M] punches [src], but doesn't leave a dent.</span>", \
-				"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE)
-	return 0
+				"<span class='warning'>[M] punches you, but doesn't leave a dent.</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+				"<span class='danger'>You punch [src], but don't leave a dent.</span>")
 
 /mob/living/silicon/attack_drone(mob/living/simple_animal/drone/M)
 	if(M.a_intent == INTENT_HARM)
 		return
 	return ..()
 
-/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/silicon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(buckled_mobs)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
-			M.electrocute_act(shock_damage/100, source, siemens_coeff, safety, tesla_shock, illusion, stun)	//Hard metal shell conducts!
+			M.electrocute_act(shock_damage/100, source, siemens_coeff, flags)	//Hard metal shell conducts!
 	return 0 //So borgs they don't die trying to fix wiring
 
 /mob/living/silicon/emp_act(severity)
@@ -104,24 +114,37 @@
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
 			unbuckle_mob(M)
-			M.Knockdown(40)
-			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
+			M.DefaultCombatKnockdown(40)
+			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>",
+				"<span class='boldwarning'>You are thrown off of [src]!</span>")
 	flash_act(affect_silicon = 1)
 
-/mob/living/silicon/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		adjustBruteLoss(Proj.damage)
-		if(prob(Proj.damage*1.5))
+/mob/living/silicon/bullet_act(obj/item/projectile/P, def_zone)
+	if(P.original != src || P.firer != src) //try to block or reflect the bullet, can't do so when shooting oneself
+		var/list/returnlist = list()
+		var/returned = mob_run_block(P, P.damage, "the [P.name]", ATTACK_TYPE_PROJECTILE, P.armour_penetration, P.firer, def_zone, returnlist)
+		if(returned & BLOCK_SHOULD_REDIRECT)
+			handle_projectile_attack_redirection(P, returnlist[BLOCK_RETURN_REDIRECT_METHOD])
+		if(returned & BLOCK_REDIRECTED)
+			return BULLET_ACT_FORCE_PIERCE
+		if(returned & BLOCK_SUCCESS)
+			P.on_hit(src, 100, def_zone)
+			return BULLET_ACT_BLOCK
+	if((P.damage_type == BRUTE || P.damage_type == BURN))
+		adjustBruteLoss(P.damage)
+		if(prob(P.damage*1.5))
 			for(var/mob/living/M in buckled_mobs)
-				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
+				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>",
+					"<span class='boldwarning'>You are knocked off of [src]!</span>")
 				unbuckle_mob(M)
-				M.Knockdown(40)
-	if(Proj.stun || Proj.knockdown)
+				M.DefaultCombatKnockdown(40)
+	if(P.stun || P.knockdown)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
-			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
-	Proj.on_hit(src)
-	return 2
+			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [P]!</span>",
+				"<span class='boldwarning'>You are knocked off of [src] by the [P]!</span>")
+	P.on_hit(src)
+	return BULLET_ACT_HIT
 
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/static)
 	if(affect_silicon)

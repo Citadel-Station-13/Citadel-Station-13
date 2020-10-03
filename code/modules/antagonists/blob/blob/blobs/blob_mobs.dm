@@ -20,7 +20,7 @@
 
 /mob/living/simple_animal/hostile/blob/update_icons()
 	if(overmind)
-		add_atom_colour(overmind.blob_reagent_datum.color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
@@ -34,7 +34,7 @@
 		for(var/i in 1 to 2)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
-				H.color = overmind.blob_reagent_datum.complementary_color
+				H.color = overmind.blobstrain.complementary_color
 			else
 				H.color = "#000000"
 		adjustHealth(-maxHealth*0.0125)
@@ -42,7 +42,7 @@
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature)
-		adjustFireLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
+		adjustFireLoss(clamp(0.01 * exposed_temperature, 1, 5))
 	else
 		adjustFireLoss(5)
 
@@ -75,6 +75,7 @@
 	desc = "A floating, fragile spore."
 	icon_state = "blobpod"
 	icon_living = "blobpod"
+	threat = 0.2
 	health = 30
 	maxHealth = 30
 	verb_say = "psychically pulses"
@@ -85,7 +86,8 @@
 	melee_damage_upper = 4
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	attacktext = "hits"
+	attack_verb_continuous = "hits"
+	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
 	del_on_death = 1
@@ -142,10 +144,12 @@
 	// Create the reagents to put into the air
 	create_reagents(10)
 
-	if(overmind && overmind.blob_reagent_datum)
-		reagents.add_reagent(overmind.blob_reagent_datum.id, 10)
+
+
+	if(overmind && overmind.blobstrain)
+		overmind.blobstrain.on_sporedeath(src)
 	else
-		reagents.add_reagent("spore", 10)
+		reagents.add_reagent(/datum/reagent/toxin/spore, 10)
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
@@ -167,14 +171,14 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	if(overmind)
-		add_atom_colour(overmind.blob_reagent_datum.complementary_color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(overmind.blobstrain.complementary_color, FIXED_COLOUR_PRIORITY)
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
 		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
 		if(overmind)
-			blob_head_overlay.color = overmind.blob_reagent_datum.complementary_color
+			blob_head_overlay.color = overmind.blobstrain.complementary_color
 		color = initial(color)//looks better.
 		add_overlay(blob_head_overlay)
 
@@ -202,7 +206,8 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 60
-	attacktext = "slams"
+	attack_verb_continuous = "slams"
+	attack_verb_simple = "slam"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
 	verb_ask = "demands"
@@ -218,10 +223,15 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
 	. = ..()
-	if(!independent) //no pulling people deep into the blob
-		verbs -= /mob/living/verb/pulled
-	else
+	if(independent)
 		pass_flags &= ~PASSBLOB
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
+	if(!independent && ismob(AM))
+		if(!supress_message)
+			to_chat(src, "<span class='warning'>You are unable to grasp people in this form.</span>")
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
@@ -238,14 +248,14 @@
 				adjustHealth(-maxHealth*0.1)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 				if(overmind)
-					H.color = overmind.blob_reagent_datum.complementary_color
+					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
 			if(locate(/obj/structure/blob/node) in blobs_in_area)
 				adjustHealth(-maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				if(overmind)
-					H.color = overmind.blob_reagent_datum.complementary_color
+					H.color = overmind.blobstrain.complementary_color
 				else
 					H.color = "#000000"
 		if(damagesources)
@@ -254,7 +264,7 @@
 			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 			I.appearance_flags = RESET_COLOR
 			if(overmind)
-				I.color = overmind.blob_reagent_datum.complementary_color
+				I.color = overmind.blobstrain.complementary_color
 			flick_overlay_view(I, src, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -269,20 +279,18 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
 	if(. && isliving(target) && overmind)
-		var/mob/living/L = target
-		var/mob_protection = L.get_permeability_protection()
-		overmind.blob_reagent_datum.reaction_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+		overmind.blobstrain.blobbernaut_attack(target)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
 	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
 		melee_damage_lower = 4
 		melee_damage_upper = 4
-		attacktext = overmind.blob_reagent_datum.blobbernaut_message
+		attack_verb_continuous = overmind.blobstrain.blobbernaut_message
 	else
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		attacktext = initial(attacktext)
+		attack_verb_continuous = initial(attack_verb_continuous)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)

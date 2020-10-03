@@ -46,22 +46,25 @@
 	return ..()
 
 /obj/machinery/space_heater/examine(mob/user)
-	..()
-	to_chat(user, "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"].")
+	. = ..()
+	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
 	if(cell)
-		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
-		to_chat(user, "There is no power cell installed.")
+		. += "There is no power cell installed."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.<span>" //100%, 75%, 50%, 25%
 
-/obj/machinery/space_heater/update_icon()
+/obj/machinery/space_heater/update_icon_state()
 	if(on)
 		icon_state = "sheater-[mode]"
 	else
 		icon_state = "sheater-off"
 
-	cut_overlays()
+/obj/machinery/space_heater/update_overlays()
+	. = ..()
 	if(panel_open)
-		add_overlay("sheater-open")
+		. += "sheater-open"
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
@@ -112,8 +115,8 @@
 		return PROCESS_KILL
 
 /obj/machinery/space_heater/RefreshParts()
-	var/laser = 0
-	var/cap = 0
+	var/laser = 2
+	var/cap = 1
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		laser += M.rating
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
@@ -124,7 +127,7 @@
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
 
-	targetTemperature = CLAMP(targetTemperature,
+	targetTemperature = clamp(targetTemperature,
 		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 		settableTemperatureMedian + settableTemperatureRange)
 
@@ -162,6 +165,11 @@
 		return
 	else
 		return ..()
+
+/obj/machinery/space_heater/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I, 5)
+	return TRUE
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
@@ -227,7 +235,7 @@
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)
-				targetTemperature = CLAMP(round(target),
+				targetTemperature = clamp(round(target),
 					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")

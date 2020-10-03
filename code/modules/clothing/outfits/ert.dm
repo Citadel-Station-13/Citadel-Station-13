@@ -1,12 +1,12 @@
 /datum/outfit/ert
 	name = "ERT Common"
 
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/combat/swat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/headset_cent/alt
 
-/datum/outfit/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -18,8 +18,9 @@
 	R.freqlock = TRUE
 
 	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label(W.registered_name, W.assignment)
 
 /datum/outfit/ert/commander
 	name = "ERT Commander"
@@ -35,7 +36,7 @@
 		/obj/item/gun/energy/e_gun=1)
 	l_pocket = /obj/item/switchblade
 
-/datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 
 	if(visualsOnly)
@@ -46,7 +47,7 @@
 
 /datum/outfit/ert/commander/alert
 	name = "ERT Commander - Amber Alert"
-	
+
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
@@ -68,15 +69,15 @@
 	id = /obj/item/card/id/ert/Security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	back = /obj/item/storage/backpack/security
 	belt = /obj/item/storage/belt/security/full
+	back = /obj/item/storage/backpack/security
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/gun/energy/e_gun/stun=1,\
 		/obj/item/melee/baton/loaded=1)
 
-/datum/outfit/ert/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 
 	if(visualsOnly)
@@ -88,7 +89,7 @@
 
 /datum/outfit/ert/security/alert
 	name = "ERT Security - Amber Alert"
-	
+
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/alert/sec
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
@@ -120,7 +121,7 @@
 		/obj/item/reagent_containers/hypospray/combat=1,\
 		/obj/item/gun/medbeam=1)
 
-/datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 
 	if(visualsOnly)
@@ -166,7 +167,7 @@
 		/obj/item/gun/energy/e_gun=1,\
 		/obj/item/construction/rcd/loaded=1)
 
-/datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 
 	if(visualsOnly)
@@ -214,7 +215,7 @@
 	l_hand = /obj/item/storage/toolbox/plastitanium
 	gloves = /obj/item/clothing/gloves/color/yellow
 
-/datum/outfit/ert/greybois/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/greybois/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
@@ -226,7 +227,7 @@
 /datum/outfit/centcom_official
 	name = "CentCom Official"
 
-	uniform = /obj/item/clothing/under/rank/centcom_officer
+	uniform = /obj/item/clothing/under/rank/centcom/officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset/headset_cent
@@ -238,7 +239,7 @@
 	l_hand = /obj/item/clipboard
 	id = /obj/item/card/id
 
-/datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	if(visualsOnly)
 		return
 
@@ -288,7 +289,7 @@
 		/obj/item/reagent_containers/hypospray/combat/heresypurge=1,
 		/obj/item/gun/medbeam=1)
 
-/datum/outfit/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
 	..()
 
 	if(visualsOnly)

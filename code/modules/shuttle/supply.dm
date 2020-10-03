@@ -28,6 +28,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/hilbertshotel
 	)))
 
+GLOBAL_LIST_INIT(cargo_shuttle_leave_behind_typecache, typecacheof(list(
+	/mob/living/simple_animal/revenant,
+	/mob/living/simple_animal/slaughter
+	)))
+
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
@@ -50,16 +55,27 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /obj/docking_port/mobile/supply/canMove()
 	if(is_station_level(z))
-		return check_blacklist(shuttle_areas)
+		return check_blacklist(shuttle_areas, GLOB.blacklisted_cargo_types - GLOB.cargo_shuttle_leave_behind_typecache)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances)
+/obj/docking_port/mobile/supply/enterTransit()
+	var/list/leave_behind = list()
+	for(var/i in check_blacklist(shuttle_areas, GLOB.cargo_shuttle_leave_behind_typecache))
+		var/atom/movable/AM = i
+		leave_behind[AM] = AM.loc
+	. = ..()
+	for(var/kicked in leave_behind)
+		var/atom/movable/victim = kicked
+		var/atom/oldloc = leave_behind[victim]
+		victim.forceMove(oldloc)
+
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstances, list/typecache)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+				if(is_type_in_typecache(a, typecache))
 					return FALSE
 				if(istype(a, /obj/structure/closet))//Prevents eigenlockers from ending up at CC
 					var/obj/structure/closet/c = a
@@ -93,30 +109,46 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				continue
 			empty_turfs += T
 
+	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	var/value = 0
 	var/purchases = 0
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		if(SO.pack.cost > SSshuttle.points)
-			continue
 
-		SSshuttle.points -= SO.pack.cost
+		var/price = SO.pack.cost
+		var/datum/bank_account/D
+		if(SO.paying_account) //Someone paid out of pocket
+			D = SO.paying_account
+			price *= 1.1 //TODO make this customizable by the quartermaster
+		else
+			D = cargo_budget
+		if(D)
+			if(!D.adjust_money(-SO.pack.cost))
+				if(SO.paying_account)
+					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
+				continue
+
+		if(SO.paying_account)
+			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
+			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			cargo.adjust_money(price - SO.pack.cost) //Cargo gets the handling fee
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
+		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
-	var/presale_points = SSshuttle.points
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/gain = 0
 
 	if(!GLOB.exports_list.len) // No exports list? Generate it!
 		setupExports()
@@ -148,15 +180,15 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += ex.total_value[E]
+		gain += ex.total_value[E]
 
-	for(var/datum/reagent/R in ex.total_reagents)
-		var/amount = ex.total_reagents[R]
-		var/value = amount*R.value
-		if(!value)
-			continue
-		msg += "[value] credits: received [amount]u of [R.name].\n"
-		SSshuttle.points += value
+	for(var/chem in ex.reagents_value)
+		var/value = ex.reagents_value[chem]
+		msg += "[value > 0 ? "+" : ""][value] credits: received [ex.reagents_volume[chem]]u of [chem].\n"
+		gain += value
+
+	D.adjust_money(gain)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [gain] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

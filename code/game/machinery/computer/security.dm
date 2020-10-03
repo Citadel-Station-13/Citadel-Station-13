@@ -265,7 +265,7 @@ What a mess.*/
 		active1 = null
 	if(!( GLOB.data_core.security.Find(active2) ))
 		active2 = null
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || hasSiliconAccessInArea(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -299,7 +299,7 @@ What a mess.*/
 			if("Log In")
 				var/mob/M = usr
 				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(issilicon(M))
+				if(hasSiliconAccessInArea(M))
 					var/mob/living/silicon/borg = M
 					active1 = null
 					active2 = null
@@ -456,7 +456,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, STATION_TIME_TIMESTAMP("hh:mm:ss"), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time), time2text(world.realtime, "MMM DD"), GLOB.year_integer, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -544,7 +544,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text),1,MAX_MESSAGE_LEN)
+							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -636,7 +636,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss"))
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time))
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
 							investigate_log("New Minor Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("mi_crim_delete")
@@ -651,7 +651,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss"))
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, STATION_TIME_TIMESTAMP("hh:mm:ss", world.time))
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
 							investigate_log("New Major Crime: <strong>[t1]</strong>: [t2] | Added to [active1.fields["name"]] by [key_name(usr)]", INVESTIGATE_RECORDS)
 					if("ma_crim_delete")
@@ -802,7 +802,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
-			if(user.canUseTopic(src, !issilicon(user)))
+			if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 				if(!trim(message1))
 					return 0
 				if(!record1 || record1 == active1)

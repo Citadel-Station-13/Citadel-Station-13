@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
-	return
+	return list()
 
 /obj/screen/orbit()
 	return
@@ -66,12 +66,6 @@
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/craft/Click()
-	var/mob/living/M = usr
-	if(isobserver(usr))
-		return
-	M.OpenCraftingMenu()
-
 /obj/screen/area_creator
 	name = "create new area"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -110,21 +104,21 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 
-	if(hud && hud.mymob && slot_id)
+	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
 		if(inv_item)
 			return inv_item.Click(location, control, params)
 
 	if(usr.attack_ui(slot_id))
 		usr.update_inv_hands()
-	return 1
+	return TRUE
 
 /obj/screen/inventory/MouseEntered()
 	..()
@@ -135,96 +129,87 @@
 	cut_overlay(object_overlays)
 	object_overlays.Cut()
 
-/obj/screen/inventory/update_icon()
+/obj/screen/inventory/update_icon_state()
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(hud && hud.mymob && slot_id && icon_full)
+	if(hud?.mymob && slot_id && icon_full)
 		if(hud.mymob.get_item_by_slot(slot_id))
 			icon_state = icon_full
 		else
 			icon_state = icon_empty
 
 /obj/screen/inventory/proc/add_overlays()
-	var/mob/user = hud.mymob
+	var/mob/user = hud?.mymob
 
-	if(hud && user && slot_id)
-		var/obj/item/holding = user.get_active_held_item()
+	if(!user || !slot_id)
+		return
 
-		if(!holding || user.get_item_by_slot(slot_id))
-			return
+	var/obj/item/holding = user.get_active_held_item()
 
-		var/image/item_overlay = image(holding)
-		item_overlay.alpha = 92
+	if(!holding || user.get_item_by_slot(slot_id))
+		return
 
-		if(!user.can_equip(holding, slot_id, TRUE))
-			item_overlay.color = "#FF0000"
-		else
-			item_overlay.color = "#00ff00"
+	var/image/item_overlay = image(holding)
+	item_overlay.alpha = 92
 
-		object_overlays += item_overlay
-		add_overlay(object_overlays)
+	if(!user.can_equip(holding, slot_id, TRUE))
+		item_overlay.color = "#FF0000"
+	else
+		item_overlay.color = "#00ff00"
+
+	object_overlays += item_overlay
+	add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
-/obj/screen/inventory/hand/update_icon()
-	..()
+/obj/screen/inventory/hand/update_overlays()
+	. = ..()
 
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
 
-	cut_overlays()
+	if(!hud?.mymob)
+		return
 
-	if(hud && hud.mymob)
-		if(iscarbon(hud.mymob))
-			var/mob/living/carbon/C = hud.mymob
-			if(C.handcuffed)
-				add_overlay(handcuff_overlay)
+	if(iscarbon(hud.mymob))
+		var/mob/living/carbon/C = hud.mymob
+		if(C.handcuffed)
+			. += handcuff_overlay
 
-			if(held_index)
-				if(!C.has_hand_for_held_index(held_index))
-					add_overlay(blocked_overlay)
+		if(held_index)
+			if(!C.has_hand_for_held_index(held_index))
+				. += blocked_overlay
 
-		if(held_index == hud.mymob.active_hand_index)
-			add_overlay("hand_active")
+	if(held_index == hud.mymob.active_hand_index)
+		. += "hand_active"
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-	if(usr.incapacitated() || isobserver(usr))
-		return 1
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+	var/mob/user = hud?.mymob
+	if(usr != user)
+		return TRUE
+	if(world.time <= user.next_move)
+		return TRUE
+	if(user.incapacitated())
+		return TRUE
+	if (ismecha(user.loc)) // stops inventory actions in a mech
+		return TRUE
 
-	if(hud.mymob.active_hand_index == held_index)
-		var/obj/item/I = hud.mymob.get_active_held_item()
+	if(user.active_hand_index == held_index)
+		var/obj/item/I = user.get_active_held_item()
 		if(I)
 			I.Click(location, control, params)
 	else
-		hud.mymob.swap_hand(held_index)
-	return 1
-
-/obj/screen/close
-	name = "close"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-	icon_state = "backpack_close"
-
-/obj/screen/close/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
+		user.swap_hand(held_index)
 	return TRUE
+
 
 /obj/screen/drop
 	name = "drop"
@@ -290,6 +275,9 @@
 		icon_state = "internal0"
 	else
 		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+			if(HAS_TRAIT(C, TRAIT_NO_INTERNALS))
+				to_chat(C, "<span class='warning'>Due to cumbersome equipment or anatomy, you are currently unable to use internals!</span>")
+				return
 			var/obj/item/clothing/check
 			var/internals = FALSE
 
@@ -343,12 +331,8 @@
 /obj/screen/mov_intent/Click()
 	toggle(usr)
 
-/obj/screen/mov_intent/update_icon(mob/user)
-	if(!user && hud)
-		user = hud.mymob
-	if(!user)
-		return
-	switch(user.m_intent)
+/obj/screen/mov_intent/update_icon_state()
+	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
@@ -369,10 +353,8 @@
 		return
 	usr.stop_pulling()
 
-/obj/screen/pull/update_icon(mob/mymob)
-	if(!mymob)
-		return
-	if(mymob.pulling)
+/obj/screen/pull/update_icon_state()
+	if(hud?.mymob?.pulling)
 		icon_state = "pull"
 	else
 		icon_state = "pull0"
@@ -401,38 +383,14 @@
 		var/mob/living/L = usr
 		L.lay_down()
 
-/obj/screen/rest/update_icon(mob/mymob)
-	if(!isliving(mymob))
+/obj/screen/rest/update_icon_state()
+	var/mob/living/user = hud?.mymob
+	if(!istype(user))
 		return
-	var/mob/living/L = mymob
-	if(!L.resting)
+	if(!user.resting)
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"
-
-/obj/screen/storage
-	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/storage/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(null, I, usr, params)
-	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"
@@ -448,7 +406,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/selecting = BODY_ZONE_CHEST
+	var/overlay_icon = 'icons/mob/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
 
@@ -541,26 +499,24 @@
 				return BODY_ZONE_HEAD
 
 /obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
-	if(isobserver(user))
+	if(user != hud?.mymob)
 		return
 
-	if(choice != selecting)
-		selecting = choice
-		update_icon(usr)
-	return 1
+	if(choice != hud.mymob.zone_selected)
+		hud.mymob.zone_selected = choice
+		update_icon()
 
-/obj/screen/zone_sel/update_icon(mob/user)
-	cut_overlays()
-	add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]"))
-	user.zone_selected = selecting
+	return TRUE
+
+/obj/screen/zone_sel/update_overlays()
+	. = ..()
+	if(!hud?.mymob)
+		return
+	. += mutable_appearance(overlay_icon, "[hud.mymob.zone_selected]")
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/zone_sel/alien/update_icon(mob/user)
-	cut_overlays()
-	add_overlay(mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]"))
-	user.zone_selected = selecting
+	overlay_icon = 'icons/mob/screen_alien.dmi'
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
@@ -642,6 +598,12 @@
 	icon = 'icons/mob/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/screen/healths/lavaland_elite
+	icon = 'icons/mob/screen_elite.dmi'
+	icon_state = "elite_health0"
+	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll

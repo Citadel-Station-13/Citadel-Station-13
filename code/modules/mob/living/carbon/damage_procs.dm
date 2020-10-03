@@ -1,6 +1,7 @@
 
 
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!forced && hit_percent <= 0)
 		return 0
@@ -37,13 +38,10 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount), FALSE, FALSE))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
-		//citadel code
-		if(AROUSAL)
-			adjustArousalLoss(damage_amount, forced = forced)
 	return TRUE
 
 
@@ -65,6 +63,8 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
+		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -74,6 +74,8 @@
 	return amount
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
+		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -86,7 +88,7 @@
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
-			blood_volume -= 3*amount // x5 is too much, x3 should be still penalizing enough.
+			blood_volume -= 3 * amount		//5x was too much, this is punishing enough.
 		else
 			blood_volume -= amount
 	return ..()
@@ -157,6 +159,11 @@
 		O.applyOrganDamage(amount, maximum)
 		O.onDamage(amount, maximum)
 
+/mob/living/carbon/proc/getFailingOrgans()
+	.=list()
+	for(var/obj/item/organ/O in internal_organs)
+		if(O.organ_flags & ORGAN_FAILING)
+			.+=O
 
 ////////////////////////////////////////////
 

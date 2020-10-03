@@ -47,6 +47,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		else if (job in completed_asset_jobs) //byond bug ID:2256651
 			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 			src << browse("...", "window=asset_cache_browser")
+			// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
+
 
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
@@ -129,7 +141,43 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return 0
 	return 1
 
+/*
+ * Call back proc that should be checked in all paths where a client can send messages
+ *
+ * Handles checking for duplicate messages and people sending messages too fast
+ *
+ * The first checks are if you're sending too fast, this is defined as sending
+ * SPAM_TRIGGER_AUTOMUTE messages in
+ * 5 seconds, this will start supressing your messages,
+ * if you send 2* that limit, you also get muted
+ *
+ * The second checks for the same duplicate message too many times and mutes
+ * you for it
+ */
 /client/proc/handle_spam_prevention(message, mute_type)
+
+	//Increment message count
+	total_message_count += 1
+
+	//store the total to act on even after a reset
+	var/cache = total_message_count
+
+	if(total_count_reset <= world.time)
+		total_message_count = 0
+		total_count_reset = world.time + (5 SECONDS)
+
+	//If they're really going crazy, mute them
+	if(cache >= SPAM_TRIGGER_AUTOMUTE * 2)
+		total_message_count = 0
+		total_count_reset = 0
+		cmd_admin_mute(src, mute_type, 1)
+		return 1
+
+	//Otherwise just supress the message
+	else if(cache >= SPAM_TRIGGER_AUTOMUTE)
+		return 1
+
+
 	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -211,20 +259,15 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			new /datum/admins(localhost_rank, ckey, 1, 1)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
-	prefs_vr = GLOB.vore_preferences_datums[ckey] //CITADEL EDIT bypassing a failing hook
 
 	if(prefs)
 		prefs.parent = src
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-
-	if(prefs_vr)		//CITADEL EDIT bypassing a failing hook START
-		prefs_vr.client = src
-	else
-		prefs_vr = new/datum/vore_preferences(src)
-		GLOB.vore_preferences_datums[ckey] = prefs_vr
-						//CITADEL EDIT bypassing a failing hook END
+	if(SSinput.initialized)
+		set_macros()
+	update_movement_keys(prefs)
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -287,9 +330,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			else
 				qdel(src)
 				return
-
-	if(SSinput.initialized)
-		set_macros()
 
 	chatOutput.start() // Starts the chat
 
@@ -411,7 +451,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
 				var/procpath/verbpath = child
-				if (copytext(verbpath.name,1,2) != "@")
+				if (verbpath.name[1] != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
@@ -502,7 +542,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey] && !(ckey in GLOB.bunker_passthrough))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a></span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
+			to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a><br>If you have already done so, wait a few minutes then try again; sometimes the server needs to fully load before you can join.</span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
@@ -526,6 +566,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if(!account_join_date)
 			account_join_date = "Error"
 			account_age = -1
+		else if(ckey in GLOB.bunker_passthrough)
+			GLOB.bunker_passthrough -= ckey
 	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
@@ -723,13 +765,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
-/client/Click(atom/object, atom/location, control, params)
+/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 	var/mcl = CONFIG_GET(number/minute_click_limit)
-	if (!holder && mcl)
+	if (!holder && !ignore_spam && mcl)
 		var/minute = round(world.time, 600)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
@@ -747,14 +789,16 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					log_game("[key_name(src)] is using the middle click aimbot exploit")
 					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-
+					log_click(object, location, control, params, src, "lockout (spam - minute ab c [ab] s [middragtime])", TRUE)
+				else
+					log_click(object, location, control, params, src, "lockout (spam - minute)", TRUE)
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
 	var/scl = CONFIG_GET(number/second_click_limit)
-	if (!holder && scl)
+	if (!holder && !ignore_spam && scl)
 		var/second = round(world.time, 10)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
@@ -767,7 +811,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 
 	if(ab) //Citadel edit, things with stuff.
+		log_click(object, location, control, params, src, "dropped (ab c [ab] s [middragtime])", TRUE)
 		return
+
+	if(prefs.log_clicks)
+		log_click(object, location, control, params, src)
 
 	if (prefs.hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
@@ -846,9 +894,26 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/viewscale = getviewsize(view)
 	var/x = viewscale[1]
 	var/y = viewscale[2]
-	x = CLAMP(x+change, min, max)
-	y = CLAMP(y+change, min,max)
+	x = clamp(x+change, min, max)
+	y = clamp(y+change, min,max)
 	change_view("[x]x[y]")
+
+/client/proc/update_movement_keys(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -860,23 +925,27 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			new_size = "15x15"
 //END OF CIT CHANGES
 
+	var/list/old_view = getviewsize(view)
 	view = new_size
-	apply_clickcatcher()
+	var/list/actualview = getviewsize(view)
+	apply_clickcatcher(actualview)
 	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
 	if (prefs.auto_fit_viewport)
 		fit_viewport()
+	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_CHANGE_VIEW, src, old_view, actualview)
 
 /client/proc/generate_clickcatcher()
 	if(!void)
 		void = new()
 		screen += void
 
-/client/proc/apply_clickcatcher()
+/client/proc/apply_clickcatcher(list/actualview)
 	generate_clickcatcher()
-	var/list/actualview = getviewsize(view)
+	if(!actualview)
+		actualview = getviewsize(view)
 	void.UpdateGreed(actualview[1],actualview[2])
 
 /client/proc/AnnouncePR(announcement)

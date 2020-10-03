@@ -18,9 +18,12 @@
 		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
 		item.plane = ABOVE_LIGHTING_PLANE
 		preview += item
+	var/list/orientations = list("South" = SOUTH, "North" = NORTH, "East" = EAST, "West" = WEST)
+	var/choice = input(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", "South") as null|anything in orientations
+	var/orientation = orientations[choice]
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
-		if(template.load(T, centered = TRUE))
+		if(template.load(T, centered = TRUE, orientation = orientation))
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
 			to_chat(src, "Failed to place map")
@@ -33,7 +36,7 @@
 	var/map = input(src, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
 	if(!map)
 		return
-	if(copytext("[map]",-4) != ".dmm")
+	if(copytext("[map]", -4) != ".dmm")//4 == length(".dmm")
 		to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map]</span>")
 		return
 	var/datum/map_template/M

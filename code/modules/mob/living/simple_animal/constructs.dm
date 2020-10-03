@@ -3,11 +3,15 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
-	mob_biotypes = list(MOB_INORGANIC)
+	mob_biotypes = NONE
 	speak_emote = list("hisses")
-	response_help  = "thinks better of touching"
-	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_help_continuous = "thinks better of touching"
+	response_help_simple = "think better of touching"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
+	threat = 1
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
@@ -33,6 +37,7 @@
 	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
 	hud_type = /datum/hud/constructs
+	blood_volume = 0
 	var/list/construct_spells = list()
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
@@ -69,18 +74,13 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
-	msg += "[desc]\n"
+	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
-		msg += "<span class='warning'>"
 		if(health >= maxHealth/2)
-			msg += "[t_He] look[t_s] slightly dented.\n"
+			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
 		else
-			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
-		msg += "</span>"
-	msg += "*---------*</span>"
-
-	to_chat(user, msg)
+			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
+	. += "*---------*</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(isconstruct(M)) //is it a construct?
@@ -107,7 +107,7 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -122,14 +122,17 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
+	threat = 3
 	maxHealth = 150
 	health = 150
-	response_harm = "harmlessly punches"
+	response_harm_continuous = "harmlessly punches"
+	response_harm_simple = "harmlessly punch"
 	harm_intent_damage = 0
 	obj_damage = 90
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attacktext = "smashes their armored gauntlet into"
+	attack_verb_continuous = "smashes their armored gauntlet into"
+	attack_verb_simple = "smash your armored gauntlet into"
 	speed = 2.5
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
@@ -171,9 +174,9 @@
 					new_angle_s -= 360
 				P.setAngle(new_angle_s)
 
-			return -1 // complete projectile permutation
+			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
-	return (..(P))
+	return ..()
 
 
 
@@ -184,12 +187,14 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
+	threat = 3
 	maxHealth = 65
 	health = 65
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	retreat_distance = 2 //AI wraiths will move in and out of combat
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	runetype = /datum/action/innate/cult/create_rune/tele
@@ -233,14 +238,16 @@
 	icon_living = "artificer"
 	maxHealth = 50
 	health = 50
-	response_harm = "viciously beats"
+	response_harm_continuous = "viciously beats"
+	response_harm_simple = "viciously beat"
 	harm_intent_damage = 5
 	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
-	attacktext = "rams"
+	attack_verb_continuous = "rams"
+	attack_verb_simple = "ram"
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -320,7 +327,8 @@
 	sight = SEE_MOBS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	attacktext = "butchers"
+	attack_verb_continuous = "butchers"
+	attack_verb_simple = "butcher"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
 							/obj/effect/proc_holder/spell/targeted/forcewall/cult)
@@ -338,7 +346,7 @@
 			stored_pulling.forceMove(loc)
 		forceMove(AM)
 		if(stored_pulling)
-			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
+			start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
@@ -357,7 +365,7 @@
 		if(!LAZYLEN(parts))
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
-			C.Knockdown(60)
+			C.DefaultCombatKnockdown(60)
 			visible_message("<span class='danger'>[src] knocks [C] down!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE
@@ -392,6 +400,9 @@
 /datum/action/innate/seek_master/Activate()
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult)
 	if(!C)
+		return
+	if(!C.cult_team)
+		to_chat(the_construct, "<span class='cult italic'>You are alone, and have no team.</span>")
 		return
 	var/datum/objective/eldergod/summon_objective = locate() in C.cult_team.objectives
 
@@ -464,4 +475,3 @@
 			hud_used.healths.icon_state = "[icon_state]_health5"
 		else
 			hud_used.healths.icon_state = "[icon_state]_health6"
-

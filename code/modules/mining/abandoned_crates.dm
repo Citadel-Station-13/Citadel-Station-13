@@ -75,8 +75,7 @@
 				new /obj/item/clothing/neck/petcollar(src)
 		if(63 to 64)
 			for(var/i in 1 to rand(4, 7))
-				var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
-				new newcoin(src)
+				new /obj/effect/spawner/lootdrop/coin(src)
 		if(65 to 66)
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
@@ -119,7 +118,7 @@
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
 			new /obj/item/storage/backpack/clown(src)
-			new /obj/item/clothing/under/rank/clown(src)
+			new /obj/item/clothing/under/rank/civilian/clown(src)
 			new /obj/item/clothing/shoes/clown_shoes(src)
 			new /obj/item/pda/clown(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
@@ -127,7 +126,7 @@
 			new /obj/item/toy/crayon/rainbow(src)
 			new /obj/item/reagent_containers/spray/waterflower(src)
 		if(95)
-			new /obj/item/clothing/under/rank/mime(src)
+			new /obj/item/clothing/under/rank/civilian/mime(src)
 			new /obj/item/clothing/shoes/sneakers/black(src)
 			new /obj/item/pda/mime(src)
 			new /obj/item/clothing/gloves/color/white(src)
@@ -157,20 +156,23 @@
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, BE_CLOSE))
 			var/list/sanitised = list()
-			var/sanitycheck = 1
-			for(var/i=1,i<=length(input),i++) //put the guess into a list
-				sanitised += text2num(copytext(input,i,i+1))
-			for(var/i=1,i<=(length(input)-1),i++) //compare each digit in the guess to all those following it
-				for(var/j=(i+1),j<=length(input),j++)
+			var/sanitycheck = TRUE
+			var/char = ""
+			var/length_input = length(input)
+			for(var/i = 1, i <= length_input, i += length(char)) //put the guess into a list
+				char = input[i]
+				sanitised += text2num(char)
+			for(var/i = 1, i <= length(sanitised) - 1, i++) //compare each digit in the guess to all those following it
+				for(var/j = i + 1, j <= length(sanitised), j++)
 					if(sanitised[i] == sanitised[j])
-						sanitycheck = null //if a digit is repeated, reject the input
-			if (input == code)
+						sanitycheck = FALSE //if a digit is repeated, reject the input
+			if(input == code)
 				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
-			else if (input == null || sanitycheck == null || length(input) != codelen)
+			else if(!input || !sanitycheck || length(sanitised) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
 				to_chat(user, "<span class='warning'>A red light flashes.</span>")
@@ -181,10 +183,11 @@
 	else
 		return ..()
 
+//this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	if(user.canUseTopic(src, BE_CLOSE))
+		attack_hand(user)
+		return TRUE
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
@@ -195,20 +198,27 @@
 			else
 				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [attempts] failed access attempts.</span>")
 			if(lastattempt != null)
-				var/list/guess = list()
-				var/list/answer = list()
-				var/bulls = 0
-				var/cows = 0
-				for(var/i=1,i<=length(lastattempt),i++)
-					guess += text2num(copytext(lastattempt,i,i+1))
-				for(var/i=1,i<=length(lastattempt),i++)
-					answer += text2num(copytext(code,i,i+1))
-				for(var/i = 1, i < codelen + 1, i++) // Go through list and count matches
-					if( answer.Find(guess[i],1,codelen+1))
-						++cows
-					if( answer[i] == guess[i])
+				var/bulls = 0 //right position, right number
+				var/cows = 0 //wrong position but in the puzzle
+
+				var/lastattempt_char = ""
+				var/length_lastattempt = length(lastattempt)
+				var/lastattempt_it = 1
+
+				var/code_char = ""
+				var/length_code = length(code)
+				var/code_it = 1
+
+				while(lastattempt_it <= length_lastattempt && code_it <= length_code) // Go through list and count matches
+					lastattempt_char = lastattempt[lastattempt_it]
+					code_char = code[code_it]
+					if(lastattempt_char == code_char)
 						++bulls
-						--cows
+					else if(findtext(code, lastattempt_char))
+						++cows
+
+					lastattempt_it += length(lastattempt_char)
+					code_it += length(code_char)
 
 				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return

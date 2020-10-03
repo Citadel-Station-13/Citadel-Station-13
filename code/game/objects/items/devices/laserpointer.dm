@@ -8,7 +8,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
 	var/energy = 5
@@ -18,7 +18,6 @@
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
-
 /obj/item/laser_pointer/red
 	pointer_icon_state = "red_laser"
 /obj/item/laser_pointer/green
@@ -27,6 +26,9 @@
 	pointer_icon_state = "blue_laser"
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
+
+/obj/item/laser_pointer/blue/handmade
+	diode = null
 
 /obj/item/laser_pointer/New()
 	..()
@@ -56,6 +58,14 @@
 	else
 		return ..()
 
+/obj/item/laser_pointer/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		if(!diode)
+			. += "<span class='notice'>The diode is missing.<span>"
+		else
+			. += "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>"
+
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
 	laser_act(target, user, params)
@@ -69,14 +79,9 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	if(HAS_TRAIT(user, TRAIT_NOGUNS))
+	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
 		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK))
-			to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
-			return
 
 	add_fingerprint(user)
 
@@ -113,7 +118,7 @@
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Knockdown(rand(100,200))
+			S.DefaultCombatKnockdown(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at [S.p_their()] sensors.</span>"
 		else
@@ -130,7 +135,8 @@
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//catpeople
-	for(var/mob/living/carbon/human/H in view(1,targloc))
+	var/list/viewers = fov_viewers(1,targloc)
+	for(var/mob/living/carbon/human/H in viewers)
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
 			continue
 		if(!H.lying)
@@ -145,12 +151,11 @@
 			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class = 'warning'> You stare at the light... </span>")
 
 	//cats!
-	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
+	for(var/mob/living/simple_animal/pet/cat/C in viewers)
 		if(prob(50))
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
-			C.resting = TRUE
-			C.update_canmove()
+			C.set_resting(TRUE)
 		else
 			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 

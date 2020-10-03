@@ -3,6 +3,7 @@
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
+	var/threat = 0 // for dynamic
 	var/atom/target
 	var/ranged = FALSE
 	var/rapid = 0 //How many shots per volley.
@@ -19,6 +20,7 @@
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
+	var/list/foes = list()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
@@ -61,6 +63,8 @@
 
 /mob/living/simple_animal/hostile/Destroy()
 	targets_from = null
+	friends = null
+	foes = null
 	return ..()
 
 /mob/living/simple_animal/hostile/Life()
@@ -192,7 +196,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(!the_target || the_target.type == /atom/movable/lighting_object || isturf(the_target)) // bail out on invalids
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -207,13 +211,13 @@
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = faction_check_mob(L)
+			var/faction_check = !foes[L] && faction_check_mob(L)
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
-				if(L.stat > stat_attack)
+				if(L.stat > stat_attack || (L.stat == UNCONSCIOUS && stat_attack == UNCONSCIOUS && HAS_TRAIT(L, TRAIT_DEATHCOMA)))
 					return FALSE
-				if(L in friends)
+				if(friends[L] > 0 && foes[L] < 1)
 					return FALSE
 			else
 				if((faction_check && !attack_same) || L.stat)
@@ -346,10 +350,11 @@
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_HOSTILE_ATTACKINGTARGET, target)
 	in_melee = TRUE
+	/* sorry for the simplemob vore fans
 	if(vore_active)
 		if(isliving(target))
 			var/mob/living/L = target
-			if(!client && L.Adjacent(src) && L.devourable) // aggressive check to ensure vore attacks can be made
+			if(!client && L.Adjacent(src) && CHECK_BITFIELD(L.vore_flags,DEVOURABLE)) // aggressive check to ensure vore attacks can be made
 				if(prob(voracious_chance))
 					vore_attack(src,L,src)
 				else
@@ -360,11 +365,13 @@
 			return target.attack_animal(src)
 	else
 		return target.attack_animal(src)
+	*/
+	return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
 	if(target && emote_taunt.len && prob(taunt_chance))
-		emote("me", 1, "[pick(emote_taunt)] at [target].")
+		emote("me", EMOTE_VISIBLE, "[pick(emote_taunt)] at [target].")
 		taunt_chance = max(taunt_chance-7,2)
 
 
@@ -427,7 +434,7 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), src)
+		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone(), 0, src)
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
@@ -594,3 +601,6 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 				. += M
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
+
+/mob/living/simple_animal/hostile/proc/threat()
+	return threat

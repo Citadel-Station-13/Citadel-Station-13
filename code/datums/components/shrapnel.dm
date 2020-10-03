@@ -13,10 +13,12 @@
 	src.override_projectile_range = override_projectile_range
 
 /datum/component/shrapnel/RegisterWithParent()
+	. = ..()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
 		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 
 /datum/component/shrapnel/UnregisterFromParent()
+	. = ..()
 	UnregisterSignal(parent, list(COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/shrapnel/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)

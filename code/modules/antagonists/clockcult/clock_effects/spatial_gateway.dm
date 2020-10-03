@@ -53,9 +53,9 @@
 	return TRUE
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>It has [uses] use\s remaining.</span>")
+		. += "<span class='brass'>It has [uses] use\s remaining.</span>"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)

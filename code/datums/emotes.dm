@@ -1,6 +1,3 @@
-#define EMOTE_VISIBLE 1
-#define EMOTE_AUDIBLE 2
-
 /datum/emote
 	var/key = "" //What calls the emote
 	var/key_third_person = "" //This will also call the emote
@@ -21,6 +18,7 @@
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
+	var/static/regex/stop_bad_mime = regex(@"says|exclaims|yells|asks")
 
 /datum/emote/New()
 	if(key_third_person)
@@ -120,7 +118,8 @@
 				if(DEAD)
 					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && (user.IsStun() || user.IsKnockdown()))
+		var/mob/living/L = user
+		if(restraint_check && (istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE)))
 			if(!intentional)
 				return FALSE
 			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
@@ -139,9 +138,10 @@
 /datum/emote/sound
 	var/sound //Sound to play when emote is called
 	var/vary = FALSE	//used for the honk borg emote
+	var/volume = 50
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 
 /datum/emote/sound/run_emote(mob/user, params)
 	. = ..()
 	if(.)
-		playsound(user.loc, sound, 50, vary)
+		playsound(user.loc, sound, volume, vary)

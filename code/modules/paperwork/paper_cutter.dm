@@ -34,13 +34,13 @@
 		return (BRUTELOSS)
 
 
-/obj/item/papercutter/update_icon()
-	..()
-	cut_overlays()
+/obj/item/papercutter/update_icon_state()
 	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
-	if(storedpaper)
-		add_overlay("paper")
 
+/obj/item/papercutter/update_overlays()
+	. = ..()
+	if(storedpaper)
+		. += "paper"
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)
@@ -91,7 +91,6 @@
 		update_icon()
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
-	. = ..()
 	var/mob/M = usr
 	if(M.incapacitated() || !Adjacent(M))
 		return
@@ -102,6 +101,10 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+
+	else
+	 . = ..()
+
 	add_fingerprint(M)
 
 /obj/item/paperslip

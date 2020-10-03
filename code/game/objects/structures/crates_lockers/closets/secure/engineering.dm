@@ -7,23 +7,17 @@
 	..()
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/head/beret/ce(src)
-	new /obj/item/clothing/under/rank/chief_engineer(src)
-	new /obj/item/clothing/under/rank/chief_engineer/skirt(src)
+	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
+	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/hardhat/weldhat/white(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/tank/jetpack/suit(src)
 	new /obj/item/cartridge/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
-	new /obj/item/storage/toolbox/mechanical(src)
-	new /obj/item/clothing/suit/hazardvest(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/areaeditor/blueprints(src)
-	new /obj/item/airlock_painter(src)
 	new /obj/item/holosign_creator/engineering(src)
-	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/multitool(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/door_remote/chief_engineer(src)
@@ -34,6 +28,8 @@
 	new /obj/item/storage/photo_album/CE(src)
 	new	/obj/item/storage/lockbox/medal/engineering(src)
 	new /obj/item/construction/rcd/loaded/upgraded(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/ce(src)
+	new /obj/item/clothing/head/beret/ce/white(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -65,7 +61,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/welding(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weldingtool(src)
+		new /obj/item/weldingtool/largetank(src)
 
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "engineer's locker"
@@ -81,7 +77,7 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
-
+	new /obj/item/cartridge/engineering(src)
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
@@ -96,8 +92,40 @@
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/analyzer(src)
 	new /obj/item/holosign_creator/atmos(src)
+	new /obj/item/holosign_creator/firelock(src)
 	new /obj/item/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
+	new /obj/item/cartridge/atmos(src)
+
+/*
+ * Empty lockers
+ * Some of the lockers are filled with junk, and sometimes its nice to just fill it with your own set-up for your own map gimmicks.
+ */
+
+/obj/structure/closet/secure_closet/engineering_chief/empty
+
+/obj/structure/closet/secure_closet/engineering_chief/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/engineering_electrical/empty
+
+/obj/structure/closet/secure_closet/engineering_electrical/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/engineering_welding/empty
+
+/obj/structure/closet/secure_closet/engineering_welding/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/engineering_personal/empty
+
+/obj/structure/closet/secure_closet/engineering_personal/empty/PopulateContents()
+	return
+
+/obj/structure/closet/secure_closet/atmospherics/empty
+
+/obj/structure/closet/secure_closet/atmospherics/empty/PopulateContents()
+	return

@@ -120,7 +120,7 @@
 
 /datum/antagonist/traitor/internal_affairs/reinstate_escape_objective()
 	..()
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive
+	var/objtype = !istype(traitor_kind,TRAITOR_AI) ? /datum/objective/escape : /datum/objective/survive
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner
 	add_objective(escape_objective)
@@ -215,20 +215,12 @@
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
 			add_objective(kill_objective)
-
-		//Optional traitor objective
-		if(prob(PROB_ACTUAL_TRAITOR))
-			employer = "The Syndicate"
-			owner.special_role = TRAITOR_AGENT_ROLE
-			special_role = TRAITOR_AGENT_ROLE
-			syndicate = TRUE
-			forge_single_objective()
 	return
 
 /datum/antagonist/traitor/internal_affairs/forge_traitor_objectives()
 	forge_iaa_objectives()
 
-	var/objtype = traitor_kind == TRAITOR_HUMAN ? /datum/objective/escape : /datum/objective/survive
+	var/objtype = !istype(traitor_kind,TRAITOR_AI) ? /datum/objective/escape : /datum/objective/survive
 	var/datum/objective/escape_objective = new objtype
 	escape_objective.owner = owner
 	add_objective(escape_objective)

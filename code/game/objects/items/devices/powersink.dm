@@ -1,5 +1,7 @@
 // Powersink - used to drain station power
 
+GLOBAL_LIST_EMPTY(power_sinks)
+
 /obj/item/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
@@ -13,7 +15,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	materials = list(MAT_METAL=750)
+	custom_materials = list(/datum/material/iron=750)
 	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e10		// maximum power that can be drained before exploding
@@ -26,7 +28,15 @@
 
 	var/obj/structure/cable/attached		// the attached cable
 
-/obj/item/powersink/update_icon()
+/obj/item/powersink/Initialize()
+	. = ..()
+	GLOB.power_sinks += src
+
+/obj/item/powersink/Destroy()
+	GLOB.power_sinks -= src
+	. = ..()
+
+/obj/item/powersink/update_icon_state()
 	icon_state = "powersink[mode == OPERATING]"
 
 /obj/item/powersink/proc/set_mode(value)

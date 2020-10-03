@@ -25,6 +25,20 @@
 		new /obj/item/reagent_containers/food/snacks/grown/wheat(.)
 
 
+/datum/supply_pack/critter/parrot
+	name = "Bird Crate"
+	desc = "Contains five expert telecommunication birds."
+	cost = 4000
+	contains = list(/mob/living/simple_animal/parrot)
+	crate_name = "parrot crate"
+
+/datum/supply_pack/critter/parrot/generate()
+	. = ..()
+	for(var/i in 1 to 4)
+		new /mob/living/simple_animal/parrot(.)
+	if(prob(1))
+		new /mob/living/simple_animal/parrot/clock_hawk(.)
+
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
 	desc = "Not a very dangerous insect, but they do give off a better image than, say, flies or cockroaches."//is that a motherfucking worm reference
@@ -58,7 +72,7 @@
 	name = "Chicken Crate"
 	desc = "The chicken goes bwaak!"
 	cost = 2000
-	contains = list( /mob/living/simple_animal/chick)
+	contains = list(/mob/living/simple_animal/chick)
 	crate_name = "chicken crate"
 
 /datum/supply_pack/critter/crab
@@ -135,7 +149,7 @@
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
 
-/datum/supply_pack/organic/critter/kiwi
+/datum/supply_pack/critter/kiwi
 	name = "Space kiwi Crate"
 	cost = 2000
 	contains = list( /mob/living/simple_animal/kiwi)
@@ -149,6 +163,18 @@
 					/mob/living/simple_animal/hostile/retaliate/poison/snake,
 					/mob/living/simple_animal/hostile/retaliate/poison/snake)
 	crate_name = "snake crate"
+
+/datum/supply_pack/critter/mouse
+	name = "Mouse Crate"
+	desc = "Good for snakes and lizards of all ages. Contains ~12 feeder mice."
+	cost = 2000
+	contains = list(/mob/living/simple_animal/mouse,)
+	crate_name = "mouse crate"
+
+/datum/supply_pack/critter/mouse/generate()
+	. = ..()
+	for(var/i in 1 to 11)
+		new /mob/living/simple_animal/mouse(.)
 
 /datum/supply_pack/critter/secbat
 	name = "Security Bat Crate"

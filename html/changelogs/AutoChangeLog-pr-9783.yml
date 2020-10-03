@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the Aux base camera door settings and toggle window type actions. Also enabling the user to modify both door access and type."

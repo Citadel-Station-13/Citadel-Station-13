@@ -53,17 +53,18 @@
 			min_wchance = 0
 			min_wrate = 0
 
-/obj/machinery/plantgenes/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/plantgenes/update_icon_state()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "dnamod-off"
 	else
 		icon_state = "dnamod"
+
+/obj/machinery/plantgenes/update_overlays()
+	. = ..()
 	if(seed)
-		add_overlay("dnamod-dna")
+		. += "dnamod-dna"
 	if(panel_open)
-		add_overlay("dnamod-open")
+		. += "dnamod-open"
 
 /obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
@@ -105,7 +106,7 @@
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!(in_range(src, user) || hasSiliconAccessInArea(user)))
 		popup.close()
 		return
 
@@ -201,9 +202,9 @@
 			if(!G)
 				continue
 			dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-			if(can_extract)
+			if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-			if(can_insert && istype(disk.gene, G.type))
+			if(can_insert && istype(disk.gene, G.type) && G.mutability_flags & PLANT_GENE_REMOVABLE)
 				dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=replace'>Replace</a>"
 			dat += "</td></tr>"
 		dat += "</table></div>"
@@ -232,14 +233,15 @@
 				for(var/a in trait_genes)
 					var/datum/plant_gene/G = a
 					dat += "<tr><td width='260px'>[G.get_name()]</td><td>"
-					if(can_extract)
+					if(can_extract && G.mutability_flags & PLANT_GENE_EXTRACTABLE)
 						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=extract'>Extract</a>"
-					dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
+					if(G.mutability_flags & PLANT_GENE_REMOVABLE)
+						dat += "<a href='?src=[REF(src)];gene=[REF(G)];op=remove'>Remove</a>"
 					dat += "</td></tr>"
 				dat += "</table>"
 			else
 				dat += "No trait-related genes detected in sample.<br>"
-			if(can_insert && istype(disk.gene, /datum/plant_gene/trait))
+			if(can_insert && istype(disk.gene, /datum/plant_gene/trait) && !seed.is_gene_forbidden(disk.gene.type))
 				dat += "<a href='?src=[REF(src)];op=insert'>Insert: [disk.gene.get_name()]</a>"
 			dat += "</div>"
 	else
@@ -400,7 +402,7 @@
 /obj/machinery/plantgenes/proc/repaint_seed()
 	if(!seed)
 		return
-	if(copytext(seed.name, 1, 13) == "experimental")
+	if(copytext(seed.name, 1, 13) == "experimental")//13 == length("experimental") + 1
 		return // Already modded name and icon
 	seed.name = "experimental " + seed.name
 	seed.icon_state = "seed-x"
@@ -417,7 +419,7 @@
 	name = "plant data disk"
 	desc = "A disk for storing plant genetic data."
 	icon_state = "datadisk_hydro"
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	var/datum/plant_gene/gene
 	var/read_only = 0 //Well, it's still a floppy disk
 	obj_flags = UNIQUE_RENAME
@@ -439,7 +441,7 @@
 	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/disk/plantgene/examine(mob/user)
-	..()
+	. = ..()
 	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
-		to_chat(user,"<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>")
-	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+		. += "<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>"
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."

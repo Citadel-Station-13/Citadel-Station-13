@@ -32,7 +32,7 @@
 	busy_icon_state = working_icon
 	update_icon()
 
-/obj/machinery/public_nanite_chamber/proc/inject_nanites()
+/obj/machinery/public_nanite_chamber/proc/inject_nanites(mob/living/attacker)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if((stat & MAINT) || panel_open)
@@ -47,46 +47,67 @@
 	set_busy(TRUE, "[initial(icon_state)]_raising")
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"),20)
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"),60)
-	addtimer(CALLBACK(src, .proc/complete_injection, locked_state),80)
+	addtimer(CALLBACK(src, .proc/complete_injection, locked_state, attacker),80)
 
-/obj/machinery/public_nanite_chamber/proc/complete_injection(locked_state)
+/obj/machinery/public_nanite_chamber/proc/complete_injection(locked_state, mob/living/attacker)
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
 	if(!occupant)
 		return
+	if(attacker)
+		occupant.investigate_log("was injected with nanites by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
 	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
-/obj/machinery/public_nanite_chamber/update_icon()
-	cut_overlays()
-
+/obj/machinery/public_nanite_chamber/proc/change_cloud(mob/living/attacker)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	if((stat & MAINT) || panel_open)
-		add_overlay("maint")
+		return
+	if(!occupant || busy)
+		return
 
-	else if(!(stat & (NOPOWER|BROKEN)))
-		if(busy || locked)
-			add_overlay("red")
-			if(locked)
-				add_overlay("bolted")
-		else
-			add_overlay("green")
+	var/locked_state = locked
+	locked = TRUE
 
+	set_busy(TRUE, "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"),40)
+	addtimer(CALLBACK(src, .proc/complete_cloud_change, locked_state, attacker),60)
 
+/obj/machinery/public_nanite_chamber/proc/complete_cloud_change(locked_state, mob/living/attacker)
+	locked = locked_state
+	set_busy(FALSE)
+	if(!occupant)
+		return
+	if(attacker)
+		occupant.investigate_log("had their nanite cloud ID changed into [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
+/obj/machinery/public_nanite_chamber/update_icon_state()
 	//running and someone in there
 	if(occupant)
 		if(busy)
 			icon_state = busy_icon_state
 		else
 			icon_state = initial(icon_state)+ "_occupied"
-		return
+	else
+		//running
+		icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
-	//running
-	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
-
-/obj/machinery/public_nanite_chamber/power_change()
+/obj/machinery/public_nanite_chamber/update_overlays()
 	. = ..()
-	update_icon()
+	if((stat & MAINT) || panel_open)
+		. += "maint"
+
+	else if(!(stat & (NOPOWER|BROKEN)))
+		if(busy || locked)
+			. += "red"
+			if(locked)
+				. += "bolted"
+		else
+			. += "green"
 
 /obj/machinery/public_nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)
@@ -94,7 +115,7 @@
 		return
 
 	if(state_open)
-		close_machine()
+		close_machine(null, user)
 		return
 
 	else if(locked)
@@ -113,7 +134,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || busy)
 			return
@@ -122,7 +143,7 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user)
+/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user, mob/living/attacker)
 	if(!state_open)
 		return FALSE
 
@@ -130,15 +151,18 @@
 
 	. = TRUE
 
-	addtimer(CALLBACK(src, .proc/try_inject_nanites), 30) //If someone is shoved in give them a chance to get out before the injection starts
+	addtimer(CALLBACK(src, .proc/try_inject_nanites, attacker), 30) //If someone is shoved in give them a chance to get out before the injection starts
 
-/obj/machinery/public_nanite_chamber/proc/try_inject_nanites()
+/obj/machinery/public_nanite_chamber/proc/try_inject_nanites(mob/living/attacker)
 	if(occupant)
 		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
+			var/datum/component/nanites/nanites = L.GetComponent(/datum/component/nanites)
+			if(nanites && nanites.cloud_id != cloud_id)
+				change_cloud(attacker)
 			return
-		if((MOB_ORGANIC in L.mob_biotypes) || (MOB_UNDEAD in L.mob_biotypes))
-			inject_nanites()
+		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
+			inject_nanites(attacker)
 
 /obj/machinery/public_nanite_chamber/open_machine()
 	if(state_open)
@@ -173,6 +197,8 @@
 	toggle_open(user)
 
 /obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
 		return
-	close_machine(target)
+	if(close_machine(target, user))
+		log_combat(user, target, "inserted", null, "into [src].")
+	add_fingerprint(user)

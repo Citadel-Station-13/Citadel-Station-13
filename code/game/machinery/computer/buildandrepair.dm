@@ -19,7 +19,7 @@
 					return
 
 				to_chat(user, "<span class='notice'>You start deconstructing the frame...</span>")
-				if(P.use_tool(src, user, 20, volume=50))
+				if(P.use_tool(src, user, 20, volume=50) && state == 0)
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/stack/sheet/metal/M = new (drop_location(), 5)
 					M.add_fingerprint(user)
@@ -28,7 +28,7 @@
 		if(1)
 			if(istype(P, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
-				if(P.use_tool(src, user, 20, volume=50))
+				if(P.use_tool(src, user, 20, volume=50) && state == 1)
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					setAnchored(FALSE)
 					state = 0
@@ -72,9 +72,7 @@
 				if(!P.tool_start_check(user, amount=5))
 					return
 				to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
-				if(P.use_tool(src, user, 20, volume=50, amount=5))
-					if(state != 2)
-						return
+				if(P.use_tool(src, user, 20, 5, 50, CALLBACK(src, .proc/check_state, 2)))
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 					state = 3
 					icon_state = "3"
@@ -94,9 +92,7 @@
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
-				if(P.use_tool(src, user, 20, amount=2))
-					if(state != 3)
-						return
+				if(P.use_tool(src, user, 20, 2, 0, CALLBACK(src, .proc/check_state, 3)))
 					to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 					state = 4
 					src.icon_state = "4"
@@ -121,6 +117,11 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
+//callback proc used on stacks use_tool to stop unnecessary amounts being wasted from spam clicking.
+/obj/structure/frame/computer/proc/check_state(target_state)
+	if(state == target_state)
+		return TRUE
+	return FALSE
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -132,12 +133,13 @@
 	..()
 
 /obj/structure/frame/computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You must unwrench [src] before rotating it!</span>")
-		return
+		return TRUE
 
 	setDir(turn(dir, -90))
+	return TRUE

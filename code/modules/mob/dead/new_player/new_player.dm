@@ -10,9 +10,6 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
-
-	anchored = TRUE	//  don't get pushed around
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -395,6 +392,8 @@
 
 		character.update_parallax_teleport()
 
+	job.standard_assign_skills(character.mind)
+
 	SSticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
@@ -473,10 +472,7 @@
 	var/free_space = 0
 	for(var/list/category in list(GLOB.command_positions) + list(GLOB.supply_positions) + list(GLOB.engineering_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
 		var/cat_color = "fff" //random default
-		if(SSjob.name_occupations && SSjob.name_occupations[category[1]])
-			cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
-		else
-			cat_color = SSjob.occupations[category[1]].selection_color
+		cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
 
@@ -586,7 +582,7 @@
 		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += GLOB.data_core.get_manifest(OOC = 1)
 

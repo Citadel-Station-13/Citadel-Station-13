@@ -111,7 +111,7 @@
 	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
 
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user) || IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user) || IsAdminGhost(user))
 		dat += "Extinguish Fires: <A href='?src=[REF(src)];operation=extinguish_fires'>[extinguish_fires ? "Yes" : "No"]</A><BR>"
 		dat += "Extinguish People: <A href='?src=[REF(src)];operation=extinguish_people'>[extinguish_people ? "Yes" : "No"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
@@ -170,7 +170,7 @@
 	if(!..())
 		return
 
-	if(IsStun())
+	if(IsStun() || IsParalyzed())
 		old_target_fire = target_fire
 		target_fire = null
 		mode = BOT_IDLE
@@ -287,7 +287,7 @@
 	if(!on)
 		icon_state = "firebot0"
 		return
-	if(IsStun())
+	if(IsStun() || IsParalyzed())
 		icon_state = "firebots1"
 	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
 		icon_state = "firebots1"

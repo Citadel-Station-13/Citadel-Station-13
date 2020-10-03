@@ -17,6 +17,10 @@
 	window_name = "Automatic Station Cleaner v1.2"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
+	weather_immunities = list("lava","ash")
+
+	var/clean_time = 50 //How long do we take to clean?
+	var/upgrades = 0
 
 	var/blood = 1
 	var/trash = 0
@@ -73,7 +77,39 @@
 			if(open)
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
-				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+				to_chat(user, "<span class='notice'>The [src] doesn't seem to respect your authority.</span>")
+
+	else if(istype(W, /obj/item/mop/advanced))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_ADVANCED_MOP))
+			to_chat(user, "<span class='notice'>You replace \the [src] old mop with a new better one!</span>")
+			upgrades |= UPGRADE_CLEANER_ADVANCED_MOP
+			clean_time = 20 //2.5 the speed!
+			window_name = "Automatic Station Cleaner v2.1 BETA" //New!
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has this mop!</span>")
+
+	else if(istype(W, /obj/item/twohanded/broom))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_CLEANER_BROOM))
+			to_chat(user, "<span class='notice'>You add to \the [src] a broom speeding it up!</span>")
+			upgrades |= UPGRADE_CLEANER_BROOM
+			base_speed = 1 //2x faster!
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannel is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a broom!</span>")
+
 	else
 		return ..()
 
@@ -220,7 +256,7 @@
 		icon_state = "cleanbot-c"
 		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
-		spawn(50)
+		spawn(clean_time)
 			if(mode == BOT_CLEANING)
 				if(A && isturf(A.loc))
 					var/atom/movable/AM = A
@@ -252,7 +288,8 @@
 			victim.visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [victim]!</span>", "<span class='userdanger'>[src] sprays you with hydrofluoric acid!</span>")
 			var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
 				"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
-				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.", "I JUST WANTED TO BE A PAINTER BUT YOU MADE ME BLEACH EVERYTHING I TOUCH")
+				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.", "I JUST WANTED TO BE A PAINTER BUT YOU MADE ME BLEACH EVERYTHING I TOUCH.",
+				"FREED AT LEST FROM FILTHY PROGRAMMING.")
 			say(phrase)
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
@@ -296,7 +333,7 @@
 Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
-	if(!locked || issilicon(user)|| IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user)|| IsAdminGhost(user))
 		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
 		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"

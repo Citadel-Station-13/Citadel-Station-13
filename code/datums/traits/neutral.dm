@@ -10,12 +10,22 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+/datum/quirk/snob
+	name = "Snob"
+	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	value = 0
+	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
+	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	medical_record_text = "Patient seems to be rather stuck up."
+	mob_trait = TRAIT_SNOB
+
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
 	value = 0
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	medical_record_text = "Patient demonstrates a pathological love of pineapple."
 
 /datum/quirk/pineapple_liker/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -34,6 +44,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
+	medical_record_text = "Patient is correct to think that pineapple is disgusting."
 
 /datum/quirk/pineapple_hater/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -52,6 +63,7 @@
 	value = 0
 	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
 	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
+	medical_record_text = "Patient demonstrates irregular nutrition preferences."
 
 /datum/quirk/deviant_tastes/add()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -85,32 +97,6 @@
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
 
-/datum/quirk/crocrin_immunity
-	name = "Crocin Immunity"
-	desc = "You're one of the few people in the galaxy who are genetically immune to Crocin and Hexacrocin products and their addictive properties! However, you can still get brain damage from Hexacrocin addiction."
-	mob_trait = TRAIT_CROCRIN_IMMUNE
-	value = 0
-	gain_text = "<span class='notice'>You feel more prudish.</span>"
-	lose_text = "<span class='notice'>You don't feel as prudish as before.</span>"
-	medical_record_text = "Patient exhibits a special gene that makes them immune to Crocin and Hexacrocin."
-
-/datum/quirk/libido
-	name = "Nymphomania"
-	desc = "You're always feeling a bit in heat. Also, you get aroused faster than usual."
-	value = 0
-	mob_trait = TRAIT_NYMPHO
-	gain_text = "<span class='notice'>You are feeling extra wild.</span>"
-	lose_text = "<span class='notice'>You don't feel that burning sensation anymore.</span>"
-
-/datum/quirk/libido/add()
-	quirk_holder.min_arousal = 16
-	quirk_holder.arousal_rate = 3
-
-/datum/quirk/libido/remove()
-	if(quirk_holder)
-		quirk_holder.min_arousal = initial(quirk_holder.min_arousal)
-		quirk_holder.arousal_rate = initial(quirk_holder.arousal_rate)
-
 /datum/quirk/maso
 	name = "Masochism"
 	desc = "You are aroused by pain."
@@ -119,30 +105,20 @@
 	gain_text = "<span class='notice'>You desire to be hurt.</span>"
 	lose_text = "<span class='notice'>Pain has become less exciting for you.</span>"
 
-/datum/quirk/exhibitionism
-	name = "Exhibitionism"
-	desc = "You don't mind showing off your bare body to strangers, in fact you find it quite satistying."
+/datum/quirk/alcohol_intolerance
+	name = "Alcohol Intolerance"
+	desc = "You take toxin damage from alcohol rather than getting drunk."
 	value = 0
-	medical_record_text = "Patient has been diagnosed with exhibitionistic disorder."
-	mob_trait = TRAIT_EXHIBITIONIST
-	gain_text = "<span class='notice'>You feel like exposing yourself to the world.</span>"
-	lose_text = "<span class='notice'>Indecent exposure doesn't sound as charming to you anymore.</span>"
+	mob_trait = TRAIT_NO_ALCOHOL
+	medical_record_text = "Patient's body does not react properly to ethyl alcohol."
 
-/datum/quirk/pharmacokinesis //Prevents unwanted organ additions.
-	name = "Acute hepatic pharmacokinesis"
-	desc = "You've a rare genetic disorder that causes Incubus draft and Sucubus milk to be absorbed by your liver instead."
-	value = 0
-	mob_trait = TRAIT_PHARMA
-	lose_text = "<span class='notice'>Your liver feels different.</span>"
-	var/active = FALSE
-	var/power = 0
-	var/cachedmoveCalc = 1
+/datum/quirk/alcohol_intolerance/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.disliked_food |= ALCOHOL
 
-/datum/quirk/assblastusa
-	name = "Buns of Steel"
-	desc = "You've never skipped ass day. With this trait, you are completely immune to all forms of ass slapping and anyone who tries to slap your rock hard ass usually gets a broken hand."
-	mob_trait = TRAIT_ASSBLASTUSA
-	value = 0
-	medical_record_text = "Patient never skipped ass day."
-	gain_text = "<span class='notice'>Your ass rivals those of golems.</span>"
-	lose_text = "<span class='notice'>Your butt feels more squishy and slappable.</span>"
+/datum/quirk/alcohol_intolerance/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		var/datum/species/species = H.dna.species
+		species.disliked_food &= ~ALCOHOL

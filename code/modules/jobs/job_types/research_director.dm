@@ -28,9 +28,12 @@
 						ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_XENOBIOLOGY, ACCESS_AI_UPLOAD,
 						ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM,
 						ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
+	paycheck = PAYCHECK_COMMAND
+	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/insanity)
+	threat = 5
 
 /datum/outfit/job/rd
 	name = "Research Director"
@@ -39,7 +42,7 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
-	uniform = /obj/item/clothing/under/rank/research_director
+	uniform = /obj/item/clothing/under/rank/rnd/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/clipboard

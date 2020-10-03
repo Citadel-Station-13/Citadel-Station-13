@@ -1,7 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - rscadd: "Adds eight new plushies"
-  - imageadd: "Adds icons for the new plushies and adds a new icon for the skylar plush"
-  - imagedel: "Deleted a old, no-longer used icon for the skylar plush"
-  - spellcheck: "Fixed a typo in the trilby plush"
