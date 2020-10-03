@@ -83,7 +83,7 @@
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
-	color = rgb(40, 130, 255)
+	icon_state = "emag_bs"
 	prox_check = FALSE
 
 /obj/item/card/emag/attack()
@@ -112,6 +112,26 @@
 /obj/item/card/emag/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It has <b>[uses ? uses : "no"]</b> charges left.</span>"
+
+/obj/item/card/id/examine_more(mob/user)
+	var/list/msg = list("<span class='notice'><i>You examine [src] closer, and note the following...</i></span>")
+
+	if(mining_points)
+		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+	if(registered_account)
+		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		if(registered_account.account_job)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
+			if(D)
+				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		msg += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		msg += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+		if(registered_account.account_holder == user.real_name)
+			msg += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
+	else
+		msg += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
+
+	return msg
 
 /obj/item/card/emag/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/emagrecharge))
@@ -166,6 +186,7 @@
 	slot_flags = ITEM_SLOT_ID
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/id_type_name = "identification card"
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
@@ -174,6 +195,8 @@
 	var/bank_support = ID_FREE_BANK_ACCOUNT
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
+	var/uses_overlays = TRUE
+	var/icon/cached_flat_icon
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -187,12 +210,21 @@
 		if(ID_LOCKED_BANK_ACCOUNT)
 			registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
 
+/obj/item/card/id/Destroy()
+	if(bank_support == ID_LOCKED_BANK_ACCOUNT)
+		QDEL_NULL(registered_account)
+	else
+		registered_account = null
+	if(my_store)
+		my_store.my_card = null
+		my_store = null
+	return ..()
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name")
+			if(NAMEOF(src, assignment),NAMEOF(src, registered_name)) //,NAMEOF(src, registered_age))
 				update_label()
 
 /obj/item/card/id/attack_self(mob/user)
@@ -218,15 +250,13 @@
 		return ..()
 
 /obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
 	var/cash_money = I.get_item_credit_value()
 	if(!cash_money)
 		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
 		return
-
-	if(!registered_account)
-		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
-		return
-
 	registered_account.adjust_money(cash_money)
 	if(physical_currency)
 		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
@@ -237,17 +267,20 @@
 	qdel(I)
 
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit into!</span>")
+		return FALSE
+
 	if (!money || !money.len)
 		return FALSE
 
 	var/total = 0
 
 	for (var/obj/item/physical_money in money)
-		var/cash_money = physical_money.get_item_credit_value()
+		total += physical_money.get_item_credit_value()
+		CHECK_TICK
 
-		total += cash_money
-
-		registered_account.adjust_money(cash_money)
+	registered_account.adjust_money(total)
 
 	QDEL_LIST(money)
 
@@ -353,20 +386,38 @@
 /obj/item/card/id/RemoveID()
 	return src
 
-/*
-Usage:
-update_label()
-	Sets the id name to whatever registered_name and assignment is
+/obj/item/card/id/update_overlays()
+	. = ..()
+	if(!uses_overlays)
+		return
+	cached_flat_icon = null
+	var/job = assignment ? ckey(GetJobName()) : null
+	if(registered_name == "Captain")
+		job = "captain"
+	if(registered_name && registered_name != "Captain")
+		. += mutable_appearance(icon, "assigned")
+	if(job)
+		. += mutable_appearance(icon, "id[job]")
 
-update_label("John Doe", "Clowny")
-	Properly formats the name and occupation and sets the id name to the arguments
-*/
+/obj/item/card/id/proc/get_cached_flat_icon()
+	if(!cached_flat_icon)
+		cached_flat_icon = getFlatIcon(src)
+	return cached_flat_icon
+
+
+/obj/item/card/id/get_examine_string(mob/user, thats = FALSE)
+	if(uses_overlays)
+		return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+	return ..()
+
 /obj/item/card/id/proc/update_label(newname, newjob)
 	if(newname || newjob)
 		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
+		update_icon()
 		return
 
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	update_icon()
 
 /obj/item/card/id/silver
 	name = "silver identification card"
@@ -379,6 +430,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/silver/reaper
 	name = "Thirteen's ID Card (Reaper)"
 	access = list(ACCESS_MAINT_TUNNELS)
+	icon_state = "reaper"
 	assignment = "Reaper"
 	registered_name = "Thirteen"
 
@@ -530,7 +582,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/ert
 	name = "\improper CentCom ID"
 	desc = "An ERT ID card."
-	icon_state = "centcom"
+	icon_state = "ert_commander"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
@@ -539,6 +591,7 @@ update_label("John Doe", "Clowny")
 	. = ..()
 
 /obj/item/card/id/ert/Security
+	icon_state = "ert_security"
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
 
@@ -547,6 +600,7 @@ update_label("John Doe", "Clowny")
 	. = ..()
 
 /obj/item/card/id/ert/Engineer
+	icon_state = "ert_engineer"
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
 
@@ -555,6 +609,7 @@ update_label("John Doe", "Clowny")
 	. = ..()
 
 /obj/item/card/id/ert/Medical
+	icon_state = "ert_medical"
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
 
@@ -563,6 +618,7 @@ update_label("John Doe", "Clowny")
 	. = ..()
 
 /obj/item/card/id/ert/chaplain
+	icon_state = "ert_chaplain"
 	registered_name = "Religious Response Officer"
 	assignment = "Religious Response Officer"
 
@@ -615,40 +671,49 @@ update_label("John Doe", "Clowny")
 		. += "<span class='notice'>Your sentence is up! You're free!</span>"
 
 /obj/item/card/id/prisoner/one
+	icon_state = "prisoner_001"
 	name = "Prisoner #13-001"
 	registered_name = "Prisoner #13-001"
 
 /obj/item/card/id/prisoner/two
+	icon_state = "prisoner_002"
 	name = "Prisoner #13-002"
 	registered_name = "Prisoner #13-002"
 
 /obj/item/card/id/prisoner/three
+	icon_state = "prisoner_003"
 	name = "Prisoner #13-003"
 	registered_name = "Prisoner #13-003"
 
 /obj/item/card/id/prisoner/four
+	icon_state = "prisoner_004"
 	name = "Prisoner #13-004"
 	registered_name = "Prisoner #13-004"
 
 /obj/item/card/id/prisoner/five
+	icon_state = "prisoner_005"
 	name = "Prisoner #13-005"
 	registered_name = "Prisoner #13-005"
 
 /obj/item/card/id/prisoner/six
+	icon_state = "prisoner_006"
 	name = "Prisoner #13-006"
 	registered_name = "Prisoner #13-006"
 
 /obj/item/card/id/prisoner/seven
+	icon_state = "prisoner_007"
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
 
 /obj/item/card/id/mining
 	name = "mining ID"
+	icon_state = "retro"
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
+	icon_state = "retro"
 	access = list(ACCESS_AWAY_GENERAL)
 
 /obj/item/card/id/away/hotel
@@ -691,6 +756,7 @@ update_label("John Doe", "Clowny")
 /obj/item/card/id/departmental_budget
 	name = "departmental card (FUCK)"
 	desc = "Provides access to the departmental budget."
+	icon_state = "budgetcard"
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
 
@@ -703,6 +769,7 @@ update_label("John Doe", "Clowny")
 			B.bank_cards += src
 		name = "departmental card ([department_name])"
 		desc = "Provides access to the [department_name]."
+		icon_state = "[lowertext(department_ID)]_budget"
 	SSeconomy.dep_cards += src
 
 /obj/item/card/id/departmental_budget/Destroy()

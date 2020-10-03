@@ -102,9 +102,8 @@
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
 	if(slot == SLOT_HANDS)
-		return
+		return ..()
 	qdel(src)
-	return
 
 /obj/item/tk_grab/examine(user)
 	if (focus)
@@ -124,7 +123,8 @@
 	. = ..()
 	if(!target || !user)
 		return
-
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	if(!focus)
 		focus_object(target)
 		return
@@ -146,7 +146,7 @@
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(considered_action = TRUE, flush = TRUE)
 	update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)

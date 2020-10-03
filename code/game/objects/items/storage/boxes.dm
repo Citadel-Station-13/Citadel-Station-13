@@ -275,6 +275,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
+obj/item/storage/box/stingbangs
+	name = "box of stingbangs (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
+	icon_state = "secbox"
+	illustration = "flashbang"
+
+/obj/item/storage/box/stingbangs/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/stingbang(src)
+
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
 	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
@@ -434,6 +444,7 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
+	custom_premium_price = PRICE_ABOVE_NORMAL // git gud
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
@@ -622,7 +633,7 @@
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	custom_price = 20
+	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -715,9 +726,9 @@
 	return (BRUTELOSS)
 
 /obj/item/storage/box/hug/attack_self(mob/user)
-	..()
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
+	. = ..()
+	user.DelayNextAction(CLICK_CD_MELEE)
+	playsound(src, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"hugbox", /datum/mood_event/hugbox)
 
@@ -744,8 +755,8 @@
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/mesh(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 // Clown survival box
@@ -1343,6 +1354,7 @@
 	name = "box of marshmallows"
 	desc = "A box of marshmallows."
 	illustration = "marshmallow"
+	custom_premium_price = PRICE_BELOW_NORMAL
 
 /obj/item/storage/box/marshmallow/PopulateContents()
 	for (var/i in 1 to 5)
@@ -1406,3 +1418,9 @@
 	new /obj/item/reagent_containers/glass/beaker/meta(src)
 	new /obj/item/reagent_containers/glass/beaker/noreact(src)
 	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+
+/obj/item/storage/box/strange_seeds_5pack
+
+/obj/item/storage/box/strange_seeds_5pack/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/seeds/random(src)

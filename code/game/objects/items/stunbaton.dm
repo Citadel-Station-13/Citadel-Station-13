@@ -14,6 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
+	attack_speed = CLICK_CD_MELEE
 
 	var/stamforce = 35
 	var/turned_on = FALSE
@@ -144,8 +145,9 @@
 		return ..()
 
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
 	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
-	user.changeNext_move(CLICK_CD_MELEE)
 
 //return TRUE to interrupt attack chain.
 /obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
@@ -156,6 +158,7 @@
 	if(IS_STAMCRIT(user))			//CIT CHANGE - makes it impossible to baton in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")
 		return TRUE
+	user.DelayNextAction()
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		if(check_martial_counter(L, user))
@@ -170,10 +173,12 @@
 	return disarming || (user.a_intent != INTENT_HARM)
 
 /obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
-	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; check_shields() handles that
+	var/list/return_list = list()
+	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	var/stunpwr = stamforce
+	stunpwr = block_calculate_resultant_damage(stunpwr, return_list)
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
 		switch_status(FALSE)
@@ -227,7 +232,7 @@
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
 		if(!iscyborg(loc))
-			deductcharge(1000 / severity, TRUE, FALSE)
+			deductcharge(severity*10, TRUE, FALSE)
 
 /obj/item/melee/baton/stunsword
 	name = "stunsword"

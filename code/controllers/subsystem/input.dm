@@ -64,19 +64,33 @@ SUBSYSTEM_DEF(input)
 	// Misc
 	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\""
 	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\""
-
+	
 	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
+	
+	// HAHA - SIKE. Because of BYOND weirdness (tl;dr not specifically binding this way results in potentially duplicate chatboxes when 
+	//  conflicts occur with something like say indicator vs say), we're going to snowflake this anyways
+	var/list/hard_binds = list(
+		"O" = "ooc",
+		"T" = "say",
+		"L" = "looc",
+		"M" = "me"
+		)
+	var/list/hard_bind_anti_collision = list()
+	var/list/anti_collision_modifiers = list("Ctrl", "Alt", "Shift", "Ctrl+Alt", "Ctrl+Shift", "Alt+Shift", "Ctrl+Alt+Shift")
+	for(var/key in hard_binds)
+		for(var/modifier in anti_collision_modifiers)
+			hard_bind_anti_collision["[modifier]+[key]"] = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
+	
 	macroset_classic_hotkey = list(
 	"Any" = "\"KeyDown \[\[*\]\]\"",
 	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
 	"Tab" = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT] input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-	"O" = "ooc",
-	"T" = "say",
-	"L" = "looc",
-	"M" = "me"
 	)
+	
+	macroset_classic_hotkey |= hard_binds
+	macroset_classic_hotkey |= hard_bind_anti_collision
 
 	// And finally, the modern set.
 	macroset_hotkey = list(
@@ -85,11 +99,10 @@ SUBSYSTEM_DEF(input)
 	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-	"O" = "ooc",
-	"T" = "say",
-	"L" = "looc",
-	"M" = "me"
 	)
+	
+	macroset_hotkey |= hard_binds
+	macroset_hotkey |= hard_bind_anti_collision
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
@@ -104,3 +117,8 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 1 to clients.len)
 		var/client/C = clients[i]
 		C.keyLoop()
+
+/// *sigh
+/client/verb/NONSENSICAL_VERB_THAT_DOES_NOTHING()
+	set name = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
+	set hidden = TRUE

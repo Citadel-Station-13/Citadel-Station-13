@@ -20,6 +20,8 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	/// did we get succed by another changeling
+	var/hostile_absorbed = FALSE
 	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
@@ -91,6 +93,8 @@
 			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
+	owner.special_role = null
+	owner.current.hud_used?.lingchemdisplay?.invisibility = INVISIBILITY_ABSTRACT
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()
@@ -222,6 +226,8 @@
 		else //not dead? no chem/geneticdamage caps.
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 			geneticdamage = max(0, geneticdamage-1)
+		owner.current.hud_used?.lingchemdisplay?.invisibility = 0
+		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
@@ -354,10 +360,12 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/regenerate)
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 
@@ -396,20 +404,31 @@
 			escape_objective_possible = FALSE
 			break
 	var/changeling_objective = rand(1,3)
+	var/generic_absorb_objective = FALSE
+	var/multiple_lings = length(get_antag_minds(/datum/antagonist/changeling,TRUE)) > 1
 	switch(changeling_objective)
 		if(1)
-			var/datum/objective/absorb/absorb_objective = new
-			absorb_objective.owner = owner
-			absorb_objective.gen_amount_goal(6, 8)
-			objectives += absorb_objective
+			generic_absorb_objective = TRUE
 		if(2)
-			var/datum/objective/absorb_changeling/ac = new
-			ac.owner = owner
-			objectives += ac
+			if(multiple_lings)
+				var/datum/objective/absorb_changeling/ac = new
+				ac.owner = owner
+				objectives += ac
+			else
+				generic_absorb_objective = TRUE
 		if(3)
-			var/datum/objective/absorb_most/ac = new
-			ac.owner = owner
-			objectives += ac
+			if(multiple_lings)
+				var/datum/objective/absorb_most/ac = new
+				ac.owner = owner
+				objectives += ac
+			else
+				generic_absorb_objective = TRUE
+
+	if(generic_absorb_objective)
+		var/datum/objective/absorb/absorb_objective = new
+		absorb_objective.owner = owner
+		absorb_objective.gen_amount_goal(6, 8)
+		objectives += absorb_objective
 
 	if(prob(60))
 		if(prob(85))

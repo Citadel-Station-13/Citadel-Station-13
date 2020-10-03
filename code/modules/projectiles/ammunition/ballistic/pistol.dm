@@ -44,7 +44,6 @@
 	desc = "A 9mm incendiary bullet casing."
 	projectile_type = /obj/item/projectile/bullet/incendiary/c9mm
 
-
 // .50AE (Desert Eagle)
 
 /obj/item/ammo_casing/a50AE
@@ -52,4 +51,3 @@
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/a50AE
-

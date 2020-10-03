@@ -144,6 +144,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Handles the special case of editing the movement var
 /mob/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, control_object))
+		var/obj/O = var_name
+		if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
+			return FALSE
 	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
 	var/diff
 	if(slowdown_edit && isnum(cached_multiplicative_slowdown) && isnum(var_value))
@@ -195,7 +199,13 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			else
 				continue
 		. += amt
+	var/old = cached_multiplicative_slowdown		// CITAEDL EDIT - To make things a bit less jarring, when in situations where
+	// your delay decreases, "give" the delay back to the client
 	cached_multiplicative_slowdown = .
+	var/diff = old - cached_multiplicative_slowdown
+	if((diff > 0) && client)
+		if(client.move_delay > world.time + 1.5)
+			client.move_delay -= diff
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()

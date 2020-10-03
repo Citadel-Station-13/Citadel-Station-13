@@ -3,9 +3,6 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
-	req_access = list(ACCESS_CARGO)
-	ui_x = 780
-	ui_y = 750
 
 	var/requestonly = FALSE
 	var/contraband = FALSE
@@ -18,6 +15,7 @@
 	var/obj/item/radio/headset/radio
 	/// var that tracks message cooldown
 	var/message_cooldown
+	var/list/loaded_coupons
 
 	light_color = "#E2853D"//orange
 
@@ -26,7 +24,6 @@
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
-	req_access = list()
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/Initialize()
@@ -65,15 +62,12 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
-	req_access = list()
 	update_static_data(user)
-	return ..()
 
-/obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "cargo", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "Cargo", name)
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()
@@ -119,7 +113,6 @@
 	var/list/data = list()
 	data["requestonly"] = requestonly
 	data["supplies"] = list()
-	data["emagged"] = obj_flags & EMAGGED
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
 		if(!data["supplies"][P.group])
@@ -134,6 +127,8 @@
 			"cost" = P.cost,
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
+			"goody" = P.goody,
+			"private_goody" = P.goody == PACK_GOODY_PRIVATE,
 			"access" = P.access,
 			"can_private_buy" = P.can_private_buy
 		))
@@ -141,9 +136,6 @@
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
-		return
-	if(!allowed(usr))
-		to_chat(usr, "<span class='notice'>Access denied.</span>")
 		return
 	switch(action)
 		if("send")
@@ -176,6 +168,8 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
+				investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
@@ -197,12 +191,14 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid)
-				if(!pack.can_private_buy && !(obj_flags & EMAGGED))
-					return
-				var/obj/item/card/id/id_card = usr.get_idcard(TRUE)
+			if(self_paid && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
 				if(!istype(id_card))
 					say("No ID card detected.")
+					return
+				if(istype(id_card, /obj/item/card/id/departmental_budget))
+					say("The [src] rejects [id_card].")
 					return
 				account = id_card.registered_account
 				if(!istype(account))
@@ -215,8 +211,22 @@
 				if(isnull(reason) || ..())
 					return
 
+			if(pack.goody == PACK_GOODY_PRIVATE && !self_paid)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+				say("ERROR: Private small crates may only be purchased by private accounts.")
+				return
+
+			var/obj/item/coupon/applied_coupon
+			for(var/i in loaded_coupons)
+				var/obj/item/coupon/coupon_check = i
+				if(pack.type == coupon_check.discounted_pack)
+					say("Coupon found! [round(coupon_check.discount_pct_off * 100)]% off applied!")
+					coupon_check.moveToNullspace()
+					applied_coupon = coupon_check
+					break
+
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
 			SO.generateRequisition(T)
 			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
@@ -224,11 +234,17 @@
 				SSshuttle.shoppinglist += SO
 				if(self_paid)
 					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+			if(requestonly && message_cooldown < world.time)
+				radio.talk_into(src, "A new order has been requested.", RADIO_CHANNEL_SUPPLY)
+				message_cooldown = world.time + 30 SECONDS
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 				if(SO.id == id)
+					if(SO.applied_coupon)
+						say("Coupon refunded.")
+						SO.applied_coupon.forceMove(get_turf(src))
 					SSshuttle.shoppinglist -= SO
 					. = TRUE
 					break

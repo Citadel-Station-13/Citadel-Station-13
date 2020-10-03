@@ -13,7 +13,7 @@
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.004
 	heat_capacity = 10000
 	intact = 1
 	var/broken = 0
@@ -162,7 +162,7 @@
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	return intact ? pry_tile(I, user) : FALSE
+	return intact ? FORCE_BOOLEAN(pry_tile(I, user)) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -189,8 +189,11 @@
 		if(user && !silent)
 			to_chat(user, "<span class='notice'>You remove the floor tile.</span>")
 		if(floor_tile && make_tile)
-			new floor_tile(src)
+			spawn_tile()
 	return make_plating()
+
+/turf/open/floor/proc/spawn_tile()
+	new floor_tile(src)
 
 /turf/open/floor/singularity_pull(S, current_size)
 	. = ..()
@@ -205,7 +208,7 @@
 			if(floor_tile)
 				if(prob(70))
 					remove_tile()
-			else if(prob(50))
+			else if(prob(50) && (/turf/open/space in baseturfs))
 				ReplaceWithLattice()
 
 /turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
@@ -293,3 +296,13 @@
 			return TRUE
 
 	return FALSE
+
+/turf/open/floor/material
+	name = "floor"
+	icon_state = "materialfloor"
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/turf/open/floor/material/spawn_tile()
+	for(var/i in custom_materials)
+		var/datum/material/M = i
+		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))

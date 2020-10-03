@@ -104,6 +104,9 @@
 			rack.AddComponent(/datum/component/magnetic_catch)
 
 //Whatever special stuff you want
+/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+	return
+		
 /datum/map_template/shuttle/proc/on_bought()
 	return
 
@@ -160,6 +163,10 @@
 
 /datum/map_template/shuttle/pirate
 	port_id = "pirate"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/hunter
+	port_id = "hunter"
 	can_be_bought = FALSE
 
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
@@ -458,6 +465,10 @@
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
 
+/datum/map_template/shuttle/whiteship/cog
+	suffix = "cog"
+	name = "NT Prisoner Transport"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
@@ -613,3 +624,15 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/hunter/space_cop
+	suffix = "space_cop"
+	name = "Police Spacevan"
+
+/datum/map_template/shuttle/hunter/russian
+	suffix = "russian"
+	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"

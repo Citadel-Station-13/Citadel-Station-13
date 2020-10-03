@@ -19,17 +19,17 @@
 	. = ..()
 	stealthcooldown = 0
 
-/mob/living/simple_animal/hostile/guardian/assassin/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/assassin/PhysicalLife()
+	if(!(. = ..()))
+		return
 	updatestealthalert()
 	if(loc == summoner && toggle)
 		ToggleMode(0)
 
-/mob/living/simple_animal/hostile/guardian/assassin/Stat()
-	..()
-	if(statpanel("Status"))
-		if(stealthcooldown >= world.time)
-			stat(null, "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/assassin/get_status_tab_items()
+	. = ..()
+	if(stealthcooldown >= world.time)
+		. += "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	. = ..()

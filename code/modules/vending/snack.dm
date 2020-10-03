@@ -12,7 +12,8 @@
 					/obj/item/reagent_containers/food/snacks/no_raisin = 5,
 					/obj/item/reagent_containers/food/snacks/spacetwinkie = 5,
 					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 5,
-					/obj/item/reagent_containers/food/snacks/cornchips = 5)
+					/obj/item/reagent_containers/food/snacks/cornchips = 5,
+					/obj/item/reagent_containers/food/snacks/energybar = 6)
 	contraband = list(
 					/obj/item/reagent_containers/food/snacks/cracker = 10,
 					/obj/item/reagent_containers/food/snacks/honeybar = 5,
@@ -27,8 +28,8 @@
 
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
-	default_price = 60
-	extra_price = 160
+	default_price = PRICE_REALLY_CHEAP
+	extra_price = PRICE_ALMOST_CHEAP
 	payment_department = ACCOUNT_SRV
 	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 	input_display_header = "Chef's Food Selection"

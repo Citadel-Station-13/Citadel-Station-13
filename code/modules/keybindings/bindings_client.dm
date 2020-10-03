@@ -59,6 +59,11 @@
 		else
 			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
 	var/keycount = 0
+	if(prefs.modless_key_bindings[_key])
+		var/datum/keybinding/kb = GLOB.keybindings_by_name[prefs.modless_key_bindings[_key]]
+		if(kb.can_use(src))
+			kb.down(src)
+			keycount++
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
@@ -85,6 +90,11 @@
 	var/movement = movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
+
+	if(prefs.modless_key_bindings[_key])
+		var/datum/keybinding/kb = GLOB.keybindings_by_name[prefs.modless_key_bindings[_key]]
+		if(kb.can_use(src))
+			kb.up(src)
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically

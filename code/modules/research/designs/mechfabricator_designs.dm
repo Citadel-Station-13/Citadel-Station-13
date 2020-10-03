@@ -264,6 +264,79 @@
 	construction_time = 600
 	category = list("Gygax")
 
+//Medical Gygax
+/datum/design/medigax_chassis
+	name = "Exosuit Chassis (\"Medical Gygax\")"
+	id = "medigax_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/medigax
+	materials = list(/datum/material/iron=20000)
+	construction_time = 100
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_torso
+	name = "Exosuit Torso (\"Medical Gygax\")"
+	id = "medigax_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_torso
+	materials = list(/datum/material/iron=20000,/datum/material/glass=10000,/datum/material/diamond=2000)
+	construction_time = 300
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_head
+	name = "Exosuit Head (\"Medical Gygax\")"
+	id = "medigax_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_head
+	materials = list(/datum/material/iron=10000,/datum/material/glass=5000, /datum/material/diamond=2000)
+	construction_time = 200
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_left_arm
+	name = "Exosuit Left Arm (\"Medical Gygax\")"
+	id = "medigax_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_left_arm
+	materials = list(/datum/material/iron=15000, /datum/material/diamond=1000)
+	construction_time = 200
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_right_arm
+	name = "Exosuit Right Arm (\"Medical Gygax\")"
+	id = "medigax_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_right_arm
+	materials = list(/datum/material/iron=15000, /datum/material/diamond=1000)
+	construction_time = 200
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_left_leg
+	name = "Exosuit Left Leg (\"Medical Gygax\")"
+	id = "medigax_left_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_left_leg
+	materials = list(/datum/material/iron=15000, /datum/material/diamond=2000)
+	construction_time = 200
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_right_leg
+	name = "Exosuit Right Leg (\"Medical Gygax\")"
+	id = "medigax_right_leg"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_right_leg
+	materials = list(/datum/material/iron=15000, /datum/material/diamond=2000)
+	construction_time = 200
+	category = list("Medical-Spec Gygax")
+
+/datum/design/medigax_armor
+	name = "Exosuit Armor (\"Medical Gygax\")"
+	id = "medigax_armor"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/medigax_armor
+	materials = list(/datum/material/iron=15000,/datum/material/diamond=10000,/datum/material/titanium=10000)
+	construction_time = 600
+	category = list("Medical-Spec Gygax")
+
 //Durand
 /datum/design/durand_chassis
 	name = "Exosuit Chassis (\"Durand\")"

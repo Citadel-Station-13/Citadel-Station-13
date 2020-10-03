@@ -250,7 +250,6 @@
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
@@ -662,7 +661,7 @@ What a mess.*/
 								GLOB.data_core.removeMajorCrime(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
+							var/t1 = stripped_multiline_input(usr, "Please summarize notes:", "Secure records", active2.fields["notes"], 8192)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1
@@ -770,7 +769,7 @@ What a mess.*/
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
-		if(prob(10/severity))
+		if(prob(severity/10))
 			switch(rand(1,8))
 				if(1)
 					if(prob(10))
@@ -795,7 +794,7 @@ What a mess.*/
 					R.fields["photo_side"] = G.fields["photo_side"]
 			continue
 
-		else if(prob(1))
+		else if(prob(severity/80))
 			qdel(R)
 			continue
 

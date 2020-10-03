@@ -37,15 +37,6 @@
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
-/datum/supply_pack/security/armory/combatknives
-	name = "Combat Knives Crate"
-	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = 3200
-	contains = list(/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat)
-	crate_name = "combat knife crate"
-
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, with three Shotgun Bandoliers, as well as seven buchshot and 12g shotgun slugs. Requires Armory access to open."
@@ -167,11 +158,10 @@
 
 /datum/supply_pack/security/armory/russian
 	name = "Russian Surplus Crate"
-	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
+	desc = "Hello Comrade, we have the most modern Russian military equipment the black market can offer, for the right price of course. Sadly we couldn't remove the lock so it requires Armory access to open."
 	cost = 7500
 	contraband = TRUE
 	contains = list(/obj/item/reagent_containers/food/snacks/rationpack,
-					/obj/item/ammo_box/magazine/m10mm/rifle,
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
@@ -181,7 +171,10 @@
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
 					/obj/item/clothing/suit/armor/vest/russian_coat,
-					/obj/item/gun/ballistic/automatic/surplus)
+					/obj/effect/spawner/bundle/crate/mosin,
+					/obj/item/storage/toolbox/ammo,
+					/obj/effect/spawner/bundle/crate/surplusrifle,
+					/obj/item/storage/toolbox/ammo/surplus)
 	crate_name = "surplus military crate"
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
@@ -232,3 +225,10 @@
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber,
 					/obj/item/ammo_box/magazine/wt550m9/wtrubber)
 	crate_name = "auto rifle ammo crate"
+
+/datum/supply_pack/security/armory/hell_single
+	name = "Hellgun Single-Pack"
+	crate_name = "hellgun crate"
+	desc = "Contains one hellgun, an old pattern of laser gun infamous for its ability to horribly disfigure targets with burns. Technically violates the Space Geneva Convention when used on humanoids."
+	cost = 1500
+	contains = list(/obj/item/gun/energy/laser/hellgun)

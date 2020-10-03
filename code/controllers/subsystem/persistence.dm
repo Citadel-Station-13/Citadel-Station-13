@@ -48,25 +48,6 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
 	var/placed_satchel = 0
 	var/path
-	if(fexists("data/npc_saves/SecretSatchels.sav")) //legacy conversion. Will only ever run once.
-		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
-		for(var/map in secret_satchels)
-			var/json_file = file("data/npc_saves/SecretSatchels[map].json")
-			var/list/legacy_secret_satchels = splittext(secret_satchels[map],"#")
-			var/list/satchels = list()
-			for(var/i=1,i<=legacy_secret_satchels.len,i++)
-				var/satchel_string = legacy_secret_satchels[i]
-				var/list/chosen_satchel = splittext(satchel_string,"|")
-				if(chosen_satchel.len == 3)
-					var/list/data = list()
-					data["x"] = text2num(chosen_satchel[1])
-					data["y"] = text2num(chosen_satchel[2])
-					data["saved_obj"] = chosen_satchel[3]
-					satchels += list(data)
-			var/list/file_data = list()
-			file_data["data"] = satchels
-			WRITE_FILE(json_file, json_encode(file_data))
-		fdel("data/npc_saves/SecretSatchels.sav")
 
 	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
 	var/list/json = list()
@@ -268,6 +249,7 @@ SUBSYSTEM_DEF(persistence)
 	SaveRandomizedRecipes()
 	SavePanicBunker()
 	SavePaintings()
+	SaveScars()
 
 /datum/controller/subsystem/persistence/proc/LoadPanicBunker()
 	var/bunker_path = file("data/bunker_passthrough.json")
@@ -547,3 +529,24 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file("data/paintings.json")
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(paintings))
+
+/datum/controller/subsystem/persistence/proc/SaveScars()
+	for(var/i in GLOB.joined_player_list)
+		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
+		if(!istype(ending_human) || !ending_human.mind || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
+			continue
+
+		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
+		if(!original_human || original_human.stat == DEAD || !original_human.all_scars || !(original_human == ending_human))
+			if(ending_human.client) // i was told if i don't check this every step of the way byond might decide a client ceases to exist mid proc so here we go
+				ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
+		else
+			for(var/k in ending_human.all_wounds)
+				var/datum/wound/iter_wound = k
+				iter_wound.remove_wound() // so we can get the scars for open wounds
+			if(!ending_human.client)
+				return
+			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ending_human.format_scars()
+		if(!ending_human.client)
+			return
+		ending_human.client.prefs.save_character()

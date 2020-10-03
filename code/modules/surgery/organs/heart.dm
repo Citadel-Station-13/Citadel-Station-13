@@ -61,10 +61,10 @@
 		return "a healthy"
 	return "<span class='danger'>an unstable</span>"
 
-/obj/item/organ/heart/prepare_eat()
-	var/obj/S = ..()
-	S.icon_state = "[icon_base]-off"
-	return S
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
+	. = ..()
+	beating = FALSE
+	update_icon()
 
 /obj/item/organ/heart/on_life()
 	. = ..()
@@ -198,8 +198,8 @@ obj/item/organ/heart/slime
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 20/severity SECONDS)
-	damage += 100/severity
+	addtimer(CALLBACK(src, .proc/Restart), 0.2*severity SECONDS)
+	damage += severity
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"

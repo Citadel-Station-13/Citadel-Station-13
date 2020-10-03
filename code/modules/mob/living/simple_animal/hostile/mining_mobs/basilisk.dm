@@ -8,7 +8,6 @@
 	icon_aggro = "Basilisk_alert"
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
-	threat = 4
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
@@ -88,8 +87,9 @@
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 	field_of_vision_type = FOV_270_DEGREES //Obviously, it's one eyeball.
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stat == CONSCIOUS)
 		consume_bait()
 

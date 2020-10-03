@@ -31,7 +31,7 @@
 			return
 	say("It doesn't seem like that's magical enough!")
 
-/obj/item/barthpot/attack_hand(mob/user)
+/obj/item/barthpot/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!active)
 		say("Meow!")
 		return
@@ -88,7 +88,7 @@
 	/obj/item/t_scanner = 5,
 	/obj/item/airlock_painter = 1,
 	/obj/item/stack/cable_coil = 6,
-	/obj/item/stack/medical/bruise_pack = 1,
+	/obj/item/stack/medical/suture = 1,
 	/obj/item/stack/rods = 3,
 	/obj/item/stack/sheet/cardboard = 2,
 	/obj/item/stack/sheet/metal = 1,

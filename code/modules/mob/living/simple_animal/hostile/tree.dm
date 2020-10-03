@@ -7,7 +7,6 @@
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
 	gender = NEUTER
-	threat = 1
 	speak_chance = 0
 	turns_per_move = 5
 	response_help_continuous = "brushes"
@@ -44,16 +43,17 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
-/mob/living/simple_animal/hostile/tree/Life()
-	..()
+/mob/living/simple_animal/hostile/tree/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(isopenturf(loc))
 		var/turf/open/T = src.loc
-		if(T.air && T.air.gases[/datum/gas/carbon_dioxide])
-			var/co2 = T.air.gases[/datum/gas/carbon_dioxide]
+		if(T.air)
+			var/co2 = T.air.get_moles(/datum/gas/carbon_dioxide)
 			if(co2 > 0)
 				if(prob(25))
 					var/amt = min(co2, 9)
-					T.air.gases[/datum/gas/carbon_dioxide] -= amt
+					T.air.adjust_moles(/datum/gas/carbon_dioxide, -amt)
 					T.atmos_spawn_air("o2=[amt]")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()

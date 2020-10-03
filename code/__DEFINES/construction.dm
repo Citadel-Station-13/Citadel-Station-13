@@ -67,7 +67,9 @@
 //tablecrafting defines
 #define CAT_NONE	""
 #define CAT_WEAPONRY	"Weaponry"
-#define CAT_WEAPON	"Weapons"
+#define CAT_WEAPON	"Ranged Weapons"
+#define CAT_MELEE	"Melee Weapons"
+#define CAT_OTHER	"Misc"
 #define CAT_AMMO	"Ammunition"
 #define CAT_PARTS	"Weapon Parts"
 #define CAT_ROBOT	"Robots"

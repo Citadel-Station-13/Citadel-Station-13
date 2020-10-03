@@ -62,8 +62,7 @@
 
 	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
+/mob/living/silicon/robot/on_attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(opened && !wiresexposed && cell && !issilicon(user))
 		cell.update_icon()
@@ -86,12 +85,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			Paralyze(160)
-		if(2)
-			Paralyze(60)
-
+	Paralyze(10 + severity/1.2)
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -139,8 +133,8 @@
 /mob/living/silicon/robot/proc/beep_boop_rogue_bot(mob/user)
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-	lawupdate = 0
-	connected_ai = null
+	lawupdate = FALSE
+	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")

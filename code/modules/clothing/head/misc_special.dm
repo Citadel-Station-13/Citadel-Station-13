@@ -50,6 +50,8 @@
 	flags_cover = HEADCOVERSEYES
 	heat = 1000
 
+	beepsky_fashion = /datum/beepsky_fashion/cake
+
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(ishuman(location))
@@ -131,6 +133,7 @@
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
+	beepsky_fashion = /datum/beepsky_fashion/cat
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == SLOT_HEAD)
@@ -238,7 +241,7 @@
 	item_state = "foilhat"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
 	equip_delay_other = 140
-	var/datum/brain_trauma/mild/phobia/paranoia
+	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
 	clothing_flags = IGNORE_HAT_TOSS
 
@@ -255,7 +258,8 @@
 		return
 	if(paranoia)
 		QDEL_NULL(paranoia)
-	paranoia = new("conspiracies")
+	paranoia = new()
+	paranoia.clonable = FALSE
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
 
@@ -286,7 +290,7 @@
 	if(!target.IsUnconscious())
 		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
-/obj/item/clothing/head/foilhat/attack_hand(mob/user)
+/obj/item/clothing/head/foilhat/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!warped && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)

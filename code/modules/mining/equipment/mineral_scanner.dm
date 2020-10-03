@@ -12,13 +12,14 @@
 	slot_flags = ITEM_SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
+	var/range = 7
 
 /obj/item/mining_scanner/attack_self(mob/user)
 	if(!user.client)
 		return
 	if(current_cooldown <= world.time)
 		current_cooldown = world.time + cooldown
-		mineral_scan_pulse(get_turf(user))
+		mineral_scan_pulse(get_turf(user), range)
 
 //Debug item to identify all ore spread quickly
 /obj/item/mining_scanner/admin

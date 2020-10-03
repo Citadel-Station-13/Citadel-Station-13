@@ -24,7 +24,6 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
-	threat = 40
 	health = 2500
 	maxHealth = 2500
 	attack_verb_continuous = "judges"
@@ -385,10 +384,7 @@ Difficulty: Very Hard
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
 
-/obj/machinery/anomalous_crystal/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/anomalous_crystal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
@@ -606,7 +602,6 @@ Difficulty: Very Hard
 	icon_state = "lightgeist"
 	icon_living = "lightgeist"
 	icon_dead = "butterfly_dead"
-	threat = -0.7
 	turns_per_move = 1
 	response_help_continuous = "waves away"
 	response_help_simple = "wave away"
@@ -647,8 +642,8 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()
 	. = ..()
-	verbs -= /mob/living/verb/pulled
-	verbs -= /mob/verb/me_verb
+	remove_verb(src, /mob/living/verb/pulled)
+	remove_verb(src, /mob/verb/me_verb)
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
 
@@ -731,20 +726,20 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/Entered(atom/A)
 	if(isliving(A) && holder_animal)
 		var/mob/living/L = A
-		L.notransform = 1
+		L.mob_transforming = 1
 		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
 		holder_animal.mind.AddSpell(P)
-		holder_animal.verbs -= /mob/living/verb/pulled
+		remove_verb(holder_animal, /mob/living/verb/pulled)
 
 /obj/structure/closet/stasis/dump_contents(override = TRUE, kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
 		L.status_flags &= ~GODMODE
-		L.notransform = 0
+		L.mob_transforming = 0
 		if(holder_animal)
 			holder_animal.mind.transfer_to(L)
 			L.mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)

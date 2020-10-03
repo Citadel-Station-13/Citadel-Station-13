@@ -56,6 +56,8 @@
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/log_pda	// log pda messages
 
 /datum/config_entry/flag/log_telecomms	// log telecomms messages
@@ -370,6 +372,10 @@
 	config_entry_value = null
 	min_val = 500
 
+/datum/config_entry/number/client_warn_version
+	config_entry_value = null
+	min_val = 500
+
 /datum/config_entry/string/client_warn_message
 	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
@@ -381,6 +387,10 @@
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+/datum/config_entry/number/client_error_build
+	config_entry_value = null
+	min_val = 0
 
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null
@@ -468,3 +478,5 @@
 
 /datum/config_entry/flag/minimaps_enabled
 	config_entry_value = TRUE
+
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API

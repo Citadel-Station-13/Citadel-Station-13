@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	name = "Dwarf"
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_DWARF,TRAIT_SNOB)
 	limbs_id = "human"
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	mutant_organs = list(/obj/item/organ/dwarfgland) //Dwarven alcohol gland, literal gland warrior
 	mutantliver = /obj/item/organ/liver/dwarf //Dwarven super liver (Otherwise they r doomed)
 	species_language_holder = /datum/language_holder/dwarf
+	species_type = "human" //a kind of human
 
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.
@@ -89,11 +90,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
 	var/last_alcohol_spam
-
-/obj/item/organ/dwarfgland/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/consumable/ethanol, stored_alcohol/10)
-	return S
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/ethanol = 10)
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
 	. = ..()

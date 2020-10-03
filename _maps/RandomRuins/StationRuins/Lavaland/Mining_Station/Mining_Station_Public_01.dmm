@@ -399,7 +399,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "hf" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "hm" = (
@@ -1565,7 +1565,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "zy" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},

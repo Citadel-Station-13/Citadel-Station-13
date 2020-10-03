@@ -4,24 +4,37 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR,HAS_FLESH)
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutant_heart = /obj/item/organ/heart/slime
-	mutant_bodyparts = list("mcolor" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None")
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	gib_types = list(/obj/effect/gibspawner/slime, /obj/effect/gibspawner/slime/bodypartless)
 	exotic_blood = /datum/reagent/blood/jellyblood
 	exotic_bloodtype = "GEL"
+	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
 	liked_food = TOXIC | MEAT
-	toxic_food = null
+	disliked_food = null
+	toxic_food = ANTITOXIC
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 	species_language_holder = /datum/language_holder/jelly
+	mutant_brain = /obj/item/organ/brain/jelly
+
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
+	species_type = "jelly"
+
+/obj/item/organ/brain/jelly
+	name = "slime nucleus"
+	desc = "A slimey membranous mass from a slime person"
+	icon_state = "brain-slime"
+
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -40,6 +53,11 @@
 		slime_change = new	//CIT CHANGE
 		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
+
+/datum/species/jelly/handle_body(mob/living/carbon/human/H)
+	. = ..()
+	//update blood color to body color
+	exotic_blood_color = "#" + H.dna.features["mcolor"]
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
@@ -114,33 +132,6 @@
 		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
 	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
-
-/datum/species/jelly/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/jelly/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/jelly/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_tail"] || mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/jelly/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["mam_waggingtail"]
-
-/datum/species/jelly/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_tail"])
-		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
-		mutant_bodyparts -= "mam_tail"
-	H.update_body()
-
-/datum/species/jelly/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["mam_waggingtail"])
-		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
-		mutant_bodyparts -= "mam_waggingtail"
-	H.update_body()
 
 
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
@@ -239,7 +230,7 @@
 		"<span class='notice'>You focus intently on moving your body while \
 		standing perfectly still...</span>")
 
-	H.notransform = TRUE
+	H.mob_transforming = TRUE
 
 	if(do_after(owner, delay=60, needhand=FALSE, target=owner, progress=TRUE))
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -249,7 +240,7 @@
 	else
 		to_chat(H, "<span class='warning'>...but fail to stand perfectly still!</span>")
 
-	H.notransform = FALSE
+	H.mob_transforming = FALSE
 
 /datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/H = owner
@@ -258,6 +249,8 @@
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
+	spare.undershirt = "Nude"
+	spare.socks = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
 	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
@@ -267,7 +260,7 @@
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
 	H.blood_volume *= 0.45
-	H.notransform = 0
+	H.mob_transforming = 0
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
 	origin_datum.bodies |= spare
@@ -281,7 +274,17 @@
 		\"steps out\" of [H.p_them()].</span>",
 		"<span class='notice'>...and after a moment of disorentation, \
 		you're besides yourself!</span>")
-
+	if(H != spare && isslimeperson(spare) && isslimeperson(H))
+		// transfer the swap-body ui if it's open
+		var/datum/action/innate/swap_body/this_swap = origin_datum.swap_body
+		var/datum/action/innate/swap_body/other_swap = spare_datum.swap_body
+		var/datum/tgui/ui = SStgui.get_open_ui(H, this_swap, "main") || SStgui.get_open_ui(spare, this_swap, "main")
+		if(ui)
+			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
+			ui.user = spare
+			ui.src_object = other_swap
+			SStgui.on_open(ui) // stick it back on the lists
+			ui.process(force = TRUE)
 
 /datum/action/innate/swap_body
 	name = "Swap Body"
@@ -297,11 +300,16 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/datum/action/innate/swap_body/ui_host(mob/user)
+	return owner
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/action/innate/swap_body/ui_state(mob/user)
+	return GLOB.not_incapacitated_state
+
+/datum/action/innate/swap_body/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "slime_swap_body", name, 400, 400, master_ui, state)
+		ui = new(user, src, "SlimeBodySwapper", name)
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)
@@ -329,6 +337,8 @@
 				stat = "Conscious"
 			if(UNCONSCIOUS)
 				stat = "Unconscious"
+			if(SOFT_CRIT)
+				stat = "Barely Conscious"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -371,10 +381,10 @@
 		return
 	switch(action)
 		if("swap")
-			var/mob/living/carbon/human/selected = locate(params["ref"])
+			var/datum/species/jelly/slime/SS = H.dna.species
+			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
-			SStgui.close_uis(src)
 			swap_to_dupe(H.mind, selected)
 
 /datum/action/innate/swap_body/proc/can_swap(mob/living/carbon/human/dupe)
@@ -408,6 +418,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
+	var/mob/living/carbon/human/old = M.current
 	if(M.current.stat == CONSCIOUS)
 		M.current.visible_message("<span class='notice'>[M.current] \
 			stops moving and starts staring vacantly into space.</span>",
@@ -419,7 +430,20 @@
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
-
+	if(old != M.current && dupe == M.current && isslimeperson(dupe))
+		var/datum/species/jelly/slime/other_spec = dupe.dna.species
+		var/datum/action/innate/swap_body/other_swap = other_spec.swap_body
+		// theoretically the transfer_to proc is supposed to transfer the ui from the mob.
+		// so I try to get the UI from one of the two mobs and schlump it over to the new action button
+		var/datum/tgui/ui = SStgui.get_open_ui(old, src, "main") || SStgui.get_open_ui(dupe, src, "main")
+		if(ui)
+			// transfer the UI over. This code is slightly hacky but it fixes the problem
+			// I'd use SStgui.on_transfer but that doesn't let you transfer the src_object as well s
+			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
+			ui.user = dupe
+			ui.src_object = other_swap
+			SStgui.on_open(ui) // stick it back on the lists
+			ui.process(force = TRUE)
 
 ////////////////////////////////////////////////////////Round Start Slimes///////////////////////////////////////////////////////////////////
 
@@ -430,13 +454,15 @@
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	inherent_traits = list(TRAIT_TOXINLOVER)
-	mutant_bodyparts = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None")
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 160 //a notch brighter so it blends better.
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
+
+	allowed_limb_ids = list("slime","stargazer","lum")
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
@@ -459,8 +485,19 @@
 
 /datum/action/innate/slime_change/proc/change_form()
 	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
-	if(select_alteration == "Hair Style")
+	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
+
+	if(select_alteration == "Body Color")
+		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
+		if(new_color)
+			var/temp_hsv = RGBtoHSV(new_color)
+			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
+				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
+				H.update_body()
+				H.update_hair()
+			else
+				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
+	else if(select_alteration == "Hair Style")
 		if(H.gender == MALE)
 			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
 			if(new_style)
@@ -497,7 +534,7 @@
 	else if (select_alteration == "Ears")
 		var/list/snowflake_ears_list = list("Normal" = null)
 		for(var/path in GLOB.mam_ears_list)
-			var/datum/sprite_accessory/mam_ears/instance = GLOB.mam_ears_list[path]
+			var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
@@ -511,7 +548,7 @@
 	else if (select_alteration == "Snout")
 		var/list/snowflake_snouts_list = list("Normal" = null)
 		for(var/path in GLOB.mam_snouts_list)
-			var/datum/sprite_accessory/mam_snouts/instance = GLOB.mam_snouts_list[path]
+			var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.mam_snouts_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
@@ -523,7 +560,7 @@
 		H.update_body()
 
 	else if (select_alteration == "Markings")
-		var/list/snowflake_markings_list = list()
+		var/list/snowflake_markings_list = list("None")
 		for(var/path in GLOB.mam_body_markings_list)
 			var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
 			if(istype(instance, /datum/sprite_accessory))
@@ -534,8 +571,6 @@
 		new_mam_body_markings = input(H, "Choose your character's body markings:", "Marking Alteration") as null|anything in snowflake_markings_list
 		if(new_mam_body_markings)
 			H.dna.features["mam_body_markings"] = new_mam_body_markings
-			if(new_mam_body_markings == "None")
-				H.dna.features["mam_body_markings"] = "Plain"
 		for(var/X in H.bodyparts) //propagates the markings changes
 			var/obj/item/bodypart/BP = X
 			BP.update_limb(FALSE, H)
@@ -544,7 +579,7 @@
 	else if (select_alteration == "Tail")
 		var/list/snowflake_tails_list = list("Normal" = null)
 		for(var/path in GLOB.mam_tails_list)
-			var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
+			var/datum/sprite_accessory/tails/mam_tails/instance = GLOB.mam_tails_list[path]
 			if(istype(instance, /datum/sprite_accessory))
 				var/datum/sprite_accessory/S = instance
 				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))

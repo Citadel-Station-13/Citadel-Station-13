@@ -13,6 +13,7 @@
 	var/ignores_timeout = FALSE
 	var/response_timer_id = null
 	var/approval_time = 600
+	var/allow_unicode = FALSE
 
 	var/static/regex/standard_station_regex
 
@@ -47,6 +48,9 @@
 		return
 
 	if(!new_name)
+		return
+	if(!allow_unicode && (length(new_name) != length_char(new_name)))
+		to_chat(user, "Unicode is not allowed. Adminhelp if you want to use it so badly.")
 		return
 	log_game("[key_name(user)] has proposed to name the station as \
 		[new_name]")

@@ -1,3 +1,34 @@
+/datum/chemical_reaction/metalgen
+	name = "metalgen"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mutagen = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/metalgen_imprint
+	name = "metalgen imprint"
+	id = /datum/reagent/metalgen
+	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/holywater
+	name = "Holy Water"
+	id = /datum/reagent/water/holywater
+	results = list(/datum/reagent/water/holywater = 1)
+	required_reagents = list(/datum/reagent/water/hollowwater = 1)
+	required_catalysts = list(/datum/reagent/water/holywater = 1)
+
+/datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.material && R.volume >= 40)
+			MM.data["material"] = R.material
+			holder.remove_reagent(R.type, 40)
+
+/datum/chemical_reaction/gravitum
+	name = "gravitum"
+	id = /datum/reagent/gravitum
+	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
+	results = list(/datum/reagent/gravitum = 10)
 
 /datum/chemical_reaction/sterilizine
 	name = "Sterilizine"
@@ -87,7 +118,7 @@
 		new /obj/item/stack/sheet/mineral/uranium(location)
 
 /datum/chemical_reaction/bluespacecrystalifaction
-	name = "Crystal Bluespace"
+	name = "Crystallized Bluespace"
 	id = "crystalbluespace"
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/bluespace = 20, /datum/reagent/iron = 1)
 	mob_react = FALSE
@@ -684,10 +715,10 @@
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/cat
-	name = "felined mutation toxic"
+	name = "felinid mutation toxic"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1) // Maybe aphro+ if it becomes a shitty meme
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/mutationtoxin = 1)
 	required_temp = 450
 
 /datum/chemical_reaction/moff
@@ -703,6 +734,14 @@
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 600
+
+/datum/chemical_reaction/slime_extractification
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 30, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 5)
+	mix_message = "The mixture condenses into a ball."
+
+/datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/slime_extract/grey(location)
 
 // Liquid Carpets
 
@@ -825,3 +864,8 @@
 	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/iron = 1, /datum/reagent/stable_plasma = 1)
 	mix_message = "The mixture congeals and gives off a faint copper scent."
 	required_temp = 350
+
+/datum/chemical_reaction/cellulose_carbonization
+	results = list(/datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_temp = 512

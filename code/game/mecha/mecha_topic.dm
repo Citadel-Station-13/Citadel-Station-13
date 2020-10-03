@@ -75,7 +75,7 @@
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
+	var/tank_temperature = internal_tank ? int_tank_air.return_temperature() : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
 	. = {"[report_internal_damage()]
 						[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
@@ -256,7 +256,7 @@
 			output_access_dialog(id_card, usr)
 
 		if(href_list["del_req_access"] && add_req_access)
-			operation_req_access -= text2num(href_list["add_req_access"])
+			operation_req_access -= text2num(href_list["del_req_access"])
 			output_access_dialog(id_card, usr)
 
 		if(href_list["finish_req_access"])

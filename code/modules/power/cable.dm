@@ -171,8 +171,8 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/twohanded/rcl))
-		var/obj/item/twohanded/rcl/R = W
+	else if(istype(W, /obj/item/rcl))
+		var/obj/item/rcl/R = W
 		if(R.loaded)
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
@@ -488,7 +488,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = 75
+	custom_price = PRICE_CHEAP_AS_FREE
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -549,11 +549,16 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
+		//only heal to 25 if limb is damaged to or past 25 burn, otherwise heal normally
+		var/difference = affecting.burn_dam - 25
+		var/heal_amount = 15
+		if(difference >= 0)
+			heal_amount = difference
 		if(user == H)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
-		if(item_heal_robotic(H, user, 0, 15))
+		if(item_heal_robotic(H, user, 0, heal_amount))
 			use(1)
 		return
 	else
@@ -564,10 +569,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 
-/obj/item/stack/cable_coil/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/stack/cable_coil/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/obj/item/stack/cable_coil/new_cable = ..()
 	if(istype(new_cable))
 		new_cable.color = color

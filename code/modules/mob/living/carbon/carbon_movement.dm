@@ -20,7 +20,7 @@
 	if(istype(J) && (movement_dir || J.stabilizers) && J.allow_thrust(0.01, src))
 		return 1
 
-/mob/living/carbon/Move(NewLoc, direct)
+/mob/living/carbon/Moved()
 	. = ..()
 	if(. && (movement_type & FLOATING)) //floating is easy
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))

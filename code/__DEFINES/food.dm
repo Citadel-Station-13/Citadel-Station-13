@@ -12,6 +12,7 @@
 #define TOXIC 		(1<<11)
 #define PINEAPPLE	(1<<12)
 #define BREAKFAST	(1<<13)
+#define ANTITOXIC 	(1<<14)
 
 #define DRINK_NICE	1
 #define DRINK_GOOD	2
@@ -19,3 +20,7 @@
 #define DRINK_FANTASTIC	4
 #define FOOD_AMAZING 5
 #define RACE_DRINK 6
+
+#define FOOD_IN_CONTAINER (1<<0)
+
+#define STOP_SERVING_BREAKFAST (15 MINUTES)

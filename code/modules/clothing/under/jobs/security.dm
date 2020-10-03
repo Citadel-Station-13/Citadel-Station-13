@@ -19,7 +19,14 @@
 	desc = "A tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rsecurity"
 	item_state = "r_suit"
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30, "wound" = 10)
+
+/obj/item/clothing/under/rank/security/officer/util
+	name = "security utility uniform"
+	desc = "a grey security uniform"
+	icon_state = "utilsec"
+	item_state = "utilsec"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
@@ -51,6 +58,28 @@
 	item_state = "blueshift"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp
+	name = "corporate security uniform"
+	desc = "How positively stuffy."
+	icon_state = "seccorp"
+	item_state = "seccorp"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/wardencorp
+	name = "corporate warden uniform"
+	icon_state = "wardencorp"
+	item_state = "wardencorp"
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/hoscorp
+	name = "corporate head of security's uniform"
+	icon_state = "hoscorp"
+	item_state = "hoscorp"
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/detcorp
+	name = "corporate detective's uniform"
+	icon_state = "detcorp"
+	item_state = "detcorp"
+
 /obj/item/clothing/under/rank/security/officer/spacepol
 	name = "police uniform"
 	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
@@ -67,7 +96,7 @@
 	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
 	icon_state = "rwarden"
 	item_state = "r_suit"
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30, "wound" = 10)
 
 /obj/item/clothing/under/rank/security/warden/grey
 	name = "grey security suit"
@@ -101,7 +130,17 @@
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det"
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30, "wound" = 10)
+
+/obj/item/clothing/under/rank/security/detective/brown
+	name = "dark boiled suit"
+	icon_state = "detectivebrown"
+	item_state = "detectivebrown"
+
+/obj/item/clothing/under/rank/security/detective/brown/brown2
+	name = "padded suit"
+	icon_state = "detectivebrown2"
+	item_state = "detectivebrown2"
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"
@@ -138,7 +177,7 @@
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	item_state = "r_suit"
-	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50, "wound" = 10)
 	strip_delay = 60
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
@@ -192,3 +231,14 @@
 	icon_state = "hos_parade_fem"
 	item_state = "r_suit"
 	fitted = FEMALE_UNIFORM_TOP
+
+/*
+ *Spacepol
+ */
+
+/obj/item/clothing/under/rank/security/spacepol
+	name = "police uniform"
+	desc = "Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol."
+	icon_state = "spacepol"
+	item_state = "spacepol"
+	can_adjust = FALSE

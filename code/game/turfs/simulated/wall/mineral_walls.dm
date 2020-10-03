@@ -72,7 +72,7 @@
 			return
 	return
 
-/turf/closed/wall/mineral/uranium/attack_hand(mob/user)
+/turf/closed/wall/mineral/uranium/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	radiate()
 	. = ..()
 
@@ -90,7 +90,7 @@
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	thermal_conductivity = 0.04
+	thermal_conductivity = 0.004
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/W, mob/user, params)
@@ -136,7 +136,7 @@
 /turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
 	if(W.sharpness && W.force)
 		var/duration = (48/W.force) * 2 //In seconds, for now.
-		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
+		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
 			duration /= 4 //Much better with hatchets and axes.
 		var/src_type = type
 		if(do_after(user, duration*10, target=src) && type == src_type) //Into deciseconds.
@@ -191,7 +191,8 @@
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
 	explosion_block = 3
-	flags_1 = CAN_BE_DIRTY_1 | CHECK_RICOCHET_1
+	flags_1 = CAN_BE_DIRTY_1 | DEFAULT_RICOCHET_1
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
