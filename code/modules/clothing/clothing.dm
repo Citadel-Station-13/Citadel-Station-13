@@ -50,11 +50,11 @@
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects
 	/*
-		Sprites used when the clothing item is refit. This is done by setting icon_override.
-		For best results, if this is set then sprite_sheets should be null and vice versa, but that is by no means necessary.
-		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits),
-		while sprite_sheets should be used for "flexible" clothing items that do not need to be refitted (e.g. aliens wearing jumpsuits).
-	*/
+	 * 	Sprites used when the clothing item is refit. This is done by setting icon_override.
+	 * 	For best results, if this is set then sprite_sheets should be null and vice versa, but that is by no means necessary.
+	 * 	Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits),
+	 * 	while sprite_sheets should be used for "flexible" clothing items that do not need to be refitted (e.g. aliens wearing jumpsuits).
+	 */
 	var/list/sprite_sheets_refit = null
 
 	// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
