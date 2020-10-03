@@ -490,7 +490,7 @@ BLIND     // can't see anything
 		to_chat(L, "<span class='warning'>The damaged threads on your [src.name] chafe!</span>")
 
 
-/obj/item/clothing/proc/refit_for_species(var/target_species)
+/obj/item/clothing/proc/refit_for_species(target_species)
 	if(!species_restricted)
 		return	// This item doesn't use the species_restricted system
 
