@@ -511,7 +511,7 @@ BLIND     // can't see anything
 	else
 		icon = initial(icon)
 
-/obj/item/clothing/head/helmet/refit_for_species(var/target_species)
+/obj/item/clothing/head/helmet/refit_for_species(target_species)
 	if(!species_restricted)
 		return	// This item doesn't use the species_restricted system
 
