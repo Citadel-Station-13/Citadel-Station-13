@@ -85,9 +85,13 @@
 	. += "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/gun/ballistic/revolver/syndicate
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "revolver",
 						"Silver" = "russianrevolver",
-						"Robust" = "revolvercit")
+						"Robust" = "revolvercit",
+						"Bulky" = "revolverhakita",
+						"Soulless" = "revolveroldflip",
+						"Soul" = "revolverold")
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
