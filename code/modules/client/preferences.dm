@@ -2639,9 +2639,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//limb stuff, only done when initially spawning in
 	if(initial_spawn)
-		//delete any existing prosthetic limbs to make sure no remnant prosthetics are left over
+		//delete any existing prosthetic limbs to make sure no remnant prosthetics are left over - But DO NOT delete those that are species-related
 		for(var/obj/item/bodypart/part in character.bodyparts)
-			if(part.status == BODYPART_ROBOTIC)
+			if(part.status == BODYPART_ROBOTIC && !part.render_like_organic)
 				qdel(part)
 		character.regenerate_limbs() //regenerate limbs so now you only have normal limbs
 		for(var/modified_limb in modified_limbs)
