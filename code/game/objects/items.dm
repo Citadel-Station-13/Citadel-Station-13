@@ -170,13 +170,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	//** These specify item/icon overrides for _species_
 
-	/* Species-specific sprites, concept stolen from Paradise//vg/.
-	ex:
-	sprite_sheets = list(
-		SPECIES_FELINID = 'icons/cat/are/bad'
-		)
-	If index term exists and icon_override is not set, this sprite sheet will be used.
-	*/
+	/* 
+	 * Species-specific sprites, concept stolen from Paradise//vg/.
+	 * ex:
+	 * sprite_sheets = list(
+	 * 	SPECIES_FELINID = 'icons/cat/are/bad'
+	 * 	)
+	 * If index term exists and icon_override is not set, this sprite sheet will be used.
+	 */
 	var/list/sprite_sheets = list()
 
 	// Species-specific sprite sheets for inventory sprites
