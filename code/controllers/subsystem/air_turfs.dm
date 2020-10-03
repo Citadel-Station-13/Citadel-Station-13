@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(air_turfs)
 	var/cost_groups = 0
 	var/cost_equalize = 0
 	var/cost_rescan = 0
-	var/rescan_enabled = TRUE
+	var/rescan_enabled = FALSE
 	var/currentpart = SSAIR_EQUALIZE
 
 /datum/controller/subsystem/air_turfs/proc/extools_update_ssair_turfs()
@@ -79,6 +79,7 @@ SUBSYSTEM_DEF(air_turfs)
 			timer = TICK_USAGE_REAL
 			SSair.rescan_active_turfs(resumed)
 			cost_rescan = MC_AVERAGE(cost_rescan, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			rescan_enabled = FALSE
 			resumed = 0
 		currentpart = SSair.monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
 	return
