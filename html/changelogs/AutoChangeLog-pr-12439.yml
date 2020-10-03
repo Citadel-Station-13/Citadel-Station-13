@@ -1,6 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "ipcs and synthlizards are now treated as actual robots, with robotic limbs, an extra organ, and better emp acts"
-  - rscadd: "surgeries for healing robotic limbs, and brain surgery for robotic heads"
-  - bugfix: "androids limbs now show up as intended"
