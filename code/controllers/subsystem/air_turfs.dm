@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(air_turfs)
 
 /datum/controller/subsystem/air_turfs/Initialize(timeofday)
 	extools_update_ssair_turfs()
+	. = ..()
 
 /datum/controller/subsystem/air_turfs/stat_entry(msg)
 	msg += "C:{"
