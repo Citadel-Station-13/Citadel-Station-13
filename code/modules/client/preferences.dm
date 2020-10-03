@@ -757,6 +757,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>HUD Button Flashes:</b> <a href='?_src_=prefs;preference=hud_toggle_flash'>[hud_toggle_flash ? "Enabled" : "Disabled"]</a><br>"
 			dat += "<b>HUD Button Flash Color:</b> <span style='border: 1px solid #161616; background-color: [hud_toggle_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hud_toggle_color;task=input'>Change</a><br>"
 
+/* CITADEL EDIT - We're using top menu instead
 			button_name = pixel_size
 			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
 
@@ -768,6 +769,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(SCALING_METHOD_BLUR)
 					button_name = "Bilinear"
 			dat += "<b>Scaling Method:</b> <a href='?_src_=prefs;preference=scaling_method'>[button_name]</a><br>"
+*/
 
 			if (CONFIG_GET(flag/maprotation) && CONFIG_GET(flag/tgstyle_maprotation))
 				var/p_map = preferred_map

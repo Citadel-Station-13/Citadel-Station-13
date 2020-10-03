@@ -23,13 +23,16 @@
 	resetFormat()
 
 /datum/viewData/proc/assertFormat()//T-Pose
-	winset(chief, "mapwindow.map", "zoom=0")
+	// winset(chief, "mapwindow.map", "zoom=0")
+	// Citadel Edit - We're using icon dropdown instead
 
 /datum/viewData/proc/resetFormat()//Cuck
-	winset(chief, "mapwindow.map", "zoom=[chief.prefs.pixel_size]")
+	// winset(chief, "mapwindow.map", "zoom=[chief.prefs.pixel_size]")
+	// Citadel Edit - We're using icon dropdown instead
 
 /datum/viewData/proc/setZoomMode()
-	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.scaling_method]")
+	// winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.scaling_method]")
+	// Citadel Edit - We're using icon dropdown instead
 
 /datum/viewData/proc/isZooming()
 	return (width || height)
