@@ -1,5 +1,5 @@
 /**
-  * Called by SSmobs at (hopefully) an interval of 1 second.
+  * Called by SSmobs at an interval of 2 seconds.
   * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
   */
 /mob/living/proc/Life(seconds, times_fired)

@@ -3061,7 +3061,6 @@
 	pixel_x = 26
 	},
 /obj/machinery/computer/card/minor/qm{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -3232,9 +3231,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/turnstile{
+	dir = 8;
 	name = "Genpop Exit Turnstile";
-	req_access_txt = "70";
-	dir = 8
+	req_access_txt = "70"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -4288,7 +4287,6 @@
 	pixel_x = 30
 	},
 /obj/machinery/computer/security/hos{
-	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -4821,7 +4819,6 @@
 	dir = 4
 	},
 /obj/machinery/computer/card/minor/hos{
-	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -6388,9 +6385,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/turnstile{
+	dir = 4;
 	name = "Genpop Entrance Turnstile";
-	req_access_txt = "69";
-	dir = 4
+	req_access_txt = "69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -8523,13 +8520,10 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "any" = (
-/obj/structure/table/wood,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/clipboard,
-/obj/item/folder/red,
-/obj/item/hand_labeler,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "anz" = (
@@ -9097,7 +9091,6 @@
 	},
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
-	icon_state = "telescreen";
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
@@ -12534,20 +12527,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "ats" = (
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/suit/jacket{
-	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "detective";
-	name = "trenchcoat"
-	},
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/head/fedora{
-	icon_state = "detective"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -12687,7 +12666,6 @@
 	dir = 8
 	},
 /obj/machinery/computer/med_data/laptop{
-	icon_state = "laptop";
 	dir = 4
 	},
 /obj/machinery/requests_console{
@@ -13264,7 +13242,6 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/secure_data/laptop{
 	dir = 1;
-	icon_state = "laptop";
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -16189,9 +16166,9 @@
 	name = "Brig Blast door"
 	},
 /obj/machinery/turnstile{
+	dir = 8;
 	name = "Genpop Exit Turnstile";
-	req_access_txt = "70";
-	dir = 8
+	req_access_txt = "70"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -18134,9 +18111,8 @@
 "aCt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/turnstile{
-	name = "Genpop Exit Turnstile";
-	icon_state = "turnstile_map";
 	dir = 1;
+	name = "Genpop Exit Turnstile";
 	req_access_txt = "70"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -26149,7 +26125,6 @@
 	},
 /obj/machinery/computer/security/telescreen/cmo{
 	dir = 1;
-	icon_state = "telescreen";
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -26762,7 +26737,6 @@
 "aPC" = (
 /obj/machinery/computer/security/telescreen/entertainment,
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -26806,7 +26780,6 @@
 /area/medical/medbay/zone3)
 "aPE" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -27105,7 +27078,6 @@
 	dir = 1
 	},
 /obj/machinery/computer/scan_consolenew{
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -27733,7 +27705,6 @@
 /area/crew_quarters/heads/cmo)
 "aRp" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -27806,7 +27777,6 @@
 /area/science/research)
 "aRw" = (
 /obj/structure/bodycontainer/morgue{
-	icon_state = "morgue1";
 	dir = 2
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -34455,7 +34425,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar_control{
-	dir = 2;
 	id = "forestarboard";
 	name = "Starboard Bow Solar Control"
 	},
@@ -35051,7 +35020,6 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/solars/starboard/fore";
-	dir = 2;
 	name = "Starboard Bow Solar APC";
 	pixel_y = -26
 	},
@@ -35995,7 +35963,6 @@
 	department = "Research Director's Desk";
 	departmentType = 5;
 	name = "Research Director RC";
-	pixel_x = 0;
 	pixel_y = -32;
 	receive_ore_updates = 1
 	},
@@ -36304,7 +36271,6 @@
 	},
 /obj/machinery/computer/security/telescreen/rd{
 	dir = 1;
-	icon_state = "telescreen";
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel{
@@ -36546,7 +36512,6 @@
 /obj/machinery/shower{
 	desc = "From what you understand it was put in rather recently, but the design looks right out of the 2510's. Weird.";
 	dir = 1;
-	icon_state = "shower";
 	name = "Emergency Shower"
 	},
 /obj/effect/turf_decal/stripes/line{

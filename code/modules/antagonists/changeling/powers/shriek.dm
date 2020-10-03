@@ -48,6 +48,6 @@
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1
 		L.break_light_tube()
-	empulse(get_turf(user), 2, 5, 1)
+	empulse_using_range(get_turf(user), 8, TRUE)
 	playsound(get_turf(user), 'sound/effects/lingempscreech.ogg', 75, TRUE, 5, soundenvwet = 0)
 	return TRUE

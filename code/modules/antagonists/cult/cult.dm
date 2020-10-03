@@ -142,8 +142,10 @@
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-		H.eye_color = eyes?.eye_color || initial(H.eye_color)
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.left_eye_color = eyes?.left_eye_color || initial(H.left_eye_color)
+		H.right_eye_color = eyes?.right_eye_color || initial(H.right_eye_color)
+		H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+		H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
 		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
 		H.cut_overlays()
@@ -236,8 +238,10 @@
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
-		H.eye_color = initial(H.eye_color)
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.left_eye_color = initial(H.left_eye_color)
+		H.right_eye_color = initial(H.right_eye_color)
+		H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+		H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
 		REMOVE_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.cut_overlays()
 		H.regenerate_icons()
@@ -312,8 +316,10 @@
 /datum/team/cult/proc/rise(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
-		H.eye_color = "f00"
-		H.dna?.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.left_eye_color = "f00"
+		H.right_eye_color = "f00"
+		H.dna?.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+		H.dna?.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
 		ADD_TRAIT(H, TRAIT_CULT_EYES, "valid_cultist")
 		H.update_body()
 

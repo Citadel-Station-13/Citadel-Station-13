@@ -1449,7 +1449,7 @@
 	environ = 0
 	update_icon()
 	update()
-	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
+	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), severity*8)
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
