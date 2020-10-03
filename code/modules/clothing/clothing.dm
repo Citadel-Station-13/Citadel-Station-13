@@ -45,7 +45,7 @@
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
 	//basically a restriction list.
-	var/list/species_restricted = null
+	var/list/species_restricted
 	//Basically syntax is species_restricted = list("Species Name","Species Name")
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects
@@ -55,7 +55,7 @@
 	 * 	Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits),
 	 * 	while sprite_sheets should be used for "flexible" clothing items that do not need to be refitted (e.g. aliens wearing jumpsuits).
 	 */
-	var/list/sprite_sheets_refit = null
+	var/list/sprite_sheets_refit
 
 	// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
