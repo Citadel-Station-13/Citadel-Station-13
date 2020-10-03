@@ -133,7 +133,7 @@
 /obj/structure/toilet/secret
 	var/secret_type = null
 
-/obj/structure/toilet/secret/PopulateContents()
+/obj/structure/toilet/secret/Initialize()
 	. = ..()
 	if (secret_type)
 		new secret_type(src)
