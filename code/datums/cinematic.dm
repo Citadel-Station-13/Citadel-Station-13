@@ -63,14 +63,6 @@
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAY_CINEMATIC, src) & COMPONENT_GLOB_BLOCK_CINEMATIC)
 		return
 
-	//Check if you can actually play it (stop mob cinematics for global ones) and create screen objects
-	for(var/A in GLOB.cinematics)
-		var/datum/cinematic/C = A
-		if(C == src)
-			continue
-		if(C.is_global || !is_global)
-			return //Can't play two global or local cinematics at the same time
-
 	//We are now playing this cinematic
 
 	//Handle what happens when a different cinematic tries to play over us
