@@ -111,7 +111,7 @@
 	include_subtypes = FALSE
 
 /datum/export/large/am_control_unit
-	cost = 4000
+	cost = 2000
 	unit_name = "antimatter control unit"
 	export_types = list(/obj/machinery/power/am_control_unit)
 

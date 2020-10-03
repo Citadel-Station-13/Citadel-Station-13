@@ -1,5 +1,3 @@
-
-
 /*
  * A large number of misc global procs.
  */
@@ -8,10 +6,8 @@
 /proc/invertHTML(HTMLstring)
 	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
-		return
 	else if(length(HTMLstring) != 7)
 		CRASH("Given non-HTML argument!")
-		return
 	else if(length_char(HTMLstring) != 7)
 		CRASH("Given non-hex symbols in argument!")
 	var/textr = copytext(HTMLstring, 2, 4)
@@ -19,30 +15,8 @@
 	var/textb = copytext(HTMLstring, 6, 8)
 	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
-/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
-	if(!start || !end)
-		return 0
-	var/dy
-	var/dx
-	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
-	dx=(32*end.x+end.pixel_x)-(32*start.x+start.pixel_x)
-	if(!dy)
-		return (dx>=0)?90:270
-	.=arctan(dx/dy)
-	if(dy<0)
-		.+=180
-	else if(dx<0)
-		.+=360
-
-/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
-	if(!y)
-		return (x>=0)?90:270
-	.=arctan(x/y)
-	if(y<0)
-		.+=180
-	else if(x<0)
-		.+=360
-
+//Better performant than an artisanal proc and more reliable than Turn(). From TGMC.
+#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -393,6 +367,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 			break
 	return loc
 
+//Returns a list of all locations the target is within.
+/proc/get_nested_locs(atom/movable/M, include_turf = FALSE)
+	. = list()
+	var/atom/A = M.loc
+	while(A && !isturf(A))
+		. += A
+		A = A.loc
+	if(A && include_turf) //At this point, only the turf is left.
+		. += A
+
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(atom/A, direction)
@@ -436,6 +420,29 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return locate(x,y,A.z)
 
+/**
+  * Get ranged target turf, but with direct targets as opposed to directions
+  *
+  * Starts at atom A and gets the exact angle between A and target
+  * Moves from A with that angle, Range amount of times, until it stops, bound to map size
+  * Arguments:
+  * * A - Initial Firer / Position
+  * * target - Target to aim towards
+  * * range - Distance of returned target turf from A
+  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
+  */
+/proc/get_ranged_target_turf_direct(atom/A, atom/target, range, offset)
+	var/angle = arctan(target.x - A.x, target.y - A.y)
+	if(offset)
+		angle += offset
+	var/turf/T = get_turf(A)
+	for(var/i in 1 to range)
+		var/turf/check = locate(A.x + cos(angle) * i, A.y + sin(angle) * i, A.z)
+		if(!check)
+			break
+		T = check
+
+	return T
 
 // returns turf relative to A offset in dx and dy tiles
 // bound to map limits
@@ -779,8 +786,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
 	var/list/actual_view = getviewsize(C ? C.view : world.view)
-	tX = CLAMP(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
-	tY = CLAMP(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
+	tX = clamp(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
+	tY = clamp(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin, client/C)
@@ -793,8 +800,8 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	tX = text2num(tX[2])
 	tZ = origin.z
 	var/list/actual_view = getviewsize(C ? C.view : world.view)
-	tX = CLAMP(origin.x + round(actual_view[1] / 2) - tX, 1, world.maxx)
-	tY = CLAMP(origin.y + round(actual_view[2] / 2) - tY, 1, world.maxy)
+	tX = clamp(origin.x + round(actual_view[1] / 2) - tX, 1, world.maxx)
+	tY = clamp(origin.y + round(actual_view[2] / 2) - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(datum/D)
@@ -1026,6 +1033,27 @@ B --><-- A
 
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
+
+/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
+	for (var/i in 1 to 5)
+		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
+		var/turf/target
+		while (L.len && !target)
+			var/I = rand(1, L.len)
+			var/turf/T = L[I]
+			var/area/X = get_area(T)
+			if(!T.density && X.valid_territory)
+				var/clear = TRUE
+				for(var/obj/O in T)
+					if(O.density)
+						clear = FALSE
+						break
+				if(clear)
+					target = T
+			if (!target)
+				L.Cut(I,I+1)
+		if (target)
+			return target
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1550,8 +1578,13 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //empty string - use TgsTargetBroadcast with admin_only = FALSE
 //other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
 /proc/send2chat(message, config_setting)
-	if(config_setting == null || !world.TgsAvailable())
+	if(config_setting == null)
 		return
+
+	UNTIL(GLOB.tgs_initialized)
+	if(!world.TgsAvailable())
+		return
+
 	var/datum/tgs_version/version = world.TgsVersion()
 	if(config_setting == "" || version.suite == 3)
 		world.TgsTargetedChatBroadcast(message, FALSE)
@@ -1565,3 +1598,16 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 	if(channels_to_use.len)
 		world.TgsChatBroadcast()
+
+//Checks to see if either the victim has a garlic necklace or garlic in their blood
+/proc/blood_sucking_checks(var/mob/living/carbon/target, check_neck, check_blood)
+	//Bypass this if the target isnt carbon.
+	if(!iscarbon(target))
+		return TRUE
+	if(check_neck)
+		if(istype(target.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+			return FALSE
+	if(check_blood)
+		if(target.reagents.has_reagent(/datum/reagent/consumable/garlic))
+			return FALSE
+	return TRUE

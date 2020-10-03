@@ -51,6 +51,19 @@
 #define ASSEMBLY_FOURTH_STEP    3
 #define ASSEMBLY_FIFTH_STEP     4
 
+//Bot Upgrade defines
+#define UPGRADE_CLEANER_ADVANCED_MOP 	      (1<<0)
+#define UPGRADE_CLEANER_BROOM            	  (1<<1)
+
+#define UPGRADE_MEDICAL_HYPOSPRAY       (1<<0)
+#define UPGRADE_MEDICAL_CHEM_BOARD      (1<<1)
+#define UPGRADE_MEDICAL_CRYO_BOARD      (1<<2)
+#define UPGRADE_MEDICAL_CHEM_MASTER     (1<<3)
+#define UPGRADE_MEDICAL_SLEEP_BOARD     (1<<4)
+#define UPGRADE_MEDICAL_PIERERCING      (1<<5)
+
+#define UPGRADE_FLOOR_ARTBOX 	     (1<<0)
+#define UPGRADE_FLOOR_SYNDIBOX     	 (1<<1)
 
 //Checks to determine borg availability depending on the server's config. These are defines in the interest of reducing copypasta
 #define BORG_SEC_AVAILABLE (!CONFIG_GET(flag/disable_secborg) && GLOB.security_level >= CONFIG_GET(number/minimum_secborg_alert))

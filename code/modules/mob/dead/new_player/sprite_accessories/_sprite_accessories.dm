@@ -16,6 +16,7 @@
 	from doing this unless you absolutely know what you are doing, and have defined a
 	conversion in savefile.dm
 */
+
 /proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, roundstart = FALSE, skip_prototype = TRUE)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
@@ -55,19 +56,19 @@
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each
 	var/color_src = MUTCOLORS	//Currently only used by mutantparts so don't worry about hair and stuff. This is the source that this accessory will get its color from. Default is MUTCOLOR, but can also be HAIR, FACEHAIR, EYECOLOR and 0 if none.
-	var/hasinner		//Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
 	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
+	var/list/relevant_layers //list of layers that this accessory uses. As of now only used in species.handle_mutant_bodyparts(), but that's where most sprite accessories are anyway.
+	var/mutant_part_string //Also used in species.handle_mutant_bodyparts() to generate the overlay icon state.
+	var/alpha_mask_state
 
 	//Special / holdover traits for Citadel specific sprites.
 	var/extra = FALSE
 	var/extra_color_src = MUTCOLORS2						//The color source for the extra overlay.
-	var/extra_icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	var/extra2 = FALSE
 	var/extra2_color_src = MUTCOLORS3
-	var/extra2_icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 
 	//for snowflake/donor specific sprites
 	var/list/ckeys_allowed
@@ -76,7 +77,7 @@
 	var/list/recommended_species
 
 /datum/sprite_accessory/underwear
-	icon = 'icons/mob/underwear.dmi'
+	icon = 'icons/mob/clothing/underwear.dmi'
 	var/has_color = FALSE
 	var/has_digitigrade = FALSE
 	var/covers_groin = FALSE

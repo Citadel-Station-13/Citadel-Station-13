@@ -137,7 +137,7 @@
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form. This ability is loud, and might cause our blood to react violently to heat."
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = 2
 	loudness = 2
 	req_human = 1
@@ -410,7 +410,7 @@
 	desc = "We reform one of our arms into a hard shield."
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form. This ability is somewhat loud, and carries a small risk of our blood gaining violent sensitivity to heat."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 	loudness = 1
 	req_human = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -489,6 +489,7 @@
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90) //No armor at all.
+	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/space/changeling/Initialize()
 	. = ..()
@@ -521,12 +522,12 @@
 /obj/effect/proc_holder/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form. This ability is loud, and might cause our blood to react violently to heat."
+	helptext = "Upkeep of the armor requires a constant expenditure of chemicals, resulting in a reduced chemical generation. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form. This ability is loud, and might cause our blood to react violently to heat."
 	chemical_cost = 20
 	dna_cost = 1
 	loudness = 2
 	req_human = 1
-	recharge_slowdown = 0.25
+	recharge_slowdown = 0.5
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_armor"
 	action_background_icon_state = "bg_ling"
@@ -542,7 +543,7 @@
 	icon_state = "lingarmor"
 	item_flags = DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 20, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list("melee" = 70, "bullet" = 60, "laser" = 30, "energy" = 40, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 50, "acid" = 90)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
@@ -558,7 +559,7 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	item_flags = DROPDEL
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 20, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 90, "acid" = 90)
+	armor = list("melee" = 70, "bullet" = 60, "laser" = 30, "energy" = 40, "bomb" = 10, "bio" = 4, "rad" = 0, "fire" = 50, "acid" = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE
 
 /obj/item/clothing/head/helmet/changeling/Initialize()

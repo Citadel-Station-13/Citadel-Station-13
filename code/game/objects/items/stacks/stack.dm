@@ -71,9 +71,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		w_class = CLAMP(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class)
 	else if (amount <= (max_amount * (2/3)))
-		w_class = CLAMP(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
+		w_class = clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -201,8 +201,13 @@
 		if(!building_checks(R, multiplier))
 			return
 		if (R.time)
+			var/adjusted_time = 0
 			usr.visible_message("<span class='notice'>[usr] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>")
-			if (!do_after(usr, R.time, target = usr))
+			if(HAS_TRAIT(usr, R.trait_booster))
+				adjusted_time = (R.time * R.trait_modifier)
+			else
+				adjusted_time = R.time
+			if (!do_after(usr, adjusted_time, target = usr))
 				return
 			if(!building_checks(R, multiplier))
 				return
@@ -240,8 +245,7 @@
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
-			cuffs.item_color = item_color
-			cuffs.update_icon()
+			cuffs.color = color
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
@@ -458,8 +462,10 @@
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
+	var/trait_booster = null
+	var/trait_modifier = 1
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
 
 
 	src.title = title
@@ -473,6 +479,8 @@
 	src.window_checks = window_checks
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
+	src.trait_booster = trait_booster
+	src.trait_modifier = trait_modifier
 /*
  * Recipe list datum
  */

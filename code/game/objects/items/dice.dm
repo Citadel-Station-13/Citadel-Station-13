@@ -170,7 +170,7 @@
 /obj/item/dice/proc/diceroll(mob/user)
 	result = roll(sides)
 	if(rigged && result != rigged)
-		if(prob(CLAMP(1/(sides - 1) * 100, 25, 80)))
+		if(prob(clamp(1/(sides - 1) * 100, 25, 80)))
 			result = rigged
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""

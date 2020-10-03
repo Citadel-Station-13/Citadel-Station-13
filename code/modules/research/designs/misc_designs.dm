@@ -206,6 +206,35 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/bright_helmet
+	name = "Workplace-Ready Firefighter Helmet"
+	desc = "By applying state of the art lighting technology to a fire helmet with industry standard photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
+	id = "bright_helmet"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	build_path = /obj/item/clothing/head/hardhat/red/upgraded
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/mauna_mug
+	name = "Mauna Mug"
+	desc = "This awesome mug will ensure your coffee never stays cold!"
+	id = "mauna_mug"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
+	build_path = /obj/item/reagent_containers/glass/maunamug
+	category = list("Equipment")
+
+/datum/design/rolling_table
+	name = "Rolly poly"
+	desc = "We duct-taped some wheels to the bottom of a table. It's goddamn science alright?"
+	id = "rolling_table"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/structure/table/rolling
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
@@ -285,6 +314,25 @@
 	build_path = /obj/item/vending_refill/donksoft
 	category = list("Equipment")
 
+/datum/design/eng_gloves
+	name = "Tinkers Gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
+	id = "eng_gloves"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/lavarods
+	name = "Lava-Resistant Metal Rods"
+	id = "lava_rods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	build_path = /obj/item/stack/rods/lava
+	category = list("initial", "Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
@@ -293,20 +341,20 @@
 	name = "Broom"
 	desc = "Just your everyday standard broom."
 	id = "broom"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 600)
 	build_path = /obj/item/twohanded/broom
-	category = list("Equipment")
+	category = list("initial", "Equipment", "Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/mop
 	name = "Mop"
 	desc = "Just your everyday standard mop."
 	id = "mop"
-	build_type = PROTOLATHE
+	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 1200, /datum/material/glass = 100)
 	build_path = /obj/item/mop
-	category = list("Equipment")
+	category = list("initial", "Equipment", "Misc")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/advmop
@@ -329,6 +377,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/normtrash
+	name = "Trashbag"
+	desc = "It's a bag for trash, you put garbage in it."
+	id = "normtrash"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2000)
+	build_path = /obj/item/storage/bag/trash
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/blutrash
 	name = "Trashbag of Holding"
 	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
@@ -346,6 +404,17 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 200)
 	build_path = /obj/item/janiupgrade
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/paint_remover
+	name = "Paint Remover"
+	desc = "Removes stains from the floor, and not much else."
+	id = "paint_remover"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	reagents_list = list(/datum/reagent/acetone = 60)
+	build_path = /obj/item/paint/paint_remover
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -614,3 +683,27 @@
 	build_path = /obj/item/circuitboard/computer/sat_control
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+
+
+/////////////////////////////////////////
+////////////Tackle Gloves////////////////
+/////////////////////////////////////////
+
+/datum/design/tackle_dolphin
+	name = "Dolphin Gloves"
+	id = "tackle_dolphin"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2500)
+	build_path = /obj/item/clothing/gloves/tackler/dolphin
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/tackle_rocket
+	name = "Rocket Gloves"
+	id = "tackle_rocket"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plasma = 1000, /datum/material/plastic = 2000)
+	build_path = /obj/item/clothing/gloves/tackler/rocket
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

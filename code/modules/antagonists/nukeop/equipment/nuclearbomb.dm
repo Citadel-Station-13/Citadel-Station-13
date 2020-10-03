@@ -41,7 +41,7 @@
 	STOP_PROCESSING(SSobj, core)
 	update_icon()
 	GLOB.poi_list |= src
-	previous_level = get_security_level()
+	previous_level = NUM2SECLEVEL(GLOB.security_level)
 
 /obj/machinery/nuclearbomb/Destroy()
 	safety = FALSE
@@ -358,7 +358,7 @@
 							if(NUKEUI_AWAIT_TIMER)
 								var/number_value = text2num(numeric_input)
 								if(number_value)
-									timer_set = CLAMP(number_value, minimum_timer_set, maximum_timer_set)
+									timer_set = clamp(number_value, minimum_timer_set, maximum_timer_set)
 									playsound(src, 'sound/machines/nuke/general_beep.ogg', 50, FALSE)
 									set_safety()
 									. = TRUE
@@ -419,7 +419,7 @@
 		return
 	timing = !timing
 	if(timing)
-		previous_level = get_security_level()
+		previous_level = NUM2SECLEVEL(GLOB.security_level)
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
@@ -451,9 +451,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, tesla_flags)
+/obj/machinery/nuclearbomb/zap_act(power, zap_flags)
 	..()
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
@@ -606,6 +606,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
+	w_volume = ITEM_VOLUME_DISK
 
 /obj/item/disk/nuclear
 	name = "nuclear authentication disk"

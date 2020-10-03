@@ -77,6 +77,9 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/alien/plasmavessel/on_life()
+	. = ..()
+	if(!.)
+		return
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)

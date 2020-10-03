@@ -12,37 +12,26 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
-	var/light_nutrition_gain_factor = 10
-	var/light_toxheal = 1
-	var/light_oxyheal = 1
-	var/light_burnheal = 1
-	var/light_bruteheal = 1
+	species_language_holder = /datum/language_holder/sylvan
+	var/light_nutrition_gain_factor = 4
+	var/light_toxheal = -1
+	var/light_oxyheal = -1
+	var/light_burnheal = -1
+	var/light_bruteheal = -1
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.faction |= "plants"
 	C.faction |= "vines"
+	C.AddElement(/datum/element/photosynthesis, light_bruteheal, light_burnheal, light_toxheal, light_oxyheal, light_nutrition_gain_factor)
 
 /datum/species/pod/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.faction -= "plants"
 	C.faction -= "vines"
+	C.RemoveElement(/datum/element/photosynthesis, light_bruteheal, light_burnheal, light_toxheal, light_oxyheal, light_nutrition_gain_factor)
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD)
-		return
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(H.loc)) //else, there's considered to be no light
-		var/turf/T = H.loc
-		light_amount = min(1,T.get_lumcount()) - 0.5
-		H.nutrition += light_amount * light_nutrition_gain_factor
-		if(H.nutrition >= NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL - 1
-		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(light_bruteheal, light_burnheal)
-			H.adjustToxLoss(-light_toxheal)
-			H.adjustOxyLoss(-light_oxyheal)
-
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
 
@@ -69,8 +58,7 @@
 				H.adjustFireLoss(rand(5,15))
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
-
+			H.adjust_nutrition(30, NUTRITION_LEVEL_FULL)
 
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"
@@ -78,10 +66,10 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
 	mutant_bodyparts = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = "pod"
-	light_nutrition_gain_factor = 7.5
-	light_bruteheal = 0.2
-	light_burnheal = 0.2
-	light_toxheal = 0.7
+	light_nutrition_gain_factor = 3
+	light_bruteheal = -0.2
+	light_burnheal = -0.2
+	light_toxheal = -0.7
 
 /datum/species/pod/pseudo_weak/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

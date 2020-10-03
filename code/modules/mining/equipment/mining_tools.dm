@@ -168,3 +168,17 @@
 	throwforce = 7
 	custom_materials = list(/datum/material/iron=50)
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/shovel/serrated
+	name = "serrated bone shovel"
+	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
+	icon_state = "shovel_bone"
+	item_state = "shovel_bone"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	force = 15
+	throwforce = 12
+	w_class = WEIGHT_CLASS_NORMAL
+	toolspeed = 0.7
+	attack_verb = list("slashed", "impaled", "stabbed", "sliced")
+	sharpness = IS_SHARP

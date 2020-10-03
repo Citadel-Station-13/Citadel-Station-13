@@ -807,9 +807,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// If it didn't reach, note that fact
 	if (!signal.data["done"])
 		to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
-		return
 		if (!silent)
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
+		return
 
 	var/target_text = signal.format_target()
 	if(allow_emojis)
@@ -998,9 +998,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/card/id/idcard = C
 		if(!idcard.registered_name)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
-			return
 			if (!silent)
 				playsound(src, 'sound/machines/terminal_error.ogg', 15, 1)
+			return
 
 		if(!owner)
 			owner = idcard.registered_name

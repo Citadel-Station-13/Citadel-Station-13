@@ -117,10 +117,10 @@
 			continue
 		contam_atoms += thing
 	var/did_contam = 0
-	if(length(can_contam))
+	if(can_contam && contam_atoms.len)
 		var/rad_strength = ((strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT)/contam_atoms.len
-		for(var/k in 1 to contam_atoms.len)
-			var/atom/thing = contam_atoms[k]
+		for(var/A in contam_atoms)
+			var/atom/thing = A
 			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
 			did_contam = 1
 	return did_contam

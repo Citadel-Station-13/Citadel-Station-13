@@ -38,3 +38,7 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 /datum/traitor_class/proc/finalize_traitor(datum/antagonist/traitor/T)
 	// Finalization. Return TRUE if should play standard traitor sound/equip, return FALSE if both are special case
 	return TRUE
+
+/datum/traitor_class/proc/clean_up_traitor(datum/antagonist/traitor/T)
+	// Any effects that need to be cleaned up if traitor class is being swapped.
+	

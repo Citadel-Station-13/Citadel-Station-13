@@ -183,7 +183,7 @@
 	return
 
 
-// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
+// Better recursive loop, technically sort of not actually recursive cause that shit is stupid, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
 
@@ -248,6 +248,15 @@
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing, .)
 		processing += A.contents
+
+//viewers() but with a signal, for blacklisting.
+/proc/fov_viewers(depth = world.view, atom/center)
+	if(!center)
+		return
+	. = viewers(depth, center)
+	for(var/k in .)
+		var/mob/M = k
+		SEND_SIGNAL(M, COMSIG_MOB_FOV_VIEWER, center, depth, .)
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
@@ -505,6 +514,19 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+
+//Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
+/proc/recursive_loc_check(atom/movable/target, type)
+	var/atom/A = target
+	if(istype(A, type))
+		return A
+
+	while(!istype(A.loc, type))
+		if(!A.loc)
+			return
+		A = A.loc
+
+	return A.loc
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))

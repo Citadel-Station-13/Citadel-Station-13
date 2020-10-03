@@ -4,7 +4,6 @@
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
-	item_color = "mime"
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
@@ -46,6 +45,7 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 	strip_delay = 50
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
@@ -72,6 +72,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
+	custom_price = 600
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -124,7 +125,6 @@
 	icon_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	item_color = "hosred"
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = NONE
@@ -144,6 +144,13 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+
+/obj/item/clothing/shoes/winterboots/ice_boots
+	name = "ice hiking boots"
+	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
+	icon_state = "iceboots"
+	item_state = "iceboots"
+	clothing_flags = NOSLIP_ICE
 
 /obj/item/clothing/shoes/winterboots/christmasbootsr
 	name = "red christmas boots"
@@ -175,13 +182,16 @@
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
+	cold_protection = FEET|LEGS
+	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+	heat_protection = FEET|LEGS
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/cult
 	name = "\improper Nar'Sien invoker boots"
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
-	item_color = "cult"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
@@ -227,7 +237,6 @@
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
-	item_color = "hosred"
 	resistance_flags = FIRE_PROOF
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
@@ -375,9 +384,106 @@
 /obj/item/clothing/shoes/cowboyboots
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
+	custom_price = 60 //remember to replace these lame cosmetics with tg's YEEEEHAW counterparts.
 	icon_state = "cowboyboots"
 
 /obj/item/clothing/shoes/cowboyboots/black
 	name = "black cowboy boots"
 	desc = "A pair of black cowboy boots, pretty easy to scuff up."
 	icon_state = "cowboyboots_black"
+
+/obj/item/clothing/shoes/wallwalkers
+	name = "wall walking boots"
+	desc = "Contrary to popular belief, these do not allow you to walk on walls. Through bluespace magic stolen from an organisation that hoards technology, they simply allow you to slip through the atoms that make up anything, but only while walking, for safety reasons. As well as this, they unfortunately cause minor breath loss as the majority of atoms in your lungs are sucked out into any solid object you walk through. Make sure not to overuse them."
+	icon_state = "walkboots"
+	var/walkcool = 0
+	var/wallcharges = 4
+	var/newlocobject = null
+
+/obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
+	. = ..()
+	if(slot == SLOT_SHOES)
+		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
+
+/obj/item/clothing/shoes/wallwalkers/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVE)
+
+/obj/item/clothing/shoes/wallwalkers/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(!istype(W, /obj/item/bluespacerecharge))
+		return
+	var/obj/item/bluespacerecharge/ER = W
+	if(ER.uses)
+		wallcharges += ER.uses
+		to_chat(user, "<span class='notice'>You charged the bluespace crystal in the [src]. It now has [wallcharges] charges left.</span>")
+		ER.uses = 0
+		ER.icon_state = "[initial(ER.icon_state)]0"
+	else
+		to_chat(user, "<span class='warning'>[ER] has no crystal on it.</span>")
+
+/obj/item/clothing/shoes/wallwalkers/examine(mob/user)
+	. = ..()
+	. += "<span class='warning'>It has [wallcharges] charges left.</span>"
+
+/obj/item/clothing/shoes/wallwalkers/proc/intercept_user_move(mob/living/m, client/client, dir, newloc, oldloc)
+	if (walkcool >= world.time || m.m_intent != MOVE_INTENT_WALK || wallcharges <= 0)
+		return
+	walkcool = world.time + m.movement_delay()
+	var/issolid = FALSE
+	var/turf/K = newloc
+	if (istype(K))
+		if (K.density)
+			issolid = TRUE
+	if (!issolid)
+		for (var/atom/T in newloc) //stuff on the new turf
+			if (!T.CanPass(m,newloc) && T != m)
+				issolid = TRUE
+				newlocobject = T
+				break
+		if (!issolid)
+			for (var/atom/T in oldloc) //directional shit on the old turf
+				if (!T.CanPass(m,newloc) && T != m && T != newlocobject)
+					issolid = TRUE
+					break
+			newlocobject = null //stopping structures from using two charges because of how shitty the canpass code is
+	m.forceMove(newloc)
+	if (!issolid)
+		return
+	m.adjustOxyLoss(rand(5,13))
+	if (prob(15))
+		m.adjustBruteLoss(rand(4,7))
+		to_chat(m,"<span class='warning'>You feel as if travelling through the solid object left something behind and it hurts!</span>")
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(5, 1, oldloc)
+	s.start()
+	flash_lighting_fx(3, 3, LIGHT_COLOR_ORANGE)
+	wallcharges--
+
+/obj/item/bluespacerecharge
+	name = "bluespace crystal recharging device"
+	desc = "A small cell with two prongs lazily jabbed into it. It looks like it's made for replacing the crystals in bluespace devices."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "bluespace_charge"
+	item_flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_TINY
+	var/uses = 6
+
+/obj/item/bluespacerecharge/examine(mob/user)
+	. = ..()
+	if(uses)
+		. += "<span class='notice'>It can add up to [uses] charges to compatible devices.</span>"
+	else
+		. += "<span class='warning'>The crystal is gone.</span>"
+
+/obj/item/bluespacerecharge/attackby(obj/item/I, mob/user, params)
+	..()
+	if(!istype(I, /obj/item/stack/ore/bluespace_crystal) || uses)
+		return
+	var/obj/item/stack/ore/bluespace_crystal/B = I
+	if (B.amount < 10)
+		return
+	uses += 3
+	to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+	B.use(10)
+	icon_state = initial(icon_state)

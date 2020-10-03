@@ -37,7 +37,7 @@
 		if(ishuman(source_mob))
 			var/mob/living/carbon/human/H = source_mob
 			if(H.dna.species.use_skintones)
-				body_coloring = "#[skintone2hex(H.skin_tone)]"
+				body_coloring = SKINTONE2HEX(H.skin_tone)
 			else
 				body_coloring = "#[H.dna.features["mcolor"]]"
 
@@ -49,7 +49,7 @@
 				H.set_species(gib_mob_species)
 				dna_to_add = temp_mob.get_blood_dna_list()
 				if(H.dna.species.use_skintones)
-					body_coloring = "#[skintone2hex(H.skin_tone)]"
+					body_coloring = SKINTONE2HEX(H.skin_tone)
 				else
 					body_coloring = "#[H.dna.features["mcolor"]]"
 			else

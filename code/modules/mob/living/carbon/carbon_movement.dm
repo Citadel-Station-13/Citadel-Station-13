@@ -24,11 +24,12 @@
 	. = ..()
 	if(. && (movement_type & FLOATING)) //floating is easy
 		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
+			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR/10
+			var/loss = HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
-				nutrition -= HUNGER_FACTOR/10
+				loss *= 2
+			adjust_nutrition(loss)
 
 /mob/living/carbon/can_move_under_living(mob/living/other)
 	. = ..()

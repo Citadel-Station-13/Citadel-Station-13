@@ -48,9 +48,6 @@
 /obj/machinery/dominator/hulk_damage()
 	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
 
-/obj/machinery/dominator/tesla_act()
-	qdel(src)
-
 /obj/machinery/dominator/update_icon()
 	cut_overlays()
 	if(stat & BROKEN)
@@ -150,7 +147,7 @@
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
 	add_fingerprint(user)
-	..()
+	return ..()
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))
@@ -229,7 +226,7 @@
 			if(!was_stranded)
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
-			if(get_security_level() == "delta")
+			if(NUM2SECLEVEL(GLOB.security_level) == "delta")
 				set_security_level("red")
 
 		SSshuttle.clearHostileEnvironment(src)

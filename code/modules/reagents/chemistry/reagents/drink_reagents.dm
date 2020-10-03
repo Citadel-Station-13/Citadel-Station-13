@@ -1,7 +1,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
+//////DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum//////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/consumable/orangejuice
@@ -165,6 +165,7 @@
 	metabolization_rate = INFINITY
 	color = "#FF4DD2"
 	taste_description = "laughter"
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
 	M.emote("laugh")
@@ -177,6 +178,7 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#FF4DD2"
 	taste_description = "laughter"
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M)
 	if(prob(30))
@@ -210,6 +212,7 @@
 	glass_name = "glass of milk"
 	glass_desc = "White and nutritious goodness!"
 	pH = 6.5
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
@@ -231,6 +234,7 @@
 	glass_icon_state = "glass_white"
 	glass_name = "glass of soy milk"
 	glass_desc = "White and nutritious soy goodness!"
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() && prob(20))
@@ -324,17 +328,18 @@
 	glass_icon_state = "lemonpitcher"
 	glass_name = "pitcher of lemonade"
 	glass_desc = "This drink leaves you feeling nostalgic for some reason."
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/tea/arnold_palmer
 	name = "Arnold Palmer"
 	description = "Encourages the patient to go golfing."
 	color = "#FFB766"
 	quality = DRINK_NICE
-	nutriment_factor = 2
 	taste_description = "bitter tea"
 	glass_icon_state = "arnold_palmer"
 	glass_name = "Arnold Palmer"
 	glass_desc = "You feel like taking a few golf swings after a few swigs of this."
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
@@ -384,6 +389,7 @@
 /datum/reagent/consumable/space_cola
 	name = "Cola"
 	description = "A refreshing beverage."
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
 	glass_icon_state  = "glass_brown"
@@ -404,6 +410,7 @@
 	glass_icon_state = "nuka_colaglass"
 	glass_name = "glass of Nuka Cola"
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
@@ -418,6 +425,7 @@
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
 	description = "Blows right through you like a space wind."
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "sweet citrus soda"
 	glass_icon_state = "Space_mountain_wind_glass"
@@ -435,6 +443,7 @@
 /datum/reagent/consumable/dr_gibb
 	name = "Dr. Gibb"
 	description = "A delicious blend of 42 different flavours."
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "cherry soda" // FALSE ADVERTISING
 	glass_icon_state = "dr_gibb_glass"
@@ -449,6 +458,7 @@
 /datum/reagent/consumable/space_up
 	name = "Space-Up"
 	description = "Tastes like a hull breach in your mouth."
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#00FF00" // rgb: 0, 255, 0
 	taste_description = "cherry soda"
 	glass_icon_state = "space-up_glass"
@@ -463,6 +473,7 @@
 /datum/reagent/consumable/lemon_lime
 	name = "Lemon Lime"
 	description = "A tangy substance made of 0.5% natural citrus!"
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "tangy lime and lemon soda"
 	glass_icon_state = "glass_yellow"
@@ -476,6 +487,7 @@
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
 	glass_icon_state = "glass_red"
@@ -489,6 +501,7 @@
 /datum/reagent/consumable/shamblers
 	name = "Shambler's Juice"
 	description = "~Shake me up some of that Shambler's Juice!~"
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#f00060" // rgb: 94, 0, 38
 	taste_description = "carbonated metallic soda"
 	glass_icon_state = "glass_red"
@@ -502,6 +515,7 @@
 /datum/reagent/consumable/buzz_fuzz
 	name = "Buzz Fuzz"
 	description = "~A Hive of Flavour!~ NOTICE: Addicting."
+	nutriment_factor = 0
 	addiction_threshold = 26 //A can and a sip
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "carbonated honey and pollen"
@@ -552,6 +566,7 @@
 	glass_icon_state = "grey_bull_glass"
 	glass_name = "glass of Grey Bull"
 	glass_desc = "Surprisingly it isnt grey."
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
 	..()
@@ -572,6 +587,7 @@
 /datum/reagent/consumable/sodawater
 	name = "Soda Water"
 	description = "A can of club soda. Why not make a scotch and soda?"
+	nutriment_factor = 0
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "carbonated water"
 	glass_icon_state = "glass_clear"
@@ -604,6 +620,7 @@
 /datum/reagent/consumable/ice
 	name = "Ice"
 	description = "Frozen water, your dentist wouldn't like you chewing this."
+	nutriment_factor = 0 //Its water why would this even geive nutriments?
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
@@ -624,6 +641,7 @@
 	glass_icon_state = "soy_latte"
 	glass_name = "soy latte"
 	glass_desc = "A nice and refreshing beverage while you're reading."
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -645,6 +663,7 @@
 	glass_icon_state = "cafe_latte"
 	glass_name = "cafe latte"
 	glass_desc = "A nice, strong and refreshing beverage while you're reading."
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -666,15 +685,15 @@
 	glass_icon_state = "doctorsdelightglass"
 	glass_name = "Doctor's Delight"
 	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-0.5, 0)
 	M.adjustFireLoss(-0.5, 0)
 	M.adjustToxLoss(-0.5, 0)
 	M.adjustOxyLoss(-0.5, 0)
-	if(M.nutrition && (M.nutrition - 2 > 0))
-		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 2
+	if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
+		M.adjust_nutrition(-2)
 	..()
 	. = 1
 
@@ -688,6 +707,7 @@
 	glass_icon_state = "chocolatepudding"
 	glass_name = "chocolate pudding"
 	glass_desc = "Tasty."
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/vanillapudding
 	name = "Vanilla Pudding"
@@ -699,50 +719,55 @@
 	glass_icon_state = "vanillapudding"
 	glass_name = "vanilla pudding"
 	glass_desc = "Tasty."
+	value = REAGENT_VALUE_UNCOMMON //real vanilla.
 
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
 	description = "A cherry flavored milkshake."
 	color = "#FFB6C1"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	taste_description = "creamy cherry"
 	glass_icon_state = "cherryshake"
 	glass_name = "cherry shake"
 	glass_desc = "A cherry flavored milkshake."
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/bluecherryshake
 	name = "Blue Cherry Shake"
 	description = "An exotic milkshake."
 	color = "#00F1FF"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	taste_description = "creamy blue cherry"
 	glass_icon_state = "bluecherryshake"
 	glass_name = "blue cherry shake"
 	glass_desc = "An exotic blue milkshake."
+	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
 	description = "A mix of pumpkin juice and coffee."
 	color = "#F4A460"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	taste_description = "creamy pumpkin"
 	glass_icon_state = "pumpkin_latte"
 	glass_name = "pumpkin latte"
 	glass_desc = "A mix of coffee and pumpkin juice."
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"
 	description = "Ice cream on top of a Dr. Gibb glass."
 	color = "#B22222"
 	quality = DRINK_NICE
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 1 * REAGENTS_METABOLISM
 	taste_description = "creamy cherry"
 	glass_icon_state = "gibbfloats"
 	glass_name = "Gibbfloat"
 	glass_desc = "Dr. Gibb with ice cream on top."
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/pumpkinjuice
 	name = "Pumpkin Juice"
@@ -755,6 +780,7 @@
 	description = "Juiced from real blumpkin."
 	color = "#00BFFF"
 	taste_description = "a mouthful of pool water"
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/triple_citrus
 	name = "Triple Citrus"
@@ -784,6 +810,7 @@
 	color = "#7D4E29"
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/menthol
 	name = "Menthol"
@@ -812,6 +839,7 @@
 	color = "#FFA500"
 	taste_description = "parsnip"
 	glass_name = "glass of parsnip juice"
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
 	name = "Peach Juice"
@@ -837,6 +865,7 @@
 	glass_icon_state = "cream_soda"
 	glass_name = "Cream Soda"
 	glass_desc = "A classic space-American vanilla flavored soft drink."
+	value = REAGENT_VALUE_VERY_COMMON //just a little vanilla
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
@@ -845,6 +874,7 @@
 /datum/reagent/consumable/sol_dry
 	name = "Sol Dry"
 	description = "A soothing, mellow drink made from ginger."
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
@@ -864,6 +894,7 @@
 	glass_icon_state = "red_queen"
 	glass_name = "Red Queen"
 	glass_desc = "DRINK ME."
+	value = REAGENT_VALUE_COMMON //growth serum.
 	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/H)
@@ -889,10 +920,11 @@
 	description = "A drink of a bygone era of milk and artificial sweetener back on a rock."
 	color = "#f76aeb"//rgb(247, 106, 235)
 	glass_icon_state = "pinkmilk"
-	quality = DRINK_FANTASTIC //Love drink
+	quality = DRINK_VERYGOOD
 	taste_description = "sweet strawberry and milk cream"
 	glass_name = "tall glass of strawberry milk"
 	glass_desc = "Delicious flavored strawberry syrup mixed with milk."
+	value = REAGENT_VALUE_VERY_COMMON
 
 /datum/reagent/consumable/tea/pinkmilk/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -905,7 +937,7 @@
 	description = "A timeless classic!"
 	color = "#f76aeb"//rgb(247, 106, 235)
 	glass_icon_state = "pinktea"
-	quality = DRINK_FANTASTIC //Love drink
+	quality = DRINK_VERYGOOD
 	taste_description = "sweet tea with a hint of strawberry"
 	glass_name = "mug of strawberry tea"
 	glass_desc = "Delicious traditional tea flavored with strawberries."
@@ -948,6 +980,7 @@
 	glass_icon_state = "monkey_energy_glass"
 	glass_name = "glass of Monkey Energy"
 	glass_desc = "You can unleash the ape, but without the pop of the can?"
+	value = REAGENT_VALUE_COMMON
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
@@ -965,3 +998,4 @@
 	glass_icon_state = "glass_yellow"
 	glass_name = "glass of bungo juice"
 	glass_desc = "Exotic! You feel like you are on vacation already."
+	value = REAGENT_VALUE_COMMON

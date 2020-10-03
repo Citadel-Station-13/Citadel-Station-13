@@ -36,6 +36,8 @@ GLOBAL_VAR(reagent_log)
 GLOBAL_PROTECT(reagent_log)
 GLOBAL_VAR(world_crafting_log)
 GLOBAL_PROTECT(world_crafting_log)
+GLOBAL_VAR(click_log)
+GLOBAL_PROTECT(click_log)
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

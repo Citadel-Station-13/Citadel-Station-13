@@ -281,7 +281,7 @@
 	hitsound = "swing_hit"
 	var/hitsound_on = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	item_color = "green"
+	var/saber_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
@@ -326,8 +326,8 @@
 /obj/item/twohanded/dualsaber/Initialize()
 	. = ..()
 	if(LAZYLEN(possible_colors))
-		item_color = pick(possible_colors)
-		switch(item_color)
+		saber_color = pick(possible_colors)
+		switch(saber_color)
 			if("red")
 				light_color = LIGHT_COLOR_RED
 			if("green")
@@ -343,7 +343,7 @@
 
 /obj/item/twohanded/dualsaber/update_icon_state()
 	if(wielded)
-		icon_state = "dualsaber[item_color][wielded]"
+		icon_state = "dualsaber[saber_color][wielded]"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()
@@ -457,7 +457,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			saber_color = "rainbow"
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
@@ -531,7 +531,7 @@
 		update_light()
 	return TRUE
 
-/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/twohanded/dualsaber/hypereutactic/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(isinhands)
 		var/mutable_appearance/gem_inhand = mutable_appearance(icon_file, "hypereutactic_gem")
@@ -582,7 +582,7 @@
 	force_wielded = 18
 	throwforce = 20
 	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3, "embed_chance" = 90)
+	embedding = list("embedded_impact_pain_multiplier" = 1.5, "embed_chance" = 65)
 	armour_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -667,6 +667,7 @@
 		force_wielded = 19
 		force_unwielded = 11
 		throwforce = 21
+		embedding = getEmbeddingBehavior(embed_chance = 75, embedded_pain_multiplier = 1.5) //plasmaglass spears are sharper
 		icon_prefix = "spearplasma"
 	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
@@ -681,6 +682,7 @@
 	if(G)
 		explosive = G
 		name = "explosive lance"
+		embedding = getEmbeddingBehavior(embed_chance = 0, embedded_pain_multiplier = 1)//elances should not be embeddable
 		desc = "A makeshift spear with [G] attached to it."
 	update_icon()
 
@@ -1174,15 +1176,14 @@
 
 /obj/item/twohanded/electrostaff/attack(mob/living/target, mob/living/user)
 	if(IS_STAMCRIT(user))//CIT CHANGE - makes it impossible to baton in stamina softcrit
-		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
+		to_chat(user, "<span class='danger'>You're too exhausted to use [src] properly.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 	if(on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		clowning_around(user)			//ouch!
 		return
 	if(iscyborg(target))
-		..()
-		return
-	if(target.run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user) & BLOCK_SUCCESS) //No message; run_block() handles that
+		return ..()
+	if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS) //No message; run_block() handles that
 		playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	if(user.a_intent != INTENT_HARM)

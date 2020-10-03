@@ -48,7 +48,9 @@
 					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "carpetsymbol", "carpetstar",
 					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
-					"ironsand12", "ironsand13", "ironsand14", "ironsand15")
+					"ironsand12", "ironsand13", "ironsand14", "ironsand15",
+					"snow", "snow0", "snow1", "snow2", "snow3", "snow4", "snow5", "snow6", "snow7", "snow8", "snow9", "snow10", "snow11", "snow12", "snow-ice", "snow_dug",
+					"unsmooth", "smooth", "1-i", "2-i", "3-i", "4-i", "1-n", "2-n", "3-s", "4-s", "1-w", "2-e", "3-w", "4-e", "1-nw", "2-ne", "3-sw", "4-se", "1-f", "2-f", "3-f", "4-f")
 	if(broken || burnt || (icon_state in icons_to_ignore_at_floor_init)) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else

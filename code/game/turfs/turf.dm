@@ -1,6 +1,8 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associatet with something on clicking,
+													//important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 	var/intact = 1
 
@@ -441,7 +443,7 @@
 	for(var/V in contents)
 		var/atom/A = V
 		if(!QDELETED(A) && A.level >= affecting_level)
-			if(ismovableatom(A))
+			if(ismovable(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
 					continue

@@ -9,9 +9,10 @@
 	/// Enable stamina combat
 	combat_flags = COMBAT_FLAGS_DEFAULT
 	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
+	has_field_of_vision = FALSE //Handled by species.
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -22,10 +23,6 @@
 
 	//Eye colour
 	var/eye_color = "000"
-
-	var/horn_color = "85615a"	//specific horn colors, because why not?
-
-	var/wing_color = "fff"		//wings too
 
 	var/skin_tone = "caucasian1"	//Skin tone
 
@@ -72,4 +69,5 @@
 	var/creamed = FALSE //to use with creampie overlays
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
+	var/account_id
 	var/last_fire_update

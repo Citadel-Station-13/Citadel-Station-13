@@ -105,3 +105,14 @@
 
 /datum/nanite_program/protocol/offline/active_effect()
 	nanites.adjust_nanites(null, boost)
+
+/datum/nanite_program/protocol/synergy
+	name = "Synergy Protocol"
+	desc = "Replication Protocol: the nanites syncronize their tasks and processes within a host, leading to an increase in replication speed proportional to the current nanite volume."
+	use_rate = 0
+	rogue_types = list(/datum/nanite_program/necrotic)
+	protocol_class = NANITE_PROTOCOL_REPLICATION
+	var/max_boost = 2 //The maximum boost this program applies to the nanite replication, multiplied with the current nanite 'saturation' percentage
+
+/datum/nanite_program/protocol/synergy/active_effect()
+	nanites.adjust_nanites(null, round(max_boost * (nanites.nanite_volume / nanites.max_nanites), 0.1))

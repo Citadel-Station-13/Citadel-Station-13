@@ -66,7 +66,6 @@
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
-
 /obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
@@ -90,7 +89,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
-
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -147,7 +145,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 	attack_verb = list("drilled")
-
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -228,7 +225,6 @@
 /obj/item/scalpel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
-
 
 /obj/item/circular_saw
 	name = "circular saw"

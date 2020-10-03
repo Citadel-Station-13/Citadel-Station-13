@@ -38,7 +38,6 @@
 /obj/item/bodybag/bluespace
 	name = "bluespace body bag"
 	desc = "A folded bluespace body bag designed for the storage and transportation of cadavers."
-	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
@@ -81,3 +80,13 @@
 		return
 	loc.visible_message("<span class='warning'>[user] suddenly appears in front of [loc]!</span>", "<span class='userdanger'>[user] breaks free of [src]!</span>")
 	qdel(src)
+
+// Containment bodybag
+
+/obj/item/bodybag/containment
+	name = "radiation containment body bag"
+	desc = "A folded heavy body bag designed for the storage and transportation of heavily irradiated cadavers."
+	icon_state = "radbodybag_folded"
+	unfoldedbag_path = /obj/structure/closet/body_bag/containment
+	w_class = WEIGHT_CLASS_NORMAL
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE

@@ -440,9 +440,8 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, multiplier)
-	var/location = get_turf(holder.my_atom)
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='danger'>The solution spews out foam!</span>")
+	var/turf/location = get_turf(holder.my_atom)
+	location.visible_message("<span class='danger'>The solution spews out foam!</span>")
 	var/datum/effect_system/foam_spread/s = new()
 	s.set_up(multiplier*2, location, holder)
 	s.start()
@@ -457,11 +456,8 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/metalfoam/on_reaction(datum/reagents/holder, multiplier)
-	var/location = get_turf(holder.my_atom)
-
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='danger'>The solution spews out a metallic foam!</span>")
-
+	var/turf/location = get_turf(holder.my_atom)
+	location.visible_message("<span class='danger'>The solution spews out a metallic foam!</span>")
 	var/datum/effect_system/foam_spread/metal/s = new()
 	s.set_up(multiplier*5, location, holder, 1)
 	s.start()
@@ -488,9 +484,8 @@
 	mob_react = FALSE
 
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, multiplier)
-	var/location = get_turf(holder.my_atom)
-	for(var/mob/M in viewers(5, location))
-		to_chat(M, "<span class='danger'>The solution spews out a metallic foam!</span>")
+	var/turf/location = get_turf(holder.my_atom)
+	location.visible_message("<span class='danger'>The solution spews out metallic foam!</span>")
 	var/datum/effect_system/foam_spread/metal/s = new()
 	s.set_up(multiplier*5, location, holder, 2)
 	s.start()
@@ -635,6 +630,11 @@
 	id = /datum/reagent/concentrated_barbers_aid
 	results = list(/datum/reagent/concentrated_barbers_aid = 2)
 	required_reagents = list(/datum/reagent/barbers_aid = 1, /datum/reagent/toxin/mutagen = 1)
+
+/datum/chemical_reaction/baldium
+	results = list(/datum/reagent/baldium = 1)
+	required_reagents = list(/datum/reagent/radium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/lye = 1)
+	required_temp = 395
 
 /datum/chemical_reaction/saltpetre
 	name = "saltpetre"

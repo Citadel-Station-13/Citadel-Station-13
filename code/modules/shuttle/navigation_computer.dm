@@ -13,6 +13,7 @@
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
+	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava)
 	var/space_turfs_only = TRUE
 	var/see_hidden = FALSE
 	var/designate_time = 0
@@ -22,6 +23,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+	whitelist_turfs = typecacheof(whitelist_turfs)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
@@ -224,6 +226,11 @@
 	if(space_turfs_only)
 		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
 		if(!ispath(turf_type, /turf/open/space))
+			return SHUTTLE_DOCKER_BLOCKED
+
+	if(length(whitelist_turfs))
+		var/turf_type = hidden_turf_info ? hidden_turf_info[2] : T.type
+		if(!is_type_in_typecache(turf_type, whitelist_turfs))
 			return SHUTTLE_DOCKER_BLOCKED
 
 	// Checking for overlapping dock boundaries

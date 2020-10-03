@@ -270,7 +270,7 @@
 	var/turf/landmark_turf = get_turf(locate(/obj/effect/landmark/shuttle_import) in GLOB.landmarks_list)
 	S.load(landmark_turf, centered = TRUE, register = FALSE)
 
-	var/affected = S.get_affected_turfs(landmark_turf, centered=TRUE)
+	var/affected = S.get_affected_turfs(landmark_turf, centered = TRUE)
 
 	var/found = 0
 	// Search the turfs for docking ports

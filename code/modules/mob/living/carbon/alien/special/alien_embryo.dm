@@ -23,6 +23,8 @@
 
 /obj/item/organ/body_egg/alien_embryo/on_life()
 	. = ..()
+	if(!owner)
+		return
 	switch(stage)
 		if(2, 3)
 			if(prob(2))

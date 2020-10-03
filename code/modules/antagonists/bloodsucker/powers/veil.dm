@@ -82,6 +82,7 @@
 
 	// Change Appearance, not randomizing clothes colour, itll just be janky
 	H.gender = pick(MALE, FEMALE)
+	H.dna.skin_tone_override = null
 	H.skin_tone = random_skin_tone()
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = pick(random_facial_hair_style(H.gender),"Shaved")
@@ -92,7 +93,7 @@
 	H.socks = random_socks(H.gender)
 	//H.eye_color = random_eye_color()
 	REMOVE_TRAIT(H, TRAIT_DISFIGURED, null) //
-	H.dna.features = random_features(H.dna.species?.id)
+	H.dna.features = random_features(H.dna.species?.id, H.gender)
 
 	// Apply Appearance
 	H.update_body(TRUE) // Outfit and underwear, also body and privates.
@@ -124,6 +125,8 @@
 		// Revert Appearance
 		H.gender = prev_gender
 		H.skin_tone = prev_skin_tone
+		if(!GLOB.skin_tones[H.skin_tone])
+			H.dna.skin_tone_override = H.skin_tone
 		H.hair_style = prev_hair_style
 		H.facial_hair_style = prev_facial_hair_style
 		H.hair_color = prev_hair_color

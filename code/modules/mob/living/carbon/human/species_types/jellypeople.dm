@@ -21,20 +21,19 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	species_language_holder = /datum/language_holder/jelly
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
 	if(slime_change)	//CIT CHANGE
 		slime_change.Remove(C)	//CIT CHANGE
-	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -43,7 +42,7 @@
 	C.faction |= "slime"
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for vampires
+	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
 		return
 	if(!H.blood_volume)
 		H.blood_volume += 5
@@ -84,7 +83,7 @@
 	background_icon_state = "bg_alien"
 	required_mobility_flags = NONE
 
-/datum/action/innate/regenerate_limbs/IsAvailable()
+/datum/action/innate/regenerate_limbs/IsAvailable(silent = FALSE)
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		var/list/limbs_to_heal = H.get_missing_limbs()
@@ -223,7 +222,7 @@
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/split_body/IsAvailable()
+/datum/action/innate/split_body/IsAvailable(silent = FALSE)
 	if(..())
 		var/mob/living/carbon/human/H = owner
 		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -606,7 +605,7 @@
 		var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
 		var/new_length = input(owner, "Penis length in inches:\n([min_D]-[max_D])", "Genital Alteration") as num|null
 		if(new_length)
-			H.dna.features["cock_length"] = CLAMP(round(new_length), min_D, max_D)
+			H.dna.features["cock_length"] = clamp(round(new_length), min_D, max_D)
 		H.update_genitals()
 		H.apply_overlay()
 		H.give_genital(/obj/item/organ/genital/testicles)
@@ -776,7 +775,7 @@
 	..()
 	species = _species
 
-/datum/action/innate/use_extract/IsAvailable()
+/datum/action/innate/use_extract/IsAvailable(silent = FALSE)
 	if(..())
 		if(species && species.current_extract && (world.time > species.extract_cooldown))
 			return TRUE

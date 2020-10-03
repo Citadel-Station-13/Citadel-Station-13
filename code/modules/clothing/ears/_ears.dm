@@ -6,6 +6,7 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE
+	custom_price = 250
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -30,6 +31,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD | ITEM_SLOT_NECK		//Fluff item, put it whereever you want!
 	actions_types = list(/datum/action/item_action/toggle_headphones)
 	var/headphones_on = FALSE
+	custom_price = 125
 
 /obj/item/clothing/ears/headphones/Initialize()
 	. = ..()

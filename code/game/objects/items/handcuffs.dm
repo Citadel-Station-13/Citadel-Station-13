@@ -113,12 +113,12 @@
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff"
 	item_state = "coil"
-	color =  "red"
+	color =  "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150, /datum/material/glass=75)
 	breakouttime = 300 //Deciseconds = 30s
-	cuffsound = 'sound/weapons/cablecuff.ogg' 
+	cuffsound = 'sound/weapons/cablecuff.ogg'
 
 /obj/item/restraints/handcuffs/cable/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start unwinding the cable restraints back into coil</span>")
@@ -130,37 +130,30 @@
 	user.put_in_hands(coil)
 	coil.color = color
 	to_chat(user, "<span class='notice'>You unwind the cable restraints back into coil</span>")
-	
+
 /obj/item/restraints/handcuffs/cable/red
-	item_color = "red"
 	color = "#ff0000"
 
 /obj/item/restraints/handcuffs/cable/yellow
-	item_color = "yellow"
 	color = "#ffff00"
 
 /obj/item/restraints/handcuffs/cable/blue
-	item_color = "blue"
 	color = "#1919c8"
 
 /obj/item/restraints/handcuffs/cable/green
-	item_color = "green"
 	color = "#00aa00"
 
 /obj/item/restraints/handcuffs/cable/pink
-	item_color = "pink"
 	color = "#ff3ccd"
 
 /obj/item/restraints/handcuffs/cable/orange
-	item_color = "orange"
 	color = "#ff8000"
 
 /obj/item/restraints/handcuffs/cable/cyan
-	item_color = "cyan"
 	color = "#00ffff"
 
 /obj/item/restraints/handcuffs/cable/white
-	item_color = "white"
+	color = null
 
 /obj/item/restraints/handcuffs/cable/random
 
@@ -170,7 +163,6 @@
 	color = pick(cable_colors)
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
 		if (R.use(1))
@@ -204,12 +196,15 @@
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
 	item_state = "zipties"
+	color = "white"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	custom_materials = null
 	breakouttime = 450 //Deciseconds = 45s
 	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
-	item_color = "white"
+
+/obj/item/restraints/handcuffs/cable/zipties/attack_self() //Zipties arent cable
+	return
 
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
@@ -230,7 +225,6 @@
 /obj/item/restraints/handcuffs/fake/kinky
 	name = "kinky handcuffs"
 	desc = "Fake handcuffs meant for erotic roleplay."
-	icon = 'modular_citadel/icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuffgag"
 	item_state = "kinkycuff"
 
@@ -257,7 +251,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
-	var/armed = 0
+	var/armed = FALSE
 	var/trap_damage = 20
 
 /obj/item/restraints/legcuffs/beartrap/Initialize()
@@ -280,14 +274,14 @@
 	if(armed && isturf(src.loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
-			var/snap = 0
+			var/snap = FALSE
 			var/def_zone = BODY_ZONE_CHEST
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				snap = 1
 				if(!C.lying)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+						snap = TRUE
 						C.legcuffed = src
 						forceMove(C)
 						C.update_equipment_speed_mods()
@@ -296,21 +290,21 @@
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
-					snap = 1
-			if(L.movement_type & FLYING)
-				snap = 0
+					snap = TRUE
+			if(L.movement_type & (FLYING | FLOATING))
+				snap = FALSE
 			if(snap)
-				armed = 0
+				armed = FALSE
 				icon_state = "[initial(icon_state)][armed]"
 				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage,BRUTE, def_zone)
+				L.apply_damage(trap_damage, BRUTE, def_zone)
 	..()
 
 /obj/item/restraints/legcuffs/beartrap/energy
 	name = "energy snare"
-	armed = 1
+	armed = TRUE
 	icon_state = "e_snare"
 	trap_damage = 0
 	item_flags = DROPDEL

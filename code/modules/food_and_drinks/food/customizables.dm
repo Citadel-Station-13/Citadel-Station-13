@@ -20,6 +20,7 @@
 	var/list/ingredients = list()
 	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
+	var/total_quality = 0 //quality of all ingredients added together
 
 /obj/item/reagent_containers/food/snacks/customizable/examine(mob/user)
 	. = ..()
@@ -56,6 +57,9 @@
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			foodtype |= S.foodtype
 			update_snack_overlays(S)
+			//quality of customised food is average of the ingredient's qualities
+			total_quality += S.food_quality
+			food_quality = total_quality / length(ingredients)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
 	else

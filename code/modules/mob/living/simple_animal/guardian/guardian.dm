@@ -13,9 +13,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	gender = NEUTER
 	mob_biotypes = NONE
 	bubble_icon = "guardian"
-	response_help  = "passes through"
-	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "magicbase"
 	icon_living = "magicbase"
@@ -29,7 +32,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	attacktext = "punches"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
@@ -109,7 +113,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_dead = "holocarp"
 			speak_emote = list("gnashes")
 			desc = "A mysterious fish that stands by its charge, ever vigilant."
-			attacktext = "bites"
+			attack_verb_continuous = "bites"
+			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
 	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
@@ -152,7 +157,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		to_chat(src, "<span class='warning'>Not a valid name, please try again.</span>")
 		guardianrename()
 		return
-	visible_message("<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
+	to_chat(src, "<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
 	fully_replace_character_name(null, new_name)
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
@@ -313,11 +318,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/obj/item/r_hand = get_item_for_held_index(2)
 
 	if(r_hand)
-		var/r_state = r_hand.item_state
-		if(!r_state)
-			r_state = r_hand.icon_state
-
-		hands_overlays += r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		hands_overlays += r_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
@@ -326,11 +327,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			client.screen |= r_hand
 
 	if(l_hand)
-		var/l_state = l_hand.item_state
-		if(!l_state)
-			l_state = l_hand.icon_state
-
-		hands_overlays +=  l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		hands_overlays +=  l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER

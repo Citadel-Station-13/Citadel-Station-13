@@ -31,9 +31,8 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	armour_penetration = 30
-	attacktext = "beats down on"
-	/*attack_verb_continuous = "beats down on"
-	attack_verb_simple = "beat down on"*/
+	attack_verb_continuous = "beats down on"
+	attack_verb_simple = "beat down on"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
@@ -172,9 +171,8 @@
 	health = 30
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "bashes against"
-	/*attack_verb_continuous = "bashes against"
-	attack_verb_simple = "bash against"*/
+	attack_verb_continuous = "bashes against"
+	attack_verb_simple = "bash against"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2

@@ -131,7 +131,6 @@
 	var/datum/pipeline/P = returnPipenet(A)
 	if(!P)
 		CRASH("null.addMember() called by [type] on [COORD(src)]")
-		return
 	P.addMember(A, src)
 
 
@@ -208,7 +207,7 @@
 /datum/pipeline/proc/return_air()
 	. = other_airs + air
 	if(null in .)
-		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		stack_trace("[src]([REF(src)]) has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
 		return removeNullsFromList(.)
 
 /datum/pipeline/proc/reconcile_air()

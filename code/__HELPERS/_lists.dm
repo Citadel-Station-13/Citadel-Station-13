@@ -11,6 +11,7 @@
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
+#define LAZYCOPY(L) (L ? L.Copy() : list() )
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
@@ -21,34 +22,48 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverseRange(L.Copy())
+#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
 
-// binary search sorted insert
-// IN: Object to be inserted
-// LIST: List to insert object into
-// TYPECONT: The typepath of the contents of the list
-// COMPARE: The variable on the objects to compare
-#define BINARY_INSERT(IN, LIST, TYPECONT, COMPARE) \
-	var/__BIN_CTTL = length(LIST);\
-	if(!__BIN_CTTL) {\
-		LIST += IN;\
-	} else {\
-		var/__BIN_LEFT = 1;\
-		var/__BIN_RIGHT = __BIN_CTTL;\
-		var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-		var/##TYPECONT/__BIN_ITEM;\
-		while(__BIN_LEFT < __BIN_RIGHT) {\
-			__BIN_ITEM = LIST[__BIN_MID];\
-			if(__BIN_ITEM.##COMPARE <= IN.##COMPARE) {\
-				__BIN_LEFT = __BIN_MID + 1;\
-			} else {\
-				__BIN_RIGHT = __BIN_MID;\
+/// Passed into BINARY_INSERT to compare keys
+#define COMPARE_KEY __BIN_LIST[__BIN_MID]
+/// Passed into BINARY_INSERT to compare values
+#define COMPARE_VALUE __BIN_LIST[__BIN_LIST[__BIN_MID]]
+
+/****
+	* Binary search sorted insert
+	* INPUT: Object to be inserted
+	* LIST: List to insert object into
+	* TYPECONT: The typepath of the contents of the list
+	* COMPARE: The object to compare against, usualy the same as INPUT
+	* COMPARISON: The variable on the objects to compare
+	* COMPTYPE: How the current bin item to compare against COMPARE is fetched. By key or value.
+	*/
+#define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
+	do {\
+		var/list/__BIN_LIST = LIST;\
+		var/__BIN_CTTL = length(__BIN_LIST);\
+		if(!__BIN_CTTL) {\
+			__BIN_LIST += INPUT;\
+		} else {\
+			var/__BIN_LEFT = 1;\
+			var/__BIN_RIGHT = __BIN_CTTL;\
+			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			var/##TYPECONT/__BIN_ITEM;\
+			while(__BIN_LEFT < __BIN_RIGHT) {\
+				__BIN_ITEM = COMPTYPE;\
+				if(__BIN_ITEM.##COMPARISON <= COMPARE.##COMPARISON) {\
+					__BIN_LEFT = __BIN_MID + 1;\
+				} else {\
+					__BIN_RIGHT = __BIN_MID;\
+				};\
+				__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
 			};\
-			__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
+			__BIN_ITEM = COMPTYPE;\
+			__BIN_MID = __BIN_ITEM.##COMPARISON > COMPARE.##COMPARISON ? __BIN_MID : __BIN_MID + 1;\
+			__BIN_LIST.Insert(__BIN_MID, INPUT);\
 		};\
-		__BIN_ITEM = LIST[__BIN_MID];\
-		__BIN_MID = __BIN_ITEM.##COMPARE > IN.##COMPARE ? __BIN_MID : __BIN_MID + 1;\
-		LIST.Insert(__BIN_MID, IN);\
-	}
+	} while(FALSE)
 
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
@@ -231,40 +246,77 @@
 
 //Picks a random element from a list based on a weighting system:
 //1. Adds up the total of weights for each element
-//2. Gets a number between 1 and that total
+//2. Gets the total from 0% to 100% of previous total value.
 //3. For each element in the list, subtracts its weighting from that number
 //4. If that makes the number 0 or less, return that element.
-/proc/pickweight(list/L)
+/proc/pickweight(list/L, base_weight = 1)
 	var/total = 0
 	var/item
 	for (item in L)
 		if (!L[item])
-			L[item] = 1
+			L[item] = base_weight
 		total += L[item]
 
-	total = rand(1, total)
+	total = rand() * total
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
-	return null
-
-/proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
+//Picks a number of elements from a list based on weight.
+//This is highly optimised and good for things like grabbing 200 items from a list of 40,000
+//Much more efficient than many pickweight calls
+/proc/pickweight_mult(list/L, quantity, base_weight = 1)
+	//First we total the list as normal
 	var/total = 0
 	var/item
 	for (item in L)
 		if (!L[item])
-			L[item] = 0
+			L[item] = base_weight
 		total += L[item]
 
-	total = rand(0, total)
-	for (item in L)
-		total -=L [item]
-		if (total <= 0 && L[item])
-			return item
+	//Next we will make a list of randomly generated numbers, called Requests
+	//It is critical that this list be sorted in ascending order, so we will build it in that order
+	//First one is free, so we start counting at 2
+	var/list/requests = list(rand(1, total))
+	for (var/i in 2 to quantity)
+		//Each time we generate the next request
+		var/newreq = rand()* total
+		//We will loop through all existing requests
+		for (var/j in 1 to requests.len)
+			//We keep going through the list until we find an element which is bigger than the one we want to add
+			if (requests[j] > newreq)
+				//And then we insert the newqreq at that point, pushing everything else forward
+				requests.Insert(j, newreq)
+				break
 
-	return null
+
+
+	//Now when we get here, we have a list of random numbers sorted in ascending order.
+	//The length of that list is equal to Quantity passed into this function
+	//Next we make a list to store results
+	var/list/results = list()
+
+	//Zero the total, we'll reuse it
+	total = 0
+
+	//Now we will iterate forward through the items list, adding each weight to the total
+	for (item in L)
+		total += L[item]
+
+		//After each item we do a while loop
+		while (requests.len && total >= requests[1])
+			//If the total is higher than the value of the first request
+			results += item //We add this item to the results list
+			requests.Cut(1,2) //And we cut off the top of the requests list
+
+			//This while loop will repeat until the next request is higher than the total.
+			//The current item might be added to the results list many times, in this process
+
+	//By the time we get here:
+		//Requests will be empty
+		//Results will have a length of quality
+	return results
 
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
@@ -273,6 +325,13 @@
 		var/picked = rand(1,L.len)
 		. = L[picked]
 		L.Cut(picked,picked+1)			//Cut is far more efficient that Remove()
+
+//Pick a random element from the list by weight and remove it from the list.
+//Result is returned as a list in the format list(key, value)
+/proc/pickweight_n_take(list/L, base_weight = 1)
+	if (L.len)
+		. = pickweight(L, base_weight)
+		L.Remove(.)
 
 //Returns the top(last) element from the list and removes it from the list (typical stack function)
 /proc/pop(list/L)
@@ -550,6 +609,29 @@
 	for(var/thing in flat_list)
 		.[thing] = TRUE
 
+/proc/deep_list2params(list/deep_list)
+	var/list/L = list()
+	for(var/i in deep_list)
+		var/key = i
+		if(isnum(key))
+			L += "[key]"
+			continue
+		if(islist(key))
+			key = deep_list2params(key)
+		else if(!istext(key))
+			key = "[REF(key)]"
+		L += "[key]"
+		var/value = deep_list[key]
+		if(!isnull(value))
+			if(islist(value))
+				value = deep_list2params(value)
+			else if(!(istext(key) || isnum(key)))
+				value = "[REF(value)]"
+			L["[key]"] = "[value]"
+	return list2params(L)
+
+#define NUMLIST2TEXTLIST(list) splittext(list2params(list), "&")
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 
@@ -589,3 +671,13 @@
 	for(var/key in input)
 		ret += key
 	return ret
+
+/proc/is_type_in_ref_list(path, list/L)
+	if(!ispath(path))//not a path
+		return
+	for(var/i in L)
+		var/datum/D = i
+		if(!istype(D))//not an usable reference
+			continue
+		if(istype(D, path))
+			return TRUE

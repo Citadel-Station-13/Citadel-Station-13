@@ -90,7 +90,10 @@
 	sabotage_type = "cloner"
 
 /datum/sabotage_objective/cloner/check_conditions()
-	return !(locate(/obj/machinery/clonepod) in GLOB.machines)
+	for(var/obj/machinery/clonepod/cloner in GLOB.machines)
+		if(is_station_level(cloner.z))
+			return FALSE
+	return TRUE
 
 /datum/sabotage_objective/ai_law
 	name = "Upload a hacked law to the AI."

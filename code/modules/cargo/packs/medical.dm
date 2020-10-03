@@ -252,6 +252,7 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+	can_private_buy = FALSE
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"

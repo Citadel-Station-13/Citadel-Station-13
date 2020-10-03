@@ -54,5 +54,5 @@
 /obj/screen/sprint_buffer/proc/update_to_mob(mob/living/L)
 	var/amount = 0
 	if(L.sprint_buffer_max > 0)
-		amount = round(CLAMP((L.sprint_buffer / L.sprint_buffer_max) * 100, 0, 100), 5)
+		amount = round(clamp((L.sprint_buffer / L.sprint_buffer_max) * 100, 0, 100), 5)
 	icon_state = "prog_bar_[amount]"

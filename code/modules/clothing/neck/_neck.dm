@@ -6,8 +6,8 @@
 	strip_delay = 40
 	equip_delay_other = 40
 
-/obj/item/clothing/neck/worn_overlays(isinhands = FALSE, icon_flag, style_flags = NONE)
-	. = list()
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
@@ -21,35 +21,30 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
-	item_color = "bluetie"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 60
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	item_color = "bluetie"
 
 /obj/item/clothing/neck/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	item_color = "redtie"
 
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
-	item_color = "blacktie"
 
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	item_color = "horribletie"
 
 /obj/item/clothing/neck/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	item_color = "stethoscope"
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] wont hear much!</span>")
@@ -93,8 +88,8 @@
 /obj/item/clothing/neck/scarf //Default white color, same functionality as beanies.
 	name = "white scarf"
 	icon_state = "scarf"
+	custom_price = 60
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-	item_color = "scarf"
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/neck/scarf/black
@@ -148,12 +143,10 @@
 /obj/item/clothing/neck/scarf/zebra
 	name = "zebra scarf"
 	icon_state = "zebrascarf"
-	item_color = "zebrascarf"
 
 /obj/item/clothing/neck/scarf/christmas
 	name = "christmas scarf"
 	icon_state = "christmasscarf"
-	item_color = "christmasscarf"
 
 //The three following scarves don't have the scarf subtype
 //This is because Ian can equip anything from that subtype
@@ -161,17 +154,14 @@
 /obj/item/clothing/neck/stripedredscarf
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
-	item_color = "stripedredscarf"
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
-	item_color = "stripedgreenscarf"
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
-	item_color = "stripedbluescarf"
 
 ///////////
 //COLLARS//
@@ -181,57 +171,44 @@
 	name = "pet collar"
 	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule. It seems to be made out of a polychromic material."
 	icon_state = "petcollar"
-	item_color = "petcollar"
-	alternate_worn_icon = 'icons/mob/neck.dmi' //Because, as it appears, the item itself is normally not directly aware of its worn overlays, so this is about the easiest way, without adding a new var.
-	hasprimary = TRUE
-	primary_color = "#00BBBB"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar
+	var/poly_states = 1
+	var/poly_colors = list("#00BBBB")
 	var/tagname = null
+	var/treat_path = /obj/item/reagent_containers/food/snacks/cookie
+
+/obj/item/clothing/neck/petcollar/Initialize()
+	. = ..()
+	if(treat_path)
+		new treat_path(src)
+
+/obj/item/clothing/neck/petcollar/ComponentInitialize()
+	. = ..()
+	if(!poly_states)
+		return
+	AddElement(/datum/element/polychromic, poly_colors, poly_states)
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
-/obj/item/clothing/neck/petcollar/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = ..()
-	if(hasprimary | hassecondary | hastertiary)
-		if(!isinhands)	//prevents the worn sprites from showing up if you're just holding them
-			if(hasprimary)	//checks if overlays are enabled
-				var/mutable_appearance/primary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-primary")	//automagical sprite selection
-				primary_worn.color = primary_color	//colors the overlay
-				. += primary_worn	//adds the overlay onto the buffer list to draw on the mob sprite
-			if(hassecondary)
-				var/mutable_appearance/secondary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-secondary")
-				secondary_worn.color = secondary_color
-				. += secondary_worn
-			if(hastertiary)
-				var/mutable_appearance/tertiary_worn = mutable_appearance(alternate_worn_icon, "[item_color]-tertiary")
-				tertiary_worn.color = tertiary_color
-				. += tertiary_worn
-
 /obj/item/clothing/neck/petcollar/leather
 	name = "leather pet collar"
 	icon_state = "leathercollar"
-	item_color = "leathercollar"
-
-	hasprimary = TRUE
-	hassecondary = TRUE
-	primary_color = "#222222"
-	secondary_color = "#888888"
+	poly_states = 2
+	poly_colors = list("#222222", "#888888")
 
 /obj/item/clothing/neck/petcollar/choker
 	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
 	name = "choker"
 	icon_state = "choker"
-	item_color = "choker"
-
-	hasprimary = TRUE
-	primary_color = "#222222"
+	poly_colors = list("#222222")
 
 /obj/item/clothing/neck/petcollar/locked
 	name = "locked collar"
 	desc = "A collar that has a small lock on it to keep it from being removed."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/collar/locked
+	treat_path = /obj/item/key/collar
 	var/lock = FALSE
 
 /obj/item/clothing/neck/petcollar/locked/attackby(obj/item/K, mob/user, params)
@@ -253,33 +230,18 @@
 /obj/item/clothing/neck/petcollar/locked/leather
 	name = "leather pet collar"
 	icon_state = "leathercollar"
-	item_color = "leathercollar"
-
-	hasprimary = TRUE
-	hassecondary = TRUE
-	primary_color = "#222222"
-	secondary_color = "#888888"
+	poly_states = 2
+	poly_colors = list("#222222", "#888888")
 
 /obj/item/clothing/neck/petcollar/locked/choker
 	name = "choker"
 	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
 	icon_state = "choker"
-	item_color = "choker"
-
-	hasprimary = TRUE
-	primary_color = "#222222"
+	poly_colors = list("#222222")
 
 /obj/item/key/collar
 	name = "Collar Key"
 	desc = "A key for a tiny lock on a collar or bag."
-
-/obj/item/clothing/neck/petcollar/Initialize()
-	. = ..()
-	new /obj/item/reagent_containers/food/snacks/cookie(src)
-
-/obj/item/clothing/neck/petcollar/locked/Initialize()
-	. = ..()
-	new /obj/item/key/collar(src)
 
 //////////////
 //DOPE BLING//
@@ -290,7 +252,40 @@
 	desc = "Damn, it feels good to be a gangster."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
-	item_color = "bling"
+
+/obj/item/clothing/neck/necklace/dope/merchant
+	desc = "Don't ask how it works, the proof is in the holochips!"
+	/// scales the amount received in case an admin wants to emulate taxes/fees.
+	var/profit_scaling = 1
+	/// toggles between sell (TRUE) and get price post-fees (FALSE)
+	var/selling = FALSE
+
+/obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
+	. = ..()
+	selling = !selling
+	to_chat(user, "<span class='notice'>[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode.</span>")
+
+/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	var/datum/export_report/ex = export_item_and_contents(I, allowed_categories = (ALL), dry_run=TRUE)
+	var/price = 0
+	for(var/x in ex.total_amount)
+		price += ex.total_value[x]
+
+	if(price)
+		var/true_price = round(price*profit_scaling)
+		to_chat(user, "<span class='notice'>[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]</span>")
+		if(selling)
+			new /obj/item/holochip(get_turf(user),true_price)
+			for(var/i in ex.exported_atoms_ref)
+				var/atom/movable/AM = i
+				if(QDELETED(AM))
+					continue
+				qdel(AM)
+	else
+		to_chat(user, "<span class='warning'>There is no export value for [I] or any items within it.</span>")
 
 //////////////////////////////////
 //VERY SUPER BADASS NECKERCHIEFS//
@@ -304,7 +299,7 @@ obj/item/clothing/neck/neckerchief
 /obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
 	. = ..()
 	if(!isinhands)
-		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
+		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/clothing/mask.dmi', icon_state)
 		realOverlay.pixel_y = -3
 		. += realOverlay
 

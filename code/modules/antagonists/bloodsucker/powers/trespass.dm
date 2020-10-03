@@ -28,7 +28,7 @@
 
 /datum/action/bloodsucker/targeted/trespass/CheckValidTarget(atom/A)
 	// Can't target my tile
-	if (A == get_turf(owner) || get_turf(A) == get_turf(owner))
+	if(A == get_turf(owner) || get_turf(A) == get_turf(owner))
 		return FALSE
 
 	return TRUE //  All we care about is destination. Anything you click is fine.
@@ -43,13 +43,13 @@
 	// Are either tiles WALLS?
 	var/turf/from_turf = get_turf(owner)
 	var/this_dir // = get_dir(from_turf, target_turf)
-	for (var/i=1 to 2)
+	for(var/i=1 to 2)
 		// Keep Prev Direction if we've reached final turf
-		if (from_turf != final_turf)
+		if(from_turf != final_turf)
 			this_dir = get_dir(from_turf, final_turf) // Recalculate dir so we don't overshoot on a diagonal.
 		from_turf = get_step(from_turf, this_dir)
 		// ERROR! Wall!
-		if (iswallturf(from_turf))
+		if(iswallturf(from_turf))
 			if (display_error)
 				var/wallwarning = (i == 1) ? "in the way" : "at your destination"
 				to_chat(owner, "<span class='warning'>There is a solid wall [wallwarning].</span>")
@@ -84,7 +84,7 @@
 	user.next_move = world.time + mist_delay
 	user.Stun(mist_delay, ignore_canstun = TRUE)
 	user.notransform = TRUE
-	user.density = 0
+	user.density = FALSE
 	var/invis_was = user.invisibility
 	user.invisibility = INVISIBILITY_MAXIMUM
 
@@ -94,7 +94,7 @@
 	sleep(mist_delay / 2)
 
 	// Move & Freeze
-	if (isturf(target_turf))
+	if(isturf(target_turf))
 		do_teleport(owner, target_turf, no_effects=TRUE, channel = TELEPORT_CHANNEL_QUANTUM) // in teleport.dm?
 	user.next_move = world.time + mist_delay / 2
 	user.Stun(mist_delay / 2, ignore_canstun = TRUE)

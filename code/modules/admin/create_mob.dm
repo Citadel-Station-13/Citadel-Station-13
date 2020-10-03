@@ -18,6 +18,7 @@
 	H.undie_color = random_short_color()
 	H.undershirt = random_undershirt(H.gender)
 	H.shirt_color = random_short_color()
+	H.dna.skin_tone_override = null
 	H.skin_tone = random_skin_tone()
 	H.hair_style = random_hair_style(H.gender)
 	H.facial_hair_style = random_facial_hair_style(H.gender)

@@ -6,10 +6,10 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	name = "Dwarf"
 	id = "dwarf" //Also called Homo sapiens pumilionis
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NO_UNDERWEAR)
-	inherent_traits = list()
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	inherent_traits = list(TRAIT_DWARF,TRAIT_SNOB)
 	limbs_id = "human"
-	use_skintones = 1
+	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	say_mod = "bellows" //high energy, EXTRA BIOLOGICAL FUEL
 	damage_overlay_type = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	disliked_food = JUNKFOOD | FRIED //Dwarves hate foods that have no nutrition other than alcohol.
 	mutant_organs = list(/obj/item/organ/dwarfgland) //Dwarven alcohol gland, literal gland warrior
 	mutantliver = /obj/item/organ/liver/dwarf //Dwarven super liver (Otherwise they r doomed)
+	species_language_holder = /datum/language_holder/dwarf
 
 /mob/living/carbon/human/species/dwarf //species admin spawn path
 	race = /datum/species/dwarf //and the race the path is set to.
@@ -30,18 +31,14 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	. = ..()
 	var/dwarf_hair = pick("Beard (Dwarf)", "Beard (Very Long)", "Beard (Long)") //beard roullette
 	var/mob/living/carbon/human/H = C
-	H.grant_language(/datum/language/dwarf)
 	H.facial_hair_style = dwarf_hair
 	H.update_hair()
-	H.transform = H.transform.Scale(1, 0.8) //We use scale, and yeah. Dwarves can become gnomes with DWARFISM.
+	H.AddElement(/datum/element/dwarfism, COMSIG_SPECIES_LOSS, src)
 	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech) //We register handle_speech is being used.
-
 
 /datum/species/dwarf/on_species_loss(mob/living/carbon/H, datum/species/new_species)
 	. = ..()
-	H.transform = H.transform.Scale(1, 1.25) //And we undo it.
 	UnregisterSignal(H, COMSIG_MOB_SAY) //We register handle_speech is not being used.
-	H.remove_language(/datum/language/dwarf)
 
 //Dwarf Name stuff
 /proc/dwarf_name() //hello caller: my name is urist mcuristurister
@@ -90,9 +87,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	var/heal_rate = 0.5 //The rate they heal damages over 400 alcohol stored. Default is 0.5 so we times 3 since 3 seconds.
 	var/alcohol_rate = 0.25 //The rate the alcohol ticks down per each iteration of dwarf_eth_ticker completing.
 	//These count in on_life ticks which should be 2 seconds per every increment of 1 in a perfect world.
-	var/dwarf_filth_ticker = 0 //Currently set =< 4, that means this will fire the proc around every 4-8 seconds.
 	var/dwarf_eth_ticker = 0 //Currently set =< 1, that means this will fire the proc around every 2 seconds
-	var/last_filth_spam
 	var/last_alcohol_spam
 
 /obj/item/organ/dwarfgland/prepare_eat()
@@ -102,66 +97,11 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 
 /obj/item/organ/dwarfgland/on_life() //Primary loop to hook into to start delayed loops for other loops..
 	. = ..()
-	dwarf_cycle_ticker()
-
-//Handles the delayed tick cycle by just adding on increments per each on_life() tick
-/obj/item/organ/dwarfgland/proc/dwarf_cycle_ticker()
-	if(owner.stat == DEAD)
-		return //We make sure they are not dead, so they don't increment any tickers.
-	dwarf_eth_ticker++
-	dwarf_filth_ticker++
-
-	if(dwarf_filth_ticker >= 4) //Should be around 4-8 seconds since a tick is around 2 seconds.
-		dwarf_filth_cycle()		//On_life will adjust regarding other factors, so we are along for the ride.
-		dwarf_filth_ticker = 0 //We set the ticker back to 0 to go again.
-	if(dwarf_eth_ticker >= 1) //Alcohol reagent check should be around 2 seconds, since a tick is around 2 seconds.
-		dwarf_eth_cycle()
-		dwarf_eth_ticker = 0
-
-//If this still friggin uses too much CPU, I'll make a for view subsystem If I have to.
-/obj/item/organ/dwarfgland/proc/dwarf_filth_cycle()
-	if(!owner?.client || !owner?.mind)
-		return
-	//Filth Reactions - Since miasma now exists
-	var/filth_counter = 0 //Holder for the filth check cycle, basically contains how much filth dwarf sees numerically.
-	for(var/fuck in view(owner,7)) //hello byond for view loop.
-		if(istype(fuck, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = fuck
-			if(H.stat == DEAD || (HAS_TRAIT(H, TRAIT_FAKEDEATH)))
-				filth_counter += 10
-		if(istype(fuck, /obj/effect/decal/cleanable/blood))
-			if(istype(fuck, /obj/effect/decal/cleanable/blood/gibs))
-				filth_counter += 1
-			else
-				filth_counter += 0.1
-		if(istype(fuck,/obj/effect/decal/cleanable/vomit)) //They are disgusted by their own vomit too.
-			filth_counter += 10 //Dwarves could technically chainstun each other in a vomit tantrum spiral.
-	switch(filth_counter)
-		if(11 to 25)
-			if(last_filth_spam + 40 SECONDS < world.time)
-				to_chat(owner, "<span class = 'warning'>Someone should really clean up in here!</span>")
-				last_filth_spam = world.time
-		if(26 to 50)
-			if(prob(6)) //And then the probability they vomit along with it.
-				to_chat(owner, "<span class = 'danger'>The stench makes you queasy.</span>")
-				owner.vomit(10) //I think vomit should stay over a disgust adjustment.
-		if(51 to 75)
-			if(prob(9))
-				to_chat(owner, "<span class = 'danger'>By Armok! You won't be able to keep alcohol down at all!</span>")
-				owner.vomit(20) //Its more funny
-		if(76 to 100)
-			if(prob(11))
-				to_chat(owner, "<span class = 'userdanger'>You can't live in such FILTH!</span>")
-				owner.adjustToxLoss(10) //Now they start dying.
-				owner.vomit(20)
-		if(101 to INFINITY) //Now they will really start dying
-			if(last_filth_spam + 12 SECONDS < world.time)
-				to_chat(owner, "<span class = 'userdanger'> THERES TOO MUCH FILTH, OH GODS THE FILTH!</span>")
-				last_filth_spam = world.time
-			if(prob(40))
-				owner.adjustToxLoss(15)
-				owner.vomit(30)
-	CHECK_TICK //Check_tick right here, its motherfuckin magic. (To me at least)
+	if(owner && owner.stat != DEAD)
+		dwarf_eth_ticker++
+		if(dwarf_eth_ticker >= 1) //Alcohol reagent check should be around 2 seconds, since a tick is around 2 seconds.
+			dwarf_eth_cycle()
+			dwarf_eth_ticker = 0
 
 //Handles the dwarf alcohol cycle tied to on_life, it ticks in dwarf_cycle_ticker.
 /obj/item/organ/dwarfgland/proc/dwarf_eth_cycle()
@@ -170,7 +110,7 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
-			stored_alcohol = CLAMP(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
+			stored_alcohol = clamp(stored_alcohol + E.boozepwr / 50, 0, max_alcohol)
 	var/heal_amt = heal_rate
 	stored_alcohol -= alcohol_rate //Subtracts alcohol_Rate from stored alcohol so EX: 250 - 0.25 per each loop that occurs.
 	if(stored_alcohol > 400) //If they are over 400 they start regenerating

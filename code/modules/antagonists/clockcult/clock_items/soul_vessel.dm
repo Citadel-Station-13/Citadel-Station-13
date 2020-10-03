@@ -31,6 +31,7 @@
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_name
 	GLOB.all_clockwork_objects += src
+	brainmob.add_blocked_language(subtypesof(/datum/language) - /datum/language/ratvar, LANGUAGE_CLOCKIE)
 
 /obj/item/mmi/posibrain/soul_vessel/Destroy()
 	GLOB.all_clockwork_objects -= src

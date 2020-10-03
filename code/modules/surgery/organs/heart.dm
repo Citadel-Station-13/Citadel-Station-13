@@ -15,6 +15,7 @@
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
+	var/no_pump = FALSE
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
@@ -66,27 +67,28 @@
 	return S
 
 /obj/item/organ/heart/on_life()
-	..()
+	. = ..()
+	if(!owner || no_pump)
+		return
 	if(owner.client && beating)
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
-		var/mob/living/carbon/H = owner
 
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
+		if(owner.health <= owner.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+			owner.playsound_local(get_turf(owner), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+		if(beat == BEAT_SLOW && owner.health > owner.crit_threshold)
+			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-		if(H.jitteriness)
-			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+		if(owner.jitteriness)
+			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+				owner.playsound_local(get_turf(owner),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
 	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
@@ -107,6 +109,7 @@ obj/item/organ/heart/slime
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
 	decay_factor = 0
+	no_pump = TRUE
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
@@ -128,6 +131,9 @@ obj/item/organ/heart/slime
 		return ..()
 
 /obj/item/organ/heart/cursed/on_life()
+	. = ..()
+	if(!owner)
+		return
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
@@ -208,12 +214,14 @@ obj/item/organ/heart/slime
 
 obj/item/organ/heart/cybernetic/upgraded/on_life()
 	. = ..()
+	if(!.)
+		return
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		owner.reagents.add_reagent(rid, ramount)
 		used_dose()
 	if(ramount < 10) //eats your nutrition to regen epinephrine
 		var/regen_amount = owner.nutrition/2000
-		owner.nutrition -= regen_amount
+		owner.adjust_nutrition(-regen_amount)
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
@@ -233,7 +241,7 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 
 /obj/item/organ/heart/freedom/on_life()
 	. = ..()
-	if(owner.health < 5 && world.time > min_next_adrenaline)
+	if(. && owner.health < 5 && world.time > min_next_adrenaline)
 		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
 		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
 		owner.heal_overall_damage(15, 15)

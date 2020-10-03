@@ -9,6 +9,7 @@
 	id = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
+	pugilist = TRUE
 	var/old_grab_state = null
 
 /datum/martial_art/cqc/reset_streak(mob/living/carbon/human/new_target)
@@ -168,24 +169,29 @@
 		return FALSE
 	add_to_streak("D",D)
 	var/obj/item/I = null
-	var/damage = (damage_roll(A,D)*0.5)
+	var/damage = damage_roll(A,D)
+	var/stunthreshold = A.dna.species.punchstunthreshold
 	if(check_streak(A,D))
 		return TRUE
-	if(prob(65))
-		if(CHECK_MOBILITY(D, MOBILITY_MOVE) || !restraining)
+	if(CHECK_MOBILITY(D, MOBILITY_MOVE) || !restraining)
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		if(damage >= stunthreshold)	
 			I = D.get_active_held_item()
 			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \
-								"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
+							"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
 			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
-			if(I && D.temporarilyRemoveItemFromInventory(I))
-				A.put_in_hands(I)
+			D.drop_all_held_items()
 			D.Jitter(2)
-			D.apply_damage(damage, BRUTE)
-	else
-		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
-							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
-		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-	log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
+			D.Dizzy(damage)
+			D.apply_damage(damage*2 + 20, STAMINA)
+			D.apply_damage(damage*0.5, BRUTE)
+		else
+			D.visible_message("<span class='danger'>[A] strikes [D] in the chest!</span>", \
+							"<span class='userdanger'>[A] strikes in chest!</span>")
+			playsound(D, 'sound/weapons/cqchit1.ogg', 25, 1, -1)
+			D.apply_damage(damage + 15, STAMINA)
+			D.apply_damage(damage*0.5, BRUTE)
+		log_combat(A, D, "disarmed (CQC)", "[I ? " grabbing \the [I]" : ""]")
 	if(restraining && A.pulling == D)
 		log_combat(A, D, "knocked out (Chokehold)(CQC)")
 		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \

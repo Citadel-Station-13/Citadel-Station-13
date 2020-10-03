@@ -4,7 +4,7 @@
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 30,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,		
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
 					/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
@@ -39,12 +39,11 @@
 					/obj/item/reagent_containers/food/drinks/bottle/trappist = 5)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
-	req_access = list(ACCESS_BAR)
 	refill_canister = /obj/item/vending_refill/boozeomat
-
-/obj/machinery/vending/boozeomat/all_access
-	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. This model appears to have no access restrictions."
-	req_access = null
+	default_price = 120
+	extra_price = 100
+	payment_department = ACCOUNT_SRV
+	cost_multiplier_per_dept = list(ACCOUNT_SRV = 0)
 
 /obj/machinery/vending/boozeomat/pubby_maint //abandoned bar on Pubbystation
 	products = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey = 1,
@@ -56,7 +55,6 @@
 			/obj/item/reagent_containers/food/drinks/ice = 3,
 			/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 6,
 			/obj/item/reagent_containers/food/drinks/flask = 1)
-	req_access = null
 
 /obj/machinery/vending/boozeomat/pubby_captain //Captain's quarters on Pubbystation
 	products = list(/obj/item/reagent_containers/food/drinks/bottle/rum = 1,
@@ -65,10 +63,17 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 6,
 					/obj/item/reagent_containers/food/drinks/ice = 1,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 4);
-	req_access = list(ACCESS_CAPTAIN)
+
+/obj/machinery/vending/boozeomat/pubby_captain/Initialize()
+	. = ..()
+	cost_multiplier_per_dept = list("[ACCESS_CAPTAIN]" = 0)
 
 /obj/machinery/vending/boozeomat/syndicate_access
-	req_access = list(ACCESS_SYNDICATE)
+	payment_department = NO_FREEBIES
+
+/obj/machinery/vending/boozeomat/syndicate_access/Initialize()
+	. = ..()
+	cost_multiplier_per_dept = list("[ACCESS_SYNDICATE]" = 0)
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"

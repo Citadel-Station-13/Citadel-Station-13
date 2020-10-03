@@ -62,18 +62,21 @@
 
 /obj/mecha/combat/neovgre/process()
 	..()
-	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hople to stop the superweapon
+	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hope to stop the superweapon
 		cell.charge = INFINITY
 		max_integrity = INFINITY
 		obj_integrity = max_integrity
 		CHECK_TICK //Just to be on the safe side lag wise
-	else if(cell.charge < cell.maxcharge)
-		for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
-			var/delta = min(recharge_rate, cell.maxcharge - cell.charge)
-			if (get_clockwork_power() <= delta)
-				cell.charge += delta
-				adjust_clockwork_power(-delta)
-			CHECK_TICK
+	else
+		if(cell.charge < cell.maxcharge)
+			for(var/obj/effect/clockwork/sigil/transmission/T in range(SIGIL_ACCESS_RANGE, src))
+				var/delta = min(recharge_rate, cell.maxcharge - cell.charge)
+				if (get_clockwork_power() >= delta)
+					cell.charge += delta
+					adjust_clockwork_power(-delta)
+		if(obj_integrity < max_integrity && istype(loc, /turf/open/floor/clockwork))
+			obj_integrity += min(max_integrity - obj_integrity, max_integrity / 200)
+		CHECK_TICK
 
 /obj/mecha/combat/neovgre/Initialize()
 	.=..()
@@ -90,7 +93,7 @@
 	energy_drain = 30
 	name = "Aribter Laser Cannon"
 	desc = "Please re-attach this to neovgre and stop asking questions about why it looks like a normal Nanotrasen issue Solaris laser cannon - Nezbere"
-	fire_sound = "sound/weapons/neovgre_laser.ogg"
+	fire_sound = 'sound/weapons/neovgre_laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy/neovgre/can_attach(obj/mecha/combat/neovgre/M)
 	if(istype(M))

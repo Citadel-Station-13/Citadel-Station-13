@@ -58,18 +58,22 @@
 /obj/item/wallframe/proc/after_attach(var/obj/O)
 	transfer_fingerprints_to(O)
 
-/obj/item/wallframe/attackby(obj/item/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/screwdriver))
-		// For camera-building borgs
-		var/turf/T = get_step(get_turf(user), user.dir)
-		if(iswallturf(T))
-			T.attackby(src, user, params)
+/obj/item/wallframe/screwdriver_act(mob/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	// For camera-building borgs
+	var/turf/T = get_step(get_turf(user), user.dir)
+	if(iswallturf(T))
+		T.attackby(src, user)
 
+/obj/item/wallframe/wrench_act(mob/user, obj/item/I)
+	if(!custom_materials)
+		return
 	var/metal_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT)
 	var/glass_amt = round(custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT)
 
-	if(istype(W, /obj/item/wrench) && (metal_amt || glass_amt))
+	if(metal_amt || glass_amt)
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
 			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)

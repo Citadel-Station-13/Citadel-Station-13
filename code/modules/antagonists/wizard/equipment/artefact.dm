@@ -159,7 +159,7 @@
 /obj/item/scrying/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	user.ghostize(1)
+	user.ghostize(1, voluntary = TRUE)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 

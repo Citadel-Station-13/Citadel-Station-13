@@ -37,16 +37,19 @@
 /obj/machinery/mineral/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
-	var/ore_multiplier_temp = 1
+	var/avg_bin_level = 0
+	var/bins = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
+		avg_bin_level = B.rating
+		bins++
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		point_upgrade_temp = 0.65 + (0.35 * L.rating)
+	avg_bin_level /= bins? bins : 1
+	ore_multiplier = STANDARD_PART_LEVEL_ORE_COEFFICIENT(avg_bin_level)
 	ore_pickup_rate = ore_pickup_rate_temp
 	point_upgrade = point_upgrade_temp
-	ore_multiplier = round(ore_multiplier_temp, 0.01)
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()

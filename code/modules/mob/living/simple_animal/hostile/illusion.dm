@@ -10,7 +10,8 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	a_intent = INTENT_HARM
-	attacktext = "gores"
+	attack_verb_continuous = "gores"
+	attack_verb_simple = "gore"
 	maxHealth = 100
 	health = 100
 	speed = 0
@@ -20,6 +21,7 @@
 	var/multiply_chance = 0 //if we multiply on hit
 	del_on_death = 1
 	deathmessage = "vanishes into thin air! It was a fake!"
+	has_field_of_vision = FALSE //not meant to be played anyway.
 
 
 /mob/living/simple_animal/hostile/illusion/Life()

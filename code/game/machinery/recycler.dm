@@ -100,43 +100,60 @@
 	eat(AM)
 	. = ..()
 
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+/obj/machinery/recycler/proc/eat(atom/AM0)
 	if(stat & (BROKEN|NOPOWER) || safety_mode)
 		return
 
 	var/list/to_eat
 
-	to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
+	to_eat = list(AM0)
 
 	var/items_recycled = 0
+	var/buzz = FALSE
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
+		if(QDELETED(AM))
+			continue
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay)
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay)
 		if(brain_holder)
-			emergency_stop(AM)
-		else if(isliving(AM))
-			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
-				crush_living(AM)
+			if(obj_flags & EMAGGED)
+				continue
 			else
 				emergency_stop(AM)
+				return
+		else if(isliving(AM))
+			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
+				to_eat += crush_living(AM)
+			else
+				emergency_stop(AM)
+				return
 		else if(isitem(AM))
 			var/obj/O = AM
 			if(O.resistance_flags & INDESTRUCTIBLE)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+				buzz = TRUE
 				O.forceMove(loc)
 			else
-				recycle_item(AM)
+				to_eat += recycle_item(AM)
 				items_recycled++
 		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			buzz = TRUE
 			AM.forceMove(loc)
 
-	if(items_recycled && sound)
+	if(items_recycled)
 		playsound(src, item_recycle_sound, 50, 1)
+	if(buzz)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
+
+	. = list()
+	for(var/A in I)
+		var/atom/movable/AM = A
+		AM.forceMove(loc)
+		if(AM.loc == loc)
+			. += AM
 
 	I.forceMove(loc)
 	var/obj/item/grown/log/L = I
@@ -172,6 +189,7 @@
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
+	. = list()
 	L.forceMove(loc)
 
 	if(issilicon(L))
@@ -193,7 +211,7 @@
 	if(eat_victim_items)
 		for(var/obj/item/I in L.get_equipped_items(TRUE))
 			if(L.dropItemToGround(I))
-				eat(I, sound=FALSE)
+				. += I
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)

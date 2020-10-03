@@ -47,6 +47,7 @@
 		slice.name = "raw [subjectname] cutlet"
 	else if(subjectjob)
 		slice.name = "raw [subjectjob] cutlet"
+	slice.adjust_food_quality(food_quality)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()

@@ -47,25 +47,12 @@
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects.
 
-	//Polychrome stuff:
-	var/hasprimary = FALSE	//These vars allow you to choose which overlays a clothing has
-	var/hassecondary = FALSE
-	var/hastertiary = FALSE
-	var/primary_color = "#FFFFFF" //RGB in hexcode
-	var/secondary_color = "#FFFFFF"
-	var/tertiary_color = "#808080"
-
-	//No idea what this is but eh	-tori
-	var/force_alternate_icon = FALSE
-
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
-	if(hasprimary | hassecondary | hastertiary)	//Checks if polychrome is enabled
-		update_icon()	//Applies the overlays and default colors onto the clothes on spawn.
 
 /obj/item/clothing/MouseDrop(atom/over_object)
 	. = ..()
@@ -150,8 +137,6 @@
 			how_cool_are_your_threads += "Adding or removing items from [src] makes no noise.\n"
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
-	if(hasprimary | hassecondary | hastertiary)	//Checks if polychrome is enabled
-		. += "<span class='notice'>Alt-click to recolor it.</span>"
 
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
@@ -188,179 +173,18 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index,t_color,icon,type)
-	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s				= icon("icon"='icons/mob/uniform.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
-	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
-	female_clothing_icon 			= fcopy_rsc(female_clothing_icon)
-	GLOB.female_clothing_icons[index] = female_clothing_icon
-
-/obj/item/clothing/under/verb/toggle()
-	set name = "Adjust Suit Sensors"
-	set category = "Object"
-	set src in usr
-	var/mob/M = usr
-	if (istype(M, /mob/dead/))
-		return
-	if (!can_use(M))
-		return
-	if(src.has_sensor == LOCKED_SENSORS)
-		to_chat(usr, "The controls are locked.")
-		return 0
-	if(src.has_sensor == BROKEN_SENSORS)
-		to_chat(usr, "The sensors have shorted out!")
-		return 0
-	if(src.has_sensor <= NO_SENSORS)
-		to_chat(usr, "This suit does not have any sensors.")
-		return 0
-
-	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
-		return
-	sensor_mode = modes.Find(switchMode) - 1
-
-	if (src.loc == usr)
-		switch(sensor_mode)
-			if(0)
-				to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
-			if(1)
-				to_chat(usr, "<span class='notice'>Your suit will now only report whether you are alive or dead.</span>")
-			if(2)
-				to_chat(usr, "<span class='notice'>Your suit will now only report your exact vital lifesigns.</span>")
-			if(3)
-				to_chat(usr, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
-
-
-/obj/item/clothing/under/CtrlClick(mob/user)
-	. = ..()
-
-	if (!(item_flags & IN_INVENTORY))
-		return
-
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-
-	if(has_sensor == LOCKED_SENSORS)
-		to_chat(user, "The controls are locked.")
-		return
-	if(has_sensor == BROKEN_SENSORS)
-		to_chat(user, "The sensors have shorted out!")
-		return
-	if(has_sensor <= NO_SENSORS)
-		to_chat(user, "This suit does not have any sensors.")
-		return
-
-	sensor_mode = SENSOR_COORDS
-
-	to_chat(user, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.w_uniform == src)
-			H.update_suit_sensors()
-
-/obj/item/clothing/under/AltClick(mob/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(attached_accessory)
-		remove_accessory(user)
-	else
-		rolldown()
-	// Polychrome stuff:
-	if(hasprimary | hassecondary | hastertiary)
-		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
-		switch(choice)	//Lets the list's options actually lead to something
-			if("Primary Color")
-				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
-				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
-					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
-				update_icon()	//updates the item icon
-				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
-			if("Secondary Color")
-				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
-				if(secondary_color_input)
-					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
-				update_icon()
-				user.regenerate_icons()
-			if("Tertiary Color")
-				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
-				if(tertiary_color_input)
-					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
-				update_icon()
-				user.regenerate_icons()
-	return TRUE
-
-/obj/item/clothing/neck/AltClick(mob/user)
-	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	// Polychrome stuff:
-	if(hasprimary | hassecondary | hastertiary)
-		var/choice = input(user,"polychromic thread options", "Clothing Recolor") as null|anything in list("[hasprimary ? "Primary Color" : ""]", "[hassecondary ? "Secondary Color" : ""]", "[hastertiary ? "Tertiary Color" : ""]")	//generates a list depending on the enabled overlays
-		switch(choice)	//Lets the list's options actually lead to something
-			if("Primary Color")
-				var/primary_color_input = input(usr,"","Choose Primary Color",primary_color) as color|null	//color input menu, the "|null" adds a cancel button to it.
-				if(primary_color_input)	//Checks if the color selected is NULL, rejects it if it is NULL.
-					primary_color = sanitize_hexcolor(primary_color_input, desired_format=6, include_crunch=1)	//formats the selected color properly
-				update_icon()	//updates the item icon
-				user.regenerate_icons()	//updates the worn icon. Probably a bad idea, but it works.
-			if("Secondary Color")
-				var/secondary_color_input = input(usr,"","Choose Secondary Color",secondary_color) as color|null
-				if(secondary_color_input)
-					secondary_color = sanitize_hexcolor(secondary_color_input, desired_format=6, include_crunch=1)
-				update_icon()
-				user.regenerate_icons()
-			if("Tertiary Color")
-				var/tertiary_color_input = input(usr,"","Choose Tertiary Color",tertiary_color) as color|null
-				if(tertiary_color_input)
-					tertiary_color = sanitize_hexcolor(tertiary_color_input, desired_format=6, include_crunch=1)
-				update_icon()
-				user.regenerate_icons()
-	return TRUE
-
-/obj/item/clothing/under/verb/jumpsuit_adjust()
-	set name = "Adjust Jumpsuit Style"
-	set category = null
-	set src in usr
-	rolldown()
-
-/obj/item/clothing/under/proc/rolldown()
-	if(!can_use(usr))
-		return
-	if(!can_adjust)
-		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
-		return
-	if(toggle_jumpsuit_adjust())
-		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.update_inv_w_uniform()
-		H.update_body()
-
-/obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
-	adjusted = !adjusted
-
-	if(adjusted)
-		if(fitted != FEMALE_UNIFORM_TOP)
-			fitted = NO_FEMALE_UNIFORM
-		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
-			body_parts_covered &= ~CHEST
-	else
-		fitted = initial(fitted)
-		if(!alt_covers_chest)
-			body_parts_covered |= CHEST
-
-	return adjusted
+/proc/generate_alpha_masked_clothing(index,state,icon,female,alpha_masks)
+	var/icon/I = icon(icon, state)
+	if(female)
+		var/icon/female_s = icon('icons/mob/clothing/alpha_masks.dmi', "[(female == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
+		I.Blend(female_s, ICON_MULTIPLY, -15, -15) //it's a 64x64 icon.
+	if(alpha_masks)
+		if(istext(alpha_masks))
+			alpha_masks = list(alpha_masks)
+		for(var/alpha_state in alpha_masks)
+			var/icon/alpha = icon('icons/mob/clothing/alpha_masks.dmi', alpha_state)
+			I.Blend(alpha, ICON_MULTIPLY, -15, -15)
+	. = GLOB.alpha_masked_worn_icons[index] = fcopy_rsc(I)
 
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(user))
@@ -441,15 +265,3 @@ BLIND     // can't see anything
 				return FALSE
 
 	return TRUE
-
-/obj/item/clothing/update_overlays()	// Polychrome stuff
-	. = ..()
-	if(hasprimary)	//Checks if the overlay is enabled
-		var/mutable_appearance/primary_overlay = mutable_appearance(icon, "[item_color]-primary", color = primary_color)	//Automagically picks overlays
-		. += primary_overlay	//Applies the coloured overlay onto the item sprite. but NOT the mob sprite.
-	if(hassecondary)
-		var/mutable_appearance/secondary_overlay = mutable_appearance(icon, "[item_color]-secondary", color = secondary_color)
-		. += secondary_overlay
-	if(hastertiary)
-		var/mutable_appearance/tertiary_overlay = mutable_appearance(icon, "[item_color]-tertiary", color = tertiary_color)
-		. += tertiary_overlay

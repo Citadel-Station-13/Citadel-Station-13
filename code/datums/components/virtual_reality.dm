@@ -176,7 +176,7 @@
 /**
   *The following procs simply acts as hooks for quit(), since components do not use callbacks anymore
   */
-/datum/component/virtual_reality/proc/action_trigger(datum/signal_source, datum/action/source)
+/datum/component/virtual_reality/proc/action_trigger(datum/action/source, obj/target)
 	quit()
 	return COMPONENT_ACTION_BLOCK_TRIGGER
 

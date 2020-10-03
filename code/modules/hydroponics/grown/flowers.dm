@@ -318,3 +318,4 @@
 	bitesize_mod = 8
 	tastes = list("wax" = 1)
 	foodtype = SUGAR
+	distill_reagent = /datum/reagent/consumable/ethanol/mead

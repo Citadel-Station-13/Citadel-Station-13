@@ -35,10 +35,8 @@ SUBSYSTEM_DEF(shuttle)
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
-	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
-	var/passive_supply_points_per_minute = 125
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -112,9 +110,6 @@ SUBSYSTEM_DEF(shuttle)
 			if(idle && not_centcom_evac && not_in_use)
 				qdel(T, force=TRUE)
 	CheckAutoEvac()
-
-	if(!(times_fired % CEILING(600/wait, 1)))
-		points += passive_supply_points_per_minute
 
 	var/esETA = emergency?.getModeStr()
 	emergency_shuttle_stat_text = "[esETA? "[esETA] [emergency.getTimerStr()]" : ""]"
@@ -217,13 +212,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	call_reason = trim(html_encode(call_reason))
 
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
+	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && GLOB.security_level > SEC_LEVEL_GREEN)
 		to_chat(user, "You must provide a reason.")
 		return
 
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	var/security_num = seclevel2num(get_security_level())
+	var/security_num = GLOB.security_level
 	switch(security_num)
 		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
@@ -285,7 +280,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL || emergencyNoRecall || SSticker.mode.name == "meteor")
 		return
-	var/security_num = seclevel2num(get_security_level())
+	var/security_num = GLOB.security_level
 	switch(security_num)
 		if(SEC_LEVEL_GREEN)
 			if(emergency.timeLeft(1) < emergencyCallTime)
@@ -559,7 +554,6 @@ SUBSYSTEM_DEF(shuttle)
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
-	points = SSshuttle.points
 	emergencyNoEscape = SSshuttle.emergencyNoEscape
 	emergencyCallAmount = SSshuttle.emergencyCallAmount
 	shuttle_purchased = SSshuttle.shuttle_purchased
@@ -642,7 +636,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end without being a proper shuttle call?
 	if(EMERGENCY_IDLE_OR_RECALLED)
 		SSshuttle.emergency.request(silent = TRUE)
-		priority_announce("The shift has come to an end and the shuttle called. [seclevel2num(get_security_level()) == SEC_LEVEL_RED ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [emergency.timeLeft(600)] minutes.", null, "shuttlecalled", "Priority")
+		priority_announce("The shift has come to an end and the shuttle called. [GLOB.security_level == SEC_LEVEL_RED ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [emergency.timeLeft(600)] minutes.", null, "shuttlecalled", "Priority")
 		log_game("Round end vote passed. Shuttle has been auto-called.")
 		message_admins("Round end vote passed. Shuttle has been auto-called.")
 	emergencyNoRecall = TRUE

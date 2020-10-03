@@ -96,6 +96,8 @@
 	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/preservahyde = 3)
+	custom_price = 150
+	custom_premium_price = 300
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -207,8 +209,8 @@
 #define DELUXE_SELF_SPRAY 10
 #define DELUXE_SELF_INJECT 10
 
-#define COMBAT_WAIT_SPRAY 0
-#define COMBAT_WAIT_INJECT 0
+#define COMBAT_WAIT_SPRAY 15
+#define COMBAT_WAIT_INJECT 15
 #define COMBAT_SELF_SPRAY 0
 #define COMBAT_SELF_INJECT 0
 
@@ -331,7 +333,6 @@
 	else
 		to_chat(user, "<span class='notice'>This doesn't fit in [src].</span>")
 		return FALSE
-	return FALSE
 
 /obj/item/hypospray/mkii/AltClick(mob/user)
 	. = ..()

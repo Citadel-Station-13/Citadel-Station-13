@@ -24,6 +24,23 @@ again.
 	name = "window spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/fulltile)
 	dir = SOUTH
+	var/electrochromatic
+	var/electrochromatic_id
+
+/obj/effect/spawner/structure/window/Initialize()
+	. = ..()
+	if(!electrochromatic)
+		return
+	if(!electrochromatic_id)
+		stack_trace("Electrochromatic window spawner set without electromatic id.")
+		return
+	if(electrochromatic_id[1] == "!")
+		electrochromatic_id = SSmapping.get_obfuscated_id(electrochromatic_id)
+	for(var/obj/structure/window/W in get_turf(src))
+		W.electrochromatic_id = electrochromatic_id
+		W.make_electrochromatic()
+		if(electrochromatic == ELECTROCHROMATIC_DIMMED)
+			W.electrochromatic_dim()
 
 /obj/effect/spawner/structure/window/hollow
 	name = "hollow window spawner"
@@ -140,13 +157,16 @@ again.
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/spawner/north, /obj/structure/window/reinforced/spawner/west)
 	. = ..()
 
-//tinted
+//tinted and electrochromatic
 
 /obj/effect/spawner/structure/window/reinforced/tinted
 	name = "tinted reinforced window spawner"
 	icon_state = "twindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/tinted/fulltile)
 
+/obj/effect/spawner/structure/window/reinforced/tinted/electrochromatic
+	name = "electrochromatic reinforced window spawner"
+	electrochromatic = ELECTROCHROMATIC_DIMMED
 
 //shuttle window
 

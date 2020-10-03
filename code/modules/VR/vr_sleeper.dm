@@ -22,6 +22,11 @@
 	sparks.set_up(2,0)
 	sparks.attach(src)
 	update_icon()
+	new_occupant_dir = dir
+
+/obj/machinery/vr_sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/vr_sleeper/attackby(obj/item/I, mob/user, params)
 	if(!state_open && !occupant)

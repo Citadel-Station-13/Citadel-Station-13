@@ -392,6 +392,8 @@
 
 		character.update_parallax_teleport()
 
+	job.standard_assign_skills(character.mind)
+
 	SSticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc

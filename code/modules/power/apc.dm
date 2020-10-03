@@ -48,7 +48,7 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
+	plane = ABOVE_WALL_PLANE
 	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
@@ -196,19 +196,23 @@
 
 	switch(tdir)
 		if(NORTH)
+			pixel_x = 0
 			pixel_y = 23
 		if(SOUTH)
+			pixel_x = 0
 			pixel_y = -23
 		if(EAST)
+			pixel_y = 0
 			pixel_x = 24
 		if(WEST)
+			pixel_y = 0
 			pixel_x = -25
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -593,19 +597,15 @@
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
-			if (C.get_amount() < 10 || !C)
+		if(C.use_tool(src, user, 20, 10) && !terminal && opened && has_electronics)
+			var/turf/T = get_turf(src)
+			var/obj/structure/cable/N = T.get_cable_node()
+			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
+				do_sparks(5, TRUE, src)
 				return
-			if (C.get_amount() >= 10 && !terminal && opened && has_electronics)
-				var/turf/T = get_turf(src)
-				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
-					do_sparks(5, TRUE, src)
-					return
-				C.use(10)
-				to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
-				make_terminal()
-				terminal.connect_to_network()
+			to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
+			make_terminal()
+			terminal.connect_to_network()
 	else if (istype(W, /obj/item/electronics/apc) && opened)
 		if (has_electronics)
 			to_chat(user, "<span class='warning'>There is already a board inside the [src]!</span>")
@@ -1350,7 +1350,7 @@
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			area.poweralert(0, src)
-		
+
 		else if(cell_percent < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
@@ -1411,6 +1411,7 @@
 		if(WIRE_POWER1, WIRE_POWER2)
 			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 				shorted = FALSE
+				update()
 		if(WIRE_AI)
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
@@ -1447,7 +1448,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)
@@ -1579,4 +1580,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
+	custom_price = 50
 	desc = "Heavy-duty switching circuits for power control."

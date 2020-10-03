@@ -118,8 +118,7 @@
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/coil = W
-				if(coil.use(1))
+				if(W.use_tool(src, user, 0, 1, max_level = JOB_SKILL_TRAINED))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \
@@ -193,7 +192,7 @@
 	var/on = FALSE					// 1 if on, 0 if off
 	var/on_gs = FALSE
 	var/static_power_used = 0
-	var/brightness = 11			// luminosity when on, also used in power calculation
+	var/brightness = 9			// luminosity when on, also used in power calculation
 	var/bulb_power = 0.75			// basically the alpha of the emitted light source
 	var/bulb_colour = "#FFF6ED"	// befault colour of the light.
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
@@ -232,7 +231,8 @@
 	icon_state = "bulb"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 6
+	brightness = 5
+	nightshift_brightness = 4
 	bulb_colour = "#FFDDBB"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
@@ -257,6 +257,7 @@
 
 /obj/machinery/light/small/built
 	icon_state = "bulb-empty"
+	start_with_cell = FALSE
 
 /obj/machinery/light/small/built/Initialize()
 	. = ..()
@@ -273,11 +274,11 @@
 	spawn(2)
 		switch(fitting)
 			if("tube")
-				brightness = 11
+				brightness = 9
 				if(prob(2))
 					break_light_tube(1)
 			if("bulb")
-				brightness = 6
+				brightness = 5
 				if(prob(5))
 					break_light_tube(1)
 		spawn(1)
@@ -311,11 +312,13 @@
 
 /obj/machinery/light/update_overlays()
 	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(on && status == LIGHT_OK)
-		var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, EMISSIVE_LAYER, EMISSIVE_PLANE)
-		glowybit.alpha = CLAMP(light_power*250, 30, 200)
-		. += glowybit
-
+		var/overlay_alpha = clamp(light_power*250, 30, 200)
+		SSvis_overlays.add_vis_overlay(src, overlayicon, base_state, EMISSIVE_UNBLOCKABLE_LAYER, EMISSIVE_UNBLOCKABLE_PLANE, dir, overlay_alpha)
+		var/mutable_appearance/M = mutable_appearance(overlayicon, base_state)
+		M.alpha = overlay_alpha
+		. += M
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
@@ -361,11 +364,11 @@
 		set_light(0)
 	update_icon()
 
-	active_power_usage = (brightness * 7.2)
+	active_power_usage = (brightness * 10)
 	if(on != on_gs)
 		on_gs = on
 		if(on)
-			static_power_used = brightness * 14.4 * (hijacked ? 2 : 1) //20W per unit luminosity
+			static_power_used = brightness * 20 * (hijacked ? 2 : 1) //20W per unit luminosity
 			addStaticPower(static_power_used, STATIC_LIGHT)
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
@@ -687,9 +690,9 @@
 	on = TRUE
 	update()
 
-/obj/machinery/light/tesla_act(power, tesla_flags)
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
-		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+/obj/machinery/light/zap_act(power, zap_flags)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
+		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
 	else
 		return ..()
@@ -748,7 +751,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	brightness = 11
+	brightness = 9
 
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
@@ -761,7 +764,7 @@
 	item_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	brightness = 6
+	brightness = 5
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
@@ -830,7 +833,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor"		// base description and icon_state
 	icon_state = "floor"
-	brightness = 6
+	brightness = 5
+	nightshift_brightness = 4
 	layer = 2.5
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

@@ -38,7 +38,18 @@
 			specialised contractor baton, and three randomly selected low cost items. Can include otherwise unobtainable items."
 	item = /obj/item/storage/box/syndie_kit/contract_kit
 	cost = 20
-	player_minimum = 15
+	player_minimum = 30
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	restricted = TRUE
+
+/datum/uplink_item/bundles_TC/northstar_bundle
+	name = "Northstar Bundle"
+	desc = "An item usually reserved for the Gorlex Marauders and their operatives, now available for recreational use.  \
+			These armbands let the user punch people very fast and with the lethality of a legendary martial artist. \
+			Does not improve weapon attack speed or the meaty fists of a hulk, but you will be unmatched in martial power. \
+			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
+	item = /obj/item/storage/box/syndie_kit/northstar
+	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/suits/infiltrator_bundle
@@ -149,6 +160,23 @@
 		if(U.purchase_log)
 			U.purchase_log.LogPurchase(goods, I, 0)
 	return C
+
+/datum/uplink_item/bundles_TC/reroll
+	name = "Renegotiate Contract"
+	desc = "Selecting this will inform the syndicate that you wish to change employers. Can only be done once; no take-backs."
+	item = /obj/effect/gibspawner/generic
+	cost = 0
+	cant_discount = TRUE
+	restricted = TRUE
+	limited_stock = 1
+
+/datum/uplink_item/bundles_TC/reroll/purchase(mob/user, datum/component/uplink/U)
+	var/datum/antagonist/traitor/T = user?.mind?.has_antag_datum(/datum/antagonist/traitor)
+	if(istype(T))
+		var/new_traitor_kind = get_random_traitor_kind(list(T.traitor_kind.type))
+		T.set_traitor_kind(new_traitor_kind)
+	else
+		to_chat(user,"Invalid user for contract renegotiation.")
 
 /datum/uplink_item/bundles_TC/random
 	name = "Random Item"

@@ -267,9 +267,8 @@
 			if(href_list["toggle"])
 				encryptmod = TRUE
 		if("translator")
-			if(href_list["toggle"])
-				grant_all_languages(TRUE)
-					// this is PERMAMENT.
+			if(href_list["toggle"])	//This is permanent.
+				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 		if("doorjack")
 			if(href_list["jack"])
 				if(cable && cable.machine)

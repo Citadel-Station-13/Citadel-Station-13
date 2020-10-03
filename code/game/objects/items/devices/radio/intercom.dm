@@ -2,6 +2,7 @@
 	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2

@@ -205,6 +205,8 @@
 		H.facial_hair_style = random_facial_hair_style(gender)
 	if(skin_tone)
 		H.skin_tone = skin_tone
+		if(!GLOB.skin_tones[H.skin_tone])
+			H.dna.skin_tone_override = H.skin_tone
 	else
 		H.skin_tone = random_skin_tone()
 	H.update_hair()
@@ -488,7 +490,7 @@
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
 	r_pocket = /obj/item/lighter
 	id = /obj/item/card/id
@@ -505,7 +507,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security

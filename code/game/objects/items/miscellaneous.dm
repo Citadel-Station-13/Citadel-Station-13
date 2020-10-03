@@ -115,6 +115,20 @@
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
 
+/obj/item/choice_beacon/hosgun
+	name = "personal weapon beacon"
+	desc = "Use this to summon your personal Head of Security issued firearm!"
+
+/obj/item/choice_beacon/hosgun/generate_display_names()
+	var/static/list/hos_gun_list
+	if(!hos_gun_list)
+		hos_gun_list = list()
+		var/list/templist = subtypesof(/obj/item/storage/secure/briefcase/hos/) //we have to convert type = name to name = type, how lovely!
+		for(var/V in templist)
+			var/atom/A = V
+			hos_gun_list[initial(A.name)] = A
+	return hos_gun_list
+
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
@@ -122,12 +136,4 @@
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
-
-/obj/item/supermatterspray
-	name = "supermatter spray"
-	desc = "A spray bottle containing some kind of magical spray to fix the SM. \"Do not inhale.\" is written on the side. Unless aimed at the supermatter, it does nothing."
-	icon = 'icons/obj/supermatter.dmi'
-	icon_state = "supermatterspray"
-	w_class = WEIGHT_CLASS_SMALL
-	var/usesleft = 2
 

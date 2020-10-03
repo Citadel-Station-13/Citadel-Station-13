@@ -62,7 +62,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
-	inaccuracy_modifier = 0.5
+	inaccuracy_modifier = 0.7
 	force = 10
 	throwforce = 10
 	cell_type = /obj/item/stock_parts/cell/lascarbine

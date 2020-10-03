@@ -21,6 +21,7 @@
 	desc = null
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
+	plane = ABOVE_WALL_PLANE
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10

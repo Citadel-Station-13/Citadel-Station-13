@@ -22,11 +22,8 @@
 	heatmod = 1.5
 
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
-	use_skintones = FALSE
 	var/datum/martial_art/mushpunch/mush
-
-/datum/species/mush/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/mushroom) //pomf pomf
+	species_language_holder = /datum/language_holder/mushroom
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

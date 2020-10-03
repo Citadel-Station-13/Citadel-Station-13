@@ -4,6 +4,7 @@
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
+	has_field_of_vision = FALSE //Not really worth it.
 	see_invisible = SEE_INVISIBLE_LIVING
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 	speech_span = SPAN_ROBOT

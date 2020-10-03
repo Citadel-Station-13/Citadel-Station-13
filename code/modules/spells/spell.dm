@@ -45,6 +45,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/singularity_pull()
 	return
 
+/obj/effect/proc_holder/Click()
+	return Trigger(usr, FALSE)
+
+/obj/effect/proc_holder/proc/Trigger(mob/user)
+	return TRUE
+
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
 		to_chat(caller, "<span class='warning'><b>[caller.ranged_ability.name]</b> has been disabled.</span>")
@@ -150,8 +156,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(mobs_blacklist)
 		mobs_blacklist = typecacheof(mobs_blacklist)
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = FALSE, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(!can_cast(user, skipcharge))
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = FALSE, mob/user = usr, skip_can_cast = FALSE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(!skip_can_cast && !can_cast(user, skipcharge))
 		return FALSE
 
 	if(!skipcharge)
@@ -181,17 +187,22 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
+	var/mob/living/L
+	if(isliving(user))
+		L = user
 	switch(invocation_type)
 		if("shout")
-			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(invocation, forced = "spell")
-			else
-				user.say(replacetext(invocation," ","`"), forced = "spell")
+			if(!L || L.can_speak_vocal(invocation))
+				if(prob(50))//Auto-mute? Fuck that noise
+					user.say(invocation, forced = "spell")
+				else
+					user.say(replacetext(invocation," ","`"), forced = "spell")
 		if("whisper")
-			if(prob(50))
-				user.whisper(invocation)
-			else
-				user.whisper(replacetext(invocation," ","`"))
+			if(!L || L.can_speak_vocal(invocation))
+				if(prob(50))
+					user.whisper(invocation)
+				else
+					user.whisper(replacetext(invocation," ","`"))
 		if("emote")
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
@@ -210,8 +221,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	qdel(action)
 	return ..()
 
-/obj/effect/proc_holder/spell/Click()
-	if(cast_check())
+/obj/effect/proc_holder/spell/Trigger(mob/user, skip_can_cast = TRUE)
+	if(cast_check(FALSE, user, skip_can_cast))
 		choose_targets()
 	return 1
 
@@ -432,7 +443,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return 1
 
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr, skipcharge = FALSE, silent = FALSE)
-	var/magic_flags = SEND_SIGNAL(user, COMSIG_MOB_SPELL_CAST_CHECK, src)
+	var/magic_flags = SEND_SIGNAL(user, COMSIG_MOB_SPELL_CAN_CAST, src)
 	if(magic_flags & SPELL_SKIP_ALL_REQS)
 		return TRUE
 
@@ -448,9 +459,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 			return FALSE
 
-	if(!skipcharge)
-		if(!charge_check(user))
-			return FALSE
+	if(!skipcharge && !charge_check(user, silent))
+		return FALSE
 
 	if(user.stat && !stat_allowed && !(magic_flags & SPELL_SKIP_STAT))
 		if(!silent)

@@ -103,7 +103,7 @@
 
 /obj/structure/table/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSTABLE)
 
@@ -163,6 +163,9 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+			for(var/x in T.contents)
+				var/obj/item/item = x
+				AfterPutItemOnTable(item, user)
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("[user] empties [I] on [src].")
 			return
@@ -175,15 +178,19 @@
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			return 1
+			I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			AfterPutItemOnTable(I, user)
+			return TRUE
 	else
 		return ..()
 
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	return
+
 /obj/structure/table/alt_attack_hand(mob/user)
 	if(user && Adjacent(user) && !user.incapacitated())
-		user.setClickCooldown(4)
+		user.changeNext_move(CLICK_CD_MELEE*0.5)
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [user.p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
@@ -211,8 +218,39 @@
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_EFFECTS
 	buildstack = null //No buildstack, so generate from mat datums
+
+///Table on wheels
+/obj/structure/table/rolling
+	name = "Rolling table"
+	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
+	anchored = FALSE
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
+	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
+	icon_state = "rollingtable"
+	var/list/attached_items = list()
+
+/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	. = ..()
+	attached_items += I
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+
+/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
+	if(newloc != loc) //Did we not move with the table? because that shit's ok
+		return FALSE
+	attached_items -= source
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+
+/obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
+		M.forceMove(loc)
+	for(var/x in attached_items)
+		var/atom/movable/AM = x
+		if(!AM.Move(loc))
+			RemoveItemFromTable(AM, AM.loc)
+	return TRUE
 
 /*
  * Glass tables
@@ -610,7 +648,7 @@
 
 /obj/structure/rack/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSTABLE)
 

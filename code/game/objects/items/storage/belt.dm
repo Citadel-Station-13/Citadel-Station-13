@@ -22,7 +22,7 @@
 		for(var/obj/item/I in contents)
 			. += I.get_belt_overlay()
 
-/obj/item/storage/belt/worn_overlays(isinhands, icon_file, style_flags = NONE)
+/obj/item/storage/belt/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
 	if(!isinhands && onmob_overlays)
 		for(var/obj/item/I in contents)
@@ -43,6 +43,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_premium_price = 300
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //because this is easier than trying to have showers wash all contents.
 
 /obj/item/storage/belt/utility/ComponentInitialize()
@@ -695,7 +696,10 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
 		/obj/item/toy/gun,
-		/obj/item/gun/energy/e_gun/mini
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/ballistic/automatic/magrifle/pistol,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/taser
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
@@ -708,6 +712,8 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	dying_key = DYE_REGISTRY_FANNYPACK
+	custom_price = 100
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

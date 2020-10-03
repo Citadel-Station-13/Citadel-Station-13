@@ -18,6 +18,7 @@
 #define VALENTINES				"Valentine's Day"
 #define APRIL_FOOLS				"April Fool's Day"
 #define EASTER					"Easter"
+#define PRIDE_MONTH				"Pride Month"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"

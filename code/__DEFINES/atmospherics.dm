@@ -161,9 +161,13 @@
 #define ATMOS_TANK_O2				"o2=100000;TEMP=293.15"
 #define ATMOS_TANK_N2				"n2=100000;TEMP=293.15"
 #define ATMOS_TANK_AIRMIX			"o2=2644;n2=10580;TEMP=293.15"
+
 //LAVALAND
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
+
+//SNOSTATION
+#define ICEMOON_DEFAULT_ATMOS "o2=17;n2=63;TEMP=180"
 
 //ATMOSIA GAS MONITOR TAGS
 #define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
@@ -255,10 +259,10 @@
 
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
-	if(T.dir & NORTH || T.dir & SOUTH) {									\
+	if(T.dir & (NORTH|SOUTH)) {									\
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
 	}																		\
-	if(T.dir & WEST || T.dir & EAST) {										\
+	if(T.dir & (WEST|EAST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
 	}
 
@@ -293,6 +297,8 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 	}
 
 #define ARCHIVE_TEMPERATURE(gas) gas.temperature_archived = gas.temperature
+
+#define ARCHIVE(gas) gas.temperature_archived = gas.temperature; gas.gas_archive = gas.gases.Copy();
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

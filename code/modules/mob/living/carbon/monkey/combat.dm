@@ -111,7 +111,7 @@
 	if(pickupTarget)
 		if(restrained() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
 			pickupTarget = null
-		else
+		else if(!isobj(loc) || istype(loc, /obj/item/clothing/head/mob_holder))
 			pickupTimer++
 			if(pickupTimer >= 4)
 				blacklistItems[pickupTarget] ++
@@ -126,10 +126,8 @@
 						pickupTarget = null
 						pickupTimer = 0
 					else if(ismob(pickupTarget.loc)) // in someones hand
-						if(istype(pickupTarget, /obj/item/clothing/head/mob_holder/))
-							var/obj/item/clothing/head/mob_holder/h = pickupTarget
-							if(h && h.held_mob==src)
-								return//dont let them pickpocket themselves
+						if(istype(pickupTarget, /obj/item/clothing/head/mob_holder))
+							return//dont let them pickpocket themselves or hold other monkys.
 						var/mob/M = pickupTarget.loc
 						if(!pickpocketing)
 							pickpocketing = TRUE

@@ -127,6 +127,17 @@
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
 
+/mob/living/carbon/human/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
+	var/datum/bank_account/account
+	var/obj/item/card/id/I = get_idcard()
+
+	if(I && I.registered_account)
+		account = I.registered_account
+		return account
+
+	return FALSE
+
 /mob/living/carbon/human/can_see_reagents()
 	. = ..()
 	if(.) //No need to run through all of this if it's already true.

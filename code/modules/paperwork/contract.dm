@@ -8,7 +8,6 @@
 	item_flags = NOBLUDGEON
 
 /obj/item/paper/contract/ComponentInitialize()
-	return
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 

@@ -10,7 +10,7 @@
 	damage_type = BURN
 	damage = 10
 	knockdown = 20
-	speed = 2
+	pixels_per_second = TILES_TO_PIXELS(5)
 	range = 16
 	movement_type = FLYING | UNSTOPPABLE
 	var/datum/beam/arm

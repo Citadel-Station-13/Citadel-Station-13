@@ -3,106 +3,92 @@
 	body_parts_covered = GROIN|LEGS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	custom_price = 60
+	mutantrace_variation = STYLE_DIGITIGRADE //how do they show up on taurs otherwise?
 
 /obj/item/clothing/under/pants/classicjeans
 	name = "classic jeans"
 	desc = "You feel cooler already."
 	icon_state = "jeansclassic"
-	item_color = "jeansclassic"
 
 /obj/item/clothing/under/pants/mustangjeans
 	name = "Must Hang jeans"
 	desc = "Made in the finest space jeans factory this side of Alpha Centauri."
 	icon_state = "jeansmustang"
-	item_color = "jeansmustang"
+	custom_price = 180
 
 /obj/item/clothing/under/pants/blackjeans
 	name = "black jeans"
 	desc = "Only for those who can pull it off."
 	icon_state = "jeansblack"
-	item_color = "jeansblack"
 
 /obj/item/clothing/under/pants/youngfolksjeans
 	name = "Young Folks jeans"
 	desc = "For those tired of boring old jeans. Relive the passion of your youth!"
 	icon_state = "jeansyoungfolks"
-	item_color = "jeansyoungfolks"
 
 /obj/item/clothing/under/pants/white
 	name = "white pants"
 	desc = "Plain white pants. Boring."
 	icon_state = "whitepants"
-	item_color = "whitepants"
 
 /obj/item/clothing/under/pants/red
 	name = "red pants"
 	desc = "Bright red pants. Overflowing with personality."
 	icon_state = "redpants"
-	item_color = "redpants"
 
 /obj/item/clothing/under/pants/black
 	name = "black pants"
 	desc = "These pants are dark, like your soul."
 	icon_state = "blackpants"
-	item_color = "blackpants"
 
 /obj/item/clothing/under/pants/tan
 	name = "tan pants"
 	desc = "Some tan pants. You look like a white collar worker with these on."
 	icon_state = "tanpants"
-	item_color = "tanpants"
 
 /obj/item/clothing/under/pants/track
 	name = "track pants"
 	desc = "A pair of track pants, for the athletic."
 	icon_state = "trackpants"
-	item_color = "trackpants"
 
 /obj/item/clothing/under/pants/jeans
 	name = "jeans"
 	desc = "A nondescript pair of tough blue jeans."
 	icon_state = "jeans"
-	item_color = "jeans"
 
 /obj/item/clothing/under/pants/khaki
 	name = "khaki pants"
 	desc = "A pair of dust beige khaki pants."
 	icon_state = "khaki"
-	item_color = "khaki"
 
 /obj/item/clothing/under/pants/camo
 	name = "camo pants"
 	desc = "A pair of woodland camouflage pants. Probably not the best choice for a space station."
 	icon_state = "camopants"
-	item_color = "camopants"
 
 /obj/item/clothing/under/pants/jeanripped
 	name = "ripped jeans"
 	desc = "If you're wearing this you're poor or a rebel"
 	icon_state = "jean_ripped"
-	item_color = "jean_ripped"
 
 /obj/item/clothing/under/pants/jeanshort
 	name = "jean shorts"
 	desc = "These are really just jeans cut in half"
 	icon_state = "jean_shorts"
-	item_color = "jean_shorts"
 
 /obj/item/clothing/under/pants/denimskirt
 	name = "denim skirt"
 	desc = "These are really just a jean leg hole cut from a pair"
 	icon_state = "denim_skirt"
-	item_color = "denim_skirt"
 
 /obj/item/clothing/under/pants/chaps
 	name = "black chaps"
 	body_parts_covered = LEGS
 	desc = "Yeehaw"
 	icon_state = "chaps"
-	item_color = "chaps"
 
 /obj/item/clothing/under/pants/yoga
 	name = "yoga pants"
 	desc = "Comfy!"
 	icon_state = "yoga_pants"
-	item_color = "yoga_pants"

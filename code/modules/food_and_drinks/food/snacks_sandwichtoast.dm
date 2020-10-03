@@ -136,7 +136,6 @@
 /obj/item/reagent_containers/food/snacks/tuna_sandwich
 	name = "tuna sandwich"
 	desc = "Both a salad and a sandwich in one."
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "tunasandwich"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)

@@ -12,7 +12,6 @@
 
 /obj/effect/mapping_helpers/network_builder/Initialize(mapload)
 	. = ..()
-	to_chat(world, "DEBUG: Initializing [COORD(src)]")
 	var/conflict = check_duplicates()
 	if(conflict)
 		stack_trace("WARNING: [type] network building helper found check_duplicates() conflict [conflict] in its location.!")
@@ -27,7 +26,6 @@
 
 /// How this works: On LateInitialize, detect all directions that this should be applicable to, and do what it needs to do, and then inform all network builders in said directions that it's been around since it won't be around afterwards.
 /obj/effect/mapping_helpers/network_builder/LateInitialize()
-	to_chat(world, "DEBUG: LateInitializing [COORD(src)]")
 	scan_directions()
 	build_network()
 	if(!custom_spawned)

@@ -144,7 +144,6 @@
 	pixel_y = 4
 	},
 /obj/item/folder/blue,
-/obj/item/gun/energy/e_gun/mini,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "av" = (
@@ -172,10 +171,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ax" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
@@ -288,10 +283,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "aM" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -301,10 +292,6 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aN" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -725,10 +712,6 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bB" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -790,14 +773,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/dark,
-/area/shuttle/escape)
-"bG" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -1057,19 +1032,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cj" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ck" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -1079,27 +1046,15 @@
 /area/shuttle/escape)
 "cr" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "cA" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -1159,10 +1114,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Xo" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -1543,7 +1494,7 @@ bn
 bi
 ac
 cj
-bG
+cr
 bR
 cK
 cT

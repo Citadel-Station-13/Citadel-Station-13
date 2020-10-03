@@ -15,7 +15,7 @@
 
 /datum/component/personal_crafting
 	var/busy
-	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
+	var/viewing_category = 1
 	var/viewing_subcategory = 1
 	var/list/categories = list(
 				CAT_WEAPONRY = list(
@@ -23,7 +23,11 @@
 					CAT_AMMO,
 				),
 				CAT_ROBOT = CAT_NONE,
-				CAT_MISC = CAT_NONE,
+				CAT_MISC = list(
+					CAT_MISCELLANEOUS,
+					CAT_TOOL,
+					CAT_FURNITURE,
+				),
 				CAT_PRIMAL = CAT_NONE,
 				CAT_FOOD = list(
 					CAT_BREAD,
@@ -188,7 +192,7 @@
 
 /datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
-	var/send_feedback = 1
+	var/send_feedback = TRUE
 	if(check_contents(user, R, contents))
 		if(check_tools(user, R, contents))
 			if(do_after(user, R.time, target = user))
@@ -201,11 +205,22 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(isitem(I))
+					if(isfood(I))
+						var/obj/item/reagent_containers/food/food_result = I
+						var/total_quality = 0
+						var/total_items = 0
+						for(var/obj/item/reagent_containers/food/ingredient in parts)
+							total_items += 1
+							total_quality += ingredient.food_quality
+						if(total_items == 0)
+							food_result.adjust_food_quality(50)
+						else
+							food_result.adjust_food_quality(total_quality / total_items)
 					user.put_in_hands(I)
 				if(send_feedback)
 					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 					log_craft("[I] crafted by [user] at [loc_name(I.loc)]")
-				return 0
+				return FALSE
 			return "."
 		return ", missing tool."
 	return ", missing component."
@@ -408,8 +423,11 @@
 	switch(action)
 		if("make")
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
-			busy = TRUE
 			ui_interact(usr)
+			if(busy)
+				to_chat(usr, "<span class='warning'>You are already making something!</span>")
+				return
+			busy = TRUE
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
 				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")

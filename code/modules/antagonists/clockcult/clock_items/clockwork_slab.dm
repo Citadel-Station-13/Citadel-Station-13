@@ -36,6 +36,24 @@
 	speed_multiplier = 0
 	no_cost = TRUE
 
+/obj/item/clockwork/slab/traitor
+	var/spent = FALSE
+
+/obj/item/clockwork/slab/traitor/check_uplink_validity()
+	return !spent
+
+/obj/item/clockwork/slab/traitor/attack_self(mob/living/user)
+	if(!is_servant_of_ratvar(user) && !spent)
+		to_chat(user, "<span class='userdanger'>You press your hand onto [src], golden tendrils of light latching onto you. Was this the best of ideas?</span>")
+		if(add_servant_of_ratvar(user, FALSE, FALSE, /datum/antagonist/clockcult/neutered/traitor))
+			spent = TRUE
+			// Add some (5 KW) power so they don't suffer for 100 ticks
+			GLOB.clockwork_power += 5000
+			// This intentionally does not use adjust_clockwork_power.
+		else
+			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
+	return ..()
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user))
@@ -103,8 +121,8 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
-/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clockwork/slab/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(isinhands && item_state && inhand_overlay)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "slab_[inhand_overlay]")
 		. += M

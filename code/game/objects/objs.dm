@@ -3,6 +3,7 @@
 	var/crit_fail = FALSE
 	animate_movement = 2
 	speech_span = SPAN_ROBOT
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
@@ -122,7 +123,7 @@
 /obj/proc/updateUsrDialog()
 	if((obj_flags & IN_USE) && !(obj_flags & USES_TGUI))
 		var/is_in_use = FALSE
-		var/list/nearby = viewers(1, src)
+		var/list/nearby = fov_viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = TRUE
@@ -151,7 +152,7 @@
 	if(obj_flags & IN_USE)
 		var/is_in_use = FALSE
 		if(update_viewers)
-			for(var/mob/M in viewers(1, src))
+			for(var/mob/M in fov_viewers(1, src))
 				if ((M.client && M.machine == src))
 					is_in_use = TRUE
 					src.interact(M)
@@ -314,3 +315,11 @@
 	current_skin = choice
 	icon_state = unique_reskin[choice]
 	to_chat(M, "[src] is now skinned as '[choice]'.")
+
+//Called when the object is constructed by an autolathe
+//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
+/obj/proc/autolathe_crafted(obj/machinery/autolathe/A)
+	return
+
+/obj/proc/rnd_crafted(obj/machinery/rnd/production/P)
+	return

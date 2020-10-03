@@ -412,6 +412,15 @@
 	begin_month = JUNE
 	begin_weekday = SUNDAY
 
+/datum/holiday/pride
+	name = PRIDE_MONTH
+	begin_day = 1
+	begin_month = JUNE
+	end_day = 30
+
+/datum/holiday/pride/getStationPrefix()
+	return pick("Pride", "Gay", "Bi", "Trans", "Lesbian", "Ace", "Aro", "Agender", pick("Enby", "Enbie"), "Pan", "Intersex", "Demi", "Poly", "Closeted", "Genderfluid")
+
 /datum/holiday/moth
 	name = "Moth Week"
 

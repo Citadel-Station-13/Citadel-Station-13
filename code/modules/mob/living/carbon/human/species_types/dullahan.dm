@@ -5,7 +5,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "deco_wings" = "None")
-	use_skintones = TRUE
+	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	mutant_brain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
@@ -13,6 +13,7 @@
 	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	has_field_of_vision = FALSE //Too much of a trouble, their vision is already bound to their severed head.
 	var/pumpkin = FALSE
 
 	var/obj/item/dullahan_relay/myhead
@@ -132,13 +133,13 @@
 		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
+	RegisterSignal(owner, COMSIG_MOB_CLICKED_SHIFT_ON, .proc/examinate_check)
 	RegisterSignal(src, COMSIG_ATOM_HEARER_IN_VIEW, .proc/include_owner)
 	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
 	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
 
-/obj/item/dullahan_relay/proc/examinate_check(atom/source, mob/user)
-	if(user.client.eye == src)
+/obj/item/dullahan_relay/proc/examinate_check(mob/source, atom/target)
+	if(source.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/processing_list, list/hearers)

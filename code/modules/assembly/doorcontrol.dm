@@ -3,14 +3,35 @@
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
 	attachable = TRUE
-	var/id = null
-	var/can_change_id = 0
+	/// Our ID. Make the first character ! if you want to obfuscate it as a mapper via randomization.
+	var/id
+	/// Can the ID be changed if used in hand?
+	var/can_change_id = FALSE
+	/// Show ID?
+	var/show_id = TRUE
 	var/cooldown = FALSE //Door cooldowns
+
+/obj/item/assembly/control/Initialize(mapload)
+	if(mapload && id)
+		if(copytext(id, 1, 2) == "!")
+			id = SSmapping.get_obfuscated_id(id)
+	return ..()
 
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
-	if(id)
+	if(id && show_id)
 		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+	if(can_change_id)
+		. += "<span class='notice'>Use in hand to change ID.</span>"
+
+/obj/item/assembly/control/attack_self(mob/living/user)
+	. = ..()
+	if(!can_change_id)
+		return
+	var/new_id
+	new_id = input(user, "Set ID", "Set ID", show_id? id : null) as text|null
+	if(!isnull(new_id))		//0/"" is considered !, so check null instead of just !.
+		id = new_id
 
 /obj/item/assembly/control/activate()
 	cooldown = TRUE
@@ -21,7 +42,6 @@
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
-
 
 /obj/item/assembly/control/airlock
 	name = "airlock controller"
@@ -123,7 +143,6 @@
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
-
 /obj/item/assembly/control/crematorium
 	name = "crematorium controller"
 	desc = "An evil-looking remote controller for a crematorium."
@@ -135,3 +154,14 @@
 			C.cremate(usr)
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+
+/obj/item/assembly/control/electrochromatic
+	name = "electrochromatic window controller"
+	desc = "Toggles linked electrochromatic windows."
+	can_change_id = TRUE
+	/// Stores our status to prevent windows from desyncing.
+	var/on = FALSE
+
+/obj/item/assembly/control/electrochromatic/activate()
+	on = !on
+	do_electrochromatic_toggle(on, id)

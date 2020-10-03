@@ -147,9 +147,8 @@
 					to_chat(user, "<span class='warning'>You need one length of cable to wire the ED-209!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
-				if(do_after(user, 40, target = src))
-					if(coil.get_amount() >= 1 && build_step == 6)
-						coil.use(1)
+				if(coil.use_tool(src, user, 40, 1))
+					if(build_step == 6)
 						to_chat(user, "<span class='notice'>You wire [src].</span>")
 						name = "wired ED-209 assembly"
 						build_step++

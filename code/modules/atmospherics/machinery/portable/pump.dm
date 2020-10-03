@@ -20,7 +20,7 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.stat = 0
-	pump.build_network()
+	SSair.add_to_rebuild_queue(pump)
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
 	var/turf/T = get_turf(src)
@@ -150,7 +150,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				pump.target_pressure = CLAMP(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				pump.target_pressure = clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
 				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)

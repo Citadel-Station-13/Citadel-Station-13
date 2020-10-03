@@ -22,14 +22,14 @@
 
 //used in design to specify which machine can build it
 #define IMPRINTER		(1<<0)	//For circuits. Uses glass/chemicals.
-#define PROTOLATHE		(1<<1)	//New stuff. Uses glass/metal/chemicals
-#define AUTOLATHE		(1<<2)	//Uses glass/metal only.
-#define CRAFTLATHE		(1<<3)	//Uses fuck if I know. For use eventually.
-#define MECHFAB			(1<<4) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
-#define BIOGENERATOR	(1<<5) 	//Uses biomass
-#define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
-#define SMELTER			(1<<7) 	//uses various minerals
-#define AUTOYLATHE		(1<<8)  // CITADEL ADD
+#define PROTOLATHE		(1<<1)	//New stuff. Uses materials/chemicals
+#define AUTOLATHE		(1<<2)	//Uses materials only.
+#define TOYLATHE		(1<<3)	//Glass/metal/plastic. Meant for toys.
+#define NO_PUBLIC_LATHE	(1<<4)	//prevents the design from being auto-unlocked by public auto(y)lathes.
+#define MECHFAB			(1<<5) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
+#define BIOGENERATOR	(1<<6) 	//Uses biomass
+#define LIMBGROWER		(1<<7) 	//Uses synthetic flesh
+#define SMELTER			(1<<8) 	//uses various minerals
 #define NANITE_COMPILER (1<<9) //Prints nanite disks
 #define AUTOBOTTLER  	(1<<10) //Uses booze, for printing
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.

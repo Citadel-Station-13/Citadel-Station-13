@@ -20,6 +20,9 @@
 	if(!newloc.Enter(src, src.loc))
 		return
 
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
+
 	// Past this is the point of no return
 	var/atom/oldloc = loc
 	var/area/oldarea = get_area(oldloc)
@@ -51,13 +54,8 @@
 /atom/movable/Move(atom/newloc, direct)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
-	if(pulling)
-		if(pullee && get_dist(src, pullee) > 1)
-			stop_pulling()
-
-		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
-			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
-			stop_pulling()
+	if(!moving_from_pull)
+		check_pulling()
 	if(!loc || !newloc)
 		return FALSE
 	var/atom/oldloc = loc
@@ -130,19 +128,16 @@
 		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 			return FALSE
 
-		if(pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+		if(pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
 			if(pulling.anchored)
 				stop_pulling()
 			else
 				var/pull_dir = get_dir(src, pulling)
 				//puller and pullee more than one tile away or in diagonal position
 				if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+					pulling.moving_from_pull = src
 					pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-					if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-						stop_pulling()
-				if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-					pulledby.stop_pulling()
-
+					pulling.moving_from_pull = null
 		Moved(oldloc, direct)
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)

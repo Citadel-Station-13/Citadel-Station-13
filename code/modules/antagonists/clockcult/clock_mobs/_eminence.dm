@@ -232,7 +232,7 @@
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
-/datum/action/innate/eminence/IsAvailable()
+/datum/action/innate/eminence/IsAvailable(silent = FALSE)
 	if(!iseminence(owner))
 		qdel(src)
 		return
@@ -283,7 +283,7 @@
 	desc = "Initiates a mass recall, warping all servants to the Ark after a short delay. This can only be used once."
 	button_icon_state = "Spatial Gateway"
 
-/datum/action/innate/eminence/mass_recall/IsAvailable()
+/datum/action/innate/eminence/mass_recall/IsAvailable(silent = FALSE)
 	. = ..()
 	if(.)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar

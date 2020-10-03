@@ -6,8 +6,6 @@
  *		FINGERPRINT CARD
  */
 
-
-
 /*
  * DATA CARDS - Used for the IC data card reader
  */
@@ -173,13 +171,22 @@
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/access_txt // mapping aid
-
-
+	var/bank_support = ID_FREE_BANK_ACCOUNT
+	var/datum/bank_account/registered_account
+	var/obj/machinery/paystand/my_store
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 	if(mapload && access_txt)
 		access = text2access(access_txt)
+	switch(bank_support)
+		if(ID_FREE_BANK_ACCOUNT)
+			var/turf/T = get_turf(src)
+			if(T && is_vr_level(T.z)) //economy is exploitable on VR in so many ways.
+				bank_support = ID_NO_BANK_ACCOUNT
+		if(ID_LOCKED_BANK_ACCOUNT)
+			registered_account = new /datum/bank_account/remote/non_transferable(pick(GLOB.redacted_strings))
+
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -193,12 +200,149 @@
 		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 		add_fingerprint(user)
+
+/obj/item/card/id/attackby(obj/item/W, mob/user, params)
+	if(!bank_support)
+		return ..()
+	if(istype(W, /obj/item/holochip))
+		insert_money(W, user)
+	else if(istype(W, /obj/item/stack/spacecash) || istype(W, /obj/item/coin))
+		insert_money(W, user, TRUE)
+	else if(istype(W, /obj/item/storage/bag/money))
+		var/obj/item/storage/bag/money/money_bag = W
+		var/list/money_contained = money_bag.contents
+		var/money_added = mass_insert_money(money_contained, user)
+		if (money_added)
+			to_chat(user, "<span class='notice'>You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of credits to the linked account.</span>")
+	else
+		return ..()
+
+/obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	var/cash_money = I.get_item_credit_value()
+	if(!cash_money)
+		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
 		return
+
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
+
+	registered_account.adjust_money(cash_money)
+	if(physical_currency)
+		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
+	else
+		to_chat(user, "<span class='notice'>You insert [I] into [src], adding [cash_money] credits to the linked account.</span>")
+
+	to_chat(user, "<span class='notice'>The linked account now reports a balance of [registered_account.account_balance] cr.</span>")
+	qdel(I)
+
+/obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
+	if (!money || !money.len)
+		return FALSE
+
+	var/total = 0
+
+	for (var/obj/item/physical_money in money)
+		var/cash_money = physical_money.get_item_credit_value()
+
+		total += cash_money
+
+		registered_account.adjust_money(cash_money)
+
+	QDEL_LIST(money)
+
+	return total
+
+/obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
+	if(!isliving(user))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+
+	return TRUE
+
+// Returns true if new account was set.
+/obj/item/card/id/proc/set_new_account(mob/living/user)
+	if(bank_support != ID_FREE_BANK_ACCOUNT)
+		to_chat(user, "<span class='warning'>This ID has no modular banking support whatsover, must be an older model...</span>")
+		return
+	. = FALSE
+	var/datum/bank_account/old_account = registered_account
+
+	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num | null
+
+	if (isnull(new_bank_id))
+		return
+
+	if(!alt_click_can_use_id(user))
+		return
+	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+		to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span>")
+		return
+	if (registered_account && registered_account.account_id == new_bank_id)
+		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
+		return
+
+	for(var/A in SSeconomy.bank_accounts)
+		var/datum/bank_account/B = A
+		if(B.account_id == new_bank_id)
+			if (old_account)
+				old_account.bank_cards -= src
+
+			B.bank_cards += src
+			registered_account = B
+			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+
+			return TRUE
+
+	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
+	return
+
+/obj/item/card/id/AltClick(mob/living/user)
+	. = ..()
+	if(!bank_support || !alt_click_can_use_id(user))
+		return
+
+	if(!registered_account && bank_support == ID_FREE_BANK_ACCOUNT)
+		set_new_account(user)
+		return
+
+	if (world.time < registered_account.withdrawDelay)
+		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
+		return
+
+	var/amount_to_remove =  input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null
+
+	if(!amount_to_remove || amount_to_remove < 0)
+		return
+	if(!alt_click_can_use_id(user))
+		return
+	amount_to_remove = FLOOR(min(amount_to_remove, registered_account.account_balance), 1)
+	if(amount_to_remove && registered_account.adjust_money(-amount_to_remove))
+		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+		user.put_in_hands(holochip)
+		to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+		return
+	registered_account.bank_card_talk("<span class='warning'>ERROR: The linked account has no sufficient credits to perform that withdrawal.</span>", TRUE)
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
 	if(mining_points)
 		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+	if(!bank_support || (bank_support == ID_LOCKED_BANK_ACCOUNT && !registered_account))
+		. += "<span class='info'>This ID has no banking support whatsover, must be an older model...</span>"
+	else if(registered_account)
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		if(registered_account.account_job)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
+			if(D)
+				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		. += "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>"
+		. += "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>"
+		if(registered_account.account_holder == user.real_name)
+			. += "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>"
+	else
+		. += "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>"
 
 /obj/item/card/id/GetAccess()
 	return access
@@ -258,6 +402,8 @@ update_label("John Doe", "Clowny")
 	chameleon_action.chameleon_type = /obj/item/card/id
 	chameleon_action.chameleon_name = "ID Card"
 	chameleon_action.initialize_disguises()
+	if(!anyone)
+		AddComponent(/datum/component/identification/syndicate, ID_COMPONENT_DEL_ON_IDENTIFY, ID_COMPONENT_EFFECT_NO_ACTIONS, NONE)		//no deconstructive analyzer usage.
 
 /obj/item/card/id/syndicate/afterattack(obj/item/O, mob/user, proximity)
 	if(!proximity)
@@ -278,8 +424,12 @@ update_label("John Doe", "Clowny")
 			else
 				return ..()
 
-		var/popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset")
-		if(user.incapacitated())
+		var/popup_input
+		if(bank_support == ID_FREE_BANK_ACCOUNT)
+			popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset", "Change Account ID")
+		else
+			popup_input = alert(user, "Choose Action", "Agent ID", "Show", "Forge/Reset")
+		if(!user.canUseTopic(src, BE_CLOSE, FALSE))
 			return
 		if(popup_input == "Forge/Reset" && !forged)
 			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
@@ -302,6 +452,18 @@ update_label("John Doe", "Clowny")
 			forged = TRUE
 			to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 			log_game("[key_name(user)] has forged \the [initial(name)] with name \"[registered_name]\" and occupation \"[assignment]\".")
+
+			// First time use automatically sets the account id to the user.
+			if (first_use && !registered_account)
+				if(ishuman(user))
+					var/mob/living/carbon/human/accountowner = user
+
+					for(var/bank_account in SSeconomy.bank_accounts)
+						var/datum/bank_account/account = bank_account
+						if(account.account_id == accountowner.account_id)
+							account.bank_cards += src
+							registered_account = account
+							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
 			return
 		else if (popup_input == "Forge/Reset" && forged)
 			registered_name = initial(registered_name)
@@ -310,6 +472,9 @@ update_label("John Doe", "Clowny")
 			update_label()
 			forged = FALSE
 			to_chat(user, "<span class='notice'>You successfully reset the ID card.</span>")
+			return
+		else if (popup_input == "Change Account ID")
+			set_new_account(user)
 			return
 	return ..()
 
@@ -326,6 +491,15 @@ update_label("John Doe", "Clowny")
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(ACCESS_SYNDICATE)
+
+/obj/item/card/id/no_banking
+	bank_support = ID_NO_BANK_ACCOUNT
+
+/obj/item/card/id/locked_banking
+	bank_support = ID_LOCKED_BANK_ACCOUNT
+
+/obj/item/card/id/syndicate/locked_banking
+	bank_support = ID_LOCKED_BANK_ACCOUNT
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
@@ -514,6 +688,34 @@ update_label("John Doe", "Clowny")
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
 
+/obj/item/card/id/departmental_budget
+	name = "departmental card (FUCK)"
+	desc = "Provides access to the departmental budget."
+	var/department_ID = ACCOUNT_CIV
+	var/department_name = ACCOUNT_CIV_NAME
+
+/obj/item/card/id/departmental_budget/Initialize()
+	. = ..()
+	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
+	if(B)
+		registered_account = B
+		if(!B.bank_cards.Find(src))
+			B.bank_cards += src
+		name = "departmental card ([department_name])"
+		desc = "Provides access to the [department_name]."
+	SSeconomy.dep_cards += src
+
+/obj/item/card/id/departmental_budget/Destroy()
+	SSeconomy.dep_cards -= src
+	return ..()
+
+/obj/item/card/id/departmental_budget/update_label()
+	return
+
+/obj/item/card/id/departmental_budget/car
+	department_ID = ACCOUNT_CAR
+	department_name = ACCOUNT_CAR_NAME
+
 //Polychromatic Knight Badge
 
 /obj/item/card/id/knight
@@ -576,5 +778,5 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/debug/Initialize()
 	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
-

@@ -473,12 +473,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"bs" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/engine/gravity_generator)
 "bt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -654,7 +648,9 @@
 	pixel_x = -25
 	},
 /obj/structure/closet/firecloset/full,
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel{
 	dir = 9
 	},
@@ -793,7 +789,9 @@
 	},
 /area/hallway/primary/central)
 "cl" = (
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel{
 	dir = 8
 	},
@@ -3614,8 +3612,8 @@ ak
 aT
 ak
 ak
-bs
-bL
+ak
+bE
 bE
 bE
 cc
@@ -3669,7 +3667,7 @@ aU
 bg
 bq
 ak
-bL
+bE
 bE
 bE
 cd
@@ -3723,7 +3721,7 @@ bh
 bh
 br
 ak
-bL
+bE
 bE
 bE
 cc

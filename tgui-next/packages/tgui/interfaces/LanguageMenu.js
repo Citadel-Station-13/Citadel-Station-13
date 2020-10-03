@@ -86,7 +86,9 @@ export const LanguageMenu = props => {
                 {' '}
                   Key: ,{language.key}
                 {' '}
-                {!!language.shadow && '(gained from mob)'}
+                {language.can_understand
+                  ? 'Can understand.'
+                  : 'Cannot understand.'}
                 {' '}
                 {language.can_speak ? 'Can speak.' : 'Cannot speak.' }
               </LabeledList.Item>

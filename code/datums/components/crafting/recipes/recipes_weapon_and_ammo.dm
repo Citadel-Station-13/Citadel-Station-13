@@ -192,7 +192,7 @@
 	result =  /obj/item/gun/ballistic/bow/pipe
 	reqs = list(/obj/item/pipe = 5,
 	/obj/item/stack/sheet/plastic = 15,
-	/obj/item/weaponcrafting/silkstring = 5)
+	/obj/item/weaponcrafting/durathread_string = 5)
 	time = 450
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -251,8 +251,10 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/pipe = 1,
+	reqs = list(/obj/item/weaponcrafting/improvised_parts/barrel_shotgun = 1,
+				/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
+				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
+				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
@@ -261,10 +263,12 @@
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/irifle
-	name = "Improvised Rifle(7.62mm)"
+	name = "Improvised Rifle (7.62mm)"
 	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
-	reqs = list(/obj/item/weaponcrafting/receiver = 1,
-				/obj/item/pipe = 2,
+	reqs = list(/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 1,
+				/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 1,
+				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
+				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
@@ -281,7 +285,7 @@
 	result = /obj/item/ammo_casing/caseless/arrow/wood
 	time = 30
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
-				 /obj/item/stack/sheet/silk = 1,
+				 /obj/item/stack/sheet/durathread = 1,
 				 /obj/item/stack/rods = 1) // 1 metal sheet = 2 rods = 2 arrows
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -298,7 +302,7 @@
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ashen_arrow
-	name = "Fire Hardened Arrow"
+	name = "Ashen Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/ash
 	tools = list(TOOL_WELDER)
 	time = 30
@@ -394,3 +398,60 @@
 	time = 5
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
+
+////////////////////
+// PARTS CRAFTING //
+////////////////////
+
+// BARRELS
+
+/datum/crafting_recipe/rifle_barrel
+	name = "Improvised Rifle Barrel"
+	result = /obj/item/weaponcrafting/improvised_parts/barrel_rifle
+	reqs = list(/obj/item/pipe = 2)
+	tools = list(TOOL_WELDER,TOOL_SAW)
+	time = 150
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
+
+/datum/crafting_recipe/shotgun_barrel
+	name = "Improvised Shotgun Barrel"
+	result = /obj/item/weaponcrafting/improvised_parts/barrel_shotgun
+	reqs = list(/obj/item/pipe = 2)
+	tools = list(TOOL_WELDER,TOOL_SAW)
+	time = 150
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
+
+// RECEIVERS
+
+/datum/crafting_recipe/rifle_receiver
+	name = "Improvised Rifle Receiver"
+	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
+	reqs = list(/obj/item/stack/sheet/metal = 20)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Rifle is the easiest to craft and can be made at an autolathe, this is a very light kick in the shin for dual-wielding ishotguns.
+	time = 50
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
+
+/datum/crafting_recipe/shotgun_receiver
+	name = "Improvised Shotgun Receiver"
+	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
+	reqs = list(/obj/item/stack/sheet/metal = 10,
+				/obj/item/stack/sheet/plasteel = 1)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Increased cost is to stop dual-wield alpha striking. ishotgun is a rvolver and can be duel-wielded
+	time = 50
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
+
+// MISC
+
+/datum/crafting_recipe/trigger_assembly
+	name = "Trigger Assembly"
+	result = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
+	reqs = list(/obj/item/stack/sheet/metal = 3,
+				/obj/item/assembly/igniter = 1)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 150
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS

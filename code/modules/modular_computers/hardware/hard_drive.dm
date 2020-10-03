@@ -157,6 +157,7 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
+	custom_price = 150
 
 /obj/item/computer_hardware/hard_drive/small/syndicate	// Syndicate variant - very slight better
 	desc = "An efficient SSD for portable devices developed by a rival organisation."

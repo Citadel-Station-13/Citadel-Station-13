@@ -5,7 +5,6 @@
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
-	chemical_cost = 15
 	dna_cost = 1
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
@@ -15,16 +14,13 @@
 	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	active = !active
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
-		changeling.chem_recharge_slowdown += 0.5
 	else
-		user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		to_chat(user, "<span class='notice'>Our muscles relax.</span>")
-		changeling.chem_recharge_slowdown -= 0.5
-		if(stacks >= 20)
+		if(stacks >= 10)
 			to_chat(user, "<span class='danger'>We collapse in exhaustion.</span>")
 			user.DefaultCombatKnockdown(60)
 			user.emote("gasp")
@@ -34,26 +30,24 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	while(active)
-		user.add_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
 			to_chat(user, "<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			user.DefaultCombatKnockdown(40)
-			user.remove_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES)
-			changeling.chem_recharge_slowdown -= 0.5
+			user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 			break
 
 		stacks++
 		//user.take_bodypart_damage(stacks * 0.03, 0)
-		user.adjustStaminaLoss(stacks*1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		user.adjustStaminaLoss(stacks*1.5) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
-		if(stacks == 10) //Warning message that the stacks are getting too high
+		if(stacks == 5) //Warning message that the stacks are getting too high
 			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")
 
 		sleep(40)
 
-	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
+	while(!active && stacks) //Damage stacks decrease slowly while not in sanic mode
 		stacks--
-		sleep(20)
+		sleep(100)

@@ -54,7 +54,6 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		add_fingerprint(user)
 		return
-	..()
 
 /obj/item/fermichem/pHpaper
 	name = "pH indicator strip"

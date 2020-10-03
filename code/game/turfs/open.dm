@@ -110,6 +110,9 @@
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
+/turf/open/indestructible/necropolis/ice
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 

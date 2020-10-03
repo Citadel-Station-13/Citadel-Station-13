@@ -22,7 +22,7 @@
 	else if(user.hal_screwyhud == 5)
 		icon_state = "stamina0"
 	else
-		icon_state = "stamina[CLAMP(FLOOR(user.getStaminaLoss() /20, 1), 0, 6)]"
+		icon_state = "stamina[clamp(FLOOR(user.getStaminaLoss() /20, 1), 0, 6)]"
 
 //stam buffer
 /obj/screen/staminabuffer

@@ -11,7 +11,11 @@ SUBSYSTEM_DEF(materials)
 	///Dictionary of category || list of material refs
 	var/list/materials_by_category
 	///List of stackcrafting recipes for materials using rigid materials
-	var/list/rigid_stack_recipes = list(new/datum/stack_recipe("chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE))
+	var/list/rigid_stack_recipes = list(
+		new /datum/stack_recipe("chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
+		new /datum/stack_recipe("toilet", /obj/structure/toilet/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
+		new /datum/stack_recipe("sink", /obj/structure/sink/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
+	)
 
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
 /datum/controller/subsystem/materials/proc/InitializeMaterials()

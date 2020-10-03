@@ -31,6 +31,7 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
+	var/maxgeneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
@@ -77,6 +78,7 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
+	owner.current.grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue. We are able to transform our body after all.
 	remove_clownmut()
 	. = ..()
 
@@ -98,16 +100,23 @@
 			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 
-/datum/antagonist/changeling/proc/reset_properties()
+/datum/antagonist/changeling/proc/reset_properties(hardReset = FALSE)
 	changeling_speak = 0
 	chosen_sting = null
-	geneticpoints = initial(geneticpoints)
+
+	geneticpoints = maxgeneticpoints
 	sting_range = initial(sting_range)
-	chem_storage = initial(chem_storage)
-	chem_recharge_rate = initial(chem_recharge_rate)
-	chem_charges = min(chem_charges, chem_storage)
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
+
+	if (hardReset)
+		chem_storage = initial(chem_storage)
+		chem_recharge_rate = initial(chem_recharge_rate)
+		geneticpoints = initial(geneticpoints)
+		maxgeneticpoints = initial(maxgeneticpoints)
+
+	chem_charges = min(chem_charges, chem_storage)
+
 
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
@@ -287,7 +296,6 @@
 			prof.name_list[slot] = I.name
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
-			prof.item_color_list[slot] = I.item_color
 			prof.item_state_list[slot] = I.item_state
 			prof.exists_list[slot] = 1
 		else
@@ -423,7 +431,7 @@
 		objectives += destroy_objective
 	else
 		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
+			var/datum/objective/assassinate/once/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
 				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
@@ -503,7 +511,6 @@
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
-	var/list/item_color_list = list()
 	var/list/item_state_list = list()
 
 	var/underwear
@@ -526,7 +533,6 @@
 	newprofile.appearance_list = appearance_list.Copy()
 	newprofile.flags_cover_list = flags_cover_list.Copy()
 	newprofile.exists_list = exists_list.Copy()
-	newprofile.item_color_list = item_color_list.Copy()
 	newprofile.item_state_list = item_state_list.Copy()
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
@@ -558,7 +564,7 @@
 			if(objective.completable)
 				var/completion = objective.check_completion()
 				if(completion >= 1)
-					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 				else if(completion <= 0)
 					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 					changelingwin = FALSE

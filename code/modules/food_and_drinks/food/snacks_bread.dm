@@ -179,12 +179,25 @@
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 
+/obj/item/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Alas, it is limited."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "garlicbread"
+	item_state = "garlicbread"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin= 4, /datum/reagent/consumable/garlic = 2)
+	bitesize = 3
+	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
+	foodtype = GRAIN
+
 /obj/item/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = ""
 	bitesize = 2
+	var/fried_garbage = FALSE //did you really fry a fire extinguisher?
 
 GLOBAL_VAR_INIT(frying_hardmode, TRUE)
 GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
@@ -215,21 +228,13 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	item_flags = fried.item_flags
 	obj_flags = fried.obj_flags
 
-	if(istype(fried, /obj/item/reagent_containers/food/snacks))
+	if(isfood(fried))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)
 	else
 		fried.forceMove(src)
 		trash = fried
-		if(!istype(fried, /obj/item/reagent_containers/food) && GLOB.frying_hardmode && GLOB.frying_bad_chems.len)
-			var/R = rand(1, GLOB.frying_bad_chems.len)
-			var/bad_chem = GLOB.frying_bad_chems[R]
-			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
-			if(GLOB.frying_bad_chem_add_volume)
-				reagents.maximum_volume += bad_chem_amount + 2 //Added room for condensed cooking oil
-			reagents.add_reagent(bad_chem, bad_chem_amount)
-			//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
-			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
+		fried_garbage = TRUE
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
 	if(trash)
@@ -237,6 +242,13 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 	. = ..()
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/On_Consume(mob/living/eater)
+	if(fried_garbage && GLOB.frying_hardmode && GLOB.frying_bad_chems.len)
+		var/R = rand(1, GLOB.frying_bad_chems.len)
+		var/bad_chem = GLOB.frying_bad_chems[R]
+		var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
+		eater.reagents.add_reagent(bad_chem, bad_chem_amount)
+		//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
+		eater.reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
 	if(trash)
 		QDEL_NULL(trash)
 	..()
@@ -247,18 +259,22 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
 			name = "lightly-fried [name]"
 			desc = "[desc] It's been lightly fried in a deep fryer."
+			adjust_food_quality(food_quality - 5)
 		if(16 to 49)
 			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 			name = "fried [name]"
 			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
+			adjust_food_quality(food_quality - 10)
 		if(50 to 59)
 			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
 			name = "deep-fried [name]"
 			desc = "[desc] Deep-fried to perfection."
+			adjust_food_quality(food_quality) //we shouldn't punish perfection in the fried arts
 		if(60 to INFINITY)
 			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
 			name = "the physical manifestation of the very concept of fried foods"
 			desc = "A heavily-fried...something.  Who can tell anymore?"
+			adjust_food_quality(0) //good job, you're truly the best cook.
 	filling_color = color
 	foodtype |= FRIED
 
