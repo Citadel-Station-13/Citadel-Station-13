@@ -52,7 +52,7 @@
 			for(var/mob/M in range(1, get_turf(src)))
 				mobs += M
 	else
-		for(var/mob/M in range(2, get_turf(src))
+		for(var/mob/M in range(2, get_turf(src)))
 			mobs += M
 
 	var/atom/host = assembly || src
