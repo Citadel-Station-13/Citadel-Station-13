@@ -3723,6 +3723,7 @@
 #include "sandcode\code\modules\mining\lavaland\necropolis_chests.dm"
 #include "sandcode\code\modules\misc\misc.dm"
 #include "sandcode\code\modules\mob\emote.dm"
+#include "sandcode\code\modules\mob\mob_defines.dm"
 #include "sandcode\code\modules\mob\say.dm"
 #include "sandcode\code\modules\mob\dead\new_player\sprite_accessories\antenna.dm"
 #include "sandcode\code\modules\mob\dead\new_player\sprite_accessories\body_markings.dm"

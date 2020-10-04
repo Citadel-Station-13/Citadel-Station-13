@@ -72,6 +72,7 @@
 
 	holder?.key_down(_key, src)
 	mob.focus?.key_down(_key, src)
+	mob.update_mouse_pointer()
 
 /// Keyup's all keys held down.
 /client/proc/ForceAllKeysUp()
@@ -104,6 +105,7 @@
 			break
 	holder?.key_up(_key, src)
 	mob.focus?.key_up(_key, src)
+	mob.update_mouse_pointer()
 
 // Called every game tick
 /client/keyLoop()

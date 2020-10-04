@@ -1,3 +1,6 @@
+/mob/living/silicon
+	examine_cursor_icon = null
+
 /mob/living/silicon/Topic(href, href_list)
 	. = ..()
 	if(href_list["skyrat_ooc_notes"])
