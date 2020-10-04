@@ -136,10 +136,10 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/proc/set_moles(gas_type, moles)
 
 // VV WRAPPERS - EXTOOLS HOOKED PROCS DO NOT TAKE ARGUMENTS FROM CALL() FOR SOME REASON.
-/datum/gas_mixture/proc/vv_set_moles(get_type, moles)
+/datum/gas_mixture/proc/vv_set_moles(gas_type, moles)
 	return set_moles(gas_type, moles)
 /datum/gas_mixture/proc/vv_get_moles(gas_type)
-	return gas_moles(gas_type)
+	return get_moles(gas_type)
 /datum/gas_mixture/proc/vv_set_temperature(new_temp)
 	return set_temperature(new_temp)
 /datum/gas_mixture/proc/vv_set_volume(new_volume)
