@@ -102,7 +102,6 @@
 /mob/living/simple_animal/jacq/proc/canmove()
 	busy = FALSE
 	update_mobility()
-	return
 
 /mob/living/simple_animal/jacq/proc/stopmove()
 	if(ckey) //if someone is in her, don't disable her movement!
@@ -110,7 +109,6 @@
 		return
 	busy = TRUE
 	update_mobility()
-	return
 
 
 /mob/living/simple_animal/jacq/proc/poof()
