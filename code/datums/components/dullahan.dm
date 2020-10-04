@@ -39,7 +39,6 @@
 					dullahan_head.custom_head = head.custom_head
 					var/head_icon = head.get_limb_icon()
 					if(head_icon)
-						dullahan_head.limb_icon = head_icon
 						dullahan_head.add_overlay(head_icon)
 						dullahan_head.icon = null
 						dullahan_head.icon_state = null
@@ -109,15 +108,13 @@
 
 //get the most up to date mutant overlays by regenerating the head if needed, updating its overlays, then copying them over
 /datum/component/dullahan/proc/copy_mutant_overlays()
-	message_admins("so this is starting wat [rand(1,1000)]")
+	message_admins("so this is starting wat")
 	var/list/overlays_standing
-	var/list/overlays_to_add = list()
 	if(!owner.get_bodypart(BODY_ZONE_HEAD))
 		owner.regenerate_limb(BODY_ZONE_HEAD, TRUE)
 	message_admins("regenerated")
 	if(owner.get_bodypart(BODY_ZONE_HEAD))
 		message_admins("yeah we regenerated his head and he has [length(owner.overlays_standing[HAIR_LAYER])]")
-		overlays_to_add += owner.get_bodypart(BODY_ZONE_HEAD).get_limb_icon(BODY_ZONE_HEAD)
 	//do NOT send a signal here, else you will cause an infinite loop and a crash
 	owner.update_hair(send_signal = FALSE)
 	//owner.update_mutant_bodyparts(send_signal = FALSE) this gets updated by update_inv_head
@@ -128,6 +125,7 @@
 	qdel(owner.get_bodypart(BODY_ZONE_HEAD))
 	message_admins("now he has [length(owner.overlays_standing[HAIR_LAYER])]")
 
+	var/overlays_to_add = list()
 	//first find the eyes overlay
 	if(islist(overlays_standing[BODY_LAYER]))
 		for(var/mutable_appearance/some_overlay in overlays_standing[BODY_LAYER])
@@ -168,11 +166,9 @@
 					accepted = FALSE
 			if(accepted)
 				overlays_to_add += some_overlay
-	if(length(stored_head.stored_mutant_overlays) || stored_head.limb_icon)
+	if(length(stored_head.stored_mutant_overlays))
 		stored_head.cut_overlay(stored_head.stored_mutant_overlays)
-		stored_head.cut_overlay(stored_head.limb_icon)
 	stored_head.stored_mutant_overlays = overlays_to_add
-	owner.remove_overlay(HEAD_LAYER)
 	stored_head.add_overlay(overlays_to_add)
 
 //when you need to update the heads appearance to be that of the characters current appearance
@@ -297,7 +293,8 @@
 	//the appearances that are used as overlays for the head (so we can easily fetch them and cut them)
 	var/list/stored_appearances = list(null, null, null, null) //we index them with 1-4 so they need items in to initially index them, same order as stored_items
 	var/list/stored_mutant_overlays = list()
-	var/limb_icon //the icon of the actual head
+	//keep track of if it was previously being worn
+	var/previously_worn = FALSE
 
 /obj/item/bodypart/head/dullahan/MouseDrop(atom/thing)
 	if(iscarbon(thing) && Adjacent(thing))
@@ -447,6 +444,7 @@
 /obj/item/bodypart/head/dullahan/attack_self(mob/user)
 	if(user == dullahan_body)
 		dullahan_body.equip_to_slot(src, SLOT_HEAD, TRUE)
+		previously_worn = TRUE
 		return TRUE
 	else
 		return ..()
@@ -454,12 +452,18 @@
 /obj/item/bodypart/head/dullahan/equipped(mob/user, slot)
 	if(user == dullahan_body) //forcibly render it if possible
 		attempt_render_head_on_body()
+	else
+		if(previously_worn)
+			previously_worn = FALSE
 	..()
 
 /obj/item/bodypart/head/dullahan/proc/attempt_render_head_on_body()
 	if(dullahan_body.head == src)
 		dullahan_body.overlays_standing[HEAD_LAYER] = build_worn_icon(HEAD_LAYER, 'icons/mob/clothing/head.dmi', FALSE, NO_FEMALE_UNIFORM, dullahan_body.icon_state, NONE, FALSE)
 		dullahan_body.add_overlay(dullahan_body.overlays_standing[HEAD_LAYER])
+	else
+		//it's not on the head
+		//cut those overlays if it was previously being worn
 
 //make sure it renders properly
 /obj/item/bodypart/head/dullahan/worn_overlays()
