@@ -42,12 +42,34 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20, "wound" = 5)
 	resistance_flags = NONE
 
+/obj/item/clothing/under/rank/engineering/engineer/mechanic
+	name = "mechanic's jumpsuit"
+	desc = "an old mechanic's jumpsuit"
+	icon_state = "mechanic"
+	item_state = "mechanic"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/engineering/engineer/util
+	name = "engineering utility uniform"
+	desc = "a utility jumpsuit for engineering personnel"
+	icon_state = "utileng"
+	item_state = "utileng"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/engineering/engineer/hazard
 	name = "engineer's hazard jumpsuit"
 	desc = "A high visibility jumpsuit made from heat and radiation resistant materials."
-	icon_state = "hazard"
-	item_state = "suit-orange"
+	icon_state = "hazard_orange"
+	item_state = "engi_suit"
 	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/engineering/engineer/hazard/green
+	icon_state = "hazard_green"
+	item_state = "g_suit"
+
+/obj/item/clothing/under/rank/engineering/engineer/hazard/white
+	icon_state = "hazard_white"
+	item_state = "gy_suit"
 
 /obj/item/clothing/under/rank/engineering/engineer/skirt
 	name = "engineer's jumpskirt"

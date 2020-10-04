@@ -95,7 +95,30 @@
 	desc = "Drains nearby alive people that are engulfed in flames. It heals 10 of each damage type per person. If a person is in critical condition it finishes them off."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
-	next_knowledge = list(/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/flame_immunity)
+	route = PATH_ASH
+
+/datum/eldritch_knowledge/flame_immunity
+	name = "Nightwatcher's Blessing"
+	gain_text = "The True Light will destroy and make something anew of any individual. If only they accepted it."
+	desc = "Becoming one with the ash, you become immune to fire and heat, allowing you to thrive in a more extreme environment.."
+	cost = 2
+	next_knowledge = list(/datum/eldritch_knowledge/spell/nightwatchers_rite)
+	route = PATH_ASH
+	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOFIRE)
+
+/datum/eldritch_knowledge/flame_immunity/on_gain(mob/living/user)
+	to_chat(user, "<span class='warning'>[gain_text]</span>")
+	for(var/X in trait_list)
+		ADD_TRAIT(user,X,MAGIC_TRAIT)
+
+/datum/eldritch_knowledge/spell/nightwatchers_rite
+	name = "Nightwatcher's Rite"
+	gain_text = "When the Glory of the Lantern scorches and sears their skin, nothing will protect them from the ashes."
+	desc = "Fire off five streams of fire from your hand, each setting ablaze targets hit and scorching them upon contact."
+	cost = 2
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/nightwatchers_rite
+	next_knowledge = list(/datum/eldritch_knowledge/final/ash_final)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_blade_upgrade
@@ -167,7 +190,7 @@
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 5
 	route = PATH_ASH
-	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
+	var/list/trait_list = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_GENELESS,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
 
 /datum/eldritch_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')

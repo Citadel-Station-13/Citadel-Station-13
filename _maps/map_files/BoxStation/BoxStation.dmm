@@ -1128,8 +1128,7 @@
 /area/security/prison)
 "acI" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /obj/machinery/door/firedoor,
@@ -1280,8 +1279,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
@@ -1296,8 +1294,7 @@
 "acZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
@@ -21317,8 +21314,7 @@
 	name = "Privacy Shutters";
 	pixel_y = 24
 	},
-/obj/structure/rack,
-/obj/item/storage/briefcase,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aYk" = (
@@ -46725,12 +46721,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cjb" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
-/area/engine/engineering)
 "cjc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -56119,7 +56109,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance/abandoned{
-	name = "maintenance access";
 	req_access_txt = "12"
 	},
 /obj/structure/barricade/wooden,
@@ -58287,7 +58276,6 @@
 	},
 /obj/machinery/computer/security/telescreen/toxins{
 	dir = 1;
-	network = list("toxins");
 	pixel_y = -28
 	},
 /obj/structure/chair{
@@ -87415,8 +87403,8 @@ bVJ
 cay
 ccw
 cig
-cjb
-cjb
+cSV
+cSV
 cig
 cig
 cmG

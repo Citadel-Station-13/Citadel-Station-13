@@ -200,6 +200,8 @@
 			L.Stun(75)
 		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
 		latched = TRUE
+	for(var/obj/mecha/M in loc)
+		M.take_damage(20, BRUTE, null, null, null, 25)
 	if(!latched)
 		retract()
 	else

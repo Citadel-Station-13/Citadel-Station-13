@@ -1,13 +1,12 @@
-
-/* EMOTE DATUMS */
-/datum/emote/living
-	mob_type_allowed_typecache = /mob/living
-	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
-
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
+
+/datum/emote/living/blush/run_emote(mob/user, params)
+	. = ..()
+	if(. && isipcperson(user))
+		do_fake_sparks(5,FALSE,user)
 
 /datum/emote/living/bow
 	key = "bow"
@@ -228,6 +227,21 @@
 			return
 		else if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+		else if(isjellyperson(C))
+			var/mob/living/carbon/human/H = C
+			if(H.dna.features["mam_ears"] == "Cat" || H.dna.features["mam_ears"] == "Cat, Big") //slime have cat ear. slime go nya.
+				playsound(C, pick('sound/voice/jelly/nyahaha1.ogg',
+				'sound/voice/jelly/nyahaha2.ogg',
+				'sound/voice/jelly/nyaha.ogg',
+				'sound/voice/jelly/nyahehe.ogg'),
+				50, 1)
+				return
+			else if(user.gender == FEMALE)
+				playsound(C, 'sound/voice/jelly/womanlaugh.ogg', 50, 1)
+				return
+			else
+				playsound(C, pick('sound/voice/jelly/manlaugh1.ogg', 'sound/voice/jelly/manlaugh2.ogg'), 50, 1)
+				return
 		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
 				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)

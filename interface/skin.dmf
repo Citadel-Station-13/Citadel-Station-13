@@ -54,7 +54,6 @@ window "mainwindow"
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
-		background-color = #242424
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		icon = 'icons\\ss13_64.png'
@@ -62,25 +61,21 @@ window "mainwindow"
 		menu = "menu"
 	elem "split"
 		type = CHILD
-		pos = 0,0
+		pos = 3,0
 		size = 637x440
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #272727
 		saved-params = "splitter"
 		left = "mapwindow"
 		right = "infowindow"
 		is-vert = true
-		splitter = 75
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 0,0
 		size = 200x200
 		anchor1 = none
 		anchor2 = none
-		background-color = #272727
 		is-visible = false
-		auto-format = false
 		saved-params = ""
 	elem "tooltip"
 		type = BROWSER
@@ -88,23 +83,18 @@ window "mainwindow"
 		size = 999x999
 		anchor1 = none
 		anchor2 = none
-		background-color = #272727
 		is-visible = false
 		saved-params = ""
 
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
-		pos = 418,0
+		pos = 0,0
 		size = 1024x1024
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
-		statusbar = false
 		is-pane = true
-		outer-size = 684x617
-		inner-size = 662x561
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -113,10 +103,10 @@ window "mapwindow"
 		anchor2 = 100,100
 		font-family = "Arial"
 		font-size = 7
+		text-color = none
 		is-default = true
-		saved-params = "icon-size"
-		zoom-mode = distort
-		style = ".center { text-align: center; }\n.maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; }\n.command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; }\n.big { font-size: 8px; }\n.reallybig { font-size: 8px; }\n.extremelybig { font-size: 8px; }\n.greentext { color: #00ff00; font-size: 7px; }\n.redtext { color: #ff0000; font-size: 7px; }\n.clown { color: #ff69bf; font-size: 7px;  font-weight: bold; }\n.his_grace { color: #15d512; }\n.hypnophrase { color: #0d0d0d; font-weight: bold; }\n.yell { font-weight: bold; }\n.italics { font-size: 6px; }"
+		saved-params = "zoom;letterbox;zoom-mode"
+		style = ".center { text-align: center; } .maptext { font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .command_headset { font-weight: bold;\tfont-size: 8px; } .small { font-size: 6px; } .big { font-size: 8px; } .reallybig { font-size: 8px; } .extremelybig { font-size: 8px; } .greentext { color: #00FF00; font-size: 7px; } .redtext { color: #FF0000; font-size: 7px; } .clown { color: #FF69Bf; font-size: 7px;  font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 
 window "infowindow"
 	elem "infowindow"
@@ -125,7 +115,6 @@ window "infowindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = #242424
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "info"
@@ -134,7 +123,6 @@ window "infowindow"
 		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #272727
 		saved-params = "splitter"
 		left = "statwindow"
 		right = "outputwindow"
@@ -145,8 +133,6 @@ window "infowindow"
 		size = 104x20
 		anchor1 = 3,0
 		anchor2 = 19,0
-		text-color = #e0e0e0
-		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "changelog"
@@ -156,8 +142,6 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 19,0
 		anchor2 = 34,0
-		text-color = #e0e0e0
-		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -167,8 +151,6 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
-		text-color = #e0e0e0
-		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -178,8 +160,6 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
-		text-color = #e0e0e0
-		background-color = #40628a
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -189,10 +169,8 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 66,0
 		anchor2 = 81,0
-		text-color = #e0e0e0
-		background-color = #40628a
 		saved-params = "is-checked"
-		text = "GitHub"
+		text = "Github"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
@@ -200,9 +178,6 @@ window "infowindow"
 		size = 100x20
 		anchor1 = 81,0
 		anchor2 = 97,0
-		font-size = 8
-		text-color = #e0e0e0
-		background-color = #a92c2c
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
@@ -214,13 +189,7 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = #272727
 		saved-params = "pos;size;is-minimized;is-maximized"
-		titlebar = false
-		statusbar = false
-		can-close = false
-		can-minimize = false
-		can-resize = false
 		is-pane = true
 	elem "input"
 		type = INPUT
@@ -232,17 +201,15 @@ window "outputwindow"
 		is-default = true
 		border = sunken
 		saved-params = "command"
-	elem "say"
+	elem "saybutton"
 		type = BUTTON
 		pos = 600,460
 		size = 37x20
 		anchor1 = 100,100
 		anchor2 = none
-		text-color = #e0e0e0
-		background-color = #272727
 		saved-params = "is-checked"
 		text = "Chat"
-		command = ".winset \"say.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\""
 		is-flat = true
 		button-type = pushbox
 	elem "browseroutput"
@@ -251,51 +218,35 @@ window "outputwindow"
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #272727
+		background-color = #ffffff
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
-		auto-format = false
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		text-color = #e0e0e0
-		background-color = #272727
 		is-default = true
 		saved-params = ""
 
-window "statwindow"
-	elem "statwindow"
+window "popupwindow"
+	elem "popupwindow"
 		type = MAIN
 		pos = 281,0
-		size = 640x480
+		size = 120x120
 		anchor1 = none
 		anchor2 = none
-		background-color = #242424
+		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
-		is-pane = true
-	elem "stat"
-		type = INFO
-		pos = 0,0
-		size = 640x480
-		anchor1 = 0,0
-		anchor2 = 100,100
-		text-color = #e0e0e0
-		background-color = #272727
-		is-default = true
-		saved-params = ""
-		tab-text-color = #e0e0e0
-		tab-background-color = #242424
-		prefix-color = #e0e0e0
-		suffix-color = #e0e0e0
+		statusbar = false
+		can-resize = false
 
 window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
-		pos = 372,0
+		pos = 281,0
 		size = 1280x1000
 		anchor1 = none
 		anchor2 = none
@@ -317,4 +268,22 @@ window "preferences_window"
 		anchor2 = 100,100
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
+
+window "statwindow"
+	elem "statwindow"
+		type = MAIN
+		pos = 372,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "statbrowser"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		is-visible = false
+		saved-params = ""
 

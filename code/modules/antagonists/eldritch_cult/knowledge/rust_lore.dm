@@ -27,8 +27,13 @@
 		if(E)
 			E.on_effect()
 			H.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_EARS,ORGAN_SLOT_EYES,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_HEART),25)
+	else
+		for(var/X in user.mind.spell_list)
+			if(!istype(X,/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp))
+				continue
+			var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/MG = X
+			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max)
 	target.rust_heretic_act()
-	target.emp_act(EMP_HEAVY)
 	return TRUE
 
 /datum/eldritch_knowledge/spell/area_conversion
@@ -43,7 +48,7 @@
 /datum/eldritch_knowledge/spell/rust_wave
 	name = "Patron's Reach"
 	desc = "You can now send a bolt of rust that corrupts the immediate area, and poisons the first target hit."
-	gain_text = "Messengers of hope fear the rustbringer."
+	gain_text = "Messengers of hope fear the Rustbringer."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/aimed/rust_wave
 	route = PATH_RUST
@@ -92,19 +97,20 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = PATH_RUST
 
-/datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(target,user,proximity_flag,click_parameters)
+/datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(mob/target,user,proximity_flag,click_parameters)
 	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
+	if(!IS_HERETIC(target))
+		if(iscarbon(target))
+			var/mob/living/carbon/carbon_target = target
+			carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
 
 /datum/eldritch_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
 	desc = "You can now send a befuddling plume that blinds, poisons and makes enemies strike each other, while also converting the immediate area into rust."
-	gain_text = "Messengers of hope fear the rustbringer."
+	gain_text = "If they knew, the truth would turn them against eachother."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
-	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
+	next_knowledge = list(/datum/eldritch_knowledge/rust_fist_upgrade,/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/rusty)
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/armor
@@ -119,11 +125,37 @@
 /datum/eldritch_knowledge/essence
 	name = "Priest's Ritual"
 	desc = "You can now transmute a tank of water into a bottle of eldritch fluid."
-	gain_text = "This is an old recipe, i got it from an owl."
+	gain_text = "This is an old recipe, I got it from an owl."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/spell/ashen_shift)
 	required_atoms = list(/obj/structure/reagent_dispensers/watertank)
 	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
+
+/datum/eldritch_knowledge/rust_fist_upgrade
+	name = "Vile Grip"
+	desc = "Empowers your Mansus Grasp further, sickening your foes and making them vomit, while also strengthening the rate at which your hand decays objects."
+	gain_text = "A sickly diseased touch that was, yet, so welcoming."
+	cost = 2
+	next_knowledge = list(/datum/eldritch_knowledge/spell/grasp_of_decay)
+	var/rust_force = 750
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
+	route = PATH_RUST
+
+/datum/eldritch_knowledge/rust_fist_upgrade/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		H.set_disgust(75)
+	return TRUE
+
+/datum/eldritch_knowledge/spell/grasp_of_decay
+	name = "Grasp of Decay"
+	desc = "Applying your knowledge of rust to the human body, a knowledge that could decay your foes from the inside out, resulting in organ failure, vomiting, or eventual death through peeling flesh."
+	gain_text = "Decay, similar to Rust, yet so much more terribly uninviting."
+	cost = 2
+	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/grasp_of_decay
+	next_knowledge = list(/datum/eldritch_knowledge/final/rust_final)
+	route = PATH_RUST
 
 /datum/eldritch_knowledge/final/rust_final
 	name = "Rustbringer's Oath"

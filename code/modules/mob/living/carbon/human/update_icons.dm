@@ -660,7 +660,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
-	. = "[dna.species.limbs_id]"
+	. = "[dna.species.mutant_bodyparts["limbs_id"]]"
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"
@@ -758,17 +758,22 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 		// eyes
 		if(!(NOEYES in dna.species.species_traits))
 			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/eye_overlay
 			if(!has_eyes)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				add_overlay(mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER))
 			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
-			if((EYECOLOR in dna.species.species_traits) && has_eyes)
-				eye_overlay.color = "#" + eye_color
-			if(OFFSET_EYES in dna.species.offset_features)
-				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
-				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
-			add_overlay(eye_overlay)
+				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/human_face.dmi', "left_eye", -BODY_LAYER)
+				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/human_face.dmi', "right_eye", -BODY_LAYER)
+				if((EYECOLOR in dna.species.species_traits) && has_eyes)
+					left_eye.color = "#" + left_eye_color
+					right_eye.color = "#" + right_eye_color
+				if(OFFSET_EYES in dna.species.offset_features)
+					left_eye.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
+					left_eye.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
+					right_eye.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
+					right_eye.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
+				add_overlay(left_eye)
+				add_overlay(right_eye)
+
 
 	dna.species.handle_hair(src)
 

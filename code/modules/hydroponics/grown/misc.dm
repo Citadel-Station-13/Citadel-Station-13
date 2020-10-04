@@ -11,6 +11,7 @@
 	production = 1
 	yield = 6
 	potency = 10
+	instability = 35
 	growthstages = 3
 	grind_results = list(/datum/reagent/mustardgrind = 1)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -111,6 +112,7 @@
 	maturation = 3
 	production = 5
 	yield = 4
+	instability = 10
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -140,6 +142,7 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
+	instability = 15
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)

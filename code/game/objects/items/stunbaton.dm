@@ -232,7 +232,7 @@
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
 		if(!iscyborg(loc))
-			deductcharge(1000 / severity, TRUE, FALSE)
+			deductcharge(severity*10, TRUE, FALSE)
 
 /obj/item/melee/baton/stunsword
 	name = "stunsword"

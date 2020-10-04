@@ -445,7 +445,7 @@ Difficulty: Normal
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
-		return altclick_listed_turf(A)
+		return AltClickNoInteract(src, A)
 	blink(A)
 
 //Hierophant overlays
@@ -661,7 +661,7 @@ Difficulty: Normal
 				continue
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, BURN, 0, 0)
+		M.take_damage(damage, BURN, 0, 0, null, 50)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"

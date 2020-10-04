@@ -64,7 +64,6 @@
 #define DEFAULT_BODYPART_ICON 'icons/mob/human_parts.dmi'
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
-#define DEFAULT_BODYPART_ICON_CITADEL 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
@@ -313,7 +312,7 @@
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
 
-#define TYPING_INDICATOR_TIMEOUT 5 MINUTES
+#define TYPING_INDICATOR_TIMEOUT 20 MINUTES
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
@@ -333,4 +332,4 @@
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
 #define EXAMINE_MORE_TIME	1 SECONDS
 
-#define SILENCE_RANGED_MESSAGE (1<<0) 
+#define SILENCE_RANGED_MESSAGE (1<<0)

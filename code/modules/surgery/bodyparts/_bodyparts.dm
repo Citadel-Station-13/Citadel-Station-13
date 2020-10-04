@@ -71,6 +71,8 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "peeling away"
 
+	var/render_like_organic = FALSE // forces limb to render as if it were an organic limb
+
 	/// The wounds currently afflicting this body part
 	var/list/wounds
 
@@ -355,7 +357,7 @@
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
 
-	var/base_roll = rand(max(damage/1.5,25), round(damage ** WOUND_DAMAGE_EXPONENT))
+	var/base_roll = rand(max(damage/1.5,25), round(damage ** CONFIG_GET(number/wound_exponent))) + (get_damage()*CONFIG_GET(number/wound_damage_multiplier))
 	var/injury_roll = base_roll
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking = GLOB.global_wound_types[woundtype]
@@ -555,7 +557,7 @@
 		if(status == BODYPART_ORGANIC)
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
-			icon = DEFAULT_BODYPART_ICON_ROBOTIC
+			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner)
 		owner.updatehealth()
@@ -579,7 +581,7 @@
 		C = owner
 		no_update = FALSE
 
-	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
+	if(HAS_TRAIT(C, TRAIT_HUSK) && (is_organic_limb() || render_like_organic))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -598,7 +600,7 @@
 
 		var/datum/species/S = H.dna.species
 		base_bp_icon = S?.icon_limbs || DEFAULT_BODYPART_ICON
-		species_id = S.limbs_id
+		species_id = S.mutant_bodyparts["limbs_id"]
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
@@ -613,12 +615,14 @@
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
-			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			skin_tone = ""
 
 		body_gender = H.dna.features["body_model"]
-		should_draw_gender = S.sexes
+		if(GLOB.nongendered_limb_types[species_id])
+			should_draw_gender = FALSE
+		else
+			should_draw_gender = S.sexes
 
 		var/mut_colors = (MUTCOLORS in S.species_traits)
 		if(mut_colors)
@@ -626,12 +630,8 @@
 				species_color = S.fixed_mut_color
 			else
 				species_color = H.dna.features["mcolor"]
-			base_bp_icon = (base_bp_icon == DEFAULT_BODYPART_ICON) ? DEFAULT_BODYPART_ICON_ORGANIC : base_bp_icon
 		else
 			species_color = ""
-
-		if(base_bp_icon != DEFAULT_BODYPART_ICON)
-			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
 
 		if(S.mutant_bodyparts["legs"])
 			if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
@@ -652,10 +652,15 @@
 				body_markings = "plain"
 				aux_marking = "plain"
 			markings_color = list(colorlist)
-
 		else
 			body_markings = null
 			aux_marking = null
+
+		if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
+			base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+
+		if(base_bp_icon != DEFAULT_BODYPART_ICON)
+			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"
@@ -669,8 +674,9 @@
 
 	if(status == BODYPART_ROBOTIC)
 		dmg_overlay_type = "robotic"
-		body_markings = null
-		aux_marking = null
+		if(!render_like_organic)
+			body_markings = null
+			aux_marking = null
 
 	if(dropping_limb)
 		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
@@ -736,7 +742,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb())
+	if(is_organic_limb() || render_like_organic)
 		limb.icon = base_bp_icon || 'icons/mob/human_parts.dmi'
 		if(should_draw_gender)
 			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"

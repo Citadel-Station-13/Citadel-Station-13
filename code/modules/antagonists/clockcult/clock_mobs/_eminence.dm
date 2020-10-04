@@ -251,7 +251,8 @@
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
 
-//Returns to the Ark
+/*
+//Returns to the Ark - Commented out and replaced with obelisk_jump
 /datum/action/innate/eminence/ark_jump
 	name = "Return to Ark"
 	desc = "Warps you to the Ark."
@@ -265,6 +266,40 @@
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
 		to_chat(owner, "<span class='warning'>There is no Ark!</span>")
+*/
+
+//Warps to a chosen Obelisk
+/datum/action/innate/eminence/obelisk_jump
+	name = "Warp to Obelisk"
+	desc = "Warps to a chosen clockwork obelisk."
+	button_icon_state = "Abscond"
+
+/datum/action/innate/eminence/obelisk_jump/Activate()
+	var/list/possible_targets = list()
+	var/list/warpnames = list()
+
+	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
+		if(!O.Adjacent(owner) && O.anchored)
+			var/area/A = get_area(O)
+			var/locname = initial(A.name)
+			possible_targets[avoid_assoc_duplicate_keys("[locname] [O.name]", warpnames)] = O
+
+	if(!possible_targets.len)
+		to_chat(owner, "<span class='warning'>There are no Obelisks to warp to!</span>")
+		return
+
+	var/target_key = input(owner, "Choose an Obelisk to warp to.", "Obelisk Warp") as null|anything in possible_targets
+	var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/target = possible_targets[target_key]
+
+	if(!target_key || !owner)
+		return
+
+	if(!target)
+		to_chat(owner, "<span class='warning'>That Obelisk does no longer exist!</span>")
+		return
+	owner.forceMove(get_turf(target))
+	owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+	flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 
 //Warps to the Station
 /datum/action/innate/eminence/station_jump
