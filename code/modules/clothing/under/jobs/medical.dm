@@ -86,6 +86,12 @@
 	permeability_coefficient = 0.5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
 
+/obj/item/clothing/under/rank/medical/paramedic/red
+	name = "red paramedic jumpsuit"
+	icon_state = "pmedred"
+	item_state = "pmedred"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/medical/paramedic/light
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	icon_state = "paramedic-light"
@@ -123,6 +129,13 @@
 	item_state = "w_suit"
 	permeability_coefficient = 0.5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
+
+/obj/item/clothing/under/rank/medical/doctor/util
+	name = "Medical Utility Uniform"
+	desc = "Utility jumpsuit for medical personnel"
+	icon_state = "utilmed"
+	item_state = "utilmed"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/doctor/blue
 	name = "blue medical scrubs"

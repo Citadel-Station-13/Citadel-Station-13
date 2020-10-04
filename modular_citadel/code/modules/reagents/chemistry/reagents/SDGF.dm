@@ -36,6 +36,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 6. Giving this to someone without concent is against space law and gets you sent to gulag.
 */
 
+#define POLICYCONFIG_SDGF "SDGF"
+#define POLICYCONFIG_SDGF_GOOD "SDGF_ALIGNED"
+#define POLICYCONFIG_SDGF_BAD "SDGF_UNALIGNED"
+
+
 //Clone serum #chemClone
 /datum/reagent/fermi/SDGF //vars, mostly only care about keeping track if there's a player in the clone or not.
 	name = "synthetic-derived growth factor"
@@ -45,7 +50,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/unitCheck = FALSE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "a weird chemical fleshy flavour"
-	var/list/candies = list()
+	var/list/ghosts = list()
 	var/pollStarted = FALSE
 	var/startHunger
 	impure_chem 			= /datum/reagent/impure/SDGFtox
@@ -63,10 +68,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			startHunger = M.nutrition
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
-				candies = pollGhostCandidates("Do you want to play as [M]'s defective clone? (Don't ERP without permission from the original)", ignore_category = POLL_IGNORE_CLONE)
+				ghosts = pollGhostCandidates("Do you want to play as [M]'s SDGF clone? (Don't ERP without permission from the original, and respect their character.)", ignore_category = POLL_IGNORE_CLONE)
 				log_reagent("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
+			to_chat(M,"<span class='notice'>If a ghost takes your clone, they will be identical to you. You may wish to add note (IC tab) to help them play your character better, and keep them up on the situation.</span>")
 		if(20 to INFINITY)
-			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
+			if(LAZYLEN(ghosts) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				var/typepath = M.type
 				var/mob/living/carbon/human/fermi_Gclone = new typepath(M.loc)
@@ -74,18 +80,22 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				if(istype(SM) && istype(M))
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
+					SM.underwear = "nude"
+					SM.socks = "nude"
+					SM.undershirt = "nude"
+					M.transfer_trait_datums(SM)
 					SM.updateappearance(mutcolor_update=1)
 
 				//Process the willing ghosts, and make sure they're actually in the body when they're moved into it!
-				candies = shuffle(candies)//Shake those ghosts up!
-				for(var/mob/dead/observer/C2 in candies)
+				ghosts = shuffle(ghosts)//Shake those ghosts up!
+				for(var/mob/dead/observer/C2 in ghosts)
 					if(C2.key && C2)
 						C2.transfer_ckey(SM, FALSE)
 						message_admins("Ghost candidate found! [C2] key [C2.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
 						log_reagent("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
 						break
 					else
-						candies -= C2
+						ghosts -= C2
 				if(!SM.mind) //Something went wrong, use alt mechanics
 					return ..()
 				SM.mind.enslave_mind_to_creator(M)
@@ -99,16 +109,28 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					ZI.Insert(SM)
 					log_reagent("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 
-				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with your original, a perfect clone of your origin.</span>")
-
-				if(prob(50))
-					to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original.</span>")
-					log_reagent("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
-				else
-					to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.</span>")
+				var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+				var/policy = policies[POLICYCONFIG_SDGF]
+				if(policy)
+					to_chat(SM,policy)
+				if(prob((purity**3) * 80)) // 80% chance at 100% purity, 0% chance at 0 purity
+					policy = policies[POLICYCONFIG_SDGF_GOOD]
+					if(policy)
+						to_chat(SM,policy)
+					else
+						to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.</span>")
 					log_reagent("FERMICHEM: [SM] ckey: [SM.key]'s is bound by [M] ckey [M.key]'s objectives, and is encouraged to help them complete them.")
-
-				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
+				else
+					policy = policies[POLICYCONFIG_SDGF_BAD]
+					if(policy)
+						to_chat(SM,policy)
+					else
+						to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original.</span>")
+					log_reagent("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
+	
+				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you. Before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with your original, a perfect clone of your origin.</span>")
+				SM.client?.change_view(CONFIG_GET(string/default_view))
+				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you. Before you get a chance to think about it, a mass splits from you, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
 				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
@@ -170,18 +192,22 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 							//clone
 							var/typepath = M.type
 							var/mob/living/fermi_Clone = new typepath(M.loc)
-							var/mob/living/carbon/C = fermi_Clone
+							var/mob/living/carbon/human/SM = fermi_Clone
 
-							if(istype(C) && istype(M))
-								C.real_name = M.real_name
-								M.dna.transfer_identity(C, transfer_SE=1)
-								C.updateappearance(mutcolor_update=1)
-							C.apply_status_effect(/datum/status_effect/chem/SGDF)
-							var/datum/status_effect/chem/SGDF/S = C.has_status_effect(/datum/status_effect/chem/SGDF)
+							if(istype(SM) && istype(M))
+								SM.real_name = M.real_name
+								M.dna.transfer_identity(SM, transfer_SE=1)
+								SM.underwear = "nude"
+								SM.socks = "nude"
+								SM.undershirt = "nude"
+								SM.updateappearance(mutcolor_update=1)
+								M.transfer_trait_datums(SM)
+							SM.real_name = M.real_name
+							SM.apply_status_effect(/datum/status_effect/chem/SGDF)
+							var/datum/status_effect/chem/SGDF/S = SM.has_status_effect(/datum/status_effect/chem/SGDF)
 							S.original = M
 							S.originalmind = M.mind
 							S.status_set = TRUE
-
 							log_reagent("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
 							SSblackbox.record_feedback("tally", "fermi_chem", 1, "Braindead clones made")
 						if(87 to INFINITY)
@@ -236,6 +262,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.real_name = M.real_name
 			M.dna.transfer_identity(SM)
 			SM.updateappearance(mutcolor_update=1)
+			M.transfer_trait_datums(SM)
 		M.mind.transfer_to(SM)
 		M.visible_message("<span class='warning'>[M]'s body shudders, the growth factor rapidly splitting into a new clone of [M].</span>")
 

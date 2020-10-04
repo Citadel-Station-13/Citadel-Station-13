@@ -249,6 +249,8 @@
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
+	spare.undershirt = "Nude"
+	spare.socks = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
 	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
@@ -272,7 +274,17 @@
 		\"steps out\" of [H.p_them()].</span>",
 		"<span class='notice'>...and after a moment of disorentation, \
 		you're besides yourself!</span>")
-
+	if(H != spare && isslimeperson(spare) && isslimeperson(H))
+		// transfer the swap-body ui if it's open
+		var/datum/action/innate/swap_body/this_swap = origin_datum.swap_body
+		var/datum/action/innate/swap_body/other_swap = spare_datum.swap_body
+		var/datum/tgui/ui = SStgui.get_open_ui(H, this_swap, "main") || SStgui.get_open_ui(spare, this_swap, "main")
+		if(ui)
+			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
+			ui.user = spare
+			ui.src_object = other_swap
+			SStgui.on_open(ui) // stick it back on the lists
+			ui.process(force = TRUE)
 
 /datum/action/innate/swap_body
 	name = "Swap Body"
@@ -325,6 +337,8 @@
 				stat = "Conscious"
 			if(UNCONSCIOUS)
 				stat = "Unconscious"
+			if(SOFT_CRIT)
+				stat = "Barely Conscious"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -371,7 +385,6 @@
 			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
-			SStgui.close_uis(src)
 			swap_to_dupe(H.mind, selected)
 
 /datum/action/innate/swap_body/proc/can_swap(mob/living/carbon/human/dupe)
@@ -405,6 +418,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
+	var/mob/living/carbon/human/old = M.current
 	if(M.current.stat == CONSCIOUS)
 		M.current.visible_message("<span class='notice'>[M.current] \
 			stops moving and starts staring vacantly into space.</span>",
@@ -416,7 +430,20 @@
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
-
+	if(old != M.current && dupe == M.current && isslimeperson(dupe))
+		var/datum/species/jelly/slime/other_spec = dupe.dna.species
+		var/datum/action/innate/swap_body/other_swap = other_spec.swap_body
+		// theoretically the transfer_to proc is supposed to transfer the ui from the mob.
+		// so I try to get the UI from one of the two mobs and schlump it over to the new action button
+		var/datum/tgui/ui = SStgui.get_open_ui(old, src, "main") || SStgui.get_open_ui(dupe, src, "main")
+		if(ui)
+			// transfer the UI over. This code is slightly hacky but it fixes the problem
+			// I'd use SStgui.on_transfer but that doesn't let you transfer the src_object as well s
+			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
+			ui.user = dupe
+			ui.src_object = other_swap
+			SStgui.on_open(ui) // stick it back on the lists
+			ui.process(force = TRUE)
 
 ////////////////////////////////////////////////////////Round Start Slimes///////////////////////////////////////////////////////////////////
 
@@ -434,6 +461,8 @@
 	coldmod = 3
 	heatmod = 1
 	burnmod = 1
+
+	allowed_limb_ids = list("slime","stargazer","lum")
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
@@ -462,7 +491,7 @@
 		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
 		if(new_color)
 			var/temp_hsv = RGBtoHSV(new_color)
-			if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
 				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
 				H.update_body()
 				H.update_hair()

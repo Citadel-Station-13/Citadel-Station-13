@@ -729,7 +729,6 @@
 	if(load)
 		load.emp_act(severity)
 
-
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
