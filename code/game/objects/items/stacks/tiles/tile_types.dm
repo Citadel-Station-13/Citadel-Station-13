@@ -211,6 +211,12 @@
 	turf_type = /turf/open/floor/carpet/black
 	tableVariant = /obj/structure/table/wood/fancy/black
 
+/obj/item/stack/tile/carpet/arcade
+	name = "arcade carpet"
+	icon_state = "tile-carpet-arcade"
+	turf_type = /turf/open/floor
+	tableVariant = null
+
 /obj/item/stack/tile/carpet/blackred
 	name = "red carpet"
 	icon_state = "tile-carpet-blackred"
@@ -295,6 +301,15 @@
 	amount = 20
 
 /obj/item/stack/tile/carpet/black/fifty
+	amount = 50
+
+/obj/item/stack/tile/carpet/arcade/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/arcade/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/arcade/fifty
 	amount = 50
 
 /obj/item/stack/tile/carpet/blackred/ten
