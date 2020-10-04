@@ -113,8 +113,8 @@
 		message_admins("we added a head for you")
 	var/datum/species/dullahan_species = owner.dna.species
 	var/list/hair_overlays = dullahan_species.get_hair()
-	qdel(owner.get_bodypart(BODY_ZONE_HEAD))
-	stored_head.add_overlay(hair_overlays)
+	if(hair_overlays)
+		message_admins("found hair overlays with length [length(hair_overlays)]")
 
 //when you need to update the heads appearance to be that of the characters current appearance
 /datum/component/dullahan/proc/refresh_head_appearance()

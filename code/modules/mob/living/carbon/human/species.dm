@@ -409,7 +409,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.remove_overlay(HAIR_LAYER)
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER] = standing
-	H.apply_overlay(HAIR_LAYER)
+		H.apply_overlay(HAIR_LAYER)
 
 /datum/species/proc/get_hair(mob/living/carbon/human/H, forced_colour)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
@@ -552,15 +552,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	return standing
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
-	message_admins("handling body")
-	var/list/standing = get_body(H)
 	H.remove_overlay(BODY_LAYER)
-	if(standing.len)
-		H.overlays_standing[BODY_LAYER] = standing
-	H.apply_overlay(BODY_LAYER)
-	handle_mutant_bodyparts(H)
 
-/datum/species/proc/get_body(mob/living/carbon/human/H)
 	var/list/standing = list()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
@@ -638,9 +631,16 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(T.has_color)
 					MA.color = "#[H.shirt_color]"
 				standing += MA
-	return standing
+
+	if(standing.len)
+		H.overlays_standing[BODY_LAYER] = standing
+
+	H.apply_overlay(BODY_LAYER)
+	handle_mutant_bodyparts(H)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
+	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
+
 	H.remove_overlay(BODY_BEHIND_LAYER)
 	H.remove_overlay(BODY_ADJ_LAYER)
 	H.remove_overlay(BODY_ADJ_UPPER_LAYER)
@@ -650,26 +650,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(!mutant_bodyparts)
 		return
 
-	var/list/stored_standing_overlays = get_mutant_bodyparts(H, forced_colour)
-	if(stored_standing_overlays)
-		message_admins("there ARE stored mutant overlays being returned")
-		for(var/list/overlay_list in stored_standing_overlays)
-			message_admins("its [overlay_list] of length [overlay_list.len]")
-			for(var/thing in overlay_list)
-				message_admins("SOME THING HERE: [thing]")
-			if(overlay_list) //ignore nulls but not empty lists
-				var/layer_number = stored_standing_overlays[overlay_list] //index = layer number
-				H.overlays_standing[layer_number] = overlay_list
-
-	H.apply_overlay(BODY_BEHIND_LAYER)
-	H.apply_overlay(BODY_ADJ_LAYER)
-	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
-	H.apply_overlay(BODY_FRONT_LAYER)
-	H.apply_overlay(HORNS_LAYER)
-
-/datum/species/proc/get_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
-	var/stored_standing_overlays[TOTAL_LAYERS] //we store them in here first!
-	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
 	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
 
 	for(var/mutant_part in mutant_bodyparts)
@@ -915,8 +895,14 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 				standing += extra2_accessory_overlay
 
-		stored_standing_overlays[layernum] = standing
-	return stored_standing_overlays
+
+		H.overlays_standing[layernum] = standing
+
+	H.apply_overlay(BODY_BEHIND_LAYER)
+	H.apply_overlay(BODY_ADJ_LAYER)
+	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
+	H.apply_overlay(BODY_FRONT_LAYER)
+	H.apply_overlay(HORNS_LAYER)
 
 /*
  * Equip the outfit required for life. Replaces items currently worn.
