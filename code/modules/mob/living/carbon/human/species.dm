@@ -405,13 +405,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
-	var/list/standing = get_hair(H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
-	if(standing.len)
-		H.overlays_standing[HAIR_LAYER] = standing
-		H.apply_overlay(HAIR_LAYER)
-
-/datum/species/proc/get_hair(mob/living/carbon/human/H, forced_colour)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
@@ -549,7 +543,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(hair_overlay.icon)
 			standing += hair_overlay
 
-	return standing
+	if(standing.len)
+		H.overlays_standing[HAIR_LAYER] = standing
+
+	H.apply_overlay(HAIR_LAYER)
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
