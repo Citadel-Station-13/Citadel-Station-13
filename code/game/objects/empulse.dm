@@ -10,7 +10,7 @@
 	if(log)
 		message_admins("EMP with power [power], max distance [max_distance] in area [epicenter.loc.name] ")
 	log_game("EMP with power [power], max distance [max_distance] in area [epicenter.loc.name] ")
-	deadchat_broadcast("EMP with power ([power]), max distance ([max_distance]) in [epicenter.loc.name]", turf_target = epicenter)
+	deadchat_broadcast("<span class='deadsay bold'>EMP with power ([power]), max distance ([max_distance]) in [epicenter.loc.name]</span>", turf_target = epicenter)
 
 	if(power > 100)
 		new /obj/effect/temp_visual/emp/pulse(epicenter)
