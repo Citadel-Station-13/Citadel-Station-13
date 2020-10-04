@@ -1,8 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Synths / IPCs are no longer wound immune."
-  - bugfix: "Husked IPCs / Synths should now be rendered correctly."
-  - bugfix: "Falling vendors now squish synths / IPCs' limbs again."
-  - bugfix: "Synths and IPCs now do not have some fun roundstart oversights anymore."
-  - bugfix: "Regenerate_limbs now works for carbons with the ROBOTIC_LIMBS trait."
