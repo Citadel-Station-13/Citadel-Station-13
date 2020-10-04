@@ -349,7 +349,7 @@
 		if(L != src && (!L.ckey || L.client?.prefs.vore_flags & LICKABLE) && Adjacent(L))
 			LAZYADD(lickable, L)
 	for(var/mob/living/listed in lickable)
-		lickable[listed] = getFlatIcon(listed) // forgive me for what I must do.
+		lickable[listed] = new /mutable_appearance(listed)
 
 	if(!lickable)
 		return
