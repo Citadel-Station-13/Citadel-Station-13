@@ -48,8 +48,8 @@
 	var/progression = list() //Keep track of where people are in the story.
 	var/active = TRUE //Turn this to false to keep normal mob behavour
 	var/cached_z
-	/// I'm busy chatting, don't move.
-	var/busy_chatting = FALSE
+	/// I'm busy, don't move.
+	var/busy = FALSE
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
@@ -68,11 +68,14 @@
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
 	var/mob/living/simple_animal/jacq/Jacq = new src.type(loc)
 	Jacq.progression = progression
+	if(ckey) //transfer over any ghost posessions
+		Jacq.key = key
 	..()
 
 /mob/living/simple_animal/jacq/death() //What is alive may never die
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
+	fully_heal(FALSE)
 	health = 25
 	poof()
 
@@ -81,9 +84,9 @@
 		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
-		busy_chatting = FALSE
+		stopmove()
 		chit_chat(M)
-		busy_chatting = TRUE
+		canmove()
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
@@ -91,10 +94,24 @@
 		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
-		busy_chatting = FALSE
+		stopmove()
 		chit_chat(M)
-		busy_chatting = TRUE
+		canmove()
 	..()
+
+/mob/living/simple_animal/jacq/proc/canmove()
+	busy = FALSE
+	update_mobility()
+	return
+
+/mob/living/simple_animal/jacq/proc/stopmove()
+	if(ckey) //if someone is in her, don't disable her movement!
+		canmove()
+		return
+	busy = TRUE
+	update_mobility()
+	return
+
 
 /mob/living/simple_animal/jacq/proc/poof()
 	last_poof = world.realtime
@@ -104,7 +121,7 @@
 	s.set_up(R, 0, loc)
 	s.start()
 	visible_message("<b>[src]</b> disappears in a puff of smoke!")
-	busy_chatting = TRUE
+	canmove()
 	health = 25
 
 	//Try to go to populated areas
@@ -370,6 +387,7 @@
 				message_admins("[C2]/[C2.key] has agreed to go on a date with [C] as Jacqueline.")
 				log_game("HALLOWEEN: [C2]/[C2.key] has agreed to go on a date with [C] as Jacqueline")
 				to_chat(src, "<span class='big spooky'>You are Jacqueline the great pumpqueen, witch Extraordinaire! You're a very Scottish lass with a kind heart, but also a little crazy. You also blew up the wizarding school and you're suspended for a while, so you visited the station before heading home. On your head lies the prize pumpkin of your Mother's pumpkin patch. You're currently on a date with [C] and well, I didn't think anyone would get this far. <i> Please be good so I can do events like this in the future. </i> </span>")
+				canmove()
 				return
 			else
 				candies =- C2
@@ -383,9 +401,13 @@
 
 /mob/living/simple_animal/jacq/update_mobility()
 	. = ..()
-	if(busy_chatting)
+	if(busy)
 		DISABLE_BITFIELD(., MOBILITY_MOVE)
-		mobility_flags = .
+	else
+		ENABLE_BITFIELD(., MOBILITY_MOVE)
+	mobility_flags = .
+
+
 
 /obj/item/clothing/head/hardhat/pumpkinhead/jaqc
 	name = "Jacq o' latern"
