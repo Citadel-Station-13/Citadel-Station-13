@@ -293,6 +293,8 @@
 	//the appearances that are used as overlays for the head (so we can easily fetch them and cut them)
 	var/list/stored_appearances = list(null, null, null, null) //we index them with 1-4 so they need items in to initially index them, same order as stored_items
 	var/list/stored_mutant_overlays = list()
+	//keep track of if it was previously being worn
+	var/previously_worn = FALSE
 
 /obj/item/bodypart/head/dullahan/MouseDrop(atom/thing)
 	if(iscarbon(thing) && Adjacent(thing))
@@ -442,6 +444,7 @@
 /obj/item/bodypart/head/dullahan/attack_self(mob/user)
 	if(user == dullahan_body)
 		dullahan_body.equip_to_slot(src, SLOT_HEAD, TRUE)
+		previously_worn = TRUE
 		return TRUE
 	else
 		return ..()
@@ -449,12 +452,18 @@
 /obj/item/bodypart/head/dullahan/equipped(mob/user, slot)
 	if(user == dullahan_body) //forcibly render it if possible
 		attempt_render_head_on_body()
+	else
+		if(previously_worn)
+			previously_worn = FALSE
 	..()
 
 /obj/item/bodypart/head/dullahan/proc/attempt_render_head_on_body()
 	if(dullahan_body.head == src)
 		dullahan_body.overlays_standing[HEAD_LAYER] = build_worn_icon(HEAD_LAYER, 'icons/mob/clothing/head.dmi', FALSE, NO_FEMALE_UNIFORM, dullahan_body.icon_state, NONE, FALSE)
 		dullahan_body.add_overlay(dullahan_body.overlays_standing[HEAD_LAYER])
+	else
+		//it's not on the head
+		//cut those overlays if it was previously being worn
 
 //make sure it renders properly
 /obj/item/bodypart/head/dullahan/worn_overlays()

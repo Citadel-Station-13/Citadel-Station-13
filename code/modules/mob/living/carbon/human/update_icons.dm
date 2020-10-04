@@ -60,12 +60,14 @@ There are several things that need to be remembered:
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "mutant")
 
-/mob/living/carbon/human/update_body(update_genitals = FALSE)
+/mob/living/carbon/human/update_body(update_genitals = FALSE, send_signal = TRUE)
 	remove_overlay(BODY_LAYER)
-	dna.species.handle_body(src)
+	dna.species.handle_body(src, send_signal)
+	message_admins("so the body is handled, isnt that epic.")
 	..()
 	if(update_genitals)
 		update_genitals()
+	message_admins("and now we cry some more")
 
 /mob/living/carbon/human/update_fire()
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
