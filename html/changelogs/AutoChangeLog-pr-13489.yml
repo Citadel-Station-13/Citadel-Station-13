@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - tweak: "the minimum brightness of mutant parts is now a define"
