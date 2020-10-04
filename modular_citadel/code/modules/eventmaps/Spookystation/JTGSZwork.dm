@@ -606,7 +606,7 @@
 		dyndial_cycle_ticker = 0
 
 /obj/machinery/grandfatherclock/proc/dyndial_cycle()
-	var/ass_time = STATION_TIME(TRUE) //Fun fact, space station time has a timezone offset, If its not on display time.
+	var/ass_time = STATION_TIME(TRUE, world.time) //Fun fact, space station time has a timezone offset, If its not on display time. I added world.time to fix the compile error. I dunno if it works as intended still!!
 	var/hour = (text2num(time2text(ass_time, "hh"))%12)
 	var/minute = text2num(time2text(ass_time, "mm"))
 
