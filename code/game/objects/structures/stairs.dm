@@ -16,6 +16,18 @@
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
 	var/turf/listeningTo
 
+/obj/structure/stairs/north
+	dir = NORTH
+
+/obj/structure/stairs/south
+	dir = SOUTH
+
+/obj/structure/stairs/east
+	dir = EAST
+
+/obj/structure/stairs/west
+	dir = WEST
+
 /obj/structure/stairs/Initialize(mapload)
 	if(force_open_above)
 		force_open_above()
@@ -105,6 +117,9 @@
 		T.ChangeTurf(/turf/open/transparent/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
+	//SIGNAL_HANDLER
+	SHOULD_NOT_SLEEP(TRUE) //the same thing.
+
 	if(dir == UP)
 		var/turf/open/transparent/openspace/T = get_step_multiz(get_turf(src), UP)
 		if(T && !istype(T))

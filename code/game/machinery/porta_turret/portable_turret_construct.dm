@@ -151,6 +151,7 @@
 					turret.installation = installed_gun.type
 					turret.setup(installed_gun)
 					qdel(src)
+					return
 
 			else if(istype(I, /obj/item/crowbar))
 				I.play_tool_sound(src, 75)

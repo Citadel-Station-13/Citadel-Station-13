@@ -132,7 +132,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	fail_chance = min(fail_chance + round(15/severity), 100)
+	fail_chance = min(fail_chance + round(severity/6.6), 100)
 
 /obj/item/gun/energy/e_gun/nuclear/update_overlays()
 	. = ..()
