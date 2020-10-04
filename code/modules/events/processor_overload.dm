@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/processor_overload
 	weight = 15
 	min_players = 20
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/processor_overload
 	announceWhen	= 1
@@ -37,4 +36,4 @@
 			// at all
 			P.ex_act(EXPLODE_DEVASTATE)
 		else
-			P.emp_act(EMP_HEAVY)
+			P.emp_act(80)

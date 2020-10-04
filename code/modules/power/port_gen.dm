@@ -209,7 +209,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	emp_act(EMP_HEAVY)
+	emp_act(100)
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)

@@ -79,21 +79,22 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		14
+#define DNA_UNI_IDENTITY_BLOCKS		15
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
-#define DNA_EYE_COLOR_BLOCK			4
-#define DNA_GENDER_BLOCK			5
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
-#define DNA_HAIR_STYLE_BLOCK		7
-#define DNA_COLOR_ONE_BLOCK			8
-#define DNA_COLOR_TWO_BLOCK			9
-#define DNA_COLOR_THREE_BLOCK		10
-#define DNA_MUTANTTAIL_BLOCK		11
-#define DNA_MUTANTEAR_BLOCK			12
-#define DNA_MUTANTMARKING_BLOCK		13
-#define DNA_TAUR_BLOCK 				14
+#define DNA_LEFT_EYE_COLOR_BLOCK	4
+#define DNA_RIGHT_EYE_COLOR_BLOCK	5
+#define DNA_GENDER_BLOCK			6
+#define DNA_FACIAL_HAIR_STYLE_BLOCK	7
+#define DNA_HAIR_STYLE_BLOCK		8
+#define DNA_COLOR_ONE_BLOCK			9
+#define DNA_COLOR_TWO_BLOCK			10
+#define DNA_COLOR_THREE_BLOCK		11
+#define DNA_MUTANTTAIL_BLOCK		12
+#define DNA_MUTANTEAR_BLOCK			13
+#define DNA_MUTANTMARKING_BLOCK		14
+#define DNA_TAUR_BLOCK 				15
 
 #define DNA_SEQUENCE_LENGTH			4
 #define DNA_MUTATION_BLOCKS			8
@@ -142,11 +143,11 @@
 #define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
 #define HORNCOLOR		25
 #define WINGCOLOR		26
-#define CAN_SCAR		27 // If this species can be scarred (fleshy)
-
+#define ROBOTIC_LIMBS	27 //has robotic limbs that render like organic ones
+#define CAN_SCAR		28 // If this species can be scarred (fleshy)
 /// Used for determining which wounds are applicable to this species.
-#define HAS_FLESH	28 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
-#define HAS_BONE	29 /// if we have bones (can suffer bone wounds)
+#define HAS_FLESH	29 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
+#define HAS_BONE	30 /// if we have bones (can suffer bone wounds)
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
