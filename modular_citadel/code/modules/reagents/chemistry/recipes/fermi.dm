@@ -594,17 +594,17 @@
 	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot! - But it's now pretty dangerous, too! The ingredients are supercheap after all...
 	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
 	//FermiChem vars:
-	OptimalTempMin 	= 350
+	OptimalTempMin 	= 500
 	OptimalTempMax 	= 750
 	ExplodeTemp 	= 850
 	OptimalpHMin 	= 2.8
 	OptimalpHMax 	= 5.5 //2.7 ph levels of optimal ph zone - centered at 4.15 - ph of ingredients mixed at equal values is 9.55; ph of result is 8.
 	ReactpHLim 		= 4
 	//CatalystFact 	= 0
-	CurveSharpT 	= 2
+	CurveSharpT 	= 5
 	CurveSharppH 	= 3
-	ThermicConstant = 5
-	HIonRelease 	= -0.1
-	RateUpLim 		= 2
+	ThermicConstant = 10
+	HIonRelease 	= -0.2
+	RateUpLim 		= 3
 	PurityMin 		= 0.5 //Good luck.
 	FermiChem 		= TRUE
