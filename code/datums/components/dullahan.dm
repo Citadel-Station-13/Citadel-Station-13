@@ -108,13 +108,9 @@
 
 //get the most up to date mutant overlays by regenerating the head if needed, updating its overlays, then copying them over
 /datum/component/dullahan/proc/copy_mutant_overlays()
-	message_admins("so this is starting wat")
 	var/list/overlays_standing
 	if(!owner.get_bodypart(BODY_ZONE_HEAD))
 		owner.regenerate_limb(BODY_ZONE_HEAD, TRUE)
-	message_admins("regenerated")
-	if(owner.get_bodypart(BODY_ZONE_HEAD))
-		message_admins("yeah we regenerated his head and he has [length(owner.overlays_standing[HAIR_LAYER])]")
 	//do NOT send a signal here, else you will cause an infinite loop and a crash
 	owner.update_hair(send_signal = FALSE)
 	//owner.update_mutant_bodyparts(send_signal = FALSE) this gets updated by update_inv_head
@@ -123,7 +119,6 @@
 	owner.update_inv_head(send_signal = FALSE)
 	overlays_standing = owner.overlays_standing
 	qdel(owner.get_bodypart(BODY_ZONE_HEAD))
-	message_admins("now he has [length(owner.overlays_standing[HAIR_LAYER])]")
 
 	var/overlays_to_add = list()
 	//first find the eyes overlay
@@ -468,6 +463,9 @@
 	else
 		//it's not on the head
 		//cut those overlays if it was previously being worn
+		if(previously_worn)
+			dullahan_body.cut_overlay(dullahan_body.overlays_standing[HEAD_LAYER])
+			previously_worn = FALSE
 
 //make sure it renders properly
 /obj/item/bodypart/head/dullahan/worn_overlays()
