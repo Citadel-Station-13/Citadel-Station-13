@@ -160,7 +160,8 @@
 					/obj/item/clothing/under/costume/cheongsam = 3,
 					/obj/item/clothing/under/costume/cheongsam/white = 3,
 					/obj/item/clothing/under/costume/cheongsam/red = 3,
-					/obj/item/storage/backpack/snail = 3)
+					/obj/item/storage/backpack/snail = 3,
+					/obj/item/umbrella = 5)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 3,
 					/obj/item/clothing/under/syndicate/tacticool/skirt = 3,
 					/obj/item/clothing/mask/balaclava = 3,
