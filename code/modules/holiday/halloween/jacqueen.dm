@@ -110,9 +110,10 @@
 	busy = TRUE
 	update_mobility()
 
-/mob/living/simple_animal/jacq/proc/jacqrunes(message, mob/living/carbon/C, list/spans) //Displays speechtext over Jacq for the user only.
+/mob/living/simple_animal/jacq/proc/jacqrunes(message, mob/living/carbon/C) //Displays speechtext over Jacq for the user only.
 	var/atom/hearer = C
-	var/list/spans = list("spooky")// This doesn't colour her text, I dunno why.
+	//var/list/spans = list("spooky")
+	spans |= "spooky"
 	new /datum/chatmessage(message, src, hearer, spans)
 	//new /datum/chatmessage(lang_treat(speaker, message_language, raw_message, spans, null, TRUE), speaker, src, spans)
 
@@ -360,7 +361,7 @@
 
 				if("What is it like being a witch?") //What is it like being a witch?
 
-					visible_message("<b>[src]</b> says, <span class='spooky'>\"Tae be honest, ah dunnae. Ah mean ah have a piece o’ paper that implies that a’m, ‘n’ a few folk who seem keen in shoving me back in their magic tower, but I don’t know if that’s fer me really.\" </span> she gives the back of her pumpkin a quick scratch as she continues <span class='spooky'> \"What draws me tae witchcraft is the chaos, ah live tae see th’ utter madness that comes fae the spells ah cast ‘n’ th’ like, ‘n’ ah know you do tae, it’s why you’re ‘ere, aye? Ah kin conjure some utterly chaotic things, and ah love tae do it, just tae see what I’ll git! It’s why visiting here is so fun, ye wee lot scurrying about, getting me candies, hoping I’ll conjure up something utterly chaotic!\" </span> she throws her arms up in the arm with a laugh, spinning the pumpkin upon her head slightly. She carefully spins it back to face you, <span class='spooky'> \"But o’ course life ain’t that easy,  ye can’t just go around being a pure agent o’ chaos, ‘n’ ah feel like the reality o’ the world be trying tae dull me, to shove me in a boring dusty auld room where ah spend t’ rest o’ me days researching some boggin’ magic till ah die. Ah want tae bloody well change t’ world, ah want to do something that leaves an impact, but ah dunnae want t’ kill people doing it.\"</span> she gives out a soft sigh,  <span class='spooky'>\"Who knows, maybe I’ll bugger off ‘n’ make some pumkinmobiles or something daft like that.\" </span>")
+					visible_message("<b>[src]</b> says, <span class='spooky'>\"Tae be honest, ah dunnae. Ah mean ah have a piece o’ paper that implies that a’m, ‘n’ a few folk who seem keen in shoving me back in their magic tower, but I don’t know if that’s fer me really.\" </span> she gives the back of her pumpkin a quick scratch as she continues <span class='spooky'> \"What draws me tae witchcraft is the chaos, ah live tae see th’ utter madness that comes fae the spells ah cast ‘n’ th’ like, ‘n’ ah know you do tae, it’s why you’re ‘ere, aye? Ah kin conjure some utterly chaotic things, and ah love tae do it, just tae see what I’ll git! It’s why visiting here is so fun, ye wee lot scurrying about, getting me candies, hoping I’ll conjure up something utterly chaotic!\" </span> she throws her arms up in the arm with a laugh, spinning the pumpkin upon her head slightly. She carefully spins it back to face you, <span class='spooky'> \"But o’ course life ain’t that easy,  ye can’t just go around being a pure agent o’ chaos, ‘n’ ah feel like the reality o’ the world be trying tae dull me, to shove me in a boring dusty auld room where ah spend t’ rest o’ me days researching some boggin’ magic till ah die. Ah want tae bloody well change t’ world, ah want to do something that leaves an impact, but ah dunnae want t’ kill people doing it.\"</span> she gives out a soft sigh, \"Who knows, maybe I’ll bugger off ‘n’ make some pumkinmobiles or something daft like that.\" </span>")
 					jacqrunes("Tae be honest, ah dunnae. Ah mean ah have a piece o’ paper that implies that a’m, ‘n’ a few folk who seem keen in shoving me back in their magic tower, but I don’t know if that’s fer me really." , C)
 					sleep(10)
 					jacqrunes("What draws me tae witchcraft is the chaos, ah live tae see th’ utter madness that comes fae the spells ah cast ‘n’ th’ like, ‘n’ ah know you do tae, it’s why you’re ‘ere, aye? Ah kin conjure some utterly chaotic things, and ah love tae do it, just tae see what I’ll git! It’s why visiting here is so fun, ye wee lot scurrying about, getting me candies, hoping I’ll conjure up something utterly chaotic!" , C)
