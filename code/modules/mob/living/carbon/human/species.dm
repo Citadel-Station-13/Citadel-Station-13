@@ -364,8 +364,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
+	if(ROBOTIC_LIMBS in species_traits)
+		for(var/obj/item/bodypart/B in C.bodyparts)
+			B.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE) // Makes all Bodyparts robotic.
+			B.render_like_organic = TRUE
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
+/datum/species/proc/update_species_slowdown(mob/living/carbon/human/H)
+	H.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
 // EDIT ENDS
 
@@ -402,6 +409,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(F)
 			qdel(F)
 
+
+	if(ROBOTIC_LIMBS in species_traits)
+		for(var/obj/item/bodypart/B in C.bodyparts)
+			B.change_bodypart_status(BODYPART_ORGANIC, FALSE, TRUE)
+			B.render_like_organic = FALSE
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
@@ -422,7 +435,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/dynamic_fhair_suffix = ""
 
 	//for augmented heads
-	if(HD.status == BODYPART_ROBOTIC)
+	if(HD.status == BODYPART_ROBOTIC && !HD.render_like_organic)
 		return
 
 	//we check if our hat or helmet hides our facial hair.
@@ -570,19 +583,21 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		// eyes
 		if(!(NOEYES in species_traits))
 			var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
-			var/mutable_appearance/eye_overlay
 			if(!has_eyes)
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+				standing += mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
 			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
-			if((EYECOLOR in species_traits) && has_eyes)
-				eye_overlay.color = "#" + H.eye_color
-
-			if(OFFSET_EYES in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_EYES][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_EYES][2]
-
-			standing += eye_overlay
+				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/human_face.dmi', "left_eye", -BODY_LAYER)
+				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/human_face.dmi', "right_eye", -BODY_LAYER)
+				if((EYECOLOR in species_traits) && has_eyes)
+					left_eye.color = "#" + H.left_eye_color
+					right_eye.color = "#" + H.right_eye_color
+				if(OFFSET_EYES in offset_features)
+					left_eye.pixel_x += offset_features[OFFSET_EYES][1]
+					left_eye.pixel_y += offset_features[OFFSET_EYES][2]
+					right_eye.pixel_x += offset_features[OFFSET_EYES][1]
+					right_eye.pixel_y += offset_features[OFFSET_EYES][2]
+				standing += left_eye
+				standing += right_eye
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
@@ -785,7 +800,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						if(FACEHAIR)
 							accessory_overlay.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
-							accessory_overlay.color = "#[H.eye_color]"
+							accessory_overlay.color = "#[H.left_eye_color]"
 						if(HORNCOLOR)
 							accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 						if(WINGCOLOR)
@@ -840,7 +855,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					if(FACEHAIR)
 						extra_accessory_overlay.color = "#[H.facial_hair_color]"
 					if(EYECOLOR)
-						extra_accessory_overlay.color = "#[H.eye_color]"
+						extra_accessory_overlay.color = "#[H.left_eye_color]"
 
 					if(HORNCOLOR)
 						extra_accessory_overlay.color = "#[H.dna.features["horns_color"]]"

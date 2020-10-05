@@ -5,7 +5,7 @@
 
 /datum/sprite_accessory/snouts/is_not_visible(mob/living/carbon/human/H, tauric, ignore_head = FALSE)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (!ignore_head && H.head && (H.head.flags_inv & HIDESNOUT)) || (!ignore_head && (!HD || HD.status == BODYPART_ROBOTIC)))
+	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || (!ignore_head && (!HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))))
 
 /datum/sprite_accessory/snout/guilmon
 	name = "Guilmon"
@@ -163,7 +163,7 @@
 
 /datum/sprite_accessory/snouts/mam_snouts/is_not_visible(mob/living/carbon/human/H, tauric, ignore_head = FALSE)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (!ignore_head && H.head && (H.head.flags_inv & HIDESNOUT)) || (!ignore_head && (!HD || HD.status == BODYPART_ROBOTIC)))
+	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || (!ignore_head && (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic)))
 
 /datum/sprite_accessory/snouts/mam_snouts/none
 	name = "None"

@@ -163,7 +163,7 @@
 						var/custom_tone = input(user, "Choose your custom skin tone:", "Race change", default) as color|null
 						if(custom_tone)
 							var/temp_hsv = RGBtoHSV(new_s_tone)
-							if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
 								to_chat(H,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 							else
 								H.skin_tone = custom_tone
@@ -177,7 +177,7 @@
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
-					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+					if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
@@ -229,17 +229,32 @@
 				H.update_hair()
 
 		if(BODY_ZONE_PRECISE_EYES)
-			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			if(new_eye_color)
-				var/n_color = sanitize_hexcolor(new_eye_color)
-				var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
-				if(eyes)
-					eyes.eye_color = n_color
-				H.eye_color = n_color
-				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				H.dna.species.handle_body()
+			var/eye_type = input(H, "Choose the eye you want to color", "Eye Color") as null|anything in list("Both Eyes", "Left Eye", "Right Eye")
+			if(eye_type)
+				var/input_color = H.left_eye_color
+				if(eye_type == "Right Eye")
+					input_color = H.right_eye_color
+				var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+input_color) as color|null
+				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
+				if(new_eye_color)
+					var/n_color = sanitize_hexcolor(new_eye_color)
+					var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
+					var/left_color = n_color
+					var/right_color = n_color
+					if(eye_type == "Left Eye")
+						right_color = H.right_eye_color
+					else
+						if(eye_type == "Right Eye")
+							left_color = H.left_eye_color
+					if(eyes)
+						eyes.left_eye_color = left_color
+						eyes.right_eye_color = right_color
+					H.left_eye_color = left_color
+					H.right_eye_color = right_color
+					H.dna.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+					H.dna.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
+					H.dna.species.handle_body()
 	if(choice)
 		curse(user)
 

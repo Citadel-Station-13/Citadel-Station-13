@@ -8974,7 +8974,6 @@
 	},
 /obj/machinery/turnstile{
 	dir = 8;
-	icon_state = "turnstile_map";
 	name = "Genpop Entrance Turnstile";
 	req_access_txt = "69"
 	},
@@ -9657,7 +9656,6 @@
 	},
 /obj/machinery/turnstile{
 	dir = 8;
-	icon_state = "turnstile_map";
 	name = "Genpop Entrance Turnstile";
 	req_access_txt = "69"
 	},
@@ -28878,8 +28876,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "capblast";
-	name = "blast door"
+	id = "capblast"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -33205,8 +33202,7 @@
 "bts" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/light_construct/small{
-	dir = 1;
-	icon_state = "bulb-construct-stage1"
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
@@ -33760,8 +33756,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "capblast";
-	name = "blast door"
+	id = "capblast"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -37603,7 +37598,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "bDc" = (
-/obj/machinery/vending/security,
 /obj/structure/disposalpipe/segment,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37611,6 +37605,7 @@
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "bDd" = (
@@ -46836,8 +46831,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
-	id = "capblast";
-	name = "blast door"
+	id = "capblast"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -47893,8 +47887,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "capblast";
-	name = "blast door"
+	id = "capblast"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -49489,8 +49482,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
-	id = "capblast";
-	name = "blast door"
+	id = "capblast"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)
@@ -49570,8 +49562,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
-	id = "capblast";
-	name = "blast door"
+	id = "capblast"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain)

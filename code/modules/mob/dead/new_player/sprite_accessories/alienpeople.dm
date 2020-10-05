@@ -51,7 +51,7 @@
 
 /datum/sprite_accessory/xeno_head/is_not_visible(mob/living/carbon/human/H, tauric, ignore_head = FALSE)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	return (!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || (!ignore_head && H.head && (H.head.flags_inv & HIDEHAIR)) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || (!ignore_head && (!HD || HD.status == BODYPART_ROBOTIC)))
+	return (!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || (!ignore_head && (!HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))))
 
 /datum/sprite_accessory/xeno_head/standard
 	name = "Standard"

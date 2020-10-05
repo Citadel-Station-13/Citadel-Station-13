@@ -211,6 +211,14 @@
 	name =  "Keyhole Sweater"
 	path = /obj/item/clothing/under/misc/keyholesweater
 
+/datum/gear/uniform/tealturtle
+	name = "Teal Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/teal
+
+/datum/gear/uniform/greyturtle
+	name = "Grey Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/grey
+
 /datum/gear/uniform/polyjump
 	name = "Polychromic Jumpsuit"
 	path = /obj/item/clothing/under/misc/polyjumpsuit
@@ -245,6 +253,127 @@
 	name = "Polychromic Athletic Shorts"
 	path = /obj/item/clothing/under/shorts/polychromic
 	cost = 2
+
+/datum/gear/uniform/hopcasual
+	name = "Casual Head of Personnel's uniform"
+	path = /obj/item/clothing/under/rank/civilian/head_of_personnel/whimsy
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Head of Personnel"
+	restricted_roles = list("Head of Personnel")
+
+/datum/gear/uniform/robosleek
+	name = "Sleek roboticist's jumpsuit"
+	path = /obj/item/clothing/under/rank/rnd/roboticist/sleek
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Roboticist"
+	restricted_roles = list("Roboticist")
+
+/datum/gear/uniform/seccorp
+	name = "Corporate Security Uniform"
+	path = /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Security Officer"
+	restricted_roles = list("Security Officer")
+
+/datum/gear/uniform/wardencorp
+	name = "Corporate Warden's Uniform"
+	path = /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/wardencorp
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Warden"
+	restricted_roles = list("Warden")
+
+/datum/gear/uniform/hoscorp
+	name = "Corporate Head of Security's Uniform"
+	path = /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/hoscorp
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Head Of Security"
+	restricted_roles = list("Head Of Security")
+
+/datum/gear/uniform/detcorp
+	name = "Corporate Detective's Uniform"
+	path = /obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/detcorp
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Detective"
+	restricted_roles = list("Detective")
+
+/datum/gear/uniform/detbrown
+	name = "Brown Worn Suit"
+	path = /obj/item/clothing/under/rank/security/detective/brown
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Detective"
+	restricted_roles = list("Detective")
+
+/datum/gear/uniform/detbrown/detbrown2
+	name = "Padded Worn Suit"
+	path = /obj/item/clothing/under/rank/security/detective/brown/brown2
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Detective"
+	restricted_roles = list("Detective")
+
+
+// Grey utility
+
+/datum/gear/uniform/grey
+	name = "Grey Uniform"
+	path = /obj/item/clothing/under/rank/civilian/util/greyshirt
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_GENERAL
+
+/datum/gear/uniform/grey/util
+	name = "Grey Utility Uniform"
+	path = /obj/item/clothing/under/rank/civilian/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_GENERAL
+
+/datum/gear/uniform/grey/sec
+	name = "Security Utility Uniform"
+	path = /obj/item/clothing/under/rank/security/officer/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Security"
+	restricted_roles = list("Detective", "Security Officer", "Warden", "Head of Security")
+
+/datum/gear/uniform/grey/sci
+	name = "Science Utility Uniform"
+	path = /obj/item/clothing/under/rank/rnd/scientist/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Science"
+	restricted_roles = list("Scientist", "Roboticist", "Research Director", "Geneticist")
+
+/datum/gear/uniform/grey/med
+	name = "Medical Utility Uniform"
+	path = /obj/item/clothing/under/rank/medical/doctor/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Medical"
+	restricted_roles = list("Medical Doctor", "Virologist", "Chemist", "Geneticist", "Paramedic")
+
+/datum/gear/uniform/grey/eng
+	name = "Engineering Utility Uniform"
+	path = /obj/item/clothing/under/rank/engineering/engineer/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Engineering"
+	restricted_roles = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
+
+/datum/gear/uniform/grey/supply
+	name = "Supply Utility Uniform"
+	path = /obj/item/clothing/under/rank/cargo/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Supply"
+	restricted_roles = list("Shaft Miner", "Cargo Technician", "Quartermaster")
+
+/datum/gear/uniform/grey/com
+	name = "Command Utility Uniform"
+	path = /obj/item/clothing/under/rank/captain/util
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_desc = "Command"
+	restricted_roles = list("Quartermaster", "Research Director", "Chief Medical Officer", "Head Of Security", "Head Of Personnel", "Captain")
+
+/datum/gear/uniform/grey/eng/mech
+	name = "Mechanic's Uniform"
+	path = /obj/item/clothing/under/rank/engineering/engineer/mechanic
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+
+/datum/gear/unifrom/grey/med/red
+	name = "Red Paramedic's Uniform"
+	path = /obj/item/clothing/under/rank/medical/paramedic/red
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
 
 // Trekie things
 //TOS
@@ -540,3 +669,9 @@
 /datum/gear/uniform/kimono/sakura
 	name = "Sakura kimono"
 	path = /obj/item/clothing/under/costume/kimono/sakura
+
+/datum/gear/uniform/ctlong
+	name = "cargo tech's jumpsuit (long pants)"
+	path = /obj/item/clothing/under/rank/cargo/tech/long
+	subcategory = LOADOUT_SUBCATEGORY_UNIFORM_JOBS
+	restricted_roles = list("Cargo Technician")

@@ -27,7 +27,10 @@
 					/obj/item/clothing/mask/bandana/red = 5,
 					/obj/item/clothing/under/rank/security/officer/skirt = 5,
 					/obj/item/clothing/under/rank/security/officer/grey = 5,
-					/obj/item/clothing/under/pants/khaki = 5)
+					/obj/item/clothing/under/pants/khaki = 5,
+					/obj/item/clothing/suit/toggle/labcoat/depjacket/sec = 5,
+					/obj/item/clothing/under/rank/security/officer/util = 5,
+					/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp = 5)
 	premium = list(/obj/item/clothing/under/rank/security/officer/formal = 5,
 					/obj/item/clothing/head/beret/sec/navyofficer = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
@@ -38,6 +41,44 @@
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"
+
+
+/obj/machinery/vending/wardrobe/det_wardrobe
+	name = "\improper DetDrobe"
+	desc = "A machine for all your detective needs, as long as you need clothes."
+	icon_state = "detdrobe"
+	product_ads = "Apply your brilliant deductive methods in style!"
+	vend_reply = "Thank you for using the DetDrobe!"
+	products = list(/obj/item/clothing/under/rank/security/detective = 2,
+					/obj/item/clothing/under/rank/security/detective/skirt = 2,
+					/obj/item/clothing/under/rank/security/detective/brown = 2,
+					/obj/item/clothing/under/rank/security/detective/brown/brown2 = 2,
+					/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/detcorp = 2,
+					/obj/item/clothing/under/rank/security/officer/util = 2,
+					/obj/item/clothing/shoes/sneakers/brown = 2,
+					/obj/item/clothing/suit/det_suit = 2,
+					/obj/item/clothing/head/fedora/det_hat = 2,
+					/obj/item/clothing/under/rank/security/detective/grey = 2,
+					/obj/item/clothing/under/rank/security/detective/grey/skirt = 2,
+					/obj/item/clothing/accessory/waistcoat = 2,
+					/obj/item/clothing/shoes/laceup = 2,
+					/obj/item/clothing/suit/det_suit/grey = 1,
+					/obj/item/clothing/suit/det_suit/forensicsred = 1,
+					/obj/item/clothing/suit/det_suit/forensicsred/long = 1,
+					/obj/item/clothing/suit/det_suit/forensicsblue = 1,
+					/obj/item/clothing/suit/det_suit/forensicsblue/long = 1,
+					/obj/item/clothing/head/fedora = 2,
+					/obj/item/clothing/gloves/color/black = 2,
+					/obj/item/clothing/gloves/color/latex = 2,
+					/obj/item/reagent_containers/food/drinks/flask/det = 2,
+					/obj/item/storage/fancy/cigarettes = 5)
+	premium = list(/obj/item/clothing/head/flatcap = 1)
+	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
+	extra_price = 350
+	payment_department = ACCOUNT_SEC
+
+/obj/item/vending_refill/wardrobe/det_wardrobe
+	machine_name = "DetDrobe"
 
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	name = "\improper MediDrobe"
@@ -66,10 +107,15 @@
 					/obj/item/clothing/suit/toggle/labcoat = 5,
 					/obj/item/clothing/suit/toggle/labcoat/paramedic = 5,
 					/obj/item/clothing/suit/toggle/labcoat/emt = 5,
+					/obj/item/clothing/suit/toggle/labcoat/depjacket/med = 5,
 					/obj/item/clothing/shoes/sneakers/white = 5,
 					/obj/item/clothing/head/soft/emt = 5,
 					/obj/item/clothing/suit/apron/surgical = 5,
-					/obj/item/clothing/mask/surgical = 5)
+					/obj/item/clothing/mask/surgical = 5,
+					/obj/item/clothing/under/rank/medical/doctor/util = 5,
+					/obj/item/clothing/under/rank/medical/paramedic/red = 5,
+					/obj/item/clothing/suit/toggle/labcoat/emt/red = 5,
+					/obj/item/clothing/suit/toggle/labcoat/emt/highvis = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
 	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
@@ -91,6 +137,12 @@
 					/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
 					/obj/item/clothing/under/rank/engineering/engineer = 5,
 					/obj/item/clothing/under/rank/engineering/engineer/skirt = 5,
+					/obj/item/clothing/under/rank/engineering/engineer/hazard = 5,
+					/obj/item/clothing/under/rank/engineering/engineer/hazard/green = 5,
+					/obj/item/clothing/under/rank/engineering/engineer/hazard/white = 5,
+					/obj/item/clothing/suit/toggle/labcoat/depjacket/eng = 5,
+					/obj/item/clothing/under/rank/engineering/engineer/util = 5,
+					/obj/item/clothing/under/rank/engineering/engineer/mechanic = 5,
 					/obj/item/clothing/suit/hazardvest = 5,
 					/obj/item/clothing/shoes/workboots = 5,
 					/obj/item/clothing/head/hardhat = 5,
@@ -134,6 +186,9 @@
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/cargo = 3,
 					/obj/item/clothing/under/rank/cargo/tech = 5,
 					/obj/item/clothing/under/rank/cargo/tech/skirt = 5,
+					/obj/item/clothing/under/rank/cargo/util = 5,
+					/obj/item/clothing/suit/toggle/labcoat/depjacket/sup = 5,
+					/obj/item/clothing/under/rank/cargo/tech/long = 5,
 					/obj/item/clothing/shoes/sneakers/black = 5,
 					/obj/item/clothing/gloves/fingerless = 5,
 					/obj/item/clothing/head/soft = 5,
@@ -154,6 +209,7 @@
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
 					/obj/item/clothing/head/beret/robo = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist = 3,
+					/obj/item/clothing/under/rank/rnd/roboticist/sleek = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist/skirt = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/robotics = 3,
 					/obj/item/clothing/suit/toggle/labcoat = 3,
@@ -184,8 +240,10 @@
 					/obj/item/storage/backpack/satchel/tox = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/rnd/scientist = 4,
+					/obj/item/clothing/under/rank/rnd/scientist/util = 4,
 					/obj/item/clothing/under/rank/rnd/scientist/skirt = 4,
 					/obj/item/clothing/suit/toggle/labcoat/science = 4,
+					/obj/item/clothing/suit/toggle/labcoat/depjacket/sci = 4,
 					/obj/item/clothing/shoes/sneakers/white = 4,
 					/obj/item/radio/headset/headset_sci = 4,
 					/obj/item/clothing/mask/gas = 5)
@@ -474,6 +532,7 @@
 					/obj/item/clothing/neck/cloak/cap = 1,
 					/obj/item/clothing/shoes/sneakers/brown = 2,
 					/obj/item/clothing/under/rank/captain = 1,
+					/obj/item/clothing/under/rank/captain/util = 1,
 					/obj/item/clothing/under/rank/captain/skirt = 1,
 					/obj/item/clothing/head/caphat = 1,
 					/obj/item/clothing/head/caphat/parade = 1,

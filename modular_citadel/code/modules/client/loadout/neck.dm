@@ -86,3 +86,7 @@
 /datum/gear/neck/polycloak
 	name = "Polychromatic Cloak"
 	path = /obj/item/clothing/neck/cloak/polychromic
+
+/datum/gear/neck/altpolycloak
+	name = "Alternate Cloak"
+	path = /obj/item/clothing/neck/cloak/alt/polychromic
