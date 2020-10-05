@@ -10,7 +10,6 @@
 	gender = NEUTER
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_HUMANOID
-	threat = 3
 	response_help_continuous = "touches"
 	response_help_simple = "touch"
 	response_disarm_continuous = "pushes"
@@ -82,8 +81,9 @@
 		return 0
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life()
-	..()
+/mob/living/simple_animal/hostile/statue/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
 		// If they're not our target

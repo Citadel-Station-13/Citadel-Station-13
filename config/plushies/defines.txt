@@ -1,0 +1,2 @@
+# EXAMPLE
+# SNOWFLAKE_PLUSHIES example {"name":"example","desc":"thanks, coders.","icon_state":"","attack_verb":["thumped","whomped","bumped"],"squeak_override":{"sound/weapons/magout.ogg":1}}

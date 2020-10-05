@@ -17,6 +17,7 @@
 
 
 	outfit = /datum/outfit/job/captain
+	plasma_outfit = /datum/outfit/plasmaman/captain
 
 	access = list() 			//See get_access()
 	minimal_access = list() 	//See get_access()

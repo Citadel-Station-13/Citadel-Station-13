@@ -117,6 +117,12 @@
 	paralysis_type = "legs"
 	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
+/datum/brain_trauma/severe/paralysis/spinesnapped
+	random_gain = FALSE
+	clonable = FALSE
+	paralysis_type = "legs"
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY // It shouldn't fix severed spinal cords really, but there is no specific surgery for that yet.
+
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
 	desc = "Patient may involuntarily fall asleep during normal activities."

@@ -138,11 +138,11 @@
 	message = "of bones"
 	export_types = list(/obj/item/stack/sheet/bone)
 
-/datum/export/stack/bronze
+/datum/export/stack/sheet/bronze
 	unit_name = "tiles"
 	cost = 5
 	message = "of brozne"
-	export_types = list(/obj/item/stack/tile/bronze)
+	export_types = list(/obj/item/stack/sheet/bronze)
 
 /datum/export/stack/brass
 	unit_name = "tiles"
@@ -155,3 +155,10 @@
 	cost = 30
 	message = "of paperframes"
 	export_types = list(/obj/item/stack/sheet/paperframes)
+
+/datum/export/stack/telecrystal
+	unit_name = "raw"
+	cost = 1000
+	message = "telecrystals"
+	export_types = list(/obj/item/stack/telecrystal)
+

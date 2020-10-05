@@ -42,6 +42,10 @@
 "ak" = (
 /obj/structure/toilet,
 /obj/effect/turf_decal/sand,
+/obj/item/reagent_containers/food/drinks/beer/light{
+	pixel_x = 9
+	},
+/obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "al" = (
@@ -191,7 +195,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aM" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/reagent_dispensers/beerkeg{
+	reagent_id = /datum/reagent/consumable/ethanol/beer/light
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aN" = (
@@ -371,7 +377,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bP" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer/light,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bQ" = (
@@ -463,6 +469,7 @@
 /obj/item/storage/box/drinkingglasses,
 /obj/item/storage/box/beakers,
 /obj/item/storage/box/donkpockets,
+/obj/item/soap,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "hY" = (
@@ -537,6 +544,14 @@
 	},
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
+"rV" = (
+/obj/effect/turf_decal/sand,
+/obj/item/reagent_containers/food/drinks/beer/light{
+	pixel_y = -3;
+	pixel_x = -9
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/beach)
 "sy" = (
 /obj/effect/turf_decal/caution{
 	dir = 4
@@ -589,6 +604,11 @@
 "Gc" = (
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/light,
+/area/ruin/powered/beach)
+"Gu" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/beer/light,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "HC" = (
 /obj/structure/rack,
@@ -964,7 +984,7 @@ ar
 ar
 ar
 ar
-ar
+bP
 ar
 bR
 bT
@@ -984,7 +1004,7 @@ as
 aw
 aC
 aC
-aP
+Gu
 aW
 aK
 Ga
@@ -1108,7 +1128,7 @@ aa
 aa
 bW
 ak
-au
+rV
 aj
 aE
 aC

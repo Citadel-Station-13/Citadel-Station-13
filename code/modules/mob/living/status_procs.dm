@@ -500,6 +500,15 @@
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 		return S
 
+///////////////////////////////// OFF BALANCE/SHOVIES ////////////////////////
+/mob/living/proc/ShoveOffBalance(amount)
+	var/datum/status_effect/off_balance/B = has_status_effect(STATUS_EFFECT_OFF_BALANCE)
+	if(B)
+		B.duration = max(world.time + amount, B.duration)
+	else if(amount > 0)
+		B = apply_status_effect(STATUS_EFFECT_OFF_BALANCE, amount)
+	return B
+
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
 /mob/living/proc/IsFrozen()

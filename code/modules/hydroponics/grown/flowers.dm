@@ -277,7 +277,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "bee_balm-grow"
 	icon_dead = "bee_balm-dead"
-	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/bee_balm/honey) //Lower odds of becoming honey
+	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/bee_balm/honey_balm) //Lower odds of becoming honey
 	reagents_add = list(/datum/reagent/medicine/spaceacillin = 0.1, /datum/reagent/space_cleaner/sterilizine = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/bee_balm
@@ -291,11 +291,11 @@
 	foodtype = GROSS
 
 // Beebalm
-/obj/item/seeds/bee_balm/honey
+/obj/item/seeds/bee_balm/honey_balm
 	name = "pack of Honey Balm seeds"
 	desc = "These seeds grow into Honey Balms."
-	icon_state = "seed-bee_balmalt"
-	species = "seed-bee_balm_alt"
+	icon_state = "seed-honey_balm"
+	species = "honey_balm"
 	plantname = "Honey Balm Pods"
 	product = /obj/item/reagent_containers/food/snacks/grown/bee_balm/honey
 	endurance = 1
@@ -304,16 +304,16 @@
 	potency = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	icon_grow = "bee_balmalt-grow"
-	icon_dead = "bee_balmalt-dead"
+	icon_grow = "honey_balm-grow"
+	icon_dead = "honey_balm-dead"
 	reagents_add = list(/datum/reagent/consumable/honey = 0.1, /datum/reagent/lye = 0.3) //To make wax
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/bee_balm/honey
-	seed = /obj/item/seeds/bee_balm/honey
+	seed = /obj/item/seeds/bee_balm/honey_balm
 	name = "honey balm"
 	desc = "A large honey filled pod of a flower."
-	icon_state = "bee_balmalt"
+	icon_state = "honey_balm"
 	filling_color = "#FF6347"
 	bitesize_mod = 8
 	tastes = list("wax" = 1)

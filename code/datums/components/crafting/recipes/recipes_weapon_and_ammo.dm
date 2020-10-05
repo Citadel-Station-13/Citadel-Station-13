@@ -6,7 +6,7 @@
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 50
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_OTHER
 
 /datum/crafting_recipe/pin_removal/check_requirements(mob/user, list/collected_requirements)
 	var/obj/item/gun/G = collected_requirements[/obj/item/gun][1]
@@ -22,7 +22,7 @@
 				/obj/item/shield/riot = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/strobeshield/New()
 	..()
@@ -38,18 +38,18 @@
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	time = 100
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/spear
 	name = "Spear"
-	result = /obj/item/twohanded/spear
+	result = /obj/item/spear
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/shard = 1,
 				/obj/item/stack/rods = 1)
 	parts = list(/obj/item/shard = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
@@ -59,7 +59,7 @@
 				/obj/item/assembly/igniter = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/teleprod
 	name = "Teleprod"
@@ -70,7 +70,7 @@
 				/obj/item/stack/ore/bluespace_crystal = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/bola
 	name = "Bola"
@@ -88,7 +88,7 @@
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
@@ -97,7 +97,7 @@
 				/obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/catwhip
 	name = "Cat O' Nine Tails"
@@ -106,18 +106,18 @@
 				/obj/item/stack/cable_coil = 1)
 	time = 40
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
-	result = /obj/item/twohanded/required/chainsaw
+	result = /obj/item/chainsaw
 	reqs = list(/obj/item/circular_saw = 1,
 				/obj/item/stack/cable_coil = 3,
 				/obj/item/stack/sheet/plasteel = 5)
 	tools = list(TOOL_WELDER)
 	time = 50
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 //////////////////
 ///BOMB CRAFTING//
@@ -134,20 +134,20 @@
 	parts = list(/obj/item/stock_parts/matter_bin = 1, /obj/item/grenade/chem_grenade = 2)
 	time = 30
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_OTHER
 
 /datum/crafting_recipe/chemical_payload2
 	name = "Chemical Payload (Gibtonite)"
 	result = /obj/item/bombcore/chemical
 	reqs = list(
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/twohanded/required/gibtonite = 1,
+		/obj/item/gibtonite = 1,
 		/obj/item/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/stock_parts/matter_bin = 1, /obj/item/grenade/chem_grenade = 2)
 	time = 50
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_OTHER
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"
@@ -169,18 +169,18 @@
 	parts = list(/obj/item/reagent_containers/food/drinks/soda_cans = 1)
 	time = 15
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_OTHER
 
 /datum/crafting_recipe/lance
 	name = "Explosive Lance (Grenade)"
-	result = /obj/item/twohanded/spear
-	reqs = list(/obj/item/twohanded/spear = 1,
+	result = /obj/item/spear
+	reqs = list(/obj/item/spear = 1,
 				/obj/item/grenade = 1)
-	parts = list(/obj/item/twohanded/spear = 1,
+	parts = list(/obj/item/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE
 
 //////////////////
 ///GUNS CRAFTING//
@@ -192,8 +192,8 @@
 	result =  /obj/item/gun/ballistic/bow/pipe
 	reqs = list(/obj/item/pipe = 5,
 	/obj/item/stack/sheet/plastic = 15,
-	/obj/item/weaponcrafting/durathread_string = 5)
-	time = 450
+	/obj/item/weaponcrafting/string = 5)
+	time = 150
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
@@ -248,10 +248,10 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/ishotgun
+/datum/crafting_recipe/ishotgun // smaller and more versatile gun requires some better materials
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/improvised_parts/barrel_shotgun = 1,
+	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
 				/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
 				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
 				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
@@ -262,10 +262,10 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/irifle
+/datum/crafting_recipe/irifle // larger and less versatile gun, but a bit easier to make
 	name = "Improvised Rifle (7.62mm)"
 	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
-	reqs = list(/obj/item/weaponcrafting/improvised_parts/barrel_rifle = 1,
+	reqs = list(/obj/item/pipe = 2, // above
 				/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 1,
 				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
 				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
@@ -283,9 +283,9 @@
 /datum/crafting_recipe/arrow
 	name = "Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/wood
-	time = 30
+	time = 5 // these only do 15 damage
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
-				 /obj/item/stack/sheet/durathread = 1,
+				 /obj/item/stack/sheet/cloth = 1,
 				 /obj/item/stack/rods = 1) // 1 metal sheet = 2 rods = 2 arrows
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
@@ -293,7 +293,7 @@
 /datum/crafting_recipe/bone_arrow
 	name = "Bone Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/bone
-	time = 30
+	time = 5
 	always_availible = FALSE
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				 /obj/item/stack/sheet/sinew = 1,
@@ -305,7 +305,7 @@
 	name = "Ashen Arrow"
 	result = /obj/item/ammo_casing/caseless/arrow/ash
 	tools = list(TOOL_WELDER)
-	time = 30
+	time = 10 // 1.5 seconds minimum per actually worthwhile arrow excluding interface lag
 	always_availible = FALSE
 	reqs = list(/obj/item/ammo_casing/caseless/arrow/wood = 1)
 	category = CAT_WEAPONRY
@@ -403,44 +403,24 @@
 // PARTS CRAFTING //
 ////////////////////
 
-// BARRELS
-
-/datum/crafting_recipe/rifle_barrel
-	name = "Improvised Rifle Barrel"
-	result = /obj/item/weaponcrafting/improvised_parts/barrel_rifle
-	reqs = list(/obj/item/pipe = 2)
-	tools = list(TOOL_WELDER,TOOL_SAW)
-	time = 150
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-/datum/crafting_recipe/shotgun_barrel
-	name = "Improvised Shotgun Barrel"
-	result = /obj/item/weaponcrafting/improvised_parts/barrel_shotgun
-	reqs = list(/obj/item/pipe = 2)
-	tools = list(TOOL_WELDER,TOOL_SAW)
-	time = 150
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
 // RECEIVERS
 
 /datum/crafting_recipe/rifle_receiver
 	name = "Improvised Rifle Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 20)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Rifle is the easiest to craft and can be made at an autolathe, this is a very light kick in the shin for dual-wielding ishotguns.
-	time = 50
+	reqs = list(/obj/item/stack/sheet/metal = 15) // you can carry multiple shotguns
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 25
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
 /datum/crafting_recipe/shotgun_receiver
 	name = "Improvised Shotgun Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 10,
-				/obj/item/stack/sheet/plasteel = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER) // Increased cost is to stop dual-wield alpha striking. ishotgun is a rvolver and can be duel-wielded
-	time = 50
+	reqs = list(/obj/item/stack/sheet/metal = 15,
+				/obj/item/stack/sheet/plasteel = 1) // requires access or hacking since shotgun is better
+	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 25
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
@@ -452,6 +432,6 @@
 	reqs = list(/obj/item/stack/sheet/metal = 3,
 				/obj/item/assembly/igniter = 1)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 150
+	time = 25
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS

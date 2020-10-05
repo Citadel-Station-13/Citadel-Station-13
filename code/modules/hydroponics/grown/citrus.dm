@@ -29,29 +29,10 @@
 	seed = /obj/item/seeds/lime
 	name = "lime"
 	desc = "It's so sour, your face will twist."
+	foodtype = FRUIT | ANTITOXIC
 	icon_state = "lime"
 	filling_color = "#00FF00"
 	juice_results = list(/datum/reagent/consumable/limejuice = 0)
-
-// Electric Lime
-/obj/item/seeds/lime/electric
-	name = "pack of electric lime seeds"
-	desc = "Electrically sour seeds."
-	icon_state = "seed-electriclime"
-	species = "electric lime"
-	plantname = "Electric Lime Tree"
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	icon_grow = "lime-grow"
-	icon_dead = "lime-dead"
-	icon_harvest = "lime-harvest"
-	product = /obj/item/reagent_containers/food/snacks/grown/citrus/lime/electric
-	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/green)
-
-/obj/item/reagent_containers/food/snacks/grown/citrus/lime/electric
-	seed = /obj/item/seeds/lime/electric
-	name = "electric lime"
-	desc = "It's so sour, you'll be shocked!"
-	icon_state = "electriclime"
 
 // Orange
 /obj/item/seeds/orange
@@ -107,8 +88,8 @@
 	icon_state = "orang"
 	filling_color = "#FFA500"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
-	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
-	tastes = list("polygons" = 1, "oranges" = 1)
+	distill_reagent = /datum/reagent/toxin/mindbreaker
+	tastes = list("polygons" = 1, "bluespace" = 1, "the true nature of reality" = 1)
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d/pickup(mob/user)
 	. = ..()
@@ -195,7 +176,7 @@
 /obj/item/reagent_containers/food/snacks/grown/firelemon/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion
 
-/obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime()
+/obj/item/reagent_containers/food/snacks/grown/firelemon/proc/prime(mob/living/lanced_by)
 	switch(seed.potency) //Combustible lemons are alot like IEDs, lots of flame, very little bang.
 		if(0 to 30)
 			update_mob()

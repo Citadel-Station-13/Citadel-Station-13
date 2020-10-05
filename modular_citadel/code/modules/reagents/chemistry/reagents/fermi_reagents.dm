@@ -159,6 +159,35 @@
 		log_reagent("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										PLUSHMIUM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//A chemical you can spray on plushies to turn them into a 'shell'
+//Hugging the plushie turns yourself into the plushie!
+/datum/reagent/fermi/plushmium
+	name = "Plushmium"
+	description = "A strange chemical, seeming almost fluffy, if it were not for it being a liquid. Known to have a strange effect on plushies."
+	color = "#fbcbd7"
+	taste_description = "the soft feeling of a plushie"
+	pH = 5
+	value = 50
+	can_synth = TRUE
+
+/datum/reagent/fermi/plushmium/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/toy/plush) && reac_volume >= 5)
+		O.loc.visible_message("<span class='warning'>The plushie seems to be staring back at you.</span>")
+		var/obj/item/toy/plushie_shell/new_shell = new /obj/item/toy/plushie_shell(O.loc)
+		new_shell.name = O.name
+		new_shell.icon = O.icon
+		new_shell.icon_state = O.icon_state
+		new_shell.stored_plush = O
+		O.forceMove(new_shell)
+
+//Extra interaction for which spraying it on an existing sentient plushie aheals them, so they can be revived!
+/datum/reagent/fermi/plushmium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(istype(M, /mob/living/simple_animal/pet/plushie) && reac_volume >= 1)
+		M.revive(full_heal = 1, admin_revive = 1)
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal
 //Writen by Trilby!! Embellsished a little by me.
@@ -192,7 +221,7 @@
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
@@ -204,7 +233,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(O == active_obj)
 			return
 	react_objs += O
-	O.emp_act(EMP_HEAVY)
+	O.emp_act(80)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
@@ -219,7 +248,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(50))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
 	..()
 

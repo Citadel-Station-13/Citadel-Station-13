@@ -7,6 +7,9 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
+	/// hides the byond verb panel as we use our own custom version
+	show_verb_panel = FALSE
+	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
 	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
 	var/AI_Interact		= 0
@@ -19,6 +22,8 @@
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
 	var/ircreplyamount = 0
+	/// last time they tried to do an autobunker auth
+	var/autobunker_last_try = 0
 
 		/////////
 		//OTHER//
@@ -27,6 +32,9 @@
 	var/last_turn = 0
 	var/move_delay = 0
 	var/area			= null
+
+	/// Last time we Click()ed. No clicking twice in one tick!
+	var/last_click = 0
 
 		///////////////
 		//SOUND STUFF//
@@ -70,11 +78,12 @@
 
 	var/inprefs = FALSE
 	var/list/topiclimiter
+
+	///Used for limiting the rate of clicks sends by the client to avoid abuse
 	var/list/clicklimiter
 
-	var/datum/chatOutput/chatOutput
-
-	var/list/credits //lazy list of all credit object bound to this client
+	///lazy list of all credit object bound to this client
+	var/list/credits
 
 	var/datum/player_details/player_details //these persist between logins/logouts during the same round.
 
@@ -117,6 +126,25 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	/// datum wrapper for client view
+	var/datum/view_data/view_size
+
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
+
+	/// list of tabs containing spells and abilities
+	var/list/spell_tabs = list()
+	/// list of tabs containing verbs
+	var/list/verb_tabs = list()
+	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
+	var/list/recent_examines
 	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
 	var/cryo_warned = -5 MINUTES
 
@@ -133,3 +161,15 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+
+	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
+	var/list/sent_assets = list()
+	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
+	var/list/completed_asset_jobs = list()
+	/// Last asset send job id.
+	var/last_asset_job = 0
+	var/last_completed_asset_job = 0
+
+	//world.time of when the crew manifest can be accessed
+	var/crew_manifest_delay
+

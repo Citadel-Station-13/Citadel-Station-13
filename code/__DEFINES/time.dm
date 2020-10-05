@@ -39,6 +39,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define SATURDAY	"Sat"
 #define SUNDAY		"Sun"
 
+#define WEEKDAY2NUM(D) (D == SUNDAY ? 1 : D == MONDAY ? 2 : D == TUESDAY ? 3 : D == WEDNESDAY ? 4 : D == THURSDAY ? 5 : D == FRIDAY ? 6 : 7) //this looks ugly, but switch statements can't be used as vars, so *shrug
+
 #define SECONDS *10
 
 #define MINUTES SECONDS*60

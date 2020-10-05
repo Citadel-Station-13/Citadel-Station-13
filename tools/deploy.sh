@@ -29,12 +29,13 @@ cp -r sound/chatter/* $1/sound/chatter/
 cp -r sound/voice/complionator/* $1/sound/voice/complionator/
 cp -r sound/instruments/* $1/sound/instruments/
 cp -r strings/* $1/strings/
+cp *byond-extools.* $1/ || true
 
 #remove .dm files from _maps
 
 #this regrettably doesn't work with windows find
 #find $1/_maps -name "*.dm" -type f -delete
 
-#dlls on windows
+#dlls on windows.
 cp rust_g* $1/ || true
 cp *BSQL.* $1/ || true

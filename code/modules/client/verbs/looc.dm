@@ -38,11 +38,15 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
 		if(mob.stat)
-			to_chat(src, "<span class='danger'>You cannot salt in LOOC while unconscious or dead.</span>")
+			to_chat(src, "<span class='danger'>You cannot use LOOC while unconscious or dead.</span>")
 			return
-		if(istype(mob, /mob/dead))
+		if(isdead(mob))
 			to_chat(src, "<span class='danger'>You cannot use LOOC while ghosting.</span>")
 			return
+		if(HAS_TRAIT(mob, TRAIT_LOOC_MUTE))
+			to_chat(src, "<span class='danger'>You cannot use LOOC right now.</span>")
+			return
+
 
 	msg = emoji_parse(msg)
 

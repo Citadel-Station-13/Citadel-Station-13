@@ -27,10 +27,12 @@
 	var/orderer_rank
 	var/orderer_ckey
 	var/reason
+	var/discounted_pct
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
+	var/obj/item/coupon/applied_coupon
 
-/datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account)
+/datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, coupon)
 	id = SSshuttle.ordernum++
 	src.pack = pack
 	src.orderer = orderer
@@ -38,6 +40,7 @@
 	src.orderer_ckey = orderer_ckey
 	src.reason = reason
 	src.paying_account = paying_account
+	src.applied_coupon = coupon
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/P = new(T)
@@ -57,58 +60,64 @@
 	P.update_icon()
 	return P
 
-/datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C)
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, pack.cost)
+/datum/supply_order/proc/generateManifest(obj/container, owner, packname) //generates-the-manifests.
+	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(container, id, 0)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
-	P.name = "shipping manifest - #[id] ([pack.name])"
+	P.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
-	if(paying_account)
-		P.info += "Direct purchase from [paying_account.account_holder]<br/>"
-		P.name += " - Purchased by [paying_account.account_holder]"
+	if(id && !(id == "Cargo"))
+		P.info += "Direct purchase from [owner]<br/>"
+		P.name += " - Purchased by [owner]"
 	P.info += "Order #[id]<br/>"
 	P.info += "Destination: [station_name]<br/>"
-	P.info += "Item: [pack.name]<br/>"
+	if(packname)
+		P.info += "Item: [packname]<br/>"
 	P.info += "Contents: <br/>"
 	P.info += "<ul>"
-	for(var/atom/movable/AM in C.contents - P - C.lockerelectronics)
+	var/list/ignore_this = list(P)
+	if(istype(container, /obj/structure/closet))
+		var/obj/structure/closet/C = container
+		ignore_this += C.lockerelectronics
+	for(var/atom/movable/AM in container.contents - ignore_this)
 		if((P.errors & MANIFEST_ERROR_CONTENTS) && prob(50))
 			continue
 		P.info += "<li>[AM.name]</li>"
 	P.info += "</ul>"
 	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
 
+	if(P.errors & MANIFEST_ERROR_ITEM)
+		var/static/list/blacklisted_error = typecacheof(list(
+			/obj/structure/closet/crate/secure,
+			/obj/structure/closet/crate/large,
+			/obj/structure/closet/secure_closet/goodies
+		))
+		if(blacklisted_error[container.type])
+			P.errors &= ~MANIFEST_ERROR_ITEM
+		else
+			var/lost = max(round(container.contents.len / 10), 1)
+			while(--lost >= 0)
+				qdel(pick(container.contents))
+
 	P.update_icon()
-	P.forceMove(C)
-	C.manifest = P
-	C.update_icon()
+	P.forceMove(container)
+
+	if(istype(container, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = container
+		C.manifest = P
+		C.update_icon()
 
 	return P
 
 /datum/supply_order/proc/generate(atom/A)
 	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
-	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
-
-	if(M.errors & MANIFEST_ERROR_ITEM)
-		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))
-			M.errors &= ~MANIFEST_ERROR_ITEM
-		else
-			var/lost = max(round(C.contents.len / 10), 1)
-			while(--lost >= 0)
-				qdel(pick(C.contents))
+	generateManifest(C, paying_account, pack)
 	return C
 
-//Paperwork for NT
-/obj/item/folder/paperwork
-	name = "Incomplete Paperwork"
-	desc = "These should've been filled out four months ago! Unfinished grant papers issued by Nanotrasen's finance department. Complete this page for additional funding."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "docs_generic"
-
-/obj/item/folder/paperwork_correct
-	name = "Finished Paperwork"
-	desc = "A neat stack of filled-out forms, in triplicate and signed. Is there anything more satisfying? Make sure they get stamped."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "docs_verified"
+/datum/supply_order/proc/generateCombo(var/miscbox, var/misc_own, var/misc_contents)
+	for (var/I in misc_contents)
+		new I(miscbox)
+	generateManifest(miscbox, misc_own, "")
+	return

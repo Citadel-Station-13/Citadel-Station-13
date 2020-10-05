@@ -18,7 +18,7 @@
 
 /turf/open/CanAtmosPass(turf/T, vertical = FALSE)
 	var/dir = vertical? get_dir_multiz(src, T) : get_dir(src, T)
-	var/opp = dir_inverse_multiz(dir)
+	var/opp = REVERSE_DIR(dir)
 	var/R = FALSE
 	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
 		R = TRUE
@@ -44,25 +44,32 @@
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
-	var/canpass = CANATMOSPASS(src, src)
+	var/canpass = CANATMOSPASS(src, src) 
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
+		var/opp_dir = REVERSE_DIR(direction)
 		if(!isopenturf(T))
 			continue
 		if(!(blocks_air || T.blocks_air) && ((direction & (UP|DOWN))? (canvpass && CANVERTICALATMOSPASS(T, src)) : (canpass && CANATMOSPASS(T, src))) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[T] = TRUE
-			T.atmos_adjacent_turfs[src] = TRUE
+			atmos_adjacent_turfs[T] = direction
+			T.atmos_adjacent_turfs[src] = opp_dir
+			T.__update_extools_adjacent_turfs()
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= T
 			if (T.atmos_adjacent_turfs)
 				T.atmos_adjacent_turfs -= src
+				T.__update_extools_adjacent_turfs()
 			UNSETEMPTY(T.atmos_adjacent_turfs)
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+	__update_extools_adjacent_turfs()
+
+/turf/proc/__update_extools_adjacent_turfs()
+
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
@@ -111,9 +118,9 @@
 	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(turf/T)
-	if(isturf(T))
-		T.air_update_turf(1)
-	air_update_turf(1)
+    if(isturf(T))
+        T.air_update_turf(1)
+    air_update_turf(1)
 
 /atom/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make an easy proc to spawn your plasma fires
 	var/turf/open/T = get_turf(src)

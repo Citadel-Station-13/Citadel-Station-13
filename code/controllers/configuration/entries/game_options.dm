@@ -98,6 +98,11 @@
 	config_entry_value = 6
 	min_val = 1
 
+/datum/config_entry/number/ecult_scaling_coeff		//how much does the amount of players get divided by to determine e_cult
+	config_entry_value = 6
+	integer = FALSE
+	min_val = 1
+
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
 	config_entry_value = 8
 	min_val = 1
@@ -168,11 +173,13 @@
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
-/datum/config_entry/flag/no_summon_guns	//No
+/datum/config_entry/flag/no_summon_guns		//No
 
 /datum/config_entry/flag/no_summon_magic	//Fun
 
 /datum/config_entry/flag/no_summon_events	//Allowed
+
+/datum/config_entry/flag/no_summon_traumas	//!
 
 /datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
 
@@ -435,6 +442,10 @@
 	config_entry_value = 64
 	min_val = 0
 
+/datum/config_entry/number/ratcap
+	config_entry_value = 64
+	min_val = 0
+
 /datum/config_entry/flag/disable_stambuffer
 
 /datum/config_entry/keyed_list/box_random_engine
@@ -517,3 +528,22 @@
   * Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
   */
 /datum/config_entry/flag/use_field_of_vision
+
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	config_entry_value = 6
+
+/datum/config_entry/number/max_shuttle_size
+	config_entry_value = 500
+
+//wound config stuff (increases the max injury roll, making injuries more likely)
+/datum/config_entry/number/wound_exponent
+	config_entry_value = WOUND_DAMAGE_EXPONENT
+	min_val = 0
+	integer = FALSE
+
+//adds a set amount to any injury rolls on a limb using get_damage() multiplied by this number
+/datum/config_entry/number/wound_damage_multiplier
+	config_entry_value = 0.333
+	min_val = 0
+	integer = FALSE

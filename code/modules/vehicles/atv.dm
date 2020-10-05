@@ -68,7 +68,7 @@
 
 /obj/vehicle/ridden/atv/snowmobile/Moved()
 	. = ..()
-	var/static/list/snow_typecache = typecacheof(list(/turf/open/floor/plating/asteroid/snow/icemoon, /turf/open/floor/plating/snowed/smoothed/icemoon))
+	var/static/list/snow_typecache = typecacheof(list(/turf/open/floor/plating/asteroid/snow/icemoon, /turf/open/floor/plating/snowed/smoothed/icemoon, /turf/open/floor/plating/snowed, /turf/open/floor/plating/asteroid/snow))
 	var/datum/component/riding/E = LoadComponent(/datum/component/riding)
 	if(snow_typecache[loc.type])
 		E.vehicle_move_delay = 1

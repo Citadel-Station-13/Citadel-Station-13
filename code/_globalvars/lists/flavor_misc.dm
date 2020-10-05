@@ -40,6 +40,46 @@ GLOBAL_LIST_EMPTY(insect_fluffs_list)
 GLOBAL_LIST_EMPTY(insect_markings_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
+//a way to index the right bodypart list given the type of bodypart
+GLOBAL_LIST_INIT(mutant_reference_list, list(
+	"tail_lizard" = GLOB.tails_list_lizard,
+	"waggingtail_lizard" = GLOB.animated_tails_list_lizard,
+	"tail_human" = GLOB.tails_list_human,
+	"waggingtail_human" = GLOB.animated_tails_list_human,
+	"spines" = GLOB.spines_list,
+	"waggingspines" = GLOB.animated_spines_list,
+	"snout" = GLOB.snouts_list,
+	"frills" = GLOB.frills_list,
+	"horns" = GLOB.horns_list,
+	"ears" = GLOB.ears_list,
+	"body_markings" = GLOB.body_markings_list,
+	"wings" = GLOB.wings_list,
+	"wingsopen" = GLOB.wings_open_list,
+	"deco_wings" = GLOB.deco_wings_list,
+	"legs" = GLOB.legs_list,
+	"insect_wings" = GLOB.insect_wings_list,
+	"insect_fluff" = GLOB.insect_fluffs_list,
+	"insect_markings" = GLOB.insect_markings_list,
+	"caps" = GLOB.caps_list,
+	"ipc_screen" = GLOB.ipc_screens_list,
+	"ipc_antenna" = GLOB.ipc_antennas_list,
+	"mam_tail" = GLOB.mam_tails_list,
+	"mam_waggingtail" = GLOB.mam_tails_animated_list,
+	"mam_body_markings" = GLOB.mam_body_markings_list,
+	"mam_ears" = GLOB.mam_ears_list,
+	"mam_snouts" = GLOB.mam_snouts_list,
+	"taur" = GLOB.taur_list,
+	"xenodorsal" = GLOB.xeno_dorsal_list,
+	"xenohead" = GLOB.xeno_head_list,
+	"xenotail" = GLOB.xeno_tail_list))
+
+//references wag types to regular types, wings open to wings, etc
+GLOBAL_LIST_INIT(mutant_transform_list, list("wingsopen" = "wings",
+	"waggingtail_human" = "tail_human",
+	"waggingtail_lizard" = "tail_lizard",
+	"waggingspines" = "spines",
+	"mam_waggingtail" = "mam_tail"))
+
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
@@ -116,15 +156,16 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 
 GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-	//Backpacks
-#define GBACKPACK "Grey Backpack"
-#define GSATCHEL "Grey Satchel"
-#define GDUFFELBAG "Grey Duffel Bag"
-#define LSATCHEL "Leather Satchel"
+//Backpacks
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"
 #define DDUFFELBAG "Department Duffel Bag"
-GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL))
+GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, //everything after this point is a non-department backpack
+	"Grey Backpack" = /obj/item/storage/backpack,
+	"Grey Satchel" = /obj/item/storage/backpack/satchel,
+	"Grey Duffel Bag" = /obj/item/storage/backpack/duffelbag,
+	"Leather Satchel" = /obj/item/storage/backpack/satchel/leather,
+	"Snail Shell" = /obj/item/storage/backpack/snail))
 
 //Suit/Skirt
 #define PREF_SUIT "Jumpsuit"
@@ -223,3 +264,26 @@ GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_a
 GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))
 
 GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARCHIVED\]", "\[EXPLETIVE DELETED\]", "\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]", "\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]", "\[ACCESS DENIED\]"))
+
+GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
+
+GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles"))
+
+GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc))
+
+//locked parts are those that your picked species requires to have
+//unlocked parts are those that anyone can choose on customisation regardless
+//parts not in unlocked, but in all, are thus locked
+GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "body_markings" = "Body Markings", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
+GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
+//parts in either of the above two lists that require a second option that allows them to be coloured
+GLOBAL_LIST_INIT(colored_mutant_parts, list("insect_wings" = "wings_color", "deco_wings" = "wings_color", "horns" = "horns_color"))
+
+//body ids that have greyscale sprites
+GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","lum","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
+
+//body ids that have prosthetic sprites
+GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
+
+//body ids that have non-gendered bodyparts
+GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem"))

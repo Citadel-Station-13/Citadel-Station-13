@@ -100,7 +100,7 @@
 	crate_name = "surplus russian clothing"
 	crate_type = /obj/structure/closet/crate/internals
 
-/datum/supply_pack/security/russianmosin
+/datum/supply_pack/security/russian_partisan
 	name = "Russian Partisan Gear"
 	desc = "An old russian partisan equipment crate, comes with a full russian outfit, a loaded surplus rifle and a second magazine."
 	contraband = TRUE
@@ -112,11 +112,16 @@
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/gloves/tackler/combat/insulated,
-					/obj/item/clothing/mask/gas,
-					/obj/item/ammo_box/magazine/m10mm/rifle,
-					/obj/item/gun/ballistic/automatic/surplus)
+					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian gear"
 	crate_type = /obj/structure/closet/crate/internals
+
+/datum/supply_pack/security/russian_partisan/fill(obj/structure/closet/crate/C)
+	..()
+	if(prob(20))
+		new /obj/effect/spawner/bundle/crate/mosin(C)
+	else
+		new /obj/effect/spawner/bundle/crate/surplusrifle(C)
 
 /datum/supply_pack/security/sechardsuit
 	name = "Sec Hardsuit"
@@ -228,3 +233,35 @@
 	access = ACCESS_ARMORY
 	crate_name = "sporting crate"
 	crate_type = /obj/structure/closet/crate/secure // Would have liked a wooden crate but access >:(
+
+/datum/supply_pack/security/dumdum
+	name = ".38 DumDum Speedloader"
+	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets. Requires Security or Forensics access to open."
+	cost = 1200
+	access = FALSE
+	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
+	contains = list(/obj/item/ammo_box/c38/dumdum)
+	crate_name = ".38 match crate"
+
+/datum/supply_pack/security/match
+	name = ".38 Match Grade Speedloader"
+	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots. Requires Security or Forensics access to open."
+	cost = 1200
+	access = FALSE
+	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
+	contains = list(/obj/item/ammo_box/c38/match)
+	crate_name = ".38 match crate"
+
+/datum/supply_pack/security/stingpack
+	name = "Stingbang Grenade Pack"
+	desc = "Contains five \"stingbang\" grenades, perfect for stopping riots and playing morally unthinkable pranks. Requires Security access to open."
+	cost = 2500
+	contains = list(/obj/item/storage/box/stingbangs)
+	crate_name = "stingbang grenade pack crate"
+
+/datum/supply_pack/security/stingpack/single
+	name = "Stingbang Single-Pack"
+	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks. Requires Security access to open."
+	cost = 1400
+	contains = list(/obj/item/grenade/stingbang)
+

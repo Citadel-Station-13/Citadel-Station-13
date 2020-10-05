@@ -3,17 +3,19 @@
 
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Alt-Click to change the transfer rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached
 	var/mode = IV_INJECTING
+	var/dripfeed = FALSE
 	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass))
+									/obj/item/reagent_containers/glass,
+									/obj/item/reagent_containers/chem_pack))
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -131,9 +133,11 @@
 		if(mode)
 			if(beaker.reagents.total_volume)
 				var/transfer_amount = 5
+				if (dripfeed)
+					transfer_amount = 1
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount = 10
+					transfer_amount *= 2
 				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
 				beaker.reagents.reaction(attached, INJECT, fraction, FALSE) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
@@ -157,12 +161,7 @@
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 
-/obj/machinery/iv_drip/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(!ishuman(user))
-		return
+/obj/machinery/iv_drip/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(attached)
 		visible_message("[attached] is detached from [src]")
 		attached = null
@@ -173,7 +172,21 @@
 	else
 		toggle_mode()
 
-/obj/machinery/iv_drip/verb/eject_beaker()
+/obj/machinery/iv_drip/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	if(dripfeed)
+		dripfeed = FALSE
+		to_chat(usr, "<span class='notice'>You loosen the valve to speed up the [src].</span>")
+	else
+		dripfeed = TRUE
+		to_chat(usr, "<span class='notice'>You tighten the valve to slowly drip-feed the contents of [src].</span>")
+
+/obj/machinery/iv_drip/attack_robot(mob/user)
+	if(Adjacent(user))
+		attack_hand(user)
+
+/obj/machinery/iv_drip/verb/eject_beaker(mob/user)
 	set category = "Object"
 	set name = "Remove IV Container"
 	set src in view(1)
@@ -188,6 +201,8 @@
 		if(usr && Adjacent(usr) && usr.can_hold_items())
 			if(!usr.put_in_hands(beaker))
 				beaker.forceMove(drop_location())
+		if(iscyborg(user))
+			beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 
@@ -225,7 +240,7 @@
 
 /obj/machinery/iv_drip/telescopic
 	name = "telescopic IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. This one is telescopic, and can be picked up and put down.Alt-Click with a beaker attached to change the transfer rate."
 	icon_state = "iv_drip"
 
 /obj/machinery/iv_drip/telescopic/update_icon_state()

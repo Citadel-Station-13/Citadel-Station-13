@@ -29,8 +29,7 @@
 /obj/item/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
+/obj/item/minigunpack/on_attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
 			if(user.get_item_by_slot(SLOT_BACK) == src)
@@ -53,6 +52,7 @@
 		..()
 
 /obj/item/minigunpack/dropped(mob/user)
+	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
@@ -125,6 +125,7 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
+	. = ..()
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
@@ -144,4 +145,5 @@
 	. = ..()
 
 /obj/item/gun/ballistic/minigun/dropped(mob/living/user)
+	. = ..()
 	ammo_pack.attach_gun(user)

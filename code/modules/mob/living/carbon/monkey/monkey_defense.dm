@@ -42,7 +42,7 @@
 	adjustBruteLoss(15)
 	return TRUE
 
-/mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/monkey/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //To allow surgery to return properly.
 		return
@@ -141,7 +141,7 @@
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/damage = .
 		var/dam_zone = dismembering_strike(M, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
 		if(!dam_zone) //Dismemberment successful
 			return TRUE

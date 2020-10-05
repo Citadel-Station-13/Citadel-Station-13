@@ -10,7 +10,6 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	threat = 2
 	move_to_delay = 10
 	ranged = 1
 	ranged_cooldown_time = 60
@@ -39,8 +38,9 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/asteroid/goliath/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	handle_preattack()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/proc/handle_preattack()
@@ -129,9 +129,8 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
-	. = ..()
-	if(!.) // dead
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(isturf(loc))
 		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
@@ -201,6 +200,8 @@
 			L.Stun(75)
 		L.adjustBruteLoss(rand(15,20)) // Less stun more harm
 		latched = TRUE
+	for(var/obj/mecha/M in loc)
+		M.take_damage(20, BRUTE, null, null, null, 25)
 	if(!latched)
 		retract()
 	else

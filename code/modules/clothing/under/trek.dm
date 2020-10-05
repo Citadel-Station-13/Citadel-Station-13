@@ -97,6 +97,48 @@
 	icon_state = "trek_ds9_medsci"
 	item_state = "b_suit"
 
+//Orvilike (Orville-inspired clothing with TOS-like color code)
+/obj/item/clothing/under/trek/command/orv
+	desc = "An uniform worn by command officers since 2420s."
+	icon_state = "orv_com"
+
+/obj/item/clothing/under/trek/engsec/orv
+	desc = "An uniform worn by operations officers since 2420s."
+	icon_state = "orv_ops"
+
+/obj/item/clothing/under/trek/medsci/orv
+	desc = "An uniform worn by medsci officers since 2420s."
+	icon_state = "orv_medsci"
+
+//Orvilike Extra (Ditto, but expands it for Civilian department with SS13 colors and gives specified command uniform)
+//honestly no idea why i added specified comm. uniforms but w/e
+/obj/item/clothing/under/trek/command/orv/captain
+	name = "captain uniform"
+	desc = "An uniform worn by captains since 2550s."
+	icon_state = "orv_com_capt"
+
+/obj/item/clothing/under/trek/command/orv/engsec
+	name = "operations command uniform"
+	desc = "An uniform worn by operations command officers since 2550s."
+	icon_state = "orv_com_ops"
+
+/obj/item/clothing/under/trek/command/orv/medsci
+	name = "medsci command uniform"
+	desc = "An uniform worn by medsci command officers since 2550s."
+	icon_state = "orv_com_medsci"
+
+/obj/item/clothing/under/trek/orv
+	name = "adjutant uniform"
+	desc = "An uniform worn by adjutants <i>(assistants)</i> since 2550s."
+	icon_state = "orv_ass"
+	item_state = "gy_suit"
+
+/obj/item/clothing/under/trek/orv/service
+	name = "service uniform"
+	desc = "An uniform worn by service officers since 2550s."
+	icon_state = "orv_srv"
+	item_state = "g_suit"
+
 //The Motion Picture
 /obj/item/clothing/under/trek/fedutil
 	name = "federation utility uniform"

@@ -23,7 +23,6 @@
 		gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return 0
@@ -37,9 +36,6 @@
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
-
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
 		if(!do_mob(user, M))
@@ -55,6 +51,10 @@
 	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
+
+/obj/item/reagent_containers/food/drinks/CheckAttackCooldown(mob/user, atom/target)
+	var/fast = HAS_TRAIT(user, TRAIT_VORACIOUS) && (user == target)
+	return user.CheckActionCooldown(fast? CLICK_CD_RANGE : CLICK_CD_MELEE)
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -268,11 +268,14 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
-	custom_price = 15
+	custom_price = PRICE_CHEAP_AS_FREE
 	icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
 	isGlass = FALSE
+
+/obj/item/reagent_containers/food/drinks/ice/sustanance
+	custom_price = PRICE_FREE
 
 /obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
@@ -296,6 +299,31 @@
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
+/obj/item/reagent_containers/food/drinks/mug/tea/red
+	name = "Dutchess Red tea"
+	icon_state = "tea"
+	desc = "Duchess Red's personal blend of red tea leaves and hot water. Great addition to any meal."
+	list_reagents = list(/datum/reagent/consumable/tea/red = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/green
+	name = "Prince Green tea"
+	icon_state = "tea"
+	desc = "Prince Green's brew of tea. The blend may be different from time to time, but Prince Green swears by it!"
+	list_reagents = list(/datum/reagent/consumable/tea/green = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/forest
+	name = "Royal Forest tea"
+	icon_state = "tea"
+	desc = "Tea fit for anyone with a sweet tooth like Royal Forest."
+	list_reagents = list(/datum/reagent/consumable/tea/forest = 30)
+
+/obj/item/reagent_containers/food/drinks/mug/tea/mush
+	name = "Rebel Mush tea"
+	icon_state = "tea"
+	desc = "Rebel Mush, a hallucinogenic tea to help people find their inner self."
+	list_reagents = list(/datum/reagent/consumable/tea/mush = 30)
+
+
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
@@ -303,7 +331,7 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 30, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = 120
+	custom_price = PRICE_ALMOST_CHEAP
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
@@ -312,7 +340,7 @@
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 30)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = 95
+	custom_price = PRICE_PRETTY_CHEAP
 
 /obj/item/reagent_containers/food/drinks/beer
 	name = "space beer"
@@ -320,7 +348,7 @@
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = 60
+	custom_price = PRICE_PRETTY_CHEAP
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
@@ -421,7 +449,7 @@
 	custom_materials = list(/datum/material/iron=250)
 	volume = 60
 	isGlass = FALSE
-	custom_price = 200
+	custom_price = PRICE_ABOVE_NORMAL
 
 /obj/item/reagent_containers/food/drinks/flask/gold
 	name = "captain's flask"
@@ -452,7 +480,7 @@
 	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	custom_price = 45
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

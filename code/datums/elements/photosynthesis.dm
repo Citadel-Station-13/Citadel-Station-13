@@ -20,7 +20,7 @@
 	///List of atoms this element is attached to. Doubles as a multiplier if the same element is attached multiple times to a target multiple times.
 	var/list/attached_atoms
 
-/datum/element/photosynthesis/Attach(datum/target, brute = -1, burn = -1, tox = -1, oxy = -1, nutri = 4, minus = 0.5, bonus = 0.2, malus = 0)
+/datum/element/photosynthesis/Attach(datum/target, brute = -1, burn = -1, tox = -1, oxy = -1, nutri = 4, minus = 0.2, bonus = 0.3, malus = -0.1)
 	. = ..()
 	if(. == ELEMENT_INCOMPATIBLE || !(isliving(target) || (isobj(target) && light_bruteheal)))
 		return ELEMENT_INCOMPATIBLE
@@ -60,7 +60,7 @@
 			if(L.stat == DEAD)
 				continue
 			if(light_nutrition_gain)
-				L.adjust_nutrition(light_amount * light_nutrition_gain * attached_atoms[AM], NUTRITION_LEVEL_FULL)
+				L.adjust_nutrition(light_amount * light_nutrition_gain * attached_atoms[AM], NUTRITION_LEVEL_WELL_FED)
 			if(light_amount > bonus_lum || light_amount < malus_lum)
 				var/mult = ((light_amount > bonus_lum) ? 1 : -1) * attached_atoms[AM]
 				if(light_bruteheal)

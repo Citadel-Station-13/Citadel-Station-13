@@ -36,7 +36,7 @@
 		visible_message("<span class='danger'>[src] spews out a ton of space lube!</span>")
 		new /obj/effect/particle_effect/foam(loc) //YEET
 
-/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
+/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	. = ..()
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/banana))
 		var/obj/item/reagent_containers/food/snacks/grown/banana/banana = I

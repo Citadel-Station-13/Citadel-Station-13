@@ -93,6 +93,13 @@
 /area/shuttle/abandoned/pod
 	name = "Abandoned Ship Pod"
 
+////////////////////////////Bounty Hunter Shuttles////////////////////////////
+/area/shuttle/hunter
+	name = "Hunter Shuttle"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	blob_allowed = FALSE
+	canSmoothWithAreas = /area/shuttle/hunter
+
 ////////////////////////////Single-area shuttles////////////////////////////
 
 /area/shuttle/transit
@@ -102,6 +109,10 @@
 
 /area/shuttle/custom
 	name = "Custom player shuttle"
+
+/area/shuttle/custom/powered
+	name = "Custom Powered player shuttle"
+	requires_power = FALSE
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"

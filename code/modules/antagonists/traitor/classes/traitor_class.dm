@@ -7,6 +7,8 @@ GLOBAL_LIST_EMPTY(traitor_classes)
 	var/chaos = 0
 	var/threat = 0
 	var/TC = 20
+	/// Minimum players for this to randomly roll via get_random_traitor_class().
+	var/min_players = 0
 	var/list/uplink_filters
 
 /datum/traitor_class/New()

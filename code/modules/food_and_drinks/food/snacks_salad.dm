@@ -20,7 +20,7 @@
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"
@@ -38,7 +38,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
-	foodtype = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
+	foodtype = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/salad/oatmeal
 	name = "oatmeal"
@@ -125,3 +125,21 @@
 	bonus_reagents = list(/datum/reagent/medicine/earthsblood = 1, /datum/reagent/iron = 4)
 	tastes = list("iron" = 1, "conspiracy" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/salad/edensalad
+	name = "\improper Salad of Eden"
+	desc = "A salad brimming with untapped potential."
+	icon_state = "eden_salad"
+	trash = /obj/item/reagent_containers/glass/bowl
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	tastes = list("hope" = 1)
+	foodtype = VEGETABLES | ANTITOXIC
+
+/obj/item/reagent_containers/food/snacks/salad/gumbo
+	name = "black eyed gumbo"
+	desc = "A spicy and savory meat and rice dish."
+	icon_state = "gumbo"
+	trash = /obj/item/reagent_containers/glass/bowl
+	list_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment = 5)
+	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
+	foodtype = GRAIN | MEAT | VEGETABLES

@@ -7,7 +7,7 @@
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
-	//custom_premium_price = 350
+	//custom_premium_price = PRICE_EXPENSIVE
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]
@@ -71,6 +71,25 @@
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
+
+/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator
+	name = "insidious guerrilla gloves"
+	desc = "Specialized combat gloves for carrying people around. Transfers tactical kidnapping and tackling knowledge to the user via the use of nanochips."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	var/carrytrait = TRAIT_QUICKER_CARRY
+
+/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLOVES)
+		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
+
+/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"

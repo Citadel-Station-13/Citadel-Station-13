@@ -29,6 +29,16 @@
 						/obj/item/clothing/glasses/monocle =1,
 						/obj/item/clothing/head/bowler = 1,
 						/obj/item/cane = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_redsleeves = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_redvest = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_vest = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_purple = 1,
+						/obj/item/clothing/suit/tailcoat = 1,
+						/obj/item/clothing/under/rank/civilian/victorianreddress = 1,
+						/obj/item/clothing/suit/vickyred = 1,
+						/obj/item/clothing/under/rank/civilian/victorianblackdress = 1,
+						/obj/item/clothing/suit/vickyblack =1,
+						/obj/item/clothing/under/rank/civilian/dutch = 2,
 						/obj/item/clothing/under/suit/sl = 1,
 						/obj/item/clothing/mask/fakemoustache = 1,
 						/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
@@ -84,8 +94,10 @@
 						/obj/item/clothing/suit/poncho = 1,
 						/obj/item/clothing/suit/poncho/green = 1,
 						/obj/item/clothing/suit/poncho/red = 1,
+						/obj/item/clothing/head/maid = 1,
 						/obj/item/clothing/under/costume/maid = 1,
 						/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
+						/obj/item/clothing/gloves/evening = 1,
 						/obj/item/clothing/glasses/cold=1,
 						/obj/item/clothing/glasses/heat=1,
 						/obj/item/clothing/suit/whitedress = 1,
@@ -114,7 +126,8 @@
 						/obj/item/gun/magic/wand = 2,
 						/obj/item/clothing/glasses/sunglasses/garb = 2,
 						/obj/item/clothing/glasses/sunglasses/blindfold = 1,
-						/obj/item/clothing/mask/muzzle = 2)
+						/obj/item/clothing/mask/muzzle = 2,
+						/obj/item/clothing/under/syndicate/camo/cosmetic = 3)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 					/obj/item/clothing/head/pirate/captain = 2,
 					/obj/item/clothing/head/helmet/roman/fake = 1,
@@ -139,8 +152,8 @@
 					/obj/item/clothing/under/costume/drfreeze = 1)
 
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 180
-	extra_price = 360
+	default_price = PRICE_ALMOST_CHEAP
+	extra_price = PRICE_ALMOST_EXPENSIVE
 	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/autodrobe/Initialize()

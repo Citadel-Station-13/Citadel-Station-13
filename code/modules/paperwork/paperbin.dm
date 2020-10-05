@@ -4,6 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
+	// inhand_icon_state = "sheet-metal"
 	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	throwforce = 0
@@ -11,6 +12,8 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 8
+	attack_hand_speed = CLICK_CD_RAPID
+	attack_hand_is_action = TRUE
 	var/papertype = /obj/item/paper
 	var/total_paper = 30
 	var/list/papers = list()
@@ -41,6 +44,7 @@
 	..()
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -52,19 +56,18 @@
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
-	else
-		. = ..()
-
 	add_fingerprint(M)
 
 /obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/paper_bin/attack_hand(mob/user)
-	if(user.lying)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/item/paper_bin/on_attack_hand(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
+	// user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
 		P.add_fingerprint(user)
@@ -86,8 +89,7 @@
 			if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 				if(prob(30))
 					P.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-					P.rigged = 1
-					P.updateinfolinks()
+					P.AddComponent(/datum/component/honkspam)
 
 		P.add_fingerprint(user)
 		P.forceMove(user.loc)
@@ -149,8 +151,7 @@
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
 
-/obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
-	..()
+/obj/item/paper_bin/bundlenatural/on_attack_hand(mob/user)
 	if(total_paper < 1)
 		qdel(src)
 
@@ -174,3 +175,9 @@
 		qdel(src)
 	else
 		..()
+
+/obj/item/paper_bin/carbon
+	name = "carbon paper bin"
+	desc = "Contains all the paper you'll ever need, in duplicate!"
+	icon_state = "paper_bin_carbon"
+	papertype = /obj/item/paper/carbon

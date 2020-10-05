@@ -12,6 +12,38 @@
 
 // please make sure they're sorted alphabetically and categorized
 
+/datum/sprite_accessory/underwear/top/cowboyshirt
+	name = "Cowboy Shirt Black"
+	icon_state = "cowboyshirt"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/red
+	name = "Cowboy Shirt Red"
+	icon_state = "cowboyshirt_red"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/navy
+	name = "Cowboy Shirt Navy"
+	icon_state = "cowboyshirt_navy"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/white
+	name = "Cowboy Shirt White"
+	icon_state = "cowboyshirt_white"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/s
+	name = "Cowboy Shirt Shortsleeved Black"
+	icon_state = "cowboyshirt_s"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/red/s
+	name = "Cowboy Shirt Shortsleeved Red"
+	icon_state = "cowboyshirt_reds"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/navy/s
+	name = "Cowboy Shirt Shortsleeved Navy"
+	icon_state = "cowboyshirt_navys"
+
+/datum/sprite_accessory/underwear/top/cowboyshirt/white/s
+	name = "Cowboy Shirt Shortsleeved White"
+	icon_state = "cowboyshirt_whites"
+
 /datum/sprite_accessory/underwear/top/longjon
 	name = "Long John Shirt"
 	icon_state = "ljont"
@@ -30,36 +62,6 @@
 	icon_state = "undershirt"
 	has_color = TRUE
 
-/datum/sprite_accessory/underwear/top/bowlingw
-	name = "Shirt - Bowling"
-	icon_state = "bowlingw"
-	has_color = TRUE
-
-/datum/sprite_accessory/underwear/top/bowling
-	name = "Shirt, Bowling - Red"
-	icon_state = "bowling"
-
-/datum/sprite_accessory/underwear/top/bowlingp
-	name = "Shirt, Bowling - Pink"
-	icon_state = "bowlingp"
-
-/datum/sprite_accessory/underwear/top/bowlinga
-	name = "Shirt, Bowling - Aqua"
-	icon_state = "bowlinga"
-
-/datum/sprite_accessory/underwear/top/bluejersey
-	name = "Shirt, Jersey - Blue"
-	icon_state = "shirt_bluejersey"
-
-/datum/sprite_accessory/underwear/top/redjersey
-	name = "Shirt, Jersey - Red"
-	icon_state = "shirt_redjersey"
-
-/datum/sprite_accessory/underwear/top/polo
-	name = "Shirt - Polo"
-	icon_state = "polo"
-	has_color = TRUE
-
 /datum/sprite_accessory/underwear/top/alienshirt
 	name = "Shirt - Alien"
 	icon_state = "shirt_alien"
@@ -71,6 +73,23 @@
 /datum/sprite_accessory/underwear/top/shirt_bee
 	name = "Shirt - Bee"
 	icon_state = "bee_shirt"
+
+/datum/sprite_accessory/underwear/top/bowlingw
+	name = "Shirt - Bowling"
+	icon_state = "bowlingw"
+	has_color = TRUE
+
+/datum/sprite_accessory/underwear/top/bowlinga
+	name = "Shirt, Bowling - Aqua"
+	icon_state = "bowlinga"
+
+/datum/sprite_accessory/underwear/top/bowling
+	name = "Shirt, Bowling - Red"
+	icon_state = "bowling"
+
+/datum/sprite_accessory/underwear/top/bowlingp
+	name = "Shirt, Bowling - Pink"
+	icon_state = "bowlingp"
 
 /datum/sprite_accessory/underwear/top/clownshirt
 	name = "Shirt - Clown"
@@ -87,6 +106,14 @@
 /datum/sprite_accessory/underwear/top/ilovent
 	name = "Shirt - I Love NT"
 	icon_state = "ilovent"
+
+/datum/sprite_accessory/underwear/top/bluejersey
+	name = "Shirt, Jersey - Blue"
+	icon_state = "shirt_bluejersey"
+
+/datum/sprite_accessory/underwear/top/redjersey
+	name = "Shirt, Jersey - Red"
+	icon_state = "shirt_redjersey"
 
 /datum/sprite_accessory/underwear/top/lover
 	name = "Shirt - Lover"
@@ -112,6 +139,11 @@
 	name = "Shirt - Pogoman"
 	icon_state = "pogoman"
 
+/datum/sprite_accessory/underwear/top/polo
+	name = "Shirt - Polo"
+	icon_state = "polo"
+	has_color = TRUE
+
 /datum/sprite_accessory/underwear/top/question
 	name = "Shirt - Question"
 	icon_state = "shirt_question"
@@ -119,6 +151,23 @@
 /datum/sprite_accessory/underwear/top/skull
 	name = "Shirt - Skull"
 	icon_state = "shirt_skull"
+
+/datum/sprite_accessory/underwear/top/shortsleeve
+	name = "Shirt - Short Sleeved"
+	icon_state = "shortsleeve"
+	has_color = TRUE
+
+/datum/sprite_accessory/underwear/top/blueshirtsport
+	name = "Shirt, Sports - Blue"
+	icon_state = "blueshirtsport"
+
+/datum/sprite_accessory/underwear/top/greenshirtsport
+	name = "Shirt, Sports - Green"
+	icon_state = "greenshirtsport"
+
+/datum/sprite_accessory/underwear/top/redshirtsport
+	name = "Shirt, Sports - Red"
+	icon_state = "redshirtsport"
 
 /datum/sprite_accessory/underwear/top/ss13
 	name = "Shirt - SS13"
@@ -141,27 +190,6 @@
 	name = "Shirt - USA"
 	icon_state = "shirt_assblastusa"
 
-/datum/sprite_accessory/underwear/top/shortsleeve
-	name = "Shirt - Short Sleeved"
-	icon_state = "shortsleeve"
-	has_color = TRUE
-
-/datum/sprite_accessory/underwear/top/blueshirtsport
-	name = "Shirt, Sports - Blue"
-	icon_state = "blueshirtsport"
-
-/datum/sprite_accessory/underwear/top/greenshirtsport
-	name = "Shirt, Sports - Green"
-	icon_state = "greenshirtsport"
-
-/datum/sprite_accessory/underwear/top/redshirtsport
-	name = "Shirt, Sports - Red"
-	icon_state = "redshirtsport"
-
-/datum/sprite_accessory/underwear/top/tankfire
-	name = "Tank Top - Fire"
-	icon_state = "tank_fire"
-
 /datum/sprite_accessory/underwear/top/tanktop
 	name = "Tank Top"
 	icon_state = "tanktop"
@@ -171,6 +199,10 @@
 	name = "Tank Top - Alt"
 	icon_state = "tanktop_alt"
 	has_color = TRUE
+
+/datum/sprite_accessory/underwear/top/tankfire
+	name = "Tank Top - Fire"
+	icon_state = "tank_fire"
 
 /datum/sprite_accessory/underwear/top/tanktop_midriff
 	name = "Tank Top - Midriff"
@@ -192,6 +224,8 @@
 	name = "Tank top - Sun"
 	icon_state = "tank_sun"
 
+//feminine accessories from here on
+
 /datum/sprite_accessory/underwear/top/babydoll
 	name = "Baby-Doll"
 	icon_state = "babydoll"
@@ -210,15 +244,25 @@
 	has_color = TRUE
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/top/bra_thin
-	name = "Bra - Thin"
-	icon_state = "bra_thin"
-	has_color = TRUE
+/datum/sprite_accessory/underwear/top/bra_beekini
+	name = "Bra - Bee-kini"
+	icon_state = "bra_bee-kini"
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/top/bra_kinky
-	name = "Bra - Kinky Black"
-	icon_state = "bra_kinky"
+/datum/sprite_accessory/underwear/top/bra_binder
+	name = "Bra (binder)"
+	icon_state = "bra_binder"
+	has_color = TRUE
+
+/datum/sprite_accessory/underwear/top/bra_binder_strapless
+	name = "Bra (binder, strapless)"
+	icon_state = "bra_binder_strapless"
+	has_color = TRUE
+
+
+/datum/sprite_accessory/underwear/top/bra_commie
+	name = "Bra - Commie"
+	icon_state = "bra_commie"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/top/bra_freedom
@@ -226,31 +270,15 @@
 	icon_state = "bra_assblastusa"
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/top/bra_commie
-	name = "Bra - Commie"
-	icon_state = "bra_commie"
-	gender = FEMALE
-
-/datum/sprite_accessory/underwear/top/bra_beekini
-	name = "Bra - Bee-kini"
-	icon_state = "bra_bee-kini"
-	gender = FEMALE
-
-/datum/sprite_accessory/underwear/top/bra_uk
-	name = "Bra - UK"
-	icon_state = "bra_uk"
-	gender = FEMALE
-
-/datum/sprite_accessory/underwear/top/bra_neko
-	name = "Bra - Neko"
-	icon_state = "bra_neko"
-	has_color = TRUE
-	gender = FEMALE
-
 /datum/sprite_accessory/underwear/top/halterneck_bra
 	name = "Bra - Halterneck"
 	icon_state = "halterneck_bra"
 	has_color = TRUE
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/top/bra_kinky
+	name = "Bra - Kinky Black"
+	icon_state = "bra_kinky"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/top/sports_bra
@@ -283,14 +311,31 @@
 	has_color = TRUE
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/top/fishnet_sleeves
-	name = "Fishnet - sleeves"
-	icon_state = "fishnet_sleeves"
+/datum/sprite_accessory/underwear/top/bra_thin
+	name = "Bra - Thin"
+	icon_state = "bra_thin"
+	has_color = TRUE
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/top/bra_neko
+	name = "Bra - Neko"
+	icon_state = "bra_neko"
+	has_color = TRUE
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/top/bra_uk
+	name = "Bra - UK"
+	icon_state = "bra_uk"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/top/fishnet_gloves
 	name = "Fishnet - gloves"
 	icon_state = "fishnet_gloves"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/top/fishnet_sleeves
+	name = "Fishnet - sleeves"
+	icon_state = "fishnet_sleeves"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/top/fishnet_base
@@ -315,39 +360,3 @@
 	icon_state = "tubetop"
 	has_color = TRUE
 	gender = FEMALE
-
-/datum/sprite_accessory/underwear/top/cowboyshirt
-	name = "Cowboy Shirt Black"
-	icon_state = "cowboyshirt"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/s
-	name = "Cowboy Shirt Shortsleeved Black"
-	icon_state = "cowboyshirt_s"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/white
-	name = "Cowboy Shirt White"
-	icon_state = "cowboyshirt_white"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/white/s
-	name = "Cowboy Shirt Shortsleeved White"
-	icon_state = "cowboyshirt_whites"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/navy
-	name = "Cowboy Shirt Navy"
-	icon_state = "cowboyshirt_navy"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/navy/s
-	name = "Cowboy Shirt Shortsleeved Navy"
-	icon_state = "cowboyshirt_navys"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/red
-	name = "Cowboy Shirt Red"
-	icon_state = "cowboyshirt_red"
-
-/datum/sprite_accessory/underwear/top/cowboyshirt/red/s
-	name = "Cowboy Shirt Shortsleeved Red"
-	icon_state = "cowboyshirt_reds"
-
-
-
-
