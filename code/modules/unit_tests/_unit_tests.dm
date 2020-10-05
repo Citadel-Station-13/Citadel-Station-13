@@ -24,7 +24,7 @@
 // #include "metabolizing.dm"
 // #include "outfit_sanity.dm"
 #include "plantgrowth_tests.dm"
-#include "quick_swap_sanity.dm"
+// #include "quick_swap_sanity.dm" - we don't have quick swap yet
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
