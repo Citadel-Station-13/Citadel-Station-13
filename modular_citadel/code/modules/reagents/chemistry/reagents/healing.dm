@@ -200,22 +200,23 @@
 
 /datum/reagent/fermi/zeolites
 	name = "Artificial Zeolites"
-	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination."
+	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination, as long as purity is at least 0.7."
 	pH = 8
 	color = "#FFDADA"
-	metabolization_rate = 8 * REAGENTS_METABOLISM //Metabolizes fast but heals a lot!
-	value = REAGENT_VALUE_COMMON
+	metabolization_rate = 8 * REAGENTS_METABOLISM //Metabolizes fast but heals a lot! Lasts far longer if more pure.
+	value = REAGENT_VALUE_RARE //Relatively hard to make now, might be fine with VERY_RARE instead depending on feedback.
 
 /datum/reagent/fermi/zeolites/on_mob_life(mob/living/carbon/M)
+	metabolization_rate = (4 / purity) * REAGENTS_METABOLISM //Metab rate directly influenced by purity. Linear.
 	var/datum/component/radioactive/contamination = M.GetComponent(/datum/component/radioactive)
 	if(M.radiation > 0)
-		M.radiation -= min(M.radiation, 60)
+		M.radiation -= min(M.radiation, round(20 ** (0.5 + purity), 0.1)) //Far more effective if more pure. Tops out at ~90 at max purity. Exponential.
 	if(contamination && contamination.strength > 0)
-		contamination.strength -= min(contamination.strength, 100)
+		contamination.strength -= min(contamination.strength, round(25 ** (0.5 + purity), 0.1)) //Tops out at ~125 at max purity. Exponential.
 	..()
 
 /datum/reagent/fermi/zeolites/reaction_obj(obj/O, reac_volume)
 	var/datum/component/radioactive/contamination = O.GetComponent(/datum/component/radioactive)
-	if(contamination && reac_volume >= 5)
+	if(contamination && reac_volume >= 5 && purity >= 0.7) //you need at least 0.7 purity to instantly purge all contam on an object.
 		qdel(contamination)
 		return
