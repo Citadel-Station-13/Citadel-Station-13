@@ -200,7 +200,7 @@
 
 /datum/reagent/fermi/zeolites
 	name = "Artificial Zeolites"
-	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination, as long as purity is at least 0.7."
+	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination, as long as its purity is at least 0.7."
 	pH = 8
 	color = "#FFDADA"
 	metabolization_rate = 8 * REAGENTS_METABOLISM //Metabolizes fast but heals a lot! Lasts far longer if more pure.
