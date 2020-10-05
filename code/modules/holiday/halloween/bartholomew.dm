@@ -132,7 +132,10 @@
 	/obj/item/clothing/head = 3,
 	/obj/item/reagent_containers/food/snacks = 3,
 	/obj/item/reagent_containers/syringe/dart = 2,
-	/obj/item/reagent_containers/food/drinks/soda_cans = 5)
+	/obj/item/reagent_containers/food/drinks/soda_cans = 5,
+	/obj/item/reagent_containers/food/drinks/drinkingglass = 4,
+	/obj/item/reagent_containers/food = 5,
+	/obj/item/reagent_containers/food/snacks = 5)
 	if(length >= 5)
 		return TRUE
 	//var/metalist = pickweight(GLOB.maintenance_loot)
