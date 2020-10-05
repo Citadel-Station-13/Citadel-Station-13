@@ -50,13 +50,14 @@ There are several things that need to be remembered:
 
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair(send_signal = TRUE)
+	message_admins("apparently we're updating hair and signal is [send_signal]")
 	dna.species.handle_hair(src)
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "hair")
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts(send_signal = TRUE)
-	dna.species.handle_mutant_bodyparts(src)
+	dna.species.handle_mutant_bodyparts(src, FALSE, send_signal)
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_HUMAN_HEAD_ICONS_UPDATED, "mutant")
 
@@ -65,8 +66,10 @@ There are several things that need to be remembered:
 	dna.species.handle_body(src, send_signal)
 	message_admins("so the body is handled, isnt that epic.")
 	..()
+	message_admins("we went crazy and updated it for carbons too")
 	if(update_genitals)
 		update_genitals()
+		message_admins("and now we've updated genitals.")
 	message_admins("and now we cry some more")
 
 /mob/living/carbon/human/update_fire()
@@ -720,9 +723,11 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
-/mob/living/carbon/human/load_limb_from_cache()
+/mob/living/carbon/human/load_limb_from_cache(send_signal = TRUE)
+	message_admins("pre")
 	..()
-	update_hair()
+	message_admins("post [send_signal]")
+	update_hair(send_signal)
 
 
 

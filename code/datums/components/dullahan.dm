@@ -172,7 +172,11 @@
 	stored_head.add_overlay(overlays_to_add)
 
 //when you need to update the heads appearance to be that of the characters current appearance
-/datum/component/dullahan/proc/refresh_head_appearance()
+/datum/component/dullahan/proc/refresh_head_appearance(test, test2)
+	if(test)
+		message_admins("[test]")
+	if(test2)
+		message_admins("[test2]")
 	copy_mutant_overlays()
 	stored_head.regenerate_icons()
 

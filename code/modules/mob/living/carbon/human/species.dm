@@ -686,7 +686,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			O.use_digitigrade = FULL_DIGITIGRADE
 			update_needed = TRUE
 	if(update_needed)
-		H.update_body_parts()
+		message_admins("updatng bodyparts with signal [send_signal]")
+		H.update_body_parts(send_signal)
 	if(not_digitigrade && (DIGITIGRADE in species_traits)) //Curse is lifted
 		species_traits -= DIGITIGRADE
 
@@ -896,13 +897,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		H.overlays_standing[layernum] = standing
 
-	message_admins("here's where overlays get applied")
 	H.apply_overlay(BODY_BEHIND_LAYER)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_ADJ_UPPER_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
 	H.apply_overlay(HORNS_LAYER)
-	message_admins("and then they're like, applied.")
 
 /*
  * Equip the outfit required for life. Replaces items currently worn.
