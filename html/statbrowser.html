@@ -293,6 +293,7 @@ if (window.location) {
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
+var vote_parts = [[null]];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -528,6 +529,12 @@ function update(global_data, ping_entry, other_entries) {
 	else if(current_tab == "Debug Stat Panel")
 		draw_debug();
 }
+/// citadel statvoting
+function update_voting(vote_data) {
+	vote_parts = JSON.parse(vote_data);
+	if(current_tab == "Status")
+		draw_status();
+}
 
 function update_mc(global_mc_data, coords_entry) {
 	mc_tab_parts = JSON.parse(global_mc_data);
@@ -703,6 +710,33 @@ function draw_status() {
 			div[textContentKey] = status_tab_parts[i];
 			document.getElementById("statcontent").appendChild(div);
 		}
+	}
+	//voting shitcode. See mc for more info.
+	if(vote_parts && vote_parts[0][0]) { //null verification.
+		var table = document.createElement("table");
+		for(var i = 0; i < vote_parts.length; i++) {
+			var part = vote_parts[i];
+			var tr = document.createElement("tr");
+			var td1 = document.createElement("td");
+			td1[textContentKey] = part[0];
+			var td2 = document.createElement("td");
+			if(part[2]) {
+				var a = document.createElement("a");
+				if(part[2] === "disabled") {
+					a.href = "byond://winset?command=Vote";
+				} else {
+					a.href = "?src=" + part[2];
+				}
+				a[textContentKey] = part[1];
+				td2.appendChild(a);
+			} else {
+				td2[textContentKey] = part[1];
+			}
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+			table.appendChild(tr);
+		}
+		document.getElementById("statcontent").appendChild(table);
 	}
 	if(verb_tabs.length == 0 || !verbs)
 	{
