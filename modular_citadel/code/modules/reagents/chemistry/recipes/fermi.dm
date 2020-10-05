@@ -598,13 +598,13 @@
 	OptimalTempMax 	= 750
 	ExplodeTemp 	= 850
 	OptimalpHMin 	= 2.8
-	OptimalpHMax 	= 5.5 //2.7 ph levels of optimal ph zone - centered at 4.15 - ph of ingredients mixed at equal values is 9.55; ph of result is 8.
+	OptimalpHMax 	= 5 //2.2 ph levels of optimal ph zone - centered at 3.9 - ph of ingredients mixed at equal values is 9.55; ph of result is 8.
 	ReactpHLim 		= 4
 	//CatalystFact 	= 0
 	CurveSharpT 	= 5
 	CurveSharppH 	= 3
-	ThermicConstant = 10
+	ThermicConstant = 15
 	HIonRelease 	= -0.2
-	RateUpLim 		= 3
+	RateUpLim 		= 4
 	PurityMin 		= 0.5 //Good luck.
 	FermiChem 		= TRUE
