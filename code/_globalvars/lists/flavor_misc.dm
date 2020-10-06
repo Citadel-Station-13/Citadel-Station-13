@@ -271,6 +271,17 @@ GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitt
 
 GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc))
 
+/proc/get_roundstart_languages()
+	var/list/languages = subtypesof(/datum/language)
+	var/list/roundstart_languages = list("None") //default option for the list
+	for(var/some_language in languages)
+		var/datum/language/language = some_language
+		if(initial(language.chooseable_roundstart))
+			roundstart_languages[initial(language.name)] = some_language
+	return roundstart_languages
+
+GLOBAL_LIST_INIT(roundstart_languages, get_roundstart_languages())
+
 //locked parts are those that your picked species requires to have
 //unlocked parts are those that anyone can choose on customisation regardless
 //parts not in unlocked, but in all, are thus locked
