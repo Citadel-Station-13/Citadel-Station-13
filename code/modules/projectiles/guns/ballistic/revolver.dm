@@ -90,6 +90,7 @@
 						"Silver" = "russianrevolver",
 						"Robust" = "revolvercit",
 						"Bulky" = "revolverhakita",
+						"Polished" = "revolvertoriate",
 						"Soulless" = "revolveroldflip",
 						"Soul" = "revolverold")
 
