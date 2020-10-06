@@ -565,7 +565,7 @@
 					var/diff_len = length(GLOB.skin_tones - GLOB.nonstandard_skin_tones)
 					H.skin_tone = GLOB.skin_tones[min(diff_len, GLOB.skin_tones.Find(H.skin_tone) + 1)]
 				else
-					H.skin_tone = H.dna.skin_tone_override = tan_mutant_color(H.dna.skin_tone_override, "#202020")
+					H.skin_tone = H.dna.skin_tone_override = tan_mutant_color(H.dna.skin_tone_override, MINIMUM_MUTANT_COLOR)
 			if(MUTCOLORS in H.dna.species.species_traits) //take current alien color and darken it slightly
 				H.dna.features["mcolor"] = tan_mutant_color(H.dna.features["mcolor"])
 			H.update_body()
@@ -576,7 +576,7 @@
 
 	return ..()
 
-/datum/reagent/spraytan/proc/tan_mutant_color(color, limit = "#7F7F7F")
+/datum/reagent/spraytan/proc/tan_mutant_color(color, limit = MINIMUM_MUTANT_COLOR)
 	var/newcolor = ""
 	var/len = length(color)
 	var/char = ""
@@ -1977,6 +1977,11 @@
 	name = "Liquid Black Carpet"
 	color = "#363636"
 	carpet_type = /turf/open/floor/carpet/black
+
+/datum/reagent/carpet/arcade
+	name = "Liquid Arcade Carpet"
+	color = "#b51d05"
+	carpet_type = /turf/open/floor/carpet/arcade
 
 /datum/reagent/carpet/blackred
 	name = "Liquid Red Black Carpet"

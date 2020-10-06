@@ -19,8 +19,9 @@
 /client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
 	set name = "Config/Launch Supplypod"
 	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
-	set category = "Admin - Events"
-	new /datum/centcom_podlauncher(usr)//create the datum
+	set category = "Admin.Events"
+	var/datum/centcom_podlauncher/plaunch  = new(usr)//create the datum
+	plaunch.ui_interact(usr)//datum has a tgui component, here we open the window
 
 //Variables declared to change how items in the launch bay are picked and launched. (Almost) all of these are changed in the ui_act proc
 //Some effect groups are choices, while other are booleans. This is because some effects can stack, while others dont (ex: you can stack explosion and quiet, but you cant stack ordered launch and random launch)
