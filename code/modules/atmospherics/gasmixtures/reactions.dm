@@ -356,6 +356,7 @@
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
 		/datum/gas/nitrous_oxide = 5,
+		"TEMP" = 10000
 		"ENER" = NITRYL_FORMATION_ENERGY
 	)
 
@@ -497,6 +498,7 @@
 	min_requirements = list(
 		/datum/gas/nitrogen = 10,
 		/datum/gas/tritium = 5,
+		"TEMP" = FUSION_TEMPERATURE_THRESHOLD
 		"ENER" = NOBLIUM_FORMATION_ENERGY)
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
