@@ -874,6 +874,8 @@
 "aqP" = (/obj/structure/toilet{dir = 4},/turf/open/floor/plasteel{icon_state = "sepia"},/area/chapel/office)
 "aqQ" = (/obj/machinery/vending/autodrobe,/turf/open/floor/wood,/area/crew_quarters/locker)
 "aqR" = (/obj/structure/sign/departments/cargo{pixel_y = 32},/turf/open/floor/spooktime/cobble/sideN,/area/eventmap/outside)
+"aqS" = (/obj/effect/spawner/lootdrop/costume,/mob/living/simple_animal/hostile/skeleton{a_intent = "friendly"; attack_sound = 'sound/vox_fem/bone.ogg'; !INVALID_VAR! = "attempts to bone"; harm_intent_damage = -5; melee_damage_lower = 1; melee_damage_type = "arousal"; melee_damage_upper = 10; name = "Closet Skeleton"},/turf/open/floor/wood,/area/eventmap/inside)
+"aqT" = (/mob/living/simple_animal/hostile/skeleton{a_intent = "friendly"; attack_sound = 'sound/vox_fem/bone.ogg'; !INVALID_VAR! = "attempts to bone"; harm_intent_damage = -5; melee_damage_lower = 1; melee_damage_type = "arousal"; melee_damage_upper = 10; name = "Closet Skeleton"},/turf/open/floor/wood,/area/eventmap/inside)
 "aqU" = (/obj/item/clothing/head/hardhat/pumpkinhead,/turf/open/floor/wood,/area/eventmap/inside)
 "aqV" = (/obj/item/seeds/pumpkin,/turf/open/floor/wood,/area/eventmap/inside)
 "aqW" = (/obj/effect/turf_decal/tile/brown{dir = 4},/turf/open/floor/plasteel,/area/quartermaster/miningoffice)
