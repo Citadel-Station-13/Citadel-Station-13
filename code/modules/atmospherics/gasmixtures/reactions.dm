@@ -356,7 +356,7 @@
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
 		/datum/gas/nitrous_oxide = 5,
-		"TEMP" = 10000
+		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
 		"ENER" = NITRYL_FORMATION_ENERGY
 	)
 
