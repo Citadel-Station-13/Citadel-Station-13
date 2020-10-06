@@ -98,6 +98,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/use_custom_skin_tone = FALSE
 	var/left_eye_color = "000000"		//Eye color
 	var/right_eye_color = "000000"
+	var/eye_type = DEFAULT_EYES_TYPE	//Eye type
 	var/split_eye_colors = FALSE
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFFFFF",
@@ -474,25 +475,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
 				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
 
-			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
-				if(!use_skintones && !mutant_colors)
-					dat += APPEARANCE_CATEGORY_COLUMN
-				if(left_eye_color != right_eye_color)
-					split_eye_colors = TRUE
-				dat += "<h3>Heterochromia</h3>"
-				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=toggle_split_eyes;task=input'>[split_eye_colors ? "Enabled" : "Disabled"]</a>"
-				if(!split_eye_colors)
-					dat += "<h3>Eye Color</h3>"
-					dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
+			if(!(NOEYES in pref_species.species_traits))
+				dat += "<h3>Eye Type</h3>"
+				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=eye_type;task=input'>[eye_type]</a><BR>"
+				if((EYECOLOR in pref_species.species_traits))
+					if(!use_skintones && !mutant_colors)
+						dat += APPEARANCE_CATEGORY_COLUMN
+					if(left_eye_color != right_eye_color)
+						split_eye_colors = TRUE
+					dat += "<h3>Heterochromia</h3>"
+					dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=toggle_split_eyes;task=input'>[split_eye_colors ? "Enabled" : "Disabled"]</a>"
+					if(!split_eye_colors)
+						dat += "<h3>Eye Color</h3>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
+						dat += "</td>"
+					else
+						dat += "<h3>Left Eye Color</h3>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_left;task=input'>Change</a>"
+						dat += "<h3>Right Eye Color</h3>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
+						dat += "</td>"
+				else if(use_skintones || mutant_colors)
 					dat += "</td>"
-				else
-					dat += "<h3>Left Eye Color</h3>"
-					dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_left;task=input'>Change</a>"
-					dat += "<h3>Right Eye Color</h3>"
-					dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
-					dat += "</td>"
-			else if(use_skintones || mutant_colors)
-				dat += "</td>"
 
 			dat += APPEARANCE_CATEGORY_COLUMN
 			dat += "<h2>Speech preferences</h2>"
@@ -1584,6 +1588,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_eyes)
 						right_eye_color = sanitize_hexcolor(new_eyes, 6)
 
+				if("eye_type")
+					var/new_eye_type = input(user, "Choose your character's eye type.", "Character Preference") as null|anything in GLOB.eye_types
+					if(new_eye_type)
+						eye_type = new_eye_type
+
 				if("toggle_split_eyes")
 					split_eye_colors = !split_eye_colors
 					right_eye_color = left_eye_color
@@ -1616,6 +1625,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor2"] = pref_species.default_color
 						if(features["mcolor3"] == "#000000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
+
+						//switch to the type of eyes the species uses
+						eye_type = pref_species.eye_type
 
 				if("custom_species")
 					var/new_species = reject_bad_name(input(user, "Choose your species subtype, if unique. This will show up on examinations and health scans. Do not abuse this:", "Character Preference", custom_species) as null|text)
@@ -2601,6 +2613,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	character.dna.species.eye_type = eye_type
 	if(chosen_limb_id && (chosen_limb_id in character.dna.species.allowed_limb_ids))
 		character.dna.species.mutant_bodyparts["limbs_id"] = chosen_limb_id
 	character.dna.real_name = character.real_name
