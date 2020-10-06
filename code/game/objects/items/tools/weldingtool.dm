@@ -109,12 +109,19 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
-		//only heal to 25 if limb is damaged to or past 25 brute, otherwise heal normally
-		var/difference = affecting.brute_dam - 25
+	if(affecting && affecting.is_robotic_limb() && user.a_intent != INTENT_HARM)
+		//only heal to threshhold_passed_mindamage if limb is damaged to or past threshhold, otherwise heal normally
+		var/damage = affecting.brute_dam
 		var/heal_amount = 15
-		if(difference >= 0)
-			heal_amount = difference
+
+		affecting.update_threshhold_state(burn = FALSE)
+
+		if(affecting.threshhold_brute_passed)
+			heal_amount = min(heal_amount, damage - affecting.threshhold_passed_mindamage)
+
+			if(!heal_amount)
+				to_chat(user, "<span class ='notice'[user == H ? "Your" : "[H]'s"] [affecting.name] appears to have suffered severe internal damage and requires surgery to repair further.</span>")
+				return
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",

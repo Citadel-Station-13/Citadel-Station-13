@@ -366,8 +366,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(ROBOTIC_LIMBS in species_traits)
 		for(var/obj/item/bodypart/B in C.bodyparts)
-			B.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE) // Makes all Bodyparts robotic.
-			B.render_like_organic = TRUE
+			B.change_bodypart_status(BODYPART_HYBRID, FALSE, TRUE) // Makes all Bodyparts 'robotic'.
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
@@ -412,8 +411,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(ROBOTIC_LIMBS in species_traits)
 		for(var/obj/item/bodypart/B in C.bodyparts)
-			B.change_bodypart_status(BODYPART_ORGANIC, FALSE, TRUE)
-			B.render_like_organic = FALSE
+			B.change_bodypart_status(initial(B.status), FALSE, TRUE)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -435,7 +433,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/dynamic_fhair_suffix = ""
 
 	//for augmented heads
-	if(HD.status == BODYPART_ROBOTIC && !HD.render_like_organic)
+	if(HD.is_robotic_limb(FALSE))
 		return
 
 	//we check if our hat or helmet hides our facial hair.
@@ -1023,7 +1021,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				return FALSE
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+				if(!H.w_uniform && !nojumpsuit && (!O || !O.is_robotic_limb()))
 					if(return_warning)
 						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
@@ -1065,7 +1063,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				return FALSE
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))
 				var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-				if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+				if(!H.w_uniform && !nojumpsuit && (!O || !O.is_robotic_limb()))
 					if(return_warning)
 						return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 					return FALSE
@@ -1080,7 +1078,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!H.w_uniform && !nojumpsuit && (!O || !O.is_robotic_limb()))
 				if(return_warning)
 					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
@@ -1096,7 +1094,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!H.w_uniform && !nojumpsuit && (!O || !O.is_robotic_limb()))
 				if(return_warning)
 					return_warning[1] = "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return FALSE
