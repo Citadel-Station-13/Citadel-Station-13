@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(air_turfs)
 	name = "Atmospherics - Turfs"
 	init_order = INIT_ORDER_AIR_TURFS
 	priority = FIRE_PRIORITY_AIR_TURFS
-	wait = 2
+	wait = 5
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/cost_turfs = 0
