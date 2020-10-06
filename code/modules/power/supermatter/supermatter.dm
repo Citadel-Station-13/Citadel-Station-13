@@ -932,6 +932,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(user.mind?.assigned_role == "Clown")
 			var/denergy = rand(-1000, 1000)
 			var/ddamage = rand(-150, clamp(150, 0, (explosion_point - damage) + 150))
+			energy += denergy
+			damage += ddamage
 			add = ", adding [denergy] energy and [ddamage] damage to the crystal"
 		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)][add].")
 		investigate_log("has consumed [key_name(user)][add].", INVESTIGATE_SUPERMATTER)
