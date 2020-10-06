@@ -698,19 +698,26 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if (oldcid)
 		if (!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
-			if (!cidcheck_spoofckeys[ckey])
-				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
-				cidcheck_spoofckeys[ckey] = TRUE
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
+			if(check_whitelist(ckey))
+				log_access("Potential CID randomizer spoof ignored due to whitelist: [key] [computer_id] [address]. Old CID: [oldcid].")
+				cidcheck -= ckey
+				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check, but has been let through anyways as they are on the whitelist. [computer_id] vs old [oldcid]</span>\
+				<br><span class='danger'>As the CID randomizer check only triggers upon a CID change, if this message shows for this person often, there is likely an issue.</span>")
+				return FALSE
+			else
+				if (!cidcheck_spoofckeys[ckey])
+					message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
+					cidcheck_spoofckeys[ckey] = TRUE
+				cidcheck[ckey] = computer_id
+				tokens[ckey] = cid_check_reconnect()
 
-			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
+				sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
 
-			 //we sleep after telling the client to reconnect, so if we still exist something is up
-			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+				 //we sleep after telling the client to reconnect, so if we still exist something is up
+				log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
-			qdel(src)
-			return TRUE
+				qdel(src)
+				return TRUE
 
 		if (oldcid != computer_id && computer_id != lastcid) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
