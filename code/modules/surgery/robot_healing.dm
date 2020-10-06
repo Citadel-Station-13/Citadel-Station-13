@@ -42,7 +42,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery/robot_brain_surgery/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
+/datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	if(!..())
 		return FALSE
 	var/possible = FALSE
