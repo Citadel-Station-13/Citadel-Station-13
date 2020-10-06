@@ -27,15 +27,16 @@
 				if(!S.requires_bodypart)
 					continue
 				if(S.requires_bodypart_type) //ugly but it'll do.
-					if(S.requires_bodypart_type == BODYPART_ORGANIC)
-						if(!affecting.is_organic_limb(FALSE))
-							continue
-					else if(S.requires_bodypart_type == BODYPART_ROBOTIC)
-						if(!affecting.is_robotic_limb())
-							continue
-					else if(S.requires_bodypart_type == BODYPART_HYBRID)
-						if(!affecting.is_organic_limb() || !affecting.is_robotic_limb())
-							continue
+					switch(S.requires_bodypart_type)
+						if(BODYPART_ORGANIC)
+							if(!affecting.is_organic_limb(FALSE))
+								continue
+						if(BODYPART_ROBOTIC)
+							if(!affecting.is_robotic_limb())
+								continue
+						if(BODYPART_HYBRID)
+							if(!affecting.is_organic_limb() || !affecting.is_robotic_limb())
+								continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
@@ -67,15 +68,16 @@
 				if(!S.requires_bodypart)
 					return
 				if(S.requires_bodypart_type) //*scream
-					if(S.requires_bodypart_type == BODYPART_ORGANIC)
-						if(!affecting.is_organic_limb(FALSE))
-							return
-					else if(S.requires_bodypart_type == BODYPART_ROBOTIC)
-						if(!affecting.is_robotic_limb())
-							return
-					else if(S.requires_bodypart_type == BODYPART_HYBRID)
-						if(!affecting.is_organic_limb() || !affecting.is_robotic_limb())
-							return
+					switch(S.requires_bodypart_type)
+						if(BODYPART_ORGANIC)
+							if(!affecting.is_organic_limb(FALSE))
+								return
+						if(BODYPART_ROBOTIC)
+							if(!affecting.is_robotic_limb())
+								return
+						if(BODYPART_HYBRID)
+							if(!affecting.is_organic_limb() || !affecting.is_robotic_limb())
+								return
 			else if(C && S.requires_bodypart)
 				return
 			if(S.lying_required && !(M.lying))

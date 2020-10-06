@@ -391,10 +391,12 @@
 		if(!affecting)
 			to_chat(user, "<span class='warning'>The limb is missing!</span>")
 			return
-		if(affecting.status != BODYPART_ORGANIC)
+		if(!affecting.is_organic_limb())
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
-
+		else if(!affecting.is_organic_limb(FALSE) && mode != HYPO_INJECT)
+			to_chat(user, "<span class='notice'>Biomechanical limbs can only be treated via their integrated injection port, not via spraying!</span>")
+			return
 	//Always log attemped injections for admins
 	var/contained = vial.reagents.log_list()
 	log_combat(user, L, "attemped to inject", src, addition="which had [contained]")

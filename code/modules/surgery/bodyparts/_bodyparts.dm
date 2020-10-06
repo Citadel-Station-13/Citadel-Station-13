@@ -745,7 +745,7 @@
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
-		if(!isnull(body_markings) && status == BODYPART_ORGANIC)
+		if(!isnull(body_markings) && is_organic_limb(FALSE))
 			if(!use_digitigrade)
 				if(body_zone == BODY_ZONE_CHEST)
 					. += image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
@@ -922,7 +922,7 @@
 	update_disabled()
 
 /obj/item/bodypart/proc/get_bleed_rate()
-	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
+	if(!is_organic_limb()) // maybe in the future we can bleed oil from aug parts, but not now
 		return
 	var/bleed_rate = 0
 	if(generic_bleedstacks > 0)
