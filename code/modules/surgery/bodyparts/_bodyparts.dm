@@ -581,7 +581,7 @@
 		C = owner
 		no_update = FALSE
 
-	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
+	if(HAS_TRAIT(C, TRAIT_HUSK) && (is_organic_limb() || render_like_organic))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -619,7 +619,10 @@
 			skin_tone = ""
 
 		body_gender = H.dna.features["body_model"]
-		should_draw_gender = S.sexes
+		if(GLOB.nongendered_limb_types[species_id])
+			should_draw_gender = FALSE
+		else
+			should_draw_gender = S.sexes
 
 		var/mut_colors = (MUTCOLORS in S.species_traits)
 		if(mut_colors)

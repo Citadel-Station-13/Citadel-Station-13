@@ -735,54 +735,62 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 
 // Only renders the head of the human
 /mob/living/carbon/human/proc/update_body_parts_head_only()
-	if (!dna)
+	if(!dna)
 		return
 
-	if (!dna.species)
+	if(!dna.species)
 		return
 
 	if(dna.species.should_render())
-		var/obj/item/bodypart/HD = get_bodypart("head")
+    return
+  
+  var/obj/item/bodypart/HD = get_bodypart("head")
+	if(!istype(HD))
+		return
 
-		if (!istype(HD))
-			return
+	HD.update_limb()
 
-		HD.update_limb()
+	add_overlay(HD.get_limb_icon())
+	update_damage_overlays()
 
-		add_overlay(HD.get_limb_icon())
-		update_damage_overlays()
+	if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
+		// lipstick
+		if(lip_style && (LIPS in dna.species.species_traits))
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/lips.dmi', "lips_[lip_style]", -BODY_LAYER)
+			lip_overlay.color = lip_color
+			if(OFFSET_LIPS in dna.species.offset_features)
+				lip_overlay.pixel_x += dna.species.offset_features[OFFSET_LIPS][1]
+				lip_overlay.pixel_y += dna.species.offset_features[OFFSET_LIPS][2]
+			add_overlay(lip_overlay)
 
-		if(HD && !(HAS_TRAIT(src, TRAIT_HUSK)))
-			// lipstick
-			if(lip_style && (LIPS in dna.species.species_traits))
-				var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
-				lip_overlay.color = lip_color
-				if(OFFSET_LIPS in dna.species.offset_features)
-					lip_overlay.pixel_x += dna.species.offset_features[OFFSET_LIPS][1]
-					lip_overlay.pixel_y += dna.species.offset_features[OFFSET_LIPS][2]
-				add_overlay(lip_overlay)
-
-			// eyes
-			if(!(NOEYES in dna.species.species_traits))
-				var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
-				if(!has_eyes)
-					add_overlay(mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER))
-				else
-					var/mutable_appearance/left_eye = mutable_appearance('icons/mob/human_face.dmi', "left_eye", -BODY_LAYER)
-					var/mutable_appearance/right_eye = mutable_appearance('icons/mob/human_face.dmi', "right_eye", -BODY_LAYER)
-					if((EYECOLOR in dna.species.species_traits) && has_eyes)
-						left_eye.color = "#" + left_eye_color
-						right_eye.color = "#" + right_eye_color
-					if(OFFSET_EYES in dna.species.offset_features)
-						left_eye.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
-						left_eye.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
-						right_eye.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
-						right_eye.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
-					add_overlay(left_eye)
-					add_overlay(right_eye)
+		// eyes
+		if(!(NOEYES in dna.species.species_traits))
+			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
+			if(!has_eyes)
+				add_overlay(mutable_appearance('icons/mob/eyes.dmi', "eyes_missing", -BODY_LAYER))
+			else
+				var/left_state = DEFAULT_LEFT_EYE_STATE
+				var/right_state = DEFAULT_RIGHT_EYE_STATE
+				if(dna.species)
+					var/eye_type = dna.species.eye_type
+					if(GLOB.eye_types[eye_type])
+						left_state = eye_type + "_left_eye"
+						right_state = eye_type + "_right_eye"
+				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
+				var/mutable_appearance/right_eye = mutable_appearance('icons/mob/eyes.dmi', right_state, -BODY_LAYER)
+				if((EYECOLOR in dna.species.species_traits) && has_eyes)
+					left_eye.color = "#" + left_eye_color
+					right_eye.color = "#" + right_eye_color
+				if(OFFSET_EYES in dna.species.offset_features)
+					left_eye.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
+					left_eye.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
+					right_eye.pixel_x += dna.species.offset_features[OFFSET_EYES][1]
+					right_eye.pixel_y += dna.species.offset_features[OFFSET_EYES][2]
+				add_overlay(left_eye)
+				add_overlay(right_eye)
 
 
-		dna.species.handle_hair(src)
+	dna.species.handle_hair(src)
 
-		update_inv_head()
-		update_inv_wear_mask()
+	update_inv_head()
+	update_inv_wear_mask()
