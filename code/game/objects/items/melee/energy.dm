@@ -190,7 +190,7 @@
 
 /obj/item/melee/transforming/energy/sword/saber
 	possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
-	unique_reskin = list("Sword" = "sword0", "Sabre" = "esabre0")
+	unique_reskin = list("Sword" = "sword0", "saber" = "esaber0")
 	var/hacked = FALSE
 	var/saber = FALSE
 
@@ -200,22 +200,22 @@
 		if(active)
 			if(sword_color)
 				if(saber)
-					icon_state = "esabre[sword_color]"
+					icon_state = "esaber[sword_color]"
 				else
 					icon_state = "sword[sword_color]"
-			START_PROCESSING(SSobj, src)
-			set_light(brightness_on)
 		else
-			STOP_PROCESSING(SSobj, src)
-			set_light(0)
+			if(saber)
+				icon_state = "esaber0"
+			else
+				icon_state = "sword0"
 
 /obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
 	. = ..()
-	if(icon_state == "sabre0")
+	if(icon_state == "esaber0")
 		saber = TRUE
 	if(active)
 		if(saber)
-			icon_state = "esabre[sword_color]"
+			icon_state = "esaber[sword_color]"
 		else
 			icon_state = "sword[sword_color]"
 
