@@ -742,9 +742,9 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 		return
 
 	if(dna.species.should_render())
-    return
-  
-  var/obj/item/bodypart/HD = get_bodypart("head")
+    	return
+
+ 	var/obj/item/bodypart/HD = get_bodypart("head")
 	if(!istype(HD))
 		return
 
