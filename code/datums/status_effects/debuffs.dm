@@ -1045,7 +1045,7 @@ datum/status_effect/pacify
 	id = "fake_virus"
 	duration = 1800//3 minutes
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 20
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
