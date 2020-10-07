@@ -35,8 +35,9 @@
 #define R_SPAWN			(1<<12)
 #define R_AUTOLOGIN		(1<<13)
 #define R_DBRANKS		(1<<14)
+#define R_SENSITIVE		(1<<15)
 
-#define R_DEFAULT R_AUTOLOGIN
+#define R_DEFAULT R_AUTOLOGIN | R_SENSITIVE
 
 #define R_EVERYTHING ALL //the sum of all other rank permissions, used for +EVERYTHING
 
