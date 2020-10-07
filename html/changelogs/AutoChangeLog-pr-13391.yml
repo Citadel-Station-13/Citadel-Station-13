@@ -1,6 +1,0 @@
-author: "dapnee"
-delete-after: True
-changes: 
-  - rscadd: "atrium, clinic, an extra office, a pseudo public mining area, two more deluxe dorms, micro beach, aux bathroom, two construction areas, mass driver, more intercoms"
-  - tweak: "moved all of service, chapel, dorms, garden, holodeck to a different z-level, RnD is more open, maintenance is a bit more random, more firelocks, added more mine-able rock"
-  - bugfix: "fixed the buttons in xenobio, gave shutters to cargo's storage area, fixed holodeck so it works now, fixed some techfabs being lathes, added sensors to atmos tanks, more decals, couple more signs, little floral areas and sitting areas added to break up hallway monotony, mech chargers are no longer missing their consoles, whiteship won't crash into arrivals anymore while the area it takes up is more telegraphed, APC placement on AI sat entrance, missing wire node for the outer portion of the AI sat, civilian level now has a telecom relay"

@@ -1136,8 +1136,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red{
@@ -1155,8 +1154,7 @@
 "acB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -1196,8 +1194,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "executionfireblast";
-	name = "blast door"
+	id = "executionfireblast"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -9534,7 +9531,6 @@
 "arF" = (
 /obj/structure/pool/ladder{
 	dir = 8;
-	icon_state = "ladder";
 	pixel_x = 4
 	},
 /turf/open/pool,
@@ -10230,7 +10226,6 @@
 /area/security/main)
 "asN" = (
 /obj/machinery/light/built{
-	icon_state = "tube-empty";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -15691,15 +15686,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDN" = (
-/obj/structure/rack,
-/obj/item/storage/briefcase{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/storage/secure/briefcase{
-	pixel_x = 2;
-	pixel_y = -2
-	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDO" = (
@@ -63650,8 +63637,7 @@
 "cvL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = "researchrangeshutters";
-	name = "blast door"
+	id = "researchrangeshutters"
 	},
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
@@ -66513,8 +66499,7 @@
 "cBm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = "researchrangeshutters";
-	name = "blast door"
+	id = "researchrangeshutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

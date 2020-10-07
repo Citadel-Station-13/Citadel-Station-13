@@ -3,7 +3,9 @@
 	name = "Initializing..."
 	var/target
 
-/obj/effect/statclick/New(loc, text, target) //Don't port this to Initialize it's too critical
+INITIALIZE_IMMEDIATE(/obj/effect/statclick) //it's new, but rebranded.
+
+/obj/effect/statclick/Initialize(mapload, text, target) //Don't port this to Initialize it's too critical
 	. = ..()
 	name = text
 	src.target = target

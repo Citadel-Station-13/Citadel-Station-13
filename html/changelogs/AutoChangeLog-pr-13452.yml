@@ -1,6 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - rscadd: "Adds methane and methyl bromide gases."
-  - tweak: "Minor gas name/desc changes to improve consistency"
-  - imageadd: "Ports the methyl bromide tank from bay. Adds two new canister sprites for the new gases and CH4 screen alerts."

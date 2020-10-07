@@ -351,6 +351,10 @@
 	name = "Black Carpet Single-Pack"
 	contains = list(/obj/item/stack/tile/carpet/black/fifty)
 
+/datum/supply_pack/misc/carpet/arcade
+	name = "Arcade Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/arcade/fifty)
+
 /datum/supply_pack/misc/carpet/premium
 	name = "Monochrome Carpet Single-Pack"
 	desc = "Exotic carpets for all your decorating needs. This 30 units stack of extra soft carpet will tie any room together."
