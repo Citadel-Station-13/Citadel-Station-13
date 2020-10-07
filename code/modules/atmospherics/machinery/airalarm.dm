@@ -107,8 +107,16 @@
 		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/freon			= new/datum/tlv/dangerous,
 		/datum/gas/methane			= new/datum/tlv(-1, -1, 3, 6),
-		/datum/gas/methyl_bromide	= new/datum/tlv/dangerous
+		/datum/gas/methyl_bromide	= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
+
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -128,8 +136,15 @@
 		/datum/gas/stimulum			= new/datum/tlv/no_checks,
 		/datum/gas/nitryl			= new/datum/tlv/no_checks,
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks,
+		/datum/gas/freon			= new/datum/tlv/no_checks,
 		/datum/gas/methane			= new/datum/tlv/no_checks,
-		/datum/gas/methyl_bromide	= new/datum/tlv/no_checks
+		/datum/gas/methyl_bromide	= new/datum/tlv/no_checks,
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -149,8 +164,15 @@
 		/datum/gas/stimulum			= new/datum/tlv(-1, -1, 1000, 1000), // Stimulum has only positive effects
 		/datum/gas/nitryl			= new/datum/tlv/dangerous,
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
+		/datum/gas/freon			= new/datum/tlv/dangerous,
 		/datum/gas/methane			= new/datum/tlv(-1, -1, 3, 6),
-		/datum/gas/methyl_bromide	= new/datum/tlv/dangerous
+		/datum/gas/methyl_bromide	= new/datum/tlv/dangerous,
+		/datum/gas/hydrogen			= new/datum/tlv/dangerous,
+		/datum/gas/healium			= new/datum/tlv/dangerous,
+		/datum/gas/proto_nitrate	= new/datum/tlv/dangerous,
+		/datum/gas/zauker			= new/datum/tlv/dangerous,
+		/datum/gas/halon			= new/datum/tlv/dangerous,
+		/datum/gas/hexane			= new/datum/tlv/dangerous
 	)
 
 /obj/machinery/airalarm/unlocked
@@ -550,7 +572,14 @@
 						/datum/gas/stimulum,
 						/datum/gas/pluoxium,
 						/datum/gas/methane,
-						/datum/gas/methyl_bromide
+						/datum/gas/methyl_bromide,
+						/datum/gas/freon,
+						/datum/gas/hydrogen,
+						/datum/gas/healium,
+						/datum/gas/proto_nitrate,
+						/datum/gas/zauker,
+						/datum/gas/halon,
+						/datum/gas/hexane,
 					),
 					"scrubbing" = 1,
 					"widenet" = 1,

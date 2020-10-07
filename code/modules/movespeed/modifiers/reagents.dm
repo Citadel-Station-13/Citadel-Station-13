@@ -12,3 +12,9 @@
 
 /datum/movespeed_modifier/reagent/nitryl
 	multiplicative_slowdown = -1
+
+/datum/movespeed_modifier/reagent/freon
+	multiplicative_slowdown = 1.6
+
+/datum/movespeed_modifier/reagent/halon
+	multiplicative_slowdown = 1.8

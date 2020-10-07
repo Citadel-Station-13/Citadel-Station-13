@@ -43,7 +43,11 @@
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
-	var/gas_stimulation_min = 0.002 //Nitryl and Stimulum
+	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
+	///Minimum amount of healium to make you unconscious for 4 seconds
+	var/healium_para_min = 3
+	///Minimum amount of healium to knock you down for good
+	var/healium_sleep_min = 6
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -399,12 +403,66 @@
 
 		breath.adjust_moles(/datum/gas/nitryl, -gas_breathed)
 
+
+	// Healium
+		var/healium_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/healium))
+		if(healium_pp > gas_stimulation_min)
+			if(prob(15))
+				to_chat(H, "<span class='alert'>Your head starts spinning and your lungs burn!</span>")
+				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+				H.emote("gasp")
+		else
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		if(healium_pp > healium_para_min)
+			H.Unconscious(rand(30, 50))//not in seconds to have a much higher variation
+			if(healium_pp > healium_sleep_min)
+				var/existing = H.reagents.get_reagent_amount(/datum/reagent/healium)
+				H.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
+		gas_breathed = breath.get_moles(/datum/gas/healium)
+		breath.adjust_moles(/datum/gas/healium,-gas_breathed)
+
+	// Proto Nitrate
+		// Inert
+	// Zauker
+		var/zauker_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/zauker))
+		if(zauker_pp > gas_stimulation_min)
+			H.adjustBruteLoss(25)
+			H.adjustOxyLoss(5)
+			H.adjustFireLoss(8)
+			H.adjustToxLoss(8)
+		gas_breathed = breath.get_moles(/datum/gas/zauker)
+		breath.adjust_moles(/datum/gas/zauker,-gas_breathed)
+
+	// Halon
+		var/halon_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/halon))
+		if(halon_pp > gas_stimulation_min)
+			H.adjustOxyLoss(5)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/halon)
+			H.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
+		gas_breathed = breath.get_moles(/datum/gas/halon)
+		breath.adjust_moles(/datum/gas/halon,-gas_breathed)
+
+	// Hexane
+		var/hexane_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/hexane))
+		if(hexane_pp > gas_stimulation_min)
+			H.hallucination += 50
+			H.reagents.add_reagent(/datum/reagent/hexane,5)
+			if(prob(33))
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
+
 	// Stimulum
 		gas_breathed = breath.get_moles(/datum/gas/stimulum)
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount(/datum/reagent/stimulum)
 			H.reagents.add_reagent(/datum/reagent/stimulum, max(0, 5 - existing))
 		breath.adjust_moles(/datum/gas/stimulum, -gas_breathed)
+
+	// Hyper-Nob
+		gas_breathed = breath.get_moles(/datum/gas/hypernoblium)
+		if (gas_breathed > gas_stimulation_min)
+			var/existing = H.reagents.get_reagent_amount(/datum/reagent/hypernoblium)
+			H.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
+		breath.breath.adjust_moles(/datum/gas/hypernoblium,-gas_breathed)
 
 	// Miasma
 		if (breath.get_moles(/datum/gas/miasma))

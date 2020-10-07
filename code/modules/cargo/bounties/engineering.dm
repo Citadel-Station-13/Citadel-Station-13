@@ -22,6 +22,17 @@
 	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium."
 	gas_type = /datum/gas/tritium
 
+/datum/bounty/item/engineering/gas/hydrogen_tank
+	name = "Full Tank of Hydrogen"
+	description = "Our R&D department is working on the development of more efficient electrical batteries using hydrogen as a catalyst. Ship us a tank full of it. (20 Moles)"
+	gas_type = /datum/gas/hydrogen
+
+/datum/bounty/item/engineering/gas/zauker_tank
+	name = "Full Tank of Zauker"
+	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses Zauker gas. Ship us a tank full of it. (20 Moles)"
+	reward = 10000
+	gas_type = /datum/gas/zauker
+
 /datum/bounty/item/engineering/pacman
 	name = "P.A.C.M.A.N.-type portable generator"
 	description = "A neighboring station had a problem with their SMES, and now need something to power their communications console. Can you send them a P.AC.M.A.N.?"

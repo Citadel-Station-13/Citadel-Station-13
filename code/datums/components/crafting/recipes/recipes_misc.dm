@@ -585,3 +585,17 @@
 				/obj/item/clothing/under/rank/security/officer = 1)
 	subcategory = CAT_FURNITURE
 	category = CAT_MISC
+
+// ATMOS STATUE
+
+/datum/crafting_recipe/elder_atmosian_statue
+	name = "Elder Atmosian Statue"
+	result = /obj/structure/statue/elder_atmosian
+	time = 6 SECONDS
+	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
+				/obj/item/grenade/gas_crystal/healium_crystal = 1,
+				/obj/item/grenade/gas_crystal/proto_nitrate_crystal = 1,
+				/obj/item/grenade/gas_crystal/zauker_crystal = 1
+				)
+	subcategory = CAT_FURNITURE
+	category = CAT_MISC

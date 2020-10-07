@@ -10,7 +10,7 @@
 	var/use_overlays = TRUE
 	volume = 1000
 
-	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor)
+	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/hydrogen, /datum/gas/healium, /datum/gas/proto_nitrate, /datum/gas/zauker, /datum/gas/halon, /datum/gas/hexane)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)

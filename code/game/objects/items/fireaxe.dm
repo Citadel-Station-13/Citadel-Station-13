@@ -71,3 +71,15 @@
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="bone_axe1")
+
+/obj/item/fireaxe/metal_h2_axe  // Blatant imitation of the fireaxe, but made out of metallic hydrogen
+	icon_state = "metalh2_axe0"
+	name = "metallic hydrogen axe"
+	desc = "A large, menacing axe made of an unkown substance that the most elder atmosians calls Metallic Hydrogen. Truly an otherwordly weapon."
+
+/obj/item/fireaxe/metal_h2_axe/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="metalh2_axe1")
+
+/obj/item/fireaxe/metal_h2_axe/update_icon_state()
+	icon_state = "metalh2_axe0"
