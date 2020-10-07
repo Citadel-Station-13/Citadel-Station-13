@@ -1,5 +1,37 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
-
+/*priority so far, check this list to see what are the numbers used. Please use a different priority for each reaction(higher number are done first)
+miaster = -10 (this should always be under all other fires)
+freonfire = -5
+plasmafire = -4
+h2fire = -3
+tritfire = -2
+halon_o2removal = -1
+nitrous_decomp = 0
+water_vapor = 1
+pluox_formation = 2
+nitrylformation = 3
+bzformation = 4
+freonformation = 5
+stimformation = 5
+nobiliumformation = 6
+stimball = 7
+ammoniacrystals = 8
+hexane_plasma_filtering = 9
+hexane_n2o_filtering = 10
+zauker_decomp = 11
+healium_production = 12
+proto_nitrate_production = 13
+zauker_production = 14
+halon_formation = 15
+hexane_formation = 16
+healium_crystal_production = 17
+proto_nitrate_crystal_production = 18
+zauker_crystal_production = 19
+proto_nitrate_response = 20 - 25
+fusion = 26
+metallic_hydrogen = 27
+nobiliumsuppression = INFINITY
+*/
 /proc/init_gas_reactions()
 	. = list()
 
@@ -88,8 +120,8 @@
 
 /datum/gas_reaction/nitrous_decomp/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
 	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	var/burned_fuel = 0
 
 
@@ -106,9 +138,20 @@
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 		return REACTING
 	return NO_REACTION
+
+/datum/gas_reaction/nitrous_decomp/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/nitrous_oxide,50)
+	G.set_temperature(50000)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/nitrous_oxide) > 30)
+		return list("success" = FALSE, "message" = "Nitrous oxide is not decomposing!")
+	return ..()
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/tritfire
@@ -125,8 +168,7 @@
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
@@ -152,11 +194,11 @@
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature*old_heat_capacity + energy_released)/new_heat_capacity)
+			air.set_temperature((old_energy + energy_released)/new_heat_capacity)
 
 	//let the floor know a fire is happening
 	if(istype(location))
-		temperature = air.return_temperature()
+		var/temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 			for(var/I in location)
@@ -180,7 +222,7 @@
 
 //plasma combustion: combustion of oxygen and plasma (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/plasmafire
-	priority = -2 //fire should ALWAYS be last, but plasma fires happen after tritium fires
+	priority = -4 //fire should ALWAYS be last, but plasma fires happen after tritium fires
 	name = "Plasma Combustion"
 	id = "plasmafire"
 
@@ -193,7 +235,7 @@
 
 /datum/gas_reaction/plasmafire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/temperature = air.return_temperature()
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
@@ -236,7 +278,7 @@
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature*old_heat_capacity + energy_released)/new_heat_capacity)
+			air.set_temperature((old_energy + energy_released)/new_heat_capacity)
 
 	//let the floor know a fire is happening
 	if(istype(location))
@@ -288,7 +330,7 @@
 
 /datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/temperature = air.return_temperature()
 	if(!isturf(holder))
 		return NO_REACTION
@@ -325,7 +367,7 @@
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 
 /datum/gas_reaction/h2fire
 	priority = -3 //fire should ALWAYS be last, but tritium fires happen before plasma fires
@@ -341,13 +383,12 @@
 
 /datum/gas_reaction/h2fire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/energy = air.thermal_energy()
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
 	var/burned_fuel = 0
-	if(air.get_moles(/datum/gas/oxygen) < air.get_moles(/datum/gas/hydrogen) || MINIMUM_H2_OXYBURN_ENERGY > air.thermal_energy())
+	if(air.get_moles(/datum/gas/oxygen) < air.get_moles(/datum/gas/hydrogen) || MINIMUM_H2_OXYBURN_ENERGY > energy)
 		burned_fuel = air.get_moles(/datum/gas/oxygen) /HYDROGEN_BURN_OXY_FACTOR
 		air.adjust_moles(/datum/gas/hydrogen, -burned_fuel)
 	else
@@ -365,11 +406,11 @@
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature*old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((energy + energy_released) / new_heat_capacity)
 
 	//let the floor know a fire is happening
 	if(istype(location))
-		temperature = air.return_temperature()
+		var/temperature = air.return_temperature()
 		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			location.hotspot_expose(temperature, CELL_VOLUME)
 			for(var/I in location)
@@ -378,6 +419,84 @@
 			location.temperature_expose(air, temperature, CELL_VOLUME)
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
+
+/datum/gas_reaction/h2fire/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/hydrogen,50)
+	G.set_moles(/datum/gas/oxygen,50)
+	G.set_volume(1000)
+	G.set_temperature(1200)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(!G.reaction_results["fire"])
+		return list("success" = FALSE, "message" = "Hydrogen fires aren't setting fire results correctly!")
+	if(!G.get_moles(/datum/gas/water_vapor))
+		return list("success" = FALSE, "message" = "Hydrogen fires aren't making H2O!")
+	return ..()
+
+/datum/gas_reaction/methanefire
+	priority = -6 //methane's the last fire that happens
+	name = "Methane Combustion"
+	id = "methanefire"
+
+/datum/gas_reaction/methanefire/init_reqs()
+	min_requirements = list(
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
+		/datum/gas/methane = MINIMUM_MOLE_COUNT,
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/methanefire/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_energy = air.thermal_energy()
+	var/list/cached_results = air.reaction_results
+	cached_results["fire"] = 0
+	var/turf/open/location = isturf(holder) ? holder : null
+	var/burned_fuel = min(air.get_moles(/datum/gas/methane),air.get_moles(/datum/gas/oxygen)*0.5)
+	air.adjust_moles(/datum/gas/methane,-burned_fuel)
+	air.adjust_moles(/datum/gas/oxygen, -burned_fuel * 2)
+	if(burned_fuel)
+		energy_released += (FIRE_METHANE_ENERGY_RELEASED * burned_fuel)
+
+		air.adjust_moles(/datum/gas/carbon_dioxide, burned_fuel)
+		air.adjust_moles(/datum/gas/water_vapor, burned_fuel * 2)
+
+		cached_results["fire"] += burned_fuel
+
+	if(energy_released > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
+
+	//let the floor know a fire is happening
+	if(istype(location))
+		var/temperature = air.return_temperature()
+		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			location.hotspot_expose(temperature, CELL_VOLUME)
+			for(var/I in location)
+				var/atom/movable/item = I
+				item.temperature_expose(air, temperature, CELL_VOLUME)
+			location.temperature_expose(air, temperature, CELL_VOLUME)
+
+	return cached_results["fire"] ? REACTING : NO_REACTION
+
+/datum/gas_reaction/methanefire/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/methane,50)
+	G.set_moles(/datum/gas/oxygen,50)
+	G.set_volume(1000)
+	G.set_temperature(1200)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(!G.reaction_results["fire"])
+		return list("success" = FALSE, "message" = "Methane fires aren't setting fire results correctly!")
+	if(!G.get_moles(/datum/gas/water_vapor))
+		return list("success" = FALSE, "message" = "Hydrogen fires aren't making H2O!")
+	if(!G.get_moles(/datum/gas/carbon_dioxide))
+		return list("success" = FALSE, "message" = "Hydrogen fires aren't making Co2!")
+	return ..()
 
 /datum/gas_reaction/ammoniacrystals
 	priority = 8
@@ -394,8 +513,7 @@
 
 /datum/gas_reaction/ammoniacrystals/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -412,7 +530,7 @@
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released)/new_heat_capacity)
+			air.set_temperature((old_energy + energy_released)/new_heat_capacity)
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
@@ -441,7 +559,7 @@
 	if(!air.analyzer_results)
 		air.analyzer_results = new
 	var/list/cached_scan_results = air.analyzer_results
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = air.get_moles(/datum/gas/plasma)
 	var/initial_hydrogen = air.get_moles(/datum/gas/hydrogen)
@@ -494,15 +612,15 @@
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(clamp(((air.return_temperature()*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY))
+			air.set_temperature(clamp(((old_energy + reaction_energy)/new_heat_capacity),TCMB,INFINITY))
 		return REACTING
 
 /datum/gas_reaction/fusion/test()
 	var/datum/gas_mixture/G = new
-	G.set_moles(/datum/gas/carbon_dioxide,300)
+	G.set_moles(/datum/gas/hydrogen,300)
 	G.set_moles(/datum/gas/plasma,1000)
 	G.set_moles(/datum/gas/tritium,100.61)
-	G.set_moles(/datum/gas/nitryl,1)
+	G.set_moles(/datum/gas/nitryl,61)
 	G.set_temperature(15000)
 	G.set_volume(1000)
 	var/result = G.react()
@@ -514,9 +632,9 @@
 	if(abs(G.get_moles(/datum/gas/plasma) - 850.616) > 0.5)
 		var/plas = G.get_moles(/datum/gas/plasma)
 		return list("success" = FALSE, "message" = "Fusion is not calculating plasma correctly, should be 850.616, is instead [plas]")
-	if(abs(G.get_moles(/datum/gas/carbon_dioxide) - 1699.384) > 0.5)
-		var/co2 = G.get_moles(/datum/gas/carbon_dioxide)
-		return list("success" = FALSE, "message" = "Fusion is not calculating co2 correctly, should be 1699.384, is instead [co2]")
+	if(abs(G.get_moles(/datum/gas/hydrogen) - 1699.384) > 0.5)
+		var/co2 = G.get_moles(/datum/gas/hydrogen)
+		return list("success" = FALSE, "message" = "Fusion is not calculating h2 correctly, should be 1699.384, is instead [co2]")
 	if(abs(G.return_temperature() - 27600) > 200) // calculating this manually sucks dude
 		var/temp = G.return_temperature()
 		return list("success" = FALSE, "message" = "Fusion is not calculating temperature correctly, should be around 27600, is instead [temp]")
@@ -537,8 +655,7 @@
 	)
 
 /datum/gas_reaction/nitrousformation/react(datum/gas_mixture/air)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/heat_efficency = min(air.get_moles(/datum/gas/oxygen) , air.get_moles(/datum/gas/nitrogen) )
 	var/energy_used = heat_efficency * NITROUS_FORMATION_ENERGY
 	if ((air.get_moles(/datum/gas/oxygen) - heat_efficency < 0 ) || (air.get_moles(/datum/gas/nitrogen) - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
@@ -550,11 +667,24 @@
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)) //the air heats up when reacting)
+			air.set_temperature(max(((old_energy + energy_used) / new_heat_capacity), TCMB)) //the air heats up when reacting)
 		return REACTING
 
+/datum/gas_reaction/nitrousformation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/oxygen,20)
+	G.set_moles(/datum/gas/nitrogen,40)
+	G.set_moles(/datum/gas/bz,10)
+	G.set_temperature(225)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/nitrous_oxide) < 18)
+		return list("success" = FALSE, "message" = "Nitrous oxide isn't being generated correctly!")
+	return ..()
+
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
-	priority = 3
+	priority = 3.5
 	name = "Nitryl formation"
 	id = "nitrylformation"
 
@@ -563,14 +693,13 @@
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
 		/datum/gas/nitrous_oxide = 5,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*400
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
+		"ENER" = NITRYL_FORMATION_ENERGY*100
 	)
 
 /datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
-	var/temperature = air.return_temperature()
-
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100),air.get_moles(/datum/gas/oxygen),air.get_moles(/datum/gas/nitrogen))
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature()/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*10),air.get_moles(/datum/gas/oxygen),air.get_moles(/datum/gas/nitrogen))
 	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
 	if ((air.get_moles(/datum/gas/oxygen) - heat_efficency < 0 )|| (air.get_moles(/datum/gas/nitrogen) - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -581,7 +710,7 @@
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB))
+			air.set_temperature(max(((old_energy - energy_used)/new_heat_capacity),TCMB))
 		return REACTING
 
 /datum/gas_reaction/nitrylformation/test()
@@ -590,11 +719,11 @@
 	G.set_moles(/datum/gas/nitrogen,30)
 	G.set_moles(/datum/gas/nitrous_oxide,10)
 	G.set_volume(1000)
-	G.set_temperature(150000)
+	G.set_temperature(13000)
 	var/result = G.react()
 	if(result != REACTING)
 		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
-	if(!G.get_moles(/datum/gas/nitryl) < 0.8)
+	if(!G.get_moles(/datum/gas/nitryl) < 0.5)
 		return list("success" = FALSE, "message" = "Nitryl isn't being generated correctly!")
 	return ..()
 
@@ -611,9 +740,8 @@
 
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
-	var/temperature = air.return_temperature()
 	var/pressure = air.return_pressure()
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(air.get_moles(/datum/gas/plasma)/air.get_moles(/datum/gas/nitrous_oxide),1))),air.get_moles(/datum/gas/nitrous_oxide),air.get_moles(/datum/gas/plasma)/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
 	if ((air.get_moles(/datum/gas/nitrous_oxide) - reaction_efficency < 0 )|| (air.get_moles(/datum/gas/plasma) - (2*reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
@@ -630,7 +758,7 @@
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB))
+			air.set_temperature(max(((old_energy + energy_released)/new_heat_capacity),TCMB))
 		return REACTING
 
 /datum/gas_reaction/bzformation/test()
@@ -660,7 +788,7 @@
 
 /datum/gas_reaction/metalhydrogen/react(datum/gas_mixture/air, datum/holder)
 	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -682,7 +810,7 @@
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy - energy_used) / new_heat_capacity), TCMB))
 		return REACTING
 
 /datum/gas_reaction/freonformation
@@ -699,9 +827,8 @@
 		)
 
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), air.get_moles(/datum/gas/plasma) , air.get_moles(/datum/gas/carbon_dioxide) , air.get_moles(/datum/gas/bz) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), air.get_moles(/datum/gas/plasma) , air.get_moles(/datum/gas/carbon_dioxide) , air.get_moles(/datum/gas/bz) )
 	var/energy_used = heat_efficency * 100
 	if ((air.get_moles(/datum/gas/plasma) - heat_efficency * 1.5 < 0 ) || (air.get_moles(/datum/gas/carbon_dioxide) - heat_efficency * 0.75 < 0) || (air.get_moles(/datum/gas/bz) - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -713,8 +840,21 @@
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity - energy_used)/new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy - energy_used)/new_heat_capacity), TCMB))
 		return REACTING
+
+/datum/gas_reaction/freonformation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/plasma,40)
+	G.set_moles(/datum/gas/carbon_dioxide,20)
+	G.set_moles(/datum/gas/bz,20)
+	G.set_temperature(50000)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/freon) < 25)
+		return list("success" = FALSE, "message" = "Freon isn't being generated correctly!")
+	return ..()
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
 	priority = 5
@@ -730,7 +870,7 @@
 		"TEMP" = STIMULUM_HEAT_SCALE/2)
 
 /datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/heat_scale = min(air.return_temperature()/STIMULUM_HEAT_SCALE,air.get_moles(/datum/gas/tritium),air.get_moles(/datum/gas/plasma),air.get_moles(/datum/gas/nitryl))
 	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE*(heat_scale**2) - STIMULUM_FIRST_DROP*(heat_scale**3) + STIMULUM_SECOND_RISE*(heat_scale**4) - STIMULUM_ABSOLUTE_DROP*(heat_scale**5)
 
@@ -745,7 +885,7 @@
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((air.return_temperature()*old_heat_capacity + stim_energy_change)/new_heat_capacity),TCMB))
+			air.set_temperature(max(((old_energy + stim_energy_change)/new_heat_capacity),TCMB))
 		return REACTING
 
 /datum/gas_reaction/stimformation/test()
@@ -774,12 +914,13 @@
 	min_requirements = list(
 		/datum/gas/nitrogen = 10,
 		/datum/gas/tritium = 5,
-		"TEMP" = 5000000)
+		"TEMP" = 10000,
+		"ENER" = NOBLIUM_FORMATION_ENERGY)
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	var/nob_formed = min((air.get_moles(/datum/gas/nitrogen)+air.get_moles(/datum/gas/tritium))/100,air.get_moles(/datum/gas/tritium)/10,air.get_moles(/datum/gas/nitrogen)/20)
-	var/energy_taken = nob_formed*(NOBLIUM_FORMATION_ENERGY/(max(air.get_moles(/datum/gas/bz),1)))
+	var/energy_taken = nob_formed*(NOBLIUM_FORMATION_ENERGY/(max(air.get_moles(/datum/gas/bz)/10,1)))
 	if ((air.get_moles(/datum/gas/tritium) - 10*nob_formed < 0) || (air.get_moles(/datum/gas/nitrogen) - 20*nob_formed < 0))
 		return NO_REACTION
 	air.adjust_moles(/datum/gas/tritium, -10*nob_formed)
@@ -791,7 +932,7 @@
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((air.return_temperature()*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB))
+			air.set_temperature(max(((old_energy - energy_taken)/new_heat_capacity),TCMB))
 
 /datum/gas_reaction/nobliumformation/test()
 	var/datum/gas_mixture/G = new
@@ -866,7 +1007,7 @@
 	)
 /datum/gas_reaction/stim_ball/react(datum/gas_mixture/air, datum/holder)
 	var/turf/open/location
-	var/old_heat_capacity = air.heat_capacity()
+	var/old_energy = air.thermal_energy()
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = get_turf(pick(pipenet.members))
@@ -887,7 +1028,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(clamp((air.return_temperature() * old_heat_capacity + energy_released) / new_heat_capacity, TCMB, INFINITY))
+			air.set_temperature(clamp((old_energy + energy_released) / new_heat_capacity, TCMB, INFINITY))
 		return REACTING
 
 /datum/gas_reaction/halon_formation
@@ -904,9 +1045,8 @@
 	)
 
 /datum/gas_reaction/halon_formation/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.01, air.get_moles(/datum/gas/tritium) , air.get_moles(/datum/gas/bz) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.01, air.get_moles(/datum/gas/tritium) , air.get_moles(/datum/gas/bz) )
 	var/energy_used = heat_efficency * 300
 	if ((air.get_moles(/datum/gas/tritium) - heat_efficency * 4 < 0 ) || (air.get_moles(/datum/gas/bz) - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -917,8 +1057,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/halon_formation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/bz,1)
+	G.set_moles(/datum/gas/tritium,1)
+	G.set_temperature(40)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/halon) < 1.5)
+		return list("success" = FALSE, "message" = "Halon isn't being generated correctly!")
+	return ..()
 
 /datum/gas_reaction/hexane_formation
 	priority = 16
@@ -934,9 +1086,8 @@
 	)
 
 /datum/gas_reaction/hexane_formation/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.01, air.get_moles(/datum/gas/hydrogen) , air.get_moles(/datum/gas/bz) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.01, air.get_moles(/datum/gas/hydrogen) , air.get_moles(/datum/gas/bz) )
 	var/energy_used = heat_efficency * 600
 	if ((air.get_moles(/datum/gas/hydrogen) - heat_efficency * 5 < 0 ) || (air.get_moles(/datum/gas/bz) - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -947,8 +1098,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/hexane_formation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/bz,2)
+	G.set_moles(/datum/gas/hydrogen,30)
+	G.set_temperature(460)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/hexane) < 20)
+		return list("success" = FALSE, "message" = "Hexane isn't being generated correctly!")
+	return ..()
 
 /datum/gas_reaction/healium_formation
 	priority = 12
@@ -964,9 +1127,8 @@
 	)
 
 /datum/gas_reaction/healium_formation/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.3, air.get_moles(/datum/gas/freon) , air.get_moles(/datum/gas/bz) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.3, air.get_moles(/datum/gas/freon) , air.get_moles(/datum/gas/bz) )
 	var/energy_used = heat_efficency * 9000
 	if ((air.get_moles(/datum/gas/freon) - heat_efficency * 2.75 < 0 ) || (air.get_moles(/datum/gas/bz) - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -977,8 +1139,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/healium_formation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/bz,90)
+	G.set_moles(/datum/gas/freon,10)
+	G.set_temperature(100)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/healium) < 80)
+		return list("success" = FALSE, "message" = "Healium isn't being generated correctly!")
+	return ..()
 
 /datum/gas_reaction/proto_nitrate_formation
 	priority = 13
@@ -994,9 +1168,8 @@
 	)
 
 /datum/gas_reaction/proto_nitrate_formation/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.005, air.get_moles(/datum/gas/pluoxium) , air.get_moles(/datum/gas/hydrogen) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.005, air.get_moles(/datum/gas/pluoxium) , air.get_moles(/datum/gas/hydrogen) )
 	var/energy_used = heat_efficency * 650
 	if ((air.get_moles(/datum/gas/pluoxium) - heat_efficency * 0.2 < 0 ) || (air.get_moles(/datum/gas/hydrogen) - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -1007,8 +1180,20 @@
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/proto_nitrate_formation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/pluoxium,100)
+	G.set_moles(/datum/gas/hydrogen,100)
+	G.set_temperature(7500)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/proto_nitrate) < 80)
+		return list("success" = FALSE, "message" = "Proto-nitrate isn't being generated correctly!")
+	return ..()
 
 /datum/gas_reaction/zauker_formation
 	priority = 14
@@ -1024,9 +1209,8 @@
 	)
 
 /datum/gas_reaction/zauker_formation/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.000005, air.get_moles(/datum/gas/hypernoblium) , air.get_moles(/datum/gas/stimulum) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.000005, air.get_moles(/datum/gas/hypernoblium) , air.get_moles(/datum/gas/stimulum) )
 	var/energy_used = heat_efficency * 5000
 	if ((air.get_moles(/datum/gas/hypernoblium) - heat_efficency * 0.01 < 0 ) || (air.get_moles(/datum/gas/stimulum) - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -1037,8 +1221,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/zauker_formation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/hypernoblium,1)
+	G.set_moles(/datum/gas/stimulum,1)
+	G.set_temperature(60000)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/zauker) < 0.1)
+		return list("success" = FALSE, "message" = "Proto-nitrate isn't being generated correctly!")
+	return ..()
 
 /datum/gas_reaction/halon_o2removal
 	priority = -1
@@ -1053,9 +1249,8 @@
 	)
 
 /datum/gas_reaction/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature / ( FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), air.get_moles(/datum/gas/halon) , air.get_moles(/datum/gas/oxygen) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() / ( FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), air.get_moles(/datum/gas/halon) , air.get_moles(/datum/gas/oxygen) )
 	var/energy_used = heat_efficency * 2500
 	if ((air.get_moles(/datum/gas/halon) - heat_efficency < 0 ) || (air.get_moles(/datum/gas/oxygen) - heat_efficency * 20 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -1066,8 +1261,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/halon_o2removal/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/halon,3)
+	G.set_moles(/datum/gas/oxygen,3)
+	G.set_temperature(400)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/oxygen) > 2)
+		return list("success" = FALSE, "message" = "Halon isn't filtering oxygen correctly!")
+	return ..()
 
 /datum/gas_reaction/hexane_plasma_filtering
 	priority = 9
@@ -1082,9 +1289,8 @@
 	)
 
 /datum/gas_reaction/hexane_plasma_filtering/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.01, air.get_moles(/datum/gas/hexane) , air.get_moles(/datum/gas/plasma) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.01, air.get_moles(/datum/gas/hexane) , air.get_moles(/datum/gas/plasma) )
 	var/energy_used = heat_efficency * 250
 	if ((air.get_moles(/datum/gas/hexane) - heat_efficency * 0.2 < 0 ) || (air.get_moles(/datum/gas/plasma) - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -1095,8 +1301,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy - energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/hexane_plasma_filtering/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/hexane,10)
+	G.set_moles(/datum/gas/plasma,10)
+	G.set_temperature(200)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/plasma) > 9.5)
+		return list("success" = FALSE, "message" = "Hexane isn't filtering plasma correctly!")
+	return ..()
 
 /datum/gas_reaction/hexane_n2o_filtering
 	priority = 10
@@ -1110,9 +1328,8 @@
 	)
 
 /datum/gas_reaction/hexane_n2o_filtering/react(datum/gas_mixture/air, datum/holder)
-	var/temperature = air.return_temperature()
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.01, air.get_moles(/datum/gas/hexane) , air.get_moles(/datum/gas/nitrous_oxide) )
+	var/old_energy = air.thermal_energy()
+	var/heat_efficency = min(air.return_temperature() * 0.01, air.get_moles(/datum/gas/hexane) , air.get_moles(/datum/gas/nitrous_oxide) )
 	var/energy_used = heat_efficency * 100
 	if ((air.get_moles(/datum/gas/hexane) - heat_efficency * 0.2 < 0 ) || (air.get_moles(/datum/gas/nitrous_oxide) - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -1124,8 +1341,20 @@
 	if(energy_used)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature(max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB))
+			air.set_temperature(max(((old_energy + energy_used) / new_heat_capacity), TCMB))
 	return REACTING
+
+/datum/gas_reaction/hexane_n2o_filtering/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/hexane,1)
+	G.set_moles(/datum/gas/nitrous_oxide,1)
+	G.set_temperature(300)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/nitrous_oxide) > 0.8)
+		return list("success" = FALSE, "message" = "Hexane isn't filtering nitrous correctly!")
+	return ..()
 
 /datum/gas_reaction/zauker_decomp
 	priority = 11
@@ -1140,8 +1369,7 @@
 
 /datum/gas_reaction/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	var/burned_fuel = 0
 	burned_fuel = min(20, air.get_moles(/datum/gas/nitrogen) , air.get_moles(/datum/gas/zauker) )
 	if(air.get_moles(/datum/gas/zauker) - burned_fuel < 0)
@@ -1156,9 +1384,21 @@
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 		return REACTING
 	return NO_REACTION
+
+/datum/gas_reaction/zauker_decomp/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/zauker,2)
+	G.set_moles(/datum/gas/nitrogen,1)
+	G.set_temperature(300)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/zauker) > 0.1)
+		return list("success" = FALSE, "message" = "Zauker isn't decomposing correctly!")
+	return ..()
 
 /datum/gas_reaction/healium_crystal_formation
 	priority = 17
@@ -1175,13 +1415,12 @@
 
 /datum/gas_reaction/healium_crystal_formation/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
 	var/consumed_fuel = 0
-	consumed_fuel = min(air.get_moles(/datum/gas/healium) * 2.5, 20 * (temperature * 0.001))
+	consumed_fuel = min(air.get_moles(/datum/gas/healium) * 2.5, 20 * (air.return_temperature() * 0.001))
 	if ((air.get_moles(/datum/gas/healium) - consumed_fuel * 0.4 < 0 ) || (air.get_moles(/datum/gas/oxygen) - consumed_fuel * 0.1 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	air.adjust_moles(/datum/gas/oxygen, -consumed_fuel * 0.1)
@@ -1192,7 +1431,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_crystal_formation
@@ -1210,13 +1449,12 @@
 
 /datum/gas_reaction/proto_nitrate_crystal_formation/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
 	var/consumed_fuel = 0
-	consumed_fuel = min(air.get_moles(/datum/gas/proto_nitrate) * 0.15, 20 * (temperature * 0.01))
+	consumed_fuel = min(air.get_moles(/datum/gas/proto_nitrate) * 0.15, 20 * (air.return_temperature() * 0.01))
 	if ((air.get_moles(/datum/gas/proto_nitrate) - consumed_fuel * 0.15 < 0 ) || (air.get_moles(/datum/gas/nitrogen) - consumed_fuel * 0.01 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	air.adjust_moles(/datum/gas/nitrogen, -consumed_fuel * 0.01)
@@ -1227,7 +1465,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/zauker_crystal_formation
@@ -1245,13 +1483,12 @@
 
 /datum/gas_reaction/zauker_crystal_formation/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
 	var/consumed_fuel = 0
-	consumed_fuel = min(air.get_moles(/datum/gas/zauker) * 0.1, 20 * (temperature * 0.02))
+	consumed_fuel = min(air.get_moles(/datum/gas/zauker) * 0.1, 20 * (air.return_temperature() * 0.02))
 	if ((air.get_moles(/datum/gas/zauker) - consumed_fuel * 0.05 < 0 ) || (air.get_moles(/datum/gas/plasma) - consumed_fuel * 5 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	air.adjust_moles(/datum/gas/plasma, -consumed_fuel * 5)
@@ -1262,7 +1499,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_plasma_response
@@ -1280,8 +1517,7 @@
 
 /datum/gas_reaction/proto_nitrate_plasma_response/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	if(!isturf(holder))
 		return NO_REACTION
 	var/turf/open/location = holder
@@ -1298,7 +1534,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_bz_response
@@ -1316,8 +1552,7 @@
 
 /datum/gas_reaction/proto_nitrate_bz_response/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
@@ -1337,7 +1572,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_freon_fire_response
@@ -1356,10 +1591,9 @@
 
 /datum/gas_reaction/proto_nitrate_freon_fire_response/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	if(air.get_moles(/datum/gas/freon) > 100 && air.get_moles(/datum/gas/oxygen) > 100)
-		var fuel_consumption = min(5, temperature * 0.03, air.get_moles(/datum/gas/freon) , air.get_moles(/datum/gas/proto_nitrate) )
+		var/fuel_consumption = min(5, air.return_temperature() * 0.03, air.get_moles(/datum/gas/freon) , air.get_moles(/datum/gas/proto_nitrate) )
 		if(air.get_moles(/datum/gas/proto_nitrate) - fuel_consumption < 0)
 			return NO_REACTION
 		air.adjust_moles(/datum/gas/proto_nitrate, -fuel_consumption)
@@ -1368,7 +1602,7 @@
 		if(energy_released)
 			var/new_heat_capacity = air.heat_capacity()
 			if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-				air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+				air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 		return REACTING
 	return NO_REACTION
 
@@ -1387,8 +1621,7 @@
 
 /datum/gas_reaction/proto_nitrate_tritium_response/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	var/turf/open/location = isturf(holder) ? holder : null
 	var produced_amount = min(5, air.get_moles(/datum/gas/tritium) , air.get_moles(/datum/gas/proto_nitrate) )
 	if(air.get_moles(/datum/gas/tritium) - produced_amount < 0 || air.get_moles(/datum/gas/proto_nitrate) - produced_amount * 0.01 < 0)
@@ -1401,7 +1634,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response
@@ -1417,8 +1650,7 @@
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
+	var/old_energy = air.thermal_energy()
 	var produced_amount = min(5, air.get_moles(/datum/gas/hydrogen) , air.get_moles(/datum/gas/proto_nitrate) )
 	if(air.get_moles(/datum/gas/hydrogen) - produced_amount < 0)
 		return NO_REACTION
@@ -1428,7 +1660,7 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
 
 /datum/gas_reaction/proto_nitrate_zauker_response
@@ -1466,9 +1698,8 @@
 
 /datum/gas_reaction/pluox_formation/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
-	var/old_heat_capacity = air.heat_capacity()
-	var/temperature = air.return_temperature()
-	var produced_amount = min(5, air.get_moles(/datum/gas/carbon_dioxide) , air.get_moles(/datum/gas/oxygen) )
+	var/old_energy = air.thermal_energy()
+	var/produced_amount = min(5, air.get_moles(/datum/gas/carbon_dioxide) , air.get_moles(/datum/gas/oxygen) )
 	if(air.get_moles(/datum/gas/carbon_dioxide) - produced_amount < 0 || air.get_moles(/datum/gas/oxygen) - produced_amount * 0.5 < 0 || air.get_moles(/datum/gas/tritium) - produced_amount * 0.01 < 0)
 		return NO_REACTION
 	air.adjust_moles(/datum/gas/carbon_dioxide, -produced_amount)
@@ -1480,5 +1711,18 @@
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.set_temperature((temperature * old_heat_capacity + energy_released) / new_heat_capacity)
+			air.set_temperature((old_energy + energy_released) / new_heat_capacity)
 	return REACTING
+
+/datum/gas_reaction/pluox_formation/test()
+	var/datum/gas_mixture/G = new
+	G.set_moles(/datum/gas/carbon_dioxide,100)
+	G.set_moles(/datum/gas/oxygen,50)
+	G.set_moles(/datum/gas/tritium,1)
+	G.set_temperature(200)
+	var/result = G.react()
+	if(result != REACTING)
+		return list("success" = FALSE, "message" = "Reaction didn't go at all!")
+	if(G.get_moles(/datum/gas/pluoxium) < 4)
+		return list("success" = FALSE, "message" = "Zauker isn't decomposing correctly!")
+	return ..()
