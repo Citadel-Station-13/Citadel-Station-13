@@ -214,7 +214,7 @@
 /obj/item/stack/tile/carpet/arcade
 	name = "arcade carpet"
 	icon_state = "tile-carpet-arcade"
-	turf_type = /turf/open/floor
+	turf_type = /turf/open/floor/carpet/arcade
 	tableVariant = null
 
 /obj/item/stack/tile/carpet/blackred
