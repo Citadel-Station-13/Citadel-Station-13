@@ -36,6 +36,10 @@
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
 	var/safe_toxins_max = MOLES_GAS_VISIBLE
+	var/safe_ch3br_min = 0
+	var/safe_ch3br_max = 1 //problematic even at low concentrations
+	var/safe_methane_min = 0
+	var/safe_methane_max = 0
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
@@ -53,6 +57,9 @@
 	var/tox_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/tox_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/tox_damage_type = TOX
+	var/methane_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+	var/methane_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+	var/methane_damage_type = OXY
 
 	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
@@ -129,6 +136,8 @@
 			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else if(safe_nitro_min)
 			H.throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+		else if(safe_ch3br_min)
+			H.throw_alert("not_enough_ch3br", /obj/screen/alert/not_enough_ch3br)
 		return FALSE
 
 	var/gas_breathed = 0
@@ -138,6 +147,8 @@
 	var/N2_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/nitrogen))
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/plasma))
 	var/CO2_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/carbon_dioxide))
+	var/CH4_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/methane))
+	var/CH3Br_pp = breath.get_breath_partial_pressure(breath.get_moles(/datum/gas/methyl_bromide))
 
 
 	//-- OXY --//
@@ -278,6 +289,58 @@
 	breath.adjust_moles(/datum/gas/carbon_dioxide, gas_breathed)
 	gas_breathed = 0
 
+//-- METHANE --//
+
+	//Too much methane!
+	if(safe_methane_max)
+		if(CH4_pp > safe_methane_max) //Same effect as excess nitrogen, generally nontoxic
+			var/ratio = (breath.get_moles(/datum/gas/methane)/safe_methane_max) * 10
+			H.apply_damage_type(clamp(ratio, methane_breath_dam_min, methane_breath_dam_max), methane_damage_type)
+			H.throw_alert("too_much_ch4", /obj/screen/alert/too_much_ch4)
+			H.losebreath += 2
+		else
+			H.clear_alert("too_much_ch4")
+	//Too little methane!
+	if(safe_methane_min)
+		if(CH4_pp < safe_methane_min)
+			gas_breathed = handle_too_little_breath(H, CH4_pp, safe_methane_min, breath.get_moles(/datum/gas/methane))
+			H.throw_alert("not_enough_ch4", /obj/screen/alert/not_enough_ch4)
+		else
+			H.failed_last_breath = FALSE
+			if(H.health >= H.crit_threshold)
+				H.adjustOxyLoss(-breathModifier)
+			gas_breathed = breath.get_moles(/datum/gas/methane)
+			H.clear_alert("not_enough_ch4")
+
+	//Exhale
+	breath.adjust_moles(/datum/gas/methane, -gas_breathed)
+	breath.adjust_moles(/datum/gas/methyl_bromide, gas_breathed)
+	gas_breathed = 0
+
+//-- CH3BR --//
+
+	//Too much methyl bromide!
+	if(safe_ch3br_max)
+		if(CH3Br_pp > safe_ch3br_max)
+			if(prob(CH3Br_pp/0.5))
+				H.adjustOrganLoss(ORGAN_SLOT_LUNGS, 3, 150) //Inhaling this is a bad idea
+				if(prob(CH3Br_pp/2))
+					to_chat(H, "<span class='alert'>Your throat closes up!</span>")
+					H.silent = max(H.silent, 3)
+			H.throw_alert("too_much_ch3br", /obj/screen/alert/too_much_ch3br)
+		else
+			H.clear_alert("too_much_ch3br")
+	//Too little methyl bromide!
+	if(safe_ch3br_min)
+		if(CH3Br_pp < safe_ch3br_min)
+			gas_breathed = handle_too_little_breath(H, CH3Br_pp, safe_ch3br_min, breath.get_moles(/datum/gas/methyl_bromide))
+			H.throw_alert("not_enough_ch3br", /obj/screen/alert/not_enough_ch3br)
+		else
+			H.failed_last_breath = FALSE
+			if(H.health >= H.crit_threshold)
+				H.adjustOxyLoss(-breathModifier)
+			gas_breathed = breath.get_moles(/datum/gas/methyl_bromide)
+			H.clear_alert("not_enough_ch3br")
 
 	//-- TRACES --//
 
@@ -458,8 +521,19 @@
 		failed = FALSE
 
 /obj/item/organ/lungs/ipc
-	name = "ipc lungs"
+	name = "ipc cooling system"
 	icon_state = "lungs-c"
+
+/obj/item/organ/lungs/ipc/emp_act(severity) //Should probably put it somewhere else later
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, "<span class='warning'>Alert: Critical cooling system failure!</span>")
+	switch(severity)
+		if(1)
+			owner.adjust_bodytemperature(100*TEMPERATURE_DAMAGE_COEFFICIENT)
+		if(2)
+			owner.adjust_bodytemperature(30*TEMPERATURE_DAMAGE_COEFFICIENT)
 
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
@@ -486,7 +560,6 @@
 		return
 	owner.losebreath = 20
 	owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 25)
-
 
 /obj/item/organ/lungs/cybernetic/upgraded
 	name = "upgraded cybernetic lungs"

@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARC
 
 GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
-GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "declares", "bellows", "buzzes" ,"beeps", "chirps" ,"hisses" ,"poofs" ,"rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters"))
+GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles"))
 
 GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc))
 
@@ -284,3 +284,9 @@ GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant
 
 //body ids that have prosthetic sprites
 GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
+
+//body ids that have non-gendered bodyparts
+GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem"))
+
+//list of eye types, corresponding to a respective left and right icon state for the set of eyes
+GLOBAL_LIST_INIT(eye_types, list("normal", "insect", "moth", "double", "double2", "double3", "cyclops"))

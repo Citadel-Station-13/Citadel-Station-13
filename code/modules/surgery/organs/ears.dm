@@ -131,4 +131,31 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	damage += 40/severity
+	damage += 0.15 * severity
+
+/obj/item/organ/ears/ipc
+	name = "auditory sensors"
+	icon_state = "ears-c"
+	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear."
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_EARS
+	gender = PLURAL
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/ears/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, "<span class='warning'>Alert: Auditory systems corrupted!.</span>")
+	switch(severity)
+		if(1)
+			owner.Jitter(30)
+			owner.Dizzy(30)
+			owner.DefaultCombatKnockdown(80)
+			deaf = 30
+
+		if(2)
+			owner.Jitter(15)
+			owner.Dizzy(15)
+			owner.DefaultCombatKnockdown(40)
+	damage += 0.15 * severity

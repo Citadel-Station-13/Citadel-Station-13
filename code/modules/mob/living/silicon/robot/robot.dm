@@ -454,10 +454,12 @@
 			if(U.action(src))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 				if(U.one_use)
+					U.afterInstall(src)
 					qdel(U)
 				else
 					U.forceMove(src)
 					upgrades += U
+					U.afterInstall(src)
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
 				U.forceMove(drop_location())

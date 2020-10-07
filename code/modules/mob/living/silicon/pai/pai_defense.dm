@@ -7,8 +7,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	take_holo_damage(50/severity)
-	DefaultCombatKnockdown(400/severity)
+	take_holo_damage(severity/2)
+	DefaultCombatKnockdown(severity*4)
 	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
 	if(holoform)
 		fold_in(force = TRUE)

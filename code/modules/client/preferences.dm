@@ -8,6 +8,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	//doohickeys for savefiles
 	var/path
+	var/vr_path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/max_save_slots = 16
 
@@ -95,7 +96,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/facial_hair_color = "000000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
 	var/use_custom_skin_tone = FALSE
-	var/eye_color = "000000"				//Eye color
+	var/left_eye_color = "000000"		//Eye color
+	var/right_eye_color = "000000"
+	var/eye_type = DEFAULT_EYES_TYPE	//Eye type
+	var/split_eye_colors = FALSE
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFFFFF",
 		"mcolor2" = "FFFFFF",
@@ -284,7 +288,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon(current_tab != 2)
+	update_preview_icon(current_tab)
 	var/list/dat = list("<center>")
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
@@ -471,18 +475,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
 				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
 
-			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
-
-				if(!use_skintones && !mutant_colors)
-					dat += APPEARANCE_CATEGORY_COLUMN
-
-				dat += "<h3>Eye Color</h3>"
-
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
-
-				dat += "</td>"
-			else if(use_skintones || mutant_colors)
-				dat += "</td>"
+			if(!(NOEYES in pref_species.species_traits))
+				dat += "<h3>Eye Type</h3>"
+				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=eye_type;task=input'>[eye_type]</a><BR>"
+				if((EYECOLOR in pref_species.species_traits))
+					if(!use_skintones && !mutant_colors)
+						dat += APPEARANCE_CATEGORY_COLUMN
+					if(left_eye_color != right_eye_color)
+						split_eye_colors = TRUE
+					dat += "<h3>Heterochromia</h3>"
+					dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=toggle_split_eyes;task=input'>[split_eye_colors ? "Enabled" : "Disabled"]</a>"
+					if(!split_eye_colors)
+						dat += "<h3>Eye Color</h3>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
+						dat += "</td>"
+					else
+						dat += "<h3>Left Eye Color</h3>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_left;task=input'>Change</a>"
+						dat += "<h3>Right Eye Color</h3>"
+						dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
+						dat += "</td>"
+				else if(use_skintones || mutant_colors)
+					dat += "</td>"
 
 			dat += APPEARANCE_CATEGORY_COLUMN
 			dat += "<h2>Speech preferences</h2>"
@@ -535,7 +549,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(length(pref_species.allowed_limb_ids))
 				if(!chosen_limb_id || !(chosen_limb_id in pref_species.allowed_limb_ids))
-					chosen_limb_id = pref_species.id
+					chosen_limb_id = pref_species.limbs_id || pref_species.id
 				dat += "<h3>Body sprite</h3>"
 				dat += "<a style='display:block;width:100px' href='?_src_=prefs;preference=bodysprite;task=input'>[chosen_limb_id]</a>"
 
@@ -1373,7 +1387,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					socks = random_socks()
 					socks_color = random_short_color()
 				if(BODY_ZONE_PRECISE_EYES)
-					eye_color = random_eye_color()
+					var/random_eye_color = random_eye_color()
+					left_eye_color = random_eye_color
+					right_eye_color = random_eye_color
 				if("s_tone")
 					skin_tone = random_skin_tone()
 					use_custom_skin_tone = null
@@ -1557,9 +1573,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						socks_color = sanitize_hexcolor(n_socks_color, 6)
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
+					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+left_eye_color) as color|null
 					if(new_eyes)
-						eye_color = sanitize_hexcolor(new_eyes, 6)
+						left_eye_color = sanitize_hexcolor(new_eyes, 6)
+						right_eye_color = sanitize_hexcolor(new_eyes, 6)
+
+				if("eye_left")
+					var/new_eyes = input(user, "Choose your character's left eye colour:", "Character Preference","#"+left_eye_color) as color|null
+					if(new_eyes)
+						left_eye_color = sanitize_hexcolor(new_eyes, 6)
+
+				if("eye_right")
+					var/new_eyes = input(user, "Choose your character's right eye colour:", "Character Preference","#"+right_eye_color) as color|null
+					if(new_eyes)
+						right_eye_color = sanitize_hexcolor(new_eyes, 6)
+
+				if("eye_type")
+					var/new_eye_type = input(user, "Choose your character's eye type.", "Character Preference") as null|anything in GLOB.eye_types
+					if(new_eye_type)
+						eye_type = new_eye_type
+
+				if("toggle_split_eyes")
+					split_eye_colors = !split_eye_colors
+					right_eye_color = left_eye_color
 
 				if("species")
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_race_names
@@ -1590,6 +1626,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(features["mcolor3"] == "#000000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
 
+						//switch to the type of eyes the species uses
+						eye_type = pref_species.eye_type
+
 				if("custom_species")
 					var/new_species = reject_bad_name(input(user, "Choose your species subtype, if unique. This will show up on examinations and health scans. Do not abuse this:", "Character Preference", custom_species) as null|text)
 					if(new_species)
@@ -1603,7 +1642,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -1614,7 +1653,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor2"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -1625,7 +1664,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor3"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -1941,7 +1980,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_cockcolor)
 						if(new_cockcolor == "#000000")
 							features["cock_color"] = pref_species.default_color
-						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -1981,7 +2020,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_ballscolor)
 						if(new_ballscolor == "#000000")
 							features["balls_color"] = pref_species.default_color
-						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
 							features["balls_color"] = sanitize_hexcolor(new_ballscolor, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -2008,7 +2047,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_breasts_color)
 						if(new_breasts_color == "#000000")
 							features["breasts_color"] = pref_species.default_color
-						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -2030,7 +2069,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/temp_hsv = RGBtoHSV(new_vagcolor)
 						if(new_vagcolor == "#000000")
 							features["vag_color"] = pref_species.default_color
-						else if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
 							features["vag_color"] = sanitize_hexcolor(new_vagcolor, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
@@ -2536,12 +2575,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.gender = gender
 	character.age = age
 
-	character.eye_color = eye_color
+	character.left_eye_color = left_eye_color
+	character.right_eye_color = right_eye_color
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
 	if(organ_eyes)
-		if(!initial(organ_eyes.eye_color))
-			organ_eyes.eye_color = eye_color
-		organ_eyes.old_eye_color = eye_color
+		if(!initial(organ_eyes.left_eye_color))
+			organ_eyes.left_eye_color = left_eye_color
+			organ_eyes.right_eye_color = right_eye_color
+		organ_eyes.old_left_eye_color = left_eye_color
+		organ_eyes.old_right_eye_color = right_eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
 	character.skin_tone = skin_tone
@@ -2571,6 +2613,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	character.dna.species.eye_type = eye_type
 	if(chosen_limb_id && (chosen_limb_id in character.dna.species.allowed_limb_ids))
 		character.dna.species.mutant_bodyparts["limbs_id"] = chosen_limb_id
 	character.dna.real_name = character.real_name
@@ -2609,9 +2652,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//limb stuff, only done when initially spawning in
 	if(initial_spawn)
-		//delete any existing prosthetic limbs to make sure no remnant prosthetics are left over
+		//delete any existing prosthetic limbs to make sure no remnant prosthetics are left over - But DO NOT delete those that are species-related
 		for(var/obj/item/bodypart/part in character.bodyparts)
-			if(part.status == BODYPART_ROBOTIC)
+			if(part.status == BODYPART_ROBOTIC && !part.render_like_organic)
 				qdel(part)
 		character.regenerate_limbs() //regenerate limbs so now you only have normal limbs
 		for(var/modified_limb in modified_limbs)
