@@ -520,15 +520,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(!split_eye_colors)
 						dat += "<h3>Eye Color</h3>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a>"
-						dat += "</td>"
 					else
 						dat += "<h3>Left Eye Color</h3>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[left_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_left;task=input'>Change</a>"
 						dat += "<h3>Right Eye Color</h3>"
 						dat += "<span style='border: 1px solid #161616; background-color: #[right_eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eye_right;task=input'>Change</a><BR>"
-						dat += "</td>"
-				else if(use_skintones || mutant_colors)
-					dat += "</td>"
 
 			dat += "<h2>Speech preferences</h2>"
 			dat += "<b>Custom Speech Verb:</b><BR>"
