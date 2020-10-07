@@ -462,7 +462,7 @@
 		if (gas_breathed > gas_stimulation_min)
 			var/existing = H.reagents.get_reagent_amount(/datum/reagent/hypernoblium)
 			H.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
-		breath.breath.adjust_moles(/datum/gas/hypernoblium,-gas_breathed)
+		breath.adjust_moles(/datum/gas/hypernoblium,-gas_breathed)
 
 	// Miasma
 		if (breath.get_moles(/datum/gas/miasma))

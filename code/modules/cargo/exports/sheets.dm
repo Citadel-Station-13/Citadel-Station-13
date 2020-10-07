@@ -114,6 +114,11 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
+/datum/export/stack/ammonia_crystals
+	cost = 25
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
+
 /datum/export/stack/cloth
 	cost = 20
 	unit_name = "sheets"

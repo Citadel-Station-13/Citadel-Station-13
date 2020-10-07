@@ -3,7 +3,7 @@
 	name = "Gas Crystal"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "bluefrag"
-	inhand_icon_state = "flashbang"
+	// inhand_icon_state = "flashbang"
 	resistance_flags = FIRE_PROOF
 
 
@@ -69,7 +69,7 @@
 			floor_loc.atmos_spawn_air("n2=[gas_amount / distance_from_center];TEMP=30")
 			floor_loc.MakeSlippery(TURF_WET_PERMAFROST, (5 / distance_from_center) MINUTES)
 		if(floor_loc.air.get_moles(/datum/gas/plasma))
-			floor_loc.air.get_moles(/datum/gas/plasma) -= floor_loc.air.get_moles(/datum/gas/plasma) * 0.5 / distance_from_center
+			floor_loc.air.adjust_moles(/datum/gas/plasma, -floor_loc.air.get_moles(/datum/gas/plasma) * 0.5 / distance_from_center)
 		floor_loc.air_update_turf()
 		for(var/mob/living/carbon/live_mob in turf_loc)
 			live_mob.adjustStaminaLoss(stamina_damage / distance_from_center)

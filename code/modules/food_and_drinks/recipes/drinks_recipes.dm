@@ -24,6 +24,11 @@
 	results = list(/datum/reagent/consumable/icecoffee = 4)
 	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/consumable/coffee = 3)
 
+/datum/chemical_reaction/hoticecoffee
+	name = "Hot Ice Coffee"
+	results = list(/datum/reagent/consumable/hot_ice_coffee = 3)
+	required_reagents = list(/datum/reagent/toxin/hot_ice = 1, /datum/reagent/consumable/coffee = 2)
+
 /datum/chemical_reaction/nuka_cola
 	name = "Nuka Cola"
 	id = /datum/reagent/consumable/nuka_cola

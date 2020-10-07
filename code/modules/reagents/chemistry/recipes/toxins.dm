@@ -57,6 +57,12 @@
 	results = list(/datum/reagent/toxin/lexorin = 3)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1)
 
+/datum/chemical_reaction/hot_ice_melt
+	name = "Hot Ice melting"
+	results = list(/datum/reagent/toxin/plasma = 12) //One sheet of hot ice makes 200m of plasma
+	required_reagents = list(/datum/reagent/toxin/hot_ice = 1)
+	required_temp = T0C + 30 //Don't burst into flames when you melt
+
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = /datum/reagent/toxin/chloralhydrate
