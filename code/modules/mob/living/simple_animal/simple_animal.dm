@@ -6,6 +6,7 @@
 	gender = PLURAL //placeholder
 	///How much blud it has for bloodsucking
 	blood_volume = 550
+	rad_flags = RAD_NO_CONTAMINATE
 
 	status_flags = CANPUSH
 
