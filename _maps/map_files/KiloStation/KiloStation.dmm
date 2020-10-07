@@ -10384,9 +10384,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "ars" = (
@@ -70077,8 +70075,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 8;
-	name = "scrubbers pipe"
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line,

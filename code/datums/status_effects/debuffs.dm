@@ -128,6 +128,9 @@
 		duration = set_duration
 	. = ..()
 
+/datum/status_effect/no_combat_mode/robotic_emp
+	id = "emp_no_combat_mode"
+
 /datum/status_effect/mesmerize
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
@@ -532,6 +535,38 @@
 			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
 		if(100)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
+
+/datum/status_effect/corrosion_curse/lesser
+	id = "corrosion_curse_lesser"
+	duration = 20 SECONDS
+
+/datum/status_effect/corrosion_curse/lesser/tick()
+	. = ..()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/chance = rand(0,100)
+	switch(chance)
+		if(0 to 19)
+			H.adjustBruteLoss(6)
+		if(20 to 29)
+			H.Dizzy(10)
+		if(30 to 39)
+			H.adjustOrganLoss(ORGAN_SLOT_LIVER,2)
+		if(40 to 49)
+			H.adjustOrganLoss(ORGAN_SLOT_HEART,2)
+		if(50 to 59)
+			H.adjustOrganLoss(ORGAN_SLOT_STOMACH,2)
+		if(60 to 69)
+			H.adjustOrganLoss(ORGAN_SLOT_EYES,5)
+		if(70 to 79)
+			H.adjustOrganLoss(ORGAN_SLOT_EARS,5)
+		if(80 to 89)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS,5)
+		if(90 to 99)
+			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,5)
+		if(100)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
 
 /datum/status_effect/amok
 	id = "amok"

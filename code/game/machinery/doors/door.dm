@@ -243,13 +243,8 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
+	if(prob(severity/5) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
-	if(prob(severity*10 - 20))
-		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
-			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
-			LAZYADD(shockedby, "\[[TIME_STAMP("hh:mm:ss", FALSE)]\]EM Pulse")
-			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED

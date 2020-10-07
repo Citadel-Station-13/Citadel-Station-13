@@ -51,11 +51,6 @@
 	cell.use(shot.energy_cost)
 	. = ..()
 
-/obj/item/gun/ballistic/automatic/magrifle/emp_act(severity)
-	. = ..()
-	if(!(. & EMP_PROTECT_CONTENTS))
-		cell.use(round(cell.charge / severity))
-
 /obj/item/gun/ballistic/automatic/magrifle/get_cell()
 	return cell
 

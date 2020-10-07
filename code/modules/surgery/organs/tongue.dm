@@ -12,7 +12,7 @@
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	maxHealth = TONGUE_MAX_HEALTH
 	var/list/initial_accents //the ones the tongue starts with, not what it currently has
-	var/list/accents //done in order of priority (please always apply abductor accent and stuttering last)
+	var/list/accents = list() //done in order of priority (please always apply abductor accent and stuttering last)
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
@@ -31,6 +31,8 @@
 
 /obj/item/organ/tongue/Initialize(mapload)
 	. = ..()
+	for(var/accent in initial_accents)
+		accents += new accent
 	low_threshold_passed = "<span class='info'>Your [name] feels a little sore.</span>"
 	low_threshold_cleared = "<span class='info'>Your [name] soreness has subsided.</span>"
 	high_threshold_passed = "<span class='warning'>Your [name] is really starting to hurt.</span>"
@@ -38,16 +40,14 @@
 	now_failing = "<span class='warning'>Your [name] feels like it's about to fall out!.</span>"
 	now_fixed = "<span class='info'>The excruciating pain of your [name] has subsided.</span>"
 	languages_possible = languages_possible_base
-	for(var/accent in initial_accents)
-		initial_accents += new accent
 
-/obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args) //this wont proc unless there's initial_accents
-	for(var/datum/accent/speech_modifier in initial_accents)
+/obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args) //this wont proc unless there's initial_accents on the tongue
+	for(var/datum/accent/speech_modifier in accents)
 		speech_args = speech_modifier.modify_speech(speech_args, source, owner)
 
 /obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
-	if (damage >= maxHealth)
+	if(damage >= maxHealth)
 		to_chat(owner, "<span class='userdanger'>Your tongue is singed beyond recognition, and disintegrates!</span>")
 		SSblackbox.record_feedback("tally", "fermi_chem", 1, "Tongues lost to Fermi")
 		qdel(src)
@@ -56,7 +56,7 @@
 	..()
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = say_mod
-	if(initial_accents)
+	if(length(initial_accents) || length(accents))
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.UnregisterSignal(M, COMSIG_MOB_SAY)
 
@@ -163,11 +163,11 @@
 	maxHealth = 75 //Take brute damage instead
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
-	var/list/phomeme_types = list(/datum/accent/bone/sans, /datum/accent/bone/papyrus)
+	var/list/phomeme_types = list(/datum/accent/span/sans, /datum/accent/span/papyrus)
 
 /obj/item/organ/tongue/bone/Initialize()
-	. = ..()
 	initial_accents += pick(phomeme_types)
+	. = ..()
 
 /obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
 	if(d < 0)
@@ -197,16 +197,13 @@
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
-	initial_accents = list(/datum/accent/robot)
+	initial_accents = list(/datum/accent/span/robot)
 	taste_sensitivity = 25 // not as good as an organic tongue
 	maxHealth = 100 //RoboTongue!
 	var/electronics_magic = TRUE
 
 /obj/item/organ/tongue/robot/could_speak_language(language)
 	return ..() || electronics_magic
-
-/obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
-	..()
 
 /obj/item/organ/tongue/fluffy
 	name = "fluffy tongue"
@@ -220,6 +217,7 @@
 	name = "cybernetic tongue"
 	desc = "A state of the art robotic tongue that can detect the pH of anything drank."
 	icon_state = "tonguecybernetic"
+	initial_accents = list(/datum/accent/span/robot)
 	taste_sensitivity = 10
 	maxHealth = 60 //It's robotic!
 	organ_flags = ORGAN_SYNTHETIC
@@ -230,10 +228,6 @@
 		return
 	var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request")
 	owner.say("The pH is appropriately [pick(errormessage)].", forced = "EMPed synthetic tongue")
-
-/obj/item/organ/tongue/cybernetic/handle_speech(datum/source, list/speech_args)
-	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
-	..()
 
 /obj/item/organ/tongue/robot/ipc
 	name = "positronic voicebox"

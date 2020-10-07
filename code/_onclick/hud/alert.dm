@@ -149,6 +149,27 @@
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "too_much_tox"
+
+/obj/screen/alert/not_enough_ch4
+	name = "Choking (No CH4)"
+	desc = "You're not getting enough methane. Find some good air before you pass out!"
+	icon_state = "not_enough_ch4"
+
+/obj/screen/alert/too_much_ch4
+	name = "Choking (CH4)"
+	desc = "There's too much methane in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_ch4"
+
+/obj/screen/alert/not_enough_ch3br
+	name = "Choking (No CH3Br)"
+	desc = "You're not getting enough methyl bromide. Find some good air before you pass out!"
+	icon_state = "not_enough_tox"
+
+/obj/screen/alert/too_much_ch3br
+	name = "Choking (CH3Br)"
+	desc = "There's highly toxic methyl bromide in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_tox"
+
 //End gas alerts
 
 
@@ -184,13 +205,22 @@
 
 /obj/screen/alert/hot
 	name = "Too Hot"
-	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	desc = "The air around you is pretty toasty! Consider putting on some insulating clothing, or moving to a cooler area."
 	icon_state = "hot"
 
 /obj/screen/alert/cold
 	name = "Too Cold"
-	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
+	desc = "The air around you is pretty cold! Consider wearing a coat, or moving to a warmer area."
 	icon_state = "cold"
+
+/obj/screen/alert/sweat
+	name = "Sweating"
+	desc = "You're sweating! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	icon_state = "sweat"
+
+/obj/screen/alert/shiver
+	name = "Shivering"
+	desc = "You're shivering! Get somewhere warmer and take off any insulating clothing like a space suit." 
 
 /obj/screen/alert/lowpressure
 	name = "Low Pressure"

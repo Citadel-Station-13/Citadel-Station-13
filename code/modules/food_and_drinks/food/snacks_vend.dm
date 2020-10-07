@@ -89,7 +89,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/doctor_delight = 5)
 	filling_color = "#F5F5DC"
 	tastes = list("sweetness" = 3, "cake" = 1)
-	foodtype = GRAIN | FRUIT | VEGETABLES
+	foodtype = GRAIN | FRUIT | VEGETABLES | ANTITOXIC
 	custom_price = PRICE_CHEAP
 
 /obj/item/reagent_containers/food/snacks/energybar

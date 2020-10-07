@@ -296,7 +296,7 @@
 /atom/proc/emp_act(severity)
 	var/protection = SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity)
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
-		wires.emp_pulse()
+		wires.emp_pulse(severity)
 	return protection // Pass the protection value collected here upwards
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -1127,3 +1127,21 @@
   */
 /atom/proc/rust_heretic_act()
 	return
+
+///Passes Stat Browser Panel clicks to the game and calls client click on an atom
+/atom/Topic(href, list/href_list)
+	. = ..()
+	if(!usr?.client)
+		return
+	var/client/usr_client = usr.client
+	var/list/paramslist = list()
+	if(href_list["statpanel_item_shiftclick"])
+		paramslist["shift"] = "1"
+	if(href_list["statpanel_item_ctrlclick"])
+		paramslist["ctrl"] = "1"
+	if(href_list["statpanel_item_altclick"])
+		paramslist["alt"] = "1"
+	if(href_list["statpanel_item_click"])
+		// first of all make sure we valid
+		var/mouseparams = list2params(paramslist)
+		usr_client.Click(src, loc, null, mouseparams)

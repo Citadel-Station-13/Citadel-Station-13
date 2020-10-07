@@ -64,6 +64,8 @@
 
 /obj/mecha/combat/neovgre/process()
 	..()
+	if(!obj_integrity) //Integrity is zero but we would heal out of that state if we went into this before it recognises it being zero
+		return
 	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hope to stop the superweapon
 		cell.charge = INFINITY
 		max_integrity = INFINITY

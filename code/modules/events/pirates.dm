@@ -5,7 +5,7 @@
 	max_occurrences = 1
 	min_players = 10
 	earliest_start = 30 MINUTES
-	gamemode_blacklist = list("nuclear","dynamic")
+	gamemode_blacklist = list("nuclear")
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
@@ -141,7 +141,7 @@
 	for(var/obj/machinery/rnd/server/S in GLOB.machines)
 		if(S.stat & (NOPOWER|BROKEN))
 			continue
-		S.emp_act(1)
+		S.emp_act(80)
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
