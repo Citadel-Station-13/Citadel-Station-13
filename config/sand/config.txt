@@ -1,0 +1,5 @@
+#Special Sandstorm configs!
+
+## Lone op inactive disk messaging
+## Comment this out to disable that spam that annoys me.
+ADMIN_DISK_INACTIVE_MSG
