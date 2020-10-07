@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 	set desc = "Toggle hearing a notification when admin PMs are received"
 	if(!holder)
 		return
@@ -396,7 +396,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
 	if(!holder)
 		return
@@ -407,7 +407,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide Radio Chatter"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
 	if(!holder)
 		return
@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 	set desc ="Toggles seeing deadchat"
 	prefs.chat_toggles ^= CHAT_DEAD
 	prefs.save_preferences()
@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 	set desc = "Toggles seeing prayers"
 	prefs.chat_toggles ^= CHAT_PRAYER
 	prefs.save_preferences()
