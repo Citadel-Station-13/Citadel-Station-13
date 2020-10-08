@@ -209,10 +209,10 @@
 /datum/reagent/fermi/zeolites/on_mob_life(mob/living/carbon/M)
 	metabolization_rate = (4 / purity) * REAGENTS_METABOLISM //Metab rate directly influenced by purity. Linear.
 	var/datum/component/radioactive/contamination = M.GetComponent(/datum/component/radioactive)
-	if(M.radiation > 0)
-		M.radiation -= min(M.radiation, round(20 ** (0.5 + purity), 0.1)) //Far more effective if more pure. Tops out at ~90 at max purity. Exponential.
+	if(M.radiation > 0) //hey so apparently pentetic literally purges 1/50 (2%) of the rad amount on someone per tick no matter the 'true' amount, sooo uhh time to tweak this some more..
+		M.radiation -= clamp(round((M.radiation / 150) * (25 ** purity), 0.1), 0, M.radiation) //Purges between ~3% and ~16% of total rad amount, per tick, depending on purity. Exponential.
 	if(contamination && contamination.strength > 0)
-		contamination.strength -= min(contamination.strength, round(25 ** (0.5 + purity), 0.1)) //Tops out at ~125 at max purity. Exponential.
+		contamination.strength -= min(contamination.strength, round(25 ** (0.5 + purity), 0.1)) //25 per tick at minimum purity; Tops out at ~125 per tick if purity is 1. Exponential.
 	..()
 
 /datum/reagent/fermi/zeolites/reaction_obj(obj/O, reac_volume)
