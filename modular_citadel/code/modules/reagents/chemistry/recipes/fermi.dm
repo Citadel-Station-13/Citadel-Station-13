@@ -604,7 +604,7 @@
 	CurveSharpT 	= 5
 	CurveSharppH 	= 3
 	ThermicConstant = 15
-	HIonRelease 	= -0.2
+	HIonRelease 	= -0.15
 	RateUpLim 		= 4
 	PurityMin 		= 0.5 //Good luck.
 	FermiChem 		= TRUE
