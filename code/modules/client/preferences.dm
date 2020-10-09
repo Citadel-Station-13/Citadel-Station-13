@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/features = list("mcolor" = "FFFFFF",
 		"mcolor2" = "FFFFFF",
 		"mcolor3" = "FFFFFF",
-		"bloodcolor" = "None" //this means dont change it
+		"bloodcolor" = "None", //this means dont change it
 		"tail_lizard" = "Smooth",
 		"tail_human" = "None",
 		"snout" = "Round",
@@ -477,7 +477,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/button_color = features["bloodcolor"]
 				if(!button_color || button_color == "None")
 					button_color = "#" + pref_species.exotic_blood_color //if no option is given, then we just accept it as the species default
-				dat += "<h3>Blood Color<\h3>"
+				dat += "<h3>Blood Color</h3>"
 				dat += "<span style='border: 1px solid #161616; background-color: [button_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=bloodcolor;task=input'>Change</a><BR>"
 
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
