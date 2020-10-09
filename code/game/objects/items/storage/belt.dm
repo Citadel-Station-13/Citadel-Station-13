@@ -835,8 +835,7 @@
 	name = "botanical belt"
 	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
 	icon_state = "plantbelt"
-	inhand_icon_state = "plantbelt"
-	worn_icon_state = "plantbelt"
+	item_state = "plantbelt"
 	content_overlays = TRUE
 
 /obj/item/storage/belt/plant/ComponentInitialize()
@@ -844,7 +843,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
+	STR.can_hold = typecacheof(list(
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/plant_analyzer,
 		/obj/item/seeds,
