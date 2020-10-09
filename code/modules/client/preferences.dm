@@ -476,7 +476,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(pref_species.can_choose_blood_color)
 				var/button_color = features["bloodcolor"]
 				if(!button_color || button_color == "None")
-					button_color = "#" + pref_species.exotic_blood_color //if no option is given, then we just accept it as the species default
+					button_color = pref_species.exotic_blood_color //if no option is given, then we just accept it as the species default
 				dat += "<h3>Blood Color</h3>"
 				dat += "<span style='border: 1px solid #161616; background-color: [button_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=bloodcolor;task=input'>Change</a><BR>"
 
