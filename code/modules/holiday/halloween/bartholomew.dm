@@ -130,9 +130,13 @@
 	/obj/item/reagent_containers/pill = 2,
 	/obj/item/clothing/shoes = 8,
 	/obj/item/clothing/head = 3,
-	/obj/item/reagent_containers/food/snacks = 3,
+	/obj/item/reagent_containers/food/snacks = 5,
 	/obj/item/reagent_containers/syringe/dart = 2,
-	/obj/item/reagent_containers/food/drinks/soda_cans = 5)
+	/obj/item/reagent_containers/food/drinks/soda_cans = 5,
+	/obj/item/reagent_containers/food/drinks/drinkingglass = 4,
+	/obj/item/reagent_containers/food/drinks = 6,
+	/obj/item/reagent_containers/food/snacks/grown/apple = 1,
+	/obj/item/reagent_containers/food/snacks/grown/banana = 2)
 	if(length >= 5)
 		return TRUE
 	//var/metalist = pickweight(GLOB.maintenance_loot)
