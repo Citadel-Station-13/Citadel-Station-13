@@ -30,15 +30,6 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	create_reagents(100 , AMOUNT_VISIBLE)
-	AddComponent(/datum/component/plumbing/simple_demand)
-
-/obj/machinery/hydroponics/constructable/automagic/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-
-/obj/machinery/hydroponics/constructable/proc/can_be_rotated(mob/user, rotation_type)
-	return !anchored
 
 /obj/machinery/hydroponics/constructable/automagic/process()
 	if(reagents)
