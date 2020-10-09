@@ -591,6 +591,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
+	S["feature_bloodcolor"]				>> features["bloodcolor"]
 	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
@@ -721,6 +722,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	jumpsuit_style					= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 6, FALSE)
+	features["bloodcolor"]			= sanitize_hexcolor(features["bloodcolor"], 6, FALSE)
 	features["tail_lizard"]			= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"]			= sanitize_inlist(features["tail_human"], GLOB.tails_list_human)
 	features["snout"]				= sanitize_inlist(features["snout"], GLOB.snouts_list)
@@ -858,6 +860,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["medical_records"]			, medical_records)
 
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
+	WRITE_FILE(S["feature_bloodcolor"]				, features["bloodcolor"])
 	WRITE_FILE(S["feature_lizard_tail"]				, features["tail_lizard"])
 	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
 	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])

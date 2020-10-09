@@ -72,6 +72,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
+	var/can_choose_blood_color = TRUE
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list(HAS_FLESH,HAS_BONE) //by default they can scar and have bones/flesh unless set to something else
@@ -317,6 +318,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
+
+	if(can_choose_blood_color)
+		var/chosen_blood = C.dna.features["bloodcolor"]
+		if(chosen_blood != "None")
+			exotic_blood_color = chosen_blood
 
 	if(old_species.mutanthands)
 		for(var/obj/item/I in C.held_items)

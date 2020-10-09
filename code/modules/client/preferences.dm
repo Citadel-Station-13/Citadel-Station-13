@@ -104,6 +104,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/features = list("mcolor" = "FFFFFF",
 		"mcolor2" = "FFFFFF",
 		"mcolor3" = "FFFFFF",
+		"bloodcolor" = "None" //this means dont change it
 		"tail_lizard" = "Smooth",
 		"tail_human" = "None",
 		"snout" = "Round",
@@ -471,6 +472,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Tertiary Color:</b><BR>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 				mutant_colors = TRUE
+
+			if(pref_species.can_choose_blood_color)
+				var/button_color = features["bloodcolor"]
+				if(!button_color || button_color == "None")
+					button_color = "#" + pref_species.exotic_blood_color //if no option is given, then we just accept it as the species default
+				dat += "<h3>Blood Color<\h3>"
+				dat += "<span style='border: 1px solid #161616; background-color: [button_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=bloodcolor;task=input'>Change</a><BR>"
 
 			if (CONFIG_GET(number/body_size_min) != CONFIG_GET(number/body_size_max))
 				dat += "<b>Sprite Size:</b> <a href='?_src_=prefs;preference=body_size;task=input'>[features["body_size"]*100]%</a><br>"
@@ -1668,6 +1676,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor, 6)
 						else
 							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+
+				if("bloodcolor")
+					var/button_color = features["bloodcolor"]
+					if(!button_color || button_color == "None")
+						button_color = pref_species.exotic_blood_color //if no option is given, then we just accept it as the species default
+					var/new_bloodcolor = input(user, "Choose your character's blood color", "Character Preference", button_color) as color|null
+					if(new_bloodcolor)
+						features["bloodcolor"] = "#" + sanitize_hexcolor(new_bloodcolor, 6)
 
 				if("mismatched_markings")
 					show_mismatched_markings = !show_mismatched_markings
