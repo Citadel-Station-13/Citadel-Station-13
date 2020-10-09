@@ -32,9 +32,6 @@
 	create_reagents(100 , AMOUNT_VISIBLE)
 
 /obj/machinery/hydroponics/constructable/automagic/process()
-	if(reagents)
-		reagents.add_reagent(reagents)
-		reagents.clear_reagents()
 	if(dead)
 		dead = 0
 		qdel(myseed)
