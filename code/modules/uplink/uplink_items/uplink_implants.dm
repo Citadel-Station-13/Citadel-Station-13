@@ -31,7 +31,7 @@
 
 /datum/uplink_item/implants/warp
 	name = "Warp Implant"
-	desc = "An implant injected into the body and later activated at the user's will. It will inject eigenstasium which saves the user's location and teleports them there after five seconds. Lasts only fifteen times."
+	desc = "An implant injected into the body and later activated at the user's will. Allows the user to teleport to where they were 10 seconds ago. Has a 10 second cooldown."
 	item = /obj/item/storage/box/syndie_kit/imp_warp
 	cost = 6
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)

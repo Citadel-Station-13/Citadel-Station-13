@@ -2475,7 +2475,7 @@
 										R.activate_module(I)
 
 		if(pod)
-			new /obj/effect/abstract/DPtarget(target, pod)
+			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

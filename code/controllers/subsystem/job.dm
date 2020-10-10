@@ -665,7 +665,7 @@ SUBSYSTEM_DEF(job)
 		message_admins(msg)
 		CRASH(msg)
 
-/datum/controller/subsystem/job/proc/equip_loadout(mob/dead/new_player/N, mob/living/M, equipbackpackstuff, bypass_prereqs = FALSE)
+/datum/controller/subsystem/job/proc/equip_loadout(mob/dead/new_player/N, mob/living/M, equipbackpackstuff, bypass_prereqs = FALSE, can_drop = TRUE)
 	var/mob/the_mob = N
 	if(!the_mob)
 		the_mob = M // cause this doesn't get assigned if player is a latejoiner
@@ -694,9 +694,15 @@ SUBSYSTEM_DEF(job)
 					var/mob/living/carbon/C = M
 					var/obj/item/storage/backpack/B = C.back
 					if(!B || !SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, I, null, TRUE, TRUE)) // Otherwise, try to put it in the backpack, for carbons.
-						I.forceMove(get_turf(C))
+						if(can_drop)
+							I.forceMove(get_turf(C))
+						else
+							qdel(I)
 				else if(!M.equip_to_slot_if_possible(I, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // Otherwise, try to put it in the backpack
-					I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
+					if(can_drop)
+						I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
+					else
+						qdel(I)
 
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)
