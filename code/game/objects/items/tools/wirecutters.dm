@@ -69,6 +69,9 @@
 	random_color = FALSE
 	toolspeed = 0.5
 
+/obj/item/wirecutters/brass/family
+	toolspeed = 1
+
 /obj/item/wirecutters/bronze
 	name = "bronze plated wirecutters"
 	desc = "A pair of wirecutters plated with bronze."

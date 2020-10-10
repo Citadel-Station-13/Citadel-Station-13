@@ -89,6 +89,9 @@
 	toolspeed = 0.5
 	random_color = FALSE
 
+/obj/item/screwdriver/brass/family
+	toolspeed = 1
+
 /obj/item/screwdriver/bronze
 	name = "bronze screwdriver"
 	desc = "A screwdriver plated with bronze."

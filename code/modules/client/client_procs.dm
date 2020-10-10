@@ -273,7 +273,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	addtimer(CALLBACK(src, .proc/ensure_keys_set), 0)	//prevents possible race conditions
+		
+	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -340,10 +341,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			else
 				qdel(src)
 				return
-
-	// if(SSinput.initialized) placed here on tg.
-	// 	set_macros()
-	// 	update_movement_keys()
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -477,16 +474,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	// view_size = new(src, getScreenSize(prefs.widescreenpref))
-	// view_size.resetFormat()
-	// view_size.setZoomMode()
-	// fit_viewport()
+	view_size = new(src, getScreenSize(prefs.widescreenpref))
+	view_size.resetFormat()
+	view_size.setZoomMode()
+	fit_viewport()
 	Master.UpdateTickRate()
 
 /client/proc/ensure_keys_set()
 	if(SSinput.initialized)
 		set_macros()
-	update_movement_keys(prefs)
+		update_movement_keys(prefs)
 
 //////////////
 //DISCONNECT//
@@ -919,8 +916,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return FALSE
 		if (NAMEOF(src, key))
 			return FALSE
-		if(NAMEOF(src, view))
-			change_view(var_value)
+		if (NAMEOF(src, view))
+			view_size.setDefault(var_value)
 			return TRUE
 	. = ..()
 
@@ -930,7 +927,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/y = viewscale[2]
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
-	change_view("[x]x[y]")
+	view_size.setDefault("[x]x[y]")
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
@@ -952,12 +949,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
-//CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
-	if(prefs && CONFIG_GET(string/default_view))
-		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
-			new_size = "15x15"
-//END OF CIT CHANGES
 
 	var/list/old_view = getviewsize(view)
 	view = new_size
