@@ -34,7 +34,7 @@
 			hair_hidden = 1
 	if(!hair_hidden)
 		if(!getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
-			overlays_standing[HAIR_LAYER] = mutable_appearance('icons/mob/human_face.dmi', "debrained", -HAIR_LAYER)
+			overlays_standing[HAIR_LAYER] = mutable_appearance('icons/mob/human_parts.dmi', "debrained", -HAIR_LAYER)
 			apply_overlay(HAIR_LAYER)
 
 

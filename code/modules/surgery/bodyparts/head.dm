@@ -161,7 +161,7 @@
 					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
 					debrain_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
-					debrain_overlay.icon = 'icons/mob/human_face.dmi'
+					debrain_overlay.icon = 'icons/mob/human_parts.dmi'
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
 			else
@@ -175,21 +175,31 @@
 
 		// lipstick
 		if(lip_style)
-			var/image/lips_overlay = image('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
+			var/image/lips_overlay = image('icons/mob/lips.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
 			lips_overlay.color = lip_color
 			. += lips_overlay
 
 		// eyes
 		if(eyes)
-			var/image/left_eye = image('icons/mob/human_face.dmi', "left_eye", -BODY_LAYER, SOUTH)
-			var/image/right_eye = image('icons/mob/human_face.dmi', "right_eye", -BODY_LAYER, SOUTH)
-			if(eyes.left_eye_color && eyes.right_eye_color)
-				left_eye.color = "#" + eyes.left_eye_color
-				right_eye.color = "#" + eyes.right_eye_color
-			. += left_eye
-			. += right_eye
+			var/left_state = DEFAULT_LEFT_EYE_STATE
+			var/right_state = DEFAULT_RIGHT_EYE_STATE
+			if(owner && owner.dna.species)
+				var/eye_type = owner.dna.species.eye_type
+				if(GLOB.eye_types[eye_type])
+					left_state = eye_type + "_left_eye"
+					right_state = eye_type + "_right_eye"
+			if(left_state != DEFAULT_NO_EYE_STATE)
+				var/image/left_eye = image('icons/mob/hair.dmi', left_state, -BODY_LAYER, SOUTH)
+				if(eyes.left_eye_color)
+					left_eye.color = "#" + eyes.left_eye_color
+				. += left_eye
+			if(right_state != DEFAULT_NO_EYE_STATE)
+				var/image/right_eye = image('icons/mob/hair.dmi', right_state, -BODY_LAYER, SOUTH)
+				if(eyes.right_eye_color)
+					right_eye.color = "#" + eyes.right_eye_color
+				. += right_eye
 		else
-			var/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
+			var/eyes_overlay = image('icons/mob/hair.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 			. += eyes_overlay
 
 /obj/item/bodypart/head/monkey

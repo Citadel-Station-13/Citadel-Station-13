@@ -11,8 +11,8 @@
 /obj/item/survivalcapsule
 	name = "bluespace shelter capsule"
 	desc = "An emergency shelter stored within a pocket of bluespace."
-	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
+	icon_state = "capsule"
 	w_class = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
@@ -72,9 +72,10 @@
 /obj/item/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
+	icon_state = "capsule-lux"
 	template_id = "shelter_beta"
 
-/obj/item/survivalcapsule/luxuryelite
+/obj/item/survivalcapsule/luxury/elitebar
 	name = "luxury elite bar capsule"
 	desc = "A luxury bar in a capsule. Bartender required and not included."
 	template_id = "shelter_charlie"
