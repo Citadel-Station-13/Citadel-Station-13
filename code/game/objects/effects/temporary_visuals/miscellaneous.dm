@@ -515,12 +515,3 @@
 /obj/effect/temp_visual/dir_setting/space_wind/Initialize(mapload, set_dir, set_alpha = 255)
 	. = ..()
 	alpha = set_alpha
-
-/obj/effect/temp_visual/slime_puddle
-	icon = 'icons/mob/mob.dmi'
-	duration = 12
-	icon_state = "to_puddle"
-
-/obj/effect/temp_visual/slime_puddle/reverse
-	icon_state = "from_puddle"
-	duration = 7

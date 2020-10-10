@@ -39,7 +39,8 @@
 	update_client_colour()
 	update_mouse_pointer()
 	if(client)
-		client.view_size?.resetToDefault()
+		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
+
 		if(client.player_details && istype(client.player_details))
 			if(client.player_details.player_actions.len)
 				for(var/datum/action/A in client.player_details.player_actions)

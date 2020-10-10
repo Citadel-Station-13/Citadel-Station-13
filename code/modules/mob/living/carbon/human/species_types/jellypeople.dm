@@ -16,8 +16,7 @@
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	var/datum/action/innate/slime_change/slime_change
-	var/datum/action/innate/slime_puddle/slime_puddle
+	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
 	liked_food = TOXIC | MEAT
 	disliked_food = null
 	toxic_food = ANTITOXIC
@@ -36,15 +35,12 @@
 	desc = "A slimey membranous mass from a slime person"
 	icon_state = "brain-slime"
 
+
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
-	if(slime_puddle && slime_puddle.is_puddle)
-		slime_puddle.Activate()
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	if(slime_change)
-		slime_change.Remove(C)
-	if(slime_puddle)
-		slime_puddle.Remove(C)
+	if(slime_change)	//CIT CHANGE
+		slime_change.Remove(C)	//CIT CHANGE
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
@@ -54,28 +50,14 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
-		slime_change = new
-		slime_change.Grant(C)
-		slime_puddle = new
-		slime_puddle.Grant(C)
+		slime_change = new	//CIT CHANGE
+		slime_change.Grant(C)	//CIT CHANGE
 	C.faction |= "slime"
 
 /datum/species/jelly/handle_body(mob/living/carbon/human/H)
 	. = ..()
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
-
-/datum/species/jelly/should_render()
-	if(slime_puddle && slime_puddle.is_puddle)
-		return FALSE
-	else
-		return ..()
-
-/datum/species/jelly/species_pass_check()
-	if(slime_puddle && slime_puddle.is_puddle)
-		return TRUE
-	else
-		return ..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
@@ -688,88 +670,6 @@
 	else
 		return
 
-/datum/action/innate/slime_puddle
-	name = "Puddle Transformation"
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimepuddle"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
-	required_mobility_flags = MOBILITY_STAND
-	var/is_puddle = FALSE
-	var/in_transformation_duration = 12
-	var/out_transformation_duration = 7
-	var/puddle_into_effect = /obj/effect/temp_visual/slime_puddle
-	var/puddle_from_effect = /obj/effect/temp_visual/slime_puddle/reverse
-	var/puddle_icon = 'icons/mob/mob.dmi'
-	var/puddle_state = "puddle"
-	var/tracked_overlay
-	var/datum/component/squeak/squeak
-	var/transforming = FALSE
-	var/last_use
-
-/datum/action/innate/slime_puddle/IsAvailable()
-	if(!transforming)
-		return ..()
-	else
-		return FALSE
-
-/datum/action/innate/slime_puddle/Activate()
-	if(isjellyperson(owner) && IsAvailable())
-		transforming = TRUE
-		UpdateButtonIcon()
-		var/mob/living/carbon/human/H = owner
-		var/mutcolor = "#" + H.dna.features["mcolor"]
-		if(!is_puddle)
-			if(CHECK_MOBILITY(H, MOBILITY_USE))
-				is_puddle = TRUE
-				owner.cut_overlays()
-				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
-				puddle_effect.color = mutcolor
-				H.Stun(in_transformation_duration, ignore_canstun = TRUE)
-				ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
-				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-				H.update_disabled_bodyparts(silent = TRUE)
-				H.layer -= 1 //go one layer down so people go over you
-				ENABLE_BITFIELD(H.pass_flags, PASSMOB)
-				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
-				sleep(in_transformation_duration)
-				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
-				puddle_overlay.color = mutcolor
-				tracked_overlay = puddle_overlay
-				owner.add_overlay(puddle_overlay)
-				transforming = FALSE
-				UpdateButtonIcon()
-		else
-			owner.cut_overlay(tracked_overlay)
-			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
-			puddle_effect.color = mutcolor
-			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
-			sleep(out_transformation_duration)
-			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
-			H.update_disabled_bodyparts(silent = TRUE)
-			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-			H.layer += 1 //go one layer back above!
-			DISABLE_BITFIELD(H.pass_flags, PASSMOB)
-			is_puddle = FALSE
-			if(squeak)
-				squeak.RemoveComponent()
-			owner.regenerate_icons()
-			transforming = FALSE
-			UpdateButtonIcon()
-	else
-		to_chat(owner, "<span class='warning'>You need to be standing up to do this!") //just assume they're a slime because it's such a weird edgecase to have it and not be one (it shouldn't even be possible)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 

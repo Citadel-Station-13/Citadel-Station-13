@@ -75,11 +75,11 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/l_arm/set_disabled(new_disabled, silent = FALSE)
+/obj/item/bodypart/l_arm/set_disabled(new_disabled)
 	. = ..()
 	if(!.)
 		return
-	if(owner.stat < UNCONSCIOUS && !silent)
+	if(owner.stat < UNCONSCIOUS)
 		switch(disabled)
 			if(BODYPART_DISABLED_DAMAGE)
 				owner.emote("scream")
@@ -136,11 +136,11 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/r_arm/set_disabled(new_disabled, silent = FALSE)
+/obj/item/bodypart/r_arm/set_disabled(new_disabled)
 	. = ..()
 	if(!.)
 		return
-	if(owner.stat < UNCONSCIOUS && !silent)
+	if(owner.stat < UNCONSCIOUS)
 		switch(disabled)
 			if(BODYPART_DISABLED_DAMAGE)
 				owner.emote("scream")
@@ -196,17 +196,16 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/l_leg/set_disabled(new_disabled, silent = FALSE)
+/obj/item/bodypart/l_leg/set_disabled(new_disabled)
 	. = ..()
 	if(!. || owner.stat >= UNCONSCIOUS)
 		return
-	if(!silent)
-		switch(disabled)
-			if(BODYPART_DISABLED_DAMAGE)
-				owner.emote("scream")
-				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-			if(BODYPART_DISABLED_PARALYSIS)
-				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	switch(disabled)
+		if(BODYPART_DISABLED_DAMAGE)
+			owner.emote("scream")
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		if(BODYPART_DISABLED_PARALYSIS)
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -254,17 +253,16 @@
 		return BODYPART_DISABLED_PARALYSIS
 	return ..()
 
-/obj/item/bodypart/r_leg/set_disabled(new_disabled, silent = FALSE)
+/obj/item/bodypart/r_leg/set_disabled(new_disabled)
 	. = ..()
 	if(!. || owner.stat >= UNCONSCIOUS)
 		return
-	if(!silent)
-		switch(disabled)
-			if(BODYPART_DISABLED_DAMAGE)
-				owner.emote("scream")
-				to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-			if(BODYPART_DISABLED_PARALYSIS)
-				to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+	switch(disabled)
+		if(BODYPART_DISABLED_DAMAGE)
+			owner.emote("scream")
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+		if(BODYPART_DISABLED_PARALYSIS)
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"

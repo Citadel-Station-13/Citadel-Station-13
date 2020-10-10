@@ -39,7 +39,6 @@
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
-	initialize_actionspeed()
 	hook_vr("mob_new",list(src))
 
 /mob/GenerateTag()

@@ -488,12 +488,12 @@
 //Checks disabled status thresholds
 
 //Checks disabled status thresholds
-/obj/item/bodypart/proc/update_disabled(silent = FALSE)
+/obj/item/bodypart/proc/update_disabled()
 	if(!owner)
 		return
-	set_disabled(is_disabled(silent), silent)
+	set_disabled(is_disabled())
 
-/obj/item/bodypart/proc/is_disabled(silent = FALSE)
+/obj/item/bodypart/proc/is_disabled()
 	if(!owner)
 		return
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS))
@@ -505,7 +505,7 @@
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
-			if(!last_maxed && !silent)
+			if(!last_maxed)
 				owner.emote("scream")
 				last_maxed = TRUE
 			if(!is_organic_limb(FALSE) || stamina_dam >= max_damage)

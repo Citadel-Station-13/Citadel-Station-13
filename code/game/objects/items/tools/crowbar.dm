@@ -37,9 +37,6 @@
 	icon_state = "crowbar_clock"
 	toolspeed = 0.5
 
-/obj/item/crowbar/brass/family
-	toolspeed = 1
-
 /obj/item/crowbar/bronze
 	name = "bronze plated crowbar"
 	desc = "A bronze plated crowbar."

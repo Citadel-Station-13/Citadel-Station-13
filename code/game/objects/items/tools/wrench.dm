@@ -40,9 +40,6 @@
 	icon_state = "wrench_clock"
 	toolspeed = 0.5
 
-/obj/item/wrench/brass/family
-	toolspeed = 1
-
 /obj/item/wrench/bronze
 	name = "bronze plated wrench"
 	desc = "A bronze plated wrench."

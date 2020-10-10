@@ -9,19 +9,12 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	/// Time interval between glowshroom "spreads"
-	var/delay_spread = 2 MINUTES
-	/// Time interval between glowshroom decay checks
-	var/delay_decay = 30 SECONDS
-	/// Boolean to indicate if the shroom is on the floor/wall
+	max_integrity = 5
+	var/delay = 1200
 	var/floor = 0
-	/// Mushroom generation number
 	var/generation = 1
-	/// Chance to spread into adjacent tiles (0-100)
-	var/spreadIntoAdjacentChance = 75
-	/// Internal seed of the glowshroom, stats are stored here
+	var/spreadIntoAdjacentChance = 60
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
-	/// Turfs where the glowshroom cannot spread to
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	/turf/open/lava,
 	/turf/open/floor/plating/beach/water))
@@ -50,30 +43,21 @@
 		QDEL_NULL(myseed)
 	return ..()
 
-/**
-  *	Creates a new glowshroom structure.
-  *
-  * Arguments:
-  * * newseed - Seed of the shroom
-  * * mutate_stats - If the plant needs to mutate their stats
-  * * spread - If the plant is a result of spreading, reduce its stats
-  */
-
-/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
-	. = ..()
+/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats)
+	..()
 	if(newseed)
 		myseed = newseed.Copy()
 		myseed.forceMove(src)
 	else
 		myseed = new myseed(src)
-	if(spread)
-		myseed.potency -= round(myseed.potency * 0.25) // Reduce potency of the little mushie if it's spreading
 	if(mutate_stats) //baby mushrooms have different stats :3
-		myseed.adjust_potency(rand(-4,3))
-		myseed.adjust_yield(rand(-3,2))
-		myseed.adjust_production(rand(-3,3))
-		myseed.endurance = clamp(myseed.endurance + rand(-3,2), 0, 100) // adjust_endurance has a min value of 10, need to edit directly
-	delay_spread = delay_spread - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
+		myseed.adjust_potency(rand(-3,6))
+		myseed.adjust_yield(rand(-1,2))
+		myseed.adjust_production(rand(-3,6))
+		myseed.adjust_endurance(rand(-3,6))
+	delay = delay - myseed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
+	obj_integrity = myseed.endurance / 7
+	max_integrity = myseed.endurance / 7
 	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
 	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
 		myseed.genes -= G
@@ -96,20 +80,13 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
 
-	addtimer(CALLBACK(src, .proc/Spread), delay_spread)
-	addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Start decaying the plant
-
-/**
-  * Causes glowshroom spreading across the floor/walls.
-  */
+	addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/Spread()
 	var/turf/ownturf = get_turf(src)
 	var/shrooms_planted = 0
 	for(var/i in 1 to myseed.yield)
-		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
-		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
-		if(prob(max(chance_stats, chance_generation))) // Whatever is the higher chance we use it
+		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
 			var/spreadsIntoAdjacent = FALSE
 
@@ -119,7 +96,7 @@
 			for(var/turf/open/floor/earth in view(3,src))
 				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 					continue
-				if(!ownturf.CanAtmosPass(earth))
+				if(!disease_air_spread_walk(ownturf, earth))
 					continue
 				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,earth))
 					possibleLocs += earth
@@ -141,15 +118,16 @@
 			if(shroomCount >= placeCount)
 				continue
 
-			Decay(TRUE, 2) // Decay before spawning new mushrooms to reduce their endurance
-			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE, TRUE)
+			var/obj/structure/glowshroom/child = new type(newLoc, myseed, TRUE)
 			child.generation = generation + 1
 			shrooms_planted++
 
 			CHECK_TICK
-	if(shrooms_planted <= myseed.yield) //if we didn't get all possible shrooms planted, try again later
-		myseed.adjust_yield(-shrooms_planted)
-		addtimer(CALLBACK(src, .proc/Spread), delay_spread)
+		else
+			shrooms_planted++ //if we failed due to generation, don't try to plant one later
+	if(shrooms_planted < myseed.yield) //if we didn't get all possible shrooms planted, try again later
+		myseed.yield -= shrooms_planted
+		addtimer(CALLBACK(src, .proc/Spread), delay)
 
 /obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
@@ -183,27 +161,9 @@
 	floor = 1
 	return 1
 
-/**
-  * Causes the glowshroom to decay by decreasing its endurance.
-  *
-  * Arguments:
-  * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
-  * * amount - Amount of endurance to be reduced due to spread decay.
-  */
-/obj/structure/glowshroom/proc/Decay(spread, amount)
-	if (spread) // Decay due to spread
-		myseed.endurance -= amount
-	else // Timed decay
-		myseed.endurance -= 1
-		if (myseed.endurance > 0)
-			addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Recall decay timer
-			return
-	if (myseed.endurance < 1) // Plant is gone
-		qdel(src)
-
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
-		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -215,8 +175,3 @@
 	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
-
-/obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
-	if (istype(I, /obj/item/plant_analyzer))
-		return myseed.attackby(I, user, params) // Hacky I guess
-	return ..() // Attack normally

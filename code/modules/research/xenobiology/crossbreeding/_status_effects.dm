@@ -335,11 +335,15 @@ datum/status_effect/rebreathing/tick()
 	duration = 600
 
 /datum/status_effect/timecookie/on_apply()
-	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H
+		H.physiology.do_after_speed *= 0.95
 	return ..()
 
 /datum/status_effect/timecookie/on_remove()
-	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H
+		H.physiology.do_after_speed /= 0.95
 	return ..()
 
 /datum/status_effect/lovecookie

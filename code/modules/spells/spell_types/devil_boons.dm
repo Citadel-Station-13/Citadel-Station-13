@@ -43,7 +43,7 @@
 	for(var/mob/C in targets)
 		if(!C.client)
 			continue
-		C.client.view_size.setTo((input("Select view range:", "Range", 4) in ranges) - 7)
+		C.client.change_view(input("Select view range:", "Range", 4) in ranges)
 
 /obj/effect/proc_holder/spell/targeted/summon_friend
 	name = "Summon Friend"
