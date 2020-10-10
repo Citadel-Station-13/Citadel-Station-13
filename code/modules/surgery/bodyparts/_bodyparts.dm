@@ -569,9 +569,9 @@
 	update_threshhold_state()
 
 	if(change_icon_to_default)
-		if(is_organic_limb())
+		if(is_organic_limb(FALSE))
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
-		else if(is_robotic_limb(FALSE))
+		else if(is_robotic_limb())
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
 
 	if(owner && !no_update) //Only use no_update if you are sure the bodypart will get updated from other sources anyways, to prevent unneccessary processing use.
