@@ -21,3 +21,5 @@
 	species_type = "insect"
 
 	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")
+
+	eye_type = "insect"
