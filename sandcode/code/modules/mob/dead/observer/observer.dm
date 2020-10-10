@@ -79,7 +79,7 @@
 
 				spawned_player.forceMove(empty_pod)
 
-				new /obj/effect/abstract/DPtarget(current_turf, empty_pod)			
+				new /obj/effect/pod_landingzone(current_turf, empty_pod)			
 
 //This is more of a hacky fix for performance due to rune-chat
 /mob/dead/observer/proc/HearNoPopup(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
