@@ -181,6 +181,30 @@
 
 /datum/component/dullahan/RemoveComponent()
 	//delete their organs and regenerate them to their species specific ones, remove accent from tongue, place head on body
+	UnregisterSignal(owner, COMSIG_HUMAN_HEAD_ICONS_UPDATED)
+	ENABLE_BITFIELD(owner.flags_1, HEAR_1)
+	//remove old, give new organs
+	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.Remove(TRUE,TRUE)
+		QDEL_NULL(brain)
+	var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_TONGUE)
+	var/list/accents
+	if(tongue)
+		tongue.Remove(TRUE,TRUE)
+		QDEL_NULL(tongue)
+	var/obj/item/organ/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)
+	if(ears)
+		ears.Remove(TRUE,TRUE)
+		QDEL_NULL(ears)
+	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.Remove(TRUE,TRUE)
+		QDEL_NULL(eyes)
+	relay.gib_on_removal = FALSE
+	qdel(relay)
+	qdel(stored_head)
+	owner.regenerate_organs()
 	..()
 
 /datum/component/dullahan/proc/has_custom_head()
@@ -238,6 +262,7 @@
 	name = "dullahan relay"
 	var/mob/living/owner
 	flags_1 = HEAR_1
+	var/gib_on_removal = TRUE //only set to false when removing the component safely
 
 /obj/item/dullahan_relay/Initialize(mapload, mob/living/carbon/human/new_owner)
 	. = ..()
@@ -280,7 +305,8 @@
 		if(isdullahan(H))
 			var/datum/component/dullahan/D = H.GetComponent(/datum/component/dullahan)
 			D.relay = null
-			owner.gib()
+			if(gib_on_removal)
+				owner.gib()
 	owner = null
 	..()
 
