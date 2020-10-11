@@ -191,9 +191,9 @@
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/effect/broken_illusion/attack_hand(mob/living/user)
+/obj/effect/broken_illusion/on_attack_hand(mob/living/user)
 	if(!ishuman(user))
-		return ..()
+		return
 	var/mob/living/carbon/human/human_user = user
 	if(IS_HERETIC(human_user))
 		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control.</span>")

@@ -423,7 +423,10 @@
 /mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife()
 	if(!(. = ..()))
 		return
+	INVOKE_ASYNC(src, .proc/do_life_things)		// yeah screw you too bad ~ kev
 
+// no sleeping in life.
+/mob/living/simple_animal/pet/dog/corgi/Ian/proc/do_life_things()
 	//Feeding, chasing food, FOOOOODDDD
 	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++
