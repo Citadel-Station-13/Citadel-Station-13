@@ -1,6 +1,32 @@
 // In this file is all code for generating worn icons by items.
 
+/**
+  * Generates worn overlays for a specific mob
+  */
+/datum/inventory_slot/proc/generate_worn_overlays(mob/target)
+	if(ishuman(target))		// most complicated
 
+	else	// easy
+	
+
+/**
+  * The "technical" proc used to build worn overlays. Should in general not be called directly.
+  */
+/datum/inventory_slot/proc/build_worn_overlays()
+
+/**
+  * Gets the spritesheet of a certain clothing asset type for ourselves
+  * taking into context our item.
+  */
+/datum/inventory_slot/proc/get_worn_spritesheet()
+	if(!held)
+		return
+	if(islist(spritesheet_override))
+		
+
+	var/datum/inventory_slot_meta/meta = get_inventory_slot_meta(id)
+	
+	
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list

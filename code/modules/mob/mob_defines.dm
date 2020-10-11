@@ -60,6 +60,23 @@
 	var/cached_multiplicative_slowdown
 	/////////////////
 
+	// Inventory
+	/// List of slot datums. Slot ID = datum
+	var/list/inventory_slots
+	/// List of inventory slots we have. Typelist or null.
+	var/list/inventory_slots_default
+	/// List of inventory slots we render on mob by default. Typelist or null.
+	var/list/inventory_slots_rendered_default
+	/// List of overlays for a slot. Lazy list, overlays should only be in here while being used.
+	var/list/inventory_slots_built_overlays
+	/// Hand selected
+	var/active_hand_index = 1
+	/// Held items - length = number of hands, null are empty hands. Null for no hands
+	var/list/held_items
+	/// Storage component being looked at by us right now
+	var/datum/component/storage/active_storage
+	// End
+
 	var/name_archive //For admin things like possession
 
 	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
@@ -78,12 +95,7 @@
 	var/atom/movable/buckling
 
 	//Hands
-	var/active_hand_index = 1
-	var/list/held_items = list() //len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand and 1 empty hand.
-	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
 	var/bloody_hands = 0
-
-	var/datum/component/storage/active_storage = null//Carbon
 
 	var/datum/hud/hud_used = null
 

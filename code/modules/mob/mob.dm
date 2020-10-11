@@ -1,4 +1,30 @@
+/mob/Initialize()
+	if(inventory_slots_default)
+		inventory_slots_default = typelist("inventory_slots_default", inventory_slots_default)
+	if(inventory_slots_rendered_default)
+		inventory_slots_rendered_default = typelist("inventory_slots_rendered_default", inventory_slots_rendered_default)
+	setup_inventory()
+	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
+	if(stat == DEAD)
+		GLOB.dead_mob_list += src
+	else
+		GLOB.alive_mob_list += src
+	set_focus(src)
+	prepare_huds()
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
+	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
+	. = ..()
+	update_config_movespeed()
+	update_movespeed(TRUE)
+	hook_vr("mob_new",list(src))
+
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+	cleanup_inventor()
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
 	GLOB.alive_mob_list -= src
@@ -21,25 +47,19 @@
 	..()
 	return QDEL_HINT_HARDDEL
 
-/mob/Initialize()
-	GLOB.mob_list += src
-	GLOB.mob_directory[tag] = src
-	if(stat == DEAD)
-		GLOB.dead_mob_list += src
-	else
-		GLOB.alive_mob_list += src
-	set_focus(src)
-	prepare_huds()
-	for(var/v in GLOB.active_alternate_appearances)
-		if(!v)
-			continue
-		var/datum/atom_hud/alternate_appearance/AA = v
-		AA.onNewMob(src)
-	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
-	. = ..()
-	update_config_movespeed()
-	update_movespeed(TRUE)
-	hook_vr("mob_new",list(src))
+/**
+  * Initializes our inventory slots.
+  */
+/mob/proc/initialize_inventory()
+	return
+
+/**
+  * Cleans up our inventory slots
+  */
+/mob/proc/cleanup_inventory()
+	for(var/obj/item/I in all_inventory_items() | held_items)
+		QDEL_NULL(I)
+	QDEL_LIST(inventory_slots)
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
