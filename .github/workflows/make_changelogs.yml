@@ -23,8 +23,8 @@ jobs:
           pip install ruamel.yaml PyGithub
       - name: Make CL
         env:
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} Use this instead if you have unprotected branches
-          GITHUB_TOKEN: ${{ secrets.CL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} Use this instead if you have unprotected branches
+          #GITHUB_TOKEN: ${{ secrets.CL_TOKEN }}
           GIT_EMAIL: "65441914+Sandstorm-Station@users.noreply.github.com"
           GIT_NAME: "Sandstorm Bot"
         run: python tools/changelog/generate_cl.py
