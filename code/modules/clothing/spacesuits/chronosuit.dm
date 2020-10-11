@@ -110,7 +110,7 @@
 		var/list/nonsafe_slots = list(SLOT_BELT, SLOT_BACK)
 		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
-			var/obj/item/slot_item = user.get_item_by_slot(slot)
+			var/obj/item/slot_item = user.get_item_in_slot(slot)
 			exposed += slot_item
 		exposed += user.held_items
 		for(var/exposed_item in exposed)

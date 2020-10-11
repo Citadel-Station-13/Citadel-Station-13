@@ -7,6 +7,7 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
+	set waitfor = FALSE
 	if(check_click_intercept(params,A))
 		return
 

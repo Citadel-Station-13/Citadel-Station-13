@@ -1,8 +1,8 @@
-/mob/living/carbon/get_item_by_slot(slot_id)
+/mob/living/carbon/get_item_in_slot(slot_id)
 	switch(slot_id)
 		if(SLOT_BACK)
 			return back
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			return wear_mask
 		if(SLOT_NECK)
 			return wear_neck
@@ -53,7 +53,7 @@
 		if(SLOT_BACK)
 			back = I
 			update_inv_back()
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
 		if(SLOT_HEAD)

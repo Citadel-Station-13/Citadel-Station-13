@@ -265,7 +265,7 @@
 				break
 		H.sec_hud_set_ID()
 
-	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
+	var/obj/item/pda/PDA = H.get_item_in_slot(pda_slot)
 	if(istype(PDA))
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title

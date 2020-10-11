@@ -494,7 +494,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(SLOT_BELT) == src)
+	if(H.get_item_in_slot(SLOT_BELT) == src)
 		style.remove(H)
 
 //Subtype of wrestling, reserved for the wrestling belts found in the holodeck

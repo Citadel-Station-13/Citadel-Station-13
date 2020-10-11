@@ -287,7 +287,7 @@
 /obj/machinery/photocopier/proc/make_ass_copy()
 	if(!check_ass())
 		return
-	if(ishuman(ass)) //(ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
+	if(ishuman(ass)) //(ass.get_item_in_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_in_slot(ITEM_SLOT_OCLOTHING)))
 		var/mob/living/carbon/C = ass //have to typecast to this, is_groin_exposed is carbon level
 		if(C.is_groin_exposed())
 			to_chat(usr, "<span class='notice'>You feel kind of silly, copying [ass == usr ? "your" : ass][ass == usr ? "" : "\'s"] ass with [ass == usr ? "your" : "[ass.p_their()]"] clothes on.</span>" )

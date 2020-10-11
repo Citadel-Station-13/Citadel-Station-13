@@ -60,7 +60,7 @@
 
 /datum/gear/donator/hheart
 	name = "The Hollow Heart"
-	slot = SLOT_WEAR_MASK
+	slot = SLOT_MASK
 	path = /obj/item/clothing/mask/hheart
 	ckeywhitelist = list("inferno707")
 
@@ -72,7 +72,7 @@
 
 /datum/gear/donator/geisha
 	name = "Geisha suit"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/costume/geisha
 	ckeywhitelist = list("atiefling")
 
@@ -84,7 +84,7 @@
 
 /datum/gear/donator/redmadcoat
 	name = "The Mad's labcoat"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/toggle/labcoat/mad/red
 	ckeywhitelist = list("zombierobin")
 
@@ -108,7 +108,7 @@
 
 /datum/gear/donator/santaoutfit
 	name = "Santa costume"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/space/santa/fluff
 	ckeywhitelist = list("illotafv")
 
@@ -132,13 +132,13 @@
 
 /datum/gear/donator/albortorosamask
 	name = "Alborto Rosa mask"
-	slot = SLOT_WEAR_MASK
+	slot = SLOT_MASK
 	path = /obj/item/clothing/mask/luchador/zigfie
 	ckeywhitelist = list("zigfie")
 
 /datum/gear/donator/mankini
 	name = "Mankini"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/misc/stripper/mankini
 	ckeywhitelist = list("zigfie")
 
@@ -150,7 +150,7 @@
 
 /datum/gear/donator/reecesgreatcoat
 	name = "Reece's Great Coat"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/trenchcoat/green
 	ckeywhitelist = list("geemiesif")
 
@@ -163,7 +163,7 @@
 
 /datum/gear/donator/stalkermask
 	name = "S.T.A.L.K.E.R. mask"
-	slot = SLOT_WEAR_MASK
+	slot = SLOT_MASK
 	path = /obj/item/clothing/mask/gas/stalker
 	ckeywhitelist = list("slomka")
 
@@ -175,13 +175,13 @@
 
 /datum/gear/donator/performersoutfit
 	name = "Bluish performer's outfit"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/costume/singer/yellow/custom
 	ckeywhitelist = list("killer402402")
 
 /datum/gear/donator/vermillion
 	name = "Vermillion clothing"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/suit/vermillion
 	ckeywhitelist = list("fractious")
 
@@ -199,7 +199,7 @@
 
 /datum/gear/donator/naomisweater
 	name = "worn black sweater"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/sweater/black/naomi
 	ckeywhitelist = list("technicalmagi")
 
@@ -211,7 +211,7 @@
 
 /datum/gear/donator/gladiator
 	name = "Gladiator Armor"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/under/costume/gladiator
 	ckeywhitelist = list("aroche")
 
@@ -223,13 +223,13 @@
 
 /datum/gear/donator/puffydress
 	name = "Puffy Dress"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/puffydress
 	ckeywhitelist = list("stallingratt")
 
 /datum/gear/donator/labredblack
 	name = "Black and Red Coat"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/toggle/labcoat/labredblack
 	ckeywhitelist = list("blakeryan", "durandalphor")
 
@@ -345,37 +345,37 @@
 
 /datum/gear/donator/Divine_robes
 	name = "Divine robes"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/custom/lunasune
 	ckeywhitelist = list("invader4352")
 
 /datum/gear/donator/gothcoat
 	name = "Goth Coat"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/gothcoat
 	ckeywhitelist = list("norko")
 
 /datum/gear/donator/corgisuit
 	name = "Corgi Suit"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/hooded/ian_costume
 	ckeywhitelist = list("cathodetherobot")
 
 /datum/gear/donator/sharkcloth
 	name = "Leon's Skimpy Outfit"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/under/custom/leoskimpy
 	ckeywhitelist = list("spectrosis")
 
 /datum/gear/donator/mimemask
 	name = "Mime Mask"
-	slot = SLOT_WEAR_MASK
+	slot = SLOT_MASK
 	path = /obj/item/clothing/mask/gas/mime
 	ckeywhitelist = list("pireamaineach")
 
 /datum/gear/donator/mimeoveralls
 	name = "Mime's Overalls"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/under/custom/mimeoveralls
 	ckeywhitelist = list("pireamaineach")
 
@@ -393,13 +393,13 @@
 
 /datum/gear/donator/zuliecloak
 	name = "Project: Zul-E"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/hooded/cloak/zuliecloak
 	ckeywhitelist = list("asky")
 
 /datum/gear/donator/blackredgold
 	name = "Black, Red, and Gold Coat"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/blackredgold
 	ckeywhitelist = list("ttbnc")
 
@@ -411,19 +411,19 @@
 
 /datum/gear/donator/kimono
 	name = "Kimono"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/kimono
 	ckeywhitelist = list("sfox63")
 
 /datum/gear/donator/commjacket
 	name = "Dusty Commisar's Cloak"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/commjacket
 	ckeywhitelist = list("sadisticbatter")
 
 /datum/gear/donator/mw2_russian_para
 	name = "Russian Paratrooper Jumper"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/custom/mw2_russian_para
 	ckeywhitelist = list("investigator77")
 
@@ -435,13 +435,13 @@
 
 /datum/gear/donator/trendy_fit
 	name = "Trendy Fit"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/custom/trendy_fit
 	ckeywhitelist = list("midgetdragon")
 
 /datum/gear/donator/singery
 	name = "Yellow Performer Outfit"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/costume/singer/yellow
 	ckeywhitelist = list("maxlynchy")
 
@@ -477,19 +477,19 @@
 
 /datum/gear/donator/mikubikini
 	name = "starlight singer bikini"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/under/custom/mikubikini
 	ckeywhitelist = list("grandvegeta")
 
 /datum/gear/donator/mikujacket
 	name = "starlight singer jacket"
-	slot = SLOT_WEAR_SUIT
+	slot = SLOT_OUTERWEAR
 	path = /obj/item/clothing/suit/mikujacket
 	ckeywhitelist = list("grandvegeta")
 
 /datum/gear/donator/mikuhair
 	name = "starlight singer hair"
-	slot = SLOT_W_UNIFORM
+	slot = SLOT_UNIFORM
 	path = /obj/item/clothing/head/mikuhair
 	ckeywhitelist = list("grandvegeta")
 

@@ -10,11 +10,11 @@
 
 /datum/outfit/varedit/proc/set_equipement_by_slot(slot,item_path)
 	switch(slot)
-		if(SLOT_W_UNIFORM)
+		if(SLOT_UNIFORM)
 			uniform = item_path
 		if(SLOT_BACK)
 			back = item_path
-		if(SLOT_WEAR_SUIT)
+		if(SLOT_OUTERWEAR)
 			suit = item_path
 		if(SLOT_BELT)
 			belt = item_path
@@ -24,7 +24,7 @@
 			shoes = item_path
 		if(SLOT_HEAD)
 			head = item_path
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			mask = item_path
 		if(SLOT_NECK)
 			neck = item_path
@@ -32,7 +32,7 @@
 			ears = item_path
 		if(SLOT_GLASSES)
 			glasses = item_path
-		if(SLOT_WEAR_ID)
+		if(SLOT_ID_CARD)
 			id = item_path
 		if(SLOT_S_STORE)
 			suit_store = item_path
@@ -68,9 +68,9 @@
 
 	//Copy equipment
 	var/list/result = list()
-	var/list/slots_to_check = list(SLOT_W_UNIFORM,SLOT_BACK,SLOT_WEAR_SUIT,SLOT_BELT,SLOT_GLOVES,SLOT_SHOES,SLOT_HEAD,SLOT_WEAR_MASK,SLOT_NECK,SLOT_EARS,SLOT_GLASSES,SLOT_WEAR_ID,SLOT_S_STORE,SLOT_L_STORE,SLOT_R_STORE)
+	var/list/slots_to_check = list(SLOT_UNIFORM,SLOT_BACK,SLOT_OUTERWEAR,SLOT_BELT,SLOT_GLOVES,SLOT_SHOES,SLOT_HEAD,SLOT_MASK,SLOT_NECK,SLOT_EARS,SLOT_GLASSES,SLOT_ID_CARD,SLOT_S_STORE,SLOT_L_STORE,SLOT_R_STORE)
 	for(var/s in slots_to_check)
-		var/obj/item/I = get_item_by_slot(s)
+		var/obj/item/I = get_item_in_slot(s)
 		var/vedits = collect_vv(I)
 		if(vedits)
 			result["[s]"] = vedits
@@ -79,7 +79,7 @@
 
 	//Copy access
 	O.stored_access = list()
-	var/obj/item/id_slot = get_item_by_slot(SLOT_WEAR_ID)
+	var/obj/item/id_slot = get_item_in_slot(SLOT_ID_CARD)
 	if(id_slot)
 		O.stored_access |= id_slot.GetAccess()
 	//Copy hands
@@ -98,7 +98,7 @@
 				result["RHAND"] = vedits
 	O.vv_values = result
 	//Copy backpack contents if exist.
-	var/obj/item/backpack = get_item_by_slot(SLOT_BACK)
+	var/obj/item/backpack = get_item_in_slot(SLOT_BACK)
 	if(istype(backpack) && SEND_SIGNAL(backpack, COMSIG_CONTAINS_STORAGE))
 		var/list/bp_stuff = list()
 		var/list/typecounts = list()
@@ -132,11 +132,11 @@
 			if("RHAND")
 				I = H.held_items[2]
 			else
-				I = H.get_item_by_slot(text2num(slot))
+				I = H.get_item_in_slot(text2num(slot))
 		for(var/vname in edits)
 			I.vv_edit_var(vname,edits[vname])
 	//Apply access
-	var/obj/item/id_slot = H.get_item_by_slot(SLOT_WEAR_ID)
+	var/obj/item/id_slot = H.get_item_in_slot(SLOT_ID_CARD)
 	if(id_slot)
 		var/obj/item/card/id/card = id_slot.GetID()
 		if(istype(card))

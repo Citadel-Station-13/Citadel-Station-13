@@ -131,7 +131,7 @@
 					continue
 				. += AM
 	for(var/slot in list(SLOT_R_STORE, SLOT_L_STORE))
-		. += user.get_item_by_slot(slot)
+		. += user.get_item_in_slot(slot)
 
 /datum/component/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()

@@ -34,7 +34,7 @@
 	..()
 
 
-/mob/living/simple_animal/drone/get_item_by_slot(slot_id)
+/mob/living/simple_animal/drone/get_item_in_slot(slot_id)
 	switch(slot_id)
 		if(SLOT_HEAD)
 			return head

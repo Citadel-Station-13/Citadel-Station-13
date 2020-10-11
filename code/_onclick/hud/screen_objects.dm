@@ -96,7 +96,7 @@
 	// just redirect clicks
 
 	if(hud?.mymob && slot_id)
-		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
+		var/obj/item/inv_item = hud.mymob.get_item_in_slot(slot_id)
 		if(inv_item)
 			return inv_item.Click(location, control, params)
 
@@ -118,7 +118,7 @@
 		icon_empty = icon_state
 
 	if(hud?.mymob && slot_id && icon_full)
-		if(hud.mymob.get_item_by_slot(slot_id))
+		if(hud.mymob.get_item_in_slot(slot_id))
 			icon_state = icon_full
 		else
 			icon_state = icon_empty
@@ -131,7 +131,7 @@
 
 	var/obj/item/holding = user.get_active_held_item()
 
-	if(!holding || user.get_item_by_slot(slot_id))
+	if(!holding || user.get_item_in_slot(slot_id))
 		return
 
 	var/image/item_overlay = image(holding)

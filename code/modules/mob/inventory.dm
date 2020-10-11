@@ -396,9 +396,9 @@
 
 	if(!slot_priority)
 		slot_priority = list( \
-			SLOT_BACK, SLOT_WEAR_ID,\
-			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
-			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
+			SLOT_BACK, SLOT_ID_CARD,\
+			SLOT_UNIFORM, SLOT_OUTERWEAR,\
+			SLOT_MASK, SLOT_HEAD, SLOT_NECK,\
 			SLOT_SHOES, SLOT_GLOVES,\
 			SLOT_EARS, SLOT_GLASSES,\
 			SLOT_BELT, SLOT_S_STORE,\
@@ -449,7 +449,7 @@
 	if(M.active_storage && M.active_storage.parent && SEND_SIGNAL(M.active_storage.parent, COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
+	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_in_slot(SLOT_BELT), M.get_item_in_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_in_slot(SLOT_BACK))
 	for(var/i in possible)
 		if(!i)
 			continue

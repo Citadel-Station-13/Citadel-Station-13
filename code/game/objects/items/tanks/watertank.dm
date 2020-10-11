@@ -31,7 +31,7 @@
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
 		return
-	if(user.get_item_by_slot(user.getBackSlot()) != src)
+	if(user.get_item_in_slot(user.getBackSlot()) != src)
 		to_chat(user, "<span class='warning'>The watertank must be worn properly to use!</span>")
 		return
 	if(user.incapacitated())
@@ -73,7 +73,7 @@
 	return ..()
 
 /obj/item/watertank/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
-	if (user.get_item_by_slot(user.getBackSlot()) == src)
+	if (user.get_item_in_slot(user.getBackSlot()) == src)
 		toggle_mister(user)
 	else
 		return ..()
@@ -351,7 +351,7 @@
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user))
 		return
-	if (user.get_item_by_slot(SLOT_BACK) != src)
+	if (user.get_item_in_slot(SLOT_BACK) != src)
 		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
 		return
 	if(on)

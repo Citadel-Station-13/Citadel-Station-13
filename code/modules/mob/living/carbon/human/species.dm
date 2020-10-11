@@ -306,7 +306,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
-		var/obj/item/thing = C.get_item_by_slot(slot_id)
+		var/obj/item/thing = C.get_item_in_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
 	if(C.hud_used)
@@ -986,7 +986,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(H.get_empty_held_indexes())
 				return TRUE
 			return FALSE
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			if(H.wear_mask)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_MASK))
@@ -1006,7 +1006,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if( !(I.slot_flags & ITEM_SLOT_BACK) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_WEAR_SUIT)
+		if(SLOT_OUTERWEAR)
 			if(H.wear_suit)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_OCLOTHING) )
@@ -1069,13 +1069,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_W_UNIFORM)
+		if(SLOT_UNIFORM)
 			if(H.w_uniform)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(SLOT_WEAR_ID)
+		if(SLOT_ID_CARD)
 			if(H.wear_id)
 				return FALSE
 			if(!CHECK_BITFIELD(I.item_flags, NO_UNIFORM_REQUIRED))

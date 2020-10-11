@@ -31,7 +31,7 @@
 		. += "[t_He] [t_is] a [dna.custom_species ? dna.custom_species : dna.species.name]!"
 
 	//uniform
-	if(w_uniform && !(SLOT_W_UNIFORM in obscured))
+	if(w_uniform && !(SLOT_UNIFORM in obscured))
 		//accessory
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
@@ -82,7 +82,7 @@
 		. += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet."
 
 	//mask
-	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
+	if(wear_mask && !(SLOT_MASK in obscured))
 		. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
 
 	if(wear_neck && !(SLOT_NECK in obscured))

@@ -121,7 +121,7 @@
 	user.dropItemToGround(user.head)
 	user.dropItemToGround(user.wear_suit)
 
-	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, 1, 1, 1)
+	user.equip_to_slot_if_possible(new suit_type(user), SLOT_OUTERWEAR, 1, 1, 1)
 	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, 1, 1, 1)
 
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)

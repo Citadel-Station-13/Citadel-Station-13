@@ -9,7 +9,7 @@
 			if(get_empty_held_indexes())
 				return TRUE
 			return FALSE
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			if(wear_mask)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_MASK) )

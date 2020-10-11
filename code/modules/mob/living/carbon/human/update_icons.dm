@@ -103,7 +103,7 @@ There are several things that need to be remembered:
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNIFORM]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_UNIFORM]
 		inv.update_icon()
 
 	if(istype(w_uniform, /obj/item/clothing/under))
@@ -155,7 +155,7 @@ There are several things that need to be remembered:
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_ID]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_ID_CARD]
 		inv.update_icon()
 
 	var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
@@ -387,7 +387,7 @@ There are several things that need to be remembered:
 	remove_overlay(SUIT_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_SUIT]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_OUTERWEAR]
 		inv.update_icon()
 
 	if(wear_suit)
@@ -477,7 +477,7 @@ There are several things that need to be remembered:
 		return
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_MASK]
 		inv.update_icon()
 
 	if(wear_mask)

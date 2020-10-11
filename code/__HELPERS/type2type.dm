@@ -410,7 +410,7 @@
 
 /proc/slot2body_zone(slot)
 	switch(slot)
-		if(SLOT_BACK, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_BELT, SLOT_WEAR_ID)
+		if(SLOT_BACK, SLOT_OUTERWEAR, SLOT_UNIFORM, SLOT_BELT, SLOT_ID_CARD)
 			return BODY_ZONE_CHEST
 
 		if(SLOT_GLOVES, SLOT_HANDS, SLOT_HANDCUFFED)
@@ -419,7 +419,7 @@
 		if(SLOT_HEAD, SLOT_NECK, SLOT_NECK, SLOT_EARS)
 			return BODY_ZONE_HEAD
 
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			return BODY_ZONE_PRECISE_MOUTH
 
 		if(SLOT_GLASSES)
@@ -652,7 +652,7 @@
 	switch(slot)
 		if(SLOT_BACK)
 			return "Backpack"
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			return "Mask"
 		if(SLOT_HANDS)
 			return "Hands"
@@ -670,9 +670,9 @@
 			return "Head"
 		if(SLOT_SHOES)
 			return "Shoes"
-		if(SLOT_WEAR_SUIT)
+		if(SLOT_OUTERWEAR)
 			return "Suit"
-		if(SLOT_W_UNIFORM)
+		if(SLOT_UNIFORM)
 			return "Uniform"
 		if(SLOT_IN_BACKPACK)
 			return "In backpack"

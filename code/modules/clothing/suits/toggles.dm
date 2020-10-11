@@ -28,11 +28,11 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_WEAR_SUIT || slot == SLOT_NECK)
+	if(slot == SLOT_OUTERWEAR || slot == SLOT_NECK)
 		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != SLOT_WEAR_SUIT && slot != SLOT_NECK)
+	if(slot != SLOT_OUTERWEAR && slot != SLOT_NECK)
 		RemoveHood()
 	..()
 
@@ -161,7 +161,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	if(!helmettype)
 		return
-	if(slot != SLOT_WEAR_SUIT)
+	if(slot != SLOT_OUTERWEAR)
 		RemoveHelmet()
 	..()
 

@@ -91,7 +91,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/darkpurple/core_effect(mob/living/target, mob/user)
 	var/equipped = 0
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), SLOT_SHOES)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), SLOT_W_UNIFORM)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), SLOT_UNIFORM)
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), SLOT_GLOVES)
 	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), SLOT_HEAD)
 	if(equipped > 0)
@@ -105,13 +105,13 @@ Regenerative extracts:
 		return
 	var/mob/living/carbon/human/H = target
 	var/fireproofed = FALSE
-	if(H.get_item_by_slot(SLOT_WEAR_SUIT))
+	if(H.get_item_in_slot(SLOT_OUTERWEAR))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_WEAR_SUIT)
+		var/obj/item/clothing/C = H.get_item_in_slot(SLOT_OUTERWEAR)
 		fireproof(C)
-	if(H.get_item_by_slot(SLOT_HEAD))
+	if(H.get_item_in_slot(SLOT_HEAD))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_HEAD)
+		var/obj/item/clothing/C = H.get_item_in_slot(SLOT_HEAD)
 		fireproof(C)
 	if(fireproofed)
 		target.visible_message("<span class='notice'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")

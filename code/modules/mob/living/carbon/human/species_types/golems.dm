@@ -12,7 +12,7 @@
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 10
-	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
+	no_equip = list(SLOT_MASK, SLOT_OUTERWEAR, SLOT_GLOVES, SLOT_SHOES, SLOT_UNIFORM, SLOT_S_STORE)
 	nojumpsuit = 1
 	sexes = 1
 	damage_overlay_type = ""

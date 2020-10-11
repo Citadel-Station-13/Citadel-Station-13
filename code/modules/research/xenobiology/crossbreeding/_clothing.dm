@@ -19,7 +19,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == SLOT_MASK)
 		ADD_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 		user.failed_last_breath = FALSE
 		user.clear_alert("not_enough_oxy")

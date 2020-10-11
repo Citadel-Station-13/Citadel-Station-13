@@ -161,7 +161,7 @@
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = SLOT_W_UNIFORM
+	inv_box.slot_id = SLOT_UNIFORM
 	inv_box.icon_state = "uniform"
 	inv_box.screen_loc = ui_iclothing
 	toggleable_inventory += inv_box
@@ -169,7 +169,7 @@
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
-	inv_box.slot_id = SLOT_WEAR_SUIT
+	inv_box.slot_id = SLOT_OUTERWEAR
 	inv_box.icon_state = "suit"
 	inv_box.screen_loc = ui_oclothing
 	toggleable_inventory += inv_box
@@ -195,7 +195,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_id
-	inv_box.slot_id = SLOT_WEAR_ID
+	inv_box.slot_id = SLOT_ID_CARD
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -203,7 +203,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_mask
-	inv_box.slot_id = SLOT_WEAR_MASK
+	inv_box.slot_id = SLOT_MASK
 	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()

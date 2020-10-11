@@ -90,7 +90,7 @@
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && loc == held_mob)
 		if(held_mob.is_holding(src))
-			if(istype(held_mob) && held_mob.gloves)
+			if(istype(held_mob) && held_mob.get_item_in_slot(SLOT_GLOVES))
 				return
 			held_mob.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(prob(10))

@@ -91,7 +91,7 @@
 		return
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_MASK]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_MASK]
 		inv?.update_icon()
 
 	if(wear_mask)

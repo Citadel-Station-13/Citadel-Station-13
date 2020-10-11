@@ -15,11 +15,11 @@
 	return items
 
 // Return the item currently in the slot ID
-/mob/living/carbon/human/get_item_by_slot(slot_id)
+/mob/living/carbon/human/get_item_in_slot(slot_id)
 	switch(slot_id)
 		if(SLOT_BACK)
 			return back
-		if(SLOT_WEAR_MASK)
+		if(SLOT_MASK)
 			return wear_mask
 		if(SLOT_NECK)
 			return wear_neck
@@ -29,7 +29,7 @@
 			return legcuffed
 		if(SLOT_BELT)
 			return belt
-		if(SLOT_WEAR_ID)
+		if(SLOT_ID_CARD)
 			return wear_id
 		if(SLOT_EARS)
 			return ears
@@ -41,9 +41,9 @@
 			return head
 		if(SLOT_SHOES)
 			return shoes
-		if(SLOT_WEAR_SUIT)
+		if(SLOT_OUTERWEAR)
 			return wear_suit
-		if(SLOT_W_UNIFORM)
+		if(SLOT_UNIFORM)
 			return w_uniform
 		if(SLOT_L_STORE)
 			return l_store
@@ -101,7 +101,7 @@
 		if(SLOT_BELT)
 			belt = I
 			update_inv_belt()
-		if(SLOT_WEAR_ID)
+		if(SLOT_ID_CARD)
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
@@ -127,7 +127,7 @@
 		if(SLOT_SHOES)
 			shoes = I
 			update_inv_shoes()
-		if(SLOT_WEAR_SUIT)
+		if(SLOT_OUTERWEAR)
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
@@ -135,7 +135,7 @@
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
-		if(SLOT_W_UNIFORM)
+		if(SLOT_UNIFORM)
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
@@ -296,7 +296,7 @@
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_back = get_item_by_slot(SLOT_BACK)
+	var/obj/item/equipped_back = get_item_in_slot(SLOT_BACK)
 	if(!equipped_back) // We also let you equip a backpack like this
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no backpack to take something out of!</span>")
@@ -327,7 +327,7 @@
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_belt = get_item_by_slot(SLOT_BELT)
+	var/obj/item/equipped_belt = get_item_in_slot(SLOT_BELT)
 	if(!equipped_belt) // We also let you equip a belt like this
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no belt to take something out of!</span>")

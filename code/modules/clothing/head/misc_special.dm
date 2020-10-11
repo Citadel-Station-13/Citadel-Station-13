@@ -284,7 +284,7 @@
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
-	if(target.get_item_by_slot(SLOT_HEAD) != src)
+	if(target.get_item_in_slot(SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
 	if(!target.IsUnconscious())

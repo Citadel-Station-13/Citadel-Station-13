@@ -114,7 +114,7 @@
 		if(jetpack)
 			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
 			return
-		if(src == user.get_item_by_slot(SLOT_WEAR_SUIT)) //Make sure the player is not wearing the suit before applying the upgrade.
+		if(src == user.get_item_in_slot(SLOT_OUTERWEAR)) //Make sure the player is not wearing the suit before applying the upgrade.
 			to_chat(user, "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>")
 			return
 
@@ -126,7 +126,7 @@
 		if(!jetpack)
 			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
-		if(src == user.get_item_by_slot(SLOT_WEAR_SUIT))
+		if(src == user.get_item_in_slot(SLOT_OUTERWEAR))
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
@@ -141,7 +141,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
-		if(slot == SLOT_WEAR_SUIT)
+		if(slot == SLOT_OUTERWEAR)
 			for(var/X in jetpack.actions)
 				var/datum/action/A = X
 				A.Grant(user)
@@ -154,7 +154,7 @@
 			A.Remove(user)
 
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
+	if(slot == SLOT_OUTERWEAR) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
 		return 1
 
 	//Engineering
@@ -691,7 +691,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/equipped(mob/user, slot)
 	. = ..()
-	if(slot != SLOT_WEAR_SUIT)
+	if(slot != SLOT_OUTERWEAR)
 		if(listeningTo)
 			UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		return

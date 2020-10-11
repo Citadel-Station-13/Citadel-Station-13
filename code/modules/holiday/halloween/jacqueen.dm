@@ -431,7 +431,7 @@
 				var/obj/item/W = H.wear_suit
 				H.dropItemToGround(W, TRUE)
 			var/ghost = new /obj/item/clothing/suit/ghost_sheet/sticky
-			H.equip_to_slot(ghost, SLOT_WEAR_SUIT, 1, 1)
+			H.equip_to_slot(ghost, SLOT_OUTERWEAR, 1, 1)
 	poof()
 
 //Blame Fel

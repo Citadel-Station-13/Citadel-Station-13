@@ -152,7 +152,7 @@
 	switch(slot)
 		if(SLOT_BELT)
 			body_parts_covered = GROIN|LEGS
-		if(SLOT_WEAR_SUIT)
+		if(SLOT_OUTERWEAR)
 			body_parts_covered = CHEST|GROIN|LEGS
 		if(SLOT_HEAD)
 			body_parts_covered = HEAD

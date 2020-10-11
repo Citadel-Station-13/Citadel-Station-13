@@ -41,9 +41,9 @@
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H),SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new uniform(H),SLOT_UNIFORM)
 	if(suit)
-		H.equip_to_slot_or_del(new suit(H),SLOT_WEAR_SUIT)
+		H.equip_to_slot_or_del(new suit(H),SLOT_OUTERWEAR)
 	if(back)
 		H.equip_to_slot_or_del(new back(H),SLOT_BACK)
 	if(belt)
@@ -55,7 +55,7 @@
 	if(head)
 		H.equip_to_slot_or_del(new head(H),SLOT_HEAD)
 	if(mask)
-		H.equip_to_slot_or_del(new mask(H),SLOT_WEAR_MASK)
+		H.equip_to_slot_or_del(new mask(H),SLOT_MASK)
 	if(neck)
 		H.equip_to_slot_or_del(new neck(H),SLOT_NECK)
 	if(ears)
@@ -63,7 +63,7 @@
 	if(glasses)
 		H.equip_to_slot_or_del(new glasses(H),SLOT_GLASSES)
 	if(id)
-		H.equip_to_slot_or_del(new id(H),SLOT_WEAR_ID)
+		H.equip_to_slot_or_del(new id(H),SLOT_ID_CARD)
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
 
@@ -108,7 +108,7 @@
 	if(!visualsOnly)
 		apply_fingerprints(H)
 		if(internals_slot)
-			H.internal = H.get_item_by_slot(internals_slot)
+			H.internal = H.get_item_in_slot(internals_slot)
 			H.update_action_buttons_icon()
 		if(implants)
 			for(var/implant_type in implants)

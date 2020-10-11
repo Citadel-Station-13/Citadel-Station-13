@@ -51,7 +51,7 @@
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
 	add_fingerprint(user)
-	if(user.get_item_by_slot(SLOT_WEAR_SUIT) == src)
+	if(user.get_item_in_slot(SLOT_OUTERWEAR) == src)
 		user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)

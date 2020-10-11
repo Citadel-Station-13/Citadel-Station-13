@@ -83,8 +83,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/list/actions //list of /datum/action's that this item has.
 	var/list/actions_types //list of paths of action datums to give to the item on New().
 
+	// Inventory
+	/// The inventory slot we're in. When we're deleted this allows for faster lookup instead of having to have the mob cycle through their slots.
+	var/datum/inventory_slot/equipped_in
+
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	// End
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 	//Citadel Edit for digitigrade stuff
@@ -749,7 +754,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
+		if(src == M.get_item_in_slot(SLOT_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)

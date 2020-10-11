@@ -12,7 +12,7 @@
 	/// The item we contain
 	var/obj/item/held
 	/// Spritesheet overrides: List of CLOTHING_ASSET_SET_DEFINE = file, or if not a list, just a single file.
-	var/spritesheet_override
+	var/override_spritesheet
 	/// Our generated HUD object
 	var/obj/screen/hud_object
 

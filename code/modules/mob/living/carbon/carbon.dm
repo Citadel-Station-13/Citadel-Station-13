@@ -236,7 +236,7 @@
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
 	<BR><B>Head:</B> <A href='?src=[REF(src)];item=[SLOT_HEAD]'>				[(head && !(head.item_flags & ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[SLOT_WEAR_MASK]'>		[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Mask:</B> <A href='?src=[REF(src)];item=[SLOT_MASK]'>		[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</A>
 	<BR><B>Neck:</B> <A href='?src=[REF(src)];item=[SLOT_NECK]'>		[(wear_neck && !(wear_neck.item_flags & ABSTRACT))	? wear_neck	: "Nothing"]</A>"}
 
 	for(var/i in 1 to held_items.len)
@@ -266,7 +266,7 @@
 	if(usr.canUseTopic(src, BE_CLOSE))
 		if(href_list["internal"] && !HAS_TRAIT(src, TRAIT_NO_INTERNALS))
 			var/slot = text2num(href_list["internal"])
-			var/obj/item/ITEM = get_item_by_slot(slot)
+			var/obj/item/ITEM = get_item_in_slot(slot)
 			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & ALLOWINTERNALS))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", \
@@ -313,7 +313,7 @@
 		// too soon.
 		var/buckle_cd = 600
 		if(handcuffed)
-			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
+			var/obj/item/restraints/O = src.get_item_in_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
 		MarkResistTime()
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
@@ -1172,7 +1172,7 @@
 /mob/living/carbon/check_obscured_slots()
 	if(head)
 		if(head.flags_inv & HIDEMASK)
-			LAZYOR(., SLOT_WEAR_MASK)
+			LAZYOR(., SLOT_MASK)
 		if(head.flags_inv & HIDEEYES)
 			LAZYOR(., SLOT_GLASSES)
 		if(head.flags_inv & HIDEEARS)

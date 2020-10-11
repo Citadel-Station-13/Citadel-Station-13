@@ -229,6 +229,10 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/supplied/freeform/attack_self(mob/user)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/prompt, user)
+
+/obj/item/aiModule/supplied/freeform/proc/prompt(mob/user)
 	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
 	if(newpos == null)
 		return
@@ -242,7 +246,6 @@ AI MODULES
 	if(!targName)
 		return
 	laws[1] = targName
-	..()
 
 /obj/item/aiModule/supplied/freeform/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()

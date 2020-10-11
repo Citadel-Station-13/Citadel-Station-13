@@ -63,9 +63,9 @@
 			H.dropItemToGround(H.w_uniform)
 			H.dropItemToGround(H.wear_suit)
 			H.dropItemToGround(H.head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_WEAR_SUIT)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_OUTERWEAR)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), SLOT_HEAD)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_W_UNIFORM)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_UNIFORM)
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
@@ -125,8 +125,8 @@
 	var/mob/living/carbon/human/lich = new(item_turf)
 
 	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), SLOT_SHOES)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), SLOT_W_UNIFORM)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), SLOT_WEAR_SUIT)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), SLOT_UNIFORM)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), SLOT_OUTERWEAR)
 	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), SLOT_HEAD)
 
 	lich.real_name = mind.name

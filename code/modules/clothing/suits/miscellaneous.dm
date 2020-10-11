@@ -203,7 +203,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == SLOT_OUTERWEAR)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)
@@ -904,7 +904,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/ratvar/equipped(mob/living/user,slot)
 	..()
-	if (slot != SLOT_WEAR_SUIT || !real)
+	if (slot != SLOT_OUTERWEAR || !real)
 		return
 	if (is_servant_of_ratvar(user))
 		return
@@ -926,7 +926,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/narsie/equipped(mob/living/user,slot)
 	..()
-	if (slot != SLOT_WEAR_SUIT || !real)
+	if (slot != SLOT_OUTERWEAR || !real)
 		return
 	if (iscultist(user))
 		return

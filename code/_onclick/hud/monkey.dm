@@ -50,7 +50,7 @@
 	inv_box.icon_state = "mask"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_mask
-	inv_box.slot_id = SLOT_WEAR_MASK
+	inv_box.slot_id = SLOT_MASK
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()

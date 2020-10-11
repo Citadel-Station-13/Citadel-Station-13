@@ -45,7 +45,7 @@
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
@@ -60,7 +60,7 @@
 	W.registered_name = H.real_name
 	ADD_TRAIT(W, TRAIT_NODROP, HIGHLANDER)
 	W.update_label(H.real_name)
-	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+	H.equip_to_slot_or_del(W, SLOT_ID_CARD)
 
 	sword = new(H)
 	if(!GLOB.highlander)

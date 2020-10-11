@@ -18,21 +18,21 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout[SLOT_WEAR_SUIT] = /obj/item/clothing/suit/wizrobe
+			loadout[SLOT_OUTERWEAR] = /obj/item/clothing/suit/wizrobe
 			loadout[SLOT_SHOES] = /obj/item/clothing/shoes/sandal/magic
 			loadout[SLOT_HEAD] = /obj/item/clothing/head/wizard
 			ruins_spaceworthiness = 1
 		if("swords")
 			loadout[SLOT_HANDS] = /obj/item/katana/cursed
 		if("bigfatdoobie")
-			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
+			loadout[SLOT_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
-			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/luchador
+			loadout[SLOT_MASK] = /obj/item/clothing/mask/luchador
 			loadout[SLOT_GLOVES] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")
-			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/chameleon
+			loadout[SLOT_MASK] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
 			loadout[SLOT_HEAD] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1
@@ -49,7 +49,7 @@
 			if(loadout[i])
 				var/obj/item/J = loadout[i]
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
-				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
+				H.dropItemToGround(H.get_item_in_slot(i), TRUE)
 				H.equip_to_slot_or_del(I, i)
 				ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 				I.item_flags |= DROPDEL
