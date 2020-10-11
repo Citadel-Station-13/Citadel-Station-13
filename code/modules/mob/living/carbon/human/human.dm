@@ -254,10 +254,10 @@
 		if(href_list["pockets"])
 			var/strip_mod = 1
 			var/strip_silence = FALSE
-			var/obj/item/clothing/gloves/g = gloves
-			if (istype(g))
-				strip_mod = g.strip_mod
-				strip_silence = g.strip_silence
+			var/obj/item/clothing/gloves/G = gloves
+			if(istype(G))
+				strip_mod = G.strip_mod
+				strip_silence = G.strip_silence
 			var/pocket_side = href_list["pockets"]
 			var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
 			var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
