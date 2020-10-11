@@ -189,7 +189,6 @@
 		brain.Remove(TRUE,TRUE)
 		QDEL_NULL(brain)
 	var/obj/item/organ/tongue/tongue = owner.getorganslot(ORGAN_SLOT_TONGUE)
-	var/list/accents
 	if(tongue)
 		tongue.Remove(TRUE,TRUE)
 		QDEL_NULL(tongue)
