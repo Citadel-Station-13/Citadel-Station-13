@@ -1,6 +1,6 @@
 /datum/species/mammal
 	name = "Anthromorph"
-	id = "mammal"
+	id = SPECIES_MAMMAL
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BEAST
@@ -15,6 +15,6 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
-	species_type = "furry"
+	species_category = SPECIES_CATEGORY_FURRY
 
 	allowed_limb_ids = list("mammal","aquatic","avian")
