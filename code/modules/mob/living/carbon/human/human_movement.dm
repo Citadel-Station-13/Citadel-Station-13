@@ -100,3 +100,8 @@
 	if(dna.species.space_move(src))
 		return TRUE
 	return ..()
+
+/mob/living/carbon/human/CanPass(atom/movable/mover, turf/target)
+	if(dna.species.species_pass_check())
+		return TRUE
+	return ..()
