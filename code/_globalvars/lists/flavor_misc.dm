@@ -38,6 +38,9 @@ GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(insect_wings_list)
 GLOBAL_LIST_EMPTY(insect_fluffs_list)
 GLOBAL_LIST_EMPTY(insect_markings_list)
+GLOBAL_LIST_EMPTY(arachnid_legs_list)
+GLOBAL_LIST_EMPTY(arachnid_spinneret_list)
+GLOBAL_LIST_EMPTY(arachnid_mandibles_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
 //a way to index the right bodypart list given the type of bodypart
@@ -60,6 +63,9 @@ GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"insect_wings" = GLOB.insect_wings_list,
 	"insect_fluff" = GLOB.insect_fluffs_list,
 	"insect_markings" = GLOB.insect_markings_list,
+	"arachnid_legs" = GLOB.arachnid_legs_list,
+	"arachnid_spinneret" = GLOB.arachnid_spinneret_list,
+	"arachnid_mandibles" = GLOB.arachnid_mandibles_list,
 	"caps" = GLOB.caps_list,
 	"ipc_screen" = GLOB.ipc_screens_list,
 	"ipc_antenna" = GLOB.ipc_antennas_list,
@@ -275,7 +281,7 @@ GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/o
 //locked parts are those that your picked species requires to have
 //unlocked parts are those that anyone can choose on customisation regardless
 //parts not in unlocked, but in all, are thus locked
-GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "body_markings" = "Body Markings", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
+GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "body_markings" = "Body Markings", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "arachnid_legs" = "Arachnid Legs", "arachnid_spinneret" = "Spinneret", "arachnid_mandibles" = "Mandibles", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
 GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
 
 //parts in either of the above two lists that require a second option that allows them to be coloured

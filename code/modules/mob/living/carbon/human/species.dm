@@ -118,7 +118,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//the ids you can use for your species, if empty, it means default only and not changeable
 	var/list/allowed_limb_ids
 
-	//the type of eyes this species has
+	//override for the icon path used when setting bodypart overlays. Intended for species that don't fit in the standard 32x32 files.
+	var/override_bp_icon
+	//the icon state of the eyes this species has
 	var/eye_type = "normal"
 
 ///////////
