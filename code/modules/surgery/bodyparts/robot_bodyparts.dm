@@ -295,7 +295,7 @@
 	brute_reduction = 3
 	burn_reduction = 2
 	max_damage = 55
-	easy_heal_threshhold = 25 //Lower threshhold than true robotic limbs, but very low mindamage too.
+	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
 	threshhold_passed_mindamage = 5
 
 /obj/item/bodypart/r_arm/robot/surplus_upgraded
@@ -305,7 +305,7 @@
 	brute_reduction = 3
 	burn_reduction = 2
 	max_damage = 55
-	easy_heal_threshhold = 25 //Lower threshhold than true robotic limbs, but very low mindamage too.
+	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
 	threshhold_passed_mindamage = 5
 
 /obj/item/bodypart/l_leg/robot/surplus_upgraded
@@ -315,7 +315,7 @@
 	brute_reduction = 3
 	burn_reduction = 2
 	max_damage = 55
-	easy_heal_threshhold = 25 //Lower threshhold than true robotic limbs, but very low mindamage too.
+	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
 	threshhold_passed_mindamage = 5
 
 /obj/item/bodypart/r_leg/robot/surplus_upgraded
@@ -325,7 +325,7 @@
 	brute_reduction = 3
 	burn_reduction = 2
 	max_damage = 55
-	easy_heal_threshhold = 25 //Lower threshhold than true robotic limbs, but very low mindamage too.
+	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
 	threshhold_passed_mindamage = 5
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
