@@ -450,7 +450,7 @@ BLIND     // can't see anything
 		return FALSE
 
 	// Skip species restriction checks on non-equipment slots
-	if(slot in list(SLOT_PUT_IN_BACKPACK, SLOT_L_STORE, SLOT_R_STORE))
+	if(slot in list(INVENTORY_SLOT_PUT_IN_BACKPACK, INVENTORY_SLOT_L_STORE, INVENTORY_SLOT_R_STORE))
 		return TRUE
 
 	if(species_restricted && ishuman(M))

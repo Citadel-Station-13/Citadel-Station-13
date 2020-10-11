@@ -84,7 +84,7 @@
 
 /obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_GLOVES)
+	if(slot == INVENTORY_SLOT_GLOVES)
 		ADD_TRAIT(user, carrytrait, GLOVE_TRAIT)
 
 /obj/item/clothing/gloves/tackler/combat/insulated/infiltrator/dropped(mob/user)

@@ -19,7 +19,7 @@
 
 /obj/item/megaphone/equipped(mob/M, slot)
 	. = ..()
-	if (slot == SLOT_PUT_IN_HANDS)
+	if (slot == INVENTORY_SLOT_PUT_IN_HANDS)
 		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)

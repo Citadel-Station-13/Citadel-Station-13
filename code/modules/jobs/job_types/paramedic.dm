@@ -41,7 +41,7 @@
 	r_pocket = /obj/item/pinpointer/crew
 	l_pocket = /obj/item/pda/medical
 	backpack_contents = list(/obj/item/roller=1)
-	pda_slot = SLOT_L_STORE
+	pda_slot = INVENTORY_SLOT_L_STORE
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

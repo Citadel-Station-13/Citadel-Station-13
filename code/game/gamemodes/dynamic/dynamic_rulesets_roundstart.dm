@@ -629,7 +629,7 @@
 	L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	var/obj/item/clockwork/slab/S = new
 	var/slot = "At your feet"
-	var/list/slots = list("In your left pocket" = SLOT_L_STORE, "In your right pocket" = SLOT_R_STORE, "In your backpack" = SLOT_PUT_IN_BACKPACK, "On your belt" = SLOT_BELT)
+	var/list/slots = list("In your left pocket" = INVENTORY_SLOT_L_STORE, "In your right pocket" = INVENTORY_SLOT_R_STORE, "In your backpack" = INVENTORY_SLOT_PUT_IN_BACKPACK, "On your belt" = INVENTORY_SLOT_BELT)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		slot = H.equip_in_one_of_slots(S, slots)

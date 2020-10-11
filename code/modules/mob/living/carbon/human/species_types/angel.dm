@@ -5,7 +5,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
-	no_equip = list(SLOT_BACK)
+	no_equip = list(INVENTORY_SLOT_BACK)
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human

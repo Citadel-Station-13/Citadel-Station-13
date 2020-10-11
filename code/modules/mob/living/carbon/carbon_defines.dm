@@ -12,8 +12,8 @@
 	var/dreaming = 0 //How many dream images we have left to send
 
 	inventory_slots_default = list(
-		SLOT_HANDCUFFED,
-		SLOT_LEGCUFFED
+		INVENTORY_SLOT_HANDCUFFED,
+		INVENTORY_SLOT_LEGCUFFED
 	)
 
 	var/disgust = 0

@@ -300,14 +300,14 @@
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
-		SLOT_BACK, SLOT_ID_CARD,\
-		SLOT_UNIFORM, SLOT_OUTERWEAR,\
-		SLOT_MASK, SLOT_HEAD, SLOT_NECK,\
-		SLOT_SHOES, SLOT_GLOVES,\
-		SLOT_EARS, SLOT_GLASSES,\
-		SLOT_BELT, SLOT_S_STORE,\
-		SLOT_L_STORE, SLOT_R_STORE,\
-		SLOT_GENERC_DEXTROUS_STORAGE
+		INVENTORY_SLOT_BACK, INVENTORY_SLOT_ID_CARD,\
+		INVENTORY_SLOT_UNIFORM, INVENTORY_SLOT_OUTERWEAR,\
+		INVENTORY_SLOT_MASK, INVENTORY_SLOT_HEAD, INVENTORY_SLOT_NECK,\
+		INVENTORY_SLOT_SHOES, INVENTORY_SLOT_GLOVES,\
+		INVENTORY_SLOT_EARS, INVENTORY_SLOT_GLASSES,\
+		INVENTORY_SLOT_BELT, INVENTORY_SLOT_S_STORE,\
+		INVENTORY_SLOT_L_STORE, INVENTORY_SLOT_R_STORE,\
+		INVENTORY_SLOT_GENERC_DEXTROUS_STORAGE
 	)
 	container_flags = APTFT_ALTCLICK|APTFT_VERB
 	container_HP = 1
@@ -330,11 +330,11 @@
 
 /obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == INVENTORY_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 			var/R = reagents.log_list()
-			log_reagent("SPLASH: [user] splashed [src] on their head via bucket/equipped(self, SLOT_HEAD) - [R]")
+			log_reagent("SPLASH: [user] splashed [src] on their head via bucket/equipped(self, INVENTORY_SLOT_HEAD) - [R]")
 			reagents.reaction(user, TOUCH)
 			reagents.clear_reagents()
 		reagent_flags = NONE
@@ -345,10 +345,10 @@
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
-		var/index = slot_equipment_priority.Find(SLOT_HEAD)
-		slot_equipment_priority.Remove(SLOT_HEAD)
+		var/index = slot_equipment_priority.Find(INVENTORY_SLOT_HEAD)
+		slot_equipment_priority.Remove(INVENTORY_SLOT_HEAD)
 		. = ..()
-		slot_equipment_priority.Insert(index, SLOT_HEAD)
+		slot_equipment_priority.Insert(index, INVENTORY_SLOT_HEAD)
 		return
 	return ..()
 

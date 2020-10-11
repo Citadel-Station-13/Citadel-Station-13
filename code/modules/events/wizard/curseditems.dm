@@ -18,23 +18,23 @@
 
 	switch(item_set)
 		if("wizardmimic")
-			loadout[SLOT_OUTERWEAR] = /obj/item/clothing/suit/wizrobe
-			loadout[SLOT_SHOES] = /obj/item/clothing/shoes/sandal/magic
-			loadout[SLOT_HEAD] = /obj/item/clothing/head/wizard
+			loadout[INVENTORY_SLOT_OUTERWEAR] = /obj/item/clothing/suit/wizrobe
+			loadout[INVENTORY_SLOT_SHOES] = /obj/item/clothing/shoes/sandal/magic
+			loadout[INVENTORY_SLOT_HEAD] = /obj/item/clothing/head/wizard
 			ruins_spaceworthiness = 1
 		if("swords")
-			loadout[SLOT_PUT_IN_HANDS] = /obj/item/katana/cursed
+			loadout[INVENTORY_SLOT_PUT_IN_HANDS] = /obj/item/katana/cursed
 		if("bigfatdoobie")
-			loadout[SLOT_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
+			loadout[INVENTORY_SLOT_MASK] = /obj/item/clothing/mask/cigarette/rollie/trippy
 			ruins_spaceworthiness = 1
 		if("boxing")
-			loadout[SLOT_MASK] = /obj/item/clothing/mask/luchador
-			loadout[SLOT_GLOVES] = /obj/item/clothing/gloves/boxing
+			loadout[INVENTORY_SLOT_MASK] = /obj/item/clothing/mask/luchador
+			loadout[INVENTORY_SLOT_GLOVES] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
 		if("voicemodulators")
-			loadout[SLOT_MASK] = /obj/item/clothing/mask/chameleon
+			loadout[INVENTORY_SLOT_MASK] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
-			loadout[SLOT_HEAD] = /obj/item/clothing/head/kitty
+			loadout[INVENTORY_SLOT_HEAD] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 

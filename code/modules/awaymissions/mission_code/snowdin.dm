@@ -589,7 +589,7 @@
 	back = /obj/item/storage/backpack
 	mask = /obj/item/clothing/mask/breath
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
-	internals_slot = SLOT_R_STORE
+	internals_slot = INVENTORY_SLOT_R_STORE
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE

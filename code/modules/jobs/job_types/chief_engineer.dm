@@ -54,7 +54,7 @@
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/engineer
-	pda_slot = SLOT_L_STORE
+	pda_slot = INVENTORY_SLOT_L_STORE
 	chameleon_extras = /obj/item/stamp/ce
 
 /datum/outfit/job/ce/rig
@@ -67,4 +67,4 @@
 	glasses = /obj/item/clothing/glasses/meson/engine
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
-	internals_slot = SLOT_S_STORE
+	internals_slot = INVENTORY_SLOT_S_STORE

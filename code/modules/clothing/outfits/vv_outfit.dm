@@ -10,35 +10,35 @@
 
 /datum/outfit/varedit/proc/set_equipement_by_slot(slot,item_path)
 	switch(slot)
-		if(SLOT_UNIFORM)
+		if(INVENTORY_SLOT_UNIFORM)
 			uniform = item_path
-		if(SLOT_BACK)
+		if(INVENTORY_SLOT_BACK)
 			back = item_path
-		if(SLOT_OUTERWEAR)
+		if(INVENTORY_SLOT_OUTERWEAR)
 			suit = item_path
-		if(SLOT_BELT)
+		if(INVENTORY_SLOT_BELT)
 			belt = item_path
-		if(SLOT_GLOVES)
+		if(INVENTORY_SLOT_GLOVES)
 			gloves = item_path
-		if(SLOT_SHOES)
+		if(INVENTORY_SLOT_SHOES)
 			shoes = item_path
-		if(SLOT_HEAD)
+		if(INVENTORY_SLOT_HEAD)
 			head = item_path
-		if(SLOT_MASK)
+		if(INVENTORY_SLOT_MASK)
 			mask = item_path
-		if(SLOT_NECK)
+		if(INVENTORY_SLOT_NECK)
 			neck = item_path
-		if(SLOT_EARS)
+		if(INVENTORY_SLOT_EARS)
 			ears = item_path
-		if(SLOT_GLASSES)
+		if(INVENTORY_SLOT_GLASSES)
 			glasses = item_path
-		if(SLOT_ID_CARD)
+		if(INVENTORY_SLOT_ID_CARD)
 			id = item_path
-		if(SLOT_S_STORE)
+		if(INVENTORY_SLOT_S_STORE)
 			suit_store = item_path
-		if(SLOT_L_STORE)
+		if(INVENTORY_SLOT_L_STORE)
 			l_pocket = item_path
-		if(SLOT_R_STORE)
+		if(INVENTORY_SLOT_R_STORE)
 			r_pocket = item_path
 
 
@@ -68,7 +68,7 @@
 
 	//Copy equipment
 	var/list/result = list()
-	var/list/slots_to_check = list(SLOT_UNIFORM,SLOT_BACK,SLOT_OUTERWEAR,SLOT_BELT,SLOT_GLOVES,SLOT_SHOES,SLOT_HEAD,SLOT_MASK,SLOT_NECK,SLOT_EARS,SLOT_GLASSES,SLOT_ID_CARD,SLOT_S_STORE,SLOT_L_STORE,SLOT_R_STORE)
+	var/list/slots_to_check = list(INVENTORY_SLOT_UNIFORM,INVENTORY_SLOT_BACK,INVENTORY_SLOT_OUTERWEAR,INVENTORY_SLOT_BELT,INVENTORY_SLOT_GLOVES,INVENTORY_SLOT_SHOES,INVENTORY_SLOT_HEAD,INVENTORY_SLOT_MASK,INVENTORY_SLOT_NECK,INVENTORY_SLOT_EARS,INVENTORY_SLOT_GLASSES,INVENTORY_SLOT_ID_CARD,INVENTORY_SLOT_S_STORE,INVENTORY_SLOT_L_STORE,INVENTORY_SLOT_R_STORE)
 	for(var/s in slots_to_check)
 		var/obj/item/I = get_item_in_slot(s)
 		var/vedits = collect_vv(I)
@@ -79,7 +79,7 @@
 
 	//Copy access
 	O.stored_access = list()
-	var/obj/item/id_slot = get_item_in_slot(SLOT_ID_CARD)
+	var/obj/item/id_slot = get_item_in_slot(INVENTORY_SLOT_ID_CARD)
 	if(id_slot)
 		O.stored_access |= id_slot.GetAccess()
 	//Copy hands
@@ -98,7 +98,7 @@
 				result["RHAND"] = vedits
 	O.vv_values = result
 	//Copy backpack contents if exist.
-	var/obj/item/backpack = get_item_in_slot(SLOT_BACK)
+	var/obj/item/backpack = get_item_in_slot(INVENTORY_SLOT_BACK)
 	if(istype(backpack) && SEND_SIGNAL(backpack, COMSIG_CONTAINS_STORAGE))
 		var/list/bp_stuff = list()
 		var/list/typecounts = list()
@@ -136,7 +136,7 @@
 		for(var/vname in edits)
 			I.vv_edit_var(vname,edits[vname])
 	//Apply access
-	var/obj/item/id_slot = H.get_item_in_slot(SLOT_ID_CARD)
+	var/obj/item/id_slot = H.get_item_in_slot(INVENTORY_SLOT_ID_CARD)
 	if(id_slot)
 		var/obj/item/card/id/card = id_slot.GetID()
 		if(istype(card))

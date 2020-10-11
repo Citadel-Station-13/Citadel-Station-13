@@ -508,10 +508,10 @@
 	W.update_label(W.registered_name, W.assignment)
 
 	// The shielded hardsuit is already TRAIT_NODROP
-	no_drops += H.get_item_in_slot(SLOT_GLOVES)
-	no_drops += H.get_item_in_slot(SLOT_SHOES)
-	no_drops += H.get_item_in_slot(SLOT_UNIFORM)
-	no_drops += H.get_item_in_slot(SLOT_EARS)
+	no_drops += H.get_item_in_slot(INVENTORY_SLOT_GLOVES)
+	no_drops += H.get_item_in_slot(INVENTORY_SLOT_SHOES)
+	no_drops += H.get_item_in_slot(INVENTORY_SLOT_UNIFORM)
+	no_drops += H.get_item_in_slot(INVENTORY_SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)

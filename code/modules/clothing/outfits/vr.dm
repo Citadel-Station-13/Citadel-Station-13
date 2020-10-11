@@ -36,7 +36,7 @@
 	. = ..()
 	var/key = H.key ? H.key : preference_source ? preference_source.key : null
 	var/obj/item/uplink/U = new /obj/item/uplink/nuclear_restricted(H, key, 80)
-	H.equip_to_slot_or_del(U, SLOT_PUT_IN_BACKPACK)
+	H.equip_to_slot_or_del(U, INVENTORY_SLOT_PUT_IN_BACKPACK)
 	var/obj/item/implant/weapons_auth/W = new
 	W.implant(H)
 	var/obj/item/implant/explosive/E = new

@@ -189,10 +189,10 @@
 		return
 
 	var/list/slots = list (
-		"backpack" = SLOT_PUT_IN_BACKPACK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE,
-		"hands" = SLOT_PUT_IN_HANDS
+		"backpack" = INVENTORY_SLOT_PUT_IN_BACKPACK,
+		"left pocket" = INVENTORY_SLOT_L_STORE,
+		"right pocket" = INVENTORY_SLOT_R_STORE,
+		"hands" = INVENTORY_SLOT_PUT_IN_HANDS
 	)
 
 	if(gangtool)//Here is where all of the text occurs when a gang boss first spawns in.

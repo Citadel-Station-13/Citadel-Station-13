@@ -229,12 +229,12 @@
 		H.dropItemToGround(I)
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
-	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), SLOT_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new hat(H), INVENTORY_SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), INVENTORY_SLOT_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), INVENTORY_SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/spear(H), INVENTORY_SLOT_BACK)
 
 
 /obj/item/voodoo

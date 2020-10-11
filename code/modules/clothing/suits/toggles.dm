@@ -28,11 +28,11 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_OUTERWEAR || slot == SLOT_NECK)
+	if(slot == INVENTORY_SLOT_OUTERWEAR || slot == INVENTORY_SLOT_NECK)
 		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != SLOT_OUTERWEAR && slot != SLOT_NECK)
+	if(slot != INVENTORY_SLOT_OUTERWEAR && slot != INVENTORY_SLOT_NECK)
 		RemoveHood()
 	..()
 
@@ -67,7 +67,7 @@
 			if(H.head)
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
+			else if(H.equip_to_slot_if_possible(hood,INVENTORY_SLOT_HEAD,0,0,1))
 				suittoggled = TRUE
 				update_icon()
 				H.update_inv_wear_suit()
@@ -89,7 +89,7 @@
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_HEAD)
+	if(slot != INVENTORY_SLOT_HEAD)
 		if(suit)
 			suit.RemoveHood()
 		else
@@ -161,7 +161,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	if(!helmettype)
 		return
-	if(slot != SLOT_OUTERWEAR)
+	if(slot != INVENTORY_SLOT_OUTERWEAR)
 		RemoveHelmet()
 	..()
 
@@ -202,7 +202,7 @@
 				if(message)
 					to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
+			else if(H.equip_to_slot_if_possible(helmet,INVENTORY_SLOT_HEAD,0,0,1))
 				if(message)
 					to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE

@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(inventory_slot_meta, inventory_slot_meta())
 	var/name = "ERROR"
 	/// ID (__DEFINES/inventory/inventory_slots.dm)
 	var/id = "ERROR"
-	/// Virtual slot? If it is we aren't a "real" slot and we should be specially handled. See: SLOT_PUT_IN_HANDS where you want to put stuff into hands rather than a specific slot
+	/// Virtual slot? If it is we aren't a "real" slot and we should be specially handled. See: INVENTORY_SLOT_PUT_IN_HANDS where you want to put stuff into hands rather than a specific slot
 	var/virtual = FALSE
 	/// Typepath to /datum/inventory_slot
 	var/slot_datum_path
@@ -29,124 +29,124 @@ GLOBAL_LIST_INIT(inventory_slot_meta, inventory_slot_meta())
 
 /datum/inventory_slot_meta/back
 	name = "Back"
-	id = SLOT_BACK
+	id = INVENTORY_SLOT_BACK
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/back
 
 /datum/inventory_slot_meta/back
 	name = "Back"
-	id = SLOT_BACK
+	id = INVENTORY_SLOT_BACK
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/back
 
 /datum/inventory_slot_meta/mask
 	name = "Mask"
-	id = SLOT_MASK
+	id = INVENTORY_SLOT_MASK
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/mask
 
 /datum/inventory_slot_meta/handcuffed
 	name = "Handcuffed"
-	id = SLOT_HANDCUFFED
+	id = INVENTORY_SLOT_HANDCUFFED
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/handcuffed
 
 /datum/inventory_slot_meta/put_in_hands
 	name = "Put Into Hands"
-	id = SLOT_PUT_IN_HANDS
+	id = INVENTORY_SLOT_PUT_IN_HANDS
 	virtual = TRUE
 
 /datum/inventory_slot_meta/belt
 	name = "Belt"
-	id = SLOT_BELT
+	id = INVENTORY_SLOT_BELT
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/belt
 
 /datum/inventory_slot_meta/id_card
 	name = "ID Card"
-	id = SLOT_ID_CARD
+	id = INVENTORY_SLOT_ID_CARD
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/id_card
 
 /datum/inventory_slot_meta/ears
 	name = "Ears"
-	id = SLOT_EARS
+	id = INVENTORY_SLOT_EARS
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/ears
 
 /datum/inventory_slot_meta/glasses
 	name = "Glasses"
-	id = SLOT_GLASSES
+	id = INVENTORY_SLOT_GLASSES
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/glasses
 
 /datum/inventory_slot_meta/gloves
 	name = "Gloves"
-	id = SLOT_GLOVES
+	id = INVENTORY_SLOT_GLOVES
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/gloves
 
 /datum/inventory_slot_meta/neck
 	name = "Neck"
-	id = SLOT_NECK
+	id = INVENTORY_SLOT_NECK
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/neck
 
 /datum/inventory_slot_meta/head
 	name = "Head"
-	id = SLOT_HEAD
+	id = INVENTORY_SLOT_HEAD
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/head
 
 /datum/inventory_slot_meta/shoes
 	name = "Shoes"
-	id = SLOT_SHOES
+	id = INVENTORY_SLOT_SHOES
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/shoes
 
 /datum/inventory_slot_meta/outerwear
 	name = "Outerwear"
-	id = SLOT_OUTERWEAR
+	id = INVENTORY_SLOT_OUTERWEAR
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/outerwear
 
 /datum/inventory_slot_meta/uniform
 	name = "Uniform"
-	id = SLOT_UNIFORM
+	id = INVENTORY_SLOT_UNIFORM
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/uniform
 
 /datum/inventory_slot_meta/left_pocket
 	name = "Left Pocket"
-	id = SLOT_L_STORE
+	id = INVENTORY_SLOT_L_STORE
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/left_pocket
 
 /datum/inventory_slot_meta/right_pocket
 	name = "Right Pocket"
-	id = SLOT_R_STORE
+	id = INVENTORY_SLOT_R_STORE
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/right_pocket
 
 /datum/inventory_slot_meta/suit_storage
 	name = "Suit Storage"
-	id = SLOT_S_STORE
+	id = INVENTORY_SLOT_S_STORE
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/suit_storage
 
 /datum/inventory_slot_meta/put_in_backpack
 	name = "Put In Backpack"
-	id = SLOT_PUT_IN_BACKPACK
+	id = INVENTORY_SLOT_PUT_IN_BACKPACK
 	virtual = TRUE
 
 /datum/inventory_slot_meta/legcuffed
 	name = "Legcuffed"
-	id = SLOT_LEGCUFFED
+	id = INVENTORY_SLOT_LEGCUFFED
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/legcuffed
 
 /datum/inventory_slot_meta/generic_dextrous_storage
 	name = "Generic Dextrous Storage"
-	id = SLOT_GENERIC_DEXTROUS_STORAGE
+	id = INVENTORY_SLOT_GENERIC_DEXTROUS_STORAGE
 	virtual = FALSE
 	slot_datum_path = /datum/inventory_slot/generic_dextrous_storage

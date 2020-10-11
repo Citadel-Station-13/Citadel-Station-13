@@ -14,7 +14,7 @@
 
 /obj/item/clothing/shoes/space_ninja/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == INVENTORY_SLOT_SHOES)
 		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/space_ninja/dropped(mob/user)

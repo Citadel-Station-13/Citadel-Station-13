@@ -130,7 +130,7 @@
 				if(AM.flags_1 & HOLOGRAM_1)
 					continue
 				. += AM
-	for(var/slot in list(SLOT_R_STORE, SLOT_L_STORE))
+	for(var/slot in list(INVENTORY_SLOT_R_STORE, INVENTORY_SLOT_L_STORE))
 		. += user.get_item_in_slot(slot)
 
 /datum/component/personal_crafting/proc/get_surroundings(mob/user)

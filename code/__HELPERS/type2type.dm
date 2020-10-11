@@ -410,25 +410,25 @@
 
 /proc/slot2body_zone(slot)
 	switch(slot)
-		if(SLOT_BACK, SLOT_OUTERWEAR, SLOT_UNIFORM, SLOT_BELT, SLOT_ID_CARD)
+		if(INVENTORY_SLOT_BACK, INVENTORY_SLOT_OUTERWEAR, INVENTORY_SLOT_UNIFORM, INVENTORY_SLOT_BELT, INVENTORY_SLOT_ID_CARD)
 			return BODY_ZONE_CHEST
 
-		if(SLOT_GLOVES, SLOT_PUT_IN_HANDS, SLOT_HANDCUFFED)
+		if(INVENTORY_SLOT_GLOVES, INVENTORY_SLOT_PUT_IN_HANDS, INVENTORY_SLOT_HANDCUFFED)
 			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 
-		if(SLOT_HEAD, SLOT_NECK, SLOT_NECK, SLOT_EARS)
+		if(INVENTORY_SLOT_HEAD, INVENTORY_SLOT_NECK, INVENTORY_SLOT_NECK, INVENTORY_SLOT_EARS)
 			return BODY_ZONE_HEAD
 
-		if(SLOT_MASK)
+		if(INVENTORY_SLOT_MASK)
 			return BODY_ZONE_PRECISE_MOUTH
 
-		if(SLOT_GLASSES)
+		if(INVENTORY_SLOT_GLASSES)
 			return BODY_ZONE_PRECISE_EYES
 
-		if(SLOT_SHOES)
+		if(INVENTORY_SLOT_SHOES)
 			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
 
-		if(SLOT_LEGCUFFED)
+		if(INVENTORY_SLOT_LEGCUFFED)
 			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
@@ -650,31 +650,31 @@
 
 /proc/slot_to_string(slot)
 	switch(slot)
-		if(SLOT_BACK)
+		if(INVENTORY_SLOT_BACK)
 			return "Backpack"
-		if(SLOT_MASK)
+		if(INVENTORY_SLOT_MASK)
 			return "Mask"
-		if(SLOT_PUT_IN_HANDS)
+		if(INVENTORY_SLOT_PUT_IN_HANDS)
 			return "Hands"
-		if(SLOT_BELT)
+		if(INVENTORY_SLOT_BELT)
 			return "Belt"
-		if(SLOT_EARS)
+		if(INVENTORY_SLOT_EARS)
 			return "Ears"
-		if(SLOT_GLASSES)
+		if(INVENTORY_SLOT_GLASSES)
 			return "Glasses"
-		if(SLOT_GLOVES)
+		if(INVENTORY_SLOT_GLOVES)
 			return "Gloves"
-		if(SLOT_NECK)
+		if(INVENTORY_SLOT_NECK)
 			return "Neck"
-		if(SLOT_HEAD)
+		if(INVENTORY_SLOT_HEAD)
 			return "Head"
-		if(SLOT_SHOES)
+		if(INVENTORY_SLOT_SHOES)
 			return "Shoes"
-		if(SLOT_OUTERWEAR)
+		if(INVENTORY_SLOT_OUTERWEAR)
 			return "Suit"
-		if(SLOT_UNIFORM)
+		if(INVENTORY_SLOT_UNIFORM)
 			return "Uniform"
-		if(SLOT_PUT_IN_BACKPACK)
+		if(INVENTORY_SLOT_PUT_IN_BACKPACK)
 			return "In backpack"
 
 /proc/tg_ui_icon_to_cit_ui(ui_style)

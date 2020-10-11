@@ -202,7 +202,7 @@
 					id.forceMove(W)
 					W.update_icon()
 			else
-				H.equip_to_slot(id,SLOT_ID_CARD)
+				H.equip_to_slot(id,INVENTORY_SLOT_ID_CARD)
 
 	else
 		alert("Invalid mob")

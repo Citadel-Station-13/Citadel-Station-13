@@ -18,7 +18,7 @@
 
 /obj/item/clothing/head/helmet/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(INVENTORY_SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1

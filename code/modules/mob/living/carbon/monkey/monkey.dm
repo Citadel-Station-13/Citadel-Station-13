@@ -17,10 +17,10 @@
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 	hud_type = /datum/hud/monkey
 	inventory_slots_default = list(
-		SLOT_HANDCUFFED,
-		SLOT_LEGCUFFED,
-		SLOT_HEAD,
-		SLOT_BACK
+		INVENTORY_SLOT_HANDCUFFED,
+		INVENTORY_SLOT_LEGCUFFED,
+		INVENTORY_SLOT_HEAD,
+		INVENTORY_SLOT_BACK
 	)
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
@@ -177,5 +177,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,SLOT_HEAD)
+		equip_to_slot_or_del(helmet,INVENTORY_SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

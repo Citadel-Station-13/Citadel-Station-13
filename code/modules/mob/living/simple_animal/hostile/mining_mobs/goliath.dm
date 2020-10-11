@@ -191,7 +191,7 @@
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
 		var/mob/living/carbon/C = L
-		var/obj/item/clothing/S = C.get_item_in_slot(SLOT_OUTERWEAR)
+		var/obj/item/clothing/S = C.get_item_in_slot(INVENTORY_SLOT_OUTERWEAR)
 		if(S && S.resistance_flags & GOLIATH_RESISTANCE)
 			L.Stun(25)
 		else if(S && S.resistance_flags & GOLIATH_WEAKNESS)

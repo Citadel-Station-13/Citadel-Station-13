@@ -31,7 +31,7 @@
 		. += "[t_He] [t_is] a [dna.custom_species ? dna.custom_species : dna.species.name]!"
 
 	//uniform
-	if(w_uniform && !(SLOT_UNIFORM in obscured))
+	if(w_uniform && !(INVENTORY_SLOT_UNIFORM in obscured))
 		//accessory
 		var/accessory_msg
 		if(istype(w_uniform, /obj/item/clothing/under))
@@ -47,7 +47,7 @@
 	if(wear_suit)
 		. += "[t_He] [t_is] wearing [wear_suit.get_examine_string(user)]."
 		//suit/armor storage
-		if(s_store && !(SLOT_S_STORE in obscured))
+		if(s_store && !(INVENTORY_SLOT_S_STORE in obscured))
 			. += "[t_He] [t_is] carrying [s_store.get_examine_string(user)] on [t_his] [wear_suit.name]."
 	//back
 	if(back)
@@ -59,7 +59,7 @@
 			. += "[t_He] [t_is] holding [I.get_examine_string(user)] in [t_his] [get_held_index_name(get_held_index_of_item(I))]."
 
 	//gloves
-	if(gloves && !(SLOT_GLOVES in obscured))
+	if(gloves && !(INVENTORY_SLOT_GLOVES in obscured))
 		. += "[t_He] [t_has] [gloves.get_examine_string(user)] on [t_his] hands."
 	else if(length(blood_DNA))
 		var/hand_number = get_num_arms(FALSE)
@@ -78,18 +78,18 @@
 		. += "[t_He] [t_has] [belt.get_examine_string(user)] about [t_his] waist."
 
 	//shoes
-	if(shoes && !(SLOT_SHOES in obscured))
+	if(shoes && !(INVENTORY_SLOT_SHOES in obscured))
 		. += "[t_He] [t_is] wearing [shoes.get_examine_string(user)] on [t_his] feet."
 
 	//mask
-	if(wear_mask && !(SLOT_MASK in obscured))
+	if(wear_mask && !(INVENTORY_SLOT_MASK in obscured))
 		. += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face."
 
-	if(wear_neck && !(SLOT_NECK in obscured))
+	if(wear_neck && !(INVENTORY_SLOT_NECK in obscured))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
 	//eyes
-	if(!(SLOT_GLASSES in obscured))
+	if(!(INVENTORY_SLOT_GLASSES in obscured))
 		if(glasses)
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if((left_eye_color == BLOODCULT_EYE || right_eye_color == BLOODCULT_EYE) && iscultist(src) && HAS_TRAIT(src, TRAIT_CULT_EYES))
@@ -100,7 +100,7 @@
 				. += "<b><font color=orange>[t_His] eyes are flickering a bright yellow!</font></b>"
 
 	//ears
-	if(ears && !(SLOT_EARS in obscured))
+	if(ears && !(INVENTORY_SLOT_EARS in obscured))
 		. += "[t_He] [t_has] [ears.get_examine_string(user)] on [t_his] ears."
 
 	//ID

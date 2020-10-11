@@ -29,7 +29,7 @@
 
 /obj/item/clothing/gloves/fingerless/pugilist/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_GLOVES)
+	if(slot == INVENTORY_SLOT_GLOVES)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			ADD_TRAIT(H, TRAIT_PUGILIST, GLOVE_TRAIT)

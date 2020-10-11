@@ -1608,7 +1608,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	if(!iscarbon(target))
 		return TRUE
 	if(check_neck)
-		if(istype(target.get_item_in_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+		if(istype(target.get_item_in_slot(INVENTORY_SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 			return FALSE
 	if(check_blood)
 		if(target.reagents.has_reagent(/datum/reagent/consumable/garlic))

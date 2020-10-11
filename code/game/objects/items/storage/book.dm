@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/mob/living/carbon/human/H = usr
 		H.dna.add_mutation(CLOWNMUT)
 		H.dna.add_mutation(SMILE)
-		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_MASK)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), INVENTORY_SLOT_MASK)
 
 	GLOB.bible_icon_state = icon_state
 	GLOB.bibleitemstates = item_state

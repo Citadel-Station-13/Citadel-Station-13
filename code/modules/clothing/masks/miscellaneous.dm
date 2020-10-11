@@ -250,7 +250,7 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if((C.get_item_in_slot(SLOT_HEAD == src)) || (C.get_item_in_slot(SLOT_MASK) == src))
+		if((C.get_item_in_slot(INVENTORY_SLOT_HEAD == src)) || (C.get_item_in_slot(INVENTORY_SLOT_MASK) == src))
 			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
 			return
 	if(slot_flags & ITEM_SLOT_HEAD)

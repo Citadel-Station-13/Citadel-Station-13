@@ -460,10 +460,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/civilian/lawyer/black(H), SLOT_UNIFORM)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
-		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), SLOT_PUT_IN_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/pen(H), SLOT_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/civilian/lawyer/black(H), INVENTORY_SLOT_UNIFORM)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), INVENTORY_SLOT_SHOES)
+		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), INVENTORY_SLOT_PUT_IN_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/pen(H), INVENTORY_SLOT_L_STORE)
 		if(SOULVALUE >= BLOOD_THRESHOLD)
 			H.set_species(/datum/species/lizard, 1)
 			H.underwear = "Nude"

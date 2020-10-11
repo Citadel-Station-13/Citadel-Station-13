@@ -28,7 +28,7 @@
 
 /obj/item/clothing/shoes/combat/sneakboots/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == INVENTORY_SLOT_SHOES)
 		ADD_TRAIT(user, TRAIT_SILENT_STEP, SHOES_TRAIT)
 
 /obj/item/clothing/shoes/combat/sneakboots/dropped(mob/user)
@@ -315,7 +315,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_in_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_in_slot(INVENTORY_SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))
@@ -415,7 +415,7 @@
 
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == INVENTORY_SLOT_SHOES)
 		RegisterSignal(user, COMSIG_MOB_CLIENT_MOVE,.proc/intercept_user_move)
 
 /obj/item/clothing/shoes/wallwalkers/dropped(mob/user)

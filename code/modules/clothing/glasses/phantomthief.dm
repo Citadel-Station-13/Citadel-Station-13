@@ -17,7 +17,7 @@
 
 /obj/item/clothing/glasses/phantomthief/syndicate/examine(mob/user)
 	. = ..()
-	if(user.get_item_in_slot(SLOT_GLASSES) == src)
+	if(user.get_item_in_slot(INVENTORY_SLOT_GLASSES) == src)
 		if(world.time >= nextadrenalinepop)
 			. += "<span class='notice'>The built-in adrenaline injector is ready for use.</span>"
 		else
@@ -33,7 +33,7 @@
 	. = ..()
 	if(!istype(user))
 		return
-	if(slot != SLOT_GLASSES)
+	if(slot != INVENTORY_SLOT_GLASSES)
 		return
 	RegisterSignal(user, COMSIG_LIVING_COMBAT_ENABLED, .proc/injectadrenaline)
 

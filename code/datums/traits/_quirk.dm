@@ -124,7 +124,7 @@ Use this as a guideline
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
+	H.equip_to_slot(glasses, INVENTORY_SLOT_GLASSES)
 	H.regenerate_icons()
 
 //This whole proc is called automatically

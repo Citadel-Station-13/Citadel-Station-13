@@ -5,29 +5,29 @@
 		return FALSE
 
 	switch(slot)
-		if(SLOT_PUT_IN_HANDS)
+		if(INVENTORY_SLOT_PUT_IN_HANDS)
 			if(get_empty_held_indexes())
 				return TRUE
 			return FALSE
-		if(SLOT_MASK)
+		if(INVENTORY_SLOT_MASK)
 			if(wear_mask)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_MASK) )
 				return FALSE
 			return TRUE
-		if(SLOT_NECK)
+		if(INVENTORY_SLOT_NECK)
 			if(wear_neck)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_NECK) )
 				return FALSE
 			return TRUE
-		if(SLOT_HEAD)
+		if(INVENTORY_SLOT_HEAD)
 			if(head)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_HEAD) )
 				return FALSE
 			return TRUE
-		if(SLOT_BACK)
+		if(INVENTORY_SLOT_BACK)
 			if(back)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_BACK) )

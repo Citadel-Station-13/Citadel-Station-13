@@ -17,7 +17,7 @@
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new C(H), SLOT_UNIFORM) //or else you end up with naked assistants running around everywhere...
+		H.equip_to_slot_or_del(new C(H), INVENTORY_SLOT_UNIFORM) //or else you end up with naked assistants running around everywhere...
 	else
 		new C(loc)
 	return INITIALIZE_HINT_QDEL
@@ -30,7 +30,7 @@
 	var/obj/item/clothing/under/color/jumpskirt/C = pick(subtypesof(/obj/item/clothing/under/color/jumpskirt) - /obj/item/clothing/under/color/jumpskirt/random)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new C(H), SLOT_UNIFORM)
+		H.equip_to_slot_or_del(new C(H), INVENTORY_SLOT_UNIFORM)
 	else
 		new C(loc)
 	return INITIALIZE_HINT_QDEL

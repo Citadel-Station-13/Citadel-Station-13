@@ -17,39 +17,39 @@
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_in_slot(slot_id)
 	switch(slot_id)
-		if(SLOT_BACK)
+		if(INVENTORY_SLOT_BACK)
 			return back
-		if(SLOT_MASK)
+		if(INVENTORY_SLOT_MASK)
 			return wear_mask
-		if(SLOT_NECK)
+		if(INVENTORY_SLOT_NECK)
 			return wear_neck
-		if(SLOT_HANDCUFFED)
+		if(INVENTORY_SLOT_HANDCUFFED)
 			return handcuffed
-		if(SLOT_LEGCUFFED)
+		if(INVENTORY_SLOT_LEGCUFFED)
 			return legcuffed
-		if(SLOT_BELT)
+		if(INVENTORY_SLOT_BELT)
 			return belt
-		if(SLOT_ID_CARD)
+		if(INVENTORY_SLOT_ID_CARD)
 			return wear_id
-		if(SLOT_EARS)
+		if(INVENTORY_SLOT_EARS)
 			return ears
-		if(SLOT_GLASSES)
+		if(INVENTORY_SLOT_GLASSES)
 			return glasses
-		if(SLOT_GLOVES)
+		if(INVENTORY_SLOT_GLOVES)
 			return gloves
-		if(SLOT_HEAD)
+		if(INVENTORY_SLOT_HEAD)
 			return head
-		if(SLOT_SHOES)
+		if(INVENTORY_SLOT_SHOES)
 			return shoes
-		if(SLOT_OUTERWEAR)
+		if(INVENTORY_SLOT_OUTERWEAR)
 			return wear_suit
-		if(SLOT_UNIFORM)
+		if(INVENTORY_SLOT_UNIFORM)
 			return w_uniform
-		if(SLOT_L_STORE)
+		if(INVENTORY_SLOT_L_STORE)
 			return l_store
-		if(SLOT_R_STORE)
+		if(INVENTORY_SLOT_R_STORE)
 			return r_store
-		if(SLOT_S_STORE)
+		if(INVENTORY_SLOT_S_STORE)
 			return s_store
 	return null
 
@@ -98,17 +98,17 @@
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
-		if(SLOT_BELT)
+		if(INVENTORY_SLOT_BELT)
 			belt = I
 			update_inv_belt()
-		if(SLOT_ID_CARD)
+		if(INVENTORY_SLOT_ID_CARD)
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
-		if(SLOT_EARS)
+		if(INVENTORY_SLOT_EARS)
 			ears = I
 			update_inv_ears()
-		if(SLOT_GLASSES)
+		if(INVENTORY_SLOT_GLASSES)
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -121,13 +121,13 @@
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
 			update_inv_glasses()
-		if(SLOT_GLOVES)
+		if(INVENTORY_SLOT_GLOVES)
 			gloves = I
 			update_inv_gloves()
-		if(SLOT_SHOES)
+		if(INVENTORY_SLOT_SHOES)
 			shoes = I
 			update_inv_shoes()
-		if(SLOT_OUTERWEAR)
+		if(INVENTORY_SLOT_OUTERWEAR)
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
@@ -135,17 +135,17 @@
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
-		if(SLOT_UNIFORM)
+		if(INVENTORY_SLOT_UNIFORM)
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
-		if(SLOT_L_STORE)
+		if(INVENTORY_SLOT_L_STORE)
 			l_store = I
 			update_inv_pockets()
-		if(SLOT_R_STORE)
+		if(INVENTORY_SLOT_R_STORE)
 			r_store = I
 			update_inv_pockets()
-		if(SLOT_S_STORE)
+		if(INVENTORY_SLOT_S_STORE)
 			s_store = I
 			update_inv_s_store()
 		else
@@ -296,7 +296,7 @@
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_back = get_item_in_slot(SLOT_BACK)
+	var/obj/item/equipped_back = get_item_in_slot(INVENTORY_SLOT_BACK)
 	if(!equipped_back) // We also let you equip a backpack like this
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no backpack to take something out of!</span>")
@@ -327,7 +327,7 @@
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
-	var/obj/item/equipped_belt = get_item_in_slot(SLOT_BELT)
+	var/obj/item/equipped_belt = get_item_in_slot(INVENTORY_SLOT_BELT)
 	if(!equipped_belt) // We also let you equip a belt like this
 		if(!thing)
 			to_chat(src, "<span class='warning'>You have no belt to take something out of!</span>")

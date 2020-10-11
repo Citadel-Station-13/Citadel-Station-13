@@ -107,7 +107,7 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(SLOT_BELT, SLOT_BACK)
+		var/list/nonsafe_slots = list(INVENTORY_SLOT_BELT, INVENTORY_SLOT_BACK)
 		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_in_slot(slot)

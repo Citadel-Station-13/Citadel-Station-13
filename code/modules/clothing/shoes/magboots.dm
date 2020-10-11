@@ -96,7 +96,7 @@
 
 /obj/item/clothing/shoes/magboots/crushing/equipped(mob/user,slot)
 	. = ..()
-	if (slot == SLOT_SHOES && magpulse)
+	if (slot == INVENTORY_SLOT_SHOES && magpulse)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED,.proc/crush)
 
 /obj/item/clothing/shoes/magboots/crushing/dropped(mob/user)

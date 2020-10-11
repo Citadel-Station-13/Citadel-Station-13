@@ -655,12 +655,12 @@
 		uses--
 		var/mob/living/carbon/C = target
 		C.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [C]!</span>")
-		C.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,SLOT_UNIFORM)
-		C.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
-		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_OUTERWEAR)
-		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), SLOT_SHOES)
-		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), SLOT_BACK)
-		C.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless/pugilist/hungryghost(user), SLOT_GLOVES)
+		C.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,INVENTORY_SLOT_UNIFORM)
+		C.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), INVENTORY_SLOT_HEAD)
+		C.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), INVENTORY_SLOT_OUTERWEAR)
+		C.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), INVENTORY_SLOT_SHOES)
+		C.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), INVENTORY_SLOT_BACK)
+		C.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless/pugilist/hungryghost(user), INVENTORY_SLOT_GLOVES)
 		if(C == user)
 			qdel(src) //Clears the hands
 		C.put_in_hands(new /obj/item/melee/cultblade(user))
