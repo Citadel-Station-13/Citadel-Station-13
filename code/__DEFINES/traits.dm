@@ -164,6 +164,7 @@
 #define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
 #define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
 #define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
+#define TRAIT_MAULER	"mauler" // this guy punches the shit out of people to hurt them, not to drain their stamina
 #define TRAIT_PASSTABLE			"passtable"
 #define TRAIT_GIANT				"giant"
 #define TRAIT_DWARF				"dwarf"
@@ -220,6 +221,8 @@
 #define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
 /// Disallow item use
 #define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+///Disallow resting/unresting
+#define TRAIT_MOBILITY_NOREST		"mobility_norest"
 
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
@@ -312,6 +315,7 @@
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
+#define SLIMEPUDDLE_TRAIT "slimepuddle"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.
