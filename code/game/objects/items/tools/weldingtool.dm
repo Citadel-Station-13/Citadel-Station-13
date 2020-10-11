@@ -110,18 +110,13 @@
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
-		//only heal to 25 if limb is damaged to or past 25 brute, otherwise heal normally
-		var/difference = affecting.brute_dam - 25
-		var/heal_amount = 15
-		if(difference >= 0)
-			heal_amount = difference
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
 					"<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
 					return
-			item_heal_robotic(H, user, heal_amount, 0)
+			item_heal_robotic(H, user, 15, 0)
 	else
 		return ..()
 
