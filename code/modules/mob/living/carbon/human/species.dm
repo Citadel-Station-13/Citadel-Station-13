@@ -591,9 +591,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			else
 				var/left_state = DEFAULT_LEFT_EYE_STATE
 				var/right_state = DEFAULT_RIGHT_EYE_STATE
-				message_admins("okay so our eye type is [eye_type] and we can index it to know [GLOB.eye_types[eye_type]]")
 				if(eye_type in GLOB.eye_types)
-					message_admins("to know that it's in!")
 					left_state = eye_type + "_left_eye"
 					right_state = eye_type + "_right_eye"
 				var/mutable_appearance/left_eye = mutable_appearance('icons/mob/eyes.dmi', left_state, -BODY_LAYER)
