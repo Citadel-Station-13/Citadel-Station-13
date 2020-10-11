@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(5) // limb squish!
 						for(var/i in C.bodyparts)
 							var/obj/item/bodypart/squish_part = i
-							if(squish_part.is_organic_limb() || squish_part.render_like_organic)
+							if(squish_part.is_organic_limb())
 								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 								squish_part.force_wound_upwards(type_wound)
 							else
