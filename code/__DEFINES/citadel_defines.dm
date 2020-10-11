@@ -105,3 +105,9 @@
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4
+
+//icon states for the default eyes and for a state for no eye
+#define DEFAULT_EYES_TYPE			"normal"
+#define DEFAULT_LEFT_EYE_STATE		"normal_left_eye"
+#define DEFAULT_RIGHT_EYE_STATE		"normal_right_eye"
+#define DEFAULT_NO_EYE_STATE		"no_eye"
