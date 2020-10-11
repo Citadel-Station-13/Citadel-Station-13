@@ -236,7 +236,7 @@ Auto Patrol[]"},
 	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
 		if((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
-			shootAt(t)
+			INVOKE_ASYNC(src, .proc/shootAt, t)
 	switch(mode)
 
 		if(BOT_IDLE)		// idle
@@ -254,7 +254,7 @@ Auto Patrol[]"},
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-					stun_attack(target)
+					INVOKE_ASYNC(src, .proc/stun_attack, target)
 
 					mode = BOT_PREP_ARREST
 					anchored = TRUE
