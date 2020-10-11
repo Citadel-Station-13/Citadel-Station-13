@@ -1,7 +1,7 @@
 {
     "map_name": "Smol Station",
     "map_path": "map_files/SmolStation",
-    "map_file": "SmolStation.dmm",
+	"map_file": "SmolStation.dmm",
     "shuttles": {
 	    "cargo": "cargo_delta",
 	    "ferry": "ferry_fancy",
