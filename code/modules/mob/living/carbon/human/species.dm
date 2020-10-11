@@ -64,7 +64,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/stunmod = 1		// multiplier for stun duration
 	var/punchdamagelow = 1       //lowest possible punch damage. if this is set to 0, punches will always miss
 	var/punchdamagehigh = 10      //highest possible punch damage
-	var/punchstunthreshold = 10//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
+	var/punchstunthreshold = 10 //damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
+	var/punchwoundbonus = 0 // additional wound bonus. generally zero.
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
@@ -106,7 +107,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
 	var/icon_limbs //Overrides the icon used for the limbs of this species. Mainly for downstream, and also because hardcoded icons disgust me. Implemented and maintained as a favor in return for a downstream's implementation of synths.
-	var/species_type
+	var/species_category
 
 	var/tail_type //type of tail i.e. mam_tail
 	var/wagging_type //type of wagging i.e. waggingtail_lizard
@@ -1361,9 +1362,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(!(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK))
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes punching cause staminaloss but funny martial artist types get a discount
-			user.adjustStaminaLossBuffered(1.5)
-		else
-			user.adjustStaminaLossBuffered(3.5)
+			if(!user.UseStaminaBuffer(1.5, warn = TRUE))
+				return
+		else if(!user.UseStaminaBuffer(3.5, warn = TRUE))
+			return
 
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
@@ -1384,6 +1386,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/punchwoundbonus = user.dna.species.punchwoundbonus
 		var/puncherstam = user.getStaminaLoss()
 		var/puncherbrute = user.getBruteLoss()
 		var/punchedstam = target.getStaminaLoss()
@@ -1399,6 +1402,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		//END OF CITADEL CHANGES
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		if(HAS_TRAIT(user, TRAIT_PUGILIST))
+			affecting = target.get_bodypart(check_zone(user.zone_selected)) // if you're going the based unarmed route you won't miss
 
 		if(!affecting) //Maybe the bodypart is missing? Or things just went wrong..
 			affecting = target.get_bodypart(BODY_ZONE_CHEST) //target chest instead, as failsafe. Or hugbox? You decide.
@@ -1410,8 +1415,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(user.dna.species.punchdamagelow)
 				if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
 					miss_chance = 0
-				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists have a flat 10% miss chance
-					miss_chance = 10
+				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists, being good at Punching People, also never miss
+					miss_chance = 0
 				else
 					miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
@@ -1425,12 +1430,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
+		if(HAS_TRAIT(user, TRAIT_MAULER)) // maulers get 15 armorpierce because if you're going to punch someone you might as well do a good job of it
+			armor_block = target.run_armor_check(affecting, "melee", armour_penetration = 15) // lot of good that sec jumpsuit did you
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
-
-		target.visible_message("<span class='danger'>[user] [atk_verb]s [target]!</span>", \
-					"<span class='userdanger'>[user] [atk_verb]s you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
-					user, "<span class='danger'>You [atk_verb] [target]!</span>")
+		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
+					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
+					user, "<span class='danger'>You [atk_verb]ed [target]!</span>")
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
@@ -1440,11 +1446,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.dismembering_strike(user, affecting.body_zone)
 
 		if(atk_verb == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage + 0.5x stamina damage
-			target.apply_damage(damage*1.5, attack_type, affecting, armor_block)
+			target.apply_damage(damage*1.5, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			target.apply_damage(damage*0.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "kicked")
-		else//other attacks deal full raw damage + 2x in stamina damage
-			target.apply_damage(damage, attack_type, affecting, armor_block)
+		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.3x raw damage + 1x stam damage, and have some armor pierce
+			target.apply_damage(damage*1.3, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
+			target.apply_damage(damage, STAMINA, affecting, armor_block)
+			log_combat(user, target, "punched (mauler)")
+		else //other attacks deal full raw damage + 2x in stamina damage
+			target.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			target.apply_damage(damage*2, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
@@ -1494,6 +1504,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		return FALSE
 
 	else if(aim_for_mouth && ( target_on_help || target_restrained || target_aiming_for_mouth))
+		if(!user.UseStaminaBuffer(3, warn = TRUE))
+			return
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 
 		target.visible_message(\
@@ -1501,7 +1513,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='notice'>[user] slaps you in the face! </span>",\
 			"You hear a slap.", target = user, target_message = "<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>")
 		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
-		user.adjustStaminaLossBuffered(3)
 		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
 			stop_wagging_tail(target)
 		return FALSE
@@ -1509,8 +1520,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(target.client?.prefs.cit_toggles & NO_ASS_SLAP)
 			to_chat(user,"A force stays your hand, preventing you from slapping \the [target]'s ass!")
 			return FALSE
+		if(!user.UseStaminaBuffer(3, warn = TRUE))
+			return FALSE
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
-		user.adjustStaminaLossBuffered(3)
 		target.adjust_arousal(20,maso = TRUE)
 		if (ishuman(target) && HAS_TRAIT(target, TRAIT_MASO) && target.has_dna() && prob(10))
 			target.mob_climax(forced_climax=TRUE)
@@ -1528,9 +1540,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes disarmspam cause staminaloss, pugilists can do it almost effortlessly
-			user.adjustStaminaLossBuffered(1)
+			if(!user.UseStaminaBuffer(1, warn = TRUE))
+				return
 		else
-			user.adjustStaminaLossBuffered(3)
+			if(!user.UseStaminaBuffer(1, warn = TRUE))
+				return
 
 		if(attacker_style && attacker_style.disarm_act(user,target))
 			return TRUE
@@ -1766,9 +1780,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(CHECK_MOBILITY(user, MOBILITY_STAND))
 			to_chat(user, "<span class='notice'>You can only force yourself up if you're on the ground.</span>")
 			return
+		if(!user.UseStaminaBuffer(STAMINA_COST_SHOVE_UP, TRUE))
+			return
 		user.visible_message("<span class='notice'>[user] forces [p_them()]self up to [p_their()] feet!</span>", "<span class='notice'>You force yourself up to your feet!</span>")
 		user.set_resting(FALSE, TRUE)
-		user.adjustStaminaLossBuffered(user.stambuffer) //Rewards good stamina management by making it easier to instantly get up from resting
 		playsound(user, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 /datum/species/proc/altdisarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1787,8 +1802,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else
 		if(user == target)
 			return
+		if(!user.UseStaminaBuffer(4, warn = TRUE))
+			return
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		user.adjustStaminaLossBuffered(4)
 		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(target.w_uniform)

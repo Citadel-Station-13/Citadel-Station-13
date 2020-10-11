@@ -130,7 +130,7 @@
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
 		P.setAngle(rand(0, 360))//SHING
-		A.adjustStaminaLossBuffered (3) //Citadel change to stop infinite bullet sponging as you run away, but it is buffered!
+		A.adjustStaminaLoss(3)
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
