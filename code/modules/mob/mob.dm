@@ -23,6 +23,7 @@
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
+	initialize_actionspeed()
 	hook_vr("mob_new",list(src))
 
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
@@ -62,25 +63,6 @@
 	for(var/obj/item/I in all_inventory_items() | held_items)
 		QDEL_NULL(I)
 	QDEL_LIST(inventory_slots)
-
-/mob/GenerateTag()
-	tag = "mob_[next_mob_id++]"
-
-/atom/proc/prepare_huds()
-	hud_list = list()
-	for(var/hud in hud_possible)
-		var/hint = hud_possible[hud]
-		switch(hint)
-			if(HUD_LIST_LIST)
-				hud_list[hud] = list()
-			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
-				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-				hud_list[hud] = I
-
-/mob/proc/Cell()
-	set category = "Admin"
-	set hidden = 1
 
 	if(!loc)
 		return 0

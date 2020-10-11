@@ -44,42 +44,16 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
-	switch(quirk_holder.mind.assigned_role)
-		if("Clown")
-			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/bikehorn/golden)
-		if("Mime")
-			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/toy/dummy)
-		if("Cook")
-			heirloom_type = /obj/item/kitchen/knife/scimitar
-		if("Botanist")
-			heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie)
-		if("Medical Doctor")
-			heirloom_type = /obj/item/healthanalyzer
-		if("Paramedic")
-			heirloom_type = /obj/item/lighter
-		if("Station Engineer")
-			heirloom_type = /obj/item/wirecutters/brass
-		if("Atmospheric Technician")
-			heirloom_type = /obj/item/extinguisher/mini/family
-		if("Lawyer")
-			heirloom_type = /obj/item/storage/briefcase/lawyer/family
-		if("Janitor")
-			heirloom_type = /obj/item/mop
-		if("Security Officer")
-			heirloom_type = /obj/item/clothing/accessory/medal/silver/valor
-		if("Scientist")
-			heirloom_type = /obj/item/toy/plush/slimeplushie
-		if("Assistant")
-			heirloom_type = /obj/item/clothing/gloves/cut/family
-		if("Chaplain")
-			heirloom_type = /obj/item/camera/spooky/family
-		if("Captain")
-			heirloom_type = /obj/item/clothing/accessory/medal/gold/captain/family
+	var/species_heirloom_entry = GLOB.species_heirlooms[H.dna.species.id]
+	if(species_heirloom_entry)
+		if(prob(species_heirloom_entry[1]))
+			heirloom_type = pick(species_heirloom_entry[2])
 	if(!heirloom_type)
-		heirloom_type = pick(
-		/obj/item/toy/cards/deck,
-		/obj/item/lighter,
-		/obj/item/dice/d20)
+		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
+		if(!job_heirloom_entry)
+			heirloom_type = pick(GLOB.job_heirlooms["NO_JOB"]) //consider: should this be a define?
+		else
+			heirloom_type = pick(job_heirloom_entry)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	GLOB.family_heirlooms += heirloom
 	var/list/slots = list(

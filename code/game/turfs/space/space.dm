@@ -235,3 +235,110 @@
 	destination_x = dest_x
 	destination_y = dest_y
 	destination_z = dest_z
+
+
+/turf/open/space/transparent
+	baseturfs = /turf/open/space/transparent/openspace
+	intact = FALSE //this means wires go on top
+
+/turf/open/space/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+	..()
+	plane = OPENSPACE_PLANE
+	layer = OPENSPACE_LAYER
+	icon_state = "transparent"
+
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/space/transparent/LateInitialize()
+	update_multiz(TRUE, TRUE)
+
+/turf/open/space/transparent/Destroy()
+	vis_contents.len = 0
+	return ..()
+
+/turf/open/space/transparent/update_multiz(prune_on_fail = FALSE, init = FALSE)
+	. = ..()
+	var/turf/T = below()
+	if(!T)
+		vis_contents.len = 0
+		if(!show_bottom_level() && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to space as a fallback
+			ChangeTurf(/turf/open/space)
+		return FALSE
+	if(init)
+		vis_contents += T
+	return TRUE
+
+/turf/open/space/transparent/multiz_turf_del(turf/T, dir)
+	if(dir != DOWN)
+		return
+	update_multiz()
+
+/turf/open/space/transparent/multiz_turf_new(turf/T, dir)
+	if(dir != DOWN)
+		return
+	update_multiz()
+
+///Called when there is no real turf below this turf
+/turf/open/space/transparent/proc/show_bottom_level()
+	var/turf/path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
+	if(!ispath(path))
+		path = text2path(path)
+		if(!ispath(path))
+			warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
+			path = /turf/open/space
+	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
+	underlays += underlay_appearance
+	return TRUE
+
+/turf/open/space/transparent/openspace
+	name = "open space"
+	desc = "Watch your step!"
+	icon_state = "transparent"
+	baseturfs = /turf/open/space/transparent/openspace
+	CanAtmosPassVertical = ATMOS_PASS_YES
+	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+///No bottom level for openspace.
+/turf/open/space/transparent/openspace/show_bottom_level()
+	return FALSE
+
+/turf/open/space/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+	. = ..()
+
+	icon_state = "transparent"
+
+	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+
+/turf/open/space/transparent/openspace/zAirIn()
+	return TRUE
+
+/turf/open/space/transparent/openspace/zAirOut()
+	return TRUE
+
+/turf/open/space/transparent/openspace/zPassIn(atom/movable/A, direction, turf/source)
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_UP)
+				return FALSE
+		return TRUE
+	return FALSE
+
+/turf/open/space/transparent/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	if(A.anchored)
+		return FALSE
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE

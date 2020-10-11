@@ -267,23 +267,59 @@ GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARC
 
 GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
+//LANGUAGE CHARACTER CUSTOMIZATION
 GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles"))
-
 GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc))
 
+//SPECIES BODYPART LISTS
 //locked parts are those that your picked species requires to have
 //unlocked parts are those that anyone can choose on customisation regardless
 //parts not in unlocked, but in all, are thus locked
 GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "body_markings" = "Body Markings", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
 GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
+
 //parts in either of the above two lists that require a second option that allows them to be coloured
 GLOBAL_LIST_INIT(colored_mutant_parts, list("insect_wings" = "wings_color", "deco_wings" = "wings_color", "horns" = "horns_color"))
 
 //body ids that have greyscale sprites
-GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","lum","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
+GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","slimelumi","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
 
 //body ids that have prosthetic sprites
 GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
+
+//FAMILY HEIRLOOM LIST
+//this works by using the first number for the species as a probability to choose one of the items in the following list for their family heirloom
+//if the probability fails, or the species simply isn't in the list, then it defaults to the next global list, which has its own list of items for each job
+//the first item in the list is for if your job isn't in that list
+
+//species-heirloom list (we categorise them by the species id var)
+GLOBAL_LIST_INIT(species_heirlooms, list(
+	"dwarf" = list(25, list(/obj/item/reagent_containers/food/drinks/dwarf_mug)), //example: 25% chance for dwarves to get a dwarf mug as their heirloom (normal container but has manly dorf icon)
+	"insect" = list(25, list(/obj/item/flashlight/lantern/heirloom_moth)),
+	"ipc" = list(25, list(/obj/item/stock_parts/cell/family)), //gives a broken powercell for flavor text!
+	"synthliz" = list(25, list(/obj/item/stock_parts/cell/family)), //they're also robots
+	"slimeperson" = list(25, list(/obj/item/toy/plush/slimeplushie)),
+	"lizard" = list(25, list(/obj/item/toy/plush/lizardplushie)),
+	))
+
+//job-heirloom list
+GLOBAL_LIST_INIT(job_heirlooms, list(
+	"NO_JOB" = list(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20),
+	"Clown" = list(/obj/item/paint/anycolor, /obj/item/bikehorn/golden),
+	"Mime" = list(/obj/item/paint/anycolor, /obj/item/toy/dummy),
+	"Cook" = list(/obj/item/kitchen/knife/scimitar),
+	"Botanist" = list(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants, /obj/item/toy/plush/beeplushie),
+	"Medical Doctor" = list(/obj/item/healthanalyzer),
+	"Paramedic" = list(/obj/item/lighter), //..why?
+	"Station Engineer" = list(/obj/item/wirecutters/brass/family, /obj/item/crowbar/brass/family, /obj/item/screwdriver/brass/family, /obj/item/wrench/brass/family), //brass tools but without the tool speed modifier
+	"Atmospheric Technician" = list(/obj/item/extinguisher/mini/family),
+	"Lawyer" = list(/obj/item/storage/briefcase/lawyer/family),
+	"Janitor" = list(/obj/item/mop),
+	"Scientist" = list(/obj/item/toy/plush/slimeplushie),
+	"Assistant" = list(/obj/item/clothing/gloves/cut/family),
+	"Chaplain" = list(/obj/item/camera/spooky/family),
+	"Head of Personnel" = list(/obj/item/pinpointer/ian)
+	))
 
 //body ids that have non-gendered bodyparts
 GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem"))

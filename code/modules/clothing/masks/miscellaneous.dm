@@ -355,7 +355,7 @@
 
 
 /obj/item/clothing/mask/paper/Initialize(mapload)
-	.=..()
+	. = ..()
 	papermask_designs = list(
 		"Blank" = image(icon = src.icon, icon_state = "plainmask"),
 		"Neutral" = image(icon = src.icon, icon_state = "neutralmask"),
@@ -384,7 +384,7 @@
 							"Vertical" = "verticalmask", "Horizontal" = "horizontalmask", "X" ="xmask",
 							"Bugeyes" = "bugmask", "Double" = "doublemask", "Mark" = "markmask")
 
-	var/choice = show_radial_menu(user,src, papermask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, papermask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
