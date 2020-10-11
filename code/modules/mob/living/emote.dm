@@ -570,7 +570,7 @@
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(isjellyperson(C))
-			pick(playsound(C, 'sound/effects/attackblob.ogg', 50, 1),playsound(C, 'sound/effects/blobattack.ogg', 50, 1))
+			playsound(C, 'sound/effects/attackblob.ogg', 50, 1)
 
 /datum/emote/living/audio_emote/blurp
 	key = "blurp"

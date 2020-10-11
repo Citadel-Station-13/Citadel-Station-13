@@ -34,6 +34,8 @@
 #define COMBAT_FLAGS_DEFAULT				(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
 /// Default combat flags for everyone else (so literally everyone but humans).
 #define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
+/// Default combat flags for those in stamina combat system
+#define COMBAT_FLAGS_STAMINA_COMBAT			(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE | COMBAT_FLAG_STAMINA_BUFFER)
 
 /// The user wants sprint mode on
 #define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
@@ -47,8 +49,8 @@
 #define COMBAT_FLAG_RESISTING_REST			(1<<4)
 /// Intentionally resting
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
-/// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<6)
+/// This mob requires stamina buffer to do things that require stamina buffer. Not having this exempts the mob from stamina combat.
+#define COMBAT_FLAG_STAMINA_BUFFER			(1<<6)
 /// Force sprint mode on at all times, overrides everything including sprint disable traits.
 #define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
 /// This mob is capable of using the active parrying system.
@@ -64,26 +66,17 @@
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
-#define SOFT_STAMCRIT 1
-#define HARD_STAMCRIT 2
+#define HARD_STAMCRIT 1
 
 // Stamcrit check helpers
 #define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
-#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
+#define CHECK_STAMCRIT(mob)					(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 
 //stamina stuff
-///Threshold over which attacks start being hindered.
-#define STAMINA_NEAR_SOFTCRIT				90
-///softcrit for stamina damage. prevents standing up, some actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_SOFTCRIT					100
-///sanity cap to prevent stamina actions (that are still performable) from sending you into crit.
-#define STAMINA_NEAR_CRIT					130
-///crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+/// crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_CRIT						140
-///same as STAMINA_SOFTCRIT except for the more traditional health calculations
-#define STAMINA_SOFTCRIT_TRADITIONAL		0
-///ditto, but for STAMINA_CRIT
-#define STAMINA_CRIT_TRADITIONAL			-40
+/// Threshold under for which you are unable to draw from stamina health to replace stamina buffer
+#define STAMINA_NO_OVERDRAW_THRESHOLD		100
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
@@ -251,36 +244,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.01
-
-//items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
-#define TOTAL_MASS_TINY_ITEM		1.25
-#define TOTAL_MASS_SMALL_ITEM		2.5
-#define TOTAL_MASS_NORMAL_ITEM		3.75
-#define TOTAL_MASS_BULKY_ITEM		5
-#define TOTAL_MASS_HUGE_ITEM		6.25
-#define TOTAL_MASS_GIGANTIC_ITEM	7.5
-
-#define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
-#define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
-#define TOTAL_MASS_TOY_SWORD 1.5
-
-//stamina cost defines.
-#define STAM_COST_ATTACK_OBJ_MULT	1.2
-#define STAM_COST_ATTACK_MOB_MULT	1
-#define STAM_COST_BATON_MOB_MULT	1
-#define STAM_COST_NO_COMBAT_MULT	1.25
-#define STAM_COST_W_CLASS_MULT		1.25
-#define STAM_COST_THROW_MULT		2
-#define STAM_COST_THROW_MOB			2.5 //multiplied by (mob size + 1)^2.
-
-///Multiplier of the (STAMINA_NEAR_CRIT - user current stamina loss) : (STAMINA_NEAR_CRIT - STAMINA_SOFTCRIT) ratio used in damage penalties when stam soft-critted.
-#define STAM_CRIT_ITEM_ATTACK_PENALTY	0.66
-/// changeNext_move penalty multiplier of the above.
-#define STAM_CRIT_ITEM_ATTACK_DELAY		1.75
-/// Damage penalty when fighting prone.
-#define LYING_DAMAGE_PENALTY			0.7
-/// Added delay when firing guns stam-softcritted. Summed with a hardset CLICK_CD_RANGE delay, similar to STAM_CRIT_DAMAGE_DELAY otherwise.
-#define STAM_CRIT_GUN_DELAY			2.75
 
 //stamina recovery defines. Blocked if combat mode is on.
 #define STAM_RECOVERY_STAM_CRIT		-7.5

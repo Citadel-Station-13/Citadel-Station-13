@@ -7,7 +7,7 @@
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	/// Enable stamina combat
-	combat_flags = COMBAT_FLAGS_DEFAULT | COMBAT_FLAG_UNARMED_PARRY
+	combat_flags = COMBAT_FLAGS_STAMINA_COMBAT | COMBAT_FLAG_UNARMED_PARRY
 	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
 	has_field_of_vision = FALSE //Handled by species.
 
