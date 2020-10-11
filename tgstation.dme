@@ -3654,6 +3654,7 @@
 #include "sandcode\code\datums\interactions\lewd\lewd_interactions.dm"
 #include "sandcode\code\datums\interactions\lewd\lewd_species.dm"
 #include "sandcode\code\datums\interactions\lewd\objects.dm"
+#include "sandcode\code\datums\mood_events\generic_negative_events.dm"
 #include "sandcode\code\datums\mutations\combined.dm"
 #include "sandcode\code\datums\ruins\lavaland.dm"
 #include "sandcode\code\datums\status_effects\buffs.dm"

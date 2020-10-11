@@ -28,7 +28,7 @@
 	if(!reward_type)
 		say("Critical error. Program terminating.")
 		return
-	
+
 	if(!check_charges()) // Out of charges!
 		say("No current problems available. Try again later.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
@@ -60,7 +60,7 @@
 			if(isnull(answer)) // User hit the cancel button
 				return
 			if(answer == solution)
-				correct = TRUE 
+				correct = TRUE
 		if("subtract")
 			var/subnum_1 = rand(-100, 100)
 			var/subnum_2 = rand(-100, 200)
@@ -72,7 +72,7 @@
 			if(answer == solution)
 				correct = TRUE
 		if("multiply")
-			var/multnum_1 = rand(-50, 50) 
+			var/multnum_1 = rand(-50, 50)
 			var/multnum_2 = rand(-250, 500)
 			var/question = "What is [multnum_1] * [multnum_2]?"
 			var/solution = multnum_1 * multnum_2
@@ -80,11 +80,11 @@
 			if(isnull(answer)) // User hit the cancel button
 				return
 			if(answer == solution)
-				correct = TRUE 
-		
+				correct = TRUE
+
 		// Medium problems
 		if("division")
-			var/divnum_2 = rand(3, 12) 
+			var/divnum_2 = rand(3, 12)
 			var/divnum_1 = rand(-50, 50) * divnum_2 // Nice numbers only.
 			var/question = "What is [divnum_1] / [divnum_2]? Rounded the answer down if applicable."
 			var/solution = round(divnum_1 / divnum_2)
@@ -108,7 +108,7 @@
 				return
 			if(answer == solution)
 				correct = TRUE
-		
+
 		if("easy algebra")
 			// ax + b = c ----> x = (c-b)/a
 			var/num_a = rand(1,5)
@@ -125,7 +125,7 @@
 		// Hard problems, where 'hard' is high school maths
 		if("algebra") // everyone's favorite :)
 			var/answer
-			var/solution 
+			var/solution
 			if(prob(50)) // 2 variants of the question
 				// a/bx = c  --->  x = a/bc. b and c may not be 0.
 				var/num_a = rand(-100, 100)
@@ -149,7 +149,7 @@
 			if(answer == solution)
 				correct = TRUE
 
-		
+
 		if("2nd polynomial")
 			// Math part
 			var/num_a = rand(1, 2)
@@ -239,11 +239,11 @@
 					D.adjust_money(-points_lost)
 		// me fail arithmetic, me brian hurt
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
-		if(difficulty == "Easy") // me fail arithmetic, me brian hurt
-			to_chat(user,"<span class='warning'>You feel lightheaded after failing such an easy question...</span>")
-			LM.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10)
+		if(difficulty == "Easy") // me fail arithmetic, me brian hurt //nice one, brain damage for it, very cool.
+			to_chat(user,"<span class='warning'>You feel sad after failing such an easy question...</span>")
+			SEND_SIGNAL(LM, COMSIG_ADD_MOOD_EVENT, "failed_easy", /datum/mood_event/failed_easy)
 		return
-	
+
 	// Award points for a correct answer.
 	switch(reward_type)
 		if("Science")
@@ -279,7 +279,7 @@
 			var/obj/item/computermath/science/ST = new /obj/item/computermath/science(drop_location())
 			qdel(src)
 			user.put_in_active_hand(ST)
-	
+
 /obj/item/computermath/cargo
 	name = "Cargo Problem Computer"
 	desc = "Earn points by solving math problems."
