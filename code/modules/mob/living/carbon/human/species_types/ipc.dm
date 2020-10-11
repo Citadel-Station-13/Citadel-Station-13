@@ -1,6 +1,6 @@
 /datum/species/ipc
 	name = "I.P.C."
-	id = "ipc"
+	id = SPECIES_IPC
 	say_mod = "beeps"
 	default_color = "00FF00"
 	blacklisted = 0
@@ -28,7 +28,7 @@
 
 	exotic_bloodtype = "HF"
 	exotic_blood_color = BLOOD_COLOR_OIL
-	species_type = "robotic"
+	species_category = SPECIES_CATEGORY_ROBOT
 
 	var/datum/action/innate/monitor_change/screen
 	languagewhitelist = list("Encoded Audio Language") //Skyrat change - species language whitelist

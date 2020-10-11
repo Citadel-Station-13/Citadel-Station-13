@@ -1,6 +1,6 @@
 /datum/species/insect
 	name = "Anthromorphic Insect"
-	id = "insect"
+	id = SPECIES_INSECT
 	say_mod = "chitters"
 	default_color = "00FF00"
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
@@ -19,7 +19,7 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
-	species_type = "insect"
+	species_category = SPECIES_CATEGORY_INSECT
 
 	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")
 

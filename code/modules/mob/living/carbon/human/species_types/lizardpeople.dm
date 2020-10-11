@@ -1,7 +1,7 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Anthromorphic Lizard"
-	id = "lizard"
+	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
@@ -29,8 +29,7 @@
 
 	tail_type = "tail_lizard"
 	wagging_type = "waggingtail_lizard"
-	species_type = "lizard"
-	wings_icon = "Dragon" //sandstorm code -- tg port wings
+	species_category = "lizard"
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -48,7 +47,7 @@
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "ashlizard"
+	id = SPECIES_ASHWALKER
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS)

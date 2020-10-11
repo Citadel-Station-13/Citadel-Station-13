@@ -4,7 +4,7 @@
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
-	id = "shadow"
+	id = SPECIES_SHADOW
 	sexes = 0
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
@@ -16,7 +16,7 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	languagewhitelist = list("Shadowtongue") //Skyrat change - species language whitelist
 
-	species_type = "shadow"
+	species_category = SPECIES_CATEGORY_SHADOW
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -33,7 +33,7 @@
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
-	id = "nightmare"
+	id = SPECIES_NIGHTMARE
 	limbs_id = "shadow"
 	burnmod = 1.5
 	blacklisted = TRUE
