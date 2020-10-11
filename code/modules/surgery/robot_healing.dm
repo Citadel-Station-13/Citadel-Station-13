@@ -43,8 +43,6 @@
 	return TRUE
 
 /datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
-	if(!..())
-		return FALSE
 	var/possible = FALSE
 	for(var/obj/item/bodypart/B in target.bodyparts)
 		if(B.is_robotic_limb())

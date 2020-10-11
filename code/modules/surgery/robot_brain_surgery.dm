@@ -19,8 +19,6 @@
 	time = 120 //long and complicated
 
 /datum/surgery/robot_brain_surgery/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
-	if(!..())
-		return FALSE
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B || !istype(B, /obj/item/organ/brain/ipc)) //No cheating!
 		return FALSE
