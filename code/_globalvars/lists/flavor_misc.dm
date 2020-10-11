@@ -289,4 +289,4 @@ GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","g
 GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow", "cultgolem", "agent", "plasmaman", "clockgolem", "clothgolem"))
 
 //list of eye types, corresponding to a respective left and right icon state for the set of eyes
-GLOBAL_LIST_INIT(eye_types, list("normal", "insect"))
+GLOBAL_LIST_INIT(eye_types, list("normal", "insect", "moth", "double", "double2", "cyclops"))
