@@ -60023,9 +60023,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "woR" = (
-/obj/machinery/cryopod{
-	dir = 1
-	},
+/obj/machinery/cryopod/tele,
 /turf/open/floor/carpet,
 /area/crew_quarters/cryopod)
 "wph" = (
@@ -90949,8 +90947,8 @@ atf
 dgz
 tqg
 ujF
-ujF
-ujF
+woR
+woR
 dgz
 aaa
 aJn
