@@ -1,6 +1,6 @@
 /datum/species/dullahan
 	name = "Dullahan"
-	id = "dullahan"
+	id = SPECIES_DULLAHAN
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
@@ -14,7 +14,7 @@
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	has_field_of_vision = FALSE //Too much of a trouble, their vision is already bound to their severed head.
-	species_type = "undead"
+	species_category = SPECIES_CATEGORY_UNDEAD
 	var/pumpkin = FALSE
 
 	var/obj/item/dullahan_relay/myhead
