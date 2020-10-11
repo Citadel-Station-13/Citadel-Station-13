@@ -153,7 +153,7 @@
 
 	if(tc)
 		var/obj/item/U = new uplink_type(H, H.key, tc)
-		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
+		H.equip_to_slot_or_del(U, SLOT_PUT_IN_BACKPACK)
 
 	var/obj/item/implant/weapons_auth/W = new
 	W.implant(H)

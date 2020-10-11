@@ -413,7 +413,7 @@
 		if(SLOT_BACK, SLOT_OUTERWEAR, SLOT_UNIFORM, SLOT_BELT, SLOT_ID_CARD)
 			return BODY_ZONE_CHEST
 
-		if(SLOT_GLOVES, SLOT_HANDS, SLOT_HANDCUFFED)
+		if(SLOT_GLOVES, SLOT_PUT_IN_HANDS, SLOT_HANDCUFFED)
 			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 
 		if(SLOT_HEAD, SLOT_NECK, SLOT_NECK, SLOT_EARS)
@@ -654,7 +654,7 @@
 			return "Backpack"
 		if(SLOT_MASK)
 			return "Mask"
-		if(SLOT_HANDS)
+		if(SLOT_PUT_IN_HANDS)
 			return "Hands"
 		if(SLOT_BELT)
 			return "Belt"
@@ -674,7 +674,7 @@
 			return "Suit"
 		if(SLOT_UNIFORM)
 			return "Uniform"
-		if(SLOT_IN_BACKPACK)
+		if(SLOT_PUT_IN_BACKPACK)
 			return "In backpack"
 
 /proc/tg_ui_icon_to_cit_ui(ui_style)

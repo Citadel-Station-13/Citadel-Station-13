@@ -241,7 +241,7 @@
 
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "Nothing"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[SLOT_PUT_IN_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "Nothing"]</a>"
 
 	dat += "<BR><B>Back:</B> <A href='?src=[REF(src)];item=[SLOT_BACK]'>[back ? back : "Nothing"]</A>"
 

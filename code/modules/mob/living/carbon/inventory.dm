@@ -68,10 +68,10 @@
 		if(SLOT_LEGCUFFED)
 			legcuffed = I
 			update_inv_legcuffed()
-		if(SLOT_HANDS)
+		if(SLOT_PUT_IN_HANDS)
 			put_in_hands(I)
 			update_inv_hands()
-		if(SLOT_IN_BACKPACK)
+		if(SLOT_PUT_IN_BACKPACK)
 			if(!back || !SEND_SIGNAL(back, COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
 				not_handled = TRUE
 		else

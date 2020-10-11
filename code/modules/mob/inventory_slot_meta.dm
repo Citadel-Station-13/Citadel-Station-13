@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(inventory_slot_meta, inventory_slot_meta())
 	var/name = "ERROR"
 	/// ID (__DEFINES/inventory/inventory_slots.dm)
 	var/id = "ERROR"
-	/// Virtual slot? If it is we aren't a "real" slot and we should be specially handled. See: SLOT_HANDS where you want to put stuff into hands rather than a specific slot
+	/// Virtual slot? If it is we aren't a "real" slot and we should be specially handled. See: SLOT_PUT_IN_HANDS where you want to put stuff into hands rather than a specific slot
 	var/virtual = FALSE
 	/// Typepath to /datum/inventory_slot
 	var/slot_datum_path

@@ -97,7 +97,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(new path(H),SLOT_IN_BACKPACK)
+					H.equip_to_slot_or_del(new path(H),SLOT_PUT_IN_BACKPACK)
 
 	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit

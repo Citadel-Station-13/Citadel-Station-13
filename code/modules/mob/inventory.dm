@@ -204,7 +204,7 @@
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE
-		I.equipped(src, SLOT_HANDS)
+		I.equipped(src, SLOT_PUT_IN_HANDS)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
 		update_inv_hands()

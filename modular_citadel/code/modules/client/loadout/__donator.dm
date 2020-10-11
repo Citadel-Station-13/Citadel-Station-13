@@ -2,21 +2,21 @@
 
 /datum/gear/donator
 	name = "IF YOU SEE THIS, PING A CODER RIGHT NOW!"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/bikehorn/golden
 	category = LOADOUT_CATEGORY_DONATOR
 	ckeywhitelist = list("This entry should never appear with this variable set.") //If it does, then that means somebody fucked up the whitelist system pretty hard
 
 /datum/gear/donator/pet
 	name = "Pet Beacon"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/choice_beacon/pet
 	ckeywhitelist = list()
 	donator_group_id = DONATOR_GROUP_TIER_1 // can be accessed by all donators
 
 /datum/gear/donator/carpet
 	name = "Carpet Beacon"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/choice_beacon/box/carpet
 	ckeywhitelist = list()
 	donator_group_id = DONATOR_GROUP_TIER_1
@@ -30,13 +30,13 @@
 
 /datum/gear/donator/donortestingbikehorn
 	name = "Donor item testing bikehorn"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/bikehorn
 	geargroupID = list("DONORTEST") //This is a list mainly for the sake of testing, but geargroupID works just fine with ordinary strings
 
 /datum/gear/donator/kevhorn
 	name = "Airhorn"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/bikehorn/airhorn
 	ckeywhitelist = list("kevinz000")
 
@@ -54,7 +54,7 @@
 
 /datum/gear/donator/kiaramedal
 	name = "Insignia of Steele"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/accessory/medal/steele
 	ckeywhitelist = list("inferno707")
 
@@ -66,7 +66,7 @@
 
 /datum/gear/donator/engravedzippo
 	name = "Engraved zippo"
-	slot = SLOT_HANDS
+	slot = SLOT_PUT_IN_HANDS
 	path = /obj/item/lighter/gold
 	ckeywhitelist = list("dirtyoldharry")
 
@@ -102,7 +102,7 @@
 
 /datum/gear/donator/treeplushie
 	name = "Christmas tree plushie"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/plush/tree
 	ckeywhitelist = list("illotafv")
 
@@ -120,7 +120,7 @@
 
 /datum/gear/donator/carrotplush
 	name = "Carrot plushie"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/plush/carrot
 	ckeywhitelist = list("improvedname")
 
@@ -156,7 +156,7 @@
 
 /datum/gear/donator/russianflask
 	name = "Russian flask"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/reagent_containers/food/drinks/flask/russian
 	cost = 2
 	ckeywhitelist = list("slomka")
@@ -187,13 +187,13 @@
 
 /datum/gear/donator/AM4B
 	name = "Foam Force AM4-B"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/gun/ballistic/automatic/AM4B
 	ckeywhitelist = list("zeronetalpha")
 
 /datum/gear/donator/carrotsatchel
 	name = "Carrot Satchel"
-	slot = SLOT_HANDS
+	slot = SLOT_PUT_IN_HANDS
 	path = /obj/item/storage/backpack/satchel/carrot
 	ckeywhitelist = list("improvedname")
 
@@ -235,31 +235,31 @@
 
 /datum/gear/donator/torisword
 	name = "Rainbow Zweihander"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/dualsaber/hypereutactic/toy/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/donator/darksabre
 	name = "Dark Sabre"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/darksabre
 	ckeywhitelist = list("inferno707")
 
 /datum/gear/donator/darksabresheath
 	name = "Dark Sabre Sheath"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/storage/belt/sabre/darksabre
 	ckeywhitelist = list("inferno707")
 
 /datum/gear/donator/toriball
 	name = "Rainbow Tennis Ball"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/tennis/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/donator/izzyball
 	name = "Katlin's Ball"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/tennis/rainbow/izzy
 	ckeywhitelist = list("izzyinbox")
 
@@ -271,7 +271,7 @@
 
 /datum/gear/donator/steelflask
 	name = "Steel Flask"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/reagent_containers/food/drinks/flask/steel
 	cost = 2
 	ckeywhitelist = list("nik707")
@@ -284,31 +284,31 @@
 
 /datum/gear/donator/cloakce
 	name = "Polychromic CE Cloak"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/neck/cloak/polychromic/polyce
 	ckeywhitelist = list("worksbythesea", "blakeryan")
 
 /datum/gear/donator/ssk
 	name = "Stun Sword Kit"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = 	/obj/item/ssword_kit
 	ckeywhitelist = list("phillip458")
 
 /datum/gear/donator/techcoat
 	name = "Techomancers Labcoat"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/suit/toggle/labcoat/mad/techcoat
 	ckeywhitelist = list("wilchen")
 
 /datum/gear/donator/leechjar
 	name = "Jar of Leeches"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = 	/obj/item/custom/leechjar
 	ckeywhitelist = list("sgtryder")
 
 /datum/gear/donator/darkarmor
 	name = "Dark Armor"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/suit/armor/vest/darkcarapace
 	ckeywhitelist = list("inferno707")
 
@@ -320,26 +320,26 @@
 
 /datum/gear/donator/flagcape
 	name = "US Flag Cape"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/neck/flagcape
 	ckeywhitelist = list("darnchacha")
 
 /datum/gear/donator/luckyjack
 	name = "Lucky Jackboots"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/shoes/lucky
 	ckeywhitelist = list("donaldtrumpthecommunist")
 
 /datum/gear/donator/raiqbawks
 	name = "Miami Boombox"
-	slot = SLOT_HANDS
+	slot = SLOT_PUT_IN_HANDS
 	cost = 2
 	path = /obj/item/boombox/raiq
 	ckeywhitelist = list("chefferz")
 
 /datum/gear/donator/m41
 	name = "Toy M41"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/gun/m41
 	ckeywhitelist = list("thalverscholen")
 
@@ -405,7 +405,7 @@
 
 /datum/gear/donator/fritzplush
 	name = "Fritz Plushie"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/plush/mammal/dog/fritz
 	ckeywhitelist = list("analwerewolf")
 
@@ -453,7 +453,7 @@
 
 /datum/gear/donator/borgplush
 	name = "Robot Plush"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/toy/plush/borgplushie
 	ckeywhitelist = list("nicholaiavenicci")
 
@@ -507,13 +507,13 @@
 
 /datum/gear/donator/cosmos
 	name = "cosmic space bedsheet"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/bedsheet/cosmos
 	ckeywhitelist = list("grunnyyy")
 
 /datum/gear/donator/customskirt
 	name = "custom atmos skirt"
-	slot = SLOT_IN_BACKPACK
+	slot = SLOT_PUT_IN_BACKPACK
 	path = /obj/item/clothing/under/custom/customskirt
 	ckeywhitelist = list("thakyz")
 

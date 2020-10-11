@@ -325,7 +325,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
-	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_PUT_IN_HANDS)
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
@@ -393,7 +393,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		return
 	if(anchored)
 		return
-	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_PUT_IN_HANDS)
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(src, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
@@ -511,7 +511,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
-	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
+	if(slot == SLOT_PUT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 

@@ -108,10 +108,10 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	H.put_in_hands(B)
-	H.equip_to_slot_if_possible(B, SLOT_IN_BACKPACK)
+	H.equip_to_slot_if_possible(B, SLOT_PUT_IN_BACKPACK)
 	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))
 	H.put_in_hands(musicaltuner)
-	H.equip_to_slot_if_possible(musicaltuner, SLOT_IN_BACKPACK)
+	H.equip_to_slot_if_possible(musicaltuner, SLOT_PUT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/photographer
@@ -166,7 +166,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/toy/crayon/spraycan/spraycan = new(get_turf(H))
 	H.put_in_hands(spraycan)
-	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	H.equip_to_slot(spraycan, SLOT_PUT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/voracious
@@ -188,7 +188,7 @@
 /datum/quirk/trandening/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/autosurgeon/gloweyes/gloweyes = new(get_turf(H))
-	H.equip_to_slot(gloweyes, SLOT_IN_BACKPACK)
+	H.equip_to_slot(gloweyes, SLOT_PUT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/bloodpressure

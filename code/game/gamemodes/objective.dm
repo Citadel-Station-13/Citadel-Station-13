@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
+			var/list/slots = list("backpack" = SLOT_PUT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -1119,7 +1119,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 	I.forceMove(get_turf(owner))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK))
+		H.equip_in_one_of_slots(I, list("backpack" = SLOT_PUT_IN_BACKPACK))
 		hoarded_item = I
 
 

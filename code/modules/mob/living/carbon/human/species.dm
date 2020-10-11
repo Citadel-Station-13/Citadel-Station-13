@@ -982,7 +982,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/num_legs = H.get_num_legs(FALSE)
 
 	switch(slot)
-		if(SLOT_HANDS)
+		if(SLOT_PUT_IN_HANDS)
 			if(H.get_empty_held_indexes())
 				return TRUE
 			return FALSE
@@ -1156,7 +1156,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(num_legs < 2)
 				return FALSE
 			return TRUE
-		if(SLOT_IN_BACKPACK)
+		if(SLOT_PUT_IN_BACKPACK)
 			if(H.back)
 				if(SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_CAN_INSERT, I, H, TRUE))
 					return TRUE

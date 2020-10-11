@@ -5,7 +5,7 @@
 		return FALSE
 
 	switch(slot)
-		if(SLOT_HANDS)
+		if(SLOT_PUT_IN_HANDS)
 			if(get_empty_held_indexes())
 				return TRUE
 			return FALSE

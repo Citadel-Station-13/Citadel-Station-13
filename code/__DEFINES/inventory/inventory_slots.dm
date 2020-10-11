@@ -4,8 +4,8 @@
 #define SLOT_MASK				"slot_wear_mask"
 #define SLOT_HANDCUFFED			"slot_handcuffed"
 #define SLOT_PUT_IN_HANDS		"slot_hands"
-										//wherever you provide a slot for hands you provide SLOT_HANDS
-										//SLOT_HANDS as a slot will pick ANY available hand
+										//wherever you provide a slot for hands you provide SLOT_PUT_IN_HANDS
+										//SLOT_PUT_IN_HANDS as a slot will pick ANY available hand
 #define SLOT_BELT				"slot_belt"
 #define SLOT_ID_CARD			"slot_wear_id"
 #define SLOT_EARS				"slot_ears"

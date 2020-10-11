@@ -68,7 +68,7 @@
 
 /datum/antagonist/heretic/proc/ecult_give_item(obj/item/item_path, mob/living/carbon/human/H)
 	var/list/slots = list(
-		"backpack" = SLOT_IN_BACKPACK,
+		"backpack" = SLOT_PUT_IN_BACKPACK,
 		"left pocket" = SLOT_L_STORE,
 		"right pocket" = SLOT_R_STORE
 	)
