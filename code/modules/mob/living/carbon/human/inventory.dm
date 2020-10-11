@@ -353,3 +353,8 @@
 		return
 	stored.attack_hand(src) // take out thing from belt
 	return
+
+/mob/living/carbon/human/racial_worn_types()
+	if(dna?.species)
+		return dna.species.racial_worn_types
+	return ..()

@@ -73,6 +73,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life // A path to an outfit that is important for species life e.g. plasmaman outfit
 
+	// Inventory/item wearing variables start
+	/// racial_worn_types bitflag. A clothing must share at least one bit with us for us to wear it.
+	var/racial_worn_types = RACIAL_WORN_DEFAULT
+	/// see modules/mob/worn_asset_sets.
+	var/clothing_asset_set = CLOTHING_ASSET_SET_DEFAULT
+	// Inventory/item wearing variables end
+
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list(HAS_FLESH,HAS_BONE) //by default they can scar and have bones/flesh unless set to something else
 	// generic traits tied to having the species

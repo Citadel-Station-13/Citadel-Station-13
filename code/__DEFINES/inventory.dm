@@ -24,32 +24,6 @@
 #define ITEM_SLOT_BACKPACK		(1<<15)
 #define ITEM_SLOT_SUITSTORE		(1<<16)
 
-//SLOTS
-#define SLOT_BACK			1
-#define SLOT_WEAR_MASK		2
-#define SLOT_HANDCUFFED		3
-#define SLOT_HANDS			4 //wherever you provide a slot for hands you provide SLOT_HANDS
-								//SLOT_HANDS as a slot will pick ANY available hand
-#define SLOT_BELT			5
-#define SLOT_WEAR_ID		6
-#define SLOT_EARS			7
-#define SLOT_GLASSES		8
-#define SLOT_GLOVES			9
-#define SLOT_NECK			10
-#define SLOT_HEAD			11
-#define SLOT_SHOES			12
-#define SLOT_WEAR_SUIT		13
-#define SLOT_W_UNIFORM		14
-#define SLOT_L_STORE		15
-#define SLOT_R_STORE		16
-#define SLOT_S_STORE		17
-#define SLOT_IN_BACKPACK	18
-#define SLOT_LEGCUFFED		19
-#define SLOT_GENERC_DEXTROUS_STORAGE	20
-
-
-#define SLOTS_AMT			20 // Keep this up to date!
-
 //I hate that this has to exist
 /proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
 	. = 0

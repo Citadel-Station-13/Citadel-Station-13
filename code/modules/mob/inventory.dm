@@ -502,3 +502,9 @@
 
 /mob/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
 	return ..() && (user == src)
+
+/**
+  * Gets the types of racial clothing we can wear. See /obj/item/var/racial_worn_types
+  */
+/mob/proc/racial_worn_types()
+	return RACIAL_WORN_DEFAULT
