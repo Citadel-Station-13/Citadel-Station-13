@@ -8,6 +8,8 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
+	stamina_buffer = INFINITY
+	UpdateStaminaBuffer()
 	GLOB.mob_living_list += src
 
 /mob/living/prepare_huds()
@@ -1257,7 +1259,7 @@
 		SetUnconscious(clamp_unconscious_to)
 	HealAllImmobilityUpTo(clamp_immobility_to)
 	adjustStaminaLoss(min(0, -stamina_boost))
-	adjustStaminaLossBuffered(min(0, -stamina_buffer_boost))
+	RechargeStaminaBuffer(stamina_buffer_boost)		// this MUST GO AFTER ADJUSTSTAMINALOSS.
 	if(scale_stamina_loss_recovery)
 		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)
