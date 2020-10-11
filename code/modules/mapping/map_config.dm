@@ -43,6 +43,21 @@
 	/// Orientation to load in by default.
 	var/orientation = SOUTH		//byond defaults to placing everyting SOUTH.
 
+	/// Jobs whitelist - if this is not empty, ONLY these jobs are allowed. Overrides blacklist.
+	var/list/job_whitelist
+	/// Jobs blacklist - if this is not empty, jobs in this aren't allowed.
+	var/list/job_blacklist
+	/// Job spawn position mod - type = number
+	var/list/job_override_spawn_positions
+	/// Job total position mod - type = number
+	var/list/job_override_total_positions
+	/// Add these accesses to jobs - type = list()
+	var/list/job_access_add
+	/// Remove these accesses from jobs - type = list()
+	var/list/job_access_remove
+	/// Override job accesses - type = list() - overrides everything else
+	var/list/job_access_override
+
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (default_to_box)
@@ -161,6 +176,69 @@
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
+	if("job_whitelist" in json)
+		job_whitelist = list()
+		for(var/path in json["job_whitelist"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_whitelist += type
+
+	if("job_blacklist" in json)
+		job_blacklist = list()
+		for(var/path in json["job_blacklist"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_blacklist += type
+
+	if("job_override_spawn_positions" in json)
+		job_override_spawn_positions = list()
+		for(var/path in json["job_override_spawn_positions"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_override_spawn_positions += type
+
+	if("job_override_total_positions" in json)
+		job_override_total_positions = list()
+		for(var/path in json["job_override_total_positions"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_override_total_positions += type
+
+	if("job_access_add" in json)
+		job_access_add = list()
+		for(var/path in json["job_acces_add"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_access_add[type] = json["job_access_add"]
+
+	if("job_access_remove" in json)
+		job_access_remove = list()
+		for(var/path in json["job_acces_add"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_access_remove[type] = json["job_access_remove"]
+
+	if("job_access_override" in json)
+		job_access_override = list()
+		for(var/path in json["job_acces_add"])
+			var/type = text2path(path)
+			if(!path)
+				log_config("map datum [config_filename] failed to validate path [path] in job overrides.")
+				continue
+			job_access_override[type] = json["job_access_override"]
+
 	defaulted = FALSE
 	return TRUE
 #undef CHECK_EXISTS
@@ -190,6 +268,13 @@
 	jsonlist["announcertype"] = announcertype
 	jsonlist["orientation"] = orientation
 	jsonlist["allow_custom_shuttles"] = allow_custom_shuttles
+	jsonlist["job_whitelist"] = job_whitelist
+	jsonlist["job_blacklist"] = job_blacklist
+	jsonlist["job_override_spawn_positions"] = job_override_spawn_positions
+	jsonlist["job_override_total_positions"] = job_override_total_positions
+	jsonlist["job_access_add"] = job_access_add
+	jsonlist["job_access_remove"] = job_access_remove
+	jsonlist["job_access_override"] = job_access_override
 	if(fexists("data/next_map.json"))
 		fdel("data/next_map.json")
 	var/F = file("data/next_map.json")

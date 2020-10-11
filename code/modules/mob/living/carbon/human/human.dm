@@ -805,7 +805,7 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 		hud_used.staminas?.update_icon_state()
-		hud_used.staminabuffer?.update_icon_state()
+		hud_used.staminabuffer?.mark_dirty()
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	if(admin_revive)
@@ -1044,10 +1044,9 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 		return
-	var/stambufferinfluence = (bufferedstam*(100/stambuffer))*0.2 //CIT CHANGE - makes stamina buffer influence movedelay
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))	//if we want to ignore slowdown from damage, but not from equipment
 		var/scaling = maxHealth / 100
-		var/health_deficiency = (((maxHealth / scaling) + stambufferinfluence) - (health / scaling) + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
+		var/health_deficiency = ((maxHealth / scaling) - (health / scaling) + (getStaminaLoss()*0.75))//CIT CHANGE - reduces the impact of staminaloss and makes stamina buffer influence it
 		if(health_deficiency >= 40)
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, (health_deficiency-39) / 75)
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying, TRUE, (health_deficiency-39) / 25)
