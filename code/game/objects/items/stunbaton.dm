@@ -249,13 +249,13 @@
 	return mutable_appearance(icon_file, "-stunsword")
 
 /obj/item/melee/baton/stunsword/on_exit_storage(datum/component/storage/S)
-	var/obj/item/storage/belt/sabre/B = S.parent
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
 	if(istype(B))
 		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
 	..()
 
 /obj/item/melee/baton/stunsword/on_enter_storage(datum/component/storage/S)
-	var/obj/item/storage/belt/sabre/B = S.parent
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
 	if(istype(B))
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 	..()
