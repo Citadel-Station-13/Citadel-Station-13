@@ -176,4 +176,6 @@
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
+	update_movespeed()
+
 	return mobility_flags
