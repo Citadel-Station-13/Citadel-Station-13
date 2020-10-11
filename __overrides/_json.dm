@@ -22,7 +22,7 @@
 			message_admins(error)
 			log_admin("[error] - [text]")
 			return list()
-	return json_deocde(text)
+	return json_decode(text)
 
 #undef MAX_JSON_DEPTH
 #undef MAX_CONSEQUETIVE_ARRAYS
