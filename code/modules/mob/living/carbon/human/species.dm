@@ -12,6 +12,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/sexes = 1 // whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/has_field_of_vision = TRUE
 
+	/// Racial worn types, clothing types it can wear. A flag has to match for something to be worn.
+	var/racial_worn_types = RACIAL_WORN_DEFAULT
+
 	//Species Icon Drawing Offsets - Pixel X, Pixel Y, Aka X = Horizontal and Y = Vertical, from bottom left corner
 	var/list/offset_features = list(
 		OFFSET_UNIFORM = list(0,0),
@@ -972,6 +975,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(return_warning)
 			return_warning[1] = "<span class='warning'>You are unable to equip that with your current garments in the way!</span>"
 		return FALSE
+
+	var/static/list/not_clothing = list(SLOT_HANDCUFFED, SLOT_LEGCUFFED, SLOT_HANDS, SLOT_IN_BACKPACK)
+	// Snowflake ass check
+	if(!(slot in not_clothing))
+		if(!H.racial_clothing_check(I))
+			#warn maybe tell the user they aren't able to wear something due to race
+			return FALSE
 
 	var/num_arms = H.get_num_arms(FALSE)
 	var/num_legs = H.get_num_legs(FALSE)

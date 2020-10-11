@@ -147,6 +147,7 @@
 #include "code\__DEFINES\research\stock_parts.dm"
 #include "code\__DEFINES\skills\defines.dm"
 #include "code\__DEFINES\skills\helpers.dm"
+#include "code\__DEFINES\species\species_clothing.dm"
 #include "code\__DEFINES\storage\_storage.dm"
 #include "code\__DEFINES\storage\volumetrics.dm"
 #include "code\__HELPERS\_cit_helpers.dm"

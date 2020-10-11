@@ -9,7 +9,7 @@
 	key = "V"
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 20
-	/datum/language/vox/syllables = list(
+	syllables = list(
 	"ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah","ti","ti","ti","hi","hi","ki","ki","ki","ki","ya","ta","ha","ka","ya","chi","cha","kah",
 	"ti-ti","hi-hi","ki-ki","ya-ya","ta-ta","ha-ha","ka-ka","chi-cha","cha-chi","ti-ti","hi-hi","ki-ki","ya-ya","ta-ta","ha-ha","ka-ka","chi-cha","cha-chi",
 	"TI-TI","HI-HI","KI-KI","YA-YA","TA-TA","HA-HA","KA-KA",

@@ -49,7 +49,7 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn(atom/A, params)
-	SHOULD_NOT_SLEEP(TRUE)
+	set waitfor = FALSE	// until we have a better system as a ton of attack_self's sleep - yell at kev to fix this someday properly like with attack_hand and on_attack_hand.
 	if(check_click_intercept(params,A))
 		return
 

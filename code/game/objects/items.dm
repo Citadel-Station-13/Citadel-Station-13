@@ -16,6 +16,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	attack_hand_is_action = FALSE
 	attack_hand_unwieldlyness = 0
 
+	// Wearing on mob variables start
+	/// Racial clothing "types" we are. A mob allow wearing at least one of our flags to wear us.
+	var/racial_worn_types = RACIAL_WORN_DEFAULT
+
 	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
