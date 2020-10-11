@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	37
+#define SAVEFILE_VERSION_MAX	39
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -216,6 +216,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				eye_type = "moth"
 			else
 				eye_type = "insect"
+
+	if(current_version < 39) //sets everyones blood color back to the species default
+		if(S["species"])
+			var/current_species = GLOB.species_list[S["species"]]
+			if(current_species)
+				var/datum/species/the_species = current_species
+				features["bloodcolor"] = initial(the_species.exotic_blood_color)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -722,7 +729,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	jumpsuit_style					= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 6, FALSE)
-	features["bloodcolor"]			= sanitize_hexcolor(features["bloodcolor"], 6, FALSE)
+	if(features["bloodcolor"] != "None")
+		features["bloodcolor"]			= sanitize_hexcolor(features["bloodcolor"], 6, FALSE)
 	features["tail_lizard"]			= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"]			= sanitize_inlist(features["tail_human"], GLOB.tails_list_human)
 	features["snout"]				= sanitize_inlist(features["snout"], GLOB.snouts_list)
