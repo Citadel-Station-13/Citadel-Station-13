@@ -36,15 +36,6 @@
 	..()
 	var/obj/screen/using
 	if(istype(owner, /mob/living/simple_animal/hostile/guardian/dextrous))
-		var/obj/screen/inventory/inv_box
-
-		inv_box = new /obj/screen/inventory()
-		inv_box.name = "internal storage"
-		inv_box.icon = ui_style
-		inv_box.icon_state = "suit_storage"
-		inv_box.screen_loc = ui_id
-		inv_box.slot_id = INVENTORY_SLOT_GENERC_DEXTROUS_STORAGE
-		static_inventory += inv_box
 
 		using = new /obj/screen/guardian/Communicate()
 		using.screen_loc = ui_sstore1

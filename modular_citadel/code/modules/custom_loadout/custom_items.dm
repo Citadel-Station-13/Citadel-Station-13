@@ -175,7 +175,7 @@
 	icon_state = "hardhat0_reindeer"
 	item_state = "hardhat0_reindeer"
 	hat_type = "reindeer"
-	flags_inv = 0
+	inventory_hide_flags = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	brightness_on = 0 //luminosity when on
 	dynamic_hair_suffix = ""
@@ -202,7 +202,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "hheart"
 	item_state = "hheart"
-	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/trenchcoat/green
 	name = "Reece's Great Coat"
@@ -406,7 +406,7 @@
 	item_state = "zuliecap"
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
-	flags_inv = HIDEEARS|HIDEHAIR
+	inventory_hide_flags = HIDEEARS|HIDEHAIR
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/blackredgold
@@ -516,7 +516,7 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 /obj/item/clothing/gloves/mikugloves
 	name = "starlight singer gloves"

@@ -223,7 +223,7 @@
 	var/obj/item/clothing/PCL = new picked_item
 	if(istype(CL) && istype(PCL))
 		CL.flags_cover = PCL.flags_cover
-		CL.flags_inv = PCL.flags_inv
+		CL.inventory_hide_flags = PCL.flags_inv
 		CL.mutantrace_variation = PCL.mutantrace_variation
 		CL.mob_overlay_icon = PCL.mob_overlay_icon
 		qdel(PCL)
@@ -448,7 +448,7 @@ CHAMELEON_CLOTHING_DEFINE(/obj/item/clothing/mask/chameleon)
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH

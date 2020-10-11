@@ -9,7 +9,7 @@
 	var/on = FALSE
 	var/hat_type = "yellow" //Determines used sprites: hardhat[on]_[hat_type] and hardhat[on]_[hat_type]2 (lying down sprite)
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 20,"energy" = 10, "bomb" = 20, "bio" = 10, "rad" = 20, "fire" = 100, "acid" = 50)
-	flags_inv = 0
+	inventory_hide_flags = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = "+generic"
@@ -96,7 +96,7 @@
 	name = "atmospheric technician's firefighting helmet"
 	desc = "A firefighter's helmet, able to keep the user cool in any situation."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD
@@ -111,10 +111,10 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	flash_protect = 2
 	tint = 2
-	flags_inv = HIDEEYES | HIDEFACE
+	inventory_hide_flags = HIDEEYES | HIDEFACE
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
-	visor_flags_inv = HIDEEYES | HIDEFACE
+	visor_inventory_hide_flags = HIDEEYES | HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/hardhat/weldhat/Initialize()

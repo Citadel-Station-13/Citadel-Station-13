@@ -70,10 +70,11 @@
 	if(H.stat == CONSCIOUS)
 		to_chat(user, "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>")
 		return
-	if(H.head)
-		var/obj/item/I = H.head
+	
+	var/obj/item/headgear = H.get_item_in_slot(SLOT_HEAD)
+	if(headgear)
 		if(I.flags_inv & HIDEHAIR) //they're wearing a hat that covers their skull
-			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.p_their()] [H.head] first!</span>")
+			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.p_their()] [headgear] first!</span>")
 			return
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask

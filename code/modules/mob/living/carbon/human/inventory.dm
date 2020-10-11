@@ -14,45 +14,6 @@
 		items -= list(l_store, r_store, s_store)
 	return items
 
-// Return the item currently in the slot ID
-/mob/living/carbon/human/get_item_in_slot(slot_id)
-	switch(slot_id)
-		if(INVENTORY_SLOT_BACK)
-			return back
-		if(INVENTORY_SLOT_MASK)
-			return wear_mask
-		if(INVENTORY_SLOT_NECK)
-			return wear_neck
-		if(INVENTORY_SLOT_HANDCUFFED)
-			return handcuffed
-		if(INVENTORY_SLOT_LEGCUFFED)
-			return legcuffed
-		if(INVENTORY_SLOT_BELT)
-			return belt
-		if(INVENTORY_SLOT_ID_CARD)
-			return wear_id
-		if(INVENTORY_SLOT_EARS)
-			return ears
-		if(INVENTORY_SLOT_GLASSES)
-			return glasses
-		if(INVENTORY_SLOT_GLOVES)
-			return gloves
-		if(INVENTORY_SLOT_HEAD)
-			return head
-		if(INVENTORY_SLOT_SHOES)
-			return shoes
-		if(INVENTORY_SLOT_OUTERWEAR)
-			return wear_suit
-		if(INVENTORY_SLOT_UNIFORM)
-			return w_uniform
-		if(INVENTORY_SLOT_L_STORE)
-			return l_store
-		if(INVENTORY_SLOT_R_STORE)
-			return r_store
-		if(INVENTORY_SLOT_S_STORE)
-			return s_store
-	return null
-
 /mob/living/carbon/human/proc/get_all_slots()
 	. = get_head_slots() | get_body_slots()
 

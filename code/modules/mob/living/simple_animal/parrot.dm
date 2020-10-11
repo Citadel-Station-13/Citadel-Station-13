@@ -65,6 +65,9 @@
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
+	inventory_slots_default = list(
+		INVENTORY_SLOT_EARS
+	)
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -80,9 +83,6 @@
 	var/list/speech_buffer = list()
 	var/speech_shuffle_rate = 20
 	var/list/available_channels = list()
-
-	//Headset for Poly to yell at engineers :)
-	var/obj/item/radio/headset/ears = null
 
 	//The thing the parrot is currently interested in. This gets used for items the parrot wants to pick up, mobs it wants to steal from,
 	//mobs it wants to attack or mobs that have attacked it

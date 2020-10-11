@@ -131,7 +131,7 @@ Slimecrossing Armor
 	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
 	icon_state = "adamsuit"
 	item_state = "adamsuit"
-	flags_inv = NONE
+	inventory_hide_flags = NONE
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 10 // Citadel Change: because 40% chance of bouncing lasers back into peoples faces isn't good.

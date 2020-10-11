@@ -82,75 +82,12 @@
 	var/datum/language_holder/H = M.get_language_holder()
 	H.open_language_menu(usr)
 
-/obj/screen/inventory
-	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
-	var/icon_empty // Icon when empty. For now used only by humans.
-	var/icon_full  // Icon when contains an item. For now used only by humans.
-	var/list/object_overlays = list()
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/inventory/Click(location, control, params)
-	if(hud?.mymob && (hud.mymob != usr))
-		return
-	// just redirect clicks
-
-	if(hud?.mymob && slot_id)
-		var/obj/item/inv_item = hud.mymob.get_item_in_slot(slot_id)
-		if(inv_item)
-			return inv_item.Click(location, control, params)
-
-	if(usr.attack_ui(slot_id))
-		usr.update_inv_hands()
-	return TRUE
-
-/obj/screen/inventory/MouseEntered()
-	..()
-	add_overlays()
-
-/obj/screen/inventory/MouseExited()
-	..()
-	cut_overlay(object_overlays)
-	object_overlays.Cut()
-
-/obj/screen/inventory/update_icon_state()
-	if(!icon_empty)
-		icon_empty = icon_state
-
-	if(hud?.mymob && slot_id && icon_full)
-		if(hud.mymob.get_item_in_slot(slot_id))
-			icon_state = icon_full
-		else
-			icon_state = icon_empty
-
-/obj/screen/inventory/proc/add_overlays()
-	var/mob/user = hud?.mymob
-
-	if(!user || !slot_id)
-		return
-
-	var/obj/item/holding = user.get_active_held_item()
-
-	if(!holding || user.get_item_in_slot(slot_id))
-		return
-
-	var/image/item_overlay = image(holding)
-	item_overlay.alpha = 92
-
-	if(!user.can_equip(holding, slot_id, TRUE, TRUE, TRUE))
-		item_overlay.color = "#FF0000"
-	else
-		item_overlay.color = "#00ff00"
-
-	object_overlays += item_overlay
-	add_overlay(object_overlays)
-
-/obj/screen/inventory/hand
+/obj/screen/hand
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
-/obj/screen/inventory/hand/update_overlays()
+/obj/screen/hand/update_overlays()
 	. = ..()
 
 	if(!handcuff_overlay)
@@ -173,7 +110,7 @@
 		. += "hand_active"
 
 
-/obj/screen/inventory/hand/Click(location, control, params)
+/obj/screen/hand/Click(location, control, params)
 	if(hud?.mymob && (hud.mymob != usr))
 		return
 	var/mob/user = hud.mymob

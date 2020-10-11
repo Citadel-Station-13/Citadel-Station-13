@@ -726,7 +726,7 @@
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = TRUE
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers
 

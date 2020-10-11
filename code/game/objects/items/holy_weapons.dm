@@ -6,7 +6,7 @@
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
@@ -168,7 +168,7 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
@@ -195,7 +195,7 @@
 	desc = "Hood made for acolytes of the chaplain."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 	name = "leader hoodie"

@@ -63,7 +63,7 @@
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
-	flags_inv = HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEHAIR|HIDEFACIALHAIR
 	dog_fashion = null
 
 /obj/item/clothing/suit/wizrobe
@@ -76,7 +76,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 20, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100, "wound" = 20)
 	allowed = list(/obj/item/teleportation_scroll)
-	flags_inv = HIDEJUMPSUIT
+	inventory_hide_flags = HIDEJUMPSUIT
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF

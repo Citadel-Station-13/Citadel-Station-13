@@ -20,7 +20,15 @@
 		INVENTORY_SLOT_HANDCUFFED,
 		INVENTORY_SLOT_LEGCUFFED,
 		INVENTORY_SLOT_HEAD,
-		INVENTORY_SLOT_BACK
+		INVENTORY_SLOT_BACK,
+		INVENTORY_SLOT_NECK,
+		INVENTORY_SLOT_MASK
+	)
+	inventory_slots_screen_loc_overrides = list(
+		INVENTORY_SLOT_HEAD = ui_monkey_head,
+		INVENTORY_SLOT_BACK = ui_monkey_back,
+		INVENTORY_SLOT_NECK = ui_monkey_neck,
+		INVENTORY_SLOT_MASK = ui_monkey_mask
 	)
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)

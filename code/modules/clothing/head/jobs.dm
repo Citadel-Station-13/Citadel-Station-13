@@ -32,7 +32,7 @@
 	desc = "It's good being the king."
 	icon_state = "captain"
 	item_state = "that"
-	flags_inv = 0
+	inventory_hide_flags = 0
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 60
 
@@ -86,7 +86,7 @@
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
 //Detective

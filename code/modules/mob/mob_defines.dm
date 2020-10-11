@@ -61,6 +61,13 @@
 	/////////////////
 
 	// Inventory
+	/**
+	  * Notice: Most of these are lazy lists to save memory/performance
+	  * However, if a HUD is ever needed for us (aka, a player is in us), we can't
+	  * lazylist the slot datums since the HUD needs to access screen loc overrides and icon state overrides
+	  * Therefore, keep in mind that the moment a player ever views our HUD everything
+	  * will be immediately initialized.
+	  */
 	/// List of slot datums. Slot ID = datum
 	var/list/inventory_slots
 	/// List of inventory slots we have. Typelist or null.
@@ -69,6 +76,8 @@
 	var/list/inventory_slots_rendered_default
 	/// List of overlays for a slot. Lazy list, overlays should only be in here while being used.
 	var/list/inventory_slots_built_overlays
+	/// Typelist. List of screen loc overrides for slots. ID = loc.
+	var/list/inventory_slots_screen_loc_overrides
 	/// Hand selected
 	var/active_hand_index = 1
 	/// Held items - length = number of hands, null are empty hands. Null for no hands

@@ -22,8 +22,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
 	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
-	var/inventory_shown = FALSE		//Equipped item inventory
 	var/hotkey_ui_hidden = FALSE	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+
+	// Item Inventory
+	/// Are we showing the parts of our inventory that is usually hidden?
+	var/toggleable_inventory_shown = FALSE	
 
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
@@ -48,7 +51,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
 	var/list/inv_slots[SLOTS_AMT] // /obj/screen/inventory objects, ordered by their slot ID.
-	var/list/hand_slots // /obj/screen/inventory/hand objects, assoc list of "[held_index]" = object
+	var/list/hand_slots // /obj/screen/hand objects, assoc list of "[held_index]" = object
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
@@ -261,13 +264,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 //9/10 this is only called once per mob and only for 2 hands
 /datum/hud/proc/build_hand_slots()
 	for(var/h in hand_slots)
-		var/obj/screen/inventory/hand/H = hand_slots[h]
+		var/obj/screen/hand/H = hand_slots[h]
 		if(H)
 			static_inventory -= H
 	hand_slots = list()
-	var/obj/screen/inventory/hand/hand_box
+	var/obj/screen/hand/hand_box
 	for(var/i in 1 to mymob.held_items.len)
-		hand_box = new /obj/screen/inventory/hand()
+		hand_box = new /obj/screen/hand()
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"

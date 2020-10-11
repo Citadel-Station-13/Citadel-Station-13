@@ -156,12 +156,12 @@
 			body_parts_covered = CHEST|GROIN|LEGS
 		if(INVENTORY_SLOT_HEAD)
 			body_parts_covered = HEAD
-			flags_inv = HIDEHAIR
+			inventory_hide_flags = HIDEHAIR
 
 /obj/item/reagent_containers/rag/towel/dropped(mob/user)
 	. = ..()
 	body_parts_covered = NONE
-	flags_inv = NONE
+	inventory_hide_flags = NONE
 
 /obj/item/reagent_containers/rag/towel/attack_self(mob/user)
 	if(!user.CanReach(src) || !user.dropItemToGround(src))

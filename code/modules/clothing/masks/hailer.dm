@@ -8,10 +8,10 @@
 	icon_state = "sechailer"
 	item_state = "sechailer"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
-	flags_inv = HIDEFACIALHAIR|HIDEFACE
+	inventory_hide_flags = HIDEFACIALHAIR|HIDEFACE
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
-	visor_flags_inv = HIDEFACE
+	visor_inventory_hide_flags = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
@@ -27,8 +27,8 @@
 	icon_state = "swat"
 	item_state = "swat"
 	aggressiveness = 3
-	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
-	visor_flags_inv = 0
+	inventory_hide_flags = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
+	visor_inventory_hide_flags = 0
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"

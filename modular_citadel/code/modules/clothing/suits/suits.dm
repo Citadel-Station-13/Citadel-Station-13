@@ -26,5 +26,5 @@
 	name = "red cloak hood"
 	icon_state = "golhood"
 	desc = "conceal your face in shame with this nanotrasen brand hood"
-	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	mutantrace_variation = NONE

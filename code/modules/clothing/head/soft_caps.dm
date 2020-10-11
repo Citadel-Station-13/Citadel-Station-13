@@ -136,7 +136,7 @@
 	icon_state = "baseballsoft"
 	soft_type = "baseball"
 	item_state = "baseballsoft"
-	flags_inv = HIDEEYES|HIDEFACE
+	inventory_hide_flags = HIDEEYES|HIDEFACE
 	armor = list("melee" = 35, "bullet" = 35, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 90)
 	strip_delay = 90 //You dont take a Major Leage cap
 	dog_fashion = null

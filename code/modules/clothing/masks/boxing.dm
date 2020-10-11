@@ -3,8 +3,8 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_inventory_hide_flags = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/adjust)
 	mutantrace_variation = STYLE_MUZZLE
@@ -23,8 +23,8 @@
 	item_state = "syndicate_balaclava"
 	clothing_flags = ALLOWINTERNALS
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_inventory_hide_flags = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	armor = list("melee" = 10, "bullet" = 5, "laser" = 5,"energy" = 5, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 30, "acid" = 30)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -36,7 +36,7 @@
 	desc = "Worn by robust fighters, flying high to defeat their foes!"
 	icon_state = "luchag"
 	item_state = "luchag"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL
 	mutantrace_variation = STYLE_MUZZLE
 	modifies_speech = TRUE
@@ -82,6 +82,6 @@
 	desc = "Protects your face from snow."
 	icon_state = "rus_balaclava"
 	item_state = "rus_balaclava"
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	visor_inventory_hide_flags = HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_SMALL

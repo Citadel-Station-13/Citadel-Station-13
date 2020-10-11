@@ -89,7 +89,7 @@
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		var/obj/item/clothing/shoes/S = H.shoes
+		var/obj/item/clothing/shoes/S = H.get_item_in_slot_if_type(SLOT_SHOES, /obj/item/clothing/shoes)
 		if(S && S.bloody_shoes[blood_state])
 			if(color != S.last_blood_color)
 				return
@@ -102,7 +102,7 @@
 /obj/effect/decal/cleanable/blood/footprints/Uncrossed(atom/movable/O)
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		var/obj/item/clothing/shoes/S = H.shoes
+		var/obj/item/clothing/shoes/S = H.get_item_in_slot_if_type(SLOT_SHOES, /obj/item/clothing/shoes)
 		if(S && S.bloody_shoes[blood_state])
 			if(color != S.last_blood_color)//last entry - we check its color
 				return

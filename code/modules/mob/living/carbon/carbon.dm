@@ -57,7 +57,7 @@
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		var/obj/screen/inventory/hand/H
+		var/obj/screen/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
 			H.update_icon()
@@ -342,11 +342,7 @@
 		ExtinguishMob()
 
 /mob/living/carbon/resist_restraints()
-	var/obj/item/I = null
-	if(handcuffed)
-		I = handcuffed
-	else if(legcuffed)
-		I = legcuffed
+	var/obj/item/I = get_item_in_slot(SLOT_HANDCUFFED) || get_item_in_slot(SLOT_LEGCUFFED)
 	if(I)
 		MarkResistTime()
 		cuff_resist(I)

@@ -457,8 +457,8 @@
 				return
 			playsound(A, "rustle", 50, 1, -5)
 			A.do_jiggle()
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
+			if(istype(over_object, /obj/screen/hand))
+				var/obj/screen/hand/H = over_object
 				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
 				return
 			A.add_fingerprint(M)

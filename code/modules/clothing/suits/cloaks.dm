@@ -15,7 +15,7 @@
 	icon_state = "golhood"
 	desc = "A hood for a cloak."
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -69,7 +69,7 @@
 	icon_state = "golhood"
 	desc = "A protective & concealing hood."
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
-	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"

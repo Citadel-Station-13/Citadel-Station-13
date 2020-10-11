@@ -225,11 +225,7 @@
 		var/mob/living/carbon/human/humanoid = i
 		if(!trackable(humanoid))
 			continue
-		var/crewmember_name = "Unknown"
-		if(humanoid.wear_id)
-			var/obj/item/card/id/ID = humanoid.wear_id.GetID()
-			if(ID && ID.registered_name)
-				crewmember_name = ID.registered_name
+		var/crewmember_name = humanoid.get_suit_sensors_name()
 		var/list/crewinfo = list(
 			ref = REF(humanoid),
 			name = crewmember_name,

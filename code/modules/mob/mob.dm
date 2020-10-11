@@ -3,6 +3,8 @@
 		inventory_slots_default = typelist("inventory_slots_default", inventory_slots_default)
 	if(inventory_slots_rendered_default || inventory_slots_default)
 		inventory_slots_rendered_default = typelist("inventory_slots_rendered_default", inventory_slots_rendered_default || inventory_slots_default)
+	if(inventory_slots_screen_loc_overrides)
+		inventory_slots_screen_loc_overrides = typelist("inventory_slots_screen_loc_overrides", inventory_slots_screen_loc_overrides)
 	setup_inventory()
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src

@@ -151,7 +151,7 @@
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
 	resistance_flags = NONE
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
@@ -159,4 +159,4 @@
 	icon_state = "swat"
 	item_state = "swat"
 	resistance_flags = NONE
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR

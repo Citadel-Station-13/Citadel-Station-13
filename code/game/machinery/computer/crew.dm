@@ -139,16 +139,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 				if (H.z == 0 && (!pos || pos.z != z))
 					continue
 
-				I = H.wear_id ? H.wear_id.GetID() : null
-
-				if (I)
-					name = I.registered_name
-					assignment = I.assignment
-					ijob = jobs[I.assignment]
-				else
-					name = "Unknown"
-					assignment = ""
-					ijob = 80
+				name = H.get_suit_sensors_name()
+				assignment = H.get_suit_sensors_assignment()
+				ijob = ((assignment in jobs) && jobs[assignment]) || 80
 
 				if (nanite_sensors || U.sensor_mode >= SENSOR_LIVING)
 					life_status = (!H.stat ? TRUE : FALSE)

@@ -11,20 +11,64 @@
 /**
   * Gets the item in a slot
   */
-/mob/proc/get_item_in_slot(slot_id)
+/mob/proc/get_item_in_slot(slot_id, allow_abstract = TRUE)
 	RETURN_TYPE(/obj/item)
 	if(!has_inventory_slot(slot_id))
 		return
 	var/datum/inventory_slot/slot = inventory_slots[slot_id]
-	return slot.get_item()
+	var/obj/item/I = slot.get_item()
+	if(!allow_abstract && (I.item_flags & ABSTRACT))
+		return
+	return I
+
+/**
+  * Get items in slots
+  */
+/mob/proc/get_items_in_slots(...)
+	. = list()
+	for(var/slot in args)
+		var/obj/item/I = get_item_in_slot(slot, TRUE)
+		. += I
 
 /**
   * Gets the item in a slot if it's of a certain type
   */
-/mob/proc/get_item_in_slot_if_type(slot_id, type, include_subtypes = TRUE)
-	var/obj/item/I = get_item_in_slot(slot_id)
+/mob/proc/get_item_in_slot_if_type(slot_id, type, include_subtypes = TRUE, allow_abstrac)
+	var/obj/item/I = get_item_in_slot(slot_id, allow_abstract)
 	return I && (include_subtypes? (istype(I, type)? I : null) : ((I.type == type)? I : null))
 
+/**
+  * Sends component signal to a slot. Slower than direct SEND_SIGNAL.
+  */
+/mob/proc/send_signal_to_slot(slot_id, sigtype, ...)
+	var/obj/item/I = get_item_in_slot(slot_id)
+	if(!I)
+		return
+	SEND_SIGNAL_DIRECT(target, list(I) + args.Copy(3))
+
+/**
+  * Get slots responsible for a certain inventory hide flag
+  */
+/mob/proc/slots_responsible_for_inventory_hide_flag(flags, only_outermost = FALSE)
+	. = list()
+	for(var/slot in inventory_slots)
+		var/datum/inventory_slot/S = inventory_slots[slot]
+		if(S.inventory_hide_flags() & flags)
+			. += slot
+
+#warn Implement only_outermost
+
+/**
+  * English names for slots
+  */
+/mob/proc/names_of_slots(...)
+	. = list()
+	for(var/slot in args)
+		var/datum/inventory_slot/S = inventory_slots[slot]
+		if(!S)
+			continue
+		. += S.name
+	return english_list(.)
 
 // Hands
 

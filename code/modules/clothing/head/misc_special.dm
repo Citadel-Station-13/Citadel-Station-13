@@ -23,9 +23,9 @@
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 60)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	visor_inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = FIRE_PROOF
 	mutantrace_variation = STYLE_MUZZLE
@@ -44,7 +44,7 @@
 	item_state = "hardhat0_cakehat"
 	hat_type = "cakehat"
 	hitsound = 'sound/weapons/tap.ogg'
-	flags_inv = HIDEEARS|HIDEHAIR
+	inventory_hide_flags = HIDEEARS|HIDEHAIR
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
@@ -89,7 +89,7 @@
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
 	alternate_screams = list('sound/voice/human/cyka1.ogg', 'sound/voice/human/cheekibreeki.ogg')
-	flags_inv = HIDEEARS|HIDEHAIR
+	inventory_hide_flags = HIDEEARS|HIDEHAIR
 	var/earflaps = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
@@ -117,7 +117,7 @@
 	icon_state = "hardhat0_pumpkin"
 	item_state = "hardhat0_pumpkin"
 	hat_type = "pumpkin"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
@@ -155,7 +155,7 @@
 	icon_state = "hardhat0_reindeer"
 	item_state = "hardhat0_reindeer"
 	hat_type = "reindeer"
-	flags_inv = 0
+	inventory_hide_flags = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	brightness_on = 1 //luminosity when on
 	dynamic_hair_suffix = ""
@@ -169,7 +169,7 @@
 	item_state = "cardborg_h"
 	flags_cover = HEADCOVERSEYES
 	alternate_screams = list('modular_citadel/sound/voice/scream_silicon.ogg')
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 
@@ -192,7 +192,7 @@
 	desc = "A bunch of hair without a head attached."
 	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
 	icon_state = "hair_vlong"
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 	color = "#000"
 	var/hair_style = "Very Long Hair"
 
@@ -231,7 +231,7 @@
 	desc = "A crude helmet made out of bronze plates. It offers very little in the way of protection."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet_old"
-	flags_inv = HIDEEARS|HIDEHAIR
+	inventory_hide_flags = HIDEEARS|HIDEHAIR
 	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
 /obj/item/clothing/head/foilhat

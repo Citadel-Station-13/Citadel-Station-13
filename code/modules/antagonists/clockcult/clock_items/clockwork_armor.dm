@@ -6,7 +6,7 @@
 	icon_state = "clockwork_helmet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACE|HIDESNOUT
+	inventory_hide_flags = HIDEEARS|HIDEHAIR|HIDEFACE|HIDESNOUT
 	mutantrace_variation = STYLE_MUZZLE
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100, "magic" = 60, "wound" = 65)
 

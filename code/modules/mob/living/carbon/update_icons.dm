@@ -171,7 +171,7 @@
 /mob/living/carbon/proc/update_hud_handcuffed()
 	if(hud_used)
 		for(var/hand in hud_used.hand_slots)
-			var/obj/screen/inventory/hand/H = hud_used.hand_slots[hand]
+			var/obj/screen/hand/H = hud_used.hand_slots[hand]
 			if(H)
 				H.update_icon()
 

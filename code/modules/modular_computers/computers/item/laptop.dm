@@ -64,8 +64,8 @@
 	. = ..()
 	if(over_object == usr || over_object == src)
 		try_toggle_open(usr)
-	else if(istype(over_object, /obj/screen/inventory/hand))
-		var/obj/screen/inventory/hand/H = over_object
+	else if(istype(over_object, /obj/screen/hand))
+		var/obj/screen/hand/H = over_object
 		var/mob/M = usr
 
 		if(!M.restrained() && !M.stat)

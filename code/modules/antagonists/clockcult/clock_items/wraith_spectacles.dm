@@ -8,7 +8,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_cover = GLASSESCOVERSEYES
-	visor_flags_inv = HIDEEYES
+	visor_inventory_hide_flags = HIDEEYES
 	visor_vars_to_toggle = NONE //we don't actually toggle anything we just set it
 	tint = 3 //this'll get reset, but it won't handle vision updates properly otherwise
 

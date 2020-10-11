@@ -5,7 +5,7 @@
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	item_state = "that"
-	flags_inv = 0
+	inventory_hide_flags = 0
 	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
 
@@ -51,7 +51,7 @@
 	name = "hastur's hood"
 	desc = "It's <i>unspeakably</i> stylish."
 	icon_state = "hasturhood"
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/nursehat
@@ -67,7 +67,7 @@
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	mutantrace_variation = STYLE_MUZZLE
 
 /obj/item/clothing/head/cueball
@@ -76,7 +76,7 @@
 	icon_state = "cueball"
 	item_state="cueball"
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/snowman
 	name = "Snowman Head"
@@ -84,14 +84,14 @@
 	icon_state = "snowman_h"
 	item_state = "snowman_h"
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
-	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/justice/blue
@@ -156,21 +156,21 @@
 	desc = "Eeeee~heheheheheheh!"
 	icon_state = "witch"
 	item_state = "witch"
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/griffin
 	name = "griffon head"
 	desc = "Why not 'eagle head'? Who knows."
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
@@ -184,7 +184,7 @@
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
 	alternate_screams = list('sound/voice/hiss6.ogg')
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -210,7 +210,7 @@
 	icon_state = "sombrero"
 	item_state = "sombrero"
 	desc = "You can practically taste the fiesta."
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 	beepsky_fashion = /datum/beepsky_fashion/sombrero
@@ -220,7 +220,7 @@
 	icon_state = "greensombrero"
 	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEFACE|HIDEEARS
 
 	dog_fashion = null
 
@@ -282,13 +282,13 @@
 	name = "paper sack hat"
 	desc = "A paper sack with crude holes cut out for eyes. Useful for hiding one's identity or ugliness."
 	icon_state = "papersack"
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
+	inventory_hide_flags = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
 
 /obj/item/clothing/head/papersack/smiley
 	name = "paper sack hat"
 	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
 	icon_state = "papersack_smile"
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
+	inventory_hide_flags = HIDEHAIR|HIDEFACE|HIDEEARS|HIDESNOUT
 
 /obj/item/clothing/head/crown
 	name = "crown"
@@ -314,13 +314,13 @@
 	name = "foam lobster head"
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"
 	desc = "A cool wig for cool people."
 	icon_state = "drfreeze_hat"
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 /obj/item/clothing/head/pharaoh
 	name = "pharaoh hat"
@@ -381,7 +381,7 @@
 	icon_state = "assu_helmet"
 	item_state = "assu_helmet"
 	desc = "A cheap replica of old riot helmet without visor. It has \"D.A.B.\" written on the front."
-	flags_inv = HIDEHAIR
+	inventory_hide_flags = HIDEHAIR
 
 /obj/item/clothing/head/hotel
 	name = "Telegram cap"
@@ -481,4 +481,4 @@
 	desc = "A traditional kabuto helmet."
 	icon_state = "kabuto"
 	item_state = "kabuto"
-	flags_inv = HIDEHAIR|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEEARS

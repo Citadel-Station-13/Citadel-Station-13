@@ -1057,6 +1057,19 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown_flying)
 
+/**
+  * Gets our name for suit sensors
+  */
+/mob/living/carbon/human/proc/get_suit_sensors_name()
+	var/obj/item/card/id/ID = get_item_in_slot_if_type(/obj/item/card/id)
+	return ID?.registered_name || "Unknown"
+
+/**
+  * Gets our job title for suit sensors
+  */
+/mob/living/carbon/human/proc/get_suit_sensors_assignment()
+	var/obj/item/card/id/ID = get_item_in_slot_if_type(/obj/item/card/id)
+	return ID?.Assignment || ""
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()

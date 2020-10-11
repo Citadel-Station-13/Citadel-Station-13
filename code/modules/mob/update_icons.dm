@@ -20,6 +20,14 @@
 	update_overlays()
 
 /**
+  * Updates worn icons for the argument slots
+  */
+/mob/proc/update_worn_overlays_for_slots(...)
+	for(var/slot in args)
+		update_worn_overlay_for_slot(slot, FALSE)
+	update_overlays()
+
+/**
   * Update held item overlay for index
   */
 /mob/proc/update_held_overlay_for_hand(index, update_overlays = TRUE)

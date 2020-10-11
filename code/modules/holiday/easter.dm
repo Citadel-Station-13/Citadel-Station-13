@@ -91,7 +91,7 @@
 	item_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"
@@ -100,7 +100,7 @@
 	item_state = "bunnysuit"
 	slowdown = -1
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 //Egg prizes and egg spawns!
 /obj/item/reagent_containers/food/snacks/egg

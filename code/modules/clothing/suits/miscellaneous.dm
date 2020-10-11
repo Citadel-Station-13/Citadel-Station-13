@@ -47,7 +47,7 @@
 	desc = "You will learn to fear the flash."
 	icon_state = "flashsuit"
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
+	inventory_hide_flags = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
 
 /obj/item/clothing/suit/pirate
 	name = "pirate coat"
@@ -72,7 +72,7 @@
 	flags_1 = CONDUCT_1
 	fire_resist = T0C+5200
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|FEET
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/justice
@@ -81,7 +81,7 @@
 	icon_state = "justice"
 	item_state = "justice"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|FEET
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/judgerobe
@@ -91,7 +91,7 @@
 	item_state = "judge"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/fancy/cigarettes, /obj/item/stack/spacecash)
-	flags_inv = HIDEJUMPSUIT
+	inventory_hide_flags = HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/tailcoat
@@ -134,7 +134,7 @@
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = NONE
 
 /obj/item/clothing/suit/hastur
@@ -143,7 +143,7 @@
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/imperium_monk
@@ -152,7 +152,7 @@
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen)
 	mutantrace_variation = NONE
 
@@ -162,7 +162,7 @@
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/monkeysuit
@@ -171,7 +171,7 @@
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/toggle/owlwings
 	name = "owl cloak"
@@ -198,7 +198,7 @@
 	icon_state = "cardborg"
 	item_state = "cardborg"
 	body_parts_covered = CHEST|GROIN
-	flags_inv = HIDEJUMPSUIT
+	inventory_hide_flags = HIDEJUMPSUIT
 	dog_fashion = /datum/dog_fashion/back
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
@@ -227,7 +227,7 @@
 	icon_state = "snowman"
 	item_state = "snowman"
 	body_parts_covered = CHEST|GROIN
-	flags_inv = HIDEJUMPSUIT
+	inventory_hide_flags = HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/poncho
@@ -266,7 +266,7 @@
 	icon_state = "white_dress"
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	flags_inv = HIDEJUMPSUIT|HIDESHOES
+	inventory_hide_flags = HIDEJUMPSUIT|HIDESHOES
 	mutantrace_variation = NONE
 
 /obj/item/clothing/suit/hooded/carp_costume
@@ -287,7 +287,7 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
@@ -304,7 +304,7 @@
 	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
 	icon_state = "ian"
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/bee_costume // It's Hip!
 	name = "bee costume"
@@ -322,7 +322,7 @@
 	icon_state = "bee"
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
-	flags_inv = HIDEHAIR|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEEARS
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/suit/hooded/bloated_human	//OH MY GOD WHAT HAVE YOU DONE!?!?!?
@@ -342,7 +342,7 @@
 	icon_state = "lingspacehelmet"
 	body_parts_covered = HEAD
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/armor/navyblue/russian
 	name = "\improper Russian officer's jacket"
@@ -358,7 +358,7 @@
 	icon_state = "ran_suit"
 	item_state = "ran_suit"
 	body_parts_covered = CHEST|GROIN|LEGS
-	flags_inv = HIDEJUMPSUIT|HIDETAUR
+	inventory_hide_flags = HIDEJUMPSUIT|HIDETAUR
 	heat_protection = CHEST|GROIN|LEGS //fluffy tails!
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
@@ -367,7 +367,7 @@
 	desc = "A hat that looks like it keeps any fluffy ears contained super warm, has little charms over it."
 	icon_state = "ran_hat"
 	item_state = "ran_hat"
-	flags_inv = HIDEEARS
+	inventory_hide_flags = HIDEEARS
 
 /*
  * Misc
@@ -379,7 +379,7 @@
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	equip_delay_self = 50
 	strip_delay = 60
 	breakouttime = 3000
@@ -535,7 +535,7 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	inventory_hide_flags = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
 // WINTER COATS
@@ -559,7 +559,7 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	flags_inv = HIDEHAIR|HIDEEARS
+	inventory_hide_flags = HIDEHAIR|HIDEEARS
 	rad_flags = RAD_NO_CONTAMINATE
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom
@@ -1000,7 +1000,7 @@
 	throw_speed = 1
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	inventory_hide_flags = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
@@ -1023,7 +1023,7 @@
 	item_state = "assu_suit"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	flags_inv = HIDEJUMPSUIT
+	inventory_hide_flags = HIDEJUMPSUIT
 	resistance_flags = NONE
 
 /obj/item/clothing/suit/hooded/wintercoat/christmascoatr
