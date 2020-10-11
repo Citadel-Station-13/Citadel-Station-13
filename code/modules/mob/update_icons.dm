@@ -1,43 +1,54 @@
 //Most of these are defined at this level to reduce on checks elsewhere in the code.
 //Having them here also makes for a nice reference list of the various overlay-updating procs available
 
-/mob/proc/regenerate_icons()		//TODO: phase this out completely if possible
-	return
+/**
+  * Updates the worn icon of a certain slot.
+  */
+/mob/proc/update_worn_overlay_for_slot(slot, update_overlays = TRUE)
+
+	if(update_overlays)
+		update_overlays()
+
+/**
+  * Updates all inventory worn icons
+  * Should not be used unless absolutely necessary
+  */
+/mob/proc/update_worn_overlays()
+	inventory_slots_built_overlays = list()
+	for(var/slot in inventory_slots)
+		update_worn_overlay_for_slot(slot, FALSE)
+	update_overlays()
+
+/**
+  * Update held item overlay for index
+  */
+/mob/proc/update_held_overlay_for_hand(index, update_overlays = TRUE)
+
+	if(update_overlays)
+		update_overlays()
+
+/**
+  * Update held item overlays
+  * Should not be used unless absolutely necessary
+  */
+/mob/proc/update_held_overlays()
+	held_item_built_overlays = list()
+	for(var/i in 1 to length(held_items))
+		update_held_overlay_for_hand(i, FALSE)
+	update_overlays()
+
+/**
+  * Fully rebuilds our overlays.
+  * Should almost never be used in code.
+  */
+/mob/proc/regenerate_overlays()
+	update_worn_overlays()
+	update_held_overlays()
 
 /mob/proc/update_icons()
 	return
 
 /mob/proc/update_transform()
-	return
-
-/mob/proc/update_inv_handcuffed()
-	return
-
-/mob/proc/update_inv_legcuffed()
-	return
-
-/mob/proc/update_inv_back()
-	return
-
-/mob/proc/update_inv_hands()
-	return
-
-/mob/proc/update_inv_wear_mask()
-	return
-
-/mob/proc/update_inv_neck()
-	return
-
-/mob/proc/update_inv_wear_suit()
-	return
-
-/mob/proc/update_inv_w_uniform()
-	return
-
-/mob/proc/update_inv_belt()
-	return
-
-/mob/proc/update_inv_head()
 	return
 
 /mob/proc/update_body()
@@ -49,23 +60,9 @@
 /mob/proc/update_fire()
 	return
 
-/mob/proc/update_inv_gloves()
-	return
-
-/mob/proc/update_inv_wear_id()
-	return
-
-/mob/proc/update_inv_shoes()
-	return
-
-/mob/proc/update_inv_glasses()
-	return
-
-/mob/proc/update_inv_s_store()
-	return
-
-/mob/proc/update_inv_pockets()
-	return
-
-/mob/proc/update_inv_ears()
-	return
+/**
+  * Gets the pixel offset of a certain slot.
+  */
+/mob/proc/slot_pixel_offsets(slot_id, obj/item/held)
+	RETURN_TYPE(/list)
+	return list(0, 0)

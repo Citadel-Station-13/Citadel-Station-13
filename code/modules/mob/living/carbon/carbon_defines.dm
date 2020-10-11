@@ -11,22 +11,15 @@
 	var/silent = FALSE 		//Can't talk. Value goes down every life proc. //NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 	var/dreaming = 0 //How many dream images we have left to send
 
-	var/obj/item/restraints/handcuffed //Whether or not the mob is handcuffed
-	var/obj/item/restraints/legcuffed //Same as handcuffs but for legs. Bear traps use this.
+	inventory_slots_default = list(
+		SLOT_HANDCUFFED,
+		SLOT_LEGCUFFED
+	)
 
 	var/disgust = 0
 
 //inventory slots
-	var/obj/item/back = null
-	var/obj/item/clothing/mask/wear_mask = null
-	var/obj/item/clothing/neck/wear_neck = null
 	var/obj/item/tank/internal = null
-	var/obj/item/head = null
-
-	var/obj/item/gloves = null //only used by humans
-	var/obj/item/clothing/shoes/shoes = null //only used by humans.
-	var/obj/item/clothing/glasses/glasses = null //only used by humans.
-	var/obj/item/ears = null //only used by humans.
 
 	var/datum/dna/dna = null//Carbon
 	var/datum/mind/last_mind = null //last mind to control this mob, for blood-based cloning

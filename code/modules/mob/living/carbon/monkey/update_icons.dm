@@ -53,6 +53,10 @@
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = legcuffed)
 
+/mob/living/carbon/monkey/slot_pixel_offsets(slot_id, obj/item/held)
+	if(SLOT_LEGCUFFED)
+		return list(0, 8)
+
 //monkey HUD updates for items in our inventory
 
 //update whether our head item appears on our hud.

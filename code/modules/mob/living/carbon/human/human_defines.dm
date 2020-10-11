@@ -15,6 +15,24 @@
 
 	block_parry_data = /datum/block_parry_data/unarmed/human
 
+	inventory_slots_default = list(
+		SLOT_HANDCUFFED,
+		SLOT_LEGCUFFED,
+		SLOT_OUTERWEAR,
+		SLOT_UNIFORM,
+		SLOT_S_STORE,
+		SLOT_L_STORE,
+		SLOT_R_STORE,
+		SLOT_GLOVES,
+		SLOT_GLASSES,
+		SLOT_EARS,
+		SLOT_NECK,
+		SLOT_SHOES,
+		SLOT_MASK,
+		SLOT_BELT,
+		SLOT_ID_CARD
+	)
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -40,15 +58,6 @@
 	var/shirt_color = "FFFFFF"
 	var/socks = "Nude" //Which socks the player wants
 	var/socks_color = "FFFFFF"
-
-	//Equipment slots
-	var/obj/item/wear_suit = null
-	var/obj/item/w_uniform = null
-	var/obj/item/belt = null
-	var/obj/item/wear_id = null
-	var/obj/item/r_store = null
-	var/obj/item/l_store = null
-	var/obj/item/s_store = null
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 

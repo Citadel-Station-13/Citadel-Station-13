@@ -1,8 +1,8 @@
 /mob/Initialize()
 	if(inventory_slots_default)
 		inventory_slots_default = typelist("inventory_slots_default", inventory_slots_default)
-	if(inventory_slots_rendered_default)
-		inventory_slots_rendered_default = typelist("inventory_slots_rendered_default", inventory_slots_rendered_default)
+	if(inventory_slots_rendered_default || inventory_slots_default)
+		inventory_slots_rendered_default = typelist("inventory_slots_rendered_default", inventory_slots_rendered_default || inventory_slots_default)
 	setup_inventory()
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src

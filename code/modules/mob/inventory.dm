@@ -1,3 +1,33 @@
+// Inventory slots and hand code
+////////////////////////////////
+
+// Inventory slots
+/**
+  * Checks if we have a slot available
+  */
+/mob/proc/has_inventory_slot(slot_id)
+	return (slot_id in inventory_slots_default) || (slot_id in inventory_slots)
+
+/**
+  * Gets the item in a slot
+  */
+/mob/proc/get_item_in_slot(slot_id)
+	RETURN_TYPE(/obj/item)
+	if(!has_inventory_slot(slot_id))
+		return
+	var/datum/inventory_slot/slot = inventory_slots[slot_id]
+	return slot.get_item()
+
+/**
+  * Gets the item in a slot if it's of a certain type
+  */
+/mob/proc/get_item_in_slot_if_type(slot_id, type, include_subtypes = TRUE)
+	var/obj/item/I = get_item_in_slot(slot_id)
+	return I && (include_subtypes? (istype(I, type)? I : null) : ((I.type == type)? I : null))
+
+
+// Hands
+
 //These procs handle putting s tuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 

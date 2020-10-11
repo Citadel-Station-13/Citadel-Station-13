@@ -13,6 +13,8 @@
 	var/obj/item/held
 	/// Spritesheet overrides: List of CLOTHING_ASSET_SET_DEFINE = file, or if not a list, just a single file.
 	var/spritesheet_override
+	/// Our generated HUD object
+	var/obj/screen/hud_object
 
 /datum/inventory_slot/New(mob/host, datum/inventory_slot_meta/parent)
 	if(!host || !parent)
@@ -33,8 +35,17 @@
 			held = null
 		else
 			QDEL_NULL(held)
+	if(hud_object)
+		QDEL_NULL(hud_object)
 	host = null
 	return ..()
+
+/**
+  * Get the item in us
+  */
+/datum/inventory_slot/proc/get_item()
+	RETURN_TYPE(/obj/item)
+	return held
 
 // Subtypes
 /datum/inventory_slot/back

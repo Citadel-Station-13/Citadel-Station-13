@@ -9,7 +9,10 @@
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
 	dextrous = TRUE
 	held_items = list(null, null)
-	var/obj/item/internal_storage //what we're storing within ourself
+	inventory_slots_default = list(
+		SLOT_GENERIC_DEXTROUS_STORAGE
+	)
+	inventory_slots_rendered_default = list()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/death(gibbed)
 	..()
