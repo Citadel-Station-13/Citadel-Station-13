@@ -286,4 +286,4 @@ GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant
 GLOBAL_LIST_INIT(prosthetic_limb_types, list("xion","bishop","cybersolutions","grayson","hephaestus","nanotrasen","talon"))
 
 //list of eye types, corresponding to a respective left and right icon state for the set of eyes
-GLOBAL_LIST_INIT(eye_types, list("normal", "insect", "moth", "double", "double2", "cyclops"))
+GLOBAL_LIST_INIT(eye_types, list("normal", "insect"))

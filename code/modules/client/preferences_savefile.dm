@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	37
+#define SAVEFILE_VERSION_MAX	36
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -204,18 +204,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(S["species"] == "lizard")
 			features["mam_snouts"] = features["snout"]
 
-	if(current_version < 36) //introduction of heterochromia
+	if(current_version < 36)
 		left_eye_color = S["eye_color"]
 		right_eye_color = S["eye_color"]
-
-	if(current_version < 37) //introduction of chooseable eye types/sprites
-		if(S["species"] == "insect")
-			left_eye_color = "#000000"
-			right_eye_color = "#000000"
-			if(chosen_limb_id == "moth" || chosen_limb_id == "moth_not_greyscale") //these actually have slightly different eyes!
-				eye_type = "moth"
-			else
-				eye_type = "insect"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
