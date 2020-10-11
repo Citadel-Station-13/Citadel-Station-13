@@ -549,16 +549,11 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
-		//only heal to 25 if limb is damaged to or past 25 burn, otherwise heal normally
-		var/difference = affecting.burn_dam - 25
-		var/heal_amount = 15
-		if(difference >= 0)
-			heal_amount = difference
 		if(user == H)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
-		if(item_heal_robotic(H, user, 0, heal_amount))
+		if(item_heal_robotic(H, user, 0, 15))
 			use(1)
 		return
 	else
