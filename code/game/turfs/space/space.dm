@@ -133,13 +133,10 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
-/turf/open/space/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	
-	var/turf/old = get_turf(OldLoc)
-	if(!isspaceturf(old) && ismob(A))
-		var/mob/M = A
-		M.update_gravity(M.mob_has_gravity())
+/turf/open/space/Entered(atom/movable/A)
+	..()
+	if ((!(A) || src != A.loc))
+		return
 
 	if(destination_z && destination_x && destination_y && !(A.pulledby || !A.can_be_z_moved))
 		var/tx = destination_x
@@ -160,18 +157,27 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/AM = A.pulling
+		var/atom/movable/pulling = A.pulling
+		var/atom/movable/puller = A
 		A.forceMove(DT)
-		if(AM)
-			var/turf/T = get_step(A.loc,turn(A.dir, 180))
-			AM.can_be_z_moved = FALSE
-			AM.forceMove(T)
-			A.start_pulling(AM)
-			AM.can_be_z_moved = TRUE
+
+		while (pulling != null)
+			var/next_pulling = pulling.pulling
+
+			var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
+			pulling.can_be_z_moved = FALSE
+			pulling.forceMove(T)
+			puller.start_pulling(pulling)
+			pulling.can_be_z_moved = TRUE
+
+			puller = pulling
+			pulling = next_pulling
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
+		A.inertia_moving = TRUE
+
 
 /turf/open/space/Exited(atom/movable/AM, atom/OldLoc)
 	. = ..()
