@@ -1,6 +1,6 @@
 /datum/species/android
 	name = "Android"
-	id = "android"
+	id = SPECIES_ANDROID
 	say_mod = "states"
 	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL,ROBOTIC_LIMBS)
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_NOFIRE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_LIMBATTACHMENT)
@@ -11,7 +11,7 @@
 	mutanttongue = /obj/item/organ/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	limbs_id = "synth"
-	species_type = "robotic"
+	species_category = SPECIES_CATEGORY_ROBOT
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()

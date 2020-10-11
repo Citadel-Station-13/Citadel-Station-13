@@ -95,8 +95,8 @@
 	if(is_ash_immune(L))
 		return
 	if(is_species(L, /datum/species/lizard/ashwalker))
-		if(!IS_STAMCRIT(L))
-			L.adjustStaminaLossBuffered(4)
+		if(L.getStaminaLoss() < (STAMINA_CRIT - 40))
+			L.adjustStaminaLoss(4)
 		return
 	L.adjustFireLoss(4)
 
