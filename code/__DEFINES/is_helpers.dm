@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
-#define istransparentturf(A) (istype(A, /turf/open/transparent))
+#define istransparentturf(A) (istype(A, /turf/open/transparent)||istype(A, /turf/open/space/transparent))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 
 // Citadel specific species
@@ -234,3 +235,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+#define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)

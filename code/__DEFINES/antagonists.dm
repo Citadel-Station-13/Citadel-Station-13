@@ -63,6 +63,10 @@
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
 
+//Lingblood stuff
+#define LINGBLOOD_DETECTION_THRESHOLD 1
+#define LINGBLOOD_EXPLOSION_MULT 2
+#define LINGBLOOD_EXPLOSION_THRESHOLD (LINGBLOOD_DETECTION_THRESHOLD * LINGBLOOD_EXPLOSION_MULT) //Hey, important to note here: the explosion threshold is explicitly more than, rather than more than or equal to. This stops a single loud ability from triggering the explosion threshold.
 
 ///Heretics --
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))

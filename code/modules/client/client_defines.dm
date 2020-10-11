@@ -126,9 +126,17 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+	/// viewsize datum for holding our view size
+	var/datum/viewData/view_size
 
-	/// datum wrapper for client view
-	var/datum/view_data/view_size
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
 
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
@@ -152,6 +160,14 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+
+	/**
+	 * Assoc list with all the active maps - when a screen obj is added to
+	 * a map, it's put in here as well.
+	 *
+	 * Format: list(<mapname> = list(/obj/screen))
+	 */
+	var/list/screen_maps = list()
 
 	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
 	var/list/sent_assets = list()

@@ -205,6 +205,7 @@
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 #define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 #define TRAIT_FAST_PUMP				"fast_pump"
+#define TRAIT_NO_PROCESS_FOOD	"no-process-food" // You don't get benefits from nutriment, nor nutrition from reagent consumables
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good...
 
 // mobility flag traits
@@ -218,6 +219,8 @@
 #define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
 /// Disallow item use
 #define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+///Disallow resting/unresting
+#define TRAIT_MOBILITY_NOREST		"mobility_norest"
 
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
@@ -310,6 +313,7 @@
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
+#define SLIMEPUDDLE_TRAIT "slimepuddle"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.
