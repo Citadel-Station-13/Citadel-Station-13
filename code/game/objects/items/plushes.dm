@@ -150,6 +150,7 @@
 	if(squeak_override)
 		var/datum/component/squeak/S = GetComponent(/datum/component/squeak)
 		S?.override_squeak_sounds = squeak_override
+	snowflake_id = id
 
 /obj/item/toy/plush/handle_atom_del(atom/A)
 	if(A == grenade)
@@ -827,12 +828,16 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	if(!victim)
 		return
 	visible_message("<span class='warning'>[src] gruesomely mutilliates [victim], leaving nothing more than dust!</span>")
-	name = victim.name
-	desc = victim.desc + " Wait, did it just move..?"
-	icon_state = victim.icon_state
-	item_state = victim.item_state
-	squeak_override = victim.squeak_override
-	attack_verb = victim.attack_verb
+	if(victim.snowflake_id) //Snowflake code for snowflake plushies.
+		set_snowflake_from_config(victim.snowflake_id)
+		desc += " Wait, did it just move..?"
+	else
+		name = victim.name
+		desc = victim.desc + " Wait, did it just move..?"
+		icon_state = victim.icon_state
+		item_state = victim.item_state
+		squeak_override = victim.squeak_override
+		attack_verb = victim.attack_verb
 	new /obj/effect/decal/cleanable/ash(get_turf(victim))
 	qdel(victim)
 

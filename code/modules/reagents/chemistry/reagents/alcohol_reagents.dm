@@ -2283,7 +2283,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 50
 
 /datum/reagent/consumable/ethanol/species_drink/on_mob_life(mob/living/carbon/C)
-	if(C.dna.species && C.dna.species.species_type == species_required) //species have a species_type variable that refers to one of the drinks
+	if(C.dna.species && C.dna.species.species_category == species_required) //species have a species_category variable that refers to one of the drinks
 		quality = RACE_DRINK
 	else
 		C.adjust_disgust(disgust)

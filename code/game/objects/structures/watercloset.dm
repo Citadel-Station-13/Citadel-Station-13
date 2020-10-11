@@ -131,15 +131,12 @@
 		return ..()
 
 /obj/structure/toilet/secret
-	var/obj/item/secret
 	var/secret_type = null
 
-/obj/structure/toilet/secret/Initialize(mapload)
+/obj/structure/toilet/secret/Initialize()
 	. = ..()
 	if (secret_type)
-		secret = new secret_type(src)
-		secret.desc += "" //In case you want to add something to the item that spawns
-		contents += secret
+		new secret_type(src)
 
 /obj/structure/toilet/secret/LateInitialize()
 	. = ..()

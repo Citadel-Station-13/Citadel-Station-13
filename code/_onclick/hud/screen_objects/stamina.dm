@@ -11,7 +11,9 @@
 /obj/screen/staminas/Click(location,control,params)
 	if(isliving(usr))
 		var/mob/living/L = usr
-		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>Your stamina buffer can take <b>[L.stambuffer]</b> stamina loss, and recharges at no cost.<br>Your stamina buffer is <b>[(L.stambuffer*(100/L.stambuffer))-(L.bufferedstam*(100/L.stambuffer))]%</b> full.</span>")
+		CONFIG_CACHE_ENTRY_AND_FETCH_VALUE(number/stamina_combat/buffer_max, buffer_max)
+		to_chat(L, "<span class='notice'>You have <b>[L.getStaminaLoss()]</b> stamina loss.<br>\
+		<br>Your stamina buffer is <b>[round((L.stamina_buffer / buffer_max) * 100, 0.1)]%</b> full.</span>")
 
 /obj/screen/staminas/update_icon_state()
 	var/mob/living/carbon/user = hud?.mymob
@@ -24,6 +26,19 @@
 	else
 		icon_state = "stamina[clamp(FLOOR(user.getStaminaLoss() /20, 1), 0, 6)]"
 
+/obj/screen/staminas/update_overlays()
+	. = ..()
+	var/mob/living/carbon/user = hud?.mymob
+	if(!user)
+		return
+	var/percent = user.getStaminaLoss() / STAMINA_CRIT
+	if((user.stat == DEAD) || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2))
+		. += list("stamina_alert3") 
+	else if(percent >= 0.85)
+		. += list("stamina_alert2")
+	else if(percent >= 0.7)
+		. += list("stamina_alert1")
+
 //stam buffer
 /obj/screen/staminabuffer
 	icon = 'modular_citadel/icons/ui/screen_gen.dmi'
@@ -33,29 +48,33 @@
 	layer = ABOVE_HUD_LAYER + 0.1
 	mouse_opacity = 0
 
-/obj/screen/staminabuffer/update_icon_state()
+/obj/screen/staminabuffer/proc/mark_dirty()
+	if(update_to_mob())
+		START_PROCESSING(SShuds, src)
+
+/obj/screen/staminabuffer/process()
+	if(!update_to_mob())
+		return PROCESS_KILL
+
+/obj/screen/staminabuffer/Destroy()
+	STOP_PROCESSING(SShuds, src)
+	return ..()
+
+/obj/screen/staminabuffer/proc/update_to_mob()
 	var/mob/living/carbon/user = hud?.mymob
-	if(!user)
-		return
+	user.UpdateStaminaBuffer(FALSE)
+	CONFIG_CACHE_ENTRY_AND_FETCH_VALUE(number/stamina_combat/buffer_max, buffer_max)
+	if(!user?.client)
+		return FALSE
 	if(user.stat == DEAD || (user.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || (user.hal_screwyhud in 1 to 2))
-		icon_state = "stambuffer7"
-	else if(user.hal_screwyhud == 5)
 		icon_state = "stambuffer0"
+		return FALSE
+	else if(user.hal_screwyhud == 5)
+		icon_state = "stambuffer29"
+		return FALSE
+	else if(user.stamina_buffer >= buffer_max)
+		icon_state = "stambuffer29"
+		return FALSE
 	else
-		switch(user.bufferedstam / user.stambuffer)
-			if(0.95 to INFINITY)
-				icon_state = "stambuffer7"
-			if(0.9 to 0.95)
-				icon_state = "stambuffer6"
-			if(0.8 to 0.9)
-				icon_state = "stambuffer5"
-			if(0.6 to 0.8)
-				icon_state = "stambuffer4"
-			if(0.4 to 0.6)
-				icon_state = "stambuffer3"
-			if(0.2 to 0.4)
-				icon_state = "stambuffer2"
-			if(0.05 to 0.2)
-				icon_state = "stambuffer1"
-			else
-				icon_state = "stambuffer0"
+		icon_state = "stambuffer[FLOOR((user.stamina_buffer / buffer_max) * 29, 1)]"
+		return TRUE

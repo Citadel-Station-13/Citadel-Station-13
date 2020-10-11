@@ -483,12 +483,12 @@
 //Checks disabled status thresholds
 
 //Checks disabled status thresholds
-/obj/item/bodypart/proc/update_disabled()
+/obj/item/bodypart/proc/update_disabled(silent = FALSE)
 	if(!owner)
 		return
-	set_disabled(is_disabled())
+	set_disabled(is_disabled(silent), silent)
 
-/obj/item/bodypart/proc/is_disabled()
+/obj/item/bodypart/proc/is_disabled(silent = FALSE)
 	if(!owner)
 		return
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS))
@@ -500,7 +500,7 @@
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
-			if(!last_maxed)
+			if(!last_maxed && !silent)
 				owner.emote("scream")
 				last_maxed = TRUE
 			if(!is_organic_limb() || stamina_dam >= max_damage)
@@ -581,7 +581,7 @@
 		C = owner
 		no_update = FALSE
 
-	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
+	if(HAS_TRAIT(C, TRAIT_HUSK) && (is_organic_limb() || render_like_organic))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -619,7 +619,10 @@
 			skin_tone = ""
 
 		body_gender = H.dna.features["body_model"]
-		should_draw_gender = S.sexes
+		if(GLOB.nongendered_limb_types[species_id])
+			should_draw_gender = FALSE
+		else
+			should_draw_gender = S.sexes
 
 		var/mut_colors = (MUTCOLORS in S.species_traits)
 		if(mut_colors)

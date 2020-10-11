@@ -1,12 +1,11 @@
 /datum/proc/key_down(key, client/user) // Called when a key is pressed down initially
-	return
+	SHOULD_NOT_SLEEP(TRUE)
 
 /datum/proc/key_up(key, client/user) // Called when a key is released
-	return
+	SHOULD_NOT_SLEEP(TRUE)
 
 /datum/proc/keyLoop(client/user) // Called once every frame
-	set waitfor = FALSE
-	return
+	SHOULD_NOT_SLEEP(TRUE)
 
 // removes all the existing macros
 /client/proc/erase_all_macros()
