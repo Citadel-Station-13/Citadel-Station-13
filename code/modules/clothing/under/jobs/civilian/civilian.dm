@@ -23,6 +23,68 @@
 	fitted = FEMALE_UNIFORM_TOP
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/under/rank/civilian/util
+	name = "generic utility uniform"
+	desc = "A utility uniform worn by various crew."
+	icon_state = "utilgen"
+	item_state = "utilgen"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/util/greyshirt
+	name = "grey uniform"
+	desc = "A bland, grey uniform."
+	icon_state = "greyshirt"
+	item_state = "greyshirt"
+
+/obj/item/clothing/under/rank/civilian/victorian_redsleeves
+	name = "black vest red victorian suit"
+	desc = "A stark red victorian suit with a black vest."
+	icon_state = "victorianblred"
+	item_state = "victorianblred"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/victorian_redvest
+	name = "red-vested victorian suit"
+	desc = "A victorian suit with a red vest."
+	icon_state = "victorianredvest"
+	item_state = "victorianredvest"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/victorian_vest
+	name = "black victorian suit"
+	desc = "A simple black victorian suit."
+	icon_state = "victorianvest"
+	item_state = "victorianvest"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/victorian_purple
+	name = "purple victorian suit"
+	desc = "A victorian suit in regal purple."
+	icon_state = "victorianlightfire"
+	item_state = "victorianlightfire"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/victorianreddress
+	name = "red victorian dress"
+	desc = "A flashy red victorian dress."
+	icon_state = "victorianreddress"
+	item_state = "victorianreddress"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/victorianblackdress
+	name = "black victorian dress"
+	desc = "A victorian dress in somber black."
+	icon_state = "victorianblackdress"
+	item_state = "victorianblackdress"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/dutch
+	name = "dutch suit"
+	desc = "A dapper dutch suit."
+	icon_state = "dutch"
+	item_state = "dutch"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/civilian/chaplain
 	desc = "It's a black jumpsuit, often worn by religious folk."
 	name = "chaplain's jumpsuit"
@@ -61,6 +123,12 @@
 	icon_state = "hop"
 	item_state = "b_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/head_of_personnel/whimsy
+	name = "casual head of personnel's jumpsuit"
+	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\", this one seems to be a bit more casual."
+	icon_state = "hop_casual"
+	item_state = "hop_casual"
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt
 	name = "head of personnel's jumpskirt"

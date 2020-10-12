@@ -436,12 +436,7 @@
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
-			//Search for item to steal
-			parrot_interest = search_for_item()
-			if(parrot_interest)
-				emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
-				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				icon_state = icon_living
+			INVOKE_ASYNC(src, .proc/attempt_item_theft)
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
@@ -619,6 +614,14 @@
 	else
 		parrot_lastmove = src.loc
 	return 0
+
+/mob/living/simple_animal/parrot/proc/attempt_item_theft()
+	//Search for item to steal
+	search_for_item()
+	if(parrot_interest)
+		emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
+		parrot_state = PARROT_SWOOP | PARROT_STEAL
+		icon_state = icon_living
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item

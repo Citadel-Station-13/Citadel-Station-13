@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
+		if(BP.is_robotic_limb())
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 

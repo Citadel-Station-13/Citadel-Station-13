@@ -1,6 +1,6 @@
 /datum/species/angel
 	name = "Angel"
-	id = "angel"
+	id = SPECIES_ANGEL
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
 	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "Angel")
@@ -9,7 +9,7 @@
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	species_type = "human" //they're a kind of human
+	species_category = SPECIES_CATEGORY_BASIC //they're a kind of human
 
 	var/datum/action/innate/flight/fly
 
@@ -142,3 +142,4 @@
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+	update_species_slowdown(H)

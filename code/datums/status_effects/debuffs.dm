@@ -128,6 +128,9 @@
 		duration = set_duration
 	. = ..()
 
+/datum/status_effect/no_combat_mode/robotic_emp
+	id = "emp_no_combat_mode"
+
 /datum/status_effect/mesmerize
 	id = "Mesmerize"
 	alert_type = /obj/screen/alert/status_effect/mesmerized
@@ -1043,7 +1046,7 @@ datum/status_effect/pacify
 	id = "fake_virus"
 	duration = 1800//3 minutes
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 20
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
