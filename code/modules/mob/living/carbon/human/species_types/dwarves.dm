@@ -56,11 +56,13 @@ GLOBAL_LIST_INIT(dwarf_last, world.file2list("strings/names/dwarf_last.txt")) //
 		var/list/dwarf_words = strings("dwarf_replacement.json", "dwarf") //thanks to regex too.
 		for(var/word in splittext(message," "))
 			var/value = dwarf_words[word] //Thus they will always be in character.
+			if(!value)
+				continue
 			if(islist(value)) //Whether they like it or not.
 				value = pick(value) //This could be drastically reduced if needed though.
-			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
-			message = replacetextEx(message, " [key]", " [value]") //Also its scottish.
+			message = replacetextEx(message, " [uppertext(word)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(word)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [word]", " [value]") //Also its scottish.
 
 	if(prob(3))
 		message += " By Armok!"
