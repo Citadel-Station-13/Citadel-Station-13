@@ -133,6 +133,9 @@
 
 /obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/try_trigger, AM)
+
+/obj/item/pressure_plate/hologrid/proc/try_trigger(atom/movable/AM)
 	if(trigger_item && istype(AM, specific_item) && !claimed)
 		AM.anchored = TRUE
 		flick("laserbox_burn", AM)

@@ -108,10 +108,15 @@
 		if(2)
 			owner.nutrition = min(owner.nutrition - 100, 0)
 			to_chat(owner, "<span class='warning'>Alert: Minor battery discharge!</span>")
+<<<<<<< HEAD
 /obj/item/organ/stomach/vox
 	name = "vox crystal"
 	icon_state = "stomach-v"
 	desc = "A large mass of blue flesh that smells like chicken and gravy."/obj/item/organ/stomach/ethereal
+=======
+
+/obj/item/organ/stomach/ethereal
+>>>>>>> de1eb2598276a5a40355da403f16cb87b51374fd
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."

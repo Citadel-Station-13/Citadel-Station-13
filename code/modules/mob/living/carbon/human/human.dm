@@ -1062,6 +1062,11 @@
 		return FALSE
 	return ..()
 
+/mob/living/carbon/human/racial_clothing_check(obj/item/I)
+	if(!dna || !dna.species)
+		return TRUE
+	return dna.species.racial_worn_types & I.racial_worn_types
+
 /mob/living/carbon/human/get_total_bleed_rate()
 	if(NOBLOOD in dna.species.species_traits)
 		return FALSE
@@ -1226,9 +1231,6 @@
 
 /mob/living/carbon/human/species/vampire
 	race = /datum/species/vampire
-
-/mob/living/carbon/human/species/vox
-	race = /datum/species/vox
 
 /mob/living/carbon/human/species/zombie
 	race = /datum/species/zombie

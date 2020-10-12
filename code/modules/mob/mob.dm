@@ -1053,3 +1053,6 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
   */
 /mob/proc/on_item_dropped(obj/item/I)
 	return
+
+/mob/proc/racial_clothing_check(obj/item/I)
+	return TRUE

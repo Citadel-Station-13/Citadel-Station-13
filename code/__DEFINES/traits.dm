@@ -208,10 +208,19 @@
 #define TRAIT_FAST_PUMP				"fast_pump"
 #define TRAIT_NO_PROCESS_FOOD	"no-process-food" // You don't get benefits from nutriment, nor nutrition from reagent consumables
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good...
+<<<<<<< HEAD
 /// Prevents stamina buffer regeneration
 #define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen"
 /// Prevents stamina regeneration
 #define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen"#define TRAIT_VOXYGEN			"vox-oxygen" // this oxygen tastes bad
+=======
+#define TRAIT_VOXYGEN			"vox-oxygen" // this oxygen tastes bad
+/// Prevents stamina buffer regeneration
+#define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen"
+/// Prevents stamina regeneration
+#define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen"
+
+>>>>>>> de1eb2598276a5a40355da403f16cb87b51374fd
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
 // BUT FOR NOW, THESE ARE HOOKED TO DO update_mobility() VIA COMSIG IN living_mobility.dm
