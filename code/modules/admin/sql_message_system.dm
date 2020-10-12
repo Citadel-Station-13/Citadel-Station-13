@@ -6,7 +6,7 @@
 		return
 	var/target_ckey = ckey(target_key)
 	if(!target_key && (type == "note" || type == "message" || type == "watchlist entry"))
-		var/new_key = input(usr,"Who would you like to create a [type] for?","Enter a key or ckey",null) as null|text
+		var/new_key = input(usr,"Who would you like to create a [type] for?","Enter a key or ckey",null) as null|textw
 		if(!new_key)
 			return
 		var/new_ckey = sanitizeSQL(ckey(new_key))
@@ -299,7 +299,7 @@
 	qdel(query_find_message_secret)
 
 /proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE)
-	if(!check_rights(R_SENSITIVE))
+	if(IsAdminAdvancedProcCall() && !check_rights(R_SENSITIVE))
 		return
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
