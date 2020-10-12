@@ -55,6 +55,10 @@
 
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
+#define BODYPART_HYBRID    3
+
+#define HYBRID_BODYPART_DAMAGE_THRESHHOLD 25 //How much damage has to be suffered until the damage threshhold counts as passed
+#define HYBRID_BODYPART_THESHHOLD_MINDAMAGE 15 //Which damage value this limb cannot be healed out of via easy nonsurgical means if the threshhold has been passed, state resets if damage value goes below mindamage.
 
 #define BODYPART_NOT_DISABLED 0
 #define BODYPART_DISABLED_DAMAGE 1
