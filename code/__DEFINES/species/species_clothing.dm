@@ -3,6 +3,9 @@
 /// Default. Non human mobs have this.
 #define RACIAL_WORN_DEFAULT		(1<<0)
 
+// Vox. Only Vox have this.
+#define RACIAL_WORN_VOX			(1<<0)
+
 // Type of default icons to use for clothing. Species variable var/clothing_asset_set. If an icon state is not in it it will fallback to default.
 /// Default. Fallback if an item state isn't found elsewhere.
 #define CLOTHING_ASSET_SET_DEFAULT		"DEFAULT"

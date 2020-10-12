@@ -3,6 +3,7 @@
 	id = "vox"
 	limbs_id= "swamp"
 	say_mod = "shrieks"
+	racial_worn_types = RACIAL_WORN_VOX
 	sexes = 0
 	species_traits = list(HAS_FLESH,HAS_BONE,NOEYES,NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
 	inherent_traits = list(TRAIT_VOXYGEN)

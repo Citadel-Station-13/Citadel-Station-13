@@ -979,7 +979,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	// Snowflake ass check
 	if(!(slot in not_clothing))
 		if(!H.racial_clothing_check(I))
-			#warn maybe tell the user they aren't able to wear something due to race
+			return_warning[1] = "<span class='warning'>You struggle and strain to slip into the clothes, but they very clearly aren't made for your body!</span>"
 			return FALSE
 
 	var/num_arms = H.get_num_arms(FALSE)
