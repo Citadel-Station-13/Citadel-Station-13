@@ -102,5 +102,10 @@
 			if(isobj(D.relay.loc))
 				var/obj/O = D.relay.loc
 				O.say(speech_args[SPEECH_MESSAGE])
+				if(D.stored_head)
+					var/worn_ear_item = D.stored_head.stored_items[3]
+					if(istype(worn_ear_item, /obj/item/radio))
+						owner.radio(speech_args[SPEECH_MESSAGE], owner.get_message_mode(speech_args[SPEECH_MESSAGE]), speech_args[SPEECH_SPANS])
+
 	speech_args[SPEECH_MESSAGE] = ""
 	return speech_args

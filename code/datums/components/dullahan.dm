@@ -128,7 +128,7 @@
 				overlays_to_add += some_overlay
 	else
 		var/mutable_appearance/some_overlay = overlays_standing[BODY_LAYER]
-		if(some_overlay.icon == 'icons/mob/human_face.dmi')
+		if(some_overlay && some_overlay.icon == 'icons/mob/human_face.dmi')
 			overlays_to_add += some_overlay
 	//next, add any horns
 	var/list/horns_overlays
