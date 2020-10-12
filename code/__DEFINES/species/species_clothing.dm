@@ -6,3 +6,7 @@
 // Type of default icons to use for clothing. Species variable var/clothing_asset_set. If an icon state is not in it it will fallback to default.
 /// Default. Fallback if an item state isn't found elsewhere.
 #define CLOTHING_ASSET_SET_DEFAULT		"DEFAULT"
+
+// Type for vox icons to use for clothing.
+/// If clothing item has this then Vox should be able to wear it without issue.
+#define CLOTHING_ASSET_SET_VOX			"VOX"
