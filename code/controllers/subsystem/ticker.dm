@@ -396,6 +396,7 @@ SUBSYSTEM_DEF(ticker)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
 					SSquirks.AssignQuirks(N.new_character, N.client, TRUE, TRUE, SSjob.GetJob(player.mind.assigned_role), FALSE, N)
+			N.client.prefs.post_copy_to(player)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -416,6 +417,7 @@ SUBSYSTEM_DEF(ticker)
 						living.client.prefs.chat_toggles ^= CHAT_OOC
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
+				living.client.init_verbs()
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)

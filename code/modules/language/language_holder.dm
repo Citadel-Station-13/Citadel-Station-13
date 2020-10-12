@@ -335,7 +335,11 @@ Key procs
 								/datum/language/shoalcommon = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/shoalcommon = list(LANGUAGE_ATOM))
-
+/datum/language_holder/arachnid
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/arachnid = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/arachnid = list(LANGUAGE_ATOM))
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

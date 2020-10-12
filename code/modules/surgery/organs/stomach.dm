@@ -94,10 +94,24 @@
 	desc = "A large mass of blue flesh that smells like chicken and gravy."
 
 /obj/item/organ/stomach/ipc
-	name = "ipc stomach"
+	name = "ipc cell"
 	icon_state = "stomach-ipc"
 
-/obj/item/organ/stomach/ethereal
+/obj/item/organ/stomach/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	switch(severity)
+		if(1)
+			owner.nutrition = min(owner.nutrition - 50, 0)
+			to_chat(owner, "<span class='warning'>Alert: Detected severe battery discharge!</span>")
+		if(2)
+			owner.nutrition = min(owner.nutrition - 100, 0)
+			to_chat(owner, "<span class='warning'>Alert: Minor battery discharge!</span>")
+/obj/item/organ/stomach/vox
+	name = "vox crystal"
+	icon_state = "stomach-v"
+	desc = "A large mass of blue flesh that smells like chicken and gravy."/obj/item/organ/stomach/ethereal
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."

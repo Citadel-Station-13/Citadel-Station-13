@@ -75,6 +75,8 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
+		H.undershirt = "Nude"
+		H.socks = "Nude"
 		H.update_body()
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)

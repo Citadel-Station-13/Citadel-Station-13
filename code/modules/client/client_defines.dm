@@ -7,6 +7,9 @@
 		////////////////
 		//ADMIN THINGS//
 		////////////////
+	/// hides the byond verb panel as we use our own custom version
+	show_verb_panel = FALSE
+	///Contains admin info. Null if client is not an admin.
 	var/datum/admins/holder = null
 	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
 	var/AI_Interact		= 0
@@ -123,6 +126,22 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+	/// viewsize datum for holding our view size
+	var/datum/viewData/view_size
+
+	/// our current tab
+	var/stat_tab
+
+	/// whether our browser is ready or not yet
+	var/statbrowser_ready = FALSE
+
+	/// list of all tabs
+	var/list/panel_tabs = list()
+
+	/// list of tabs containing spells and abilities
+	var/list/spell_tabs = list()
+	/// list of tabs containing verbs
+	var/list/verb_tabs = list()
 	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
 	var/list/recent_examines
 	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
@@ -142,6 +161,14 @@
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
 
+	/**
+	 * Assoc list with all the active maps - when a screen obj is added to
+	 * a map, it's put in here as well.
+	 *
+	 * Format: list(<mapname> = list(/obj/screen))
+	 */
+	var/list/screen_maps = list()
+
 	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
 	var/list/sent_assets = list()
 	/// List of all completed blocking send jobs awaiting acknowledgement by send_asset
@@ -152,3 +179,4 @@
 
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay
+

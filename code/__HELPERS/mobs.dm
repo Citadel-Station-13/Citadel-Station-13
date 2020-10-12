@@ -76,6 +76,12 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_fluff, GLOB.insect_fluffs_list)
 	if(!GLOB.insect_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/insect_markings, GLOB.insect_markings_list)
+	if(!GLOB.arachnid_legs_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_legs, GLOB.arachnid_legs_list)
+	if(!GLOB.arachnid_spinneret_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_spinneret, GLOB.arachnid_spinneret_list)
+	if(!GLOB.arachnid_mandibles_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_mandibles, GLOB.arachnid_mandibles_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -177,6 +183,9 @@
 		"insect_wings"		= pick(GLOB.insect_wings_list),
 		"insect_fluff"		= "None",
 		"insect_markings"	= pick(GLOB.insect_markings_list),
+		"arachnid_legs"		= pick(GLOB.arachnid_legs_list),
+		"arachnid_spinneret"	= pick(GLOB.arachnid_spinneret_list),
+		"arachnid_mandibles"	= pick(GLOB.arachnid_mandibles_list),
 		"taur"				= "None",
 		"mam_body_markings" = snowflake_markings_list.len ? pick(snowflake_markings_list) : "None",
 		"mam_ears" 			= snowflake_ears_list ? pick(snowflake_ears_list) : "None",
@@ -274,6 +283,13 @@
 /proc/random_unique_moth_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_arachnid_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(pick(GLOB.arachnid_first)) + " " + capitalize(pick(GLOB.arachnid_last))
 
 		if(!findname(.))
 			break

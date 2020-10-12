@@ -462,16 +462,14 @@
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
-	switch(power)
-		if(0 to 5)
-			return "low"
-		if(5 to 20)
-			return "mid"
-		if(20 to 50)
-			return "high"
-		if(50 to INFINITY)
-			return "super"
+/proc/instability2text(instability) //used when displaying fusion power on analyzers
+	switch(instability)
+		if(0 to 2)
+			return "stable, meaning that its heat will always increase."
+		if(2 to 3)
+			return "metastable, meaning that its heat will trend upwards."
+		if (3 to INFINITY)
+			return "unstable, meaning that its heat will trend downwards."
 
 /proc/color2hex(color)	//web colors
 	if(!color)

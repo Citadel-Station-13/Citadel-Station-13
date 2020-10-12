@@ -49,7 +49,7 @@
 /datum/traitor_class/ai/on_removal(datum/antagonist/traitor/T)
 	var/mob/living/silicon/ai/A = T.owner.current
 	A.set_zeroth_law("")
-	A.verbs -= /mob/living/silicon/ai/proc/choose_modules
+	remove_verb(A, /mob/living/silicon/ai/proc/choose_modules)
 	A.malf_picker.remove_malf_verbs(A)
 	qdel(A.malf_picker)
 
