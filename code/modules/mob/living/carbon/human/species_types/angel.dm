@@ -7,7 +7,7 @@
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	no_equip = list(SLOT_BACK)
 	blacklisted = 1
-	limbs_id = "human"
+	limbs_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	species_category = SPECIES_CATEGORY_BASIC //they're a kind of human
 
