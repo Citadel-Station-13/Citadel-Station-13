@@ -12,11 +12,6 @@
 			visible_message("[user] turned [target] into an enraged [target]!")
 			qdel(target)
 			qdel(src)
-		else if(istype(target, /mob/living/simple_animal/hostile/megafauna/legion))
-			new /mob/living/simple_animal/hostile/megafauna/legion/hard(target.loc)
-			visible_message("[user] turned [target] into an enraged [target]!")
-			qdel(target)
-			qdel(src)
 
 /obj/item/organ/regenerative_core/attack_self(mob/user)
 	if(iscarbon(user))
