@@ -32,7 +32,7 @@
 	materials = list(/datum/material/glass = 3000, /datum/material/plasma = 3000, /datum/material/diamond = 250, /datum/material/bluespace = 250)
 	build_path = /obj/item/reagent_containers/glass/beaker/bluespace
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -973,6 +973,10 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 
+/////////////////////////////////////////
+////////////     Plumbing      //////////
+/////////////////////////////////////////
+
 /datum/design/acclimator
 	name = "Plumbing Acclimator"
 	desc = "A heating and cooling device for pipes!"
@@ -1126,3 +1130,14 @@
 	build_path = /obj/item/construction/plumbing
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/rplunger
+    name = "Reinforced Plunger"
+    desc = "A plunger designed for heavy duty clogs."
+    id = "rplunger"
+    build_type = PROTOLATHE
+    materials = list(/datum/material/plasma = 1000, /datum/material/iron = 1000, /datum/material/glass = 1000)
+    construction_time = 15
+    build_path = /obj/item/plunger/reinforced
+    category = list ("Misc","Medical Designs")
+    departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
