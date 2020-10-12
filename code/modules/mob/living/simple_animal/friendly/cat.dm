@@ -144,7 +144,7 @@
 		var/json_file = file("data/npc_saves/Runtime.json")
 		if(!fexists(json_file))
 			return
-		var/list/json = json_decode(file2text(json_file))
+		var/list/json = safe_json_decode(file2text(json_file))
 		family = json["family"]
 	if(isnull(family))
 		family = list()

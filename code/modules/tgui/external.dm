@@ -207,7 +207,7 @@
 	// Decode payload
 	var/payload
 	if(href_list["payload"])
-		payload = json_decode(href_list["payload"])
+		payload = safe_json_decode(href_list["payload"])
 	// Pass message to window
 	if(window)
 		window.on_message(type, payload, href_list)

@@ -74,7 +74,7 @@ in their list
 	return json_encode(thing.serialize())
 
 /proc/json_to_object(var/json_data, var/loc)
-	return list_to_object(json_decode(json_data), loc)
+	return list_to_object(safe_json_decode(json_data), loc)
 
 /proc/list_to_object(var/list/data, var/loc)
 	if(!islist(data))

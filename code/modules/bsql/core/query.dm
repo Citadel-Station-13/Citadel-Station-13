@@ -21,7 +21,7 @@ BSQL_PROTECT_DATUM(/datum/BSQL_Operation/Query)
 			return FALSE
 		else
 			BSQL_ERROR(result)
-			
+
 /datum/BSQL_Operation/Query/WaitForCompletion()
 	. = ..()
 	if(.)
@@ -30,6 +30,6 @@ BSQL_PROTECT_DATUM(/datum/BSQL_Operation/Query)
 /datum/BSQL_Operation/Query/proc/LoadQueryResult()
 	last_result_json = world._BSQL_Internal_Call("GetRow", connection.id, id)
 	if(last_result_json)
-		last_result = json_decode(last_result_json)
+		last_result = safe_json_decode(last_result_json)
 	else
 		last_result = null

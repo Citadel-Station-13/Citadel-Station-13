@@ -107,7 +107,7 @@
 	if(!json)
 		return FALSE	//continue world/Topic
 
-	var/list/topic_parameters = json_decode(json)
+	var/list/topic_parameters = safe_json_decode(json)
 	if(!topic_parameters)
 		return TopicResponse("Invalid topic parameters json!");
 
@@ -246,7 +246,7 @@
 		TGS_ERROR_LOG("Failed export request, missing content!")
 		return
 
-	var/list/bridge_response = json_decode(response_json)
+	var/list/bridge_response = safe_json_decode(response_json)
 	if(!bridge_response)
 		TGS_ERROR_LOG("Failed export request, bad json: [response_json]")
 		return

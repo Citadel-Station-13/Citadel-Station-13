@@ -116,7 +116,7 @@
 	var/list/configlist = CONFIG_GET(keyed_list/snowflake_plushies)
 	var/list/jsonlist = configlist[id]
 	ASSERT(jsonlist)
-	jsonlist = json_decode(jsonlist)
+	jsonlist = safe_json_decode(jsonlist)
 	if(jsonlist["inherit_from"])
 		var/path = text2path(jsonlist["inherit_from"])
 		if(!ispath(path, /obj/item/toy/plush))

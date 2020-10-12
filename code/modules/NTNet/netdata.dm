@@ -18,7 +18,7 @@
 		if(data["encrypted_passkey"] && !passkey)
 			var/result = XorEncrypt(hextostr(data["encrypted_passkey"], TRUE), SScircuit.cipherkey)
 			if(length(result) > 1)
-				passkey = json_decode(XorEncrypt(hextostr(data["encrypted_passkey"], TRUE), SScircuit.cipherkey))
+				passkey = safe_json_decode(XorEncrypt(hextostr(data["encrypted_passkey"], TRUE), SScircuit.cipherkey))
 
 			// Encrypt the passkey.
 			if(!data["encrypted_passkey"] && passkey)
@@ -34,10 +34,10 @@
 	data["encrypted_passkey"] = passkey
 
 /datum/netdata/proc/json_to_data(json)
-	data = json_decode(json)
+	data = safe_json_decode(json)
 
 /datum/netdata/proc/json_append_to_data(json)
-	data |= json_decode(json)
+	data |= safe_json_decode(json)
 
 /datum/netdata/proc/data_to_json()
 	return json_encode(data)

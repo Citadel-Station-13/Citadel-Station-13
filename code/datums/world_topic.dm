@@ -61,7 +61,7 @@
 	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
 
 /datum/world_topic/pr_announce/Run(list/input, addr)
-	var/list/payload = json_decode(input["payload"])
+	var/list/payload = safe_json_decode(input["payload"])
 	var/id = "[payload["pull_request"]["id"]]"
 	if(!PRcounts[id])
 		PRcounts[id] = 1

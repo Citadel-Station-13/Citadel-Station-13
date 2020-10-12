@@ -236,5 +236,5 @@
 	return pick(.)
 
 /proc/__nan()
-	var/list/L = json_decode("{\"value\":NaN}")
+	var/list/L = safe_json_decode("{\"value\":NaN}")
 	return L["value"]

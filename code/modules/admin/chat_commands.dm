@@ -187,6 +187,6 @@ GLOBAL_LIST(round_end_notifiees)
 		var/json_file = file("data/npc_saves/Poly.json")
 		if(!fexists(json_file))
 			return "**BAWWWWWK!** LEAVE THE HEADSET! ***BAWKKKKK!!***"
-		var/list/json = json_decode(file2text(json_file))
+		var/list/json = safe_json_decode(file2text(json_file))
 		speech_buffer = json["phrases"]
 		return "[pick(speech_buffer)]"

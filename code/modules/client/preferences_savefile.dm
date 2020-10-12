@@ -119,7 +119,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 26)
 		var/vr_path = "data/player_saves/[parent.ckey[1]]/[parent.ckey]/vore/character[default_slot].json"
 		if(fexists(vr_path))
-			var/list/json_from_file = json_decode(file2text(vr_path))
+			var/list/json_from_file = safe_json_decode(file2text(vr_path))
 			if(json_from_file)
 				if(json_from_file["digestable"])
 					ENABLE_BITFIELD(vore_flags,DIGESTABLE)
@@ -666,7 +666,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["vore_taste"]						>> vore_taste
 	var/char_vr_path = "[vr_path]/character_[default_slot]_v2.json"
 	if(fexists(char_vr_path))
-		var/list/json_from_file = json_decode(file2text(char_vr_path))
+		var/list/json_from_file = safe_json_decode(file2text(char_vr_path))
 		if(json_from_file)
 			belly_prefs = json_from_file["belly_prefs"]
 	//gear loadout

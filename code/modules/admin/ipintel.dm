@@ -87,7 +87,7 @@
 		var/status = text2num(http["STATUS"])
 
 		if (status == 200)
-			var/response = json_decode(file2text(http["CONTENT"]))
+			var/response = safe_json_decode(file2text(http["CONTENT"]))
 			if (response)
 				if (response["status"] == "success")
 					var/intelnum = text2num(response["result"])
