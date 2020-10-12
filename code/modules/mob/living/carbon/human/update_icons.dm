@@ -906,7 +906,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 			continue
 
 		. += "-[BP.body_zone]"
-		if(BP.status == BODYPART_ORGANIC)
+		if(BP.is_organic_limb(FALSE))
 			. += "-organic"
 		else
 			. += "-robotic"

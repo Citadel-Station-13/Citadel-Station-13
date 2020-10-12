@@ -411,7 +411,7 @@
 		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, severity / 20)
 	severity *= 0.5
 	for(var/obj/item/bodypart/L in src.bodyparts)
-		if(L.status == BODYPART_ROBOTIC)
+		if(L.is_robotic_limb())
 			if(!informed)
 				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
 				informed = TRUE

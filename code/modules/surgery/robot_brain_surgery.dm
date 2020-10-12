@@ -10,7 +10,7 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = BODYPART_ROBOTIC
+	requires_bodypart_type = 0
 	desc = "A surgical procedure that restores the default behavior logic and personality matrix of an IPC posibrain."
 
 /datum/surgery_step/fix_robot_brain
@@ -20,7 +20,7 @@
 
 /datum/surgery/robot_brain_surgery/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
+	if(!B || !istype(B, /obj/item/organ/brain/ipc)) //No cheating!
 		return FALSE
 	return TRUE
 
