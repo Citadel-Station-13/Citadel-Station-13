@@ -1294,3 +1294,6 @@
 
 /mob/living/carbon/human/species/roundstartslime
 	race = /datum/species/jelly/roundstartslime
+
+/mob/living/carbon/human/species/arachnid
+	race = /datum/species/arachnid

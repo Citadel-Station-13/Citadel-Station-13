@@ -715,21 +715,27 @@
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/cat
-	name = "felinid mutation toxic"
+	name = "felinid mutation toxin"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
 	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1) // Maybe aphro+ if it becomes a shitty meme
 	required_temp = 450
 
 /datum/chemical_reaction/moff
-	name = "insect mutation toxic"
+	name = "insect mutation toxin"
 	id = /datum/reagent/mutationtoxin/insect
 	results = list(/datum/reagent/mutationtoxin/insect = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 2, /datum/reagent/ammonia = 5, /datum/reagent/lithium = 1, /datum/reagent/mutationtoxin = 1)
 	required_temp = 320
 
+/datum/chemical_reaction/mutationtoxin/arachnid
+	name = "arachnid mutation toxin"
+	id = /datum/reagent/mutationtoxin/arachnid
+	results = list(/datum/reagent/mutationtoxin/arachnid = 1)
+	required_reagents = list(/datum/reagent/mutationtoxin/insect = 1, /datum/reagent/toxin/heparin = 10)
+
 /datum/chemical_reaction/notlight //Harder to make do to it being a hard race to play
-	name = "shadow muatatuin toxic"
+	name = "shadow mutation toxin"
 	id = /datum/reagent/mutationtoxin/shadow
 	results = list(/datum/reagent/mutationtoxin/shadow = 1)
 	required_reagents  = list(/datum/reagent/liquid_dark_matter = 5, /datum/reagent/medicine/synaptizine = 10, /datum/reagent/medicine/oculine = 10, /datum/reagent/mutationtoxin = 1)

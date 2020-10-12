@@ -124,13 +124,15 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//the ids you can use for your species, if empty, it means default only and not changeable
 	var/list/allowed_limb_ids
 
+	//override for the icon path used when setting bodypart overlays. Intended for species that don't fit in the standard 32x32 files.
+	var/override_bp_icon
+	//the icon state of the eyes this species has
+	var/eye_type = "normal"
+
 	//sandcode tg port, very special
 	var/flying_species = FALSE //is a flying species, just a check for some things
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
 	var/wings_icon = "Angel" //the icon used for the wings
-
-	//the type of eyes this species has
-	var/eye_type = "normal"
 
 ///////////
 // PROCS //
@@ -382,7 +384,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		fly = new
 		fly.Grant(C)
 	//sandstorm code end -- tg port wings
-	
+
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, TRUE, multiplicative_slowdown = speedmod)
 
 	if(ROBOTIC_LIMBS in species_traits)
@@ -1932,7 +1934,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.w_socks.add_fingerprint(user)
 		else if(target.w_underwear)
 			target.w_underwear.add_fingerprint(user)
-		//			
+		//
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
