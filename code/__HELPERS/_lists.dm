@@ -682,7 +682,7 @@
 
 #define MAX_JSON_DEPTH 9
 #define MAX_CONSEQUETIVE_ARRAYS 5
-#define MAX_JSON_LENGTH (1024*10)
+#define MAX_JSON_LENGTH (1024*40)
 
 /proc/safe_json_decode(text, default = list())
 	. = default
