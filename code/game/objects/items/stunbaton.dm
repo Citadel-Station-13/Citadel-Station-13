@@ -238,7 +238,7 @@
 
 /obj/item/melee/baton/stunsword
 	name = "stunsword"
-	desc = "not actually sharp, this sword is functionally identical to a stunbaton"
+	desc = "Not actually sharp, this sword is functionally identical to its baton counterpart."
 	icon_state = "stunsword"
 	item_state = "sword"
 
@@ -249,6 +249,18 @@
 
 /obj/item/melee/baton/stunsword/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-stunsword")
+
+/obj/item/melee/baton/stunsword/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/baton/stunsword/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
 
 /obj/item/ssword_kit
 	name = "stunsword kit"
