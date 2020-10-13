@@ -3691,6 +3691,7 @@
 #include "sandcode\code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "sandcode\code\game\objects\items\devices\extra_arm.dm"
 #include "sandcode\code\game\objects\items\devices\PDA\PDA.dm"
+#include "sandcode\code\game\objects\items\devices\radio\headset.dm"
 #include "sandcode\code\game\objects\items\devices\radio\radio.dm"
 #include "sandcode\code\game\objects\items\plushes\goat_boss.dm"
 #include "sandcode\code\game\objects\items\plushes\plushes.dm"
