@@ -153,14 +153,19 @@
 		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
 		return
 
+	var/mob/living/carbon/human/human_caster = caster
+	if(!human_caster?.dna?.species?.id == SPECIES_VAMPIRE)
+		to_chat(caster, "<span class='warning'>You don't seem to be able to shapeshift..</span>")
+		return
+
 	var/mob/living/shape = new shapeshift_type(caster.loc)
-	H = new(shape,src,caster)
+	H = new(shape,src,human_caster)
 	if(istype(H, /mob/living/simple_animal))
 		var/mob/living/simple_animal/SA = H
-		if((caster.blood_volume >= (BLOOD_VOLUME_BAD*caster.blood_ratio)) || (ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE))))
+		if((human_caster.blood_volume <= (BLOOD_VOLUME_BAD*human_caster.blood_ratio)) || (ventcrawl_nude_only && length(human_caster.get_equipped_items(include_pockets = TRUE))))
 			SA.ventcrawler = FALSE
 	if(transfer_name)
-		H.name = caster.name
+		H.name = human_caster.name
 
 
 	clothes_req = NONE
