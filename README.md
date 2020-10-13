@@ -3,7 +3,7 @@ Based and maintained from Citadel Station 13, that is based and maintained from 
 
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-[![Build Status](https://api.travis-ci.org/SandPoot/Sandstorm-Station-13.svg?branch=master)](https://travis-ci.org/SandPoot/Sandstorm-Station-13)
+[![Build Status](https://travis-ci.com/Sandstorm-Station/Sandstorm-Station-13.svg?branch=master)](https://travis-ci.com/github/Sandstorm-Station/Sandstorm-Station-13)
 
 <img alt="GitHub forks badge" src="https://img.shields.io/github/forks/SandPoot/Sandstorm-Station-13"> <img alt="GitHub stars badge" src="https://img.shields.io/github/stars/SandPoot/Sandstorm-Station-13"> <a href="http://www.gnu.org/licenses/agpl-3.0.html"><img alt="GitHub license badge" src="https://img.shields.io/github/license/SandPoot/Sandstorm-Station-13"></a>
 
