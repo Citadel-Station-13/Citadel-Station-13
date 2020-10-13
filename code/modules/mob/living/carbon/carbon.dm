@@ -156,6 +156,7 @@
 
 /mob/living/carbon/throw_item(atom/target)
 	throw_mode_off()
+	update_mouse_pointer()
 	if(!target || !isturf(loc))
 		return
 	if(istype(target, /obj/screen))
@@ -611,7 +612,7 @@
 		update_mobility()
 	UpdateStaminaBuffer()
 	update_health_hud()
-	
+
 /mob/living/carbon/update_sight()
 	if(!client)
 		return

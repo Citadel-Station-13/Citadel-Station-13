@@ -28,9 +28,9 @@
 	contents = newlist(/obj/item/retractor/alien,
 					   /obj/item/hemostat/alien,
 					   /obj/item/cautery/alien,
-					   /obj/item/surgicaldrill/alien, 
+					   /obj/item/surgicaldrill/alien,
 					   /obj/item/scalpel/alien,
-					   /obj/item/circular_saw/alien, 
+					   /obj/item/circular_saw/alien,
 					   /obj/item/surgical_drapes)
 
 /obj/item/organ/cyberimp/arm/surgery/emag_act()

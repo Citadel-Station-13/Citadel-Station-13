@@ -1,3 +1,6 @@
-/mob	
+/mob
 	///Cursor icon used when holding shift over things
-	var/examine_cursor_icon = 'sandcode/icons/effects/mouse_pointers/examine_pointer.dmi'
+	var/examine_cursor_icon = 'sandcode/icons/effects/mouse_pointers/examine.dmi'
+	var/combat_cursor_icon = 'sandcode/icons/effects/mouse_pointers/combat.dmi'
+	var/pull_cursor_icon = 'sandcode/icons/effects/mouse_pointers/pull.dmi'
+	var/throw_cursor_icon = 'sandcode/icons/effects/mouse_pointers/throw.dmi'
