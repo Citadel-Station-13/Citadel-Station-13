@@ -45,6 +45,7 @@
 /obj/structure/geyser/random
 	erupting_state = null
 	var/list/options = list(/datum/reagent/clf3 = 7, /datum/reagent/water/hollowwater = 7, /datum/reagent/medicine/omnizine/protozine = 5, /datum/reagent/wittel = 1)
+	//Currently set to 7/20 chance for clf3 and hollowater, 5/20 for protozine, and 1/20 for wittel
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
