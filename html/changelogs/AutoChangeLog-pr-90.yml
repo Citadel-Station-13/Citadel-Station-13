@@ -1,0 +1,4 @@
+author: SandPoot
+delete-after: true
+changes:
+  - rscadd: Added cursors for pull, throw and combat mode.
