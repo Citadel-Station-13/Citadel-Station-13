@@ -46,24 +46,6 @@
 	if(isnum(use_delay_override))
 		use_delay = use_delay_override
 
-/datum/component/squeak/RemoveComponent()
-	if(!isatom(parent))
-		return
-	UnregisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
-	if(ismovable(parent))
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT), .proc/play_squeak)
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ITEM_WEARERCROSSED, COMSIG_MOVABLE_CROSS), .proc/play_squeak_crossed)
-		UnregisterSignal(parent, COMSIG_CROSS_SQUEAKED, .proc/delay_squeak)
-		UnregisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
-		if(isitem(parent))
-			UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
-			UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
-			UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-			UnregisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-			if(istype(parent, /obj/item/clothing/shoes))
-				UnregisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
-	..()
-
 /datum/component/squeak/proc/play_squeak()
 	do_play_squeak()
 

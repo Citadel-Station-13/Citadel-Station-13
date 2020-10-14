@@ -782,6 +782,7 @@
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
+				QDEL_NULL(squeak)
 			owner.regenerate_icons()
 			transforming = FALSE
 			UpdateButtonIcon()
