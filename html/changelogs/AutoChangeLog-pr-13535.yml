@@ -1,7 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "Energy sabre reskin for the energy sword - access via alt-click."
-  - bugfix: "Alt-click reskins are fixed."
-  - tweak: "Defibrillators and their many, many overlays were moved to another .dmi."
-  - tweak: "You can now change the color of an energy sword via multitool. Not deswords. Yet."

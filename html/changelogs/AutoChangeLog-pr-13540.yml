@@ -1,6 +1,0 @@
-author: "ArcaneMusic, The0bserver-sys"
-delete-after: True
-changes: 
-  - rscadd: "New from Hydrowear LLC: The Botanical Belt! This handy yellow belt lets you hold most of your botany gear, and a few beakers for reduced bag and floor clutter!"
-  - tweak: "Gives Hydrotrays plumbing pipes automatically, allowing you to make a self sustaining tray via plumbing."
-  - tweak: "Gives Service access to Bluespace Beakers, at last, gives Cargo, Science, and Medical the ability to construct reinforced plungers for use on lavaland."

@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - fix: "Finally 100% fixes beacons, you can now build beacons and go to that Z-level on your custom shuttle (or whiteship i guess)."

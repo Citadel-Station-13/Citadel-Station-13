@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - refactor: "Dwarf speech is no longer absolutely paranoid about word replacement."

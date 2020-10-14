@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - balance: "The \"Skelter ruin\" now has stechkins as opposed to M1911s"
-  - tweak: "Skelter's decorative bullet casings replaced to factor in the change in caliber"
-  - rscadd: "Skelter now has a combat knife and fluff note"

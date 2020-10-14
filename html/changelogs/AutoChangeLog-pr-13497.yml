@@ -1,5 +1,0 @@
-author: "Zandario"
-delete-after: True
-changes: 
-  - code_imp: "Added some framework for future species expansions, including clothing refitting."
-  - refactor: "Made majority of the relevant Species IDs and Categories pre-defined, also for easier expansion and use."

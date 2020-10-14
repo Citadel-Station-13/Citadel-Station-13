@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - config: "Makes a separate config folder for sandstorm stuff."

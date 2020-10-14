@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Changes your cursor when you are holding shift to indicate you will examine."

@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "Changeling bone gauntlets! They punch the shit out of people really good."
-  - tweak: "Guerilla gloves and gorilla gloves inherit the strip modifiers of their predecessors, because apparently they had those."
-  - balance: "Pugilists now always hit the targeted limb and never miss."
