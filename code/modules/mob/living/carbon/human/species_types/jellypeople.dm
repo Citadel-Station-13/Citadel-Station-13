@@ -742,8 +742,7 @@
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 				H.update_disabled_bodyparts(silent = TRUE)	//silently update arms to be paralysed
 
-				H.dna.species.speedmod = 1.5 //slowdown because puddles are slow
-				H.dna.species.update_species_slowdown(owner)
+				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 
 				H.layer -= 1 //go one layer down so people go over you
 				ENABLE_BITFIELD(H.pass_flags, PASSMOB) //this actually lets people pass over you
@@ -777,14 +776,13 @@
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
-			H.dna.species.speedmod = 0 //back to normal
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 			H.layer += 1 //go one layer back above!
 			DISABLE_BITFIELD(H.pass_flags, PASSMOB)
 			is_puddle = FALSE
 			if(squeak)
 				squeak.RemoveComponent()
 			owner.regenerate_icons()
-			H.dna.species.update_species_slowdown(owner)
 			transforming = FALSE
 			UpdateButtonIcon()
 	else
