@@ -209,7 +209,7 @@
 		return listclearnulls(.)
 
 /datum/pipeline/proc/empty()
-	for(var/datum/gas_mixture/GM in get_all_connected_airs()
+	for(var/datum/gas_mixture/GM in get_all_connected_airs())
 		GM.empty()
 
 /datum/pipeline/proc/get_all_connected_airs()
