@@ -33,7 +33,7 @@
 #include "spawn_humans.dm"
 // #include "species_whitelists.dm"
 #include "subsystem_init.dm"
-#include "surgeries.dm"
+// #include "surgeries.dm" // fails at random due to a race condition, commented out for now
 #include "timer_sanity.dm"
 #include "unit_test.dm"
 
