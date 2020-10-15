@@ -230,6 +230,7 @@
 /datum/config_entry/keyed_list/multiplicative_movespeed
 	key_mode = KEY_MODE_TYPE
 	value_mode = VALUE_MODE_NUM
+	abstract_type = /datum/config_entry/keyed_list/multiplicative_movespeed
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
@@ -242,6 +243,7 @@
 		update_config_movespeed_type_lookup(TRUE)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/normal
+	name = "multiplicative_movespeed"
 	config_entry_value = list(			//DEFAULTS
 	/mob/living/simple_animal = 1,
 	/mob/living/silicon/pai = 1,
@@ -252,6 +254,7 @@
 	)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/floating
+	name = "multiplicative_movespeed_floating"
 	config_entry_value = list(
 		/mob/living = 0,
 		/mob/living/carbon/alien/humanoid = 0,
