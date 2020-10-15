@@ -1,6 +1,6 @@
 /datum/species/skeleton
 	name = "Skeleton"
-	id = "skeleton"
+	id = SPECIES_SKELETON
 	say_mod = "rattles"
 	blacklisted = 0
 	sexes = 0
@@ -15,7 +15,7 @@
 	brutemod = 1.25
 	burnmod = 1.25
 
-	species_type = "skeleton" //they have their own category that's disassociated from undead, paired with plasmapeople
+	species_category = SPECIES_CATEGORY_SKELETON //they have their own category that's disassociated from undead, paired with plasmapeople
 
 /datum/species/skeleton/New()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN]) //skeletons are stronger during the spooky season!
@@ -31,7 +31,7 @@
 
 /datum/species/skeleton/space
 	name = "Spooky Spacey Skeleton"
-	id = "spaceskeleton"
+	id = SPECIES_SKELETON_SPACE
 	limbs_id = "skeleton"
 	blacklisted = 1
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT, TRAIT_FAKEDEATH, TRAIT_CALCIUM_HEALER)

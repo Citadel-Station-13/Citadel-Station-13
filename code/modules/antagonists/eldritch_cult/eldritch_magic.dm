@@ -424,8 +424,7 @@
 	range = -1
 	include_user = TRUE
 	charge_max = 300
-	emp_heavy = 6
-	emp_light = 10
+	range = 14
 	sound = 'sound/effects/lingscreech.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade

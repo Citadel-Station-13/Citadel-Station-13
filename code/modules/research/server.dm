@@ -40,12 +40,12 @@
 	else
 		working = TRUE
 
-/obj/machinery/rnd/server/emp_act()
+/obj/machinery/rnd/server/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	stat |= EMPED
-	addtimer(CALLBACK(src, .proc/unemp), 600)
+	addtimer(CALLBACK(src, .proc/unemp), severity*9)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()

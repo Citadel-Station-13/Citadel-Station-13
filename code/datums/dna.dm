@@ -76,6 +76,9 @@
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
 	new_dna.species.say_mod = species.say_mod
+	new_dna.species.exotic_blood_color = species.exotic_blood_color //it can change from the default value
+	new_dna.species.eye_type = species.eye_type
+	new_dna.species.limbs_id = species.limbs_id || species.id
 	new_dna.real_name = real_name
 	new_dna.nameless = nameless
 	new_dna.custom_species = custom_species

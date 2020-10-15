@@ -173,7 +173,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[storyteller.get_injection_chance(TRUE)]%</b> chance)<BR>"
+	dat += "<br>Injection Timers:<BR>"
 	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)/10] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
@@ -513,7 +513,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
-	starting_rule.scale_up(extra_rulesets_amount, threat_level)
+	starting_rule.scale_up(extra_rulesets_amount, threat_level-added_threat)
 	if (starting_rule.pre_execute())
 		log_threat("[starting_rule.ruletype] - <b>[starting_rule.name]</b> [starting_rule.cost + starting_rule.scaled_times * starting_rule.scaling_cost] threat", verbose = TRUE)
 		if(starting_rule.flags & HIGHLANDER_RULESET)
@@ -675,13 +675,12 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		log_game("DYNAMIC: Checking for midround injection.")
 
 		update_playercounts()
-		if (prob(storyteller.get_injection_chance()))
+		if (storyteller.should_inject_antag())
 			SSblackbox.record_feedback("tally","dynamic",1,"Attempted midround injections")
 			var/list/drafted_rules = storyteller.midround_draft()
 			if (drafted_rules.len > 0)
 				SSblackbox.record_feedback("tally","dynamic",1,"Successful midround injections")
 				picking_midround_latejoin_rule(drafted_rules)
-		// get_injection_chance can do things on fail
 
 /// Updates current_players.
 /datum/game_mode/dynamic/proc/update_playercounts()
@@ -757,12 +756,11 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			picking_midround_latejoin_rule(list(forced_latejoin_rule), forced = TRUE)
 		forced_latejoin_rule = null
 
-	else if (latejoin_injection_cooldown < world.time && prob(storyteller.get_injection_chance()))
+	else if (storyteller.should_inject_antag())
 		SSblackbox.record_feedback("tally","dynamic",1,"Attempted latejoin injections")
 		var/list/drafted_rules = storyteller.latejoin_draft(newPlayer)
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			SSblackbox.record_feedback("tally","dynamic",1,"Successful latejoin injections")
-			latejoin_injection_cooldown = storyteller.get_latejoin_cooldown() + world.time
 
 /// Increase the threat level.
 /datum/game_mode/dynamic/proc/create_threat(gain)

@@ -2,6 +2,7 @@
 set -euo pipefail
 
 tools/deploy.sh travis_test
+rm travis_test/*.dll
 mkdir travis_test/config
 
 #test config

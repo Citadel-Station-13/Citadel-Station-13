@@ -18,9 +18,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	var/obj/item/radio/headset/radio
 	var/arrival = "%PERSON has signed up as %RANK"
-	var/arrivalToggle = 1
+	var/arrivalToggle = TRUE
 	var/newhead = "%PERSON, %RANK, is the department head."
-	var/newheadToggle = 1
+	var/newheadToggle = TRUE
+	var/cryostorage = "%PERSON, %RANK, has been moved into cryogenic storage." // this shouldnt be changed
 
 	var/greenlight = "Light_Green"
 	var/pinklight = "Light_Pink"
@@ -84,6 +85,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(arrival, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
+	else if(message_type == "CRYOSTORAGE")
+		message = CompileText(cryostorage, user, rank)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
@@ -160,7 +163,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/emp_act(severity)
 	. = ..()
-	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF))
+	if(!(stat & (NOPOWER|BROKEN)) && !(. & EMP_PROTECT_SELF) && severity >= 30)
 		act_up()
 
 /obj/machinery/announcement_system/emag_act()

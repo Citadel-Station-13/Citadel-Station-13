@@ -154,7 +154,7 @@
 
 /datum/keybinding/living/toggle_sprint/down(client/user)
 	var/mob/living/L = user.mob
-	L.default_toggle_sprint(TRUE)
+	L.default_toggle_sprint()
 	return TRUE
 
 /datum/keybinding/mob/toggle_move_intent

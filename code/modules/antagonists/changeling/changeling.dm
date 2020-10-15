@@ -38,8 +38,9 @@
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/loudfactor = 0 //Used for blood tests. At 4, blood tests will succeed. At 10, blood tests will result in an explosion.
-	var/bloodtestwarnings = 0 //Used to track if the ling has been notified that they will pass blood tests.
+	var/loudfactor = 0 //Used for blood tests. This is is the average loudness of the ling's abilities calculated with the below two vars
+	var/loudtotal = 0 //Used to keep track of the sum of the ling's loudness
+	var/totalpurchases = 0 //Used to keep track of how many purchases the ling's made after free abilities have been added
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -139,8 +140,6 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
-	loudfactor = 0
-	bloodtestwarnings = 0
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -148,6 +147,9 @@
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
+	loudfactor = 0
+	loudtotal = 0
+	totalpurchases = 0
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
@@ -192,13 +194,18 @@
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)
-	loudfactor += thepower.loudness
-	if(loudfactor >= 4 && !bloodtestwarnings)
-		to_chat(owner.current, "<span class='warning'>Our blood is growing flammable. Our blood will react violently to heat.</span>")
-		bloodtestwarnings = 1
-	if(loudfactor >= 10 && bloodtestwarnings < 2)
-		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will react explosively to heat.</span>")
-		bloodtestwarnings = 2
+	loudtotal += thepower.loudness
+	totalpurchases++
+	var/oldloudness = loudfactor
+	loudfactor = loudtotal/max(totalpurchases,1)
+	if(loudfactor >= LINGBLOOD_DETECTION_THRESHOLD && oldloudness < LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown flammable. Our blood will now react violently to heat.</span>")
+	else if(loudfactor < LINGBLOOD_DETECTION_THRESHOLD && oldloudness >= LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has stabilized, and will no longer react violently to heat.</span>")
+	if(loudfactor > LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness <= LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will now react explosively to heat.</span>")
+	else if(loudfactor <= LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness > LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has slightly stabilized, and will no longer explode when exposed to heat.</span>")
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
