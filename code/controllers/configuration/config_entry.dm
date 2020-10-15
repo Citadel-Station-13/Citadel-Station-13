@@ -27,7 +27,7 @@
 /datum/config_entry/New()
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")
-	if(isnull(name))
+	if(!name)
 		name = lowertext(type2top(type))
 	else
 		name = lowertext(name)
