@@ -332,7 +332,7 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 /datum/objective/protect/check_completion()
 	return !target || considered_alive(target, enforce_human = human_check)
 
-/datum/objective/protect/check_completion()
+/datum/objective/protect/check_midround_completion()
 	return FALSE //Nuh uh, you get a new objective
 
 /datum/objective/protect/update_explanation_text()
