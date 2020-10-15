@@ -46,7 +46,7 @@
 	if(isnum(use_delay_override))
 		use_delay = use_delay_override
 
-/datum/component/squeak/RemoveComponent()
+/datum/component/squeak/UnregisterFromParent()
 	if(!isatom(parent))
 		return
 	UnregisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
