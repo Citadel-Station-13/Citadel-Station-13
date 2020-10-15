@@ -67,3 +67,10 @@
 #define LOADOUT_LIMB_AMPUTATED		"Amputated"
 
 #define LOADOUT_LIMBS		 		list(LOADOUT_LIMB_NORMAL,LOADOUT_LIMB_PROSTHETIC,LOADOUT_LIMB_AMPUTATED) //you can amputate your legs/arms though
+
+//options for modifiying color of loadout items
+#define LOADOUT_COLOR_TYPE_NONE				"no_color"
+#define LOADOUT_COLOR_TYPE_POLYCHROMIC		"polychromic"
+
+//maximum loadout slots you can have (as in, how many stored loadout sets)
+#define LOADOUT_MAXIMUM_SLOTS		5
