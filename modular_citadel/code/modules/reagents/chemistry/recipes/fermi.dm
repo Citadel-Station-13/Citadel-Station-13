@@ -286,14 +286,14 @@
 	//FermiChem vars:
 	OptimalTempMin 			= 780
 	OptimalTempMax			= 820
-	ExplodeTemp 			= 840
-	OptimalpHMin 			= 12
-	OptimalpHMax 			= 13
+	ExplodeTemp 			= 900
+	OptimalpHMin 			= 8
+	OptimalpHMax 			= 12
 	ReactpHLim 				= 2
 	//CatalystFact 			= 0
 	CurveSharpT 			= 0.5
 	CurveSharppH 			= 4
-	ThermicConstant 		= 15
+	ThermicConstant 		= 10
 	HIonRelease 			= 0.1
 	RateUpLim 				= 1
 	FermiChem				= TRUE
