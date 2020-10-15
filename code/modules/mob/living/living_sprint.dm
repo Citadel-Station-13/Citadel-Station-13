@@ -29,6 +29,7 @@
 	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	add_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
 
@@ -36,6 +37,7 @@
 	if(!(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) || (combat_flags & COMBAT_FLAG_SPRINT_FORCED))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
 

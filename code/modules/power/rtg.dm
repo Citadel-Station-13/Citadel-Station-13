@@ -53,6 +53,33 @@
 	power_gen = 1250 // 2500 on T1, 10000 on T4.
 	circuit = /obj/item/circuitboard/machine/rtg/advanced
 
+/obj/machinery/power/rtg/advanced/fullupgrade //fully ugpraded stock parts
+	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further. This model is fully upgraded with the latest tech available in this quadrant."
+
+/obj/machinery/power/rtg/advanced/fullupgrade/Initialize()
+	. = ..()
+	//This looks terrifying. And apparently instancing vars and modifying the amount variable causes runtime errors. Guess we're sticking to copy pasta, thanks, byond.
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/rtg/advanced(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/uranium(null)
+	component_parts += new /obj/item/stack/sheet/mineral/plasma(null)
+	component_parts += new /obj/item/stack/sheet/mineral/plasma(null)
+	component_parts += new /obj/item/stack/sheet/mineral/plasma(null)
+	component_parts += new /obj/item/stack/sheet/mineral/plasma(null)
+	component_parts += new /obj/item/stack/sheet/mineral/plasma(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/micro_laser/quadultra(null)
+	RefreshParts()
+
 // Void Core, power source for Abductor ships and bases.
 // Provides a lot of power, but tends to explode when mistreated.
 
