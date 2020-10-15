@@ -4,7 +4,7 @@
 /obj/item/defibrillator
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -23,8 +23,8 @@
 	var/obj/item/stock_parts/cell/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
-	var/healdisk = FALSE // Will we shock people dragging the body?
-	var/pullshocksafely = FALSE //Dose the unit have the healdisk upgrade?
+	var/healdisk = FALSE // Does the unit have the healdisk upgrade?
+	var/pullshocksafely = FALSE // Will we shock people dragging the body?
 	var/primetime = 0 // is the defib faster
 	var/timedeath = 10
 	var/disarm_shock_time = 10
@@ -140,7 +140,7 @@
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
-		deductcharge(1000 / severity)
+		deductcharge(severity*10)
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(safety)
@@ -261,7 +261,7 @@
 /obj/item/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -682,7 +682,7 @@
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
@@ -703,7 +703,7 @@
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE

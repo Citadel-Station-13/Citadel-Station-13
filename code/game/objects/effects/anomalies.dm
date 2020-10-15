@@ -291,7 +291,19 @@
 	S.rabid = TRUE
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
 	S.Evolve()
-	offer_control(S,POLL_IGNORE_SENTIENCE_POTION)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?",ROLE_SENTIENCE,null,ROLE_SENTIENCE,100,S,POLL_IGNORE_SENTIENCE_POTION)
+	if(length(candidates))
+		var/mob/C = pick(candidates)
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(S)])")
+		C.transfer_ckey(S, FALSE)
+		var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+		var/policy = policies[POLICYCONFIG_ON_PYROCLASTIC_SENTIENT]
+		if(policy)
+			to_chat(S,policy)
+		return TRUE
+	else
+		message_admins("No ghosts were willing to take control of [ADMIN_LOOKUPFLW(S)])")
+		return FALSE
 
 /////////////////////
 

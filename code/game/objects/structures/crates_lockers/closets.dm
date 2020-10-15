@@ -571,10 +571,10 @@
 			O.emp_act(severity)
 	if(!secure || broken)
 		return ..()
-	if(prob(50 / severity))
+	if(prob(severity/2))
 		locked = !locked
 		update_icon()
-	if(prob(20 / severity) && !opened)
+	if(prob(severity/5) && !opened)
 		if(!locked)
 			open()
 		else

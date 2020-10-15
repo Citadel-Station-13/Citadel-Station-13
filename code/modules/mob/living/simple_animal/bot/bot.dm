@@ -370,7 +370,7 @@
 		ejectpai(0)
 	if(on)
 		turn_off()
-	spawn(severity*300)
+	spawn(3 * severity)
 		stat &= ~EMPED
 		if(was_on)
 			turn_on()
@@ -1060,4 +1060,4 @@ Pass a positive integer as an argument to override a bot's default speed.
 	path.Cut(1, 2)
 
 /mob/living/silicon/rust_heretic_act()
-	adjustBruteLoss(500) 
+	adjustBruteLoss(500)

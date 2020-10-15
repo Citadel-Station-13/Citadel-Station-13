@@ -428,7 +428,7 @@
 /area/awaymission/cabin)
 "bm" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse5";
+	id_tag = "snowdorm5";
 	name = "Cabin 5"
 	},
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -3318,7 +3318,7 @@
 /area/awaymission/cabin)
 "iV" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse1";
+	id_tag = "snowdorm1";
 	name = "Cabin 1"
 	},
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -3326,7 +3326,7 @@
 /area/awaymission/cabin)
 "iW" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse2";
+	id_tag = "snowdorm2";
 	name = "Cabin 2"
 	},
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -3334,7 +3334,7 @@
 /area/awaymission/cabin)
 "iX" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse3";
+	id_tag = "snowdorm3";
 	name = "Cabin 3"
 	},
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -3342,7 +3342,7 @@
 /area/awaymission/cabin)
 "iY" = (
 /obj/machinery/door/airlock/wood{
-	id_tag = "snowdinbutworse4";
+	id_tag = "snowdorm4";
 	name = "Cabin 4"
 	},
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -3419,31 +3419,37 @@
 /area/awaymission/cabin)
 "jg" = (
 /obj/machinery/button/door{
-	id = "snowdinbutworse2";
-	name = "airlock button";
-	pixel_y = -27
+	id = "snowdorm2";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jh" = (
 /obj/machinery/button/door{
-	id = "snowdinbutworse1";
-	name = "airlock button";
-	pixel_y = -27
+	id = "snowdorm1";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ji" = (
 /obj/machinery/button/door{
-	id = "snowdinbutworse3";
-	name = "airlock button";
-	pixel_y = -27
+	id = "snowdorm3";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jj" = (
 /obj/machinery/button/door{
-	id = "snowdinbutworse4";
+	id = "snowdorm4";
 	name = "airlock button";
 	pixel_y = -27
 	},
@@ -3451,7 +3457,7 @@
 /area/awaymission/cabin)
 "jk" = (
 /obj/machinery/button/door{
-	id = "snowdinbutworse5";
+	id = "snowdorm5";
 	name = "airlock button";
 	pixel_y = -27
 	},
@@ -4024,8 +4030,8 @@
 	pixel_y = -2
 	},
 /obj/item/clothing/head/christmashatg{
-	pixel_y = 12;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 12
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)

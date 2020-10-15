@@ -328,7 +328,7 @@
 			throwSmoke(loc)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message("<span class='warning'>[src] melts [exp_on], ionizing the air around it!</span>")
-			empulse(loc, 4, 6)
+			empulse_using_range(loc, 9)
 			investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////

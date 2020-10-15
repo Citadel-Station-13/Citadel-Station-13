@@ -8,6 +8,8 @@
 	active_block_item = null
 	REMOVE_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_STAMINA_BUFFER_REGENERATION, ACTIVE_BLOCK_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION, ACTIVE_BLOCK_TRAIT)
 	remove_movespeed_modifier(/datum/movespeed_modifier/active_block)
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	DelayNextAction(data.block_end_click_cd_add)
@@ -27,6 +29,10 @@
 		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_BLOCK_TRAIT)		//probably should be something else at some point
 	if(data.block_lock_sprinting)
 		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_BLOCK_TRAIT)
+	if(data.block_no_stamina_regeneration)
+		ADD_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION, ACTIVE_BLOCK_TRAIT)
+	if(data.block_no_stambuffer_regeneration)
+		ADD_TRAIT(src, TRAIT_NO_STAMINA_BUFFER_REGENERATION, ACTIVE_BLOCK_TRAIT)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/active_block, multiplicative_slowdown = data.block_slowdown)
 	active_block_effect_start()
 	return TRUE
@@ -192,7 +198,7 @@
 		var/held_index = C.get_held_index_of_item(src)
 		var/obj/item/bodypart/BP = C.hand_bodyparts[held_index]
 		if(!BP?.body_zone)
-			return C.adjustStaminaLossBuffered(stamina_amount)		//nah
+			return C.adjustStaminaLoss(stamina_amount)		//nah
 		var/zone = BP.body_zone
 		var/stamina_to_zone = data.block_stamina_limb_ratio * stamina_amount
 		var/stamina_to_chest = stamina_amount - stamina_to_zone
@@ -200,9 +206,9 @@
 		stamina_to_chest -= stamina_buffered
 		C.apply_damage(stamina_to_zone, STAMINA, zone)
 		C.apply_damage(stamina_to_chest, STAMINA, BODY_ZONE_CHEST)
-		C.adjustStaminaLossBuffered(stamina_buffered)
+		C.adjustStaminaLoss(stamina_buffered)
 	else
-		owner.adjustStaminaLossBuffered(stamina_amount)
+		owner.adjustStaminaLoss(stamina_amount)
 
 /obj/item/proc/on_active_block(mob/living/owner, atom/object, damage, damage_blocked, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return, override_direction)
 	return
@@ -231,6 +237,7 @@
 	active_block_do_stamina_damage(owner, object, stamina_cost, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, block_return)
 	block_return[BLOCK_RETURN_ACTIVE_BLOCK_DAMAGE_MITIGATED] = damage - final_damage
 	block_return[BLOCK_RETURN_SET_DAMAGE_TO] = final_damage
+	block_return[BLOCK_RETURN_MITIGATION_PERCENT] = clamp(1 - (final_damage / damage), 0, 1)
 	. = BLOCK_SHOULD_CHANGE_DAMAGE
 	if((final_damage <= 0) || (damage <= 0))
 		. |= BLOCK_SUCCESS			//full block

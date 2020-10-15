@@ -366,6 +366,11 @@
 	flashlight_power = 0.8
 	custom_price = PRICE_CHEAP
 
+/obj/item/flashlight/lantern/heirloom_moth
+	name = "old lantern"
+	desc = "An old lantern that has seen plenty of use."
+	light_range = 4
+
 /obj/item/flashlight/lantern/jade
 	name = "jade lantern"
 	desc = "An ornate, green lantern."
@@ -428,7 +433,7 @@
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
 		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.")
-		A.emp_act(EMP_HEAVY)
+		A.emp_act(80)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
 	return

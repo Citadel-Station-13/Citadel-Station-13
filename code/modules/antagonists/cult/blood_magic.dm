@@ -165,7 +165,7 @@
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-	empulse(owner, 2, 5)
+	empulse_using_range(owner, 8)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
@@ -451,7 +451,7 @@
 				L.flash_act(1,1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 				else if(iscarbon(target))
 					var/mob/living/carbon/C = L
 					C.silent += clamp(12 - C.silent, 0, 6)
@@ -610,7 +610,7 @@
 				var/prev_color = candidate.color
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
-					candidate.emp_act(EMP_HEAVY)
+					candidate.emp_act(80)
 					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)

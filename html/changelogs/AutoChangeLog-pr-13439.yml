@@ -1,4 +1,0 @@
-author: "Tupinambis"
-delete-after: True
-changes: 
-  - bugfix: "Ghost poly's color value is now a hex value instead of an oct value. This has been a thing for OVER FIVE YEARS"
