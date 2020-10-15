@@ -765,6 +765,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/bodypart in relevant_layers[layer])
 			var/datum/sprite_accessory/S = bodypart
 			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
+			var/mutable_appearance/marking_overlay //incase a marking overlay is used
 			bodypart = S.mutant_part_string || dna_feature_as_text_string[S]
 
 			if(S.gender_specific)
@@ -812,6 +813,17 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 							accessory_overlay.color = "#[H.dna.features["horns_color"]]"
 						if(WINGCOLOR)
 							accessory_overlay.color = "#[H.dna.features["wings_color"]]"
+						if("dual_color") //if you see this its a mistake, replace it with a define
+							//if you get here it means you are colouring a main part, and a marking
+							//the main part
+							var/accessory_feature = "[bodypart]_color"
+							accessory_overlay.color = "#[H.dna.features[accessory_feature]]"
+
+							//the marking
+							marking_overlay = mutable_appearance(S.icon, layer = -layernum)
+							marking_overlay.icon_state = "[S.name]_markings"
+							var/marking_feature = "[bodypart]_marking_color"
+							marking_overlay.color = "#[H.dna.features[marking_feature]]"
 				else
 					accessory_overlay.color = forced_colour
 			else
@@ -825,8 +837,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(OFFSET_MUTPARTS in H.dna.species.offset_features)
 				accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
 				accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
+				if(marking_overlay)
+					marking_overlay.pixel_x += H.dna.species.offset_features[OFFSET_MUTPARTS][1]
+					marking_overlay.pixel_y += H.dna.species.offset_features[OFFSET_MUTPARTS][2]
 
 			standing += accessory_overlay
+			if(marking_overlay)
+				standing += marking_overlay
 
 			if(S.extra) //apply the extra overlay, if there is one
 				var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layernum)
