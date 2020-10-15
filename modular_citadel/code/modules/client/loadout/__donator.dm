@@ -287,7 +287,6 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/clothing/neck/cloak/polychromic/polyce
 	ckeywhitelist = list("worksbythesea", "blakeryan")
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/donator/ssk
 	name = "Stun Sword Kit"

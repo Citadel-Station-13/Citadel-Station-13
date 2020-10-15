@@ -223,43 +223,36 @@
 	name = "Polychromic Jumpsuit"
 	path = /obj/item/clothing/under/misc/polyjumpsuit
 	cost = 2
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/skirt/poly
 	name = "Polychromic Jumpskirt"
 	path = /obj/item/clothing/under/dress/skirt/polychromic
 	cost = 2
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/suit/poly
 	name = "Polychromic Button-up Shirt"
 	path = /obj/item/clothing/under/misc/poly_shirt
 	cost = 3
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/skirt/poly/pleated
 	name = "Polychromic Pleated Sweaterskirt"
 	path = /obj/item/clothing/under/dress/skirt/polychromic/pleated
 	cost = 3
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/polykilt
 	name = "Polychromic Kilt"
 	path = /obj/item/clothing/under/costume/kilt/polychromic
 	cost = 3
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/shorts/poly
 	name = "Polychromic Shorts"
 	path = /obj/item/clothing/under/misc/polyshorts
 	cost = 3
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/shorts/poly/athletic
 	name = "Polychromic Athletic Shorts"
 	path = /obj/item/clothing/under/shorts/polychromic
 	cost = 2
-	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/uniform/hopcasual
 	name = "Casual Head of Personnel's uniform"
