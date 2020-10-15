@@ -591,8 +591,9 @@
 /datum/chemical_reaction/fermi/zeolites
 	name = "Zeolites"
 	id = /datum/reagent/fermi/zeolites
-	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot! - But it's now pretty dangerous, too! The ingredients are supercheap after all...
+	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot! - But it's now somewhat dangerous, and needs a bit of uranium to catalyze the reaction
 	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
+	required_catalysts = list(/datum/reagent/uranium = 5)
 	//FermiChem vars:
 	OptimalTempMin 	= 500
 	OptimalTempMax 	= 750
@@ -601,9 +602,9 @@
 	OptimalpHMax 	= 5 //2.2 ph levels of optimal ph zone - centered at 3.9 - ph of ingredients mixed at equal values is 9.55; ph of result is 8.
 	ReactpHLim 		= 4
 	//CatalystFact 	= 0
-	CurveSharpT 	= 3
+	CurveSharpT 	= 2
 	CurveSharppH 	= 3
-	ThermicConstant = 15
+	ThermicConstant = 7
 	HIonRelease 	= -0.15
 	RateUpLim 		= 4
 	PurityMin 		= 0.5 //Good luck.
