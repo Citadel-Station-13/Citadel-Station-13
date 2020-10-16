@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(economy)
 	secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	civ_payout() // Payout based on ??? Profit
 	car_payout() // Cargo's natural gain in the cash moneys.
-	for(var/account in bank_accounts)
+	for(var/account in bank_accounts_by_id)
 		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
 		bank_account.payday(1)
 
