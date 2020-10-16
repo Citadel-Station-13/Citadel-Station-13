@@ -561,11 +561,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							var/mutant_type_list = GLOB.mutant_reference_list[mutant_part]
 							if(mutant_type_list)
 								var/datum/sprite_accessory/accessory = mutant_type_list[existing_mutant_part]
-								if(accessory?.color_src == DUAL_COLOR)
+								message_admins("[accessory?.color_src]")
+								if(accessory && accessory.color_src == DUAL_COLOR && accessory.name != "None")
 									var/feature_part = "[mutant_part]_color"
 									dat += "<b>Primary Color:</b><BR>"
 									dat += "<span style='border:1px solid #161616; background-color: #[features[feature_part]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[feature_part];task=input'>Change</a><BR>"
-								if(accessory?.marking_state)
+								if(accessory && accessory.marking_state)
 									var/feature_marking_part = "[mutant_part]_marking_color"
 									dat += "<b>Marking Color:</b><BR>"
 									dat += "<span style='border:1px solid #161616; background-color: #[features[feature_marking_part]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[feature_marking_part];task=input'>Change</a><BR>"
