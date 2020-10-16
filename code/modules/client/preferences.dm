@@ -556,7 +556,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<span style='border:1px solid #161616; background-color: #[features[color_type]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[color_type];task=input'>Change</a><BR>"
 					var/marking_type = GLOB.colored_markings_mutant_parts[mutant_part] //does it have the requirement for two types of colouring, self and marking?
 					if(marking_type)
-						var/existing_mutant_part = pref_species.mutant_bodyparts[mutant_part]
+						var/existing_mutant_part = features[mutant_part] || pref_species.mutant_bodyparts[mutant_part]
 						if(existing_mutant_part)
 							var/mutant_type_list = GLOB.mutant_reference_list[mutant_part]
 							if(mutant_type_list)
