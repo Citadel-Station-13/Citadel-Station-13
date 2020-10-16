@@ -47,6 +47,9 @@
 	var/light_overlay = "envirohelm-light"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	mutantrace_variation = NONE
+	var/held_flags_inv = 0
+	var/face_shown = FALSE
+
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	if(!light_overlay)
@@ -71,6 +74,33 @@
 	. = ..()
 	if(!isinhands && on)
 		. += mutable_appearance(icon_file, light_overlay)
+
+/obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	toggle_face_visibility(user)
+	return TRUE
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_face_visibility()
+	set src in usr
+
+	if(!can_use(usr))
+		return 0
+
+	src.face_shown = !src.face_shown
+	if(src.face_shown)
+		src.held_flags_inv = src.flags_inv
+		src.flags_inv &= HIDEEYES|HIDEFACIALHAIR //imagine if plasmemes could get facial hair.
+	else
+		src.flags_inv = src.held_flags_inv
+	to_chat(usr, "<span class='notice'>You adjust [src], [src.face_shown?"reveal":"obscur"]ing facial details while worn.</span>")
+	usr.update_inv_head()
+
+/obj/item/clothing/head/helmet/space/plasmaman/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>The helmet is currently adjusted to [src.face_shown?"reveal":"obscure"] facial details.</span>"
+	. += "<span class='notice'>Alt-click on [src] to toggle facial obscurity.</span>"
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
