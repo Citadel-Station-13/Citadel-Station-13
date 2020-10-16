@@ -153,11 +153,11 @@
 		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
 		return
 
-	var/mob/living/carbon/human/human_caster = caster
-	if(!human_caster?.dna?.species?.id == SPECIES_VAMPIRE)
-		to_chat(caster, "<span class='warning'>You don't seem to be able to shapeshift..</span>")
+	if(!ishuman(caster))
+		to_chat(caster, "<span class='warning'>You need to be humanoid to be able to do this!</span>")
 		return
 
+	var/mob/living/carbon/human/human_caster = caster
 	var/mob/living/shape = new shapeshift_type(caster.loc)
 	H = new(shape,src,human_caster)
 	if(istype(H, /mob/living/simple_animal))
@@ -171,3 +171,15 @@
 	clothes_req = NONE
 	mobs_whitelist = null
 	mobs_blacklist = null
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/bat/cast(list/targets, mob/user = usr)
+	if(!(locate(/obj/shapeshift_holder) in targets[1]))
+		if(!ishuman(user))
+			to_chat(user, "<span class='warning'>You need to be humanoid to be able to do this!</span>")
+			return
+
+		var/mob/living/carbon/human/human_user = user
+		if(!(human_user.dna?.species?.id == SPECIES_VAMPIRE))
+			to_chat(user, "<span class='warning'>You don't seem to be able to shapeshift..</span>")
+			return
+	return ..()
