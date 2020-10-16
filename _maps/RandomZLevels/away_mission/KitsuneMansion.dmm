@@ -364,7 +364,6 @@
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "rK" = (
-/obj/structure/punji_sticks,
 /obj/item/stack/sheet/mineral/diamond,
 /turf/open/floor/plating/asteroid/snow/kitsune,
 /area/awaymission/kitsune)
@@ -9566,7 +9565,7 @@ Xf
 Xf
 Xf
 Xf
-rK
+BH
 Xf
 Xf
 Xf
@@ -13701,7 +13700,7 @@ Xf
 Xf
 VY
 Xf
-Xf
+rK
 Yc
 Xf
 Xf
