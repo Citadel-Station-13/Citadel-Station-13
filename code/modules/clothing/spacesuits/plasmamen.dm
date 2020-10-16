@@ -50,7 +50,6 @@
 	var/held_flags_inv = 0
 	var/face_shown = FALSE
 
-
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	if(!light_overlay)
 		return
