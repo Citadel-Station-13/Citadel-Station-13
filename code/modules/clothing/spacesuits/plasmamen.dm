@@ -90,7 +90,7 @@
 	src.face_shown = !src.face_shown
 	if(src.face_shown)
 		src.held_flags_inv = src.flags_inv
-		src.flags_inv &= HIDEEYES|HIDEFACIALHAIR //imagine if plasmemes could get facial hair.
+		src.flags_inv &= HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT //imagine if plasmemes could get facial hair.
 	else
 		src.flags_inv = src.held_flags_inv
 	to_chat(usr, "<span class='notice'>You adjust [src], [src.face_shown?"reveal":"obscur"]ing facial details while worn.</span>")
