@@ -89,7 +89,7 @@
 
 /obj/item/clothing/mask/gas/clown_hat/examine(mob/user)
 	. = ..()
-	. += "Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>."
+	. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
 
 /obj/item/clothing/mask/gas/clown_hat/AltClick(mob/user)
 	. = ..()
@@ -135,7 +135,7 @@
 
 /obj/item/clothing/mask/gas/mime/examine(mob/user)
 	. = ..()
-	. += "Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>."
+	. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
 
 /obj/item/clothing/mask/gas/mime/AltClick(mob/user)
 	. = ..()
