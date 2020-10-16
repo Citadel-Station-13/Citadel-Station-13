@@ -561,7 +561,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							var/mutant_type_list = GLOB.mutant_reference_list[mutant_part]
 							if(mutant_type_list)
 								var/datum/sprite_accessory/accessory = mutant_type_list[existing_mutant_part]
-								message_admins("[accessory?.color_src]")
 								if(accessory && accessory.color_src == DUAL_COLOR && accessory.name != "None")
 									var/feature_part = "[mutant_part]_color"
 									dat += "<b>Primary Color:</b><BR>"
