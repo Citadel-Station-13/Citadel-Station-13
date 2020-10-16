@@ -552,6 +552,26 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/color_type = GLOB.colored_mutant_parts[mutant_part] //if it can be coloured, show the appropriate button
 					if(color_type)
 						dat += "<span style='border:1px solid #161616; background-color: #[features[color_type]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[color_type];task=input'>Change</a><BR>"
+					else
+						//is it matrixed or does it have extra parts to be coloured?
+						var/find_part = features[mutant_part] || pref_species.mutant_bodyparts[mutant_part]
+						var/find_part_list = GLOB.mutant_reference_list[mutant_part]
+						if(find_part && find_part_list)
+							var/datum/sprite_accessory/accessory = find_part_list[find_part]
+							if(accessory)
+								if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
+									var/primary_feature = "[mutant_part]_primary"
+									dat += "<b>Primary Color</b><BR>"
+									dat += "<span style='border:1px solid #161616; background-color: #[features[primary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[primary_feature];task=input'>Change</a><BR>"
+									if(accessory.color_src == MATRIXED || (accessory.extra && (accessory.extra_color_src == MUTCOLORS || accessory.extra_color_src == MUTCOLORS2 || accessory.extra_color_src == MUTCOLORS3)))
+										var/secondary_feature = "[mutant_part]_secondary"
+										dat += "<b>Secondary Color</b><BR>"
+										dat += "<span style='border:1px solid #161616; background-color: #[features[secondary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[secondary_feature];task=input'>Change</a><BR>"
+										if(accessory.color_src == MATRIXED || (accessory.extra2 && (accessory.extra2_color_src == MUTCOLORS || accessory.extra2_color_src == MUTCOLORS2 || accessory.extra2_color_src == MUTCOLORS3)))
+											var/tertiary_feature = "[mutant_part]_tertiary"
+											dat += "<b>Tertiary Color</b><BR>"
+											dat += "<span style='border:1px solid #161616; background-color: #[features[tertiary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[tertiary_feature];task=input'>Change</a><BR>"
+
 					mutant_category++
 					if(mutant_category >= MAX_MUTANT_ROWS)
 						dat += "</td>"
@@ -2033,6 +2053,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in GLOB.xeno_dorsal_list
 					if(new_dors)
 						features["xenodorsal"] = new_dors
+
+				//every single primary/secondary/tertiary colouring done at once
+				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary"."xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","bodymarkings_primary","bodymarkings_secondary","bodymarkings_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary"."frills_secondary","frills_tertiary","ipcantenna_primary","ipcantenna_secondary","ipcantenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiaty","spines_primary","spines_secondary","spines_tertiary")
+					var/the_feature = features[href_list["preference"]]
+					if(!the_feature)
+						features[href_list["preference"]] = "FFFFFF"
+						the_feature = "FFFFFF"
+					var/new_feature_color = input(user, "Choose your character's mutant part colour:", "Character Preference","#"+features[href_list["preference"]]) as color|null
+					if(new_feature_color)
+						var/temp_hsv = RGBtoHSV(new_feature_color)
+						if(new_feature_color == "#000000")
+							features[href_list["preference"]] = pref_species.default_color
+						else if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3])
+							features[href_list["preference"]] = sanitize_hexcolor(new_feature_color, 6)
+						else
+							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				//Genital code
 				if("cock_color")

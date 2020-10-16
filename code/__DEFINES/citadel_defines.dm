@@ -114,3 +114,13 @@
 
 //special species definitions
 #define MINIMUM_MUTANT_COLOR	"#202020" //this is how dark players mutant parts and skin can be
+
+//defines for different matrix sections
+#define MATRIX_RED			"red"
+#define MATRIX_GREEN		"green"
+#define MATRIX_BLUE			"blue"
+#define MATRIX_RED_GREEN	"red_green"
+#define MATRIX_RED_BLUE		"red_blue"
+#define MATRIX_BLUE_GREEN	"blue_green"
+#define MATRIX_ALL			"red_green_blue"
+#define MATRIX_NONE			"none"

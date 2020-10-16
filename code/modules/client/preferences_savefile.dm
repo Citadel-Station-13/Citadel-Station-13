@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	38
+#define SAVEFILE_VERSION_MAX	39
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -225,6 +225,29 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(S["species"] == "skeleton")
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
+
+	if(current_version < 39) //extreme changes to how things are coloured
+		for(var/feature in features)
+			var/feature_type = features[feature]
+			var/ref_list = GLOB.mutant_reference_list[feature_type]
+			if(ref_list)
+				message_admins("ref list found")
+				var/datum/sprite_accessory/accessory = ref_list[feature]
+				if(accessory)
+					var/primary_string = "[feature_type]_primary"
+					var/secondary_string = "[feature_type]_secondary]"
+					var/tertiary_string = "[feature_type]_tertiary]"
+					if(accessory.color_src == MATRIXED)
+						features[primary_string] = features["mcolor"]
+						features[secondary_string] = features["mcolor2"]
+						features[tertiary_string] = features["mcolor3"]
+					else if(accessory.color_src == MUTCOLORS)
+						features[primary_string] = features["mcolor"]
+					else if(accessory.color_src == MUTCOLORS2)
+						features[secondary_string] = features["mcolor2"]
+					else if(accessory.color_src == MUTCOLORS3)
+						features[tertiary_string] = features["mcolor3"]
+
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

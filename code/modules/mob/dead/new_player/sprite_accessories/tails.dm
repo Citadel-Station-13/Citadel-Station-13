@@ -8,7 +8,7 @@
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
-	mutant_part_string = "tailwag"
+	mutant_part_string = "tail" //keep this the same, ALWAYS, this is incredibly important for colouring!
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /******************************************
@@ -34,12 +34,14 @@
 	icon_state = "axolotl"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/lizard/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails/lizard/dtiger
 	name = "Dark Tiger"
@@ -54,12 +56,14 @@
 	icon_state = "guilmon"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/lizard/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails/lizard/ltiger
 	name = "Light Tiger"
@@ -107,12 +111,14 @@
 	icon_state = "axolotl"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/human/axolotl
 	name = "Axolotl"
 	icon_state = "axolotl"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails/mam_tails/batl
 	name = "Bat (Long)"
@@ -139,12 +145,14 @@
 	icon_state = "bee"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/tails_animated/human/bee
 	name = "Bee"
 	icon_state = "bee"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
@@ -163,24 +171,28 @@
 	icon_state = "catbig"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails/human/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/human/twocat
 	name = "Cat, Double"
 	icon_state = "twocat"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails/human/corvid
 	name = "Corvid"
@@ -195,12 +207,14 @@
 	icon_state = "cow"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails_animated/human/cow
 	name = "Cow"
 	icon_state = "cow"
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	color_src = MATRIXED
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/tails/human/dtiger
 	name = "Dark Tiger"
@@ -538,7 +552,7 @@
 /datum/sprite_accessory/tails_animated/mam_tails_animated
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
-	mutant_part_string = "tailwag"
+	mutant_part_string = "tail" //KEEP IT THE SAME
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/tails_animated/mam_tails_animated/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
