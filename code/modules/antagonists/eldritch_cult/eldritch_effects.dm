@@ -190,6 +190,17 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	alpha = 0
+
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/show_presence), 15 SECONDS)
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
+
+/obj/effect/broken_illusion/proc/show_presence()
+	animate(src, alpha = 255, time = 15 SECONDS)
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user)
 	if(!ishuman(user))
@@ -239,6 +250,7 @@
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	invisibility = INVISIBILITY_OBSERVER
 	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
 	///Who can see us?
