@@ -19,7 +19,8 @@
 	var/starting_tape_type = /obj/item/tape/random
 	var/open_panel = 0
 	var/canprint = 1
-
+	var/list/icons_available = list()
+	var/icon_directory = 'icons/radials/taperecorder.dmi'
 
 /obj/item/taperecorder/Initialize(mapload)
 	. = ..()
@@ -32,6 +33,29 @@
 	. = ..()
 	. += "The wire panel is [open_panel ? "opened" : "closed"]."
 
+/obj/item/taperecorder/AltClick(mob/user)
+	. = ..()
+	play()
+
+/obj/item/taperecorder/proc/update_available_icons()
+	icons_available = list()
+
+	if(recording)
+		icons_available += list("Stop Recording" = image(icon = icon_directory, icon_state = "record_stop"))
+	else
+		if(!playing)
+			icons_available += list("Record" = image(icon = icon_directory, icon_state = "record"))
+
+	if(playing)
+		icons_available += list("Pause" = image(icon = icon_directory, icon_state = "pause"))
+	else
+		if(!recording)
+			icons_available += list("Play" = image(icon = icon_directory, icon_state = "play"))
+
+	if(canprint && !recording && !playing)
+		icons_available += list("Print Transcript" = image(icon = icon_directory, icon_state = "print"))
+	if(mytape)
+		icons_available += list("Eject" = image(icon = icon_directory, icon_state = "eject"))
 
 /obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/tape))
@@ -69,7 +93,6 @@
 			return TRUE
 	return FALSE
 
-
 /obj/item/taperecorder/verb/ejectverb()
 	set name = "Eject Tape"
 	set category = "Object"
@@ -81,7 +104,6 @@
 
 	eject(usr)
 
-
 /obj/item/taperecorder/update_icon_state()
 	if(!mytape)
 		icon_state = "taperecorder_empty"
@@ -91,7 +113,6 @@
 		icon_state = "taperecorder_playing"
 	else
 		icon_state = "taperecorder_idle"
-
 
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode, atom/movable/source)
 	. = ..()
@@ -193,13 +214,31 @@
 
 
 /obj/item/taperecorder/attack_self(mob/user)
-	if(!mytape || mytape.ruined)
+	if(!mytape)
+		to_chat(user, "<span class='notice'>The [src] does not have a tape inside.</span>")
 		return
-	if(recording)
-		stop()
-	else
-		record()
+	if(mytape.ruined)
+		to_chat(user, "<span class='notice'>The tape inside the [src] appears to be broken.</span>")
+		return
 
+	update_available_icons()
+	if(icons_available)
+		var/selection = show_radial_menu(user, src, icons_available, radius = 38, require_near = TRUE, tooltips = TRUE)
+		if(!selection)
+			return
+		switch(selection)
+			if("Pause")
+				stop()
+			if("Stop Recording")  // yes we actually need 2 seperate stops for the same proc- Hopek
+				stop()
+			if("Record")
+				record()
+			if("Play")
+				play()
+			if("Print Transcript")
+				print_transcript()
+			if("Eject")
+				eject(user)
 
 /obj/item/taperecorder/verb/print_transcript()
 	set name = "Print Transcript"

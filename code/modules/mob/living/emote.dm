@@ -227,6 +227,21 @@
 			return
 		else if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+		else if(isjellyperson(C))
+			var/mob/living/carbon/human/H = C
+			if(H.dna.features["mam_ears"] == "Cat" || H.dna.features["mam_ears"] == "Cat, Big") //slime have cat ear. slime go nya.
+				playsound(C, pick('sound/voice/jelly/nyahaha1.ogg',
+				'sound/voice/jelly/nyahaha2.ogg',
+				'sound/voice/jelly/nyaha.ogg',
+				'sound/voice/jelly/nyahehe.ogg'),
+				50, 1)
+				return
+			else if(user.gender == FEMALE)
+				playsound(C, 'sound/voice/jelly/womanlaugh.ogg', 50, 1)
+				return
+			else
+				playsound(C, pick('sound/voice/jelly/manlaugh1.ogg', 'sound/voice/jelly/manlaugh2.ogg'), 50, 1)
+				return
 		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
 				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)
@@ -547,7 +562,7 @@
 	if(. && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(isjellyperson(C))
-			pick(playsound(C, 'sound/effects/attackblob.ogg', 50, 1),playsound(C, 'sound/effects/blobattack.ogg', 50, 1))
+			playsound(C, 'sound/effects/attackblob.ogg', 50, 1)
 
 /datum/emote/living/audio_emote/blurp
 	key = "blurp"

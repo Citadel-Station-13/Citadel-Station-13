@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			debug_tools_allowed = TRUE
 		//END CITADEL EDIT
 	else if(GLOB.deadmins[ckey])
-		verbs += /client/proc/readmin
+		add_verb(src, /client/proc/readmin)
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
@@ -268,14 +268,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	addtimer(CALLBACK(src, .proc/ensure_keys_set), 0)	//prevents possible race conditions
+		
+	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps //(prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
 
 	if(fexists(roundend_report_file()))
-		verbs += /client/proc/show_previous_roundend_report
+		add_verb(src, /client/proc/show_previous_roundend_report)
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
@@ -336,12 +337,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return
 
-	// if(SSinput.initialized) placed here on tg.
-	// 	set_macros()
-	// 	update_movement_keys()
-
 	// Initialize tgui panel
 	tgui_panel.initialize()
+	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -470,16 +469,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	// view_size = new(src, getScreenSize(prefs.widescreenpref))
-	// view_size.resetFormat()
-	// view_size.setZoomMode()
-	// fit_viewport()
+	view_size = new(src, getScreenSize(prefs.widescreenpref))
+	view_size.resetFormat()
+	view_size.setZoomMode()
+	fit_viewport()
 	Master.UpdateTickRate()
 
 /client/proc/ensure_keys_set()
 	if(SSinput.initialized)
 		set_macros()
-	update_movement_keys(prefs)
+		update_movement_keys(prefs)
 
 //////////////
 //DISCONNECT//
@@ -857,9 +856,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
-		verbs += /client/proc/self_notes
+		add_verb(src, /client/proc/self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
-		verbs += /client/proc/self_playtime
+		add_verb(src, /client/proc/self_playtime)
 
 
 #undef UPLOAD_LIMIT
@@ -912,8 +911,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return FALSE
 		if (NAMEOF(src, key))
 			return FALSE
-		if(NAMEOF(src, view))
-			change_view(var_value)
+		if (NAMEOF(src, view))
+			view_size.setDefault(var_value)
 			return TRUE
 	. = ..()
 
@@ -923,7 +922,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/y = viewscale[2]
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
-	change_view("[x]x[y]")
+	view_size.setDefault("[x]x[y]")
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
@@ -945,12 +944,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
-//CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
-	if(prefs && CONFIG_GET(string/default_view))
-		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
-			new_size = "15x15"
-//END OF CIT CHANGES
 
 	var/list/old_view = getviewsize(view)
 	view = new_size
@@ -1001,3 +994,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/can_have_part(part_name)
 	return prefs.pref_species.mutant_bodyparts[part_name] || (part_name in GLOB.unlocked_mutant_parts)
+
+/// compiles a full list of verbs and sends it to the browser
+/client/proc/init_verbs()
+	if(IsAdminAdvancedProcCall())
+		return
+	var/list/verblist = list()
+	verb_tabs.Cut()
+	for(var/thing in (verbs + mob?.verbs))
+		var/procpath/verb_to_init = thing
+		if(!verb_to_init)
+			continue
+		if(verb_to_init.hidden)
+			continue
+		if(!istext(verb_to_init.category))
+			continue
+		verb_tabs |= verb_to_init.category
+		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
+	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")

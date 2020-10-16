@@ -27,7 +27,10 @@
 /datum/config_entry/New()
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")
-	name = lowertext(type2top(type))
+	if(!name)
+		name = lowertext(type2top(type))
+	else
+		name = lowertext(name)
 	if(islist(config_entry_value))
 		var/list/L = config_entry_value
 		default = L.Copy()

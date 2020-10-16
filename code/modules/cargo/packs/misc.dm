@@ -13,6 +13,13 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+
+/datum/supply_pack/misc/anvil
+	name = "Anvil Crate"
+	desc = "An anvil in a crate, we had to dig this out of the old warehouse. It's got wheels on it so you can move it."
+	cost = 7500
+	contains = list(/obj/structure/anvil/obtainable/basic)
+
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -343,6 +350,10 @@
 /datum/supply_pack/misc/carpet/black
 	name = "Black Carpet Single-Pack"
 	contains = list(/obj/item/stack/tile/carpet/black/fifty)
+
+/datum/supply_pack/misc/carpet/arcade
+	name = "Arcade Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/arcade/fifty)
 
 /datum/supply_pack/misc/carpet/premium
 	name = "Monochrome Carpet Single-Pack"
