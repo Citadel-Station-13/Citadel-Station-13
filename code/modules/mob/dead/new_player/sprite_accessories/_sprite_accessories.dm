@@ -52,6 +52,7 @@
 /datum/sprite_accessory
 	var/icon			//the icon file the accessory is located in
 	var/icon_state		//the icon_state of the accessory
+	var/marking_state   //icon state of accessory marking if any
 	var/name			//the preview name of the accessory
 	var/gender = NEUTER	//Determines if the accessory will be skipped or included in random hair generations
 	var/gender_specific //Something that can be worn by either gender, but looks different on each

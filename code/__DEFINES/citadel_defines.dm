@@ -114,3 +114,6 @@
 
 //special species definitions
 #define MINIMUM_MUTANT_COLOR	"#202020" //this is how dark players mutant parts and skin can be
+
+//way of colouring things from virgo (two parts coloured, one regular, then a marking over it)
+#define DUAL_COLOR		"dual_color"

@@ -226,6 +226,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
+	if(current_version < 39) //taur revamp
+		features["taur_color"] = "FFFFFF"
+		features["taur_marking_color"] = "FFFFFF"
+		switch(features["taur"])
+			if("Naga")
+				features["taur"] = "Naga (old)"
+			if("Virgo - Synthetic Feline")
+				features["taur"] = "Feline (synth) (old)"
+			if("Tentacle")
+				features["taur"] = "Tentacle (old)"
+			if("Virgo - Synthetic Lizard")
+				features["taur"] = "Lizard (synth) (old)"
+			if("Virgo - Synthetic Horse")
+				features["taur"] = "Horse (synth) (old)"
+			if("Virgo - Synthetic Wolf")
+				features["taur"] = "Wolf (synth) (old)"
+			if("Virgo - Synthetic Lizard (Inverted)")
+				features["taur"] = "Lizard (synth-inverted) (old)"
+			if("Virgo - Synthetic Feline (Inverted)")
+				features["taur"] = "Feline (synth-inverted) (old)"
+			if("Virgo - Synthetic Horse (Inverted)")
+				features["taur"] = "Horse (synth-inverted) (old)"
+			if("Virgo - Synthetic Wolf (Inverted)")
+				features["taur"] = "Wolf (synth-inverted) (old)"
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -568,6 +593,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_arachnid_mandibles"]		>> features["arachnid_mandibles"]
 	S["feature_horns_color"]			>> features["horns_color"]
 	S["feature_wings_color"]			>> features["wings_color"]
+	S["feature_taur_color"]				>> features["taur_color"]
+	S["feature_taur_marking_color"]		>> features["taur_marking_color"]
 	S["persistent_scars"] 				>> persistent_scars
 	S["scars1"]							>> scars_list["1"]
 	S["scars2"]							>> scars_list["2"]
@@ -897,6 +924,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_arachnid_spinneret"]		, features["arachnid_spinneret"])
 	WRITE_FILE(S["feature_arachnid_mandibles"]		, features["arachnid_mandibles"])
 	WRITE_FILE(S["feature_meat"]					, features["meat_type"])
+	WRITE_FILE(S["feature_taur_color"]				, features["taur_color"])
+	WRITE_FILE(S["feature_taur_marking_color"]		, features["taur_marking_color"])
 
 	WRITE_FILE(S["feature_has_cock"], features["has_cock"])
 	WRITE_FILE(S["feature_cock_shape"], features["cock_shape"])

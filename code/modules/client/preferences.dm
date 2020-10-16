@@ -132,6 +132,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"xenohead" = "Standard",
 		"xenotail" = "Xenomorph Tail",
 		"taur" = "None",
+		"taur_color" = "FFFFFF",
+		"taur_marking_color" = "FFFFFF",
 		"genitals_use_skintone" = FALSE,
 		"has_cock" = FALSE,
 		"cock_shape" = DEF_COCK_SHAPE,
@@ -552,6 +554,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/color_type = GLOB.colored_mutant_parts[mutant_part] //if it can be coloured, show the appropriate button
 					if(color_type)
 						dat += "<span style='border:1px solid #161616; background-color: #[features[color_type]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[color_type];task=input'>Change</a><BR>"
+					var/marking_type = GLOB.colored_markings_mutant_parts[mutant_part] //does it have the requirement for two types of colouring, self and marking?
+					if(marking_type)
+						var/existing_mutant_part = pref_species.mutant_bodyparts[mutant_part]
+						if(existing_mutant_part)
+							var/mutant_type_list = GLOB.mutant_reference_list[mutant_part]
+							if(mutant_type_list)
+								var/datum/sprite_accessory/accessory = mutant_type_list[existing_mutant_part]
+								if(accessory?.color_src == DUAL_COLOR)
+									var/feature_part = "[mutant_part]_color"
+									dat += "<b>Primary Color:</b><BR>"
+									dat += "<span style='border:1px solid #161616; background-color: #[features[feature_part]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[feature_part];task=input'>Change</a><BR>"
+								if(accessory?.marking_state)
+									var/feature_marking_part = "[mutant_part]_marking_color"
+									dat += "<b>Marking Color:</b><BR>"
+									dat += "<span style='border:1px solid #161616; background-color: #[features[feature_marking_part]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[feature_marking_part];task=input'>Change</a><BR>"
 					mutant_category++
 					if(mutant_category >= MAX_MUTANT_ROWS)
 						dat += "</td>"
@@ -1959,6 +1976,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["tail_human"] = "None"
 							features["tail_lizard"] = "None"
 							features["arachnid_spinneret"] = "None"
+
+				if("taur_color")
+					var/new_taurcolor = input(user, "Choose your character's taur color:", "Character Preference","#"+features["taur_color"]) as color|null
+					if(new_taurcolor)
+						features["taur_color"] = sanitize_hexcolor(new_taurcolor, 6)
+
+				if("taur_marking_color")
+					var/new_markingcolor = input(user, "Choose your taur markings color:", "Character Preference","#"+features["taur_marking_color"]) as color|null
+					if(new_markingcolor)
+						features["taur_marking_color"] = sanitize_hexcolor(new_markingcolor, 6)
 
 				if("ears")
 					var/list/snowflake_ears_list = list()

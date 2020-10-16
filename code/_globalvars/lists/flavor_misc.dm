@@ -287,6 +287,9 @@ GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
 //parts in either of the above two lists that require a second option that allows them to be coloured
 GLOBAL_LIST_INIT(colored_mutant_parts, list("insect_wings" = "wings_color", "deco_wings" = "wings_color", "horns" = "horns_color"))
 
+//parts in either all/unlocked mutant part lists that require two colour options because of special accessory markings
+GLOBAL_LIST_INIT(colored_markings_mutant_parts, list("taur" = list("Taur Color", "Markings Color"))) //the features are name_color and name_markings_color, but due to the format they're not required here
+
 //body ids that have greyscale sprites
 GLOBAL_LIST_INIT(greyscale_limb_types, list("human","moth","lizard","pod","plant","jelly","slime","golem","slimelumi","stargazer","mush","ethereal","snail","c_golem","b_golem","mammal","xeno","ipc","insect","synthliz","avian","aquatic"))
 
