@@ -107,7 +107,7 @@
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	//purity and pH accuracy
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		data["partRating"]= 10**(M.rating-1)
+		data["partRating"]= M.rating
 		if(M.rating == 4)
 			data["showPurity"] = 1
 		else
