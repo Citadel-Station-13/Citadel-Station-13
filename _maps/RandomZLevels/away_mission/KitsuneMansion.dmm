@@ -901,7 +901,7 @@
 	},
 /area/awaymission/kitsune)
 "JH" = (
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/wood,
 /area/awaymission/kitsune)
 "Kp" = (
@@ -1282,6 +1282,11 @@
 "Yo" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/candle/infinite/hugbox,
+/turf/open/floor/wood/kitsune,
+/area/awaymission/kitsune)
+"YF" = (
+/obj/structure/table/wood/fancy/blackred,
+/obj/item/stack/sheet/mineral/diamond,
 /turf/open/floor/wood/kitsune,
 /area/awaymission/kitsune)
 "YL" = (
@@ -8377,7 +8382,7 @@ Xf
 Xf
 Xf
 Ix
-rK
+BH
 Xf
 Xf
 Xf
@@ -10565,7 +10570,7 @@ Xf
 OX
 ZO
 ZO
-qH
+YF
 CH
 ZO
 Zg
