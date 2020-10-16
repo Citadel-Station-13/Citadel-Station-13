@@ -11,6 +11,44 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_MUZZLE
+	var/held_flags_inv = 0
+	var/held_visor_flags_inv = 0
+	var/face_shown = FALSE
+
+/obj/item/clothing/mask/gas/AltClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	toggle_face_visibility(user)
+	return TRUE
+
+/obj/item/clothing/mask/gas/proc/toggle_face_visibility()
+	set src in usr
+
+	if(!can_use(usr))
+		return 0
+
+	src.face_shown = !src.face_shown
+	if(src.face_shown)
+		src.held_flags_inv = src.flags_inv
+		src.held_visor_flags_inv = src.visor_flags_inv
+		if(src.mask_adjusted) //is it one of those toggleable masks like the sechailer?
+			src.held_flags_inv |= src.held_visor_flags_inv //make sure we're not missing anything in that case.
+		src.flags_inv &= HIDEEYES|HIDEFACIALHAIR //still obstruct eyes and facial hair if gas mask subtype is hiding them, otherwise don't.
+		src.visor_flags_inv &= HIDEEYES|HIDEFACIALHAIR
+	else
+		src.flags_inv = src.held_flags_inv
+		src.visor_flags_inv = src.held_visor_flags_inv
+		if(src.mask_adjusted) //is it one of those toggleable masks like the sechailer?
+			src.flags_inv &= ~src.visor_flags_inv //woosh
+	to_chat(usr, "<span class='notice'>You adjust [src], [src.face_shown?"reveal":"obscur"]ing facial details while worn.</span>")
+	usr.update_inv_wear_mask()
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>The mask is currently adjusted to [src.face_shown?"reveal":"obscure"] facial details.</span>"
+	. += "<span class='notice'>Alt-click on [src] to toggle facial obscurity.</span>"
+
 
 /obj/item/clothing/mask/gas/glass
 	name = "glass gas mask"
