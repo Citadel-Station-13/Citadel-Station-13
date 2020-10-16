@@ -20,6 +20,12 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
+		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+		var/mob/living/carbon/human/H = user
+		accounts_to_rob -= H.get_bank_account()
+		for(var/i in accounts_to_rob)
+			var/datum/bank_account/B = i
+			B.being_dumped = TRUE
 		new /obj/effect/dumpeetTarget(targetturf, user)
 		dumped = TRUE
 
@@ -65,7 +71,6 @@
 				return
 			to_chat(user, "<span class='warning'>You quickly cash out your funds to a more secure banking location. Funds are safu.</span>") // This is a reference and not a typo
 			card.registered_account.being_dumped = FALSE
-			card.registered_account.withdrawDelay = 0
 			if(check_if_finished())
 				qdel(src)
 				return
@@ -153,18 +158,19 @@
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = SSeconomy.bank_accounts.Copy()
+	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		B.dumpeet()
+		B.being_dumped = TRUE
 	dump()
 
 /obj/structure/checkoutmachine/proc/dump()
 	var/percentage_lost = (rand(5, 15) / 100)
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		if(!B.being_dumped)
+		if(!(B?.being_dumped))
+			accounts_to_rob -= B
 			continue
 		var/amount = B.account_balance * percentage_lost
 		var/datum/bank_account/account = bogdanoff.get_bank_account()
@@ -181,7 +187,8 @@
 /obj/structure/checkoutmachine/proc/stop_dumping()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
-		B.being_dumped = FALSE
+		if(B)
+			B.being_dumped = FALSE
 
 /obj/effect/dumpeetFall //Falling pod
 	name = ""

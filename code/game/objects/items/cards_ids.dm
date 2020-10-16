@@ -316,17 +316,16 @@
 		to_chat(user, "<span class='warning'>The account ID was already assigned to this card.</span>")
 		return
 
-	for(var/A in SSeconomy.bank_accounts)
-		var/datum/bank_account/B = A
-		if(B.account_id == new_bank_id)
-			if (old_account)
-				old_account.bank_cards -= src
+	var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
+	if(B && B.account_id == new_bank_id)
+		if (old_account)
+			old_account.bank_cards -= src
 
-			B.bank_cards += src
-			registered_account = B
-			to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+		B.bank_cards += src
+		registered_account = B
+		to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
 
-			return TRUE
+		return TRUE
 
 	to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 	return
@@ -340,8 +339,8 @@
 		set_new_account(user)
 		return
 
-	if (world.time < registered_account.withdrawDelay)
-		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
+	if (registered_account.being_dumped)
+		registered_account.bank_card_talk("<span class='warning'>内部服务器错误</span>", TRUE)
 		return
 
 	var/amount_to_remove =  input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null
@@ -510,12 +509,11 @@
 				if(ishuman(user))
 					var/mob/living/carbon/human/accountowner = user
 
-					for(var/bank_account in SSeconomy.bank_accounts)
-						var/datum/bank_account/account = bank_account
-						if(account.account_id == accountowner.account_id)
-							account.bank_cards += src
-							registered_account = account
-							to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
+					var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[accountowner.account_id]"]
+					if(account.account_id == accountowner.account_id)
+						account.bank_cards += src
+						registered_account = account
+						to_chat(user, "<span class='notice'>Your account number has been automatically assigned.</span>")
 			return
 		else if (popup_input == "Forge/Reset" && forged)
 			registered_name = initial(registered_name)

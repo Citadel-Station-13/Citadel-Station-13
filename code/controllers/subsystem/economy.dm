@@ -45,7 +45,11 @@ SUBSYSTEM_DEF(economy)
 							"adamantine" = 750,
 							// tier 4
 							"rainbow" = 1000)
-	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
+	/**
+	  * List of normal (no department ones) accounts' identifiers with associated datum accounts, for big O performance.
+	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
+	  */
+	var/list/bank_accounts_by_id = list()
 	var/list/dep_cards = list()
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
@@ -60,8 +64,8 @@ SUBSYSTEM_DEF(economy)
 	secmedsrv_payout() // Payout based on crew safety, health, and mood.
 	civ_payout() // Payout based on ??? Profit
 	car_payout() // Cargo's natural gain in the cash moneys.
-	for(var/A in bank_accounts)
-		var/datum/bank_account/B = A
+	for(var/A in bank_accounts_by_id)
+		var/datum/bank_account/B = bank_accounts_by_id[A]
 		B.payday(1)
 
 
