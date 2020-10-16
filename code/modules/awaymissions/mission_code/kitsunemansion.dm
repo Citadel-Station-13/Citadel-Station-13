@@ -27,6 +27,7 @@
 /obj/structure/bloodsucker/candelabrum/fox
 	light_power = 3
 	light_range = 4
+	max_integrity = 50
 	anchored = TRUE
 	lit = TRUE
 	icon_state = "candelabrum_lit"
@@ -112,9 +113,9 @@
 		if((get_dir(src,target) in list(SOUTH,EAST,WEST,NORTH)) && fireball.cast_check(0,src)) //Lined up for fireball
 			src.setDir(get_dir(src,target))
 			fireball.perform(list(target), user = src)
-			next_cast = world.time + 50 //One spell per second
+			next_cast = world.time + 200 //One spell per 20 seconds
 			return .
 		if(mm.cast_check(0,src))
 			mm.choose_targets(src)
-			next_cast = world.time + 50
+			next_cast = world.time + 100 //One spell per 10 seconds
 			return .
