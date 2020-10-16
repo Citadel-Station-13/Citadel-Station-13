@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - tweak: "cloning now correctly copies your blood colour, body sprite type and eye type"
