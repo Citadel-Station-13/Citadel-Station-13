@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	45
+#define SAVEFILE_VERSION_MAX	600
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -226,7 +226,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
-	if(current_version < 390) //extreme changes to how things are coloured
+	if(current_version < 3900) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
+		message_admins("good morning a")
+		features["color_scheme"] = OLD_CHARACTER_COLORING //disable advanced coloring system by default
 		for(var/feature in features)
 			message_admins("[feature]")
 			var/feature_type = features[feature]
@@ -597,6 +599,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_arachnid_mandibles"]		>> features["arachnid_mandibles"]
 	S["feature_horns_color"]			>> features["horns_color"]
 	S["feature_wings_color"]			>> features["wings_color"]
+	S["feature_color_scheme"]			>> features["color_scheme"]
 	S["persistent_scars"] 				>> persistent_scars
 	S["scars1"]							>> scars_list["1"]
 	S["scars2"]							>> scars_list["2"]
@@ -953,6 +956,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 
 	WRITE_FILE(S["feature_ooc_notes"], features["ooc_notes"])
+
+	WRITE_FILE(S["feature_color_scheme"], features["color_scheme"])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

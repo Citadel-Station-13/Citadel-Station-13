@@ -561,7 +561,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							//is it matrixed or does it have extra parts to be coloured?
 							var/find_part = features[mutant_part] || pref_species.mutant_bodyparts[mutant_part]
 							var/find_part_list = GLOB.mutant_reference_list[mutant_part]
-							if(find_part && find_part_list)
+							if(find_part && find_part != "None" && find_part_list)
 								var/datum/sprite_accessory/accessory = find_part_list[find_part]
 								if(accessory)
 									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
