@@ -2279,7 +2279,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 ////////////////////
 /datum/reagent/consumable/ethanol/species_drink
 	var/species_required
-	var/disgust = 30
+	var/disgust = 26
 	boozepwr = 50
 
 /datum/reagent/consumable/ethanol/species_drink/reaction_mob(mob/living/carbon/C, method=TOUCH)
