@@ -74,8 +74,12 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Ratio of stamina incurred by chest (so after [block_stamina_limb_ratio] runs) that is buffered.
 	var/block_stamina_buffer_ratio = 1
 
-	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
+	/// Stamina dealt directly via UseStaminaBuffer() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
+	/// Prevent stamina buffer regeneration while block?
+	var/block_no_stambuffer_regeneration = TRUE
+	/// Prevent stamina regeneration while block?
+	var/block_no_stamina_regeneration = FALSE
 
 	/// Bitfield for attack types that we can block while down. This will work in any direction.
 	var/block_resting_attack_types_anydir = ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED | ATTACK_TYPE_TACKLE
@@ -307,7 +311,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /mob/living/proc/handle_block_parry(seconds = 1)
 	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
 		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
-		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
+		UseStaminaBuffer(data.block_stamina_cost_per_second * seconds)
 
 /mob/living/on_item_dropped(obj/item/I)
 	if(I == active_block_item)

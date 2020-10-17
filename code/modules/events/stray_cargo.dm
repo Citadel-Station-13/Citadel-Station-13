@@ -55,7 +55,7 @@
 	crate.update_icon()
 	var/obj/structure/closet/supplypod/pod = make_pod()
 	crate.forceMove(pod)
-	new /obj/effect/abstract/DPtarget(LZ, pod)
+	new /obj/effect/pod_landingzone(LZ, pod)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()

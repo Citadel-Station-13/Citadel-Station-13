@@ -182,6 +182,13 @@ export const ChemDispenser = (props, context) => {
                   units of {chemical.name}
                 </Box>
               ))}
+              <Box
+                key={"pH"}>
+                pH:
+                <AnimatedNumber
+                  initial={7.0}
+                  value={data.beakerCurrentpH} />
+              </Box>
             </LabeledList.Item>
           </LabeledList>
         </Section>
