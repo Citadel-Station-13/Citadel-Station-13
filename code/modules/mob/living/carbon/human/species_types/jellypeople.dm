@@ -468,7 +468,7 @@
 /datum/species/jelly/roundstartslime
 	name = "Xenobiological Slime Hybrid"
 	id = SPECIES_SLIME_HYBRID
-	limbs_id = "slime"
+	limbs_id = SPECIES_SLIME
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	inherent_traits = list(TRAIT_TOXINLOVER)
@@ -480,7 +480,7 @@
 	heatmod = 1
 	burnmod = 1
 
-	allowed_limb_ids = list("slime","stargazer","lum")
+	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
