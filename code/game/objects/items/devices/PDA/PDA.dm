@@ -266,7 +266,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
-	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/chat)
 	emoji_s.send(user) //Already sent by chat but no harm doing this
 
 	user.set_machine(src)
@@ -1206,7 +1206,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			A.emp_act(severity)
 	if (!(. & EMP_PROTECT_SELF))
 		emped += 1
-		spawn(200 * severity)
+		spawn(2 * severity)
 			emped -= 1
 
 /proc/get_viewable_pdas()

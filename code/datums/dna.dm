@@ -76,6 +76,9 @@
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type
 	new_dna.species.say_mod = species.say_mod
+	new_dna.species.exotic_blood_color = species.exotic_blood_color //it can change from the default value
+	new_dna.species.eye_type = species.eye_type
+	new_dna.species.limbs_id = species.limbs_id || species.id
 	new_dna.real_name = real_name
 	new_dna.nameless = nameless
 	new_dna.custom_species = custom_species
@@ -132,7 +135,8 @@
 		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len)
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
-		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
+		L[DNA_LEFT_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.left_eye_color)
+		L[DNA_RIGHT_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.right_eye_color)
 		L[DNA_COLOR_ONE_BLOCK] = sanitize_hexcolor(features["mcolor"], 6)
 		L[DNA_COLOR_TWO_BLOCK] = sanitize_hexcolor(features["mcolor2"], 6)
 		L[DNA_COLOR_THREE_BLOCK] = sanitize_hexcolor(features["mcolor3"], 6)
@@ -224,8 +228,10 @@
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.facial_hair_color))
 		if(DNA_SKIN_TONE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
-		if(DNA_EYE_COLOR_BLOCK)
-			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
+		if(DNA_LEFT_EYE_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.left_eye_color))
+		if(DNA_RIGHT_EYE_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.right_eye_color))
 		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
@@ -464,7 +470,8 @@
 	hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
 	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 	skin_tone = dna.skin_tone_override || GLOB.skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
-	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
+	left_eye_color = sanitize_hexcolor(getblock(structure, DNA_LEFT_EYE_COLOR_BLOCK))
+	right_eye_color = sanitize_hexcolor(getblock(structure, DNA_RIGHT_EYE_COLOR_BLOCK))
 	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
 	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
 	if(icon_update)

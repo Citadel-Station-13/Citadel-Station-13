@@ -390,7 +390,7 @@
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
-	. += "<span class='notice'>It is set to layer [pipe_layer].</span>"
+	. += "<span class='notice'>It is set to layer [pipe_layer]. Use a Multitool on the circuit to change this.</span>"
 
 /obj/item/circuitboard/machine/thermomachine/heater
 	name = "Heater (Machine Board)"
@@ -1146,3 +1146,8 @@
 	build_path = /obj/machinery/atmospherics/components/unary/shuttle/heater
 	req_components = list(/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/matter_bin = 1)
+
+/obj/item/circuitboard/machine/explosive_compressor
+	name = "Explosive Compressor (Machine Board)"
+	build_path = /obj/machinery/research/explosive_compressor
+	req_components = list(/obj/item/stock_parts/matter_bin = 3)

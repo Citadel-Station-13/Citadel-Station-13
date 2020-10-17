@@ -457,21 +457,23 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /atom/proc/GetAllContents(var/T)
 	var/list/processing_list = list(src)
+	var/i = 0
+	var/lim = 1
 	if(T)
 		. = list()
-		var/i = 0
-		while(i < length(processing_list))
+		while(i < lim)
 			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
 			processing_list += A.contents
+			lim = processing_list.len
 			if(istype(A,T))
 				. += A
 	else
-		var/i = 0
-		while(i < length(processing_list))
+		while(i < lim)
 			var/atom/A = processing_list[++i]
 			processing_list += A.contents
+			lim = processing_list.len
 		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
@@ -480,10 +482,12 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/processing = list(src)
 	. = list()
 	var/i = 0
-	while(i < length(processing))
+	var/lim = 1
+	while(i < lim)
 		var/atom/A = processing[++i]
 		if(!ignore_typecache[A.type])
 			processing += A.contents
+			lim = processing.len
 			. += A
 
 
@@ -1253,6 +1257,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(istype(O, /obj/structure/window))
 			var/obj/structure/window/W = O
 			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+		if(istype(O, /obj/structure/railing))
+			var/obj/structure/railing/rail = O
+			if(rail.ini_dir == dir_to_check || rail.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
 				return FALSE
 	return TRUE
 

@@ -142,8 +142,8 @@
 	set_light(2, 0.5)
 	qdel(access_card) //we don't have free access
 	access_card = null
-	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
+	remove_verb(src, /mob/living/simple_animal/drone/verb/check_laws)
+	remove_verb(src, /mob/living/simple_animal/drone/verb/drone_ping)
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()

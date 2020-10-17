@@ -232,7 +232,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
-	foodtype = JUNKFOOD | SUGAR
+	foodtype = JUNKFOOD | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/tobiko
 	name = "tobiko"
@@ -451,7 +451,7 @@
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
-	foodtype = JUNKFOOD | SUGAR
+	foodtype = JUNKFOOD | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/lollipop/Initialize()
 	. = ..()

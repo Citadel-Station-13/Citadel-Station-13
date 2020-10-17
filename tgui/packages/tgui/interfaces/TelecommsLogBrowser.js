@@ -50,15 +50,17 @@ export const TelecommsLogBrowser = (props, context) => {
                 buttons={(
                   <Fragment>
                     <Button
-                      content="Flush Buffer"
                       icon="minus-circle"
                       disabled={!servers.length || !!selected}
-                      onClick={() => act('release')} />
+                      onClick={() => act('release')}>
+                      Flush Buffer
+                    </Button>
                     <Button
-                      content="Probe Network"
                       icon="sync"
                       disabled={selected}
-                      onClick={() => act('probe')} />
+                      onClick={() => act('probe')}>
+                      Probe Network
+                    </Button>
                   </Fragment>
                 )}>
                 {servers ? (
@@ -71,10 +73,10 @@ export const TelecommsLogBrowser = (props, context) => {
                 label="Selected Server"
                 buttons={(
                   <Button
-                    content="Disconnect"
                     disabled={!selected}
-                    onClick={() => act('mainmenu')}
-                  />
+                    onClick={() => act('mainmenu')}>
+                    Disconnect
+                  </Button>
                 )}>
                 {selected ? (
                   `${selected.name} (${selected.id})`
@@ -131,10 +133,11 @@ export const TelecommsLogBrowser = (props, context) => {
                         label="Filename"
                         buttons={(
                           <Button
-                            content="Delete"
                             onClick={() => act('delete', {
                               'value': logs.ref,
-                            })} />
+                            })}>
+                            Delete
+                          </Button>
                         )}>
                         {logs.name}
                       </LabeledList.Item>
@@ -172,12 +175,13 @@ export const TelecommsLogBrowser = (props, context) => {
                       label={`${server.ref}`}
                       buttons={(
                         <Button
-                          content="Connect"
                           selected={data.selected
                           && (server.ref === data.selected.ref)}
                           onClick={() => act('viewmachine', {
                             'value': server.id,
-                          })} />
+                          })}>
+                          Connect
+                        </Button>
                       )}>
                       {`${server.name} (${server.id})`}
                     </LabeledList.Item>

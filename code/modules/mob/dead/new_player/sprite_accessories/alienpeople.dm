@@ -14,13 +14,13 @@
 	name = "Standard"
 	icon_state = "standard"
 
-/datum/sprite_accessory/xeno_dorsal/royal
-	name = "Royal"
-	icon_state = "royal"
-
 /datum/sprite_accessory/xeno_dorsal/down
 	name = "Dorsal Down"
 	icon_state = "down"
+
+/datum/sprite_accessory/xeno_dorsal/royal
+	name = "Royal"
+	icon_state = "royal"
 
 /******************************************
 ************* Xeno Tails ******************
@@ -51,19 +51,19 @@
 
 /datum/sprite_accessory/xeno_head/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	return (!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
+	return (!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.is_robotic_limb(FALSE))
 
 /datum/sprite_accessory/xeno_head/standard
 	name = "Standard"
 	icon_state = "standard"
 
-/datum/sprite_accessory/xeno_head/royal
-	name = "royal"
-	icon_state = "royal"
-
 /datum/sprite_accessory/xeno_head/hollywood
 	name = "hollywood"
 	icon_state = "hollywood"
+
+/datum/sprite_accessory/xeno_head/royal
+	name = "royal"
+	icon_state = "royal"
 
 /datum/sprite_accessory/xeno_head/warrior
 	name = "warrior"

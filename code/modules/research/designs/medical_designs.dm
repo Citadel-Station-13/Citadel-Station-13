@@ -32,7 +32,7 @@
 	materials = list(/datum/material/glass = 3000, /datum/material/plasma = 3000, /datum/material/diamond = 250, /datum/material/bluespace = 250)
 	build_path = /obj/item/reagent_containers/glass/beaker/bluespace
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -353,6 +353,16 @@
 	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/silver = 6000, /datum/material/gold = 3000)
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/portable_chem_mixer
+	name = "Portable Chemical Mixer"
+	desc = "A portable device that dispenses and mixes chemicals. Reagents have to be supplied with beakers."
+	id = "portable_chem_mixer"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/plastic = 5000, /datum/material/iron = 10000, /datum/material/glass = 3000)
+	build_path = /obj/item/storage/portable_chem_mixer
+	category = list("Equipment")
 
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
@@ -963,6 +973,10 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 
+/////////////////////////////////////////
+////////////     Plumbing      //////////
+/////////////////////////////////////////
+
 /datum/design/acclimator
 	name = "Plumbing Acclimator"
 	desc = "A heating and cooling device for pipes!"
@@ -1116,3 +1130,14 @@
 	build_path = /obj/item/construction/plumbing
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/rplunger
+    name = "Reinforced Plunger"
+    desc = "A plunger designed for heavy duty clogs."
+    id = "rplunger"
+    build_type = PROTOLATHE
+    materials = list(/datum/material/plasma = 1000, /datum/material/iron = 1000, /datum/material/glass = 1000)
+    construction_time = 15
+    build_path = /obj/item/plunger/reinforced
+    category = list ("Misc","Medical Designs")
+    departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO

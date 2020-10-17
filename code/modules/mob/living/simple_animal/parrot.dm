@@ -115,12 +115,12 @@
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
-	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
+	add_verb(src, list(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player, \
 			  /mob/living/simple_animal/parrot/proc/toggle_mode,
-			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
+			  /mob/living/simple_animal/parrot/proc/perch_mob_player))
 
 
 /mob/living/simple_animal/parrot/examine(mob/user)
@@ -142,11 +142,11 @@
 
 	..(gibbed)
 
-/mob/living/simple_animal/parrot/Stat()
-	..()
-	if(statpanel("Status"))
-		stat("Held Item", held_item)
-		stat("Mode",a_intent)
+/mob/living/simple_animal/parrot/get_status_tab_items()
+	. = ..()
+	. += ""
+	. += "Held Item: [held_item]"
+	. += "Mode: [a_intent]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
@@ -436,12 +436,7 @@
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
-			//Search for item to steal
-			parrot_interest = search_for_item()
-			if(parrot_interest)
-				emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
-				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				icon_state = icon_living
+			INVOKE_ASYNC(src, .proc/attempt_item_theft)
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
@@ -619,6 +614,14 @@
 	else
 		parrot_lastmove = src.loc
 	return 0
+
+/mob/living/simple_animal/parrot/proc/attempt_item_theft()
+	//Search for item to steal
+	search_for_item()
+	if(parrot_interest)
+		emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
+		parrot_state = PARROT_SWOOP | PARROT_STEAL
+		icon_state = icon_living
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -978,7 +981,8 @@
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
-	color = "#FFFFFF77"
+	color = "#FFFFFF"
+	alpha = 77
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = INCORPOREAL_MOVE_BASIC

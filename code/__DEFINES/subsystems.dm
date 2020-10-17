@@ -51,7 +51,8 @@
 #define INIT_ORDER_FAIL2TOPIC		99
 #define INIT_ORDER_TITLE			98
 #define INIT_ORDER_GARBAGE			95
-#define INIT_ORDER_DBCORE			93
+#define INIT_ORDER_DBCORE			94
+#define INIT_ORDER_STATPANELS		93
 #define INIT_ORDER_BLACKBOX			92
 #define INIT_ORDER_SERVER_MAINT		91
 #define INIT_ORDER_INPUT			90
@@ -86,6 +87,7 @@
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
 
 
@@ -93,7 +95,6 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_VORE			5
-#define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
@@ -121,7 +122,9 @@
 #define FIRE_PRIORITY_PROJECTILES	200
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_STATPANEL		390
 #define FIRE_PRIORITY_CHAT			400
+#define FIRE_PRIORITY_RUNECHAT		410
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 

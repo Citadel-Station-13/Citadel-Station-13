@@ -225,7 +225,7 @@
 		if(C && istype(C) && C.bug == src)
 			if(!same_z_level(C))
 				return
-			C.emp_act(EMP_HEAVY)
+			C.emp_act(80)
 			C.bug = null
 			bugged_cameras -= C.c_tag
 		interact()

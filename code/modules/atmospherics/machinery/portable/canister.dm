@@ -50,7 +50,9 @@
 		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma
+		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
+		"methane" = /obj/machinery/portable_atmospherics/canister/methane,
+		"methyl bromide" = /obj/machinery/portable_atmospherics/canister/methyl_bromide
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -62,7 +64,7 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
-	desc = "Nitrogen gas. Reportedly useful for something."
+	desc = "Nitrogen. Reportedly useful for something."
 	icon_state = "red"
 	gas_type = /datum/gas/nitrogen
 
@@ -80,19 +82,19 @@
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
-	desc = "Plasma gas. The reason YOU are here. Highly toxic."
+	desc = "Plasma. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
-	desc = "BZ, a powerful hallucinogenic nerve agent."
+	desc = "BZ. A powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
-	desc = "Nitrous oxide gas. Known to cause drowsiness."
+	desc = "Nitrous oxide. Known to cause drowsiness."
 	icon_state = "redws"
 	gas_type = /datum/gas/nitrous_oxide
 
@@ -115,7 +117,7 @@
 
 /obj/machinery/portable_atmospherics/canister/nitryl
 	name = "nitryl canister"
-	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
+	desc = "Nitryl. Feels great 'til the acid eats your lungs."
 	icon_state = "brown"
 	gas_type = /datum/gas/nitryl
 
@@ -133,7 +135,7 @@
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
-	desc = "Water Vapor. We get it, you vape."
+	desc = "Water vapor. We get it, you vape."
 	icon_state = "water_vapor"
 	gas_type = /datum/gas/water_vapor
 	filled = 1
@@ -144,6 +146,18 @@
 	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
 	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/methane
+	name = "methane canister"
+	desc = "Methane. The simplest of hydrocarbons. Non-toxic but highly flammable."
+	icon_state = "greyblackred"
+	gas_type = /datum/gas/methane
+
+/obj/machinery/portable_atmospherics/canister/methyl_bromide
+	name = "methyl bromide canister"
+	desc = "Methyl bromide. A potent toxin to most, essential for the Kharmaan to live."
+	icon_state = "purplecyan"
+	gas_type = /datum/gas/methyl_bromide
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
