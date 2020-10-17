@@ -2282,12 +2282,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/disgust = 30
 	boozepwr = 50
 
-/datum/reagent/consumable/ethanol/species_drink/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
-	if(C.dna.species && C.dna.species.species_category == species_required) //species have a species_category variable that refers to one of the drinks
-		quality = RACE_DRINK
-	else
-		C.adjust_disgust(disgust)
-	return ..()
+/datum/reagent/consumable/ethanol/species_drink/reaction_mob(mob/living/carbon/C, method=TOUCH)
+	if(method == INGEST)
+		if(C.dna.species && C.dna.species.species_category == species_required) //species have a species_category variable that refers to one of the drinks
+			quality = RACE_DRINK
+		else
+			C.adjust_disgust(disgust)
+		return ..()
 
 /datum/reagent/consumable/ethanol/species_drink/coldscales
 	name = "Coldscales"
