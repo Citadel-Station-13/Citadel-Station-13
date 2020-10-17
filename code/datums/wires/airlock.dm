@@ -53,8 +53,6 @@
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!A.hasSiliconAccessInArea(user) && A.isElectrified() && A.shock(user, 100))
-		return FALSE
 	if(A.panel_open)
 		return TRUE
 
@@ -73,6 +71,8 @@
 /datum/wires/airlock/on_pulse(wire)
 	set waitfor = FALSE
 	var/obj/machinery/door/airlock/A = holder
+	if(usr && !A.hasSiliconAccessInArea(usr) && A.isElectrified() && A.shock(usr, 100))
+		return FALSE
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Pulse to loose power.
 			A.loseMainPower()
@@ -127,6 +127,8 @@
 
 /datum/wires/airlock/on_cut(wire, mend)
 	var/obj/machinery/door/airlock/A = holder
+	if(usr && !A.hasSiliconAccessInArea(usr) && A.isElectrified() && A.shock(usr, 100))
+		return FALSE
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))

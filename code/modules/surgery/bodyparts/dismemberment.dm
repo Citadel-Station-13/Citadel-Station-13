@@ -435,4 +435,6 @@
 		var/datum/wound/loss/phantom_loss = new // stolen valor, really
 		scaries.generate(L, phantom_loss)
 		L.attach_limb(src, 1)
+		if(ROBOTIC_LIMBS in dna.species.species_traits) //Snowflake trait moment, but needed.
+			L.change_bodypart_status(BODYPART_HYBRID, FALSE, TRUE) //Haha what if IPC-lings actually regenerated the right limbs instead of organic ones? That'd be pretty cool, right?
 		return TRUE

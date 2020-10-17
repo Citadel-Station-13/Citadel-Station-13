@@ -379,7 +379,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting && affecting.is_robotic_limb())
 		var/dam //changes repair text based on how much brute/burn was supplied
 		if(brute_heal > burn_heal)
 			dam = 1
@@ -431,7 +431,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/living/getImplant(type)
 	return locate(type) in implants
 
-/proc/offer_control(mob/M)
+/proc/offer_control(mob/M,ignore_category=null)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
@@ -445,7 +445,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+	var/list/mob/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M, ignore_category)
 
 	if(LAZYLEN(candidates))
 		var/mob/C = pick(candidates)

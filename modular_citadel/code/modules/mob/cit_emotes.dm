@@ -3,10 +3,6 @@
 /mob
 	var/nextsoundemote = 1
 
-//Disables the custom emote blacklist from TG that normally applies to slimes.
-/datum/emote/living/custom
-	mob_type_blacklist_typecache = list(/mob/living/brain)
-
 /datum/emote/living/insult
 	key = "insult"
 	key_third_person = "insults"
@@ -46,6 +42,11 @@
 			sound = pick('modular_citadel/sound/voice/scream_m1.ogg', 'modular_citadel/sound/voice/scream_m2.ogg')
 			if(user.gender == FEMALE)
 				sound = pick('modular_citadel/sound/voice/scream_f1.ogg', 'modular_citadel/sound/voice/scream_f2.ogg')
+			if(is_species(user, /datum/species/jelly))
+				if(user.gender == FEMALE)
+					sound = pick('modular_citadel/sound/voice/scream_jelly_f1.ogg', 'modular_citadel/sound/voice/scream_jelly_f2.ogg')
+				else
+					sound = pick('modular_citadel/sound/voice/scream_jelly_m1.ogg', 'modular_citadel/sound/voice/scream_jelly_m2.ogg')
 			if(is_species(user, /datum/species/android) || is_species(user, /datum/species/synth) || is_species(user, /datum/species/ipc))
 				sound = 'modular_citadel/sound/voice/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
@@ -74,7 +75,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -91,7 +91,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap2/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -108,7 +107,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap3/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -125,7 +123,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/awoo/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -142,7 +139,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/nya/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -159,7 +155,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/weh/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -176,7 +171,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/peep/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -200,7 +194,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -217,7 +210,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/merp/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -234,7 +226,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/bark/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -252,7 +243,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/squish/run_emote(mob/living/user, params)
 	if(!(. = ..()))

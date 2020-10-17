@@ -1,6 +1,6 @@
 /datum/species/insect
 	name = "Anthromorphic Insect"
-	id = "insect"
+	id = SPECIES_INSECT
 	say_mod = "chitters"
 	default_color = "00FF00"
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
@@ -13,10 +13,13 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/insect
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	exotic_bloodtype = "BUG"
 	exotic_blood_color = BLOOD_COLOR_BUG
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
-	species_type = "insect"
+	species_category = SPECIES_CATEGORY_INSECT
+
+	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")
+
+	eye_type = "insect"

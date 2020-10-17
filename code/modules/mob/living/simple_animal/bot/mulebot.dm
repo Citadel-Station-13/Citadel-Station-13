@@ -438,6 +438,16 @@
 
 
 
+/mob/living/simple_animal/bot/mulebot/get_status_tab_items()
+	. = ..()
+	if(cell)
+		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+	else
+		. += text("No Cell Inserted!")
+	if(load)
+		. += "Current Load: [load.name]"
+
+
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
 	if(path && path.len)
@@ -718,7 +728,6 @@
 		cell.emp_act(severity)
 	if(load)
 		load.emp_act(severity)
-
 
 /mob/living/simple_animal/bot/mulebot/explode()
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")

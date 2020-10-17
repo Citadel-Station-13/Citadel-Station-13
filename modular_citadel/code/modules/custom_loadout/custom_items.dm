@@ -1,25 +1,7 @@
-
 //For custom items.
 
 // Unless there's a digitigrade version make sure you add mutantrace_variation = NONE to all clothing/under and shoes - Pooj
 // Digitigrade stuff is uniform_digi.dmi and digishoes.dmi in icons/mob
-
-/obj/item/custom/ceb_soap
-	name = "Cebutris' Soap"
-	desc = "A generic bar of soap that doesn't really seem to work right."
-	gender = PLURAL
-	icon = 'icons/obj/custom.dmi'
-	icon_state = "cebu"
-	w_class = WEIGHT_CLASS_TINY
-	item_flags = NOBLUDGEON
-
-/obj/item/soap/cebu //real versions, for admin shenanigans. Adminspawn only
-	desc = "A bright blue bar of soap that smells of wolves"
-	icon = 'icons/obj/custom.dmi'
-	icon_state = "cebu"
-
-/obj/item/soap/cebu/fast //speedyquick cleaning version. Still not as fast as Syndiesoap. Adminspawn only.
-	cleanspeed = 15
 
 /obj/item/clothing/neck/cloak/inferno
 	name = "Kiara's Cloak"
@@ -316,7 +298,7 @@
 
 /obj/item/clothing/neck/petcollar/naomi
 	name = "worn pet collar"
-	desc = "a pet collar that looks well used."
+	desc = "A pet collar that looks well used."
 
 /obj/item/clothing/neck/cloak/green
 	name = "Generic Green Cloak"
@@ -568,3 +550,21 @@
 	desc = "A fancy cloak embroidered with polychromatic thread in a pattern that reminds one of the wielders of unlimited power."
 	icon_state = "polyce"
 	poly_colors = list("#808080", "#8CC6FF", "#FF3535")
+
+/obj/item/clothing/under/custom/customskirt
+	name = "unzipped atmos skirt"
+	desc = "atmos jumpsuit skirt with the top half zipped down and wrapped around the waist."
+	icon_state = "atmos_skirt"
+	item_state = "atmos_skirt"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+
+/obj/item/clothing/head/halo
+	name = "transdimensional halo"
+	desc = "An oddly shaped halo that magically hovers above the head."
+	icon_state = "halo"
+	item_state = "halo"
+	icon = 'icons/mob/clothing/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	dynamic_hair_suffix = ""
+	

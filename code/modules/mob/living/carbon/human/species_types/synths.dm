@@ -1,6 +1,6 @@
 /datum/species/synth
 	name = "Synthetic" //inherited from the real species, for health scanners and things
-	id = "synth"
+	id = SPECIES_SYNTH
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING,NOGENITALS,NOAROUSAL) //all of these + whatever we inherit from the real species
@@ -17,11 +17,11 @@
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 	species_language_holder = /datum/language_holder/synthetic
-	species_type = "robotic"
+	species_category = SPECIES_CATEGORY_ROBOT
 
 /datum/species/synth/military
 	name = "Military Synth"
-	id = "military_synth"
+	id = SPECIES_SYNTH_MIL
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
@@ -61,7 +61,7 @@
 		mutant_organs = S.mutant_organs.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
-		limbs_id = S.limbs_id
+		limbs_id = S.mutant_bodyparts["limbs_id"]
 		use_skintones = S.use_skintones
 		fixed_mut_color = S.fixed_mut_color
 		hair_color = S.hair_color

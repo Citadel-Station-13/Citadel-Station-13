@@ -56,21 +56,19 @@
 		return
 
 	if(T)
+		if(!L.UseStaminaBuffer(stamusage, warn = TRUE))
+			return
 		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
 		clean(T)
 		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(T, used_item = src)
-		if(istype(L))
-			L.adjustStaminaLossBuffered(stamusage)
 		playsound(T, "slosh", 50, 1)
-
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mop) || istype(I, /obj/item/soap))
 		return
 	else
 		return ..()
-
 
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)

@@ -7,6 +7,27 @@
 	category = LOADOUT_CATEGORY_DONATOR
 	ckeywhitelist = list("This entry should never appear with this variable set.") //If it does, then that means somebody fucked up the whitelist system pretty hard
 
+/datum/gear/donator/pet
+	name = "Pet Beacon"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/choice_beacon/pet
+	ckeywhitelist = list()
+	donator_group_id = DONATOR_GROUP_TIER_1 // can be accessed by all donators
+
+/datum/gear/donator/carpet
+	name = "Carpet Beacon"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/choice_beacon/box/carpet
+	ckeywhitelist = list()
+	donator_group_id = DONATOR_GROUP_TIER_1
+
+/datum/gear/donator/chameleon_bedsheet
+	name = "Chameleon Bedsheet"
+	slot = SLOT_NECK
+	path = /obj/item/bedsheet/chameleon
+	ckeywhitelist = list()
+	donator_group_id = DONATOR_GROUP_TIER_1
+
 /datum/gear/donator/donortestingbikehorn
 	name = "Donor item testing bikehorn"
 	slot = SLOT_IN_BACKPACK
@@ -18,12 +39,6 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/bikehorn/airhorn
 	ckeywhitelist = list("kevinz000")
-
-/datum/gear/donator/cebusoap
-	name = "Cebutris' soap"
-	slot = SLOT_IN_BACKPACK
-	path = /obj/item/custom/ceb_soap
-	ckeywhitelist = list("cebutris")
 
 /datum/gear/donator/kiaracloak
 	name = "Kiara's cloak"
@@ -495,3 +510,15 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/bedsheet/cosmos
 	ckeywhitelist = list("grunnyyy")
+
+/datum/gear/donator/customskirt
+	name = "custom atmos skirt"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/under/custom/customskirt
+	ckeywhitelist = list("thakyz")
+
+/datum/gear/donator/hisakaki
+	name = "halo"
+	slot = SLOT_HEAD
+	path = 	/obj/item/clothing/head/halo
+	ckeywhitelist = list("hisakaki")

@@ -149,12 +149,13 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "shotgunclip"
 	caliber = "shotgun" // slapped in to allow shell mix n match
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
+	w_class = WEIGHT_CLASS_NORMAL
+	w_volume = ITEM_VOLUME_STRIPPER_CLIP
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 4
 	var/pixeloffsetx = 4
 	start_empty = TRUE
-	multiload = FALSE
-	load_delay = 6 //6ds
 
 /obj/item/ammo_box/shotgun/update_overlays()
 	. = ..()

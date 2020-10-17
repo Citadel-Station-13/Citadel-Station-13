@@ -178,7 +178,6 @@
 			dat += "<A href='?src=[REF(src)];login=1'>{Log In}</A>"
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
@@ -542,7 +541,7 @@
 	. = ..()
 	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
-			if(prob(10/severity))
+			if(prob(severity/10))
 				switch(rand(1,6))
 					if(1)
 						if(prob(10))
@@ -561,7 +560,7 @@
 						R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 				continue
 
-			else if(prob(1))
+			else if(prob(severity/80))
 				qdel(R)
 				continue
 

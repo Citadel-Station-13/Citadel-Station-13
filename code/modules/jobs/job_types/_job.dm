@@ -73,6 +73,31 @@
 	/// Starting skill modifiers.
 	var/list/starting_modifiers
 
+/**
+  * Checks if we should be created on a certain map
+  */
+/datum/job/proc/map_check(datum/map_config/C)
+	return (length(C.job_whitelist)? (type in C.job_whitelist) : !(type in C.job_blacklist))
+
+/**
+  * Processes map specific overrides
+  */
+/datum/job/proc/process_map_overrides(datum/map_config/C)
+	if(type in C.job_override_spawn_positions)
+		spawn_positions = C.job_override_spawn_positions[type]
+	if(type in C.job_override_total_positions)
+		total_positions = C.job_override_total_positions[type]
+	if(type in C.job_access_override)
+		access = C.job_access_override[type]
+		minimal_access = access
+	else
+		if(type in C.job_access_add)
+			access += C.job_access_add[type]
+			minimal_access += C.job_access_add[type]
+		if(type in C.job_access_remove)
+			access -= C.job_access_add[type]
+			minimal_access -= C.job_access_remove[type]
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -80,6 +105,9 @@
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+	if(/datum/quirk/paraplegic in blacklisted_quirks)
+		H.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
+		H.set_resting(FALSE, TRUE) //they probably shouldn't be on the floor because they had no legs then suddenly had legs
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -170,9 +198,6 @@
 	return max(0, minimal_player_age - C.player_age)
 
 /datum/job/proc/config_check()
-	return TRUE
-
-/datum/job/proc/map_check()
 	return TRUE
 
 /datum/job/proc/radio_help_message(mob/M)

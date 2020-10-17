@@ -29,6 +29,9 @@
 	var/has_lock_sprites = TRUE //whether to load the lock overlays or not
 	var/allows_hostiles = FALSE //does the pet carrier allow hostile entities to be held within it?
 
+/obj/item/pet_carrier/donator
+	custom_materials = null //you cant just use the loadout item to get free metal!
+
 /obj/item/pet_carrier/Destroy()
 	if(occupants.len)
 		for(var/V in occupants)
