@@ -561,14 +561,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if(accessory)
 								if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
 									var/primary_feature = "[mutant_part]_primary"
+									var/secondary_feature = "[mutant_part]_secondary"
+									var/tertiary_feature = "[mutant_part]_tertiary"
+									var/matrixed_sections = accessory.matrixed_sections
+									if(accessory.color_src == MATRIXED && !matrixed_sections)
+										message_admins("Sprite Accessory Failure (customization): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+										continue
+									else if(accessory.color_src == MATRIXED)
+										switch(matrixed_sections)
+											if(MATRIX_GREEN) //only composed of a green section
+												primary_feature = secondary_feature //swap primary for secondary, so it properly assigns the second colour, reserved for the green section
+											if(MATRIX_BLUE)
+												primary_feature = tertiary_feature //same as above, but the tertiary feature is for the blue section
+											if(MATRIX_RED_BLUE) //composed of a red and blue section
+												secondary_feature = tertiary_feature //swap secondary for tertiary, as blue should always be tertiary
+											if(MATRIX_GREEN_BLUE) //composed of a green and blue section
+												primary_feature = secondary_feature //swap primary for secondary, as first option is green, which is linked to the secondary
+												secondary_feature = tertiary_feature //swap secondary for tertiary, as second option is blue, which is linked to the tertiary
 									dat += "<b>Primary Color</b><BR>"
 									dat += "<span style='border:1px solid #161616; background-color: #[features[primary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[primary_feature];task=input'>Change</a><BR>"
-									if(accessory.color_src == MATRIXED || (accessory.extra && (accessory.extra_color_src == MUTCOLORS || accessory.extra_color_src == MUTCOLORS2 || accessory.extra_color_src == MUTCOLORS3)))
-										var/secondary_feature = "[mutant_part]_secondary"
+									if((accessory.color_src == MATRIXED && (matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_ALL)) || (accessory.extra && (accessory.extra_color_src == MUTCOLORS || accessory.extra_color_src == MUTCOLORS2 || accessory.extra_color_src == MUTCOLORS3)))
 										dat += "<b>Secondary Color</b><BR>"
 										dat += "<span style='border:1px solid #161616; background-color: #[features[secondary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[secondary_feature];task=input'>Change</a><BR>"
-										if(accessory.color_src == MATRIXED || (accessory.extra2 && (accessory.extra2_color_src == MUTCOLORS || accessory.extra2_color_src == MUTCOLORS2 || accessory.extra2_color_src == MUTCOLORS3)))
-											var/tertiary_feature = "[mutant_part]_tertiary"
+										if((accessory.color_src == MATRIXED && matrixed_sections == MATRIX_ALL) || (accessory.extra2 && (accessory.extra2_color_src == MUTCOLORS || accessory.extra2_color_src == MUTCOLORS2 || accessory.extra2_color_src == MUTCOLORS3)))
 											dat += "<b>Tertiary Color</b><BR>"
 											dat += "<span style='border:1px solid #161616; background-color: #[features[tertiary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[tertiary_feature];task=input'>Change</a><BR>"
 
@@ -2055,7 +2070,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["xenodorsal"] = new_dors
 
 				//every single primary/secondary/tertiary colouring done at once
-				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary"."xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","bodymarkings_primary","bodymarkings_secondary","bodymarkings_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary"."frills_secondary","frills_tertiary","ipcantenna_primary","ipcantenna_secondary","ipcantenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiaty","spines_primary","spines_secondary","spines_tertiary")
+				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary","xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","bodymarkings_primary","bodymarkings_secondary","bodymarkings_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary","frills_secondary","frills_tertiary","ipcantenna_primary","ipcantenna_secondary","ipcantenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiaty","spines_primary","spines_secondary","spines_tertiary")
 					var/the_feature = features[href_list["preference"]]
 					if(!the_feature)
 						features[href_list["preference"]] = "FFFFFF"
