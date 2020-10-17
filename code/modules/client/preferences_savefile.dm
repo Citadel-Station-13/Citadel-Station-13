@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	39
+#define SAVEFILE_VERSION_MAX	45
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -226,42 +226,43 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
-	if(current_version < 39) //extreme changes to how things are coloured
+	if(current_version < 390) //extreme changes to how things are coloured
 		for(var/feature in features)
 			message_admins("[feature]")
 			var/feature_type = features[feature]
-			var/ref_list = GLOB.mutant_reference_list[feature_type]
-			if(ref_list)
-				message_admins("ref list found")
-				var/datum/sprite_accessory/accessory = ref_list[feature]
-				if(accessory)
-					var/primary_string = "[feature_type]_primary"
-					var/secondary_string = "[feature_type]_secondary]"
-					var/tertiary_string = "[feature_type]_tertiary]"
-					if(accessory.matrixed_sections)
-						switch(accessory.matrixed_sections)
-							if(MATRIX_GREEN) //only composed of a green section
-								primary_string = secondary_string //swap primary for secondary, so it properly assigns the second colour, reserved for the green section
-							if(MATRIX_BLUE)
-								primary_string = tertiary_string //same as above, but the tertiary feature is for the blue section
-							if(MATRIX_RED_BLUE) //composed of a red and blue section
-								secondary_string = tertiary_string //swap secondary for tertiary, as blue should always be tertiary
-							if(MATRIX_GREEN_BLUE) //composed of a green and blue section
-								primary_string = secondary_string //swap primary for secondary, as first option is green, which is linked to the secondary
-								secondary_string = tertiary_string //swap secondary for tertiary, as second option is blue, which is linked to the tertiary
-					else if(accessory.color_src != MATRIXED)
-						message_admins("Sprite Accessory Failure (migration from [current_version] to 39): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
-						continue
-					if(accessory.color_src == MATRIXED)
-						features[primary_string] = features["mcolor"]
-						features[secondary_string] = features["mcolor2"]
-						features[tertiary_string] = features["mcolor3"]
-					else if(accessory.color_src == MUTCOLORS)
-						features[primary_string] = features["mcolor"]
-					else if(accessory.color_src == MUTCOLORS2)
-						features[secondary_string] = features["mcolor2"]
-					else if(accessory.color_src == MUTCOLORS3)
-						features[tertiary_string] = features["mcolor3"]
+			if(feature_type)
+				var/ref_list = GLOB.mutant_reference_list[feature_type]
+				if(ref_list)
+					message_admins("ref list found [ref_list]")
+					var/datum/sprite_accessory/accessory = ref_list[feature]
+					if(accessory)
+						var/primary_string = "[feature_type]_primary"
+						var/secondary_string = "[feature_type]_secondary]"
+						var/tertiary_string = "[feature_type]_tertiary]"
+						if(accessory.matrixed_sections)
+							switch(accessory.matrixed_sections)
+								if(MATRIX_GREEN) //only composed of a green section
+									primary_string = secondary_string //swap primary for secondary, so it properly assigns the second colour, reserved for the green section
+								if(MATRIX_BLUE)
+									primary_string = tertiary_string //same as above, but the tertiary feature is for the blue section
+								if(MATRIX_RED_BLUE) //composed of a red and blue section
+									secondary_string = tertiary_string //swap secondary for tertiary, as blue should always be tertiary
+								if(MATRIX_GREEN_BLUE) //composed of a green and blue section
+									primary_string = secondary_string //swap primary for secondary, as first option is green, which is linked to the secondary
+									secondary_string = tertiary_string //swap secondary for tertiary, as second option is blue, which is linked to the tertiary
+						else if(accessory.color_src != MATRIXED)
+							message_admins("Sprite Accessory Failure (migration from [current_version] to 39): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+							continue
+						if(accessory.color_src == MATRIXED)
+							features[primary_string] = features["mcolor"]
+							features[secondary_string] = features["mcolor2"]
+							features[tertiary_string] = features["mcolor3"]
+						else if(accessory.color_src == MUTCOLORS)
+							features[primary_string] = features["mcolor"]
+						else if(accessory.color_src == MUTCOLORS2)
+							features[secondary_string] = features["mcolor2"]
+						else if(accessory.color_src == MUTCOLORS3)
+							features[tertiary_string] = features["mcolor3"]
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
