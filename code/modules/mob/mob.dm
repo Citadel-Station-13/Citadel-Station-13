@@ -141,7 +141,7 @@
 	if(target_message && target && istype(target) && target.client)
 		hearers -= target
 		if(omni)
-			target.show_message(msg)
+			target.show_message(target_message)
 		else
 			//This entire if/else chain could be in two lines but isn't for readibilties sake.
 			var/msg = target_message
@@ -158,7 +158,7 @@
 		if(!M.client)
 			continue
 		if(omni)
-			M.show_message(msg)
+			M.show_message(message)
 			continue
 		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
