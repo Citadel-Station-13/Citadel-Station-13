@@ -124,3 +124,7 @@
 #define MATRIX_GREEN_BLUE	"green_blue"
 #define MATRIX_ALL			"red_green_blue"
 #define MATRIX_NONE			"none"
+
+//defines for the two colour schemes, advanced and old
+#define OLD_CHARACTER_COLORING			"old_color_system"
+#define ADVANCED_CHARACTER_COLORING		"advanced_color_system"

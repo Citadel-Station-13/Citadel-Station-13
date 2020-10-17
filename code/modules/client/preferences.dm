@@ -166,7 +166,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"ooc_notes" = "",
 		"meat_type" = "Mammalian",
 		"body_model" = MALE,
-		"body_size" = RESIZE_DEFAULT_SIZE
+		"body_size" = RESIZE_DEFAULT_SIZE,
+		"color_scheme" = OLD_CHARACTER_COLORING
 		)
 	var/custom_speech_verb = "default" //if your say_mod is to be something other than your races
 	var/custom_tongue = "default" //if your tongue is to be something other than your races
@@ -470,6 +471,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(!use_skintones)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
+				dat += "<h3>Advanced Coloring</h3>"
+				dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=color_scheme;task=input'>[(features["color_scheme"] == ADVANCED_CHARACTER_COLORING) ? "Enabled" : "Disabled"]</a>"
+
 				dat += "<h2>Body Colors</h2>"
 
 				dat += "<b>Primary Color:</b><BR>"
@@ -553,45 +557,46 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(color_type)
 						dat += "<span style='border:1px solid #161616; background-color: #[features[color_type]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[color_type];task=input'>Change</a><BR>"
 					else
-						//is it matrixed or does it have extra parts to be coloured?
-						var/find_part = features[mutant_part] || pref_species.mutant_bodyparts[mutant_part]
-						var/find_part_list = GLOB.mutant_reference_list[mutant_part]
-						if(find_part && find_part_list)
-							var/datum/sprite_accessory/accessory = find_part_list[find_part]
-							if(accessory)
-								if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
-									var/primary_feature = "[mutant_part]_primary"
-									var/secondary_feature = "[mutant_part]_secondary"
-									var/tertiary_feature = "[mutant_part]_tertiary"
-									var/matrixed_sections = accessory.matrixed_sections
-									if(accessory.color_src == MATRIXED && !matrixed_sections)
-										message_admins("Sprite Accessory Failure (customization): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
-										continue
-									else if(accessory.color_src == MATRIXED)
-										switch(matrixed_sections)
-											if(MATRIX_GREEN) //only composed of a green section
-												primary_feature = secondary_feature //swap primary for secondary, so it properly assigns the second colour, reserved for the green section
-											if(MATRIX_BLUE)
-												primary_feature = tertiary_feature //same as above, but the tertiary feature is for the blue section
-											if(MATRIX_RED_BLUE) //composed of a red and blue section
-												secondary_feature = tertiary_feature //swap secondary for tertiary, as blue should always be tertiary
-											if(MATRIX_GREEN_BLUE) //composed of a green and blue section
-												primary_feature = secondary_feature //swap primary for secondary, as first option is green, which is linked to the secondary
-												secondary_feature = tertiary_feature //swap secondary for tertiary, as second option is blue, which is linked to the tertiary
-									if(!features[primary_feature])
-										features[primary_feature] = "FFFFFF"
-									dat += "<b>Primary Color</b><BR>"
-									dat += "<span style='border:1px solid #161616; background-color: #[features[primary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[primary_feature];task=input'>Change</a><BR>"
-									if((accessory.color_src == MATRIXED && (matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)) || (accessory.extra && (accessory.extra_color_src == MUTCOLORS || accessory.extra_color_src == MUTCOLORS2 || accessory.extra_color_src == MUTCOLORS3)))
-										if(!features[secondary_feature])
-											features[secondary_feature] = "FFFFFF"
-										dat += "<b>Secondary Color</b><BR>"
-										dat += "<span style='border:1px solid #161616; background-color: #[features[secondary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[secondary_feature];task=input'>Change</a><BR>"
-										if((accessory.color_src == MATRIXED && matrixed_sections == MATRIX_ALL) || (accessory.extra2 && (accessory.extra2_color_src == MUTCOLORS || accessory.extra2_color_src == MUTCOLORS2 || accessory.extra2_color_src == MUTCOLORS3)))
-											if(!features[tertiary_feature])
-												features[tertiary_feature] = "FFFFFF"
-											dat += "<b>Tertiary Color</b><BR>"
-											dat += "<span style='border:1px solid #161616; background-color: #[features[tertiary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[tertiary_feature];task=input'>Change</a><BR>"
+						if(features["color_scheme"] == ADVANCED_CHARACTER_COLORING) //advanced individual part colouring system
+							//is it matrixed or does it have extra parts to be coloured?
+							var/find_part = features[mutant_part] || pref_species.mutant_bodyparts[mutant_part]
+							var/find_part_list = GLOB.mutant_reference_list[mutant_part]
+							if(find_part && find_part_list)
+								var/datum/sprite_accessory/accessory = find_part_list[find_part]
+								if(accessory)
+									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
+										var/primary_feature = "[mutant_part]_primary"
+										var/secondary_feature = "[mutant_part]_secondary"
+										var/tertiary_feature = "[mutant_part]_tertiary"
+										var/matrixed_sections = accessory.matrixed_sections
+										if(accessory.color_src == MATRIXED && !matrixed_sections)
+											message_admins("Sprite Accessory Failure (customization): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+											continue
+										else if(accessory.color_src == MATRIXED)
+											switch(matrixed_sections)
+												if(MATRIX_GREEN) //only composed of a green section
+													primary_feature = secondary_feature //swap primary for secondary, so it properly assigns the second colour, reserved for the green section
+												if(MATRIX_BLUE)
+													primary_feature = tertiary_feature //same as above, but the tertiary feature is for the blue section
+												if(MATRIX_RED_BLUE) //composed of a red and blue section
+													secondary_feature = tertiary_feature //swap secondary for tertiary, as blue should always be tertiary
+												if(MATRIX_GREEN_BLUE) //composed of a green and blue section
+													primary_feature = secondary_feature //swap primary for secondary, as first option is green, which is linked to the secondary
+													secondary_feature = tertiary_feature //swap secondary for tertiary, as second option is blue, which is linked to the tertiary
+										if(!features[primary_feature])
+											features[primary_feature] = "FFFFFF"
+										dat += "<b>Primary Color</b><BR>"
+										dat += "<span style='border:1px solid #161616; background-color: #[features[primary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[primary_feature];task=input'>Change</a><BR>"
+										if((accessory.color_src == MATRIXED && (matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)) || (accessory.extra && (accessory.extra_color_src == MUTCOLORS || accessory.extra_color_src == MUTCOLORS2 || accessory.extra_color_src == MUTCOLORS3)))
+											if(!features[secondary_feature])
+												features[secondary_feature] = "FFFFFF"
+											dat += "<b>Secondary Color</b><BR>"
+											dat += "<span style='border:1px solid #161616; background-color: #[features[secondary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[secondary_feature];task=input'>Change</a><BR>"
+											if((accessory.color_src == MATRIXED && matrixed_sections == MATRIX_ALL) || (accessory.extra2 && (accessory.extra2_color_src == MUTCOLORS || accessory.extra2_color_src == MUTCOLORS2 || accessory.extra2_color_src == MUTCOLORS3)))
+												if(!features[tertiary_feature])
+													features[tertiary_feature] = "FFFFFF"
+												dat += "<b>Tertiary Color</b><BR>"
+												dat += "<span style='border:1px solid #161616; background-color: #[features[tertiary_feature]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=[tertiary_feature];task=input'>Change</a><BR>"
 
 					mutant_category++
 					if(mutant_category >= MAX_MUTANT_ROWS)
@@ -2090,6 +2095,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features[href_list["preference"]] = sanitize_hexcolor(new_feature_color, 6)
 						else
 							to_chat(user,"<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+
+				//advanced color mode toggle
+				if("color_scheme")
+					if(features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
+						features["color_scheme"] = OLD_CHARACTER_COLORING
+					else
+						features["color_scheme"] = ADVANCED_CHARACTER_COLORING
 
 				//Genital code
 				if("cock_color")

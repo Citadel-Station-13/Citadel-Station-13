@@ -746,14 +746,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		)
 
 	var/g = (H.dna.features["body_model"] == FEMALE) ? "f" : "m"
-	var/list/colorlist = list()
 	var/husk = HAS_TRAIT(H, TRAIT_HUSK)
-	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor"]]00")
-	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor2"]]00")
-	colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features["mcolor3"]]00")
-	colorlist += husk ? list(0, 0, 0) : list(0, 0, 0, hair_alpha)
-	for(var/index in 1 to colorlist.len)
-		colorlist[index] /= 255
 
 	for(var/layer in relevant_layers)
 		var/list/standing = list()
@@ -775,9 +768,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-			var/primary_string = "[S.mutant_part_string]_primary"
-			var/secondary_string = "[S.mutant_part_string]_secondary"
-			var/tertiary_string = "[S.mutant_part_string]_tertiary"
+			var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
+
+			var/primary_string = advanced_color_system ? "[S.mutant_part_string]_primary" : "mcolor"
+			var/secondary_string = advanced_color_system ? "[S.mutant_part_string]_secondary" : "mcolor2"
+			var/tertiary_string = advanced_color_system ? "[S.mutant_part_string]_tertiary" : "mcolor3"
 
 			if(!husk)
 				if(!forced_colour)
