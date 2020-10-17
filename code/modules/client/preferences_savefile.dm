@@ -231,10 +231,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			message_admins("[feature]")
 			var/feature_type = features[feature]
 			if(feature_type)
-				var/ref_list = GLOB.mutant_reference_list[feature_type]
+				var/ref_list = GLOB.mutant_reference_list[feature]
 				if(ref_list)
 					message_admins("ref list found [ref_list]")
-					var/datum/sprite_accessory/accessory = ref_list[feature]
+					var/datum/sprite_accessory/accessory = ref_list[feature_type]
 					if(accessory)
 						var/primary_string = "[feature_type]_primary"
 						var/secondary_string = "[feature_type]_secondary]"
