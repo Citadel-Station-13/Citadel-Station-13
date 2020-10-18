@@ -623,6 +623,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Jobs
 	S["joblessrole"]		>> joblessrole
 	//Load prefs
+
 	S["job_preferences"]	>> job_preferences
 
 	//Quirks
