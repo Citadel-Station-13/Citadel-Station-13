@@ -58,13 +58,16 @@ SUBSYSTEM_DEF(statpanels)
 								if(PLURALITY_VOTING, APPROVAL_VOTING)
 									var/ivotedforthis = FALSE
 									if(SSvote.vote_system == APPROVAL_VOTING)
-										ivotedforthis = SSvote.voted[target.ckey] && (text2num(choice_id) in SSvote.voted[usr.ckey])
+										ivotedforthis = SSvote.voted[target.ckey] && (text2num(choice_id) in SSvote.voted[target.ckey])
 									else
 										ivotedforthis = (SSvote.voted[target.ckey] == text2num(choice_id))
 									vote_arry[++vote_arry.len] += list(ivotedforthis ? "\[X\]" : "\[ \]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
 								if(SCHULZE_VOTING, INSTANT_RUNOFF_VOTING)
-									var/vote_position = SSvote.voted[target.ckey] ? (SSvote.voted[usr.ckey].Find(text2num(choice_id))) : " ")
-									vote_array[++vote_arry.len] += list("\[[vote_position]\]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
+									var/list/vote = SSvote.voted[target.ckey]
+									var/vote_position = " "
+									if(vote)
+										vote_position = vote.Find(text2num(choice_id))
+									vote_arry[++vote_arry.len] += list("\[[vote_position]\]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
 				var/vote_str = url_encode(json_encode(vote_arry))
 				target << output("[vote_str]", "statbrowser:update_voting")
 			else
