@@ -841,7 +841,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(ref_list)
 				var/datum/sprite_accessory/accessory = ref_list[feature_value]
 				if(accessory)
-					message_admins("loading feature [feature] and value [feature_value]")
 					var/primary_string = "[feature]_primary"
 					var/secondary_string = "[feature]_secondary]"
 					var/tertiary_string = "[feature]_tertiary]"
@@ -849,7 +848,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						message_admins("Sprite Accessory Failure (loading data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 						continue
 					if(S["feature_[primary_string]"])
-						message_admins("we have feature_[primary_string] that we load into [primary_string], its value is [S["feature_[primary_string]"]]")
 						S["feature_[primary_string]"]		>> features[primary_string]
 					if(S["feature_[secondary_string]"])
 						S["feature_[secondary_string]"]		>> features[secondary_string]
@@ -996,13 +994,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						message_admins("Sprite Accessory Failure (saving data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 						continue
 					if(features[primary_string])
-						message_admins("primary is [primary_string] and has value [features[primary_string]] this is written to feature_[primary_string]")
 						WRITE_FILE(S["feature_[primary_string]"], features[primary_string])
 					if(features[secondary_string])
-						message_admins("secondary is [secondary_string]")
 						WRITE_FILE(S["feature_[secondary_string]"], features[secondary_string])
 					if(features[tertiary_string])
-						message_admins("tertiary is [tertiary_string]")
 						WRITE_FILE(S["feature_[tertiary_string]"], features[tertiary_string])
 
 	//Custom names
