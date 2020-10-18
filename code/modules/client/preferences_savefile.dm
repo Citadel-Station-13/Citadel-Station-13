@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	600
+#define SAVEFILE_VERSION_MAX	39
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -226,22 +226,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
-	if(current_version < 3900) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
-		message_admins("good morning a")
+	if(current_version < 39) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
 		features["color_scheme"] = OLD_CHARACTER_COLORING //disable advanced coloring system by default
 		for(var/feature in features)
-			message_admins("[feature]")
-			var/feature_type = features[feature]
-			if(feature_type)
+			var/feature_value = features[feature]
+			if(feature_value)
 				var/ref_list = GLOB.mutant_reference_list[feature]
 				if(ref_list)
-					message_admins("ref list found [ref_list]")
-					var/datum/sprite_accessory/accessory = ref_list[feature_type]
+					var/datum/sprite_accessory/accessory = ref_list[feature_value]
 					if(accessory)
-						var/primary_string = "[feature_type]_primary"
-						var/secondary_string = "[feature_type]_secondary]"
-						var/tertiary_string = "[feature_type]_tertiary]"
-						if(accessory.color_src == MATRIXED && !accessory.matrixed_sections)
+						var/primary_string = "[feature]_primary"
+						var/secondary_string = "[feature]_secondary]"
+						var/tertiary_string = "[feature]_tertiary]"
+						if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature != "None")
 							message_admins("Sprite Accessory Failure (migration from [current_version] to 39): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 							continue
 						if(accessory.color_src == MATRIXED)
@@ -255,7 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						else if(accessory.color_src == MUTCOLORS3)
 							features[tertiary_string] = features["mcolor3"]
 
-		features["color_scheme"] = OLD_CHARACTER_COLORING //advanced is off
+		features["color_scheme"] = OLD_CHARACTER_COLORING //advanced is off by default
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
