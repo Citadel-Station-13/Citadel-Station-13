@@ -674,6 +674,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_vag_visibility"]			>> features["vag_visibility"]
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
+
+	//load every advanced coloring mode thing in one go
+	for(var/feature in features)
+		var/feature_value = features[feature]
+		if(feature_value)
+			var/ref_list = GLOB.mutant_reference_list[feature]
+			if(ref_list)
+				var/datum/sprite_accessory/accessory = ref_list[feature_value]
+				if(accessory)
+					var/primary_string = "[feature]_primary"
+					var/secondary_string = "[feature]_secondary]"
+					var/tertiary_string = "[feature]_tertiary]"
+					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature != "None")
+						message_admins("Sprite Accessory Failure (loading data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+						continue
+					if(features[primary_string])
+						S["feature_[primary_string]"]		>> features[primary_string]
+					if(features[secondary_string])
+						S["feature_[secondary_string]"]		>> features[secondary_string]
+					if(features[tertiary_string])
+						S["feature_[tertiary_string]"]		>> features[tertiary_string]
+
 	//flavor text
 	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
 	if((S["flavor_text"] != "") && (S["flavor_text"] != null) && S["flavor_text"]) //If old text isn't null and isn't "" but still exists.
@@ -955,6 +977,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_ooc_notes"], features["ooc_notes"])
 
 	WRITE_FILE(S["feature_color_scheme"], features["color_scheme"])
+
+	//save every advanced coloring mode thing in one go
+	for(var/feature in features)
+		var/feature_value = features[feature]
+		if(feature_value)
+			var/ref_list = GLOB.mutant_reference_list[feature]
+			if(ref_list)
+				var/datum/sprite_accessory/accessory = ref_list[feature_value]
+				if(accessory)
+					var/primary_string = "[feature]_primary"
+					var/secondary_string = "[feature]_secondary]"
+					var/tertiary_string = "[feature]_tertiary]"
+					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature != "None")
+						message_admins("Sprite Accessory Failure (saving data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+						continue
+					if(features[primary_string])
+						WRITE_FILE(S["feature_[primary_string]"], features[primary_string])
+					if(features[secondary_string])
+						WRITE_FILE(S["feature_[secondary_string]"], features[secondary_string])
+					if(features[tertiary_string])
+						WRITE_FILE(S["feature_[tertiary_string]"], features[tertiary_string])
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
