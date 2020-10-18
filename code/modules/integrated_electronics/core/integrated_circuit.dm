@@ -88,6 +88,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	setup_io(activators, /datum/integrated_io/activate, null, IC_ACTIVATOR)
 	LAZYSET(custom_materials, /datum/material/iron, w_class * SScircuit.cost_multiplier)
 	. = ..()
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/integrated_circuit/proc/on_data_written() //Override this for special behaviour when new data gets pushed to the circuit.
 	return
