@@ -238,7 +238,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						var/primary_string = "[feature]_primary"
 						var/secondary_string = "[feature]_secondary]"
 						var/tertiary_string = "[feature]_tertiary]"
-						if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature != "None")
+						if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 							message_admins("Sprite Accessory Failure (migration from [current_version] to 39): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 							continue
 						if(accessory.color_src == MATRIXED)
@@ -686,7 +686,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					var/primary_string = "[feature]_primary"
 					var/secondary_string = "[feature]_secondary]"
 					var/tertiary_string = "[feature]_tertiary]"
-					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature != "None")
+					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 						message_admins("Sprite Accessory Failure (loading data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 						continue
 					if(features[primary_string])
@@ -989,7 +989,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					var/primary_string = "[feature]_primary"
 					var/secondary_string = "[feature]_secondary]"
 					var/tertiary_string = "[feature]_tertiary]"
-					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature != "None")
+					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 						message_admins("Sprite Accessory Failure (saving data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 						continue
 					if(features[primary_string])
