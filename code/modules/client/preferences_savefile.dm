@@ -675,27 +675,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
 
-	//load every advanced coloring mode thing in one go
-	for(var/feature in features)
-		var/feature_value = features[feature]
-		if(feature_value)
-			var/ref_list = GLOB.mutant_reference_list[feature]
-			if(ref_list)
-				var/datum/sprite_accessory/accessory = ref_list[feature_value]
-				if(accessory)
-					var/primary_string = "[feature]_primary"
-					var/secondary_string = "[feature]_secondary]"
-					var/tertiary_string = "[feature]_tertiary]"
-					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
-						message_admins("Sprite Accessory Failure (loading data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
-						continue
-					if(features[primary_string])
-						S["feature_[primary_string]"]		>> features[primary_string]
-					if(features[secondary_string])
-						S["feature_[secondary_string]"]		>> features[secondary_string]
-					if(features[tertiary_string])
-						S["feature_[tertiary_string]"]		>> features[tertiary_string]
-
 	//flavor text
 	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
 	if((S["flavor_text"] != "") && (S["flavor_text"] != null) && S["flavor_text"]) //If old text isn't null and isn't "" but still exists.
@@ -852,6 +831,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["silicon_flavor_text"]			= copytext(features["silicon_flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["ooc_notes"]			= copytext(features["ooc_notes"], 1, MAX_FLAVOR_LEN)
+
+	//load every advanced coloring mode thing in one go
+	//THIS MUST BE DONE AFTER ALL FEATURE SAVES OR IT WILL NOT WORK
+	for(var/feature in features)
+		var/feature_value = features[feature]
+		if(feature_value)
+			var/ref_list = GLOB.mutant_reference_list[feature]
+			if(ref_list)
+				var/datum/sprite_accessory/accessory = ref_list[feature_value]
+				if(accessory)
+					var/primary_string = "[feature]_primary"
+					var/secondary_string = "[feature]_secondary]"
+					var/tertiary_string = "[feature]_tertiary]"
+					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
+						message_admins("Sprite Accessory Failure (loading data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
+						continue
+					if(features[primary_string])
+						S["feature_[primary_string]"]		>> features[primary_string]
+					if(features[secondary_string])
+						S["feature_[secondary_string]"]		>> features[secondary_string]
+					if(features[tertiary_string])
+						S["feature_[tertiary_string]"]		>> features[tertiary_string]
 
 	persistent_scars = sanitize_integer(persistent_scars)
 	scars_list["1"] = sanitize_text(scars_list["1"])
