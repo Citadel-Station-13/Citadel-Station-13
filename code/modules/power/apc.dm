@@ -897,6 +897,10 @@
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
+	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
+	var/abilitiesavail = FALSE
+	if(H && !H.stealthmode && H.toggled)
+		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked,
 		"failTime" = failure_timer,
