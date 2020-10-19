@@ -219,7 +219,7 @@ const ApcContent = (props, context) => {
                   <Button
                     icon="unlock"
                     content="Hijack"
-                    disabled={data.hijacker && data.hijacked === 0}
+                    disabled={data.hijacker}
                     onClick={() => act('hijack')} />
                   <Button
                     icon="lock"
