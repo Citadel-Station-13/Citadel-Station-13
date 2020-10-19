@@ -1064,6 +1064,25 @@
 		if("hack")
 			if(get_malf_status(usr))
 				malfhack(usr)
+		if("drain")
+			cell.use(cell.charge)
+			hijacker.toggleSiliconAccessArea(area)
+			hijacker = null
+			set_hijacked_lighting()
+			update_icon()
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 2 MINUTES
+			energy_fail(30 SECONDS * (cell.charge / cell.maxcharge))
+		if("lockdown")
+			var/celluse = rand(20,35)
+			celluse = celluse /100
+			for (var/obj/machinery/door/D in GLOB.airlocks)
+				if (get_area(D) == area)
+					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
+					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
+			cell.charge -= cell.maxcharge*celluse
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
 			if(get_malf_status(usr))
 				malfoccupy(usr)
