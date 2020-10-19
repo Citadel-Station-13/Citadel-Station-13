@@ -1,7 +1,7 @@
 /obj/structure/destructible/clockwork/reflector
 	name = "reflector"
-	desc = "A large lantern-shaped machine made of thin brass. It looks fragile."
-	clockwork_desc = "A lantern-shaped generator that produces power when near starlight."
+	desc = "A large mirror-like structure made of thin brass on one side. It looks fragile."
+	clockwork_desc = "A large mirror-like structure made of thin brass on one side. It can redirect laser fire on one side"
 	icon_state = "reflector"
 	unanchored_icon = "reflector_unwrenched"
 	max_integrity = 40
