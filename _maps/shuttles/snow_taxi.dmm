@@ -39,6 +39,7 @@
 	name = "Mining Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
+	callTime = 5;
 	dwidth = 3;
 	height = 4;
 	id = "snow_taxi";
