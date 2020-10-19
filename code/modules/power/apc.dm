@@ -915,11 +915,11 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
-		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
+		"hijackable" = HAS_TRAIT(user, TRAIT_HIJACKER),
+		"hijacked" = hijacker && hasSiliconAccessInArea(hijacker),
 		"hijacker" = hijacker == user ? TRUE : FALSE,
 		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
 		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
-
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
@@ -1017,7 +1017,12 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr)))))
+	if(..() || !can_use(usr, 1))
+		return
+	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
+		hijack(usr)
+		return
+	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")

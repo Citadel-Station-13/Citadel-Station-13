@@ -211,7 +211,7 @@ const ApcContent = (props, context) => {
                 content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
                 onClick={() => act('toggle_nightshift')} />
             )} />
-          {data.hijackable && (
+          {data.hijackable === 1 && (
             <LabeledList.Item
               title="Hijacking"
               buttons={(
@@ -219,17 +219,17 @@ const ApcContent = (props, context) => {
                   <Button
                     icon="unlock"
                     content="Hijack"
-                    disabled={data.hijacker}
+                    disabled={data.hijacker && data.hijacked === 0}
                     onClick={() => act('hijack')} />
                   <Button
                     icon="lock"
                     content="Lockdown"
-                    disabled={!data.lockdownavail}
+                    isabled={!data.lockdownavail && data.hijacked === 1}
                     onClick={() => act('lockdown')} />
                   <Button
                     icon="lightbulb-o"
                     content="Drain"
-                    disabled={!data.drainavail}
+                    disabled={!data.drainavail && data.hijacked === 1}
                     onClick={() => act('drain')} />
                 </Fragment>
               )} />
