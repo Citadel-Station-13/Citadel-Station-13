@@ -2,7 +2,4 @@
     "map_name": "Burger Station",
     "map_path": "map_files/BurgerStation",
     "map_file": "BurgerStation.dmm",
-	"shuttles": {
-	    "cargo": "cargo_delta"
-    }
 }
