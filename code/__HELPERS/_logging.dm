@@ -4,8 +4,15 @@
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-#define WRITE_LOG(log, text) rustg_log_write(log, text)
-
+#ifdef EXTOOLS_LOGGING
+// proc hooked, so we can just put in standard TRUE and FALSE
+#define WRITE_LOG(log, text) extools_log_write(log,text,TRUE)
+#define WRITE_LOG_NO_FORMAT(log, text) extools_log_write(log,text,FALSE)
+#else
+//This is an external call, "true" and "false" are how rust parses out booleans
+#define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
+#define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
+#endif
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
@@ -53,7 +60,7 @@
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: DSAY: [text]")
 
 /proc/log_consent(text)
-	WRITE_LOG(GLOB.world_game_log,"CONSENT: [text]")
+	WRITE_LOG(GLOB.world_game_log, "CONSENT: [text]")
 
 /* All other items are public. */
 /proc/log_game(text)
@@ -63,6 +70,9 @@
 /proc/log_virus(text)
 	if (CONFIG_GET(flag/log_virus))
 		WRITE_LOG(GLOB.world_virus_log, "VIRUS: [text]")
+
+/proc/log_asset(text)
+	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
@@ -75,6 +85,10 @@
 /proc/log_attack(text)
 	if (CONFIG_GET(flag/log_attack))
 		WRITE_LOG(GLOB.world_attack_log, "ATTACK: [text]")
+
+/proc/log_wounded(text)
+	if (CONFIG_GET(flag/log_attack))
+		WRITE_LOG(GLOB.world_attack_log, "WOUND: [text]")
 
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
@@ -113,6 +127,9 @@
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		WRITE_LOG(GLOB.world_pda_log, "COMMENT: [text]")
 
+/proc/log_paper(text)
+	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
+
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
@@ -125,6 +142,10 @@
 /proc/log_vote(text)
 	if (CONFIG_GET(flag/log_vote))
 		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
+
+/proc/log_shuttle(text)
+	if (CONFIG_GET(flag/log_shuttle))
+		WRITE_LOG(GLOB.world_shuttle_log, "SHUTTLE: [text]")
 
 /proc/log_craft(text)
 	if (CONFIG_GET(flag/log_craft))
@@ -151,6 +172,9 @@
 
 /proc/log_subsystem(subsystem, text)
 	WRITE_LOG(GLOB.subsystem_log, "[subsystem]: [text]")
+
+/proc/log_click(atom/object, atom/location, control, params, client/C, event = "clicked", unexpected)
+	WRITE_LOG(GLOB.click_log, "[unexpected? "ERROR" :"CLICK"]: [C.ckey] - [event] : [istype(object)? "[object] ([COORD(object)])" : object] | [istype(location)? "[location] ([COORD(location)])" : location] | [control] | [params]")
 
 /* Log to both DD and the logfile. */
 /proc/log_world(text)
@@ -181,14 +205,45 @@
 /proc/start_log(log)
 	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")
 
-/* ui logging */ 
-
-/proc/log_tgui(text)
-	WRITE_LOG(GLOB.tgui_log, text)
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context,
+		datum/tgui_window/window,
+		datum/src_object)
+	var/entry = ""
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window && window.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "\nUsing: [src_object.type] [REF(src_object)]"
+	// Insert message
+	if(message)
+		entry += "\n[message]"
+	WRITE_LOG(GLOB.tgui_log, entry)
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
+#ifdef EXTOOLS_LOGGING
+	extools_finalize_logging()
+#else
 	rustg_log_close_all()
+#endif
 
 
 /* Helper procs for building detailed log lines */

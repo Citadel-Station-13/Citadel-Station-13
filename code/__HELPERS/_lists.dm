@@ -37,6 +37,7 @@
 	* TYPECONT: The typepath of the contents of the list
 	* COMPARE: The object to compare against, usualy the same as INPUT
 	* COMPARISON: The variable on the objects to compare
+	* COMPTYPE: How the current bin item to compare against COMPARE is fetched. By key or value.
 	*/
 #define BINARY_INSERT(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
 	do {\
@@ -68,7 +69,7 @@
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
-		return "[nothing_text]"
+		return nothing_text
 	else if (total == 1)
 		return "[input[1]]"
 	else if (total == 2)
@@ -552,12 +553,6 @@
 			if(D.vars[varname] == value)
 				return D
 
-//remove all nulls from a list
-/proc/removeNullsFromList(list/L)
-	while(L.Remove(null))
-		continue
-	return L
-
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -629,6 +624,8 @@
 			L["[key]"] = "[value]"
 	return list2params(L)
 
+#define NUMLIST2TEXTLIST(list) splittext(list2params(list), "&")
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 
@@ -668,3 +665,21 @@
 	for(var/key in input)
 		ret += key
 	return ret
+
+/proc/is_type_in_ref_list(path, list/L)
+	if(!ispath(path))//not a path
+		return
+	for(var/i in L)
+		var/datum/D = i
+		if(!istype(D))//not an usable reference
+			continue
+		if(istype(D, path))
+			return TRUE
+
+/proc/safe_json_encode(list/L, default = "")
+	. = default
+	return json_encode(L)
+
+/proc/safe_json_decode(string, default = list())
+	. = default
+	return json_decode(string)

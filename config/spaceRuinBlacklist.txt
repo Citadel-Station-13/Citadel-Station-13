@@ -52,3 +52,4 @@
 #_maps/RandomRuins/SpaceRuins/arcade.dmm
 #_maps/RandomRuins/SpaceRuins/spacehermit.dmm
 #_maps/RandomRuins/SpaceRuins/advancedlab.dmm
+#_maps/RandomRuins/SpaceRuins/spacediner.dmm

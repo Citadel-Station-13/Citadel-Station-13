@@ -217,7 +217,7 @@
 		return FALSE
 	return ..()
 
-/obj/structure/bloodsucker/vassalrack/attack_hand(mob/user)
+/obj/structure/bloodsucker/vassalrack/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	//. = ..()	// Taken from sacrificial altar in divine.dm
 	//if(.)
 	//	return
@@ -328,8 +328,8 @@
 		//	to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		//	useLock = FALSE
 		//	return
-		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE) 	
-		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE) 	
+		user.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
+		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, TRUE)
 		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE)
 		target.Jitter(25)
 		target.emote("laugh")
@@ -361,9 +361,9 @@
 		torture_time -= I.force / 4
 		torture_dmg_brute += I.force / 4
 		//torture_dmg_burn += I.
-		if(I.sharpness == IS_SHARP)
+		if(I.sharpness == SHARP_EDGED)
 			torture_time -= 1
-		else if(I.sharpness == IS_SHARP_ACCURATE)
+		else if(I.sharpness == SHARP_POINTY)
 			torture_time -= 2
 		if(istype(I, /obj/item/weldingtool))
 			var/obj/item/weldingtool/welder = I
@@ -456,6 +456,7 @@
 
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	return ..() //return a hint
 
 /obj/structure/bloodsucker/candelabrum/update_icon_state()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"
@@ -469,7 +470,7 @@
 		. += {"<span class='cult'>This is a magical candle which drains at the sanity of the fools who havent yet accepted your master, as long as it is active.\n
 		You can turn it on and off by clicking on it while you are next to it</span>"} */
 
-/obj/structure/bloodsucker/candelabrum/attack_hand(mob/user)
+/obj/structure/bloodsucker/candelabrum/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/datum/antagonist/vassal/T = user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	if(AmBloodsucker(user) || istype(T))
 		toggle()
@@ -490,13 +491,14 @@
 	update_icon()
 
 /obj/structure/bloodsucker/candelabrum/process()
-	if(lit)
-		for(var/mob/living/carbon/human/H in viewers(7, src))
-			var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
-			if(AmBloodsucker(H) || T) //We dont want vassals or vampires affected by this
-				return
-			H.hallucination = 20
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
+	if(!lit)
+		return
+	for(var/mob/living/carbon/human/H in fov_viewers(7, src))
+		var/datum/antagonist/vassal/T = H.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
+		if(AmBloodsucker(H) || T) //We dont want vassals or vampires affected by this
+			return
+		H.hallucination = 20
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vampcandle", /datum/mood_event/vampcandle)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   OTHER THINGS TO USE: HUMAN BLOOD. /obj/effect/decal/cleanable/blood
 

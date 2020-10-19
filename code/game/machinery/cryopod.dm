@@ -76,7 +76,6 @@
 
 	var/datum/browser/popup = new(user, "cryopod_console", "Cryogenic System Control")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
@@ -242,6 +241,7 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
+		investigate_log("Cryogenics machine closed with occupant [key_name(occupant)] by user [key_name(user)].", INVESTIGATE_CRYOGENICS)
 		if(mob_occupant && mob_occupant.stat != DEAD)
 			to_chat(occupant, "<span class='boldnotice'>You feel cool air surround you. You go numb as your senses turn inward.</span>")
 		if(mob_occupant.client)//if they're logged in
@@ -251,12 +251,15 @@
 	icon_state = "cryopod"
 
 /obj/machinery/cryopod/open_machine()
+	if(occupant)
+		investigate_log("Cryogenics machine opened with occupant [key_name(occupant)] inside.", INVESTIGATE_CRYOGENICS)
 	..()
 	icon_state = "cryopod-open"
 	density = TRUE
 	name = initial(name)
 
 /obj/machinery/cryopod/container_resist(mob/living/user)
+	investigate_log("Cryogenics machine container resisted by [key_name(user)] with occupant [key_name(occupant)].", INVESTIGATE_CRYOGENICS)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
@@ -305,6 +308,8 @@
 	var/mob/living/mob_occupant = occupant
 	var/list/obj/item/cryo_items = list()
 
+	investigate_log("Despawning [key_name(mob_occupant)].", INVESTIGATE_CRYOGENICS)
+
 	//Handle Borg stuff first
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
@@ -350,23 +355,23 @@
 		cryo_items -= I
 
 	//Update any existing objectives involving this mob.
-	for(var/datum/objective/O in GLOB.objectives)
+	for(var/i in GLOB.objectives)
+		var/datum/objective/O = i
 		// We don't want revs to get objectives that aren't for heads of staff. Letting
 		// them win or lose based on cryo is silly so we remove the objective.
 		if(istype(O,/datum/objective/mutiny) && O.target == mob_occupant.mind)
 			qdel(O)
-		else if(O.target && istype(O.target, /datum/mind))
-			if(O.target == mob_occupant.mind)
-				if(O.owner && O.owner.current)
-					to_chat(O.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
-				O.target = null
-				spawn(10) //This should ideally fire after the occupant is deleted.
-					if(!O)
-						return
-					O.find_target()
-					O.update_explanation_text()
-					if(!(O.target))
-						qdel(O)
+		else if(O.target && istype(O.target, /datum/mind) && !O.check_midround_completion())
+			if(O.target == mob_occupant.mind && O.owner?.current)
+				to_chat(O.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
+			O.target = null
+			spawn(10) //This should ideally fire after the occupant is deleted.
+				if(!O)
+					return
+				O.find_target()
+				O.update_explanation_text()
+				if(!(O.target))
+					qdel(O)
 
 	if(mob_occupant.mind)
 		//Handle job slot/tater cleanup.

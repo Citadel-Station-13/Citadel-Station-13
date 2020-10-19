@@ -19,8 +19,11 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		to_chat(src, "You can't vent crawl while you're restrained!")
 		return
 	if(has_buckled_mobs())
-		to_chat(src, "You can't vent crawl with other creatures on you!")
-		return
+		// attempt once
+		unbuckle_all_mobs()
+		if(has_buckled_mobs())
+			to_chat(src, "You can't vent crawl with other creatures on you!")
+			return
 	if(buckled)
 		to_chat(src, "You can't vent crawl while buckled!")
 		return
@@ -56,15 +59,8 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 			if(!client)
 				return
 
-			if(iscarbon(src) && ventcrawler < 2)//It must have atleast been 1 to get this far
-				var/failed = 0
-				var/list/items_list = get_equipped_items(include_pockets = TRUE)
-				if(items_list.len)
-					failed = 1
-				for(var/obj/item/I in held_items)
-					failed = 1
-					break
-				if(failed)
+			if(iscarbon(src) && ventcrawler == VENTCRAWLER_NUDE)
+				if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
 					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
 					return
 

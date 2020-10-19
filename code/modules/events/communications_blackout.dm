@@ -2,7 +2,6 @@
 	name = "Communications Blackout"
 	typepath = /datum/round_event/communications_blackout
 	weight = 30
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/communications_blackout
 	announceWhen	= 1
@@ -24,4 +23,4 @@
 
 /datum/round_event/communications_blackout/start()
 	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)

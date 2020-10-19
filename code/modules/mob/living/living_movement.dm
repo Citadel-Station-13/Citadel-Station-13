@@ -1,10 +1,23 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
-	if(is_shifted)
-		is_shifted = FALSE
-		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+	//Hide typing indicator if we move.
+	clear_typing_indicator()
+	update_pixel_shifting(TRUE)
+
+/mob/living/setDir(newdir, ismousemovement)
+	. = ..()
+	if(ismousemovement)
+		update_pixel_shifting()
+
+/mob/living/proc/update_pixel_shifting(moved = FALSE)
+	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
+		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, flags = ANIMATION_END_NOW)
+	else if(moved)
+		if(is_shifted)
+			is_shifted = FALSE
+			pixel_x = get_standard_pixel_x_offset(lying)
+			pixel_y = get_standard_pixel_y_offset(lying)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))
@@ -75,14 +88,26 @@
 
 	. = ..()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
+	else
+		if(isliving(pulledby))
+			var/mob/living/L = pulledby
+			L.set_pull_offsets(src, pulledby.grab_state)
 
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
+
+
+/mob/living/Move_Pulled(atom/A)
+	. = ..()
+	if(!. || !isliving(A))
+		return
+	var/mob/living/L = A
+	set_pull_offsets(L, grab_state)
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()

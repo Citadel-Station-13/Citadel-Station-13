@@ -46,6 +46,7 @@
 	var/minimal_player_age = 0
 
 	var/outfit = null
+	var/plasma_outfit = null //the outfit given to plasmamen
 
 	var/exp_requirements = 0
 
@@ -55,6 +56,9 @@
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
 	//can be overridden by antag_rep.txt config
 	var/antag_rep = 10
+
+	var/paycheck = PAYCHECK_MINIMAL
+	var/paycheck_department = ACCOUNT_CIV
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 	var/list/blacklisted_quirks		//list of quirk typepaths blacklisted.
@@ -66,10 +70,33 @@
 	// How much threat this job is worth in dynamic. Is subtracted if the player's not an antag, added if they are.
 	var/threat = 0
 
-	/// Starting skill levels.
-	var/list/starting_skills
-	/// Skill affinities to set
-	var/list/skill_affinities
+	/// Starting skill modifiers.
+	var/list/starting_modifiers
+
+/**
+  * Checks if we should be created on a certain map
+  */
+/datum/job/proc/map_check(datum/map_config/C)
+	return (length(C.job_whitelist)? (type in C.job_whitelist) : !(type in C.job_blacklist))
+
+/**
+  * Processes map specific overrides
+  */
+/datum/job/proc/process_map_overrides(datum/map_config/C)
+	if(type in C.job_override_spawn_positions)
+		spawn_positions = C.job_override_spawn_positions[type]
+	if(type in C.job_override_total_positions)
+		total_positions = C.job_override_total_positions[type]
+	if(type in C.job_access_override)
+		access = C.job_access_override[type]
+		minimal_access = access
+	else
+		if(type in C.job_access_add)
+			access += C.job_access_add[type]
+			minimal_access += C.job_access_add[type]
+		if(type in C.job_access_remove)
+			access -= C.job_access_add[type]
+			minimal_access -= C.job_access_remove[type]
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
@@ -78,6 +105,9 @@
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+	if(/datum/quirk/paraplegic in blacklisted_quirks)
+		H.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
+		H.set_resting(FALSE, TRUE) //they probably shouldn't be on the floor because they had no legs then suddenly had legs
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -104,7 +134,13 @@
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
 	if(!H)
 		return FALSE
-
+	if(!visualsOnly)
+		var/datum/bank_account/bank_account = new(H.real_name, src)
+		bank_account.account_holder = H.real_name
+		bank_account.account_job = src
+		bank_account.account_id = rand(111111,999999)
+		bank_account.payday(STARTING_PAYCHECKS, TRUE)
+		H.account_id = bank_account.account_id
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
@@ -164,22 +200,14 @@
 /datum/job/proc/config_check()
 	return TRUE
 
-/datum/job/proc/map_check()
-	return TRUE
-
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
 
 /datum/job/proc/standard_assign_skills(datum/mind/M)
-	if(!starting_skills)
+	if(!starting_modifiers)
 		return
-	for(var/skill in starting_skills)
-		M.skill_holder.boost_skill_value_to(skill, starting_skills[skill])
-	// do wipe affinities though
-	M.skill_holder.skill_affinities = list()
-	for(var/skill in skill_affinities)
-		M.skill_holder.skill_affinities[skill] = skill_affinities[skill]
-	UNSETEMPTY(M.skill_holder.skill_affinities)		//if we didn't set any.
+	for(var/mod in starting_modifiers)
+		ADD_SINGLETON_SKILL_MODIFIER(M, mod, null)
 
 /datum/outfit/job
 	name = "Standard Gear"
@@ -201,21 +229,24 @@
 	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	switch(preference_source?.prefs.backbag)
-		if(GBACKPACK)
-			back = /obj/item/storage/backpack //Grey backpack
-		if(GSATCHEL)
-			back = /obj/item/storage/backpack/satchel //Grey satchel
-		if(GDUFFELBAG)
-			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-		if(LSATCHEL)
-			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-		if(DSATCHEL)
-			back = satchel //Department satchel
-		if(DDUFFELBAG)
-			back = duffelbag //Department duffel bag
-		else
-			back = backpack //Department backpack
+	var/preference_backpack = preference_source?.prefs.backbag
+
+	if(preference_backpack)
+		switch(preference_backpack)
+			if(DBACKPACK)
+				back = backpack //Department backpack
+			if(DSATCHEL)
+				back = satchel //Department satchel
+			if(DDUFFELBAG)
+				back = duffelbag //Department duffel bag
+			else
+				var/find_preference_backpack = GLOB.backbaglist[preference_backpack] //attempt to find non-department backpack
+				if(find_preference_backpack)
+					back = find_preference_backpack
+				else //tried loading in a backpack that we don't allow as a loadout one
+					back = backpack
+	else //somehow doesn't have a preference set, should never reach this point but just-in-case
+		back = backpack
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder
@@ -242,12 +273,18 @@
 			H.real_name = "[J.title] #[rand(10000, 99999)]"
 
 	var/obj/item/card/id/C = H.wear_id
-	if(istype(C))
+	if(istype(C) && C.bank_support)
 		C.access = J.get_access()
 		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
+		for(var/A in SSeconomy.bank_accounts)
+			var/datum/bank_account/B = A
+			if(B.account_id == H.account_id)
+				C.registered_account = B
+				B.bank_cards += C
+				break
 		H.sec_hud_set_ID()
 
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)

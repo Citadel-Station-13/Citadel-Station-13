@@ -117,7 +117,7 @@
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
 				if(obj_flags & EMAGGED)
-					user.nutrition = 0 //yeah you pretty hongry
+					user.set_nutrition(0) //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
@@ -160,7 +160,6 @@
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 

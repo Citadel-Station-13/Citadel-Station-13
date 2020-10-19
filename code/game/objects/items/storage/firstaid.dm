@@ -37,12 +37,28 @@
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/reagent_containers/hypospray/medipen/ekit(src)
 	new /obj/item/healthanalyzer(src)
+
+/obj/item/storage/firstaid/emergency
+	icon_state = "medbriefcase"
+	name = "emergency first-aid kit"
+	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
+
+/obj/item/storage/firstaid/emergency/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/healthanalyzer/wound = 1,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/suture/emergency = 1,
+		/obj/item/stack/medical/ointment = 1,
+		/obj/item/reagent_containers/hypospray/medipen/ekit = 2)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
@@ -52,12 +68,12 @@
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/suture(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/mesh(src)
+	new /obj/item/stack/medical/mesh(src)
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
@@ -223,9 +239,30 @@
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_PILL_BOTTLE
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+
+/obj/item/storage/pill_bottle/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(!length(user.get_empty_held_indexes()))
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		return
+	var/obj/item/reagent_containers/pill/P = locate() in contents
+	if(P)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, P, user)
+		if(!user.put_in_hands(P))
+			P.forceMove(user.drop_location())	// make sure it's not stuck in the user if the put in hands somehow fails
+			to_chat(user, "<span class='warning'>[P] drops to the floor!</span>")
+		else
+			to_chat(user, "<span class='notice'>You take \a [P] out of [src].</span>")
+	else
+		to_chat(user, "<span class='notice'>There are no pills left in the bottle.</span>")
+	return TRUE
+
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -244,7 +281,7 @@
 	desc = "Contains pills used to counter radiation poisoning."
 
 /obj/item/storage/pill_bottle/anitrad/PopulateContents()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 4)
 		new /obj/item/reagent_containers/pill/antirad(src)
 
 /obj/item/storage/pill_bottle/epinephrine
@@ -276,7 +313,7 @@
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
 
 /obj/item/storage/pill_bottle/stimulant/PopulateContents()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 4)
 		new /obj/item/reagent_containers/pill/stimulant(src)
 
 /obj/item/storage/pill_bottle/mining
@@ -368,12 +405,20 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/breast_enlargement(src)
 
+/obj/item/storage/pill_bottle/neurine
+	name = "bottle of neurine pills"
+	desc = "Contains pills to treat non-severe mental traumas."
+
+/obj/item/storage/pill_bottle/neurine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/neurine(src)
+
 /////////////
 //Organ Box//
 /////////////
 
 /obj/item/storage/belt/organbox
-	name = "Organ Storge"
+	name = "Organ Storage"
 	desc = "A compact box that helps hold massive amounts of implants, organs, and some tools. Has a belt clip for easy carrying"
 	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/mysterybox.dmi'
@@ -392,6 +437,12 @@
 	STR.can_hold = typecacheof(list(
 	/obj/item/storage/pill_bottle,
 	/obj/item/reagent_containers/hypospray,
+	/obj/item/pinpointer/crew,
+	/obj/item/tele_iv,
+	/obj/item/sequence_scanner,
+	/obj/item/sensor_device,
+	/obj/item/bodybag,
+	/obj/item/surgicaldrill/advanced,
 	/obj/item/healthanalyzer,
 	/obj/item/reagent_containers/syringe,
 	/obj/item/clothing/glasses/hud/health,
@@ -400,6 +451,7 @@
 	/obj/item/retractor,
 	/obj/item/cautery,
 	/obj/item/surgical_drapes,
+	/obj/item/bonesetter,
 	/obj/item/autosurgeon,
 	/obj/item/organ,
 	/obj/item/implant,
@@ -407,8 +459,11 @@
 	/obj/item/implantcase,
 	/obj/item/implanter,
 	/obj/item/circuitboard/computer/operating,
+	/obj/item/circuitboard/computer/crew,
+	/obj/item/stack/sheet/glass,
 	/obj/item/stack/sheet/mineral/silver,
-	/obj/item/organ_storage
+	/obj/item/organ_storage,
+	/obj/item/reagent_containers/chem_pack
 	))
 
 //hijacking the minature first aids for hypospray boxes. <3
@@ -422,6 +477,8 @@
 	throw_range = 7
 	var/empty = FALSE
 	item_state = "firstaid"
+	custom_price = PRICE_ABOVE_NORMAL
+	custom_premium_price = PRICE_EXPENSIVE
 
 /obj/item/storage/hypospraykit/ComponentInitialize()
 	. = ..()

@@ -207,12 +207,11 @@
 	to_chat(user,"<span class='notice'>You switch [src] setting to [setting] mode.</span>")
 	update_icon()
 
-/obj/item/gun/energy/dueling/update_icon(force_update)
+/obj/item/gun/energy/dueling/update_overlays(force_update)
 	. = ..()
 	if(setting_overlay)
-		cut_overlay(setting_overlay)
 		setting_overlay.icon_state = setting_iconstate()
-		add_overlay(setting_overlay)
+		. += setting_overlay
 
 /obj/item/gun/energy/dueling/Destroy()
 	if(duel)
@@ -237,7 +236,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+/obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread = 0, stam_cost = 0)
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
 		to_chat(user,"<span class='notice'>You confirm your readiness.</span>")
@@ -363,8 +362,7 @@
 	STR.max_items = 2
 	STR.can_hold = typecacheof(/obj/item/gun/energy/dueling)
 
-/obj/item/storage/lockbox/dueling/update_icon()
-	cut_overlays()
+/obj/item/storage/lockbox/dueling/update_icon_state()
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"

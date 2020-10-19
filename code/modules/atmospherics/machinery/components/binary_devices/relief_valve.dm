@@ -60,15 +60,14 @@
 	else if(!opened && our_pressure >= open_pressure)
 		open()
 
-/obj/machinery/atmospherics/components/binary/relief_valve/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-																datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/atmospherics/components/binary/relief_valve/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_relief", name, 335, 115, master_ui, state)
+		ui = new(user, src, "AtmosRelief", name)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/relief_valve/ui_data()
-	var/data = list()
+	var/list/data = list()
 	data["open_pressure"] = round(open_pressure)
 	data["close_pressure"] = round(close_pressure)
 	data["max_pressure"] = round(50*ONE_ATMOSPHERE)
@@ -79,11 +78,11 @@
 		return
 	switch(action)
 		if("open_pressure")
-			var/pressure = params["open_pressure"]
+			var/pressure = params["pressure"]
 			if(pressure == "max")
 				pressure = 50*ONE_ATMOSPHERE
 				. = TRUE
-			else if(pressure == "input")
+			else if(pressure == "input") // The manual expirience.
 				pressure = input("New output pressure ([close_pressure]-[50*ONE_ATMOSPHERE] kPa):", name, open_pressure) as num|null
 				if(!isnull(pressure) && !..())
 					. = TRUE
@@ -94,7 +93,7 @@
 				open_pressure = clamp(pressure, close_pressure, 50*ONE_ATMOSPHERE)
 				investigate_log("open pressure was set to [open_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("close_pressure")
-			var/pressure = params["close_pressure"]
+			var/pressure = params["pressure"]
 			if(pressure == "max")
 				pressure = open_pressure
 				. = TRUE

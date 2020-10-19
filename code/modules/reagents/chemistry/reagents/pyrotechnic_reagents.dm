@@ -227,6 +227,18 @@
 		playsound(M, "sparks", 50, 1)
 	..()
 
+/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
+	. = ..()
+	if(!istype(L))
+		return
+	L.physiology.siemens_coeff *= 2
+
+/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/human/L)
+	. = ..()
+	if(!istype(L))
+		return
+	L.physiology.siemens_coeff *= 0.5
+
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"
 	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
@@ -269,8 +281,8 @@
 	if(hotspot && !isspaceturf(T))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
-			if(G.temperature > T20C)
-				G.temperature = max(G.temperature/2,T20C)
+			if(G.return_temperature() > T20C)
+				G.set_temperature(max(G.return_temperature()/2,T20C))
 			G.react(src)
 			qdel(hotspot)
 

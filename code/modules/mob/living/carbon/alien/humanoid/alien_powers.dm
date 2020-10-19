@@ -21,10 +21,10 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	action = new(src)
 
-/obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check)
+/obj/effect/proc_holder/alien/Trigger(mob/living/carbon/user, skip_cost_check = FALSE)
 	if(!istype(user))
 		return TRUE
-	if(!skip_cost_check || cost_check(check_turf,user))
+	if(skip_cost_check || cost_check(check_turf,user))
 		if(fire(user) && user) // Second check to prevent runtimes when evolving
 			user.adjustPlasma(-plasma_cost)
 	return TRUE
@@ -148,10 +148,10 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_acid"
 
 /obj/effect/proc_holder/alien/acid/on_gain(mob/living/carbon/user)
-	user.verbs.Add(/mob/living/carbon/proc/corrosive_acid)
+	add_verb(user, /mob/living/carbon/proc/corrosive_acid)
 
 /obj/effect/proc_holder/alien/acid/on_lose(mob/living/carbon/user)
-	user.verbs.Remove(/mob/living/carbon/proc/corrosive_acid)
+	remove_verb(user, /mob/living/carbon/proc/corrosive_acid)
 
 /obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
 	if(target in oview(1,user))

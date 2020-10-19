@@ -13,6 +13,13 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+
+/datum/supply_pack/misc/anvil
+	name = "Anvil Crate"
+	desc = "An anvil in a crate, we had to dig this out of the old warehouse. It's got wheels on it so you can move it."
+	cost = 7500
+	contains = list(/obj/structure/anvil/obtainable/basic)
+
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -87,37 +94,12 @@
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
 
-/datum/supply_pack/misc/paper_work
-	name = "Freelance Paper work"
-	desc = "The Nanotrasen Primary Bureaucratic Database Intelligence (PDBI) reports that the station has not completed its funding and grant paperwork this solar cycle. In order to gain further funding, your station is required to fill out (10) ten of these forms or no additional capital will be disbursed. We have sent you ten copies of the following form and we expect every one to be up to Nanotrasen Standards." // Disbursement. It's not a typo, look it up.
-	cost = 700 // Net of 0 credits but makes (120 x 10 = 1200)
-	contains = list(/obj/item/folder/paperwork,
-					/obj/item/pen/fountain
-					)
-	crate_name = "Paperwork"
-
-/datum/supply_pack/misc/paper_work/generate()
-	. = ..()
-	for(var/i in 1 to 9)
-		new /obj/item/folder/paperwork(.)
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Entertainment ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/misc/randombedsheets
-	name = "Bedsheet Crate (R)"
-	desc = "Snuggle up in some sweet sheets with this assorted bedsheet crate. Each set comes with eight random bedsheets for your slumbering pleasure!"
-	cost = 2000
-	contains = list(/obj/item/bedsheet/random)
-	crate_name = "random bedsheet crate"
-
-/datum/supply_pack/misc/randombedsheets/generate()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/bedsheet/random(.)
-
 /datum/supply_pack/misc/coloredsheets
-	name = "Bedsheet Crate (C)"
+	name = "Bedsheet Crate"
 	desc = "Give your night life a splash of color with this crate filled with bedsheets! Contains a total of nine different-colored sheets."
 	cost = 1250
 	contains = list(/obj/item/bedsheet/blue,
@@ -219,9 +201,9 @@
 
 /datum/supply_pack/misc/dirtymags
 	name = "Dirty Magazines"
-	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun Mags, Stetchkin Mags."
+	desc = "Get your mind out of the gutter operative, you have work to do. Three items per order. Possible Results: .357 Speedloaders, Kitchen Gun patented magazines, or Stetchkin magazines."
 	hidden = TRUE
-	cost = 12000
+	cost = 4000
 	var/num_contained = 3
 	contains = list(/obj/item/ammo_box/a357,
 					/obj/item/ammo_box/magazine/pistolm9mm,
@@ -319,11 +301,11 @@
 	name = "Potted Plants Crate"
 	desc = "Spruce up the station with these lovely plants! Contains a random assortment of five potted plants from Nanotrasen's potted plant research division. Warranty void if thrown."
 	cost = 730
-	contains = list(/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random,
-					/obj/item/twohanded/required/kirbyplants/random)
+	contains = list(/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random,
+					/obj/item/kirbyplants/random)
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
@@ -358,45 +340,62 @@
 //////////////////////////// Misc + Decor ////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/misc/carpet_exotic
-	name = "Exotic Carpet Crate"
-	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. Contains 100 tiles each of 10 different flooring patterns."
-	cost = 7000
-	contains = list(/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/blue/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/cyan/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/green/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/orange/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/purple/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/red/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblue/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/royalblack/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "exotic carpet crate"
-
 /datum/supply_pack/misc/carpet
-	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains some classic carpet, along with black, red, and monochrome varients."
-	cost = 1350
-	contains = list(/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/black/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/blackred/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty,
-					/obj/item/stack/tile/carpet/monochrome/fifty)
-	crate_name = "premium carpet crate"
+	goody = PACK_GOODY_PUBLIC
+	name = "Classic Carpet Single-Pack"
+	desc = "Plasteel floor tiles getting on your nerves? This 50 units stack of extra soft carpet will tie any room together."
+	cost = 200
+	contains = list(/obj/item/stack/tile/carpet/fifty)
+
+/datum/supply_pack/misc/carpet/black
+	name = "Black Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/black/fifty)
+
+/datum/supply_pack/misc/carpet/arcade
+	name = "Arcade Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/arcade/fifty)
+
+/datum/supply_pack/misc/carpet/premium
+	name = "Monochrome Carpet Single-Pack"
+	desc = "Exotic carpets for all your decorating needs. This 30 units stack of extra soft carpet will tie any room together."
+	cost = 250
+	contains = list(/obj/item/stack/tile/carpet/monochrome/thirty)
+
+/datum/supply_pack/misc/carpet/premium/blackred
+	name = "Black-Red Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/blackred/thirty)
+
+/datum/supply_pack/misc/carpet/premium/royalblack
+	name = "Royal Black Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/royalblack/thirty)
+
+/datum/supply_pack/misc/carpet/premium/royalblue
+	name = "Royal Blue Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/royalblue/thirty)
+
+/datum/supply_pack/misc/carpet/premium/red
+	name = "Red Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/red/thirty)
+
+/datum/supply_pack/misc/carpet/premium/purple
+	name = "Purple Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/purple/thirty)
+
+/datum/supply_pack/misc/carpet/premium/orange
+	name = "Orange Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/orange/thirty)
+
+/datum/supply_pack/misc/carpet/premium/green
+	name = "Green Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/green/thirty)
+
+/datum/supply_pack/misc/carpet/premium/cyan
+	name = "Cyan Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/cyan/thirty)
+
+/datum/supply_pack/misc/carpet/premium/blue
+	name = "Blue Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/blue/thirty)
 
 /datum/supply_pack/misc/noslipfloor
 	name = "High-traction Floor Tiles"
@@ -427,18 +426,44 @@
 					/obj/item/restraints/handcuffs/fake/kinky,
 					/obj/item/clothing/head/kitty/genuine, // Why its illegal
 					/obj/item/clothing/head/kitty/genuine,
-					/obj/item/storage/pill_bottle/penis_enlargement,
-					/obj/structure/reagent_dispensers/keg/aphro)
+					/obj/item/storage/pill_bottle/penis_enlargement)
 	crate_name = "lewd kit"
 	crate_type = /obj/structure/closet/crate
 
-/datum/supply_pack/misc/lewdkeg
-	name = "Lewd Deluxe Keg"
-	desc = "That other stuff not getting you ready? Well I have a Chemslut making tons of the good stuff."
-	cost = 7500 //It can be a weapon
-	contraband = TRUE
-	contains = list(/obj/structure/reagent_dispensers/keg/aphro/strong)
-	crate_name = "deluxe keg"
+///Special supply crate that generates random syndicate gear up to a determined TC value
+
+/datum/supply_pack/misc/syndicate
+
+	name = "Assorted Syndicate Gear"
+
+	desc = "Contains a random assortment of syndicate gear."
+
+	special = TRUE ///Cannot be ordered via cargo
+
+	contains = list()
+
+	crate_name = "syndicate gear crate"
+
 	crate_type = /obj/structure/closet/crate
 
+	var/crate_value = 30 ///Total TC worth of contained uplink items
 
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Syndicate Packs /////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+//Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
+//(this is exclusively used for the rare variant of the stray cargo event!)
+/datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	while(crate_value)
+		var/category = pick(uplink_items)
+		var/item = pick(uplink_items[category])
+		var/datum/uplink_item/I = uplink_items[category][item]
+		if(!I.surplus || prob(100 - I.surplus))
+			continue
+		if(crate_value < I.cost)
+			continue
+		crate_value -= I.cost
+		new I.item(C)

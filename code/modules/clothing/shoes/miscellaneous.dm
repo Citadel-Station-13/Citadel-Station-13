@@ -17,6 +17,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 12 SECONDS
 
 /obj/item/clothing/shoes/combat/sneakboots
 	name = "insidious sneakboots"
@@ -45,9 +46,11 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
 	strip_delay = 50
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -71,6 +74,8 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
+	custom_price = PRICE_ABOVE_EXPENSIVE
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -97,6 +102,7 @@
 	icon_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
+	lace_time = 20 SECONDS // how the hell do these laces even work??
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -128,6 +134,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 12 SECONDS
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -142,6 +149,14 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/winterboots/ice_boots
+	name = "ice hiking boots"
+	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
+	icon_state = "iceboots"
+	item_state = "iceboots"
+	clothing_flags = NOSLIP_ICE
 
 /obj/item/clothing/shoes/winterboots/christmasbootsr
 	name = "red christmas boots"
@@ -168,11 +183,16 @@
 	strip_delay = 40
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
+	cold_protection = FEET|LEGS
+	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+	heat_protection = FEET|LEGS
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/cult
@@ -183,6 +203,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult/alt
 	name = "cultist boots"
@@ -213,12 +234,14 @@
 	strip_delay = 100
 	equip_delay_other = 100
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
@@ -271,6 +294,7 @@
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
@@ -345,6 +369,7 @@
 	icon_state = "rus_shoes"
 	item_state = "rus_shoes"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 // kevin is into feet
 /obj/item/clothing/shoes/wraps
@@ -352,6 +377,7 @@
 	desc = "Ankle coverings. These ones have a golden design."
 	icon_state = "gildedcuffs"
 	body_parts_covered = FALSE
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/wraps/silver
 	name = "silver leg wraps"
@@ -372,6 +398,7 @@
 	name = "cowboy boots"
 	desc = "A standard pair of brown cowboy boots."
 	icon_state = "cowboyboots"
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboyboots/black
 	name = "black cowboy boots"

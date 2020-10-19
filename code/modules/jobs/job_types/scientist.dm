@@ -12,9 +12,12 @@
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/scientist
+	plasma_outfit = /datum/outfit/plasmaman/science
 
 	access = list(ACCESS_ROBOTICS, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE, ACCESS_GENETICS)
 	minimal_access = list(ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM)
+	paycheck = PAYCHECK_MEDIUM
+	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	threat = 1.2

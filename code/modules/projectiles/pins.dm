@@ -13,10 +13,15 @@
 	var/pin_removeable = 0 // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
-/obj/item/firing_pin/New(newloc)
-	..()
+/obj/item/firing_pin/Initialize(newloc)
+	. = ..()
 	if(istype(newloc, /obj/item/gun))
 		gun = newloc
+
+/obj/item/firing_pin/Destroy()
+	if(gun)
+		gun.pin = null
+	return ..()
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -224,24 +229,6 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
-/obj/item/firing_pin/Destroy()
-	if(gun)
-		gun.pin = null
-	return ..()
-
-//Station Locked
-
-/obj/item/firing_pin/away
-	name = "station locked pin"
-	desc = "A firing pin that only will fire when off the station."
-
-/obj/item/firing_pin/away/pin_auth(mob/living/user)
-	var/area/station_area = get_area(src)
-	if(!station_area || is_station_level(station_area.z))
-		to_chat(user, "<span class='warning'>The pin beeps, refusing to fire.</span>")
-		return FALSE
-	return TRUE
-
 /obj/item/firing_pin/security_level
 	name = "security level firing pin"
 	desc = "A sophisticated firing pin that authorizes operation based on its settings and current security level."
@@ -325,3 +312,18 @@
 
 /obj/item/firing_pin/security_level/pin_auth(mob/living/user)
 	return (only_lethals && !(gun.chambered?.harmful)) || ISINRANGE(GLOB.security_level, min_sec_level, max_sec_level)
+
+// Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
+/obj/item/firing_pin/explorer
+	name = "outback firing pin"
+	desc = "A firing pin used by the austrailian defense force, retrofit to prevent weapon discharge on the station."
+	icon_state = "firing_pin_explorer"
+	fail_message = "<span class='warning'>CANNOT FIRE WHILE ON STATION, MATE!</span>"
+
+// This checks that the user isn't on the station Z-level.
+/obj/item/firing_pin/explorer/pin_auth(mob/living/user)
+	var/turf/station_check = get_turf(user)
+	if(!station_check||is_station_level(station_check.z))
+		to_chat(user, "<span class='warning'>You cannot use your weapon while on the station!</span>")
+		return FALSE
+	return TRUE

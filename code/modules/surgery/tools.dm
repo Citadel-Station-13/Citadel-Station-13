@@ -10,6 +10,12 @@
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
 
+/obj/item/retractor/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
+
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
@@ -55,6 +61,12 @@
 	tool_behaviour = TOOL_HEMOSTAT
 	toolspeed = 1
 
+/obj/item/hemostat/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
+
 /obj/item/hemostat/augment
 	name = "hemostat"
 	desc = "Tiny servos power a pair of pincers to stop bleeding."
@@ -65,7 +77,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
-
 
 /obj/item/cautery
 	name = "cautery"
@@ -80,6 +91,12 @@
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
 
+/obj/item/cautery/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
+
 /obj/item/cautery/augment
 	name = "cautery"
 	desc = "A heated element that cauterizes wounds."
@@ -90,7 +107,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
-
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -108,6 +124,12 @@
 	attack_verb = list("drilled")
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
+
+/obj/item/surgicaldrill/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/surgicaldrill/advanced
 	name = "searing tool"
@@ -148,7 +170,6 @@
 	toolspeed = 0.5
 	attack_verb = list("drilled")
 
-
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -166,13 +187,20 @@
 	item_flags = SURGICAL_TOOL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
+	bare_wound_bonus = 20
 
 /obj/item/scalpel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+
+/obj/item/scalpel/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
@@ -183,7 +211,7 @@
 	force = 16
 	toolspeed = 0.7
 	light_color = LIGHT_COLOR_GREEN
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 
 /obj/item/scalpel/advanced/Initialize()
 	. = ..()
@@ -223,12 +251,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 
 /obj/item/scalpel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
-
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -248,14 +275,21 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
+	wound_bonus = 5
+	bare_wound_bonus = 10
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
+/obj/item/circular_saw/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()
 
 /obj/item/circular_saw/augment
 	name = "circular saw"
@@ -273,7 +307,7 @@
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -378,3 +412,24 @@
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
+
+/obj/item/bonesetter
+	name = "bonesetter"
+	desc = "For setting things right."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone setter"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("corrected", "properly set")
+	tool_behaviour = TOOL_BONESET
+	toolspeed = 1
+
+/obj/item/bonesetter/attack(mob/living/L, mob/user)
+	if(user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
+		return
+	return ..()

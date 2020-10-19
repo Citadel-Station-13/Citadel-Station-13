@@ -5,18 +5,24 @@
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 3
-	spawn_positions = 2
+	spawn_positions = 3
 	supervisors = "the chief engineer"
 	selection_color = "#ff9b3d"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/atmos
+	plasma_outfit = /datum/outfit/plasmaman/atmospherics
 
 	access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,
 									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ENGINE,
 									ACCESS_ENGINE_EQUIP, ACCESS_EMERGENCY_STORAGE, ACCESS_CONSTRUCTION, ACCESS_MINERAL_STOREROOM)
+	paycheck = PAYCHECK_MEDIUM
+	paycheck_department = ACCOUNT_ENG
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic, /datum/skill_modifier/job/affinity/wiring)
+
 	display_order = JOB_DISPLAY_ORDER_ATMOSPHERIC_TECHNICIAN
 	threat = 0.5
 

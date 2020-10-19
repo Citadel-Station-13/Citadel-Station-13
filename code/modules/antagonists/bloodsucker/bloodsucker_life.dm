@@ -10,27 +10,24 @@
 //
 // Show as dead when...
 
-/datum/antagonist/bloodsucker/proc/LifeTick()// Should probably run from life.dm, same as handle_changeling, but will be an utter pain to move
-	set waitfor = FALSE // Don't make on_gain() wait for this function to finish. This lets this code run on the side.
-	var/notice_healing
-	while(owner && !AmFinalDeath()) // owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER) == src
-		if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
-			AddBloodVolume(passive_blood_drain) // -.1 currently
-		if(HandleHealing(1)) 		// Heal
-			if(!notice_healing && owner.current.blood_volume > 0)
-				to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
-				notice_healing = TRUE
-		else if(notice_healing == TRUE)
-			notice_healing = FALSE 	// Apply Low Blood Effects
-		HandleStarving()  // Death
-		HandleDeath() // Standard Update
-		update_hud()// Daytime Sleep in Coffin
-		if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
-			if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
-				Torpor_Begin()
-					// Wait before next pass
-		sleep(10)
-	FreeAllVassals() 	// Free my Vassals! (if I haven't yet)
+/datum/antagonist/bloodsucker/proc/LifeTick()  //Runs from BiologicalLife, handles all the bloodsucker constant proccesses
+	if(!owner || AmFinalDeath())
+		return
+	if(owner.current.stat == CONSCIOUS && !poweron_feed && !HAS_TRAIT(owner.current, TRAIT_FAKEDEATH)) // Deduct Blood
+		AddBloodVolume(passive_blood_drain) // -.1 currently
+	if(HandleHealing(1)) 		// Heal
+		if(!notice_healing && owner.current.blood_volume > 0)
+			to_chat(owner, "<span class='notice'>The power of your blood begins knitting your wounds...</span>")
+			notice_healing = TRUE
+	else if(notice_healing)
+		notice_healing = FALSE 	// Apply Low Blood Effects
+	HandleStarving()  // Death
+	HandleDeath() // Standard Update
+	update_hud()// Daytime Sleep in Coffin
+	if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
+		if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
+			Torpor_Begin()
+				// Wait before next pass
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -177,7 +174,7 @@
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))
 	// Nutrition
-	owner.current.nutrition = clamp(owner.current.blood_volume, 545, 0) //The amount of blood is how full we are.
+	owner.current.set_nutrition(min(owner.current.blood_volume, NUTRITION_LEVEL_FED)) //The amount of blood is how full we are.
 	//A bit higher regeneration based on blood volume
 	if(owner.current.blood_volume < 700)
 		additional_regen = 0.4
@@ -216,8 +213,8 @@
 				//	for (var/datum/action/bloodsucker/masquerade/P in powers)
 				//		P.Deactivate()
 		//	TEMP DEATH
-	var/total_brute = owner.current.getBruteLoss()
-	var/total_burn = owner.current.getFireLoss()
+	var/total_brute = owner.current.getBruteLoss_nonProsthetic()
+	var/total_burn = owner.current.getFireLoss_nonProsthetic()
 	var/total_toxloss = owner.current.getToxLoss() //This is neater than just putting it in total_damage
 	var/total_damage = total_brute + total_burn + total_toxloss
 	// Died? Convert to Torpor (fake death)
@@ -272,13 +269,15 @@
 
 /datum/antagonist/bloodsucker/AmFinalDeath()
  	return owner && owner.AmFinalDeath()
-/datum/antagonist/changeling/AmFinalDeath()
- 	return owner && owner.AmFinalDeath()
 
 /datum/mind/proc/AmFinalDeath()
  	return !current || QDELETED(current) || !isliving(current) || isbrain(current) || !get_turf(current) // NOTE: "isliving()" is not the same as STAT == CONSCIOUS. This is to make sure you're not a BORG (aka silicon)
 
 /datum/antagonist/bloodsucker/proc/FinalDeath()
+		//Dont bother if we are already supposed to be dead
+	if(FinalDeath)
+		return 
+	FinalDeath = TRUE //We are now supposed to die. Lets not spam it.
 	if(!iscarbon(owner.current)) //Check for non carbons.
 		owner.current.gib()
 		return
@@ -308,6 +307,7 @@
 
 
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //			HUMAN FOOD
@@ -331,7 +331,7 @@
 		return
 	var/mob/living/carbon/C = owner.current
 	// Remove Nutrition, Give Bad Food
-	C.nutrition -= food_nutrition
+	C.adjust_nutrition(-food_nutrition)
 	foodInGut += food_nutrition
 	// Already ate some bad clams? Then we can back out, because we're already sick from it.
 	if(foodInGut != food_nutrition)

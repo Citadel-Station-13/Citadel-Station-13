@@ -61,10 +61,10 @@
 		return "a healthy"
 	return "<span class='danger'>an unstable</span>"
 
-/obj/item/organ/heart/prepare_eat()
-	var/obj/S = ..()
-	S.icon_state = "[icon_base]-off"
-	return S
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
+	. = ..()
+	beating = FALSE
+	update_icon()
 
 /obj/item/organ/heart/on_life()
 	. = ..()
@@ -198,8 +198,8 @@ obj/item/organ/heart/slime
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 20/severity SECONDS)
-	damage += 100/severity
+	addtimer(CALLBACK(src, .proc/Restart), 0.2*severity SECONDS)
+	damage += severity
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"
@@ -221,7 +221,7 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 		used_dose()
 	if(ramount < 10) //eats your nutrition to regen epinephrine
 		var/regen_amount = owner.nutrition/2000
-		owner.nutrition -= regen_amount
+		owner.adjust_nutrition(-regen_amount)
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()

@@ -14,7 +14,7 @@
 
 /datum/mutation/human/wacky
 	name = "Wacky"
-	desc = "<span class='sans'>Unknown.</span>"
+	desc = "Unknown."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
@@ -277,10 +277,10 @@
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/beachbum)
-	owner.remove_language(/datum/language/common)
+	owner.grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/common)
-	owner.remove_language(/datum/language/beachbum)
+	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)

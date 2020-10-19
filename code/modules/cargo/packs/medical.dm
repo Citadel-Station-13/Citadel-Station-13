@@ -114,7 +114,9 @@
 					/obj/item/storage/box/medsprays,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/pill_bottle/stimulant)
+					/obj/item/storage/pill_bottle/stimulant,
+					/obj/item/stack/medical/bone_gel,
+					/obj/item/stack/medical/bone_gel)
 	crate_name = "medical supplies crate"
 
 /datum/supply_pack/medical/adv_surgery_tools
@@ -141,34 +143,6 @@
 ///////////////////////////// Medical Kits ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-/datum/supply_pack/medical/firstaidbruises
-	name = "Bruise Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing bruises and broken bones."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/brute)
-	crate_name = "brute treatment kit crate"
-
-/datum/supply_pack/medical/firstaidburns
-	name = "Burn Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing severe burns."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/fire)
-	crate_name = "burn treatment kit crate"
-
-/datum/supply_pack/medical/firstaid
-	name = "First Aid Kit Crate"
-	desc = "Contains four first aid kits for healing most types of wounds."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/regular)
-	crate_name = "first aid kit crate"
-
 /datum/supply_pack/medical/sprays
 	name = "Medical Sprays"
 	desc = "Contains two cans of Styptic Spray, Silver Sulfadiazine Spray, Synthflesh Spray and Sterilizer Compound Spray."
@@ -182,35 +156,6 @@
 					/obj/item/reagent_containers/medspray/sterilizine,
 					/obj/item/reagent_containers/medspray/sterilizine)
 	crate_name = "medical supplies crate"
-
-/datum/supply_pack/medical/firstaidmixed
-	name = "Mixed Medical Kits"
-	desc = "Contains one of each medical kits for dealing with a variety of injured crewmembers."
-	cost = 1250
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/fire,
-					/obj/item/storage/firstaid/regular)
-	crate_name = "medical supplies crate"
-
-/datum/supply_pack/medical/firstaidoxygen
-	name = "Oxygen Deprivation Kit Crate"
-	desc = "Contains three first aid kits focused on helping oxygen deprivation victims."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/o2)
-	crate_name = "oxygen deprivation kit crate"
-
-/datum/supply_pack/medical/firstaidtoxins
-	name = "Toxin Treatment Kit Crate"
-	desc = "Contains three first aid kits focused on healing damage dealt by heavy toxins."
-	cost = 1000
-	contains = list(/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/toxin)
-	crate_name = "toxin treatment kit crate"
 
 /datum/supply_pack/medical/advrad
 	name = "Radiation Treatment Crate Deluxe"
@@ -252,6 +197,7 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
+	can_private_buy = FALSE
 
 /datum/supply_pack/medical/anitvirus
 	name = "Virus Containment Crate"
@@ -272,3 +218,18 @@
 					/obj/item/storage/box/beakers)
 	crate_name = "virus containment unit crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss)
+
+	crate_name = "medipen crate"

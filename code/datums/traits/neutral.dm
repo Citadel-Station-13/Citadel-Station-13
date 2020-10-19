@@ -10,6 +10,15 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
+/datum/quirk/snob
+	name = "Snob"
+	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	value = 0
+	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
+	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	medical_record_text = "Patient seems to be rather stuck up."
+	mob_trait = TRAIT_SNOB
+
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
@@ -113,3 +122,19 @@
 	if(H)
 		var/datum/species/species = H.dna.species
 		species.disliked_food &= ~ALCOHOL
+
+/datum/quirk/longtimer
+	name = "Longtimer"
+	desc = "You've been around for a long time and seen more than your fair share of action, suffering some pretty nasty scars along the way. For whatever reason, you've declined to get them removed or augmented."
+	value = 0
+	gain_text = "<span class='notice'>Your body has seen better days.</span>"
+	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
+	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+	/// the minimum amount of scars we can generate
+	var/min_scars = 3
+	/// the maximum amount of scars we can generate
+	var/max_scars = 7
+
+/datum/quirk/longtimer/on_spawn()
+	var/mob/living/carbon/C = quirk_holder
+	C.generate_fake_scars(rand(min_scars, max_scars))

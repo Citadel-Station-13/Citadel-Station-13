@@ -40,7 +40,7 @@
 	trunk_check()
 
 	air_contents = new /datum/gas_mixture()
-	//gas.volume = 1.05 * CELLSTANDARD
+	//air_contents.set_volume(1.05 * CELLSTANDARD)
 	update_icon()
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
@@ -263,7 +263,7 @@
 	. = ..()
 	if(.)
 		return
-	for(var/obj/item/I in src_object)
+	for(var/obj/item/I in src_object.contents())
 		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
@@ -299,13 +299,15 @@
 
 // handle machine interaction
 
-/obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+/obj/machinery/disposal/bin/ui_state(mob/user)
+	return GLOB.notcontained_state
+
+/obj/machinery/disposal/bin/ui_interact(mob/user, datum/tgui/ui)
 	if(stat & BROKEN)
 		return
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "disposal_unit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "DisposalUnit", name)
 		ui.open()
 
 /obj/machinery/disposal/bin/ui_data(mob/user)
@@ -375,7 +377,6 @@
 	log_combat(user, target, "shoved", "into [src] (disposal bin)")
 	return TRUE
 
-
 /obj/machinery/disposal/bin/flush()
 	..()
 	full_pressure = FALSE
@@ -443,8 +444,8 @@
 	var/datum/gas_mixture/env = L.return_air()
 	var/pressure_delta = (SEND_PRESSURE*1.01) - air_contents.return_pressure()
 
-	if(env.temperature > 0)
-		var/transfer_moles = 0.1 * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+	if(env.return_temperature() > 0)
+		var/transfer_moles = 0.1 * pressure_delta*air_contents.return_volume()/(env.return_temperature() * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)

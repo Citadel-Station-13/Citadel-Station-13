@@ -28,7 +28,7 @@
 		return 0
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
+	for(var/mob/living/C in fov_view(1,src))
 		if(C!=src && Adjacent(C))
 			choices += C
 
@@ -184,7 +184,7 @@
 				var/mob/living/simple_animal/slime/M
 				M = new(loc, child_colour)
 				if(ckey)
-					M.nutrition = new_nutrition //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
+					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
 				if(i != 1)
 					step_away(M,src)

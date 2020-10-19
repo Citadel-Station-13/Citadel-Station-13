@@ -500,6 +500,15 @@
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 		return S
 
+///////////////////////////////// OFF BALANCE/SHOVIES ////////////////////////
+/mob/living/proc/ShoveOffBalance(amount)
+	var/datum/status_effect/off_balance/B = has_status_effect(STATUS_EFFECT_OFF_BALANCE)
+	if(B)
+		B.duration = max(world.time + amount, B.duration)
+	else if(amount > 0)
+		B = apply_status_effect(STATUS_EFFECT_OFF_BALANCE, amount)
+	return B
+
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
 /mob/living/proc/IsFrozen()
@@ -571,12 +580,13 @@
 /mob/living/proc/cure_blind(source)
 	REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		update_blindness()
+		if(eye_blind <= 1) //little hack now that we don't actively check for trait and unconsciousness on update_blindness.
+			adjust_blindness(-1)
 
 /mob/living/proc/become_blind(source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
 		ADD_TRAIT(src, TRAIT_BLIND, source)
-		update_blindness()
+		blind_eyes(1)
 	else
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 

@@ -57,3 +57,5 @@
 			cut_overlays()
 		else
 			icon_state = "[module.cyborg_base_icon]"
+
+	SEND_SIGNAL(src, COMSIG_ROBOT_UPDATE_ICONS)

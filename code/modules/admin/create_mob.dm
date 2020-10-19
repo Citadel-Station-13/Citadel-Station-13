@@ -24,7 +24,9 @@
 	H.facial_hair_style = random_facial_hair_style(H.gender)
 	H.hair_color = random_short_color()
 	H.facial_hair_color = H.hair_color
-	H.eye_color = random_eye_color()
+	var/random_eye_color = random_eye_color()
+	H.left_eye_color = random_eye_color
+	H.right_eye_color = random_eye_color
 	H.dna.blood_type = random_blood_type()
 	H.saved_underwear = H.underwear
 	H.saved_undershirt = H.undershirt
@@ -41,6 +43,9 @@
 	H.dna.features["insect_wings"] = pick(GLOB.insect_wings_list)
 	H.dna.features["deco_wings"] = pick(GLOB.deco_wings_list)
 	H.dna.features["insect_fluff"] = pick(GLOB.insect_fluffs_list)
+	H.dna.features["arachnid_legs"] = pick(GLOB.arachnid_legs_list)
+	H.dna.features["arachnid_spinneret"] = pick(GLOB.arachnid_spinneret_list)
+	H.dna.features["arachnid_mandibles"] = pick(GLOB.arachnid_mandibles_list)
 	H.dna.features["flavor_text"] = "" //Oh no.
 	H.dna.features["body_model"] = H.gender
 

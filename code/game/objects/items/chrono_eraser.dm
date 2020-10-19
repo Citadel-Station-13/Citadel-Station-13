@@ -65,7 +65,7 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
 	if(field)
 		field_disconnect(field)
 	..()
@@ -246,9 +246,9 @@
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.gases[/datum/gas/oxygen] = MOLES_O2STANDARD
-	GM.gases[/datum/gas/nitrogen] = MOLES_N2STANDARD
-	GM.temperature = T20C
+	GM.set_moles(/datum/gas/oxygen, MOLES_O2STANDARD)
+	GM.set_moles(/datum/gas/nitrogen, MOLES_N2STANDARD)
+	GM.set_temperature(T20C)
 	return GM
 
 /obj/effect/chrono_field/Move()

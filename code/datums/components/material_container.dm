@@ -73,7 +73,7 @@
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [parent].</span>")
 		return
-	if(!has_space(material_amount))
+	if((!precise_insertion || !GLOB.typecache_stack[I.type]) && !has_space(material_amount))
 		to_chat(user, "<span class='warning'>[parent] has not enough space. Please remove materials from [parent] in order to insert more.</span>")
 		return
 	user_insert(I, user)
@@ -105,7 +105,7 @@
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
-	if(!I)
+	if(QDELETED(I))
 		return FALSE
 
 	multiplier = CEILING(multiplier, 0.01)

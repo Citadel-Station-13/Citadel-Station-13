@@ -11,7 +11,7 @@
 		return FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC))
 		if(!parts.len)
 			return FALSE
 	return ..()
@@ -19,7 +19,7 @@
 /datum/nanite_program/regenerative/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC))
 		if(!parts.len)
 			return
 		for(var/obj/item/bodypart/L in parts)
@@ -76,7 +76,8 @@
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(length(C.get_traumas()))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(length(B?.get_traumas_type(TRAUMA_RESILIENCE_BASIC)))
 			problems = TRUE
 	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
@@ -120,7 +121,7 @@
 
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = list(BODYPART_ROBOTIC, BODYPART_HYBRID))
 		if(!parts.len)
 			return FALSE
 	else
@@ -131,7 +132,7 @@
 /datum/nanite_program/repairing/active_effect(mob/living/M)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = list(BODYPART_ROBOTIC, BODYPART_HYBRID))
 		if(!parts.len)
 			return
 		var/update = FALSE
@@ -175,7 +176,7 @@
 /datum/nanite_program/regenerative_advanced/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC))
 		if(!parts.len)
 			return
 		var/update = FALSE
@@ -198,7 +199,8 @@
 	var/problems = FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		if(length(C.get_traumas()))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(length(B?.get_traumas_type(TRAUMA_RESILIENCE_SURGERY)))
 			problems = TRUE
 	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
 		problems = TRUE
@@ -208,7 +210,7 @@
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
-		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
 
 /datum/nanite_program/defib
 	name = "Defibrillation"

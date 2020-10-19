@@ -34,6 +34,7 @@
 	var/restricted = FALSE
 	req_access = list()
 
+	var/update = 0
 	var/static/list/label2types = list(
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -49,7 +50,9 @@
 		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma
+		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
+		"methane" = /obj/machinery/portable_atmospherics/canister/methane,
+		"methyl bromide" = /obj/machinery/portable_atmospherics/canister/methyl_bromide
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -61,7 +64,7 @@
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
-	desc = "Nitrogen gas. Reportedly useful for something."
+	desc = "Nitrogen. Reportedly useful for something."
 	icon_state = "red"
 	gas_type = /datum/gas/nitrogen
 
@@ -79,19 +82,19 @@
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
-	desc = "Plasma gas. The reason YOU are here. Highly toxic."
+	desc = "Plasma. The reason YOU are here. Highly toxic."
 	icon_state = "orange"
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
-	desc = "BZ, a powerful hallucinogenic nerve agent."
+	desc = "BZ. A powerful hallucinogenic nerve agent."
 	icon_state = "purple"
 	gas_type = /datum/gas/bz
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
-	desc = "Nitrous oxide gas. Known to cause drowsiness."
+	desc = "Nitrous oxide. Known to cause drowsiness."
 	icon_state = "redws"
 	gas_type = /datum/gas/nitrous_oxide
 
@@ -114,7 +117,7 @@
 
 /obj/machinery/portable_atmospherics/canister/nitryl
 	name = "nitryl canister"
-	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
+	desc = "Nitryl. Feels great 'til the acid eats your lungs."
 	icon_state = "brown"
 	gas_type = /datum/gas/nitryl
 
@@ -132,7 +135,7 @@
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"
-	desc = "Water Vapor. We get it, you vape."
+	desc = "Water vapor. We get it, you vape."
 	icon_state = "water_vapor"
 	gas_type = /datum/gas/water_vapor
 	filled = 1
@@ -143,6 +146,18 @@
 	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
 	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/methane
+	name = "methane canister"
+	desc = "Methane. The simplest of hydrocarbons. Non-toxic but highly flammable."
+	icon_state = "greyblackred"
+	gas_type = /datum/gas/methane
+
+/obj/machinery/portable_atmospherics/canister/methyl_bromide
+	name = "methyl bromide canister"
+	desc = "Methyl bromide. A potent toxin to most, essential for the Kharmaan to live."
+	icon_state = "purplecyan"
+	gas_type = /datum/gas/methyl_bromide
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
@@ -159,10 +174,10 @@
 /obj/machinery/portable_atmospherics/canister/proto
 	name = "prototype canister"
 
+
 /obj/machinery/portable_atmospherics/canister/proto/default
 	name = "prototype canister"
 	desc = "The best way to fix an atmospheric emergency... or the best way to introduce one."
-	icon_state = "proto"
 	icon_state = "proto"
 	volume = 5000
 	max_integrity = 300
@@ -170,6 +185,7 @@
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
 	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
 	prototype = TRUE
+
 
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen
 	name = "prototype canister"
@@ -192,6 +208,7 @@
 
 	update_icon()
 
+
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	qdel(pump)
 	pump = null
@@ -200,14 +217,14 @@
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
 		if(starter_temp)
-			air_contents.temperature = starter_temp
-		air_contents.gases[gas_type] = (maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+			air_contents.set_temperature(starter_temp)
+		air_contents.set_moles(gas_type,(maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 		if(starter_temp)
-			air_contents.temperature = starter_temp
+			air_contents.set_temperature(starter_temp)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.gases[/datum/gas/oxygen] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.gases[/datum/gas/nitrogen] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.set_moles(/datum/gas/oxygen, (O2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
+	air_contents.set_moles(/datum/gas/nitrogen, (N2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(stat & BROKEN)
@@ -215,7 +232,6 @@
 
 /obj/machinery/portable_atmospherics/canister/update_overlays()
 	. = ..()
-
 	if(holding)
 		. += "can-open"
 	if(connected_port)
@@ -245,7 +261,8 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
@@ -263,6 +280,7 @@
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
 	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
 		return
+	stat |= BROKEN
 	canister_break()
 
 /obj/machinery/portable_atmospherics/canister/proc/canister_break()
@@ -272,10 +290,9 @@
 	T.assume_air(expelled_gas)
 	air_update_turf()
 
-	stat |= BROKEN
+	obj_break()
 	density = FALSE
-	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	update_icon()
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
@@ -314,11 +331,13 @@
 		air_update_turf() // Update the environment if needed.
 	update_icon()
 
-/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "canister", name, 420, 405, master_ui, state)
+		ui = new(user, src, "Canister", name)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/canister/ui_data()
@@ -353,7 +372,7 @@
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in label2types
+			var/label = input("New canister label:", name) as null|anything in sortList(label2types)
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)
@@ -396,8 +415,8 @@
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
 					var/list/danger = list()
-					for(var/id in air_contents.gases)
-						var/gas = air_contents.gases[id]
+					for(var/id in air_contents.get_gases())
+						var/gas = air_contents.get_moles(id)
 						if(!GLOB.meta_gas_dangers[id])
 							continue
 						if(gas > (GLOB.meta_gas_visibility[id] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility

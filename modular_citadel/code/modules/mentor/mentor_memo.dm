@@ -33,11 +33,14 @@
 			var/datum/DBQuery/query_memocheck = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")] WHERE ckey = '[sql_ckey]'")
 			if(!query_memocheck.Execute())
 				var/err = query_memocheck.ErrorMsg()
+				qdel(query_memocheck)
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
 				return
 			if(query_memocheck.NextRow())
+				qdel(query_memocheck)
 				to_chat(src, "You already have set a memo.")
 				return
+			qdel(query_memocheck)
 			var/memotext = input(src,"Write your Memo","Memo") as message
 			if(!memotext)
 				return
@@ -46,20 +49,24 @@
 			var/datum/DBQuery/query_memoadd = SSdbcore.NewQuery("INSERT INTO [format_table_name("mentor_memo")] (ckey, memotext, timestamp) VALUES ('[sql_ckey]', '[memotext]', '[timestamp]')")
 			if(!query_memoadd.Execute())
 				var/err = query_memoadd.ErrorMsg()
+				qdel(query_memoadd)
 				log_game("SQL ERROR adding new memo. Error : \[[err]\]\n")
 				return
 			log_admin("[key_name(src)] has set a mentor memo: [memotext]")
 			message_admins("[key_name_admin(src)] has set a mentor memo:<br>[memotext]")
+			qdel(query_memoadd)
 		if("Edit")
 			var/datum/DBQuery/query_memolist = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")]")
 			if(!query_memolist.Execute())
 				var/err = query_memolist.ErrorMsg()
+				qdel(query_memolist)
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
 				return
 			var/list/memolist = list()
 			while(query_memolist.NextRow())
 				var/lkey = query_memolist.item[1]
 				memolist += "[lkey]"
+			qdel(query_memolist)
 			if(!memolist.len)
 				to_chat(src, "No memos found in database.")
 				return
@@ -70,10 +77,12 @@
 			var/datum/DBQuery/query_memofind = SSdbcore.NewQuery("SELECT memotext FROM [format_table_name("mentor_memo")] WHERE ckey = '[target_sql_ckey]'")
 			if(!query_memofind.Execute())
 				var/err = query_memofind.ErrorMsg()
+				qdel(query_memofind)
 				log_game("SQL ERROR obtaining memotext from memo table. Error : \[[err]\]\n")
 				return
 			if(query_memofind.NextRow())
 				var/old_memo = query_memofind.item[1]
+				qdel(query_memofind)
 				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as message
 				if(!new_memo)
 					return
@@ -83,6 +92,7 @@
 				var/datum/DBQuery/update_query = SSdbcore.NewQuery("UPDATE [format_table_name("mentor_memo")] SET memotext = '[new_memo]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE ckey = '[target_sql_ckey]'")
 				if(!update_query.Execute())
 					var/err = update_query.ErrorMsg()
+					qdel(update_query)
 					log_game("SQL ERROR editing memo. Error : \[[err]\]\n")
 					return
 				if(target_sql_ckey == sql_ckey)
@@ -91,10 +101,14 @@
 				else
 					log_admin("[key_name(src)] has edited [target_sql_ckey]'s mentor memo from [old_memo] to [new_memo]")
 					message_admins("[key_name_admin(src)] has edited [target_sql_ckey]'s mentor memo from<br>[old_memo]<br>to<br>[new_memo]")
+				qdel(update_query)
+			else
+				qdel(query_memofind)
 		if("Show")
 			var/datum/DBQuery/query_memoshow = SSdbcore.NewQuery("SELECT ckey, memotext, timestamp, last_editor FROM [format_table_name("mentor_memo")]")
 			if(!query_memoshow.Execute())
 				var/err = query_memoshow.ErrorMsg()
+				qdel(query_memoshow)
 				log_game("SQL ERROR obtaining ckey, memotext, timestamp, last_editor from memo table. Error : \[[err]\]\n")
 				return
 			var/output = null
@@ -107,6 +121,7 @@
 				if(last_editor)
 					output += "<br><span class='memoedit'>Last edit by [last_editor] <A href='?_src_=holder;mentormemoeditlist=[ckey]'>(Click here to see edit log)</A></span>"
 				output += "<br>[memotext]</span><br>"
+			qdel(query_memoshow)
 			if(!output)
 				to_chat(src, "No memos found in database.")
 				return
@@ -115,12 +130,14 @@
 			var/datum/DBQuery/query_memodellist = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("mentor_memo")]")
 			if(!query_memodellist.Execute())
 				var/err = query_memodellist.ErrorMsg()
+				qdel(query_memodellist)
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
 				return
 			var/list/memolist = list()
 			while(query_memodellist.NextRow())
 				var/ckey = query_memodellist.item[1]
 				memolist += "[ckey]"
+			qdel(query_memodellist)
 			if(!memolist.len)
 				to_chat(src, "No memos found in database.")
 				return
@@ -131,6 +148,7 @@
 			var/datum/DBQuery/query_memodel = SSdbcore.NewQuery("DELETE FROM [format_table_name("memo")] WHERE ckey = '[target_sql_ckey]'")
 			if(!query_memodel.Execute())
 				var/err = query_memodel.ErrorMsg()
+				qdel(query_memodel)
 				log_game("SQL ERROR removing memo. Error : \[[err]\]\n")
 				return
 			if(target_sql_ckey == sql_ckey)

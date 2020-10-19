@@ -75,3 +75,11 @@
 #define ID_COMPONENT_KNOWLEDGE_NONE			0
 /// Has full knowledge
 #define ID_COMPONENT_KNOWLEDGE_FULL				1
+
+// Combat mode flags.
+/// The user wants combat mode on
+#define COMBAT_MODE_TOGGLED					(1<<0)
+/// combat mode is active.
+#define COMBAT_MODE_ACTIVE					(1<<1)
+/// combat mode is not active
+#define COMBAT_MODE_INACTIVE				(1<<2)

@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/obj/item/stock_parts/cell/cell
-	var/powerefficiency = 0.1
+	var/powerefficiency = 0.0666666
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
@@ -32,7 +32,6 @@
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
 	var/obj/item/reagent_containers/beaker = null
-	//dispensable_reagents is copypasted in plumbing synthesizers. Please update accordingly. (I didn't make it global because that would limit custom chem dispensers)
 	var/list/dispensable_reagents = list(
 		/datum/reagent/hydrogen,
 		/datum/reagent/lithium,
@@ -178,11 +177,10 @@
 		beaker = null
 		update_icon()
 
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/chem_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_dispenser", name, 565, 550, master_ui, state)
+		ui = new(user, src, "ChemDispenser", name)
 		if(user.hallucinating())
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
 		ui.open()
@@ -217,7 +215,7 @@
 		data["beakerTransferAmounts"] = null
 		data["beakerCurrentpH"] = null
 
-	var/list/chemicals = list()
+	var/chemicals[0]
 	var/is_hallucinating = FALSE
 	if(user.hallucinating())
 		is_hallucinating = TRUE
@@ -276,7 +274,7 @@
 				. = TRUE
 		if("eject")
 			replace_beaker(usr)
-			. = TRUE //no afterattack
+			. = TRUE
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
 				return
@@ -327,9 +325,9 @@
 				for(var/reagent in recording_recipe)
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
-						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
+						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
 						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -387,7 +385,7 @@
 
 /obj/machinery/chem_dispenser/RefreshParts()
 	recharge_amount = initial(recharge_amount)
-	var/newpowereff = 0.0666666
+	var/newpowereff = initial(powerefficiency)
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -511,12 +509,10 @@
 		/datum/reagent/consumable/peachjuice
 	)
 	emagged_reagents = list(
-		/datum/reagent/consumable/ethanol/thirteenloko,
-		/datum/reagent/consumable/ethanol/changelingsting,
-		/datum/reagent/consumable/ethanol/whiskey_cola,
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin,
-		/datum/reagent/medicine/cryoxadone
+		/datum/reagent/medicine/cryoxadone,
+		/datum/reagent/iron
 	)
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
@@ -571,13 +567,12 @@
 	upgrade_reagents2 = null
 	upgrade_reagents3 = null
 	emagged_reagents = list(
-		/datum/reagent/iron,
 		/datum/reagent/consumable/ethanol/alexander,
 		/datum/reagent/consumable/clownstears,
 		/datum/reagent/toxin/minttoxin,
 		/datum/reagent/consumable/ethanol/atomicbomb,
-		/datum/reagent/drug/aphrodisiac,
-		/datum/reagent/drug/aphrodisiacplus
+		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/changelingsting
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
@@ -723,3 +718,58 @@
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
+
+///An unique, less efficient model found in the medbay apothecary room.
+/obj/machinery/chem_dispenser/apothecary
+	name = "apothecary chem dispenser"
+	desc = "A cheaper chem dispenser meant for small scale medicine production."
+	icon_state = "minidispenser"
+	working_state = "minidispenser_working"
+	nopower_state = "minidispenser_nopower"
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/apothecary
+	powerefficiency = 0.0833333
+	dispensable_reagents = list( //radium and stable plasma moved to upgrade tier 1 and 2, they've little to do with most medicines anyway.
+		/datum/reagent/hydrogen,
+		/datum/reagent/lithium,
+		/datum/reagent/carbon,
+		/datum/reagent/nitrogen,
+		/datum/reagent/oxygen,
+		/datum/reagent/fluorine,
+		/datum/reagent/sodium,
+		/datum/reagent/aluminium,
+		/datum/reagent/silicon,
+		/datum/reagent/phosphorus,
+		/datum/reagent/sulfur,
+		/datum/reagent/chlorine,
+		/datum/reagent/potassium,
+		/datum/reagent/iron,
+		/datum/reagent/copper,
+		/datum/reagent/mercury,
+		/datum/reagent/water,
+		/datum/reagent/consumable/ethanol,
+		/datum/reagent/consumable/sugar,
+		/datum/reagent/toxin/acid,
+		/datum/reagent/fuel,
+		/datum/reagent/silver,
+		/datum/reagent/iodine,
+		/datum/reagent/bromine
+	)
+	upgrade_reagents = list(
+		/datum/reagent/oil,
+		/datum/reagent/ammonia,
+		/datum/reagent/radium
+	)
+	upgrade_reagents2 = list(
+		/datum/reagent/acetone,
+		/datum/reagent/phenol,
+		/datum/reagent/stable_plasma
+	)
+	upgrade_reagents3 = list(
+		/datum/reagent/medicine/mine_salve
+	)
+
+	emagged_reagents = list(
+		/datum/reagent/drug/space_drugs,
+		/datum/reagent/toxin/carpotoxin,
+		/datum/reagent/medicine/morphine
+	)

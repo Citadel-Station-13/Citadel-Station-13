@@ -10,18 +10,6 @@
 	icon_state = null
 	covers_groin = FALSE
 
-/datum/sprite_accessory/underwear/bottom/mankini
-	name = "Mankini"
-	icon_state = "mankini"
-	has_color = TRUE
-	gender = MALE
-
-/datum/sprite_accessory/underwear/bottom/male_kinky
-	name = "Jockstrap"
-	icon_state = "jockstrap"
-	has_color = TRUE
-	gender = MALE
-
 /datum/sprite_accessory/underwear/bottom/briefs
 	name = "Briefs"
 	icon_state = "briefs"
@@ -77,6 +65,26 @@
 	has_digitigrade = TRUE
 	has_color = TRUE
 
+/datum/sprite_accessory/underwear/bottom/male_kinky
+	name = "Jockstrap"
+	icon_state = "jockstrap"
+	has_color = TRUE
+	gender = MALE
+
+/datum/sprite_accessory/underwear/bottom/longjon
+	name = "Long John Bottoms"
+	icon_state = "ljonb"
+	has_digitigrade = TRUE
+	has_color = TRUE
+
+/datum/sprite_accessory/underwear/bottom/mankini
+	name = "Mankini"
+	icon_state = "mankini"
+	has_color = TRUE
+	gender = MALE
+
+//feminine underwear from here on
+
 /datum/sprite_accessory/underwear/bottom/panties
 	name = "Panties"
 	icon_state = "panties"
@@ -89,11 +97,6 @@
 	has_color = TRUE
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/bottom/fishnet_lower
-	name = "Panties - Fishnet"
-	icon_state = "fishnet_lower"
-	gender = FEMALE
-
 /datum/sprite_accessory/underwear/bottom/female_beekini
 	name = "Panties - Bee-kini"
 	icon_state = "panties_bee-kini"
@@ -104,6 +107,11 @@
 	icon_state = "panties_commie"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/bottom/fishnet_lower
+	name = "Panties - Fishnet"
+	icon_state = "fishnet_lower"
+	gender = FEMALE
+
 /datum/sprite_accessory/underwear/bottom/female_usastripe
 	name = "Panties - Freedom"
 	icon_state = "panties_assblastusa"
@@ -112,11 +120,6 @@
 /datum/sprite_accessory/underwear/bottom/female_kinky
 	name = "Panties - Kinky Black"
 	icon_state = "panties_kinky"
-	gender = FEMALE
-
-/datum/sprite_accessory/underwear/bottom/panties_uk
-	name = "Panties - UK"
-	icon_state = "panties_uk"
 	gender = FEMALE
 
 /datum/sprite_accessory/underwear/bottom/panties_neko
@@ -149,17 +152,10 @@
 	has_color = TRUE
 	gender = FEMALE
 
-/datum/sprite_accessory/underwear/bottom/longjon
-	name = "Long John Bottoms"
-	icon_state = "ljonb"
-	has_digitigrade = TRUE
-	has_color = TRUE
-
-/datum/sprite_accessory/underwear/bottom/swimsuit_red
-	name = "Swimsuit, One Piece - Red"
-	icon_state = "swimming_red"
+/datum/sprite_accessory/underwear/bottom/panties_uk
+	name = "Panties - UK"
+	icon_state = "panties_uk"
 	gender = FEMALE
-	covers_chest = TRUE
 
 /datum/sprite_accessory/underwear/bottom/swimsuit
 	name = "Swimsuit, One Piece - Black"
@@ -170,6 +166,12 @@
 /datum/sprite_accessory/underwear/bottom/swimsuit_blue
 	name = "Swimsuit, One Piece - Striped Blue"
 	icon_state = "swimming_blue"
+	gender = FEMALE
+	covers_chest = TRUE
+
+/datum/sprite_accessory/underwear/bottom/swimsuit_red
+	name = "Swimsuit, One Piece - Red"
+	icon_state = "swimming_red"
 	gender = FEMALE
 	covers_chest = TRUE
 
@@ -184,5 +186,3 @@
 	icon_state = "thong_babydoll"
 	has_color = TRUE
 	gender = FEMALE
-
-

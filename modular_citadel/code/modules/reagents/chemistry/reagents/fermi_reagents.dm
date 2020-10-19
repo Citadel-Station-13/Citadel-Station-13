@@ -98,10 +98,8 @@
 		M.emote("cough")
 		var/obj/item/toy/plush/P = pick(subtypesof(/obj/item/toy/plush))
 		new P(T)
-		to_chat(M, "<span class='warning'>You feel a lump form in your throat, as you suddenly cough up what seems to be a hairball?</b></span>")
-		var/list/seen = viewers(8, T)
-		for(var/mob/S in seen)
-			to_chat(S, "<span class='warning'>[M] suddenly coughs up a [P.name]!</b></span>")
+		M.visible_message("<span class='warning'>[M] suddenly coughs up a [P.name]!</b></span>",\
+						"<span class='warning'>You feel a lump form in your throat, as you suddenly cough up what seems to be a hairball?</b></span>")
 		var/T2 = get_random_station_turf()
 		P.throw_at(T2, 8, 1)
 	..()
@@ -120,10 +118,10 @@
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
 			if(prob(20))
-				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
+				var/list/seen = M.fov_view() - M //Sound and sight checkers
 				for(var/victim in seen)
-					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
-						seen = seen - victim
+					if(isanimal(victim) || !isliving(victim))
+						seen -= victim
 				if(LAZYLEN(seen))
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 		if(16)
@@ -141,10 +139,10 @@
 				to_chat(M, "You find yourself unable to supress the desire to howl!")
 				M.emote("awoo")
 			if(prob(5))
-				var/list/seen = viewers(5, get_turf(M))//Sound and sight checkers
+				var/list/seen = M.fov_view() - M //Sound and sight checkers
 				for(var/victim in seen)
-					if((istype(victim, /mob/living/simple_animal/pet/)) || (victim == M) || (!isliving(victim)))
-						seen = seen - victim
+					if(isanimal(victim) || !isliving(victim))
+						seen -= victim
 				if(LAZYLEN(seen))
 					to_chat(M, "You notice [pick(seen)]'s bulge [pick("OwO!", "uwu!")]")
 	..()
@@ -158,8 +156,37 @@
 		to_chat(M, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
 		M.say("Pleh!")
 	else
-		log_game("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
+		log_reagent("FERMICHEM: [M] ckey: [M.key]'s tongue has been made permanent")
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//										PLUSHMIUM
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//A chemical you can spray on plushies to turn them into a 'shell'
+//Hugging the plushie turns yourself into the plushie!
+/datum/reagent/fermi/plushmium
+	name = "Plushmium"
+	description = "A strange chemical, seeming almost fluffy, if it were not for it being a liquid. Known to have a strange effect on plushies."
+	color = "#fbcbd7"
+	taste_description = "the soft feeling of a plushie"
+	pH = 5
+	value = 50
+	can_synth = TRUE
+
+/datum/reagent/fermi/plushmium/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/toy/plush) && reac_volume >= 5)
+		O.loc.visible_message("<span class='warning'>The plushie seems to be staring back at you.</span>")
+		var/obj/item/toy/plushie_shell/new_shell = new /obj/item/toy/plushie_shell(O.loc)
+		new_shell.name = O.name
+		new_shell.icon = O.icon
+		new_shell.icon_state = O.icon_state
+		new_shell.stored_plush = O
+		O.forceMove(new_shell)
+
+//Extra interaction for which spraying it on an existing sentient plushie aheals them, so they can be revived!
+/datum/reagent/fermi/plushmium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(istype(M, /mob/living/simple_animal/pet/plushie) && reac_volume >= 1)
+		M.revive(full_heal = 1, admin_revive = 1)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Nanite removal
@@ -194,7 +221,7 @@
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
@@ -206,7 +233,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(O == active_obj)
 			return
 	react_objs += O
-	O.emp_act(EMP_HEAVY)
+	O.emp_act(80)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
@@ -221,7 +248,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(50))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
 	..()
 
@@ -301,9 +328,8 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 			else
 				var/datum/chemical_reaction/Ferm  = GLOB.chemical_reagents_list[reagent.type]
 				Ferm.on_reaction(holder, reagent.volume)
-	for(var/mob/M in viewers(8, location))
-		to_chat(M, "<span class='danger'>The solution reacts dramatically, with a meow!</span>")
-		playsound(get_turf(M), 'modular_citadel/sound/voice/merowr.ogg', 50, 1)
+	holder.my_atom.visible_message("<span class='danger'>The solution reacts dramatically, with a meow!</span>")
+	playsound(holder.my_atom, 'modular_citadel/sound/voice/merowr.ogg', 50, 1)
 	holder.clear_reagents()
 
 /datum/reagent/fermi/acidic_buffer
@@ -321,10 +347,8 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
-	var/list/seen = viewers(5, get_turf(holder))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
-	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+	holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
+	playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
@@ -342,10 +366,8 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return ..()
 	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
-	var/list/seen = viewers(5, get_turf(holder))
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='warning'>The beaker froths as the pH changes!</b></span>")
-	playsound(get_turf(holder.my_atom), 'sound/FermiChem/bufferadd.ogg', 50, 1)
+	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</b></span>")
+	playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
@@ -381,7 +403,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	catto.color = "#[H.dna.features["mcolor"]]"
 	catto.pseudo_death = TRUE
 	H.forceMove(catto)
-	log_game("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
+	log_reagent("FERMICHEM: [H] ckey: [H.key] has been made into a cute catto.")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "cats")
 	if(H.InCritical())
 		perma = TRUE
@@ -415,7 +437,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		H.say("*wag")//force update sprites.
 	to_chat(H, "<span class='notice'>[words]</span>")
 	qdel(catto)
-	log_game("FERMICHEM: [H] ckey: [H.key] has returned to normal")
+	log_reagent("FERMICHEM: [H] ckey: [H.key] has returned to normal")
 
 
 /datum/reagent/fermi/secretcatchem/reaction_mob(var/mob/living/L)
@@ -424,7 +446,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(catto.origin)
 			var/mob/living/carbon/human/H = catto.origin
 			H.stat = CONSCIOUS
-			log_game("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
+			log_reagent("FERMICHEM: [catto] ckey: [catto.key] has returned to normal.")
 			to_chat(catto, "<span class='notice'>Your body shifts back to normal!</span>")
 			H.forceMove(catto.loc)
 			catto.mind.transfer_to(H)

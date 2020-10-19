@@ -6,7 +6,7 @@
 	name = "grenade launcher"
 	icon_state = "dshotgun-sawn"
 	item_state = "gun"
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.5
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -42,8 +42,7 @@
 	actions_types = list()
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/gyropistol/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/gyropistol/update_icon_state()
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
 
 /obj/item/gun/ballistic/automatic/speargun
@@ -54,6 +53,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	can_suppress = FALSE
+	automatic_burst_overlay = FALSE
 	mag_type = /obj/item/ammo_box/magazine/internal/speargun
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	burst_size = 1
@@ -62,8 +62,9 @@
 	actions_types = list()
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/speargun/update_icon()
-	return
+/obj/item/gun/ballistic/automatic/speargun/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/ballistic/automatic/speargun/attack_self()
 	return
@@ -87,7 +88,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
 	fire_delay = 0
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.25
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	magazine_wording = "rocket"
@@ -137,20 +138,20 @@
 			chamber_round()
 			update_icon()
 
-/obj/item/gun/ballistic/rocketlauncher/update_icon()
+/obj/item/gun/ballistic/rocketlauncher/update_icon_state()
 	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
 	user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!</span>", \
 		"<span class='userdanger'>You aim [src] at the ground to perform a bisnasty rocket jump...</span>")
 	if(can_shoot())
-		user.notransform = TRUE
+		user.mob_transforming = TRUE
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
 		sleep(70)
 		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
 		sleep(5)
-		user.notransform = FALSE
+		user.mob_transforming = FALSE
 		process_fire(user, user, TRUE)
 		if(!QDELETED(user)) //if they weren't gibbed by the explosion, take care of them for good.
 			user.gib()

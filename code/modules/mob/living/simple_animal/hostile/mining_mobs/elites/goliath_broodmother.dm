@@ -25,15 +25,13 @@
 	icon_aggro = "broodmother"
 	icon_dead = "egg_sac"
 	icon_gib = "syndicate_gib"
-	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	armour_penetration = 30
-	attacktext = "beats down on"
-	/*attack_verb_continuous = "beats down on"
-	attack_verb_simple = "beat down on"*/
+	attack_verb_continuous = "beats down on"
+	attack_verb_simple = "beat down on"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2
@@ -42,6 +40,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathmessage = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
+	crate_type = /obj/structure/closet/crate/necropolis/tendril/weapon_armor
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_patch,
 								/datum/action/innate/elite_attack/spawn_children,
@@ -98,9 +97,8 @@
 		if(CALL_CHILDREN)
 			call_children()
 
-/mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life()
-	. = ..()
-	if(!.) //Checks if they are dead as a rock.
+/mob/living/simple_animal/hostile/asteroid/elite/broodmother/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(health < maxHealth * 0.5 && rand_tent < world.time)
 		rand_tent = world.time + 30
@@ -172,9 +170,8 @@
 	health = 30
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "bashes against"
-	/*attack_verb_continuous = "bashes against"
-	attack_verb_simple = "bash against"*/
+	attack_verb_continuous = "bashes against"
+	attack_verb_simple = "bash against"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	speed = 2

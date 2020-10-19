@@ -10,9 +10,12 @@
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/clown
+	plasma_outfit = /datum/outfit/plasmaman/clown
 
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
+	paycheck = PAYCHECK_MINIMAL
+	paycheck_department = ACCOUNT_SRV
 
 	mind_traits = list(TRAIT_CLOWN_MENTALITY)
 

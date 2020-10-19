@@ -74,6 +74,10 @@
 	icon_state = "beaniedurathread"
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
 
-
+/obj/item/clothing/head/beanie/waldo
+	name = "red striped bobble hat"
+	desc = "If you're going on a worldwide hike, you'll need some cold protection."
+	icon_state = "waldo_hat"
+	item_state = "waldo_hat"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet

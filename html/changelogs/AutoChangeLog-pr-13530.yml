@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - rscadd: "Clowns now have unpredictable effects on supermatter crystals when dusting from contact."

@@ -2,6 +2,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
+	new/datum/stack_recipe("railing", /obj/structure/railing, 3, time = 18, window_checks = TRUE), \
 	))
 
 /obj/item/stack/rods
@@ -17,10 +18,10 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=1000)
-	mats_per_stack = 1000
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	embedding = list()
 	novariants = TRUE
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
@@ -89,3 +90,19 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/fifty
 	amount = 50
+
+/obj/item/stack/rods/lava
+	name = "heat resistant rod"
+	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	singular_name = "heat resistant rod"
+	icon_state = "rods"
+	item_state = "rods"
+	color = "#5286b9ff"
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	max_amount = 30
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+
+/obj/item/stack/rods/lava/thirty
+	amount = 30

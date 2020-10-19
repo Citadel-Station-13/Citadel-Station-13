@@ -4,6 +4,7 @@
 	name = "alien embryo"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/stage = 0
 	var/bursting = FALSE
 
@@ -15,11 +16,6 @@
 		to_chat(finder, "It's grown quite large, and writhes slightly as you look at it.")
 		if(prob(10))
 			AttemptGrow(0)
-
-/obj/item/organ/body_egg/alien_embryo/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
-	return S
 
 /obj/item/organ/body_egg/alien_embryo/on_life()
 	. = ..()
@@ -92,7 +88,7 @@
 	ghost.transfer_ckey(new_xeno, FALSE)
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
 	new_xeno.Paralyze(6)
-	new_xeno.notransform = TRUE
+	new_xeno.mob_transforming = TRUE
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
 	sleep(6)
@@ -102,7 +98,7 @@
 
 	if(new_xeno)
 		new_xeno.SetParalyzed(0)
-		new_xeno.notransform = FALSE
+		new_xeno.mob_transforming = FALSE
 		new_xeno.invisibility = 0
 
 	var/mob/living/carbon/old_owner = owner

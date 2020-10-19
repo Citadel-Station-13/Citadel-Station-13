@@ -75,12 +75,8 @@
 		. = pda.owner
 	else if(istype(tablet))
 		var/obj/item/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
-		if(card_slot && (card_slot.stored_card2 || card_slot.stored_card))
-			if(card_slot.stored_card2) //The second card is the one used for authorization in the ID changing program, so we prioritize it here for consistency
-				. = card_slot.stored_card2.registered_name
-			else
-				if(card_slot.stored_card)
-					. = card_slot.stored_card.registered_name
+		if(card_slot?.stored_card)
+			. = card_slot.stored_card.registered_name
 	if(!.)
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
@@ -127,6 +123,17 @@
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
 
+/mob/living/carbon/human/proc/get_bank_account()
+	RETURN_TYPE(/datum/bank_account)
+	var/datum/bank_account/account
+	var/obj/item/card/id/I = get_idcard()
+
+	if(I && I.registered_account)
+		account = I.registered_account
+		return account
+
+	return FALSE
+
 /mob/living/carbon/human/can_see_reagents()
 	. = ..()
 	if(.) //No need to run through all of this if it's already true.
@@ -140,3 +147,32 @@
 	if(blood_dna.len)
 		last_bloodtype = blood_dna[blood_dna[blood_dna.len]]//trust me this works
 		last_blood_DNA = blood_dna[blood_dna.len]*/
+
+/// For use formatting all of the scars this human has for saving for persistent scarring
+/mob/living/carbon/human/proc/format_scars()
+	var/list/missing_bodyparts = get_missing_limbs()
+	if(!all_scars && !length(missing_bodyparts))
+		return
+	var/scars = ""
+	for(var/i in missing_bodyparts)
+		var/datum/scar/scaries = new
+		scars += "[scaries.format_amputated(i)]"
+	for(var/i in all_scars)
+		var/datum/scar/scaries = i
+		scars += "[scaries.format()];"
+	return scars
+
+/// Takes a single scar from the persistent scar loader and recreates it from the saved data
+/mob/living/carbon/human/proc/load_scar(scar_line)
+	var/list/scar_data = splittext(scar_line, "|")
+	if(LAZYLEN(scar_data) != SCAR_SAVE_LENGTH)
+		return // invalid, should delete
+	var/version = text2num(scar_data[SCAR_SAVE_VERS])
+	if(!version || version < SCAR_CURRENT_VERSION) // get rid of old scars
+		return
+	var/obj/item/bodypart/the_part = get_bodypart("[scar_data[SCAR_SAVE_ZONE]]")
+	var/datum/scar/scaries = new
+	return scaries.load(the_part, scar_data[SCAR_SAVE_VERS], scar_data[SCAR_SAVE_DESC], scar_data[SCAR_SAVE_PRECISE_LOCATION], text2num(scar_data[SCAR_SAVE_SEVERITY]))
+
+/mob/living/carbon/human/get_biological_state()
+	return dna.species.get_biological_state()

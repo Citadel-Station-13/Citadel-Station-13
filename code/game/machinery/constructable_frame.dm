@@ -83,7 +83,6 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				if(!P.tool_start_check(user, amount=5))
 					return
-
 				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50, amount=5))
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")

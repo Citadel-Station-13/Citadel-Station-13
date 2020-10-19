@@ -7,76 +7,199 @@
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/structure/closet/crate/necropolis/tendril/random
+	name = "necropolis crate"
+	desc = "A chest for a chest, a head for a head."
+
+/obj/structure/closet/crate/necropolis/tendril/random/PopulateContents()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/structure/closet/crate/necropolis/tendril/magic(src)
+		if(2)
+			new /obj/structure/closet/crate/necropolis/tendril/weapon_armor(src)
+		if(3)
+			new /obj/structure/closet/crate/necropolis/tendril/misc(src)
+
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
 
-/obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
+/obj/structure/closet/crate/necropolis/tendril/magic
+	name = "relic necropolis chest"
+
+/obj/structure/closet/crate/necropolis/tendril/weapon_armor
+	name = "armament necropolis chest"
+
+/obj/structure/closet/crate/necropolis/tendril/misc
+
+/obj/structure/closet/crate/necropolis/tendril/all
+	desc = "It's watching you suspiciously."
+
+/obj/structure/closet/crate/necropolis/tendril/magic/PopulateContents()
+	var/loot = rand(1,10)
 	switch(loot)
 		if(1)
-			new /obj/item/shared_storage/red(src)
-		if(2)
-			new /obj/item/clothing/suit/space/hardsuit/cult(src)
-		if(3)
 			new /obj/item/soulstone/anybody(src)
+		if(2)
+			new /obj/item/rod_of_asclepius(src)
+		if(3)
+			new /obj/item/organ/heart/cursed/wizard(src)
 		if(4)
-			new /obj/item/katana/cursed(src)
+			new /obj/item/book/granter/spell/summonitem(src)
 		if(5)
-			new /obj/item/clothing/glasses/godeye(src)
+			new /obj/item/borg/upgrade/modkit/lifesteal(src)
+			new /obj/item/bedsheet/cult(src)
 		if(6)
-			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(7)
-			new /obj/item/pickaxe/diamond(src)
+			new /obj/item/warp_cube/red(src)
 		if(8)
+			new /obj/item/immortality_talisman(src)
+		if(9)
+			new /obj/item/gun/magic/wand/book/healing(src)
+		if(10)
+			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
+			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
+			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
+
+/obj/structure/closet/crate/necropolis/tendril/weapon_armor/PopulateContents()
+	var/loot = rand(1,11)
+	switch(loot)
+		if(1)
+			new /obj/item/clothing/suit/space/hardsuit/cult(src)
+		if(2)
+			new /obj/item/katana/lavaland(src)
+		if(3)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
 			else
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
-		if(9)
-			new /obj/item/rod_of_asclepius(src)
-		if(10)
-			new /obj/item/organ/heart/cursed/wizard(src)
-		if(11)
-			new /obj/item/ship_in_a_bottle(src)
-		if(12)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
-		if(13)
-			new /obj/item/jacobs_ladder(src)
-		if(14)
+		if(4)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
+		if(5)
 			new /obj/item/nullrod/scythe/talking(src)
-		if(15)
+		if(6)
 			new /obj/item/nullrod/armblade(src)
-		if(16)
-			new /obj/item/guardiancreator(src)
-		if(17)
+		if(7)
+			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
+		if(8)
+			new /obj/item/grenade/clusterbuster/inferno(src)
+		if(9)
+			new /obj/item/gun/magic/wand/book/shock(src)
+		if(10)
+			new /obj/item/gun/magic/wand/book/page(src)
+		if(11)
+			new /obj/item/gun/magic/wand/book/spark(src)
+
+/obj/structure/closet/crate/necropolis/tendril/misc/PopulateContents()
+	var/loot = rand(1,14)
+	switch(loot)
+		if(1)
+			new /obj/item/shared_storage/red(src)
+		if(2)
+			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+		if(3)
+			new /obj/item/ship_in_a_bottle(src)
+		if(4)
+			new /obj/item/voodoo(src)
+		if(5)
+			new /obj/item/book_of_babel(src)
+		if(6)
+			new /obj/item/jacobs_ladder(src)
+		if(7)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
 			else
 				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
-		if(18)
-			new /obj/item/warp_cube/red(src)
-		if(19)
+		if(8)
 			new /obj/item/wisp_lantern(src)
-		if(20)
-			new /obj/item/immortality_talisman(src)
-		if(21)
-			new /obj/item/gun/magic/hook(src)
-		if(22)
+		if(9)
+			new /obj/item/pickaxe/rosegold(src)
+		if(10)
+			new /obj/item/bedsheet/cosmos(src)
+			new /obj/item/melee/skateboard/hoverboard(src)
+		if(11)
+			new /obj/item/disk/tech_disk/illegal(src)
+		if(12)
+			new /obj/item/clothing/suit/space/hardsuit/cult(src)
+		if(13)
+			new /obj/item/katana/lavaland(src)
+		if(14)
+			if(prob(50))
+				new /obj/item/disk/design_disk/modkit_disc/resonator_blast(src)
+			else
+				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
+
+/obj/structure/closet/crate/necropolis/tendril/all/PopulateContents()
+	var/loot = rand(1,29)
+	switch(loot)
+		if(1)
+			new /obj/item/shared_storage/red(src)
+		if(2)
+			new /obj/item/reagent_containers/glass/bottle/potion/flight(src)
+		if(3)
+			new /obj/item/ship_in_a_bottle(src)
+		if(4)
 			new /obj/item/voodoo(src)
-		if(23)
-			new /obj/item/grenade/clusterbuster/inferno(src)
-		if(24)
-			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(25)
-			new /obj/item/book/granter/spell/summonitem(src)
-		if(26)
+		if(5)
 			new /obj/item/book_of_babel(src)
-		if(27)
+		if(6)
+			new /obj/item/jacobs_ladder(src)
+		if(7)
+			if(prob(50))
+				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
+			else
+				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
+		if(8)
+			new /obj/item/wisp_lantern(src)
+		if(9)
+			new /obj/item/pickaxe/rosegold(src)
+		if(10)
+			new /obj/item/bedsheet/cosmos(src)
+			new /obj/item/melee/skateboard/hoverboard(src)
+		if(11)
+			new /obj/item/disk/tech_disk/illegal(src)
+		if(12)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
+		if(13)
+			new /obj/item/nullrod/scythe/talking(src)
+		if(14)
+			new /obj/item/nullrod/armblade(src)
+		if(15)
+			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor/old(src)
+		if(16)
+			new /obj/item/grenade/clusterbuster/inferno(src)
+		if(17)
+			new /obj/item/gun/magic/wand/book/shock(src)
+		if(18)
+			new /obj/item/gun/magic/wand/book/page(src)
+		if(19)
+			new /obj/item/gun/magic/wand/book/spark(src)
+		if(20)
+			new /obj/item/soulstone/anybody(src)
+		if(21)
+			new /obj/item/rod_of_asclepius(src)
+		if(22)
+			new /obj/item/organ/heart/cursed/wizard(src)
+		if(23)
+			new /obj/item/book/granter/spell/summonitem(src)
+		if(24)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-		if(28)
+		if(25)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
+		if(26)
+			new /obj/item/warp_cube/red(src)
+		if(27)
+			new /obj/item/immortality_talisman(src)
+		if(28)
+			new /obj/item/gun/magic/wand/book/healing(src)
+		if(29)
+			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
+			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
+			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -487,7 +610,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	user.notransform = TRUE
+	user.mob_transforming = TRUE
 	user.status_flags |= GODMODE
 
 	can_destroy = FALSE
@@ -496,7 +619,7 @@
 
 /obj/effect/immortality_talisman/proc/unvanish(mob/user)
 	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
+	user.mob_transforming = FALSE
 	user.forceMove(get_turf(src))
 
 	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
@@ -564,7 +687,7 @@
 
 /obj/item/book_of_babel/attack_self(mob/user)
 	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
-	user.grant_all_languages(omnitongue=TRUE)
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -654,13 +777,16 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	faction_bonus_force = 30
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
+	var/bleed_stacks_per_hit = 3
 	total_mass = 2.75
 	total_mass_on = 5
+	attack_speed = 0
+	attack_unwieldlyness = CLICK_CD_MELEE * 0.5
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -679,8 +805,12 @@
 		return FALSE
 	. = ..()
 	if(.)
+		if(active)
+			attack_unwieldlyness = CLICK_CD_MELEE
+		else
+			attack_unwieldlyness = CLICK_CD_MELEE * 0.5
 		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+		user.SetNextAction(CLICK_CD_MELEE * 0.25, considered_action = FALSE, flush = TRUE)
 
 /obj/item/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
@@ -695,18 +825,12 @@
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
-/obj/item/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	..()
-	if(!active)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
-
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
-	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 	if(!B)
-		if(!active) //This isn't in the above if-check so that the else doesn't care about active
-			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
 	else
-		B.add_bleed(B.bleed_buildup)
+		B.add_stacks(bleed_stacks_per_hit)
 
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
@@ -741,7 +865,7 @@
 			new /obj/item/lava_staff(src)
 		if(3)
 			new /obj/item/book/granter/spell/sacredflame(src)
-			new /obj/item/gun/magic/wand/fireball(src)
+			new /obj/item/gun/magic/hook(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
 
@@ -760,7 +884,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
@@ -862,7 +986,8 @@
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
 			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade")
-			H.eye_color = "fee5a3"
+			H.left_eye_color = "fee5a3"
+			H.right_eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
@@ -924,6 +1049,9 @@
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/attempt_lava, target, user, proximity_flag, click_parameters)
+
+/obj/item/lava_staff/proc/attempt_lava(atom/target, mob/user, proximity_flag, click_parameters)
 	if(timer > world.time)
 		return
 
@@ -977,7 +1105,7 @@
 		if(2)
 			new /obj/item/gun/ballistic/revolver/doublebarrel/super(src)
 		if(3)
-			new /obj/item/gun/magic/staff/spellblade(src)
+			new /obj/item/guardiancreator(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"
@@ -1066,6 +1194,7 @@
 	var/random_crystal = pick(choices)
 	new random_crystal(src)
 	new /obj/item/organ/vocal_cords/colossus(src)
+	new /obj/item/clothing/glasses/godeye(src)
 
 /obj/structure/closet/crate/necropolis/colossus/crusher
 	name = "angelic colossus chest"
@@ -1099,7 +1228,7 @@
 	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
-	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+	var/friendly_fire_check = TRUE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()

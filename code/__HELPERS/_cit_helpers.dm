@@ -1,9 +1,6 @@
 //THIS FILE CONTAINS CONSTANTS, PROCS, AND OTHER THINGS//
 /////////////////////////////////////////////////////////
 
-/mob/proc/setClickCooldown(var/timeout)
-	next_move = max(world.time + timeout, next_move)
-
 /proc/get_matrix_largest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(2)
@@ -20,7 +17,7 @@
 	var/matrix/mtrx=new()
 	return mtrx.Scale(0.65)
 
-proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user' has available to them. It searches the list of ckeys attached to the 'whitelist' var for a species and also checks if they're an admin.
+/proc/get_racelist(mob/user)//This proc returns a list of species that 'user' has available to them. It searches the list of ckeys attached to the 'whitelist' var for a species and also checks if they're an admin.
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		var/list/wlist = S.whitelist
@@ -104,16 +101,6 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		set category = "Admin"
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
-
-//LOOC toggles
-/client/verb/listen_looc()
-	set name = "Show/Hide LOOC"
-	set category = "Preferences"
-	set desc = "Toggles seeing LocalOutOfCharacter chat"
-	prefs.chat_toggles ^= CHAT_LOOC
-	prefs.save_preferences()
-	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /mob/living/carbon/proc/has_penis()
 	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)

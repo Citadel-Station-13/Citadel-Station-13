@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/vent_clog
 	weight = 10
 	max_occurrences = 3
-	gamemode_blacklist = list("dynamic")
 	min_players = 25
 
 /datum/round_event/vent_clog
@@ -40,6 +39,7 @@
 		/datum/reagent/pax,
 		/datum/reagent/consumable/laughter,
 		/datum/reagent/concentrated_barbers_aid,
+		/datum/reagent/baldium,
 		/datum/reagent/colorful_reagent,
 		/datum/reagent/peaceborg_confuse,
 		/datum/reagent/peaceborg_tire,
@@ -139,22 +139,6 @@
 	typepath = /datum/round_event/vent_clog/plasma_decon
 	max_occurrences = 0
 
-/datum/round_event_control/vent_clog/female
-	name = "Clogged Vents; Girlcum"
-	typepath = /datum/round_event/vent_clog/female
-	max_occurrences = 0
-
-/datum/round_event/vent_clog/female
-	reagentsAmount = 100
-
-/datum/round_event_control/vent_clog/male
-	name = "Clogged Vents: Semen"
-	typepath = /datum/round_event/vent_clog/male
-	max_occurrences = 0
-
-/datum/round_event/vent_clog/male
-	reagentsAmount = 100
-
 /datum/round_event/vent_clog/beer/announce()
 	priority_announce("The scrubbers network is experiencing an unexpected surge of pressurized beer. Some ejection of contents may occur.", "Atmospherics alert")
 
@@ -164,36 +148,6 @@
 			var/datum/reagents/R = new/datum/reagents(1000)
 			R.my_atom = vent
 			R.add_reagent(/datum/reagent/consumable/ethanol/beer, reagentsAmount)
-
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
-		CHECK_TICK
-
-/datum/round_event/vent_clog/male/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejaculation of contents may occur.", "Atmospherics alert")
-
-/datum/round_event/vent_clog/male/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc && !vent.welded)
-			var/datum/reagents/R = new/datum/reagents(1000)
-			R.my_atom = vent
-			R.add_reagent(/datum/reagent/consumable/semen, reagentsAmount)
-
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
-		CHECK_TICK
-
-/datum/round_event/vent_clog/female/announce()
-	priority_announce("The scrubbers network is experiencing a backpressure squirt. Some ejection of contents may occur.", "Atmospherics alert")
-
-/datum/round_event/vent_clog/female/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent in vents)
-		if(vent && vent.loc && !vent.welded)
-			var/datum/reagents/R = new/datum/reagents(1000)
-			R.my_atom = vent
-			R.add_reagent(/datum/reagent/consumable/femcum, reagentsAmount)
 
 			var/datum/effect_system/foam_spread/foam = new
 			foam.set_up(200, get_turf(vent), R)

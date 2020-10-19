@@ -92,7 +92,7 @@
 			qdel(src)
 
 /obj/item/glasswork/glasses
-	name = "Hand Made Glasses"
-	desc = "Hande made glasses that have not been polished at all making them useless. Selling them could still be worth a bit of credits."
+	name = "Handmade Glasses"
+	desc = "Handmade glasses that have not been polished at all making them useless. Selling them could still be worth a few credits."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "frames_2"

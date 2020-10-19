@@ -67,7 +67,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
-/obj/effect/rune/attack_hand(mob/living/user)
+/obj/effect/rune/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -982,7 +982,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
 	for(var/mob/living/L in range(src, 3))
 		L.DefaultCombatKnockdown(30)
-	empulse(T, 0.42*(intensity), 1)
+	empulse_using_range(T, 0.65*(intensity))
 	var/list/images = list()
 	var/zmatch = T.z
 	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]

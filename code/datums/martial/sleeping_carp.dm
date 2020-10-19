@@ -44,7 +44,7 @@
 	else
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 		log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
-	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting)
+	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
 	return TRUE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -56,7 +56,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
-	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
+	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return TRUE
 
@@ -66,14 +66,14 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if((D.mobility_flags & MOBILITY_STAND))
-		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.DefaultCombatKnockdown(50, override_hardstun = 0.01, override_stamdmg = 0)
-		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD) //A cit specific change form the tg port to really punish anyone who tries to stand up
+		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND) //A cit specific change form the tg port to really punish anyone who tries to stand up
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	else
-		D.apply_damage(damage*0.5, BRUTE, BODY_ZONE_HEAD)
-		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD)
+		D.apply_damage(damage*0.5, BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
@@ -99,7 +99,7 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	D.apply_damage(damage, BRUTE, affecting)
+	D.apply_damage(damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND) && damage >= stunthreshold)
 		to_chat(D, "<span class='danger'>You stumble and fall!</span>")
@@ -130,7 +130,7 @@
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
 		P.setAngle(rand(0, 360))//SHING
-		A.adjustStaminaLossBuffered (3) //Citadel change to stop infinite bullet sponging as you run away, but it is buffered!
+		A.adjustStaminaLoss(3)
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
@@ -180,14 +180,12 @@
 	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
 	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll. Avoid heat at all costs!</span>")
 
-/obj/item/twohanded/bostaff
+/obj/item/staff/bostaff
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 10
-	force_wielded = 24
 	throwforce = 20
 	throw_speed = 2
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
@@ -196,11 +194,29 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	block_chance = 50
+	var/wielded = FALSE // track wielded status on item
 
-/obj/item/twohanded/bostaff/update_icon_state()
-	icon_state = "bostaff[wielded]"
+/obj/item/staff/bostaff/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
-/obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
+/obj/item/staff/bostaff/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_wielded="bostaff1")
+
+/// triggered on wield of two handed item
+/obj/item/staff/bostaff/proc/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/staff/bostaff/proc/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+
+/obj/item/staff/bostaff/update_icon_state()
+	icon_state = "bostaff0"
+
+/obj/item/staff/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
@@ -249,7 +265,7 @@
 	else
 		return ..()
 
-/obj/item/twohanded/bostaff/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+/obj/item/staff/bostaff/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(!wielded)
 		return BLOCK_NONE
 	return ..()

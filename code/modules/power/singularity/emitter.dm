@@ -75,7 +75,7 @@
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -315,6 +315,9 @@
 
 /obj/machinery/power/emitter/proc/integrate(obj/item/gun/energy/E,mob/user)
 	if(istype(E, /obj/item/gun/energy))
+		if(!E.can_emitter)
+			to_chat(user, "<span class='warning'>[E] cannot fit into emitters.</span>")
+			return
 		if(!user.transferItemToLoc(E, src))
 			return
 		gun = E
@@ -361,7 +364,7 @@
 	icon_state_on = "protoemitter_+a"
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	var/view_range = 12
+	var/view_range = 4.5
 	var/datum/action/innate/protoemitter/firing/auto
 
 //BUCKLE HOOKS
@@ -376,7 +379,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
+			buckled_mob.client.view_size.resetToDefault()
 	auto.Remove(buckled_mob)
 	. = ..()
 
@@ -392,7 +395,7 @@
 	M.pixel_y = 14
 	layer = 4.1
 	if(M.client)
-		M.client.change_view(view_range)
+		M.client.view_size.setTo(view_range)
 	if(!auto)
 		auto = new()
 	auto.Grant(M, src)

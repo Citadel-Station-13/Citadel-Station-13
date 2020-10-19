@@ -396,6 +396,7 @@ SUBSYSTEM_DEF(ticker)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
 					SSquirks.AssignQuirks(N.new_character, N.client, TRUE, TRUE, SSjob.GetJob(player.mind.assigned_role), FALSE, N)
+			N.client.prefs.post_copy_to(player)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -409,13 +410,14 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			living.mob_transforming = TRUE
 			if(living.client)
 				if (living.client.prefs && living.client.prefs.auto_ooc)
 					if (living.client.prefs.chat_toggles & CHAT_OOC)
 						living.client.prefs.chat_toggles ^= CHAT_OOC
 				var/obj/screen/splash/S = new(living.client, TRUE)
 				S.Fade(TRUE)
+				living.client.init_verbs()
 			livings += living
 	if(livings.len)
 		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
@@ -423,7 +425,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE
+		L.mob_transforming = FALSE
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -711,7 +713,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/gondolabridge.ogg',
-		'sound/roundend/haveabeautifultime.ogg'\
+		'sound/roundend/haveabeautifultime.ogg',
+		'sound/roundend/CitadelStationHasSeenBetterDays.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

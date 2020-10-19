@@ -98,7 +98,7 @@
 
 /obj/item/radio/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
 	if(unscrewed && !isAI(user))
@@ -107,19 +107,15 @@
 	else
 		..()
 
-/obj/item/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/radio/ui_state(mob/user)
+	return GLOB.inventory_state
+
+/obj/item/radio/ui_interact(mob/user, datum/tgui/ui, datum/ui_state/state)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/ui_width = 360
-		var/ui_height = 106
-		if(subspace_transmission)
-			if(channels.len > 0)
-				ui_height += 6 + channels.len * 21
-			else
-				ui_height += 24
-		ui = new(user, src, ui_key, "radio", name, ui_width, ui_height, master_ui, state)
+		ui = new(user, src, "Radio", name)
+		if(state)
+			ui.set_state(state)
 		ui.open()
 
 /obj/item/radio/ui_data(mob/user)
@@ -199,7 +195,7 @@
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)
-		language = M.get_default_language()
+		language = M.get_selected_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
 	return ITALICS | REDUCE_RANGE
 

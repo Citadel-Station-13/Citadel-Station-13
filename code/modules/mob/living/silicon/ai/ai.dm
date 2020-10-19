@@ -23,11 +23,13 @@
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
+	deathsound = 'sound/voice/scream/android_scream.ogg'
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
+	has_field_of_vision = FALSE //Vision through cameras.
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
@@ -138,7 +140,7 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-	verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
 
 	aiPDA = new/obj/item/pda/ai(src)
 	aiPDA.owner = name
@@ -152,10 +154,10 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
+		add_verb(src, list(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/botcall, /mob/living/silicon/ai/proc/control_integrated_radio, \
-		/mob/living/silicon/ai/proc/set_automatic_say_channel)
+		/mob/living/silicon/ai/proc/set_automatic_say_channel))
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
@@ -207,26 +209,26 @@
 	display_icon_override = ai_core_icon
 	set_core_display_icon(ai_core_icon)
 
-/mob/living/silicon/ai/Stat()
-	..()
-	if(statpanel("Status"))
-		if(!stat)
-			stat(null, text("System integrity: [(health+100)/2]%"))
-			stat(null, text("Connected cyborgs: [connected_robots.len]"))
-			for(var/mob/living/silicon/robot/R in connected_robots)
-				var/robot_status = "Nominal"
-				if(R.shell)
-					robot_status = "AI SHELL"
-				else if(R.stat || !R.client)
-					robot_status = "OFFLINE"
-				else if(!R.cell || R.cell.charge <= 0)
-					robot_status = "DEPOWERED"
-				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
-				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
-				Module: [R.designation] | Loc: [get_area_name(R, TRUE)] | Status: [robot_status]"))
-			stat(null, text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
-		else
-			stat(null, text("Systems nonfunctional"))
+/mob/living/silicon/ai/get_status_tab_items()
+	. = ..()
+	if(stat != CONSCIOUS)
+		. += text("Systems nonfunctional")
+		return
+	. += text("System integrity: [(health + 100) * 0.5]%")
+	. += text("Connected cyborgs: [length(connected_robots)]")
+	for(var/r in connected_robots)
+		var/mob/living/silicon/robot/connected_robot = r
+		var/robot_status = "Nominal"
+		if(connected_robot.shell)
+			robot_status = "AI SHELL"
+		else if(connected_robot.stat != CONSCIOUS || !connected_robot.client)
+			robot_status = "OFFLINE"
+		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
+			robot_status = "DEPOWERED"
+		//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
+		. += text("[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[connected_robot.cell.charge]/[connected_robot.cell.maxcharge]" : "Empty"] | \
+		Module: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]")
+	. += text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]") //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -284,8 +286,6 @@
 	. = ..()
 	var/turf/ai = get_turf(src)
 	var/turf/target = get_turf(A)
-	if (.)
-		return
 
 	if(!target)
 		return
@@ -859,7 +859,7 @@
 	to_chat(src, "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
-	verbs += /mob/living/silicon/ai/proc/choose_modules
+	add_verb(src, /mob/living/silicon/ai/proc/choose_modules)
 	malf_picker = new /datum/module_picker
 
 
@@ -868,30 +868,33 @@
 		light_cameras()
 	if(istype(A, /obj/machinery/camera))
 		current = A
-	if(client)
-		if(ismovable(A))
-			if(A != GLOB.ai_camera_room_landmark)
-				end_multicam()
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
-		else
+	if(!client)
+		return
+	if(ismovable(A))
+		if(A != GLOB.ai_camera_room_landmark)
 			end_multicam()
-			if(isturf(loc))
-				if(eyeobj)
-					client.eye = eyeobj
-					client.perspective = EYE_PERSPECTIVE
-				else
-					client.eye = client.mob
-					client.perspective = MOB_PERSPECTIVE
-			else
+		client.perspective = EYE_PERSPECTIVE
+		client.eye = A
+	else
+		end_multicam()
+		if(isturf(loc))
+			if(eyeobj)
+				client.eye = eyeobj
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		update_sight()
-		if(client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
+			else
+				client.eye = client.mob
+				client.perspective = MOB_PERSPECTIVE
 		else
-			clear_fullscreen("remote_view", 0)
+			client.perspective = EYE_PERSPECTIVE
+			client.eye = loc
+	update_sight()
+	if(client.eye != src)
+		var/atom/AT = client.eye
+		AT.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE, A)
+	return TRUE
 
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
 	. = ..()

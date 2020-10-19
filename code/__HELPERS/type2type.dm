@@ -339,10 +339,24 @@
 /proc/isLeap(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
 
-
+/// For finding out what body parts a body zone covers, the inverse of the below basically
+/proc/zone2body_parts_covered(def_zone)
+	switch(def_zone)
+		if(BODY_ZONE_CHEST)
+			return list(CHEST, GROIN)
+		if(BODY_ZONE_HEAD)
+			return list(HEAD)
+		if(BODY_ZONE_L_ARM)
+			return list(ARM_LEFT, HAND_LEFT)
+		if(BODY_ZONE_R_ARM)
+			return list(ARM_RIGHT, HAND_RIGHT)
+		if(BODY_ZONE_L_LEG)
+			return list(LEG_LEFT, FOOT_LEFT)
+		if(BODY_ZONE_R_LEG)
+			return list(LEG_RIGHT, FOOT_RIGHT)
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
-//(I challenge you to find a use for this)
+//(I challenge you to find a use for this) -I found a use for it!!
 /proc/body_parts_covered2organ_names(bpc)
 	var/list/covered_parts = list()
 
@@ -448,16 +462,14 @@
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
-	switch(power)
-		if(0 to 5)
-			return "low"
-		if(5 to 20)
-			return "mid"
-		if(20 to 50)
-			return "high"
-		if(50 to INFINITY)
-			return "super"
+/proc/instability2text(instability) //used when displaying fusion power on analyzers
+	switch(instability)
+		if(0 to 2)
+			return "stable, meaning that its heat will always increase."
+		if(2 to 3)
+			return "metastable, meaning that its heat will trend upwards."
+		if (3 to INFINITY)
+			return "unstable, meaning that its heat will trend downwards."
 
 /proc/color2hex(color)	//web colors
 	if(!color)
@@ -606,6 +618,12 @@
 		else //regex everything else (works for /proc too)
 			return lowertext(replacetext("[the_type]", "[type2parent(the_type)]/", ""))
 
+
+/// Return html to load a url.
+/// for use inside of browse() calls to html assets that might be loaded on a cdn.
+/proc/url2htmlloader(url)
+	return {"<html><head><meta http-equiv="refresh" content="0;URL='[url]'"/></head><body onLoad="parent.location='[url]'"></body></html>"}
+
 /proc/strtohex(str)
 	if(!istext(str)||!str)
 		return
@@ -629,3 +647,45 @@
 			return null
 		r += ascii2text(c)
 	return r
+
+/proc/slot_to_string(slot)
+	switch(slot)
+		if(SLOT_BACK)
+			return "Backpack"
+		if(SLOT_WEAR_MASK)
+			return "Mask"
+		if(SLOT_HANDS)
+			return "Hands"
+		if(SLOT_BELT)
+			return "Belt"
+		if(SLOT_EARS)
+			return "Ears"
+		if(SLOT_GLASSES)
+			return "Glasses"
+		if(SLOT_GLOVES)
+			return "Gloves"
+		if(SLOT_NECK)
+			return "Neck"
+		if(SLOT_HEAD)
+			return "Head"
+		if(SLOT_SHOES)
+			return "Shoes"
+		if(SLOT_WEAR_SUIT)
+			return "Suit"
+		if(SLOT_W_UNIFORM)
+			return "Uniform"
+		if(SLOT_IN_BACKPACK)
+			return "In backpack"
+
+/proc/tg_ui_icon_to_cit_ui(ui_style)
+	switch(ui_style)
+		if('icons/mob/screen_plasmafire.dmi')
+			return 'modular_citadel/icons/ui/screen_plasmafire.dmi'
+		if('icons/mob/screen_slimecore.dmi')
+			return 'modular_citadel/icons/ui/screen_slimecore.dmi'
+		if('icons/mob/screen_operative.dmi')
+			return 'modular_citadel/icons/ui/screen_operative.dmi'
+		if('icons/mob/screen_clockwork.dmi')
+			return 'modular_citadel/icons/ui/screen_clockwork.dmi'
+		else
+			return 'modular_citadel/icons/ui/screen_midnight.dmi'

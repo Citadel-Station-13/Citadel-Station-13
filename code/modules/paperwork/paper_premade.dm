@@ -4,10 +4,21 @@
 
 /obj/item/paper/fluff/sop
 	name = "paper- 'Standard Operating Procedure'"
-	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by resetting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alarms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
+	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by resetting the alarm<BR>\nRed- Ejection/Self-Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alarms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
 
 /obj/item/paper/fluff/shuttles/daniel
 	info = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"
+
+/obj/item/paper/fluff/jobs/prisoner/letter
+	name = "letter from home"
+	info = {"Dearest sweetheart,
+	<br>It is truly saddening you must spend your time locked up in an awful prison on that dangerous station. I have spoken to your lawyer who will attempt to appeal to the judge so your sentence may hopefully be reduced.
+	<br>Regardless, I just want you to understand that all of us out here still love you, and want to see you released safely some day! I know that prison can be a very vicious place, so please promise us you'll avoid getting into any fights or trouble, okay?
+	<br>We all care for your safety deeply, and could not live with ourselves if you ended up getting hurt. We've scheduled a visit to see you, and with any luck, hopefully our request will be granted soon.
+	<br>Anyways, please do your best to make it by in that place, and never forget we'll be always here for you, no matter if we're separated.
+	<br>
+	<br>Please stay safe,
+	<br>-Love, <i>Your Dearest</i>"}
 
 
 ////////////	Job guides n' fluff
@@ -48,13 +59,46 @@
 	name = "paper- 'Chemical Information'"
 	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in an enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure unconscious and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administered to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units will induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
 
+/obj/item/paper/fluff/jobs/medical/hippocratic
+	name = "paper- 'Hippocratic Oath'"
+	info = {"<i>I swear to fulfill, to the best of my ability and judgment, this covenant:
+	<br>
+	I will respect the hard-won scientific gains of those physicians in whose steps I walk,
+	and gladly share such knowledge as is mine with those who are to follow.
+	<br>
+	I will apply, for the benefit of the sick, all measures that are required,
+	avoiding those twin traps of overtreatment and therapeutic nihilism.
+	<br>
+	I will remember that there is art to medicine as well as science,
+	and that warmth, sympathy, and understanding may outweigh the surgeon's knife or the chemist's drug.
+	<br>
+	I will not be ashamed to say "I know not,"
+	nor will I fail to call in my colleagues when the skills of another are needed for a patient's recovery.
+	<br>
+	I will respect the privacy of my patients, for their problems are not disclosed to me that the world may know. Most especially must I tread with care in matters of life and death.
+	If it is given me to save a life, all thanks. But it may also be within my power to take a life;
+	this awesome responsibility must be faced with great humbleness and awareness of my own frailty. Above all, I must not play at God.
+	<br>
+	I will remember that I do not treat a fever chart, a cancerous growth, but a sick human being, whose illness may affect the person's family and economic stability.
+	My responsibility includes these related problems, if I am to care adequately for the sick.
+	<br>
+	I will prevent disease whenever I can, for prevention is preferable to cure.
+	<br>
+	I will remember that I remain a member of society, with special obligations to all my fellow human beings,
+	those sound of mind and body as well as the infirm.
+	<br>
+	If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter.
+	May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.
+	</i>"}
+
 	/*
 	*	Stations
 	*/
+////////// cogstation.
 
 /obj/item/paper/guides/cogstation/job_changes
 	name = "MEMO: Job Changes"
-	info = "To ensure minimal employee downtime, please take note of the following changes to select professions that Cogstation specifically requires:<BR>\n<BR>\n- Chemists are to have <B>basic Research access</B>and an encryption key for the Science channel. <BR>\n- Roboticists are to have <B>basic Medical and Morgue access</B>. <BR>\n- Engineers and Atmospheric Technicians <I>are</I> to have Warehouse and Mining access.<BR>\n- The Cook should <I>not</I> have Morgue access <BR>\n- The Clown and Mime <I>are</I> to have Maintenance access. This is necessary due to the location of their offices.<BR>\n<BR>\n<I>Generated by Organic Resources Bot #2053</I>"
+	info = "To ensure minimal employee downtime, please take note of the following changes to select professions that CogStation specifically requires:<BR>\n<BR>\n- Engineers and Atmospheric Technicians <I>are</I> to have Warehouse and Mining access. <BR>\n- The Cook should <I>not</I> have Morgue access. <BR>\n- The Clown and Mime <I>are</I> to have Maintenance access. This is necessary due to the location of their offices.<BR>\n<BR>\n<I>Generated by Organic Resources Bot #2053</I>"
 
 /obj/item/paper/guides/cogstation/letter_sec
 	name = "To future Security personnel"
@@ -62,7 +106,7 @@
 
 /obj/item/paper/guides/cogstation/disposals
 	name = "Regarding the disposal system:"
-	info = "As you might have noticed, this station has far more disposal pipes than you may expect from your average Nanotrasen research facility. Part of the reason for this is specialization - mail, trash, even corpses have their own disposal systems. Unfortunately, the convenient color-coding was lost in translocation and we've had to compensate by marking the area around each bin. <BR>\n<BR>\n- <B>WHITE/GRAY STRIPES is for DELIVERIES.  <BR>\n- RED STRIPES is for CORPSES.  <BR>\n- EVERYTHING ELSE is for TRASH,</B> barring a few exceptions that should be labeled as such. <BR>\n<BR>\nIdeally the station won't sustain any heavy structural damage during your time here but if it does, or someone decides to tamper with/sabotage this system, you'll be forgiven if you can't put it back together perfectly. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>Architectural Analyst"
+	info = "As you might have noticed, this station has far more disposal pipes than you may expect from your average Nanotrasen research facility. Part of the reason for this is specialization - mail, trash, even corpses have their own disposal systems. Unfortunately, the convenient color-coding was lost in translocation and we've had to compensate by marking the area around each bin. <BR>\n<BR>\n- <B>WHITE/GRAY STRIPES are for DELIVERIES.  <BR>\n- RED STRIPES are for CORPSES.  <BR>\n- EVERYTHING ELSE is for TRASH,</B> barring a few exceptions that should be labeled as such. <BR>\n<BR>\nIdeally the station won't sustain any heavy structural damage during your time here but if it does, or someone decides to tamper with/sabotage this system, you'll be forgiven if you can't put it back together perfectly. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>Architectural Analyst"
 
 /obj/item/paper/guides/cogstation/janitor
 	name = "a quick tip"
@@ -86,7 +130,11 @@
 
 /obj/item/paper/guides/cogstation/letter_eng
 	name = "To future Engineering staff:"
-	info = "I'm not gonna sugarcoat this. Compared to other departments, you might have your work cut out for you. CogStation is an entirely different beast than your standard Box, but everyone's still gonna expect you to keep the place running. <BR>\n<BR>\n If there's any good news, it's your time to shine if you know how to run a thermo-electric generator. That's what this station runs on, and CentCom isn't planning on changing that. If it's absolutely critical you might be able to run a singularity or tesla engine east of mining, but it won't have any sort of shielding out there. <BR>\n<BR>\nThe air system's different too. It's multiple small networks instead of a single big one, with air hookups across the station. Fortunately it's not that complicated, but it comes at the expense of being able to filter out and reuse specific gases. Besides, you'll probably be busy enough with the engine and general upkeep anyway. <BR>\n<BR>\nThe disposal network in contrast is significantly more complicated, yet more capable. I've already elaborated on it, so I'll let you find and read my write-up for that. As for the routing system, it's just begging to get hit by a stray meteor so consider other utilities a higher priority. <BR>\n<BR>\nGood luck. You're gonna need it. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>Architectural Analyst"
+	info = "I'm not gonna sugarcoat this. Compared to other departments, <I>you might have your work cut out for you.</I> CogStation is an entirely different beast than your standard Box, but everyone's still gonna expect you to keep the place running. <BR>\n<BR>\n If there's any good news, <B>it's your time to shine if you know how to run a thermo-electric generator.</B> That's what this station runs on, and that isn't likely to change anytime soon. If it's absolutely critical you <I>might</I> be able to run a singularity or tesla engine east of mining, but it won't have any sort of protection out there. <BR>\n<BR>\n<B>You still have three solar arrays to work with,</B> two of them being on each end of the starboard side. The port side array will need you to either get access from a head of staff or security, unless you want to spacewalk around the whole station. Don't be afraid to ask the latter - they're there for you, after all. As for other utilities <B>the air system is a bit different than you'd expect</B>, but fortunately you should have the atmos techs this station needed a long time ago. <B>The disposal network is significantly more complicated, yet more capable.</B> I've already elaborated on it, so I'll let you find and read my write-up for that. <B>As for the routing system,</B> it's just begging to get hit by a stray meteor so <B>consider other utilities a higher priority.</B> <BR>\n<BR>\nGood luck. You're gonna need it. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>Architectural Analyst"
+
+/obj/item/paper/guides/cogstation/letter_atmos
+	name = "To future Atmospheric Technicians:"
+	info = "If the place that this station used to call home still hired atmos techs, odds are we could've gotten this place up and running a lot sooner. Alas, the past is in the past and the hard work's already been done. You still have a job to do, but it shouldn't be much different from other stations in this sector. That being said, be aware of the following: <BR>\n<BR>\n - If you haven't already noticed, <B>the atmospherics department is separate from the rest of the station.</B> You'll either need to spacewalk or take a transit tube to reach it, but it still connects to the station's air system at large. <BR>\n<BR>\n- Seeing as the TEG already uses the standard red and blue for it's heating/cooling loops, <B>the scrubber pipes are ORANGE. The main air supply pipes are a purpleish-blue</B> - HOWEVER, these aren't the only air pipes you'll see. We've decided to reuse existing lines from the old air hookup system - <B>these pipes are CYAN and serve to supply air to specific areas</B>. There's also a <B>VIOLET line to help keep the TEG stable.</B> <BR>\n<BR>\nNanotrasen's invested a considerable amount into updating this system, so even if Murphy's Law is alive and well in this sector, the air system isn't one of the things that should fail. If a section of the station is having air problems, <B>check the old air hookups FIRST.</B> Your problem could be as simple as a 'greytider' turning a valve or a clown hooking up a laughing gas canister. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>Architectural Analyst"
 
 /obj/item/paper/guides/cogstation/letter_chief
 	name = "To the future Chief Engineer:"
@@ -94,15 +142,15 @@
 
 /obj/item/paper/guides/cogstation/letter_hos
 	name = "To the future HoS"
-	info = "I'm gonna be rather disappointed if CentCom doesn't brief you about this station, but if they don't <B>I wrote up another letter for your department that should cover it pretty well.</B> Make sure your officers read it if they aren't up to speed. <BR>\n<BR>\nSomething you in particular should know is that if someone's getting to be too much to handle, the boys and I have constructed a 'discount transfer centre' just behind the router. <B>Use it only as a last resort</B> - the walls may be reinforced but they're still thin, and you'll have big trouble on your hands if the AI or any cyborgs find out about it. <BR>\n<BR><I>-LC</I>"
+	info = "I'm gonna be rather disappointed if Central Command doesn't brief you about this station, but if they don't <B>I wrote up another letter for your department that should cover it pretty well.</B> Make sure your officers read it if they aren't up to speed. <BR>\n<BR>\nSomething you in particular should know is that if someone's getting to be too much to handle, the boys and I have constructed a 'discount transfer centre' just behind the router. <B>Use it only as a last resort</B> - the walls may be reinforced but they're still thin, and you'll have big trouble on your hands if the AI or any cyborgs find out about it. <BR>\n<BR><I>-LC</I>"
 
 /obj/item/paper/guides/cogstation/letter_supp
 	name = "To future Supply Staff:"
-	info = "Cargo, move freight. Miners, don't die. Your jobs are pretty straightforward, which is likely why they originally fell under Engineering on this station as opposed to their own department. Although we've considerably readjusted this part of the station to accommodate you, there are potential differences you should be aware of.<BR>\n<BR>\nEngineering<I>will</I> have access to some of your department, namely the warehouse and mining dock. Mining operations on this station were originally asteroid-based, hence the catwalk into the great beyond. Although you won't need to worry about being space-worthy due to a newly installed shuttle dock, they might need to get out there. <BR>\n<BR>\nYou'll have all your usual means of shipping out goods, but the disposal network is more complex with a separate line for mail and trash. I've left another note that explains this in detail, but know trash is the janitor's responsibility, not yours. <BR>\n<BR>\nThe biggest difference has to be this station's router system, which allows departments to ship goods between themselves. Even if the belts aren't working properly they'll still have their own request consoles, so you'll want to check for orders regularly. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>\nArchitectural Analyst"
+	info = "Cargo, move freight. Miners, don't die. Your jobs are pretty straightforward, which is likely why they originally fell under Engineering on this station as opposed to their own department. Although we've considerably readjusted this part of the station to accommodate you, there are potential differences you should be aware of.<BR>\n<BR>\nEngineering<I>will</I> have access to some of your department, namely the warehouse and mining dock. Mining operations on this station were originally asteroid-based, hence the catwalk into the great beyond. Although you won't need to worry about being space-worthy due to a newly installed shuttle dock, they might need to get out there. <BR>\n<BR>\nYou'll have all your usual means of shipping out goods, but the disposal network is more complex with a separate line for mail and trash. It also isn't fully space-proofed, meanin it may not be the best choice for livestock, monkey cubes, or clowns. I've left another note that explains this in detail, but know trash is the janitor's responsibility, not yours. <BR>\n<BR>\nThe biggest difference has to be this station's router system, which allows departments to ship goods between themselves. Even if the belts aren't working properly they'll still have their own request consoles, so you'll want to check for orders regularly. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>\nArchitectural Analyst"
 
-/obj/item/paper/fluff/cogstation/sleepers
-	name = "Re: Sleepers?"
-	info = "Yes, the sleepers are meant to be publicly accessible. Policies in this station's original location encouraged crew to visit the clinic or treat themselves when it came to minor injuries. <BR>\n<BR>\n<B>This is no excuse for you not to do your jobs.</B> You may wish to keep an eye on the sleepers as to ensure they're being used responsibly. Remember, allowing an overdose to happen under your watch isn't much different from administering that overdose yourself. <BR>\n<BR>\n<I>- Dr. Halley</I>"
+/obj/item/paper/guides/cogstation/letter_med
+	name = "Re: Future Medical Staff"
+	info = "With this station nearing approval for regular use, I've been told to consolidate anything noteworthy about its general medical department into a single document. As you may be able to guess, this is that document. <BR>\n<BR>\n- First, you should know a <B>medical clinic is present in the civilian (starboard bow) wing.</B> If you have personnel to spare, it's recommended you have someone staff it - that way people with minor injuries can report there instead of clogging up the research wing. <BR>\n<BR>\n- Despite recent renovations to bring this station in line with regional policy, you'll still find the robotics lab directly adjacent to your department. <B>I advise you take full advantage of this,</B>  whether it's requesting prosthetics in advance or harvesting organs from those who have undergone more...permanent procedures. <BR>\n<BR>\n- Lastly, <B>please make a habit of checking the morgue on a regular basis.</B> Thanks to the Corpse Disposal Network (or CDN for short), you may find the station's deceased delivered directly to you. Some may be employees capable of being revived - more information can be found in the morgue itself. <BR>\n<BR>\n<I>- Dr. Halley</I>"
 
 /obj/item/paper/fluff/cogstation/cloner
 	name = "Re: Issue with the cloner?"
@@ -111,6 +159,10 @@
 /obj/item/paper/fluff/cogstation/letter_rd
 	name = "To the future Research Director"
 	info = "Apologies if you were expecting a letter from the station's Research Director, but just prior to translocation we found out they were a BLF operative. I wouldn't trust a single word they wrote and while I'm not a scientist, something tells me your department will have the easiest time adjusting to this station. <BR>\n<BR>\nYou should have everything you need - this is a research facility after all. It's just a matter of finding it, which shouldn't be too hard. Folks like you are why we're out in deep space, after all! <BR>\n<I>-Louis Cannon</I> <BR>\nFormer Head of Security"
+
+/obj/item/paper/fluff/cogstation/letter_arrd
+	name = "To the future Research Director"
+	info = "Listen, I doubt I need to tell you to how to do your job. From what I've heard this station is getting a state-of-the-art xenobiology lab after it gets translocated, and I don't know the first thing about what you guys do about those slimes. However, there's one thing I <I>do</I> know and it's that your station will have botanists. <BR>\n<BR>\n<B>It's crucial you give them everything they need, so long as they agree to maintain as many apiaries as humanely possible.</B> I know it sounds ridiculous, but it's the <B>ONLY way to keep the floor cluwnes at bay.</B> If you don't know what a floor cluwne is, trust me when I say you do <I>NOT</I> want to find out! <BR>\n<I>Jesse P.</I> <BR>\nFormer CogStation RD"
 
 /obj/item/paper/fluff/cogstation/letter_cap
 	name = "Captain's Log"
@@ -122,15 +174,27 @@
 
 /obj/item/paper/fluff/cogstation/letter_chap
 	name = "A message from the DHDA"
-	info = "Regardless of what the name leads you to believe, CogStation is neither Ratvarian in origin nor designed by members of this so-called 'clock cult'. Despite a potential common enemy and instances of exhibiting peaceful behavior, their beliefs have been labeled 'Heretical' by the Department of Higher-Dimensional Affairs and following them is grounds for immediate termination.  <BR>\nAs the station's designated Chaplain, it is advised you correct anyone who claims this station and/or its designers are Ratvarian. While they are most likely misinformed or 'joking around', untruths gain credibility the more they are repeated. <BR>\n<BR>\n<I>Soulstone Obelisk</I> <BR>\n<BR>\nDepartment of Higher-Dimensional Affairs"
+	info = "Regardless of what the name leads you to believe, CogStation is neither Ratvarian in origin nor designed by members of this so-called 'clock cult'. Despite a potential common enemy and instances of exhibiting peaceful behavior, their beliefs have been labeled 'Heretical' by the Department of Higher-Dimensional Affairs and following them is grounds for immediate termination. <BR>\nAs the station's designated Chaplain, it is advised you correct anyone who claims this station and/or its designers are Ratvarian. While they are most likely misinformed or 'joking around', untruths gain credibility the more they are repeated. <BR>\n<BR>\n<I>Soulstone Obelisk</I> <BR>\n<BR>\nDepartment of Higher-Dimensional Affairs"
 
 /obj/item/paper/fluff/cogstation/cluwne
 	name = "Mysterious Note"
 	info = "<B>ThE rInGmAsTeR dOeSn'T rUn ThE cIrCus... HONK!!!</B>"
 
+/obj/item/paper/fluff/cogstation/secsolars
+	name = "A heads up:"
+	info = "I'm hoping you guys are aware of the <B>access changes this station requires</B>, but one thing they might have forgot to mention is that <B>one of the station's solar arrays and air hookups are wedged squarely behind your department. Engineering might need to come through your department to access them.</B> <BR>\n<BR>\nWhile I can imagine potential concerns,  <B>there shouldn't be any problems if both sides are transparent and communicative.</B> The engineer is most likely there to do their job of keeping the station running, and will only need to pass through your department office and interrogation room (or alternatively, the bridge). You're free to get the doors for them and/or watch them work if it helps put your mind at ease. If they loiter or otherwise act suspiciously <I>then</I> you might want to have a word with them. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>Architectural Analyst"
+
+/obj/item/paper/fluff/cogstation/eva
+	name = "MEMO: Spacesuits"
+	info = "As a Head of Personnel, you may be familiar with crew members requesting EVA access, particularly when there is an absence of credible threats on the station. While it is your decision to grant or deny access unless overriden by your superior(s), you should be aware of an abundance of spacesuits on this station. While intended for emergencies, these suits are cheaper to replace. You may find it beneficial to direct aspiring 'space explorers' towards finding one of these suits instead, although it is advised you order replacement suits in advance through the cargo department. <BR>\n<BR>\n<I>Generated by Organic Resources Bot #2053</I>"
+
+/obj/item/paper/fluff/cogstation/chemists
+	name = "Re: Scientists?!"
+	info = "Scientists <I>should</I> have access to the chemistry lab. This is intentional as opposed to some sort of oversight - after all, they need to reach the medsci router somehow. <BR>\n<BR>\nIf anything you should see this as a blessing, as you won't need to sideline whatever it is you're doing to get them what they need. Your focus should remain on predominantly medical goods, just like other stations in this sector. <BR>\n<BR>\n- Dr. Halley"
+
 /obj/item/paper/fluff/cogstation/mime
 	name = "Au futur Mime"
-	info = "Toutes mes excuses pour toute mauvaise grammaire, je ne suis pas un haut-parleur naturel Français et a dû utiliser NanoTranslate. Bien que vous puissiez être mécontent de l’emplacement de votre bureau, s’il vous plaît comprendre que c’était le seul endroit où nous pourrions le mettre sans problèmes de sécurité et/ou CentClown se plaindre à ce sujet. Nous nous excusons également pour l’absence d’une zone de performance dédiée, mais nous espérons que vous accorder un accès à l’entretien compensera. <BR>\n<BR>\n<I>-C. Donnelly<I> <BR>\n<BR>\nAnalyste Architectural"
+	info = "Toutes mes excuses pour toute mauvaise grammaire, je ne suis pas un haut-parleur naturel Franï¿½ais et a dï¿½ utiliser NanoTranslate. Bien que vous puissiez ï¿½tre mï¿½content de lï¿½emplacement de votre bureau, sï¿½il vous plaï¿½t comprendre que cï¿½ï¿½tait le seul endroit oï¿½ nous pourrions le mettre sans problï¿½mes de sï¿½curitï¿½ et/ou CentClown se plaindre ï¿½ ce sujet. Nous nous excusons ï¿½galement pour lï¿½absence dï¿½une zone de performance dï¿½diï¿½e, mais nous espï¿½rons que vous accorder un accï¿½s ï¿½ lï¿½entretien compensera. <BR>\n<BR>\n<I>-C. Donnelly<I> <BR>\n<BR>\nAnalyste Architectural"
 
 /obj/item/paper/fluff/cogstation/bsrb
 	name = "Message from the NTBSRB"
@@ -152,9 +216,9 @@
 	name = "ROUTER STATUS: LIMITED"
 	info = "Currently, this router cannot receive deliveries from the Airbridge, MedSci, Security, or Service Routers. Cargo and the recycler are the only points currently accepting deliveries from here, although manual input from the routing depot is currently required. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>\n<BR>\nArchitectural Analyst"
 
-/obj/item/paper/fluff/cogstation/router_cargo
-	name = "ROUTER STATUS: VERY LIMITED"
-	info = "Currently, this router cannot receive deliveries from the Airbridge, MedSci, Security, or Service Routers. It is not yet capable of making deliveries, beyond sending items to the recycler. <BR>\n<BR>\n<I>-C. Donnelly</I> <BR>\n<BR>\nArchitectural Analyst"
+/obj/item/paper/fluff/cogstation/mulebot
+	name = "MEMO: MULEbots"
+	info = "As you may know, MULEbots have been coded to minimize travel distance for maximum efficiency. In the case of this station, that may include travelling through depressurized areas exposed to space. Please bear this in mind before using them to transport living tissue. <BR>\n<BR>\n<I>Generated by Organic Resources Bot #2053</I>"
 
 ///////////	CentCom
 

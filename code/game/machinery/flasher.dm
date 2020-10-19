@@ -5,6 +5,7 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	plane = ABOVE_WALL_PLANE
 	max_integrity = 250
 	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
@@ -20,6 +21,7 @@
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
+	plane = GAME_PLANE
 	strength = 80
 	anchored = FALSE
 	base_state = "pflash"
@@ -33,6 +35,9 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else
 		bulb = new(src)
+
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)

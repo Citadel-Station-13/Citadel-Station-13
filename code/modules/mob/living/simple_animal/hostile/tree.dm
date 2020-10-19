@@ -7,12 +7,14 @@
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
 	gender = NEUTER
-	threat = 1
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "brushes"
-	response_disarm = "pushes"
-	response_harm = "hits"
+	response_help_continuous = "brushes"
+	response_help_simple = "brush"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 	speed = 1
 	maxHealth = 250
 	health = 250
@@ -23,7 +25,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("pines")
 	emote_taunt = list("growls")
@@ -40,16 +43,17 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
-/mob/living/simple_animal/hostile/tree/Life()
-	..()
+/mob/living/simple_animal/hostile/tree/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(isopenturf(loc))
 		var/turf/open/T = src.loc
-		if(T.air && T.air.gases[/datum/gas/carbon_dioxide])
-			var/co2 = T.air.gases[/datum/gas/carbon_dioxide]
+		if(T.air)
+			var/co2 = T.air.get_moles(/datum/gas/carbon_dioxide)
 			if(co2 > 0)
 				if(prob(25))
 					var/amt = min(co2, 9)
-					T.air.gases[/datum/gas/carbon_dioxide] -= amt
+					T.air.adjust_moles(/datum/gas/carbon_dioxide, -amt)
 					T.atmos_spawn_air("o2=[amt]")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()

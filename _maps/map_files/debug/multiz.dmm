@@ -102,7 +102,7 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "au" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space)
 "av" = (
 /obj/structure/stairs{
@@ -473,12 +473,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"bs" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/engine/gravity_generator)
 "bt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -654,7 +648,9 @@
 	pixel_x = -25
 	},
 /obj/structure/closet/firecloset/full,
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel{
 	dir = 9
 	},
@@ -793,7 +789,9 @@
 	},
 /area/hallway/primary/central)
 "cl" = (
-/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel{
 	dir = 8
 	},
@@ -1302,7 +1300,7 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/twohanded/fireaxe,
+/obj/item/fireaxe,
 /obj/item/extinguisher,
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1409,7 +1407,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1544,7 +1542,7 @@
 /turf/open/floor/plating,
 /area/space)
 "iu" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/hallway/secondary/service)
 "iK" = (
 /turf/open/floor/plasteel{
@@ -1595,7 +1593,7 @@
 	},
 /area/hallway/secondary/service)
 "nx" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "nz" = (
 /obj/machinery/light{
@@ -1635,7 +1633,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
 "qo" = (
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -1648,7 +1646,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/engine/storage)
 "sh" = (
 /turf/open/floor/plasteel{
@@ -1748,7 +1746,7 @@
 /area/construction)
 "Bk" = (
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Bm" = (
 /obj/machinery/light{
@@ -1878,7 +1876,7 @@
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/openspace,
+/turf/open/transparent/openspace,
 /area/space/nearstation)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
@@ -3614,8 +3612,8 @@ ak
 aT
 ak
 ak
-bs
-bL
+ak
+bE
 bE
 bE
 cc
@@ -3669,7 +3667,7 @@ aU
 bg
 bq
 ak
-bL
+bE
 bE
 bE
 cd
@@ -3723,7 +3721,7 @@ bh
 bh
 br
 ak
-bL
+bE
 bE
 bE
 cc

@@ -93,7 +93,7 @@
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
 		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
-		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
+		/obj/item/stack/sheet/bronze					= /datum/species/golem/bronze,
 		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
 		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
 		/obj/item/stack/sheet/bone					= /datum/species/golem/bone,
@@ -133,7 +133,7 @@
 	assignedrole = "Lavaland Syndicate"
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/new_spawn)
-	new_spawn.grant_language(/datum/language/codespeak)
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"

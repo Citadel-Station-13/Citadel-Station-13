@@ -11,6 +11,7 @@
 	production = 5
 	yield = 4
 	potency = 20
+	instability = 30
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
@@ -80,11 +81,9 @@
 	foodtype = FRUIT
 	wine_power = 50
 
-/obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	if(.)
-		return
-	if( ismob(loc) )
+	if(ishuman(loc))
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
 

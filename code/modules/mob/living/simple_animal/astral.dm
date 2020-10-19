@@ -5,10 +5,15 @@
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT
-	attacktext = "raises the hairs on the neck of"
-	response_harm = "disrupts the concentration of"
-	response_disarm = "wafts"
-	friendly = "communes with"
+	has_field_of_vision = FALSE //we are a spoopy ghost
+	attack_verb_continuous = "raises the hair on the neck of"
+	attack_verb_simple = "raise the hair on the neck of"
+	response_harm_continuous = "disrupts the concentration of"
+	response_harm_simple = "disrupt the concentration of"
+	response_disarm_continuous = "wafts"
+	response_disarm_simple = "waft"
+	friendly_verb_continuous = "communes with"
+	friendly_verb_simple = "commute with"
 	loot = null
 	maxHealth = 10
 	health = 10
@@ -18,8 +23,8 @@
 	deathmessage = "disappears as if it was never really there to begin with"
 	incorporeal_move = 1
 	alpha = 50
-	attacktext = "touches the mind of"
 	speak_emote = list("echos")
+	rad_flags = RAD_NO_CONTAMINATE
 	movement_type = FLYING
 	var/pseudo_death = FALSE
 	var/posses_safe = FALSE
@@ -32,13 +37,16 @@
 /mob/living/simple_animal/astral/death()
 	icon_state = "shade_dead"
 	Stun(1000)
-	friendly = "deads at"
 	pseudo_death = TRUE
 	incorporeal_move = 0
 	to_chat(src, "<span class='notice'>Your astral projection is interrupted and your mind is sent back to your body with a shock!</span>")
 
 /mob/living/simple_animal/astral/ClickOn(var/atom/A, var/params)
-	..()
+	. = ..()
+	attempt_possess(A)
+
+/mob/living/simple_animal/astral/proc/attempt_possess(atom/A)
+	set waitfor = FALSE
 	if(pseudo_death == FALSE)
 		if(isliving(A))
 			if(ishuman(A))
@@ -49,17 +57,17 @@
 						to_chat(src, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
 						return
 					to_chat(src, "<b><i>You astrally possess [H]!</b></i>")
-					log_game("FERMICHEM: [src] has astrally possessed [A]!")
+					log_reagent("FERMICHEM: [src] has astrally possessed [A]!")
 					src.mind.transfer_to(H)
 					qdel(src)
 			var/message = html_decode(stripped_input(src, "Enter a message to send to [A]", MAX_MESSAGE_LEN))
 			if(!message)
 				return
 			to_chat(A, "[src] projects into your mind, <b><i> \"[message]\"</b></i>")
-			log_game("FERMICHEM: [src] has astrally transmitted [message] into [A]")
+			log_reagent("FERMICHEM: [src] has astrally transmitted [message] into [A]")
 
 //Delete the mob if there's no mind! Pay that mob no mind.
-/mob/living/simple_animal/astral/Life()
-	if(!mind)
-		qdel(src)
+/mob/living/simple_animal/astral/PhysicalLife(seconds, times_fired)
 	. = ..()
+	if(!mind && !QDELETED(src))
+		qdel(src)

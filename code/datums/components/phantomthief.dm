@@ -20,7 +20,7 @@
 	valid_slots = _valid_slots
 
 /datum/component/wearertargeting/phantomthief/proc/handlefilterstuff(mob/living/user, was_forced = FALSE)
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
+	if(!SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		user.remove_filter("phantomthief")
 	else
 		user.add_filter("phantomthief", 4, list(type = "drop_shadow", x = filter_x, y = filter_y, size = filter_size, color = filter_color))

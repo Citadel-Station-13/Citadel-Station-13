@@ -213,6 +213,11 @@
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				. += "<span class='notice'>- [R.volume] units of [R.name].</span>"
 
+/obj/machinery/reagentgrinder/AltClick(mob/user)
+	. = ..()
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		replace_beaker(user)
+
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
 	for(var/i in holdingitems)
 		var/obj/item/O = i

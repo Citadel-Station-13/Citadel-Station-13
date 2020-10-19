@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
+	var/list/ice_ruins_templates = list()
+	var/list/ice_ruins_underground_templates = list()
 	var/list/station_ruins_templates = list()
 	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
 
@@ -102,19 +104,32 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = TRUE
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
 	if (lava_ruins.len)
-		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
+		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), lava_ruins_templates)
 		for (var/lava_z in lava_ruins)
 			spawn_rivers(lava_z)
+
+	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
+	if (ice_ruins.len)
+		// needs to be whitelisted for underground too so place_below ruins work
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), ice_ruins_templates)
+		for (var/ice_z in ice_ruins)
+			spawn_rivers(ice_z, 4, /turf/open/transparent/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+
+	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
+	if (ice_ruins_underground.len)
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), ice_ruins_underground_templates)
+		for (var/ice_z in ice_ruins_underground)
+			spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
 
 	// Generate deep space ruins
 	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
 	if (space_ruins.len)
-		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
+		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), space_ruins_templates)
 
 	// Generate station space ruins
 	var/list/station_ruins = levels_by_trait(ZTRAIT_STATION)
 	if (station_ruins.len)
-		seedRuins(station_ruins, CONFIG_GET(number/station_space_budget), /area/space/station_ruins, station_ruins_templates)
+		seedRuins(station_ruins, (SSmapping.config.station_ruin_budget < 0) ? CONFIG_GET(number/station_space_budget) : SSmapping.config.station_ruin_budget, list(/area/space/station_ruins), station_ruins_templates)
 	SSmapping.seedStation()
 	loading_ruins = FALSE
 #endif
@@ -182,6 +197,8 @@ SUBSYSTEM_DEF(mapping)
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates
 	lava_ruins_templates = SSmapping.lava_ruins_templates
+	ice_ruins_templates = SSmapping.ice_ruins_templates
+	ice_ruins_underground_templates = SSmapping.ice_ruins_underground_templates
 	station_ruins_templates = SSmapping.station_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
@@ -196,7 +213,7 @@ SUBSYSTEM_DEF(mapping)
 
 	z_list = SSmapping.z_list
 
-/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, orientation = SOUTH)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 
@@ -236,7 +253,7 @@ SUBSYSTEM_DEF(mapping)
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
-		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE, orientation = orientation))
 			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
@@ -252,7 +269,7 @@ SUBSYSTEM_DEF(mapping)
 	// load the station
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION, FALSE, config.orientation)
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
@@ -268,7 +285,7 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
-	else if (!isnull(config.minetype))
+	else if (!isnull(config.minetype) && config.minetype != "none")
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
 
@@ -317,6 +334,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for (var/map in mapvotes)
 		if (!map)
 			mapvotes.Remove(map)
+			continue
 		if (!(map in global.config.maplist))
 			mapvotes.Remove(map)
 			continue
@@ -372,6 +390,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("[global.config.directory]/lavaruinblacklist.txt")
 	banned += generateMapList("[global.config.directory]/spaceruinblacklist.txt")
+	banned += generateMapList("[global.config.directory]/iceruinblacklist.txt")
 	banned += generateMapList("[global.config.directory]/stationruinblacklist.txt")
 
 	for(var/item in sortList(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
@@ -389,6 +408,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		if(istype(R, /datum/map_template/ruin/lavaland))
 			lava_ruins_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/icemoon/underground))
+			ice_ruins_underground_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/icemoon))
+			ice_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/station))
@@ -424,7 +447,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission / Virtual Reality"
-	set category = "Fun"
+	set category = "Admin.Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return
@@ -446,11 +469,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		else
 			return
 
-	possible_options += "Custom"
-	var/lvl_name
-	var/datum/space_level/level
+	var/away_name
+	var/datum/space_level/away_level
 
-	var/answer = input("What kind ? ","Away/VR") as null|anything in possible_options
+	var/answer = input("What kind ? ","Away/VR") as null|anything in list(possible_options + "Custom")
 	switch(answer)
 		if(null)
 			return
@@ -458,33 +480,21 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			var/mapfile = input("Pick file:", "File") as null|file
 			if(!mapfile)
 				return
-			lvl_name = "[mapfile] custom"
-			to_chat(usr,"<span class='notice'>Loading [lvl_name]...</span>")
+			away_name = "[mapfile] custom"
+			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
 			var/datum/map_template/template = new(mapfile, choice, ztraits)
-			level = template.load_new_z(ztraits)
+			away_level = template.load_new_z(ztraits)
 		else
-			lvl_name = answer
-			to_chat(usr,"<span class='notice'>Loading [lvl_name]...</span>")
-			var/datum/map_template/template = new(lvl_name, choice)
-			level = template.load_new_z(ztraits)
+			away_name = answer
+			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
+			var/datum/map_template/template = new(away_name, choice)
+			away_level = template.load_new_z(ztraits)
 
-	message_admins("Admin [key_name_admin(usr)] has loaded [lvl_name] [choice].")
-	log_admin("Admin [key_name(usr)] has loaded [lvl_name] [choice].")
-	if(!level)
-		message_admins("Loading [lvl_name] failed!")
+	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
+	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
+	if(!away_level)
+		message_admins("Loading [away_name] failed!")
 		return
-
-
-	if(choice == AWAY_MISSION_NAME && GLOB.the_gateway)
-		//Link any found away gate with station gate
-		var/obj/machinery/gateway/centeraway/new_gate
-		for(var/obj/machinery/gateway/centeraway/G in GLOB.machines)
-			if(G.z == level.z_value) //I'll have to refactor gateway shitcode before multi-away support.
-				new_gate = G
-				break
-		//Link station gate with away gate and remove wait time.
-		GLOB.the_gateway.awaygate = new_gate
-		GLOB.the_gateway.wait = world.time
 
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override, border_type_override)
 	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)

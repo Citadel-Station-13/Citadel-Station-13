@@ -133,7 +133,7 @@
 	slices_num = 5
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
-	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtype = GRAIN | DAIRY | FRUIT | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/lime
 	name = "lime cake slice"
@@ -141,7 +141,7 @@
 	icon_state = "limecake_slice"
 	filling_color = "#00FF00"
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
-	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtype = GRAIN | DAIRY | FRUIT | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/store/cake/lemon
 	name = "lemon cake"
@@ -312,7 +312,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	name = "pound cake"
 	desc = "A condensed cake made for filling people up quickly."
 	icon_state = "pound_cake"
-	slices_num = 7 //Its ment to feed the party
+	slices_num = 7 //Its meant to feed the party
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 60)
 	tastes = list("cake" = 5, "sweetness" = 1, "batter" = 1)

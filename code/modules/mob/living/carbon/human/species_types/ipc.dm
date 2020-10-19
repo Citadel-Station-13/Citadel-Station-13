@@ -1,25 +1,34 @@
 /datum/species/ipc
 	name = "I.P.C."
-	id = "ipc"
+	id = SPECIES_IPC
 	say_mod = "beeps"
 	default_color = "00FF00"
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	blacklisted = 0
 	sexes = 0
-	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)
+	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD)
+	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,HAS_FLESH,HAS_BONE,HAIR,ROBOTIC_LIMBS)
+	hair_alpha = 210
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	mutant_bodyparts = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
-	mutanttongue = /obj/item/organ/tongue/robot/ipc
-//Just robo looking parts.
+
+	//Just robo looking parts.
 	mutant_heart = /obj/item/organ/heart/ipc
 	mutantlungs = /obj/item/organ/lungs/ipc
 	mutantliver = /obj/item/organ/liver/ipc
 	mutantstomach = /obj/item/organ/stomach/ipc
 	mutanteyes = /obj/item/organ/eyes/ipc
+	mutantears = /obj/item/organ/ears/ipc
+	mutanttongue = /obj/item/organ/tongue/robot/ipc
+	mutant_brain = /obj/item/organ/brain/ipc
+
+	//special cybernetic organ for getting power from apcs
+	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
 
 	exotic_bloodtype = "HF"
+	exotic_blood_color = BLOOD_COLOR_OIL
+	species_category = SPECIES_CATEGORY_ROBOT
 
 	var/datum/action/innate/monitor_change/screen
 

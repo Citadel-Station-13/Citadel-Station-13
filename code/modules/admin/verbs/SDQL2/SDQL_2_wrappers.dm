@@ -234,3 +234,7 @@
 	for(var/turf/T in v)
 		. += T
 	return pick(.)
+
+/proc/__nan()
+	var/list/L = json_decode("{\"value\":NaN}")
+	return L["value"]

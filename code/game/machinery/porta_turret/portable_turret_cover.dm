@@ -31,10 +31,7 @@
 	return parent_turret.attack_ai(user)
 
 
-/obj/machinery/porta_turret_cover/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/porta_turret_cover/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	return parent_turret.attack_hand(user)
 
@@ -70,8 +67,8 @@
 	else
 		return ..()
 
-/obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
-	parent_turret.attacked_by(I, user)
+/obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user, attackchain_flags = NONE, damage_multiplier = 1)
+	return parent_turret.attacked_by(I, user)
 
 /obj/machinery/porta_turret_cover/attack_alien(mob/living/carbon/alien/humanoid/user)
 	parent_turret.attack_alien(user)

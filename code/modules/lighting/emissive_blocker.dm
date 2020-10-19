@@ -11,6 +11,7 @@
 	plane = EMISSIVE_BLOCKER_PLANE
 	layer = EMISSIVE_BLOCKER_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	//Why?
 	//render_targets copy the transform of the target as well, but vis_contents also applies the transform
 	//to what's in it. Applying RESET_TRANSFORM here makes vis_contents not apply the transform.

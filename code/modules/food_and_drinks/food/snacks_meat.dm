@@ -22,6 +22,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/fish
 	tastes = list("fish" = 1)
 	foodtype = MEAT
 
@@ -54,10 +55,18 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
 
+/obj/item/reagent_containers/food/snacks/fishfry
+	name = "fish fry"
+	desc = "All that and no bag of chips..."
+	icon_state = "fish_fry"
+	list_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	filling_color = "#ee7676"
+	tastes = list("fish" = 1, "pan seared vegtables" = 1)
+	foodtype = MEAT | VEGETABLES | FRIED
+	
 /obj/item/reagent_containers/food/snacks/sushi_basic
 	name = "funa hosomaki"
 	desc = "A small cylindrical kudzu skin, filled with rice and fish."
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_basic"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
@@ -69,7 +78,6 @@
 /obj/item/reagent_containers/food/snacks/sushi_adv
 	name = "funa nigiri"
 	desc = "A peace  of carp lightly placed on some rice."
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_adv"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
@@ -81,7 +89,6 @@
 /obj/item/reagent_containers/food/snacks/sushi_pro
 	name = "funa nigiri"
 	desc = "A well prepared peace  of the best of the carp fillet placed on rice. Looks fancy and fresh!"
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_pro"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
@@ -132,11 +139,22 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtype = MEAT | ALCOHOL
 
+/obj/item/reagent_containers/food/snacks/rawmeatball
+	name = "raw meatball"
+	desc = "Raw mushy meat. Better cook this!"
+	icon_state = "rawmeatball"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meatball
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	filling_color = "#bd2020"
+	tastes = list("meat" = 1, "slime" = 1)
+	foodtype = MEAT | RAW
+
 /obj/item/reagent_containers/food/snacks/meatball
 	name = "meatball"
 	desc = "MAMA MIA DAS A SPICY"
 	icon_state = "meatball"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#800000"
 	tastes = list("meat" = 1)
 	foodtype = MEAT
@@ -165,6 +183,27 @@
 	icon_state = "salami"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("meat" = 1, "smoke" = 1)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatloaf
+	name = "meatloaf"
+	desc = "Meat! In a loaf!"
+	icon_state = "meatloaf"
+	filling_color = "#8f0f0f"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/ketchup = 5)
+	tastes = list("meat" = 1, "ketchup" = 1)
+	slices_num = 5
+	slice_path = /obj/item/reagent_containers/food/snacks/meatloaf_slice
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatloaf_slice
+	name = "meatloaf slice"
+	filling_color = "#8f0f0f"
+	desc = "Meat! In chunky slices!"
+	icon_state = "meatloaf_slice"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ketchup = 1)
+	tastes = list("meat" = 1, "ketchup" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/kebab
@@ -295,6 +334,16 @@
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
 
+/obj/item/reagent_containers/food/snacks/sweet_and_sour
+	name = "sweet and sour chicken"
+	desc = "More sweet than sour, but delicious nonetheless."
+	icon_state = "sweet_and_sour"
+	filling_color = "#B22222"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/soysauce = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/soysauce = 2)
+	tastes = list("\"chicken\"" = 1)
+	foodtype = MEAT | PINEAPPLE
+
 /obj/item/reagent_containers/food/snacks/pigblanket
 	name = "pig in a blanket"
 	desc = "A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it."
@@ -397,6 +446,12 @@
 	name = "cow cube"
 	tastes = list("milk" = 1, "beef" = 1)
 	dried_being = /mob/living/simple_animal/cow
+
+/obj/item/reagent_containers/food/snacks/cube/ape
+	name = "ape cube"
+	desc = "Don't add water."
+	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
+	dried_being = /mob/living/simple_animal/hostile/gorilla
 
 /obj/item/reagent_containers/food/snacks/cube/egg
 //Well eggs normally are able to hatch into small birds, this one does not.

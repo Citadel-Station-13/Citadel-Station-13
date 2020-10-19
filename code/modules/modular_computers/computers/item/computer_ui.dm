@@ -3,7 +3,7 @@
 	ui_interact(user)
 
 // Operates TGUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
 	if(!enabled)
 		if(ui)
 			ui.close()
@@ -14,7 +14,7 @@
 		return 0
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
-	if(!screen_on && !hasSiliconAccessInArea(user))
+	if(!screen_on && !issilicon(user))
 		if(ui)
 			ui.close()
 		return 0
@@ -33,19 +33,44 @@
 		to_chat(user, "<span class='danger'>\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning.</span>")
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "ntos_main", "NtOS Main menu", 400, 500, master_ui, state)
-		ui.set_style("ntos")
+		ui = new(user, src, "NtosMain")
+		ui.set_autoupdate(TRUE)
 		ui.open()
-		ui.set_autoupdate(state = 1)
+		ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
+	data["device_theme"] = device_theme
+
+	data["login"] = list()
+	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+	if(cardholder)
+		var/obj/item/card/id/stored_card = cardholder.GetID()
+		if(stored_card)
+			var/stored_name = stored_card.registered_name
+			var/stored_title = stored_card.assignment
+			if(!stored_name)
+				stored_name = "Unknown"
+			if(!stored_title)
+				stored_title = "Unknown"
+			data["login"] = list(
+				IDName = stored_name,
+				IDJob = stored_title,
+			)
+
+	data["removable_media"] = list()
+	if(all_components[MC_SDD])
+		data["removable_media"] += "removable storage disk"
+	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
+	if(intelliholder?.stored_card)
+		data["removable_media"] += "intelliCard"
+	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
+	if(secondarycardholder?.stored_card)
+		data["removable_media"] += "secondary RFID card"
+
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
@@ -143,6 +168,7 @@
 				set_light(comp_light_luminosity, 1, comp_light_color)
 			else
 				set_light(0)
+			return TRUE
 
 		if("PC_light_color")
 			var/mob/user = usr
@@ -158,6 +184,36 @@
 			light_color = new_color
 			update_light()
 			return TRUE
+
+		if("PC_Eject_Disk")
+			var/param = params["name"]
+			var/mob/user = usr
+			switch(param)
+				if("removable storage disk")
+					var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
+					if(!portable_drive)
+						return
+					if(uninstall_component(portable_drive, usr))
+						user.put_in_hands(portable_drive)
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
+				if("intelliCard")
+					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
+					if(!intelliholder)
+						return
+					if(intelliholder.try_eject(user))
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
+				if("ID")
+					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+					if(!cardholder)
+						return
+					cardholder.try_eject(user)
+				if("secondary RFID card")
+					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD2]
+					if(!cardholder)
+						return
+					cardholder.try_eject(user)
+
+
 		else
 			return
 

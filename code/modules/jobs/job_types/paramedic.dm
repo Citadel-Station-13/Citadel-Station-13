@@ -14,13 +14,14 @@
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS)
 
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS)
+	paycheck = PAYCHECK_MEDIUM
+	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 
 	threat = 0.5
 
-	starting_skills = list(/datum/skill/numerical/surgery = STARTING_SKILL_SURGERY_MEDICAL)
-	skill_affinities = list(/datum/skill/numerical/surgery = STARTING_SKILL_AFFINITY_SURGERY_MEDICAL)
+	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"
@@ -35,7 +36,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
 	belt = /obj/item/storage/belt/medical
 	l_hand = /obj/item/storage/firstaid/regular
-	suit_store = /obj/item/flashlight/pen
+	suit_store = /obj/item/flashlight/pen/paramedic
 	id = /obj/item/card/id
 	r_pocket = /obj/item/pinpointer/crew
 	l_pocket = /obj/item/pda/medical

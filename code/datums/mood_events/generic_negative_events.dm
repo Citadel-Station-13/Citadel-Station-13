@@ -77,10 +77,14 @@
 	description = "<span class='boldwarning'>Pull it out!</span>\n"
 	mood_change = -7
 
-/datum/mood_event/table
-	description = "<span class='warning'>Someone threw me on a table!</span>\n"
-	mood_change = -2
-	timeout = 2 MINUTES
+/datum/mood_event/table_limbsmash
+	description = "<span class='warning'>That fucking table, man that hurts...</span>\n"
+	mood_change = -3
+	timeout = 3 MINUTES
+
+/datum/mood_event/table_limbsmash/add_effects(obj/item/bodypart/banged_limb)
+	if(banged_limb)
+		description = "<span class='warning'>My fucking [banged_limb.name], man that hurts...</span>\n"
 
 /datum/mood_event/table/add_effects()
 	if(ishuman(owner))
@@ -153,7 +157,18 @@
 	mood_change = -4
 	timeout = 2400
 
+/datum/mood_event/graverobbing
+	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	mood_change = -8
+	timeout = 3 MINUTES
+
+/datum/mood_event/gates_of_mansus
+	description = "<span class='boldwarning'>LIVING IN A PERFORMANCE IS WORSE THAN DEATH</span>\n"
+	mood_change = -25
+	timeout = 4 MINUTES
+
 //These are unused so far but I want to remember them to use them later
+
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
 	mood_change = -6
@@ -161,6 +176,8 @@
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
+
+//End unused
 
 /datum/mood_event/sad_empath
 	description = "<span class='warning'>Someone seems upset...</span>\n"
@@ -187,6 +204,11 @@
 	mood_change = -1
 	timeout = 2 MINUTES
 
+/datum/mood_event/plush_bite
+	description = "<span class='warning'>IT BIT ME!! OW!</span>\n"
+	mood_change = -3
+	timeout = 2 MINUTES
+
 //Cursed stuff below
 
 /datum/mood_event/emptypred
@@ -198,6 +220,8 @@
 	description = "<span class='nicegreen'>It feels quite cold out here.</span>\n"
 	mood_change = -2
 	timeout = 1 MINUTES
+
+//Cursed stuff end.
 
 /datum/mood_event/vampcandle
 	description = "<span class='umbra'>Something is making your mind feel... loose...</span>\n"
@@ -248,7 +272,7 @@
 	description = "<span class='boldwarning'>Something I recently ate was horrifyingly disgusting.</span>\n"
 	mood_change = -5
 	timeout = 5 MINUTES
-	
+
 /datum/mood_event/nanite_sadness
 	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
 	mood_change = -7
@@ -256,3 +280,17 @@
 /datum/mood_event/nanite_sadness/add_effects(message)
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
 
+/datum/mood_event/artbad
+	description = "<span class='warning'>I've produced better art than that from my ass.</span>\n"
+	mood_change = -2
+	timeout = 1200
+
+/datum/mood_event/tripped
+	description = "<span class='boldwarning'>I can't believe I fell for the oldest trick in the book!</span>\n"
+	mood_change = -6
+	timeout = 2 MINUTES
+
+/datum/mood_event/untied
+	description = "<span class='boldwarning'>I hate when my shoes come untied!</span>\n"
+	mood_change = -3
+	timeout = 1 MINUTES

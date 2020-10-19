@@ -4,6 +4,7 @@
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 	var/special_role = ROLE_TRAITOR
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
@@ -46,6 +47,8 @@
 	for(var/C in GLOB.traitor_classes)
 		if(!(C in blacklist))
 			var/datum/traitor_class/class = GLOB.traitor_classes[C]
+			if(class.min_players > length(GLOB.joined_player_list))
+				continue
 			var/weight = LOGISTIC_FUNCTION(1.5*class.weight,chaos_weight,class.chaos,0)
 			weights[C] = weight * 1000
 	var/choice = pickweight(weights, 0)

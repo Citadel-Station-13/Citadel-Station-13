@@ -13,13 +13,17 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	faction = list("neutral")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_same = 1
-	attacktext = "kicks"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 40
 	maxHealth = 40
@@ -29,11 +33,12 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
+	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
-	udder = new()
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize(/datum/reagent/milk_reagent)
+	udder = new (null, milk_reagent)
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
@@ -41,9 +46,10 @@
 	udder = null
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
-	. = ..()
-	if(.)
+/mob/living/simple_animal/hostile/retaliate/goat/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(stat == CONSCIOUS)
 		//chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))
 			Retaliate()
@@ -52,8 +58,7 @@
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
-	if(stat == CONSCIOUS)
-		udder.generateMilk()
+		udder.generateMilk(milk_reagent)
 		eat_plants()
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
@@ -121,21 +126,26 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-	attacktext = "kicks"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 50
 	maxHealth = 50
 	var/obj/item/udder/udder = null
+	var/datum/reagent/milk_reagent = /datum/reagent/consumable/milk
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/cow/Initialize()
-	udder = new()
+	udder = new(null, milk_reagent)
 	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
@@ -150,12 +160,13 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/cow/Life()
-	. = ..()
+/mob/living/simple_animal/cow/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(stat == CONSCIOUS)
-		udder.generateMilk()
+		udder.generateMilk(milk_reagent)
 
-/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/cow/on_attack_hand(mob/living/carbon/M)
 	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
@@ -181,6 +192,28 @@
 	else
 		..()
 
+//a cow that produces a random reagent in its udder
+/mob/living/simple_animal/cow/random
+	name = "strange cow"
+	desc = "Something seems off about the milk this cow is producing."
+
+/mob/living/simple_animal/cow/random/Initialize()
+	milk_reagent = get_random_reagent_id() //this has a blacklist so don't worry about romerol cows, etc
+	..()
+
+//Wisdom cow, speaks and bestows great wisdoms
+/mob/living/simple_animal/cow/wisdom
+	name = "wisdom cow"
+	desc = "Known for its wisdom, shares it with all"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/wisdomcow = 1) //truly the best meat
+	gold_core_spawnable = FALSE
+	speak_chance = 10 //the cow is eager to share its wisdom! //but is wise enough to not lag  the server too bad
+	milk_reagent = /datum/reagent/medicine/liquid_wisdom
+
+/mob/living/simple_animal/cow/wisdom/Initialize()
+	. = ..()
+	speak = GLOB.wisdoms //Done here so it's setup properly
+
 /mob/living/simple_animal/chick
 	name = "\improper chick"
 	desc = "Adorable! They make such a racket though."
@@ -198,10 +231,14 @@
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 1)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-	attacktext = "kicks"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
 	health = 3
 	maxHealth = 3
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -210,16 +247,15 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/chick/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chick/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)
@@ -227,8 +263,9 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
-/mob/living/simple_animal/chick/holo/Life()
-	..()
+/mob/living/simple_animal/chick/holo/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	amount_grown = 0
 
 /mob/living/simple_animal/chicken
@@ -249,10 +286,14 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/chicken = 2)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
 	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-	attacktext = "kicks"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
 	health = 15
 	maxHealth = 15
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -268,7 +309,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/chicken_count = 0
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/chicken/Initialize()
 	. = ..()
@@ -297,9 +338,8 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/chicken/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("<span class='alertalien'>[src] [pick(layMessage)]</span>")
@@ -342,10 +382,14 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg/kiwiEgg
 	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-	attacktext = "kicks"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
 	health = 25
 	maxHealth = 25
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -358,6 +402,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/static/kiwi_count = 0
 
+	footstep_type = FOOTSTEP_MOB_CLAW
+
 /mob/living/simple_animal/kiwi/Destroy()
 	--kiwi_count
 	return ..()
@@ -366,9 +412,8 @@
 	. = ..()
 	++kiwi_count
 
-/mob/living/simple_animal/kiwi/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/kiwi/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if((!stat && prob(3) && eggsleft > 0) && egg_type)
 		visible_message("[src] [pick(layMessage)]")
@@ -418,10 +463,14 @@
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
-	attacktext = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
 	health = 10
 	maxHealth = 10
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -430,14 +479,15 @@
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 
+	footstep_type = FOOTSTEP_MOB_CLAW
+
 /mob/living/simple_animal/babyKiwi/Initialize()
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
-/mob/living/simple_animal/babyKiwi/Life()
-	. =..()
-	if(!.)
+/mob/living/simple_animal/babyKiwi/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		return
 	if(!stat && !ckey)
 		amount_grown += rand(1,2)
@@ -453,14 +503,16 @@
 /obj/item/udder
 	name = "udder"
 
-/obj/item/udder/Initialize()
+/obj/item/udder/Initialize(loc, milk_reagent)
+	if(!milk_reagent)
+		milk_reagent = /datum/reagent/consumable/milk
 	create_reagents(50, NONE, NO_REAGENTS_VALUE)
-	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
+	reagents.add_reagent(milk_reagent, 20)
 	. = ..()
 
-/obj/item/udder/proc/generateMilk()
+/obj/item/udder/proc/generateMilk(datum/reagent/milk_reagent)
 	if(prob(5))
-		reagents.add_reagent(/datum/reagent/consumable/milk, rand(5, 10))
+		reagents.add_reagent(milk_reagent, rand(5, 10))
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O
@@ -472,3 +524,33 @@
 		user.visible_message("[user] milks [src] using \the [O].", "<span class='notice'>You milk [src] using \the [O].</span>")
 	else
 		to_chat(user, "<span class='danger'>The udder is dry. Wait a bit longer...</span>")
+
+/mob/living/simple_animal/deer
+	name = "doe"
+	desc = "A gentle, peaceful forest animal. How did this get into space?"
+	icon_state = "deer-doe"
+	icon_living = "deer-doe"
+	icon_dead = "deer-doe-dead"
+	gender = FEMALE
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	speak = list("Weeeeeeee?","Weeee","WEOOOOOOOOOO")
+	speak_emote = list("grunts","grunts lowly")
+	emote_hear = list("brays.")
+	emote_see = list("shakes its head.")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 3)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently nudges"
+	response_disarm_simple = "gently nudge"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "bucks"
+	attack_verb_simple = "buck"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	health = 75
+	maxHealth = 75
+	blood_volume = BLOOD_VOLUME_NORMAL
+	footstep_type = FOOTSTEP_MOB_SHOE

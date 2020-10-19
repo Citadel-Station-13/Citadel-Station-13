@@ -81,7 +81,16 @@
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 	build_path = /obj/item/airlock_painter
 	category = list("initial", "Misc","Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/airlock_painter/decal
+	name = "Decal Painter"
+	id = "decal_painter"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
+	build_path = /obj/item/airlock_painter/decal
+	category = list("initial","Tools","Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/cultivator
 	name = "Cultivator"
@@ -255,4 +264,28 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 150)
 	build_path = /obj/item/key/collar
+	category = list("initial", "Misc")
+
+/datum/design/price_tagger
+	name = "Price Tagger"
+	id = "price_tagger"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	build_path = /obj/item/price_tagger
+	category = list("initial", "Misc")
+
+/datum/design/custom_vendor_refill
+	name = "Custom Vendor Refill"
+	id = "custom_vendor_refill"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2000)
+	build_path = /obj/item/vending_refill/custom
+	category = list("initial", "Misc")
+
+/datum/design/trigger_assembly
+	name = "Trigger Assembly"
+	id = "trigger_assembly"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 6500, /datum/material/glass = 50)
+	build_path = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
 	category = list("initial", "Misc")

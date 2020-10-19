@@ -18,9 +18,8 @@
 	..()
 	SSair.atmos_machinery += src
 
-	air_contents = new
-	air_contents.volume = volume
-	air_contents.temperature = T20C
+	air_contents = new(volume)
+	air_contents.set_temperature(T20C)
 
 	return 1
 
@@ -146,11 +145,16 @@
 
 /obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(air_contents, user, src)
+	return TRUE
 
-/obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
+/obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(I.force < 10 && !(stat & BROKEN))
 		take_damage(0)
 	else
 		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
 		..()
+
+/obj/machinery/portable_atmospherics/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	atmosanalyzer_scan(air_contents, O, src, FALSE)

@@ -1,7 +1,7 @@
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
-	desc = "A scanner used to evaluate a plant's various areas of growth."
+	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
@@ -10,6 +10,25 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	var/scan_mode = PLANT_SCANMODE_STATS
+
+/obj/item/plant_analyzer/attack_self(mob/user)
+	. = ..()
+	scan_mode = !scan_mode
+	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == PLANT_SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
+
+/obj/item/plant_analyzer/attack(mob/living/M, mob/living/carbon/human/user)
+	//Checks if target is a podman
+	if(ispodperson(M))
+		user.visible_message("<span class='notice'>[user] analyzes [M]'s vitals.</span>", \
+							"<span class='notice'>You analyze [M]'s vitals.</span>")
+		if(scan_mode== PLANT_SCANMODE_STATS)
+			healthscan(user, M, advanced = TRUE)
+		else
+			chemscan(user, M)
+		add_fingerprint(user)
+		return
+	return ..()
 
 // *************************************
 // Hydroponics Tools
@@ -82,7 +101,7 @@
 	custom_materials = list(/datum/material/iron = 15000)
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/hatchet/Initialize()
 	. = ..()
@@ -103,6 +122,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
+	attack_speed = CLICK_CD_MELEE
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
@@ -125,9 +145,12 @@
 			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
+/obj/item/scythe/pre_attack(atom/A, mob/living/user, params, attackchain_flags, damage_multiplier)
+	. = ..()
+	if(. & STOP_ATTACK_PROC_CHAIN)
+		return
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
-		return ..()
+		return
 	else
 		var/turf/user_turf = get_turf(user)
 		var/dir_to_target = get_dir(user_turf, get_turf(A))
@@ -138,11 +161,12 @@
 			var/turf/T = get_step(user_turf, turn(dir_to_target, i))
 			for(var/obj/structure/spacevine/V in T)
 				if(user.Adjacent(V))
-					melee_attack_chain(user, V)
+					melee_attack_chain(user, V, attackchain_flags = ATTACK_IGNORE_CLICKDELAY)
 					stam_gain += 5					//should be hitcost
 		swiping = FALSE
 		stam_gain += 2								//Initial hitcost
 		user.adjustStaminaLoss(-stam_gain)
+		user.DelayNextAction()
 
 // *************************************
 // Nutrient defines for hydroponics

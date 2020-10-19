@@ -9,6 +9,7 @@
 	var/originalName
 	var/list/affixes
 	var/list/appliedComponents
+	var/list/appliedElements
 
 	var/static/list/affixListing
 
@@ -22,6 +23,7 @@
 
 	src.affixes = affixes
 	appliedComponents = list()
+	appliedElements = list()
 	randomAffixes()
 
 /datum/component/fantasy/Destroy()
@@ -118,6 +120,8 @@
 		affix.remove(src)
 	for(var/i in appliedComponents)
 		qdel(i)
+	for(var/i in appliedElements)
+		master._RemoveElement(i)
 
 	master.force = max(0, master.force - quality)
 	master.throwforce = max(0, master.throwforce - quality)

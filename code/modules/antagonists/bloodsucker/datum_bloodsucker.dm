@@ -20,7 +20,7 @@
 	var/poweron_feed = FALSE			// Am I feeding?
 	var/poweron_masquerade = FALSE
 	// STATS
-	var/bloodsucker_level 
+	var/bloodsucker_level
 	var/bloodsucker_level_unspent = 1
 	var/regen_rate = 0.3				// How fast do I regenerate?
 	var/additional_regen                // How much additional blood regen we gain from bonuses such as high blood.
@@ -37,9 +37,11 @@
 	var/had_toxlover
 	var/level_bloodcost
 	var/passive_blood_drain = -0.1        //The amount of blood we loose each bloodsucker life() tick
+	var/notice_healing                    //Var to see if you are healing for preventing spam of the chat message inform the user of such
+	var/FinalDeath                  //Have we reached final death? Used to prevent spam.
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
 
 /datum/antagonist/bloodsucker/on_gain()
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
@@ -50,7 +52,6 @@
 	AssignStarterPowersAndStats()// Give Powers & Stats
 	forge_bloodsucker_objectives()// Objectives & Team
 	update_bloodsucker_icons_added(owner.current, "bloodsucker")	// Add Antag HUD
-	LifeTick()	// Run Life Function
 	. = ..()
 
 
@@ -137,7 +138,7 @@
 		if(owner.current.gender == MALE)
 			if(prob(10)) // Gender override
 				bloodsucker_reputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
-		else
+		else if(owner.current.gender == FEMALE)
 			if(prob(10)) // Gender override
 				bloodsucker_reputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 
@@ -209,7 +210,7 @@
 	// Physiology
 	CheckVampOrgans() // Heart, Eyes
 	// Language
-	owner.current.grant_language(/datum/language/vampiric)
+	owner.current.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
 	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 	// Disabilities
@@ -246,7 +247,7 @@
 	// Update Health
 	owner.current.setMaxHealth(100)
 	// Language
-	owner.current.remove_language(/datum/language/vampiric)
+	owner.current.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	// Soul
 	if (owner.soulOwner == owner) // Return soul, if *I* own it.
 		owner.hasSoul = TRUE
@@ -340,10 +341,12 @@
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/LifeTick)
 	return
 
 //This handles the removal of antag huds/special abilities
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -649,10 +652,10 @@
 		return TRUE
 	// Check 3) If I am a BLOODSUCKER, then are they my Vassal?
 	if (mob_B && atom_V && (atom_V in mob_B.vassals))
-		return TRUE 
+		return TRUE
 	// Check 4) If we are both VASSAL, then do we have the same master?
 	if (atom_V && mob_V && atom_V.master == mob_V.master)
-		return TRUE 
+		return TRUE
 	return FALSE
 
 
@@ -683,6 +686,8 @@
 	owner.current.hud_used.sunlight_display.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
+	if(FinalDeath)
+		return
 	// No Hud? Get out.
 	if(!owner.current.hud_used)
 		return
@@ -710,7 +715,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/bloodsucker/proc/update_counter(value, valuecolor)
-	invisibility = 0 
+	invisibility = 0
 
 /obj/screen/bloodsucker/blood_counter
 	icon = 'icons/mob/actions/bloodsucker.dmi'
@@ -758,7 +763,7 @@
 
 /obj/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
 	..()
-	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"	
+	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"
 
 /datum/antagonist/bloodsucker/proc/count_vassals(datum/mind/master)
 	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)

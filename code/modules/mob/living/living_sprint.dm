@@ -29,13 +29,15 @@
 	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	add_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
 
 /mob/living/proc/disable_sprint_mode(update_icon = TRUE)
-	if(!(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
+	if(!(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) || (combat_flags & COMBAT_FLAG_SPRINT_FORCED))
 		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/sprinting)
 	if(update_icon)
 		update_sprint_icon()
 
@@ -51,6 +53,8 @@
 /mob/living/proc/disable_intentional_sprint_mode()
 	if(!(combat_flags & COMBAT_FLAG_SPRINT_TOGGLED) && !(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
 		return
+	if(combat_flags & COMBAT_FLAG_SPRINT_FORCED)
+		return
 	DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_TOGGLED)
 	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		disable_sprint_mode(FALSE)
@@ -59,6 +63,9 @@
 /mob/living/proc/user_toggle_intentional_sprint_mode()
 	var/old = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(old)
+		if(combat_flags & COMBAT_FLAG_SPRINT_FORCED)
+			to_chat(src, "<span class='warning'>You are unable to stop sprinting!</span>")
+			return
 		disable_intentional_sprint_mode()
 		if((m_intent == MOVE_INTENT_RUN) && CHECK_ALL_MOBILITY(src, MOBILITY_STAND|MOBILITY_MOVE))
 			playsound_local(src, 'sound/misc/sprintdeactivate.ogg', 50, FALSE, pressure_affected = FALSE)

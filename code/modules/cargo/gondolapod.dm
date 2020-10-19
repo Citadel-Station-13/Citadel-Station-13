@@ -2,9 +2,12 @@
 	name = "gondola"
 	real_name = "gondola"
 	desc = "The silent walker. This one seems to be part of a delivery agency."
-	response_help = "pets"
-	response_disarm = "bops"
-	response_harm = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	faction = list("gondola")
 	turns_per_move = 10
 	icon = 'icons/mob/gondolapod.dmi'
@@ -39,7 +42,7 @@
 	set name = "Release Contents"
 	set category = "Gondola"
 	set desc = "Release any contents stored within your vast belly."
-	linked_pod.open(src, forced = TRUE)
+	linked_pod.open(src, TRUE)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/examine(mob/user)
 	..()
@@ -58,12 +61,12 @@
 	else
 		to_chat(src, "<span class='notice'>A closer look inside yourself reveals... nothing.</span>")
 
-/mob/living/simple_animal/pet/gondola/gondolapod/proc/setOpened()
+/mob/living/simple_animal/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/setClosed), 50)
+	addtimer(CALLBACK(src, /atom.proc/setClosed), 50)
 
-/mob/living/simple_animal/pet/gondola/gondolapod/proc/setClosed()
+/mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE
 	update_icon()
 

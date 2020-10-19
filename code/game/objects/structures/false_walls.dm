@@ -7,6 +7,7 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
+	plane = WALL_PLANE
 	layer = LOW_OBJ_LAYER
 	density = TRUE
 	opacity = 1
@@ -40,7 +41,7 @@
 	new /obj/structure/falsewall/brass(loc)
 	qdel(src)
 
-/obj/structure/falsewall/attack_hand(mob/user)
+/obj/structure/falsewall/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(opening)
 		return
 	. = ..()
@@ -179,7 +180,7 @@
 	radiate()
 	return ..()
 
-/obj/structure/falsewall/uranium/attack_hand(mob/user)
+/obj/structure/falsewall/uranium/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	radiate()
 	. = ..()
 

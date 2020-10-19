@@ -12,7 +12,7 @@
 		overlays_standing[cache_index] = null
 
 /mob/living/carbon/regenerate_icons()
-	if(notransform)
+	if(mob_transforming)
 		return 1
 	update_inv_hands()
 	update_inv_handcuffed()
@@ -68,7 +68,7 @@
 	var/dam_colors = "#E62525"
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		dam_colors = bloodtype_to_color(H.dna.blood_type)
+		dam_colors = H.dna.species.exotic_blood_color
 
 	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER, color = dam_colors)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
@@ -203,6 +203,12 @@
 
 	remove_overlay(BODYPARTS_LAYER)
 
+	var/is_taur = FALSE
+	if(dna?.species.mutant_bodyparts["taur"])
+		var/datum/sprite_accessory/taur/T = GLOB.taur_list[dna.features["taur"]]
+		if(T?.hide_legs)
+			is_taur = TRUE
+
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		BP.update_limb()
@@ -213,9 +219,12 @@
 		return
 
 	//GENERATE NEW LIMBS
+	var/static/list/leg_day = typecacheof(list(/obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg))
 	var/list/new_limbs = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(is_taur && leg_day[BP.type])
+			continue
 		new_limbs += BP.get_limb_icon()
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
@@ -250,7 +259,7 @@
 			. += "-digitigrade[BP.use_digitigrade]"
 		if(BP.animal_origin)
 			. += "-[BP.animal_origin]"
-		if(BP.status == BODYPART_ORGANIC)
+		if(BP.is_organic_limb(FALSE))
 			. += "-organic"
 		else
 			. += "-robotic"

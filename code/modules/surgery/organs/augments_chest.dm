@@ -23,7 +23,7 @@
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
-		owner.nutrition += 50
+		owner.adjust_nutrition(50)
 		addtimer(CALLBACK(src, .proc/synth_cool), 50)
 
 /obj/item/organ/cyberimp/chest/nutriment/proc/synth_cool()
@@ -33,9 +33,8 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount / severity)
+	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount * severity/100)
 	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
-
 
 /obj/item/organ/cyberimp/chest/nutriment/plus
 	name = "Nutriment pump implant PLUS"
@@ -115,10 +114,10 @@
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.stat != DEAD && prob(50 / severity) && H.can_heartattack())
+		if(H.stat != DEAD && prob(severity/2) && H.can_heartattack())
 			H.set_heartattack(TRUE)
 			to_chat(H, "<span class='userdanger'>You feel a horrible agony in your chest!</span>")
-			addtimer(CALLBACK(src, .proc/undo_heart_attack), 60 SECONDS / severity)
+			addtimer(CALLBACK(src, .proc/undo_heart_attack), (60 * severity/100) SECONDS)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
 	var/mob/living/carbon/human/H = owner

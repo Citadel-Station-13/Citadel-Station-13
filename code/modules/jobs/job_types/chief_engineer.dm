@@ -17,6 +17,7 @@
 	exp_type_department = EXP_TYPE_ENGINEERING
 
 	outfit = /datum/outfit/job/ce
+	plasma_outfit = /datum/outfit/plasmaman/ce
 
 	access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,
 						ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ATMOSPHERICS, ACCESS_EVA,
@@ -26,6 +27,10 @@
 						ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ATMOSPHERICS, ACCESS_EVA,
 						ACCESS_HEADS, ACCESS_CONSTRUCTION, ACCESS_SEC_DOORS, ACCESS_MINISAT,
 						ACCESS_CE, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_TCOMSAT, ACCESS_MINERAL_STOREROOM)
+	paycheck = PAYCHECK_COMMAND
+	paycheck_department = ACCOUNT_ENG
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/affinity/wiring)
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_ENGINEER
 	blacklisted_quirks = list(/datum/quirk/mute, /datum/quirk/brainproblems, /datum/quirk/paraplegic, /datum/quirk/insanity)

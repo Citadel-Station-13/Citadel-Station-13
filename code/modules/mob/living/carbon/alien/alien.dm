@@ -25,7 +25,7 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5
+	heat_protection = 0.5
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = 1
@@ -33,8 +33,8 @@
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/Initialize()
-	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/mob_sleep)
+	add_verb(src, /mob/living/proc/lay_down)
 
 	create_bodyparts() //initialize bodyparts
 
@@ -93,11 +93,9 @@
 /mob/living/carbon/alien/IsAdvancedToolUser()
 	return has_fine_manipulation
 
-/mob/living/carbon/alien/Stat()
-	..()
-
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
+/mob/living/carbon/alien/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
 
 /mob/living/carbon/alien/getTrail()
 	if(getBruteLoss() < 200)
@@ -140,7 +138,8 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
-	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>",
+		"<span class='alertalien'>You begin to twist and contort!</span>")
 	new_xeno.setDir(dir)
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

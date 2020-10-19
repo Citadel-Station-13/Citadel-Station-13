@@ -10,13 +10,13 @@
 	move_to_delay = 5
 	vision_range = 20
 	aggro_vision_range = 20
-	threat = 1
 	maxHealth = 40 //easy to kill, but oh, will you be seeing a lot of them.
 	health = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	melee_damage_type = BURN
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/effects/curseattack.ogg'
 	throw_message = "passes through the smokey body of"
 	obj_damage = 0
@@ -102,8 +102,9 @@ IGNORE_PROC_IF_NOT_TARGET(attack_slime)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L)
+/mob/living/simple_animal/hostile/asteroid/curseblob/attacked_by(obj/item/I, mob/living/L, attackchain_flags = NONE, damage_multiplier = 1)
 	if(L != set_target)
+		I.ApplyAttackCooldown(L, src)
 		return
 	return ..()
 

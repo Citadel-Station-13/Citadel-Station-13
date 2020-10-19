@@ -5,6 +5,7 @@
 	antagpanel_category = "Clockcult"
 	job_rank = ROLE_SERVANT_OF_RATVAR
 	antag_moodlet = /datum/mood_event/cult
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	var/datum/action/innate/hierophant/hierophant_network = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
@@ -91,7 +92,7 @@
 		current = mob_override
 	GLOB.all_clockwork_mobs += current
 	current.faction |= "ratvar"
-	current.grant_language(/datum/language/ratvar)
+	current.grant_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CLOCKIE)
 	current.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	if(issilicon(current))
 		var/mob/living/silicon/S = current
@@ -102,6 +103,7 @@
 			R.module.rebuild_modules()
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.add_blocked_language(subtypesof(/datum/language) - /datum/language/ratvar, LANGUAGE_CLOCKIE)
 			A.can_be_carded = FALSE
 			A.requires_power = POWER_REQ_CLOCKCULT
 			var/list/AI_frame = list(mutable_appearance('icons/mob/clockwork_mobs.dmi', "aiframe")) //make the AI's cool frame
@@ -142,7 +144,7 @@
 		current = mob_override
 	GLOB.all_clockwork_mobs -= current
 	current.faction -= "ratvar"
-	current.remove_language(/datum/language/ratvar)
+	current.remove_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CLOCKIE)
 	current.clear_alert("clockinfo")
 	for(var/datum/action/innate/clockwork_armaments/C in owner.current.actions) //Removes any bound clockwork armor
 		qdel(C)
@@ -152,6 +154,7 @@
 		var/mob/living/silicon/S = current
 		if(isAI(S))
 			var/mob/living/silicon/ai/A = S
+			A.remove_blocked_language(subtypesof(/datum/language) - /datum/language/ratvar, LANGUAGE_CLOCKIE)
 			A.can_be_carded = initial(A.can_be_carded)
 			A.requires_power = initial(A.requires_power)
 			A.cut_overlays()

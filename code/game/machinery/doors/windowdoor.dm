@@ -11,7 +11,7 @@
 	integrity_failure = 0
 	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100)
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
@@ -53,6 +53,15 @@
 		icon_state = base_state
 	else
 		icon_state = "[src.base_state]open"
+
+/obj/machinery/door/window/update_atom_colour()
+	if((color && (color_hex2num(color) < 255)))
+		visible = TRUE
+		if(density)
+			set_opacity(TRUE)
+	else
+		visible = FALSE
+	set_opacity(density && visible)
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
@@ -143,16 +152,18 @@
 	do_animate("opening")
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state ="[src.base_state]open"
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/finish_opening), 10)
+	return TRUE
 
+/obj/machinery/door/window/proc/finish_opening()
+	operating = FALSE
 	density = FALSE
-//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+	if(visible)
+		set_opacity(FALSE)
 	air_update_turf(1)
 	update_freelook_sight()
-
 	if(operating == 1) //emag again
 		operating = FALSE
-	return 1
 
 /obj/machinery/door/window/close(forced=0)
 	if (src.operating)
@@ -171,10 +182,13 @@
 	density = TRUE
 	air_update_turf(1)
 	update_freelook_sight()
-	sleep(10)
+	addtimer(CALLBACK(src, .proc/finish_closing), 10)
+	return TRUE
 
+/obj/machinery/door/window/proc/finish_closing()
+	if(visible)
+		set_opacity(TRUE)
 	operating = FALSE
-	return 1
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -383,7 +397,7 @@
 	return ..()
 
 /obj/machinery/door/window/clockwork/emp_act(severity)
-	if(prob(80/severity))
+	if(prob(severity/1.25))
 		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()

@@ -63,3 +63,23 @@
 
 /datum/effect_system/lightning_spread
 	effect_type = /obj/effect/particle_effect/sparks/electricity
+
+//fake sparks, not subtyped because we don't want light/heat, nor checks inside an often used proc for a rare subcase for saving like 10 lines of code
+/obj/effect/particle_effect/fake_sparks
+	name = "lightning"
+	icon_state = "electricity"
+
+/obj/effect/particle_effect/fake_sparks/Initialize()
+	. = ..()
+	flick(icon_state, src) // replay the animation
+	playsound(src, "sparks", 100, TRUE)
+	QDEL_IN(src, 20)
+
+/datum/effect_system/fake_spark_spread
+	effect_type = /obj/effect/particle_effect/fake_sparks
+
+/proc/do_fake_sparks(n, c, source)
+	var/datum/effect_system/fake_spark_spread/sparks = new
+	sparks.set_up(n, c, source)
+	sparks.autocleanup = TRUE
+	sparks.start()

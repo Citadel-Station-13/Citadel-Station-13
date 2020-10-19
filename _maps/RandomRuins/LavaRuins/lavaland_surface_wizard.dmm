@@ -90,11 +90,11 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "l" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "m" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
@@ -105,7 +105,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "n" = (
 /obj/structure/stone_tile/block/cracked{
@@ -136,14 +136,14 @@
 	},
 /obj/structure/table/bronze,
 /obj/item/disk/design_disk/adv/knight_gear,
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "q" = (
 /obj/structure/table/bronze,
 /obj/item/stack/sheet/mineral/runite{
 	amount = 5
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "r" = (
 /obj/structure/stone_tile/block{
@@ -153,7 +153,7 @@
 /obj/item/stack/sheet/mineral/runite{
 	amount = 5
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "s" = (
 /obj/structure/stone_tile/block{
@@ -186,13 +186,13 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "v" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "w" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -205,7 +205,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
-/turf/open/indestructible/necropolis,
+/turf/open/indestructible/necropolis/air,
 /area/lavaland/surface/outdoors)
 "x" = (
 /obj/structure/stone_tile/block{

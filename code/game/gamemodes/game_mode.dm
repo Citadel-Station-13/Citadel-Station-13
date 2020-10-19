@@ -417,7 +417,7 @@
 				if(player.assigned_role == job)
 					candidates -= player
 
-	if(candidates.len < recommended_enemies)
+	if(candidates.len < recommended_enemies && CONFIG_GET(keyed_list/force_antag_count)[config_tag])
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
@@ -542,6 +542,8 @@
 
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
+		return 0
+	if(C.prefs?.db_flags & DB_FLAG_EXEMPT)
 		return 0
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0

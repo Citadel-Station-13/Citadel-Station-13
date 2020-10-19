@@ -47,14 +47,11 @@
 	if(icon_state)
 		lock_icon_state = icon_state
 	generate_lock_visuals()
-	var/mob/M = parent
-	LAZYOR(M.mousemove_intercept_objects, src)
+	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOUSEMOVE, .proc/onMouseMove)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/lockon_aiming/Destroy()
-	var/mob/M = parent
 	clear_visuals()
-	LAZYREMOVE(M.mousemove_intercept_objects, src)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -120,7 +117,7 @@
 		return
 	LAZYREMOVE(immune_weakrefs, A.weak_reference)
 
-/datum/component/lockon_aiming/onMouseMove(object,location,control,params)
+/datum/component/lockon_aiming/proc/onMouseMove(object,location,control,params)
 	var/mob/M = parent
 	if(!istype(M) || !M.client)
 		return

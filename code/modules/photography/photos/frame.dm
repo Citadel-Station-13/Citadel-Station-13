@@ -4,7 +4,7 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
@@ -21,8 +21,7 @@
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/wallframe/picture/attack_hand(mob/user)
+/obj/item/wallframe/picture/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -40,6 +39,7 @@
 /obj/item/wallframe/picture/examine(mob/user)
 	if(user.is_holding(src) && displayed)
 		displayed.show(user)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
 		return list()
 	return ..()
 
@@ -63,6 +63,7 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	custom_materials = list(/datum/material/wood = 2000)
 	var/obj/item/photo/framed
 	var/persistence_id
 	var/can_decon = TRUE
@@ -109,6 +110,7 @@
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
 		framed.show(user)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
 		return list()
 	return ..()
 
@@ -138,10 +140,7 @@
 
 	..()
 
-/obj/structure/sign/picture_frame/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/sign/picture_frame/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(framed)
 		framed.show(user)
 

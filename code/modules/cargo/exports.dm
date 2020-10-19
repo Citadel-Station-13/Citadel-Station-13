@@ -26,6 +26,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/total_value = list()   //export instance => total value of sold objects
 	var/list/reagents_volume = list()//export reagents => into the total volume of the object sold
 	var/list/reagents_value = list()//export reagents => into the reagent type total value.
+	var/list/exported_atoms_ref = list()	//if they're not deleted they go in here for use.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, allowed_categories = EXPORT_CARGO, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
@@ -67,7 +68,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
 	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
-	var/k_elasticity = 1/300			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 1/30 - > 0
+	var/k_elasticity = 1/100			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity" - CIT EDIT 1/30 - > 100
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export

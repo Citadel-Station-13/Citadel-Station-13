@@ -37,10 +37,10 @@
 		C.put_in_hands(B1)
 		C.put_in_hands(B2)
 		C.regenerate_icons()
-	src.notransform = TRUE
+	src.mob_transforming = TRUE
 	spawn(0)
 		bloodpool_sink(B)
-		src.notransform = FALSE
+		src.mob_transforming = FALSE
 	return 1
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
@@ -73,7 +73,7 @@
 
 	if(victim.stat == CONSCIOUS)
 		src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
-	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/demonsblood))
+	else if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/demonsblood))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
 		victim.forceMove(src)
@@ -104,7 +104,7 @@
 	if(!victim)
 		return FALSE
 
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/consumable/ethanol/devilskiss))
+	if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/devilskiss))
 		to_chat(src, "<span class='warning'><b>AAH! THEIR FLESH! IT BURNS!</b></span>")
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		var/found_bloodpool = FALSE
@@ -155,7 +155,7 @@
 	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
-	if(src.notransform)
+	if(src.mob_transforming)
 		to_chat(src, "<span class='warning'>Finish eating first!</span>")
 		return 0
 	B.visible_message("<span class='warning'>[B] starts to bubble...</span>")
@@ -164,7 +164,7 @@
 	if(!B)
 		return
 	forceMove(B.loc)
-	src.client.eye = src
+	reset_perspective(src)
 	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B></span>")
 	exit_blood_effect(B)
 	if(iscarbon(src))
