@@ -911,6 +911,10 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
+		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
+		"hijacker" = hijacker == user ? TRUE : FALSE,
+		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
+		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
 
 		"powerChannels" = list(
 			list(
