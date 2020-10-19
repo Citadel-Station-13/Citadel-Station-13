@@ -251,8 +251,8 @@
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
 
-/*
-//Returns to the Ark - Commented out and replaced with obelisk_jump
+
+//Returns to the Ark - Going along with their superior mobility
 /datum/action/innate/eminence/ark_jump
 	name = "Return to Ark"
 	desc = "Warps you to the Ark."
@@ -265,8 +265,8 @@
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
-		to_chat(owner, "<span class='warning'>There is no Ark!</span>")
-*/
+		to_chat(owner, "<span class='nezbere '>There is no Ark to warp to, ascendant one.</span>")
+
 
 //Warps to a chosen Obelisk
 /datum/action/innate/eminence/obelisk_jump

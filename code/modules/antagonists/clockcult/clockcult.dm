@@ -7,6 +7,7 @@
 	antag_moodlet = /datum/mood_event/cult
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	var/datum/action/innate/hierophant/hierophant_network = new
+	var/datum/action/innate/hierophant/eminence_ascend = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
 	var/make_team = TRUE //This should be only false for tutorial scarabs
@@ -27,8 +28,20 @@
 	show_in_roundend = FALSE
 	make_team = FALSE
 
+/datum/antagonist/clockcult/eminence
+	var/datum/action/innate/eminence/mass_recall = new
+	var/datum/action/innate/eminence/obelisk_jump = new
+	var/datum/action/innate/eminence/ark_jump = new
+
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
+	qdel(eminence_ascend)
+	return ..()
+
+/datum/antagonist/clockcult/eminence/Destroy()
+	qdel(mass_recall)
+	qdel(obelisk_jump)
+	qdel(ark_jump)
 	return ..()
 
 /datum/antagonist/clockcult/get_team()
