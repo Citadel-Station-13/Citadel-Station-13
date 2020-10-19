@@ -210,7 +210,7 @@
 
 /datum/pipeline/proc/empty()
 	for(var/datum/gas_mixture/GM in get_all_connected_airs())
-		GM.empty()
+		GM.clear()
 
 /datum/pipeline/proc/get_all_connected_airs()
 	var/list/datum/gas_mixture/GL = list()
