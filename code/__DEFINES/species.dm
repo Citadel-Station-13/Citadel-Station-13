@@ -4,6 +4,7 @@
 #define SPECIES_ABDUCTOR			"abductor"
 #define SPECIES_ANDROID				"android"
 #define SPECIES_MAMMAL				"mammal"
+#define SPECIES_ARACHNID			"arachnid"
 #define SPECIES_INSECT				"insect"
 #define SPECIES_DULLAHAN			"dullahan"
 #define SPECIES_DWARF				"dwarf"
@@ -33,6 +34,7 @@
 	#define SPECIES_SYNTH_MIL		"military_synth"
 #define SPECIES_VAMPIRE				"vampire"
 #define SPECIES_XENOHYBRID			"xeno"
+#define SPECIES_ZOMBIE				"zombie"
 
 // Species Category Defines ---------------------
 
@@ -44,6 +46,7 @@
 #define SPECIES_CATEGORY_PLANT		"plant"
 #define SPECIES_CATEGORY_ROBOT		"robotic"
 #define SPECIES_CATEGORY_JELLY		"jelly"
+#define SPECIES_CATEGORY_LIZARD		"lizard"
 #define SPECIES_CATEGORY_SHADOW		"shadow"
 #define SPECIES_CATEGORY_SKELETON	"skeleton"
 #define SPECIES_CATEGORY_UNDEAD		"undead"
