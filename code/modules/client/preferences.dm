@@ -245,7 +245,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///loadout stuff
 	var/gear_points = 10
 	var/list/gear_categories
-	var/list/chosen_gear = list()
+	var/list/loadout_data = list()
+	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
+	var/list/chosen_gear = list() //your current set of items from loadout_data
 	var/gear_category
 	var/gear_subcategory
 
@@ -824,6 +826,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 		if(3)
+			//calculate your gear points from the chosen item
+			gear_points = CONFIG_GET(number/initial_gear_points)
+			var/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
+			if(chosen_gear)
+				for(var/loadout_data in chosen_gear)
+					var/loadout_item = loadout_data[LOADOUT_ITEM]
+					if(loadout_item)
+						var/datum/gear/loadout_gear = text2path(loadout_item)
+						gear_points -= loadout
+			else
+				chosen_gear = list()
+
 			dat += "<table align='center' width='100%'>"
 			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
@@ -879,7 +893,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
 						var/class_link = ""
-						if(gear.type in chosen_gear)
+						if(has_loadout_gear(chosen_gear, gear.type))
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 						else if(gear_points <= 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
@@ -2606,8 +2620,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						current_tab = text2num(href_list["tab"])
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
-			chosen_gear = list()
-			gear_points = CONFIG_GET(number/initial_gear_points)
+			loadout_data["SAVE_[loadout_slot]"] = list()
 			save_preferences()
 		if(href_list["select_category"])
 			gear_category = html_decode(href_list["select_category"])
@@ -2620,10 +2633,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
-			if(!toggle && (G.type in chosen_gear))//toggling off and the item effectively is in chosen gear)
-				chosen_gear -= G.type
-				gear_points += initial(G.cost)
-			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
+			if(!toggle && has_loadout_gear(chosen_gear, G.type))//toggling off and the item effectively is in chosen gear)
+				remove_gear_from_loadout(chosen_gear, G.type)
+			else if(toggle && (!(has_loadout_gear(chosen_gear, G.type))))
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
@@ -2631,8 +2643,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
-					chosen_gear += G.type
-					gear_points -= initial(G.cost)
+					if(loadout_data["SAVE_[loadout_slot]"])
+						loadout_data["SAVE_[loadout_slot]"] += list(list(LOADOUT_ITEM = G.type)) //double packed because it does the union of the CONTENTS of the lists
+					else
+						loadout_data["SAVE_[loadout_slot]"] = list(list(LOADOUT_ITEM = G.type)) //double packed because you somehow had no save slot in your loadout?
 
 	ShowChoices(user)
 	return 1
@@ -2854,6 +2868,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else
 			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
+
+/datum/preferences/proc/has_loadout_gear(gear_list, gear_type)
+	for(var/loadout_gear in gear_list)
+		if(loadout_gear["ITEM"] == gear_type)
+			return loadout_gear
+	return FALSE
+
+/datum/preferences/proc/remove_gear_from_loadout(gear_list, gear_type)
+	var/find_gear = has_loadout_gear(gear_list, gear_type)
+	if(find_gear)
+		gear_list -= find_gear
 
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT
