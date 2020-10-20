@@ -834,7 +834,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/loadout_item = loadout_data[LOADOUT_ITEM]
 					if(loadout_item)
 						var/datum/gear/loadout_gear = text2path(loadout_item)
-						gear_points -= loadout
+						gear_points -= initial(loadout_gear.cost)
 			else
 				chosen_gear = list()
 
@@ -2633,9 +2633,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
+			message_admins("they selected [G] and toggle is [toggle] where has loadout says [has_loadout_gear(chosen_gear, G.type)]")
 			if(!toggle && has_loadout_gear(chosen_gear, G.type))//toggling off and the item effectively is in chosen gear)
+				message_admins("remove it")
 				remove_gear_from_loadout(chosen_gear, G.type)
-			else if(toggle && (!(has_loadout_gear(chosen_gear, G.type))))
+			else if(toggle && !(has_loadout_gear(chosen_gear, G.type)))
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
@@ -2643,7 +2645,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
+					message_admins("so they can have it")
 					if(loadout_data["SAVE_[loadout_slot]"])
+						message_admins("and its added to the list")
 						loadout_data["SAVE_[loadout_slot]"] += list(list(LOADOUT_ITEM = G.type)) //double packed because it does the union of the CONTENTS of the lists
 					else
 						loadout_data["SAVE_[loadout_slot]"] = list(list(LOADOUT_ITEM = G.type)) //double packed because you somehow had no save slot in your loadout?
@@ -2870,8 +2874,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				return TRUE
 
 /datum/preferences/proc/has_loadout_gear(gear_list, gear_type)
+	message_admins("do they have [gear_type]")
 	for(var/loadout_gear in gear_list)
-		if(loadout_gear["ITEM"] == gear_type)
+		message_admins("while searching we found [loadout_gear[LOADOUT_ITEM]]")
+		if(loadout_gear[LOADOUT_ITEM] == gear_type)
 			return loadout_gear
 	return FALSE
 
