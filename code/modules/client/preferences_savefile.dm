@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	39
+#define SAVEFILE_VERSION_MAX	38
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -669,7 +669,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/json_from_file = json_decode(file2text(char_vr_path))
 		if(json_from_file)
 			belly_prefs = json_from_file["belly_prefs"]
-
 	//gear loadout
 	var/text_to_load
 	S["loadout"] >> text_to_load
