@@ -523,7 +523,7 @@
 	path = 	/obj/item/clothing/head/halo
 	ckeywhitelist = list("hisakaki")
 
-/datum/gear/donator\vest
+/datum/gear/donator/vest
 	name = "vest and shirt"
 	slot = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/custom/vest
