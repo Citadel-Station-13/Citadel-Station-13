@@ -101,6 +101,7 @@
 	name = "Polychromic winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
 	cost = 4 //too many people with neon green coats is hard on the eyes
+	color_type = LOADOUT_COLOR_TYPE_POLYCHROMIC
 
 /datum/gear/suit/coat/med
 	name = "Medical winter coat"
