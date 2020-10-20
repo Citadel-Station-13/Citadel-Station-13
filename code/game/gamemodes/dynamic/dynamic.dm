@@ -128,7 +128,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	/// If a only ruleset has been executed. No other rulesets will be run.
 	var/only_ruleset_executed = FALSE
 	/// If the first picked ruleset was a minor ruleset. Minor antagonists will be weighted higher.
-	var/minor_ruleset_round = FALSE
+	var/minor_ruleset_start = FALSE
 	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
 	var/antags_rolled = 0
 	// Arbitrary threat addition, for fudging purposes.
@@ -402,7 +402,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		rigged_roundstart()
 	else
 		roundstart()
-	if(minor_ruleset_round)
+	if(minor_ruleset_start)
 		log_game("DYNAMIC: Starting a minor ruleset round.")
 	else
 		var/starting_rulesets = ""
@@ -414,7 +414,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
-	if(minor_ruleset_round)
+	if(minor_ruleset_start)
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/minor_roundstart),rand(1 MINUTES,5 MINUTES))
 	else
 		for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
@@ -426,10 +426,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/list/potential_minor_rulesets = storyteller.minor_rule_draft()
 	var/iterations = 0
 	var/num_rulesets_executed = 0
-	for(var/r in midround_rules | latejoin_rules)
-		var/datum/dynamic_ruleset/rule = r
-		if(CHECK_BITFIELD(rule.flags,MINOR_RULESET))
-			rule.weight_mult *= 1.5
 	while(threat < threat_level && potential_minor_rulesets.len && (!CHECK_TICK || iterations < 100))
 		var/datum/dynamic_ruleset/minor/rule = pickweight(potential_minor_rulesets)
 		rule.candidates = current_players[CURRENT_LIVING_PLAYERS].Copy()
@@ -465,17 +461,17 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
 		return TRUE
-	if(prob(storyteller.minor_round_chance()))
-		minor_ruleset_round = TRUE
-		message_admins("Dynamic has started a minor antag round. Antags will be assigned in 1-5 minutes.")
-		log_game("DYNAMIC: Minor round started.")
-		return
+	if(prob(storyteller.minor_start_chance()))
+		minor_ruleset_start = TRUE
+		message_admins("Dynamic has initialized a minor antag start. Antags will be assigned in 1-5 minutes.")
+		log_game("DYNAMIC: Minor start initialized.")
+		return TRUE
 	var/list/drafted_rules = storyteller.roundstart_draft()
 	if(!drafted_rules.len)
-		message_admins("Not enough threat level for roundstart antags!")
-		log_game("DYNAMIC: Not enough threat level for roundstart antags!")
-		midround_injection_cooldown = round((midround_injection_cooldown + world.time) / 2, 1)
-		latejoin_injection_cooldown = round((latejoin_injection_cooldown + world.time) / 2, 1)
+		message_admins("No roundstart antags drafted! Falling back to minor ruleset start.")
+		log_game("DYNAMIC: No roundstart antags drafted! Falling back to minor ruleset start.")
+		minor_ruleset_start = TRUE
+		return FALSE
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
 	extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
@@ -509,8 +505,9 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	else
 
 		if(threat_level >= 50)
-			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
+			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this. Falling back to minor antag start.")
 		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
+		minor_ruleset_start = TRUE
 		return FALSE
 	return TRUE
 

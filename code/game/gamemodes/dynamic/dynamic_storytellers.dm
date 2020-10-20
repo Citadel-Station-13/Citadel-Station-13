@@ -32,7 +32,7 @@ Property weights are added to the config weight of the ruleset. They are:
 "conversion" -- Basically a bool. Conversion antags, well, convert. It's in its own class 'cause people kinda hate conversion.
 */
 
-/datum/dynamic_storyteller/proc/minor_round_chance()
+/datum/dynamic_storyteller/proc/minor_start_chance()
 	return clamp(60 - mode.threat_level,0,100) // by default higher threat = lower chance of minor round
 
 /datum/dynamic_storyteller/proc/start_injection_cooldowns()
@@ -107,7 +107,7 @@ Property weights are added to the config weight of the ruleset. They are:
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
 	var/list/drafted_rules = list()
-	var/minor_round_weight_mult = (100-minor_round_chance()) / 100
+	var/minor_round_weight_mult = (100-minor_start_chance()) / 100
 	for (var/datum/dynamic_ruleset/roundstart/rule in mode.roundstart_rules)
 		if (rule.acceptable(mode.roundstart_pop_ready, mode.threat_level))	// If we got the population and threat required
 			rule.candidates = mode.candidates.Copy()
@@ -217,7 +217,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	min_players = 30
 	var/refund_cooldown = 0
 
-/datum/dynamic_storyteller/chaotic/minor_round_chance()
+/datum/dynamic_storyteller/chaotic/minor_start_chance()
 	return 0
 
 /datum/dynamic_storyteller/chaotic/do_process()
@@ -240,7 +240,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
-/datum/dynamic_storyteller/chaotic/minor_round_chance()
+/datum/dynamic_storyteller/chaotic/minor_start_chance()
 	return 0
 
 /datum/dynamic_storyteller/team/should_inject_antag(dry_run = FALSE)
@@ -256,7 +256,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 1, "conversion" = 20)
 
-/datum/dynamic_storyteller/chaotic/minor_round_chance()
+/datum/dynamic_storyteller/chaotic/minor_start_chance()
 	return 0
 
 /datum/dynamic_storyteller/random
@@ -275,7 +275,7 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/random/should_inject_antag()
 	return prob(50)
 
-/datum/dynamic_storyteller/chaotic/minor_round_chance()
+/datum/dynamic_storyteller/chaotic/minor_start_chance()
 	return 20
 
 /datum/dynamic_storyteller/random/roundstart_draft()
@@ -352,7 +352,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("trust" = -2)
 
-/datum/dynamic_storyteller/intrigue/minor_round_chance()
+/datum/dynamic_storyteller/intrigue/minor_start_chance()
 	return 100 - mode.threat_level
 
 /datum/dynamic_storyteller/grabbag
@@ -362,7 +362,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	weight = 2
 	flags = USE_PREF_WEIGHTS | USE_PREV_ROUND_WEIGHTS
 
-/datum/dynamic_storyteller/grabbag/minor_round_chance()
+/datum/dynamic_storyteller/grabbag/minor_start_chance()
 	return 100
 
 /datum/dynamic_storyteller/liteextended
@@ -376,7 +376,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	dead_player_weight = 5
 	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
 
-/datum/dynamic_storyteller/liteextended/minor_round_chance()
+/datum/dynamic_storyteller/liteextended/minor_start_chance()
 	return 100
 
 /datum/dynamic_storyteller/no_antag
