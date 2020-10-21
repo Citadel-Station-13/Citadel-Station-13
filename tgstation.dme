@@ -3761,6 +3761,7 @@
 #include "sandcode\code\modules\mob\living\silicon\silicon.dm"
 #include "sandcode\code\modules\mob\living\silicon\robot\robot.dm"
 #include "sandcode\code\modules\mob\living\silicon\robot\robot_modules.dm"
+#include "sandcode\code\modules\mob\living\simple_animal\bot\hugbot.dm"
 #include "sandcode\code\modules\mob\living\simple_animal\friendly\doges.dm"
 #include "sandcode\code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "sandcode\code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
