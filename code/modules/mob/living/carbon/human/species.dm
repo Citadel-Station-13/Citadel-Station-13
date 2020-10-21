@@ -775,11 +775,11 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/tertiary_string = advanced_color_system ? "[S.mutant_part_string]_tertiary" : "mcolor3"
 			//failsafe: if there's no value for any of these, set it to white
 			if(!H.dna.features[primary_string])
-				H.dna.features[primary_string] = "FFFFFF"
+				H.dna.features[primary_string] = advanced_color_system ? H.dna.features["mcolor"] : "FFFFFF"
 			if(!H.dna.features[secondary_string])
-				H.dna.features[secondary_string] = "FFFFFF"
+				H.dna.features[secondary_string] = advanced_color_system ? H.dna.features["mcolor2"] : "FFFFFF"
 			if(!H.dna.features[tertiary_string])
-				H.dna.features[tertiary_string] = "FFFFFF"
+				H.dna.features[tertiary_string] = advanced_color_system ? H.dna.features["mcolor3"] : "FFFFFF"
 
 			if(!husk)
 				if(!forced_colour)
