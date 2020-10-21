@@ -148,6 +148,8 @@
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
+	if(total_heat_capacity <= 0)
+		return 1
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.return_volume())
 	var/target_temperature
 	var/target_heat_capacity
