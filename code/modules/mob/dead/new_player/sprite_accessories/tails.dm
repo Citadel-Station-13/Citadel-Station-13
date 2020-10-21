@@ -1,6 +1,6 @@
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
-	mutant_part_string = "tail"
+	mutant_part_string = "tails"
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/tails/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
@@ -8,7 +8,7 @@
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
-	mutant_part_string = "tail" //keep this the same, ALWAYS, this is incredibly important for colouring!
+	mutant_part_string = "tails" //keep this the same, ALWAYS, this is incredibly important for colouring!
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /******************************************

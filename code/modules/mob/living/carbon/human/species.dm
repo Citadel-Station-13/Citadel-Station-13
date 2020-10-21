@@ -773,6 +773,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			var/primary_string = advanced_color_system ? "[S.mutant_part_string]_primary" : "mcolor"
 			var/secondary_string = advanced_color_system ? "[S.mutant_part_string]_secondary" : "mcolor2"
 			var/tertiary_string = advanced_color_system ? "[S.mutant_part_string]_tertiary" : "mcolor3"
+			//failsafe: if there's no value for any of these, set it to white
+			if(!H.dna.features[primary_string])
+				H.dna.features[primary_string] = "FFFFFF"
+			if(!H.dna.features[secondary_string])
+				H.dna.features[secondary_string] = "FFFFFF"
+			if(!H.dna.features[tertiary_string])
+				H.dna.features[tertiary_string] = "FFFFFF"
 
 			if(!husk)
 				if(!forced_colour)
@@ -797,9 +804,18 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 						if(MATRIXED)
 							var/list/accessory_colorlist = list()
-							accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features[primary_string]]00")
-							accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features[secondary_string]]00")
-							accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features[tertiary_string]]00")
+							if(S.matrixed_sections == MATRIX_RED || S.matrixed_sections == MATRIX_RED_GREEN || S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_ALL)
+								accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features[primary_string]]00")
+							else
+								accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("00000000")
+							if(S.matrixed_sections == MATRIX_GREEN || S.matrixed_sections == MATRIX_RED_GREEN || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_ALL)
+								accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features[secondary_string]]00")
+							else
+								accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("00000000")
+							if(S.matrixed_sections == MATRIX_BLUE || S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_ALL)
+								accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("[H.dna.features[tertiary_string]]00")
+							else
+								accessory_colorlist += husk ? ReadRGB("#a3a3a3") : ReadRGB("00000000")
 							accessory_colorlist += husk ? list(0, 0, 0) : list(0, 0, 0, hair_alpha)
 							for(var/index in 1 to accessory_colorlist.len)
 								accessory_colorlist[index] /= 255

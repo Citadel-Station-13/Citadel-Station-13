@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	40
+#define SAVEFILE_VERSION_MAX	41
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -226,7 +226,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
-	if(current_version < 40) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
+	if(current_version < 41) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
 		features["color_scheme"] = OLD_CHARACTER_COLORING //disable advanced coloring system by default
 		for(var/feature in features)
 			var/feature_value = features[feature]
@@ -235,9 +235,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				if(ref_list)
 					var/datum/sprite_accessory/accessory = ref_list[feature_value]
 					if(accessory)
-						var/primary_string = "[feature]_primary"
-						var/secondary_string = "[feature]_secondary]"
-						var/tertiary_string = "[feature]_tertiary]"
+						var/primary_string = "[accessory.mutant_part_string]_primary"
+						var/secondary_string = "[accessory.mutant_part_string]_secondary]"
+						var/tertiary_string = "[accessory.mutant_part_string]_tertiary]"
 						if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 							message_admins("Sprite Accessory Failure (migration from [current_version] to 39): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 							continue
@@ -842,9 +842,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(ref_list)
 				var/datum/sprite_accessory/accessory = ref_list[feature_value]
 				if(accessory)
-					var/primary_string = "[feature]_primary"
-					var/secondary_string = "[feature]_secondary]"
-					var/tertiary_string = "[feature]_tertiary]"
+					var/primary_string = "[accessory.mutant_part_string]_primary"
+					var/secondary_string = "[accessory.mutant_part_string]_secondary]"
+					var/tertiary_string = "[accessory.mutant_part_string]_tertiary]"
 					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 						message_admins("Sprite Accessory Failure (loading data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 						continue
@@ -988,9 +988,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(ref_list)
 				var/datum/sprite_accessory/accessory = ref_list[feature_value]
 				if(accessory)
-					var/primary_string = "[feature]_primary"
-					var/secondary_string = "[feature]_secondary]"
-					var/tertiary_string = "[feature]_tertiary]"
+					var/primary_string = "[accessory.mutant_part_string]_primary"
+					var/secondary_string = "[accessory.mutant_part_string]_secondary]"
+					var/tertiary_string = "[accessory.mutant_part_string]_tertiary]"
 					if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 						message_admins("Sprite Accessory Failure (saving data): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 						continue

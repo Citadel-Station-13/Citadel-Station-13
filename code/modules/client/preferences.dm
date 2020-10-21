@@ -565,9 +565,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								var/datum/sprite_accessory/accessory = find_part_list[find_part]
 								if(accessory)
 									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
-										var/primary_feature = "[mutant_part]_primary"
-										var/secondary_feature = "[mutant_part]_secondary"
-										var/tertiary_feature = "[mutant_part]_tertiary"
+										var/primary_feature = "[accessory.mutant_part_string]_primary"
+										var/secondary_feature = "[accessory.mutant_part_string]_secondary"
+										var/tertiary_feature = "[accessory.mutant_part_string]_tertiary"
 										var/matrixed_sections = accessory.matrixed_sections
 										if(accessory.color_src == MATRIXED && !matrixed_sections)
 											message_admins("Sprite Accessory Failure (customization): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
