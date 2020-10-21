@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Fixed species-specific drinks not giving a mood boost if you are that species."
