@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	39
+#define SAVEFILE_VERSION_MAX	40
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -226,7 +226,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
-	if(current_version < 39) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
+	if(current_version < 40) //extreme changes to how things are coloured (the introduction of the advanced coloring system)
 		features["color_scheme"] = OLD_CHARACTER_COLORING //disable advanced coloring system by default
 		for(var/feature in features)
 			var/feature_value = features[feature]
