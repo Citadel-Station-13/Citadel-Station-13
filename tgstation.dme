@@ -14,7 +14,8 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\_basemap.dm"
+#include "_maps\boxstation.dm"
+#include "_maps\RandomZLevels\away_mission\jungleresort.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_extools.dm"
@@ -1804,6 +1805,7 @@
 #include "code\modules\awaymissions\mission_code\caves.dm"
 #include "code\modules\awaymissions\mission_code\centcomAway.dm"
 #include "code\modules\awaymissions\mission_code\challenge.dm"
+#include "code\modules\awaymissions\mission_code\jungleresort.dm"
 #include "code\modules\awaymissions\mission_code\moonoutpost19.dm"
 #include "code\modules\awaymissions\mission_code\murderdome.dm"
 #include "code\modules\awaymissions\mission_code\research.dm"
@@ -2555,8 +2557,8 @@
 #include "code\modules\mob\living\carbon\human\species_types\abductor.dm"
 #include "code\modules\mob\living\carbon\human\species_types\android.dm"
 #include "code\modules\mob\living\carbon\human\species_types\angel.dm"
-#include "code\modules\mob\living\carbon\human\species_types\arachnid.dm"
 #include "code\modules\mob\living\carbon\human\species_types\anthromorph.dm"
+#include "code\modules\mob\living\carbon\human\species_types\arachnid.dm"
 #include "code\modules\mob\living\carbon\human\species_types\bugmen.dm"
 #include "code\modules\mob\living\carbon\human\species_types\corporate.dm"
 #include "code\modules\mob\living\carbon\human\species_types\dullahan.dm"
