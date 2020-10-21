@@ -61,6 +61,13 @@
 	if(user.mind)
 		speed_mod = user.mind.action_skill_mod(/datum/skill/numerical/surgery, speed_mod, THRESHOLD_UNTRAINED, FALSE)
 	var/delay = time * speed_mod
+	if(target == user)
+		if(HAS_TRAIT(target, TRAIT_PAINKILLER))
+			display_results(user, self_message = "<span class='notice'>You begin performing a surgery on yourself with painkillers, you'll be able to do it faster than without it.</span>")
+			delay = delay * 7
+		else
+			display_results(user, self_message = "<span class='warning'>You begin performing a surgery on yourself without any painkillers, you take your time due to the pain.</span>")
+			delay = delay * 15
 	if(do_after(user, delay, target = target))
 		var/prob_chance = 100
 		if(implement_type)	//this means it isn't a require hand or any item step.
