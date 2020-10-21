@@ -1,3 +1,8 @@
+#define CHECK_ALL_FUEL(MACRO,LOGIC) \
+	MACRO(/datum/gas/tritium) LOGIC\
+	MACRO(/datum/gas/hydrogen) LOGIC\
+	MACRO(/datum/gas/methane) LOGIC\
+	MACRO(/datum/gas/plasma)
 
 
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -9,6 +14,7 @@
 	return
 
 
+#define SUFFICIENT(GAS) (air.get_moles(GAS) > 0.5)
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if(!air)
 		return
@@ -16,18 +22,16 @@
 	var/oxy = air.get_moles(/datum/gas/oxygen)
 	if (oxy < 0.5)
 		return
-	var/tox = air.get_moles(/datum/gas/plasma)
-	var/trit = air.get_moles(/datum/gas/tritium)
 	if(active_hotspot)
 		if(soh)
-			if(tox > 0.5 || trit > 0.5)
+			if(CHECK_ALL_FUEL(SUFFICIENT,||))
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && CHECK_ALL_FUEL(SUFFICIENT,||))
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
@@ -164,10 +168,10 @@
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		qdel(src)
 		return
-	if(!location.air || INSUFFICIENT(/datum/gas/oxygen) || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium)) && INSUFFICIENT(/datum/gas/hydrogen) && INSUFFICIENT(/datum/gas/methane))
+	if(!location.air || CHECK_ALL_FUEL(INSUFFICIENT,||))
 		qdel(src)
 		return
-		
+
 	perform_exposure()
 
 	if(bypassing)
@@ -236,4 +240,5 @@
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
 
+#undef SUFFICIENT
 #undef INSUFFICIENT

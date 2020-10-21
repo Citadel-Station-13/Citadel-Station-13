@@ -435,6 +435,8 @@ nobiliumsuppression = INFINITY
 		return list("success" = FALSE, "message" = "Hydrogen fires aren't making H2O!")
 	return ..()
 
+// Methane fires FOOM really effectively, at higher temperatures--if they're sparked by another flammable gas, it'll get very hot very quickly
+
 /datum/gas_reaction/methanefire
 	priority = -6 //methane's the last fire that happens
 	name = "Methane Combustion"
@@ -453,7 +455,8 @@ nobiliumsuppression = INFINITY
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
-	var/burned_fuel = min(air.get_moles(/datum/gas/methane),air.get_moles(/datum/gas/oxygen)*0.5)
+	var/temperature_scale = min((air.return_temperature()-FIRE_MINIMUM_TEMPERATURE_TO_EXIST)/METHANE_AUTOIGNITION_POINT,1)
+	var/burned_fuel = min(air.get_moles(/datum/gas/methane),air.get_moles(/datum/gas/oxygen)*0.5) * temperature_scale
 	air.adjust_moles(/datum/gas/methane,-burned_fuel)
 	air.adjust_moles(/datum/gas/oxygen, -burned_fuel * 2)
 	if(burned_fuel)
