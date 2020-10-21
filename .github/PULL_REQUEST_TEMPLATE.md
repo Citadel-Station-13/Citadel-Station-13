@@ -9,6 +9,10 @@
 
 <!-- Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding. -->
 
+## A Port?
+
+<!-- Just say if it is a port of something and link the original pr/commit/whatever. -->
+
 ## Changelog
 :cl:
 add: Added new things
