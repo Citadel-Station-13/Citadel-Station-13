@@ -39578,6 +39578,10 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Toxins Launch Room Access";
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bpn" = (
@@ -40573,6 +40577,10 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/security/checkpoint)
+"bBq" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/open/floor/plating,
+/area/science/storage)
 "bGL" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 5
@@ -40604,10 +40612,6 @@
 	},
 /area/engine/atmos)
 "bOJ" = (
-/obj/machinery/camera{
-	c_tag = "Toxins Launch Room Access";
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -42065,6 +42069,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "kaA" = (
@@ -42205,11 +42210,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"leB" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "leU" = (
 /turf/closed/wall/r_wall/rust,
 /area/science/storage)
 "lmq" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/science/storage)
 "low" = (
@@ -42427,6 +42436,12 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
+"mrS" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "msG" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -42441,6 +42456,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"mtU" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "mvB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
@@ -42523,6 +42544,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"njJ" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "nty" = (
 /obj/machinery/button/massdriver{
 	id = "toxinsdriver";
@@ -43169,6 +43196,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"rxk" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "rzn" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
@@ -43305,6 +43338,10 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
+"ssf" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "svX" = (
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
@@ -46249,6 +46286,9 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "ujg" = (
@@ -46695,6 +46735,10 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"wbg" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "wbV" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/hydroponics/soil,
@@ -46849,6 +46893,13 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"xmE" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1;
+	name = "Space Loop Out"
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -97368,7 +97419,7 @@ meo
 sVt
 sVt
 sVt
-aad
+iio
 aad
 aad
 aad
@@ -97620,12 +97671,12 @@ meo
 uiT
 bfq
 bpj
+wbg
+wbg
+wbg
+wbg
+fjN
 iio
-aad
-aad
-aad
-aad
-aad
 aad
 aaa
 aaa
@@ -97877,12 +97928,12 @@ sVt
 kQn
 lFm
 fjN
-iio
-aad
-aad
-aad
-aad
-aad
+hVE
+hVE
+hVE
+hVE
+mrS
+leB
 aac
 aaa
 aaa
@@ -98134,12 +98185,12 @@ ucd
 vZb
 iiW
 bOJ
-iio
-aad
-aad
-aad
-aad
-aad
+ssf
+xmE
+njJ
+rxk
+mtU
+leB
 aac
 aaa
 aaa
@@ -98386,17 +98437,17 @@ aac
 aad
 eGm
 lmq
-lmq
+bBq
 sVt
 iio
 upN
 iio
 iio
 iio
-aad
-aad
-aad
-aac
+iio
+leB
+leB
+iio
 aac
 aaa
 aaa
@@ -98651,8 +98702,8 @@ uTF
 gGq
 iio
 aad
-aad
-aad
+aac
+aac
 aac
 aaa
 aaa
@@ -98908,8 +98959,8 @@ msG
 ogL
 iio
 aad
-aad
-aad
+aac
+aac
 aac
 aaa
 aaa
@@ -99165,7 +99216,7 @@ msG
 diQ
 iio
 aad
-aad
+aac
 aac
 aac
 aaa
