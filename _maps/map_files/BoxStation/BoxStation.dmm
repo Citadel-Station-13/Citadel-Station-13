@@ -26758,7 +26758,6 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "blS" = (
@@ -29845,6 +29844,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "btp" = (
+/obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "btq" = (
@@ -29852,7 +29852,9 @@
 	dir = 1;
 	name = "Space Loop Out"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/maintenance/starboard)
 "btr" = (
 /obj/machinery/camera{
@@ -30975,11 +30977,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bvQ" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "bvR" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -53533,12 +53532,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"dyO" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "dyS" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -54046,6 +54039,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"eXL" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "fbp" = (
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot,
@@ -54969,15 +54969,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
-"hNW" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "hOv" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -55208,12 +55199,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"ixi" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space)
 "izg" = (
 /obj/item/cigbutt/cigarbutt,
 /turf/open/floor/plating,
@@ -55645,6 +55630,13 @@
 	},
 /turf/open/space,
 /area/solar/starboard/fore)
+"jIy" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "jJF" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
@@ -55817,6 +55809,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
+"kgk" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/starboard)
 "kgr" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -55903,12 +55900,6 @@
 /obj/structure/window,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"krp" = (
-/obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop In"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "ktP" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -56226,12 +56217,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"lht" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "lhQ" = (
 /obj/machinery/power/floodlight,
 /obj/structure/cable{
@@ -56979,6 +56964,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nJP" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "nJQ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
@@ -57354,6 +57346,12 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
+"oBQ" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Space Loop In"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "oDm" = (
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel,
@@ -57418,12 +57416,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
-"oRg" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "oSl" = (
 /obj/machinery/door/airlock/security{
 	name = "Firing Range";
@@ -57477,12 +57469,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"oZE" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/turf/open/space/basic,
-/area/space)
 "pem" = (
 /obj/machinery/button/door{
 	desc = "Bolts the doors to the Private Study.";
@@ -57903,6 +57889,13 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
+"qtH" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qus" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -58017,6 +58010,13 @@
 /obj/structure/chair/sofa/left,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"qXJ" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "rcD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -59529,10 +59529,11 @@
 	},
 /turf/open/floor/plating,
 /area/security/range)
-"vds" = (
+"vdo" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "vdu" = (
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
@@ -60045,6 +60046,15 @@
 /obj/item/instrument/recorder,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"wkc" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -60106,6 +60116,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"wqW" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/starboard)
 "wrp" = (
 /obj/machinery/light{
 	dir = 8
@@ -112097,16 +112115,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-bvQ
-oRg
-bvQ
-oRg
-aaa
+gXs
+jIy
+nJP
+jIy
+nJP
+gXs
 bky
-btp
+kgk
 brH
-btp
+bvQ
 bxt
 cNT
 bCm
@@ -112355,15 +112373,15 @@ aaa
 aaa
 aaa
 aaa
-ixi
-lht
-oZE
-lht
-vds
+qtH
+eXL
+qXJ
+eXL
+vdo
 bZi
 bqg
-krp
-dyO
+oBQ
+wqW
 cNR
 brG
 brG
@@ -112612,18 +112630,18 @@ aaa
 aaa
 aaa
 aaa
-lht
-vds
-vds
-vds
-vds
+eXL
+vdo
+vdo
+vdo
+vdo
 bZi
 btq
 brI
 bvR
 cNS
 byx
-hNW
+wkc
 bky
 bky
 bEs
@@ -112873,7 +112891,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gXs
 bky
 bky
 bky
