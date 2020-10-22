@@ -17,9 +17,13 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "ag" = (
-/obj/structure/closet/firecloset,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 8;
+	name = "8maintenance loot spawner"
+	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "ah" = (
@@ -146,6 +150,17 @@
 /area/ruin/powered)
 "aE" = (
 /turf/open/floor/plating/asteroid/airless,
+/area/ruin/powered)
+"aF" = (
+/obj/machinery/power/port_gen/pacman{
+	active = 1;
+	anchored = 1;
+	sheets = 10
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "aG" = (
 /obj/structure/sink/puddle,
@@ -332,15 +347,11 @@
 /obj/item/pickaxe/titanium,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
-"ch" = (
-/obj/structure/closet/emcloset,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
-"cv" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/mineral/titanium,
+"fc" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "fp" = (
 /turf/closed/mineral/random/high_chance/earth_like,
@@ -348,7 +359,13 @@
 "jx" = (
 /turf/closed/mineral/silver/earth_like,
 /area/ruin/powered)
-"lr" = (
+"ma" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"mr" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -358,67 +375,44 @@
 "nc" = (
 /turf/closed/mineral/bscrystal/earth_like,
 /area/ruin/powered)
-"nL" = (
-/obj/item/stack/ore/iron,
-/obj/item/stack/ore/iron,
-/obj/item/stack/ore/iron,
+"nl" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"oR" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
-"oy" = (
-/obj/item/stack/ore/iron,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"sc" = (
+"wU" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
-"sB" = (
-/obj/machinery/power/port_gen/pacman{
-	active = 1;
-	anchored = 1;
-	sheets = 10
-	},
+"zs" = (
+/obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
-"EI" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable{
-	icon_state = "0-2"
+"CY" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"DH" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
 	},
-/turf/open/floor/plating/asteroid,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
-"EQ" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"Gp" = (
-/obj/structure/cable,
-/obj/machinery/power/port_gen/pacman{
-	active = 1;
-	anchored = 1;
-	sheets = 10
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"Jz" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"JZ" = (
-/turf/closed/mineral/titanium/earth_like,
-/area/ruin/powered)
-"Kf" = (
+"Ft" = (
 /obj/structure/reagent_dispensers/fueltank/high,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -427,55 +421,18 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
-"Km" = (
-/obj/structure/shuttle/engine/propulsion/left{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/ruin/powered)
-"KH" = (
-/obj/structure/reagent_dispensers/watertank/high,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
-"Lt" = (
-/obj/structure/mirror,
-/turf/closed/wall/mineral/iron,
-/area/ruin/powered)
-"Ml" = (
+"HK" = (
 /obj/structure/cable{
-	icon_state = "2-8"
+	icon_state = "1-4"
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
-"MT" = (
-/obj/item/stack/ore/gold,
-/obj/item/stack/ore/gold,
-/obj/item/stack/ore/gold,
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"PG" = (
-/turf/closed/mineral/gold/earth_like,
-/area/ruin/powered)
-"Ro" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/mineral/titanium,
-/area/ruin/powered)
-"Ue" = (
-/turf/closed/mineral/diamond/earth_like,
-/area/ruin/powered)
-"Ut" = (
-/obj/machinery/portable_atmospherics/canister/air,
+"HP" = (
+/obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
-"Vq" = (
+"Iy" = (
 /obj/item/clothing/suit/hazardvest{
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
@@ -555,6 +512,39 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
+"JZ" = (
+/turf/closed/mineral/titanium/earth_like,
+/area/ruin/powered)
+"Kj" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"Lt" = (
+/obj/structure/mirror,
+/turf/closed/wall/mineral/iron,
+/area/ruin/powered)
+"PG" = (
+/turf/closed/mineral/gold/earth_like,
+/area/ruin/powered)
+"Qi" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	active = 1;
+	anchored = 1;
+	sheets = 10
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"Sv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"Ue" = (
+/turf/closed/mineral/diamond/earth_like,
+/area/ruin/powered)
 "VS" = (
 /turf/closed/mineral/uranium/earth_like,
 /area/ruin/powered)
@@ -563,9 +553,23 @@
 /obj/item/circuitboard/machine/ore_redemption,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
-"Zu" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium,
+"WP" = (
+/obj/item/stack/ore/gold,
+/obj/item/stack/ore/gold,
+/obj/item/stack/ore/gold,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"Xh" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"XQ" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
 
 (1,1,1) = {"
@@ -1332,9 +1336,9 @@ bb
 bb
 af
 ak
-Ro
+DH
 an
-lr
+mr
 ak
 af
 am
@@ -1436,9 +1440,9 @@ bb
 aR
 ae
 ag
-ch
+nl
 an
-cv
+HP
 at
 ae
 am
@@ -1539,11 +1543,11 @@ ba
 bb
 am
 af
-Kf
-KH
-Zu
-Ut
-sc
+Ft
+zs
+Sv
+CY
+wU
 af
 bg
 bb
@@ -1591,11 +1595,11 @@ ba
 bb
 bb
 ae
-Vq
-sB
+Iy
+aF
 br
-Ut
-Ut
+CY
+CY
 ae
 bb
 bb
@@ -1647,8 +1651,8 @@ bd
 af
 bl
 af
-Km
-Km
+XQ
+XQ
 bb
 bb
 bb
@@ -1854,8 +1858,8 @@ am
 am
 aR
 am
-EI
-EQ
+Kj
+HK
 am
 bb
 bb
@@ -1907,10 +1911,10 @@ am
 am
 am
 am
-Ml
-Jz
-Jz
-Gp
+oR
+Xh
+Xh
+Qi
 ba
 ba
 ba
@@ -1961,7 +1965,7 @@ am
 am
 am
 am
-oy
+fc
 aR
 ba
 ba
@@ -2063,7 +2067,7 @@ am
 aR
 am
 am
-MT
+WP
 aP
 bb
 am
@@ -2218,7 +2222,7 @@ bg
 am
 am
 am
-nL
+ma
 am
 aS
 bb
