@@ -1741,7 +1741,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/shower{
-	pixel_y = 26
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
