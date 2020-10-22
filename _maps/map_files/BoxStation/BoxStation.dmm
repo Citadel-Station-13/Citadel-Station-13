@@ -29188,11 +29188,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "brH" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/space/basic,
-/area/space)
+/obj/item/cigbutt/cigarbutt,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "brI" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -30978,7 +30976,7 @@
 /area/science/explab)
 "bvQ" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
+	dir = 6
 	},
 /turf/open/space/basic,
 /area/space)
@@ -30986,6 +30984,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bvS" = (
@@ -53534,6 +53533,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"dyO" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "dyS" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -54964,6 +54969,15 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"hNW" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "hOv" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -55037,12 +55051,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"hTw" = (
-/obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop In"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "hWd" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -55200,6 +55208,12 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"ixi" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space)
 "izg" = (
 /obj/item/cigbutt/cigarbutt,
 /turf/open/floor/plating,
@@ -55889,6 +55903,12 @@
 /obj/structure/window,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"krp" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Space Loop In"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "ktP" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -56206,6 +56226,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"lht" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space)
 "lhQ" = (
 /obj/machinery/power/floodlight,
 /obj/structure/cable{
@@ -56252,12 +56278,6 @@
 	icon_state = "wood-broken6"
 	},
 /area/maintenance/bar)
-"lpH" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/turf/open/space/basic,
-/area/space)
 "lsk" = (
 /obj/machinery/vending/kink,
 /turf/open/floor/plasteel,
@@ -56625,12 +56645,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"mBg" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/turf/open/space/basic,
-/area/space)
 "mGw" = (
 /obj/machinery/door/airlock/security{
 	name = "Labor Shuttle";
@@ -57404,6 +57418,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"oRg" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space)
 "oSl" = (
 /obj/machinery/door/airlock/security{
 	name = "Firing Range";
@@ -57457,6 +57477,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"oZE" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/space/basic,
+/area/space)
 "pem" = (
 /obj/machinery/button/door{
 	desc = "Bolts the doors to the Private Study.";
@@ -58322,15 +58348,6 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/ai_monitored/storage/eva)
-"rNM" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "rPU" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -59327,10 +59344,6 @@
 "uGI" = (
 /turf/open/floor/grass,
 /area/security/prison)
-"uGQ" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/space/basic,
-/area/space)
 "uHc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -59516,6 +59529,10 @@
 	},
 /turf/open/floor/plating,
 /area/security/range)
+"vds" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space)
 "vdu" = (
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
@@ -60382,12 +60399,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"xlp" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space)
 "xmo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -112087,14 +112098,14 @@ aaa
 aaa
 aaa
 aaa
-brH
-lpH
-brH
-lpH
+bvQ
+oRg
+bvQ
+oRg
 aaa
 bky
 btp
-btp
+brH
 btp
 bxt
 cNT
@@ -112344,15 +112355,15 @@ aaa
 aaa
 aaa
 aaa
-bvQ
-xlp
-mBg
-xlp
-uGQ
+ixi
+lht
+oZE
+lht
+vds
 bZi
 bqg
-hTw
-bvR
+krp
+dyO
 cNR
 brG
 brG
@@ -112601,18 +112612,18 @@ aaa
 aaa
 aaa
 aaa
-xlp
-uGQ
-uGQ
-uGQ
-uGQ
+lht
+vds
+vds
+vds
+vds
 bZi
 btq
 brI
 bvR
 cNS
 byx
-rNM
+hNW
 bky
 bky
 bEs
