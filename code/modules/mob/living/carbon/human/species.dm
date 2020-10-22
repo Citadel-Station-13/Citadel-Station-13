@@ -770,9 +770,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 			var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
 
-			var/primary_string = advanced_color_system ? "[S.mutant_part_string]_primary" : "mcolor"
-			var/secondary_string = advanced_color_system ? "[S.mutant_part_string]_secondary" : "mcolor2"
-			var/tertiary_string = advanced_color_system ? "[S.mutant_part_string]_tertiary" : "mcolor3"
+			var/mutant_string = S.mutant_part_string
+			if(mutant_string == "tailwag") //wagging tails should be coloured the same way as your tail
+				mutant_string = "tail"
+			var/primary_string = advanced_color_system ? "[mutant_string]_primary" : "mcolor"
+			var/secondary_string = advanced_color_system ? "[mutant_string]_secondary" : "mcolor2"
+			var/tertiary_string = advanced_color_system ? "[mutant_string]_tertiary" : "mcolor3"
 			//failsafe: if there's no value for any of these, set it to white
 			if(!H.dna.features[primary_string])
 				H.dna.features[primary_string] = advanced_color_system ? H.dna.features["mcolor"] : "FFFFFF"

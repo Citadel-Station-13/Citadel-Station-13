@@ -8,7 +8,7 @@
 
 /datum/sprite_accessory/tails_animated
 	icon = 'icons/mob/mutant_bodyparts.dmi'
-	mutant_part_string = "tail" //keep this the same, ALWAYS, this is incredibly important for colouring!
+	mutant_part_string = "tailwag" //keep this the same, ALWAYS, this is incredibly important for colouring!
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /******************************************

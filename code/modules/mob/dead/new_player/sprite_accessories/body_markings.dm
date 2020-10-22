@@ -5,7 +5,7 @@
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_ADJ_LAYER)
-	mutant_part_string = "body_markings"
+	mutant_part_string = "bodymarkings"
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -49,7 +49,6 @@
 	gender_specific = 0
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
-	mutant_part_string = "mam_body_markings"
 	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/mam_body_markings/none

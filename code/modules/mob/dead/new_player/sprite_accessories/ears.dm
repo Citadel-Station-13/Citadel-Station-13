@@ -203,7 +203,6 @@
 /datum/sprite_accessory/ears/mam_ears
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 	color_src = MATRIXED
-	mutant_part_string = "mam_ears"
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/ears/mam_ears/is_not_visible(var/mob/living/carbon/human/H, var/tauric)

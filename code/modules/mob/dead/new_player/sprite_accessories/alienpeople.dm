@@ -27,7 +27,7 @@
 *******************************************/
 /datum/sprite_accessory/xeno_tail
 	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
-	mutant_part_string = "xenotail"
+	mutant_part_string = "tail"
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/xeno_tail/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
@@ -46,7 +46,7 @@
 *******************************************/
 /datum/sprite_accessory/xeno_head
 	icon = 'modular_citadel/icons/mob/xeno_parts_greyscale.dmi'
-	mutant_part_string = "xenohead"
+	mutant_part_string = "xhead"
 	relevant_layers = list(BODY_ADJ_LAYER)
 
 /datum/sprite_accessory/xeno_head/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
