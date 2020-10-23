@@ -81,11 +81,11 @@
 	poof()
 
 /mob/living/simple_animal/jacq/on_attack_hand(mob/living/carbon/human/M)
-	if(!active)
-		say("Hello there [gender_check(M)]!")
-		return ..()
 	if(spawn_cars)
 		spawn_cars(M)
+		return ..()
+	if(!active)
+		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
 		stopmove()
@@ -94,11 +94,11 @@
 	..()
 
 /mob/living/simple_animal/jacq/attack_paw(mob/living/carbon/monkey/M)
-	if(!active)
-		say("Hello there [gender_check(M)]!")
-		return ..()
 	if(spawn_cars)
 		spawn_cars(M)
+		return ..()
+	if(!active)
+		say("Hello there [gender_check(M)]!")
 		return ..()
 	if(!ckey)
 		stopmove()
@@ -124,6 +124,8 @@
 
 
 /mob/living/simple_animal/jacq/proc/poof()
+	if(!active)//if disabled, don't poof
+		return
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
@@ -490,8 +492,7 @@
 			visible_message("<b>[src]</b> points at the key atop the car, <span class='spooky'>\"Dunnae ferget yer key like.\"</span>")
 			jacqrunes("Dunnae ferget yer key like.", C)
 		if("How do Automatics work?")
-			visible_message("<b>[src]</b> smiles, <span class='spooky'>\"Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears (help is gear 1, disarm is gear 2, grab is gear 3 and harm is gear 4) while holding a direction (make sure the clutch is enabled when you change gears, you should hear a sound when you've successfully changed gears), r to toggle handbrake, hold alt for brake and press shift for boost (the machine will beep when the boost is recharged)! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear, andusing a boost to get you started is a good idea. If you've got a good speed you'll likely never need to dip down to gear 1 again, and make sure to hold the acceleration pedal down while changing gears (hold a direction). 1st gear is for slow movement, and it's a good idea to mvoe to 2nd gear as quick as you can, you can coldstart a car from gear one by slowly moving, then using the boost to jump you up to gear 2 speeds. The upper gears are mostly for limiting your top speed.
- \"</span>")
+			visible_message("<b>[src]</b> smiles, <span class='spooky'>\"Hold wasd to gain speed in a direction, c to enable/disable the clutch, 1 2 3 4 to change gears (help is gear 1, disarm is gear 2, grab is gear 3 and harm is gear 4) while holding a direction (make sure the clutch is enabled when you change gears, you should hear a sound when you've successfully changed gears), r to toggle handbrake, hold alt for brake and press shift for boost (the machine will beep when the boost is recharged)! If you hear an ebbing sound like \"brbrbrbrbr\" you need to gear down, the whining sound means you need to gear up. Hearing a pleasant \"whumwhumwhum\" is optimal gearage! It can be a lil slow to start, so make sure you're in the 1st gear, andusing a boost to get you started is a good idea. If you've got a good speed you'll likely never need to dip down to gear 1 again, and make sure to hold the acceleration pedal down while changing gears (hold a direction). 1st gear is for slow movement, and it's a good idea to mvoe to 2nd gear as quick as you can, you can coldstart a car from gear one by slowly moving, then using the boost to jump you up to gear 2 speeds. The upper gears are for limiting your top speed.\"</span>")
 			jacqrunes("They're a bit tricky, aye. Basically;", C)
 		if("Nothing, thanks")
 			visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Suit yerself.\"</span>")
