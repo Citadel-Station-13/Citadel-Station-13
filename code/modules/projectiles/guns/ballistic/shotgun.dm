@@ -128,6 +128,7 @@
 	icon_state = "irifle"
 	item_state = "shotgun"
 	desc = "A bolt-action breechloaded rifle that takes 7.62mm bullets."
+	projectile_damage_multiplier = 0.9 //10% less damage do to being hand made
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
 	can_bayonet = FALSE
 	var/slung = FALSE
@@ -171,6 +172,8 @@
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
+	projectile_damage_multiplier = 1.1 //+1
+	projectile_armor_penitration_multiplier = 1.1//+1
 	var/guns_left = 30
 	var/gun_type
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
@@ -180,6 +183,8 @@
 	desc = "Pew Pew Pew."
 	fire_sound = 'sound/weapons/emitter.ogg'
 	pin = /obj/item/firing_pin/magic
+	projectile_damage_multiplier = 1
+	projectile_armor_penitration_multiplier = 1
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	can_bayonet = FALSE

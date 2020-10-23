@@ -14,16 +14,6 @@
 	stamina = 20
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/item/projectile/bullet/magnetic/weak
-	damage = 15
-	armour_penetration = 10
-	light_range = 2
-	range = 25
-
-/obj/item/projectile/bullet/magnetic/weak/disabler
-	damage = 2
-	stamina = 20
-
 /obj/item/projectile/bullet/magnetic/hyper
 	damage = 10
 	armour_penetration = 20

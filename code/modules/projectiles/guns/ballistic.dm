@@ -202,6 +202,7 @@
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 		sawn_off = TRUE
+		projectile_damage_multiplier = src.projectile_damage_multiplier - 0.1 //We lose 10% of damange if were spawn off
 		update_icon()
 		return 1
 

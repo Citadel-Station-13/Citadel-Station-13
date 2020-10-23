@@ -88,6 +88,7 @@
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
+	var/projectile_armor_penitration_multiplier = 1 //Deals with AP of ammo
 
 	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
 
