@@ -3624,4 +3624,8 @@
 #include "modular_citadel\code\modules\reagents\chemistry\recipes\fermi.dm"
 #include "modular_citadel\code\modules\reagents\objects\clothes.dm"
 #include "modular_citadel\code\modules\reagents\objects\items.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vector_process.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vectorcar_heads.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vectorcraft.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vectorvariants.dm"
 // END_INCLUDE
