@@ -164,6 +164,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/kitchen/knife,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "cn" = (
@@ -215,6 +216,12 @@
 "cX" = (
 /obj/structure/flora/rock,
 /turf/open/floor/plating/dirt/jungle,
+/area/awaymission/jungleresort)
+"dm" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/clothing/head/hardhat/cakehat,
+/turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "dn" = (
 /obj/structure/chair/comfy/brown,
@@ -1043,7 +1050,7 @@
 /area/awaymission/jungleresort)
 "pP" = (
 /obj/structure/sign/warning,
-/turf/closed/mineral/random/labormineral,
+/turf/closed/mineral/random/labormineral/jungle,
 /area/awaymission/jungleresort)
 "pQ" = (
 /turf/open/water/jungle,
@@ -1234,9 +1241,9 @@
 /area/awaymission/jungleresort)
 "sS" = (
 /obj/structure/table/wood,
-/obj/item/lighter/gold,
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 /obj/item/clothing/mask/cigarette/robustgold,
+/obj/item/lighter,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "td" = (
@@ -1852,7 +1859,7 @@
 /turf/open/floor/grass,
 /area/awaymission/jungleresort)
 "AR" = (
-/turf/closed/mineral/random/labormineral,
+/turf/closed/mineral/random/labormineral/jungle,
 /area/awaymission/jungleresort)
 "AS" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2148,6 +2155,7 @@
 /obj/item/storage/box/donkpockets,
 /obj/item/camera,
 /obj/item/camera_film,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
 "EO" = (
@@ -2730,7 +2738,7 @@
 /turf/open/floor/plating,
 /area/awaymission/jungleresort)
 "LR" = (
-/mob/living/simple_animal/hostile/jungle/leaper,
+/mob/living/simple_animal/hostile/jungle/leaper/boss,
 /turf/open/water/jungle,
 /area/awaymission/jungleresort)
 "LU" = (
@@ -3134,7 +3142,7 @@
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter,
 /obj/item/clothing/head/fedora/curator,
 /obj/item/clothing/shoes/workboots/mining,
-/obj/item/melee/curator_whip,
+/obj/item/melee/chainofcommand/jungle,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "RW" = (
@@ -3219,6 +3227,8 @@
 /obj/item/gun/ballistic/shotgun/sc_pump,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/head/helmet,
+/obj/item/ammo_casing/shotgun/buckshot,
+/obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "SV" = (
@@ -3348,6 +3358,9 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/innards,
 /obj/structure/stone_tile/surrounding/cracked,
+/obj/item/fireaxe,
+/obj/item/clothing/head/hardhat/red,
+/obj/item/clothing/shoes/workboots,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "Us" = (
@@ -3723,7 +3736,6 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 9
 	},
-/obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/plating/dirt/jungle,
 /area/awaymission/jungleresort)
 "Zn" = (
@@ -6244,7 +6256,7 @@ AR
 AR
 AR
 YQ
-wH
+AR
 AR
 AR
 AR
@@ -12607,7 +12619,7 @@ AR
 AR
 AR
 AR
-YQ
+sQ
 nw
 ro
 UB
@@ -17653,7 +17665,7 @@ Jd
 sS
 Wi
 Co
-Se
+dm
 tK
 Jd
 Jj
@@ -24088,7 +24100,7 @@ YQ
 YQ
 YQ
 YQ
-ZV
+AR
 AR
 AR
 AR
