@@ -247,7 +247,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/gear_categories
 	var/list/loadout_data = list()
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
-	var/list/chosen_gear = list() //your current set of items from loadout_data
 	var/gear_category
 	var/gear_subcategory
 
@@ -828,7 +827,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(3)
 			//calculate your gear points from the chosen item
 			gear_points = CONFIG_GET(number/initial_gear_points)
-			var/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
+			var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
 			if(chosen_gear)
 				message_admins("loading gear from SAVE_[loadout_slot]")
 				for(var/loadout_data in chosen_gear)
@@ -895,7 +894,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
 						var/class_link = ""
-						if(has_loadout_gear(chosen_gear, gear.type))
+						if(has_loadout_gear(loadout_slot, gear.type))
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 						else if(gear_points <= 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
@@ -2635,11 +2634,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
-			message_admins("they selected [G] and toggle is [toggle] where has loadout says [has_loadout_gear(chosen_gear, G.type)]")
-			if(!toggle && has_loadout_gear(chosen_gear, G.type))//toggling off and the item effectively is in chosen gear)
-				message_admins("remove it")
-				remove_gear_from_loadout(chosen_gear, G.type)
-			else if(toggle && !(has_loadout_gear(chosen_gear, G.type)))
+			if(!toggle && has_loadout_gear(loadout_slot, G.type))//toggling off and the item effectively is in chosen gear)
+				remove_gear_from_loadout(loadout_slot, G.type)
+			else if(toggle && !(has_loadout_gear(loadout_slot, G.type)))
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
@@ -2860,8 +2857,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/is_loadout_slot_available(slot)
 	var/list/L
 	LAZYINITLIST(L)
-	for(var/i in chosen_gear)
-		var/datum/gear/G = i
+	for(var/i in loadout_data["SAVE_[loadout_slot]"])
+		var/datum/gear/G = i[LOADOUT_ITEM]
 		var/occupied_slots = L[initial(G.category)] ? L[initial(G.category)] + 1 : 1
 		LAZYSET(L, initial(G.category), occupied_slots)
 	switch(slot)
@@ -2875,19 +2872,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
 
-/datum/preferences/proc/has_loadout_gear(gear_list, gear_type)
-	message_admins("do they have [gear_type]")
+/datum/preferences/proc/has_loadout_gear(save_slot, gear_type)
+	var/list/gear_list = loadout_data["SAVE_[save_slot]"]
 	for(var/loadout_gear in gear_list)
-		message_admins("while searching we found [loadout_gear[LOADOUT_ITEM]]")
 		if(loadout_gear[LOADOUT_ITEM] == gear_type)
-			message_admins("these two things are literally the same")
 			return loadout_gear
 	return FALSE
 
-/datum/preferences/proc/remove_gear_from_loadout(gear_list, gear_type)
-	var/find_gear = has_loadout_gear(gear_list, gear_type)
+/datum/preferences/proc/remove_gear_from_loadout(save_slot, gear_type)
+	var/find_gear = has_loadout_gear(save_slot, gear_type)
 	if(find_gear)
-		gear_list -= find_gear
+		loadout_data["SAVE_[save_slot]"].Remove(list(find_gear))
 
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT
