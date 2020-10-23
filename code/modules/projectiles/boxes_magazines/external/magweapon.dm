@@ -1,4 +1,5 @@
 /obj/item/ammo_box/magazine/mmag
+	name = "magrifle magazine (non-lethal disabler)"
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/magnetic/disabler
 	caliber = "mag"
