@@ -830,9 +830,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			var/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
 			if(chosen_gear)
+				message_admins("loading gear from SAVE_[loadout_slot]")
 				for(var/loadout_data in chosen_gear)
 					var/loadout_item = loadout_data[LOADOUT_ITEM]
 					if(loadout_item)
+						message_admins("loading [loadout_item] from slot")
 						var/datum/gear/loadout_gear = text2path(loadout_item)
 						gear_points -= initial(loadout_gear.cost)
 			else
@@ -2878,6 +2880,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/loadout_gear in gear_list)
 		message_admins("while searching we found [loadout_gear[LOADOUT_ITEM]]")
 		if(loadout_gear[LOADOUT_ITEM] == gear_type)
+			message_admins("these two things are literally the same")
 			return loadout_gear
 	return FALSE
 
