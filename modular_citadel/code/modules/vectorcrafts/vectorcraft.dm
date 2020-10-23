@@ -9,7 +9,7 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "zoomscoot"
 	movedelay = 5
-	allow_diagonal_dir = TRUE
+	//allow_diagonal_dir = TRUE - find fix for this later
 	inertia_moving = FALSE
 	animate_movement = 0
 	max_integrity = 100
