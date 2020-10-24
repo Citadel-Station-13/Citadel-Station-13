@@ -60,7 +60,7 @@ proc/get_top_level_mob(var/mob/S)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 			M.show_message(message)
 
-	user.visible_message(message = message, self_message = message, hearing_distance = 1, omni = TRUE)
+	user.visible_message(message = message, self_message = message, vision_distance = 1, omni = TRUE)
 
 ///////////////// SUBTLE 2: NO GHOST BOOGALOO
 
