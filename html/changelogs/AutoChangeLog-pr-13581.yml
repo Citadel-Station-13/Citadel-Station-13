@@ -1,6 +1,0 @@
-author: "Ghommie, porting PRs by MMMiracles and pireamaineach, credits to BlueWildrose too."
-delete-after: True
-changes: 
-  - rscadd: "You can now draw on plasmaman helmets with a crayon to turn their frown upside-down."
-  - balance: "Plasmaman helmets no longer hide your identity when worn by themselves."
-  - balance: "Plasmaman helmets now have welding visors, which can't stack with their torches in the helmet and are visible."
