@@ -3707,6 +3707,7 @@
 #include "sandcode\code\game\objects\structures\ladders.dm"
 #include "sandcode\code\game\objects\structures\lavaland\necropolis_tendril.dm"
 #include "sandcode\code\game\turfs\simulated\floor\asteroid.dm"
+#include "sandcode\code\game\turfs\simulated\floor\plating.dm"
 #include "sandcode\code\modules\admin\verbs\fix_air.dm"
 #include "sandcode\code\modules\atmospherics\machinery\pipes\bluespace.dm"
 #include "sandcode\code\modules\cargo\packs\emergency.dm"
