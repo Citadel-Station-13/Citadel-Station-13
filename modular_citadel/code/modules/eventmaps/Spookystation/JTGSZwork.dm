@@ -1031,7 +1031,6 @@
     icon_state = "umbrella_[open ? "open" : "closed"]"
     item_state = icon_state
     update_icon()
-    ..()
 
 //Keep the mechs out of the mech arena
 /obj/structure/trap/ctf/nomech
