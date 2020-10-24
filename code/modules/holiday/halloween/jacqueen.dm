@@ -492,8 +492,8 @@
 			visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Suit yerself.\"</span>")
 			jacqrunes("Suit yerself.", C)
 
-	visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. Ye can repair 'em with the welders o'er there.\"</span>")
-	jacqrunes("Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. Ye can repair 'em with the welders o'er there.", C)
+	visible_message("<b>[src]</b> shrugs, <span class='spooky'>\"Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. They move slower damaged too like. Ye can repair 'em with the welders o'er there.\"</span>")
+	jacqrunes("Oh and look after the crafts, aye? They can get a wee bit... explosive if banged up a tad too much. They move slower damaged too like. Ye can repair 'em with the welders o'er there. ", C)
 
 
 /mob/living/simple_animal/jacq/update_mobility()

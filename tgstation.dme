@@ -15,6 +15,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\map_files\SpookyStation\halloweenPersiWork.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_extools.dm"
@@ -3601,6 +3602,7 @@
 #include "modular_citadel\code\modules\custom_loadout\custom_items.dm"
 #include "modular_citadel\code\modules\custom_loadout\load_to_mob.dm"
 #include "modular_citadel\code\modules\custom_loadout\read_from_file.dm"
+#include "modular_citadel\code\modules\eventmaps\Spookystation\JTGSZwork.dm"
 #include "modular_citadel\code\modules\mentor\dementor.dm"
 #include "modular_citadel\code\modules\mentor\follow.dm"
 #include "modular_citadel\code\modules\mentor\mentor.dm"
@@ -3639,4 +3641,8 @@
 #include "modular_citadel\code\modules\reagents\chemistry\recipes\fermi.dm"
 #include "modular_citadel\code\modules\reagents\objects\clothes.dm"
 #include "modular_citadel\code\modules\reagents\objects\items.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vector_process.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vectorcar_heads.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vectorcraft.dm"
+#include "modular_citadel\code\modules\vectorcrafts\vectorvariants.dm"
 // END_INCLUDE
