@@ -21,8 +21,8 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
-	var/self_fueling = FALSE //Do we refill areself or not
-	var/next_fueling = 10 //How long do we wait before refilling
+	var/self_fueling = FALSE //Do we refill ourselves or not
+	var/next_fueling = 10 //How long we wait before refilling
 	var/nextrefueltick = 0 // How long it takes before we get a new fuel unit
 
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
@@ -86,9 +86,9 @@
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
 
-	//This handles refuelung, its looking at how much fuel the tool has, and comparing it to the how much it holds
+	//This handles refueling. Its looking at how much fuel the tool has and comparing that to how much it holds
 	//This then looks if the refuel tick has come based on world time.
-	//Then looks if we refuel areselfs are not.
+	//Then looks if we refuel ourselves or not.
 
 	if(get_fuel() < max_fuel && nextrefueltick < world.time && self_fueling)
 		nextrefueltick = world.time + next_fueling
@@ -375,7 +375,7 @@
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	next_fueling = 5 //makes welding fuel faster then experimental ones
+	next_fueling = 5 //makes welding fuel faster than experimental ones
 	icon_state = "clockwelder"
 	item_state = "brasswelder"
 
