@@ -12,7 +12,7 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = BODYPART_ROBOTIC
+	requires_bodypart_type = 0 //You can do this on anyone, but it won't really be useful on people without augments.
 	ignore_clothes = TRUE
 	var/antispam = FALSE
 	var/healing_step_type = /datum/surgery_step/robot_heal/basic
@@ -39,6 +39,16 @@
 
 /datum/surgery_step/robot_heal/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER && !tool.tool_use_check(user, 1))
+		return FALSE
+	return TRUE
+
+/datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
+	var/possible = FALSE
+	for(var/obj/item/bodypart/B in target.bodyparts)
+		if(B.is_robotic_limb())
+			possible = TRUE
+			break
+	if(!possible)
 		return FALSE
 	return TRUE
 

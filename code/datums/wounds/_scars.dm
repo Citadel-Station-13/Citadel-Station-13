@@ -79,7 +79,7 @@
 
 /// Used to "load" a persistent scar
 /datum/scar/proc/load(obj/item/bodypart/BP, version, description, specific_location, severity=WOUND_SEVERITY_SEVERE)
-	if(!(BP.body_zone in applicable_zones) || !(BP.is_organic_limb() || BP.render_like_organic))
+	if(!(BP.body_zone in applicable_zones) || !BP.is_organic_limb())
 		qdel(src)
 		return
 
