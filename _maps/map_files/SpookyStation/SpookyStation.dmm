@@ -2211,7 +2211,7 @@
 "aQA" = (/obj/structure/table/wood/fancy,/obj/item/reagent_containers/food/snacks/donut/laugh,/obj/item/reagent_containers/food/snacks/donut/laugh,/turf/open/floor/wood,/area/eventmap/inside)
 "aQB" = (/obj/structure/table/wood/fancy,/obj/item/reagent_containers/food/snacks/donut/laugh,/turf/open/floor/wood,/area/eventmap/inside)
 "aQC" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel,/area/eventmap/inside)
-"aQD" = (/obj/item/barthpot{BallTutorial = 1; light_range = 5},/turf/open/floor/spooktime/cobble/roadsideS,/area/eventmap/outside)
+"aQD" = (/obj/item/barthpot{active = 0; BallTutorial = 1; light_range = 5},/turf/open/floor/spooktime/cobble/roadsideS,/area/eventmap/outside)
 "aQF" = (/obj/machinery/washing_machine,/turf/open/floor/plasteel/showroomfloor,/area/eventmap/mountaininside)
 "aQG" = (/obj/structure/sink{dir = 8; pixel_x = -12},/obj/structure/mirror{pixel_x = -28},/turf/open/floor/plasteel/showroomfloor,/area/eventmap/mountaininside)
 "aQI" = (/obj/structure/bookcase/random/adult,/turf/open/floor/plasteel,/area/eventmap/mountaininside)
