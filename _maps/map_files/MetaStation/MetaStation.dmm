@@ -76185,6 +76185,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"cYI" = (
+/obj/machinery/camera{
+	c_tag = "Research Division Circuitry Lab";
+	dir = 1;
+	network = list("ss13","rd")
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "cYJ" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -79847,12 +79855,12 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "dka" = (
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -32
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
 	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
+/turf/open/space,
+/area/space/nearstation)
 "dlI" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
@@ -81295,6 +81303,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"etb" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "etr" = (
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
@@ -81335,6 +81351,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"faU" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space/nearstation)
 "fdr" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -81515,6 +81536,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"idz" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -81532,6 +81558,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
+"izh" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "izu" = (
 /obj/machinery/autolathe{
 	name = "public autolathe"
@@ -81674,6 +81706,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"jDS" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "jKK" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -81907,6 +81946,16 @@
 /obj/effect/landmark/start/roboticist,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
+"lUv" = (
+/obj/structure/noticeboard{
+	dir = 1;
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "lWL" = (
 /obj/machinery/smartfridge/organ/preloaded,
 /turf/closed/wall,
@@ -82010,6 +82059,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"mIJ" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/space,
+/area/space/nearstation)
 "mSd" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -82105,6 +82161,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/storage/wing)
+"nKU" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/science/circuit)
 "nLT" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -82325,6 +82388,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"pDn" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "pEv" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -82397,6 +82467,12 @@
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
+"qaK" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "qhe" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -82442,6 +82518,11 @@
 "qBq" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/hallway/secondary/entry)
+"qEc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction,
+/turf/open/floor/plating,
+/area/science/circuit)
 "qJZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -82459,13 +82540,12 @@
 /turf/open/floor/plating,
 /area/crew_quarters/cryopod)
 "qRM" = (
-/obj/machinery/camera{
-	c_tag = "Research Division Circuitry Lab";
-	dir = 1;
-	network = list("ss13","rd")
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
 	},
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
+/turf/open/space,
+/area/space/nearstation)
 "qVR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -82623,6 +82703,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"sqe" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space/basic,
+/area/space/nearstation)
 "stP" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Port to Fuel Pipe"
@@ -82708,6 +82792,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
+"tfs" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "tre" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -82756,6 +82847,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"tID" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Space Loop Out";
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "tUa" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -82871,6 +82969,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"vda" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/space,
+/area/space/nearstation)
 "vgd" = (
 /obj/item/taperecorder,
 /obj/item/camera,
@@ -82939,6 +83044,11 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"vYs" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/space,
+/area/space/nearstation)
 "wdu" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -83010,6 +83120,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/closed/wall,
 /area/science/circuit)
+"wNQ" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "wOE" = (
 /obj/machinery/door/airlock/external{
 	name = "Atmospherics External Airlock";
@@ -83139,6 +83256,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xHA" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Space Loop In";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
 "xIi" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -83165,6 +83289,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/security/vacantoffice)
+"xUO" = (
+/turf/open/space,
+/area/space/nearstation)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -83190,6 +83317,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"yfk" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "yfW" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -83213,9 +83347,12 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "ykE" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel/white,
-/area/science/circuit)
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/space,
+/area/space/nearstation)
 
 (1,1,1) = {"
 oRp
@@ -120391,9 +120528,9 @@ kOt
 gRS
 oUA
 cxO
-qRM
+cxO
+cYI
 krD
-aaf
 aaf
 aaf
 anS
@@ -120648,9 +120785,9 @@ oLW
 gGT
 wPk
 dGH
-dka
+cxO
+lUv
 krD
-aaf
 aaa
 aaf
 aaf
@@ -120905,9 +121042,9 @@ ocT
 xkG
 uTS
 cxO
-ykE
+cxO
+tfs
 krD
-aaa
 aaa
 aaa
 aaa
@@ -121163,9 +121300,9 @@ llb
 uTS
 cxO
 cxO
-krD
-aaa
-aaa
+tID
+noG
+lMJ
 aaa
 aaa
 aaf
@@ -121419,13 +121556,13 @@ lsv
 txj
 eEe
 cxO
-cxO
-krD
-aaa
-aaa
-aaa
-aaf
-aaf
+izh
+qaK
+qEc
+idz
+idz
+vYs
+mIJ
 aaa
 anT
 aaf
@@ -121676,13 +121813,13 @@ jyv
 ohj
 nnK
 cxO
+xHA
 cxO
 krD
 aaa
 aaa
 aaa
-aaa
-aaf
+qRM
 aaa
 anT
 aaf
@@ -121933,13 +122070,13 @@ krD
 noG
 krD
 noG
+nKU
 krD
 krD
-aaa
-aaa
-aaa
-aaa
-aaf
+yfk
+idz
+idz
+vda
 aaa
 aqB
 aaa
@@ -122185,18 +122322,18 @@ dvY
 dvY
 dvY
 aaf
-aaf
-aaf
+dka
+vYs
+idz
+idz
+idz
+jDS
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
+wNQ
+idz
+vYs
+mIJ
 aaf
 anT
 aaa
@@ -122442,18 +122579,18 @@ crc
 aaf
 ctl
 aaa
-aaf
-aaf
+qRM
+xUO
 anT
 anT
 anT
-aaf
-aaf
-aaf
-lMJ
-lMJ
-aaf
-aaa
+ake
+ake
+ake
+pDn
+faU
+vYs
+jDS
 aaf
 anT
 aaf
@@ -122699,17 +122836,17 @@ crd
 ack
 ack
 aaf
-aaf
+ykE
+idz
+sqe
+sqe
+idz
+idz
+idz
+idz
+etb
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
+ake
 aaf
 aaf
 anT

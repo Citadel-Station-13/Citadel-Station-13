@@ -9528,6 +9528,9 @@
 	name = "Medbay";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "asV" = (
@@ -9554,6 +9557,9 @@
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -26782,7 +26788,6 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "blS" = (
@@ -28569,8 +28574,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "bqg" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bqh" = (
@@ -29211,17 +29217,15 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "brH" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
+/obj/item/cigbutt/cigarbutt,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "brI" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -29871,15 +29875,17 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "btp" = (
+/obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "btq" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1;
+	name = "Space Loop Out"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/maintenance/starboard)
 "btr" = (
 /obj/machinery/camera{
@@ -31002,15 +31008,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bvQ" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bvR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bvS" = (
@@ -31663,10 +31667,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bxt" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -42973,6 +42978,9 @@
 /area/science/circuit)
 "bZi" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bZj" = (
@@ -52807,6 +52815,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cNS" = (
@@ -52819,15 +52830,19 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cNT" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cNU" = (
@@ -54082,6 +54097,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"eXL" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "fbp" = (
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot,
@@ -55653,6 +55675,13 @@
 	},
 /turf/open/space,
 /area/solar/starboard/fore)
+"jIy" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "jJF" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
@@ -55825,6 +55854,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
+"kgk" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/starboard)
 "kgr" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -56962,6 +56996,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nJP" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "nJQ" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
@@ -57337,6 +57378,12 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
+"oBQ" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Space Loop In"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "oDm" = (
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel,
@@ -57874,6 +57921,13 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
+"qtH" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qus" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -57988,6 +58042,13 @@
 /obj/structure/chair/sofa/left,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"qXJ" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "rcD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -59503,6 +59564,11 @@
 	},
 /turf/open/floor/plating,
 /area/security/range)
+"vdo" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "vdu" = (
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
@@ -60015,6 +60081,15 @@
 /obj/item/instrument/recorder,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"wkc" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -60064,6 +60139,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"wqW" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/starboard)
 "wrp" = (
 /obj/machinery/light{
 	dir = 8
@@ -93285,9 +93368,9 @@ aZV
 aZV
 aZV
 aZV
-bmx
-bmx
-bmx
+aZV
+aZV
+aZV
 bqH
 bqH
 btM
@@ -112045,14 +112128,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gXs
+jIy
+nJP
+jIy
+nJP
+gXs
 bky
-btp
+kgk
 brH
 bvQ
 bxt
@@ -112303,15 +112386,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qtH
+eXL
+qXJ
+eXL
+vdo
 bZi
 bqg
-brG
-brG
+oBQ
+wqW
 cNR
 brG
 brG
@@ -112560,18 +112643,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+eXL
+vdo
+vdo
+vdo
+vdo
 bZi
 btq
 brI
 bvR
 cNS
 byx
-brI
+wkc
 bky
 bky
 bEs
@@ -112821,7 +112904,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gXs
 bky
 bky
 bky
