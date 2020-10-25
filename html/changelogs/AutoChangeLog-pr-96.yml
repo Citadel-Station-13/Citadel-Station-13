@@ -1,0 +1,5 @@
+author: SandPoot
+delete-after: true
+changes:
+  - rscadd: Added the Power Armor category to the exosuit fabricators(mechfabs) and
+      adds every part to it.
