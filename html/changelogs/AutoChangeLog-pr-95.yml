@@ -1,7 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - rscadd: Platings can be removed from the floor (currently only certain ones),
-      just examine it to know if you can or not, and how to.
-  - tweak: Trying to place a tile on an asteroid turf, such as lavaland's, will no
-      longer place a regular tile and instead place plating first.
