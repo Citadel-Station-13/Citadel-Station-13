@@ -54,6 +54,7 @@
 								"Durand",
 								"H.O.N.K",
 								"Phazon",
+								"Power Armor",
 								"Exosuit Equipment",
 								"Exosuit Ammunition",
 								"Cyborg Upgrade Modules",
