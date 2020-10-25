@@ -897,6 +897,10 @@
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
+	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
+	var/abilitiesavail = FALSE
+	if(H && !H.stealthmode && H.toggled)
+		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked,
 		"failTime" = failure_timer,
@@ -911,7 +915,11 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
-
+		"hijackable" = HAS_TRAIT(user, TRAIT_HIJACKER),
+		"hijacked" = hijacker && hasSiliconAccessInArea(hijacker),
+		"hijacker" = hijacker == user ? TRUE : FALSE,
+		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
+		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
@@ -1009,7 +1017,12 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr)))))
+	if(..() || !can_use(usr, 1))
+		return
+	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
+		hijack(usr)
+		return
+	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")
@@ -1056,6 +1069,25 @@
 		if("hack")
 			if(get_malf_status(usr))
 				malfhack(usr)
+		if("drain")
+			cell.use(cell.charge)
+			hijacker.toggleSiliconAccessArea(area)
+			hijacker = null
+			set_hijacked_lighting()
+			update_icon()
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 2 MINUTES
+			energy_fail(30 SECONDS * (cell.charge / cell.maxcharge))
+		if("lockdown")
+			var/celluse = rand(20,35)
+			celluse = celluse /100
+			for (var/obj/machinery/door/D in GLOB.airlocks)
+				if (get_area(D) == area)
+					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
+					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
+			cell.charge -= cell.maxcharge*celluse
+			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
+			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
 			if(get_malf_status(usr))
 				malfoccupy(usr)
