@@ -567,4 +567,13 @@
 	icon = 'icons/mob/clothing/custom_w.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	dynamic_hair_suffix = ""
-	
+
+/obj/item/clothing/under/custom/vest
+	name = "vest"
+	desc = "A vest with a shirt underlining it."
+	icon_state = "vest"
+	item_state = "vest"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = STYLE_DIGITIGRADE
+

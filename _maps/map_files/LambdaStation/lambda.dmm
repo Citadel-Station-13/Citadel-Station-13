@@ -391,8 +391,12 @@
 /turf/open/space,
 /area/solar/port/fore)
 "abk" = (
-/turf/closed/wall/r_wall,
-/area/asteroid/nearstation)
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "abl" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -720,9 +724,6 @@
 /obj/machinery/doppler_array/research/science{
 	dir = 1
 	},
-/obj/machinery/status_display/ai{
-	pixel_y = 32
-	},
 /obj/item/radio/intercom{
 	dir = 8;
 	pixel_x = -28
@@ -742,13 +743,16 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "acf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
 /obj/machinery/button/massdriver{
 	id = "toxinsdriver";
 	pixel_x = 24;
 	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -1137,12 +1141,12 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "adb" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -1153,13 +1157,9 @@
 "add" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "ade" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -4424,7 +4424,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "ajC" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera/autoname{
 	dir = 1
 	},
@@ -10504,6 +10503,10 @@
 "atH" = (
 /turf/closed/wall/r_wall,
 /area/science/server)
+"atI" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/nearstation)
 "atJ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -63631,10 +63634,26 @@
 	},
 /turf/open/space/basic,
 /area/solar/starboard/aft)
+"egV" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "ehl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/paramedic)
+"ehs" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "eia" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -64004,6 +64023,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"eLb" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "eMH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -64435,6 +64460,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"fvD" = (
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "fvI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -65459,6 +65487,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"hbf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "hbS" = (
 /obj/machinery/button/door{
 	id = "engstorage";
@@ -66197,6 +66234,13 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/aft)
+"iIs" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "iJd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light_switch{
@@ -66614,6 +66658,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"jwN" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 10
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/nearstation)
 "jEf" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
@@ -67109,6 +67159,11 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
+"krP" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "krZ" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -67214,6 +67269,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
+"kFO" = (
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "kJN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/structure/table,
@@ -68138,6 +68202,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"mkV" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "mmA" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -70166,6 +70239,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
+"qPP" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "qSJ" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable{
@@ -70410,6 +70490,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"rsU" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "rtC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -71613,6 +71700,12 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"ucV" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 5
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/asteroid/nearstation)
 "ufs" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -72684,6 +72777,15 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"wgn" = (
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Space Loop In"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "wgU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output,
 /turf/open/floor/engine/vacuum,
@@ -72988,6 +73090,15 @@
 "wPh" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
+"wPU" = (
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "wQP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -73270,6 +73381,11 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
+"xzG" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/turf/open/floor/plating,
+/area/science/mixing)
 "xAN" = (
 /turf/closed/wall,
 /area/maintenance/department/electrical)
@@ -99141,7 +99257,7 @@ aaA
 aaA
 aaA
 abY
-aUL
+hbf
 afP
 afB
 acw
@@ -100418,11 +100534,11 @@ aaA
 aaA
 aaA
 aaA
-abk
-abk
-abk
-abk
-abk
+aaQ
+aaQ
+aaQ
+aaQ
+aaQ
 aaA
 aaA
 abY
@@ -103763,8 +103879,8 @@ aAY
 aAY
 aAY
 aAY
-aAY
-aAY
+aaA
+aaA
 abJ
 acb
 acF
@@ -104009,20 +104125,20 @@ aab
 aab
 aab
 aab
-aab
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
+aaa
+aaa
+aaa
+abk
+krP
+krP
+krP
+qPP
+atI
+ucV
 aAY
 abK
+abK
+abJ
 acc
 acG
 adb
@@ -104268,19 +104384,19 @@ aab
 aab
 aab
 aaa
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-abK
-ace
+aaa
+rsU
+krP
+krP
+krP
+iIs
+aac
+jwN
+atI
+xzG
+kFO
+mkV
+eLb
 acH
 ajC
 abJ
@@ -104525,19 +104641,19 @@ aab
 aab
 aab
 aaa
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
+aac
+abk
+krP
+krP
+krP
+egV
+aac
 aAY
 aAY
 abK
-ace
+wPU
+fvD
+fvD
 acI
 add
 adv
@@ -104781,19 +104897,19 @@ aab
 aab
 aab
 aab
-aaa
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-aAY
-abK
+aac
+aac
+rsU
+krP
+krP
+krP
+qPP
+atI
+atI
+atI
+xzG
+wgn
+ehs
 acf
 adH
 ade
@@ -105048,8 +105164,8 @@ aaA
 aaA
 aaA
 aaA
-aaA
-aaA
+abJ
+abJ
 abJ
 abK
 abK
