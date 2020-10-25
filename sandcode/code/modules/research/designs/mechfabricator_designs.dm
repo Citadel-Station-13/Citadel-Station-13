@@ -61,7 +61,7 @@
 	build_path = /obj/item/mecha_parts/chassis/powerarmor
 	materials = list(/datum/material/iron=15000, /datum/material/plasma=5000)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 
 /datum/design/powerarmor_torso
 	name = "Power Armor Torso"
@@ -70,7 +70,7 @@
 	build_path = /obj/item/mecha_parts/part/powerarmor_torso
 	materials = list(/datum/material/iron=40000, /datum/material/plasma=10000, /datum/material/titanium=5000)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 
 /datum/design/powerarmor_helmet
 	name = "Power Armor Helmet"
@@ -79,7 +79,7 @@
 	build_path = /obj/item/mecha_parts/part/powerarmor_helmet
 	materials = list(/datum/material/iron=20000, /datum/material/plasma=10000, /datum/material/titanium=5000, /datum/material/glass=5000)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 
 /datum/design/powerarmor_armL
 	name = "Power Armor Left Arm"
@@ -88,7 +88,7 @@
 	build_path = /obj/item/mecha_parts/part/powerarmor_left_arm
 	materials = list(/datum/material/iron=20000, /datum/material/plasma=10000, /datum/material/titanium=5000,)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 
 /datum/design/powerarmor_armR
 	name = "Power Armor Right Arm"
@@ -97,7 +97,7 @@
 	build_path = /obj/item/mecha_parts/part/powerarmor_right_arm
 	materials = list(/datum/material/iron=20000, /datum/material/plasma=10000, /datum/material/titanium=5000,)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 
 /datum/design/powerarmor_legL
 	name = "Power Armor Left Leg"
@@ -106,7 +106,7 @@
 	build_path = /obj/item/mecha_parts/part/powerarmor_left_leg
 	materials = list(/datum/material/iron=20000, /datum/material/plasma=10000, /datum/material/titanium=5000,)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 
 /datum/design/powerarmor_legR
 	name = "Power Armor Right Leg"
@@ -115,5 +115,5 @@
 	build_path = /obj/item/mecha_parts/part/powerarmor_right_leg
 	materials = list(/datum/material/iron=20000, /datum/material/plasma=10000, /datum/material/titanium=5000,)
 	construction_time = 500
-	category = list("Misc")
+	category = list("Power Armor")
 ///End of Power Armor
