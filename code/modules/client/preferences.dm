@@ -894,8 +894,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
 						var/class_link = ""
-						if(has_loadout_gear(loadout_slot, gear.type))
+						var/list/loadout_item = has_loadout_gear(loadout_slot, gear.type)
+						if(loadout_item)
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
+							if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
+
 						else if(gear_points <= 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)

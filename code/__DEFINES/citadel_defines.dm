@@ -114,8 +114,3 @@
 
 //special species definitions
 #define MINIMUM_MUTANT_COLOR	"#202020" //this is how dark players mutant parts and skin can be
-
-//loadout defines
-#define MAXIMUM_LOADOUT_SAVES	5
-#define LOADOUT_ITEM			"loadout_item"
-#define LOADOUT_COLOR			"loadout_color"
