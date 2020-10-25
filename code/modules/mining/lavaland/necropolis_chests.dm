@@ -325,7 +325,7 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "memento_mori"
 	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot, mob/user, datum/action/A)
