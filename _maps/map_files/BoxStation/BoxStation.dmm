@@ -350,7 +350,7 @@
 /area/security/prison)
 "aaV" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aaW" = (
@@ -54835,7 +54835,7 @@
 /area/engine/atmos)
 "hgO" = (
 /obj/structure/table,
-/obj/item/storage/box/dice{
+/obj/item/storage/dice{
 	pixel_x = 4;
 	pixel_y = 4
 	},
