@@ -670,12 +670,12 @@ SUBSYSTEM_DEF(job)
 	var/mob/the_mob = N
 	if(!the_mob)
 		the_mob = M // cause this doesn't get assigned if player is a latejoiner
-	var/list/chosen_gear = the_mob.client.prefs.loadout_data[the_mob.client.prefs.loadout_slot]
+	var/list/chosen_gear = the_mob.client.prefs.loadout_data["SAVE_[the_mob.client.prefs.loadout_slot]"]
 	if(the_mob.client && the_mob.client.prefs && (chosen_gear && chosen_gear.len))
 		if(!ishuman(M))//no silicons allowed
 			return
 		for(var/i in chosen_gear)
-			var/datum/gear/G = i
+			var/datum/gear/G = i[LOADOUT_ITEM]
 			G = GLOB.loadout_items[initial(G.category)][initial(G.subcategory)][initial(G.name)]
 			if(!G)
 				continue

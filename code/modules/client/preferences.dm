@@ -830,11 +830,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
 			if(chosen_gear)
 				message_admins("loading gear from SAVE_[loadout_slot]")
-				for(var/loadout_data in chosen_gear)
-					var/loadout_item = loadout_data[LOADOUT_ITEM]
-					if(loadout_item)
-						message_admins("loading [loadout_item] from slot")
-						var/datum/gear/loadout_gear = text2path(loadout_item)
+				for(var/loadout_item in chosen_gear)
+					var/loadout_item_path = loadout_item[LOADOUT_ITEM]
+					if(loadout_item_path)
+						message_admins("loading [loadout_item_path] from slot")
+						var/datum/gear/loadout_gear = text2path(loadout_item_path)
+						if(loadout_gear)
+							message_admins("it exists with a name of [initial(loadout_gear.name)]")
 						gear_points -= initial(loadout_gear.cost)
 			else
 				chosen_gear = list()
@@ -895,17 +897,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							continue
 						var/class_link = ""
 						var/list/loadout_item = has_loadout_gear(loadout_slot, gear.type)
+						var/extra_color_data = ""
 						if(loadout_item)
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 							if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
-
+								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
+								for(var/loadout_color in loadout_item[LOADOUT_COLOR])
+									extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color];'>&nbsp;&nbsp;&nbsp;</span>"
 						else if(gear_points <= 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)
 							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
 						else
 							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
-						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a></td>"
+						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a>[extra_color_data]</td>"
 						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 						if(islist(gear.restricted_roles))
 							if(gear.restricted_roles.len)
@@ -2647,12 +2652,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
-					message_admins("so they can have it")
+					var/list/new_loadout_data = list(LOADOUT_ITEM = G.type)
+					if(length(G.loadout_initial_colors))
+						new_loadout_data[LOADOUT_COLOR] = G.loadout_initial_colors
 					if(loadout_data["SAVE_[loadout_slot]"])
-						message_admins("and its added to the list")
-						loadout_data["SAVE_[loadout_slot]"] += list(list(LOADOUT_ITEM = G.type)) //double packed because it does the union of the CONTENTS of the lists
+						loadout_data["SAVE_[loadout_slot]"] += list(new_loadout_data) //double packed because it does the union of the CONTENTS of the lists
 					else
-						loadout_data["SAVE_[loadout_slot]"] = list(list(LOADOUT_ITEM = G.type)) //double packed because you somehow had no save slot in your loadout?
+						loadout_data["SAVE_[loadout_slot]"] = list(new_loadout_data) //double packed because you somehow had no save slot in your loadout?
+		if(href_list["loadout_color"])
+			var/name = html_decode(href_list["loadout_gear_name"])
+			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
+			if(!G)
+				return
+			var/user_gear = has_loadout_gear(loadout_slot, G.type)
+			if(!user_gear)
+				return
+			var/list/color_options = list()
+			var/list/color_option_format = list("Primary", "Secondary", "Tertiary") //could make this a define and use it everywhere
+			for(var/i=1, i<=length(G.loadout_initial_colors), i++)
+				var/option = color_option_format[i]
+				if(option)
+					color_options += option
+				else
+					color_options += "Color [i]"
+			var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
+			if(color_to_change)
+				var/color_index = color_options[color_to_change]
+				message_admins("chosen index is [color_index]")
+				var/current_color = user_gear[LOADOUT_COLOR][color_index]
+				message_admins("current color is [current_color]")
+				var/new_color = input(user, "Polychromic options", "Choose [color_to_change] Color", current_color) as color|null
+				if(new_color)
+					message_admins("new colour successful")
+					user_gear[LOADOUT_COLOR][color_index] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
 
 	ShowChoices(user)
 	return 1

@@ -76,4 +76,4 @@
 //loadout item flags
 #define LOADOUT_CAN_NAME					(1<<0) //renaming items
 #define LOADOUT_CAN_DESCRIPTION				(1<<1) //adding a custom description to items
-#define LOADOUT_CAN_COLOR_POLYCHROMIC
+#define LOADOUT_CAN_COLOR_POLYCHROMIC		(1<<2)
