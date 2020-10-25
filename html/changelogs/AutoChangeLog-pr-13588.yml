@@ -1,0 +1,5 @@
+author: "Delams-The-SM"
+delete-after: True
+changes: 
+  - rscadd: "Added 3 new emotes *hiss *purr *meow"
+  - soundadd: "ported sounds from Citadel RP for *purr and *meow"
