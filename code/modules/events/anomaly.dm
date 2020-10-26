@@ -44,7 +44,13 @@
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/list/turf/valid = list()
+	for(var/i in get_area_turfs(impact_area))
+		var/turf/T = i
+		if(T.density)
+			continue
+		valid += T
+	var/turf/T = pick(valid)
 	var/newAnomaly
 	if(T)
 		newAnomaly = new anomaly_path(T)
