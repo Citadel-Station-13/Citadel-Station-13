@@ -704,8 +704,11 @@
 		var/penalty_threshold = CONFIG_GET(number/threshold_body_size_penalty)
 		if(features["body_size"] < penalty_threshold && old_size >= penalty_threshold)
 			C.maxHealth -= 10 //reduce the maxhealth
+			var/slowdown = (1 - round(features["body_size"] / danger, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
+			holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
 		else
 			if(old_size < penalty_threshold && features["body_size"] >= penalty_threshold)
 				C.maxHealth  += 10 //give the maxhealth back
+				holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride) //remove the slowdown
 
 

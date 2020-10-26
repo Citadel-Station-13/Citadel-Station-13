@@ -531,8 +531,8 @@
 //multiplicative slowdown multiplier. See 'dna.update_body_size' for the operation.
 //doesn't apply to floating or crawling mobs
 /datum/config_entry/number/body_size_slowdown_multiplier
-	config_entry_value = 0.25
-	min_val = 0.1 //To encourage folks to disable the slowdown through the above config instead.
+	config_entry_value = 0
+	min_val = 0
 	integer = FALSE
 
 //Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
