@@ -58567,8 +58567,10 @@
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/cable/white,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "rcD" = (
