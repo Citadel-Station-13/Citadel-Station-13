@@ -1,3 +1,48 @@
+/datum/component/construction/mecha/examine(datum/source, mob/user, list/examine_list)
+	. = ..()
+	if(looky_helpy)
+		switch(steps[index]["key"])
+			if(TOOL_WELDER)
+				examine_list += "<span class='notice'>The mech's parts could be <b>welded</b> into place.</span>"
+			if(/obj/item/stack/sheet/bluespace_crystal)
+				examine_list += "<span class='notice'>The mech could use a <b>crystal</b> of sorts.</span>"
+			if(/obj/item/stock_parts/capacitor/quadratic)
+				examine_list += "<span class='notice'>The mech requires a <b>quadratic capacitor</b>.</span>"
+			//All the game's boards because code is stupid --start
+			if(/obj/item/circuitboard/mecha/ripley/main)
+				examine_list += "<span class='notice'>The mech requires a <b>Ripley Central Control module circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/ripley/peripherals)
+				examine_list += "<span class='notice'>The mech requires a <b>Ripley Peripherals Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/gygax/main)
+				examine_list += "<span class='notice'>The mech requires a <b>Gygax Central Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/gygax/peripherals)
+				examine_list += "<span class='notice'>The mech requires a <b>Gygax Peripherals Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/gygax/targeting)
+				examine_list += "<span class='notice'>The mech requires a <b>Gygax Weapon Control and Targeting circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/honker/main)
+				examine_list += "<span class='notice'>The mech requires a <b>H.O.N.K Central Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/honker/peripherals)
+				examine_list += "<span class='notice'>The mech requires a <b>H.O.N.K Peripherals Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/honker/targeting)
+				examine_list += "<span class='notice'>The mech requires a <b>H.O.N.K Weapon Control and Targeting circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/durand/main)
+				examine_list += "<span class='notice'>The mech requires a <b>Durand Central Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/durand/peripherals)
+				examine_list += "<span class='notice'>The mech requires a <b>Durand Peripherals Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/durand/targeting)
+				examine_list += "<span class='notice'>The mech requires a <b>Durand Weapon Control and Targeting circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/phazon/main)
+				examine_list += "<span class='notice'>The mech requires a <b>Phazon Central Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/phazon/peripherals)
+				examine_list += "<span class='notice'>The mech requires a <b>Phazon Peripherals Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/phazon/targeting)
+				examine_list += "<span class='notice'>The mech requires a <b>Phazon Weapon Control and Targeting circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/odysseus/main)
+				examine_list += "<span class='notice'>The mech requires a <b>Odysseus Central Control circuitboard</b>.</span>"
+			if(/obj/item/circuitboard/mecha/odysseus/peripherals)
+				examine_list += "<span class='notice'>The mech requires a <b>Odysseus Peripherals Control circuitboard</b>.</span>"
+			//All the game's boards because code is stupid --end
+
 //Power armor: now actually built!
 /datum/component/construction/unordered/mecha_chassis/powerarmor
 	result = /datum/component/construction/mecha/powerarmor
