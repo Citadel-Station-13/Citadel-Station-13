@@ -1,4 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - bugfix: All the mech's construction steps should be visible now when examining.
