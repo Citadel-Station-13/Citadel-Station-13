@@ -705,6 +705,14 @@ SUBSYSTEM_DEF(job)
 						I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
 					else
 						qdel(I)
+			if(I) //handle loadout colors last
+				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
+					var/datum/element/polychromic/polychromic = SSdcs.GetElement(list(/datum/element/polychromic))
+					if(polychromic)
+						var/list/polychromic_entry = polychromic.colors_by_atom[I]
+						if(polychromic_entry)
+							polychromic.colors_by_atom[I] = I[LOADOUT_COLOR]
+
 
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)

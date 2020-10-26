@@ -2666,17 +2666,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/user_gear = has_loadout_gear(loadout_slot, G.type)
 			if(!user_gear)
 				return
+			message_admins("the gear is of length [length(user_gear)]")
+			message_admins("the color list is of length [length(user_gear[LOADOUT_COLOR])]")
 			var/list/color_options = list()
-			var/list/color_option_format = list("Primary", "Secondary", "Tertiary") //could make this a define and use it everywhere
 			for(var/i=1, i<=length(G.loadout_initial_colors), i++)
-				var/option = color_option_format[i]
-				if(option)
-					color_options += option
-				else
-					color_options += "Color [i]"
+				color_options += "Color [i]"
 			var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
 			if(color_to_change)
-				var/color_index = color_options[color_to_change]
+				var/color_index = text2num(copytext(color_to_change, 7))
 				message_admins("chosen index is [color_index]")
 				var/current_color = user_gear[LOADOUT_COLOR][color_index]
 				message_admins("current color is [current_color]")
