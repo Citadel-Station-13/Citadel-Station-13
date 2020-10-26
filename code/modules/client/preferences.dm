@@ -2692,7 +2692,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species
 
-	var/old_size = character.dna.features["body_size"]
+	var/old_size = RESIZE_DEFAULT_SIZE
 	if(isdwarf(character))
 		character.dna.features["body_size"] = RESIZE_DEFAULT_SIZE
 		old_size = RESIZE_DEFAULT_SIZE
