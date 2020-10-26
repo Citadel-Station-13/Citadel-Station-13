@@ -509,13 +509,13 @@
 
 //Body size configs, the feature will be disabled if both min and max have the same value.
 /datum/config_entry/number/body_size_min
-	config_entry_value = RESIZE_DEFAULT_SIZE
+	config_entry_value = 0.9
 	min_val = 0.1 //to avoid issues with zeros and negative values.
 	max_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE
 
 /datum/config_entry/number/body_size_max
-	config_entry_value = RESIZE_DEFAULT_SIZE
+	config_entry_value = 1.25
 	min_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE
 
@@ -523,7 +523,7 @@
 //to compensate for their smaller hitbox.
 //To disable, just make sure the value is lower than 'body_size_min'
 /datum/config_entry/number/threshold_body_size_penalty
-	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
+	config_entry_value = RESIZE_DEFAULT_SIZE
 	min_val = 0
 	max_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE

@@ -2693,8 +2693,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.custom_species = character.custom_species
 
 	var/old_size = character.dna.features["body_size"]
-	if(isdwarf(character)
-		character.dna.features["body_size"] = 1
+	if(isdwarf(character))
+		character.dna.features["body_size"] = RESIZE_DEFAULT_SIZE
 		old_size = 1
 
 	if((parent && parent.can_have_part("meat_type")) || pref_species.mutant_bodyparts["meat_type"])
