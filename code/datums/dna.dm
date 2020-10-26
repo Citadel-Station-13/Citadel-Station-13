@@ -696,11 +696,13 @@
 /datum/dna/proc/update_body_size(old_size)
 	if(!holder || features["body_size"] == old_size)
 		return
+	//new size detected
 	holder.resize = features["body_size"] / old_size
 	holder.update_transform()
-	var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
-	if(features["body_size"] < danger)
-		var/slowdown = (1 - round(features["body_size"] / danger, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
-		holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
-	else if(old_size < danger)
-		holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride)
+	if(features["body_size"] < 1 && old_size >= 1)
+		holder.maxhealth -= 10 //reduce the maxhealth
+	else
+		if(old_size < 1 && features["body_size"] >= 1)
+			holder.maxhealth  += 10 //give the maxhealth back
+
+
