@@ -519,10 +519,10 @@
 	min_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE
 
-//Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+//Penalties given to characters with a body size smaller than this value,
 //to compensate for their smaller hitbox.
 //To disable, just make sure the value is lower than 'body_size_min'
-/datum/config_entry/number/threshold_body_size_slowdown
+/datum/config_entry/number/threshold_body_size_penalty
 	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
 	min_val = 0
 	max_val = RESIZE_DEFAULT_SIZE
