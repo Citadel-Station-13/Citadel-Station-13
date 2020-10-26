@@ -699,11 +699,13 @@
 	//new size detected
 	holder.resize = features["body_size"] / old_size
 	holder.update_transform()
-	var/penalty_threshold = CONFIG_GET(number/threshold_body_size_penalty)
-	if(features["body_size"] < penalty_threshold && old_size >= penalty_threshold)
-		holder.maxhealth -= 10 //reduce the maxhealth
-	else
-		if(old_size < penalty_threshold && features["body_size"] >= penalty_threshold)
-			holder.maxhealth  += 10 //give the maxhealth back
+	if(iscarbon(holder))
+		var/mob/living/carbon/C = holder
+		var/penalty_threshold = CONFIG_GET(number/threshold_body_size_penalty)
+		if(features["body_size"] < penalty_threshold && old_size >= penalty_threshold)
+			C.maxHealth -= 10 //reduce the maxhealth
+		else
+			if(old_size < penalty_threshold && features["body_size"] >= penalty_threshold)
+				C.maxHealth  += 10 //give the maxhealth back
 
 
