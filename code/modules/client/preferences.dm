@@ -2683,8 +2683,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		pref_species = new /datum/species/human
 		save_character()
 
-	var/old_size = character.dna.features["body_size"]
-
 	character.dna.features = features.Copy()
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
 	character.dna.species.eye_type = eye_type
@@ -2693,6 +2691,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species
+
+	var/old_size = character.dna.features["body_size"]
+	if(isdwarf(character)
+		character.dna.features["body_size"] = 1
+		old_size = 1
 
 	if((parent && parent.can_have_part("meat_type")) || pref_species.mutant_bodyparts["meat_type"])
 		character.type_of_meat = GLOB.meat_types[features["meat_type"]]
