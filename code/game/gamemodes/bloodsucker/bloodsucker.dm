@@ -32,8 +32,7 @@
 	reroll_friendly = FALSE
 	enemy_minimum_age = 7
 	round_ends_with_antag_death = FALSE
-
-
+	restricted_species = list("plasmaman", "shadow", "skeleton", "synthliz", "synth", "vampire", "ipc", "dullahan", "android")
 	announce_span = "danger"
 	announce_text = "Filthy, bloodsucking vampires are crawling around disguised as crewmembers!\n\
 	<span class='danger'>Bloodsuckers</span>: The crew are cattle, while you are both shepherd and slaughterhouse.\n\

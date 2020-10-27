@@ -25,6 +25,7 @@
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
+	var/list/restricted_species = list() //The ID of the species you dont want to be considered for this gamemode's antags, like bloodless species being a bloodsucker.
 	var/required_players = 0
 	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
@@ -415,6 +416,13 @@
 		for(var/datum/mind/player in candidates)
 			for(var/job in restricted_jobs)					// Remove people who want to be antagonist but have a job already that precludes it
 				if(player.assigned_role == job)
+					candidates -= player
+
+	if(restricted_species)
+		for(var/datum/mind/player in candidates)
+			for(var/species_id in restricted_species)
+				var/mob/living/carbon/player_mob = player.current
+				if(player_mob.dna.species == restricted_species)
 					candidates -= player
 
 	if(candidates.len < recommended_enemies && CONFIG_GET(keyed_list/force_antag_count)[config_tag])
