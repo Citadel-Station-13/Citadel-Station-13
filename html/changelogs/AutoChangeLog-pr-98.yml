@@ -1,0 +1,8 @@
+author: Floof Ball#0798, Rohesie and SandPoot
+delete-after: true
+changes:
+  - rscadd: The ability to change what type of tiles you want to place down, you can
+      see what tiles can do this by examining them.
+  - refactor: Refactors tiles.
+  - code_imp: Changed some radial code.
+  - imageadd: Many sprites related to tiles.
