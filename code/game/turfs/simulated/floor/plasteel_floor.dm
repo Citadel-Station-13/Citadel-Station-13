@@ -13,12 +13,10 @@
 		new /obj/effect/temp_visual/glowing_rune(src)
 	ChangeTurf(/turf/open/floor/plating/rust)
 
-/turf/open/floor/plasteel/update_icon()
-	if(!..())
-		return 0
-	if(!broken && !burnt)
-		icon_state = icon_regular_floor
-
+/turf/open/floor/plasteel/update_icon_state()			//sandstorm change - tile floofing
+	if(broken || burnt)									//included - tile floofing
+		return											//included - tile floofing
+	icon_state = base_icon_state						//included - tile floofing
 
 /turf/open/floor/plasteel/airless
 	initial_gas_mix = AIRLESS_ATMOS

@@ -64,7 +64,7 @@
 /obj/item/stack/tile/mineral/titanium
 	name = "titanium tile"
 	singular_name = "titanium floor tile"
-	desc = "A tile made of titanium, used for shuttles."
+	desc = "Sleek titanium tiles, used for shuttles." //sandstorm change - tile floofing
 	icon_state = "tile_shuttle"
 	turf_type = /turf/open/floor/mineral/titanium
 	mineralType = "titanium"

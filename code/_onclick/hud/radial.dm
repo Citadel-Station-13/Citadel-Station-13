@@ -195,6 +195,9 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	else
 		if(istext(choices_values[choice_id]))
 			E.name = choices_values[choice_id]
+		else if(ispath(choices_values[choice_id],/atom))		//sandstorm change (i don't even wanna try to explain it)- tile floofing
+			var/atom/A = choices_values[choice_id]				//included 		   (but it fixes the thing.)			 - tile floofing
+			E.name = initial(A.name)							//included - tile floofing
 		else
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
 			E.name = AM.name
