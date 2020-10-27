@@ -2641,6 +2641,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else if(firstspace == name_length)
 				real_name += "[pick(GLOB.last_names)]"
 
+	//reset size if applicable
+	if(character.dna.features["body_size"])
+		var/initial_old_size = character.dna.features["body_size"]
+		character.dna.features["body_size"] = RESIZE_DEFAULT_SIZE
+		character.dna.update_body_size(initial_old_size)
+
 	character.real_name = nameless ? "[real_name] #[rand(10000, 99999)]" : real_name
 	character.name = character.real_name
 	character.nameless = nameless
@@ -2695,7 +2701,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/old_size = RESIZE_DEFAULT_SIZE
 	if(isdwarf(character))
 		character.dna.features["body_size"] = RESIZE_DEFAULT_SIZE
-		old_size = RESIZE_DEFAULT_SIZE
 
 	if((parent && parent.can_have_part("meat_type")) || pref_species.mutant_bodyparts["meat_type"])
 		character.type_of_meat = GLOB.meat_types[features["meat_type"]]
