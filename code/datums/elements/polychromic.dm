@@ -37,6 +37,7 @@
 		var/col = LAZYACCESS(colors, I) || "#FFFFFF"
 		L += make_appearances ? mutable_appearance(mut_icon, overlays_states[I], color = col) : col
 	colors_by_atom[A] = L
+	message_admins("attached")
 
 	RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
 
@@ -170,7 +171,7 @@
 		if(istype(source,/obj/item/clothing/suit/hooded)) //so how come it be like this, where toggleable headslots are named separately (helmet/hood) anyways?
 			var/obj/item/clothing/suit/hooded/sourcesuit = source
 			H = sourcesuit.hood
-		else if(istype(source,/obj/item/clothing/suit/space/hardsuit)) 
+		else if(istype(source,/obj/item/clothing/suit/space/hardsuit))
 			var/obj/item/clothing/suit/space/hardsuit/sourcesuit = source
 			H = sourcesuit.helmet
 		else

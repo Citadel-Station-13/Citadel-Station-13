@@ -707,10 +707,15 @@ SUBSYSTEM_DEF(job)
 						qdel(I)
 			if(I) //handle loadout colors last
 				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
-					var/datum/element/polychromic/polychromic = SSdcs.GetElement(list(/datum/element/polychromic))
+					var/datum/element/polychromic/polychromic
+					for(var/some_connection in I.comp_lookup["parent_qdeleting"]) //stupid way to do it but GetElement does not work for this case, sigh
+						if(ispath(some_connection, /datum/element/polychromic))
+							polychromic = some_connection
+							break
 					if(polychromic)
 						var/list/polychromic_entry = polychromic.colors_by_atom[I]
 						if(polychromic_entry)
+							message_admins("we found the corresponding atom")
 							polychromic.colors_by_atom[I] = I[LOADOUT_COLOR]
 
 
