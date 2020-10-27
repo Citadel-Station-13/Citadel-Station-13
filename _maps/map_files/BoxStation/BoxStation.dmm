@@ -45390,10 +45390,8 @@
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
 "cfv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/plasticflaps,
-/obj/item/toy/plush/hairball,
-/turf/open/floor/carpet/red,
+/obj/structure/plasticflaps/opaque,
+/turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "cfw" = (
 /turf/closed/wall/r_wall,
@@ -53586,8 +53584,16 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "dBm" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/light/floor,
+/obj/structure/table,
+/obj/item/clothing/glasses/sunglasses/reagent,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -5;
+	pixel_y = 13
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_uplift{
+	pixel_x = 10;
+	pixel_y = 7
 	},
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
@@ -55202,6 +55208,7 @@
 /area/maintenance/starboard/aft)
 "hUJ" = (
 /obj/structure/reagent_dispensers/beerkeg,
+/obj/machinery/light/floor,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "hWd" = (
@@ -55390,7 +55397,6 @@
 "ixd" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/beer,
-/obj/machinery/light/floor,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "iyG" = (
@@ -56457,12 +56463,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/range)
-"lcf" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "leE" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -56909,6 +56909,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/mob/living/simple_animal/bot/mulebot,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "mvt" = (
@@ -59689,12 +59690,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"tRD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/open/floor/carpet/royalblue,
-/area/maintenance/starboard/aft)
 "tRF" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -60165,6 +60160,7 @@
 /area/engine/gravity_generator)
 "uRn" = (
 /mob/living/simple_animal/opossum,
+/obj/structure/chair/stool,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "uRS" = (
@@ -60768,10 +60764,6 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/space/basic,
 /area/space)
-"wej" = (
-/mob/living/simple_animal/bot/mulebot,
-/turf/open/floor/carpet/royalblue,
-/area/maintenance/starboard/aft)
 "weM" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -61135,9 +61127,6 @@
 /area/maintenance/port/aft)
 "xgs" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "xgC" = (
@@ -112197,7 +112186,7 @@ cNW
 cNW
 clt
 cNW
-cNW
+wVN
 cNW
 cQw
 cjD
@@ -112454,13 +112443,13 @@ ccW
 cNW
 clt
 cNW
-cgy
-wej
+cfv
+cNW
 mug
 hUJ
 ixd
 cNW
-aaf
+ktS
 aaf
 aaf
 aaf
@@ -112709,8 +112698,8 @@ cNW
 wly
 ccV
 noa
-lcf
-cfv
+clu
+cNW
 xgs
 srk
 srk
@@ -112968,13 +112957,13 @@ pDG
 cNW
 ceT
 cNW
-dBm
+gGK
 chH
 dEh
 srk
 gGK
 cNW
-aaf
+ktS
 aaf
 aaf
 aaf
@@ -113225,7 +113214,7 @@ cNW
 cNW
 cPH
 cNW
-tRD
+gGK
 pcK
 srk
 dHp
@@ -113486,7 +113475,7 @@ cgy
 gGK
 gGK
 uRn
-cgy
+dBm
 cNW
 aaa
 aaf
@@ -113745,7 +113734,7 @@ cNW
 cNW
 cNW
 cNW
-aaf
+ktS
 aaf
 aaf
 aaf
