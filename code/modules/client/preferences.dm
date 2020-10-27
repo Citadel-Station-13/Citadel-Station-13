@@ -565,9 +565,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								var/datum/sprite_accessory/accessory = find_part_list[find_part]
 								if(accessory)
 									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
-										var/primary_feature = "[accessory.mutant_part_string]_primary"
-										var/secondary_feature = "[accessory.mutant_part_string]_secondary"
-										var/tertiary_feature = "[accessory.mutant_part_string]_tertiary"
+										var/mutant_string = accessory.mutant_part_string
+										if(!mutant_string)
+											mutant_string = "[accessory]"
+										var/primary_feature = "[mutant_string]_primary"
+										var/secondary_feature = "[mutant_string]_secondary"
+										var/tertiary_feature = "[mutant_string]_tertiary"
 										if(!features[primary_feature])
 											features[primary_feature] = features["mcolor"]
 										if(!features[secondary_feature])
