@@ -2702,6 +2702,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	character.dna.species.eye_type = eye_type
 	if(chosen_limb_id && (chosen_limb_id in character.dna.species.allowed_limb_ids))
 		character.dna.species.mutant_bodyparts["limbs_id"] = chosen_limb_id
+		character.dna.species.limbs_id = chosen_limb_id //just to be safe when cloning
 	character.dna.real_name = character.real_name
 	character.dna.nameless = character.nameless
 	character.dna.custom_species = character.custom_species
