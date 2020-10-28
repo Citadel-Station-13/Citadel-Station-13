@@ -1,4 +1,5 @@
 /obj/item/ammo_box/magazine/mmag
+	name = "magrifle magazine (non-lethal disabler)"
 	icon_state = "mediummagmag"
 	ammo_type = /obj/item/ammo_casing/caseless/magnetic/disabler
 	caliber = "mag"
@@ -12,12 +13,12 @@
 /obj/item/ammo_box/magazine/mmag/small
 	name = "magpistol magazine (non-lethal disabler)"
 	icon_state = "smallmagmag"
-	ammo_type = /obj/item/ammo_casing/caseless/magnetic/weak/disabler
+	ammo_type = /obj/item/ammo_casing/caseless/magnetic/disabler
 	max_ammo = 16
 
 /obj/item/ammo_box/magazine/mmag/small/lethal
 	name = "magpistol magazine (lethal)"
-	ammo_type = /obj/item/ammo_casing/caseless/magnetic/weak
+	ammo_type = /obj/item/ammo_casing/caseless/magnetic
 
 /obj/item/ammo_box/magazine/mhyper
 	name = "hyper-burst rifle magazine"
