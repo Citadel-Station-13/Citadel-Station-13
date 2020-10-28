@@ -202,7 +202,7 @@
 /area/shuttle/arrival)
 "N" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/dice{
+/obj/item/storage/dice{
 	pixel_x = -2;
 	pixel_y = 8
 	},
