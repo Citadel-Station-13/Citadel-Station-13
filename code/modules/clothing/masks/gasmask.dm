@@ -74,7 +74,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	visor_flags_inv = HIDEFACE
 	dog_fashion = /datum/dog_fashion/head/clown
-	var/static/list/clownmask_designs = list()
+	var/static/list/clownmask_designs
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
@@ -131,7 +131,7 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	visor_flags_inv = HIDEFACE
-	var/static/list/mimemask_designs = list()
+	var/static/list/mimemask_designs
 
 /obj/item/clothing/mask/gas/mime/examine(mob/user)
 	. = ..()
