@@ -22,7 +22,6 @@
 	resistance_flags = FIRE_PROOF
 
 	var/self_fueling = FALSE //Do we refill ourselves or not
-	var/next_fueling = 10 //How long we wait before refilling
 	var/nextrefueltick = 0 // How long it takes before we get a new fuel unit
 
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
@@ -91,7 +90,7 @@
 	//Then looks if we refuel ourselves or not.
 
 	if(get_fuel() < max_fuel && nextrefueltick < world.time && self_fueling)
-		nextrefueltick = world.time + next_fueling
+		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
 
 /obj/item/weldingtool/suicide_act(mob/user)
@@ -385,7 +384,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	self_fueling = TRUE
-	next_fueling = 0
 	toolspeed = 0.1
 	light_intensity = 0
 	change_icons = 0
@@ -396,7 +394,6 @@
 	icon = 'icons/obj/advancedtools.dmi'
 	icon_state = "welder"
 	self_fueling = TRUE
-	next_fueling = 0
 	toolspeed = 0.2
 	light_intensity = 0
 	change_icons = 0
