@@ -22551,7 +22551,7 @@
 /area/hallway/primary/starboard)
 "aJa" = (
 /obj/structure/table,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
@@ -22871,7 +22871,7 @@
 /obj/machinery/requests_console{
 	department = "Genetics";
 	name = "Genetics RC";
-	pixel_x = 28	
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -28655,7 +28655,7 @@
 "aTf" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

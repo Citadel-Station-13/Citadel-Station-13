@@ -2180,7 +2180,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afp" = (
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
@@ -10645,7 +10645,7 @@
 /area/crew_quarters/dorms)
 "ayo" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayq" = (

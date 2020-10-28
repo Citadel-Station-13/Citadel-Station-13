@@ -20654,7 +20654,7 @@
 /area/tcommsat/server)
 "oJq" = (
 /obj/structure/table,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
@@ -25115,7 +25115,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/delivery,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/machinery/light{
 	dir = 4
 	},

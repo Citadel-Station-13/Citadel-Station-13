@@ -486,18 +486,7 @@ SUBSYSTEM_DEF(ticker)
 		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 	else
 		var/vote_type = CONFIG_GET(string/map_vote_type)
-		switch(vote_type)
-			if("PLURALITY")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
-			if("APPROVAL")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = APPROVAL_VOTING)
-			if("IRV")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = INSTANT_RUNOFF_VOTING)
-			if("SCORE")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = MAJORITY_JUDGEMENT_VOTING)
-			else
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
-		// fallback
+		SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = vote_type)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING

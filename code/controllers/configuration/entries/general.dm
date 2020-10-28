@@ -290,7 +290,7 @@
 /datum/config_entry/flag/tgstyle_maprotation
 
 /datum/config_entry/string/map_vote_type
-	config_entry_value = "SCORE"
+	config_entry_value = APPROVAL_VOTING
 
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75

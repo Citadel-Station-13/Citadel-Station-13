@@ -263,6 +263,7 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 /obj/item/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
