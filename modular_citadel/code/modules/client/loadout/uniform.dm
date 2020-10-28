@@ -44,6 +44,10 @@
 	name = "Maid costume"
 	path = /obj/item/clothing/under/costume/maid
 
+/datum/gear/uniform/maidcostume/polychromic
+	name = "Polychromic maid costume"
+	path = /obj/item/clothing/under/rank/civilian/janitor/maid/polychromic
+
 /datum/gear/uniform/mailmanuniform
 	name = "Mailman's jumpsuit"
 	path = /obj/item/clothing/under/misc/mailman
