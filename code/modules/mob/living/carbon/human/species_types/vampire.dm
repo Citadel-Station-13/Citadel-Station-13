@@ -18,7 +18,7 @@
 	var/batform_enabled = TRUE
 
 /datum/species/vampire/roundstart
-	id = SPECIES_HALLOWEEN_VAMPIRE
+	id = SPECIES_VAMPIRE_WEAK
 	batform_enabled = FALSE
 
 /datum/species/vampire/roundstart/check_roundstart_eligible()
