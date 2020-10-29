@@ -18,7 +18,7 @@
 	air_contents.set_volume(volume)
 	air_contents.set_temperature(T20C)
 	if(gas_type)
-		air_contents.set_moles(AIR_CONTENTS)
+		air_contents.set_moles(gas_type,AIR_CONTENTS)
 		name = "[name] ([GLOB.meta_gas_names[gas_type]])"
 
 /obj/machinery/atmospherics/components/unary/tank/air

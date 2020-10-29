@@ -66,17 +66,15 @@ SUBSYSTEM_DEF(air)
 	return ..()
 
 /datum/controller/subsystem/air/Initialize(timeofday)
-	extools_update_ssair()
 	map_loading = FALSE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
-	extools_update_reactions()
 	return ..()
 
 /datum/controller/subsystem/air/proc/extools_update_ssair()
-/datum/controller/subsystem/air/proc/extools_update_reactions()
+//datum/controller/subsystem/air/proc/extools_update_reactions()
 
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
@@ -110,7 +108,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = monstermos_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
+		currentpart = SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
@@ -123,12 +121,13 @@ SUBSYSTEM_DEF(air)
 
 	if(currentpart == SSAIR_ACTIVETURFS)
 		timer = TICK_USAGE_REAL
-		process_active_turfs(resumed)
+		process_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		MC_TICK_CHECK
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_EXCITEDGROUPS
+		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
 		timer = TICK_USAGE_REAL
@@ -259,8 +258,8 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/datum/controller/subsystem/air/proc/process_active_turfs(resumed = 0)
-	return process_active_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+/datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
+	return process_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -297,7 +296,7 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/datum/controller/subsystem/air/proc/process_active_turfs_extools()
+/datum/controller/subsystem/air/proc/process_turfs_extools()
 /datum/controller/subsystem/air/proc/process_turf_equalize_extools()
 /datum/controller/subsystem/air/proc/process_excited_groups_extools()
 /datum/controller/subsystem/air/proc/get_amt_excited_groups()

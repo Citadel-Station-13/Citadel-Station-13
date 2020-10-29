@@ -281,17 +281,6 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
 
-GLOBAL_VAR(atmos_extools_initialized) // this must be an uninitialized (null) one or init_monstermos will be called twice because reasons
-#define ATMOS_EXTOOLS_CHECK if(!GLOB.atmos_extools_initialized){\
-	GLOB.atmos_extools_initialized=TRUE;\
-	if(fexists(EXTOOLS)){\
-		var/result = call(EXTOOLS,"init_monstermos")();\
-		if(result != "ok") {CRASH(result);}\
-	} else {\
-		CRASH("[EXTOOLS] does not exist!");\
-	}\
-}
-
 //Unomos - So for whatever reason, garbage collection actually drastically decreases the cost of atmos later in the round. Turning this into a define yields massively improved performance.
 #define GAS_GARBAGE_COLLECT(GASGASGAS)\
 	var/list/CACHE_GAS = GASGASGAS;\

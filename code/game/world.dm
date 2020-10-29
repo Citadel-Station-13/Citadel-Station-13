@@ -8,15 +8,13 @@ GLOBAL_LIST(topic_status_cache)
 
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
+
 /world/New()
-	if (fexists(EXTOOLS))
-		call(EXTOOLS, "maptick_initialize")()
-	#ifdef EXTOOLS_LOGGING
-		call(EXTOOLS, "init_logging")()
-	else
-		CRASH("[EXTOOLS] does not exist!")
-	#endif
-	enable_debugger()
+	if (fexists(AUXTOOLS))
+		var/message = call(AUXTOOLS,"auxtools_init")()
+		if(message != "SUCCESS")
+			CRASH("Auxtools failed to load with message [message]!")
+	//enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
 #endif
