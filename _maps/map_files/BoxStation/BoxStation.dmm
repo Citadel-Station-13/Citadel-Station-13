@@ -53586,7 +53586,6 @@
 "dBm" = (
 /obj/machinery/light/floor,
 /obj/structure/table,
-/obj/item/clothing/glasses/sunglasses/reagent,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
 	pixel_x = -5;
 	pixel_y = 13
@@ -53595,6 +53594,7 @@
 	pixel_x = 10;
 	pixel_y = 7
 	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "dCr" = (
@@ -53811,6 +53811,7 @@
 /area/security/execution/transfer)
 "eoD" = (
 /obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/unum,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "epD" = (
@@ -55396,7 +55397,14 @@
 /area/hallway/primary/starboard)
 "ixd" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/bottle/welding_fuel{
+	pixel_y = 1;
+	pixel_x = -5
+	},
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "iyG" = (
@@ -56552,9 +56560,7 @@
 "lre" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck/syndicate{
-	pixel_y = 6
-	},
+/obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "lsk" = (
@@ -56589,10 +56595,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"lxP" = (
-/mob/living/simple_animal/opossum,
-/turf/closed/wall,
-/area/science/xenobiology)
 "lzt" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/stripes/line,
@@ -57469,11 +57471,11 @@
 "nYK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood/poker,
-/obj/item/clothing/glasses/sunglasses/big,
 /obj/item/stack/spacecash/c10{
 	pixel_x = 8;
 	pixel_y = 8
 	},
+/obj/effect/spawner/lootdrop/druggie_pill,
 /turf/open/floor/plasteel/grimy,
 /area/maintenance/starboard/aft)
 "nYT" = (
@@ -60159,7 +60161,9 @@
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "uRn" = (
-/mob/living/simple_animal/opossum,
+/mob/living/simple_animal/opossum{
+	anchored = 1
+	},
 /obj/structure/chair/stool,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
@@ -107286,7 +107290,7 @@ bLe
 bMr
 bNr
 bIT
-lxP
+bJN
 bJN
 bJN
 bJN
@@ -112449,7 +112453,7 @@ mug
 hUJ
 ixd
 cNW
-ktS
+aaa
 aaf
 aaf
 aaf
@@ -112963,7 +112967,7 @@ dEh
 srk
 gGK
 cNW
-ktS
+aaa
 aaf
 aaf
 aaf
@@ -113734,7 +113738,7 @@ cNW
 cNW
 cNW
 cNW
-ktS
+aaa
 aaf
 aaf
 aaf

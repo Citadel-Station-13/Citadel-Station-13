@@ -101369,9 +101369,7 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dpP" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck/syndicate{
-	pixel_y = 6
-	},
+/obj/item/toy/cards/deck,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dpQ" = (
