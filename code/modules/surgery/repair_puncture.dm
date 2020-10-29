@@ -14,6 +14,10 @@
 	requires_real_bodypart = TRUE
 	targetable_wound = /datum/wound/pierce
 
+/datum/surgery/repair_puncture/biomech
+	requires_bodypart_type = BODYPART_HYBRID
+	steps = list(/datum/surgery_step/mechanic_open, /datum/surgery_step/repair_innards, /datum/surgery_step/seal_veins, /datum/surgery_step/mechanic_close)
+
 /datum/surgery/repair_puncture/can_start(mob/living/user, mob/living/carbon/target)
 	. = ..()
 	if(.)
