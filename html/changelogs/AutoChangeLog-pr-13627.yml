@@ -1,8 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Dice bags no longer act like cardboard boxes."
-  - bugfix: "Abductors should be no longer mute."
-  - bugfix: "Item action buttons should now properly show the item current overlays, most times."
-  - bugfix: "The blackbox should now go into your hand slot when pried out, rather than tumbling on the ground everytime."
-  - tweak: "The Quick Equip hotkey is now usable by all living mobs (so long they have hands and equipment slots)"
