@@ -687,7 +687,7 @@
 				aux_marking = "plain"
 			var/color_scheme = H.dna.features["color_scheme"]
 			if(color_scheme == ADVANCED_CHARACTER_COLORING)
-				var/alt_colorlist = list()
+				var/list/alt_colorlist = list()
 				alt_colorlist.Cut()
 				alt_colorlist += ReadRGB("[H.dna.features["primary_mam_body_markings"]]00")
 				alt_colorlist += ReadRGB("[H.dna.features["secondary_mam_body_markings"]]00")
