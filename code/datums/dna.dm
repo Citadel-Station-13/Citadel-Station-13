@@ -5,7 +5,7 @@
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/list/features = list("FFF") //first value is mutant color
+	var/list/features = list("FFF", "body_size" = RESIZE_DEFAULT_SIZE) //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/nameless = FALSE
 	var/custom_species	//siiiiigh I guess this is important
