@@ -567,7 +567,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
 										var/mutant_string = accessory.mutant_part_string
 										if(!mutant_string)
-											mutant_string = "[accessory]"
+											if(istype(accessory, /datum/sprite_accessory/mam_body_markings))
+												mutant_string = "mam_body_markings"
 										var/primary_feature = "[mutant_string]_primary"
 										var/secondary_feature = "[mutant_string]_secondary"
 										var/tertiary_feature = "[mutant_string]_tertiary"
