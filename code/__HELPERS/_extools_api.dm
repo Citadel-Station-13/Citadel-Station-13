@@ -3,3 +3,9 @@
 /proc/extools_log_write()
 
 /proc/extools_finalize_logging()
+
+GLOBAL_VAR_INIT(auxtools_initialized,FALSE)
+
+#define AUXTOOLS_CHECK\
+	if (!GLOB.auxtools_initialized && fexists(AUXTOOLS) && findtext(call(AUXTOOLS,"auxtools_init")(),"SUCCESS"))\
+		GLOB.auxtools_initialized = TRUE;\

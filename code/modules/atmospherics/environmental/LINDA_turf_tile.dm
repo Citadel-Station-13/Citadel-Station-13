@@ -36,9 +36,9 @@
 
 /turf/open/Initialize()
 	if(!blocks_air)
-		air = new
+		air = new(2500,src)
 		air.copy_from_turf(src)
-		update_air_ref()
+		update_air_ref(!planetary_atmos)
 	. = ..()
 
 /turf/open/Destroy()

@@ -10,10 +10,7 @@ GLOBAL_LIST(topic_status_cache)
 //So subsystems globals exist, but are not initialised
 
 /world/New()
-	if (fexists(AUXTOOLS))
-		var/message = call(AUXTOOLS,"auxtools_init")()
-		if(message != "SUCCESS")
-			CRASH("Auxtools failed to load with message [message]!")
+	AUXTOOLS_CHECK
 	//enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()

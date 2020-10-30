@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		. = ..()
 		if (!.) // changeturf failed or didn't do anything
 			QDEL_NULL(stashed_air)
-			update_air_ref()
+			update_air_ref(TRUE)
 			return
 		var/turf/open/newTurf = .
 		newTurf.air.copy_from(stashed_air)

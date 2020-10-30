@@ -23,17 +23,16 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 	var/_extools_pointer_gasmixture = 0 // Contains the memory address of the shared_ptr object for this gas mixture in c++ land. Don't. Touch. This. Var.
 
-GLOBAL_VAR_INIT(auxmos_initialized,FALSE)
+GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 
 /proc/auxtools_atmos_init()
-	CRASH("Auxtools not loaded! Stuff will get messy!")
 
 /datum/gas_mixture/New(volume)
 	if (!isnull(volume))
 		initial_volume = volume
-	if(!GLOB.auxmos_initialized)
-		auxtools_atmos_init()
-		GLOB.auxmos_initialized = TRUE
+	AUXTOOLS_CHECK
+	if(!GLOB.auxtools_atmos_initialized && auxtools_atmos_init())
+		GLOB.auxtools_atmos_initialized = TRUE
 	__gasmixture_register()
 	reaction_results = new
 
@@ -333,10 +332,6 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 */
 
 /datum/gas_mixture/turf
-
-/datum/gas_mixture/turf/__gasmixture_register()
-
-/datum/gas_mixture/turf/__gasmixture_unregister()
 
 /*
 /mob/verb/profile_atmos()
