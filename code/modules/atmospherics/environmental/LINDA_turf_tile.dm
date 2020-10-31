@@ -38,7 +38,7 @@
 	if(!blocks_air)
 		air = new(2500,src)
 		air.copy_from_turf(src)
-		update_air_ref(!planetary_atmos)
+		update_air_ref(planetary_atmos ? 1 : 2)
 	. = ..()
 
 /turf/open/Destroy()
@@ -121,7 +121,7 @@
 		if (nonoverlaying_gases[id])
 			continue
 		var/gas_overlay = GLOB.meta_gas_overlays[id]
-		if(gas_overlay && air.get_moles(id) > GLOB.meta_gas_visibility[META_GAS_MOLES_VISIBLE])
+		if(gas_overlay && air.get_moles(id) > GLOB.meta_gas_visibility[id])
 			new_overlay_types += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(air.get_moles(id) / MOLES_GAS_VISIBLE_STEP, 1))]
 
 	if (atmos_overlay_types)

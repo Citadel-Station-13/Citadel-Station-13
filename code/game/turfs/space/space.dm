@@ -27,7 +27,7 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
-	update_air_ref(FALSE)
+	update_air_ref(0)
 	vis_contents.Cut() //removes inherited overlays
 	visibilityChanged()
 

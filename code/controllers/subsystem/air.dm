@@ -6,7 +6,9 @@ SUBSYSTEM_DEF(air)
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
+	var/cost_copy_from = 0
 	var/cost_turfs = 0
+	var/cost_copy_to = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
@@ -44,25 +46,20 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "EQ:[round(cost_equalize,1)]|"
+	msg += "CF:[round(cost_copy_from,1)]|"
 	msg += "AT:[round(cost_turfs,1)]|"
-	msg += "EG:[round(cost_groups,1)]|"
+	msg += "CT:[round(cost_copy_to,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
 	msg += "} "
-	var/active_turfs_len = get_amt_active_turfs()
-	msg += "AT:[active_turfs_len]|"
-	msg += "EG:[get_amt_excited_groups()]|"
 	msg += "HS:[hotspots.len]|"
 	msg += "PN:[networks.len]|"
 	msg += "HP:[high_pressure_delta.len]|"
-	msg += "AS:[active_super_conductivity.len]|"
 	msg += "GA:[get_amt_gas_mixes()]|"
 	msg += "MG:[get_max_gas_mixes()]|"
-	msg += "AT/MS:[round((cost ? active_turfs_len/cost : 0),0.1)]"
 	return ..()
 
 /datum/controller/subsystem/air/Initialize(timeofday)
@@ -123,11 +120,11 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		resumed = 0
+		currentpart = SSAIR_HIGHPRESSURE
 		MC_TICK_CHECK
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
-		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
 		timer = TICK_USAGE_REAL
