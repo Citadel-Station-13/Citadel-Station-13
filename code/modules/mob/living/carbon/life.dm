@@ -803,7 +803,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				confused += 2
 				to_chat(src, "<span class='warning'>Error - Sensory system overload detected!</span>")
 		if("harmies")
-			a_intent = INTENT_HARM
+			a_intent_change(INTENT_HARM)
 			to_chat(src, "<span class='notice'>Intent subsystem successfully recalibrated.</span>")
 		if("longdeaf")
 			ADD_TRAIT(src, TRAIT_DEAF, CORRUPTED_SYSTEM)
