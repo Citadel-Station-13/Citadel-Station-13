@@ -638,11 +638,12 @@
 		species_flags_list = H.dna.species.species_traits
 
 		//body marking memes
+		var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
 		var/list/colorlist = list()
 		colorlist.Cut()
-		colorlist += ReadRGB("[H.dna.features["mcolor"]]00")
-		colorlist += ReadRGB("[H.dna.features["mcolor2"]]00")
-		colorlist += ReadRGB("[H.dna.features["mcolor3"]]00")
+		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor"]]00")
+		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_secondary"]]00") : ReadRGB("[H.dna.features["mcolor2"]]00")
+		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_tertiary"]]00") : ReadRGB("[H.dna.features["mcolor3"]]00")
 		colorlist += list(0,0,0, S.hair_alpha)
 		for(var/index=1, index<=colorlist.len, index++)
 			colorlist[index] = colorlist[index]/255
@@ -685,17 +686,7 @@
 			else
 				body_markings = "plain"
 				aux_marking = "plain"
-			var/color_scheme = H.dna.features["color_scheme"]
-			if(color_scheme == ADVANCED_CHARACTER_COLORING)
-				var/list/alt_colorlist = list()
-				alt_colorlist.Cut()
-				alt_colorlist += ReadRGB("[H.dna.features["primary_mam_body_markings"]]00")
-				alt_colorlist += ReadRGB("[H.dna.features["secondary_mam_body_markings"]]00")
-				alt_colorlist += ReadRGB("[H.dna.features["tertiary_mam_body_markings"]]00")
-				alt_colorlist += list(0,0,0, S.hair_alpha)
-				markings_color = list(alt_colorlist)
-			else
-				markings_color = list(colorlist)
+			markings_color = list(colorlist)
 		else
 			body_markings = null
 			aux_marking = null

@@ -708,6 +708,9 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 			. += "-[BP.dmg_overlay_type]"
 		if(BP.body_markings)
 			. += "-[BP.body_markings]"
+			if(length(BP.markings_color) && length(BP.markings_color[1]))
+				for(var/color in BP.markings_color[1])
+					. += "-[color]"
 		else
 			. += "-no_marking"
 
