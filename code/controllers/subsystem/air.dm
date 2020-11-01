@@ -120,11 +120,10 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		resumed = 0
-		currentpart = SSAIR_HIGHPRESSURE
-		MC_TICK_CHECK
 		if(state != SS_RUNNING)
 			return
+		resumed = 0
+		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
 		timer = TICK_USAGE_REAL
@@ -237,7 +236,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	return process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+	return process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag)
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -256,7 +255,23 @@ SUBSYSTEM_DEF(air)
 	*/
 
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
-	return process_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.01 * world.tick_lag)
+	if(!resumed)
+		src.currentrun = process_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag)
+		if(src.currentrun.len)
+			pause()
+	else
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/turf/open/T = currentrun[currentrun.len]
+			var/flags = currentrun[T]
+			currentrun.len--
+			if(T)
+				if(flags & 2)
+					T.air.react()
+				if(flags & 1)
+					T.update_visuals()
+			if (MC_TICK_CHECK)
+				return
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
