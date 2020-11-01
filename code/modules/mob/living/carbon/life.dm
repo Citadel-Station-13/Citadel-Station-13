@@ -25,6 +25,9 @@
 	if(stat != DEAD)
 		handle_liver()
 
+	if(stat != DEAD)
+		handle_corruption()
+
 
 /mob/living/carbon/PhysicalLife(seconds, times_fired)
 	if(!(. = ..()))
@@ -406,7 +409,7 @@
 	for(var/thing in all_wounds)
 		var/datum/wound/W = thing
 		if(W.processes) // meh
-			W.handle_process()	
+			W.handle_process()
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
@@ -732,3 +735,45 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return
 
 	heart.beating = !status
+
+//////////////////////////////////////
+//SYSTEM CORRUPTION FOR ROBOT-PEOPLE//
+//////////////////////////////////////
+
+#define CORRUPTION_CHECK_INTERVAL 10 //Life() is called once every second.. I think? - Doublecheck this, future self.
+#define CORRUPTION_THRESHHOLD_MINOR 10 //Annoyances, to remind you you should get your corruption fixed.
+#define CORRUPTION_THRESHHOLD_MAJOR 40 //Very annoying stuff, go get fixed.
+#define CORRUPTION_THRESHHOLD_CRITICAL 70 //Extremely annoying stuff, possibly life-threatening
+
+/mob/living/carbon/proc/handle_corruption()
+	if(!HAS_TRAIT(src, TRAIT_ROBOTICORGANISM)) //Only robot-people need to care about this
+		return
+	corruption_timer++
+	var/corruption = getToxLoss(toxins_type = TOX_SYSCORRUPT)
+	var/timer_req = CORRUPTION_CHECK_INTERVAL
+	switch(corruption)
+		if(0 to CORRUPTION_THRESHHOLD_MINOR)
+			timer_req = INFINITY //Below minor corruption you are fiiine
+		if(CORRUPTION_THRESHHOLD_MAJOR to CORRUPTION_THRESHHOLD_CRITICAL)
+			timer_req -= 1
+		if(CORRUPTION_THRESHHOLD_CRITICAL to INFINITY)
+			timer_req -= 2
+	if(corruption_timer < timer_req)
+		return
+	corruption_timer = 0
+	if(!prob(corruption)) //Lucky you beat the rng roll!
+		adjustToxLoss(-0.2, toxins_type = TOX_SYSCORRUPT) //If you succeed the roll, lose a tiny bit of corruption. Only applies past the low threshhold.
+		return
+	var/list/whatmighthappen = list()
+	whatmighthappen += list("message", "dropthing", "movetile", "shortdeaf", "flopover", "nutriloss", "selfflash")
+	if(corruption >= CORRUPTION_THRESHHOLD_MAJOR)
+		whatmighthappen += list("longdeaf", "longknockdown", "shortlimbdisable", "armspasm", "shortblind", "shortstun", "shortmute", "vomit", "halluscinate")
+	if(corruption >= CORRUPTION_THRESHHOLD_CRITICAL)
+		whatmighthappen += list("receporgandamage", "longlimbdisable", "blindmutedeaf", "longstun", "sleep", "inducetrauma", "amplifycorrupt")
+	//WIP
+
+
+#undef CORRUPTION_CHECK_INTERVAL
+#undef CORRUPTION_THRESHHOLD_MINOR
+#undef CORRUPTION_THRESHHOLD_MAJOR
+#undef CORRUPTION_THRESHHOLD_CRITICAL
