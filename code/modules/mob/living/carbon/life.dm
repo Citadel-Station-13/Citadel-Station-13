@@ -820,7 +820,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if("shortblind")
 			ADD_TRAIT(src, TRAIT_BLIND, CORRUPTED_SYSTEM)
 			addtimer(CALLBACK(src, .proc/reenable_vision), 5 SECONDS)
-			to_chat(src, ">span class='warning'>Visual receptor shutdown detected - Initiating reboot.</span>")
+			to_chat(src, "<span class='warning'>Visual receptor shutdown detected - Initiating reboot.</span>")
 		if("shortstun")
 			Stun(30)
 			to_chat(src, "<span class='warning'>Deadlock detected in primary systems, error code [rand(101, 999)].</span>")
