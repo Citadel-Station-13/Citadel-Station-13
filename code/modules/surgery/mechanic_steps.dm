@@ -38,7 +38,7 @@
 	return TRUE
 //prepare electronics
 /datum/surgery_step/prepare_electronics
-	name = "prepare electronics"
+	name = "prepare electronics (multitool)"
 	implements = list(
 		TOOL_MULTITOOL = 100,
 		TOOL_HEMOSTAT = 10) // try to reboot internal controllers via short circuit with some conductor
@@ -77,7 +77,7 @@
 
 //open hatch
 /datum/surgery_step/open_hatch
-	name = "open the hatch"
+	name = "open the hatch (empty hand)"
 	accept_hand = 1
 	time = 10
 
