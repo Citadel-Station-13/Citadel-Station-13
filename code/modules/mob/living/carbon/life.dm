@@ -866,7 +866,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				BRAIN_TRAUMA_SEVERE = 10))
 			gain_trauma_type(trauma_type, resistance) //Gaining the trauma will inform them
 		if("amplifycorrupt")
-			adjustToxLoss(10, toxins_type = TOX_SYSCORRUPT)
+			adjustToxLoss(5, toxins_type = TOX_SYSCORRUPT)
 			to_chat(src, "<span class='warning'>System safeguards failing - Action urgently required.</span>")
 		if("changetemp")
 			adjust_bodytemperature(pick(list(rand(-100, -70), rand(70, 100))))
