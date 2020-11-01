@@ -245,15 +245,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						if(accessory.color_src == MATRIXED && !accessory.matrixed_sections && feature_value != "None")
 							message_admins("Sprite Accessory Failure (migration from [current_version] to 39): Accessory [accessory.type] is a matrixed item without any matrixed sections set!")
 							continue
-						if(accessory.color_src == MATRIXED)
+						var/primary_exists = features[primary_string]
+						var/secondary_exists = features[secondary_string]
+						var/tertiary_exists = features[tertiary_string]
+						if(accessory.color_src == MATRIXED && !primary_exists && !secondary_exists && !tertiary_exists)
 							features[primary_string] = features["mcolor"]
 							features[secondary_string] = features["mcolor2"]
 							features[tertiary_string] = features["mcolor3"]
-						else if(accessory.color_src == MUTCOLORS)
+						else if(accessory.color_src == MUTCOLORS && !primary_exists)
 							features[primary_string] = features["mcolor"]
-						else if(accessory.color_src == MUTCOLORS2)
+						else if(accessory.color_src == MUTCOLORS2 && !secondary_exists)
 							features[secondary_string] = features["mcolor2"]
-						else if(accessory.color_src == MUTCOLORS3)
+						else if(accessory.color_src == MUTCOLORS3 && !tertiary_exists)
 							features[tertiary_string] = features["mcolor3"]
 
 		features["color_scheme"] = OLD_CHARACTER_COLORING //advanced is off by default
