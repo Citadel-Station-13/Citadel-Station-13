@@ -118,6 +118,7 @@
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
 #define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
 #define TRAIT_TOXINLOVER		"toxinlover"
+#define TRAIT_ROBOTICORGANISM	"robotic_organism"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
