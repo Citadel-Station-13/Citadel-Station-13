@@ -111,6 +111,7 @@
 	var/obj/machinery/computer/apc_control/remote_control = null
 	var/mob/living/carbon/hijacker
 	var/hijackerlast = TRUE
+	var/being_hijacked = FALSE
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -902,7 +903,7 @@
 	if(H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
-		"locked" = locked,
+		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE),
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
@@ -1119,10 +1120,14 @@
 /obj/machinery/power/apc/proc/hijack(mob/living/L)
 	if (!istype(L))
 		return
+	if(being_hijacked)
+		to_chat(L, "<span class='warning'>This APC is already being hijacked!</span>")
+		return
 	if (hijacker && hijacker != L)
 		var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
 		to_chat(L, "<span class='warning'>Someone already has control of this APC. Beginning counter-hijack.</span>")
 		H.hijacking = TRUE
+		being_hijacked = TRUE
 		if (do_after(L,20 SECONDS,target=src))
 			hijacker.toggleSiliconAccessArea(area)
 			if (L.toggleSiliconAccessArea(area))
@@ -1130,23 +1135,28 @@
 				update_icon()
 				set_hijacked_lighting()
 			H.hijacking = FALSE
+			being_hijacked = FALSE
 			return
 		else
 			to_chat(L, "<span class='warning'>Aborting.</span>")
 			H.hijacking = FALSE
+			being_hijacked = FALSE
 			return
 	to_chat(L, "<span class='notice'>Beginning hijack of APC.</span>")
 	var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
 	H.hijacking = TRUE
+	being_hijacked = TRUE
 	if (do_after(L,H.stealthmode ? 12 SECONDS : 5 SECONDS,target=src))
 		if (L.toggleSiliconAccessArea(area))
 			hijacker = L
 			update_icon()
 			set_hijacked_lighting()
 			H.hijacking = FALSE
+			being_hijacked = FALSE
 	else
 		to_chat(L, "<span class='warning'>Aborting.</span>")
 		H.hijacking = FALSE
+		being_hijacked = FALSE
 		return
 
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)

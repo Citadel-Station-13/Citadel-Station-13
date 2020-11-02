@@ -237,11 +237,20 @@
 			. += "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"] the interface.</span>"
 
 /obj/machinery/airalarm/ui_status(mob/user)
-	if(hasSiliconAccessInArea(user) && aidisabled)
-		to_chat(user, "AI control has been disabled.")
-	else if(!shorted)
+	if(hasSiliconAccessInArea(user))
+		if(aidisabled)
+			to_chat(user, "AI control has been disabled")
+			return UI_CLOSE
+		else if(!issilicon(user)) //True sillycones use ..()
+			return UI_INTERACTIVE
+	if(!shorted)
 		return ..()
 	return UI_CLOSE
+
+/obj/machinery/airalarm/can_interact(mob/user)
+	. = ..()
+	if (!issilicon(user) && hasSiliconAccessInArea(user))
+		return TRUE
 
 /obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

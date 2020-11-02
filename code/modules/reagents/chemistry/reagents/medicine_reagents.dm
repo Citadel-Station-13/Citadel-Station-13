@@ -970,7 +970,7 @@
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
 					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
-					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
 					if(policy)
@@ -1321,7 +1321,7 @@
 	pH = 11
 	value = REAGENT_VALUE_COMMON //not any higher. Ambrosia is a milestone for hydroponics already.
 
-	
+
 //Earthsblood is still a wonderdrug. Just... don't expect to be able to mutate something that makes plants so healthy.
 /datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
@@ -1335,7 +1335,7 @@
 			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
 			myseed.adjust_endurance(round(chems.get_reagent_amount(src.type) * 0.5))
 			myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.5))
-	
+
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-3 * REM, FALSE)
 	M.adjustFireLoss(-3 * REM, FALSE)
