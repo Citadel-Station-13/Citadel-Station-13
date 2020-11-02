@@ -711,6 +711,8 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 			if(length(BP.markings_color) && length(BP.markings_color[1]))
 				for(var/color in BP.markings_color[1])
 					. += "-[color]"
+		if(BP.icon)
+			. += "-[BP.icon]"
 		else
 			. += "-no_marking"
 

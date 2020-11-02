@@ -5,7 +5,7 @@
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_ADJ_LAYER)
-	mutant_part_string = "bodymarkings"
+	mutant_part_string = "body_markings"
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"

@@ -567,8 +567,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
 										var/mutant_string = accessory.mutant_part_string
 										if(!mutant_string)
-											if(istype(accessory, /datum/sprite_accessory/mam_body_markings))
-												mutant_string = "mam_body_markings"
+											if(istype(accessory, /datum/sprite_accessory/mam_body_markings) || istype(accessory, /datum/sprite_accessory/body_markings))
+												continue
 										var/primary_feature = "[mutant_string]_primary"
 										var/secondary_feature = "[mutant_string]_secondary"
 										var/tertiary_feature = "[mutant_string]_tertiary"
@@ -1603,10 +1603,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								var/prosthetic_type = input(user, "Choose the type of prosthetic", "Character Preference") as null|anything in (list("prosthetic") + GLOB.prosthetic_limb_types)
 								if(prosthetic_type)
 									var/number_of_prosthetics = 0
-									for(var/modification in modified_limbs)
-										if(modified_limbs[modification][1] == LOADOUT_LIMB_PROSTHETIC)
+									for(var/modified_limb in modified_limbs)
+										if(modified_limbs[modified_limb][1] == LOADOUT_LIMB_PROSTHETIC && modified_limb != limb_type)
 											number_of_prosthetics += 1
-									if(number_of_prosthetics >= MAXIMUM_LOADOUT_PROSTHETICS && !(limb_type in modified_limbs && modified_limbs[limb_type][1] == LOADOUT_LIMB_PROSTHETIC))
+									if(number_of_prosthetics > MAXIMUM_LOADOUT_PROSTHETICS)
 										to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
 									else
 										//save the actual prosthetic data
@@ -2086,7 +2086,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["xenodorsal"] = new_dors
 
 				//every single primary/secondary/tertiary colouring done at once
-				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary","xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","insect_markings_primary","insect_markings_secondary","insect_markings_tertiary","bodymarkings_primary","bodymarkings_secondary","bodymarkings_tertiary","insect_fluff_primary","insect_fluff_secondary","insect_fluff_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary","frills_secondary","frills_tertiary","ipc_antenna_primary","ipc_antenna_secondary","ipc_antenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiary","spines_primary","spines_secondary","spines_tertiary", "mam_body_markings_primary", "mam_body_markings_secondary", "mam_body_markings_tertiary")
+				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary","xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","insect_markings_primary","insect_markings_secondary","insect_markings_tertiary","bodymarkings_primary","bodymarkings_secondary","bodymarkings_tertiary","insect_fluff_primary","insect_fluff_secondary","insect_fluff_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary","frills_secondary","frills_tertiary","ipc_antenna_primary","ipc_antenna_secondary","ipc_antenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiary","spines_primary","spines_secondary","spines_tertiary", "mam_body_markings_primary")
 					var/the_feature = features[href_list["preference"]]
 					if(!the_feature)
 						features[href_list["preference"]] = "FFFFFF"
