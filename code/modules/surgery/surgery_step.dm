@@ -81,8 +81,12 @@
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
 				surgery.complete()
-	surgery.step_in_progress = FALSE
-	return advance
+		surgery.step_in_progress = FALSE
+		return advance
+	else
+		surgery.step_in_progress = FALSE
+		return TRUE //Stop the attack chain!
+
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to perform surgery on [target]...</span>",
