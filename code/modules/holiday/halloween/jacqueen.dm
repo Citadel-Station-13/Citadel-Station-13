@@ -51,7 +51,6 @@
 	/// I'm busy, don't move.
 	var/busy = FALSE
 	var/static/blacklisted_items = typecacheof(list(
-	/obj/item/projectile,
 	/obj/effect,
 	/obj/belly,
 	/obj/mafia_game_board,
