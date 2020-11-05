@@ -4,7 +4,7 @@ args:
 clockcult_user: If the user / source has to do with clockcult stuff
 drain_weapons: If this drains weaponry, such as batons and guns
 recursive: If this recurses through mob / storage contents. ONLY USE THIS IF IT'S NOT CALLED TOO FREQUENTLY, or I'm not liable for any lag / functional issues caused
-drain_amount: Ho much is drained by default; Influenced by a multiplier on most things depending on how much power they usually hold.
+drain_amount: How much is drained by default; Influenced by a multiplier on most things depending on how much power they usually hold.
 */
 /atom/movable/proc/power_drain(clockcult_user, drain_weapons = FALSE, recursive = FALSE, drain_amount = MIN_CLOCKCULT_POWER) //This proc as of now is only in use for void volt and transmission sigils
 	if(recursive)
