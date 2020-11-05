@@ -90,25 +90,20 @@
 /datum/map_template/proc/load_new_z(orientation = SOUTH, list/ztraits = src.ztraits || list(ZTRAIT_AWAY = TRUE), centered = TRUE)
 	var/x = centered? max(round((world.maxx - width) / 2), 1) : 1
 	var/y = centered? max(round((world.maxy - height) / 2), 1) : 1
-	message_admins("d1")
+
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, ztraits)
-	message_admins("d2")
 	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation)
-	message_admins("d3")
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
 
 	repopulate_sorted_areas()
-	message_admins("d4")
+
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
-	message_admins("d5")
 	smooth_zlevel(world.maxz)
-	message_admins("d6")
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 	on_map_loaded(world.maxz, parsed.bounds)
-	message_admins("d7")
 
 	return level
 
