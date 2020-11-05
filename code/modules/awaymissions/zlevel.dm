@@ -15,6 +15,14 @@
 	INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	GLOB.random_zlevels_generated[name] = TRUE
 
+/proc/createSpecificZlevel(name = AWAY_MISSION_NAME, list/traits = list(ZTRAIT_AWAY = TRUE), map)
+	var/start_time = REALTIMEOFDAY
+	if(!load_new_z_level(map, name, SOUTH, traits))
+		INIT_ANNOUNCE("Failed to load [name]! map filepath: [map]!")
+		return
+	INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
+	GLOB.random_zlevels_generated[name] = TRUE
+
 /obj/effect/landmark/awaystart
 	name = "away mission spawn"
 	desc = "Randomly picked away mission spawn points."
