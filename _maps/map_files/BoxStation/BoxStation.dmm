@@ -1492,6 +1492,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/fore)
+"adu" = (
+/obj/effect/landmark/barthpot,
+/turf/open/floor/wood,
+/area/library)
 "adw" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
@@ -105520,7 +105524,7 @@ aIt
 aPd
 aIt
 aPb
-aIt
+adu
 aXu
 aYW
 bat

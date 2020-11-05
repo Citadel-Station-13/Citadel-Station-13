@@ -127,12 +127,13 @@
   * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
   * * target (optional) is the other mob involved with the visible message. For example, the attacker in many combat messages.
   * * target_message (optional) is what the target mob will see e.g. "[src] does something to you!"
+  * * omni (optional) if TRUE, will show to users no matter what.
   */
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message, user_msg, runechat_popup) //SKYRAT CHANGE
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message, omni = FALSE, runechat_popup)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	var/final_msg = user_msg ? "<b>[src]</b> " + message : message //SKYRAT CHANGE
+	var/final_msg = !(src == null) ? "<b>[src]</b> " + message : "<b>Unknown</b> " + message //SKYRAT CHANGE
 	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	if(!length(hearers))
 		return
@@ -140,19 +141,25 @@
 
 	if(target_message && target && istype(target) && target.client)
 		hearers -= target
-		//This entire if/else chain could be in two lines but isn't for readibilties sake.
-		var/msg = target_message
-		if(target.see_invisible<invisibility) //if src is invisible to us,
-			msg = blind_message
-		//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
-		else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
-			msg = blind_message
-		if(msg)
-			target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
+		if(omni)
+			target.show_message(target_message)
+		else
+			//This entire if/else chain could be in two lines but isn't for readibilties sake.
+			var/msg = target_message
+			if(target.see_invisible<invisibility) //if src is invisible to us,
+				msg = blind_message
+			//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
+			else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
+				msg = blind_message
+			if(msg)
+				target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
 		if(!M.client)
+			continue
+		if(omni)
+			M.show_message(message)
 			continue
 		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
@@ -167,15 +174,18 @@
 			continue
 		if (runechat_popup && M.client?.prefs.chat_on_map && (M.client.prefs.see_chat_non_mob || ismob(src)) && M.client.prefs.see_chat_emotes) //SKYRAT CHANGE
 			M.create_chat_message(src, null, msg, list("emote", "italics"), null) //Skyrat change
-		M.show_message(final_msg, MSG_VISUAL,blind_message, MSG_AUDIBLE) //SKYRAT CHANGE
+		M.show_message(final_msg, MSG_VISUAL, blind_message, MSG_AUDIBLE) //SKYRAT CHANGE
 
 ///Adds the functionality to self_message.
-mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message, user_msg, runechat_popup) //SKYRAT CHANGE
+/mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message, omni = FALSE, runechat_popup)
 	. = ..()
 	if(self_message && target != src)
-		if (runechat_popup && client?.prefs.chat_on_map && client.prefs.see_chat_emotes) //SKYRAT CHANGE
-			create_chat_message(src, null, self_message, list("emote", "italics"), null) //Skyrat change
-		show_message(user_msg ? "<b>[src]</b> " + self_message : self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE) //SKYRAT CHANGE
+		if(!omni)
+			show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+			if(runechat_popup && client?.prefs.chat_on_map && client.prefs.see_chat_emotes) //SKYRAT CHANGE
+				create_chat_message(src, null, self_message, list("emote", "italics"), null) //Skyrat change
+		else
+			show_message(self_message)
 
 /**
   * Show a message to all mobs in earshot of this atom

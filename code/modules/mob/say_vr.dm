@@ -39,15 +39,6 @@ proc/get_top_level_mob(var/mob/S)
 	else if(!params)
 		var/subtle_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Subtle", null, MAX_MESSAGE_LEN)
 		if(subtle_emote && !check_invalid(user, subtle_emote))
-			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
-			switch(type)
-				if("Visible")
-					emote_type = EMOTE_VISIBLE
-				if("Hearable")
-					emote_type = EMOTE_AUDIBLE
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
-					return
 			message = subtle_emote
 		else
 			return FALSE
@@ -69,11 +60,7 @@ proc/get_top_level_mob(var/mob/S)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)) && (user.client)) //SKYRAT CHANGE - only user controlled mobs show their emotes to all-seeing ghosts, to reduce chat spam
 			M.show_message(message)
 
-	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(message=message,hearing_distance=1)
-	else
-		user.visible_message(message=message,self_message=message,vision_distance=1)
-
+	user.visible_message(message = message, self_message = message, vision_distance = 1, omni = TRUE)
 
 ///////////////// SUBTLE 2: NO GHOST BOOGALOO
 
@@ -122,10 +109,7 @@ proc/get_top_level_mob(var/mob/S)
 	user.log_message(message, LOG_SUBTLER)
 	message = "<b>[user]</b> " + "<i>[user.say_emphasis(message)]</i>"
 
-	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(message=message,hearing_distance=1, ignored_mobs = GLOB.dead_mob_list)
-	else
-		user.visible_message(message=message,self_message=message,vision_distance=1, ignored_mobs = GLOB.dead_mob_list)
+	user.visible_message(message = message, self_message = message, vision_distance = 1, ignored_mobs = GLOB.dead_mob_list, omni = TRUE)
 
 ///////////////// VERB CODE
 /mob/living/verb/subtle()

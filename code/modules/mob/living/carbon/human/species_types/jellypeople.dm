@@ -715,18 +715,25 @@
 		return FALSE
 
 /datum/action/innate/slime_puddle/Activate()
+	var/mob/living/carbon/human/H = owner
+	//if they have anything stuck to their hands, we immediately say 'no' and return
+	for(var/obj/item/I in H.held_items)
+		if(HAS_TRAIT(I, TRAIT_NODROP))
+			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
+			return
 	if(isjellyperson(owner) && IsAvailable())
 		transforming = TRUE
 		UpdateButtonIcon()
-		var/mob/living/carbon/human/H = owner
 		var/mutcolor = "#" + H.dna.features["mcolor"]
 		if(!is_puddle)
-			if(CHECK_MOBILITY(H, MOBILITY_USE))
-				is_puddle = TRUE
-				owner.cut_overlays()
+			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
+				is_puddle = TRUE //so we know which transformation to use when its used
+				owner.cut_overlays() //we dont show our normal sprite, we show a puddle sprite
 				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
 				puddle_effect.color = mutcolor
-				H.Stun(in_transformation_duration, ignore_canstun = TRUE)
+				H.Stun(in_transformation_duration, ignore_canstun = TRUE) //cant move while transforming
+
+				//series of traits that make up the puddle behaviour
 				ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
@@ -734,19 +741,30 @@
 				ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
+				H.update_disabled_bodyparts(silent = TRUE)	//silently update arms to be paralysed
+
 				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-				H.update_disabled_bodyparts(silent = TRUE)
+
 				H.layer -= 1 //go one layer down so people go over you
-				ENABLE_BITFIELD(H.pass_flags, PASSMOB)
-				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg'))
-				sleep(in_transformation_duration)
+				ENABLE_BITFIELD(H.pass_flags, PASSMOB) //this actually lets people pass over you
+				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg')) //blorble noise when people step on you
+
+				//if the user is a changeling, retract their sting
+				H.unset_sting()
+
+				sleep(in_transformation_duration) //wait for animation to end
+
+				//set the puddle overlay up
 				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
 				puddle_overlay.color = mutcolor
 				tracked_overlay = puddle_overlay
 				owner.add_overlay(puddle_overlay)
+
 				transforming = FALSE
 				UpdateButtonIcon()
 		else
+			//like the above, but reverse everything done!
 			owner.cut_overlay(tracked_overlay)
 			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
 			puddle_effect.color = mutcolor
@@ -759,6 +777,7 @@
 			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
 			H.update_disabled_bodyparts(silent = TRUE)
 			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 			H.layer += 1 //go one layer back above!

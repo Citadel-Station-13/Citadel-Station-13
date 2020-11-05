@@ -15,8 +15,13 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 	species_category = SPECIES_CATEGORY_UNDEAD
+	var/batform_enabled = TRUE
 
-/datum/species/vampire/check_roundstart_eligible()
+/datum/species/vampire/roundstart
+	id = SPECIES_VAMPIRE_WEAK
+	batform_enabled = FALSE
+
+/datum/species/vampire/roundstart/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return FALSE
@@ -27,8 +32,9 @@
 	if(!C.dna.skin_tone_override)
 		C.skin_tone = "albino"
 	C.update_body(0)
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
-	C.AddSpell(B)
+	if(batform_enabled)
+		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
+		C.AddSpell(B)
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/C)
 	. = ..()
