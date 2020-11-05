@@ -524,6 +524,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		return FALSE
+	features = DEFAULT_FEATURE_LIST
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
