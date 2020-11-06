@@ -470,6 +470,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			return
 
 	var/away_name
+	var/datum/space_level/away_level
 
 	var/answer = input("What kind ? ","Away/VR") as null|anything in (possible_options + "Custom")
 	switch(answer)
@@ -481,14 +482,19 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				return
 			away_name = "[mapfile] custom"
 			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
-			createSpecificZlevel(choice, ztraits, mapfile)
+			var/datum/map_template/template = new(mapfile, choice, ztraits)
+			away_level = template.load_new_z(ztraits)
 		else
 			away_name = answer
 			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
-			createSpecificZlevel(choice, ztraits, away_name)
+			var/datum/map_template/template = new(away_name, choice)
+			away_level = template.load_new_z(ztraits)
 
-	message_admins("Admin [key_name_admin(usr)] has attempted to load [away_name] away mission.")
-	log_admin("Admin [key_name(usr)] has attempted to load [away_name] away mission.")
+	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
+	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
+	if(!away_level)
+		message_admins("Loading [away_name] failed!")
+		return
 
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override, border_type_override)
 	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)

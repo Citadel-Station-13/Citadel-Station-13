@@ -17,20 +17,14 @@
 		z_list += S
 
 /datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
-	message_admins("d1_1")
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_Z, args)
 	var/new_z = z_list.len + 1
-	if(world.maxz < new_z)
-		message_admins("d1_2")
+	if (world.maxz < new_z)
 		world.incrementMaxZ()
-		message_admins("d1_3")
-		//CHECK_TICK
+		CHECK_TICK
 	// TODO: sleep here if the Z level needs to be cleared
-	message_admins("d1_4")
 	var/datum/space_level/S = new z_type(new_z, name, traits)
-	message_admins("d1_5")
 	z_list += S
-	message_admins("d1_6")
 	return S
 
 /datum/controller/subsystem/mapping/proc/get_level(z)
