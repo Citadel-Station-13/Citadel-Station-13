@@ -36,11 +36,11 @@
 /mob/dead/new_player/proc/new_player_panel()
 	//hold this until we know they passed age verification
 	if(CONFIG_GET(flag/age_verification)) //make sure they are verified
-		if(!C.set_db_player_flags())
+		if(!client.set_db_player_flags())
 			message_admins("Blocked [src] from new player panel because age verification could not access player database flags.")
 			return
 		else
-			var/dbflags = C.prefs.db_flags
+			var/dbflags = client.prefs.db_flags
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
 				var/age_verification = alert(src, "You must be 18+ to enter this server. Please confirm your age.",, "I am 18+", "I am not 18+")
 				if(age_verification != "I am 18+")

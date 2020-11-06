@@ -593,16 +593,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			else if(ckey in GLOB.bunker_passthrough)
 				GLOB.bunker_passthrough -= ckey
 		if(CONFIG_GET(flag/age_verification)) //setup age verification
-			if(!C.set_db_player_flags())
+			if(!set_db_player_flags())
 				message_admins(usr, "<span class='danger'>ERROR: Unable to read player flags from database. Please check logs.</span>")
 				return
 			else
-				var/dbflags = C.prefs.db_flags
+				var/dbflags = prefs.db_flags
 				if(!(dbflags & DB_FLAG_AGE_CONFIRMATION_COMPLETE)) //they have not completed age verification
 					if((ckey in GLOB.bunker_passthrough)) //they're verified in the panic bunker though
-						C.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+						update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
 					else
-						C.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, TRUE)
+						update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, TRUE)
 
 	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
