@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(atoms)
 	InitializeAtoms()
 	return ..()
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, check_lag = TRUE)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
@@ -37,14 +37,16 @@ SUBSYSTEM_DEF(atoms)
 			var/atom/A = I
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(I, mapload_arg)
-				CHECK_TICK
+				if(check_lag)
+					CHECK_TICK
 	else
 		count = 0
 		for(var/atom/A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
 				++count
-				CHECK_TICK
+				if(check_lag)
+					CHECK_TICK
 
 	testing("Initialized [count] atoms")
 	pass(count)

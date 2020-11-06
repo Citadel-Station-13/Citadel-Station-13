@@ -433,18 +433,20 @@ SUBSYSTEM_DEF(air)
 		AM.build_network()
 		CHECK_TICK
 
-/datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
+/datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines, check_lag = TRUE)
 	if(!initialized) // yogs - fixes randomized bars
 		return // yogs
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmosinit()
-		CHECK_TICK
+		if(check_lag)
+			CHECK_TICK
 
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
-		CHECK_TICK
+		if(check_lag)
+			CHECK_TICK
 
 /datum/controller/subsystem/air/proc/get_init_dirs(type, dir)
 	if(!pipe_init_dirs_cache[type])

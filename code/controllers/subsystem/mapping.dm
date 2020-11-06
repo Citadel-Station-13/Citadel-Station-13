@@ -483,12 +483,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			away_name = "[mapfile] custom"
 			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
 			var/datum/map_template/template = new(mapfile, choice, ztraits)
-			away_level = template.load_new_z(ztraits)
+			message_admins("template loaded")
+			away_level = template.load_new_z(SOUTH, ztraits, TRUE, FALSE)
 		else
 			away_name = answer
 			to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
 			var/datum/map_template/template = new(away_name, choice)
-			away_level = template.load_new_z(ztraits)
+			message_admins("template loaded")
+			away_level = template.load_new_z(SOUTH, ztraits, TRUE, FALSE)
 
 	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
 	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")

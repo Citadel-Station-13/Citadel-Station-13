@@ -10,22 +10,25 @@
 	var/default_annihilate = FALSE
 	var/list/ztraits				//zlevel traits for load_new_z
 
-/datum/map_template/New(path = null, rename = null, cache = FALSE)
+/datum/map_template/New(path = null, rename = null, cache = FALSE, check_lag = TRUE)
+	message_admins("template new running")
 	if(path)
 		mappath = path
 	if(mappath)
-		preload_size(mappath, cache)
+		message_admins("reloading")
+		preload_size(mappath, cache, check_lag)
 	if(rename)
 		name = rename
+	message_admins("it survived loading new")
 
 /datum/map_template/Destroy()
 	QDEL_NULL(cached_map)
 	return ..()
 
-/datum/map_template/proc/preload_size(path = mappath, force_cache = FALSE)
+/datum/map_template/proc/preload_size(path = mappath, force_cache = FALSE, check_lag = TRUE)
 	if(cached_map)
 		return cached_map.parsed_bounds
-	var/datum/parsed_map/parsed = new(file(path))
+	var/datum/parsed_map/parsed = new(file(path), check_lag = check_lag)
 	var/bounds = parsed?.parsed_bounds
 	if(bounds)
 		width = bounds[MAP_MAXX] - bounds[MAP_MINX] + 1
@@ -83,27 +86,35 @@
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
 	SSmapping.reg_in_areas_in_z(areas)
-	SSatoms.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(atoms, FALSE)
 	SSmachines.setup_template_powernets(cables)
-	SSair.setup_template_machinery(atmos_machines)
+	SSair.setup_template_machinery(atmos_machines, FALSE)
 
-/datum/map_template/proc/load_new_z(orientation = SOUTH, list/ztraits = src.ztraits || list(ZTRAIT_AWAY = TRUE), centered = TRUE)
+/datum/map_template/proc/load_new_z(orientation = SOUTH, list/ztraits = src.ztraits || list(ZTRAIT_AWAY = TRUE), centered = TRUE, check_lag = TRUE)
+	message_admins("d1")
 	var/x = centered? max(round((world.maxx - width) / 2), 1) : 1
+	message_admins("d2")
 	var/y = centered? max(round((world.maxy - height) / 2), 1) : 1
-
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, ztraits)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation)
+	message_admins("d3")
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, ztraits, check_lag = check_lag)
+	message_admins("d4")
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop = TRUE, orientation = orientation, check_lag = check_lag)
+	message_admins("d5")
 	var/list/bounds = parsed.bounds
+	message_admins("d6")
 	if(!bounds)
 		return FALSE
 
 	repopulate_sorted_areas()
-
+	message_admins("d7")
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
+	message_admins("d8")
 	smooth_zlevel(world.maxz)
+	message_admins("d9")
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 	on_map_loaded(world.maxz, parsed.bounds)
+	message_admins("d10")
 
 	return level
 

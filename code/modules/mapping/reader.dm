@@ -72,11 +72,15 @@
 	placeOnTop = FALSE as num,
 	orientation = SOUTH as num,
 	annihilate_tiles = FALSE,
-	crop_relative_to_game_world = TRUE
+	crop_relative_to_game_world = TRUE,
+	check_lag = TRUE
 	)
-	var/datum/parsed_map/parsed = new(dmm_file, measureOnly = measureOnly)
+	message_admins("dd1")
+	var/datum/parsed_map/parsed = new(dmm_file, measureOnly = measureOnly, check_lag = check_lag)
+	message_admins("dd2")
 	if(parsed.bounds && !measureOnly)
-		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles)
+		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, check_lag)
+		message_admins("dd3")
 	return parsed
 
 /**
@@ -85,18 +89,18 @@
   * WARNING: Crop function crops based on the tiles you'd see in the map editor. If you're planning to load it in in a different orientation later, you better have done the math.
   * It's recommended that you do not crop using this at all.
   */
-/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, measureOnly = FALSE)
-	_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+/datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, measureOnly = FALSE, check_lag = TRUE)
+	_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly, check_lag)
 
-/datum/parsed_map/proc/_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+/datum/parsed_map/proc/_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly, check_lag = TRUE)
 	var/static/parsing = FALSE
 	UNTIL(!parsing)
 	// do not multithread this or bad things happen
 	parsing = TRUE
-	_do_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+	_do_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly, check_lag)
 	parsing = FALSE
 
-/datum/parsed_map/proc/_do_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly)
+/datum/parsed_map/proc/_do_parse(tfile, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, measureOnly, check_lag = TRUE)
 	if(isfile(tfile))
 		original_path = "[tfile]"
 		tfile = file2text(tfile)
@@ -135,7 +139,7 @@
 			var/curr_z = text2num(dmmRegex.group[5])
 			if(curr_z < z_lower || curr_z > z_upper)
 				continue
-						
+
 			var/curr_x = text2num(dmmRegex.group[3])
 			var/curr_y = text2num(dmmRegex.group[4])
 
@@ -171,7 +175,7 @@
 			if(width > right_width)
 				for(var/i in 1 to lines)
 					gridLines[i] = copytext(gridLines[i], 1, key_len * right_width)
-			
+
 			// during the actual load we're starting at the top and working our way down
 			gridSet.ycrd += lines - 1
 
@@ -183,7 +187,8 @@
 			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], curr_y + lines - 1)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], curr_z)
 			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], curr_z)
-		CHECK_TICK
+		if(check_lag)
+			CHECK_TICK
 
 	// Indicate failure to parse any coordinates by nulling bounds
 	if(bounds[1] == 1.#INF)
@@ -200,15 +205,15 @@
 	return QDEL_HINT_HARDDEL_NOW
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, datum/map_orientation_pattern/forced_pattern)
+/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, datum/map_orientation_pattern/forced_pattern, check_lag = TRUE)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, forced_pattern)
+	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, orientation, annihilate_tiles, forced_pattern, check_lag)
 	Master.StopLoadingMap()
 
 // Do not call except via load() above.
 // Lower/upper here refers to the actual map template's parsed coordinates, NOT ACTUAL COORDINATES! Figure it out yourself my head hurts too much to implement that too.
-/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, orientation = SOUTH, annihilate_tiles = FALSE, datum/map_orientation_pattern/forced_pattern)
+/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, orientation = SOUTH, annihilate_tiles = FALSE, datum/map_orientation_pattern/forced_pattern, check_lag = TRUE)
 	var/list/areaCache = list()
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -276,7 +281,7 @@
 					var/list/cache = modelCache[model_key]
 					if(!cache)
 						CRASH("Undefined model key in DMM: [model_key]")
-					build_coordinate(areaCache, cache, locate(placement_x, placement_y, parsed_z), no_afterchange, placeOnTop, turn_angle, annihilate_tiles, swap_xy, invert_y, invert_x)
+					build_coordinate(areaCache, cache, locate(placement_x, placement_y, parsed_z), no_afterchange, placeOnTop, turn_angle, annihilate_tiles, swap_xy, invert_y, invert_x, check_lag)
 
 					// only bother with bounds that actually exist
 					bounds[MAP_MINX] = min(bounds[MAP_MINX], placement_x)
@@ -290,9 +295,11 @@
 					++turfsSkipped
 				#endif
 				actual_x += xi
-				CHECK_TICK
+				if(check_lag)
+					CHECK_TICK
 			actual_y += yi
-			CHECK_TICK
+			if(check_lag)
+				CHECK_TICK
 
 	if(!no_changeturf)
 		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
@@ -389,7 +396,7 @@
 
 		.[model_key] = list(members, members_attributes)
 
-/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, turn_angle as num, annihilate_tiles = FALSE, swap_xy, invert_y, invert_x)
+/datum/parsed_map/proc/build_coordinate(list/areaCache, list/model, turf/crds, no_changeturf as num, placeOnTop as num, turn_angle as num, annihilate_tiles = FALSE, swap_xy, invert_y, invert_x, check_lag = TRUE)
 	var/index
 	var/list/members = model[1]
 	var/list/members_attributes = model[2]
@@ -429,7 +436,7 @@
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop,turn_angle, swap_xy, invert_y, invert_x)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop,turn_angle, swap_xy, invert_y, invert_x, check_lag)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
@@ -451,7 +458,7 @@
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop, turn_angle = 0, swap_xy, invert_y, invert_x)
+/datum/parsed_map/proc/instance_atom(path,list/attributes, turf/crds, no_changeturf, placeOnTop, turn_angle = 0, swap_xy, invert_y, invert_x, check_lag = TRUE)
 	world.preloader_setup(attributes, path, turn_angle, invert_x, invert_y, swap_xy)
 
 	if(crds)
@@ -469,7 +476,7 @@
 		world.preloader_load(.)
 
 	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
-	if(TICK_CHECK)
+	if(TICK_CHECK && check_lag)
 		SSatoms.map_loader_stop()
 		stoplag()
 		SSatoms.map_loader_begin()
