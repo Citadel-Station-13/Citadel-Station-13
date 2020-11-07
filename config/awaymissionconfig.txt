@@ -11,6 +11,7 @@
 #_maps/RandomZLevels/away_mission/Academy.dmm
 #_maps/RandomZLevels/away_mission/wildwest.dmm
 #_maps/RandomZLevels/away_mission/challenge.dmm
+_maps/RandomZLevels/away_mission/jungleresort.dmm
 #_maps/RandomZLevels/away_mission/moonoutpost19.dmm
 #_maps/RandomZLevels/away_mission/undergroundoutpost45.dmm
 #_maps/RandomZLevels/away_mission/caves.dmm
