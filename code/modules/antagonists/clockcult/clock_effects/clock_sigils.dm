@@ -216,6 +216,14 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/effect/clockwork/sigil/transmission/process()
     var/power_drained = 0
     var/power_mod = 0.005

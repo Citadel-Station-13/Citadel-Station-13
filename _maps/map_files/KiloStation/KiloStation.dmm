@@ -19127,7 +19127,7 @@
 /area/maintenance/disposal/incinerator)
 "aFL" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aFM" = (
 /obj/structure/grille,
@@ -19140,7 +19140,7 @@
 /area/maintenance/disposal/incinerator)
 "aFO" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aFP" = (
 /obj/machinery/door/firedoor,
@@ -19196,7 +19196,7 @@
 "aFU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/meter,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aFV" = (
 /obj/structure/cable{
@@ -20074,6 +20074,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/engine/atmos)
 "aHy" = (
@@ -20930,7 +20931,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aIM" = (
 /obj/effect/turf_decal/bot,
@@ -20949,13 +20950,14 @@
 /turf/closed/wall,
 /area/maintenance/central)
 "aIO" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/closed/wall,
 /area/engine/atmos)
 "aIP" = (
@@ -21204,7 +21206,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aJm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -21443,6 +21445,7 @@
 /area/engine/atmos)
 "aJI" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/engine/atmos)
 "aJJ" = (
@@ -21839,13 +21842,6 @@
 	dir = 1
 	},
 /area/hallway/primary/fore)
-"aKm" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/engine/atmos)
 "aKn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -52340,6 +52336,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/engine/atmos)
 "bGp" = (
@@ -53442,6 +53439,7 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/engine/atmos)
 "bIc" = (
@@ -53455,10 +53453,11 @@
 	},
 /area/engine/atmos)
 "bIe" = (
-/obj/machinery/atmospherics/pipe/simple/purple/visible,
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/closed/wall,
 /area/engine/atmos)
 "bIf" = (
@@ -61567,10 +61566,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bUM" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/engine/atmos)
 "bUN" = (
@@ -63743,9 +63743,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"bYf" = (
-/turf/closed/mineral/random/labormineral,
-/area/maintenance/starboard/aft)
 "bYg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -67197,7 +67194,6 @@
 /area/maintenance/port/aft)
 "cdS" = (
 /obj/structure/sign/warning/securearea,
-/obj/item/multitool,
 /turf/closed/wall/r_wall,
 /area/security/nuke_storage)
 "cdT" = (
@@ -75348,7 +75344,9 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 4
 	},
-/obj/machinery/airalarm,
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -78581,6 +78579,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/engine/atmos)
 "cxU" = (
@@ -80393,7 +80392,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/space,
-/area/engine/atmos)
+/area/space/nearstation)
 "cCY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -84949,7 +84948,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "jOz" = (
 /obj/structure/sign/warning/electricshock,
@@ -112892,9 +112891,9 @@ cvg
 aMP
 aFL
 aIL
-aFI
+aEh
 aFW
-aFI
+aEh
 cko
 cko
 aaa
@@ -113151,9 +113150,9 @@ aFO
 cwc
 aFO
 cwA
-aFI
-aFI
-aFI
+aEh
+aEh
+aEh
 aaa
 aaa
 aaa
@@ -113665,9 +113664,9 @@ aFU
 cwd
 jHJ
 cwH
-aFI
-aFI
-aFI
+aEh
+aEh
+aEh
 aaa
 aaa
 aaa
@@ -113920,9 +113919,9 @@ cFF
 cFF
 cFF
 aJl
-aFI
-aFI
-aFI
+aEh
+aEh
+aEh
 cko
 cko
 aaa
@@ -114175,7 +114174,7 @@ cBz
 aHd
 aMZ
 aFc
-cFF
+aFM
 acm
 aaa
 aaQ
@@ -114689,7 +114688,7 @@ cBB
 aHf
 bDR
 aFc
-cFF
+aFM
 acm
 aaa
 cow
@@ -115203,7 +115202,7 @@ cBz
 aHg
 aNa
 aFd
-cFF
+aFM
 acm
 aaa
 cow
@@ -115717,7 +115716,7 @@ cBB
 aHi
 bFG
 aFd
-cFF
+aFM
 acm
 aaa
 acm
@@ -116231,7 +116230,7 @@ cBz
 aHj
 aNb
 aVG
-cFF
+aFM
 acm
 aaa
 cow
@@ -116739,13 +116738,13 @@ cpK
 cqL
 cph
 bwy
-aKm
+bIe
 clu
 cBB
 aHl
 bId
 aFe
-cFF
+aFM
 acm
 aaa
 aaQ
@@ -124434,7 +124433,7 @@ koc
 dbY
 dlg
 bWx
-bYf
+bPJ
 ceU
 cgI
 cDp
