@@ -86,8 +86,8 @@
 		else
 			var/dbflags = client.prefs.db_flags
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
-				var/age_verification = alert(src, "You must be 18+ to enter this server. Please confirm your age.",, "I am 18+", "I am not 18+")
-				if(age_verification != "I am 18+")
+				var/age_verification = askuser(src, "Age Verification", "I am 18+", "I am not 18+", null, TRUE, null)
+				if(age_verification != "1")
 					create_message("note", ckey, "Server - Automated Age Verification", "Failed age verification.", null, null, TRUE, TRUE, null, "9999-01-01", "High") //log this occurence
 					qdel(client) //kick the user
 					return FALSE
