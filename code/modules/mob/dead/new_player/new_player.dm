@@ -34,26 +34,6 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
-	//hold this until we know they passed age verification
-	if(CONFIG_GET(flag/age_verification)) //make sure they are verified
-		if(!client.set_db_player_flags())
-			message_admins("Blocked [src] from new player panel because age verification could not access player database flags.")
-			return
-		else
-			var/dbflags = client.prefs.db_flags
-			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
-				var/age_verification = alert(src, "You must be 18+ to enter this server. Please confirm your age.",, "I am 18+", "I am not 18+")
-				if(age_verification != "I am 18+")
-					create_message("note", ckey, "Server - Automated Age Verification", "Failed age verification.", null, null, TRUE, TRUE, null, "9999-01-01", "High") //log this occurence
-					qdel(client) //kick the user
-				else
-					//they claim to be of age, so allow them to continue and update their flags
-					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
-					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
-					//log this
-					message_admins("[ckey] has joined through the automated age verification process.")
-
-
 	var/output = "<center><p>Welcome, <b>[client ? client.prefs.real_name : "Unknown User"]</b></p>"
 	output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
@@ -98,12 +78,37 @@
 	popup.set_content(output)
 	popup.open(FALSE)
 
+/mob/dead/new_player/proc/age_verify()
+	if(CONFIG_GET(flag/age_verification)) //make sure they are verified
+		if(!client.set_db_player_flags())
+			message_admins("Blocked [src] from new player panel because age verification could not access player database flags.")
+			return FALSE
+		else
+			var/dbflags = client.prefs.db_flags
+			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
+				var/age_verification = alert(src, "You must be 18+ to enter this server. Please confirm your age.",, "I am 18+", "I am not 18+")
+				if(age_verification != "I am 18+")
+					create_message("note", ckey, "Server - Automated Age Verification", "Failed age verification.", null, null, TRUE, TRUE, null, "9999-01-01", "High") //log this occurence
+					qdel(client) //kick the user
+					return FALSE
+				else
+					//they claim to be of age, so allow them to continue and update their flags
+					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
+					//log this
+					message_admins("[ckey] has joined through the automated age verification process.")
+					return TRUE
+	return TRUE
+
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
 		return 0
 
 	if(!client)
 		return 0
+
+	if(!age_verify())
+		return
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
