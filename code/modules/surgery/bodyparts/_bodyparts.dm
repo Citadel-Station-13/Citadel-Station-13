@@ -639,14 +639,18 @@
 
 		//body marking memes
 		var/list/colorlist = list()
-		var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
+		//var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
 		colorlist.Cut()
-		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor"]]00")
-		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_secondary"]]00") : ReadRGB("[H.dna.features["mcolor2"]]00")
-		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_tertiary"]]00") : ReadRGB("[H.dna.features["mcolor3"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_secondary"]]00") : ReadRGB("[H.dna.features["mcolor2"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_tertiary"]]00") : ReadRGB("[H.dna.features["mcolor3"]]00")
+		colorlist += ReadRGB("[H.dna.features["mcolor"]]00")
+		colorlist += ReadRGB("[H.dna.features["mcolor2"]]00")
+		colorlist += ReadRGB("[H.dna.features["mcolor3"]]00")
 		colorlist += list(0,0,0, S.hair_alpha)
 		for(var/index=1, index<=colorlist.len, index++)
 			colorlist[index] = colorlist[index]/255
+			message_admins("[source] update to [colorlist[index]]")
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
