@@ -650,7 +650,6 @@
 		colorlist += list(0,0,0, S.hair_alpha)
 		for(var/index=1, index<=colorlist.len, index++)
 			colorlist[index] = colorlist[index]/255
-			message_admins("[source] update to [colorlist[index]]")
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
