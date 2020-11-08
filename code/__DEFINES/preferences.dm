@@ -81,7 +81,9 @@
 #define EXP_TYPE_ADMIN			"Admin"
 
 //Flags in the players table in the db
-#define DB_FLAG_EXEMPT 1
+#define DB_FLAG_EXEMPT 							(1<<0)
+#define DB_FLAG_AGE_CONFIRMATION_INCOMPLETE		(1<<1)
+#define DB_FLAG_AGE_CONFIRMATION_COMPLETE		(1<<2)
 
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
