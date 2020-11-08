@@ -641,7 +641,7 @@
 		var/list/colorlist = list()
 		var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
 		colorlist.Cut()
-		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor1"]]00")
+		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor"]]00")
 		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_secondary"]]00") : ReadRGB("[H.dna.features["mcolor2"]]00")
 		colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_tertiary"]]00") : ReadRGB("[H.dna.features["mcolor3"]]00")
 		colorlist += list(0,0,0, S.hair_alpha)
