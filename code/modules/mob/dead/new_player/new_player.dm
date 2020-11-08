@@ -88,7 +88,7 @@
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
 				var/age_verification = askuser(src, "Are you 18+", "Age Verification", "I am 18+", "I am not 18+", null, TRUE, null)
 				if(age_verification != 1)
-					add_system_note("Automated-Age-Verification", "Failed automatic age verification")
+					client.add_system_note("Automated-Age-Verification", "Failed automatic age verification")
 					qdel(client) //kick the user
 					return FALSE
 				else
