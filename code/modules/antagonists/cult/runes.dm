@@ -324,7 +324,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_TALISMAN
 	construct_invoke = FALSE
 
-/obj/effect/rune/empower/invoke(var/list/invokers)
+/obj/effect/rune/empower/invoke(list/invokers)
 	. = ..()
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	for(var/datum/action/innate/cult/blood_magic/BM in user.actions)
@@ -1087,27 +1087,32 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/loc_memory = null
 	var/spawntype = /obj/structure/destructible/cult/altar
 	var/list/donators
+	var/active = FALSE
+	var/remaining_cost
+	var/accumulated_blood
 
 /obj/effect/rune/summon_structure/invoke(list/invokers)
-	if(locate(/obj/structure/destructible/cult) in range(src.loc, 2) || locate(/obj/machinery/door/cult) in range(src.loc, 2))
-		to_chat(activator, "<span class='warning'>There is a building blocking the ritual..</span>")
+	var/mob/living/user = invokers[1]
+	if(locate(/obj/structure/destructible/cult) in range(loc, 2) || locate(/obj/machinery/door/airlock/cult) in range(loc, 2))
+		to_chat(user, "<span class='warning'>There is a building blocking the ritual..</span>")
 		return
-	else
-		START_PROCESSING(SSobj, src)
-		donators = invokers
-		..()
+	if(user.z != map.zMainStation)
+		to_chat(user, "<span class='cult'>The veil here is still too dense to allow raising structures from the realm of Nar-Sie. We must raise our structure in the heart of the station.</span>")
+		return
+	if(active)
+		midcast(user)
+		return
+
+	START_PROCESSING(SSobj, src)
+	active = TRUE
+	donators = invokers //We need the invokers for later.
+	..()
 
 /obj/effect/rune/summon_structure/process()
-	var/obj/effect/rune/R = spell_holder
-
-	var/mob/living/user = activator
-
-	proximity_check() //See above
-
-	if(user.z != map.zMainStation)
-		to_chat(activator, "<span class='cult'>The veil here is still too dense to allow raising structures from the realm of Nar-Sie. We must raise our structure in the heart of the station.</span>")
-		STOP_PROCESSING(SSobj, src)
+	if(!active)
+		STOP_PROCESSING(SSobj, src) //I wish I knew a way to know if something was processing
 		return
+	var/mob/living/user = donators[1]
 
 	var/list/choices = list(
 		list("Altar", "radial_altar", "The nexus of a cult base. Has many uses. More runes will also become usable after the first altar has been raised."),
@@ -1115,21 +1120,21 @@ structure_check() searches for nearby cultist structures required for the invoca
 		list("Forge (locked)", "radial_locked2", "Reach Act 2 to unlock the Forge.")
 	)
 
+	var/structure = show_radial_menu(user, loc, choices, 'icons/obj/cult_radial3.dmi', "radial-cult")
 
-	var/structure = show_radial_menu(user, R.loc, choices, 'icons/obj/cult_radial3.dmi', "radial-cult")
-
-	if(!R.Adjacent(user) || !structure )
+	if(!Adjacent(user) || !structure )
 		abort()
 		return
-
+/*
 	if(src.procc)
 		to_chat(user, "<span class='rose'>A structure is already being raised from this rune, so you contribute to that instead.</span>")
-		R.active_spell.midcast(user)
+		src.midcast(user)
 		return
-
+*/
 	switch(structure)
 		if("Altar")
 			spawntype = /obj/structure/cult/altar
+			/*
 		if("Spire")
 			spawntype = /obj/structure/cult/spire
 		if("Forge")
@@ -1142,57 +1147,54 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(user,"Reach Act 2 to unlock the Forge. It enables the forging of cult blades and armor, as well as new construct shells.")
 			abort()
 			return
+			*/
 
-	loc_memory = spell_holder.loc
-	contributors.Add(user)
-	update_progbar()
+	loc_memory = src.loc
+	//update_progbar()
 	if(user.client)
 		user.client.images |= progbar
-	spell_holder.overlays += image('icons/obj/cult.dmi',"runetrigger-build")
-	to_chat(activator, "<span class='rose'>This ritual's blood toll can be substantially reduced by having multiple cultists partake in it or by wearing cult attire.</span>")
+	src.overlays += image('icons/obj/cult.dmi',"runetrigger-build")
+	to_chat(donators, "<span class='rose'>This ritual's blood toll can be substantially reduced by having multiple cultists partake in it or by wearing cult attire.</span>")
+	addtimer(CALLBACK(.proc/payment), 1, TIMER_UNIQUE)
+	/*
 	spawn()
 		payment()
-
-/obj/effect/rune/summon_structure/cast_talisman() //Raise structure talismans create an invisible summoning rune beneath the caster's feet.
-	var/obj/effect/rune/R = new(get_turf(activator))
-	R.icon_state = "temp"
-	R.active_spell = new type(activator,R)
-	qdel(src)
-
+	*/
 /obj/effect/rune/summon_structure/midcast(mob/add_cultist)
-	if (add_cultist in contributors)
+	if(add_cultist in donators)
 		return
 	invoke(add_cultist, invocation)
-	contributors.Add(add_cultist)
-	if (add_cultist.client)
+	donators.Add(add_cultist)
+	if(add_cultist.client)
 		add_cultist.client.images |= progbar
 
-/obj/effect/rune/summon_structure/abort(cause)
-	spell_holder.overlays -= image('icons/obj/cult.dmi',"runetrigger-build")
+/obj/effect/rune/summon_structure/proc/abort(cause)
+	switch(cause)
+
+	STOP_PROCESSING(SSobj, src)
+	overlays -= image('icons/obj/cult.dmi',"runetrigger-build")
 	..()
 
 /obj/effect/rune/summon_structure/proc/payment()
 	var/failsafe = 0
 	while(failsafe < 1000)
 		failsafe++
-		//are our payers still here and about?
-		var/summoners = 0//the higher, the easier it is to perform the ritual without many cultists. default=0
-		for(var/mob/living/L in contributors)
-			if (iscultist(L) && (L in range(spell_holder,1)) && (L.stat == CONSCIOUS))
+		for(var/mob/living/L in donators)
+			if (iscultist(L) && (L in range(src ,1)) && (L.stat == CONSCIOUS))
 				summoners++
 				summoners += round(L.get_cult_power()/30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
 			else											//This makes using the rune alone hard at roundstart, but fairly easy later on.
 				if (L.client)
 					L.client.images -= progbar
-				contributors.Remove(L)
+				donators.Remove(L)
 		var/amount_paid = 0
-		for(var/mob/living/L in contributors)
+		for(var/mob/living/L in donators)
 			var/data = use_available_blood(L, cost_upkeep,contributors[L])
 			if (data[BLOODCOST_RESULT] == BLOODCOST_FAILURE)//out of blood are we?
-				contributors.Remove(L)
+				donators.Remove(L)
 			else
 				amount_paid += data[BLOODCOST_TOTAL]
-				contributors[L] = data[BLOODCOST_RESULT]
+				donators[L] = data[BLOODCOST_RESULT]
 				make_tracker_effects(L.loc,spell_holder, 1, "soul", 3, /obj/effect/tracker/drain, 1)//visual feedback
 
 		accumulated_blood += amount_paid
@@ -1203,8 +1205,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 			cancelling--
 			if (cancelling <= 0)
 				if(accumulated_blood && !(locate(/obj/effect/decal/cleanable/blood/splatter) in loc_memory))
-					var/obj/effect/decal/cleanable/blood/splatter/S = new (loc_memory)//splash
+					var/obj/effect/decal/cleanable/blood/S = new (loc_memory)//splash
+					donator[1]
 					S.amount = 2
+					if(iscarbon(donator[1]))
+						var/mob/living/user = invokers[1]
+						S.blood_DNA = user.dna
 				abort(RITUALABORT_BLOOD)
 				return
 
@@ -1221,6 +1227,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(accumulated_blood >= remaining_cost )
 			proximity_check()
 			success()
+			STOP_PROCESSING(SSobj, src)
 			return
 
 		update_progbar()
@@ -1229,14 +1236,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	message_admins("A rune ritual has iterated for over 1000 blood payment procs. Something's wrong there.")
 
 /obj/effect/rune/summon_structure/proc/success()
-	new spawntype(spell_holder.loc)
-	if (spawntype == /obj/structure/cult/altar)
-		var/datum/faction/bloodcult/cult = find_active_faction_by_type(/datum/faction/bloodcult)
-		if(cult)
-			cult.stage(CULT_ACT_I)
-		else
-			message_admins("Blood Cult: An altar was raised... but we cannot find the cult faction. Excellent bus.")
-	qdel(spell_holder) //Deletes the datum as well.
+	new spawntype(loc)
+	qdel(src) //Deletes the datum as well.
 
 
 /proc/hudFix(mob/living/carbon/human/target)

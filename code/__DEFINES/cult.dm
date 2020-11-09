@@ -21,3 +21,7 @@
 //misc
 #define SOULS_TO_REVIVE 3
 #define BLOODCULT_EYE "f00"
+
+//VGcult defines
+#define RITUALABORT_BLOOD	"channel cancel"
+#define RITUALABORT_BLOCKED	"blocked"
