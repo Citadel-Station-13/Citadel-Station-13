@@ -185,12 +185,7 @@
 			var/obj/structure/constructshell/T = target
 			var/mob/living/simple_animal/hostile/construct/shade/A = locate() in src
 			if(A)
-				var/list/constructs = list(
-					"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
-					"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
-					"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
-					)
-				var/construct_class = show_radial_menu(user, src, constructs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+				var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				if(!T || !T.loc)
 					return
 				switch(construct_class)
@@ -204,7 +199,7 @@
 						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
 
-						else
+					else
 						return
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
@@ -220,10 +215,6 @@
 	if(QDELETED(target))
 		return
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
-	var/makeicon = newstruct.icon_state
-	var/holyness = newstruct.holy
-	flick("make_[makeicon][holyness]", newstruct)
-	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
 		newstruct.master = stoner
@@ -247,9 +238,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user)
-	if(!shade_controller)
-		shade_controller = T
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, vic = 0)
 	if(HAS_TRAIT_FROM(T, TRAIT_SACRIFICED, "sacrificed"))
 		if(user)
 			to_chat(user, "This body has already been harvested!")
@@ -259,7 +248,7 @@
 	var/mob/living/simple_animal/hostile/construct/shade/S = new /mob/living/simple_animal/hostile/construct/shade(src)
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
-	S.key = shade_controller.key
+	T.transfer_ckey(S)
 	S.original_mind = T.mind.current
 	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	S.update_atom_languages()
@@ -294,11 +283,12 @@
 	if(!T)
 		return FALSE
 	if(!chosen_ghost)
-		to_chat(U, "<span class='danger'>There were no spirits willing to become a shade.</span>")
+		to_chat(user, "<span class='danger'>There were no spirits willing to become a shade.</span>")
 		return FALSE
 	if(contents.len) //If they used the soulstone on someone else in the meantime
 		return FALSE
+	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
 		T.dropItemToGround(W)
-	init_shade(T, U)
+	init_shade(T, user)
 	return TRUE

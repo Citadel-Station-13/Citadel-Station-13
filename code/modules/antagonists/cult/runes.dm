@@ -213,7 +213,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	var/oldcolor = color
 	color = RUNE_COLOR_DARKRED
-	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 
 	var/mob/living/F = invokers[1]
@@ -324,9 +323,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 			var/mob/living/carbon/human/H = sacrificial
 			H.spew_organ(2, 6)
-		else
-			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
-			sacrifical.gib()
 	return TRUE
 
 /obj/effect/rune/empower

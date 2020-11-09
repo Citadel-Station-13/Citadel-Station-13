@@ -44,7 +44,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
-	var/original_body
+	var/original_mind
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -68,8 +68,8 @@
 		CR.button.moved = "6:[pos],4:-2"
 
 /mob/living/simple_animal/hostile/construct/death()
-	if(original_body)
-		transfer_ckey(original_body)
+	if(original_mind)
+		transfer_ckey(original_mind)
 	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
