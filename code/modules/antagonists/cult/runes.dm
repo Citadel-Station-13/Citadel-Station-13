@@ -108,7 +108,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 */
 
-/obj/effect/rune/proc/can_invoke(var/mob/living/user=null)
+/obj/effect/rune/proc/can_invoke(mob/living/user)
 	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
 	var/list/invokers = list() //people eligible to invoke the rune
 	if(user)
@@ -131,7 +131,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				invokers += L
 	return invokers
 
-/obj/effect/rune/proc/invoke(var/list/invokers)
+/obj/effect/rune/proc/invoke(list/invokers)
 	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
 	for(var/M in invokers)
 		if(isliving(M))
@@ -172,7 +172,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "[rand(1,7)]"
 	color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
-/obj/effect/rune/malformed/invoke(var/list/invokers)
+/obj/effect/rune/malformed/invoke(list/invokers)
 	..()
 	qdel(src)
 
@@ -1076,6 +1076,167 @@ structure_check() searches for nearby cultist structures required for the invoca
 				I.override = TRUE
 		sleep(190)
 
+//Rune that lets you summon cult structures at the cost of your very own blood.
+/obj/effect/rune/summon_structure
+	cultist_name = "Raise Structure"
+	cultist_desc = "Drag-in eldritch structures from the realm of Nar-Sie."
+	invocation = "Ta'gh fara'qha fel d'amar det."
+	color = RUNE_COLOR_DARKRED
+	scribe_delay = 50
+	invoke_damage = 15
+	var/turf/loc_memory = null
+	var/spawntype = /obj/structure/destructible/cult/altar
+	var/list/donators
+
+/obj/effect/rune/summon_structure/invoke(list/invokers)
+	if(locate(/obj/structure/destructible/cult) in range(src.loc, 2) || locate(/obj/machinery/door/cult) in range(src.loc, 2))
+		to_chat(activator, "<span class='warning'>There is a building blocking the ritual..</span>")
+		return
+	else
+		START_PROCESSING(SSobj, src)
+		donators = invokers
+		..()
+
+/obj/effect/rune/summon_structure/process()
+	var/obj/effect/rune/R = spell_holder
+
+	var/mob/living/user = activator
+
+	proximity_check() //See above
+
+	if(user.z != map.zMainStation)
+		to_chat(activator, "<span class='cult'>The veil here is still too dense to allow raising structures from the realm of Nar-Sie. We must raise our structure in the heart of the station.</span>")
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	var/list/choices = list(
+		list("Altar", "radial_altar", "The nexus of a cult base. Has many uses. More runes will also become usable after the first altar has been raised."),
+		list("Spire (locked)", "radial_locked1", "Reach Act 1 to unlock the Spire."),
+		list("Forge (locked)", "radial_locked2", "Reach Act 2 to unlock the Forge.")
+	)
+
+
+	var/structure = show_radial_menu(user, R.loc, choices, 'icons/obj/cult_radial3.dmi', "radial-cult")
+
+	if(!R.Adjacent(user) || !structure )
+		abort()
+		return
+
+	if(src.procc)
+		to_chat(user, "<span class='rose'>A structure is already being raised from this rune, so you contribute to that instead.</span>")
+		R.active_spell.midcast(user)
+		return
+
+	switch(structure)
+		if("Altar")
+			spawntype = /obj/structure/cult/altar
+		if("Spire")
+			spawntype = /obj/structure/cult/spire
+		if("Forge")
+			spawntype = /obj/structure/cult/forge
+		if("Spire (locked)")
+			to_chat(user,"Reach Act 1 to unlock the Spire. It allows human cultists to acquire Arcane Tattoos, providing various buffs.")
+			abort()
+			return
+		if("Forge (locked)")
+			to_chat(user,"Reach Act 2 to unlock the Forge. It enables the forging of cult blades and armor, as well as new construct shells.")
+			abort()
+			return
+
+	loc_memory = spell_holder.loc
+	contributors.Add(user)
+	update_progbar()
+	if(user.client)
+		user.client.images |= progbar
+	spell_holder.overlays += image('icons/obj/cult.dmi',"runetrigger-build")
+	to_chat(activator, "<span class='rose'>This ritual's blood toll can be substantially reduced by having multiple cultists partake in it or by wearing cult attire.</span>")
+	spawn()
+		payment()
+
+/obj/effect/rune/summon_structure/cast_talisman() //Raise structure talismans create an invisible summoning rune beneath the caster's feet.
+	var/obj/effect/rune/R = new(get_turf(activator))
+	R.icon_state = "temp"
+	R.active_spell = new type(activator,R)
+	qdel(src)
+
+/obj/effect/rune/summon_structure/midcast(mob/add_cultist)
+	if (add_cultist in contributors)
+		return
+	invoke(add_cultist, invocation)
+	contributors.Add(add_cultist)
+	if (add_cultist.client)
+		add_cultist.client.images |= progbar
+
+/obj/effect/rune/summon_structure/abort(cause)
+	spell_holder.overlays -= image('icons/obj/cult.dmi',"runetrigger-build")
+	..()
+
+/obj/effect/rune/summon_structure/proc/payment()
+	var/failsafe = 0
+	while(failsafe < 1000)
+		failsafe++
+		//are our payers still here and about?
+		var/summoners = 0//the higher, the easier it is to perform the ritual without many cultists. default=0
+		for(var/mob/living/L in contributors)
+			if (iscultist(L) && (L in range(spell_holder,1)) && (L.stat == CONSCIOUS))
+				summoners++
+				summoners += round(L.get_cult_power()/30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
+			else											//This makes using the rune alone hard at roundstart, but fairly easy later on.
+				if (L.client)
+					L.client.images -= progbar
+				contributors.Remove(L)
+		var/amount_paid = 0
+		for(var/mob/living/L in contributors)
+			var/data = use_available_blood(L, cost_upkeep,contributors[L])
+			if (data[BLOODCOST_RESULT] == BLOODCOST_FAILURE)//out of blood are we?
+				contributors.Remove(L)
+			else
+				amount_paid += data[BLOODCOST_TOTAL]
+				contributors[L] = data[BLOODCOST_RESULT]
+				make_tracker_effects(L.loc,spell_holder, 1, "soul", 3, /obj/effect/tracker/drain, 1)//visual feedback
+
+		accumulated_blood += amount_paid
+
+		if(amount_paid) //3 seconds without blood and the ritual fails.
+			cancelling = 3
+		else
+			cancelling--
+			if (cancelling <= 0)
+				if(accumulated_blood && !(locate(/obj/effect/decal/cleanable/blood/splatter) in loc_memory))
+					var/obj/effect/decal/cleanable/blood/splatter/S = new (loc_memory)//splash
+					S.amount = 2
+				abort(RITUALABORT_BLOOD)
+				return
+
+		switch(summoners)
+			if (1)
+				remaining_cost = 300
+			if (2)
+				remaining_cost = 120
+			if (3)
+				remaining_cost = 18
+			if (4 to INFINITY)
+				remaining_cost = 0
+
+		if(accumulated_blood >= remaining_cost )
+			proximity_check()
+			success()
+			return
+
+		update_progbar()
+
+		sleep(10)
+	message_admins("A rune ritual has iterated for over 1000 blood payment procs. Something's wrong there.")
+
+/obj/effect/rune/summon_structure/proc/success()
+	new spawntype(spell_holder.loc)
+	if (spawntype == /obj/structure/cult/altar)
+		var/datum/faction/bloodcult/cult = find_active_faction_by_type(/datum/faction/bloodcult)
+		if(cult)
+			cult.stage(CULT_ACT_I)
+		else
+			message_admins("Blood Cult: An altar was raised... but we cannot find the cult faction. Excellent bus.")
+	qdel(spell_holder) //Deletes the datum as well.
 
 
 /proc/hudFix(mob/living/carbon/human/target)
