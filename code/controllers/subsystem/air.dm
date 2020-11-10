@@ -46,9 +46,8 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "CF:[round(cost_copy_from,1)]|"
 	msg += "AT:[round(cost_turfs,1)]|"
-	msg += "CT:[round(cost_copy_to,1)]|"
+	msg += "EQ:[round(cost_equalize,1)]"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
@@ -105,7 +104,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_ACTIVETURFS
+		currentpart = SSAIR_EQUALIZE
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
@@ -236,7 +235,24 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	return process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag)
+	if(!resumed)
+		src.currentrun = process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag)
+		if(src.currentrun.len)
+			pause()
+	else
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/turf/open/T = currentrun[currentrun.len]
+			var/list/arg = currentrun[T]
+			var/turf/open/otherT = arg[1]
+			var/amt = arg[2]
+			currentrun.len--
+			if(T)
+				T.update_visuals()
+				otherT.update_visuals()
+				T.consider_pressure_difference(otherT,amt)
+			if (MC_TICK_CHECK)
+				return
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
@@ -254,24 +270,13 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
+/datum/controller/subsystem/air/proc/begin_turf_process()
+
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
 	if(!resumed)
-		src.currentrun = process_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag)
-		if(src.currentrun.len)
-			pause()
-	else
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/turf/open/T = currentrun[currentrun.len]
-			var/flags = currentrun[T]
-			currentrun.len--
-			if(T)
-				if(flags & 2)
-					T.air.react()
-				if(flags & 1)
-					T.update_visuals()
-			if (MC_TICK_CHECK)
-				return
+		begin_turf_process()
+	if(process_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag))
+		pause()
 	/*
 	//cache for sanic speed
 	var/fire_count = times_fired
