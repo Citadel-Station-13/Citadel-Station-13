@@ -79,7 +79,7 @@
 	popup.open(FALSE)
 
 /mob/dead/new_player/proc/age_verify()
-	if(CONFIG_GET(flag/age_verification) && !check_rights_for(user.client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
+	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
 		if(!client.set_db_player_flags())
 			message_admins("Blocked [src] from new player panel because age gate could not access player database flags.")
 			return FALSE
