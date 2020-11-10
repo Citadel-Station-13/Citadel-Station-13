@@ -85,10 +85,10 @@
 			return FALSE
 		else
 			var/dbflags = client.prefs.db_flags
-			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
-				var/age_verification = askuser(src, "Are you 18+", "Age Verification", "I am 18+", "I am not 18+", null, TRUE, null)
+			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
+				var/age_verification = askuser(src, "Are you 18+", "Age Gate", "I am 18+", "I am not 18+", null, TRUE, null)
 				if(age_verification != 1)
-					client.add_system_note("Automated-Age-Verification", "Failed automatic age gate process")
+					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
 					qdel(client) //kick the user
 					return FALSE
 				else
