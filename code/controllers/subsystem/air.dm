@@ -236,7 +236,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
 	if(!resumed)
-		src.currentrun = process_turf_equalize_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag)
+		src.currentrun = process_turf_equalize_extools((Master.current_ticklimit - TICK_USAGE) * world.tick_lag)
 		if(src.currentrun.len)
 			pause()
 	else
@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
 	if(!resumed)
 		begin_turf_process()
-	if(process_turfs_extools(resumed, (Master.current_ticklimit - TICK_USAGE) * 0.1 * world.tick_lag))
+	if(process_turfs_extools((Master.current_ticklimit - TICK_USAGE) * world.tick_lag))
 		pause()
 	/*
 	//cache for sanic speed

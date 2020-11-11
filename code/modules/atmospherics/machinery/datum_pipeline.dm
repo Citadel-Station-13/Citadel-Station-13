@@ -255,7 +255,8 @@
 		total_thermal_energy += G.thermal_energy()
 		total_heat_capacity += G.heat_capacity()
 
-	total_gas_mixture.set_temperature(total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0)
+	if(total_heat_capacity)
+		total_gas_mixture.set_temperature(total_thermal_energy/total_heat_capacity)
 
 	if(total_gas_mixture.return_volume() > 0)
 		//Update individual gas_mixtures by volume ratio
