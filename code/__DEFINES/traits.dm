@@ -323,3 +323,4 @@
 /// This trait is added by the parry system.
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
+#define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.
