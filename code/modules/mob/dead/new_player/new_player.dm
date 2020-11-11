@@ -79,16 +79,16 @@
 	popup.open(FALSE)
 
 /mob/dead/new_player/proc/age_verify()
-	if(CONFIG_GET(flag/age_verification)) //make sure they are verified
+	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
 		if(!client.set_db_player_flags())
-			message_admins("Blocked [src] from new player panel because age verification could not access player database flags.")
+			message_admins("Blocked [src] from new player panel because age gate could not access player database flags.")
 			return FALSE
 		else
 			var/dbflags = client.prefs.db_flags
-			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
-				var/age_verification = askuser(src, "Are you 18+", "Age Verification", "I am 18+", "I am not 18+", null, TRUE, null)
+			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
+				var/age_verification = askuser(src, "Are you 18+", "Age Gate", "I am 18+", "I am not 18+", null, TRUE, null)
 				if(age_verification != 1)
-					add_system_note("Automated-Age-Verification", "Failed automatic age verification")
+					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
 					qdel(client) //kick the user
 					return FALSE
 				else
@@ -96,7 +96,7 @@
 					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
 					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
 					//log this
-					message_admins("[ckey] has joined through the automated age verification process.")
+					message_admins("[ckey] has joined through the automated age gate process.")
 					return TRUE
 	return TRUE
 
