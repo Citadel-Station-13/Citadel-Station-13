@@ -83,6 +83,16 @@
 		updateUsrDialog()
 		update_icon()
 		return
+
+	if(beaker)
+		if(istype(I, /obj/item/reagent_containers/dropper))
+			var/obj/item/reagent_containers/dropper/D = I
+			D.afterattack(beaker, user, 1)
+			return
+		if(istype(I, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/S = I
+			S.afterattack(beaker, user, 1)
+			return
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
@@ -107,7 +117,7 @@
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	//purity and pH accuracy
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		data["partRating"]= 10**(M.rating-1)
+		data["partRating"]= M.rating
 		if(M.rating == 4)
 			data["showPurity"] = 1
 		else

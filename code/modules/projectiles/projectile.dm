@@ -245,7 +245,7 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
 			var/obj/item/bodypart/B = L.get_bodypart(def_zone)
-			if(B && B.status == BODYPART_ROBOTIC) // So if you hit a robotic, it sparks instead of bloodspatters
+			if(B && B.is_robotic_limb()) // So if you hit a robotic, it sparks instead of bloodspatters - Hybrid limbs don't bleed from this as of now too, subject to balance.. probably.
 				do_sparks(2, FALSE, target.loc)
 				if(prob(25))
 					new /obj/effect/decal/cleanable/oil(target_loca)

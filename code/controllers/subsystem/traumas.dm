@@ -158,8 +158,8 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/head/frenchberet, /obj/item/clothing/suit/suspenders, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
 						/obj/item/storage/backpack/mime, /obj/item/reagent_containers/food/snacks/grown/banana/mime,
 						/obj/item/grown/bananapeel/mimanapeel, /obj/item/cartridge/virus/mime, /obj/item/clothing/shoes/sneakers/mime,
-						/obj/item/bedsheet/mime, /obj/item/reagent_containers/food/snacks/burger/mime, /obj/item/clothing/head/beret, /obj/item/clothing/mask/gas/sexymime,
-						/obj/item/clothing/under/rank/civilian/mime/sexy, /obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence)),
+						/obj/item/bedsheet/mime, /obj/item/reagent_containers/food/snacks/burger/mime, /obj/item/clothing/head/beret,
+						/obj/item/toy/figure/mime, /obj/item/toy/crayon/mime, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced, /obj/mecha/combat/reticence)),
 
 					"cats" = typecacheof(list(/obj/item/organ/ears/cat, /obj/item/organ/tail/cat, /obj/item/laser_pointer, /obj/item/toy/cattoy, /obj/item/clothing/head/kitty,
 						/obj/item/clothing/head/collectable/kitty, /obj/item/melee/chainofcommand/tailwhip/kitty, /obj/item/stack/sheet/animalhide/cat)),
@@ -198,7 +198,8 @@ SUBSYSTEM_DEF(traumas)
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod, /datum/species/shadow)),
 						  "anime" = typecacheof(list(/datum/species/human/felinid)),
 						  "cats" = typecacheof(list(/datum/species/human/felinid)),
-						  "syndicate" = typecacheof(list(/datum/species/corporate, /datum/species/zombie/infectious))
+						  "syndicate" = typecacheof(list(/datum/species/corporate, /datum/species/zombie/infectious)),
+						  "arachnid" = typecacheof(list(/datum/species/arachnid))
 						 )
 
 	return ..()

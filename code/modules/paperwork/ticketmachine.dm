@@ -160,8 +160,7 @@
 /obj/machinery/ticket_machine/proc/reset_cooldown()
 	ready = TRUE
 
-/obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user)
-	. = ..()
+/obj/machinery/ticket_machine/on_attack_hand(mob/living/carbon/user)
 	INVOKE_ASYNC(src, .proc/attempt_ticket, user)
 
 /obj/machinery/ticket_machine/proc/attempt_ticket(mob/living/carbon/user)

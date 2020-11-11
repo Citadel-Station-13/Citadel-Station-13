@@ -45,7 +45,7 @@
 
 /obj/item/bodypart/head/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
-	if(status != BODYPART_ROBOTIC)
+	if(!is_robotic_limb())
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
@@ -141,7 +141,7 @@
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
-		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
+		if(!is_robotic_limb(FALSE)) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
 				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]

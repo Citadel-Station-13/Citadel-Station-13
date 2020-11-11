@@ -1,6 +1,6 @@
 /datum/species/human
 	name = "Human"
-	id = "human"
+	id = SPECIES_HUMAN
 	default_color = "FFFFFF"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS_PARTSONLY,WINGCOLOR,HAS_FLESH,HAS_BONE)
@@ -12,7 +12,7 @@
 
 	tail_type = "tail_human"
 	wagging_type = "waggingtail_human"
-	species_type = "human"
+	species_category = SPECIES_CATEGORY_BASIC
 
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
