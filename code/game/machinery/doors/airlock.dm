@@ -1457,6 +1457,16 @@
 		ui.open()
 	return TRUE
 
+/obj/machinery/door/airlock/ui_status(mob/user)
+	. = ..()
+	if (!issilicon(user) && hasSiliconAccessInArea(user))
+		. = UI_INTERACTIVE
+
+/obj/machinery/door/airlock/can_interact(mob/user)
+	. = ..()
+	if (!issilicon(user) && hasSiliconAccessInArea(user))
+		return TRUE
+
 /obj/machinery/door/airlock/ui_data()
 	var/list/data = list()
 

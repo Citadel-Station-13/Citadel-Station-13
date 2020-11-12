@@ -166,7 +166,7 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+				H.equip_in_one_of_slots(O, slots, critical = TRUE)
 
 /datum/objective/assassinate
 	name = "assasinate"
@@ -1152,7 +1152,7 @@ GLOBAL_LIST_EMPTY(cult_contraband)
 	I.forceMove(get_turf(owner))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK))
+		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK), critical = TRUE)
 		hoarded_item = I
 
 
