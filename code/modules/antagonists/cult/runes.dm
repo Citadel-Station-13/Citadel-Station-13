@@ -354,7 +354,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	GLOB.teleport_runes -= src
 	return ..()
 
-/obj/effect/rune/teleport/invoke(var/list/invokers)
+/obj/effect/rune/teleport/invoke(list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
@@ -474,7 +474,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return
 
-/obj/effect/rune/narsie/invoke(var/list/invokers)
+/obj/effect/rune/narsie/invoke(list/invokers)
 	if(used)
 		return
 	if(!is_station_level(z))
@@ -536,7 +536,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/revive_number = LAZYLEN(GLOB.sacrificed) - revives_used
 		. += "<b>Revives Remaining:</b> [revive_number]"
 
-/obj/effect/rune/raise_dead/invoke(var/list/invokers)
+/obj/effect/rune/raise_dead/invoke(list/invokers)
 	var/turf/T = get_turf(src)
 	var/mob/living/mob_to_revive
 	var/list/potential_revive_mobs = list()
@@ -641,7 +641,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/wall/BlockSuperconductivity()
 	return density
 
-/obj/effect/rune/wall/invoke(var/list/invokers)
+/obj/effect/rune/wall/invoke(list/invokers)
 	if(recharging)
 		return
 	var/mob/living/user = invokers[1]
@@ -704,7 +704,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "3"
 	color = RUNE_COLOR_SUMMON
 
-/obj/effect/rune/summon/invoke(var/list/invokers)
+/obj/effect/rune/summon/invoke(list/invokers)
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
 	for(var/datum/mind/M in SSticker.mode.cult)
@@ -762,7 +762,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/blood_boil/do_invoke_glow()
 	return
 
-/obj/effect/rune/blood_boil/invoke(var/list/invokers)
+/obj/effect/rune/blood_boil/invoke(list/invokers)
 	if(rune_in_use)
 		return
 	..()
@@ -951,7 +951,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	scribe_delay = 100
 	requires_full_power = TRUE
 
-/obj/effect/rune/apocalypse/invoke(var/list/invokers)
+/obj/effect/rune/apocalypse/invoke(list/invokers)
 	if(rune_in_use)
 		return
 	. = ..()
@@ -1090,6 +1090,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/active = FALSE
 	var/remaining_cost
 	var/accumulated_blood
+	var/cancelling
 
 /obj/effect/rune/summon_structure/invoke(list/invokers)
 	var/mob/living/user = invokers[1]
@@ -1110,7 +1111,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/summon_structure/process()
 	if(!active)
-		STOP_PROCESSING(SSobj, src) //I wish I knew a way to know if something was processing
+		abort()
 		return
 	var/mob/living/user = donators[1]
 
@@ -1132,9 +1133,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 */
 	switch(structure)
+	/*
 		if("Altar")
 			spawntype = /obj/structure/cult/altar
-			/*
 		if("Spire")
 			spawntype = /obj/structure/cult/spire
 		if("Forge")
@@ -1169,8 +1170,18 @@ structure_check() searches for nearby cultist structures required for the invoca
 		add_cultist.client.images |= progbar
 
 /obj/effect/rune/summon_structure/proc/abort(cause)
+	if(destroying_self)
+		return
+	destroying_self = TRUE
 	switch(cause)
-
+		if(RITUALABORT_BLOCKED)
+			if(activator)
+				to_chat(activator, "<span class='warning'>There is a building blocking the ritual..</span>")
+		if(RITUALABORT_BLOOD)
+			.visible_message("<span class='warning'>Deprived of blood, the channeling is disrupted.</span>")
+		if(RITUALABORT_GONE)
+			if(donators) //There will be one donator anyways.
+				to_chat(donators, "<span class='warning'>The ritual ends as you move away from the rune.</span>")
 	STOP_PROCESSING(SSobj, src)
 	overlays -= image('icons/obj/cult.dmi',"runetrigger-build")
 	..()
@@ -1179,8 +1190,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/failsafe = 0
 	while(failsafe < 1000)
 		failsafe++
+		var/summoners = 0//the higher, the easier it is to perform the ritual without many cultists. default=0
 		for(var/mob/living/L in donators)
-			if (iscultist(L) && (L in range(src ,1)) && (L.stat == CONSCIOUS))
+			if (iscultist(L) && (L in range(src, 1)) && (L.stat == CONSCIOUS))
 				summoners++
 				summoners += round(L.get_cult_power()/30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
 			else											//This makes using the rune alone hard at roundstart, but fairly easy later on.
@@ -1209,8 +1221,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 					donator[1]
 					S.amount = 2
 					if(iscarbon(donator[1]))
-						var/mob/living/user = invokers[1]
-						S.blood_DNA = user.dna
+						var/mob/living/carbon/C = donator[1]
+						S.blood_DNA = C.dna
 				abort(RITUALABORT_BLOOD)
 				return
 

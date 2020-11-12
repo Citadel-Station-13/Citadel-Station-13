@@ -25,3 +25,5 @@
 //VGcult defines
 #define RITUALABORT_BLOOD	"channel cancel"
 #define RITUALABORT_BLOCKED	"blocked"
+#define RITUALABORT_STAND	"too far"
+#define RITUALABORT_GONE	"moved away"
