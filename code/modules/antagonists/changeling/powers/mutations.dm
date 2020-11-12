@@ -684,10 +684,10 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
-	enhancement = 9 // first, do harm. all of it. all of the harm. just fuck em up.
-	wound_enhancement = 9
-	var/fast_enhancement = 9
-	var/fast_wound_enhancement = 9
+	enhancement = 6 // first, do harm. all of it. all of the harm. just fuck em up.
+	wound_enhancement = 6
+	var/fast_enhancement = 6
+	var/fast_wound_enhancement = 6
 	var/slow_enhancement = 20
 	var/slow_wound_enhancement = 20
 	silent = TRUE

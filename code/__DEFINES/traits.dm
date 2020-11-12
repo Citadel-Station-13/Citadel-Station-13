@@ -208,10 +208,9 @@
 #define TRAIT_FAST_PUMP				"fast_pump"
 #define TRAIT_NO_PROCESS_FOOD	"no-process-food" // You don't get benefits from nutriment, nor nutrition from reagent consumables
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good...
-/// Prevents stamina buffer regeneration
-#define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen"
-/// Prevents stamina regeneration
-#define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen"
+#define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen" /// Prevents stamina buffer regeneration
+#define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen" /// Prevents stamina regeneration
+#define TRAIT_ARMOR_BROKEN		"armor_broken" //acts as if you are wearing no clothing when taking damage, does not affect non-clothing sources of protection
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -324,3 +323,4 @@
 /// This trait is added by the parry system.
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
+#define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.

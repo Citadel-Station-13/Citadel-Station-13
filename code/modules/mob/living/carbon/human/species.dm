@@ -668,7 +668,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	H.remove_overlay(BODY_FRONT_LAYER)
 	H.remove_overlay(HORNS_LAYER)
 
-	if(!mutant_bodyparts)
+	if(!length(mutant_bodyparts))
 		return
 
 	var/tauric = mutant_bodyparts["taur"] && H.dna.features["taur"] && H.dna.features["taur"] != "None"
@@ -1451,9 +1451,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.apply_damage(damage*1.5, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			target.apply_damage(damage*0.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "kicked")
-		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.3x raw damage + 1x stam damage, and have some armor pierce
-			target.apply_damage(damage*1.3, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
-			target.apply_damage(damage, STAMINA, affecting, armor_block)
+		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.1x raw damage + 1.3x stam damage, and have some armor pierce
+			target.apply_damage(damage*1.1, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
+			target.apply_damage(damage*1.3, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched (mauler)")
 		else //other attacks deal full raw damage + 2x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
