@@ -1232,13 +1232,23 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 		update_progbar()
 
-		sleep(10)
 	message_admins("A rune ritual has iterated for over 1000 blood payment procs. Something's wrong there.")
 
 /obj/effect/rune/summon_structure/proc/success()
 	new spawntype(loc)
 	qdel(src) //Deletes the datum as well.
 
+/datum/rune_spell/blood_cult/raisestructure/proc/proximity_check()
+	var/obj/effect/rune/R = spell_holder
+	if (locate(/obj/structure/cult) in range(R.loc,1))
+		abort(RITUALABORT_BLOCKED)
+		return FALSE
+
+	if (locate(/obj/machinery/door/mineral/cult) in range(R.loc,1))
+		abort(RITUALABORT_NEAR)
+		return FALSE
+
+	else return TRUE
 
 /proc/hudFix(mob/living/carbon/human/target)
 	if(!target || !target.client)
