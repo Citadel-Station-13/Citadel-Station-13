@@ -7,7 +7,7 @@
 	antag_moodlet = /datum/mood_event/cult
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 	var/datum/action/innate/hierophant/hierophant_network = new
-	var/datum/action/innate/hierophant/eminence_ascend = new
+	var/datum/action/innate/eminence_ascend = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
 	var/make_team = TRUE //This should be only false for tutorial scarabs
@@ -16,19 +16,23 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/clockcult/silent
+	name = "Silent Clock Cultist"
 	silent = TRUE
 	show_in_antagpanel = FALSE //internal
 
 /datum/antagonist/clockcult/neutered
+	name = "Neutered Clock Cultist"
 	neutered = TRUE
 
 /datum/antagonist/clockcult/neutered/traitor
+	name = "Traitor Clock Cultist"
 	ignore_eligibility_check = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE
 	make_team = FALSE
 
 /datum/antagonist/clockcult/eminence
+	name = "Eminence"
 	var/datum/action/innate/eminence/mass_recall = new
 	var/datum/action/innate/eminence/obelisk_jump = new
 	var/datum/action/innate/eminence/ark_jump = new

@@ -1,5 +1,5 @@
 /datum/action/innate/eminence_ascend
-	name = "Ascend as eminence"
+	name = "Ascend as the Eminence"
 	button_icon_state = "eminence_action"
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
@@ -7,48 +7,46 @@
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-/datum/action/innate/eminence_ascend/activate()
-	var/datum/antagonist/clockcult/C = user.mind.has_antag_datum(/datum/antagonist/clockcult)
+/datum/action/innate/eminence_ascend/Activate()
+	var/datum/antagonist/clockcult/C = owner.mind.has_antag_datum(/datum/antagonist/clockcult)
 	if(!C || !C.clock_team)
 		return
 	if(C.clock_team.eminence)
-		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
+		to_chat(owner, "<span class='warning'>There's already an Eminence!</span>")
 		return
 	if(eminence_nominee) //This could be one large proc, but is split into three for ease of reading
-		if(eminence_nominee == user)
-			cancelation(user)
+		if(eminence_nominee == owner)
+			cancelation(owner)
 		else
-			objection(user)
+			objection(owner)
 	else
-		nomination(user)
-
-/datum/action/innate/eminence_ascend/attack_drone(mob/living/simple_animal/drone/user)
-	if(!is_servant_of_ratvar(user))
-		..()
-	else
-		to_chat(user, "<span class='warning'>You feel the omniscient gaze turn into a puzzled frown. Perhaps you should just stick to building.</span>")
+		nomination(owner)
+/*
+/datum/action/innate/eminence_ascend/activate()
+	if(!is_(owner))
+		to_chat(owner, "<span class='warning'>You feel the omniscient gaze turn into a puzzled frown. Perhaps you should just stick to building.</span>")
 		return
-
+*/
 	var/datum/mind/rando = locate() in get_antag_minds(/datum/antagonist/clockcult) //if theres no cultists new team without eminence will be created anyway.
 	if(rando)
 		var/datum/antagonist/clockcult/random_cultist = rando.has_antag_datum(/datum/antagonist/clockcult)
 		if(random_cultist && random_cultist.clock_team && random_cultist.clock_team.eminence)
-			to_chat(user, "<span class='warning'>There's already an Eminence - too late!</span>")
+			to_chat(owner, "<span class='warning'>There's already an Eminence - too late!</span>")
 			return
 	if(!GLOB.servants_active)
-		to_chat(user, "<span class='warning'>The Ark must be active first!</span>")
+		to_chat(owner, "<span class='warning'>The Ark must be active first!</span>")
 		return
-	if(alert(user, "Become the Eminence using admin?", "Become Eminence", "Yes", "No") != "Yes")
+	if(alert(owner, "Become the Eminence using admin?", "Become Eminence", "Yes", "No") != "Yes")
 		return
-	message_admins("<span class='danger'>Admin [key_name_admin(user)] directly became the Eminence of the cult!</span>")
-	log_admin("Admin [key_name(user)] made themselves the Eminence.")
+	message_admins("<span class='danger'>Admin [key_name_admin(owner)] directly became the Eminence of the cult!</span>")
+	log_admin("Admin [key_name(owner)] made themselves the Eminence.")
 	var/mob/camera/eminence/eminence = new(get_turf(src))
-	user.transfer_ckey(eminence, FALSE)
+	owner.transfer_ckey(eminence, FALSE)
 	hierophant_message("<span class='bold large_brass'>Ratvar has directly assigned the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
 		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
 
-/datum/action/innate/eminence_ascend/proc/nomination(mob/living/nominee) //A user is nominating themselves or ghosts to become Eminence
+/datum/action/innate/eminence_ascend/proc/nomination(mob/living/nominee) //A owner is nominating themselves or ghosts to become Eminence
 	var/nomination_choice = alert(nominee, "Who would you like to nominate?", "Eminence Nomination", "Nominate Yourself", "Nominate Ghosts", "Cancel")
 	if(!is_servant_of_ratvar(nominee) || !nominee.canUseTopic(src) || eminence_nominee)
 		return
@@ -95,7 +93,7 @@
 			return
 		playsound(eminence_nominee, 'sound/machines/clockcult/ark_damage.ogg', 50, FALSE)
 		eminence_nominee.visible_message("<span class='warning'>A blast of white-hot light flows into [eminence_nominee], vaporizing [eminence_nominee.p_them()] in an instant!</span>", \
-		"<span class='userdanger'>allthelightintheuniverseflowing.into.YOU</span>")
+		"<span class='ownerdanger'>allthelightintheuniverseflowing.into.YOU</span>")
 		for(var/obj/item/I in eminence_nominee)
 			eminence_nominee.dropItemToGround(I)
 		var/mob/camera/eminence/eminence = new(get_turf(src))
@@ -113,8 +111,6 @@
 			hierophant_message("<span class='brass'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
 			eminence_nominee = null
 			return
-		visible_message("<span class='warning'>A blast of white-hot light spirals from [src] in waves!</span>")
-		playsound(src, 'sound/machines/clockcult/ark_damage.ogg', 50, FALSE)
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee = pick(candidates)
 		eminence_nominee.transfer_ckey(eminence)
