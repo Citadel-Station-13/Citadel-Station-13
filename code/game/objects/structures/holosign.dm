@@ -98,6 +98,10 @@
 /obj/structure/holosign/barrier/firelock/BlockSuperconductivity()
 	return TRUE
 
+/obj/structure/holosign/barrier/firelock/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
 /obj/structure/holosign/barrier/combifan
 	name = "holo combifan"
 	desc = "A holographic barrier resembling a blue-accented tiny fan. Though it does not prevent solid objects from passing through, gas and temperature changes are kept out."

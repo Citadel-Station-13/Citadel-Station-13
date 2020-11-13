@@ -928,8 +928,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/mob/living/user = AM
 		if(user.status_flags & GODMODE)
 			return
-		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
+		var/add
+		if(user.mind?.assigned_role == "Clown")
+			var/denergy = rand(-1000, 1000)
+			var/ddamage = rand(-150, clamp(150, 0, (explosion_point - damage) + 150))
+			power += denergy
+			damage += ddamage
+			add = ", adding [denergy] energy and [ddamage] damage to the crystal"
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)][add].")
+		investigate_log("has consumed [key_name(user)][add].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
 		if(power_changes)
 			matter_power += 200

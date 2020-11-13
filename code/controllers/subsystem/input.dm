@@ -64,10 +64,10 @@ SUBSYSTEM_DEF(input)
 	// Misc
 	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\""
 	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\""
-	
+
 	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
-	
-	// HAHA - SIKE. Because of BYOND weirdness (tl;dr not specifically binding this way results in potentially duplicate chatboxes when 
+
+	// HAHA - SIKE. Because of BYOND weirdness (tl;dr not specifically binding this way results in potentially duplicate chatboxes when
 	//  conflicts occur with something like say indicator vs say), we're going to snowflake this anyways
 	var/list/hard_binds = list(
 		"O" = "ooc",
@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(input)
 	for(var/key in hard_binds)
 		for(var/modifier in anti_collision_modifiers)
 			hard_bind_anti_collision["[modifier]+[key]"] = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
-	
+
 	macroset_classic_hotkey = list(
 	"Any" = "\"KeyDown \[\[*\]\]\"",
 	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(input)
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	)
-	
+
 	macroset_classic_hotkey |= hard_binds
 	macroset_classic_hotkey |= hard_bind_anti_collision
 
@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(input)
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	)
-	
+
 	macroset_hotkey |= hard_binds
 	macroset_hotkey |= hard_bind_anti_collision
 

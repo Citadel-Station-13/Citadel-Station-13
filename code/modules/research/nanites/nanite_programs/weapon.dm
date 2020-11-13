@@ -123,7 +123,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/emp/on_trigger(comm_message)
-	empulse(host_mob, 1, 2)
+	empulse_using_range(host_mob, 3)
 
 /datum/nanite_program/pyro/active_effect()
 	host_mob.fire_stacks += 1

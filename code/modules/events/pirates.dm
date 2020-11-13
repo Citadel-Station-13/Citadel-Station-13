@@ -141,7 +141,7 @@
 	for(var/obj/machinery/rnd/server/S in GLOB.machines)
 		if(S.stat & (NOPOWER|BROKEN))
 			continue
-		S.emp_act(1)
+		S.emp_act(80)
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
@@ -219,7 +219,7 @@
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/internals/oxygen
+	storage_type = /obj/item/tank/jetpack/void
 
 
 /obj/machinery/loot_locator
@@ -275,6 +275,7 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	resistance_flags = INDESTRUCTIBLE
 	ui_x = 600
 	ui_y = 230
 	var/status_report = "Ready for delivery."
