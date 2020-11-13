@@ -770,11 +770,11 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!prob(corruption)) //Lucky you beat the rng roll!
 		return
 	var/list/whatmighthappen = list()
-	whatmighthappen += list("message" = 4, "dropthing" = 2, "movetile" = 1, "shortdeaf" = 1, "flopover" = 2, "nutriloss" = 1, "selfflash" = 1, "harmies" = 2)
+	whatmighthappen += list("message" = 4, "dropthing" = 1, "movetile" = 1, "shortdeaf" = 1, "flopover" = 2, "nutriloss" = 1, "selfflash" = 1, "harmies" = 1)
 	if(corruption >= CORRUPTION_THRESHHOLD_MAJOR)
-		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 2, "shortblind" = 1, "shortstun" = 1, "shortmute" = 2, "vomit" = 1, "halluscinate" = 2)
+		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 1, "shortblind" = 1, "shortstun" = 1, "shortmute" = 1, "vomit" = 1, "halluscinate" = 2)
 	if(corruption >= CORRUPTION_THRESHHOLD_CRITICAL)
-		whatmighthappen += list("receporgandamage" = 1, "longlimbdisable" = 2, "blindmutedeaf" = 1, "longstun" = 1, "sleep" = 1, "inducetrauma" = 2, "amplifycorrupt" = 4, "changetemp" = 2)
+		whatmighthappen += list("receporgandamage" = 1, "longlimbdisable" = 1, "blindmutedeaf" = 1, "longstun" = 1, "sleep" = 1, "inducetrauma" = 1, "amplifycorrupt" = 2, "changetemp" = 2)
 	var/event = pickweight(whatmighthappen)
 	log_message("has been affected by [event] due to system corruption of [corruption], with a corruption state of [corruption_state]", LOG_ATTACK)
 	switch(event)
@@ -857,6 +857,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			addtimer(CALLBACK(src, .proc/forcesleep), (rand(6, 10)) SECONDS)
 			to_chat(src, "<span class='warning'>Priority 1 shutdown order received in operating system - Preparing powerdown.</span>")
 		if("inducetrauma")
+			to_chat(src, "<span class='warning'>Major interference detected in main operating matrix - Complications possible.</span>")
 			var/resistance = pick(
 				65;TRAUMA_RESILIENCE_BASIC,
 				35;TRAUMA_RESILIENCE_SURGERY)
@@ -864,7 +865,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			var/trauma_type = pickweight(list(
 				BRAIN_TRAUMA_MILD = 80,
 				BRAIN_TRAUMA_SEVERE = 10))
-			gain_trauma_type(trauma_type, resistance) //Gaining the trauma will inform them
+			gain_trauma_type(trauma_type, resistance) //Gaining the trauma will inform them, but we'll tell them too so they know what the reason was.
 		if("amplifycorrupt")
 			adjustToxLoss(5, toxins_type = TOX_SYSCORRUPT)
 			to_chat(src, "<span class='warning'>System safeguards failing - Action urgently required.</span>")
