@@ -1284,6 +1284,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		radiation = 0
 		return TRUE
 
+	if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
+		return //Robots are hardened against radiation, but suffer system corruption at very high levels.
+
 	if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
 		if(CHECK_MOBILITY(H, MOBILITY_STAND))
 			H.emote("collapse")
