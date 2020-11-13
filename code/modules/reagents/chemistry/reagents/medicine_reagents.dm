@@ -1697,7 +1697,7 @@
 //Sloowly heals system corruption in robotic organisms. Causes mild toxins damage in nonrobots.
 /datum/reagent/medicine/system_cleaner
 	name = "System Cleaner"
-	description = "A reagent with special properties causing it to slowly reduce corruption in robots. Mildly toxic for nonrobots."
+	description = "A reagent with special properties causing it to slowly reduce corruption in robots. Mildly toxic for organics."
 	reagent_state = LIQUID
 	color = "#D7C9C6"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
