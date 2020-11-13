@@ -79,7 +79,7 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 		"[user] completes the surgery on [target].")
 	var/purged = target.getToxLoss(TOX_SYSCORRUPT)
 	target.setToxLoss(0, toxins_type = TOX_SYSCORRUPT)
-	target.Sleeping(round(purged * 0.2, 1))
+	target.Unconscious(round(purged * 0.2, 1))
 	return TRUE
 
 /datum/surgery_step/remove_corruption/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
