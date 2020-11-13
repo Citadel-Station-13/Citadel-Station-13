@@ -5,10 +5,10 @@
 //Moved into its own file for easier accessability & less cluttering of carbon/life.dm. Used in BiologicalLife()
 
 
-#define CORRUPTION_CHECK_INTERVAL 10//Life() is called once every second.. I think?.
+#define CORRUPTION_CHECK_INTERVAL 10   //Life() is called once every second, so ten seconds interval.
 #define CORRUPTION_THRESHHOLD_MINOR 10 //Above: Annoyances, to remind you you should get your corruption fixed.
-#define CORRUPTION_THRESHHOLD_MAJOR 40 //Above: Very annoying stuff, go get fixed.
-#define CORRUPTION_THRESHHOLD_CRITICAL 70 //Above: Extremely annoying stuff, possibly life-threatening
+#define CORRUPTION_THRESHHOLD_MAJOR 35 //Above: Very annoying stuff, go get fixed.
+#define CORRUPTION_THRESHHOLD_CRITICAL 65 //Above: Extremely annoying stuff, possibly life-threatening
 
 /mob/living/carbon/proc/handle_corruption()
 	if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM)) //Only robot-people need to care about this
@@ -35,11 +35,11 @@
 	if(!prob(corruption)) //Lucky you beat the rng roll!
 		return
 	var/list/whatmighthappen = list()
-	whatmighthappen += list("avoided" = 4, "dropthing" = 1, "movetile" = 1, "shortdeaf" = 1, "flopover" = 2, "nutriloss" = 1, "selfflash" = 1, "harmies" = 1)
+	whatmighthappen += list("avoided" = 3, "dropthing" = 1, "movetile" = 1, "shortdeaf" = 1, "flopover" = 1, "nutriloss" = 1, "selfflash" = 1, "harmies" = 1)
 	if(corruption >= CORRUPTION_THRESHHOLD_MAJOR)
-		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 1, "shortblind" = 1, "shortstun" = 1, "shortmute" = 1, "vomit" = 1, "halluscinate" = 2)
+		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 1, "shortblind" = 1, "shortstun" = 1, "shortmute" = 1, "vomit" = 1, "halluscinate" = 1)
 	if(corruption >= CORRUPTION_THRESHHOLD_CRITICAL)
-		whatmighthappen += list("receporgandamage" = 1, "longlimbdisable" = 1, "blindmutedeaf" = 1, "longstun" = 1, "sleep" = 1, "inducetrauma" = 1, "amplifycorrupt" = 2, "changetemp" = 2)
+		whatmighthappen += list("receporgandamage" = 1, "longlimbdisable" = 1, "blindmutedeaf" = 1, "longstun" = 1, "sleep" = 1, "inducetrauma" = 1, "amplifycorrupt" = 1, "changetemp" = 1)
 	var/event = pickweight(whatmighthappen)
 	log_message("has been affected by [event] due to system corruption of [corruption], with a corruption state of [corruption_state]", LOG_ATTACK)
 	switch(event)
@@ -52,7 +52,7 @@
 		if("movetile")
 			if(CHECK_MOBILITY(src, MOBILITY_MOVE) && !ismovable(loc))
 				step(src, pick(GLOB.cardinals))
-				to_chat(src, "<span class='warning'>Error - Malfuction in movement control subsystem.</span>")
+				to_chat(src, "<span class='warning'>Error - Malfunction in movement control subsystem.</span>")
 		if("shortdeaf")
 			ADD_TRAIT(src, TRAIT_DEAF, CORRUPTED_SYSTEM)
 			addtimer(CALLBACK(src, .proc/reenable_hearing), 5 SECONDS)
@@ -65,7 +65,7 @@
 			to_chat(src, "<span class='warning'>Power surge detected in internal battery cell.</span>")
 		if("selfflash")
 			if(flash_act(override_protection = 1))
-				confused += 2
+				confused += 4
 				to_chat(src, "<span class='warning'>Error - Sensory system overload detected!</span>")
 		if("harmies")
 			a_intent_change(INTENT_HARM)
