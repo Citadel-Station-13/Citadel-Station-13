@@ -174,7 +174,7 @@
 		return toxloss
 
 	var/affected_by = TOX_DEFAULT
-	if(HAS_TRAIT(src, TRAIT_ROBOTICORGANISM))
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		affected_by = TOX_SYSCORRUPT
 
 	if(toxins_type != affected_by)
@@ -186,7 +186,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	var/affected_by = TOX_DEFAULT
-	if(HAS_TRAIT(src, TRAIT_ROBOTICORGANISM))
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		affected_by = TOX_SYSCORRUPT
 	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
 		return FALSE
@@ -202,7 +202,7 @@
 		return FALSE
 
 	var/affected_by = TOX_DEFAULT
-	if(HAS_TRAIT(src, TRAIT_ROBOTICORGANISM))
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 		affected_by = TOX_SYSCORRUPT
 	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
 		return FALSE

@@ -155,7 +155,7 @@ GENETICS SCANNER
 	if(oxy_loss > 10)
 		msg += "\n\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>"
 	if(tox_loss > 10)
-		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of [HAS_TRAIT(M, TRAIT_ROBOTICORGANISM) ? "system corruption" : "toxin damage"] detected.</span>"
+		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of [HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM) ? "system corruption" : "toxin damage"] detected.</span>"
 	if(M.getStaminaLoss())
 		msg += "\n\t<span class='alert'>Subject appears to be suffering from fatigue.</span>"
 		if(advanced)
@@ -182,7 +182,7 @@ GENETICS SCANNER
 							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
 							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
 							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
-							<td style='width: 45px;'><font color='green'><b>[HAS_TRAIT(C, TRAIT_ROBOTICORGANISM) ? "Corruption" :"Toxin"]</b></font></td>\
+							<td style='width: 45px;'><font color='green'><b>[HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "Corruption" :"Toxin"]</b></font></td>\
 							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 							<tr><td><font color='#0000CC'>Overall:</font></td>\
 							<td><font color='red'>[brute_loss]</font></td>\

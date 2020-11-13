@@ -746,7 +746,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 #define CORRUPTION_THRESHHOLD_CRITICAL 70 //Above: Extremely annoying stuff, possibly life-threatening
 
 /mob/living/carbon/proc/handle_corruption()
-	if(!HAS_TRAIT(src, TRAIT_ROBOTICORGANISM)) //Only robot-people need to care about this
+	if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM)) //Only robot-people need to care about this
 		return
 	corruption_timer++
 	var/corruption = getToxLoss(toxins_type = TOX_SYSCORRUPT)
