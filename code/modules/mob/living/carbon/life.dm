@@ -869,7 +869,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			adjustToxLoss(5, toxins_type = TOX_SYSCORRUPT)
 			to_chat(src, "<span class='warning'>System safeguards failing - Action urgently required.</span>")
 		if("changetemp")
-			adjust_bodytemperature(pick(list(rand(-100, -70), rand(70, 100))))
+			adjust_bodytemperature(rand(150, 250))
 			to_chat(src, "<span class='warning'>Warning - Fatal coolant flow error at node [rand(6, 99)]!</span>") //This is totally not a reference to anything.
 
 /mob/living/carbon/proc/reenable_limb(disabled_limb)
