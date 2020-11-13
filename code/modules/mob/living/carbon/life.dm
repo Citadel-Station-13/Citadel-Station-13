@@ -441,7 +441,10 @@
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
-		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
+		if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+			adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
+		else if(radiation > RAD_MOB_SAFE * 3)
+			adjustToxLoss(log(radiation-RAD_MOB_SAFE*3)*RAD_TOX_COEFFICIENT*0.2) //Robots are more resistant to rads, but in the end suffer slow corruption at high levels.
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
