@@ -492,7 +492,7 @@
 	var/possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/process()
-	for(var/mob/living/simple_animal/shade/S in contents)
+	for(var/mob/living/simple_animal/hostile/construct/shade/S in contents)
 		if(S.mind)
 			return
 		else
@@ -516,7 +516,7 @@
 
 	if(LAZYLEN(candidates))
 		var/mob/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
+		var/mob/living/simple_animal/hostile/construct/shade/S = new(src)
 		S.real_name = name
 		S.name = name
 		S.ckey = C.ckey
@@ -537,7 +537,7 @@
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
+	for(var/mob/living/simple_animal/hostile/construct/shade/S in contents)
 		to_chat(S, "You were destroyed!")
 		qdel(S)
 	return ..()
