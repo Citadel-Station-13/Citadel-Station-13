@@ -78,7 +78,7 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 		"[user] successfully initiates a system purge in [target].",
 		"[user] completes the surgery on [target].")
 	var/purged = target.getToxLoss(TOX_SYSCORRUPT)
-	target.setToxLoss(0, TOX_SYSCORRUPT)
+	target.setToxLoss(0, toxins_type = TOX_SYSCORRUPT)
 	target.Sleeping(round(purged * 0.2, 1))
 	return TRUE
 
