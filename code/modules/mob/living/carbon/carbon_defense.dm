@@ -212,6 +212,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		adjustToxLoss(severity/5, toxins_type = TOX_SYSCORRUPT) //EMPs fuck robots over. Up to 20 corruption per EMP if hit by the full power. Might be a bit high, subject to change if it is.
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
