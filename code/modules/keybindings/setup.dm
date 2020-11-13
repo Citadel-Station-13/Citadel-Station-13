@@ -5,7 +5,7 @@
 	SHOULD_NOT_SLEEP(TRUE)
 
 /datum/proc/keyLoop(client/user) // Called once every frame
-	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_NOT_SLEEP(TRUE)
 
 // removes all the existing macros
 /client/proc/erase_all_macros()
