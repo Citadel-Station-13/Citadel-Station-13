@@ -773,7 +773,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!prob(corruption)) //Lucky you beat the rng roll!
 		return
 	var/list/whatmighthappen = list()
-	whatmighthappen += list("message" = 4, "dropthing" = 1, "movetile" = 1, "shortdeaf" = 1, "flopover" = 2, "nutriloss" = 1, "selfflash" = 1, "harmies" = 1)
+	whatmighthappen += list("avoided" = 4, "dropthing" = 1, "movetile" = 1, "shortdeaf" = 1, "flopover" = 2, "nutriloss" = 1, "selfflash" = 1, "harmies" = 1)
 	if(corruption >= CORRUPTION_THRESHHOLD_MAJOR)
 		whatmighthappen += list("longdeaf" = 1, "longknockdown" = 1, "shortlimbdisable" = 1, "shortblind" = 1, "shortstun" = 1, "shortmute" = 1, "vomit" = 1, "halluscinate" = 2)
 	if(corruption >= CORRUPTION_THRESHHOLD_CRITICAL)
@@ -781,7 +781,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	var/event = pickweight(whatmighthappen)
 	log_message("has been affected by [event] due to system corruption of [corruption], with a corruption state of [corruption_state]", LOG_ATTACK)
 	switch(event)
-		if("message")
+		if("avoided")
 			to_chat(src, "<span class='notice'>System malfunction avoided by hardware safeguards - intervention recommended.</span>")
 			adjustToxLoss(-0.2, toxins_type = TOX_SYSCORRUPT) //If you roll this, your system safeguards caught onto the system corruption and neutralised a bit of it.
 		if("dropthing")
