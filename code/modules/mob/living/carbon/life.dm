@@ -444,7 +444,7 @@
 		if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 			adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
 		else if(radiation > RAD_MOB_SAFE * 3)
-			adjustToxLoss(log(radiation-RAD_MOB_SAFE*3)*RAD_TOX_COEFFICIENT*0.2, toxins_type = TOX_SYSCORRUPT) //Robots are more resistant to rads, but in the end suffer slow corruption at high levels.
+			adjustToxLoss(log(radiation-RAD_MOB_SAFE*3)*RAD_TOX_COEFFICIENT, toxins_type = TOX_SYSCORRUPT) //Robots are more resistant to rads, but in the end suffer slow corruption at high levels.
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
