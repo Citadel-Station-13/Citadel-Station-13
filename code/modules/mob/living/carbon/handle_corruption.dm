@@ -20,7 +20,7 @@
 	switch(corruption)
 		if(0 to CORRUPTION_THRESHHOLD_MINOR)
 			timer_req = INFINITY //Below minor corruption you are fiiine
-			corruption_state = "<font color='green'>None</font>"
+			corruption_state = "<font color='green'>None</font>" //This should never happen, but have it anyways.
 		if(CORRUPTION_THRESHHOLD_MINOR to CORRUPTION_THRESHHOLD_MAJOR)
 			corruption_state = "<font color='blue'>Minor</font>"
 		if(CORRUPTION_THRESHHOLD_MAJOR to CORRUPTION_THRESHHOLD_CRITICAL)

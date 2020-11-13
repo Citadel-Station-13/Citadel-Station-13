@@ -213,7 +213,10 @@
 	if(. & EMP_PROTECT_CONTENTS)
 		return
 	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
-		adjustToxLoss(severity/5, toxins_type = TOX_SYSCORRUPT) //EMPs fuck robots over. Up to 20 corruption per EMP if hit by the full power. Might be a bit high, subject to change if it is.
+		//EMPs fuck robots over. Up to ~11.5 corruption per EMP if hit by the full power. They also get up to 15 burn damage per EMP (up to 2.5 per limb), plus short hardstun
+		//Though, note that the burn damage is linear, while corruption is logarythmical, which means at lower severities you still get corruption, but far less burn / stun
+		//Note than as compensation, they only take half the limb burn damage someone fully augmented would take, which would be up to 30 burn.
+		adjustToxLoss(round(log(severity)*2.5, 0.1), toxins_type = TOX_SYSCORRUPT)
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
