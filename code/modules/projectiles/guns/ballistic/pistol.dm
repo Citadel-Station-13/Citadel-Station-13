@@ -54,11 +54,10 @@
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
-	desc = "A classic .45 handgun with a small magazine capacity."
+	desc = "A classic .45 handgun with a small magazine capacity. Has a threaded barrel for suppressors."
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
-	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
@@ -67,6 +66,7 @@
 	name = "\improper Kitchen Gun (TM)"
 	desc = "Say goodbye to dirt with Kitchen Gun (TM)! Laser sight and night vision accessories sold separately."
 	icon_state = "kitchengun"
+	can_suppress = FALSE
 	mag_type = /obj/item/ammo_box/magazine/m45/kitchengun
 
 /obj/item/gun/ballistic/automatic/pistol/deagle
@@ -98,11 +98,10 @@
 
 /obj/item/gun/ballistic/automatic/pistol/APS
 	name = "stechkin APS pistol"
-	desc = "The original Russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
+	desc = "The original Russian version of a widely used Syndicate sidearm. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
-	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
@@ -136,7 +135,7 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 50
 	burst_size = 1
-	can_suppress = 0
+	can_suppress = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list()
 	fire_sound = 'sound/weapons/blastcannon.ogg'

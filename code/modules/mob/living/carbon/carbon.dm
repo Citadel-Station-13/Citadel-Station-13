@@ -611,7 +611,7 @@
 		update_mobility()
 	UpdateStaminaBuffer()
 	update_health_hud()
-	
+
 /mob/living/carbon/update_sight()
 	if(!client)
 		return
