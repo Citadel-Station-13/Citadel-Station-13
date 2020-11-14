@@ -1,0 +1,5 @@
+author: SandPoot
+delete-after: true
+changes:
+  - rscadd: Added ClothesMate resupply canister to cargo for the same price of the
+      AutoDrobe.
