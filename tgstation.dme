@@ -3725,6 +3725,7 @@
 #include "sandcode\code\modules\atmospherics\machinery\pipes\bluespace.dm"
 #include "sandcode\code\modules\cargo\packs\emergency.dm"
 #include "sandcode\code\modules\cargo\packs\misc.dm"
+#include "sandcode\code\modules\cargo\packs\vending.dm"
 #include "sandcode\code\modules\client\asset_cache.dm"
 #include "sandcode\code\modules\client\loadout\boxers.dm"
 #include "sandcode\code\modules\client\loadout\shirts.dm"
