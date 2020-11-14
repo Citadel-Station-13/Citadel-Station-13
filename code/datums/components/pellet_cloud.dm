@@ -55,7 +55,7 @@
 	var/mob/living/shooter
 
 /datum/component/pellet_cloud/Initialize(projectile_type=/obj/item/shrapnel, magnitude=5)
-	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent))
+	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent) && !issupplypod(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(magnitude < 1)
