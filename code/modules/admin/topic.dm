@@ -508,7 +508,7 @@
 			if("constructwraith")
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
-				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/hostile/construct/shade , null, null, delmob )
 
 
 	/////////////////////////////////////new ban stuff
@@ -2475,7 +2475,7 @@
 										R.activate_module(I)
 
 		if(pod)
-			new /obj/effect/abstract/DPtarget(target, pod)
+			new /obj/effect/pod_landingzone(target, pod)
 
 		if (number == 1)
 			log_admin("[key_name(usr)] created a [english_list(paths)]")

@@ -651,11 +651,11 @@
 	name = "Fennec"
 	icon_state = "fennec"
 
-/datum/sprite_accessory/tails/mam_tails/human/fish
+/datum/sprite_accessory/tails/mam_tails/fish
 	name = "Fish"
 	icon_state = "fish"
 
-/datum/sprite_accessory/tails_animated/mam_tails_animated/human/fish
+/datum/sprite_accessory/tails_animated/mam_tails_animated/fish
 	name = "Fish"
 	icon_state = "fish"
 

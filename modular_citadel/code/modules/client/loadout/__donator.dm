@@ -522,3 +522,17 @@
 	slot = SLOT_HEAD
 	path = 	/obj/item/clothing/head/halo
 	ckeywhitelist = list("hisakaki")
+
+/datum/gear/donator/vest
+	name = "vest and shirt"
+	slot = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/custom/vest
+	ckeywhitelist = list("maylowfox")
+
+/datum/gear/donator/exo
+	name = "exo frame"
+	slot = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/custom/exo
+	ckeywhitelist = list("jesterz7")
+
+

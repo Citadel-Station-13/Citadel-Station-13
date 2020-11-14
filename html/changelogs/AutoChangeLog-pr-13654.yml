@@ -1,0 +1,4 @@
+author: "ArchieBeepBoop"
+delete-after: True
+changes: 
+  - bugfix: "Jacqueen and the Christmas tree should no longer spawn abstract things that can cause shittons of runtimes."

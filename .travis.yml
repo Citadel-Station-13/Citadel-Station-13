@@ -1,13 +1,13 @@
 language: generic
+os: linux
 dist: xenial
-sudo: false
 
 branches:
   except:
   - ___TGS3TempBranch
   - ___TGSTempBranch
 
-matrix:
+jobs:
   include:
     - name: "Run Linters"
       addons:
@@ -16,9 +16,15 @@ matrix:
             - python3
             - python3-pip
             - python3-setuptools
+            - pcregrep
+            - rustc
+            - cargo
+      cache:
+        directories:
+          - $HOME/SpacemanDMM
       install:
         - tools/travis/install_build_tools.sh
-        - tools/travis/install_dreamchecker.sh
+        - tools/travis/install_spaceman_dmm.sh dreamchecker
       script:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/check_changelogs.sh
@@ -76,3 +82,21 @@ matrix:
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme || travis_terminate 1
         - tools/travis/run_server.sh
+
+    # - name: "Generate Documentation"
+    #   # Only run for non-PR commits to the real master branch.
+    #   if: branch = master AND head_branch IS blank
+    #   install:
+    #     - tools/travis/install_spaceman_dmm.sh dmdoc
+    #   before_script:
+    #     # Travis checks out a hash, try to get back on a branch.
+    #     - git checkout $TRAVIS_BRANCH || true
+    #   script:
+    #     - ~/dmdoc
+    #     - touch dmdoc/.nojekyll
+    #   deploy:
+    #     provider: pages
+    #     skip_cleanup: true
+    #     local_dir: dmdoc
+    #     token: $DMDOC_GITHUB_TOKEN
+    #     fqdn: codedocs.tgstation13.org

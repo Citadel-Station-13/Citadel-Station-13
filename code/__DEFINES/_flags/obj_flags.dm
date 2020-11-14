@@ -9,8 +9,11 @@
 #define UNIQUE_RENAME			(1<<6)	//can you customize the description/name of the thing?
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
 #define FROZEN					(1<<8)
-#define SHOVABLE_ONTO			(1<<9)	//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
-#define BLOCK_Z_FALL			(1<<10)
+#define BLOCK_Z_OUT_DOWN		(1<<9)  // Should this object block z falling from loc?
+#define BLOCK_Z_OUT_UP			(1<<10) // Should this object block z uprise from loc?
+#define BLOCK_Z_IN_DOWN			(1<<11) // Should this object block z falling from above?
+#define BLOCK_Z_IN_UP			(1<<12) // Should this object block z uprise from below?
+#define SHOVABLE_ONTO			(1<<13)	//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE	0 // We have no damage on the clothing
@@ -18,3 +21,6 @@
 #define CLOTHING_SHREDDED	2 // The clothing is useless and cannot be equipped unless repaired first
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
+
+/// Flags for the pod_flags var on /obj/structure/closet/supplypod
+#define FIRST_SOUNDS (1<<0) // If it shouldn't play sounds the first time it lands, used for reverse mode

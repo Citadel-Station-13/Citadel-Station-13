@@ -1,7 +1,7 @@
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "Xenobiological Jelly Entity"
-	id = "jelly"
+	id = SPECIES_JELLY
 	default_color = "00FF90"
 	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR,HAS_FLESH)
@@ -16,7 +16,8 @@
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	var/datum/action/innate/slime_change/slime_change	//CIT CHANGE
+	var/datum/action/innate/slime_change/slime_change
+	var/datum/action/innate/slime_puddle/slime_puddle
 	liked_food = TOXIC | MEAT
 	disliked_food = null
 	toxic_food = ANTITOXIC
@@ -28,19 +29,22 @@
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
-	species_type = "jelly"
+	species_category = SPECIES_CATEGORY_JELLY
 
 /obj/item/organ/brain/jelly
 	name = "slime nucleus"
 	desc = "A slimey membranous mass from a slime person"
 	icon_state = "brain-slime"
 
-
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
+	if(slime_puddle && slime_puddle.is_puddle)
+		slime_puddle.Activate()
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	if(slime_change)	//CIT CHANGE
-		slime_change.Remove(C)	//CIT CHANGE
+	if(slime_change)
+		slime_change.Remove(C)
+	if(slime_puddle)
+		slime_puddle.Remove(C)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
@@ -50,14 +54,28 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
-		slime_change = new	//CIT CHANGE
-		slime_change.Grant(C)	//CIT CHANGE
+		slime_change = new
+		slime_change.Grant(C)
+		slime_puddle = new
+		slime_puddle.Grant(C)
 	C.faction |= "slime"
 
 /datum/species/jelly/handle_body(mob/living/carbon/human/H)
 	. = ..()
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
+
+/datum/species/jelly/should_render()
+	if(slime_puddle && slime_puddle.is_puddle)
+		return FALSE
+	else
+		return ..()
+
+/datum/species/jelly/species_pass_check()
+	if(slime_puddle && slime_puddle.is_puddle)
+		return TRUE
+	else
+		return ..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
@@ -140,7 +158,7 @@
 
 /datum/species/jelly/slime
 	name = "Xenobiological Slime Entity"
-	id = "slime"
+	id = SPECIES_SLIME
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	say_mod = "says"
@@ -274,7 +292,17 @@
 		\"steps out\" of [H.p_them()].</span>",
 		"<span class='notice'>...and after a moment of disorentation, \
 		you're besides yourself!</span>")
-
+	if(H != spare && isslimeperson(spare) && isslimeperson(H))
+		// transfer the swap-body ui if it's open
+		var/datum/action/innate/swap_body/this_swap = origin_datum.swap_body
+		var/datum/action/innate/swap_body/other_swap = spare_datum.swap_body
+		var/datum/tgui/ui = SStgui.get_open_ui(H, this_swap, "main") || SStgui.get_open_ui(spare, this_swap, "main")
+		if(ui)
+			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
+			ui.user = spare
+			ui.src_object = other_swap
+			SStgui.on_open(ui) // stick it back on the lists
+			ui.process(force = TRUE)
 
 /datum/action/innate/swap_body
 	name = "Swap Body"
@@ -327,6 +355,8 @@
 				stat = "Conscious"
 			if(UNCONSCIOUS)
 				stat = "Unconscious"
+			if(SOFT_CRIT)
+				stat = "Barely Conscious"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -373,7 +403,6 @@
 			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
-			SStgui.close_uis(src)
 			swap_to_dupe(H.mind, selected)
 
 /datum/action/innate/swap_body/proc/can_swap(mob/living/carbon/human/dupe)
@@ -407,6 +436,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
+	var/mob/living/carbon/human/old = M.current
 	if(M.current.stat == CONSCIOUS)
 		M.current.visible_message("<span class='notice'>[M.current] \
 			stops moving and starts staring vacantly into space.</span>",
@@ -418,14 +448,27 @@
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
 		"<span class='notice'>...and move this one instead.</span>")
-
+	if(old != M.current && dupe == M.current && isslimeperson(dupe))
+		var/datum/species/jelly/slime/other_spec = dupe.dna.species
+		var/datum/action/innate/swap_body/other_swap = other_spec.swap_body
+		// theoretically the transfer_to proc is supposed to transfer the ui from the mob.
+		// so I try to get the UI from one of the two mobs and schlump it over to the new action button
+		var/datum/tgui/ui = SStgui.get_open_ui(old, src, "main") || SStgui.get_open_ui(dupe, src, "main")
+		if(ui)
+			// transfer the UI over. This code is slightly hacky but it fixes the problem
+			// I'd use SStgui.on_transfer but that doesn't let you transfer the src_object as well s
+			SStgui.on_close(ui) // basically removes it from lists is all this proc does.
+			ui.user = dupe
+			ui.src_object = other_swap
+			SStgui.on_open(ui) // stick it back on the lists
+			ui.process(force = TRUE)
 
 ////////////////////////////////////////////////////////Round Start Slimes///////////////////////////////////////////////////////////////////
 
 /datum/species/jelly/roundstartslime
 	name = "Xenobiological Slime Hybrid"
-	id = "slimeperson"
-	limbs_id = "slime"
+	id = SPECIES_SLIME_HYBRID
+	limbs_id = SPECIES_SLIME
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
 	inherent_traits = list(TRAIT_TOXINLOVER)
@@ -437,7 +480,7 @@
 	heatmod = 1
 	burnmod = 1
 
-	allowed_limb_ids = list("slime","stargazer","lum")
+	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
 
 /datum/action/innate/slime_change
 	name = "Alter Form"
@@ -466,7 +509,7 @@
 		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
 		if(new_color)
 			var/temp_hsv = RGBtoHSV(new_color)
-			if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
 				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
 				H.update_body()
 				H.update_hair()
@@ -645,6 +688,107 @@
 	else
 		return
 
+/datum/action/innate/slime_puddle
+	name = "Puddle Transformation"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimepuddle"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	background_icon_state = "bg_alien"
+	required_mobility_flags = MOBILITY_STAND
+	var/is_puddle = FALSE
+	var/in_transformation_duration = 12
+	var/out_transformation_duration = 7
+	var/puddle_into_effect = /obj/effect/temp_visual/slime_puddle
+	var/puddle_from_effect = /obj/effect/temp_visual/slime_puddle/reverse
+	var/puddle_icon = 'icons/mob/mob.dmi'
+	var/puddle_state = "puddle"
+	var/tracked_overlay
+	var/datum/component/squeak/squeak
+	var/transforming = FALSE
+	var/last_use
+
+/datum/action/innate/slime_puddle/IsAvailable()
+	if(!transforming)
+		return ..()
+	else
+		return FALSE
+
+/datum/action/innate/slime_puddle/Activate()
+	var/mob/living/carbon/human/H = owner
+	//if they have anything stuck to their hands, we immediately say 'no' and return
+	for(var/obj/item/I in H.held_items)
+		if(HAS_TRAIT(I, TRAIT_NODROP))
+			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
+			return
+	if(isjellyperson(owner) && IsAvailable())
+		transforming = TRUE
+		UpdateButtonIcon()
+		var/mutcolor = "#" + H.dna.features["mcolor"]
+		if(!is_puddle)
+			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
+				is_puddle = TRUE //so we know which transformation to use when its used
+				owner.cut_overlays() //we dont show our normal sprite, we show a puddle sprite
+				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
+				puddle_effect.color = mutcolor
+				H.Stun(in_transformation_duration, ignore_canstun = TRUE) //cant move while transforming
+
+				//series of traits that make up the puddle behaviour
+				ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
+				H.update_disabled_bodyparts(silent = TRUE)	//silently update arms to be paralysed
+
+				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
+
+				H.layer -= 1 //go one layer down so people go over you
+				ENABLE_BITFIELD(H.pass_flags, PASSMOB) //this actually lets people pass over you
+				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg')) //blorble noise when people step on you
+
+				//if the user is a changeling, retract their sting
+				H.unset_sting()
+
+				sleep(in_transformation_duration) //wait for animation to end
+
+				//set the puddle overlay up
+				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
+				puddle_overlay.color = mutcolor
+				tracked_overlay = puddle_overlay
+				owner.add_overlay(puddle_overlay)
+
+				transforming = FALSE
+				UpdateButtonIcon()
+		else
+			//like the above, but reverse everything done!
+			owner.cut_overlay(tracked_overlay)
+			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
+			puddle_effect.color = mutcolor
+			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
+			sleep(out_transformation_duration)
+			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
+			REMOVE_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
+			H.update_disabled_bodyparts(silent = TRUE)
+			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
+			H.layer += 1 //go one layer back above!
+			DISABLE_BITFIELD(H.pass_flags, PASSMOB)
+			is_puddle = FALSE
+			if(squeak)
+				squeak.RemoveComponent()
+			owner.regenerate_icons()
+			transforming = FALSE
+			UpdateButtonIcon()
+	else
+		to_chat(owner, "<span class='warning'>You need to be standing up to do this!") //just assume they're a slime because it's such a weird edgecase to have it and not be one (it shouldn't even be possible)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 
@@ -652,7 +796,7 @@
 
 /datum/species/jelly/luminescent
 	name = "Luminescent Slime Entity"
-	id = "lum"
+	id = SPECIES_SLIME_LUMI
 	say_mod = "says"
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
@@ -819,7 +963,7 @@
 
 /datum/species/jelly/stargazer
 	name = "Stargazer Slime Entity"
-	id = "stargazer"
+	id = SPECIES_STARGAZER
 	var/datum/action/innate/project_thought/project_thought
 	var/datum/action/innate/link_minds/link_minds
 	var/list/mob/living/linked_mobs = list()
