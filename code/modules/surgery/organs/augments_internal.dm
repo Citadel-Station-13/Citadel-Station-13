@@ -118,6 +118,35 @@
 	crit_fail = FALSE
 	organ_flags &= ~ORGAN_FAILING
 
+/obj/item/organ/cyberimp/brain/robot_radshielding
+	name = "ECC System Guard implant"
+	desc = "This implant can counteract the effects of harmful radiation in robots, effectively increasing their radiation tolerance significantly."
+	implant_color = "#0066ff"
+	slot = ORGAN_SLOT_BRAIN_ROBOT_RADSHIELDING
+
+/obj/item/organ/cyberimp/brain/robot_radshielding/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	if(!HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		return //Why did you even get yourself implanted this if you aren't a robot?
+	owner.adjustToxLoss(severity / 10, toxins_type = TOX_SYSCORRUPT)
+	to_chat(owner, "<span class='warning'>Your ECC implant suddenly behaves very erratically, scrambling your system.</span>")
+
+/obj/item/organ/cyberimp/brain/robot_radshielding/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_ROBOT_RADSHIELDING, ROBOT_RADSHIELDING_IMPLANT_TRAIT) //Organics can get this, but it does literally nothing for them except cause more pain if EMPd, so uh, good on you?
+
+/obj/item/organ/cyberimp/brain/robot_radshielding/Remove(special = FALSE)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/C = .
+	REMOVE_TRAIT(C, TRAIT_ROBOT_RADSHIELDING, ROBOT_RADSHIELDING_IMPLANT_TRAIT)
+
+
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

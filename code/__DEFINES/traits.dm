@@ -119,6 +119,7 @@
 #define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_ROBOTIC_ORGANISM	"robotic_organism"
+#define TRAIT_ROBOT_RADSHIELDING	"robot_radshielding"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
@@ -308,6 +309,7 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+#define ROBOT_RADSHIELDING_IMPLANT_TRAIT "robot-radshielding-implant"
 #define MARTIAL_ARTIST_TRAIT "martial_artist"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
@@ -319,7 +321,7 @@
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
 #define SLIMEPUDDLE_TRAIT "slimepuddle"
-#define CORRUPTED_SYSTEM "corrupted_system"
+#define CORRUPTED_SYSTEM "corrupted-system"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.

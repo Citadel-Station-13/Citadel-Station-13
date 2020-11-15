@@ -4,7 +4,7 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 */
 /datum/surgery/purge_corruption
 	name = "Purge corruption"
-	desc = "A highly complex and time-consuming surgery used to purge any corruption currently present in a robotic organism. Will knock the target out for an amount of time proportional to corruption purged."
+	desc = "A highly complex and time-consuming surgery used to purge any corruption currently present in a robot. Will knock out the patient for an amount of time proportional to corruption purged."
 	steps = list(
 			/datum/surgery_step/incise,
 			/datum/surgery_step/retract_skin,
@@ -16,7 +16,8 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 			/datum/surgery_step/override_safeties,
 			/datum/surgery_step/remove_corruption,
 			/datum/surgery_step/close)
-	location = BODY_ZONE_HEAD
+	possible_locs = list(BODY_ZONE_HEAD)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey) //If admins made a monkey into a robotic supersoldier or something.
 
 /datum/surgery/purge_corruption/robotic
 	requires_bodypart_type = BODYPART_ROBOTIC
@@ -32,7 +33,8 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 			/datum/surgery_step/mechanic_close)
 
 /datum/surgery/purge_corruption/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
-	if(!(. = ..()))
+	. = ..()
+	if(!.)
 		return
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B || !HAS_TRAIT(target, TRAIT_ROBOTIC_ORGANISM))
@@ -44,19 +46,19 @@ Has a version for organic people and robotic/synthetic ones, considering robotic
 	time = 50
 
 /datum/surgery_step/override_safeties/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to override the safeties of [target]'s brain...</span>",
-		"[user] begins to override the hardware safeties of [target]'s brain.",
+	display_results(user, target, "<span class='notice'>You begin to override the safeties of [target]...</span>",
+		"[user] begins to override the hardware safeties of [target].",
 		"[user] begins to perform surgery on [target]'s brain.")
 
 /datum/surgery_step/override_safeties/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You succeed in overriding the safeties of [target]'s brain.</span>",
-		"[user] successfully overrides the safeties of [target]'s posibrain!",
+	display_results(user, target, "<span class='notice'>You succeed in overriding the safeties of [target].</span>",
+		"[user] successfully overrides the safeties of [target]!",
 		"[user] completes the surgery on [target]'s brain.")
 	return TRUE
 
 /datum/surgery_step/override_safeties/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You fail overriding the safeties of [target]'s brain.</span>",
-		"[user] fails overriding the safeties of [target]'s brain!",
+	display_results(user, target, "<span class='notice'>You fail overriding the safeties of [target].</span>",
+		"[user] fails overriding the safeties of [target]",
 		"[user] completes the surgery on [target]'s brain.")
 	return FALSE
 

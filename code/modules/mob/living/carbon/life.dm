@@ -443,8 +443,10 @@
 	if(radiation > RAD_MOB_SAFE)
 		if(!HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 			adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
-		else if(radiation > RAD_MOB_SAFE * 3)
-			adjustToxLoss(log(radiation-RAD_MOB_SAFE*3)*RAD_TOX_COEFFICIENT, toxins_type = TOX_SYSCORRUPT) //Robots are more resistant to rads, but in the end suffer slow corruption at high levels.
+		else
+			var/rad_threshold = HAS_TRAIT(src, TRAIT_ROBOT_RADSHIELDING) ? RAD_UPGRADED_ROBOT_SAFE : RAD_DEFAULT_ROBOT_SAFE
+			if(radiation > rad_threshold)
+				adjustToxLoss(log(radiation-rad_threshold)*RAD_TOX_COEFFICIENT, toxins_type = TOX_SYSCORRUPT) //Robots are less resistant to rads, unless upgraded in which case they are fine at higher levels than organics.
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
