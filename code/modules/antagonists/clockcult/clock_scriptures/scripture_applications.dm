@@ -101,7 +101,7 @@
 
 //Memory Allocation: Finds a willing ghost and makes them into a clockwork guardian for the invoker.
 /datum/clockwork_scripture/memory_allocation
-	descname = "Personal Guardian, A Peice Of Your Mind."
+	descname = "Personal Guardian housed in the brain."
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Guardian, a variant of Marauder that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
@@ -115,7 +115,7 @@
 	sort_priority = 5
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M in GLOB.all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/clockwork/guardian/M in GLOB.all_clockwork_mobs)
 		if(M.host == invoker)
 			to_chat(invoker, "<span class='warning'>You can only house one guardian at a time!</span>")
 			return FALSE
@@ -151,7 +151,7 @@
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...sword and shield!"))
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
-	var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M = new(invoker)
+	var/mob/living/simple_animal/hostile/clockwork/guardian/M = new(invoker)
 	M.key = theghost.key
 	M.bind_to_host(invoker)
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
