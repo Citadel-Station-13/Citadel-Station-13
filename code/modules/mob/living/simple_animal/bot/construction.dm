@@ -206,7 +206,7 @@
 	icon_state = "toolbox_tiles"
 	throwforce = 10
 	created_name = "Floorbot"
-	var/toolbox = /obj/item/storage/toolbox/mechanical
+	var/toolbox = /obj/item/storage/toolbox
 
 /obj/item/bot_assembly/floorbot/Initialize()
 	. = ..()
@@ -225,7 +225,7 @@
 			name = "incomplete floorbot assembly"
 			icon_state = "toolbox_tiles_sensor"
 
-/obj/item/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
+/obj/item/storage/toolbox/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
 		return
