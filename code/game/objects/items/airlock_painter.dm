@@ -134,7 +134,7 @@
 	icon_state = "decal_sprayer"
 	item_state = "decalsprayer"
 	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
-	var/stored_dir = 2
+	var/stored_dir = 1
 	var/stored_color = ""
 	var/stored_decal = "warningline"
 	var/stored_decal_total = "warningline"
@@ -169,9 +169,9 @@
 /obj/item/airlock_painter/decal/AltClick(mob/user) //sandstorm change - everything that makes this work is on same path to this but on sandcode
 	. = ..()
 	var/decal_category = list(
-		"Decal" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = stored_dir),
+		"Decal" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = turn(stored_dir, 180)),
 		"Color" = image(icon = 'icons/obj/crayons.dmi', icon_state = "crayonred"),
-		"Dir" = image(icon = 'icons/obj/device.dmi', icon_state = "pinonfar", dir = stored_dir)
+		"Dir" = image(icon = 'icons/obj/device.dmi', icon_state = "pinonfar", dir = turn(stored_dir, 180))
 	)
 	var/cat_chosen = show_radial_menu(user,src,decal_category, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))

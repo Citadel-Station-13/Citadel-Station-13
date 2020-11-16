@@ -18,7 +18,7 @@
 		"Delivery Marker" = image(icon = 'icons/turf/decals.dmi', icon_state = "delivery", dir = stored_dir),
 		"Warning Box" = image(icon = 'icons/turf/decals.dmi', icon_state = "warn_full", dir = stored_dir)
 	)
-	var/choice = show_radial_menu(user,src,decal_list_img, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, decal_list_img, radius = 45, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -85,7 +85,7 @@
 		"Red" = image(icon = 'icons/obj/crayons.dmi', icon_state = "crayonred"),
 		"White" = image(icon = 'icons/obj/crayons.dmi', icon_state = "crayonwhite")
 	)
-	var/choice = show_radial_menu(user,src,choose_color, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choose_color, custom_check = CALLBACK(src,.proc/check_menu,user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -118,22 +118,22 @@
 	if(!check_menu(user))
 		return
 	switch(choice)
-		if("North")
+		if("South")
 			stored_dir = dir_list[1]
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
 			to_chat(user, "<span class='notice'>You change [src] direction to '[choice]'.</span>")
 			update_decal_path()
-		if("South")
+		if("North")
 			stored_dir = dir_list[2]
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
 			to_chat(user, "<span class='notice'>You change [src] direction to '[choice]'.</span>")
 			update_decal_path()
-		if("East")
+		if("West")
 			stored_dir = dir_list[3]
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
 			to_chat(user, "<span class='notice'>You change [src] direction to '[choice]'.</span>")
 			update_decal_path()
-		if("West")
+		if("East")
 			stored_dir = dir_list[4]
 			playsound(src, 'sound/effects/pop.ogg', 50, 0)
 			to_chat(user, "<span class='notice'>You change [src] direction to '[choice]'.</span>")
