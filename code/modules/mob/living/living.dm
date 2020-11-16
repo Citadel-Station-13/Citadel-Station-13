@@ -299,7 +299,7 @@
 			var/self_tailcheck = dna?.species?.mutant_bodyparts["mam_tail"] && (dna.species.mutant_bodyparts["mam_tail"] != "None")
 			var/other_tailcheck = M.dna?.species?.mutant_bodyparts["mam_tail"] && (M.dna.species.mutant_bodyparts["mam_tail"] != "None")
 			if((zone_selected == BODY_ZONE_PRECISE_GROIN) && self_tailcheck && other_tailcheck)
-				visible_message("<span class='warning'>[src] coils their tail with [AM], pulling them along!</span>", "[src] has entwined their tail with yours, pulling you along!")
+				visible_message("<span class='warning'>[src] coils [p_their()] tail with [AM], pulling [M.p_them()] along!</span>", "[src] has entwined [p_their()] tail with yours, pulling you along!")
 			else
 				visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>",
 					"<span class='warning'>You have grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>", target = M,
