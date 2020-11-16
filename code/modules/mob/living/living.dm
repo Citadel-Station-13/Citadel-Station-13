@@ -258,6 +258,13 @@
 		AM.setDir(current_dir)
 	now_pushing = FALSE
 
+// i wish to have a "friendly chat" with whoever made three tail variables instead of one
+/mob/living/proc/has_tail()
+	if(!dna || !dna.species || !dna.species.mutant_bodyparts)
+		return FALSE
+	var/list/L = dna.species.mutant_bodyparts		// caches list because i refuse to type it out and because performance
+	return (L["mam_tail"] && (L["mam_tail"] != "None")) || (L["tail_human"] && (L["tail_human"] != "None")) || (L["tail_lizard"] && (L["tail_lizard"] != "None"))
+
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
@@ -296,9 +303,7 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			var/self_tailcheck = dna?.species?.mutant_bodyparts["mam_tail"] && (dna.species.mutant_bodyparts["mam_tail"] != "None")
-			var/other_tailcheck = M.dna?.species?.mutant_bodyparts["mam_tail"] && (M.dna.species.mutant_bodyparts["mam_tail"] != "None")
-			if((zone_selected == BODY_ZONE_PRECISE_GROIN) && self_tailcheck && other_tailcheck)
+			if((zone_selected == BODY_ZONE_PRECISE_GROIN) && has_tail() && M.has_tail())
 				visible_message("<span class='warning'>[src] coils [p_their()] tail with [AM], pulling [M.p_them()] along!</span>", "[src] has entwined [p_their()] tail with yours, pulling you along!")
 			else
 				visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>",
