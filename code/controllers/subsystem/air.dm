@@ -242,11 +242,12 @@ SUBSYSTEM_DEF(air)
 		T.update_visuals()
 	for(var/list/pair in tiles_with_diffs)
 		var/turf/open/enemy_tile = pair[1]
-		var/difference = pair[2]
-		if(difference > 0)
-			T.consider_pressure_difference(enemy_tile, difference)
-		else
-			enemy_tile.consider_pressure_difference(T, -difference)
+		if(istype(enemy_tile))
+			var/difference = pair[2]
+			if(difference > 0)
+				T.consider_pressure_difference(enemy_tile, difference)
+			else
+				enemy_tile.consider_pressure_difference(T, -difference)
 
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
 	var/datum/callback/post_process = CALLBACK(GLOBAL_PROC,/proc/post_process_turf)
