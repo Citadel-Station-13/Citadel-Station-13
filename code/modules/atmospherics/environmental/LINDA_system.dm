@@ -19,32 +19,28 @@
 /turf/open/CanAtmosPass(turf/T, vertical = FALSE)
 	var/dir = vertical? get_dir_multiz(src, T) : get_dir(src, T)
 	var/opp = REVERSE_DIR(dir)
-	var/R = FALSE
+	. = TRUE
 	if(vertical && !(zAirOut(dir, T) && T.zAirIn(dir, src)))
-		R = TRUE
+		. = FALSE
 	if(blocks_air || T.blocks_air)
-		R = TRUE
+		. = FALSE
 	if (T == src)
-		return !R
+		return .
 	for(var/obj/O in contents+T.contents)
 		var/turf/other = (O.loc == src ? T : src)
 		if(!(vertical? (CANVERTICALATMOSPASS(O, other)) : (CANATMOSPASS(O, other))))
-			R = TRUE
-			if(O.BlockSuperconductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
-				atmos_supeconductivity |= dir
-				T.atmos_supeconductivity |= opp
-				return FALSE						//no need to keep going, we got all we asked
+			. = FALSE
+		if(O.BlockThermalConductivity()) 	//the direction and open/closed are already checked on CanAtmosPass() so there are no arguments
+			conductivity_blocked_directions |= dir
+			T.conductivity_blocked_directions |= opp
+			if(!.)
+				return .
 
-	atmos_supeconductivity &= ~dir
-	T.atmos_supeconductivity &= ~opp
-
-	return !R
-
-/atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
+/atom/movable/proc/BlockThermalConductivity() // Objects that don't let heat through.
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
-	var/canpass = CANATMOSPASS(src, src) 
+	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
@@ -56,20 +52,19 @@
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = direction
 			T.atmos_adjacent_turfs[src] = opp_dir
-			T.__update_extools_adjacent_turfs()
+			T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()))
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= T
 			if (T.atmos_adjacent_turfs)
 				T.atmos_adjacent_turfs -= src
-				T.__update_extools_adjacent_turfs()
+				T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()))
 			UNSETEMPTY(T.atmos_adjacent_turfs)
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
-	__update_extools_adjacent_turfs()
+	__update_auxtools_turf_adjacency_info(isspaceturf(get_z_base_turf()))
 
-/turf/proc/__update_extools_adjacent_turfs()
-
+/turf/proc/__update_auxtools_turf_adjacency_info()
 
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
@@ -115,7 +110,6 @@
 /turf/air_update_turf(command = 0)
 	if(command)
 		ImmediateCalculateAdjacentTurfs()
-	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(turf/T)
     if(isturf(T))
@@ -136,5 +130,3 @@
 	G.parse_gas_string(text)
 
 	air.merge(G)
-	archive()
-	SSair.add_to_active(src, 0)

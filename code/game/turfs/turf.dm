@@ -68,7 +68,6 @@
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src)
-		SSair.add_to_active(src)
 
 	if (light_power && light_range)
 		update_light()
@@ -90,7 +89,11 @@
 
 	ComponentInitialize()
 
+	__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()))
+
 	return INITIALIZE_HINT_NORMAL
+
+/turf/proc/__auxtools_update_turf_temp_info()
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CALCULATE_ADJACENT_TURFS(src)
@@ -115,7 +118,6 @@
 		for(var/I in B.vars)
 			B.vars[I] = null
 		return
-	SSair.remove_from_active(src)
 	visibilityChanged()
 	QDEL_LIST(blueprint_data)
 	flags_1 &= ~INITIALIZED_1

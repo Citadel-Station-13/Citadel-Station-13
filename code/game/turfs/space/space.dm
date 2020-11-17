@@ -5,7 +5,7 @@
 	intact = 0
 
 	temperature = TCMB
-	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	thermal_conductivity = 0
 	heat_capacity = 700000
 
 	var/destination_z
@@ -38,9 +38,6 @@
 	var/area/A = loc
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
 		add_overlay(/obj/effect/fullbright)
-
-	if(requires_activation)
-		SSair.add_to_active(src)
 
 	if (light_power && light_range)
 		update_light()
@@ -286,12 +283,7 @@
 
 ///Called when there is no real turf below this turf
 /turf/open/space/transparent/proc/show_bottom_level()
-	var/turf/path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
-	if(!ispath(path))
-		path = text2path(path)
-		if(!ispath(path))
-			warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
-			path = /turf/open/space
+	var/turf/path = get_z_base_turf()
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
 	underlays += underlay_appearance
 	return TRUE

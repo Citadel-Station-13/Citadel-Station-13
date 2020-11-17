@@ -209,18 +209,9 @@
 			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
 /turf/open/Initalize_Atmos(times_fired)
-	set_excited(FALSE)
 	update_visuals()
 
-	current_cycle = times_fired
 	ImmediateCalculateAdjacentTurfs()
-	for(var/i in atmos_adjacent_turfs)
-		var/turf/open/enemy_tile = i
-		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-		if(!get_excited() && air.compare(enemy_air))
-			//testing("Active turf found. Return value of compare(): [is_active]")
-			set_excited(TRUE)
-			SSair.add_to_active_extools(src)
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
