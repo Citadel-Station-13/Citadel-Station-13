@@ -99,7 +99,7 @@
 	else
 		..()
 
-/obj/item/clockwork/slab/cyborg/ratvar_act()
+/obj/item/clockwork/slab/cyborg/ui_act()
 	..()
 	if(!GLOB.ratvar_awakens)
 		SStgui.close_uis(src)
