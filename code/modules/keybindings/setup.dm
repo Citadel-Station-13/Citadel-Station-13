@@ -25,6 +25,7 @@
 		var/key = macroset[i]
 		var/command = macroset[key]
 		winset(src, "[name]-[REF(key)]", "parent=[name];name=[key];command=[command]")
+	update_special_keybinds()
 
 /client/proc/set_macros(datum/preferences/prefs_override = prefs)
 	set waitfor = FALSE

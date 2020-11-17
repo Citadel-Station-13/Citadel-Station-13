@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C?.update_movement_keys(src)
+	C?.set_macros()
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -2370,9 +2370,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							if(key_bindings[old_key])
 								key_bindings[old_key] -= kb_name
+								LAZYADD(key_bindings["Unbound"], kb_name)
 								if(!length(key_bindings[old_key]))
 									key_bindings -= old_key
 						user << browse(null, "window=capturekeypress")
+						user.client.set_macros()
 						save_preferences()
 						ShowChoices(user)
 						return
@@ -2407,7 +2409,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								key_bindings -= old_key
 						key_bindings[full_key] += list(kb_name)
 						key_bindings[full_key] = sortList(key_bindings[full_key])
-					user.client.update_movement_keys()
+					user.client.set_macros()
 					user << browse(null, "window=capturekeypress")
 					save_preferences()
 
@@ -2419,7 +2421,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 					modless_key_bindings = list()
-					user.client.update_movement_keys()
+					user.client.set_macros()
 
 				if("chat_on_map")
 					chat_on_map = !chat_on_map
@@ -2831,7 +2833,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/key in oldkeys)
 		if(!key_bindings[key])
 			key_bindings[key] = oldkeys[key]
-	parent.update_movement_keys()
+	parent.update_special_keybinds()
 
 /datum/preferences/proc/is_loadout_slot_available(slot)
 	var/list/L

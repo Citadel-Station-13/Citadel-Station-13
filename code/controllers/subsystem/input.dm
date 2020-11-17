@@ -52,10 +52,7 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 65 to 90)
 		classic_ctrl_override_keys += ascii2text(i)
 	// let's play the game of clientside bind overrides!
-	classic_ctrl_override_keys -= list("T", "O", "M", "L")
-	macroset_classic_input["Ctrl+T"] = "say"
-	macroset_classic_input["Ctrl+O"] = "ooc"
-	macroset_classic_input["Ctrl+L"] = "looc"
+	classic_ctrl_override_keys -= list("M")
 	// let's play the list iteration game x2
 	for(var/key in classic_ctrl_override_keys)
 		// make sure to double double quote to ensure things are treated as a key combo instead of addition/semicolon logic.
@@ -70,10 +67,7 @@ SUBSYSTEM_DEF(input)
 	// HAHA - SIKE. Because of BYOND weirdness (tl;dr not specifically binding this way results in potentially duplicate chatboxes when
 	//  conflicts occur with something like say indicator vs say), we're going to snowflake this anyways
 	var/list/hard_binds = list(
-		"O" = "ooc",
-		"T" = "say",
-		"L" = "looc",
-		"M" = "me"
+		"L" = "looc"
 		)
 	var/list/hard_bind_anti_collision = list()
 	var/list/anti_collision_modifiers = list("Ctrl", "Alt", "Shift", "Ctrl+Alt", "Ctrl+Shift", "Alt+Shift", "Ctrl+Alt+Shift")
@@ -110,7 +104,6 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 1 to clients.len)
 		var/client/user = clients[i]
 		user.set_macros()
-		user.update_movement_keys()
 
 /datum/controller/subsystem/input/fire()
 	var/list/clients = GLOB.clients // Let's sing the list cache song
