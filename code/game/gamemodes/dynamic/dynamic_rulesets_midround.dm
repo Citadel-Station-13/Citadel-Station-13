@@ -207,9 +207,8 @@
 	requirements = list(30,25,20,15,15,15,15,15,15,15)
 	repeatable = TRUE
 	high_population_requirement = 15
-	flags = TRAITOR_RULESET
+	flags = TRAITOR_RULESET | MINOR_RULESET | ALWAYS_MAX_WEIGHT_RULESET
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
-	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
@@ -494,6 +493,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
+	flags = MINOR_RULESET
 	requirements = list(101,101,101,70,50,40,20,15,15,15)
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
@@ -630,6 +630,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 15
+	flags = MINOR_RULESET
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
 	high_population_requirement = 30
 	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 2)
