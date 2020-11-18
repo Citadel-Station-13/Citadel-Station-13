@@ -85,7 +85,9 @@
 		return advance
 	else
 		surgery.step_in_progress = FALSE
-		return TRUE //Stop the attack chain!
+		if(repeatable)
+			return FALSE //This is how the repeatable surgery detects it shouldn't cycle
+		return TRUE //Stop the attack chain! - Except on repeatable steps, because otherwise we land in an infinite loop.
 
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
