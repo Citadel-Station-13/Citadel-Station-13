@@ -143,14 +143,16 @@ SUBSYSTEM_DEF(air)
 
 	if(currentpart == SSAIR_TURF_CONDUCTION)
 		timer = TICK_USAGE_REAL
-		process_turf_heat(resumed)
+		process_turf_heat(CALLBACK(GLOBAL_PROC,/proc/heat_post_process))
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 	currentpart = SSAIR_REBUILD_PIPENETS
 
-
+/proc/heat_post_process(turf/T,new_temp)
+	T.temperature = new_temp
+	T.temperature_expose()
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
@@ -213,8 +215,15 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
+/proc/post_process_equalize(turf/open/T,turf/open/otherT,amount)
+	if(!istype(T) || !istype(otherT))
+		return
+	T.update_visuals()
+	otherT.update_visuals()
+	T.consider_pressure_difference(otherT,amount)
+
 /datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	if(process_turf_equalize_extools((Master.current_ticklimit - TICK_USAGE) * world.tick_lag))
+	if(process_turf_equalize_extools((Master.current_ticklimit - TICK_USAGE) * world.tick_lag,CALLBACK(GLOBAL_PROC,/proc/post_process_equalize)))
 		pause()
 	/*
 	//cache for sanic speed
