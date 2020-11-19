@@ -286,6 +286,28 @@
 
 			despawn_occupant()
 
+/obj/machinery/cryopod/proc/store_occupant(mob/living/L)
+	//TODO - Everything.
+	//Make a sister proc that performs a "light" version of despawn_occupant, which adds all preservable items
+	//to a list (so that they can be moved out of the occupant's inventory on demand, but otherwise staying inside
+	//that inventory so that it's perfectly preserved if the occupant comes back out), temporarily frees up the job
+	//slot, and adds an additional valid target for each objective targetting the occupant (being an additional target
+	//rather than a replacement so that people can't use cryo as a "i don't wanna be an antag target uwu" tool, and
+	//also so that antags have an either or choice if the target returns)
+	if(!istype(L))
+		return
+	SSticker.cryo_occupants["[ckey(L.key)]"] = list(L, src)
+	if(L.client)
+		var/mob/dead/new_player/NP = new()
+		NP.ckey = L.ckey
+	else
+		L.ckey = null
+	L.status_flags |= GODMODE //Make sure they can't be harmed while they're cryo'd out. And also so that the vacuum of nullspace doesn't kill them
+	//To investigate: See if there's any way to make the mob stop processing while they're cryo'd out? Maybe see if there's a way to make timers related to them freeze while they're out, as well
+
+	L.moveToNullspace() //Cya nerd
+	return
+
 #define CRYO_DESTROY 0
 #define CRYO_PRESERVE 1
 #define CRYO_OBJECTIVE 2
@@ -484,13 +506,18 @@
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
-	close_machine(target)
+
+	log_admin("<span class='notice'>[key_name(target)] entered a stasis pod.</span>")
+	message_admins("[key_name_admin(target)] entered a stasis pod. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+	add_fingerprint(target)
+	store_occupant(target)
+	/*close_machine(target)
 
 	to_chat(target, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
 	name = "[name] ([occupant.name])"
 	log_admin("<span class='notice'>[key_name(target)] entered a stasis pod.</span>")
 	message_admins("[key_name_admin(target)] entered a stasis pod. (<A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-	add_fingerprint(target)
+	add_fingerprint(target)*/
 
 //Attacks/effects.
 /obj/machinery/cryopod/blob_act()

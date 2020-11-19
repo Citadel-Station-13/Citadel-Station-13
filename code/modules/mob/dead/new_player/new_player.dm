@@ -34,8 +34,18 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
+	var/in_cryo_storage = ((SSticker.cryo_occupants.len && SSticker.cryo_occupants["[ckey(key)]"]) ? TRUE : FALSE)
 	var/output = "<center><p>Welcome, <b>[client ? client.prefs.real_name : "Unknown User"]</b></p>"
-	output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
+	if(in_cryo_storage)
+		var/mob/living/L = SSticker.cryo_occupants["[ckey(key)]"][1]
+		var/datum/mind/M = L?.mind
+		var/cryo_role = M?.assigned_role
+		var/slot_taken = IsJobUnavailable(cryo_role)
+		output += "<center><p>[slot_taken ? "Former" : "Current"] Job: <b>[cryo_role ? cryo_role : "Unknown"]</b></p>"
+		if(cryo_role && slot_taken)
+			output += "<center><p>(<i>[get_job_unavailable_error_message(slot_taken, cryo_role)]</i>)</b></p>"
+	else
+		output += "<center><p><a href='byond://?src=[REF(src)];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
@@ -47,8 +57,12 @@
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
 		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Crew Manifest</a></p>"
-		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
+		if(in_cryo_storage)
+			output += "<p><a href='byond://?src=[REF(src)];uncryo=1'>Exit Cryogenic Storage</a></p>"
+		else
+			output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
+		//TODO - make observing move cryo occupants to deep storage
 
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())
@@ -88,7 +102,7 @@
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age verification
 				var/age_verification = askuser(src, "Are you 18+", "Age Verification", "I am 18+", "I am not 18+", null, TRUE, null)
 				if(age_verification != 1)
-					add_system_note("Automated-Age-Verification", "Failed automatic age verification")
+					//add_system_note("Automated-Age-Verification", "Failed automatic age verification")
 					qdel(client) //kick the user
 					return FALSE
 				else
@@ -184,6 +198,22 @@
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
+		return
+	
+	if(href_list["uncryo"])
+		//TODO - Everything.
+		//Make this spawn you as the overflow slot and move your original body to deep storage if the job slot you're assigned is currently full
+		//Make this actually spawn you back at the cryopod you used to cryo out with, falling back to the arrivals shuttle only if that cryopod is in an inoperable state
+		if(!(SSticker.cryo_occupants.len && SSticker.cryo_occupants["[ckey(key)]"]))
+			return
+		var/mob/living/L = SSticker.cryo_occupants["[ckey(key)]"][1]
+		if(!istype(L))
+			return
+		SSjob.SendToLateJoin(L)
+		new_character = L
+		SSticker.cryo_occupants -= "[ckey(key)]"
+		L.status_flags &= ~GODMODE
+		transfer_character()
 		return
 
 	if(href_list["JoinAsGhostRole"])

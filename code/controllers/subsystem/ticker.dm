@@ -24,6 +24,8 @@ SUBSYSTEM_DEF(ticker)
 	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
+	var/list/cryo_occupants = list()		//List of all cryo occupants that are currently in the lobby. Keyed list containing references to mobs in nullspace and the cryopods they exited from
+	var/list/cryo_deepstorage = list()		//List of all cryo occupants that have abandoned the round via ghosting.
 
 	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
 	var/list/factions = list()				//list of all factions
