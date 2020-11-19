@@ -11,6 +11,12 @@
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
 
+//Toxins damage 'typeflag' - is this normal toxins damage or does it have to do with systems corruption (ROBOTIC_ORGANISM species trait)
+
+#define TOX_DEFAULT 1 //For normal toxins damage / healing (toxins, etc), adjustToxLoss() defaults to this
+#define TOX_SYSCORRUPT 2 //For toxins damage causing adverse effects to robotic organisms, up to and including fatal corruption, or healing that damage
+#define TOX_OMNI 3 //For tox damage / healing that affects both organics and robotic organisms. Used by very few things, e.g. aheals / by default setToxLoss()
+
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 		(1<<0)
 #define FIRELOSS 		(1<<1)
