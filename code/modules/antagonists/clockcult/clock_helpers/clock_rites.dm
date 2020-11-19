@@ -6,12 +6,13 @@
 //The base clockwork rite. This should never be visible
 /datum/clockwork_rite
 	var/name = "Rite of THE frog" //The name of the rite
-	var/desc = "This rite is used to summon the legendary frog whose-name-shall-not-be-spoken, ender of many worlds." //What does this rite do? Shown to cultists if they choose 'Show Info' after selecting the rite.
+	var/desc = "This rite is used to summon the legendary frog whose-name-shall-not-be-spoken, ender of many worlds." //What does this rite do? Shown to servants if they choose 'Show Info' after selecting the rite.
 	var/list/required_ingredients = list(/obj/item/clockwork) //What does this rite require?
 	var/power_cost = 0 //How much power does this rite cost.. or does it even add power?
-	var/requires_human = FALSE	//Does the rite require a ../carbon/human on the rune?
+	var/requires_human = FALSE	//Does the rite require a ../carbon/human on the sigil?
 	var/must_be_servant = TRUE //If the above is true, does the human need to be a servant?
 	var/target_can_be_invoker = TRUE //Does this rite work if the invoker is also the target?
+	var/requires_full_power = FALSE //Does the invoker need to be an actual full-on servant, or is this available to neutered ones aswell?
 	var/cast_time = 0 //How long does the rite take to cast?
 	var/limit = INFINITE //How often can this rite be used per round? Set this to INFINITE for unlimited, 0 for disallowed, anything above 0 for a limit
 	var/times_used = 0 //How often has the rite already been used this shift?
