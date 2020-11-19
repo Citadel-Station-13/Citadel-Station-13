@@ -1361,7 +1361,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			new /obj/effect/immovablerod(startT, endT,target)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD_QUICK)
 			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
-			var/obj/structure/closet/supplypod/centcompod/pod = new()
+			var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+			var/obj/structure/closet/supplypod/centcompod/pod = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 			pod.damage = 40
 			pod.explosionSize = list(0,0,0,2)
 			pod.effectStun = TRUE

@@ -59,7 +59,8 @@
 
 // Launch the pod to collect our victim.
 /datum/syndicate_contract/proc/launch_extraction_pod(turf/empty_pod_turf)
-	var/obj/structure/closet/supplypod/extractionpod/empty_pod = new()
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/extractionpod/empty_pod = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 
 	RegisterSignal(empty_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
 
@@ -176,8 +177,8 @@
 
 	if(possible_drop_loc.len > 0)
 		var/pod_rand_loc = rand(1, possible_drop_loc.len)
-
-		var/obj/structure/closet/supplypod/return_pod = new()
+		var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+		var/obj/structure/closet/supplypod/return_pod = new(pick(get_area_turfs(pod_storage_area)))
 		return_pod.bluespace = TRUE
 		return_pod.explosionSize = list(0,0,0,0)
 		return_pod.style = STYLE_SYNDICATE

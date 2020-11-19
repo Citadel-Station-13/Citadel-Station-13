@@ -187,8 +187,8 @@
 
 	partner_outfit.equip(partner)
 
-	var/obj/structure/closet/supplypod/arrival_pod = new()
-
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/arrival_pod = new(pick(get_area_turfs(pod_storage_area)))
 	arrival_pod.style = STYLE_SYNDICATE
 	arrival_pod.explosionSize = list(0,0,0,1)
 	arrival_pod.bluespace = TRUE

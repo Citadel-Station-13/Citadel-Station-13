@@ -7,4 +7,4 @@
 	//SKYRAT CHANGES - ssd indicator
 	lastclienttime = world.time
 	set_ssd_indicator(TRUE)
-	//END OF SKYRAT CHANGES 
+	//END OF SKYRAT CHANGES
