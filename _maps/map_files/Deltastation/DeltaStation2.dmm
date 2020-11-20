@@ -660,6 +660,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "abr" = (
@@ -1484,15 +1485,15 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
 /obj/machinery/camera{
 	c_tag = "Arrivals Dock - Fore";
 	dir = 8;
 	name = "arrivals camera"
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -125490,6 +125491,12 @@
 "fMf" = (
 /turf/closed/wall,
 /area/engine/transit_tube)
+"fNv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "fRK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -125528,6 +125535,13 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing)
+"gdi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "gmj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -125543,6 +125557,14 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"gtU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "gKn" = (
 /obj/structure/grille,
 /turf/open/space,
@@ -125689,6 +125711,10 @@
 /obj/effect/landmark/start/cyborg,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"hvq" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "hAf" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -125822,6 +125848,17 @@
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"iwA" = (
+/obj/docking_port/stationary{
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "iwL" = (
 /obj/machinery/status_display/evac{
 	pixel_x = 32
@@ -125943,6 +125980,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/solars/port/aft)
+"jdg" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "jdx" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -126287,6 +126330,15 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
+"kRp" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/flashlight,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "lak" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
@@ -126320,6 +126372,13 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
+"ljQ" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "lkk" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/hydroponics/soil,
@@ -126396,6 +126455,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
+"lwc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "lyU" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix{
 	dir = 8
@@ -126962,6 +127030,14 @@
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"pDK" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/item/gps/mining{
+	gpstag = "MINE_PUB"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pQm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -127057,6 +127133,21 @@
 	dir = 5
 	},
 /area/science/circuit)
+"qsT" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Arrivals Dock - Public Mining";
+	dir = 8;
+	name = "arrivals camera"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "qBG" = (
 /obj/effect/spawner/lootdrop/keg,
 /turf/open/floor/plating,
@@ -127075,6 +127166,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"rft" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "rhO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -127083,6 +127183,18 @@
 	dir = 9
 	},
 /area/science/circuit)
+"ryj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "rCv" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 6
@@ -127429,6 +127541,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"uFR" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "uNP" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -159602,13 +159721,13 @@ hZh
 hZh
 hZh
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aad
+aaO
+aaO
+abf
+aaO
+aaO
 aad
 aad
 aad
@@ -159859,13 +159978,13 @@ hZh
 hZh
 hZh
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-qgU
 aad
+aaa
+aaO
+ljQ
+kRp
+pDK
+aaO
 aad
 aaa
 aaa
@@ -160116,12 +160235,12 @@ hZh
 hZh
 hZh
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaO
+aaO
+aaO
+abe
+abC
+jdg
 aaO
 abf
 aaO
@@ -160372,18 +160491,18 @@ hZh
 hZh
 hZh
 hZh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaO
-abe
+iwA
+ryj
+hvq
+ryj
+acb
+fNv
+aiT
+abZ
 abp
 abC
 abC
-abZ
+abC
 abC
 abC
 acV
@@ -160630,19 +160749,19 @@ hZh
 hZh
 hZh
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaO
+aaO
 aaO
 vcs
+lwc
+gtU
+rft
 abq
-abD
-abD
-abZ
-abD
-abD
+gdi
+gdi
+gdi
+gdi
+gdi
 acW
 adr
 adr
@@ -160887,12 +161006,12 @@ hZh
 hZh
 hZh
 aaa
-aaa
-aaa
-aaa
-aaa
+aad
 aaa
 aaO
+agk
+qsT
+uFR
 aaO
 abf
 aaO
@@ -161144,13 +161263,13 @@ hZh
 hZh
 hZh
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-qgU
 aad
+aad
+aaO
+aaO
+abf
+aaO
+aaO
 aad
 aaa
 aaa
@@ -161402,12 +161521,12 @@ hZh
 hZh
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aad
+aad
+aad
+aad
+aad
+aad
 aad
 aad
 aad
