@@ -317,9 +317,7 @@
 	return prof
 
 /datum/antagonist/changeling/proc/add_profile(datum/changelingprofile/prof)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
+	return
 
 	if(!first_prof)
 		first_prof = prof
