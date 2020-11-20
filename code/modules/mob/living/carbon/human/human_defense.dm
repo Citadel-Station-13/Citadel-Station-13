@@ -411,6 +411,8 @@
 	if(isrobotic(src))
 		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, severity / 20)
 	severity *= 0.5
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		severity *= 0.5 //Robotpeople take less limb damage, but instead suffer system corruption (see carbon emp_act)
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.is_robotic_limb())
 			if(!informed)
