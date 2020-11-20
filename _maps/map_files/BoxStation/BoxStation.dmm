@@ -9547,20 +9547,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"asZ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/item/kirbyplants{
-	icon_state = "applebush"
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "ata" = (
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -54559,18 +54545,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
-"fXJ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "fZm" = (
 /obj/structure/chair/sofa/left,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -55515,18 +55489,6 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
-"iOZ" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "commonmining_home";
-	name = "SS13: Common Mining Dock";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
-	width = 7
-	},
-/turf/open/space/basic,
-/area/space)
 "iPX" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
@@ -55589,6 +55551,18 @@
 /obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"iWK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "iYE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56130,6 +56104,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"kiY" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 4"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "kmw" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -56640,6 +56623,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"lBd" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "lBz" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -56849,12 +56841,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/processing)
-"mlw" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/table,
-/obj/item/flashlight,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "mml" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -56931,6 +56917,17 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/bar)
+"mqo" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "mqZ" = (
 /obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating,
@@ -57695,14 +57692,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet/locker)
-"oni" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/table,
-/obj/item/gps/mining{
-	gpstag = "MINE_PUB"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "oqj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -58187,6 +58176,15 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"pFY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-06"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pHl" = (
 /obj/structure/table,
 /obj/item/storage/box/beakers{
@@ -58429,6 +58427,16 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
+"qtw" = (
+/obj/machinery/door/airlock/external{
+	dir = 2;
+	name = "Port Docking Bay 4"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "qtH" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -58491,17 +58499,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/starboard/aft)
-"qFz" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "qIw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -58803,6 +58800,12 @@
 /obj/item/clothing/under/dress/sundress,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"rsp" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/flashlight,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "rtl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -59061,6 +59064,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"rZQ" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "saK" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -59119,15 +59134,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"sfE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-06"
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "shR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -59318,14 +59324,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"sIG" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+"sJw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
-/obj/structure/chair,
-/turf/open/floor/plasteel/white/corner{
+/obj/machinery/computer/shuttle/mining/common{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "Arrivals Bay Mining Dock";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "sJx" = (
 /obj/effect/turf_decal/stripes/line{
@@ -59669,6 +59679,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"tHy" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/item/kirbyplants{
+	icon_state = "applebush"
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "tJi" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -60242,15 +60266,6 @@
 	icon_state = "carpetsymbol"
 	},
 /area/crew_quarters/theatre)
-"uSx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "uSC" = (
 /obj/machinery/pool/drain,
 /turf/open/pool,
@@ -60294,16 +60309,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"uZy" = (
-/obj/machinery/door/airlock/external{
-	dir = 2;
-	name = "Port Docking Bay 4"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "vae" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -60869,6 +60874,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/pool)
+"wjd" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/gps/mining{
+	gpstag = "MINE_PUB"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "wje" = (
 /obj/structure/rack,
 /obj/item/instrument/banjo,
@@ -61015,15 +61028,6 @@
 	},
 /turf/closed/wall,
 /area/hallway/secondary/service)
-"wBv" = (
-/obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 4"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "wHk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -69064,7 +69068,7 @@ aaa
 aaa
 aaa
 aaa
-iOZ
+rZQ
 aaa
 aaa
 aoV
@@ -69321,7 +69325,7 @@ aaa
 aaa
 aaf
 awW
-wBv
+kiY
 awW
 aaf
 aaa
@@ -69835,7 +69839,7 @@ aaa
 aaa
 arB
 awW
-uZy
+qtw
 awW
 arB
 aaa
@@ -70091,9 +70095,9 @@ aaa
 aaa
 aaa
 arB
-asZ
+tHy
 ayl
-uSx
+sJw
 arB
 aaf
 aaa
@@ -70348,9 +70352,9 @@ aaa
 aaa
 aaa
 awW
-sIG
+lBd
 ayl
-mlw
+rsp
 awW
 aaf
 aaa
@@ -70605,9 +70609,9 @@ aaa
 aaa
 aaa
 awW
-sIG
+lBd
 ayl
-oni
+wjd
 awW
 aaf
 aaa
@@ -70862,9 +70866,9 @@ aaa
 aaa
 aaa
 arB
-qFz
+mqo
 ayn
-sfE
+pFY
 aAC
 aaf
 aaa
@@ -71119,7 +71123,7 @@ aaa
 aaa
 aaa
 arB
-fXJ
+iWK
 ayk
 awW
 aAD
