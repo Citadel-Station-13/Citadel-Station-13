@@ -12,7 +12,7 @@ $include plushies/defines.txt
 $include job_threats.txt
 $include policy.txt
 # Special Sandstorm configs
-$include sand/config.txt
+$include sandstorm/config.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:

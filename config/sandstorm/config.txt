@@ -2,4 +2,8 @@
 
 ## Lone op inactive disk messaging
 ## Comment this out to disable that spam that annoys me.
-ADMIN_DISK_INACTIVE_MSG
+#ADMIN_DISK_INACTIVE_MSG
+
+## Roundstart ping
+## Won't do anything if unset
+#NEW_ROUND_PING

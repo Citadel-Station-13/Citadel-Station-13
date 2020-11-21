@@ -3650,6 +3650,7 @@
 #include "sandcode\code\_globalvars\lists\misc.dm"
 #include "sandcode\code\_globalvars\lists\objects.dm"
 #include "sandcode\code\_onclick\hud\screen_objects.dm"
+#include "sandcode\code\controllers\configuration\entries\sandstorm.dm"
 #include "sandcode\code\datums\action.dm"
 #include "sandcode\code\datums\ai_laws.dm"
 #include "sandcode\code\datums\shuttles.dm"
