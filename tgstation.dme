@@ -3839,6 +3839,7 @@
 #include "sandcode\code\modules\research\designs\telecomms_designs.dm"
 #include "sandcode\code\modules\research\designs\tool_designs.dm"
 #include "sandcode\code\modules\research\designs\weapon_designs.dm"
+#include "sandcode\code\modules\research\designs\autolathe_designs\autolathe_designs_medical_and_dinnerware.dm"
 #include "sandcode\code\modules\research\designs\machine_designs\machine_designs_all_misc.dm"
 #include "sandcode\code\modules\research\nanites\nanite_programs\utility.dm"
 #include "sandcode\code\modules\research\techweb\all_nodes.dm"
