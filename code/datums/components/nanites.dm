@@ -189,10 +189,10 @@
 		permanent_programs += P
 		if(immutable)
 			P.immutable = TRUE
-		for(var/i in programs)
-			var/datum/nanite_program/E = i
+		for(var/e in programs)
+			var/datum/nanite_program/E = e
 			if(E.unique && (E.type == P.type))
-				qdel(i)
+				qdel(e)
 		programs += P
 
 /**

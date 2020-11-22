@@ -137,7 +137,7 @@
 	name = "Enhanced Error Correction"
 	desc = "The nanites self-propagate and replicate their program storage memory, preventing viral takeovers."
 	id = "antiviral_nanites"
-	program_type = /datum/nanite_program/antiviral
+	program_type = /datum/nanite_program/lockout/antiviral
 	category = list("Utility Nanites")
 
 /datum/design/nanites/hostile_lockdown
@@ -145,7 +145,7 @@
 	desc = "The nanites constantly encrypt and scramble their own control sectors, preventing consoles from controlling them. Furthermore, \
 	if the host happens to be a synthetic organism with innate control over nanite strains, this will prevent them from acting on the nanites as well."
 	id = "hostile_lockdown"
-	program_type = /datum/nanite_program/hostile_lockdown
+	program_type = /datum/nanite_program/lockout/hostile_lockdown
 	category = list("Utility Nanites")
 
 ////////////////////MEDICAL NANITES//////////////////////////////////////
