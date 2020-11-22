@@ -24164,11 +24164,11 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aVt" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-13"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-20"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -24941,10 +24941,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWV" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_y = -32
+/obj/effect/turf_decal/stripes/corner{
+	dir = 2
 	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWW" = (
@@ -81819,6 +81818,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
+"kHw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/table,
+/obj/item/gps{
+	gpstag = "MINE_PUB"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "kJW" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -81876,6 +81885,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"lcv" = (
+/obj/machinery/door/airlock/external{
+	name = "Public Mining Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "llb" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_circuit_printer,
@@ -81895,6 +81913,13 @@
 /obj/item/multitool,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"lvm" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "lws" = (
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -82008,6 +82033,12 @@
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/white/corner,
+/area/hallway/secondary/entry)
+"mdt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "mjJ" = (
 /obj/machinery/nuclearbomb/beer{
@@ -82379,6 +82410,21 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"pAD" = (
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"pBY" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space,
+/area/space)
 "pCV" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -82594,6 +82640,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"rta" = (
+/obj/machinery/door/airlock/external{
+	dir = 2;
+	name = "Public Mining Dock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "rzX" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -82892,6 +82948,12 @@
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"ulG" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/flashlight,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "upN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -83044,6 +83106,15 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"vMG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-05"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "vYs" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -91683,13 +91754,13 @@ aaf
 aaf
 aaa
 aaa
+aaf
 aaa
 aaa
-aaf
-aaf
-aaf
-aaf
-aaf
+aaa
+aaa
+aaa
+pBY
 aaa
 aaa
 aaa
@@ -91940,14 +92011,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaf
-aaa
-aaa
-aaa
 aaf
 aaf
+aaf
+aaf
+aaf
+aVs
+rta
+aVs
 aaf
 aaf
 aaa
@@ -92199,12 +92270,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaf
+aVs
+pAD
+aVs
 aaa
 aaf
 aaa
@@ -92460,7 +92531,7 @@ aRA
 aRA
 aRA
 aVs
-aVs
+lcv
 aVs
 aVs
 aaf
@@ -92717,9 +92788,9 @@ wOY
 aSH
 aUb
 aVt
-aWT
+mdt
+vMG
 aVs
-aaf
 aaf
 aaa
 aaa
@@ -92974,9 +93045,9 @@ abu
 bsk
 aUc
 aVu
-aWU
-aYC
-aaa
+bvF
+lvm
+aVs
 aaf
 aaa
 aaa
@@ -93231,9 +93302,9 @@ wOY
 aSI
 aRA
 aVv
-aWU
+bvF
+ulG
 aVs
-aaf
 aaf
 aaa
 aaa
@@ -93489,8 +93560,8 @@ aRA
 aRA
 cZf
 aWV
-aRA
-aaa
+kHw
+aVs
 aaa
 aaa
 aaa
