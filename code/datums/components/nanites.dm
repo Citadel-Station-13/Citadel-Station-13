@@ -34,7 +34,7 @@
 	/// EMP percent deletion upper
 	var/emp_percent_deletion_upper = 0.35
 	/// EMP percent deletion lower
-	var/emp_percent_deletion_lower = 0.25
+	var/emp_percent_deletion_lower = 0.30
 	/// EMP severity multiplier, capping to 0 to 100
 	var/emp_severity_mod = 1
 	/// EMP severity div for cloudsync reset chance
@@ -47,7 +47,7 @@
 	/// Shock percent deletion upper
 	var/shock_percent_deletion_upper = 0.25
 	/// Shock percent deletion lower
-	var/shock_percent_deletion_lower = 0.15
+	var/shock_percent_deletion_lower = 0.20
 
 
 	/// minor shock deletion lower
