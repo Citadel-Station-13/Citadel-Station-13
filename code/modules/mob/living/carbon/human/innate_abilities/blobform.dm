@@ -43,7 +43,7 @@
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
 				is_puddle = TRUE //so we know which transformation to use when its used
-				ADD_TRIAT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
+				ADD_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
 				owner.cut_overlays() //we dont show our normal sprite, we show a puddle sprite
 				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
 				puddle_effect.color = mutcolor
@@ -100,7 +100,7 @@
 	REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIME_PUDDLE_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
 	H.update_disabled_bodyparts(silent = TRUE)
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 	H.layer += 1 //go one layer back above!
