@@ -16,7 +16,7 @@
 	var/datum/nanite_extra_setting/program = extra_settings[NES_PROGRAM_OVERWRITE]
 	var/datum/nanite_extra_setting/cloud = extra_settings[NES_CLOUD_OVERWRITE]
 	for(var/mob/M in orange(host_mob, 5))
-		if(SEND_SIGNAL(M, COMSIG_NANITE_CHECK_VIRAL_PROTECTION))
+		if(SEND_SIGNAL(M, COMSIG_NANITE_CHECK_VIRAL_PREVENTION))
 			continue
 		switch(program.get_value())
 			if("Overwrite")
@@ -354,7 +354,7 @@
 /datum/nanite_program/lockout
 	unique = TRUE
 	var/emp_disable_time = 0
-	var/shock_disbale_time = 0
+	var/shock_disable_time = 0
 	var/minor_shock_disable_time = 0
 	var/disable_time = 0
 	var/lock_console = FALSE
@@ -364,18 +364,18 @@
 /datum/nanite_program/lockout/enable_passive_effect()
 	. = ..()
 	if(lock_console)
-		Registersignal(src, COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK, .proc/check_antivirus)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK, .proc/check_antivirus)
 	if(lock_host)
-		Registersignal(src, COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK, .proc/check_antivirus)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK, .proc/check_antivirus)
 	if(lock_virus)
-		Registersignal(src, COMSIG_NANITE_INTERNAL_VIRUS_LOCK_CHECK, .proc/check_antivirus)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK, .proc/check_antivirus)
 
 /datum/nanite_program/lockout/disable_passive_effect()
 	. = ..()
 	UnregisterSignal(src, list(
 		COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK,
 		COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK,
-		COMSIG_NANITE_INTERNAL_ANTI_VIRAL_CHECK
+		COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK
 	))
 
 /datum/nanite_program/lockout/on_emp(severity)

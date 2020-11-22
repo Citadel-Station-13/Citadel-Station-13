@@ -30,7 +30,7 @@
 	/// EMP flat deletion upper
 	var/emp_flat_deletion_upper = 35
 	/// EMP flat deletion lower
-	var/emp_Flat_deletion_lower = 20
+	var/emp_flat_deletion_lower = 20
 	/// EMP percent deletion upper
 	var/emp_percent_deletion_upper = 0.35
 	/// EMP percent deletion lower
@@ -165,7 +165,7 @@
   */
 /datum/component/nanites/proc/nanites_depleted()
 	if(qdel_self_on_depletion)
-		delete_nantes()
+		delete_nanites()
 
 /**
   * Used to rid ourselves
@@ -176,6 +176,8 @@
 
 /**
   * Adds permanent programs
+  *
+  * WARNING: Has no sanity checks. Make sure you know what you are doing! (make sure programs do not conflict)
   */
 /datum/component/nanites/proc/add_permanent_program(list/program, immutable = FALSE)
 	if(!islist(program))
@@ -188,7 +190,8 @@
 		if(immutable)
 			P.immutable = TRUE
 		for(var/i in programs)
-			if(P.collision_check(i))
+			var/datum/nanite_program/E = i
+			if(E.unique && (E.type == P.type))
 				qdel(i)
 		programs += P
 
@@ -208,7 +211,7 @@
   * Checks if we can block out viral replica
   */
 /datum/component/nanites/proc/check_viral_prevention()
-	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_VIRAL_LOCK_CHECK)
+	return SEND_SIGNAL(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK)
 
 //Syncs the nanite component to another, making it so programs are the same with the same programming (except activation status)
 /datum/component/nanites/proc/sync(datum/signal_source, datum/component/nanites/source, full_overwrite = TRUE, copy_activation = FALSE)
@@ -303,7 +306,7 @@
 			NP.on_shock(shock_damage)
 
 /datum/component/nanites/proc/on_minor_shock(datum/source)
-	adjust_nanites(null, -(rand(miner_shock_deletion_lower, miner_shock_deletion_uppper)))			//Lose 5-15 flat nanite volume
+	adjust_nanites(null, -(rand(minor_shock_deletion_lower, minor_shock_deletion_upper)))			//Lose 5-15 flat nanite volume
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
