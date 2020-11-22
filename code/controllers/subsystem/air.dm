@@ -6,9 +6,7 @@ SUBSYSTEM_DEF(air)
 	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
-	var/cost_copy_from = 0
 	var/cost_turfs = 0
-	var/cost_copy_to = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
@@ -46,6 +44,7 @@ SUBSYSTEM_DEF(air)
 	msg += "C:{"
 	msg += "AT:[round(cost_turfs,1)]|"
 	msg += "TH:[round(turf_process_time(),1)]|"
+	msg += "EG:[round(cost_groups,1)]|"
 	msg += "EQ:[round(cost_equalize,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
@@ -118,6 +117,15 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_turfs(resumed)
 		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_EXCITEDGROUPS
+
+	if(currentpart == SSAIR_EXCITEDGROUPS)
+		timer = TICK_USAGE_REAL
+		process_excited_groups(resumed)
+		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -278,8 +286,17 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
+/proc/post_process_excited_turf(turf/open/T)
+	if(istype(T))
+		T.update_visuals()
+
+/datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
+	if(!process_excited_groups_extools(CALLBACK(GLOBAL_PROC,/proc/post_process_excited_turf)))
+		pause()
+
 /datum/controller/subsystem/air/proc/process_turfs_extools()
 /datum/controller/subsystem/air/proc/process_turf_equalize_extools()
+/datum/controller/subsystem/air/proc/process_excited_groups_extools()
 /datum/controller/subsystem/air/proc/get_amt_gas_mixes()
 /datum/controller/subsystem/air/proc/get_max_gas_mixes()
 /datum/controller/subsystem/air/proc/turf_process_time()

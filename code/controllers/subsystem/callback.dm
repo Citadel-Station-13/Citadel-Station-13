@@ -9,5 +9,12 @@ SUBSYSTEM_DEF(callbacks)
 	SScallbacks.flags |= SS_NO_FIRE
 	CRASH("Auxtools not found! Callback subsystem shutting itself off.")
 
+/proc/_process_callbacks_priority()
+	SScallbacks.can_fire = 0
+	SScallbacks.flags |= SS_NO_FIRE
+	CRASH("Auxtools not found! Callback subsystem shutting itself off.")
+
 /datum/controller/subsystem/callbacks/fire()
-	_process_callbacks()
+	_process_callbacks_priority()
+	if(TICK_CHECK || _process_callbacks(MC_TICK_REMAINING_MS))
+		pause()
