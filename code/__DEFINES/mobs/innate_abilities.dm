@@ -25,5 +25,5 @@
 /// limb regrowth usage type
 #define PROPERTY_LIMB_REGROWTH_USAGE_TYPE "cost"
 	/// blood
-	#define REGRWOTH_USES_BLOOD "blood"
+	#define REGROWTH_USES_BLOOD "blood"
 

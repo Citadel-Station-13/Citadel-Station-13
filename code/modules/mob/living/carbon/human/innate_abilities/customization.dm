@@ -6,7 +6,7 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/ability/humanoid_customization/Activate()
-	if(owner.get_ability_property(INNATE_ABILITY_HUMANOID_CUSTOMIZATION, ABILITY_CUSTOMIZATION_SILENT))
+	if(owner.get_ability_property(INNATE_ABILITY_HUMANOID_CUSTOMIZATION, PROPERTY_CUSTOMIZATION_SILENT))
 		owner.visible_message("<span class='notice'>[owner] gains a look of \
 		concentration while standing perfectly still.\
 			Their body seems to shift and starts getting more goo-like.</span>",
@@ -20,7 +20,7 @@
 ///// maybe just make this entire thing tgui based. maybe.
 ///////
 
-/datum/action/innate/slime_change/proc/change_form()
+/datum/action/innate/ability/humanoid_customization/proc/change_form()
 	var/mob/living/carbon/human/H = owner
 	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
 

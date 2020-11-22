@@ -12,7 +12,7 @@
 /mob/proc/get_ability_property(ability, property)
 	return ability_properties && ability_properties[ability] && ability_properties[ability][property]
 
-GLOBAL_LIST_INIT(innate_ability_typepaths, all_innate_ability_typepaths)
+GLOBAL_LIST_INIT(innate_ability_typepaths, all_innate_ability_typepaths())
 
 /proc/all_innate_ability_typepaths()
 	return list(

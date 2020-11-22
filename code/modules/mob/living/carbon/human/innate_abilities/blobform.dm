@@ -13,7 +13,7 @@
 	var/puddle_from_effect = /obj/effect/temp_visual/slime_puddle/reverse
 	var/puddle_icon = 'icons/mob/mob.dmi'
 	var/puddle_state = "puddle"
-	var/tracked_overlay
+	var/mutable_appearance/tracked_overlay
 	var/datum/component/squeak/squeak
 	var/transforming = FALSE
 	var/last_use
@@ -39,7 +39,7 @@
 	if(IsAvailable())
 		transforming = TRUE
 		UpdateButtonIcon()
-		var/mutcolor = get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOFMROM_COLOR) || ("#" + H.dna.features["mcolor"])
+		var/mutcolor = owner.get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOBFORM_COLOR) || ("#" + H.dna.features["mcolor"])
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
 				is_puddle = TRUE //so we know which transformation to use when its used
@@ -88,7 +88,7 @@
 	//like the above, but reverse everything done!
 	H.cut_overlay(tracked_overlay)
 	var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
-	puddle_effect.color = mutcolor
+	puddle_effect.color = tracked_overlay.color
 	H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 	sleep(out_transformation_duration)
 	REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)

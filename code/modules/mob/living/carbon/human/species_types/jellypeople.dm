@@ -15,9 +15,6 @@
 	exotic_bloodtype = "GEL"
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
-	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	var/datum/action/innate/slime_change/slime_change
-	var/datum/action/innate/slime_puddle/slime_puddle
 	liked_food = TOXIC | MEAT
 	disliked_food = null
 	toxic_food = ANTITOXIC
@@ -37,14 +34,6 @@
 	icon_state = "brain-slime"
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
-	if(slime_puddle && slime_puddle.is_puddle)
-		slime_puddle.Activate()
-	if(regenerate_limbs)
-		regenerate_limbs.Remove(C)
-	if(slime_change)
-		slime_change.Remove(C)
-	if(slime_puddle)
-		slime_puddle.Remove(C)
 	C.faction -= "slime"
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -81,8 +70,6 @@
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < (BLOOD_VOLUME_BAD*H.blood_ratio))
 		Cannibalize_Body(H)
-	if(regenerate_limbs)
-		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
