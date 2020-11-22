@@ -72,7 +72,7 @@
 		holder = user_mob.client //if its a mob, assign the mob's client to holder
 	bay =  locate(/area/centcom/supplypod/loading/one) in GLOB.sortedAreas //Locate the default bay (one) from the centcom map
 	bayNumber = bay.loading_id //Used as quick reference to what bay we're taking items from
-	var/area/pod_storage_area = locate(/area/centcom/supplypod/pod_storage) in GLOB.sortedAreas
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
 	temp_pod = new(pick(get_area_turfs(pod_storage_area))) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
 	orderedArea = createOrderedArea(bay) //Order all the turfs in the selected bay (top left to bottom right) to a single list. Used for the "ordered" mode (launchChoice = 1)
 	selector = new(null, holder.mob)
@@ -638,7 +638,7 @@
 	refreshView()
 
 /area/centcom/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
-	. = ..() 
+	. = ..()
 	var/obj/imgbound = locate() in locate(200,SUPPLYPOD_X_OFFSET*-4.5, 1)
 	call(GLOB.podlauncher, "RegisterSignal")(imgbound, "ct[GLOB.podstyles[14][9]]", "[GLOB.podstyles[14][10]]dlauncher")
 
@@ -702,10 +702,11 @@
 /datum/centcom_podlauncher/proc/launch(turf/target_turf) //Game time started
 	if (isnull(target_turf))
 		return
-	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
+	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod, sameloc = TRUE) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
 	toLaunch.update_icon()//we update_icon() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
-	toLaunch.forceMove(shippingLane)
+	//We don't have this area, lets just have it where we had the temp pod
+	//var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
+	//toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
 			var/launch_candidate = pick_n_take(launchList)

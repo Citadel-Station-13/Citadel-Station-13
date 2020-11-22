@@ -249,7 +249,7 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	T.transfer_ckey(S)
-	S.original_mind = T.mind.current
+	S.original_mind = T.mind
 	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	S.update_atom_languages()
 	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
