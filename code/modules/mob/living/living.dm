@@ -259,7 +259,7 @@
 	now_pushing = FALSE
 
 // i wish to have a "friendly chat" with whoever made three tail variables instead of one
-/mob/living/proc/has_tail()
+/mob/proc/has_tail()
 	return FALSE
 
 /mob/living/carbon/human/has_tail()
