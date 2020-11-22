@@ -36,7 +36,7 @@
 	return . | A.attack_hand(src, intent, .)
 
 /atom/proc/attack_hand(mob/user, act_intent = user.a_intent, attackchain_flags)
-	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_NOT_SLEEP(TRUE)
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)

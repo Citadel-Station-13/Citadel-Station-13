@@ -3,7 +3,7 @@
   * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
   */
 /mob/living/proc/Life(seconds, times_fired)
-	SHOULD_NOT_SLEEP(TRUE)
+	//SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
 
