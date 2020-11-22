@@ -91,7 +91,7 @@
 	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
 	var/light_range = FLOOR(nanite_amount/50, 1) - 1
 	explosion(host_mob, 0, heavy_range, light_range)
-	qdel(nanites)
+	nanites.delete_nanites()
 
 //TODO make it defuse if triggered again
 
