@@ -48,6 +48,8 @@
 #define MOB_EPIC		(1 << 7)	// Megafauna
 #define MOB_REPTILE		(1 << 8)
 #define MOB_SPIRIT		(1 << 9)
+/// Mobs that otherwise support nanites
+#define MOB_NANITES		(1 << 10)
 
 // Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
