@@ -27,13 +27,17 @@ GLOBAL_LIST_INIT(innate_ability_typepaths, all_innate_ability_typepaths())
 /mob/proc/grant_ability_from_source(list/abilities, source)
 	if(!islist(abilities))
 		abilities = list(abilities)
+	LAZYINITLIST(ability_actions)
+	LAZYINITLIST(innate_abilities)
+	to_chat(world, "DEBUG: granting list [english_list(abilities)]")
 	for(var/ability in abilities)
-		LAZYINITLIST(innate_abilities)
 		LAZYINITLIST(innate_abilities[ability])
 		innate_abilities[ability] |= source
+		to_chat(world, "DEBG: granting [ability]")
 		if(ability_actions[ability])
-			return
-		var/datum/action/innate/ability/A = ability_actions[ability] = new GLOB.innate_ability_typepaths[ability]
+			continue
+		var/datum/action/innate/ability/A = new GLOB.innate_ability_typepaths[ability]
+		ability_actions[ability] = A
 		A.Grant(src)
 
 /**
@@ -42,9 +46,11 @@ GLOBAL_LIST_INIT(innate_ability_typepaths, all_innate_ability_typepaths())
 /mob/proc/remove_ability_from_source(list/abilities, source)
 	if(!islist(abilities))
 		abilities = list(abilities)
+	if(!length(innate_abilities))
+		return
 	for(var/ability in abilities)
-		if(!innate_abilities || !length(innate_abilities[ability]))
-			return
+		if(!length(innate_abilities[ability]))
+			continue
 		innate_abilities[ability] -= source
 		if(!length(innate_abilities[ability]))
 			innate_abilities -= ability
