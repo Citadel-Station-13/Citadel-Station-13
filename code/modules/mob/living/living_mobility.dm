@@ -6,6 +6,7 @@
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOPICKUP), .proc/update_mobility)
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOUSE), .proc/update_mobility)
 	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOREST), .proc/update_mobility)
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_LIVING_NO_DENSITY), .proc/update_density)
 
 //Stuff like mobility flag updates, resting updates, etc.
 
@@ -148,7 +149,7 @@
 		L.update_pull_movespeed()
 
 	//Handle lying down, voluntary or involuntary
-	density = !lying
+	update_density()
 	if(lying)
 		set_resting(TRUE, TRUE, FALSE)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
