@@ -29,14 +29,13 @@ GLOBAL_LIST_INIT(innate_ability_typepaths, all_innate_ability_typepaths())
 		abilities = list(abilities)
 	LAZYINITLIST(ability_actions)
 	LAZYINITLIST(innate_abilities)
-	to_chat(world, "DEBUG: granting list [english_list(abilities)]")
 	for(var/ability in abilities)
 		LAZYINITLIST(innate_abilities[ability])
 		innate_abilities[ability] |= source
-		to_chat(world, "DEBG: granting [ability]")
 		if(ability_actions[ability])
 			continue
-		var/datum/action/innate/ability/A = new GLOB.innate_ability_typepaths[ability]
+		var/path = GLOB.innate_ability_typepaths[ability]
+		var/datum/action/innate/ability/A = new path
 		ability_actions[ability] = A
 		A.Grant(src)
 
