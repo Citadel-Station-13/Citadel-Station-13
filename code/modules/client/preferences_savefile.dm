@@ -265,19 +265,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/ctrl_t_binding = S["key_bindings"]["CtrlT"]
 		var/ctrl_m_binding = S["key_bindings"]["CtrlM"]
 		if(length(ctrl_t_binding) && "say_with_indicator" in ctrl_t_binding)
-      if(!length(S["key_bindings"]["T"]))
-			  S["key_bindings"]["T"] = list("say_with_indicator")
-      else
-        S["key_bindings"]["T"] += "say_with_indicator"
+			if(!length(S["key_bindings"]["T"]))
+				S["key_bindings"]["T"] = list("say_with_indicator")
+			else
+				S["key_bindings"]["T"] += "say_with_indicator"
 			S["key_bindings"]["CtrlT"] -= "say_with_indicator"
-      S["key_bindings"]["CtrlT"] += "say"
+			S["key_bindings"]["CtrlT"] += "say"
 		if(length(ctrl_m_binding) && "me_with_indicator" in ctrl_m_binding)
-      if(!length(S["key_bindings"]["M"])
-			  S["key_bindings"]["M"] = list("me_with_indicator")
-      else
-        S["key_bindings"]["M"] += "me_with_indicator"
+			if(!length(S["key_bindings"]["M"]))
+				S["key_bindings"]["M"] = list("me_with_indicator")
+			else
+				S["key_bindings"]["M"] += "me_with_indicator"
 			S["key_bindings"]["CtrlM"] -= "me_with_indicator"
-      S["key_bindings"]["CtrlM"] == "me"
+			S["key_bindings"]["CtrlM"] == "me"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
