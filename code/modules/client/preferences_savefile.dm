@@ -226,6 +226,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
+	if(current_version < 5000)
+		var/ctrl_t_binding = S["key_bindings"]["CtrlT"]
+		var/ctrl_m_binding = S["key_bindings"]["CtrlM"]
+		if(length(ctrl_t_binding) && "say_with_indicator" in ctrl_t_binding)
+			S["key_bindings"]["T"] = "say_with_indicator"
+			S["key_bindings"]["CtrlT"] = "say"
+		if(length(ctrl_m_binding) && "me_with_indicator" in ctrl_m_binding)
+			S["key_bindings"]["M"] = "me_with_indicator"
+			S["key_bindings"]["CtrlM"] = "me"
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
