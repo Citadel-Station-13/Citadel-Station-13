@@ -79,7 +79,7 @@
 	no_destination_swap = TRUE
 	var/static/list/dumb_rev_heads = list()
 
-	/obj/machinery/computer/shuttle/mining/common
+/obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"
 	desc = "Used to call and send the lavaland shuttle."
 	req_access = list()
