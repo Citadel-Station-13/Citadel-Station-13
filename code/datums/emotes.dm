@@ -55,7 +55,7 @@
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	msg = "<b>[user]</b> " + msg
+	msg = "<span class='emote'><b>[user]</b> [msg]</span>"
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
