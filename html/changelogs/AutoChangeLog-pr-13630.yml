@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "you can now customize your size from 90% to 130%, going below 100% makes you have 10 less max health"

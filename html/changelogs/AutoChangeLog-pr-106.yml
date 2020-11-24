@@ -1,5 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - rscadd: Server will ping a role on roundstart (actual start) if set.
-  - config: Changed configs location.

@@ -1,4 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - admin: "Canceling events gives more time to stop from 10 to 30"

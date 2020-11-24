@@ -1,8 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "Biomechanical (hybrid) bodyparts now have access to wound-fixing surgeries."
-  - tweak: "A wound being fixed no longer just qdel()s surgeries connected to it."
-  - tweak: "Some robotic surgery steps are now a bit more clear."
-  - bugfix: "Organs no longer get fed to people after successfully being inserted into them."
-  - tweak: "Not completing the do_after of a surgery no longer causes you to attack the target with whatever you were holding."

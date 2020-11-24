@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Repeatable surgery steps can no longer cause an infinite loop if not completing the do_after"

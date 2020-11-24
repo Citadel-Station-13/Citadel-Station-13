@@ -1,6 +1,0 @@
-author: ZombieTsar
-delete-after: true
-changes:
-  - rscadd: Added new tools, toolbox and a slime core for creation on the crafting
-      menu.
-  - rscadd: Added rnd circuit boards to crafting menu, will need a nerf.

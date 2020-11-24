@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - rscadd: "Robots (anyone with the robotic_organism trait) have toxins damage replaced with system corruption. See the PR for details."

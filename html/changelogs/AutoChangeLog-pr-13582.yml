@@ -1,5 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "a tonne of fixes to colourisation of parts, too many to name, including some sprite fixes"
-  - rscadd: "things now have their own individual primary/(secondary)/(tertiary) colours as required, and these can be modified by you"

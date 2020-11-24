@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "added in-game age verification as an alternative to access requests"

@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - code_imp: "Swaps the gift static blacklist with a global list one."

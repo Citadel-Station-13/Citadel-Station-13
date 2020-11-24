@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a minor incorrectness in ratvarian borg slabs (ratvar_act -> ui_act)"

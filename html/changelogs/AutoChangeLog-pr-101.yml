@@ -1,6 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - tweak: The radial type selection for the decal painter now has a bigger radius,
-      so that no sprites go over each other.
-  - bugfix: Decal painter previews now appear the right way.
