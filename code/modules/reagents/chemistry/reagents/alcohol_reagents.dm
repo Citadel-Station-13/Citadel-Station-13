@@ -36,7 +36,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(HAS_TRAIT(C, TRAIT_NO_ALCOHOL))
+	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM)) //Robots don't get drunk
 		return ..()
 
 	if(HAS_TRAIT(C, TRAIT_TOXIC_ALCOHOL))
