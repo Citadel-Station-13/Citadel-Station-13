@@ -168,7 +168,6 @@
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
-	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/durathread
