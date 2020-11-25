@@ -8,6 +8,15 @@
  * Gifts
  */
 
+GLOBAL_LIST_INIT(gift_item_blacklist, typecacheof(list(
+	/obj/effect,
+	/obj/belly,
+	/obj/mafia_game_board,
+	/obj/docking_port,
+	/obj/shapeshift_holder,
+	/obj/screen
+	)))
+
 GLOBAL_LIST_EMPTY(possible_gifts)
 
 /obj/item/a_gift
@@ -95,7 +104,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		var/list/gift_types_list = subtypesof(/obj/item)
 		for(var/V in gift_types_list)
 			var/obj/item/I = V
-			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.item_flags) & ABSTRACT))
+			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.item_flags) & ABSTRACT) || (is_type_in_typecache(I, GLOB.gift_item_blacklist)))
 				gift_types_list -= V
 		GLOB.possible_gifts = gift_types_list
 	var/gift_type = pick(GLOB.possible_gifts)

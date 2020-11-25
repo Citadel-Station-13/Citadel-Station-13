@@ -21,6 +21,13 @@
 	item_state = "r_suit"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30, "wound" = 10)
 
+/obj/item/clothing/under/rank/security/officer/util
+	name = "security utility uniform"
+	desc = "a grey security uniform"
+	icon_state = "utilsec"
+	item_state = "utilsec"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
 	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
@@ -50,6 +57,28 @@
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp
+	name = "corporate security uniform"
+	desc = "How positively stuffy."
+	icon_state = "seccorp"
+	item_state = "seccorp"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/wardencorp
+	name = "corporate warden uniform"
+	icon_state = "wardencorp"
+	item_state = "wardencorp"
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/hoscorp
+	name = "corporate head of security's uniform"
+	icon_state = "hoscorp"
+	item_state = "hoscorp"
+
+/obj/item/clothing/under/rank/security/officer/blueshirt/seccorp/detcorp
+	name = "corporate detective's uniform"
+	icon_state = "detcorp"
+	item_state = "detcorp"
 
 /obj/item/clothing/under/rank/security/officer/spacepol
 	name = "police uniform"
@@ -102,6 +131,16 @@
 	icon_state = "detective"
 	item_state = "det"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30, "wound" = 10)
+
+/obj/item/clothing/under/rank/security/detective/brown
+	name = "dark boiled suit"
+	icon_state = "detectivebrown"
+	item_state = "detectivebrown"
+
+/obj/item/clothing/under/rank/security/detective/brown/brown2
+	name = "padded suit"
+	icon_state = "detectivebrown2"
+	item_state = "detectivebrown2"
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"

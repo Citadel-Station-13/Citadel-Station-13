@@ -21,6 +21,11 @@
 					/obj/item/clothing/suit/jacket/puffer/vest = 4,
 					/obj/item/clothing/suit/jacket/puffer = 4,
 					/obj/item/clothing/suit/hooded/cloak/david = 4,
+					/obj/item/clothing/suit/bomber = 5,
+					/obj/item/clothing/under/suit/turtle/teal = 3,
+					/obj/item/clothing/under/suit/turtle/grey = 3,
+					/obj/item/clothing/under/rank/civilian/util = 5,
+					/obj/item/clothing/under/rank/civilian/util/greyshirt = 5,
 					/obj/item/clothing/under/suit/navy = 3,
 					/obj/item/clothing/under/suit/black_really = 3,
 					/obj/item/clothing/under/suit/burgundy = 3,
@@ -176,6 +181,7 @@
 					/obj/item/clothing/under/pants/mustangjeans = 3,
 					/obj/item/clothing/neck/necklace/dope = 5,
 					/obj/item/clothing/suit/jacket/letterman_nanotrasen = 5,
+					/obj/item/clothing/under/misc/corporateuniform = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/polychromic = 5)
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = PRICE_CHEAP

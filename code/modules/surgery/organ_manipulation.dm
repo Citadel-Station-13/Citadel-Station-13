@@ -2,6 +2,7 @@
 	name = "organ manipulation"
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
+	requires_bodypart_type = BODYPART_ORGANIC
 	requires_real_bodypart = 1
 	steps = list(
 		/datum/surgery_step/incise,
@@ -143,4 +144,4 @@
 			display_results(user, target, "<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!")
-	return 0
+	return 1

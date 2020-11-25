@@ -138,7 +138,7 @@
 	if(prob(hardness))
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		hulk_recoil(arm, user)
+		//hulk_recoil(arm, user)		// citadel edit - no, hulks are already subject to stamina combat
 		dismantle_wall(1)
 
 	else

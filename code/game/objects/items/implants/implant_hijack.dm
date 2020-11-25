@@ -7,7 +7,8 @@
 	activated = 1
 	var/toggled = FALSE
 	icon_state = "hijack"
-	var/eye_color
+	var/left_eye_color
+	var/right_eye_color
 	var/stealthmode = FALSE
 	var/stealthcooldown = 0
 	var/hijacking = FALSE
@@ -25,8 +26,10 @@
 		return
 	var/on = toggled && !stealthmode
 	var/mob/living/carbon/human/H = imp_in
-	H.eye_color = on ? "ff0" : eye_color
-	H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+	H.left_eye_color = on ? "ff0" : left_eye_color
+	H.right_eye_color = on ? "ff0" : right_eye_color
+	H.dna.update_ui_block(DNA_LEFT_EYE_COLOR_BLOCK)
+	H.dna.update_ui_block(DNA_RIGHT_EYE_COLOR_BLOCK)
 	H.update_body()
 
 /obj/item/implant/hijack/implant(mob/living/target, mob/user, silent = FALSE)
@@ -34,7 +37,8 @@
 		ADD_TRAIT(target, TRAIT_HIJACKER, "implant")
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
-			eye_color = H.eye_color
+			left_eye_color = H.left_eye_color
+			right_eye_color = H.right_eye_color
 		return TRUE
 
 /obj/item/implant/hijack/removed(mob/living/source, silent = FALSE, special = 0)
@@ -49,7 +53,8 @@
 				apc.update_icon()
 		if (ishuman(source))
 			var/mob/living/carbon/human/H = source
-			H.eye_color = eye_color
+			H.left_eye_color = left_eye_color
+			H.right_eye_color = left_eye_color
 		return TRUE
 
 /obj/item/implant/hijack/proc/InterceptClickOn(mob/living/user,params,atom/object)
@@ -87,10 +92,17 @@
 /obj/item/implant/hijack/proc/hijack_remotely(obj/machinery/power/apc/apc)
 	if (apc.hijacker || hijacking)
 		return FALSE //can't remotely hijack an already hijacked APC
+
+	if(apc.being_hijacked)
+		to_chat(imp_in, "<span class='warning'>This APC is already being hijacked!</span>")
+		return FALSE
+
+	apc.being_hijacked = TRUE
 	hijacking = TRUE
 	to_chat(imp_in, "<span class='notice'>Establishing remote connection with APC.</span>")
 	if (!do_after(imp_in, 4 SECONDS,target=apc))
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+		apc.being_hijacked = FALSE
 		hijacking = FALSE
 		return TRUE
 	if (LAZYLEN(imp_in.siliconaccessareas) >= HIJACK_APC_MAX_AMOUNT)
@@ -113,6 +125,7 @@
 		toggle_eyes()
 	else
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+	apc.being_hijacked = FALSE
 	hijacking = FALSE
 	imp_in.light_power = 0
 	imp_in.light_range = 0

@@ -760,6 +760,7 @@
 /obj/item/melee/transforming/cleaving_saw
 	name = "cleaving saw"
 	desc = "This saw, effective at drawing the blood of beasts, transforms into a long cleaver that makes use of centrifugal force."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	force = 12
 	force_on = 20 //force when active
 	throwforce = 20
@@ -986,7 +987,8 @@
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
 			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade")
-			H.eye_color = "fee5a3"
+			H.left_eye_color = "fee5a3"
+			H.right_eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
@@ -1176,6 +1178,7 @@
 /obj/item/gun/ballistic/revolver/doublebarrel/super
 	name = "super combat shotgun"
 	desc = "From the belly of the beast - or rather, demon. Twice as lethal as a less-than-super shotgun, but a tad bulkier."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	icon_state = "heckgun"
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/heck
@@ -1206,6 +1209,7 @@
 /obj/item/hierophant_club
 	name = "hierophant club"
 	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	icon_state = "hierophant_club_ready_beacon"
 	item_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'

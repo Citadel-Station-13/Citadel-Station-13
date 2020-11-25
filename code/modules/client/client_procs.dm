@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			debug_tools_allowed = TRUE
 		//END CITADEL EDIT
 	else if(GLOB.deadmins[ckey])
-		verbs += /client/proc/readmin
+		add_verb(src, /client/proc/readmin)
 		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
@@ -268,14 +268,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	addtimer(CALLBACK(src, .proc/ensure_keys_set), 0)	//prevents possible race conditions
+
+	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps //(prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
 
 	if(fexists(roundend_report_file()))
-		verbs += /client/proc/show_previous_roundend_report
+		add_verb(src, /client/proc/show_previous_roundend_report)
 
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
@@ -336,12 +337,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return
 
-	// if(SSinput.initialized) placed here on tg.
-	// 	set_macros()
-	// 	update_movement_keys()
-
 	// Initialize tgui panel
 	tgui_panel.initialize()
+	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -470,16 +469,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	// view_size = new(src, getScreenSize(prefs.widescreenpref))
-	// view_size.resetFormat()
-	// view_size.setZoomMode()
-	// fit_viewport()
+	view_size = new(src, getScreenSize(prefs.widescreenpref))
+	view_size.resetFormat()
+	view_size.setZoomMode()
+	fit_viewport()
 	Master.UpdateTickRate()
 
 /client/proc/ensure_keys_set()
 	if(SSinput.initialized)
 		set_macros()
-	update_movement_keys(prefs)
+		update_movement_keys(prefs)
 
 //////////////
 //DISCONNECT//
@@ -562,36 +561,49 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!query_client_in_db.Execute())
 		qdel(query_client_in_db)
 		return
-	if(!query_client_in_db.NextRow())
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey] && !(ckey in GLOB.bunker_passthrough))
-			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a><br>If you have already done so, wait a few minutes then try again; sometimes the server needs to fully load before you can join.</span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
-			var/list/connectiontopic_a = params2list(connectiontopic)
-			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
-			if(panic_addr && !connectiontopic_a["redirect"])
-				var/panic_name = CONFIG_GET(string/panic_server_name)
-				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
-				winset(src, null, "command=.options")
-				src << link("[panic_addr]?redirect=1")
-			qdel(query_client_in_db)
-			qdel(src)
-			return
+	if(!query_client_in_db.NextRow()) //new user detected
+		if(!holder && !GLOB.deadmins[ckey])
+			if(CONFIG_GET(flag/panic_bunker) && !(ckey in GLOB.bunker_passthrough))
+				log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+				message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
+				to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a><br>If you have already done so, wait a few minutes then try again; sometimes the server needs to fully load before you can join.</span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
+				var/list/connectiontopic_a = params2list(connectiontopic)
+				var/list/panic_addr = CONFIG_GET(string/panic_server_address)
+				if(panic_addr && !connectiontopic_a["redirect"])
+					var/panic_name = CONFIG_GET(string/panic_server_name)
+					to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
+					winset(src, null, "command=.options")
+					src << link("[panic_addr]?redirect=1")
+				qdel(query_client_in_db)
+				qdel(src)
+				return
 
-		new_player = 1
-		account_join_date = sanitizeSQL(findJoinDate())
-		var/sql_key = sanitizeSQL(key)
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
-		if(!query_add_player.Execute())
-			qdel(query_client_in_db)
+			new_player = 1
+			account_join_date = sanitizeSQL(findJoinDate())
+			var/sql_key = sanitizeSQL(key)
+			var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+			if(!query_add_player.Execute())
+				qdel(query_client_in_db)
+				qdel(query_add_player)
+				return
 			qdel(query_add_player)
-			return
-		qdel(query_add_player)
-		if(!account_join_date)
-			account_join_date = "Error"
-			account_age = -1
-		else if(ckey in GLOB.bunker_passthrough)
-			GLOB.bunker_passthrough -= ckey
+			if(!account_join_date)
+				account_join_date = "Error"
+				account_age = -1
+			else if(ckey in GLOB.bunker_passthrough)
+				GLOB.bunker_passthrough -= ckey
+		if(CONFIG_GET(flag/age_verification)) //setup age verification
+			if(!set_db_player_flags())
+				message_admins(usr, "<span class='danger'>ERROR: Unable to read player flags from database. Please check logs.</span>")
+				return
+			else
+				var/dbflags = prefs.db_flags
+				if(!(dbflags & DB_FLAG_AGE_CONFIRMATION_COMPLETE)) //they have not completed age verification
+					if((ckey in GLOB.bunker_passthrough)) //they're verified in the panic bunker though
+						update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+					else
+						update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, TRUE)
+
 	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
@@ -857,9 +869,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
-		verbs += /client/proc/self_notes
+		add_verb(src, /client/proc/self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
-		verbs += /client/proc/self_playtime
+		add_verb(src, /client/proc/self_playtime)
 
 
 #undef UPLOAD_LIMIT
@@ -912,8 +924,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return FALSE
 		if (NAMEOF(src, key))
 			return FALSE
-		if(NAMEOF(src, view))
-			change_view(var_value)
+		if (NAMEOF(src, view))
+			view_size.setDefault(var_value)
 			return TRUE
 	. = ..()
 
@@ -923,7 +935,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/y = viewscale[2]
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
-	change_view("[x]x[y]")
+	view_size.setDefault("[x]x[y]")
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
@@ -945,12 +957,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
-
-//CIT CHANGES START HERE - makes change_view change DEFAULT_VIEW to 15x15 depending on preferences
-	if(prefs && CONFIG_GET(string/default_view))
-		if(!prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
-			new_size = "15x15"
-//END OF CIT CHANGES
 
 	var/list/old_view = getviewsize(view)
 	view = new_size
@@ -1001,3 +1007,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/can_have_part(part_name)
 	return prefs.pref_species.mutant_bodyparts[part_name] || (part_name in GLOB.unlocked_mutant_parts)
+
+/// compiles a full list of verbs and sends it to the browser
+/client/proc/init_verbs()
+	if(IsAdminAdvancedProcCall())
+		return
+	var/list/verblist = list()
+	verb_tabs.Cut()
+	for(var/thing in (verbs + mob?.verbs))
+		var/procpath/verb_to_init = thing
+		if(!verb_to_init)
+			continue
+		if(verb_to_init.hidden)
+			continue
+		if(!istext(verb_to_init.category))
+			continue
+		verb_tabs |= verb_to_init.category
+		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
+	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")

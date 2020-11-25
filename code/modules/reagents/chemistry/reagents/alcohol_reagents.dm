@@ -90,6 +90,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A freezing pint of beer."
 	pH = 4
 
+	// Beer is a chemical composition of alcohol and various other things. It's a garbage nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
+/datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
 	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety has reduced calorie and alcohol content."
@@ -1962,7 +1969,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
 //Bugs should not drink Bug spray.
-	if(isinsect(M) || isflyperson(M))
+	if(isinsect(M) || isflyperson(M) || isarachnid(M))
 		M.adjustToxLoss(1,0)
 	return ..()
 
@@ -2272,15 +2279,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 ////////////////////
 /datum/reagent/consumable/ethanol/species_drink
 	var/species_required
-	var/disgust = 25
+	var/disgust = 26
 	boozepwr = 50
 
-/datum/reagent/consumable/ethanol/species_drink/on_mob_life(mob/living/carbon/C)
-	if(C.dna.species && C.dna.species.species_type == species_required) //species have a species_type variable that refers to one of the drinks
-		quality = RACE_DRINK
-	else
-		C.adjust_disgust(disgust)
-	return ..()
+/datum/reagent/consumable/ethanol/species_drink/reaction_mob(mob/living/carbon/C, method=TOUCH)
+	if(method == INGEST)
+		if(C?.dna?.species?.species_category == species_required) //species have a species_category variable that refers to one of the drinks
+			quality = RACE_DRINK
+		else
+			C.adjust_disgust(disgust)
+		return ..()
 
 /datum/reagent/consumable/ethanol/species_drink/coldscales
 	name = "Coldscales"

@@ -511,8 +511,28 @@
 	path = /obj/item/bedsheet/cosmos
 	ckeywhitelist = list("grunnyyy")
 
+/datum/gear/donator/customskirt
+	name = "custom atmos skirt"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/under/custom/customskirt
+	ckeywhitelist = list("thakyz")
+
 /datum/gear/donator/hisakaki
 	name = "halo"
 	slot = SLOT_HEAD
 	path = 	/obj/item/clothing/head/halo
 	ckeywhitelist = list("hisakaki")
+
+/datum/gear/donator/vest
+	name = "vest and shirt"
+	slot = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/custom/vest
+	ckeywhitelist = list("maylowfox")
+
+/datum/gear/donator/exo
+	name = "exo frame"
+	slot = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/custom/exo
+	ckeywhitelist = list("jesterz7")
+
+

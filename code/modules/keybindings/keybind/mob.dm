@@ -107,7 +107,18 @@
 
 /datum/keybinding/living/subtle/down(client/user)
 	var/mob/living/L = user.mob
-	L.subtle_keybind()
+	L.subtle()
+	return TRUE
+
+/datum/keybinding/living/subtler
+	hotkey_keys = list("6")
+	classic_keys = list()
+	name = "subtler_emote"
+	full_name = "Subtler Anti-Ghost Emote"
+
+/datum/keybinding/living/subtler/down(client/user)
+	var/mob/living/L = user.mob
+	L.subtler()
 	return TRUE
 
 /datum/keybinding/mob/whisper

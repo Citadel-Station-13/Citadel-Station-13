@@ -166,13 +166,12 @@
 	if(turned_on)
 		if(baton_stun(M, user, disarming))
 			user.do_attack_animation(M)
-			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
 		M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	return disarming || (user.a_intent != INTENT_HARM)
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/living/user, disarming = FALSE)
 	var/list/return_list = list()
 	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
@@ -193,6 +192,9 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
+
+	if(!user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
+		return FALSE
 
 	if(!disarming)
 		if(knockdown)
@@ -232,11 +234,11 @@
 	if (!(. & EMP_PROTECT_SELF))
 		switch_status(FALSE)
 		if(!iscyborg(loc))
-			deductcharge(1000 / severity, TRUE, FALSE)
+			deductcharge(severity*10, TRUE, FALSE)
 
 /obj/item/melee/baton/stunsword
 	name = "stunsword"
-	desc = "not actually sharp, this sword is functionally identical to a stunbaton"
+	desc = "Not actually sharp, this sword is functionally identical to its baton counterpart."
 	icon_state = "stunsword"
 	item_state = "sword"
 
@@ -247,6 +249,18 @@
 
 /obj/item/melee/baton/stunsword/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-stunsword")
+
+/obj/item/melee/baton/stunsword/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/baton/stunsword/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
 
 /obj/item/ssword_kit
 	name = "stunsword kit"

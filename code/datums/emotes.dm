@@ -66,8 +66,12 @@
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg)
-	else
+	else if(emote_type == EMOTE_VISIBLE)
 		user.visible_message(msg)
+	else if(emote_type == EMOTE_BOTH)
+		user.visible_message(msg, blind_message = msg)
+	else if(emote_type == EMOTE_OMNI)
+		user.visible_message(msg, omni = TRUE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))

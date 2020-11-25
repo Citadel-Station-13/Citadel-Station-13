@@ -134,6 +134,19 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 /datum/gas_mixture/proc/set_volume(new_volume)
 /datum/gas_mixture/proc/get_moles(gas_type)
 /datum/gas_mixture/proc/set_moles(gas_type, moles)
+
+// VV WRAPPERS - EXTOOLS HOOKED PROCS DO NOT TAKE ARGUMENTS FROM CALL() FOR SOME REASON.
+/datum/gas_mixture/proc/vv_set_moles(gas_type, moles)
+	return set_moles(gas_type, moles)
+/datum/gas_mixture/proc/vv_get_moles(gas_type)
+	return get_moles(gas_type)
+/datum/gas_mixture/proc/vv_set_temperature(new_temp)
+	return set_temperature(new_temp)
+/datum/gas_mixture/proc/vv_set_volume(new_volume)
+	return set_volume(new_volume)
+/datum/gas_mixture/proc/vv_react(datum/holder)
+	return react(holder)
+
 /datum/gas_mixture/proc/scrub_into(datum/gas_mixture/target, list/gases)
 /datum/gas_mixture/proc/mark_immutable()
 /datum/gas_mixture/proc/get_gases()
@@ -196,7 +209,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
 	//Returns: a string indicating what check failed, or "" if check passes
 
-/datum/gas_mixture/proc/react(turf/open/dump_location)
+/datum/gas_mixture/proc/react(datum/holder)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
@@ -243,7 +256,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 		set_moles(path, text2num(gas[id]))
 	archive()
 	return 1
-
+/*
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	if(!total_moles())
@@ -291,7 +304,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
-
+*/
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
 //eg:

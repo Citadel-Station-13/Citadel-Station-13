@@ -551,11 +551,37 @@
 	icon_state = "polyce"
 	poly_colors = list("#808080", "#8CC6FF", "#FF3535")
 
+/obj/item/clothing/under/custom/customskirt
+	name = "unzipped atmos skirt"
+	desc = "atmos jumpsuit skirt with the top half zipped down and wrapped around the waist."
+	icon_state = "atmos_skirt"
+	item_state = "atmos_skirt"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+
 /obj/item/clothing/head/halo
 	name = "transdimensional halo"
 	desc = "An oddly shaped halo that magically hovers above the head."
 	icon_state = "halo"
 	item_state = "halo"
 	icon = 'icons/mob/clothing/custom_w.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/under/custom/vest
+	name = "vest"
+	desc = "A vest with a shirt underlining it."
+	icon_state = "vest"
+	item_state = "vest"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = STYLE_DIGITIGRADE
+
+/obj/item/clothing/suit/custom/exo
+	name = "Full ExoFrame"
+	desc = "A suit specially designed for those who live and breath hardware with custom tooled robotic manipulators for working with precision even on the most hazardous of jobs."
+	icon_state = "frame"
+	item_state = "frame"
+	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
