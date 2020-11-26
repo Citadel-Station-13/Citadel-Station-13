@@ -1491,6 +1491,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/fore)
+"adu" = (
+/obj/effect/landmark/barthpot,
+/turf/open/floor/wood,
+/area/library)
 "adw" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
@@ -51202,15 +51206,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
-"cyt" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 4"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "cyu" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -55556,6 +55551,18 @@
 /obj/item/coin/silver,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"iWK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "iYE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56097,11 +56104,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
-"kls" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space/nearstation)
+"kiY" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 4"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "kmw" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -56612,6 +56623,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
+"lBd" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "lBz" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -56897,6 +56917,17 @@
 	icon_state = "wood-broken5"
 	},
 /area/maintenance/bar)
+"mqo" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "mqZ" = (
 /obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plating,
@@ -58145,6 +58176,15 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"pFY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-06"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pHl" = (
 /obj/structure/table,
 /obj/item/storage/box/beakers{
@@ -58387,6 +58427,16 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/crew_quarters/toilet)
+"qtw" = (
+/obj/machinery/door/airlock/external{
+	dir = 2;
+	name = "Port Docking Bay 4"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "qtH" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -58750,6 +58800,12 @@
 /obj/item/clothing/under/dress/sundress,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"rsp" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/flashlight,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "rtl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -59008,6 +59064,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
+"rZQ" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "saK" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -59256,6 +59324,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"sJw" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Arrivals Bay Mining Dock";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "sJx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -59598,6 +59679,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"tHy" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/item/kirbyplants{
+	icon_state = "applebush"
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "tJi" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -60159,8 +60254,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "uRn" = (
-/mob/living/simple_animal/opossum,
 /obj/structure/chair/stool,
+/mob/living/simple_animal/opossum,
 /turf/open/floor/carpet/royalblue,
 /area/maintenance/starboard/aft)
 "uRS" = (
@@ -60779,6 +60874,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/pool)
+"wjd" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/table,
+/obj/item/gps/mining{
+	gpstag = "MINE_PUB"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "wje" = (
 /obj/structure/rack,
 /obj/item/instrument/banjo,
@@ -68456,7 +68559,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gDl
 aaa
 aaa
 aaa
@@ -68965,10 +69068,10 @@ aaa
 aaa
 aaa
 aaa
+rZQ
 aaa
 aaa
-aaa
-aae
+aoV
 aaa
 aaa
 aaa
@@ -69220,11 +69323,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
+awW
+kiY
+awW
+aaf
 aaa
 aaa
 aaa
@@ -69477,11 +69580,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
+awW
+auP
+awW
+aaf
 aaa
 aaa
 aaa
@@ -69734,11 +69837,11 @@ aaa
 aaa
 aaa
 aaa
-aoV
-aaa
-aaa
-aaa
-aaa
+arB
+awW
+qtw
+awW
+arB
 aaa
 aaa
 aaa
@@ -69991,12 +70094,12 @@ aaa
 aaa
 aaa
 aaa
-aoV
-aaa
-aaa
-aaa
-aaa
-aoV
+arB
+tHy
+ayl
+sJw
+arB
+aaf
 aaa
 aaa
 aaa
@@ -70248,12 +70351,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aoV
+awW
+lBd
+ayl
+rsp
+awW
+aaf
 aaa
 aaa
 aaa
@@ -70505,12 +70608,12 @@ aaa
 aaa
 aaa
 aaa
+awW
+lBd
+ayl
+wjd
+awW
 aaf
-aaa
-aaa
-aaa
-aaf
-kls
 aaa
 aaa
 aaa
@@ -70763,9 +70866,9 @@ aaa
 aaa
 aaa
 arB
-arB
-arB
-arB
+mqo
+ayn
+pFY
 aAC
 aaf
 aaa
@@ -71020,7 +71123,7 @@ aaa
 aaa
 aaa
 arB
-awZ
+iWK
 ayk
 awW
 aAD
@@ -71281,7 +71384,7 @@ awZ
 ayl
 beK
 auP
-cyt
+cyu
 cyd
 aaa
 aaa
@@ -105452,7 +105555,7 @@ aIt
 aPd
 aIt
 aPb
-aIt
+adu
 aXu
 aYW
 bat
