@@ -288,7 +288,7 @@
 	severity *= emp_severity_mod
 	var/loss = (severity / 100) * (rand(emp_percent_deletion_lower, emp_percent_deletion_upper) * nanite_volume) + rand(emp_flat_deletion_lower, emp_flat_deletion_upper)
 	adjust_nanites(null, -loss)
-	if(prob(severity / emp_desync_mod))
+	if(prob(severity * emp_desync_mod))
 		cloud_id = 0
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
