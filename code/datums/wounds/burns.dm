@@ -25,16 +25,16 @@
 	var/sanitization = 0
 
 	/// Once we reach infestation beyond WOUND_INFESTATION_SEPSIS, we get this many warnings before the limb is completely paralyzed (you'd have to ignore a really bad burn for a really long time for this to happen)
-	var/strikes_to_lose_limb = 3
+	var/limb_decay = 3
+	var/datum/brain_trauma/severe/paralysis/sepsis
 
 
 /datum/wound/burn/handle_process()
 	. = ..()
-	if(strikes_to_lose_limb == 0)
+	if(limb_decay <= 0)
 		victim.adjustToxLoss(0.5)
 		if(prob(1))
 			victim.visible_message("<span class='danger'>The infection on the remnants of [victim]'s [limb.name] shift and bubble nauseatingly!</span>", "<span class='warning'>You can feel the infection on the remnants of your [limb.name] coursing through your veins!</span>")
-		return
 
 	if(victim.reagents)
 		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
@@ -56,6 +56,8 @@
 	// here's the check to see if we're cleared up
 	if((flesh_damage <= 0) && (infestation <= 1))
 		to_chat(victim, "<span class='green'>The burns on your [limb.name] have cleared up!</span>")
+		if(sepsis)
+			qdel(sepsis)
 		qdel(src)
 		return
 
@@ -64,6 +66,10 @@
 		var/bandage_factor = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
 		infestation = max(0, infestation - WOUND_BURN_SANITIZATION_RATE)
 		sanitization = max(0, sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor))
+		return
+
+	// don't get worse if you have formaldehyde or preservahyde in your system, or if you are cold and are not immune to cold
+	if(victim.reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || victim.reagents.has_reagent(/datum/reagent/preservahyde, 1) || (victim.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(victim, TRAIT_RESISTCOLD)))
 		return
 
 	infestation += infestation_rate
@@ -98,7 +104,7 @@
 				victim.adjustToxLoss(1)
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
 			if(prob(infestation))
-				switch(strikes_to_lose_limb)
+				switch(limb_decay)
 					if(3 to INFINITY)
 						to_chat(victim, "<span class='deadsay'>The skin on your [limb.name] is literally dripping off, you feel awful!</span>")
 					if(2)
@@ -108,12 +114,12 @@
 					if(0)
 						to_chat(victim, "<span class='deadsay'><b>The last of the nerve endings in your [limb.name] wither away, as the infection completely paralyzes your joint connector.</b></span>")
 						threshold_penalty = 120 // piss easy to destroy
-						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
+						sepsis = new (limb.body_zone)
 						victim.gain_trauma(sepsis)
-				strikes_to_lose_limb--
+				limb_decay--
 
 /datum/wound/burn/get_examine_description(mob/user)
-	if(strikes_to_lose_limb <= 0)
+	if(limb_decay <= 0)
 		return "<span class='deadsay'><B>[victim.p_their(TRUE)] [limb.name] is completely dead and unrecognizable as organic.</B></span>"
 
 	var/list/condition = list("[victim.p_their(TRUE)] [limb.name] [examine_desc]")
@@ -146,9 +152,9 @@
 	return "<B>[condition.Join()]</B>"
 
 /datum/wound/burn/get_scanner_description(mob/user)
-	if(strikes_to_lose_limb == 0)
+	if(limb_decay <= 0)
 		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
-		oopsie += "<div class='ml-3'>Infection Level: <span class='deadsay'>The infection is total. The bodypart is lost. Amputate or augment limb immediately.</span></div>"
+		oopsie += "<div class='ml-3'>Infection Level: <span class='deadsay'>The infection is total. The bodypart is covered in infection. Disinfect limb immediately.</span></div>"
 		return oopsie
 
 	. = ..()
@@ -246,6 +252,12 @@
 
 /datum/wound/burn/on_synthflesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
+
+//if you cut your arm off, you remove the wound, and thus should no longer have the brain trauma
+/datum/wound/burn/remove_wound(ignore_limb, replaced = FALSE)
+	if(sepsis)
+		qdel(sepsis)
+	..()
 
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/moderate
