@@ -11,6 +11,18 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_MUZZLE
+	visor_flags_inv = HIDEFACE
+	var/flavor_adjust = TRUE //can it do the heehoo alt click to hide/show identity
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	if(flavor_adjust)
+		. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
+
+/obj/item/clothing/mask/gas/AltClick(mob/user)
+	. = ..()
+	if(flavor_adjust && adjustmask(user, TRUE))
+		return TRUE
 
 /obj/item/clothing/mask/gas/glass
 	name = "glass gas mask"
@@ -35,6 +47,7 @@
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+	flavor_adjust = FALSE
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -72,7 +85,6 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
-	visor_flags_inv = HIDEFACE
 	dog_fashion = /datum/dog_fashion/head/clown
 	var/static/list/clownmask_designs
 
@@ -86,15 +98,6 @@
 			"The Madman" = image(icon = src.icon, icon_state = "joker"),
 			"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
 			)
-
-/obj/item/clothing/mask/gas/clown_hat/examine(mob/user)
-	. = ..()
-	. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
-
-/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/user)
-	. = ..()
-	if(adjustmask(user, TRUE))
-		return TRUE
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
@@ -130,17 +133,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
-	visor_flags_inv = HIDEFACE
 	var/static/list/mimemask_designs
-
-/obj/item/clothing/mask/gas/mime/examine(mob/user)
-	. = ..()
-	. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
-
-/obj/item/clothing/mask/gas/mime/AltClick(mob/user)
-	. = ..()
-	if(adjustmask(user, TRUE))
-		return TRUE
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()
