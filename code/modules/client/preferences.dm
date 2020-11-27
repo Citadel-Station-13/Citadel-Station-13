@@ -53,7 +53,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// List with a key string associated to a list of keybindings. Unlike key_bindings, this one operates on raw key, allowing for binding a key that triggers regardless of if a modifier is depressed as long as the raw key is sent.
 	var/list/modless_key_bindings = list()
 
-
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
@@ -219,7 +218,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C?.full_macro_assert()
+	C?.ensure_keys_set()
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -2382,7 +2381,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								if(!length(key_bindings[old_key]))
 									key_bindings -= old_key
 						user << browse(null, "window=capturekeypress")
-						user.client.full_macro_assert()
+						user.client.ensure_keys_set()
 						save_preferences()
 						ShowChoices(user)
 						return
@@ -2417,7 +2416,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								key_bindings -= old_key
 						key_bindings[full_key] += list(kb_name)
 						key_bindings[full_key] = sortList(key_bindings[full_key])
-					user.client.full_macro_assert()
+					user.client.ensure_keys_set()
 					user << browse(null, "window=capturekeypress")
 					save_preferences()
 
@@ -2429,7 +2428,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					hotkeys = (choice == "Hotkey")
 					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 					modless_key_bindings = list()
-					user.client.full_macro_assert()
+					user.client.ensure_keys_set()
 
 				if("chat_on_map")
 					chat_on_map = !chat_on_map
@@ -2843,7 +2842,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/key in oldkeys)
 		if(!key_bindings[key])
 			key_bindings[key] = oldkeys[key]
-	parent.full_macro_assert(src)
+	parent.ensure_keys_set(src)
 
 /datum/preferences/proc/is_loadout_slot_available(slot)
 	var/list/L

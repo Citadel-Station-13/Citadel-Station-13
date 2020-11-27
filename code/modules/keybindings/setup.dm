@@ -38,7 +38,7 @@
 	apply_macro_set(SKIN_MACROSET_CLASSIC_HOTKEYS, SSinput.macroset_classic_hotkey)
 	apply_macro_set(SKIN_MACROSET_CLASSIC_INPUT, SSinput.macroset_classic_input)
 
-	set_hotkeys_preference()
+	set_hotkeys_preference(prefs_override)
 
 /client/proc/set_hotkeys_preference(datum/preferences/prefs_override = prefs)
 	if(prefs_override.hotkeys)
@@ -54,6 +54,37 @@
 	set_macros(prefs_override)
 	update_special_keybinds(prefs_override)
 
+/*
+/datum/controller/subsystem/input
+	/** KEEP THIS UP TO DATE WITH update_special_keybinds!
+	  * We use this list to detect when to avoid binding a key twice.
+	  */
+	var/list/special_keybinds = list("North", "East", "West", "South", "Say", "OOC", "Me", "Subtle", "Subtler", "Whisper", "LOOC")
+
+/datum/preferences/proc/get_all_keys_for_special_keybinds()
+	for(var/key in key_bindings)
+*/
+
+/client/proc/do_special_keybind(key, command)
+	var/alt = findtext(key, "Alt")
+	if(alt)
+		key = copytext(key, 1, alt) + copytext(key, alt + 3, 0)
+	var/ctrl = findtext(key, "Ctrl")
+	if(ctrl)
+		key = copytext(key, 1, ctrl) + copytext(key, ctrl + 4, 0)
+	var/shift = findtext(key, "Shift")
+	if(shift)
+		key = copytext(key, 1, shift) + copytext(key, shift + 5, 0)
+	key = "[alt? "Alt+":""][ctrl? "Ctrl+":""][shift? "Shift+":""][key]"
+	/// KEEP THIS UP TO DATE!
+	var/static/list/all_macrosets = list(
+		SKIN_MACROSET_HOTKEYS,
+		SKIN_MACROSET_CLASSIC_HOTKEYS,
+		SKIN_MACROSET_CLASSIC_INPUT
+	)
+	for(var/macroset in all_macrosets)
+		winset(src, "[macroset]-[REF(key)]", "parent=[macroset];name=[key];command=[command]")
+
 /**
   * Updates the keybinds for special keys
   *
@@ -64,7 +95,7 @@
   * * direct_prefs - the preference we're going to get keybinds from
   */
 /client/proc/update_special_keybinds(datum/preferences/direct_prefs)
-	var/datum/preferences/D = prefs || direct_prefs
+	var/datum/preferences/D = direct_prefs || prefs
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
@@ -80,16 +111,16 @@
 				if("South")
 					movement_keys[key] = SOUTH
 				if("Say")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=say")
+					do_special_keybind(key, "say")
 				if("OOC")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
+					do_special_keybind(key, "OOC")
 				if("Me")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
+					do_special_keybind(key, "me")
 				if("Subtle")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=subtle")
+					do_special_keybind(key, "subtle")
 				if("Subtler")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=subtler")
+					do_special_keybind(key, "Subtler-Anti-Ghost")
 				if("Whisper")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=whisper")
+					do_special_keybind(key, "whisper")
 				if("LOOC")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=looc")
+					do_special_keybind(key, "LOOC")
