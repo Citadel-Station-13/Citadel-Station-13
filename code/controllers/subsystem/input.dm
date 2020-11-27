@@ -70,9 +70,6 @@ SUBSYSTEM_DEF(input)
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	)
 
-	macroset_classic_hotkey |= hard_binds
-	macroset_classic_hotkey |= hard_bind_anti_collision
-
 	// And finally, the modern set.
 	macroset_hotkey = list(
 	"Any" = "\"KeyDown \[\[*\]\]\"",
@@ -81,9 +78,6 @@ SUBSYSTEM_DEF(input)
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	)
-
-	macroset_hotkey |= hard_binds
-	macroset_hotkey |= hard_bind_anti_collision
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
