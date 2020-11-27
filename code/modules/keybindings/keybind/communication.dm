@@ -5,16 +5,19 @@
 	hotkey_keys = list("CtrlT")
 	name = "Say"
 	full_name = "IC Say"
+	clientside = "say"
 
 /datum/keybinding/client/communication/ooc
 	hotkey_keys = list("O")
 	name = "OOC"
 	full_name = "Out Of Character Say (OOC)"
+	clientside = "ooc"
 
 /datum/keybinding/client/communication/me
 	hotkey_keys = list("CtrlM")
 	name = "Me"
 	full_name = "Me (emote)"
+	clientside = "me"
 
 //indicators
 /datum/keybinding/client/communication/say_with_indicator
@@ -44,21 +47,25 @@
 	classic_keys = list()
 	name = "Subtle"
 	full_name = "Subtle Emote"
+	clientside = "subtle"
 
 /datum/keybinding/client/communication/subtler
 	hotkey_keys = list("6")
 	classic_keys = list()
 	name = "Subtler"
 	full_name = "Subtler Anti-Ghost Emote"
+	clientside = "subtler-anti-ghost"
 
 /datum/keybinding/client/communication/whisper
 	hotkey_keys = list("Y")
 	classic_keys = list()
 	name = "Whisper"
 	full_name = "Whisper"
+	clientside = "whisper"
 
 /datum/keybinding/client/communication/looc
 	hotkey_keys = list("L")
 	classic_keys = list()
 	name = "LOOC"
 	full_name = "Local Out of Character chat"
+	clientside = "looc"

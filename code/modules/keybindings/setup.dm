@@ -7,12 +7,28 @@
 /datum/proc/keyLoop(client/user) // Called once every frame
 	//SHOULD_NOT_SLEEP(TRUE)
 
+/client/verb/fix_macros()
+	set name = "Fix Keybindings"
+	set desc = "Re-assert all your macros/keybindings."
+	set category = "OOC"
+	if(last_macro_fix > (world.time - 10 SECONDS))
+		to_chat(src, "<span class='warning'>It's been too long since the last reset. Wait a while.</span>")
+		return
+	if(!SSinput.initialized)
+		to_chat(src, "<span class='warning'>Input hasn't been initialized yet. Wait a while.</span>")
+		return
+	to_chat(src, "<span class='danger'>Force-reasserting all macros.</span>")
+	last_macro_fix = world.time
+	full_macro_assert()
+
 // removes all the existing macros
 /client/proc/erase_all_macros()
 	var/erase_output = ""
-	var/list/macro_set = list()
-	for(var/macroset in SSinput.all_macrosets)		// WE HAVE THREE AAAAAAAA
-		macro_set |= params2list(winget(src, "[macroset].*", "command")) // The third arg doesnt matter here as we're just removing them all
+	var/list/set_text = list()
+	for(var/macroset in SSinput.all_macrosets)
+		set_text += "[macroset].*"
+	set_text = set_text.Join(";")
+	var/list/macro_set = params2list(winget(src, "[set_text]", "command"))
 	for(var/k in 1 to length(macro_set))
 		var/list/split_name = splittext(macro_set[k], ".")
 		var/macro_name = "[split_name[1]].[split_name[2]]" // [3] is "command"
@@ -29,17 +45,11 @@
 		winset(src, "[name]-[REF(key)]", "parent=[name];name=[key];command=[command]")
 
 /client/proc/set_macros(datum/preferences/prefs_override = prefs)
-	set waitfor = FALSE
-
 	keys_held.Cut()
-
-	erase_all_macros()
 
 	apply_macro_set(SKIN_MACROSET_HOTKEYS, SSinput.macroset_hotkey)
 	apply_macro_set(SKIN_MACROSET_CLASSIC_HOTKEYS, SSinput.macroset_classic_hotkey)
 	apply_macro_set(SKIN_MACROSET_CLASSIC_INPUT, SSinput.macroset_classic_input)
-
-	set_hotkeys_preference(prefs_override)
 
 /client/proc/set_hotkeys_preference(datum/preferences/prefs_override = prefs)
 	if(prefs_override.hotkeys)
@@ -47,13 +57,18 @@
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT]")
 
-/client/proc/ensure_keys_set()
+/client/proc/ensure_keys_set(datum/preferences/prefs_override = prefs)
 	if(SSinput.initialized)
-		full_macro_assert()
+		full_macro_assert(prefs_override)
 
 /client/proc/full_macro_assert(datum/preferences/prefs_override = prefs)
+	INVOKE_ASYNC(src, .proc/do_full_macro_assert, prefs_override)		// winget sleeps.
+
+/client/proc/do_full_macro_assert(datum/preferences/prefs_override = prefs)
+	erase_all_macros()
 	set_macros(prefs_override)
 	update_special_keybinds(prefs_override)
+	set_hotkeys_preference(prefs_override)
 
 /client/proc/do_special_keybind(key, command, datum/preferences/prefs_override = prefs)
 	var/alt = findtext(key, "Alt")
@@ -96,17 +111,8 @@
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
-				if("Say")
-					do_special_keybind(key, "say", D)
-				if("OOC")
-					do_special_keybind(key, "ooc", D)
-				if("Me")
-					do_special_keybind(key, "me", D)
-				if("Subtle")
-					do_special_keybind(key, "subtle", D)
-				if("Subtler")
-					do_special_keybind(key, "subtler-anti-ghost", D)
-				if("Whisper")
-					do_special_keybind(key, "whisper", D)
-				if("LOOC")
-					do_special_keybind(key, "looc", D)
+				else
+					var/datum/keybinding/KB = GLOB.keybindings_by_name[kb_name]
+					if(!KB.clientside)
+						continue
+					do_special_keybind(key, KB.clientside, D)
