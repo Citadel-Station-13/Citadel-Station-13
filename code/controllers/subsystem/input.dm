@@ -6,6 +6,12 @@ SUBSYSTEM_DEF(input)
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
+	/// KEEP THIS UP TO DATE!
+	var/static/list/all_macrosets = list(
+		SKIN_MACROSET_HOTKEYS,
+		SKIN_MACROSET_CLASSIC_HOTKEYS,
+		SKIN_MACROSET_CLASSIC_INPUT
+	)
 	/// Classic mode input focused macro set. Manually set because we can't define ANY or ANY+UP for classic.
 	var/static/list/macroset_classic_input
 	/// Classic mode map focused macro set. Manually set because it needs to be clientside and go to macroset_classic_input.

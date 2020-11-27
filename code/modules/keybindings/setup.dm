@@ -10,7 +10,9 @@
 // removes all the existing macros
 /client/proc/erase_all_macros()
 	var/erase_output = ""
-	var/list/macro_set = params2list(winget(src, "default.*", "command")) // The third arg doesnt matter here as we're just removing them all
+	var/list/macro_set = list()
+	for(var/macroset in SSinput.all_macrosets)		// WE HAVE THREE AAAAAAAA
+		macro_set |= params2list(winget(src, "[macroset].*", "command")) // The third arg doesnt matter here as we're just removing them all
 	for(var/k in 1 to length(macro_set))
 		var/list/split_name = splittext(macro_set[k], ".")
 		var/macro_name = "[split_name[1]].[split_name[2]]" // [3] is "command"
@@ -25,7 +27,6 @@
 		var/key = macroset[i]
 		var/command = macroset[key]
 		winset(src, "[name]-[REF(key)]", "parent=[name];name=[key];command=[command]")
-	update_special_keybinds()
 
 /client/proc/set_macros(datum/preferences/prefs_override = prefs)
 	set waitfor = FALSE
@@ -54,18 +55,7 @@
 	set_macros(prefs_override)
 	update_special_keybinds(prefs_override)
 
-/*
-/datum/controller/subsystem/input
-	/** KEEP THIS UP TO DATE WITH update_special_keybinds!
-	  * We use this list to detect when to avoid binding a key twice.
-	  */
-	var/list/special_keybinds = list("North", "East", "West", "South", "Say", "OOC", "Me", "Subtle", "Subtler", "Whisper", "LOOC")
-
-/datum/preferences/proc/get_all_keys_for_special_keybinds()
-	for(var/key in key_bindings)
-*/
-
-/client/proc/do_special_keybind(key, command)
+/client/proc/do_special_keybind(key, command, datum/preferences/prefs_override = prefs)
 	var/alt = findtext(key, "Alt")
 	if(alt)
 		key = copytext(key, 1, alt) + copytext(key, alt + 3, 0)
@@ -75,14 +65,10 @@
 	var/shift = findtext(key, "Shift")
 	if(shift)
 		key = copytext(key, 1, shift) + copytext(key, shift + 5, 0)
+	if(!alt && !ctrl && !shift && !prefs_override.hotkeys)
+		return	/// DO NOT.
 	key = "[alt? "Alt+":""][ctrl? "Ctrl+":""][shift? "Shift+":""][key]"
-	/// KEEP THIS UP TO DATE!
-	var/static/list/all_macrosets = list(
-		SKIN_MACROSET_HOTKEYS,
-		SKIN_MACROSET_CLASSIC_HOTKEYS,
-		SKIN_MACROSET_CLASSIC_INPUT
-	)
-	for(var/macroset in all_macrosets)
+	for(var/macroset in SSinput.all_macrosets)
 		winset(src, "[macroset]-[REF(key)]", "parent=[macroset];name=[key];command=[command]")
 
 /**
@@ -111,16 +97,16 @@
 				if("South")
 					movement_keys[key] = SOUTH
 				if("Say")
-					do_special_keybind(key, "say")
+					do_special_keybind(key, "say", D)
 				if("OOC")
-					do_special_keybind(key, "OOC")
+					do_special_keybind(key, "ooc", D)
 				if("Me")
-					do_special_keybind(key, "me")
+					do_special_keybind(key, "me", D)
 				if("Subtle")
-					do_special_keybind(key, "subtle")
+					do_special_keybind(key, "subtle", D)
 				if("Subtler")
-					do_special_keybind(key, "Subtler-Anti-Ghost")
+					do_special_keybind(key, "subtler-anti-ghost", D)
 				if("Whisper")
-					do_special_keybind(key, "whisper")
+					do_special_keybind(key, "whisper", D)
 				if("LOOC")
-					do_special_keybind(key, "LOOC")
+					do_special_keybind(key, "looc", D)
