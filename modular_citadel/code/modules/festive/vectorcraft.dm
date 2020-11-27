@@ -9,10 +9,11 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-Earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "zoomscoot"
 	movedelay = 5
-	allow_diagonal_dir = TRUE
+	//allow_diagonal_dir = TRUE - find fix for this later
 	inertia_moving = FALSE
 	animate_movement = 0
 	max_integrity = 100
+	//key_type = /obj/item/key
 	var/obj/structure/trunk //Trunkspace of craft
 	var/vector = list("x" = 0, "y" = 0) //vector math
 	var/tile_loc = list("x" = 0, "y" = 0) //x y offset of tile
@@ -251,13 +252,13 @@
 	if(gear == "auto")
 		return
 	//USE THE CCLUUUTCHHH
-	if(gear != driver.a_intent && !driver.combatmode)
+	if(gear != driver.a_intent && SEND_SIGNAL(driver, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 		//playsound
 		to_chat(driver, "<span class='warning'><b>The gearbox gives out a horrific sound!</b></span>")
 		playsound(src.loc,'sound/vehicles/clutch_fail.ogg', 70, 0)
 		apply_damage(5)
 		acceleration = acceleration/2
-	else if(gear != driver.a_intent && driver.combatmode)
+	else if(gear != driver.a_intent && SEND_SIGNAL(driver, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		playsound(src.loc,'sound/vehicles/clutch_win.ogg', 100, 0)
 	gear = driver.a_intent
 
@@ -485,11 +486,11 @@ if(driver.sprinting && !(boost_cooldown))
 
 //Calculates the acceleration
 /obj/vehicle/sealed/vectorcraft/proc/calc_acceleration() //Make speed 0 - 100 regardless of gear here
-	if(driver.combatmode)//clutch is on
+	if(SEND_SIGNAL(driver, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))//clutch is on
 		return FALSE
 	if(gear == "auto")
 		acceleration += accel_step
-		acceleration = CLAMP(acceleration, initial(acceleration), max_acceleration)
+		acceleration = clamp(acceleration, initial(acceleration), max_acceleration)
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
@@ -525,15 +526,15 @@ if(driver.sprinting && !(boost_cooldown))
 			enginesound_delay = world.time + 16
 		return
 
-	acceleration = CLAMP(acceleration, initial(acceleration), max_acceleration)
+	acceleration = clamp(acceleration, initial(acceleration), max_acceleration)
 
 //calulate the vector change
 /obj/vehicle/sealed/vectorcraft/proc/calc_vector(direction)
-	if(driver.combatmode)//clutch is on
+	if(SEND_SIGNAL(driver, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))//clutch is on
 		return FALSE
 	var/cached_acceleration = acceleration
 	var/boost_active = FALSE
-	if(driver.sprinting && !(boost_cooldown))
+	if((driver.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(boost_cooldown))
 		cached_acceleration += boost_power //You got boost power!
 		boost_cooldown = world.time + 80
 		playsound(src.loc,'sound/vehicles/boost.ogg', 100, 0)
@@ -567,15 +568,15 @@ if(driver.sprinting && !(boost_cooldown))
 		vector["x"] = result_vector["x"]
 		vector["y"] = result_vector["y"]
 	else
-		vector["x"] = CLAMP(result_vector["x"], -max_velocity, max_velocity)
-		vector["y"] = CLAMP(result_vector["y"], -max_velocity, max_velocity)
+		vector["x"] = clamp(result_vector["x"], -max_velocity, max_velocity)
+		vector["y"] = clamp(result_vector["y"], -max_velocity, max_velocity)
 
 	if(vector["x"] > max_velocity || vector["x"] < -max_velocity)
 		vector["x"] = vector["x"] - (vector["x"]/10)
-		vector["x"] = CLAMP(vector["x"], -250, 250)
+		vector["x"] = clamp(vector["x"], -250, 250)
 	if(vector["y"] > max_velocity || vector["y"] < -max_velocity)
 		vector["y"] = vector["y"] - (vector["y"]/10)
-		vector["y"] = CLAMP(vector["y"], -250, 250)
+		vector["y"] = clamp(vector["y"], -250, 250)
 
 	return
 

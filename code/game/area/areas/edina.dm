@@ -81,3 +81,13 @@
 			var/turf/open/floor/light/F = T
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+
+////////////////Mapping helper/////////////////////////
+/obj/effect/mapping_helpers/planet_z
+	name = "planet z helper"
+	layer = POINT_LAYER
+
+/obj/effect/mapping_helpers/planet_z/Initialize()
+	. = ..()
+	var/datum/space_level/S = SSmapping.get_level(z)
+	S.traits["Planet"] = TRUE //This probably doesn't work as I expect. But maybe!!
