@@ -46,6 +46,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		H.grant_ability_from_source(list(INNATE_ABILITY_SLIME_BLOBFORM, INNATE_ABILITY_LIMB_REGROWTH, INNATE_ABILITY_HUMANOID_CUSTOMIZATION), ABILITY_SOURCE_SPECIES)
+		H.set_ability_property(INNATE_ABILITY_LIMB_REGROWTH, PROPERTY_LIMB_REGROWTH_USAGE_TYPE, REGRWOTH_USES_BLOOD)
 	C.faction |= "slime"
 
 /datum/species/jelly/handle_body(mob/living/carbon/human/H)
