@@ -522,11 +522,6 @@
 	return FALSE
 
 
-/obj/item/organ/lungs/on_life()
-	..()
-	if((!failed) && ((organ_flags & ORGAN_FAILING)))
-		if(owner.stat == CONSCIOUS)
-
 /obj/item/organ/lungs/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()
 	if(!.)
