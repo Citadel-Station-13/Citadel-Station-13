@@ -99,18 +99,21 @@
 	desc = "A rather impractical, long coat."
 	icon_state = "tailcoat"
 	item_state = "tailcoat"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/vickyblack
 	name = "black victorian coat"
 	desc = "An overbearing black coat, it looks far older than you are."
 	icon_state = "vickyblack"
 	item_state = "vickyblack"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/vickyred
 	name = "red victorian coat"
 	desc = "An overbearing red coat, it looks far older than you are."
 	icon_state = "vickyred"
 	item_state = "vickyred"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
