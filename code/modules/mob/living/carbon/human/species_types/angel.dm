@@ -130,7 +130,7 @@
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
 		stunmod = 2
-		speedmod = -0.35
+		speedmod = -0.1
 		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE

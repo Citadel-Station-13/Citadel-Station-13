@@ -78,12 +78,37 @@
 	popup.set_content(output)
 	popup.open(FALSE)
 
+/mob/dead/new_player/proc/age_verify()
+	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
+		if(!client.set_db_player_flags())
+			message_admins("Blocked [src] from new player panel because age gate could not access player database flags.")
+			return FALSE
+		else
+			var/dbflags = client.prefs.db_flags
+			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
+				var/age_verification = askuser(src, "Are you 18+", "Age Gate", "I am 18+", "I am not 18+", null, TRUE, null)
+				if(age_verification != 1)
+					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
+					qdel(client) //kick the user
+					return FALSE
+				else
+					//they claim to be of age, so allow them to continue and update their flags
+					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
+					//log this
+					message_admins("[ckey] has joined through the automated age gate process.")
+					return TRUE
+	return TRUE
+
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
 		return 0
 
 	if(!client)
 		return 0
+
+	if(!age_verify())
+		return
 
 	//Determines Relevent Population Cap
 	var/relevant_cap

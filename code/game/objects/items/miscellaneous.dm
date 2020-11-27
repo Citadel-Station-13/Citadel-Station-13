@@ -52,7 +52,8 @@
 
 /obj/item/choice_beacon/proc/spawn_option(atom/choice,mob/living/M)
 	var/obj/new_item = create_choice_atom(choice, M)
-	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new(pick(get_area_turfs(pod_storage_area))) //Lets just have it in the pod storage zone for a really short time because we don't want it in nullspace
 	pod.explosionSize = list(0,0,0,0)
 	new_item.forceMove(pod)
 	var/msg = "<span class='danger'>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"

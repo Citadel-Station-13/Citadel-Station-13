@@ -5,6 +5,7 @@
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_ADJ_LAYER)
+	mutant_part_string = "body_markings"
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -21,6 +22,7 @@
 	icon_state = "guilmon"
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/body_markings/ltiger
 	name = "Light Tiger Body"
@@ -47,6 +49,7 @@
 	gender_specific = 0
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -54,6 +57,7 @@
 	ckeys_allowed = list("yousshouldnteverbeseeingthisyoumeme")
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
 	relevant_layers = null
+	matrixed_sections = 0
 
 /datum/sprite_accessory/mam_body_markings/redpanda
 	name = "Redpanda"
@@ -229,6 +233,7 @@
 	icon = 'icons/mob/wings.dmi'
 	color_src = 0
 	relevant_layers = list(BODY_FRONT_LAYER)
+	mutant_part_string = "insect_fluff"
 
 /datum/sprite_accessory/insect_fluff/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	return (!H.dna.features["insect_fluff"] || H.dna.features["insect_fluff"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))

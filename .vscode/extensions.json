@@ -2,6 +2,8 @@
     "recommendations": [
         "gbasood.byond-dm-language-support",
         "platymuus.dm-langclient",
-        "EditorConfig.EditorConfig"
+		"EditorConfig.EditorConfig",
+		"arcanis.vscode-zipfs",
+		"dbaeumer.vscode-eslint"
     ]
 }

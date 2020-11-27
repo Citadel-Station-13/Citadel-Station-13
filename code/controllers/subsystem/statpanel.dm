@@ -45,22 +45,29 @@ SUBSYSTEM_DEF(statpanels)
 				var/list/vote_arry = list(
 					list("Vote active!", "There is currently a vote running. Question: [SSvote.question]")
 					) //see the MC on how this works.
-				if(!(SSvote.vote_system in list(PLURALITY_VOTING, APPROVAL_VOTING)))
+				if(!(SSvote.vote_system in list(PLURALITY_VOTING, APPROVAL_VOTING, SCHULZE_VOTING, INSTANT_RUNOFF_VOTING)))
 					vote_arry[++vote_arry.len] += list("STATPANEL VOTING DISABLED!", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.", "disabled")
 					//does not return.
 				else
-					vote_arry[++vote_arry.len] += list("Time Left:", " [round(SSvote.end_time - world.time)] seconds")
+					vote_arry[++vote_arry.len] += list("Time Left:", " [DisplayTimeText(SSvote.end_time - world.time)] seconds")
 					vote_arry[++vote_arry.len] += list("Choices:", "")
 					for(var/choice in SSvote.choice_statclicks)
 						var/choice_id = SSvote.choice_statclicks[choice]
-						var/ivotedforthis = FALSE
 						if(target.ckey)
 							switch(SSvote.vote_system)
-								if(APPROVAL_VOTING)
-									ivotedforthis = SSvote.voted[target.ckey] && (text2num(choice_id) in SSvote.voted[usr.ckey])
-								if(PLURALITY_VOTING)
-									ivotedforthis = (SSvote.voted[target.ckey] == text2num(choice_id))
-							vote_arry[++vote_arry.len] += list(ivotedforthis ? "\[X\]" : "\[ \]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
+								if(PLURALITY_VOTING, APPROVAL_VOTING)
+									var/ivotedforthis = FALSE
+									if(SSvote.vote_system == APPROVAL_VOTING)
+										ivotedforthis = SSvote.voted[target.ckey] && (text2num(choice_id) in SSvote.voted[target.ckey])
+									else
+										ivotedforthis = (SSvote.voted[target.ckey] == text2num(choice_id))
+									vote_arry[++vote_arry.len] += list(ivotedforthis ? "\[X\]" : "\[ \]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
+								if(SCHULZE_VOTING, INSTANT_RUNOFF_VOTING)
+									var/list/vote = SSvote.voted[target.ckey]
+									var/vote_position = " "
+									if(vote)
+										vote_position = vote.Find(text2num(choice_id))
+									vote_arry[++vote_arry.len] += list("\[[vote_position]\]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
 				var/vote_str = url_encode(json_encode(vote_arry))
 				target << output("[vote_str]", "statbrowser:update_voting")
 			else

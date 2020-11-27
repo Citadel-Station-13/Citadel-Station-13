@@ -248,7 +248,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/ishotgun // smaller and more versatile gun requires some better materials
+/datum/crafting_recipe/ishotgun 
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
@@ -408,7 +408,7 @@
 /datum/crafting_recipe/rifle_receiver
 	name = "Improvised Rifle Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 15) // you can carry multiple shotguns
+	reqs = list(/obj/item/stack/sheet/metal = 15)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
 	time = 25
 	category = CAT_WEAPONRY
@@ -417,10 +417,9 @@
 /datum/crafting_recipe/shotgun_receiver
 	name = "Improvised Shotgun Receiver"
 	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 15,
-				/obj/item/stack/sheet/plasteel = 1) // requires access or hacking since shotgun is better
+	reqs = list(/obj/item/stack/sheet/metal = 10) // shotgun does less damage than the rifle and can't 1shot but is more portable
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 25
+	time = 20
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
@@ -432,6 +431,6 @@
 	reqs = list(/obj/item/stack/sheet/metal = 3,
 				/obj/item/assembly/igniter = 1)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 25
+	time = 20
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
