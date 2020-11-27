@@ -76,37 +76,3 @@
 	else
 		user.mob.dropItemToGround(I)
 	return TRUE
-
-/datum/keybinding/living/subtle
-	hotkey_keys = list("5")
-	classic_keys = list()
-	name = "subtle_emote"
-	full_name = "Subtle Emote"
-
-/datum/keybinding/living/subtle/down(client/user)
-	var/mob/living/L = user.mob
-	L.subtle()
-	return TRUE
-
-/datum/keybinding/living/subtler
-	hotkey_keys = list("6")
-	classic_keys = list()
-	name = "subtler_emote"
-	full_name = "Subtler Anti-Ghost Emote"
-
-/datum/keybinding/living/subtler/down(client/user)
-	var/mob/living/L = user.mob
-	L.subtler()
-	return TRUE
-
-/datum/keybinding/mob/whisper
-	hotkey_keys = list("Y")
-	classic_keys = list()
-	name = "whisper"
-	full_name = "Whisper"
-
-/datum/keybinding/mob/whisper/down(client/user)
-	var/mob/M = user.mob
-	M.whisper_keybind()
-	return TRUE
-

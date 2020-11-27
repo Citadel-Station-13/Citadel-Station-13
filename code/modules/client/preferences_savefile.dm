@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	44
+#define SAVEFILE_VERSION_MAX	45
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -42,7 +42,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //if your savefile is 3 months out of date, then 'tough shit'.
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 32)	//If you remove this, remove force_reset_keybindings() too.
+	if(current_version < 45)	//If you remove this, remove force_reset_keybindings() too.
+		force_reset_keybindings_direct(TRUE)
 		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
@@ -260,24 +261,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 							features[tertiary_string] = features["mcolor3"]
 
 		features["color_scheme"] = OLD_CHARACTER_COLORING //advanced is off by default
-
-	if(current_version < 44)
-		var/ctrl_t_binding = S["key_bindings"]["CtrlT"]
-		var/ctrl_m_binding = S["key_bindings"]["CtrlM"]
-		if(length(ctrl_t_binding) && ("say_with_indicator" in ctrl_t_binding))
-			if(!length(S["key_bindings"]["T"]))
-				S["key_bindings"]["T"] = list("say_with_indicator")
-			else
-				S["key_bindings"]["T"] += "say_with_indicator"
-			S["key_bindings"]["CtrlT"] -= "say_with_indicator"
-			S["key_bindings"]["CtrlT"] += "say"
-		if(length(ctrl_m_binding) && ("me_with_indicator" in ctrl_m_binding))
-			if(!length(S["key_bindings"]["M"]))
-				S["key_bindings"]["M"] = list("me_with_indicator")
-			else
-				S["key_bindings"]["M"] += "me_with_indicator"
-			S["key_bindings"]["CtrlM"] -= "me_with_indicator"
-			S["key_bindings"]["CtrlM"] = "me"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

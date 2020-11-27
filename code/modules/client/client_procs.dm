@@ -443,7 +443,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
-
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
@@ -474,10 +473,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	fit_viewport()
 	Master.UpdateTickRate()
-
-/client/proc/ensure_keys_set()
-	if(SSinput.initialized)
-		set_macros()
 
 //////////////
 //DISCONNECT//
@@ -935,38 +930,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
 	view_size.setDefault("[x]x[y]")
-
-/**
-  * Updates the keybinds for special keys
-  *
-  * Handles adding macros for the keys that need it
-  * And adding movement keys to the clients movement_keys list
-  * At the time of writing this, communication(OOC, Say, IC) require macros
-  * Arguments:
-  * * direct_prefs - the preference we're going to get keybinds from
-  */
-/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
-	var/datum/preferences/D = prefs || direct_prefs
-	if(!D?.key_bindings)
-		return
-	movement_keys = list()
-	for(var/key in D.key_bindings)
-		for(var/kb_name in D.key_bindings[key])
-			switch(kb_name)
-				if("North")
-					movement_keys[key] = NORTH
-				if("East")
-					movement_keys[key] = EAST
-				if("West")
-					movement_keys[key] = WEST
-				if("South")
-					movement_keys[key] = SOUTH
-				if("Say")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=say")
-				if("OOC")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=ooc")
-				if("Me")
-					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=me")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
