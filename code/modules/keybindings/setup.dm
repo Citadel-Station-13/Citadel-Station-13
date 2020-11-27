@@ -50,7 +50,7 @@
 	if(SSinput.initialized)
 		full_macro_assert()
 
-/client/proc/full_macro_assert(datum/preferences/prefs_override = refs)
+/client/proc/full_macro_assert(datum/preferences/prefs_override = prefs)
 	set_macros(prefs_override)
 	update_special_keybinds(prefs_override)
 
