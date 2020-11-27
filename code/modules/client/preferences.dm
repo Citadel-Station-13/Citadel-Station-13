@@ -2353,7 +2353,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
-					user.client.set_macros()
+					user.client.ensure_keys_set()
 
 				if("keybindings_capture")
 					var/datum/keybinding/kb = GLOB.keybindings_by_name[href_list["keybinding"]]
@@ -2842,7 +2842,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/key in oldkeys)
 		if(!key_bindings[key])
 			key_bindings[key] = oldkeys[key]
-	parent.ensure_keys_set(src)
+	parent.ensure_keys_set()
 
 /datum/preferences/proc/is_loadout_slot_available(slot)
 	var/list/L
