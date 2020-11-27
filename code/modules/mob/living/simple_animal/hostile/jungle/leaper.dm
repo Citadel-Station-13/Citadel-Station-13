@@ -10,7 +10,7 @@
 	icon_state = "leaper"
 	icon_living = "leaper"
 	icon_dead = "leaper_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 300
 	health = 300
 	ranged = TRUE
@@ -26,7 +26,7 @@
 	var/hop_cooldown = 0 //Strictly for player controlled leapers
 	var/projectile_ready = FALSE //Stopping AI leapers from firing whenever they want, and only doing it after a hop has finished instead
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /obj/item/projectile/leaper
 	name = "leaper bubble"
@@ -42,7 +42,7 @@
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.reagents.add_reagent("leaper_venom", 5)
+		C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
 		return
 	if(isanimal(target))
 		var/mob/living/simple_animal/L = target
@@ -80,7 +80,7 @@
 
 /obj/structure/leaper_bubble/Initialize()
 	. = ..()
-	float(on = TRUE)
+	INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 	QDEL_IN(src, 100)
 
 /obj/structure/leaper_bubble/Destroy()
@@ -93,10 +93,10 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/jungle/leaper))
 			playsound(src,'sound/effects/snap.ogg',50, 1, -1)
-			L.Knockdown(50)
+			L.DefaultCombatKnockdown(50)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				C.reagents.add_reagent("leaper_venom", 5)
+				C.reagents.add_reagent(/datum/reagent/toxin/leaper_venom, 5)
 			if(isanimal(L))
 				var/mob/living/simple_animal/A = L
 				A.adjustHealth(25)
@@ -105,7 +105,6 @@
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"
-	id = "leaper_venom"
 	description = "A toxin spat out by leapers that, while harmless in small doses, quickly creates a toxic reaction if too much is in the body."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -129,14 +128,14 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/Initialize()
 	. = ..()
-	verbs -= /mob/living/verb/pulled
+	remove_verb(src, /mob/living/verb/pulled)
 
 /mob/living/simple_animal/hostile/jungle/leaper/CtrlClickOn(atom/A)
 	face_atom(A)
 	target = A
 	if(!isturf(loc))
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		return
 	if(hopping)
 		return
@@ -166,8 +165,9 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/jungle/leaper/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	update_icons()
 
 /mob/living/simple_animal/hostile/jungle/leaper/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -197,7 +197,7 @@
 	hopping = TRUE
 	density = FALSE
 	pass_flags |= PASSMOB
-	notransform = TRUE
+	mob_transforming = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
 	if(player_hop)
 		new_turf = get_turf(target)
@@ -209,7 +209,7 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
 	density = TRUE
-	notransform = FALSE
+	mob_transforming = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -220,7 +220,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlop()
 	var/turf/new_turf = get_turf(target)
 	hopping = TRUE
-	notransform = TRUE
+	mob_transforming = TRUE
 	new /obj/effect/temp_visual/leaper_crush(new_turf)
 	addtimer(CALLBACK(src, .proc/BellyFlopHop, new_turf), 30)
 
@@ -231,7 +231,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
 	density = TRUE
-	notransform = FALSE
+	mob_transforming = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		L.adjustBruteLoss(35)
@@ -249,7 +249,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/Goto()
 	return
 
-/mob/living/simple_animal/hostile/jungle/leaper/throw_impact()
+/mob/living/simple_animal/hostile/jungle/leaper/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	return
 
 /mob/living/simple_animal/hostile/jungle/leaper/update_icons()

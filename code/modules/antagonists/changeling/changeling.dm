@@ -8,6 +8,7 @@
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
+	threat = 10
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -19,6 +20,8 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	/// did we get succed by another changeling
+	var/hostile_absorbed = FALSE
 	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
@@ -30,12 +33,14 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
+	var/maxgeneticpoints = 10
 	var/purchasedpowers = list()
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/loudfactor = 0 //Used for blood tests. At 4, blood tests will succeed. At 10, blood tests will result in an explosion.
-	var/bloodtestwarnings = 0 //Used to track if the ling has been notified that they will pass blood tests.
+	var/loudfactor = 0 //Used for blood tests. This is is the average loudness of the ling's abilities calculated with the below two vars
+	var/loudtotal = 0 //Used to keep track of the sum of the ling's loudness
+	var/totalpurchases = 0 //Used to keep track of how many purchases the ling's made after free abilities have been added
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -54,8 +59,10 @@
 	var/honorific
 	if(owner.current.gender == FEMALE)
 		honorific = "Ms."
-	else
+	else if(owner.current.gender == MALE)
 		honorific = "Mr."
+	else
+		honorific = "Mx."
 	if(GLOB.possible_changeling_IDs.len)
 		changelingID = pick(GLOB.possible_changeling_IDs)
 		GLOB.possible_changeling_IDs -= changelingID
@@ -74,6 +81,7 @@
 	create_initial_profile()
 	if(give_objectives)
 		forge_objectives()
+	owner.current.grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue. We are able to transform our body after all.
 	remove_clownmut()
 	. = ..()
 
@@ -86,6 +94,8 @@
 			B.organ_flags |= ORGAN_VITAL
 			B.decoy_override = FALSE
 	remove_changeling_powers()
+	owner.special_role = null
+	owner.current.hud_used?.lingchemdisplay?.invisibility = INVISIBILITY_ABSTRACT
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()
@@ -95,16 +105,23 @@
 			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 
-/datum/antagonist/changeling/proc/reset_properties()
+/datum/antagonist/changeling/proc/reset_properties(hardReset = FALSE)
 	changeling_speak = 0
 	chosen_sting = null
-	geneticpoints = initial(geneticpoints)
+
+	geneticpoints = maxgeneticpoints
 	sting_range = initial(sting_range)
-	chem_storage = initial(chem_storage)
-	chem_recharge_rate = initial(chem_recharge_rate)
-	chem_charges = min(chem_charges, chem_storage)
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
+
+	if (hardReset)
+		chem_storage = initial(chem_storage)
+		chem_recharge_rate = initial(chem_recharge_rate)
+		geneticpoints = initial(geneticpoints)
+		maxgeneticpoints = initial(maxgeneticpoints)
+
+	chem_charges = min(chem_charges, chem_storage)
+
 
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
@@ -123,8 +140,6 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
-	loudfactor = 0
-	bloodtestwarnings = 0
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -132,6 +147,9 @@
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
+	loudfactor = 0
+	loudtotal = 0
+	totalpurchases = 0
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
@@ -176,13 +194,18 @@
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)
-	loudfactor += thepower.loudness
-	if(loudfactor >= 4 && !bloodtestwarnings)
-		to_chat(owner.current, "<span class='warning'>Our blood is growing flammable. Our blood will react violently to heat.</span>")
-		bloodtestwarnings = 1
-	if(loudfactor >= 10 && bloodtestwarnings < 2)
-		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will react explosively to heat.</span>")
-		bloodtestwarnings = 2
+	loudtotal += thepower.loudness
+	totalpurchases++
+	var/oldloudness = loudfactor
+	loudfactor = loudtotal/max(totalpurchases,1)
+	if(loudfactor >= LINGBLOOD_DETECTION_THRESHOLD && oldloudness < LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown flammable. Our blood will now react violently to heat.</span>")
+	else if(loudfactor < LINGBLOOD_DETECTION_THRESHOLD && oldloudness >= LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has stabilized, and will no longer react violently to heat.</span>")
+	if(loudfactor > LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness <= LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will now react explosively to heat.</span>")
+	else if(loudfactor <= LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness > LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has slightly stabilized, and will no longer explode when exposed to heat.</span>")
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
@@ -210,6 +233,8 @@
 		else //not dead? no chem/geneticdamage caps.
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 			geneticdamage = max(0, geneticdamage-1)
+		owner.current.hud_used?.lingchemdisplay?.invisibility = 0
+		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
@@ -284,7 +309,6 @@
 			prof.name_list[slot] = I.name
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
-			prof.item_color_list[slot] = I.item_color
 			prof.item_state_list[slot] = I.item_state
 			prof.exists_list[slot] = 1
 		else
@@ -343,10 +367,12 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/regenerate)
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 
@@ -385,20 +411,31 @@
 			escape_objective_possible = FALSE
 			break
 	var/changeling_objective = rand(1,3)
+	var/generic_absorb_objective = FALSE
+	var/multiple_lings = length(get_antag_minds(/datum/antagonist/changeling,TRUE)) > 1
 	switch(changeling_objective)
 		if(1)
-			var/datum/objective/absorb/absorb_objective = new
-			absorb_objective.owner = owner
-			absorb_objective.gen_amount_goal(6, 8)
-			objectives += absorb_objective
+			generic_absorb_objective = TRUE
 		if(2)
-			var/datum/objective/absorb_changeling/ac = new
-			ac.owner = owner
-			objectives += ac
+			if(multiple_lings)
+				var/datum/objective/absorb_changeling/ac = new
+				ac.owner = owner
+				objectives += ac
+			else
+				generic_absorb_objective = TRUE
 		if(3)
-			var/datum/objective/absorb_most/ac = new
-			ac.owner = owner
-			objectives += ac
+			if(multiple_lings)
+				var/datum/objective/absorb_most/ac = new
+				ac.owner = owner
+				objectives += ac
+			else
+				generic_absorb_objective = TRUE
+
+	if(generic_absorb_objective)
+		var/datum/objective/absorb/absorb_objective = new
+		absorb_objective.owner = owner
+		absorb_objective.gen_amount_goal(6, 8)
+		objectives += absorb_objective
 
 	if(prob(60))
 		if(prob(85))
@@ -420,7 +457,7 @@
 		objectives += destroy_objective
 	else
 		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
+			var/datum/objective/assassinate/once/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
 				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
@@ -500,7 +537,6 @@
 	var/list/appearance_list = list()
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
-	var/list/item_color_list = list()
 	var/list/item_state_list = list()
 
 	var/underwear
@@ -523,7 +559,6 @@
 	newprofile.appearance_list = appearance_list.Copy()
 	newprofile.flags_cover_list = flags_cover_list.Copy()
 	newprofile.exists_list = exists_list.Copy()
-	newprofile.item_color_list = item_color_list.Copy()
 	newprofile.item_state_list = item_state_list.Copy()
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
@@ -552,11 +587,17 @@
 	if(objectives.len)
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			if(objective.completable)
+				var/completion = objective.check_completion()
+				if(completion >= 1)
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
+				else if(completion <= 0)
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+					changelingwin = FALSE
+				else
+					parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 			else
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				changelingwin = 0
+				parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 			count++
 
 	if(changelingwin)

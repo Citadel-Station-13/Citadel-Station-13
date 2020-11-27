@@ -11,7 +11,7 @@
 	cooldown_min = 300
 	level_max = 0
 
-/obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
+/obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr, skipcharge = FALSE, silent = FALSE)
 	if(ready)
 		return ..()
 	return FALSE
@@ -110,8 +110,7 @@
 	else
 		walk_link(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
+/obj/effect/cross_action/spacetime_dist/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	walk_link(user)
 
 /obj/effect/cross_action/spacetime_dist/attack_paw(mob/user)

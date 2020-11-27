@@ -1,8 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/rod_form
 	name = "Rod Form"
 	desc = "Take on the form of an immovable rod, destroying all in your path."
-	clothes_req = 1
-	human_req = 0
 	charge_max = 250
 	cooldown_min = 100
 	range = -1
@@ -20,7 +18,7 @@
 		W.damage_bonus += spell_level * 20 //You do more damage when you upgrade the spell
 		W.start_turf = start
 		M.forceMove(W)
-		M.notransform = 1
+		M.mob_transforming = 1
 		M.status_flags |= GODMODE
 
 //Wizard Version of the Immovable Rod
@@ -39,7 +37,7 @@
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)
 		wizard.status_flags &= ~GODMODE
-		wizard.notransform = 0
+		wizard.mob_transforming = 0
 		wizard.forceMove(get_turf(src))
 	return ..()
 

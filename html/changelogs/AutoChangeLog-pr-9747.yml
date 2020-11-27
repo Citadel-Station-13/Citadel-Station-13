@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed AI holopad speech text being small and whispers that in multiple exclamation marks echo through multiple areas."

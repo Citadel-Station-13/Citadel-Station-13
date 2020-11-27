@@ -1,5 +1,5 @@
 /client/proc/play_sound(S as sound)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -10,7 +10,7 @@
 	var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
 	if(!freq)
 		freq = 1
-	vol = CLAMP(vol, 1, 100)
+	vol = clamp(vol, 1, 100)
 
 	var/sound/admin_sound = new()
 	admin_sound.file = S
@@ -34,9 +34,7 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			var/user_vol = M.client.chatOutput.adminMusicVolume
-			if(user_vol)
-				admin_sound.volume = vol * (user_vol / 100)
+			admin_sound.volume = vol * M.client.admin_music_volume
 			SEND_SOUND(M, admin_sound)
 			admin_sound.volume = vol
 
@@ -44,7 +42,7 @@
 
 
 /client/proc/play_local_sound(S as sound)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -55,7 +53,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_web_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Internet Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -69,7 +67,7 @@
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
-		var/pitch
+		var/list/music_extra_data = list()
 		if(length(web_sound_input))
 
 			web_sound_input = trim(web_sound_input)
@@ -97,11 +95,10 @@
 					var/webpage_url = title
 					if (data["webpage_url"])
 						webpage_url = "<a href=\"[data["webpage_url"]]\">[title]</a>"
-
-					var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
-					if(!freq)
-						freq = 1
-					pitch = freq
+					music_extra_data["start"] = data["start_time"]
+					music_extra_data["end"] = data["end_time"]
+					music_extra_data["link"] = data["webpage_url"]
+					music_extra_data["title"] = data["title"]
 
 					var/res = alert(usr, "Show the title of and link to this song to the players?\n[title]",, "No", "Yes", "Cancel")
 					switch(res)
@@ -130,16 +127,62 @@
 			for(var/m in GLOB.player_list)
 				var/mob/M = m
 				var/client/C = M.client
-				if((C.prefs.toggles & SOUND_MIDI) && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
+				if(C.prefs.toggles & SOUND_MIDI)
 					if(!stop_web_sounds)
-						C.chatOutput.sendMusic(web_sound_url, pitch)
+						C.tgui_panel?.play_music(web_sound_url, music_extra_data)
 					else
-						C.chatOutput.stopMusic()
+						C.tgui_panel?.stop_music()
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
+/client/proc/manual_play_web_sound()
+	set category = "Admin.Fun"
+	set name = "Manual Play Internet Sound"
+	if(!check_rights(R_SOUNDS))
+		return
+
+	var/web_sound_input = input("Enter content stream URL (must be a direct link)", "Play Internet Sound via direct URL") as text|null
+	if(istext(web_sound_input))
+		if(!length(web_sound_input))
+			log_admin("[key_name(src)] stopped web sound")
+			message_admins("[key_name(src)] stopped web sound")
+			var/mob/M
+			for(var/i in GLOB.player_list)
+				M = i
+				M?.client?.tgui_panel?.stop_music()
+			return
+
+		var/list/music_extra_data = list()
+		web_sound_input = trim(web_sound_input)
+		if(web_sound_input && (findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol)))
+			to_chat(src, "<span class='boldwarning'>Non-http(s) URIs are not allowed.</span>", confidential = TRUE)
+			return
+
+		var/list/explode = splittext(web_sound_input, "/") //if url=="https://fixthisshit.com/pogchamp.ogg"then title="pogchamp.ogg"
+		var/title = "[explode[explode.len]]"
+
+		if(!findtext(title, ".mp3") && !findtext(title, ".mp4")) // IE sucks.
+			to_chat(src, "<span class='warning'>The format is not .mp3/.mp4, IE 8 and above can only support the .mp3/.mp4 format, the music might not play.</span>", confidential = TRUE)
+
+		if(length(title) > 50) //kev no.
+			title = "Unknown.mp3"
+
+		music_extra_data["title"] = title
+
+		SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
+		log_admin("[key_name(src)] played web sound: [web_sound_input]")
+		message_admins("[key_name(src)] played web sound: [web_sound_input]")
+
+		for(var/m in GLOB.player_list)
+			var/mob/M = m
+			var/client/C = M.client
+			if(C.prefs.toggles & SOUND_MIDI)
+				C.tgui_panel?.play_music(web_sound_input, music_extra_data)
+
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manual Play Internet Sound")
+
 /client/proc/set_round_end_sound(S as sound)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Set Round End Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -150,42 +193,6 @@
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/play_web_sound_manual()
-	set category = "Fun"
-	set name = "Manual Play Internet Sound"
-	if(!check_rights(R_SOUNDS))
-		return
-
-	var/web_sound_input = input("Enter youtube-dl fetched content URL (supported sites only, leave blank to stop playing)", "Send youtube-dl media link") as text|null
-	if(!istext(web_sound_input))
-		return
-	web_sound_input = trim(web_sound_input)
-	if(!length(web_sound_input))
-		log_admin("[key_name(src)] stopped web sound")
-		message_admins("[key_name(src)] stopped web sound")
-		for(var/m in GLOB.player_list)
-			var/mob/M = m
-			var/client/C = M.client
-			if((C.prefs.toggles & SOUND_MIDI) && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-				C.chatOutput.stopMusic()
-		return
-	var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
-	if(!freq)
-		return
-	if(web_sound_input && !findtext(web_sound_input, GLOB.is_http_protocol))
-		to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
-		to_chat(src, "<span class='warning'>The media provider returned a content URL that isn't using the HTTP or HTTPS protocol</span>")
-		return
-
-	SSblackbox.record_feedback("nested tally", "played_url_manual", 1, list("[ckey]", "[web_sound_input]"))
-	log_admin("[key_name(src)] manually played web sound: [web_sound_input]")
-	message_admins("[key_name(src)] manually played web sound: <a href='web_sound_input'>HREF</a>")
-	for(var/m in GLOB.player_list)
-		var/mob/M = m
-		var/client/C = M.client
-		if((C.prefs.toggles & SOUND_MIDI) && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-			C.chatOutput.sendMusic(web_sound_input, freq)
-
 /client/proc/stop_sounds()
 	set category = "Debug"
 	set name = "Stop All Playing Sounds"
@@ -195,9 +202,7 @@
 	log_admin("[key_name(src)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
 	for(var/mob/M in GLOB.player_list)
-		if(M.client)
-			SEND_SOUND(M, sound(null))
-			var/client/C = M.client
-			if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-				C.chatOutput.stopMusic()
+		SEND_SOUND(M, sound(null))
+		var/client/C = M.client
+		C?.tgui_panel?.stop_music()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

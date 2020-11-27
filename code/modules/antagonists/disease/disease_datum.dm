@@ -2,6 +2,7 @@
 	name = "Sentient Disease"
 	roundend_category = "diseases"
 	antagpanel_category = "Disease"
+	show_to_ghosts = TRUE
 	var/disease_name = ""
 
 /datum/antagonist/disease/on_gain()
@@ -16,6 +17,14 @@
 	objectives += O
 
 	. = ..()
+
+/datum/antagonist/disease/threat()
+	var/mob/camera/disease/D = owner.current
+	var/final_threat = 0
+	for(var/V in D.purchased_abilities)
+		var/datum/disease_ability/A = V
+		final_threat += (A.cost/8)*A.malefit
+	return final_threat*D.hosts
 
 /datum/antagonist/disease/greet()
 	to_chat(owner.current, "<span class='notice'>You are the [owner.special_role]!</span>")
@@ -44,11 +53,17 @@
 	var/objectives_text = ""
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+		if(objective.completable)
+			var/completion = objective.check_completion()
+			if(completion >= 1)
+				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
+			else if(completion <= 0)
+				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				win = FALSE
+			else
+				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-			win = FALSE
+			result += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 
 	result += objectives_text

@@ -88,3 +88,11 @@
 /datum/config_entry/number/dynamic_warops_cost
 	config_entry_value = 10
 	min_val = 0
+
+/datum/config_entry/keyed_list/storyteller_weight
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/storyteller_min_players
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM

@@ -5,12 +5,10 @@
 /mob/proc/get_active_held_item()
 	return get_item_for_held_index(active_hand_index)
 
-
 //Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_held_item()
 	return get_item_for_held_index(get_inactive_hand_index())
-
 
 //Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
@@ -24,12 +22,9 @@
 		other_hand = 0
 	return other_hand
 
-
 /mob/proc/get_item_for_held_index(i)
 	if(i > 0 && i <= held_items.len)
 		return held_items[i]
-	return FALSE
-
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
@@ -37,16 +32,13 @@
 		return "r"
 	return "l"
 
-
 //Check we have an organ for this hand slot (Dismemberment), Only relevant for humans
 /mob/proc/has_hand_for_held_index(i)
 	return TRUE
 
-
 //Check we have an organ for our active hand slot (Dismemberment),Only relevant for humans
 /mob/proc/has_active_hand()
 	return has_hand_for_held_index(active_hand_index)
-
 
 //Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
 //Lefts: 1, 3, 5, 7...
@@ -108,6 +100,14 @@
 	return held_items.Find(I)
 
 
+///Find number of held items, multihand compatible
+/mob/proc/get_num_held_items()
+	. = 0
+	for(var/i in 1 to held_items.len)
+		if(held_items[i])
+			.++
+
+
 //Sad that this will cause some overhead, but the alias seems necessary
 //*I* may be happy with a million and one references to "indexes" but others won't be
 /mob/proc/is_holding(obj/item/I)
@@ -158,7 +158,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -333,51 +333,76 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
-		I.dropped(src)
+		on_item_dropped(I)
+		if(I.dropped(src) == ITEM_RELOCATED_BY_DROPPED)
+			return FALSE
 	return TRUE
 
-//Outdated but still in use apparently. This should at least be a human proc.
-//Daily reminder to murder this - Remie.
-/mob/living/proc/get_equipped_items(include_pockets = FALSE)
+//This is a SAFE proc. Use this instead of equip_to_slot()!
+//set qdel_on_fail to have it delete W if it fails to equip
+//set disable_warning to disable the 'you are unable to equip that' warning.
+//unset redraw_mob to prevent the mob from being redrawn at the end.
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, clothing_check = FALSE)
+	if(!istype(W))
+		return FALSE
+	var/list/warning = list("<span class='warning'>You are unable to equip that!</span>")
+	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self, clothing_check, warning))
+		if(qdel_on_fail)
+			qdel(W)
+		else if(!disable_warning)
+			to_chat(src, warning[1])
+		return FALSE
+	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	return TRUE
+
+//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
+//In most cases you will want to use equip_to_slot_if_possible()
+/mob/proc/equip_to_slot(obj/item/W, slot)
 	return
 
-/mob/living/carbon/get_equipped_items(include_pockets = FALSE)
-	var/list/items = list()
-	if(back)
-		items += back
-	if(head)
-		items += head
-	if(wear_mask)
-		items += wear_mask
-	if(wear_neck)
-		items += wear_neck
-	return items
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the round starts and when events happen and such.
+//Also bypasses equip delay checks, since the mob isn't actually putting it on.
+/mob/proc/equip_to_slot_or_del(obj/item/W, slot)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE)
 
-/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
-	var/list/items = ..()
-	if(belt)
-		items += belt
-	if(ears)
-		items += ears
-	if(glasses)
-		items += glasses
-	if(gloves)
-		items += gloves
-	if(shoes)
-		items += shoes
-	if(wear_id)
-		items += wear_id
-	if(wear_suit)
-		items += wear_suit
-	if(w_uniform)
-		items += w_uniform
-	if(include_pockets)
-		if(l_store)
-			items += l_store
-		if(r_store)
-			items += r_store
-		if(s_store)
-			items += s_store
+//puts the item "W" into an appropriate slot in a human's inventory
+//returns 0 if it cannot, 1 if successful
+/mob/proc/equip_to_appropriate_slot(obj/item/W, clothing_check = FALSE)
+	if(!istype(W))
+		return 0
+	var/slot_priority = W.slot_equipment_priority
+
+	if(!slot_priority)
+		slot_priority = list( \
+			SLOT_BACK, SLOT_WEAR_ID,\
+			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
+			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
+			SLOT_SHOES, SLOT_GLOVES,\
+			SLOT_EARS, SLOT_GLASSES,\
+			SLOT_BELT, SLOT_S_STORE,\
+			SLOT_L_STORE, SLOT_R_STORE,\
+			SLOT_GENERC_DEXTROUS_STORAGE\
+		)
+
+	for(var/slot in slot_priority)
+		if(equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE, FALSE, clothing_check)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
+			return 1
+
+	return 0
+
+/**
+ * Used to return a list of equipped items on a mob; does not include held items (use get_all_gear)
+ *
+ * Argument(s):
+ * * Optional - include_pockets (TRUE/FALSE), whether or not to include the pockets and suit storage in the returned list
+ */
+
+/mob/living/proc/get_equipped_items(include_pockets = FALSE)
+	var/list/items = list()
+	for(var/obj/item/I in contents)
+		if(I.item_flags & IN_INVENTORY)
+			items += I
+	items -= held_items
 	return items
 
 /mob/living/proc/unequip_everything()
@@ -392,7 +417,7 @@
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
-	if(M.equip_to_appropriate_slot(src))
+	if(M.equip_to_appropriate_slot(src, TRUE))
 		M.update_inv_hands()
 		return TRUE
 	else
@@ -468,6 +493,20 @@
 			bodyparts += BP
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
+
+
+//GetAllContents that is reasonable and not stupid
+/mob/living/carbon/proc/get_all_gear()
+	var/list/processing_list = get_equipped_items(include_pockets = TRUE) + held_items
+	listclearnulls(processing_list) // handles empty hands
+	var/i = 0
+	while(i < length(processing_list) )
+		var/atom/A = processing_list[++i]
+		if(SEND_SIGNAL(A, COMSIG_CONTAINS_STORAGE))
+			var/list/item_stuff = list()
+			SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, item_stuff)
+			processing_list += item_stuff
+	return processing_list
 
 /mob/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
 	return ..() && (user == src)

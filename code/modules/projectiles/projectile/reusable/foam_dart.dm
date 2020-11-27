@@ -39,3 +39,10 @@
 	icon_state = "foamdart_riot_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
 	stamina = 25
+
+/obj/item/projectile/bullet/reusable/foam_dart/mag
+	name = "magfoam dart"
+	icon_state = "magjectile-toy"
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	light_range = 2
+	light_color = LIGHT_COLOR_YELLOW

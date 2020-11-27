@@ -34,7 +34,7 @@
 			hair_hidden = 1
 	if(!hair_hidden)
 		if(!getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
-			overlays_standing[HAIR_LAYER] = mutable_appearance('icons/mob/human_face.dmi', "debrained", -HAIR_LAYER)
+			overlays_standing[HAIR_LAYER] = mutable_appearance('icons/mob/human_parts.dmi', "debrained", -HAIR_LAYER)
 			apply_overlay(HAIR_LAYER)
 
 
@@ -45,7 +45,7 @@
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
+		var/mutable_appearance/legcuffs = mutable_appearance('icons/mob/clothing/restraints.dmi', legcuffed.item_state, -LEGCUFF_LAYER)
 		legcuffs.color = handcuffed.color
 		legcuffs.pixel_y = 8
 

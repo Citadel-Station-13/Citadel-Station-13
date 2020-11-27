@@ -3,7 +3,7 @@
 	name = "reinforced floor"
 	desc = "Extremely sturdy."
 	icon_state = "engine"
-	thermal_conductivity = 0.025
+	thermal_conductivity = 0.0025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
@@ -43,7 +43,7 @@
 			return TRUE
 		if(floor_tile)
 			new floor_tile(src, 2)
-		ScrapeAway()
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return TRUE
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
@@ -56,41 +56,40 @@
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		ScrapeAway()
+		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return
 	switch(severity)
 		if(1)
 			if(prob(80))
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
-					ScrapeAway()
+					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					ReplaceWithLattice()
 				else
-					ScrapeAway(2)
+					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else if(prob(50))
-				ScrapeAway(2)
+				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else
-				ScrapeAway()
+				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		if(2)
 			if(prob(50))
-				ScrapeAway()
+				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()
-	if(current_size >= STAGE_FIVE)
+	if(current_size >= STAGE_FIVE && prob(30))
 		if(floor_tile)
-			if(prob(30))
-				new floor_tile(src)
-				make_plating()
-		else if(prob(30))
+			remove_tile(forced = TRUE)
+		else
 			ReplaceWithLattice()
+
+/turf/open/floor/engine/remove_tile(mob/user, silent = FALSE, make_tile = TRUE, forced = FALSE)
+	if(forced)
+		return ..()
 
 /turf/open/floor/engine/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/open/floor/engine/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/turf/open/floor/engine/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.Move_Pulled(src)
 
 //air filled floors; used in atmos pressure chambers

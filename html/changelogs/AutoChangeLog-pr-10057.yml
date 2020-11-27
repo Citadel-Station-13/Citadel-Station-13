@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed on_mob eyes overlays not updating properly in certain cases."
-  - bugfix: "Fixed deconversion from bloodshot eyes blood cult resetting your eyes' color to pitch black instead of their previous color, more or less."

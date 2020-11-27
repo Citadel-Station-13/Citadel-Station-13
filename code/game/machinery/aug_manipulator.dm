@@ -19,20 +19,20 @@
 	initial_icon_state = initial(icon_state)
 	return ..()
 
-/obj/machinery/aug_manipulator/update_icon()
-	cut_overlays()
-
+/obj/machinery/aug_manipulator/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = "[initial_icon_state]-broken"
 		return
-
-	if(storedpart)
-		add_overlay("[initial_icon_state]-closed")
 
 	if(powered())
 		icon_state = initial_icon_state
 	else
 		icon_state = "[initial_icon_state]-off"
+
+/obj/machinery/aug_manipulator/update_overlays()
+	. = ..()
+	if(storedpart)
+		. += "[initial_icon_state]-closed"
 
 /obj/machinery/aug_manipulator/Destroy()
 	QDEL_NULL(storedpart)
@@ -59,7 +59,7 @@
 
 	else if(istype(O, /obj/item/bodypart))
 		var/obj/item/bodypart/B = O
-		if(B.status != BODYPART_ROBOTIC)
+		if(!B.is_robotic_limb(FALSE))
 			to_chat(user, "<span class='warning'>The machine only accepts cybernetics!</span>")
 			return
 		if(storedpart)
@@ -100,10 +100,7 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/aug_manipulator/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/aug_manipulator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 
 	if(storedpart)

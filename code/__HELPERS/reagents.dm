@@ -72,3 +72,26 @@
 	if(!GLOB.chemical_reactions_list[primary_reagent])
 		GLOB.chemical_reactions_list[primary_reagent] = list()
 	GLOB.chemical_reactions_list[primary_reagent] += R
+
+/proc/choose_reagent_id(mob/user)
+	var/chosen_id
+	switch(alert(user, "Choose a method.", "Add Reagents", "Search", "Choose from a list", "I'm feeling lucky"))
+		if("Search")
+			var/valid_id
+			while(!valid_id)
+				chosen_id = input(user, "Enter the ID of the reagent you want to add.", "Search reagents") as null|text
+				if(isnull(chosen_id)) //Get me out of here!
+					break
+				if(!ispath(text2path(chosen_id)))
+					chosen_id = pick_closest_path(chosen_id, make_types_fancy(subtypesof(/datum/reagent)))
+					if(ispath(chosen_id))
+						valid_id = TRUE
+				else
+					valid_id = TRUE
+				if(!valid_id)
+					to_chat(user, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
+		if("Choose from a list")
+			chosen_id = input(user, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
+		if("I'm feeling lucky")
+			chosen_id = pick(subtypesof(/datum/reagent))
+	return chosen_id

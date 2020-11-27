@@ -21,11 +21,11 @@
 
 /obj/item/mop/New()
 	..()
-	create_reagents(mopcap)
+	create_reagents(mopcap, NONE, NO_REAGENTS_VALUE)
 
 
 /obj/item/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
+	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
 		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		A.clean_blood()
 		for(var/obj/effect/O in A)
@@ -42,7 +42,7 @@
 
 	var/mob/living/L = user
 
-	if(istype(L) && L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(istype(L) && IS_STAMCRIT(L))
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return
 
@@ -56,21 +56,19 @@
 		return
 
 	if(T)
+		if(!L.UseStaminaBuffer(stamusage, warn = TRUE))
+			return
 		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
 		clean(T)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(T, used_item = src)
-		if(istype(L))
-			L.adjustStaminaLossBuffered(stamusage)
 		playsound(T, "slosh", 50, 1)
-
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mop) || istype(I, /obj/item/soap))
 		return
 	else
 		return ..()
-
 
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)
@@ -98,7 +96,7 @@
 	stamusage = 1
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
-	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
 /obj/item/mop/advanced/New()
 	..()

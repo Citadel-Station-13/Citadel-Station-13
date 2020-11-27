@@ -11,9 +11,13 @@
 	var/icon_left = "bloodhand_left"
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
-	force = 21 // Just enough to break airlocks with melee attacks
+	force = 18
+	sharpness = SHARP_POINTY //it's a claw, they're sharp.
 	damtype = "brute"
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
+	sharpness = SHARP_EDGED
+	wound_bonus = -30
+	bare_wound_bonus = 15
 
 /obj/item/zombie_hand/Initialize()
 	. = ..()
@@ -32,11 +36,15 @@
 	. = ..()
 	if(!proximity_flag)
 		return
-	else if(isliving(target))
-		if(ishuman(target))
-			try_to_zombie_infect(target)
-		else
-			check_feast(target, user)
+	else
+		if(istype(target, /obj)) //do far more damage to non mobs so we can get through airlocks
+			var/obj/target_object = target
+			target_object.take_damage(force * 3, BRUTE, "melee", 0)
+		else if(isliving(target))
+			if(ishuman(target))
+				try_to_zombie_infect(target)
+			else
+				check_feast(target, user)
 
 /proc/try_to_zombie_infect(mob/living/carbon/human/target)
 	CHECK_DNA_AND_SPECIES(target)
@@ -51,8 +59,6 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
-
-
 
 /obj/item/zombie_hand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -74,4 +80,15 @@
 		user.adjustCloneLoss(-hp_gained, 0)
 		user.updatehealth()
 		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
-		user.nutrition = min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL)
+		user.adjust_nutrition(hp_gained, NUTRITION_LEVEL_FULL)
+
+/obj/item/paper/guides/antag/romerol_instructions
+	info = "How to do necromancy with chemicals:<br>\
+	<ul>\
+	<li>Use a dropper or syringe (provided) to inject the Romerol (provided) into a target (not provided)</li>\
+	<li>Wait for said target to die, or speed the process up by doing it yourself</li>\
+	<li>Run away from the target, as they will be hostile when rising back up</li>\
+	<li>Optionally: Inject chemical into foods and drinks to further spread possible infection</li>\
+	<li>???</li>\
+	<li>Complete assigned objectives amidst the chaos</li>\
+	</ul>"

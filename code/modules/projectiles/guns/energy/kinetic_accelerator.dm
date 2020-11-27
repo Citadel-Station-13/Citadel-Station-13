@@ -34,13 +34,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/premium)
 
-/obj/item/gun/energy/kinetic_accelerator/premiumka/dropped()
-	. = ..()
-	if(!QDELING(src) && !holds_charge)
-		// Put it on a delay because moving item from slot to hand
-		// calls dropped().
-		addtimer(CALLBACK(src, .proc/empty_if_not_held), 1.60)
-
 /obj/item/ammo_casing/energy/kinetic/premium
 	projectile_type = /obj/item/projectile/kinetic/premium
 
@@ -53,12 +46,11 @@
 	range = 4
 	log_override = TRUE
 
-/obj/item/gun/energy/kinetic_accelerator/premiumka/update_icon()
-	..()
-	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
+/obj/item/gun/energy/kinetic_accelerator/getinaccuracy(mob/living/user, bonus_spread, stamloss)
+	var/old_fire_delay = fire_delay //It's pretty irrelevant tbh but whatever.
+	fire_delay = overheat_time
+	. = ..()
+	fire_delay = old_fire_delay
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
 	. = ..()
@@ -112,7 +104,20 @@
 /obj/item/gun/energy/kinetic_accelerator/cyborg
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	max_mod_capacity = 80
+
+/obj/item/gun/energy/kinetic_accelerator/cyborg/Destroy()
+	for(var/obj/item/borg/upgrade/modkit/M in modkits)
+		M.uninstall(src)
+	return ..()
+
+/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg
+	holds_charge = TRUE
+	unique_frequency = TRUE
+
+/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/Destroy()
+	for(var/obj/item/borg/upgrade/modkit/M in modkits)
+		M.uninstall(src)
+	return ..()
 
 /obj/item/gun/energy/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -125,7 +130,7 @@
 	if(!holds_charge)
 		empty()
 
-/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot()
+/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	. = ..()
 	attempt_reload()
 
@@ -134,7 +139,7 @@
 	if(!can_shoot())
 		attempt_reload()
 
-/obj/item/gun/energy/kinetic_accelerator/dropped()
+/obj/item/gun/energy/kinetic_accelerator/dropped(mob/user)
 	. = ..()
 	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
@@ -142,7 +147,7 @@
 		addtimer(CALLBACK(src, .proc/empty_if_not_held), 2)
 
 /obj/item/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
-	if(!ismob(loc))
+	if(!ismob(loc) && !istype(loc, /obj/item/integrated_circuit))
 		empty()
 
 /obj/item/gun/energy/kinetic_accelerator/proc/empty()
@@ -184,12 +189,10 @@
 	update_icon()
 	overheat = FALSE
 
-/obj/item/gun/energy/kinetic_accelerator/update_icon()
-	..()
+/obj/item/gun/energy/kinetic_accelerator/update_overlays()
+	. = ..()
 	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
+		. += "[icon_state]_empty"
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
@@ -203,6 +206,12 @@
 	if(loc && istype(loc, /obj/item/gun/energy/kinetic_accelerator))
 		var/obj/item/gun/energy/kinetic_accelerator/KA = loc
 		KA.modify_projectile(BB)
+
+/obj/item/gun/energy/kinetic_accelerator/getstamcost(mob/living/carbon/user)
+	if(user && !lavaland_equipment_pressure_check(get_turf(user)))
+		return 0
+	else
+		return ..()
 
 //Projectiles
 /obj/item/projectile/kinetic
@@ -280,21 +289,21 @@
 	. += "<span class='notice'>Occupies <b>[cost]%</b> of mod capacity.</span>"
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/gun/energy/kinetic_accelerator) && !issilicon(user))
+	if(istype(A, /obj/item/gun/energy/kinetic_accelerator))
 		install(A, user)
 	else
 		..()
 
-/obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-			return install(H, usr)
+/obj/item/borg/upgrade/modkit/afterInstall(mob/living/silicon/robot/R)
+	for(var/obj/item/gun/energy/kinetic_accelerator/H in R.module.modules)
+		if(install(H, R)) //It worked
+			return
+	to_chat(R, "<span class='alert'>Upgrade error - Aborting Kinetic Accelerator linking.</span>") //No applicable KA found, insufficient capacity, or some other problem.
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
 	if(src in KA.modkits) // Sanity check to prevent installing the same modkit twice thanks to occasional click/lag delays.
-		return
+		return FALSE
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/simple_animal/hostile/mining_drone))
 			to_chat(user, "<span class='notice'>The modkit you're trying to install is only rated for minebot use.</span>")
@@ -314,7 +323,7 @@
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
 			if(!user.transferItemToLoc(src, KA))
-				return
+				return FALSE
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
 			KA.modkits += src
@@ -323,12 +332,6 @@
 	else
 		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
 		. = FALSE
-
-/obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module.modules)
-			uninstall(KA)
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, forcemove = TRUE)
 	KA.modkits -= src
@@ -371,14 +374,18 @@
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
 	modifier = 2.5
 	minebot_upgrade = FALSE
+	var/decreased
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.overheat_time -= modifier
+		var/old = KA.overheat_time
+		KA.overheat_time = max(0, KA.overheat_time - modifier)
+		decreased = old - KA.overheat_time
+
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
-	KA.overheat_time += modifier
+	KA.overheat_time += decreased
 	..()
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot

@@ -1,26 +1,8 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
-	if (notransform)
+#define TRANSFORMATION_DURATION 22
+
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+	if(mob_transforming || transformation_timer)
 		return
-	//Handle items on mob
-
-	//first implants & organs
-	var/list/stored_implants = list()
-	var/list/int_organs = list()
-
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/X in implants)
-			var/obj/item/implant/IMP = X
-			stored_implants += IMP
-			IMP.removed(src, 1, 1)
-
-	var/list/missing_bodyparts_zones = get_missing_limbs()
-
-	var/obj/item/cavity_object
-
-	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
-	if(CH.cavity_item)
-		cavity_object = CH.cavity_item
-		CH.cavity_item = null
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items(TRUE)
@@ -29,30 +11,52 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
+	mob_transforming = TRUE
+	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify(loc)
-	sleep(22)
+
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_monkeyize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+
+/mob/living/carbon/proc/finish_monkeyize(tr_flags)
+	transformation_timer = null
+
+	var/list/missing_bodyparts_zones = get_missing_limbs()
+
+	var/list/stored_implants = list()
+
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/X in implants)
+			var/obj/item/implant/IMP = X
+			stored_implants += IMP
+			IMP.removed(src, 1, 1)
+
+	var/list/int_organs = list()
+	var/obj/item/cavity_object
+
+	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
+
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
-		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
-		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
+		O.name = "monkey ([copytext_char(md5(real_name), 2, 6)])"
+		O.real_name = "monkey ([copytext_char(md5(real_name), 2, 6)])"
 
 	//handle DNA and other attributes
 	dna.transfer_identity(O)
 	O.updateappearance(icon_update=0)
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
+		O.dna.mutation_index = dna.mutation_index
+		O.dna.default_mutation_genes = dna.default_mutation_genes
+		O.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -90,7 +94,7 @@
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
 			var/obj/item/organ/I = X
-			I.Remove(O, 1)
+			I.Remove(TRUE)
 
 		if(mind)
 			mind.transfer_to(O)
@@ -103,7 +107,7 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			int_organs += I
-			I.Remove(src, 1)
+			I.Remove(TRUE)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -151,12 +155,33 @@
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
-	if (notransform)
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+	if (mob_transforming || transformation_timer)
 		return
-	//Handle items on mob
 
-	//first implants & organs
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
+		var/Itemlist = get_equipped_items(TRUE)
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
+			dropItemToGround(W, TRUE)
+			if (client)
+				client.screen -= W
+
+	//Make mob invisible and spawn animation
+	mob_transforming = TRUE
+	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+
+	icon = null
+	cut_overlays()
+	invisibility = INVISIBILITY_MAXIMUM
+	new /obj/effect/temp_visual/monkeyify/humanify(loc)
+
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+
+/mob/living/carbon/proc/finish_humanize(tr_flags)
+	transformation_timer = null
+
 	var/list/stored_implants = list()
 	var/list/int_organs = list()
 
@@ -175,26 +200,6 @@
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
 
-	//now the rest
-	if (tr_flags & TR_KEEPITEMS)
-		var/Itemlist = get_equipped_items(TRUE)
-		Itemlist += held_items
-		for(var/obj/item/W in Itemlist)
-			dropItemToGround(W, TRUE)
-			if (client)
-				client.screen -= W
-
-
-
-	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
-	icon = null
-	cut_overlays()
-	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/temp_visual/monkeyify/humanify(loc)
-	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		O.equip_to_appropriate_slot(C)
@@ -202,7 +207,7 @@
 	dna.transfer_identity(O)
 	O.updateappearance(mutcolor_update=1)
 
-	if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+	if(findtext(O.dna.real_name, "monkey", 1, 7)) //7 == length("monkey") + 1
 		O.real_name = random_unique_name(O.gender)
 		O.dna.generate_unique_enzymes(O)
 	else
@@ -210,9 +215,9 @@
 	O.name = O.real_name
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
+		O.dna.mutation_index = dna.mutation_index
+		O.dna.default_mutation_genes = dna.default_mutation_genes
+		O.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
 		O.domutcheck()
 
 	if(suiciding)
@@ -250,7 +255,7 @@
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
 			var/obj/item/organ/I = X
-			I.Remove(O, 1)
+			I.Remove(TRUE)
 
 		if(mind)
 			mind.transfer_to(O)
@@ -262,7 +267,7 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			int_organs += I
-			I.Remove(src, 1)
+			I.Remove(TRUE)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -308,7 +313,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/AIize()
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/t in bodyparts)
 		qdel(t)
@@ -316,13 +321,13 @@
 	return ..()
 
 /mob/living/carbon/AIize()
-	if (notransform)
+	if(mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	mob_transforming = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
@@ -357,7 +362,7 @@
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
-	if (notransform)
+	if(mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		if(delete_items)
@@ -365,8 +370,8 @@
 		else
 			dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	mob_transforming = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -402,13 +407,13 @@
 
 //human -> alien
 /mob/living/carbon/human/proc/Alienize(mind_transfer = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	mob_transforming = 1
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -429,19 +434,20 @@
 		mind.transfer_to(new_xeno)
 	else
 		transfer_ckey(new_xeno)
+	update_atom_languages()
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	. = new_xeno
 	qdel(src)
 
 /mob/living/carbon/human/proc/slimeize(reproduce, mind_transfer = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	mob_transforming = 1
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -453,7 +459,7 @@
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
-			M.nutrition = round(nutrition/number)
+			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)
 			babies += M
 		new_slime = pick(babies)
@@ -480,13 +486,13 @@
 
 
 /mob/living/carbon/human/proc/corgize(mind_transfer = TRUE)
-	if (notransform)
+	if (mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	mob_transforming = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)	//this really should not be necessary
@@ -504,7 +510,7 @@
 	qdel(src)
 
 /mob/living/carbon/proc/gorillize(mind_transfer = TRUE)
-	if(notransform)
+	if(mob_transforming)
 		return
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
@@ -515,8 +521,8 @@
 		dropItemToGround(W, TRUE)
 
 	regenerate_icons()
-	notransform = TRUE
-	canmove = FALSE
+	mob_transforming = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
@@ -538,14 +544,14 @@
 	if(mind)
 		mind_transfer = alert("Want to transfer their mind into the new mob", "Mind Transfer", "Yes", "No") == "Yes" ? TRUE : FALSE
 
-	if(notransform)
+	if(mob_transforming)
 		return
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 
 	regenerate_icons()
-	notransform = TRUE
-	canmove = FALSE
+	mob_transforming = TRUE
+	Paralyze(INFINITY)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 
@@ -584,3 +590,68 @@
 
 	. = new_mob
 	qdel(src)
+
+
+/* Certain mob types have problems and should not be allowed to be controlled by players.
+ *
+ * This proc is here to force coders to manually place their mob in this list, hopefully tested.
+ * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
+ */
+/mob/proc/safe_animal(MP)
+
+//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
+	if(!MP)
+		return 0	//Sanity, this should never happen.
+
+	if(ispath(MP, /mob/living/simple_animal/hostile/construct))
+		return 0 //Verbs do not appear for players.
+
+//Good mobs!
+	if(ispath(MP, /mob/living/simple_animal/pet/cat))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/pet/dog/corgi))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/crab))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/hostile/mushroom))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/hostile/construct/shade))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/mouse))
+		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
+	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
+		return 1 //Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
+	if(ispath(MP, /mob/living/simple_animal/parrot))
+		return 1 //Parrots are no longer unfinished! -Nodrak
+
+	//Not in here? Must be untested!
+	return 0
+
+#undef TRANSFORMATION_DURATION
+
+/mob/living/proc/turn_into_pickle()
+	//if they're already a pickle, turn them back instead
+	if(istype(src, /mob/living/simple_animal/pickle))
+		//turn them back from being a pickle, but release them alive
+		var/mob/living/simple_animal/pickle/existing_pickle = src
+		if(existing_pickle.original_body)
+			existing_pickle.original_body.forceMove(get_turf(src))
+			if(mind)
+				mind.transfer_to(existing_pickle.original_body)
+			qdel(src)
+	else
+		//make a new pickle on the tile and move their mind into it if possible
+		var/mob/living/simple_animal/pickle/new_pickle = new /mob/living/simple_animal/pickle(get_turf(src))
+		new_pickle.original_body = src
+		if(mind)
+			mind.transfer_to(new_pickle)
+		//give them their old access if any
+		var/obj/item/card/id/mob_access_card = get_idcard()
+		if(mob_access_card)
+			new_pickle.access_card = mob_access_card
+		//move old body inside the pickle for safekeeping (when they die, we'll return the corpse because we're nice)
+		src.forceMove(new_pickle)

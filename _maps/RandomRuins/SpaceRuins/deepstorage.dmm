@@ -2202,11 +2202,11 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "eO" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/combat{
+/obj/item/clothing/gloves/tackler/combat/insulated{
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/clothing/gloves/combat{
+/obj/item/clothing/gloves/tackler/combat/insulated{
 	pixel_x = 3;
 	pixel_y = -2
 	},

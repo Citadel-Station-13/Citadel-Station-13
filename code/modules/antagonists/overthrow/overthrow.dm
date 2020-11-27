@@ -10,6 +10,7 @@
 	roundend_category = "syndicate mutineers"
 	antagpanel_category = "Syndicate Mutineers"
 	job_rank = ROLE_TRAITOR // simply use the traitor preference & jobban settings
+	threat = 5
 	var/datum/team/overthrow/team
 	var/static/list/possible_useful_items
 
@@ -130,14 +131,14 @@
 		"left pocket" = SLOT_L_STORE,
 		"right pocket" = SLOT_R_STORE
 	)
-	var/where = H.equip_in_one_of_slots(O, slots)
+	var/where = H.equip_in_one_of_slots(O, slots, critical = TRUE)
 	if (!where)
 		to_chat(H, "The Syndicate were unfortunately unable to get you the AI module.")
 	else
 		to_chat(H, "Use the AI board in your [where] to take control of the AI, as requested by the Syndicate.")
 	// Give the implant converter
 	var/obj/item/overthrow_converter/I = new(H)
-	where = H.equip_in_one_of_slots(I, slots)
+	where = H.equip_in_one_of_slots(I, slots, critical = TRUE)
 	if (!where)
 		to_chat(H, "The Syndicate were unfortunately unable to get you a converter implant.")
 	else

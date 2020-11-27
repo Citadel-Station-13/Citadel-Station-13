@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
-	nonabstract_req = 1
+	mobs_blacklist = list(/mob/living/brain, /mob/living/silicon/pai)
 
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
@@ -82,10 +82,7 @@
 		switch(invocation_type)
 			if("shout")
 				user.say("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
-				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
-				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+				playsound(user.loc, pick('sound/misc/null.ogg'), 100, 1)
 			if("whisper")
 				user.whisper("[invocation] [uppertext(chosenarea.name)]")
 

@@ -17,6 +17,7 @@
 	toolspeed = 0.9
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
+	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize()
 	. = ..()
@@ -37,7 +38,7 @@
 
 	if(do_after_cooldown(target))
 		set_ready_state(FALSE)
-		log_message("Started drilling [target]")
+		mecha_log_message("Started drilling [target]")
 		if(isturf(target))
 			var/turf/T = target
 			T.drill_act(src)
@@ -61,13 +62,13 @@
 
 /turf/closed/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	if(drill.do_after_mecha(src, 60 / drill.drill_level))
-		drill.log_message("Drilled through [src]")
+		drill.mecha_log_message("Drilled through [src]")
 		dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	if(drill.drill_level >= DRILL_HARDENED)
 		if(drill.do_after_mecha(src, 120 / drill.drill_level))
-			drill.log_message("Drilled through [src]")
+			drill.mecha_log_message("Drilled through [src]")
 			dismantle_wall(TRUE, FALSE)
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
@@ -76,14 +77,14 @@
 	for(var/turf/closed/mineral/M in range(drill.chassis,1))
 		if(get_dir(drill.chassis,M)&drill.chassis.dir)
 			M.gets_drilled()
-	drill.log_message("Drilled through [src]")
+	drill.mecha_log_message("Drilled through [src]")
 	drill.move_ores()
 
 /turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
 		if((get_dir(drill.chassis,M)&drill.chassis.dir) && !M.dug)
 			M.getDug()
-	drill.log_message("Drilled through [src]")
+	drill.mecha_log_message("Drilled through [src]")
 	drill.move_ores()
 
 
@@ -153,6 +154,7 @@
 	selectable = 0
 	equip_cooldown = 15
 	var/scanning_time = 0
+	mech_flags = EXOSUIT_MODULE_WORKING
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
 	. = ..()

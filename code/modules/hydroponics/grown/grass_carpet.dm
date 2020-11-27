@@ -11,12 +11,13 @@
 	maturation = 2
 	production = 5
 	yield = 5
+	instability = 10
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grass/carpet, /obj/item/seeds/grass/fairy)
-	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/grass
 	seed = /obj/item/seeds/grass
@@ -27,7 +28,7 @@
 	bitesize_mod = 2
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
-	wine_power = 15
+	distill_reagent = /datum/reagent/consumable/ethanol/beer/light
 
 /obj/item/reagent_containers/food/snacks/grown/grass/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You prepare the astroturf.</span>")
@@ -49,9 +50,10 @@
 	plantname = "Fairygrass"
 	product = /obj/item/reagent_containers/food/snacks/grown/grass/fairy
 	icon_grow = "fairygrass-grow"
-	icon_dead = "fairygrass-dead"
+	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
-	reagents_add = list("nutriment" = 0.02, "hydrogen" = 0.05, "space_drugs" = 0.15)
+	mutatelist = list (/obj/item/seeds/grass/carpet)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
 
 /obj/item/reagent_containers/food/snacks/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
@@ -66,9 +68,9 @@
 	for(var/datum/plant_gene/trait/glow/gene in seed.genes)
 		G = gene
 		break
-	
+
 	stacktype = initial(stacktype)
-	
+
 	if(G)
 		switch(G.type)
 			if(/datum/plant_gene/trait/glow/white)
@@ -85,10 +87,10 @@
 				stacktype = /obj/item/stack/tile/fairygrass/purple
 			if(/datum/plant_gene/trait/glow/pink)
 				stacktype = /obj/item/stack/tile/fairygrass/pink
-	
+
 	. = ..()
 
-		
+
 
 
 // Carpet
@@ -99,7 +101,7 @@
 	species = "carpet"
 	plantname = "Carpet"
 	product = /obj/item/reagent_containers/food/snacks/grown/grass/carpet
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/grass/fairy)
 	rarity = 10
 
 /obj/item/reagent_containers/food/snacks/grown/grass/carpet

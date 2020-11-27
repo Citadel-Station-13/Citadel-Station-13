@@ -24,7 +24,7 @@
 	var/obj/item/head = null
 
 	var/obj/item/gloves = null //only used by humans
-	var/obj/item/shoes = null //only used by humans.
+	var/obj/item/clothing/shoes/shoes = null //only used by humans.
 	var/obj/item/clothing/glasses/glasses = null //only used by humans.
 	var/obj/item/ears = null //only used by humans.
 
@@ -40,7 +40,7 @@
 
 	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
 
-	var/rotate_on_lying = 1
+	rotate_on_lying = TRUE
 
 	var/tinttotal = 0	// Total level of visualy impairing items
 
@@ -49,7 +49,6 @@
 	//Gets filled up in create_bodyparts()
 
 	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
-	var/list/leg_bodyparts = list()
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
@@ -64,3 +63,20 @@
 	var/damageoverlaytemp = 0
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
+	var/tackling = FALSE //Whether or not we are tackling, this will prevent the knock into effects for carbons
+
+	var/corruption_timer = 0 //Only relevant for robotpeople. A timer that ticks in handle_corruption() so stuff doesn't happen  every tick.
+
+	/// All of the wounds a carbon has afflicted throughout their limbs
+	var/list/all_wounds
+	/// All of the scars a carbon has afflicted throughout their limbs
+	var/list/all_scars
+
+	/// Protection (insulation) from the heat, Value 0-1 corresponding to the percentage of protection
+	var/heat_protection = 0 // No heat protection
+	/// Protection (insulation) from the cold, Value 0-1 corresponding to the percentage of protection
+	var/cold_protection = 0 // No cold protection
+
+	/// Timer id of any transformation
+	var/transformation_timer
+

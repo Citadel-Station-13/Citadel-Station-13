@@ -51,7 +51,8 @@
 	for(var/datum/antagonist/cult/C in GLOB.antagonists)
 		if(!C.owner)
 			continue
-		all_cults |= C.cult_team
+		if(C.cult_team)
+			all_cults |= C.cult_team
 	for(var/datum/team/cult/T in all_cults)
 		deltimer(T.blood_target_reset_timer)
 		T.blood_target = src
@@ -126,7 +127,7 @@
 
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in viewers(consume_range, src))
+	for(var/mob/living/carbon/M in fov_viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
@@ -200,7 +201,7 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in urange(consume_range,src,1))
-		if(isturf(X) || ismovableatom(X))
+		if(isturf(X) || ismovable(X))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0

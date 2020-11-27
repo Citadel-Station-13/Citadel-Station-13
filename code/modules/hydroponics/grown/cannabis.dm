@@ -9,15 +9,14 @@
 	maturation = 8
 	potency = 20
 	growthstages = 1
+	instability = 40
 	growing_icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
-						/obj/item/seeds/cannabis/death,
-						/obj/item/seeds/cannabis/white,
-						/obj/item/seeds/cannabis/ultimate)
-	reagents_add = list("space_drugs" = 0.15, "lipolicide" = 0.35) // gives u the munchies
+						/obj/item/seeds/cannabis/death)
+	reagents_add = list(/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -27,8 +26,8 @@
 	species = "megacannabis"
 	plantname = "Rainbow Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
-	mutatelist = list()
-	reagents_add = list("mindbreaker" = 0.15, "lipolicide" = 0.35)
+	mutatelist = list(/obj/item/seeds/cannabis/ultimate)
+	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.15, /datum/reagent/toxin/lipolicide = 0.35)
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -38,8 +37,8 @@
 	species = "blackcannabis"
 	plantname = "Deathweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/death
-	mutatelist = list()
-	reagents_add = list("cyanide" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
+	mutatelist = list(/obj/item/seeds/cannabis/white)
+	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 
 /obj/item/seeds/cannabis/white
@@ -50,7 +49,7 @@
 	plantname = "Lifeweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
-	reagents_add = list("omnizine" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
+	reagents_add = list(/datum/reagent/medicine/omnizine = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 
 
@@ -63,21 +62,21 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
 	mutatelist = list()
-	reagents_add = list("space_drugs" = 0.3,
-						"mindbreaker" = 0.3,
-						"mercury" = 0.15,
-						"lithium" = 0.15,
-						"atropine" = 0.15,
-						"haloperidol" = 0.15,
-						"methamphetamine" = 0.15,
-						"capsaicin" = 0.15,
-						"barbers_aid" = 0.15,
-						"bath_salts" = 0.15,
-						"itching_powder" = 0.15,
-						"crank" = 0.15,
-						"krokodil" = 0.15,
-						"histamine" = 0.15,
-						"lipolicide" = 0.15)
+	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
+						/datum/reagent/toxin/mindbreaker = 0.3,
+						/datum/reagent/mercury = 0.15,
+						/datum/reagent/lithium = 0.15,
+						/datum/reagent/medicine/atropine = 0.15,
+						/datum/reagent/medicine/haloperidol = 0.15,
+						/datum/reagent/drug/methamphetamine = 0.15,
+						/datum/reagent/consumable/capsaicin = 0.15,
+						/datum/reagent/barbers_aid = 0.15,
+						/datum/reagent/drug/bath_salts = 0.15,
+						/datum/reagent/toxin/itching_powder = 0.15,
+						/datum/reagent/drug/crank = 0.15,
+						/datum/reagent/drug/krokodil = 0.15,
+						/datum/reagent/toxin/histamine = 0.15,
+						/datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 69
 
 
@@ -106,6 +105,7 @@
 	seed = /obj/item/seeds/cannabis/death
 	name = "death cannabis leaf"
 	desc = "Looks a bit dark. Oh well."
+	foodtype = VEGETABLES | TOXIC
 	icon_state = "blackcannabis"
 	wine_power = 40
 
@@ -113,6 +113,7 @@
 	seed = /obj/item/seeds/cannabis/white
 	name = "white cannabis leaf"
 	desc = "It feels smooth and nice to the touch."
+	foodtype = VEGETABLES | ANTITOXIC
 	icon_state = "whitecannabis"
 	wine_power = 10
 

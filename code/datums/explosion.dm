@@ -76,7 +76,9 @@ GLOBAL_LIST_EMPTY(explosions)
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	//stoplag() //tldr, let the calling proc call qdel(src) before we explode
+	// no - use sleep. stoplag() results in quirky things like explosions taking too long to process and hanging mid-air for no reason.
+	sleep(0)
 
 	EX_PREPROCESS_EXIT_CHECK
 
@@ -87,6 +89,8 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
+	
+	deadchat_broadcast("<span class='deadsay bold'>An explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) has occured at ([get_area(epicenter)])</span>", turf_target = get_turf(epicenter))
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
@@ -101,13 +105,21 @@ GLOBAL_LIST_EMPTY(explosions)
 	// 3/7/14 will calculate to 80 + 35
 
 	var/far_dist = 0
-	far_dist += heavy_impact_range * 5
+	far_dist += heavy_impact_range * 15 // Large explosions carry further
 	far_dist += devastation_range * 20
 
 	if(!silent)
 		var/frequency = get_rand_frequency()
 		var/sound/explosion_sound = sound(get_sfx("explosion"))
 		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
+		var/sound/creaking_explosion_sound = sound(get_sfx("explosion_creaking"))
+		var/sound/hull_creaking_sound = sound(get_sfx("hull_creaking"))
+		var/sound/explosion_echo_sound = sound('sound/effects/explosion_distant.ogg')
+		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION) 
+		var/creaking_explosion = FALSE
+
+		if(prob(devastation_range*30+heavy_impact_range*5) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
+			creaking_explosion = TRUE // prob over 100 always returns true
 
 		for(var/mob/M in GLOB.player_list)
 			// Double check for client
@@ -121,14 +133,32 @@ GLOBAL_LIST_EMPTY(explosions)
 				if(dist <= round(max_range + world.view - 2, 1))
 					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
 					if(baseshakeamount > 0)
-						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
+						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = CLAMP(far_dist, 30, 50) // Volume is based on explosion size and dist
-					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
+					var/far_volume = clamp(far_dist/2, 40, 60) // Volume is based on explosion size and dist
+					if(creaking_explosion)
+						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = creaking_explosion_sound, distance_multiplier = 0)
+					else if(prob(75))
+						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = far_explosion_sound, distance_multiplier = 0) // Far sound
+					else
+						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0) // Echo sound
+
+					if(baseshakeamount > 0 || devastation_range)
+						if(!baseshakeamount) // Devastating explosions rock the station and ground
+							baseshakeamount = devastation_range*3
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+				
+				else if(M.can_hear() && !isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
+					var/echo_volume = 40
+					if(devastation_range)
+						baseshakeamount = devastation_range
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+						echo_volume = 60
+					M.playsound_local(epicenter, null, echo_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0)
+
+				if(creaking_explosion) // 5 seconds after the bang, the station begins to creak
+					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(25, 40), 1, frequency, null, null, FALSE, hull_creaking_sound, null, null, null, null, 0), 5 SECONDS)
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
@@ -194,14 +224,12 @@ GLOBAL_LIST_EMPTY(explosions)
 
 		//------- EX_ACT AND TURF FIRES -------
 
-		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
-			var/list/items = list()
-			for(var/I in T)
-				var/atom/A = I
-				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += A.GetAllContents()
-			for(var/O in items)
-				var/atom/A = O
+		if((T == epicenter) && !QDELETED(explosion_source) && ismovable(explosion_source) && (get_turf(explosion_source) == T)) // Ensures explosives detonating from bags trigger other explosives in that bag
+			var/list/atoms = list()
+			for(var/atom/A in explosion_source.loc)		// the ismovableatom check 2 lines above makes sure we don't nuke an /area
+				atoms += A
+			for(var/i in atoms)
+				var/atom/A = i
 				if(!QDELETED(A))
 					A.ex_act(dist)
 

@@ -19,9 +19,9 @@ Bonus
 
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
-	stealth = 1
+	stealth = -1
 	resistance = -4
-	stage_speed = -4
+	stage_speed = -3
 	transmittable = -4
 	level = 6
 	severity = 5
@@ -29,11 +29,12 @@ Bonus
 	symptom_delay_min = 20
 	symptom_delay_max = 75
 	var/infective = FALSE
-	threshold_desc = "<b>Stage Speed 4:</b> Increases the intensity of the flames.<br>\
-					  <b>Stage Speed 8:</b> Further increases flame intensity.<br>\
-					  <b>Transmission 8:</b> Host will spread the virus through skin flakes when bursting into flame.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active."
-
+	threshold_desc = list(
+		"Stage Speed 4" = "Increases the intensity of the flames.",
+		"Stage Speed 8" = "Further increases flame intensity.",
+		"Transmission 8" = "Host will spread the virus through skin flakes when bursting into flame.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+	)
 /datum/symptom/fire/Start(datum/disease/advance/A)
 	if(!..())
 		return
@@ -98,7 +99,6 @@ Bonus
 */
 
 /datum/symptom/alkali
-
 	name = "Alkali perspiration"
 	desc = "The virus attaches to sudoriparous glands, synthesizing a chemical that bursts into flames when reacting with water, leading to self-immolation."
 	stealth = 2
@@ -112,9 +112,9 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
-	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the effect, but reduces its frequency.<br>\
-					  <b>Stage Speed 8:</b> Increases explosion radius when the host is wet.<br>\
-					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host."
+	threshold_desc = list("Resistance 9" = "Doubles the intensity of the effect, but reduces its frequency.",
+					  "Stage Speed 8" = "Increases explosion radius when the host is wet.",
+					  "Transmission 8" = "Additionally synthesizes chlorine trifluoride and napalm inside the host.")
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
 	if(!..())
@@ -156,7 +156,7 @@ Bonus
 	M.adjust_fire_stacks(get_stacks)
 	M.adjustFireLoss(get_stacks/2)
 	if(chems)
-		M.reagents.add_reagent("clf3", 2 * power)
+		M.reagents.add_reagent(/datum/reagent/clf3, 2 * power)
 	return 1
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/M, datum/disease/advance/A)
@@ -164,5 +164,5 @@ Bonus
 	M.adjust_fire_stacks(get_stacks)
 	M.adjustFireLoss(get_stacks)
 	if(chems)
-		M.reagents.add_reagent_list(list("napalm" = 4 * power, "clf3" = 4 * power))
+		M.reagents.add_reagent_list(list(/datum/reagent/napalm = 4 * power, /datum/reagent/clf3 = 4 * power))
 	return 1

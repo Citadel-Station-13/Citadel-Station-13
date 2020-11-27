@@ -4,6 +4,7 @@
 	can_coexist_with_others = FALSE
 	job_rank = ROLE_GANG
 	antagpanel_category = "Gang"
+	threat = 2
 	var/hud_type = "gangster"
 	var/message_name = "Gangster"
 	var/datum/team/gang/gang
@@ -31,7 +32,7 @@
 /datum/antagonist/gang/farewell()
 	if(ishuman(owner.current))
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
-		to_chat(owner, "<span class='userdanger'>You are no longer a gangster!</span>")
+		to_chat(owner, "<span class='userdanger'>You are no longer a gangster! Your memories from the time you were in a gang are hazy... You don't seem to be able to recall the names of your previous allies, not even your bosses...</span>")
 
 /datum/antagonist/gang/on_gain()
 	if(!gang)
@@ -167,6 +168,7 @@
 	name = "Gang boss"
 	hud_type = "gang_boss"
 	message_name = "Leader"
+	threat = 10
 
 /datum/antagonist/gang/boss/on_gain()
 	..()
@@ -195,7 +197,7 @@
 
 	if(gangtool)//Here is where all of the text occurs when a gang boss first spawns in.
 		var/obj/item/device/gangtool/G = new()
-		var/where = H.equip_in_one_of_slots(G, slots)
+		var/where = H.equip_in_one_of_slots(G, slots, critical = TRUE)
 		if (!where)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a Gangtool.")
 		else
@@ -205,7 +207,7 @@
 
 	if(pen)
 		var/obj/item/pen/gang/T = new()
-		var/where2 = H.equip_in_one_of_slots(T, slots)
+		var/where2 = H.equip_in_one_of_slots(T, slots, critical = TRUE)
 		if (!where2)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen to start.")
 		else
@@ -213,7 +215,7 @@
 
 	if(spraycan)
 		var/obj/item/toy/crayon/spraycan/gang/SC = new(null,gang)
-		var/where3 = H.equip_in_one_of_slots(SC, slots)
+		var/where3 = H.equip_in_one_of_slots(SC, slots, critical = TRUE)
 		if (!where3)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start.")
 		else
@@ -221,7 +223,7 @@
 
 	if(hud)
 		var/obj/item/clothing/glasses/hud/security/chameleon/C = new(null,gang)
-		var/where4 = H.equip_in_one_of_slots(C, slots)
+		var/where4 = H.equip_in_one_of_slots(C, slots, critical = TRUE)
 		if (!where4)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a chameleon security HUD.")
 		else

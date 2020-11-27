@@ -111,11 +111,10 @@
 
 /turf/open/floor/holofloor/carpet/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/update_icon), 1)
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
-	if(!..())
-		return 0
+	. = ..()
 	if(intact)
 		queue_smooth(src)
 
@@ -135,7 +134,7 @@
 	tiled_dirt = FALSE
 	baseturfs = /turf/open/floor/holofloor/snow
 
-/turf/open/floor/holofloor/snow/attack_hand(mob/living/user)
+/turf/open/floor/holofloor/snow/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

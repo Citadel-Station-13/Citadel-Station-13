@@ -13,14 +13,16 @@
 	maxbodytemp = INFINITY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	response_help  = "pokes"
-	response_disarm = "shoos"
-	response_harm   = "splats"
+	response_help_continuous  = "pokes"
+	response_help_simple = "poke"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "splats"
+	response_harm_simple = "plat"
 	speak_emote = list("chitters")
 	mouse_opacity = 2
 	density = TRUE
 	ventcrawler = VENTCRAWLER_ALWAYS
-	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
 	verb_exclaim = "chitters loudly"
@@ -96,10 +98,10 @@
 	icon_state = "bananaspider"
 	bitesize = 3
 	eatverb = "devours"
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	foodtype = GROSS | MEAT | RAW
-	grind_results = list("blood" = 20, "liquidgibs" = 5)
-	juice_results = list("banana" = 0)
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	juice_results = list(/datum/reagent/consumable/banana = 0)
 
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()

@@ -18,10 +18,16 @@ Ask ninjanomnom if they're around
 #define RAD_BURN_THRESHOLD 1000						// Applied radiation must be over this to burn
 
 #define RAD_MOB_SAFE 500							// How much stored radiation in a mob with no ill effects
+#define RAD_DEFAULT_ROBOT_SAFE 250					// Like above, except for robotic carbons. Far more susceptible to corruption from radiation.
+#define RAD_UPGRADED_ROBOT_SAFE 750					// If the robot has been upgraded via an implant, their radiation threshold is raised to be somewhat above that of organics.
 
 #define RAD_MOB_HAIRLOSS 800						// How much stored radiation to check for hair loss
 
 #define RAD_MOB_MUTATE 1250							// How much stored radiation to check for mutation
+
+#define RAD_MONKEY_GORILLIZE 1650					// How much stored radiation to check for Harambe time.
+#define RAD_MOB_GORILLIZE_FACTOR 100
+#define RAD_MONKEY_GORILLIZE_EXPONENT 0.5
 
 #define RAD_MOB_VOMIT 2000							// The amount of radiation to check for vomitting
 #define RAD_MOB_VOMIT_PROB 1						// Chance per tick of vomitting
@@ -41,9 +47,9 @@ Ask ninjanomnom if they're around
 // WARNING: The deines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
 // contamination_chance = 		(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1))
 // contamination_strength = 	(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
-#define RAD_MINIMUM_CONTAMINATION 350				// How strong does a radiation wave have to be to contaminate objects
+#define RAD_MINIMUM_CONTAMINATION 300				// How strong does a radiation wave have to be to contaminate objects
 #define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005	// Higher means higher strength scaling contamination chance
-#define RAD_CONTAMINATION_STR_COEFFICIENT 0.3		// Higher means higher strength scaling contamination strength
+#define RAD_CONTAMINATION_STR_COEFFICIENT 0.99		// Higher means higher strength scaling contamination strength
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 
 #define RAD_HALF_LIFE 90							// The half-life of contaminated objects

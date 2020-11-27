@@ -365,11 +365,11 @@
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/table,
-/obj/item/stack/medical/bruise_pack{
+/obj/item/stack/medical/suture{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/suture,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bj" = (

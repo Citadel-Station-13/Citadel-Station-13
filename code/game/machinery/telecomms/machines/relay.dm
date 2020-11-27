@@ -19,6 +19,11 @@
 	var/broadcasting = 1
 	var/receiving = 1
 
+/obj/machinery/telecomms/relay/RefreshParts()
+	idle_power_usage = 30
+	for(var/obj/item/stock_parts/manipulator/P in component_parts)
+		idle_power_usage -= (P.rating * 1.5) //Has 2 manipulators
+
 /obj/machinery/telecomms/relay/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
 	var/turf/T = get_turf(src)

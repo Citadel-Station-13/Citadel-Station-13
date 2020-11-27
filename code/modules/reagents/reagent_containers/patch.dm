@@ -19,8 +19,10 @@
 			return
 		if(!L.can_inject(user, TRUE, user.zone_selected, FALSE, TRUE)) //stopped by clothing, not by species immunity.
 			return
-		if(affecting.status != BODYPART_ORGANIC)
+		if(!affecting.is_organic_limb())
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
+		else if(!affecting.is_organic_limb(FALSE))
+			to_chat(user, "<span class='notice'>Medical patches won't work on a biomechanical limb!</span>")
 			return
 	..()
 
@@ -32,13 +34,13 @@
 /obj/item/reagent_containers/pill/patch/styptic
 	name = "brute patch"
 	desc = "Helps with brute injuries."
-	list_reagents = list("styptic_powder" = 20)
+	list_reagents = list(/datum/reagent/medicine/styptic_powder = 20)
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/silver_sulf
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-	list_reagents = list("silver_sulfadiazine" = 20)
+	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 20)
 	icon_state = "bandaid_burn"
 
 /obj/item/reagent_containers/pill/patch/get_belt_overlay()

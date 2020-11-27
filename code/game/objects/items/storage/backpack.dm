@@ -24,9 +24,9 @@
 /obj/item/storage/backpack/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 21
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_items = 21
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_BACKPACK
+	STR.max_w_class = MAX_WEIGHT_CLASS_BACKPACK
 
 /*
  * Backpack Types
@@ -54,14 +54,19 @@
 	icon_state = "holdingsat"
 	item_state = "holdingsat"
 	species_exception = list(/datum/species/angel)
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+
+/obj/item/storage/backpack/holding/duffel
+	name = "duffel bag of holding"
+	desc = "A duffel bag that opens into a localized pocket of Blue Space."
+	icon_state = "holdingduffel"
+	item_state = "holdingduffel"
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.allow_big_nesting = TRUE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
-	STR.max_combined_w_class = 35
+	STR.max_w_class = MAX_WEIGHT_CLASS_BAG_OF_HOLDING
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_BAG_OF_HOLDING
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
@@ -339,7 +344,7 @@
 /obj/item/storage/backpack/duffelbag/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 30
+	STR.max_volume = STORAGE_VOLUME_DUFFLEBAG
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
@@ -364,6 +369,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
@@ -386,6 +392,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
@@ -453,7 +460,7 @@
 	item_state = "duffel-syndieammo"
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
-	new /obj/item/clothing/under/lawyer/blacksuit(src)
+	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -480,6 +487,7 @@
 	new /obj/item/circular_saw(src)
 	new /obj/item/surgicaldrill(src)
 	new /obj/item/cautery(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
@@ -496,8 +504,8 @@
 	new /obj/item/scalpel/advanced(src)
 	new /obj/item/retractor/advanced(src)
 	new /obj/item/surgicaldrill/advanced(src)
+	new /obj/item/bonesetter(src)
 	new /obj/item/surgical_drapes(src)
-	new /obj/item/storage/firstaid/tactical(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/mmi/syndie(src)
@@ -527,6 +535,31 @@
 /obj/item/storage/backpack/duffelbag/syndie/ammo/smg/PopulateContents()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax
+	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax/PopulateContents()
+	new /obj/item/mecha_ammo/incendiary(src)
+	new /obj/item/mecha_ammo/incendiary(src)
+	new /obj/item/mecha_ammo/incendiary(src)
+	new /obj/item/mecha_ammo/flashbang(src)
+	new /obj/item/mecha_ammo/flashbang(src)
+	new /obj/item/mecha_ammo/flashbang(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
+	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/mauler/PopulateContents()
+	new /obj/item/mecha_ammo/lmg(src)
+	new /obj/item/mecha_ammo/lmg(src)
+	new /obj/item/mecha_ammo/lmg(src)
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/missiles_he(src)
+	new /obj/item/mecha_ammo/missiles_he(src)
+	new /obj/item/mecha_ammo/missiles_he(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
@@ -600,7 +633,7 @@
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
 	new /obj/item/pda/clown(src)
-	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/bikehorn(src)
@@ -618,3 +651,9 @@ obj/item/storage/backpack/duffelbag/syndie/shredderbundle
 	new /obj/item/gun/ballistic/automatic/flechette/shredder(src)
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+
+/obj/item/storage/backpack/snail
+	name = "snail shell"
+	desc = "Worn by snails as armor and storage compartment."
+	icon_state = "snailshell"
+	item_state = "snailshell"

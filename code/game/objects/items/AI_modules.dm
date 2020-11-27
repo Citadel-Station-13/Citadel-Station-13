@@ -22,7 +22,7 @@ AI MODULES
 	throw_range = 7
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
-	materials = list(MAT_GOLD=50)
+	custom_materials = list(/datum/material/gold=50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
 	. = ..()
@@ -369,7 +369,7 @@ AI MODULES
 	if(!targName)
 		return
 	subject = targName
-	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
+	laws = list("You may not injure a [subject] or cause one to come to harm.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
 				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	..()

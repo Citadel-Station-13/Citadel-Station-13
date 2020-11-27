@@ -57,7 +57,7 @@
 		canvas rotting away and contents vanishing.</span>")
 	qdel(src)
 
-/obj/structure/cursed_money/attack_hand(mob/living/user)
+/obj/structure/cursed_money/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -108,7 +108,7 @@
 	if (levels.len)
 		dest = locate(T.x, T.y, pick(levels))
 
-	T.ChangeTurf(/turf/open/chasm)
+	T.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
 	var/turf/open/chasm/C = T
 	C.set_target(dest)
 	C.drop(user)

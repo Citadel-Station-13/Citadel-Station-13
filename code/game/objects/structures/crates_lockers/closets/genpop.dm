@@ -91,11 +91,11 @@
 		locked = TRUE
 	return ..()
 
-/obj/structure/closet/secure_closet/genpop/attack_hand(mob/user)
+/obj/structure/closet/secure_closet/genpop/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
-	if(!broken && registered_id != null && registered_id in user.held_items)
+	if(!broken && registered_id != null && (registered_id in user.held_items))
 		handle_prisoner_id(user)
 		return
 

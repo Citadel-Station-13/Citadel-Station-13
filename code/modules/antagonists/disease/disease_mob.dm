@@ -83,17 +83,16 @@ the new instance inside the host to be updated to the template's stats.
 		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 
 
-/mob/camera/disease/Stat()
+/mob/camera/disease/get_status_tab_items()
 	..()
-	if(statpanel("Status"))
-		if(freemove)
-			stat("Host Selection Time: [round((freemove_end - world.time)/10)]s")
-		else
-			stat("Adaptation Points: [points]/[total_points]")
-			stat("Hosts: [disease_instances.len]")
-			var/adapt_ready = next_adaptation_time - world.time
-			if(adapt_ready > 0)
-				stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
+	if(freemove)
+		. += "Host Selection Time: [round((freemove_end - world.time)/10)]s"
+	else
+		. += "Adaptation Points: [points]/[total_points]"
+		. += "Hosts: [disease_instances.len]"
+		var/adapt_ready = next_adaptation_time - world.time
+		if(adapt_ready > 0)
+			. += "Adaptation Ready: [round(adapt_ready/10, 0.1)]s"
 
 
 /mob/camera/disease/examine(mob/user)
@@ -128,6 +127,9 @@ the new instance inside the host to be updated to the template's stats.
 		link = FOLLOW_LINK(src, to_follow)
 	else
 		link = ""
+	// Create map text prior to modifying message for goonchat
+	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, FALSE, source)
 	to_chat(src, "[link] [message]")
@@ -288,15 +290,18 @@ the new instance inside the host to be updated to the template's stats.
 
 /mob/camera/disease/ClickOn(var/atom/A, params)
 	if(freemove && ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
-			return
-		if(!freemove)
-			return
-		if(QDELETED(H) || !force_infect(H))
-			to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
+		confirm_initial_infection(A)
 	else
 		..()
+
+/mob/camera/disease/proc/confirm_initial_infection(mob/living/carbon/human/H)
+	set waitfor = FALSE
+	if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
+		return
+	if(!freemove)
+		return
+	if(QDELETED(H) || !force_infect(H))
+		to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
 
 /mob/camera/disease/proc/adapt_cooldown()
 	to_chat(src, "<span class='notice'>You have altered your genetic structure. You will be unable to adapt again for [DisplayTimeText(adaptation_cooldown)].</span>")
@@ -318,7 +323,11 @@ the new instance inside the host to be updated to the template's stats.
 	var/list/dat = list()
 
 	if(examining_ability)
-		dat += "<a href='byond://?src=[REF(src)];main_menu=1'>Back</a><br><h1>[examining_ability.name]</h1>[examining_ability.stat_block][examining_ability.long_desc][examining_ability.threshold_block]"
+		dat += "<a href='byond://?src=[REF(src)];main_menu=1'>Back</a><br>"
+		dat += "<h1>[examining_ability.name]</h1>"
+		dat += "[examining_ability.stat_block][examining_ability.long_desc][examining_ability.threshold_block]"
+		for(var/entry in examining_ability.threshold_block)
+			dat += "<b>[entry]</b>: [examining_ability.threshold_block[entry]]<br>"
 	else
 		dat += "<h1>Disease Statistics</h1><br>\
 			Resistance: [DT.totalResistance()]<br>\

@@ -2,8 +2,7 @@
 	name = "Tesla Blast"
 	desc = "Blast lightning at your foes!"
 	charge_type = "recharge"
-	charge_max	= 300
-	clothes_req = 1
+	charge_max	= 270
 	invocation = "UN'LTD P'WAH!"
 	invocation_type = "shout"
 	range = 7
@@ -16,9 +15,9 @@
 
 	action_icon_state = "lightning"
 
-/obj/effect/proc_holder/spell/targeted/tesla/Click()
-	if(!ready && cast_check())
-		StartChargeup()
+/obj/effect/proc_holder/spell/targeted/tesla/Trigger(mob/user, skip_can_cast = TRUE)
+	if(!ready && cast_check(FALSE, user, skip_can_cast))
+		StartChargeup(user)
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/tesla/proc/StartChargeup(mob/user = usr)
@@ -69,10 +68,10 @@
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 		current.visible_message("<span class='warning'>[current] absorbs the spell, remaining unharmed!</span>", "<span class='userdanger'>You absorb the spell, remaining unharmed!</span>")
 	if(bounces < 1)
-		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
+		current.electrocute_act(bolt_energy,"Lightning Bolt", flags = SHOCK_NOGLOVES)
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 	else
-		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
+		current.electrocute_act(bolt_energy,"Lightning Bolt", flags = SHOCK_NOGLOVES)
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 		var/list/possible_targets = new
 		for(var/mob/living/M in view_or_range(range,target,"view"))

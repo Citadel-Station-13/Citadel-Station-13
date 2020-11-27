@@ -1,6 +1,7 @@
 /datum/wires/airalarm
 	holder_type = /obj/machinery/airalarm
 	proper_name = "Air Alarm"
+	req_knowledge = JOB_SKILL_MASTER
 
 /datum/wires/airalarm/New(atom/holder)
 	wires = list(
@@ -46,7 +47,7 @@
 					A.mode = 1 // AALARM_MODE_SCRUB
 				A.apply_mode()
 		if(WIRE_ALARM) // Clear alarms.
-			var/area/AA = get_area(A)
+			var/area/AA = get_base_area(A)
 			if(AA.atmosalert(0, holder))
 				A.post_alert(0)
 			A.update_icon()
@@ -68,7 +69,7 @@
 				A.mode = 3 // AALARM_MODE_PANIC
 				A.apply_mode()
 		if(WIRE_ALARM) // Post alarm.
-			var/area/AA = get_area(A)
+			var/area/AA = get_base_area(A)
 			if(AA.atmosalert(2, holder))
 				A.post_alert(2)
 			A.update_icon()

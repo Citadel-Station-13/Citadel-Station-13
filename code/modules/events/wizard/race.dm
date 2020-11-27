@@ -10,6 +10,7 @@
 	var/list/stored_name
 	var/list/stored_species
 	var/list/stored_dna
+	threat = 10
 
 /datum/round_event/wizard/race/setup()
 	stored_name = list()

@@ -30,7 +30,7 @@
 		toggle()
 		return TRUE
 
-/obj/structure/destructible/clockwork/powered/mania_motor/attack_hand(mob/living/user)
+/obj/structure/destructible/clockwork/powered/mania_motor/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -63,4 +63,4 @@
 				break
 		if(!M)
 			M = H.apply_status_effect(STATUS_EFFECT_MANIAMOTOR, src)
-		M.severity = CLAMP(M.severity + ((11 - get_dist(src, H)) * efficiency * efficiency), 0, MAX_MANIA_SEVERITY)
+		M.severity = clamp(M.severity + ((11 - get_dist(src, H)) * efficiency * efficiency), 0, MAX_MANIA_SEVERITY)

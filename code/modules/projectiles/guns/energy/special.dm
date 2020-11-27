@@ -34,11 +34,11 @@
 	pin = null
 	ammo_x_offset = 1
 
-/obj/item/gun/energy/decloner/update_icon()
+/obj/item/gun/energy/decloner/update_overlays()
 	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
-		add_overlay("decloner_spin")
+		. += "decloner_spin"
 
 /obj/item/gun/energy/floragun
 	name = "floral somatoray"
@@ -85,10 +85,11 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
+	inaccuracy_modifier = 0.25
 	obj_flags = 0
 	overheat_time = 20
 	holds_charge = TRUE
@@ -105,13 +106,15 @@
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"
-	desc = "A reverse engineered weapon using syndicate technology."
+	desc = "A reverse engineered weapon using syndicate technology. This thing seems incredibly unwieldly, and seems to be using similar internals to the Proto-Kinetic Accelerator. It might not play nice when brought near weapons similar to it."
 	icon_state = "crossbowlarge"
-	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=4000)
+	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+	weapon_weight = WEAPON_HEAVY
 	pin = null
+	unique_frequency = FALSE
 
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
@@ -122,7 +125,8 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
+	inaccuracy_modifier = 0.25
 	can_charge = 0
 
 	heat = 3800
@@ -130,9 +134,10 @@
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
-/obj/item/gun/energy/plasmacutter/Initialize()
+/obj/item/gun/energy/plasmacutter/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
@@ -162,9 +167,6 @@
 /obj/item/gun/energy/plasmacutter/use(amount)
 	return cell.use(amount * 100)
 
-/obj/item/gun/energy/plasmacutter/update_icon()
-	return
-
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
@@ -178,12 +180,14 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	pin = null
+	inaccuracy_modifier = 0.25
+	automatic_charge_overlays = FALSE
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
 
-/obj/item/gun/energy/wormhole_projector/update_icon()
-	icon_state = "[initial(icon_state)][select]"
+/obj/item/gun/energy/wormhole_projector/update_icon_state()
+	icon_state = "[initial(icon_state)][current_firemode_index]"
 	item_state = icon_state
 
 /obj/item/gun/energy/wormhole_projector/update_ammo_types()
@@ -229,7 +233,7 @@
 	p_blue.link_portal(p_orange)
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null, atmos_link)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null, atmos_link)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -251,8 +255,9 @@
 	can_charge = 0
 	use_cyborg_cell = 1
 
-/obj/item/gun/energy/printer/update_icon()
-	return
+/obj/item/gun/energy/printer/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/energy/printer/emp_act()
 	return
@@ -313,13 +318,22 @@
 	icon_state = "emitter_carbine"
 	force = 12
 	w_class = WEIGHT_CLASS_SMALL
+	inaccuracy_modifier = 0.25
 	cell_type = /obj/item/stock_parts/cell/super
 	ammo_type = list(/obj/item/ammo_casing/energy/emitter)
+	automatic_charge_overlays = FALSE
 
-/obj/item/gun/energy/emitter/update_icon()
-	..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+/obj/item/gun/energy/emitter/update_icon_state()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
-		add_overlay("emitter_carbine_empty")
+		icon_state = "emitter_carbine_empty"
 	else
-		add_overlay("emitter_carbine")
+		icon_state = "emitter_carbine"
+
+//the pickle ray
+/obj/item/gun/energy/pickle_gun
+	name = "pickle ray"
+	desc = "funniest shit i've ever seen"
+	icon_state = "decloner"
+	no_pin_required = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/pickle)

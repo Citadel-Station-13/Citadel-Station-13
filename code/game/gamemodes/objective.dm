@@ -9,14 +9,24 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/team_explanation_text			//For when there are multiple owners.
 	var/datum/mind/target = null		//If they are focused on a particular person.
-	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
-	var/completed = 0					//currently only used for custom objectives.
-	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
+	var/target_amount = FALSE			//If they are focused on a particular number. Steal objectives have their own counter.
+	var/completed = FALSE				//currently only used for custom objectives.
+	var/completable = TRUE				//Whether this objective shows greentext when completed
+	var/martyr_compatible = FALSE		//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(var/text)
 	GLOB.objectives += src // CITADEL EDIT FOR CRYOPODS
 	if(text)
 		explanation_text = text
+
+/datum/objective/Destroy(force, ...)
+	GLOB.objectives -= src
+	if(owner)
+		for(var/datum/antagonist/A in owner.antag_datums)
+			A.objectives -= src
+	if(team)
+		team.objectives -= src
+	. = ..()
 
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
 	. = (team && team.members) ? team.members.Copy() : list()
@@ -66,6 +76,13 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/proc/check_completion()
 	return completed
 
+/*
+Used during the round to check if an objective has already been completed, generally should have harsher requirements that the default objective  (no true because of short afk, etc)
+If not set, defaults to check_completion instead. Set it. It's used by cryo.
+*/
+/datum/objective/proc/check_midround_completion()
+	return check_completion()
+
 /datum/objective/proc/is_unique_objective(possible_target)
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
@@ -85,8 +102,10 @@ GLOBAL_LIST_EMPTY(objectives)
 		if(M)
 			. += M
 
-/datum/objective/proc/find_target()
+/datum/objective/proc/find_target(dupe_search_range, blacklist)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	for(var/I in owners)
@@ -95,7 +114,8 @@ GLOBAL_LIST_EMPTY(objectives)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
-			possible_targets += possible_target
+			if(!(possible_target in blacklist))
+				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)
@@ -146,7 +166,7 @@ GLOBAL_LIST_EMPTY(objectives)
 			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+				H.equip_in_one_of_slots(O, slots, critical = TRUE)
 
 /datum/objective/assassinate
 	name = "assasinate"
@@ -162,6 +182,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/assassinate/check_completion()
 	return !considered_alive(target) || considered_afk(target)
 
+/datum/objective/assassinate/check_midround_completion()
+	return FALSE //They need to be dead at the end of the round, silly!
+
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -171,6 +194,32 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
+
+/datum/objective/assassinate/once
+	name = "kill once"
+	var/won = FALSE
+
+/datum/objective/assassinate/once/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Kill [target.name], the [!target_role_type ? target.assigned_role : target.special_role]. You only need to kill them once; if they come back, you've still succeeded."
+		START_PROCESSING(SSprocessing,src)
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/assassinate/once/check_completion()
+	return won || ..()
+
+/datum/objective/assassinate/once/process()
+	won = tick_check_completion()
+	if(won)
+		STOP_PROCESSING(SSprocessing,src)
+
+/datum/objective/assassinate/once/proc/tick_check_completion()
+	return won || !considered_alive(target) //The target afking / logging off for a bit during the round doesn't complete it, but them being afk at roundend does.
+
+/datum/objective/assassinate/once/check_midround_completion()
+	return won //If they cryoed, only keep it if we already won
 
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
@@ -197,6 +246,9 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
 
+/datum/objective/mutiny/check_midround_completion()
+	return FALSE
+
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -216,7 +268,10 @@ GLOBAL_LIST_EMPTY(objectives)
 	return target
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
+	return !target || !considered_alive(target) || (!target.current?.onCentCom() && !target.current?.onSyndieBase())
+
+/datum/objective/maroon/check_midround_completion()
+	return FALSE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
@@ -277,6 +332,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/protect/check_completion()
 	return !target || considered_alive(target, enforce_human = human_check)
 
+/datum/objective/protect/check_midround_completion()
+	return FALSE //Nuh uh, you get a new objective
+
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -293,9 +351,11 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/hijack
 	name = "hijack"
-	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
-	team_explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody. Leave no team member behind."
+	explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console)."
+	team_explanation_text = "Hijack the emergency shuttle by hacking its navigational protocols through the control console (alt click emergency shuttle console). Leave no team member behind."
 	martyr_compatible = 0 //Technically you won't get both anyway.
+	/// Overrides the hijack speed of any antagonist datum it is on ONLY, no other datums are impacted.
+	var/hijack_speed_override = 1
 
 /datum/objective/hijack/check_completion() // Requires all owners to escape.
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
@@ -365,6 +425,31 @@ GLOBAL_LIST_EMPTY(objectives)
 			return FALSE
 	return TRUE
 
+/datum/objective/breakout
+	name = "breakout"
+	martyr_compatible = 1
+	var/target_role_type = 0
+	var/human_check = TRUE
+
+/datum/objective/breakout/check_completion()
+	return !target || considered_escaped(target)
+
+/datum/objective/breakout/check_midround_completion()
+	return FALSE
+
+/datum/objective/breakout/find_target_by_role(role, role_type=0, invert=0)
+	if(!invert)
+		target_role_type = role_type
+	..()
+	return target
+
+/datum/objective/breakout/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Make sure [target.name], the [!target_role_type ? target.assigned_role : target.special_role] escapes on the shuttle or an escape pod alive and without being in custody."
+	else
+		explanation_text = "Free Objective"
+
 /datum/objective/escape/escape_with_identity
 	name = "escape with identity"
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
@@ -400,6 +485,9 @@ GLOBAL_LIST_EMPTY(objectives)
 		var/mob/living/carbon/human/H = M.current
 		if(H.dna.real_name == target_real_name && (H.get_id_name() == target_real_name || target_missing_id))
 			return TRUE
+	return FALSE
+
+/datum/objective/escape/escape_with_identity/check_midround_completion()
 	return FALSE
 
 /datum/objective/escape/escape_with_identity/admin_edit(mob/admin)
@@ -527,7 +615,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 					return TRUE
 
-			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
@@ -562,6 +650,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
 
+/datum/objective/steal/exchange/check_midround_completion()
+	return FALSE
 
 /datum/objective/steal/exchange/update_explanation_text()
 	..()
@@ -581,7 +671,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		targetinfo = new/datum/objective_item/unique/docs_blue
 	explanation_text = "Do not give up or lose [targetinfo.name]."
 	steal_target = targetinfo.targetitem
-
 
 /datum/objective/download
 	name = "download"
@@ -616,7 +705,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(count)
 		target_amount = count
 	update_explanation_text()
-
+/*
 /datum/objective/capture
 	name = "capture"
 	var/captured_amount = 0
@@ -662,7 +751,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(count)
 		target_amount = count
 	update_explanation_text()
-
+*/
 //Changeling Objectives
 
 /datum/objective/absorb
@@ -767,6 +856,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		return target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey //Borgs/brains/AIs count as dead for traitor objectives.
 	return TRUE
 
+/datum/objective/destroy/check_midround_completion()
+	return FALSE
+
 /datum/objective/destroy/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -820,6 +912,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 //Created by admin tools
 /datum/objective/custom
 	name = "custom"
+	completable = FALSE
 
 /datum/objective/custom/admin_edit(mob/admin)
 	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
@@ -997,4 +1090,170 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	command_staff_only = TRUE
 
 
+/datum/objective/hoard
+	name = "hoard"
+	var/obj/item/hoarded_item = null
 
+/datum/objective/hoard/get_target()
+	return hoarded_item
+
+/datum/objective/hoard/proc/set_target(obj/item/I)
+	if(I)
+		hoarded_item = I
+		explanation_text = "Keep [I] on your person at all times."
+		return hoarded_item
+	else
+		explanation_text = "Free objective"
+		return
+
+/datum/objective/hoard/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	if(!hoarded_item)
+		return TRUE
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+
+		for(var/obj/I in all_items) //Check for items
+			if(I == hoarded_item)
+				return TRUE
+	return FALSE
+
+/datum/objective/hoard/heirloom
+	name = "steal heirloom"
+
+/datum/objective/hoard/heirloom/find_target()
+	set_target(pick(GLOB.family_heirlooms))
+
+GLOBAL_LIST_EMPTY(traitor_contraband)
+
+GLOBAL_LIST_EMPTY(cult_contraband)
+
+/datum/objective/hoard/collector
+	name = "Hoard contraband"
+
+/datum/objective/collector/New()
+	..()
+	if(!GLOB.traitor_contraband.len)//Only need to fill the list when it's needed.
+		GLOB.traitor_contraband = list(/obj/item/card/emag/empty,/obj/item/clothing/glasses/phantomthief,/obj/item/clothing/gloves/chameleon/broken)
+	if(!GLOB.cult_contraband.len)
+		GLOB.cult_contraband = list(/obj/item/clockwork/slab,/obj/item/clockwork/component/belligerent_eye,/obj/item/clockwork/component/belligerent_eye/lens_gem,/obj/item/shuttle_curse,/obj/item/cult_shift)
+
+/datum/objective/hoard/collector/find_target()
+	var/obj/item/I
+	var/I_type
+	if(prob(50))
+		I_type = pick_n_take(GLOB.traitor_contraband) // always unique unless it's run out, in which case we refill it anyway
+	else
+		I_type = pick_n_take(GLOB.cult_contraband)
+	I = new I_type
+	I.forceMove(get_turf(owner))
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.equip_in_one_of_slots(I, list("backpack" = SLOT_IN_BACKPACK), critical = TRUE)
+		hoarded_item = I
+
+
+
+GLOBAL_LIST_EMPTY(possible_sabotages)
+// For saboteurs. Go in and cause some trouble somewhere. Not necessarily breaking things, just sufficiently troublemaking.
+/datum/objective/sabotage
+	name = "sabotage"
+	var/datum/sabotage_objective/targetinfo = null //composition > inheritance.
+
+/datum/objective/sabotage/get_target()
+	return targetinfo.sabotage_type
+
+/datum/objective/sabotage/New()
+	..()
+	if(!GLOB.possible_sabotages.len)//Only need to fill the list when it's needed.
+		for(var/I in subtypesof(/datum/sabotage_objective))
+			new I
+
+/datum/objective/sabotage/find_target()
+	var/list/datum/mind/owners = get_owners()
+	var/approved_targets = list()
+	check_sabotages:
+		for(var/datum/sabotage_objective/possible_sabotage in GLOB.possible_sabotages)
+			if(!is_unique_objective(possible_sabotage.sabotage_type) || possible_sabotage.check_conditions() || !possible_sabotage.can_run())
+				continue
+			for(var/datum/mind/M in owners)
+				if(M.current.mind.assigned_role in possible_sabotage.excludefromjob)
+					continue check_sabotages
+			approved_targets += possible_sabotage
+	return set_target(safepick(approved_targets))
+
+/datum/objective/sabotage/proc/set_target(datum/sabotage_objective/sabo)
+	if(sabo)
+		targetinfo = sabo
+		explanation_text = "[targetinfo.name]"
+		give_special_equipment(targetinfo.special_equipment)
+		return sabo
+	else
+		explanation_text = "Free objective"
+		return
+
+/datum/objective/sabotage/check_completion()
+	return targetinfo.check_conditions()
+
+/datum/objective/flavor
+	name = "flavor"
+	completable = FALSE
+	var/flavor_file
+
+/datum/objective/flavor/proc/get_flavor_list()
+	return world.file2list(flavor_file)
+
+/datum/objective/flavor/proc/forge_objective()
+	var/flavor_list = get_flavor_list()
+	explanation_text = pick(flavor_list)
+
+/datum/objective/flavor/traitor
+	name = "traitor flavor"
+	flavor_file = "strings/flavor_objectives/traitor.txt"
+
+/datum/objective/flavor/traitor/get_flavor_list()
+	. = ..()
+	switch(owner.assigned_role)
+		if("Station Engineer", "Atmospheric Technician")
+			. += world.file2list("strings/flavor_objectives/traitor/engineering.txt")
+		if("Medical Doctor","Chemist","Virologist","Geneticist")
+			. += world.file2list("strings/flavor_objectives/traitor/medical.txt")
+		if("Scientist","Roboticist","Geneticist")
+			. += world.file2list("strings/flavor_objectives/traitor/science.txt")
+		if("Assistant")
+			. += world.file2list("strings/flavor_objectives/traitor/assistant.txt")
+
+/datum/objective/flavor/ninja_helping
+	flavor_file = "strings/flavor_objectives/ninja_helping.txt"
+
+/datum/objective/flavor/ninja_syndie
+	flavor_file = "strings/flavor_objectives/ninja_syndie.txt"
+
+/datum/objective/flavor/wizard
+	flavor_file = "strings/flavor_objectives/wizard.txt"
+
+/datum/objective/contract
+	var/payout = 0
+	var/payout_bonus = 0
+	var/area/dropoff = null
+	var/static/list/blacklisted_areas = typecacheof(list(/area/ai_monitored/turret_protected,
+														/area/solar/,
+														/area/ruin/,	//thank you station space ruins
+														/area/science/test_area/,
+														/area/shuttle/))
+
+/datum/objective/contract/proc/generate_dropoff()	// Generate a random valid area on the station that the dropoff will happen.
+	var/found = FALSE
+	while(!found)
+		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors && !is_type_in_typecache(dropoff_area, blacklisted_areas))
+			dropoff = dropoff_area
+			found = TRUE
+
+/datum/objective/contract/proc/dropoff_check(mob/user, mob/target)	// Check if both the contractor and contract target are at the dropoff point.
+	var/area/user_area = get_area(user)
+	var/area/target_area = get_area(target)
+	return (istype(user_area, dropoff) && istype(target_area, dropoff))

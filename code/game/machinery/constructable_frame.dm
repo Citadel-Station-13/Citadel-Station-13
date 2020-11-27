@@ -83,7 +83,6 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				if(!P.tool_start_check(user, amount=5))
 					return
-
 				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50, amount=5))
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -119,6 +118,9 @@
 
 			if(istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/B = P
+				if(!B.build_path)
+					to_chat(user, "<span class'warning'>This circuitboard seems to be broken.</span>")
+					return
 				if(!anchored && B.needs_anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
@@ -181,6 +183,9 @@
 				if(component_check)
 					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new circuit.build_path(loc)
+					if(new_machine.circuit)
+						QDEL_NULL(new_machine.circuit)
+					new_machine.circuit = circuit
 					new_machine.setAnchored(anchored)
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
@@ -189,9 +194,6 @@
 					for(var/obj/O in src)
 						O.moveToNullspace()
 						new_machine.component_parts += O
-					if(new_machine.circuit)
-						QDEL_NULL(new_machine.circuit)
-					new_machine.circuit = circuit
 					circuit.moveToNullspace()
 					new_machine.RefreshParts()
 					qdel(src)

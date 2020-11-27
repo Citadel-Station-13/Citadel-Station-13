@@ -29,7 +29,7 @@
 	projectilesound = 'sound/weapons/pierce.ogg'
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
-	anchored = TRUE
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	blood_volume = 0
 	var/combatant_state = SEEDLING_STATE_NEUTRAL
 	var/obj/seedling_weakpoint/weak_point

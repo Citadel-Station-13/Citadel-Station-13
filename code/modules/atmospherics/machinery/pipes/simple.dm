@@ -1,11 +1,9 @@
-/*
-Simple Pipe
-The regular pipe you see everywhere, including bent ones.
-*/
+// Simple Pipe
+// The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
-	icon_state = "intact"
+	icon_state = "pipe11-2"
 
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
@@ -20,13 +18,13 @@ The regular pipe you see everywhere, including bent ones.
 	pipe_state = "simple"
 
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
-	normalize_cardinal_directions()
 	if(dir in GLOB.diagonals)
 		initialize_directions = dir
+		return
 	switch(dir)
-		if(NORTH,SOUTH)
+		if(NORTH, SOUTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST,WEST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
 //Colored pipes, use these for mapping
@@ -407,3 +405,8 @@ The regular pipe you see everywhere, including bent ones.
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/pipe/simple/update_icon()
+	icon_state = "pipe[nodes[1] ? "1" : "0"][nodes[2] ? "1" : "0"]-[piping_layer]"
+	update_layer()
+	update_alpha()

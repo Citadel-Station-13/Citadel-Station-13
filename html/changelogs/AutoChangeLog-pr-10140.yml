@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Dynamic has a (totally unused for any relevant purpose) roundstart report now."

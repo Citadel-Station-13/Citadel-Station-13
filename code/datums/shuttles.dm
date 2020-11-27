@@ -23,14 +23,14 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-/datum/map_template/shuttle/preload_size(path, cache)
+/datum/map_template/shuttle/preload_size(path = mappath, force_cache = FALSE)
 	. = ..(path, TRUE) // Done this way because we still want to know if someone actualy wanted to cache the map
 	if(!cached_map)
 		return
 
 	discover_port_offset()
 
-	if(!cache)
+	if(!cached_map)
 		cached_map = null
 
 /datum/map_template/shuttle/proc/discover_port_offset()
@@ -53,12 +53,11 @@
 				++xcrd
 			--ycrd
 
-/datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
+/datum/map_template/shuttle/load(turf/T, centered = FALSE, orientation = SOUTH, annihilate = default_annihilate, force_cache = FALSE, rotate_placement_to_orientation = FALSE, register = TRUE)
 	. = ..()
 	if(!.)
 		return
-	var/list/turfs = block(	locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
-							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+	var/list/turfs = get_last_loaded_turf_block()
 	for(var/i in 1 to turfs.len)
 		var/turf/place = turfs[i]
 		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
@@ -105,6 +104,9 @@
 			rack.AddComponent(/datum/component/magnetic_catch)
 
 //Whatever special stuff you want
+/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+	return
+		
 /datum/map_template/shuttle/proc/on_bought()
 	return
 
@@ -129,6 +131,10 @@
 
 /datum/map_template/shuttle/mining
 	port_id = "mining"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/mining_common
+	port_id = "mining_common"
 	can_be_bought = FALSE
 
 /datum/map_template/shuttle/cargo
@@ -159,6 +165,10 @@
 	port_id = "pirate"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/hunter
+	port_id = "hunter"
+	can_be_bought = FALSE
+
 /datum/map_template/shuttle/ruin //For random shuttles in ruins
 	port_id = "ruin"
 	can_be_bought = FALSE
@@ -166,6 +176,11 @@
 /datum/map_template/shuttle/snowdin
 	port_id = "snowdin"
 	can_be_bought = FALSE
+
+/datum/map_template/shuttle/snow_taxi
+	port_id = "snow"
+	can_be_bought = FALSE
+	suffix = "taxi"
 
 // Shuttles start here:
 
@@ -283,6 +298,12 @@
 	credit_cost = 4000
 	description = "A fairly standard shuttle, though larger and slightly better equipped than the Box Station variant."
 
+/datum/map_template/shuttle/emergency/kilo
+	suffix = "kilo"
+	name = "Kilo Station Emergency Shuttle"
+	credit_cost = 5000
+	description = "A fully functional shuttle including a complete infirmary, storage facilties and regular amenities."
+
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Ministation emergency shuttle"
@@ -380,8 +401,20 @@
 /datum/map_template/shuttle/emergency/gorilla
 	suffix = "gorilla"
 	name = "Gorilla Cargo Freighter"
-	description = "A rustic, barely excuseable shuttle transporting important cargo. Not for crew who are about to go ape."
+	description = "(Emag only) A rustic, barely excuseable shuttle transporting important cargo. Not for crew who are about to go ape."
 	credit_cost = 2000
+
+/datum/map_template/shuttle/emergency/gorilla/prerequisites_met()
+	if("emagged" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
+
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "nature"
+	name = "Dynamic Environmental Interaction Shuttle"
+	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
+	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
+	credit_cost = 8000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
@@ -410,6 +443,11 @@
 	name = "fancy transport ferry"
 	description = "At some point, someone upgraded the ferry to have fancier flooring... and less seats."
 
+/datum/map_template/shuttle/ferry/kilo
+	suffix = "kilo"
+	name = "kilo transport ferry"
+	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -434,9 +472,17 @@
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
 
+/datum/map_template/shuttle/whiteship/cog
+	suffix = "cog"
+	name = "NT Prisoner Transport"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/kilo
+	suffix = "kilo"
+	name = "supply shuttle (Kilo)"
 
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
@@ -456,6 +502,12 @@
 	admin_notes = "Comes with turrets that will target any simplemob."
 	credit_cost = 12500
 
+/datum/map_template/shuttle/emergency/cog
+	suffix = "cog"
+	name = "NES Classic"
+	description = "A blast from the past! This recreation of the Nanotrasen Emergency Shuttle Port features the same focus on seating as the original, but on a slightly longer frame to better accommodate modern shuttle docks."
+	credit_cost = 750
+
 /datum/map_template/shuttle/arrival/box
 	suffix = "box"
 	name = "arrival shuttle (Box)"
@@ -472,6 +524,14 @@
 	suffix = "box"
 	name = "labour shuttle (Box)"
 
+/datum/map_template/shuttle/labour/kilo
+	suffix = "kilo"
+	name = "labour shuttle (Kilo)"
+
+/datum/map_template/shuttle/labour/cog
+	suffix = "cog"
+	name = "labour shuttle (Cog)"
+
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"
 	name = "basic syndicate infiltrator"
@@ -484,13 +544,29 @@
 	suffix = "delta"
 	name = "mining shuttle (Delta)"
 
+/datum/map_template/shuttle/mining/kilo
+	suffix = "kilo"
+	name = "mining shuttle (Kilo)"
+
 /datum/map_template/shuttle/labour/delta
 	suffix = "delta"
 	name = "labour shuttle (Delta)"
 
+/datum/map_template/shuttle/mining_common/meta
+	suffix = "meta"
+	name = "lavaland shuttle (Meta)"
+
+/datum/map_template/shuttle/labour/kilo
+	suffix = "kilo"
+	name = "labour shuttle (Kilo)"
+
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"
 	name = "arrival shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/kilo
+	suffix = "kilo"
+	name = "arrival shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
@@ -499,6 +575,14 @@
 /datum/map_template/shuttle/arrival/omega
 	suffix = "omega"
 	name = "arrival shuttle (Omega)"
+
+/datum/map_template/shuttle/arrival/cog
+	suffix = "cog"
+	name = "arrival shuttle (Cog)"
+
+/datum/map_template/shuttle/arrival/snaxi
+	suffix = "snaxi"
+	name = "arrival shuttle (Snaxi)"
 
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
@@ -547,3 +631,15 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/hunter/space_cop
+	suffix = "space_cop"
+	name = "Police Spacevan"
+
+/datum/map_template/shuttle/hunter/russian
+	suffix = "russian"
+	name = "Russian Cargo Ship"
+
+/datum/map_template/shuttle/hunter/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter Ship"

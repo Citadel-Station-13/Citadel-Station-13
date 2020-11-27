@@ -26,15 +26,24 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
-					continue
+				if(S.requires_bodypart_type) //ugly but it'll do.
+					switch(S.requires_bodypart_type)
+						if(BODYPART_ORGANIC)
+							if(!affecting.is_organic_limb(FALSE))
+								continue
+						if(BODYPART_ROBOTIC)
+							if(!affecting.is_robotic_limb())
+								continue
+						if(BODYPART_HYBRID)
+							if(!affecting.is_organic_limb() || !affecting.is_robotic_limb())
+								continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
 			if(S.lying_required && !(M.lying))
 				continue
-			if(!S.can_start(user, M))
+			if(!S.can_start(user, M, I))
 				continue
 			for(var/path in S.target_mobtypes)
 				if(istype(M, path))
@@ -58,13 +67,22 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
-					return
+				if(S.requires_bodypart_type) //*scream
+					switch(S.requires_bodypart_type)
+						if(BODYPART_ORGANIC)
+							if(!affecting.is_organic_limb(FALSE))
+								return
+						if(BODYPART_ROBOTIC)
+							if(!affecting.is_robotic_limb())
+								return
+						if(BODYPART_HYBRID)
+							if(!affecting.is_organic_limb() || !affecting.is_robotic_limb())
+								return
 			else if(C && S.requires_bodypart)
 				return
 			if(S.lying_required && !(M.lying))
 				return
-			if(!S.can_start(user, M))
+			if(!S.can_start(user, M, I))
 				return
 
 			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
@@ -89,18 +107,23 @@
 			"<span class='notice'>You remove [I] from [M]'s [parse_zone(selected_zone)].</span>")
 		qdel(S)
 	else if(S.can_cancel)
-		var/close_tool_type = /obj/item/cautery
+		var/required_tool_type = TOOL_CAUTERY
 		var/obj/item/close_tool = user.get_inactive_held_item()
-		var/is_robotic = S.requires_bodypart_type == BODYPART_ROBOTIC
+		var/is_robotic = (S.requires_bodypart_type == BODYPART_ROBOTIC || S.requires_bodypart_type == BODYPART_HYBRID)
 		if(is_robotic)
-			close_tool_type = /obj/item/screwdriver
-		if(istype(close_tool, close_tool_type) || iscyborg(user))
-			M.surgeries -= S
-			user.visible_message("[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].", \
-				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")
-			qdel(S)
-		else
+			required_tool_type = TOOL_SCREWDRIVER
+		if(iscyborg(user))
+			close_tool = locate(/obj/item/cautery) in user.held_items
+			if(!close_tool)
+				to_chat(user, "<span class='warning'>You need to equip a cautery in an inactive slot to stop [M]'s surgery!</span>")
+				return
+		else if(!close_tool || close_tool.tool_behaviour != required_tool_type)
 			to_chat(user, "<span class='warning'>You need to hold a [is_robotic ? "screwdriver" : "cautery"] in your inactive hand to stop [M]'s surgery!</span>")
+			return
+		M.surgeries -= S
+		user.visible_message("<span class='notice'>[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].</span>", \
+			"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")
+		qdel(S)
 
 /proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)

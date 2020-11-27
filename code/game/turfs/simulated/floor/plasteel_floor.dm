@@ -8,6 +8,11 @@
 	. = ..()
 	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
+/turf/open/floor/plasteel/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
+
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
 		return 0
@@ -67,6 +72,9 @@
 
 /turf/open/floor/plasteel/chapel
 	icon_state = "chapel"
+
+/turf/open/floor/plasteel/chapel_floor
+	icon_state = "chapel_alt"
 
 /turf/open/floor/plasteel/showroomfloor
 	icon_state = "showroomfloor"

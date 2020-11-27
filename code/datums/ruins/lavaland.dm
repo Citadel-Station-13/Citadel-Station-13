@@ -67,7 +67,8 @@
 	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
 	Seem very intent on research and individual liberty, and also geology based naming?"
 	cost = 20
-	suffix = "lavaland_surface_golem_ship.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "golem_ship.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/animal_hospital
@@ -113,14 +114,12 @@
 	description = "..."
 	suffix = "lavaland_surface_sloth.dmm"
 	// Generates nothing but atmos runtimes and salt
-	cost = 0
 
 /datum/map_template/ruin/lavaland/ratvar
 	name = "Dead God"
 	id = "ratvar"
-	description = "Ratvars final resting place."
+	description = "Ratvar's final resting place."
 	suffix = "lavaland_surface_dead_ratvar.dmm"
-	cost = 0
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/hierophant
@@ -136,7 +135,7 @@
 	id = "blooddrunk"
 	description = "A strange arrangement of stone tiles and an insane, beastly miner contemplating them."
 	suffix = "lavaland_surface_blooddrunk1.dmm"
-	cost = 0
+	always_place = TRUE
 	allow_duplicates = FALSE //will only spawn one variant of the ruin
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner/guidance
@@ -168,14 +167,17 @@
 	id = "alien-nest"
 	description = "Not even Necropolis is safe from alien infestation. The competition for hosts has locked the legion and aliens in an endless conflict that can only be resolved by a PKA."
 	suffix = "lavaland_surface_alien_nest.dmm"
-	cost = 20
+	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_surface_fountain_hall.dmm"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "fountain_hall.dmm"
 	cost = 5
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
@@ -198,7 +200,7 @@
 	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily. A demonic laugh echoes throughout the caverns"
 	suffix = "lavaland_surface_cultaltar.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
@@ -224,6 +226,13 @@
 	allow_duplicates = FALSE
 	cost = 5
 
+/datum/map_template/ruin/lavaland/dark_wizards
+	name = "Dark Wizard Altar"
+	id = "dark_wizards"
+	description = "A ruin with dark wizards. What secret do they guard?"
+	suffix = "lavaland_surface_wizard.dmm"
+	cost = 5
+
 /datum/map_template/ruin/lavaland/puzzle
 	name = "Ancient Puzzle"
 	id = "puzzle"
@@ -237,5 +246,14 @@
 	description = "A strange tumor which houses a powerful beast..."
 	suffix = "lavaland_surface_elite_tumor.dmm"
 	cost = 5
+	placement_weight = 3
 	always_place = TRUE
-	allow_duplicates = TRUE 
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/lavaland/elephant_graveyard
+	name = "Elephant Graveyard"
+	id = "Graveyard"
+	description = "An abandoned graveyard, calling to those unable to continue."
+	suffix = "lavaland_surface_elephant_graveyard.dmm"
+	allow_duplicates = FALSE
+	cost = 10

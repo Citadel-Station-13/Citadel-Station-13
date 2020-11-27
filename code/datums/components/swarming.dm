@@ -11,6 +11,17 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/join_swarm)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/leave_swarm)
 
+/datum/component/swarming/Destroy()
+	if(is_swarming)
+		for(var/A in swarm_members)
+			var/datum/component/swarming/other_swarm = A
+			other_swarm.swarm_members -= src
+			swarm_members -= other_swarm
+			if(!length(other_swarm.swarm_members))
+				other_swarm.unswarm()
+		unswarm()
+	return ..()
+
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/AM)
 	var/datum/component/swarming/other_swarm = AM.GetComponent(/datum/component/swarming)
 	if(!other_swarm)

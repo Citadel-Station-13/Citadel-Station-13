@@ -123,9 +123,9 @@
 		M.SetSleeping(0)
 		M.stuttering += 20*mul
 		M.adjustEarDamage(0, 30*mul)
-		M.Knockdown(60*mul)
+		M.DefaultCombatKnockdown(60*mul)
 		if(prob(40))
-			M.Knockdown(200*mul)
+			M.DefaultCombatKnockdown(200*mul)
 		else
 			M.Jitter(500*mul)
 

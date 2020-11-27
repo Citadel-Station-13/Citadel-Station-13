@@ -15,7 +15,7 @@
 	requires_tech = FALSE
 	var/value_multiplier = 1
 
-/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target)
+/datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/target, obj/item/tool)
 	. = ..()
 	if(HAS_TRAIT_FROM(target, TRAIT_DISSECTED,"[name]"))
 		return FALSE
@@ -24,8 +24,8 @@
 
 /datum/surgery_step/dissection
 	name = "dissection"
-	implements = list(/obj/item/scalpel/augment = 75, /obj/item/scalpel/advanced = 60, /obj/item/scalpel = 45, /obj/item/kitchen/knife = 20, /obj/item/shard = 10)// special tools not only cut down time but also improve probability, doesn't use TOOL_SCALPEL because different scalpels have different probs
-	time = 125
+	implements = list(/obj/item/scalpel/alien = 100, /obj/item/scalpel/advanced = 99, /obj/item/scalpel = 90, /obj/item/kitchen/knife = 45, /obj/item/shard = 25)// special tools not only cut down time but also improve probability, doesn't use TOOL_SCALPEL because different scalpels have different probs
+	time = 100
 	silicons_obey_prob = TRUE
 	repeatable = TRUE
 
@@ -78,7 +78,7 @@
 	"[user] dissects [target]!")
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, L, wound_bonus=CANT_WOUND)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
 	return TRUE
@@ -89,7 +89,7 @@
 	"[user] dissects [target], but looks a little dissapointed.")
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (round(check_value(target, surgery) * 0.01))))
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+	target.apply_damage(80, BRUTE, L, wound_bonus=CANT_WOUND)
 	return TRUE
 
 /datum/surgery/advanced/experimental_dissection/adv

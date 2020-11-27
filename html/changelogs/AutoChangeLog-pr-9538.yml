@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - balance: "Combat defibs now instant stun on disarm rather than 1 second again"
-  - balance: "Defibs are now always emagged when emagged with an emag rather than EMP."

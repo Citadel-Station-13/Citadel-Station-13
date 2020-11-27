@@ -3,11 +3,17 @@
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 // cost = 700- Minimum cost, or infinite points are possible.
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////// Costumes & Toys /////////////////////////////////
+////////////////////////////////// Toys //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/costumes_toys
 	group = "Costumes & Toys"
+
+/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
 
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"
@@ -57,6 +63,7 @@
 					/obj/item/toy/cards/deck/syndicate,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe,
 					/obj/item/clothing/under/syndicate/tacticool,
+					/obj/item/clothing/under/syndicate/skirt,
 					/obj/item/clothing/under/syndicate,
 					/obj/item/suppressor,
 					/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
@@ -64,7 +71,8 @@
 					/obj/item/clothing/mask/gas/syndicate,
 					/obj/item/clothing/neck/necklace/dope,
 					/obj/item/vending_refill/donksoft,
-					/obj/item/circuitboard/computer/arcade/amputation)
+					/obj/item/circuitboard/computer/arcade/amputation,
+					/obj/item/storage/bag/ammo)
 	crate_name = "crate"
 
 /datum/supply_pack/costumes_toys/foamforce
@@ -91,40 +99,6 @@
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
-
-/datum/supply_pack/costumes_toys/formalwear
-	name = "Formalwear Crate"
-	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
-	cost = 4750 //Lots of fancy clothing that can be sold back!
-	contains = list(/obj/item/clothing/under/blacktango,
-					/obj/item/clothing/under/assistantformal,
-					/obj/item/clothing/under/assistantformal,
-					/obj/item/clothing/under/lawyer/bluesuit,
-					/obj/item/clothing/suit/toggle/lawyer,
-					/obj/item/clothing/under/lawyer/purpsuit,
-					/obj/item/clothing/suit/toggle/lawyer/purple,
-					/obj/item/clothing/under/lawyer/blacksuit,
-					/obj/item/clothing/suit/toggle/lawyer/black,
-					/obj/item/clothing/accessory/waistcoat,
-					/obj/item/clothing/neck/tie/blue,
-					/obj/item/clothing/neck/tie/red,
-					/obj/item/clothing/neck/tie/black,
-					/obj/item/clothing/head/bowler,
-					/obj/item/clothing/head/fedora,
-					/obj/item/clothing/head/flatcap,
-					/obj/item/clothing/head/beret,
-					/obj/item/clothing/head/that,
-					/obj/item/clothing/shoes/laceup,
-					/obj/item/clothing/shoes/laceup,
-					/obj/item/clothing/shoes/laceup,
-					/obj/item/clothing/under/suit_jacket/charcoal,
-					/obj/item/clothing/under/suit_jacket/navy,
-					/obj/item/clothing/under/suit_jacket/burgundy,
-					/obj/item/clothing/under/suit_jacket/checkered,
-					/obj/item/clothing/under/suit_jacket/tan,
-					/obj/item/lipstick/random)
-	crate_name = "formalwear crate"
-	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/clownpin
 	name = "Hilarious Firing Pin Crate"
@@ -166,47 +140,6 @@
 	contraband = TRUE
 	contains = list(/obj/item/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
-
-/datum/supply_pack/costumes_toys/costume_original
-	name = "Original Costume Crate"
-	desc = "Reenact Shakespearean plays with this assortment of outfits. Contains eight different costumes!"
-	cost = 1750
-	contains = list(/obj/item/clothing/head/snowman,
-					/obj/item/clothing/suit/snowman,
-					/obj/item/clothing/head/chicken,
-					/obj/item/clothing/suit/chickensuit,
-					/obj/item/clothing/mask/gas/monkeymask,
-					/obj/item/clothing/suit/monkeysuit,
-					/obj/item/clothing/head/cardborg,
-					/obj/item/clothing/suit/cardborg,
-					/obj/item/clothing/head/xenos,
-					/obj/item/clothing/suit/xenos,
-					/obj/item/clothing/suit/hooded/ian_costume,
-					/obj/item/clothing/suit/hooded/carp_costume,
-					/obj/item/clothing/suit/hooded/bee_costume)
-	crate_name = "original costume crate"
-	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/costumes_toys/costume
-	name = "Standard Costume Crate"
-	desc = "Supply the station's entertainers with the equipment of their trade with these Nanotrasen-approved costumes! Contains a full clown and mime outfit, along with a bike horn and a bottle of nothing."
-	cost = 1300
-	access = ACCESS_THEATRE
-	contains = list(/obj/item/storage/backpack/clown,
-					/obj/item/clothing/shoes/clown_shoes,
-					/obj/item/clothing/mask/gas/clown_hat,
-					/obj/item/clothing/under/rank/clown,
-					/obj/item/bikehorn,
-					/obj/item/clothing/under/rank/mime,
-					/obj/item/clothing/shoes/sneakers/black,
-					/obj/item/clothing/gloves/color/white,
-					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/head/beret,
-					/obj/item/clothing/suit/suspenders,
-					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
-					/obj/item/storage/backpack/mime)
-	crate_name = "standard costume crate"
-	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
@@ -278,6 +211,86 @@
 	crate_name = "plushie crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+
+//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// Costumes  //////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/costumes_toys/formalwear
+	name = "Formalwear Crate"
+	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
+	cost = 4750 //Lots of fancy clothing that can be sold back!
+	contains = list(/obj/item/clothing/under/dress/blacktango,
+					/obj/item/clothing/under/misc/assistantformal,
+					/obj/item/clothing/under/misc/assistantformal,
+					/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
+					/obj/item/clothing/suit/toggle/lawyer,
+					/obj/item/clothing/under/rank/civilian/lawyer/purpsuit,
+					/obj/item/clothing/suit/toggle/lawyer/purple,
+					/obj/item/clothing/under/suit/black,
+					/obj/item/clothing/suit/toggle/lawyer/black,
+					/obj/item/clothing/accessory/waistcoat,
+					/obj/item/clothing/neck/tie/blue,
+					/obj/item/clothing/neck/tie/red,
+					/obj/item/clothing/neck/tie/black,
+					/obj/item/clothing/head/bowler,
+					/obj/item/clothing/head/fedora,
+					/obj/item/clothing/head/flatcap,
+					/obj/item/clothing/head/beret,
+					/obj/item/clothing/head/that,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/shoes/laceup,
+					/obj/item/clothing/under/suit/charcoal,
+					/obj/item/clothing/under/suit/navy,
+					/obj/item/clothing/under/suit/burgundy,
+					/obj/item/clothing/under/suit/checkered,
+					/obj/item/clothing/under/suit/tan,
+					/obj/item/lipstick/random)
+	crate_name = "formalwear crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/costumes_toys/costume_original
+	name = "Original Costume Crate"
+	desc = "Reenact Shakespearean plays with this assortment of outfits. Contains eight different costumes!"
+	cost = 1750
+	contains = list(/obj/item/clothing/head/snowman,
+					/obj/item/clothing/suit/snowman,
+					/obj/item/clothing/head/chicken,
+					/obj/item/clothing/suit/chickensuit,
+					/obj/item/clothing/mask/gas/monkeymask,
+					/obj/item/clothing/suit/monkeysuit,
+					/obj/item/clothing/head/cardborg,
+					/obj/item/clothing/suit/cardborg,
+					/obj/item/clothing/head/xenos,
+					/obj/item/clothing/suit/xenos,
+					/obj/item/clothing/suit/hooded/ian_costume,
+					/obj/item/clothing/suit/hooded/carp_costume,
+					/obj/item/clothing/suit/hooded/bee_costume)
+	crate_name = "original costume crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/costumes_toys/costume
+	name = "Standard Costume Crate"
+	desc = "Supply the station's entertainers with the equipment of their trade with these Nanotrasen-approved costumes! Contains a full clown and mime outfit, along with a bike horn and a bottle of nothing."
+	cost = 1300
+	access = ACCESS_THEATRE
+	contains = list(/obj/item/storage/backpack/clown,
+					/obj/item/clothing/shoes/clown_shoes,
+					/obj/item/clothing/mask/gas/clown_hat,
+					/obj/item/clothing/under/rank/civilian/clown,
+					/obj/item/bikehorn,
+					/obj/item/clothing/under/rank/civilian/mime,
+					/obj/item/clothing/shoes/sneakers/black,
+					/obj/item/clothing/gloves/color/white,
+					/obj/item/clothing/mask/gas/mime,
+					/obj/item/clothing/head/beret,
+					/obj/item/clothing/suit/suspenders,
+					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
+					/obj/item/storage/backpack/mime)
+	crate_name = "standard costume crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
 	desc = "Pretend to join the Wizard Federation with this full wizard outfit! Nanotrasen would like to remind its employees that actually joining the Wizard Federation is subject to termination of job and life."
@@ -289,81 +302,35 @@
 	crate_name = "wizard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
-
-/datum/supply_pack/costumes_toys/wardrobes/autodrobe
-	name = "Autodrobe Supply Crate"
-	desc = "Autodrobe missing your favorite dress? Solve that issue today with this autodrobe refill."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/autodrobe)
-	crate_name = "autodrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/cargo
-	name = "Cargo Wardrobe Supply Crate"
-	desc = "This crate contains a refill for the CargoDrobe."
-	cost = 750
-	contains = list(/obj/item/vending_refill/wardrobe/cargo_wardrobe)
-	crate_name = "cargo department supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/engineering
-	name = "Engineering Wardrobe Supply Crate"
-	desc = "This crate contains refills for the EngiDrobe and AtmosDrobe."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/wardrobe/engi_wardrobe,
-					/obj/item/vending_refill/wardrobe/atmos_wardrobe)
-	crate_name = "engineering department wardrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/general
-	name = "General Wardrobes Supply Crate"
-	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
-	cost = 3750
-	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
-					/obj/item/vending_refill/wardrobe/bar_wardrobe,
-					/obj/item/vending_refill/wardrobe/chef_wardrobe,
-					/obj/item/vending_refill/wardrobe/jani_wardrobe,
-					/obj/item/vending_refill/wardrobe/chap_wardrobe)
-	crate_name = "general wardrobes vendor refills"
-
-/datum/supply_pack/costumes_toys/wardrobes/hydroponics
-	name = "Hydrobe Supply Crate"
-	desc = "This crate contains a refill for the Hydrobe."
-	cost = 750
-	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
-	crate_name = "hydrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/medical
-	name = "Medical Wardrobe Supply Crate"
-	desc = "This crate contains refills for the MediDrobe, ChemDrobe, GeneDrobe, and ViroDrobe."
-	cost = 3000
-	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
-					/obj/item/vending_refill/wardrobe/chem_wardrobe,
-					/obj/item/vending_refill/wardrobe/gene_wardrobe,
-					/obj/item/vending_refill/wardrobe/viro_wardrobe)
-	crate_name = "medical department wardrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/science
-	name = "Science Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SciDrobe and RoboDrobe."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
-					/obj/item/vending_refill/wardrobe/science_wardrobe)
-	crate_name = "science department wardrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/security
-	name = "Security Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SecDrobe and LawDrobe."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
-					/obj/item/vending_refill/wardrobe/law_wardrobe)
-	crate_name = "security department supply crate"
-
-/datum/supply_pack/costumes_toys/kinkmate
-	name = "Kinkmate construction kit"
-	cost = 2000
-	contraband = TRUE
-	contains = list(/obj/item/vending_refill/kink, /obj/item/circuitboard/machine/kinkmate)
-	crate_name = "Kinkmate construction kit"
+/datum/supply_pack/costumes_toys/wedding
+	name = "Wedding Crate"
+	desc = "Tie the knot IN SPACE! Hold your own extravagant wedding with this crate of suits and bridal gowns. Complete with champagne, cake, and the luxurious cost you would expect for an event to remember."
+	cost = 10000 // weddings are absurdly expensive and so is this crate
+	contains = list(/obj/item/clothing/under/suit/black_really, //we don't actually need suits since you can vend them but the crate should feel "complete"
+					/obj/item/clothing/under/suit/black_really,
+					/obj/item/clothing/under/suit/charcoal,
+					/obj/item/clothing/under/suit/charcoal,
+					/obj/item/clothing/under/suit/navy,
+					/obj/item/clothing/under/suit/navy,
+					/obj/item/clothing/under/suit/burgundy,
+					/obj/item/clothing/under/suit/burgundy, // A pair of each "fancy suit" color for variety
+					/obj/item/clothing/under/suit/white,
+					/obj/item/clothing/under/suit/white, // white is a weird color for a groom but some people are weird
+					/obj/item/clothing/under/suit/polychromic,
+					/obj/item/clothing/under/suit/polychromic, // in case you can't be satisfied with the most fitting choices, of course.
+					/obj/item/clothing/under/dress/wedding, 
+					/obj/item/clothing/under/dress/wedding, // this is what you actually bought the crate for. You can't get these anywhere else.
+					/obj/item/clothing/under/dress/wedding/orange,
+					/obj/item/clothing/under/dress/wedding/orange,
+					/obj/item/clothing/under/dress/wedding/purple,
+					/obj/item/clothing/under/dress/wedding/purple,
+					/obj/item/clothing/under/dress/wedding/blue,
+					/obj/item/clothing/under/dress/wedding/blue,
+					/obj/item/clothing/under/dress/wedding/red,
+					/obj/item/clothing/under/dress/wedding/red, // two of each
+					/obj/item/reagent_containers/food/drinks/bottle/champagne, //appropriate booze for a wedding
+					/obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake, // we don't have a full wedding cake but this will do
+					/obj/item/storage/fancy/ringbox/silver,
+					/obj/item/storage/fancy/ringbox/silver) //diamond rings cost the same price as this crate via cargo so we're not giving you two for free. Wedding rings are traditionally less valuable anyway.
+	crate_name = "wedding crate"
+	

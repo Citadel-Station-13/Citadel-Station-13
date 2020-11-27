@@ -106,12 +106,12 @@
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/instrument/guitar/guitar = new(get_turf(H))
-	H.put_in_hands(guitar)
-	H.equip_to_slot(guitar, SLOT_IN_BACKPACK)
+	var/obj/item/choice_beacon/music/B = new(get_turf(H))
+	H.put_in_hands(B)
+	H.equip_to_slot_if_possible(B, SLOT_IN_BACKPACK)
 	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))
 	H.put_in_hands(musicaltuner)
-	H.equip_to_slot(musicaltuner, SLOT_IN_BACKPACK)
+	H.equip_to_slot_if_possible(musicaltuner, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/photographer
@@ -201,10 +201,21 @@
 	medical_record_text = "Patient's blood tests report an abnormal concentration of red blood cells in their bloodstream."
 
 /datum/quirk/bloodpressure/add()
-	var/mob/living/M = quirk_holder
-	M.blood_ratio = 1.2
-	M.blood_volume += 150
+	quirk_holder.blood_ratio = 1.2
+	quirk_holder.blood_volume += 150
 
 /datum/quirk/bloodpressure/remove()
-	var/mob/living/M = quirk_holder
-	M.blood_ratio = 1
+	if(quirk_holder)
+		quirk_holder.blood_ratio = 1
+
+/datum/quirk/night_vision
+	name = "Night Vision"
+	desc = "You can see slightly more clearly in full darkness than most people."
+	value = 1
+	mob_trait = TRAIT_NIGHT_VISION
+	gain_text = "<span class='notice'>The shadows seem a little less dark.</span>"
+	lose_text = "<span class='danger'>Everything seems a little darker.</span>"
+
+/datum/quirk/night_vision/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.update_sight()

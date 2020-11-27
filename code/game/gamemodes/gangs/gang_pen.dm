@@ -54,6 +54,6 @@
 		return
 	var/mob/living/carbon/human/H = gangster_mind.current // we are sure the dude's human cause it's checked in attack()
 	H.silent = max(H.silent, 5)
-	H.Knockdown(100)
+	H.DefaultCombatKnockdown(100)
 	gangster_mind.add_antag_datum(/datum/antagonist/gang, gang)
 	return TRUE

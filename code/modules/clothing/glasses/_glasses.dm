@@ -8,7 +8,7 @@
 	strip_delay = 20
 	equip_delay_other = 25
 	resistance_flags = NONE
-	materials = list(MAT_GLASS = 250)
+	custom_materials = list(/datum/material/glass = 250)
 	var/vision_flags = 0
 	var/darkness_view = 2//Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING	//admin only for now
@@ -54,6 +54,9 @@
 		H.blur_eyes(5)
 		eyes.applyOrganDamage(5)
 
+/obj/item/clothing/glasses/proc/ranged_attack(mob/living/carbon/human/user,atom/A, params)
+	return FALSE
+
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
@@ -79,6 +82,7 @@
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -92,14 +96,19 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
+
+/obj/item/clothing/glasses/meson/eyepatch
+	name = "eyepatch mesons"
+	desc = "A meson system that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
+	icon_state = "mesonpatch"
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
-	scan_reagents = TRUE //You can see reagents while wearing science goggles
+	clothing_flags = SCAN_REAGENTS //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
@@ -111,16 +120,23 @@
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
-	desc = "You can totally see in the dark now!"
+	desc = "You can totally see in the dark now! Just don't look too closely at bright lights. This lacks any flash correction."
 	icon_state = "night"
 	item_state = "glasses"
 	darkness_view = 8
+	flash_protect = -2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night/prescription
 	name = "prescription night vision goggles"
 	desc = "NVGs but for those with nearsightedness."
+	vision_correction = 1
+
+/obj/item/clothing/glasses/night/syndicate
+	name = "combat night vision goggles"
+	desc = "See everything, without fear."
+	flash_protect = 1
 	vision_correction = 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
@@ -132,6 +148,30 @@
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+
+/obj/item/clothing/glasses/eyepatch/syndicate
+	name = "cybernetic eyepatch"
+	desc = "An eyepatch used to enhance one's aim with guns."
+	icon_state = "syndicatepatch"
+	item_state = "syndicatepatch"
+	resistance_flags = ACID_PROOF
+
+/obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		user.visible_message("<span class='warning'>Circuitry from the eyepatch links itself to your brain as you put on the eyepatch.")
+		if(HAS_TRAIT(user, TRAIT_POOR_AIM))
+			user.visible_message("<span class='warning'>You hear a fizzing noise from the circuit. That can't be good.")
+		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
+
+/obj/item/clothing/glasses/eyepatch/syndicate/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.applyOrganDamage(30)
+		user.visible_message("<span class='warning'>Your eye stings as the circuitry is removed from your eye!")
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -164,7 +204,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
@@ -187,6 +227,12 @@
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
 
+/obj/item/clothing/glasses/regular/circle
+	name = "circle glasses"
+	desc = "Why would you wear something so controversial yet so brave?"
+	icon_state = "circle_glasses"
+	item_state = "circle_glasses"
+
 //Here lies green glasses, so ugly they died. RIP
 
 /obj/item/clothing/glasses/sunglasses
@@ -203,7 +249,7 @@
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	scan_reagents = TRUE
+	clothing_flags = SCAN_REAGENTS
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -215,7 +261,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	name = "black giga gar glasses"
@@ -235,7 +281,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar
@@ -247,13 +293,43 @@
 	throwforce = 12
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/obj/item/clothing/glasses/sunglasses/stunglasses
+	name = "stunglasses"
+	desc = "Sunglasses with inbuilt flashes. Made for those who prefer to walk around in style, who needs clumsy flashes anyway?"
+	actions_types = list(/datum/action/item_action/flash)
+	var/obj/item/assembly/flash/installed
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/Initialize()
+	. = ..()
+	if (!installed)
+		installed = new(src)
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/ui_action_click(mob/user)
+	if (installed && !installed.crit_fail)
+		installed.attack_self(user)
+	else
+		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
+
+/obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
+	if (istype(W,/obj/item/screwdriver))
+		if (installed)
+			installed.forceMove(get_turf(src))
+			to_chat(user, "<span class = 'notice'>You remove [installed] from [src].</span>")
+			installed = null
+	if (istype(W,/obj/item/assembly/flash))
+		if (!installed)
+			W.forceMove(src)
+			to_chat(user, "<span class = 'notice'>You install [W] into [src].</span>")
+			installed = W
+	. = ..()
+
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
 	desc = "Protects the eyes from welders; approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	actions_types = list(/datum/action/item_action/toggle)
-	materials = list(MAT_METAL = 250)
+	custom_materials = list(/datum/material/iron = 250)
 	flash_protect = 2
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
@@ -297,16 +373,16 @@
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
 	if(ishuman(user) && !colored_before)
-		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		add_atom_colour("#[user.left_eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
-	. = list()
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc
-		var/mutable_appearance/M = mutable_appearance('icons/mob/eyes.dmi', "blindfoldwhite")
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 		M.appearance_flags |= RESET_COLOR
-		M.color = "#[H.eye_color]"
+		M.color = "#[H.left_eye_color]"
 		. += M
 
 /obj/item/clothing/glasses/sunglasses/big
@@ -405,7 +481,7 @@
 	item_state = "godeye"
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
-	scan_reagents = TRUE
+	clothing_flags = SCAN_REAGENTS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
@@ -456,3 +532,46 @@
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)
+
+/obj/item/clothing/glasses/debug
+	name = "debug glasses"
+	desc = "Medical, security and diagnostic hud. Alt click to toggle xray."
+	icon_state = "nvgmeson"
+	item_state = "nvgmeson"
+	flags_cover = GLASSESCOVERSEYES
+	darkness_view = 8
+	flash_protect = 2
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	glass_colour_type = FALSE
+	clothing_flags = SCAN_REAGENTS
+	vision_flags = SEE_TURFS
+	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
+	var/xray = FALSE
+
+/obj/item/clothing/glasses/debug/equipped(mob/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_EYES)
+		return
+	if(ishuman(user))
+		for(var/hud in hudlist)
+			var/datum/atom_hud/H = GLOB.huds[hud]
+			H.add_hud_to(user)
+
+/obj/item/clothing/glasses/debug/dropped(mob/user)
+	. = ..()
+	if(ishuman(user))
+		for(var/hud in hudlist)
+			var/datum/atom_hud/H = GLOB.huds[hud]
+			H.remove_hud_from(user)
+
+/obj/item/clothing/glasses/debug/AltClick(mob/user)
+	. = ..()
+	if(ishuman(user))
+		if(xray)
+			vision_flags -= SEE_MOBS|SEE_OBJS
+		else
+			vision_flags += SEE_MOBS|SEE_OBJS
+		xray = !xray
+		var/mob/living/carbon/human/H = user
+		H.update_sight()
+

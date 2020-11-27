@@ -35,6 +35,7 @@
 	icon = 'icons/turf/decals.dmi'
 	icon_state = "warningline"
 	layer = TURF_DECAL_LAYER
+	plane = ABOVE_WALL_PLANE
 
 /obj/effect/turf_decal/Initialize()
 	..()
@@ -45,4 +46,5 @@
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	T.AddComponent(/datum/component/decal, icon, icon_state, dir, CLEAN_GOD, color, null, null, alpha)
+	var/turn_dir = 180 - dir2angle(T.dir) //Turning a dir by 0 results in a roulette of random dirs.
+	T.AddElement(/datum/element/decal, icon, icon_state, turn_dir ? turn(dir, turn_dir) : dir, CLEAN_GOD, color, null, null, alpha)

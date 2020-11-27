@@ -22,7 +22,7 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	var/state = 0
-	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
+	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book, /obj/item/gun/magic/wand/book) //Things allowed in the bookcase
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
@@ -112,15 +112,14 @@
 			else
 				return ..()
 
-
-/obj/structure/bookcase/attack_hand(mob/user)
+/obj/structure/bookcase/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	if(.)
+	if(. || !istype(user))
 		return
 	if(contents.len)
 		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			if(!CHECK_MOBILITY(user, MOBILITY_USE) || !in_range(loc, user))
 				return
 			if(ishuman(user))
 				if(!user.get_active_held_item())
@@ -129,6 +128,17 @@
 				choice.forceMove(drop_location())
 			update_icon()
 
+/obj/structure/bookcase/attack_ghost(mob/dead/observer/user)
+	. = ..()
+	if(!length(contents))
+		to_chat(user, "<span class='warning'>It's empty!</span>")
+		return
+	var/obj/item/book/choice = input("Which book would you like to read?") as null|obj in contents
+	if(choice)
+		if(!istype(choice)) //spellbook, cult tome, or the one weird bible storage
+			to_chat(user,"A mysterious force is keeping you from reading that.")
+			return
+		choice.attack_ghost(user)
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
@@ -137,11 +147,8 @@
 	qdel(src)
 
 
-/obj/structure/bookcase/update_icon()
-	if(contents.len < 5)
-		icon_state = "book-[contents.len]"
-	else
-		icon_state = "book-5"
+/obj/structure/bookcase/update_icon_state()
+	icon_state = "book-[min(length(contents), 5)]"
 
 
 /obj/structure/bookcase/manuals/medical
@@ -185,7 +192,7 @@
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = WEIGHT_CLASS_NORMAL	 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	resistance_flags = FLAMMABLE
 	var/dat				//Actual page content
@@ -203,13 +210,17 @@
 		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
 		return
 	if(dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+		show_to(user)
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
-		onclose(user, "book")
 	else
 		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
 
+/obj/item/book/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	show_to(O)
+
+/obj/item/book/proc/show_to(mob/user)
+	user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))

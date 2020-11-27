@@ -13,6 +13,8 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
+	material_drop = /obj/item/stack/sheet/plasteel
+	material_drop_amount = 5
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
 /obj/structure/closet/crate/New()
@@ -31,19 +33,24 @@
 				return 1
 	return !density
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
 
-/obj/structure/closet/crate/attack_hand(mob/user)
+/obj/structure/closet/crate/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
-	if(.)
-		return
 	if(manifest)
 		tear_manifest(user)
+
+/obj/structure/closet/crate/tool_interact(obj/item/W, mob/user)
+	if(W.tool_behaviour == TOOL_WIRECUTTER && manifest)
+		tear_manifest(user)
+		return TRUE
+	return ..()
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
@@ -75,13 +82,16 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
+	can_weld_shut = FALSE
+	breakout_time = 200
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	var/pryLidTimer = 250
 
 /obj/structure/closet/crate/coffin/examine(mob/user)
 	. = ..()
-	if(user.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
+	if(user.mind?.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
 		. += {"<span class='cult'>This is a coffin which you can use to regenerate your burns and other wounds faster.</span>"}
 		. += {"<span class='cult'>You can also thicken your blood if you survive the day, and hide from the sun safely while inside.</span>"}
 	/*	if(user.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
@@ -132,6 +142,9 @@
 	desc = "A freezer containing packs of blood."
 	icon_state = "surgery"
 
+/obj/structure/closet/crate/freezer/blood/fake
+	should_populate_contents = FALSE
+
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
 	new /obj/item/reagent_containers/blood(src)
@@ -142,12 +155,18 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/jellyblood(src)
+	new /obj/item/reagent_containers/blood/insect(src)
+	new /obj/item/reagent_containers/blood/synthetics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs
 	name = "surplus prosthetic limbs"
 	desc = "A crate containing an assortment of cheap prosthetic limbs."
+
+/obj/structure/closet/crate/freezer/surplus_limbs/fake
+	should_populate_contents = FALSE
 
 /obj/structure/closet/crate/freezer/surplus_limbs/PopulateContents()
 	. = ..()
@@ -164,6 +183,7 @@
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
 	icon_state = "radiation"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
@@ -181,6 +201,9 @@
 	desc = "A crate for the storage of an RCD."
 	name = "\improper RCD crate"
 	icon_state = "engi_crate"
+
+/obj/structure/closet/crate/rcd/fake
+	should_populate_contents = FALSE
 
 /obj/structure/closet/crate/rcd/PopulateContents()
 	..()
