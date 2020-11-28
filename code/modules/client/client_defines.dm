@@ -89,6 +89,8 @@
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
 
+	/// Last time they used fix macros
+	var/last_macro_fix = 0
 	/// Keys currently held
 	var/list/keys_held = list()
 	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
