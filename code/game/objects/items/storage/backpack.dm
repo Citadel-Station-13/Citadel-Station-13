@@ -106,6 +106,9 @@
 	icon_state = "cultpack"
 	item_state = "backpack"
 
+/obj/item/storage/backpack/cultpack/get_cult_power()
+	return 30
+
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."

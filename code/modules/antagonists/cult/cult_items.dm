@@ -1068,44 +1068,13 @@
 	else
 		..()
 
-/obj/item/weapon/storage/backpack/cultpack
-	name = "trophy rack"
-	desc = "It's useful for both carrying extra gear and proudly declaring your insanity. It has room on it for trophies of macabre descript."
-	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/cultstuff.dmi', "right_hand" = 'icons/mob/in-hand/right/cultstuff.dmi')
-	icon_state = "cultpack_0skull"
-	item_state = "cultpack"
-	var/skulls = 0
-
-/obj/item/weapon/storage/backpack/cultpack/attack_self(var/mob/user)
-	..()
-	for(var/i = 1 to skulls)
-		new/obj/item/weapon/skull(get_turf(src))
-	update_icon(user)
-
-/obj/item/weapon/storage/backpack/cultpack/attackby(var/obj/item/weapon/W, var/mob/user)
-	if(istype(W, /obj/item/weapon/skull) && (skulls < 3))
-		user.u_equip(W,1)
-		qdel(W)
-		skulls++
-		update_icon(user)
-		to_chat(user,"<span class='warning'>You plant \the [W] on \the [src].</span>")
-		return
-	. = ..()
-
-/obj/item/weapon/storage/backpack/cultpack/update_icon(var/mob/living/carbon/user)
-	icon_state = "cultpack_[skulls]skull"
-	item_state = "cultpack"
-	if(istype(user))
-		user.update_inv_back()
-
-/obj/item/weapon/storage/backpack/cultpack/get_cult_power()
-	return 30
-
-/obj/item/weapon/storage/backpack/cultpack/cultify()
-	return
-
 /mob/proc/get_cult_power()
 	var/power = 0
+	var/list/valid_cultpower_slots = list(
+	SLOT_WEAR_SUIT,
+	SLOT_HEAD,
+	SLOT_SHOES,
+	)
 	for (var/slot in valid_cultpower_slots)
 		var/obj/item/I = get_item_by_slot(slot)
 		if (istype(I))
@@ -1114,15 +1083,15 @@
 	return power
 
 /obj/item/clothing/shoes/cult
-	name = "boots"
+	name = "cult boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
-	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/cultstuff.dmi', "right_hand" = 'icons/mob/in-hand/right/cultstuff.dmi')
 	icon_state = "cult"
 	item_state = "cult"
-	_color = "cult"
+	can_be_tied = FALSE //No laces.
 	siemens_coefficient = 0.7
-	heat_conductivity = INS_SHOE_HEAT_CONDUCTIVITY
-	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/shoes/cult/get_cult_power()
 	return 10
+
+/obj/item/proc/get_cult_power()
+	return 0

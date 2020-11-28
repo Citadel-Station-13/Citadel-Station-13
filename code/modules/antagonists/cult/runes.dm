@@ -1093,55 +1093,76 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	scribe_delay = 50
 	invoke_damage = 15
-	var/turf/loc_memory = null
-	var/spawntype = /obj/structure/destructible/cult/altar
+	var/turf/loc_memory
+	var/spawntype = /mob/living/simple_animal/chicken //If they somehow bypass the sanity, have a fucking chicken.
 	var/list/donators
-	var/active = FALSE
 	var/remaining_cost
 	var/accumulated_blood
 	var/cancelling
+	var/datum/progressbar/progbar
+	var/original_blood
+	var/static/image/talisman_altar = image(icon = 'icons/obj/cult.dmi', icon_state = "talismanaltar")
+	var/static/image/cult_forge = image(icon = 'icons/obj/cult.dmi', icon_state = "forge")
+	var/static/image/cult_archives = image(icon = 'icons/obj/cult.dmi', icon_state = "tomealtar")
+	var/static/image/cult_pylon = image(icon = 'icons/obj/cult.dmi', icon_state = "pylon")
 
 /obj/effect/rune/summon_structure/invoke(list/invokers)
 	var/mob/living/user = invokers[1]
 	if(locate(/obj/structure/destructible/cult) in range(loc, 2) || locate(/obj/machinery/door/airlock/cult) in range(loc, 2))
 		to_chat(user, "<span class='warning'>There is a building blocking the ritual..</span>")
 		return
-	if(user.z != map.zMainStation)
-		to_chat(user, "<span class='cult'>The veil here is still too dense to allow raising structures from the realm of Nar-Sie. We must raise our structure in the heart of the station.</span>")
+	if(is_station_level(get_turf(src.z)))
+		to_chat(user, "<span class='cult'>The veil here is still too dense to allow raising structures from the realm of Nar-Sie. We must raise our structure inside the station.</span>")
 		return
-	if(active)
+	if(datum_flags & DF_ISPROCESSING)
 		midcast(user)
 		return
 
-	START_PROCESSING(SSobj, src)
-	active = TRUE
 	donators = invokers //We need the invokers for later.
+	if(iscarbon(user)) //Only carbonds have DNA
+		var/mob/living/carbon/original_caster = user
+		original_blood = original_caster.dna
 	..()
+	ui_interact(user)
+	handle_progbar(user)
 
-/obj/effect/rune/summon_structure/process()
-	if(!active)
-		abort()
-		return
-	var/mob/living/user = donators[1]
+/obj/effect/rune/summon_structure/proc/check_menu(mob/living/user)
+	if(!user || user.incapacitated() || !iscultist(user))
+		return FALSE
+	return TRUE
 
+/obj/effect/rune/summon_structure/ui_interact(mob/user)
 	var/list/choices = list(
+		"Talisman Altar" = talisman_altar,
+		"Cult Archives" = cult_archives,
+		"Cult Forge" = cult_forge,
+		"Cult Pylon" = cult_pylon,
+		/*
 		list("Altar", "radial_altar", "The nexus of a cult base. Has many uses. More runes will also become usable after the first altar has been raised."),
 		list("Spire (locked)", "radial_locked1", "Reach Act 1 to unlock the Spire."),
 		list("Forge (locked)", "radial_locked2", "Reach Act 2 to unlock the Forge.")
+			*/
 	)
-
-	var/structure = show_radial_menu(user, loc, choices, 'icons/obj/cult_radial3.dmi', "radial-cult")
+	var/structure = show_radial_menu(user, loc, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 
 	if(!Adjacent(user) || !structure )
 		abort()
 		return
-/*
-	if(src.procc)
+
+	if(datum_flags & DF_ISPROCESSING)
 		to_chat(user, "<span class='rose'>A structure is already being raised from this rune, so you contribute to that instead.</span>")
-		src.midcast(user)
+		midcast(user)
 		return
-*/
+
 	switch(structure)
+		if("Talisman Altar")
+			spawntype = /obj/structure/destructible/cult/talisman
+		if("Cult Archives")
+			spawntype = /obj/structure/destructible/cult/tome
+		if("Cult Forge")
+			spawntype = /obj/structure/destructible/cult/forge
+		if("Cult Pylon")
+			spawntype = /obj/structure/destructible/cult/pylon
 	/*
 		if("Altar")
 			spawntype = /obj/structure/cult/altar
@@ -1161,41 +1182,34 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	loc_memory = src.loc
 	//update_progbar()
-	if(user.client)
-		user.client.images |= progbar
 	src.overlays += image('icons/obj/cult.dmi',"runetrigger-build")
 	to_chat(donators, "<span class='rose'>This ritual's blood toll can be substantially reduced by having multiple cultists partake in it or by wearing cult attire.</span>")
-	addtimer(CALLBACK(.proc/payment), 1, TIMER_UNIQUE)
+	START_PROCESSING(SSobj, src)
 	/*
 	spawn()
 		payment()
 	*/
-/obj/effect/rune/summon_structure/midcast(mob/add_cultist)
+/obj/effect/rune/summon_structure/proc/midcast(mob/add_cultist)
 	if(add_cultist in donators)
 		return
 	invoke(add_cultist, invocation)
 	donators.Add(add_cultist)
-	if(add_cultist.client)
-		add_cultist.client.images |= progbar
+	handle_progbar(add_cultist)
 
 /obj/effect/rune/summon_structure/proc/abort(cause)
-	if(destroying_self)
-		return
-	destroying_self = TRUE
+	STOP_PROCESSING(SSobj, src)
 	switch(cause)
 		if(RITUALABORT_BLOCKED)
-			if(activator)
-				to_chat(activator, "<span class='warning'>There is a building blocking the ritual..</span>")
+			to_chat(src, "<span class='warning'>There is a building blocking the ritual..</span>")
 		if(RITUALABORT_BLOOD)
-			.visible_message("<span class='warning'>Deprived of blood, the channeling is disrupted.</span>")
+			visible_message(src, "<span class='warning'>Deprived of blood, the channeling is disrupted.</span>")
 		if(RITUALABORT_GONE)
 			if(donators) //There will be one donator anyways.
-				to_chat(donators, "<span class='warning'>The ritual ends as you move away from the rune.</span>")
-	STOP_PROCESSING(SSobj, src)
+				to_chat(src, "<span class='warning'>The ritual ends as you move away from the rune.</span>")
 	overlays -= image('icons/obj/cult.dmi',"runetrigger-build")
-	..()
+	QDEL_IN(src, 1)
 
-/obj/effect/rune/summon_structure/proc/payment()
+/obj/effect/rune/summon_structure/process()
 	var/failsafe = 0
 	while(failsafe < 1000)
 		failsafe++
@@ -1203,73 +1217,69 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/mob/living/L in donators)
 			if (iscultist(L) && (L in range(src, 1)) && (L.stat == CONSCIOUS))
 				summoners++
-				summoners += round(L.get_cult_power()/30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
-			else											//This makes using the rune alone hard at roundstart, but fairly easy later on.
-				if (L.client)
-					L.client.images -= progbar
-				donators.Remove(L)
+				summoners += round(L.get_cult_power() / 30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
 		var/amount_paid = 0
 		for(var/mob/living/L in donators)
-			var/data = use_available_blood(L, cost_upkeep,contributors[L])
-			if (data[BLOODCOST_RESULT] == BLOODCOST_FAILURE)//out of blood are we?
+			//Lets not kill the cultists that need blood to live with this, while allowing those that dont need blood to survive to donate as much as they want
+			if(!L.blood_volume || L.blood_volume < BLOOD_VOLUME_SURVIVE && !isvampire(L) && !HAS_TRAIT(src, TRAIT_NOMARROW))
 				donators.Remove(L)
 			else
-				amount_paid += data[BLOODCOST_TOTAL]
-				donators[L] = data[BLOODCOST_RESULT]
-				make_tracker_effects(L.loc,spell_holder, 1, "soul", 3, /obj/effect/tracker/drain, 1)//visual feedback
+				L.blood_volume--
+				amount_paid++
+				make_tracker_effects(L.loc, src, 1, "soul", 3, /obj/effect/tracker/drain, 1)//visual feedback
 
 		accumulated_blood += amount_paid
 
-		if(amount_paid) //3 seconds without blood and the ritual fails.
+		if(amount_paid) //3 ticks without blood and the ritual fails.
 			cancelling = 3
 		else
 			cancelling--
 			if (cancelling <= 0)
 				if(accumulated_blood && !(locate(/obj/effect/decal/cleanable/blood/splatter) in loc_memory))
 					var/obj/effect/decal/cleanable/blood/S = new (loc_memory)//splash
-					donator[1]
-					S.amount = 2
-					if(iscarbon(donator[1]))
-						var/mob/living/carbon/C = donator[1]
+					if(iscarbon(donators[1]))
+						var/mob/living/carbon/C = donators[1]
 						S.blood_DNA = C.dna
 				abort(RITUALABORT_BLOOD)
 				return
 
 		switch(summoners)
-			if (1)
+			if(1)
 				remaining_cost = 300
-			if (2)
+			if(2)
 				remaining_cost = 120
-			if (3)
+			if(3)
 				remaining_cost = 18
-			if (4 to INFINITY)
+			if(4 to INFINITY)
 				remaining_cost = 0
+
+		progbar.update(remaining_cost - accumulated_blood)
 
 		if(accumulated_blood >= remaining_cost )
 			proximity_check()
 			success()
 			STOP_PROCESSING(SSobj, src)
 			return
-
-		update_progbar()
-
 	message_admins("A rune ritual has iterated for over 1000 blood payment procs. Something's wrong there.")
 
 /obj/effect/rune/summon_structure/proc/success()
-	new spawntype(loc)
-	qdel(src) //Deletes the datum as well.
+	new spawntype(get_turf(src))
+	qdel(src)
 
-/datum/rune_spell/blood_cult/raisestructure/proc/proximity_check()
-	var/obj/effect/rune/R = spell_holder
-	if (locate(/obj/structure/cult) in range(R.loc,1))
+/obj/effect/rune/summon_structure/proc/handle_progbar(mob/user)
+	var/datum/progressbar/progbar
+	if(!progbar)
+		progbar = new(user, remaining_cost, src)
+
+/obj/effect/rune/summon_structure/proc/proximity_check()
+	if(locate(/obj/structure/destructible/cult) in range(loc, 2))
 		abort(RITUALABORT_BLOCKED)
 		return FALSE
-
-	if (locate(/obj/machinery/door/mineral/cult) in range(R.loc,1))
+	if(locate(/obj/machinery/door/airlock/cult) in range(loc, 2))
 		abort(RITUALABORT_NEAR)
 		return FALSE
-
-	else return TRUE
+	else
+		return TRUE
 
 /proc/hudFix(mob/living/carbon/human/target)
 	if(!target || !target.client)

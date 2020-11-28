@@ -27,3 +27,4 @@
 #define RITUALABORT_BLOCKED	"blocked"
 #define RITUALABORT_STAND	"too far"
 #define RITUALABORT_GONE	"moved away"
+#define	RITUALABORT_NEAR	"near"
