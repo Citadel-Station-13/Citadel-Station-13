@@ -1,6 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - balance: "Rad collectors now get 1.25x as much energy from radiation"
-  - balance: "Rad collectors now put out 1.25x as much stored energy per tick"
-  - balance: "Above two rad collector changes give a total 56.25% power output increase"
