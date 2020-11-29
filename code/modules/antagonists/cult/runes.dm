@@ -1145,7 +1145,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	)
 	var/structure = show_radial_menu(user, loc, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 
-	if(!Adjacent(user) || !structure )
+	if(!structure)
 		abort()
 		return
 
@@ -1189,85 +1189,83 @@ structure_check() searches for nearby cultist structures required for the invoca
 	spawn()
 		payment()
 	*/
-/obj/effect/rune/summon_structure/proc/midcast(mob/add_cultist)
-	if(add_cultist in donators)
+/obj/effect/rune/summon_structure/proc/midcast(mob/user)
+	if(user in donators)
 		return
-	invoke(add_cultist, invocation)
-	donators.Add(add_cultist)
-	handle_progbar(add_cultist)
+	invoke(user, invocation)
+	donators.Add(user)
+	handle_progbar(user)
 
 /obj/effect/rune/summon_structure/proc/abort(cause)
 	STOP_PROCESSING(SSobj, src)
 	switch(cause)
 		if(RITUALABORT_BLOCKED)
-			to_chat(src, "<span class='warning'>There is a building blocking the ritual..</span>")
+			visible_message(src, "<span class='warning'>There is a building blocking the ritual..</span>")
 		if(RITUALABORT_BLOOD)
 			visible_message(src, "<span class='warning'>Deprived of blood, the channeling is disrupted.</span>")
 		if(RITUALABORT_GONE)
 			if(donators) //There will be one donator anyways.
-				to_chat(src, "<span class='warning'>The ritual ends as you move away from the rune.</span>")
-	overlays -= image('icons/obj/cult.dmi',"runetrigger-build")
+				visible_message(src, "<span class='warning'>The ritual ends as you move away from the rune.</span>")
+		if(RITUALABORT_TOOLONG)
+			visible_message(src, "<span class='warning'>The ritual has lasted for too long.</span>")
+	do_invoke_glow()
 	QDEL_IN(src, 1)
 
 /obj/effect/rune/summon_structure/process()
 	var/failsafe = 0
-	while(failsafe < 1000)
-		failsafe++
-		var/summoners = 0//the higher, the easier it is to perform the ritual without many cultists. default=0
-		for(var/mob/living/L in donators)
-			if (iscultist(L) && (L in range(src, 1)) && (L.stat == CONSCIOUS))
-				summoners++
-				summoners += round(L.get_cult_power() / 30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
-		var/amount_paid = 0
-		for(var/mob/living/L in donators)
-			//Lets not kill the cultists that need blood to live with this, while allowing those that dont need blood to survive to donate as much as they want
-			if(!L.blood_volume || L.blood_volume < BLOOD_VOLUME_SURVIVE && !isvampire(L) && !HAS_TRAIT(src, TRAIT_NOMARROW))
-				donators.Remove(L)
-			else
-				L.blood_volume--
-				amount_paid++
-				make_tracker_effects(L.loc, src, 1, "soul", 3, /obj/effect/tracker/drain, 1)//visual feedback
-
-		accumulated_blood += amount_paid
-
-		if(amount_paid) //3 ticks without blood and the ritual fails.
-			cancelling = 3
+	if(failsafe > 1000)
+		message_admins("[ADMIN_LOOKUPFLW(src)], a bloodcult structure summoning ritual has iterated for over 1000 blood payment procs. Something's wrong there.")
+		abort(RITUALABORT_TOOLONG)
+		return
+	failsafe++
+	var/summoners = 0 //the higher, the easier it is to perform the ritual without many cultists.
+	var/amount_paid = 0
+	for(var/mob/living/L in donators)
+		if(Adjacent(L) && !iscultist(L) && L.stat == CONSCIOUS)
+			donators.Remove(L)
+			continue
 		else
-			cancelling--
-			if (cancelling <= 0)
-				if(accumulated_blood && !(locate(/obj/effect/decal/cleanable/blood/splatter) in loc_memory))
-					var/obj/effect/decal/cleanable/blood/S = new (loc_memory)//splash
-					if(iscarbon(donators[1]))
-						var/mob/living/carbon/C = donators[1]
-						S.blood_DNA = C.dna
-				abort(RITUALABORT_BLOOD)
-				return
-
-		switch(summoners)
-			if(1)
-				remaining_cost = 300
-			if(2)
-				remaining_cost = 120
-			if(3)
-				remaining_cost = 18
-			if(4 to INFINITY)
-				remaining_cost = 0
-
-		progbar.update(remaining_cost - accumulated_blood)
-
-		if(accumulated_blood >= remaining_cost )
-			proximity_check()
-			success()
-			STOP_PROCESSING(SSobj, src)
+			summoners++
+			summoners += round(L.get_cult_power() / 30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
+		if(!L.blood_volume || L.blood_volume < BLOOD_VOLUME_SURVIVE && !isvampire(L) && !HAS_TRAIT(src, TRAIT_NOMARROW))
+			donators.Remove(L)
+			continue
+		else
+			L.blood_volume--
+			amount_paid++
+			make_tracker_effects(L.loc, src, 1, "soul", 3, /obj/effect/tracker/drain, 1)//visual feedback
+	do_invoke_glow()
+	accumulated_blood += amount_paid
+	if(amount_paid) //3 ticks without blood and the ritual fails.
+		cancelling = 3
+	else
+		cancelling--
+		if (cancelling <= 0)
+			if(accumulated_blood && !(locate(/obj/effect/decal/cleanable/blood/splatter) in loc_memory))
+				var/obj/effect/decal/cleanable/blood/S = new (loc_memory)//splash
+				if(iscarbon(donators[1]))
+					var/mob/living/carbon/C = donators[1]
+					S.blood_DNA = C.dna
+			abort(RITUALABORT_BLOOD)
 			return
-	message_admins("A rune ritual has iterated for over 1000 blood payment procs. Something's wrong there.")
-
-/obj/effect/rune/summon_structure/proc/success()
-	new spawntype(get_turf(src))
-	qdel(src)
+	switch(summoners)
+		if(1)
+			remaining_cost = 300
+		if(2)
+			remaining_cost = 120
+		if(3)
+			remaining_cost = 18
+		if(4 to INFINITY)
+			remaining_cost = 0
+	if(progbar)
+		progbar.update(remaining_cost - accumulated_blood)
+	if(accumulated_blood >= remaining_cost )
+		proximity_check()
+		new spawntype(get_turf(src))
+		STOP_PROCESSING(SSobj, src)
+		qdel(src)
 
 /obj/effect/rune/summon_structure/proc/handle_progbar(mob/user)
-	var/datum/progressbar/progbar
 	if(!progbar)
 		progbar = new(user, remaining_cost, src)
 

@@ -19,7 +19,7 @@
 	absolute_X = (x * WORLD_ICON_SIZE)
 	absolute_Y = (y * WORLD_ICON_SIZE)
 
-	addtimer(CALLBACK(src, .proc/begin_processing), 1)
+	addtimer(CALLBACK(src, .proc/begin_processing), 1) //We can't callback a macro as far as I know
 
 /obj/effect/tracker/soul
 	name = "soul"
@@ -30,7 +30,11 @@
 	color = "red"
 
 /obj/effect/tracker/proc/begin_processing()
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/effect/tracker/Destroy(force)
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
 
 /obj/effect/tracker/process()
 	. = ..()
@@ -83,7 +87,6 @@
 	y = absolute_Y/WORLD_ICON_SIZE
 	update_icon()
 
-	STOP_PROCESSING(SSobj, src)
 	addtimer(CALLBACK(src, .proc/begin_processing), refresh)
 
 
@@ -114,4 +117,3 @@
 			Tr.target = tr_destination
 			if(custom_icon_state)
 				Tr.icon_state = pick(possible_icons)
-			sleep(1)

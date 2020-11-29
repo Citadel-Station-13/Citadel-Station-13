@@ -28,3 +28,4 @@
 #define RITUALABORT_STAND	"too far"
 #define RITUALABORT_GONE	"moved away"
 #define	RITUALABORT_NEAR	"near"
+#define RITUALABORT_TOOLONG "toolong"
