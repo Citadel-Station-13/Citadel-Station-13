@@ -115,7 +115,8 @@ GLOBAL_LIST_INIT(all_types_bloods,list(
 		"L",
 		"U",
 		"GEL",
-		"BUG"
+		"BUG",
+		"SAP"
 		))
 
 GLOBAL_LIST_INIT(blood_reagent_types, list(
