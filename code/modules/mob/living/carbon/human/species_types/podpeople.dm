@@ -13,6 +13,7 @@
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
 	species_language_holder = /datum/language_holder/sylvan
+	exotic_bloodtype = "SAP"
 	var/light_nutrition_gain_factor = 4
 	var/light_toxheal = -1
 	var/light_oxyheal = -1
