@@ -45,7 +45,7 @@
 
 /obj/item/reagent_containers/blood/random/Initialize()
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "SY", "HF", "GEL", "BUG")
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "SY", "HF", "GEL", "BUG", "SAP")
 	return ..()
 
 /obj/item/reagent_containers/blood/APlus
@@ -83,6 +83,9 @@
 
 /obj/item/reagent_containers/blood/insect
 	blood_type = "BUG"
+	
+/obj/item/reagent_containers/blood/sap
+	blood_type = "SAP"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
