@@ -254,7 +254,7 @@
 		"X*" = list("X*", "SY"),
 		"SY" = list("SY"),
 		"GEL" = list("GEL","SY"),
-		"BUG" = list("BUG", "SY")
+		"BUG" = list("BUG", "SY"),
 		"SAP" = list("SAP", "SY")
 	)
 
