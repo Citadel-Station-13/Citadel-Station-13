@@ -112,6 +112,11 @@
 			name = "Lizard Blood"
 			taste_description = "something spicy"
 			pH = 6.85
+		
+		if(data["blood_type"] == "SAP")
+			name = "Sap"
+			taste_description = "sugary metal"
+			pH = 6.85
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
