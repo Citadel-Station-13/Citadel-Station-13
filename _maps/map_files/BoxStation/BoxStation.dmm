@@ -56600,10 +56600,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"lxP" = (
-/mob/living/simple_animal/opossum,
-/turf/closed/wall,
-/area/science/xenobiology)
 "lzt" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/stripes/line,
@@ -107389,7 +107385,7 @@ bLe
 bMr
 bNr
 bIT
-lxP
+bJN
 bJN
 bJN
 bJN
