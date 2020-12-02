@@ -70,6 +70,24 @@
 	update_special_keybinds(prefs_override)
 	set_hotkeys_preference(prefs_override)
 
+/proc/keybind_collision_permutation(key, alt = FALSE, ctrl = FALSE, shift = FALSE)
+	var/list/permutations = list()
+	if(!shift)
+		permutations += "Shift"
+	if(!ctrl)
+		permutations += "Ctrl"
+	if(!alt)
+		permutations += "Alt"
+	. = list()
+	do_keybind_collision_permutations(key, permutations, .)
+
+/proc/do_keybind_collision_permutations(key, list/permutations = list(), list/out = list())
+	. = out
+	for(var/mod in permutations.Copy())
+		permutations -= mod
+		. += "[mod]+[key]"
+		do_keybind_collision_permutations("[mod]+[key]", permutations.Copy(), .)
+
 /client/proc/do_special_keybind(key, command, datum/preferences/prefs_override = prefs)
 	var/alt = findtext(key, "Alt")
 	if(alt)
@@ -83,8 +101,15 @@
 	if(!alt && !ctrl && !shift && !prefs_override.hotkeys)
 		return	/// DO NOT.
 	key = "[alt? "Alt+":""][ctrl? "Ctrl+":""][shift? "Shift+":""][key]"
+	var/list/settings = list("[key]" = "[command]")
+	var/list/permutations = keybind_collision_permutation(key, alt, ctrl, shift)
+	for(var/i in permutations)
+		permutations[i] = NONSENSICAL_VERB
+	settings |= permutations
 	for(var/macroset in SSinput.all_macrosets)
-		winset(src, "[macroset]-[REF(key)]", "parent=[macroset];name=[key];command=[command]")
+		for(var/k in settings)
+			var/c  = settings[k]
+			winset(src, "[macroset]-[REF(k)]", "parent=[macroset];name=[k];command=[c]")
 
 /**
   * Updates the keybinds for special keys
