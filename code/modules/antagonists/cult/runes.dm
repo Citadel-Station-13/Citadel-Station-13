@@ -1221,14 +1221,18 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/summoners = 0 //the higher, the easier it is to perform the ritual without many cultists.
 	var/amount_paid = 0
 	for(var/mob/living/L in donators)
-		if(Adjacent(L) && !iscultist(L) && L.stat == CONSCIOUS)
+		if(!Adjacent(L) || !iscultist(L) || !(L.stat == CONSCIOUS))
 			donators.Remove(L)
+			if(L.client)
+				L.client.images -= progbar
 			continue
 		else
 			summoners++
 			summoners += round(L.get_cult_power() / 30)	//For every 30 cult power, you count as one additional cultist. So with Robes and Shoes, you already count as 3 cultists.
 		if(!L.blood_volume || L.blood_volume < BLOOD_VOLUME_SURVIVE && !isvampire(L) && !HAS_TRAIT(src, TRAIT_NOMARROW))
 			donators.Remove(L)
+			if(L.client)
+				L.client.images -= progbar
 			continue
 		else
 			L.blood_volume--
@@ -1268,6 +1272,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/summon_structure/proc/handle_progbar(mob/user)
 	if(!progbar)
 		progbar = new(user, remaining_cost, src)
+	else
+		if(user.client)
+			user.client.images += progbar
 
 /obj/effect/rune/summon_structure/proc/proximity_check()
 	if(locate(/obj/structure/destructible/cult) in range(loc, 2))
