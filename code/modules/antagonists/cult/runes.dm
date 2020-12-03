@@ -1185,6 +1185,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	src.overlays += image('icons/obj/cult.dmi',"runetrigger-build")
 	to_chat(donators, "<span class='rose'>This ritual's blood toll can be substantially reduced by having multiple cultists partake in it or by wearing cult attire.</span>")
 	START_PROCESSING(SSobj, src)
+	do_invoke_glow()
 	/*
 	spawn()
 		payment()
@@ -1248,8 +1249,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(accumulated_blood && !(locate(/obj/effect/decal/cleanable/blood/splatter) in loc_memory))
 				var/obj/effect/decal/cleanable/blood/S = new (loc_memory)//splash
 				if(iscarbon(donators[1]))
-					var/mob/living/carbon/C = donators[1]
-					S.blood_DNA = C.dna
+					S.blood_DNA = original_blood
 			abort(RITUALABORT_BLOOD)
 			return
 	switch(summoners)
@@ -1271,8 +1271,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/summon_structure/proc/handle_progbar(mob/user)
 	if(!progbar)
-		progbar = new(user, remaining_cost, src)
+		progbar = new(user, 300, src)
 	else
+		progbar.update(remaining_cost - accumulated_blood)
 		if(user.client)
 			user.client.images += progbar
 
