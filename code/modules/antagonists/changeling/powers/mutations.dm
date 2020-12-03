@@ -679,6 +679,7 @@
 	item_state = "ling_gauntlets"
 	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching people, not so much for firearms."
 	transfer_prints = TRUE
+	item_flags = DROPDEL // whoops
 	body_parts_covered = ARMS|HANDS
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -691,13 +692,13 @@
 	var/slow_enhancement = 20
 	var/slow_wound_enhancement = 20
 	silent = TRUE
-	inherited_trait = TRAIT_CHUNKYFINGERS // dummy thicc bone hands
-	secondary_trait = TRAIT_MAULER // its only violence from here, bucko
+	inherited_trait = TRAIT_CHUNKYFINGERS // how do you expect to shoot anyone with bone covered hands
+	secondary_trait = TRAIT_MAULER // just punch them idiot
 	var/fasthands = TRUE
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/examine(mob/user)
 	. = ..()
-	. += "[src] are formed to allow for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
+	. += "[src] are shaped for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
 	. += "Alt-click them to change between rapid strikes and strong blows."
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/AltClick(mob/user)
