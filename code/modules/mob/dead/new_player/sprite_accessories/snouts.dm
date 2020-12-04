@@ -5,12 +5,7 @@
 
 /datum/sprite_accessory/snouts/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
-
-/datum/sprite_accessory/snout/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	color_src = MATRIXED
+	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.is_robotic_limb(FALSE))
 
 /datum/sprite_accessory/snouts/round
 	name = "Round"
@@ -158,12 +153,11 @@
 	color_src = MATRIXED
 	icon = 'modular_citadel/icons/mob/mam_snouts.dmi'
 	recommended_species = list("mammal", "slimeperson", "insect", "podweak", "lizard")
-	mutant_part_string = "snout"
 	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/snouts/mam_snouts/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
-	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || (HD.status == BODYPART_ROBOTIC && !HD.render_like_organic))
+	return ((H.wear_mask && (H.wear_mask.flags_inv & HIDESNOUT)) || (H.head && (H.head.flags_inv & HIDESNOUT)) || !HD || HD.is_robotic_limb(FALSE))
 
 /datum/sprite_accessory/snouts/mam_snouts/none
 	name = "None"
@@ -174,10 +168,12 @@
 /datum/sprite_accessory/snouts/mam_snouts/bird
 	name = "Beak"
 	icon_state = "bird"
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/snouts/mam_snouts/bigbeak
 	name = "Big Beak"
 	icon_state = "bigbeak"
+	matrixed_sections = MATRIX_BLUE
 
 /datum/sprite_accessory/snouts/mam_snouts/bug
 	name = "Bug"
@@ -191,52 +187,64 @@
 	icon_state = "elephant"
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/husky
 	name = "Husky"
 	icon_state = "husky"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/rhino
 	name = "Horn"
 	icon_state = "rhino"
 	extra = TRUE
-	extra = MUTCOLORS3
+	extra_color_src = MUTCOLORS3
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/snouts/mam_snouts/rodent
 	name = "Rodent"
 	icon_state = "rodent"
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/lcanid
 	name = "Mammal, Long"
 	icon_state = "lcanid"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/lcanidalt
 	name = "Mammal, Long ALT"
 	icon_state = "lcanidalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/scanid
 	name = "Mammal, Short"
 	icon_state = "scanid"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/scanidalt
 	name = "Mammal, Short ALT"
 	icon_state = "scanidalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/scanidalt2
 	name = "Mammal, Short ALT 2"
 	icon_state = "scanidalt2"
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/wolf
 	name = "Mammal, Thick"
 	icon_state = "wolf"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/wolfalt
 	name = "Mammal, Thick ALT"
 	icon_state = "wolfalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/otie
 	name = "Otie"
 	icon_state = "otie"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/round
 	name = "Round"
@@ -251,18 +259,22 @@
 /datum/sprite_accessory/snouts/mam_snouts/pede
 	name = "Scolipede"
 	icon_state = "pede"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/sergal
 	name = "Sergal"
 	icon_state = "sergal"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/shark
 	name = "Shark"
 	icon_state = "shark"
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/hshark
 	name = "hShark"
 	icon_state = "hshark"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/sharp
 	name = "Sharp"
@@ -279,18 +291,22 @@
 	icon_state = "skulldog"
 	extra = TRUE
 	extra_color_src = MATRIXED
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/toucan
 	name = "Toucan"
 	icon_state = "toucan"
+	matrixed_sections = MATRIX_RED_BLUE //one single pixel of red. one.
 
 /datum/sprite_accessory/snouts/mam_snouts/redpanda
 	name = "WahCoon"
 	icon_state = "wah"
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/snouts/mam_snouts/redpandaalt
 	name = "WahCoon ALT"
 	icon_state = "wahalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /******************************************
 **************** Snouts *******************
@@ -299,10 +315,12 @@
 /datum/sprite_accessory/snouts/mam_snouts/fbird
 	name = "Beak (Top)"
 	icon_state = "fbird"
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/snouts/mam_snouts/fbigbeak
 	name = "Big Beak (Top)"
 	icon_state = "fbigbeak"
+	matrixed_sections = MATRIX_BLUE
 
 /datum/sprite_accessory/snouts/mam_snouts/fbug
 	name = "Bug (Top)"
@@ -316,52 +334,64 @@
 	icon_state = "felephant"
 	extra = TRUE
 	extra_color_src = MUTCOLORS3
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/frhino
 	name = "Horn (Top)"
 	icon_state = "frhino"
 	extra = TRUE
 	extra = MUTCOLORS3
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/snouts/mam_snouts/fhusky
 	name = "Husky (Top)"
 	icon_state = "fhusky"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/flcanid
 	name = "Mammal, Long (Top)"
 	icon_state = "flcanid"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/flcanidalt
 	name = "Mammal, Long ALT (Top)"
 	icon_state = "flcanidalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fscanid
 	name = "Mammal, Short (Top)"
 	icon_state = "fscanid"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fscanidalt
 	name = "Mammal, Short ALT (Top)"
 	icon_state = "fscanidalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fscanidalt2
 	name = "Mammal, Short ALT 2 (Top)"
 	icon_state = "fscanidalt2"
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/fwolf
 	name = "Mammal, Thick (Top)"
 	icon_state = "fwolf"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fwolfalt
 	name = "Mammal, Thick ALT (Top)"
 	icon_state = "fwolfalt"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fotie
 	name = "Otie (Top)"
 	icon_state = "fotie"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/frodent
 	name = "Rodent (Top)"
 	icon_state = "frodent"
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/fround
 	name = "Round (Top)"
@@ -376,14 +406,17 @@
 /datum/sprite_accessory/snouts/mam_snouts/fpede
 	name = "Scolipede (Top)"
 	icon_state = "fpede"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fsergal
 	name = "Sergal (Top)"
 	icon_state = "fsergal"
+	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/snouts/mam_snouts/fshark
 	name = "Shark (Top)"
 	icon_state = "fshark"
+	matrixed_sections = MATRIX_RED
 
 /datum/sprite_accessory/snouts/mam_snouts/fsharp
 	name = "Sharp (Top)"
@@ -398,7 +431,14 @@
 /datum/sprite_accessory/snouts/mam_snouts/ftoucan
 	name = "Toucan (Top)"
 	icon_state = "ftoucan"
+	matrixed_sections = MATRIX_RED_BLUE
 
 /datum/sprite_accessory/snouts/mam_snouts/fredpanda
 	name = "WahCoon (Top)"
 	icon_state = "fwah"
+	matrixed_sections = MATRIX_ALL
+
+/datum/sprite_accessory/snouts/mam_snouts/fredpanda/alt
+	name = "WahCoon ALT (Top)"
+	icon_state = "fwahalt"
+	matrixed_sections = MATRIX_RED_GREEN

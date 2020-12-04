@@ -216,6 +216,14 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/effect/clockwork/sigil/transmission/process()
     var/power_drained = 0
     var/power_mod = 0.005
@@ -408,7 +416,7 @@
 
 /obj/effect/clockwork/sigil/rite
 	name = "radiant sigil"
-	desc = "A glowing sigil glowing with barely-contained power."
+	desc = "A sigil glowing with barely-contained power."
 	clockwork_desc = "A sigil that will allow you to perform certain rites on it, provided you have access to sufficient power and materials."
 	icon_state = "sigiltransmission" //am big lazy - recolored transmission sigil
 	sigil_name = "Sigil of Rites"
@@ -432,7 +440,8 @@
 		return
 	var/list/possible_rites = list()
 	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
-		possible_rites[R] = R
+		if(is_servant_of_ratvar(user, require_full_power = TRUE) || !R.requires_full_power)
+			possible_rites[R] = R
 	var/input_key = input(user, "Choose a rite", "Choosing a rite") as null|anything in possible_rites
 	if(!input_key)
 		return

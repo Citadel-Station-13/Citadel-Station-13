@@ -368,3 +368,9 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/(location)
+
+/datum/chemical_reaction/system_cleaner
+	name = "System Cleaner"
+	id = /datum/reagent/medicine/system_cleaner
+	results = list(/datum/reagent/medicine/system_cleaner = 4)
+	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)

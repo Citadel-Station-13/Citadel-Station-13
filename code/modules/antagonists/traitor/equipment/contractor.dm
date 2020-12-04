@@ -187,8 +187,8 @@
 
 	partner_outfit.equip(partner)
 
-	var/obj/structure/closet/supplypod/arrival_pod = new()
-
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/arrival_pod = new(pick(get_area_turfs(pod_storage_area)))
 	arrival_pod.style = STYLE_SYNDICATE
 	arrival_pod.explosionSize = list(0,0,0,1)
 	arrival_pod.bluespace = TRUE
@@ -203,7 +203,7 @@
 	partner_mind.make_Contractor_Support()
 	to_chat(partner_mind.current, "\n<span class='alertwarning'>[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.</span>")
 	to_chat(partner_mind.current, "<span class='alertwarning'>Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.</span>\n\n")
-	new /obj/effect/abstract/DPtarget(free_location, arrival_pod)
+	new /obj/effect/pod_landingzone(free_location, arrival_pod)
 
 /datum/contractor_item/blackout
 	name = "Blackout"

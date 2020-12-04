@@ -368,7 +368,8 @@
 	var/turf/T = get_turf(S)
 
 	var/obj/structure/spider/stickyweb/W = locate() in T
-	if(W)
+	var/obj/structure/arachnid/W2 = locate() in T
+	if(W || W2)
 		to_chat(S, "<span class='warning'>There's already a web here!</span>")
 		return
 

@@ -32,7 +32,7 @@
 	materials = list(/datum/material/glass = 3000, /datum/material/plasma = 3000, /datum/material/diamond = 250, /datum/material/bluespace = 250)
 	build_path = /obj/item/reagent_containers/glass/beaker/bluespace
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -522,6 +522,17 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/cyberimp_robot_radshielding
+	name = "ECC System Guard Implant"
+	desc = "This implant can counteract the effects of harmful radiation in robots, effectively increasing their radiation tolerance significantly."
+	id = "ci-robot-radshielding"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 400, /datum/material/silver = 350, /datum/material/gold = 1000, /datum/material/diamond = 100)
+	build_path = /obj/item/organ/cyberimp/brain/robot_radshielding
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
@@ -973,6 +984,10 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 
+/////////////////////////////////////////
+////////////     Plumbing      //////////
+/////////////////////////////////////////
+
 /datum/design/acclimator
 	name = "Plumbing Acclimator"
 	desc = "A heating and cooling device for pipes!"
@@ -1126,3 +1141,14 @@
 	build_path = /obj/item/construction/plumbing
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/rplunger
+    name = "Reinforced Plunger"
+    desc = "A plunger designed for heavy duty clogs."
+    id = "rplunger"
+    build_type = PROTOLATHE
+    materials = list(/datum/material/plasma = 1000, /datum/material/iron = 1000, /datum/material/glass = 1000)
+    construction_time = 15
+    build_path = /obj/item/plunger/reinforced
+    category = list ("Misc","Medical Designs")
+    departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO

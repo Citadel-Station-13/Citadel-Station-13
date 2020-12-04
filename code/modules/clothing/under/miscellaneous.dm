@@ -168,7 +168,6 @@
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
-	body_parts_covered = CHEST|GROIN
 	can_adjust = FALSE
 
 /obj/item/clothing/under/misc/durathread
@@ -236,7 +235,7 @@
 	icon_state = "tssuit"
 	item_state = "r_suit"
 	can_adjust = FALSE
-	mutantrace_variation = USE_TAUR_CLIP_MASK
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/under/misc/poly_shirt
 	name = "polychromic button-up shirt"
