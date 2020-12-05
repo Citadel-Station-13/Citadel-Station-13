@@ -1,4 +1,0 @@
-author: "Acer202"
-delete-after: True
-changes: 
-  - bugfix: "Main mining shuttle should no longer look at the public mining shuttle and attempt to dock ontop of it. Monastery shuttle should now function again."
