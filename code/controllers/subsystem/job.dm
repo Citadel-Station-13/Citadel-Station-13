@@ -676,6 +676,7 @@ SUBSYSTEM_DEF(job)
 			return
 		for(var/i in chosen_gear)
 			var/datum/gear/G = i[LOADOUT_ITEM]
+			message_admins("attempt to index with category [initial(G.category)] and subcategory [initial(G.subcategory)] is this a race condition?")
 			G = GLOB.loadout_items[initial(G.category)][initial(G.subcategory)][initial(G.name)]
 			if(!G)
 				continue
@@ -708,11 +709,9 @@ SUBSYSTEM_DEF(job)
 			if(I) //handle loadout colors last
 				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
 					var/datum/element/polychromic/polychromic
-					for(var/some_connection in I.comp_lookup["parent_qdeleting"]) //stupid way to do it but GetElement does not work for this case, sigh
-						if(ispath(some_connection, /datum/element/polychromic))
-							polychromic = some_connection
-							break
-					if(polychromic)
+					var/some_connection = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this case, sigh
+					if(ispath(some_connection, /datum/element/polychromic))
+						polychromic = some_connection
 						var/list/polychromic_entry = polychromic.colors_by_atom[I]
 						if(polychromic_entry)
 							message_admins("we found the corresponding atom")
