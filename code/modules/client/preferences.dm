@@ -895,7 +895,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
 						var/class_link = ""
-						var/list/loadout_item = has_loadout_gear(loadout_slot, gear.type)
+						var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
 						var/extra_color_data = ""
 						if(loadout_item)
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
@@ -2641,9 +2641,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
-			if(!toggle && has_loadout_gear(loadout_slot, G.type))//toggling off and the item effectively is in chosen gear)
-				remove_gear_from_loadout(loadout_slot, G.type)
-			else if(toggle && !(has_loadout_gear(loadout_slot, G.type)))
+			if(!toggle && has_loadout_gear(loadout_slot, "[G.type]"))//toggling off and the item effectively is in chosen gear)
+				remove_gear_from_loadout(loadout_slot, "[G.type]")
+			else if(toggle && !(has_loadout_gear(loadout_slot, "[G.type]")))
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
@@ -2651,7 +2651,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
-					var/list/new_loadout_data = list(LOADOUT_ITEM = G.type)
+					var/list/new_loadout_data = list(LOADOUT_ITEM = "[G.type]")
 					if(length(G.loadout_initial_colors))
 						new_loadout_data[LOADOUT_COLOR] = G.loadout_initial_colors
 					if(loadout_data["SAVE_[loadout_slot]"])
@@ -2663,7 +2663,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
 			if(!G)
 				return
-			var/user_gear = has_loadout_gear(loadout_slot, G.type)
+			var/user_gear = has_loadout_gear(loadout_slot, "[G.type]")
 			if(!user_gear)
 				return
 			message_admins("the gear is of length [length(user_gear)]")
