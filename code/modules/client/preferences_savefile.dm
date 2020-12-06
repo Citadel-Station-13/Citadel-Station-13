@@ -275,10 +275,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				continue
 			var/datum/gear/gear_item = text2path(some_gear_item)
 			if(!(initial(gear_item.loadout_flags) & LOADOUT_CAN_COLOR_POLYCHROMIC))
-				message_admins("a")
 				loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item)) //for the migration we put their old save into the first save slot, which is loaded by default!
 			else
-				message_admins("b")
 				//the same but we setup some new polychromic data  (you can't get the initial value for a list so we have to do this horrible thing here)
 				var/datum/gear/temporary_gear_item = new gear_item
 				loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item, LOADOUT_COLOR = temporary_gear_item.loadout_initial_colors))

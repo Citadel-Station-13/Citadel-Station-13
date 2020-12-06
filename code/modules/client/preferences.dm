@@ -811,14 +811,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
 			if(chosen_gear)
-				message_admins("loading gear from SAVE_[loadout_slot]")
 				for(var/loadout_item in chosen_gear)
 					var/loadout_item_path = loadout_item[LOADOUT_ITEM]
 					if(loadout_item_path)
-						message_admins("loading [loadout_item_path] from slot")
 						var/datum/gear/loadout_gear = text2path(loadout_item_path)
 						if(loadout_gear)
-							message_admins("it exists with a name of [initial(loadout_gear.name)]")
 						gear_points -= initial(loadout_gear.cost)
 			else
 				chosen_gear = list()
@@ -2670,20 +2667,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/user_gear = has_loadout_gear(loadout_slot, "[G.type]")
 			if(!user_gear)
 				return
-			message_admins("the gear is of length [length(user_gear)]")
-			message_admins("the color list is of length [length(user_gear[LOADOUT_COLOR])]")
 			var/list/color_options = list()
 			for(var/i=1, i<=length(G.loadout_initial_colors), i++)
 				color_options += "Color [i]"
 			var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
 			if(color_to_change)
 				var/color_index = text2num(copytext(color_to_change, 7))
-				message_admins("chosen index is [color_index]")
 				var/current_color = user_gear[LOADOUT_COLOR][color_index]
-				message_admins("current color is [current_color]")
 				var/new_color = input(user, "Polychromic options", "Choose [color_to_change] Color", current_color) as color|null
 				if(new_color)
-					message_admins("new colour successful")
 					user_gear[LOADOUT_COLOR][color_index] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
 
 	ShowChoices(user)
