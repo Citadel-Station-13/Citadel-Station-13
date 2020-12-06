@@ -2927,7 +2927,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/remove_gear_from_loadout(save_slot, gear_type)
 	var/find_gear = has_loadout_gear(save_slot, gear_type)
 	if(find_gear)
-		loadout_data["SAVE_[save_slot]"].Remove(list(find_gear))
+		loadout_data["SAVE_[save_slot]"] -= find_gear
 
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT
