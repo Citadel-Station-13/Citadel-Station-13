@@ -816,7 +816,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(loadout_item_path)
 						var/datum/gear/loadout_gear = text2path(loadout_item_path)
 						if(loadout_gear)
-						gear_points -= initial(loadout_gear.cost)
+							gear_points -= initial(loadout_gear.cost)
 			else
 				chosen_gear = list()
 
