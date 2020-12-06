@@ -234,7 +234,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		for(var/i=1, i<= MAXIMUM_LOADOUT_SAVES, i++)
 			loadout_data["SAVE_[i]"] = list()
 		for(var/some_gear_item in saved_loadout_paths)
-			if(!ispath(some_gear_item))
+			if(!ispath(text2path(some_gear_item)))
 				message_admins("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
 				continue
 			loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item)) //for the migration we put their old save into the first save slot, which is loaded by default!
