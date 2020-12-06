@@ -274,8 +274,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!ispath(text2path(some_gear_item)))
 				message_admins("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
 				continue
-			loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item)) //for the migration we put their old save into the first save slot, which is loaded by default!
+			var/datum/gear/gear_item = text2path(some_gear_item)
+			if(!initial(gear_item.loadout_initial_colors))
+				loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item)) //for the migration we put their old save into the first save slot, which is loaded by default!
+			else
+				//the same but we setup some new polychromic data
+				loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item, LOADOUT_COLOR = initial(gear_item.loadout_initial_colors)))
 			//it's double packed into a list because += will union the two lists contents
+
 		S["loadout"] = safe_json_encode(loadout_data)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
