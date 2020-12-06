@@ -98,7 +98,7 @@
 					L.adjustFireLoss(amount)
 					newamt = L.getFireLoss()
 				if("toxin")
-					L.adjustToxLoss(amount)
+					L.adjustToxLoss(amount, toxins_type = TOX_OMNI)
 					newamt = L.getToxLoss()
 				if("oxygen")
 					L.adjustOxyLoss(amount)

@@ -44,7 +44,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
-	var/original_mind
+	var/datum/mind/original_mind
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -69,7 +69,7 @@
 
 /mob/living/simple_animal/hostile/construct/death()
 	if(original_mind)
-		transfer_ckey(original_mind)
+		transfer_ckey(original_mind.current)
 	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
