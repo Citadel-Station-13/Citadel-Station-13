@@ -35,8 +35,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 91-100: Dangerously toxic - swift death
 */
 
+
+/datum/reagent/consumable/ethanol/on_mob_add(mob/living/L, amount)
+	. = ..()
+	if(!iscarbon(L))
+		return
+
+	var/mob/living/carbon/C = L
+	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM))
+		C.reagents.remove_reagent(type, amount, FALSE)
+
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(HAS_TRAIT(C, TRAIT_NO_ALCOHOL))
+	if(HAS_TRAIT(C, TRAIT_TOXIC_ALCOHOL))
 		C.adjustToxLoss((boozepwr/25)*REM,forced = TRUE)
 	else if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 		var/booze_power = boozepwr
@@ -2279,15 +2289,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 ////////////////////
 /datum/reagent/consumable/ethanol/species_drink
 	var/species_required
-	var/disgust = 25
+	var/disgust = 26
 	boozepwr = 50
 
-/datum/reagent/consumable/ethanol/species_drink/on_mob_life(mob/living/carbon/C)
-	if(C.dna.species && C.dna.species.species_category == species_required) //species have a species_category variable that refers to one of the drinks
-		quality = RACE_DRINK
-	else
-		C.adjust_disgust(disgust)
-	return ..()
+/datum/reagent/consumable/ethanol/species_drink/reaction_mob(mob/living/carbon/C, method=TOUCH)
+	if(method == INGEST)
+		if(C?.dna?.species?.species_category == species_required) //species have a species_category variable that refers to one of the drinks
+			quality = RACE_DRINK
+		else
+			C.adjust_disgust(disgust)
+		return ..()
 
 /datum/reagent/consumable/ethanol/species_drink/coldscales
 	name = "Coldscales"

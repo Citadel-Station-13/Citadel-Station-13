@@ -17,10 +17,14 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion/right{
-	dir = 4
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 8;
+	name = "8maintenance loot spawner"
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "ah" = (
 /obj/structure/table/wood,
@@ -70,20 +74,21 @@
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "ar" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/wood,
 /area/ruin/powered)
 "as" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "at" = (
-/obj/structure/shuttle/engine/propulsion/left{
-	dir = 4
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 5;
+	pixel_y = -32
 	},
-/turf/closed/wall/mineral/titanium,
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "au" = (
 /obj/item/seeds/tower,
@@ -93,11 +98,15 @@
 /area/ruin/powered)
 "av" = (
 /obj/structure/table/wood,
-/obj/item/paper/crumpled{
-	info = "</b><br><br>So this is it, I guess.. Always thought I'd go out doing something stupid, but.. not like this.<br>Should anyone find this note, tell Jeremy Clarke he can kiss my ass. Launching the pod unprepared like that..<br>Well. Now that I'm keeling over here, I guess I should write how I came to be the last one standing here.<br>Four of us took this pod.. only three of us woke up though.. fourth pod is locked from the inside, we couldn't figure out how to get it open.<br>Me and the clown set up a farm s'we can survive at least a while.. though, he didn't seem to understand that man cannot live on banana alone.<br>Had a bunch of circuits on him for some reason when he eventually passed, whispered to me something about a chem dispenser.. I.. don't know what he meant by that. I was never good with machinary. Maybe he wanted space lube?<br>The assistant that we gave the space suit to go out and find help never came back.. I'm betting he found salvation and left us behind.. never can trust those grubby greytiders."
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton{
+	pixel_x = 6;
+	pixel_y = 9
 	},
-/obj/item/pen,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "aw" = (
@@ -141,6 +150,17 @@
 /area/ruin/powered)
 "aE" = (
 /turf/open/floor/plating/asteroid/airless,
+/area/ruin/powered)
+"aF" = (
+/obj/machinery/power/port_gen/pacman{
+	active = 1;
+	anchored = 1;
+	sheets = 10
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "aG" = (
 /obj/structure/sink/puddle,
@@ -187,9 +207,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "aQ" = (
-/obj/item/stack/ore/gold,
-/obj/item/stack/ore/gold,
-/obj/item/stack/ore/gold,
+/obj/item/circuitboard/machine/circuit_imprinter,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "aR" = (
@@ -205,8 +223,12 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "aU" = (
-/obj/item/flashlight/lamp,
 /obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/meat/slab/human{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/meat/slab/human,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "aV" = (
@@ -238,20 +260,24 @@
 /turf/closed/mineral/random/no_caves/earth_like,
 /area/ruin/powered)
 "bc" = (
-/obj/item/circuitboard/machine/circuit_imprinter,
+/obj/structure/table/wood,
+/obj/item/vending_refill/snack,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bd" = (
-/obj/item/grown/bananapeel,
-/turf/open/floor/plating/asteroid,
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
 "be" = (
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
-/obj/structure/fans/tiny/invisible,
+/obj/structure/chair/wood/normal{
+	dir = 1
+	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bf" = (
-/obj/item/clothing/glasses/meson,
+/obj/machinery/door/airlock/wood,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bg" = (
@@ -275,50 +301,43 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bl" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable{
-	icon_state = "0-2"
+/obj/machinery/door/airlock/titanium{
+	name = "Escape Pod Airlock"
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "bm" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/item/flashlight/lamp,
+/obj/structure/table/wood,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bn" = (
-/obj/structure/cable{
-	icon_state = "2-8"
+/obj/structure/table/wood,
+/obj/item/paper/crumpled{
+	info = "</b><br><br>So this is it, I guess.. Always thought I'd go out doing something stupid, but.. not like this.<br>Should anyone find this note, tell Jeremy Clarke he can kiss my ass. Launching the pod unprepared like that..<br>Well. Now that I'm keeling over here, I guess I should write how I came to be the last one standing here.<br>Four of us took this pod.. only three of us woke up though.. fourth pod is locked from the inside, we couldn't figure out how to get it open.<br>Me and the clown set up a farm s'we can survive at least a while.. though, he didn't seem to understand that man cannot live on banana alone.<br>Had a bunch of circuits on him for some reason when he eventually passed, whispered to me something about a chem dispenser.. I.. don't know what he meant by that. I was never good with machinary. Maybe he wanted space lube?<br>The assistant that we gave the space suit to go out and find help never came back.. I'm betting he found salvation and left us behind.. never can trust those grubby greytiders."
 	},
+/obj/item/pen,
+/obj/item/stock_parts/cell/hyper,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bo" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/item/grown/bananapeel,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bp" = (
-/obj/item/stack/ore/iron,
-/obj/item/stack/ore/iron,
-/obj/item/stack/ore/iron,
+/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "bq" = (
-/obj/structure/cable,
-/obj/machinery/power/port_gen/pacman{
-	active = 1;
-	anchored = 1;
-	sheets = 10
-	},
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "br" = (
-/obj/item/stack/ore/iron,
-/obj/item/stack/sheet/mineral/plasma,
-/obj/item/stack/sheet/mineral/plasma,
-/turf/open/floor/plating/asteroid,
+/obj/effect/decal/cleanable/oil{
+	icon_state = "floor5"
+	},
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "bs" = (
 /obj/item/flashlight/lamp/bananalamp,
@@ -328,17 +347,180 @@
 /obj/item/pickaxe/titanium,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
+"fc" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
 "fp" = (
 /turf/closed/mineral/random/high_chance/earth_like,
 /area/ruin/powered)
 "jx" = (
 /turf/closed/mineral/silver/earth_like,
 /area/ruin/powered)
+"ma" = (
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"mr" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
 "nc" = (
 /turf/closed/mineral/bscrystal/earth_like,
 /area/ruin/powered)
+"nl" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"oR" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"wU" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"zs" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"CY" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"DH" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"Ft" = (
+/obj/structure/reagent_dispensers/fueltank/high,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"HK" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"HP" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
+"Iy" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate/internals,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/mineral/titanium,
+/area/ruin/powered)
 "JZ" = (
 /turf/closed/mineral/titanium/earth_like,
+/area/ruin/powered)
+"Kj" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "Lt" = (
 /obj/structure/mirror,
@@ -346,6 +528,19 @@
 /area/ruin/powered)
 "PG" = (
 /turf/closed/mineral/gold/earth_like,
+/area/ruin/powered)
+"Qi" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	active = 1;
+	anchored = 1;
+	sheets = 10
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"Sv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
 /area/ruin/powered)
 "Ue" = (
 /turf/closed/mineral/diamond/earth_like,
@@ -357,6 +552,24 @@
 /obj/item/circuitboard/machine/mining_equipment_vendor/golem,
 /obj/item/circuitboard/machine/ore_redemption,
 /turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"WP" = (
+/obj/item/stack/ore/gold,
+/obj/item/stack/ore/gold,
+/obj/item/stack/ore/gold,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"Xh" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"XQ" = (
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
 
 (1,1,1) = {"
@@ -1123,9 +1336,9 @@ bb
 bb
 af
 ak
-ao
-ao
-ao
+DH
+an
+mr
 ak
 af
 am
@@ -1175,9 +1388,9 @@ bb
 aR
 ae
 ae
-an
-an
-an
+af
+bl
+af
 ae
 ae
 am
@@ -1225,13 +1438,13 @@ ba
 ba
 bb
 aR
+ae
 ag
-ag
-af
-ar
-af
+nl
+an
+HP
 at
-at
+ae
 am
 bb
 fp
@@ -1277,13 +1490,13 @@ aL
 bb
 bb
 aT
-am
-am
-am
-am
-am
-am
-am
+bl
+br
+an
+an
+an
+an
+bl
 aR
 bb
 bb
@@ -1329,13 +1542,13 @@ am
 ba
 bb
 am
-am
-am
-am
-am
-am
-am
-am
+af
+Ft
+zs
+Sv
+CY
+wU
+af
 bg
 bb
 fp
@@ -1381,13 +1594,13 @@ am
 ba
 bb
 bb
-am
-am
-am
-am
-am
-am
-am
+ae
+Iy
+aF
+br
+CY
+CY
+ae
 bb
 bb
 bb
@@ -1432,14 +1645,14 @@ am
 bb
 bb
 bb
-aU
+am
 bd
-am
-am
+bd
+af
 bl
-bm
-am
-am
+af
+XQ
+XQ
 bb
 bb
 bb
@@ -1484,15 +1697,15 @@ am
 bb
 bb
 ba
-av
-be
 am
 am
 am
-bn
-bo
-bo
-bq
+am
+am
+am
+am
+am
+am
 bb
 bb
 bb
@@ -1525,10 +1738,10 @@ bb
 bb
 bb
 bb
-ba
-am
-am
-am
+ar
+ar
+ar
+ar
 am
 am
 am
@@ -1536,15 +1749,15 @@ am
 bb
 bb
 bb
-bc
-bf
 am
 am
 am
 am
 am
 am
-br
+am
+am
+am
 bb
 bb
 bb
@@ -1577,10 +1790,10 @@ bb
 bb
 bb
 bb
-bb
-bb
-bb
-bb
+ar
+av
+am
+ar
 am
 am
 am
@@ -1629,10 +1842,10 @@ bb
 fp
 bb
 bb
-bb
-bb
-bb
-bb
+ar
+aU
+be
+bf
 am
 am
 am
@@ -1645,8 +1858,8 @@ am
 am
 aR
 am
-am
-am
+Kj
+HK
 am
 bb
 bb
@@ -1681,27 +1894,27 @@ bb
 bb
 bb
 bb
-bb
-bb
-bb
-bb
+ar
+bc
+am
+ar
+am
+am
+am
+am
+ba
 ba
 am
 am
 am
-ba
-ba
 am
 am
 am
 am
-am
-am
-am
-am
-am
-am
-am
+oR
+Xh
+Xh
+Qi
 ba
 ba
 ba
@@ -1733,16 +1946,18 @@ bb
 bb
 bb
 bb
-bb
-bb
-bb
-bb
+ar
+ar
+ar
+ar
 ba
 ba
 ba
 aK
 ba
 ba
+bm
+bo
 am
 am
 am
@@ -1750,9 +1965,7 @@ am
 am
 am
 am
-bp
-am
-am
+fc
 aR
 ba
 ba
@@ -1795,14 +2008,14 @@ fp
 ba
 fp
 ba
+bn
+bp
+am
+am
+am
+am
+am
 aP
-am
-am
-am
-am
-am
-am
-am
 am
 am
 aR
@@ -1848,14 +2061,14 @@ ba
 ba
 ba
 aQ
-aP
+bq
 am
 am
 aR
 am
 am
-am
-am
+WP
+aP
 bb
 am
 ba
@@ -2009,7 +2222,7 @@ bg
 am
 am
 am
-am
+ma
 am
 aS
 bb

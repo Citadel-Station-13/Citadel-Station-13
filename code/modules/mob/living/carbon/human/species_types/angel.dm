@@ -7,7 +7,7 @@
 	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	no_equip = list(SLOT_BACK)
 	blacklisted = 1
-	limbs_id = "human"
+	limbs_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	species_category = SPECIES_CATEGORY_BASIC //they're a kind of human
 
@@ -130,7 +130,7 @@
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
 		stunmod = 2
-		speedmod = -0.35
+		speedmod = -0.1
 		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE

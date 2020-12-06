@@ -2,7 +2,7 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = SPECIES_FELINID
-	limbs_id = "human"
+	limbs_id = SPECIES_HUMAN
 
 	mutant_bodyparts = list("mam_tail" = "Cat", "mam_ears" = "Cat", "deco_wings" = "None")
 

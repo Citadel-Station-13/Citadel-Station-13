@@ -268,8 +268,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-		
-	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
+
+	addtimer(CALLBACK(src, .proc/ensure_keys_set, prefs), 10)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -443,7 +443,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
-
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
@@ -474,11 +473,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	fit_viewport()
 	Master.UpdateTickRate()
-
-/client/proc/ensure_keys_set()
-	if(SSinput.initialized)
-		set_macros()
-		update_movement_keys(prefs)
 
 //////////////
 //DISCONNECT//
@@ -561,36 +555,49 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!query_client_in_db.Execute())
 		qdel(query_client_in_db)
 		return
-	if(!query_client_in_db.NextRow())
-		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey] && !(ckey in GLOB.bunker_passthrough))
-			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a><br>If you have already done so, wait a few minutes then try again; sometimes the server needs to fully load before you can join.</span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
-			var/list/connectiontopic_a = params2list(connectiontopic)
-			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
-			if(panic_addr && !connectiontopic_a["redirect"])
-				var/panic_name = CONFIG_GET(string/panic_server_name)
-				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
-				winset(src, null, "command=.options")
-				src << link("[panic_addr]?redirect=1")
-			qdel(query_client_in_db)
-			qdel(src)
-			return
+	if(!query_client_in_db.NextRow()) //new user detected
+		if(!holder && !GLOB.deadmins[ckey])
+			if(CONFIG_GET(flag/panic_bunker) && !(ckey in GLOB.bunker_passthrough))
+				log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
+				message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
+				to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a><br>If you have already done so, wait a few minutes then try again; sometimes the server needs to fully load before you can join.</span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
+				var/list/connectiontopic_a = params2list(connectiontopic)
+				var/list/panic_addr = CONFIG_GET(string/panic_server_address)
+				if(panic_addr && !connectiontopic_a["redirect"])
+					var/panic_name = CONFIG_GET(string/panic_server_name)
+					to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
+					winset(src, null, "command=.options")
+					src << link("[panic_addr]?redirect=1")
+				qdel(query_client_in_db)
+				qdel(src)
+				return
 
-		new_player = 1
-		account_join_date = sanitizeSQL(findJoinDate())
-		var/sql_key = sanitizeSQL(key)
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
-		if(!query_add_player.Execute())
-			qdel(query_client_in_db)
+			new_player = 1
+			account_join_date = sanitizeSQL(findJoinDate())
+			var/sql_key = sanitizeSQL(key)
+			var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+			if(!query_add_player.Execute())
+				qdel(query_client_in_db)
+				qdel(query_add_player)
+				return
 			qdel(query_add_player)
-			return
-		qdel(query_add_player)
-		if(!account_join_date)
-			account_join_date = "Error"
-			account_age = -1
-		else if(ckey in GLOB.bunker_passthrough)
-			GLOB.bunker_passthrough -= ckey
+			if(!account_join_date)
+				account_join_date = "Error"
+				account_age = -1
+			else if(ckey in GLOB.bunker_passthrough)
+				GLOB.bunker_passthrough -= ckey
+		if(CONFIG_GET(flag/age_verification)) //setup age verification
+			if(!set_db_player_flags())
+				message_admins(usr, "<span class='danger'>ERROR: Unable to read player flags from database. Please check logs.</span>")
+				return
+			else
+				var/dbflags = prefs.db_flags
+				if(!(dbflags & DB_FLAG_AGE_CONFIRMATION_COMPLETE)) //they have not completed age verification
+					if((ckey in GLOB.bunker_passthrough)) //they're verified in the panic bunker though
+						update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+					else
+						update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, TRUE)
+
 	qdel(query_client_in_db)
 	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if(!query_get_client_age.Execute())
@@ -923,23 +930,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
 	view_size.setDefault("[x]x[y]")
-
-/client/proc/update_movement_keys(datum/preferences/direct_prefs)
-	var/datum/preferences/D = prefs || direct_prefs
-	if(!D?.key_bindings)
-		return
-	movement_keys = list()
-	for(var/key in D.key_bindings)
-		for(var/kb_name in D.key_bindings[key])
-			switch(kb_name)
-				if("North")
-					movement_keys[key] = NORTH
-				if("East")
-					movement_keys[key] = EAST
-				if("West")
-					movement_keys[key] = WEST
-				if("South")
-					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

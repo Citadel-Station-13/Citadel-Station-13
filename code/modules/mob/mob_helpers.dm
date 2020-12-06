@@ -496,8 +496,19 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			colored_message = "<font color=[color]>[message]</font>"
 		else
 			colored_message = "<font color='[color]'>[message]</font>"
-
-	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)]" = colored_message)
+	
+	//This makes readability a bit better for admins.
+	switch(message_type)
+		if(LOG_WHISPER)
+			colored_message = "(WHISPER) [colored_message]"
+		if(LOG_OOC)
+			colored_message = "(OOC) [colored_message]"
+		if(LOG_ASAY)
+			colored_message = "(ASAY) [colored_message]"
+		if(LOG_EMOTE)
+			colored_message = "(EMOTE) [colored_message]"
+	
+	var/list/timestamped_message = list("\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)]" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 
