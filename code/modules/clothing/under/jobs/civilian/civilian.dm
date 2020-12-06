@@ -199,6 +199,15 @@
 	can_adjust = FALSE
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/under/rank/civilian/janitor/maid/polychromic
+	icon_state = "polymaid"
+	item_state = "polymaid"
+	var/list/poly_colors = list("#FFFFFF", "#000000")
+
+/obj/item/clothing/under/rank/civilian/janitor/maid/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, poly_colors, 2)
+
 /obj/item/clothing/under/rank/civilian/lawyer
 	desc = "Slick threads."
 	name = "Lawyer suit"

@@ -11,7 +11,7 @@
 	meat = null
 	gib_types = /obj/effect/gibspawner/robot
 	damage_overlay_type = "synth"
-	limbs_id = "synth"
+	limbs_id = SPECIES_SYNTH
 	var/list/initial_species_traits = list(NOTRANSSTING) //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
@@ -80,7 +80,7 @@
 		qdel(fake_species)
 		fake_species = null
 		meat = initial(meat)
-		limbs_id = "synth"
+		limbs_id = SPECIES_SYNTH
 		use_skintones = FALSE
 		sexes = 0
 		fixed_mut_color = ""
