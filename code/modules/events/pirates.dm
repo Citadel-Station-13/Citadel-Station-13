@@ -219,7 +219,7 @@
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/internals/oxygen
+	storage_type = /obj/item/tank/jetpack/void
 
 
 /obj/machinery/loot_locator
@@ -275,6 +275,7 @@
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	resistance_flags = INDESTRUCTIBLE
 	ui_x = 600
 	ui_y = 230
 	var/status_report = "Ready for delivery."

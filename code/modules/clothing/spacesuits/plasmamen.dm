@@ -40,37 +40,115 @@
 	icon_state = "plasmaman-helm"
 	item_state = "plasmaman-helm"
 	strip_delay = 80
+	flash_protect = 2
+	tint = 2
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75, "wound" = 10)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 4 //luminosity when the light is on
-	var/on = FALSE
+	var/helmet_on = FALSE
+	var/smile = FALSE
+	var/smile_color = "#FF0000"
 	var/light_overlay = "envirohelm-light"
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	var/visor_icon = "envisor"
+	var/smile_state = "envirohelm_smile"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen/plasmaman)
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES
+	visor_flags_inv = HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	mutantrace_variation = NONE
+
+/obj/item/clothing/head/helmet/space/plasmaman/Initialize()
+	. = ..()
+	visor_toggling()
+	update_icon()
+
+/obj/item/clothing/head/helmet/space/plasmaman/ComponentInitialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/wipe_that_smile_off_your_face)
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE))
+		toggle_welding_screen(user)
+		return TRUE
+
+/obj/item/clothing/head/helmet/space/plasmaman/proc/toggle_welding_screen(mob/living/user)
+	if(weldingvisortoggle(user))
+		if(helmet_on)
+			to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
+			helmet_on = FALSE
+			set_light(0)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE) //Visors don't just come from nothing
+		update_icon()
+
+/obj/item/clothing/head/helmet/space/plasmaman/update_overlays()
+	. = ..()
+	if(!up)
+		. += visor_icon
+	if(helmet_on)
+		. += light_overlay
+	if(smile)
+		var/mutable_appearance/M = mutable_appearance(icon, smile_state)
+		M.color = smile_color
+		. += M
+
+/obj/item/clothing/head/helmet/space/plasmaman/attackby(obj/item/C, mob/living/user)
+	. = ..()
+	if(istype(C, /obj/item/toy/crayon))
+		if(!smile)
+			var/obj/item/toy/crayon/CR = C
+			to_chat(user, "<span class='notice'>You start drawing a smiley face on the helmet's visor..</span>")
+			if(do_after(user, 25, target = src))
+				smile = TRUE
+				smile_color = CR.paint_color
+				to_chat(user, "You draw a smiley on the helmet visor.")
+				update_icon()
+		else
+			to_chat(user, "<span class='warning'>Seems like someone already drew something on this helmet's visor!</span>")
+
+///gets called when receiving the CLEAN_ACT signal from something, i.e soap or a shower. exists to remove any smiley faces drawn on the helmet.
+/obj/item/clothing/head/helmet/space/plasmaman/proc/wipe_that_smile_off_your_face()
+	if(smile)
+		smile = FALSE
+		update_icon()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	if(!light_overlay)
 		return
-	on = !on
-	if(!on)
-		cut_overlay(light_overlay)
-	else
-		add_overlay(light_overlay)
-	user.update_inv_head() //So the mob overlay updates
+	if(!up)
+		to_chat(user, "<span class='notice'>Your helmet's torch can't pass through your welding visor!</span>")
+		return
+	helmet_on = !helmet_on
 
-	if(on)
+	if(helmet_on)
 		set_light(brightness_on, 0.8, "#FFCC66")
 	else
 		set_light(0)
 
-	for(var/X in actions)
-		var/datum/action/A=X
-		A.UpdateButtonIcon()
+	update_icon()
+
+/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
+	up = !up
+	clothing_flags ^= visor_flags
+	flags_inv ^= visor_flags_inv
+	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
+		flash_protect ^= initial(flash_protect)
+	if(visor_vars_to_toggle & VISOR_TINT)
+		tint ^= initial(tint)
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
 	. = ..()
-	if(!isinhands && on)
-		. += mutable_appearance(icon_file, light_overlay)
+	if(!isinhands)
+		if(smile)
+			var/mutable_appearance/M = mutable_appearance(icon_file, smile_state)
+			M.color = smile_color
+			. += M
+		if(!up)
+			. += mutable_appearance(icon_file, visor_icon)
+		if(helmet_on)
+			. += mutable_appearance(icon_file, light_overlay)
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
@@ -170,6 +248,7 @@
 	desc = "A khaki helmet given to plasmamen miners operating on lavaland."
 	icon_state = "explorer_envirohelm"
 	item_state = "explorer_envirohelm"
+	visor_icon = "explorer_envisor"
 
 /obj/item/clothing/head/helmet/space/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit helmet"
@@ -202,7 +281,9 @@
 	icon_state = "prototype_envirohelm"
 	item_state = "prototype_envirohelm"
 	light_overlay = null
-	actions_types = list()
+	actions_types = list(/datum/action/item_action/toggle_welding_screen/plasmaman)
+	smile_state = "prototype_smile"
+	visor_icon = "prototype_envisor"
 
 /obj/item/clothing/head/helmet/space/plasmaman/botany
 	name = "botany plasma envirosuit helmet"
@@ -222,6 +303,7 @@
 	icon_state = "mime_envirohelm"
 	item_state = "mime_envirohelm"
 	light_overlay = "mime_envirohelm-light"
+	visor_icon = "mime_envisor"
 
 /obj/item/clothing/head/helmet/space/plasmaman/clown
 	name = "clown envirosuit helmet"
@@ -229,3 +311,6 @@
 	icon_state = "clown_envirohelm"
 	item_state = "clown_envirohelm"
 	light_overlay = "clown_envirohelm-light"
+	item_state = "clown_envirohelm"
+	visor_icon = "clown_envisor"
+	smile_state = "clown_smile"
