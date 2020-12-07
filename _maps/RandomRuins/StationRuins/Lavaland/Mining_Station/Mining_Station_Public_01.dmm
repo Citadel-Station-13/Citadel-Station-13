@@ -1552,10 +1552,14 @@
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
 "yZ" = (
-/obj/docking_port/stationary/public_mining_dock{
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
+	dwidth = 3;
+	height = 7;
 	id = "lavaland_common_away";
-	name = "Mining Station Public Wing"
+	name = "Lavaland Mining Public Wing";
+	width = 7
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

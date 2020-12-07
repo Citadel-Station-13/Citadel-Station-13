@@ -79,13 +79,13 @@
 	no_destination_swap = TRUE
 	var/static/list/dumb_rev_heads = list()
 
-	/obj/machinery/computer/shuttle/mining/common
+/obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"
 	desc = "Used to call and send the lavaland shuttle."
 	req_access = list()
 	circuit = /obj/item/circuitboard/computer/mining_shuttle/common
-	shuttleId = "mining_common"
-	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
+	shuttleId = "mining_shuttle_common"
+	possible_destinations = "commonmining_home;lavaland_common_away"
 
 
 /obj/machinery/computer/shuttle/mining/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
