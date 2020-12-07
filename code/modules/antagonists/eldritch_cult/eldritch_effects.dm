@@ -8,6 +8,12 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
+/obj/effect/eldritch/Initialize()
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
+
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
