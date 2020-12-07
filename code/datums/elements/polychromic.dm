@@ -37,7 +37,6 @@
 		var/col = LAZYACCESS(colors, I) || "#FFFFFF"
 		L += make_appearances ? mutable_appearance(mut_icon, overlays_states[I], color = col) : col
 	colors_by_atom[A] = L
-	message_admins("attached")
 
 	RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlays)
 
