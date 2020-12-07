@@ -171,6 +171,7 @@
 #define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_BRAIN_ROBOT_RADSHIELDING "brain_robot_radshielding"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PENIS "penis"
 #define ORGAN_SLOT_WOMB "womb"

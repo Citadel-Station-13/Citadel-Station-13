@@ -85,8 +85,10 @@
 		heal_overall_damage(0, abs(amount), 0, FALSE, TRUE, updating_health)
 	return amount
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+
+//God save me from spaghettifying this - Syscorrupt damage is not affected by toxlovers.
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
+	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER) && toxins_type != TOX_SYSCORRUPT) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 3 * amount		//5x was too much, this is punishing enough.
@@ -173,7 +175,7 @@
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(status && !status[BP.status])
+		if(status && !status.Find(BP.status))
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP

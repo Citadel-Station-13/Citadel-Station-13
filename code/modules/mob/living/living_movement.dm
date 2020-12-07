@@ -1,8 +1,6 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
-	//Hide typing indicator if we move.
-	clear_typing_indicator()
 	update_pixel_shifting(TRUE)
 
 /mob/living/setDir(newdir, ismousemovement)

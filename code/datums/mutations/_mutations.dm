@@ -150,7 +150,6 @@
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
 
-
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
 		return
