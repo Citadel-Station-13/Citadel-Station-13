@@ -78,6 +78,26 @@
 	popup.set_content(output)
 	popup.open(FALSE)
 
+/proc/age_gate(/mob/dead/new_player/plr)
+	var/list/dat = list("<center>")
+	dat += "Enter your date of birth here, to confirm that you are over 18.<BR>"
+	dat += "<b>Your date of birth is not saved, only the fact that you are over/under 18 is.</b><BR>"
+	dat += "</center>"
+
+	dat += "<form action='?src=[REF(src)]' method='get'><select name = 'Month'>"
+	var/monthList = list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+	for(var/month in monthList)
+		dat += "<option value = [monthList[month]]>[month]</option>"
+	dat += "</select>"
+	dat += "<select name = 'Year'>"
+	for(var/year in 1920 to 2020)
+		dat += "<option value = [year]>[year]</option>"
+	dat += "</select></form><BR>"
+
+	output += "<p><input type='submit' value='Submit information.'>"
+
+	plr << browse(dat,"window=playerpoll;size=500x250")
+
 /mob/dead/new_player/proc/age_verify()
 	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
 		if(!client.set_db_player_flags())
@@ -86,7 +106,7 @@
 		else
 			var/dbflags = client.prefs.db_flags
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
-				var/age_verification = askuser(src, "Are you 18+", "Age Gate", "I am 18+", "I am not 18+", null, TRUE, null)
+				var/age_verification = age_gate(src)
 				if(age_verification != 1)
 					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
 					qdel(client) //kick the user
