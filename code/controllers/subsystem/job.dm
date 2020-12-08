@@ -691,6 +691,19 @@ SUBSYSTEM_DEF(job)
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
+			if(I && length(i[LOADOUT_COLOR])) //handle loadout colors
+			 	//handle polychromic items
+				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
+					var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
+					if(polychromic && istype(polychromic))
+						var/list/polychromic_entry = polychromic.colors_by_atom[I]
+						if(polychromic_entry)
+							polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
+							I.update_icon()
+				else
+					//handle non-polychromic items (they only have one color)
+					I.add_atom_colour(i[LOADOUT_COLOR][1], FIXED_COLOUR_PRIORITY)
+					I.update_icon()
 			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
@@ -705,15 +718,6 @@ SUBSYSTEM_DEF(job)
 						I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
 					else
 						qdel(I)
-			if(I) //handle loadout colors last
-				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
-					var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
-					if(polychromic && istype(polychromic))
-						var/list/polychromic_entry = polychromic.colors_by_atom[I]
-						if(polychromic_entry)
-							polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
-							I.update_icon()
-
 
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)
