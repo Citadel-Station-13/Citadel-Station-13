@@ -364,7 +364,7 @@
 		else if(O.target && istype(O.target, /datum/mind))
 			if(O.target != mob_occupant.mind)
 				continue
-			if(!O.check_midround_completion())
+			if(O.check_midround_completion())
 				continue
 			if(O.owner && O.owner.current)
 				to_chat(O.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
