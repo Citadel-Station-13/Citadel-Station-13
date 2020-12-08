@@ -258,8 +258,8 @@
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
-	SHOULD_NOT_SLEEP(TRUE)
 	interact(usr)
+
 */
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
