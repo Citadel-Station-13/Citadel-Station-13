@@ -97,6 +97,8 @@
 #define COMSIG_ATOM_RAD_ACT "atom_rad_act"
 ///from base of atom/narsie_act(): ()
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
+///from base of atom/honkmother_act(): ()
+#define COMSIG_ATOM_HONKMOTHER_ACT "atom_honkmother_act"
 ///from base of atom/ratvar_act(): ()
 #define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
