@@ -91,7 +91,7 @@
 	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
 	dat += HrefTokenFormField()
 	dat += "<select name = 'Month'>"
-	var/monthList = list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+	var/monthList = list("January" = 1, "February" = 2, "March" = 3, "April" = 4, "May" = 5, "June" = 6, "July" = 7, "August" = 8, "September" = 9, "October" = 10, "November" = 11, "December" = 12)
 	for(var/month in monthList)
 		dat += "<option value = [monthList[month]]>[month]</option>"
 	dat += "</select>"
@@ -111,7 +111,7 @@
 	popup.open(FALSE)
 	onclose(src, "age_gate")
 
-	while(!age_gate_result)
+	while(age_gate_result == null)
 		stoplag(1)
 
 	popup.close()
@@ -147,9 +147,11 @@
 	if(!client)
 		return 0
 
+	//don't let people get to this unless they are specifically not verified
+	//if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
 	if(href_list["Month"])
-		var/player_month = href_list["Month"]
-		var/player_year = href_list["Year"]
+		var/player_month = text2num(href_list["Month"])
+		var/player_year = text2num(href_list["Year"])
 
 		var/current_time = world.realtime
 		var/current_month = text2num(time2text(current_time, "MM"))
@@ -161,7 +163,7 @@
 
 		var/months_in_eighteen_years = 18 * 12
 
-		var/month_difference = player_total_months - current_total_months
+		var/month_difference = current_total_months - player_total_months
 		if(month_difference > months_in_eighteen_years)
 			age_gate_result = TRUE // they're fine
 		else if(month_difference < months_in_eighteen_years)
@@ -183,8 +185,6 @@
 			else
 				//it has been their 18th birthday this month
 				age_gate_result = TRUE
-	else
-		return
 
 	if(!age_verify())
 		return
