@@ -210,6 +210,8 @@
 	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(isnull(N))
 		return ..()
+	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM))
+		C.adjustToxLoss(1, toxins_type = TOX_SYSCORRUPT) //Interferes with robots. Rare chem, so, pretty good at that too.
 	N.nanite_volume += -cached_purity*5//0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
