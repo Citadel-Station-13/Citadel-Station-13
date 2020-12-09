@@ -7,6 +7,13 @@
 	current_size = 12
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
+	
+	var/max_mobs = 50
+	var/spawn_time = 30 //30 seconds default
+	var/mob_types = list(/mob/living/simple_animal/hostile/retaliate/clown, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk, /mob/living/simple_animal/hostile/retaliate/clown/longface, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown, /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus, /mob/living/simple_animal/hostile/retaliate/clown/mutant/blob, /mob/living/simple_animal/hostile/retaliate/clown/banana, /mob/living/simple_animal/hostile/retaliate/clown/honkling, /mob/living/simple_animal/hostile/retaliate/clown/lube)
+	var/spawn_text = "emerges from"
+	var/faction = list("clown")
+	var/spawner_type = /datum/component/spawner
 
 /obj/singularity/narsie/honkmother/Initialize()
 	. = ..()
