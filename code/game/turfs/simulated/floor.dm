@@ -216,6 +216,11 @@
 	if(.)
 		ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 
+/turf/open/floor/honkmother_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
+		ChangeTurf(/turf/open/floor/mineral/bananium, flags = CHANGETURF_INHERIT_AIR)
+
 /turf/open/floor/ratvar_act(force, ignore_mobs)
 	. = ..()
 	if(.)
