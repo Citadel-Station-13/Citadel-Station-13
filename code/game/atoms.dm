@@ -615,6 +615,9 @@
 
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
+	
+/atom/proc/honkmother_act()
+	SEND_SIGNAL(src, COMSIG_ATOM_HONKMOTHER_ACT)
 
 /atom/proc/ratvar_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
