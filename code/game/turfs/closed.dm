@@ -44,6 +44,11 @@
 
 /turf/closed/indestructible/singularity_act()
 	return
+	
+/turf/closed/wall/honkmother_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
+		ChangeTurf(/turf/closed/wall/mineral/bananium)
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"
