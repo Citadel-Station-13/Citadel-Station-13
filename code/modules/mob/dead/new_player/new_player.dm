@@ -16,6 +16,9 @@
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
 
+	//is there a result we want to read from the age gate
+	var/age_gate_result
+
 /mob/dead/new_player/Initialize()
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
@@ -78,25 +81,42 @@
 	popup.set_content(output)
 	popup.open(FALSE)
 
-/proc/age_gate(/mob/dead/new_player/plr)
+/mob/dead/new_player/proc/age_gate()
 	var/list/dat = list("<center>")
 	dat += "Enter your date of birth here, to confirm that you are over 18.<BR>"
 	dat += "<b>Your date of birth is not saved, only the fact that you are over/under 18 is.</b><BR>"
 	dat += "</center>"
 
-	dat += "<form action='?src=[REF(src)]' method='get'><select name = 'Month'>"
+	dat += "<form action='?src=[REF(src)]'>"
+	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
+	dat += HrefTokenFormField()
+	dat += "<select name = 'Month'>"
 	var/monthList = list("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 	for(var/month in monthList)
 		dat += "<option value = [monthList[month]]>[month]</option>"
 	dat += "</select>"
-	dat += "<select name = 'Year'>"
-	for(var/year in 1920 to 2020)
-		dat += "<option value = [year]>[year]</option>"
-	dat += "</select></form><BR>"
+	dat += "<select name = 'Year' style = 'float:right'>"
+	var/current_year = text2num(time2text(world.realtime, "YYYY"))
+	var/start_year = 1920
+	for(var/year in start_year to current_year)
+		var/reverse_year = 1920 + (current_year - year)
+		dat += "<option value = [reverse_year]>[reverse_year]</option>"
+	dat += "</select>"
+	dat += "<center><input type='submit' value='Submit information'></center>"
+	dat += "</form>"
 
-	output += "<p><input type='submit' value='Submit information.'>"
+	winshow(src, "age_gate", TRUE)
+	var/datum/browser/popup = new(src, "age_gate", "<div align='center'>Age Gate</div>", 400, 250)
+	popup.set_content(dat.Join())
+	popup.open(FALSE)
+	onclose(src, "age_gate")
 
-	plr << browse(dat,"window=playerpoll;size=500x250")
+	while(!age_gate_result)
+		stoplag(1)
+
+	popup.close()
+
+	return age_gate_result
 
 /mob/dead/new_player/proc/age_verify()
 	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
@@ -106,7 +126,7 @@
 		else
 			var/dbflags = client.prefs.db_flags
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
-				var/age_verification = age_gate(src)
+				var/age_verification = age_gate()
 				if(age_verification != 1)
 					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
 					qdel(client) //kick the user
@@ -126,6 +146,45 @@
 
 	if(!client)
 		return 0
+
+	if(href_list["Month"])
+		var/player_month = href_list["Month"]
+		var/player_year = href_list["Year"]
+
+		var/current_time = world.realtime
+		var/current_month = text2num(time2text(current_time, "MM"))
+		var/current_year = text2num(time2text(current_time, "YYYY"))
+
+		var/player_total_months = (player_year * 12) + player_month
+
+		var/current_total_months = (current_year * 12) + current_month
+
+		var/months_in_eighteen_years = 18 * 12
+
+		var/month_difference = player_total_months - current_total_months
+		if(month_difference > months_in_eighteen_years)
+			age_gate_result = TRUE // they're fine
+		else if(month_difference < months_in_eighteen_years)
+			age_gate_result = FALSE
+		else
+			//they could be 17 or 18 depending on the /day/ they were born in
+			var/current_day = text2num(time2text(current_time, "DD"))
+			var/days_in_months = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+			if((player_year % 4) == 0) // leap year so february actually has 29 days
+				days_in_months[2] = 29
+			var/total_days_in_player_month = days_in_months[player_month]
+			var/list/days
+			for(var/number in 1 to total_days_in_player_month)
+				days += number
+			var/player_day = input(src, "What day of the month were you born in.", 1) in days
+			if(player_day <= current_day)
+				//their birthday has not passed
+				age_gate_result = FALSE
+			else
+				//it has been their 18th birthday this month
+				age_gate_result = TRUE
+	else
+		return
 
 	if(!age_verify())
 		return
