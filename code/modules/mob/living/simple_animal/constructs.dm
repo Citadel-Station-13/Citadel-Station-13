@@ -72,7 +72,7 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/construct/death()
-	if(original_mind && QDELETED(original_mind))
+	if(original_mind && !(QDELETED(original_mind)))
 		transfer_ckey(original_mind.current)
 	..()
 
