@@ -182,7 +182,7 @@
 		BP.base_bp_icon = selected.icon_limbs || DEFAULT_BODYPART_ICON_ORGANIC
 		BP.species_id = selected.limbs_id
 		BP.color_src = (MUTCOLORS in selected.species_traits ? MUTCOLORS : (selected.use_skintones ? SKINTONE : FALSE))
-		BP.should_draw_gender = (selected.sexes && (limb.body_zone in ORGAN_BODYPARTS))
+		BP.should_draw_gender = (selected.sexes && (BP.body_zone in ORGAN_BODYPARTS))
 		BP.update_limb(TRUE)
 		BP.update_icon_dropped()
 		BP.name = "\improper synthetic [lowertext(selected.name)] [limb.name]"
