@@ -307,7 +307,9 @@
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			if((zone_selected == BODY_ZONE_PRECISE_GROIN) && has_tail() && M.has_tail())
-				visible_message("<span class='warning'>[src] coils [p_their()] tail with [AM], pulling [M.p_them()] along!</span>", "[src] has entwined [p_their()] tail with yours, pulling you along!")
+				visible_message("<span class='warning'>[src] coils [p_their()] tail with [M]'s, pulling [M.p_them()] along!</span>", "You entwine tails with [M], pulling [M.p_them()] along!", ignored_mobs = M)
+				M.show_message("<span class='warning'>[src] has entwined [p_their()] tail with yours, pulling you along!</span>", MSG_VISUAL, "<span class='warning'>You feel <b>something</b> coiling around your tail, pulling you along!</span>")
+
 			else
 				visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>",
 					"<span class='warning'>You have grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>", target = M,
