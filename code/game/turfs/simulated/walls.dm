@@ -272,6 +272,11 @@
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
+		
+/turf/closed/wall/honkmother_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
+		ChangeTurf(/turf/closed/wall/mineral/bananium)
 
 /turf/closed/wall/ratvar_act(force, ignore_mobs)
 	. = ..()
