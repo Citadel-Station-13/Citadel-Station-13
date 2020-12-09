@@ -31,14 +31,14 @@
 	makeNewConstruct(/mob/living/simple_animal/hostile/retaliate/clown/honkling, user, cultoverride = TRUE, loc_override = src.loc)
 
 
-/obj/singularity/narsie/Bump(atom/A)
+/obj/singularity/narsie/honkmother/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
 		T = get_step(A, A.dir)
 	forceMove(T)
 
 
-/obj/singularity/narsie/mezzer()
+/obj/singularity/narsie/honkmother/mezzer()
 	for(var/mob/living/carbon/M in fov_viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
@@ -46,16 +46,16 @@
 				M.apply_effect(60, EFFECT_STUN)
 
 
-/obj/singularity/narsie/consume(atom/A)
+/obj/singularity/narsie/honkmother/consume(atom/A)
 	if(isturf(A))
 		A.honkmother_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
+/obj/singularity/narsie/honkmother/ex_act() //No throwing bombs at her either.
 	return
 
 
-/obj/singularity/narsie/proc/pickcultist() //leaving this in just in case removing it will break things
+/obj/singularity/narsie/honkmother/proc/pickcultist() //leaving this in just in case removing it will break things
 	var/list/cultists = list()
 	var/list/noncultists = list()
 	
@@ -90,7 +90,7 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(atom/food)
+/obj/singularity/narsie/honkmother/proc/acquire(atom/food)
 	if(food == target)
 		return
 	to_chat(target, "<span class='clown'>The Honkmother is bored of you.</span>")
@@ -100,7 +100,7 @@
 	else
 		to_chat(target, "<span class ='clown'>HOOOOOOOOOOOOOONK!</span>")
 
-/obj/singularity/narsie/proc/narsie_spawn_animation()
+/obj/singularity/narsie/honkmother/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	setDir(SOUTH)
 	move_self = 0
