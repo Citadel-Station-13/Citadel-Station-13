@@ -70,6 +70,7 @@
 
 ///Heretics --
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
+#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 
 #define PATH_SIDE "Side"
 

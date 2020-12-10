@@ -8,6 +8,12 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
+/obj/effect/eldritch/Initialize()
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
+
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -69,6 +75,7 @@
 				if(is_type_in_list(local_atom_in_range,local_required_atom_list))
 					selected_atoms |= local_atom_in_range
 					local_required_atoms -= list(local_required_atom_list)
+					break
 
 		if(length(local_required_atoms) > 0)
 			continue
@@ -190,6 +197,19 @@
 	icon_state = "pierced_illusion"
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	alpha = 0
+	invisibility = INVISIBILITY_OBSERVER
+
+/obj/effect/broken_illusion/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/show_presence), 15 SECONDS)
+	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
+
+/obj/effect/broken_illusion/proc/show_presence()
+	invisibility = 0
+	animate(src, alpha = 255, time = 15 SECONDS)
 
 /obj/effect/broken_illusion/attack_hand(mob/living/user)
 	if(!ishuman(user))
@@ -228,17 +248,19 @@
 		explosion.start()
 
 /obj/effect/broken_illusion/examine(mob/user)
+	. = ..()
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='userdanger'>Your brain hurts when you look at this!</span>")
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,30)
-	. = ..()
+		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,20,190)
+		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	invisibility = INVISIBILITY_OBSERVER
 	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
 	///Who can see us?
