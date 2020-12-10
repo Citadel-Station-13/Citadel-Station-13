@@ -11426,9 +11426,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/paper{
 	icon_state = "paper_onfire";
-	text = I sign here with my last breath to sell my soul to curse you all for what you have done...
+	name = "Burning Note";
+	text = "I sign here with my last breath to sell my soul to curse you all..."
 	},
-/obj/item/pen/fountain,
+/obj/item/pen/fountain{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "ayy" = (
