@@ -243,8 +243,8 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 
 	//acounts for changes in temperature
 	var/turf/model_parent = model.parent_type
-	if(model.temperature != initial(model.temperature) || model.temperature != initial(model_parent.temperature))
-		set_temperature(model.temperature)
+	if(model.return_temperature() != initial(model.initial_temperature) || model.return_temperature() != initial(model_parent.initial_temperature))
+		set_temperature(model.return_temperature())
 
 	return 1
 

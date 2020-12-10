@@ -76,7 +76,7 @@
 	return air
 
 /turf/temperature_expose()
-	if(temperature > heat_capacity)
+	if(return_temperature() > heat_capacity)
 		to_be_destroyed = TRUE
 
 /turf/open/proc/eg_reset_cooldowns()
@@ -179,7 +179,10 @@
 
 //////////////////////////SPACEWIND/////////////////////////////
 
-/turf/open/proc/consider_pressure_difference(turf/T, difference)
+/turf/proc/consider_pressure_difference()
+	return
+
+/turf/open/consider_pressure_difference(turf/T, difference)
 	if(difference > pressure_difference)
 		pressure_direction = get_dir(src, T)
 		pressure_difference = difference

@@ -151,16 +151,13 @@ SUBSYSTEM_DEF(air)
 
 	if(currentpart == SSAIR_TURF_CONDUCTION)
 		timer = TICK_USAGE_REAL
-		process_turf_heat(CALLBACK(GLOBAL_PROC,/proc/heat_post_process))
+		if(process_turf_heat(MC_TICK_REMAINING_MS))
+			pause()
 		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 	currentpart = SSAIR_REBUILD_PIPENETS
-
-/proc/heat_post_process(turf/T,new_temp)
-	T.temperature = new_temp
-	T.temperature_expose()
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
@@ -223,15 +220,8 @@ SUBSYSTEM_DEF(air)
 		if(MC_TICK_CHECK)
 			return
 
-/proc/post_process_equalize(turf/open/T,turf/open/otherT,amount)
-	if(!istype(T) || !istype(otherT))
-		return
-	T.update_visuals()
-	otherT.update_visuals()
-	T.consider_pressure_difference(otherT,amount)
-
 /datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	if(process_turf_equalize_extools((Master.current_ticklimit - TICK_USAGE) * world.tick_lag,CALLBACK(GLOBAL_PROC,/proc/post_process_equalize)))
+	if(process_turf_equalize_extools(MC_TICK_REMAINING_MS))
 		pause()
 	/*
 	//cache for sanic speed
@@ -250,25 +240,8 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/proc/post_process_turf(flags,turf/open/T,list/tiles_with_diffs)
-	if(!isopenturf(T))
-		return
-	if(flags & 2)
-		T.air.react()
-	if(flags & 1)
-		T.update_visuals()
-	for(var/list/pair in tiles_with_diffs)
-		var/turf/open/enemy_tile = pair[1]
-		if(istype(enemy_tile))
-			var/difference = pair[2]
-			if(difference > 0)
-				T.consider_pressure_difference(enemy_tile, difference)
-			else
-				enemy_tile.consider_pressure_difference(T, -difference)
-
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
-	var/datum/callback/post_process = CALLBACK(GLOBAL_PROC,/proc/post_process_turf)
-	if(process_turfs_extools(post_process))
+	if(process_turfs_extools(MC_TICK_REMAINING_MS))
 		pause()
 	/*
 	//cache for sanic speed
@@ -291,7 +264,7 @@ SUBSYSTEM_DEF(air)
 		T.update_visuals()
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
-	if(!process_excited_groups_extools(CALLBACK(GLOBAL_PROC,/proc/post_process_excited_turf)))
+	if(!process_excited_groups_extools(MC_TICK_REMAINING_MS))
 		pause()
 
 /datum/controller/subsystem/air/proc/process_turfs_extools()
