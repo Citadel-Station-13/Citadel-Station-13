@@ -1,5 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - refactor: Completely comments the original limb grower for the new one.
-  - rscadd: The limb grower can now make more stuff.
