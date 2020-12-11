@@ -130,6 +130,7 @@
 				if(age_verification != 1)
 					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
 					//ban them and kick them
+					AddBan(client.ckey, client.computer_id, "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification.", "SYSTEM", FALSE, null, client.address)
 					qdel(client)
 					return FALSE
 				else
@@ -149,8 +150,7 @@
 		return 0
 
 	//don't let people get to this unless they are specifically not verified
-	//if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
-	if(href_list["Month"])
+	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
 		var/player_month = text2num(href_list["Month"])
 		var/player_year = text2num(href_list["Year"])
 
@@ -165,30 +165,28 @@
 		var/months_in_eighteen_years = 18 * 12
 
 		var/month_difference = current_total_months - player_total_months
-		message_admins("one: [month_difference] two: [months_in_eighteen_years]")
 		if(month_difference > months_in_eighteen_years)
 			age_gate_result = TRUE // they're fine
 		else
 			if(month_difference < months_in_eighteen_years)
 				age_gate_result = FALSE
 			else
-				message_admins("broken")
 				//they could be 17 or 18 depending on the /day/ they were born in
 				var/current_day = text2num(time2text(current_time, "DD"))
 				var/days_in_months = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 				if((player_year % 4) == 0) // leap year so february actually has 29 days
 					days_in_months[2] = 29
 				var/total_days_in_player_month = days_in_months[player_month]
-				var/list/days
+				var/list/days = list()
 				for(var/number in 1 to total_days_in_player_month)
 					days += number
 				var/player_day = input(src, "What day of the month were you born in.") as anything in days
 				if(player_day <= current_day)
-					//their birthday has not passed
-					age_gate_result = FALSE
-				else
-					//it has been their 18th birthday this month
+					//their birthday has passed
 					age_gate_result = TRUE
+				else
+					//it has NOT been their 18th birthday yet
+					age_gate_result = FALSE
 
 	if(!age_verify())
 		return
