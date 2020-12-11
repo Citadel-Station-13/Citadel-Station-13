@@ -18,6 +18,7 @@ Assistant
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 	dresscodecompliant = FALSE
+	always_can_respawn_as = TRUE
 	threat = 0.2
 
 /datum/job/assistant/get_access()

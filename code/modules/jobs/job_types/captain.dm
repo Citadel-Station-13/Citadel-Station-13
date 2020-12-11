@@ -14,6 +14,7 @@
 	exp_requirements = 180
 	exp_type = EXP_TYPE_COMMAND
 	exp_type_department = EXP_TYPE_COMMAND
+	considered_combat_role = TRUE
 
 
 	outfit = /datum/outfit/job/captain

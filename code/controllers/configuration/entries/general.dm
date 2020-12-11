@@ -172,8 +172,6 @@
 
 /datum/config_entry/string/hostedby
 
-/datum/config_entry/flag/norespawn
-
 /datum/config_entry/flag/guest_jobban
 
 /datum/config_entry/flag/usewhitelist

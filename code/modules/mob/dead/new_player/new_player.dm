@@ -382,6 +382,9 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	if(!respawn_latejoin_check(notify = TRUE))
+		return FALSE
+
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
@@ -445,6 +448,8 @@
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
+	LAZYOR(prefs.slots_joined_as, prefs.slot)
+	LAZYOR(prefs.characters_joined_as, character.real_name))
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)

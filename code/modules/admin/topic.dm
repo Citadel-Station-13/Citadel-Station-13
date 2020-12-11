@@ -936,6 +936,12 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_MIND_TRANSFER];jobban4=[REF(M)]'>Mind Transfer Potion</a></td>"
 
+		//Respawns
+		if(jobban_isbanned(M, ROLE_RESPAWN))
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_RESPAWN];jobban4=[REF(M)]'><font color=red>Respawns</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=[ROLE_RESPAWN];jobban4=[REF(M)]'>Respawns</a></td>"
+
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
