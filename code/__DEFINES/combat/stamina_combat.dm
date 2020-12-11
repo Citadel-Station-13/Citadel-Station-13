@@ -10,7 +10,7 @@
 /// Usage for eyestabbing with a screwdriver
 #define STAMINA_COST_ITEM_EYESTAB		7.5
 /// Usage for shoving yourself off the ground instantly
-#define STAMINA_COST_SHOVE_UP			10
+#define STAMINA_COST_SHOVE_UP			15
 
 //items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
 #define TOTAL_MASS_TINY_ITEM		1.25
