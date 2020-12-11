@@ -30,10 +30,10 @@
 		0, 0, 0
 	)
 
-/obj/machinery/gear_painter/update_icon()
+/obj/machinery/gear_painter/update_icon_state()
 	if(panel_open)
 		icon_state = "colormate_open"
-	else if(inoperable())
+	else if(!is_operational())
 		icon_state = "colormate_off"
 	else if(inserted)
 		icon_state = "colormate_active"
@@ -57,7 +57,7 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
-	if(is_type_in_list(I, allowed_types) && !inoperable())
+	if(is_type_in_list(I, allowed_types) && is_operational())
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
@@ -66,12 +66,24 @@
 		inserted = I
 		update_icon()
 
+/obj/machinery/gear_painter/AltClick(mob/user)
+	. = ..()
+	if(!user.CanReach(src))
+		return
+	if(!inserted)
+		return
+	to_chat(user, "<span class='notice'>You remove [inserted] from [src]")
+	inserted.forceMove(drop_location())
+	inserted = null
+	update_icon()
+	updateUsrDialog()
+
 /obj/machinery/gear_painter/ui_interact(mob/user)
-	if(inoperable())
+	if(!is_operational())
 		return
 	user.set_machine(src)
 	var/list/dat = "<TITLE>Color Mate Control Panel</TITLE><BR>"
-	if(!processing.len)
+	if(!inserted)
 		dat += "No item inserted."
 	else
 		for(var/atom/movable/O in processing)
@@ -180,11 +192,11 @@
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/gear_painter/proc/check_valid_color(list/color, mob/user)
-	if(!islist(color))		// normal
-		var/list/HSV = ReadHSV(color)
+/obj/machinery/gear_painter/proc/check_valid_color(list/cm, mob/user)
+	if(!islist(cm))		// normal
+		var/list/HSV = ReadHSV(cm)
 		if(HSV[3] < minimum_normal_lightness)
-			to_chat(user, "<span class='warning'>[color] is far too dark!</span>")
+			to_chat(user, "<span class='warning'>[cm] is far too dark (min lightness [minimum_normal_lightness]!</span>")
 			return FALSE
 		return TRUE
 	else	// matrix
@@ -192,17 +204,13 @@
 		// A predefined number of them must pass to be considered valid
 		var/passed = 0
 		var/list/HSV
-#define TEST(color) \
-	HSV = ReadHSV(RGBMatrixTransform(testing, color)); \
-	if(HSV[3] >= minimum_matrix_lightness) { \
-		passed++; \
-	}
-		TEST("FF0000")
-		TEST("00FF00")
-		TEST("0000FF")
-		TEST("FFFFFF")
-#undef TEST
+#define COLORTEST(thestring, thematrix) passed += (ReadHSV(RGBMatrixTransform(thestring, thematrix)) >= minimum_matrix_lightness)
+		COLORTEST("FF0000", cm)
+		COLORTEST("00FF00", cm)
+		COLORTEST("0000FF", cm)
+		COLORTEST("FFFFFF", cm)
+#undef COLORTEST
 		if(passed < minimum_matrix_tests)
-			to_chat(user, "<span class='warning'>[english_list(color)] is not allowed.</span>")
+			to_chat(user, "<span class='warning'>[english_list(color)] is not allowed (pased [passed] out of 4, minimum [minimum_matrix_tests], minimum lightness [minimum_matrix_lightness]).</span>")
 			return FALSE
 		return TRUE
