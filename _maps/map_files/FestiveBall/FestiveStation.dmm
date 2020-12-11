@@ -32102,6 +32102,9 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bxQ" = (
+/obj/structure/sign/directions/medical{
+	dir = 8
+	},
 /turf/closed/festive/bluebrick/bluebrickcornerse,
 /area/crew_quarters/heads/cmo)
 "bxR" = (
@@ -46675,6 +46678,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/sign/directions/medical{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = -24
+	},
 /turf/open/floor/festive/wooden/wooden2,
 /area/library)
 "cbk" = (
@@ -47653,6 +47661,10 @@
 /obj/structure/sign/directions/evac{
 	dir = 1
 	},
+/obj/structure/sign/directions/science{
+	dir = 1;
+	pixel_y = -8
+	},
 /turf/closed/festive/whitebrick{
 	color = "#993e28"
 	},
@@ -47665,12 +47677,24 @@
 	dir = 1;
 	pixel_y = -8
 	},
+/obj/structure/sign/directions/security{
+	acid_level = 8;
+	dir = 1;
+	pixel_y = 8
+	},
 /turf/closed/festive/greybrick,
 /area/edina)
 "cdC" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
 	pixel_y = -8
+	},
+/obj/structure/sign/directions/medical{
+	dir = 1
+	},
+/obj/structure/sign/directions/science{
+	dir = 1;
+	pixel_y = 8
 	},
 /turf/closed/festive/greybrick,
 /area/edina)
@@ -52138,6 +52162,10 @@
 	},
 /turf/open/floor/festive/sidewalk,
 /area/edina/street)
+"cvs" = (
+/obj/structure/sign/directions/supply,
+/turf/closed/festive/whitebrick,
+/area/hydroponics)
 "cvt" = (
 /obj/structure/streetdecor/lampfestive{
 	pixel_x = 16;
@@ -52546,6 +52574,10 @@
 /turf/open/floor/festive/stairs/stairssouth,
 /area/edina)
 "cxo" = (
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = -8
+	},
 /turf/closed/festive/greybrick/greybrickcornernw,
 /area/edina)
 "cxp" = (
@@ -53740,6 +53772,37 @@
 /area/engine{
 	name = "Antimatter engine"
 	})
+"fao" = (
+/obj/structure/sign/directions/medical{
+	dir = 8
+	},
+/obj/structure/sign/directions/science{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/security{
+	acid_level = 8;
+	dir = 1;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/closed/festive/whitebrick{
+	color = "#967832"
+	},
+/area/quartermaster/qm)
+"gIU" = (
+/obj/structure/table/wood,
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/structure/sign/directions/cells{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/security/brig)
 "hlu" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/tile/green,
@@ -53755,12 +53818,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"jrc" = (
-/obj/structure/statue/sandstone/venus,
-/turf/open/floor/grass/snow/edina{
-	initial_gas_mix = "o2=22;n2=82;TEMP=270"
+"iLC" = (
+/obj/structure/sign/directions/medical{
+	dir = 8
 	},
-/area/edina)
+/obj/structure/sign/directions/science{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/closed/festive/greybrick,
+/area/janitor)
+"iMm" = (
+/obj/structure/sign/directions/medical{
+	dir = 8
+	},
+/turf/closed/wall/mineral/wood,
+/area/medical/chemistry)
+"jex" = (
+/obj/structure/fence,
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/floor/festive/alleyway,
+/area/edina/backstreet)
 "jzG" = (
 /obj/structure/table,
 /obj/machinery/smartfridge/disks,
@@ -53770,6 +53851,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"kWd" = (
+/obj/structure/sign/directions/cells{
+	dir = 8
+	},
+/turf/closed/wall/mineral/iron,
+/area/security/brig)
+"lcg" = (
+/obj/structure/sign/directions/cells{
+	dir = 4
+	},
+/turf/closed/wall/mineral/iron,
+/area/security/brig)
 "nCN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53779,16 +53872,74 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=270"
 	},
 /area/edina/backstreet)
-"nRU" = (
-/obj/machinery/door/airlock/wood/glass,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/cafeteria/lunchroom)
+"nSS" = (
+/obj/structure/statue/sandstone/venus,
+/turf/open/floor/grass/snow/edina{
+	initial_gas_mix = "o2=22;n2=82;TEMP=270"
+	},
+/area/edina)
+"pCQ" = (
+/obj/structure/sign/directions/science{
+	dir = 8;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/structure/sign/directions/security{
+	acid_level = 8;
+	dir = 1;
+	pixel_y = -8
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 1
+	},
+/turf/closed/festive/creambrick{
+	color = "#ffbb4d"
+	},
+/area/storage/tools)
 "pOy" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
+"qua" = (
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/cafeteria/lunchroom)
+"skd" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/westleft{
+	name = "Hydroponics - Staff Only";
+	req_one_access_txt = "25;26;28;35"
+	},
+/obj/machinery/door/window/eastleft{
+	name = "Hydroponics"
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
+"ssr" = (
+/obj/structure/sign/directions/cells{
+	dir = 1
+	},
+/turf/closed/wall/mineral/iron,
+/area/security/brig)
+"szs" = (
+/obj/structure/sign/directions/science{
+	dir = 8;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/medical,
+/turf/open/space/basic,
+/area/space)
+"sTn" = (
+/obj/structure/sign/directions/evac{
+	dir = 1
+	},
+/turf/closed/festive/bluebrick,
+/area/space)
 "tax" = (
 /obj/structure/table,
 /obj/machinery/plantgenes{
@@ -53803,30 +53954,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"xmz" = (
+"tBN" = (
+/obj/structure/sign/directions/evac{
+	dir = 1
+	},
+/turf/closed/festive/whitebrick{
+	color = "#967832"
+	},
+/area/quartermaster{
+	name = "Cargo Break Room"
+	})
+"uTE" = (
 /obj/structure/fence,
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/festive/sidewalk,
 /area/edina/street)
-"xFt" = (
-/obj/structure/fence,
-/obj/effect/turf_decal/weather/snow/corner,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 1
-	},
-/turf/open/floor/festive/alleyway,
-/area/edina/backstreet)
-"xFS" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/westleft{
-	name = "Hydroponics - Staff Only";
-	req_one_access_txt = "25;26;28;35"
-	},
-/obj/machinery/door/window/eastleft{
-	name = "Hydroponics"
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
+"vgD" = (
+/obj/structure/sign/directions/cells,
+/turf/closed/wall/mineral/iron,
+/area/security/brig)
 
 (1,1,1) = {"
 aaa
@@ -82470,7 +82616,7 @@ aal
 aal
 aal
 aal
-jrc
+nSS
 aal
 aal
 ake
@@ -88201,7 +88347,7 @@ bDK
 bhy
 bey
 bjN
-bNd
+iMm
 bNd
 bNd
 bNd
@@ -91242,7 +91388,7 @@ aaE
 aaE
 aaE
 aaE
-aaE
+szs
 ake
 aju
 alJ
@@ -91254,7 +91400,7 @@ aso
 aFT
 bjQ
 aXz
-aXz
+pCQ
 aXz
 aXz
 aXz
@@ -91274,7 +91420,7 @@ bVo
 bVo
 cgY
 chf
-bVo
+iLC
 bPw
 aFT
 cvw
@@ -91286,7 +91432,7 @@ bQE
 aFT
 bjS
 boV
-boV
+fao
 boV
 boV
 boV
@@ -91306,7 +91452,7 @@ cjP
 cjQ
 cjR
 ccZ
-ccZ
+sTn
 cuG
 aju
 alJ
@@ -96189,7 +96335,7 @@ bWy
 bWy
 bYN
 bWy
-bWy
+tBN
 bPw
 aFT
 cvw
@@ -97121,7 +97267,7 @@ auI
 auI
 auI
 auI
-auI
+vgD
 aAg
 aAg
 aVr
@@ -97891,7 +98037,7 @@ axD
 ayp
 ayQ
 azs
-azL
+gIU
 aAb
 aAg
 aAg
@@ -98149,7 +98295,7 @@ auI
 auI
 auI
 auI
-auI
+ssr
 aAg
 aAg
 aAC
@@ -99177,7 +99323,7 @@ auI
 auI
 auI
 auI
-auI
+lcg
 aAg
 aAg
 aAC
@@ -100001,7 +100147,7 @@ bFX
 bOx
 bOx
 bOx
-nRU
+qua
 bOx
 bOx
 bOx
@@ -100205,7 +100351,7 @@ auI
 auI
 auI
 auI
-auI
+kWd
 aAg
 aAg
 aAC
@@ -100762,7 +100908,7 @@ aEF
 amq
 aju
 bjS
-aZi
+cvs
 aZi
 aZi
 aZi
@@ -103595,10 +103741,10 @@ aZi
 caA
 aZi
 aZi
-xFS
+skd
 aZi
 aZi
-xFt
+jex
 aoG
 aoG
 aal
@@ -105387,7 +105533,7 @@ bVn
 bVn
 bVn
 bVn
-xmz
+uTE
 beF
 beF
 beF
