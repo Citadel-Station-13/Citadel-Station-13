@@ -1,10 +1,11 @@
 /obj/machinery/gear_painter
 	name = "\improper Color Mate"
 	desc = "A machine to give your apparel a fresh new color! Recommended to use with white items for best results."
-	icon = 'icons/obj/vending_vr.dmi'
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "colormate"
 	density = TRUE
 	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/colormate
 	var/obj/item/inserted
 	var/activecolor = "#FFFFFF"
 	var/list/color_matrix_last
@@ -66,6 +67,9 @@
 		inserted = I
 		update_icon()
 
+/obj/machinery/gear_painter/AllowDrop()
+	return FALSE
+
 /obj/machinery/gear_painter/AltClick(mob/user)
 	. = ..()
 	if(!user.CanReach(src))
@@ -86,9 +90,8 @@
 	if(!inserted)
 		dat += "No item inserted."
 	else
-		for(var/atom/movable/O in processing)
-			dat += "Item inserted: [O]<HR>"
-			dat += "<a href='?src=[REF(src)];toggle_matrix_mode=1'>Matrix mode: [matrix_mode? "On" : "Off"]</a>"
+		dat += "Item inserted: [inserted]<HR>"
+		dat += "<a href='?src=[REF(src)];toggle_matrix_mode=1'>Matrix mode: [matrix_mode? "On" : "Off"]</a>"
 		if(!matrix_mode)
 			dat += "<A href='?src=\ref[src];select=1'>Select new color.</A><BR>"
 			dat += "Color: <font color='[activecolor]'>&#9899;</font>"
@@ -172,7 +175,7 @@
 			text2num(href_list["cb"])
 		)
 		color_matrix_last = cm.Copy()
-		if(!check_valid_color(cm, user))
+		if(!check_valid_color(cm, usr))
 			return
 		inserted.add_atom_colour(cm, FIXED_COLOUR_PRIORITY)
 		playsound(src, 'sound/effects/spray3.ogg', 50, 1)
@@ -203,7 +206,6 @@
 		// We test using full red, green, blue, and white
 		// A predefined number of them must pass to be considered valid
 		var/passed = 0
-		var/list/HSV
 #define COLORTEST(thestring, thematrix) passed += (ReadHSV(RGBMatrixTransform(thestring, thematrix)) >= minimum_matrix_lightness)
 		COLORTEST("FF0000", cm)
 		COLORTEST("00FF00", cm)
