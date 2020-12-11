@@ -244,7 +244,7 @@
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/colormate
-	name = "Colormate (Machine Board")
+	name = "Colormate (Machine Board)"
 	build_path = /obj/machinery/gear_painter
 	req_components = list()
 	def_components = list()
