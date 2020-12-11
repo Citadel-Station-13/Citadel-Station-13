@@ -145,7 +145,7 @@
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/high/boom()
-	explosion(get_turf(src), 1, 2, 7, flame_range = 12)
+	explosion(get_turf(src), 0, 2, 5, flame_range = 12)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
