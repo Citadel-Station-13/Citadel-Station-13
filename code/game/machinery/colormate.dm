@@ -49,9 +49,9 @@
 	if(inserted)
 		to_chat(user, "<span class='warning'>The machine is already loaded.</span>")
 		return
-	if(default_deconstruction_screwdriver(user, I))
+	if(default_deconstruction_screwdriver(user, "colormate_open", "colormate", I))
 		return
-	if(default_deconstruction_crowbar(user, I))
+	if(default_deconstruction_crowbar(I))
 		return
 	if(default_unfasten_wrench(user, I, 40))
 		return
@@ -66,6 +66,8 @@
 
 		inserted = I
 		update_icon()
+	else
+		return ..()
 
 /obj/machinery/gear_painter/AllowDrop()
 	return FALSE
@@ -86,7 +88,7 @@
 	if(!is_operational())
 		return
 	user.set_machine(src)
-	var/list/dat = "<TITLE>Color Mate Control Panel</TITLE><BR>"
+	var/list/dat = list("<TITLE>Color Mate Control Panel</TITLE><BR>")
 	if(!inserted)
 		dat += "No item inserted."
 	else
@@ -206,7 +208,7 @@
 		// We test using full red, green, blue, and white
 		// A predefined number of them must pass to be considered valid
 		var/passed = 0
-#define COLORTEST(thestring, thematrix) passed += (ReadHSV(RGBMatrixTransform(thestring, thematrix)) >= minimum_matrix_lightness)
+#define COLORTEST(thestring, thematrix) passed += (ReadHSV(RGBMatrixTransform(thestring, thematrix))[3] >= minimum_matrix_lightness)
 		COLORTEST("FF0000", cm)
 		COLORTEST("00FF00", cm)
 		COLORTEST("0000FF", cm)
