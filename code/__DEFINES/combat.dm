@@ -81,6 +81,8 @@
 //stamina stuff
 /// crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_CRIT						140
+/// Threshold for leaving stamina critical
+#define STAMINA_CRIT_REMOVAL_THRESHOLD		100
 /// Threshold under for which you are unable to draw from stamina health to replace stamina buffer
 #define STAMINA_NO_OVERDRAW_THRESHOLD		100
 
