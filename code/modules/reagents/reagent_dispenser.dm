@@ -123,7 +123,7 @@
 
 /obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
 	AddComponent(/datum/component/plumbing/tank)
-	
+
 //////////////
 //Fuel Tanks//
 //////////////
@@ -134,14 +134,18 @@
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 
-/obj/structure/reagent_dispensers/fueltank/high //Unused - Good for ghost roles
+/obj/structure/reagent_dispensers/fueltank/high
 	name = "high-capacity fuel tank"
 	desc = "A now illegal tank, full of highly pressurized industrial welding fuel. Do not consume or have a open flame close to this tank."
 	icon_state = "fuel_high"
-	tank_volume = 3000
+	tank_volume = 5000
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
+	qdel(src)
+
+/obj/structure/reagent_dispensers/fueltank/high/boom()
+	explosion(get_turf(src), 0, 2, 5, flame_range = 12)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
