@@ -56,7 +56,23 @@
 
 //Prompts this client for custom holoform parameters.
 /proc/user_interface_custom_holoform(client/C)
+	message_admins("poge")
 	var/datum/preferences/target_prefs = C.prefs
+	if(target_prefs.path)
+		var/list/characters = list()
+		var/savefile/S = new /savefile(target_prefs.path)
+		if(S)
+			var/name
+			var/max_save_slots = C.prefs.max_save_slots
+			for(var/i=1, i<=max_save_slots, i++)
+				S["real_name"] >> name
+				characters[i] = name
+			var/chosen_name = input(C, "Which character do you wish to use as your appearance.") as anything in characters
+			if(chosen_name)
+				target_prefs = new(C)
+				if(!target_prefs.load_character(characters[chosen_name]))
+					target_prefs = C.prefs
+
 	ASSERT(target_prefs)
 	//In the future, maybe add custom path allowances a la admin create outfit but for now..
 	return generate_custom_holoform_from_prefs_safe(target_prefs, C.mob)
