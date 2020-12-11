@@ -59,7 +59,7 @@
 
 	user.log_message(msg, LOG_EMOTE)
 	//msg = "<b>[user]</b> " + msg //SKYRAT CHANGE
-	var/dchatmsg = "<b>[user]</b> " + msg //SKYRAT CHANGE
+	var/dchatmsg = "<span class='emote'><b>[user]</b> [msg]</span>" //SKYRAT CHANGE
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
