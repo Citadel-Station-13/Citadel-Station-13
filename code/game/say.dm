@@ -96,13 +96,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[say_mod(input, message_mode)][spanned ? ", \"[spanned]\"" : ""]"
 	// Citadel edit [spanned ? ", \"[spanned]\"" : ""]"
 
+/// Converts specific characters, like +, |, and _ to formatted output.
 /atom/movable/proc/say_emphasis(input)
-	var/static/regex/italics = regex("\\|(?=\\S)(.*?)(?=\\S)\\|", "g")
-	input = replacetext_char(input, italics, "<i>$1</i>")
-	var/static/regex/bold = regex("\\+(?=\\S)(.*?)(?=\\S)\\+", "g")
-	input = replacetext_char(input, bold, "<b>$1</b>")
-	var/static/regex/underline = regex("_(?=\\S)(.*?)(?=\\S)_", "g")
-	input = replacetext_char(input, underline, "<u>$1</u>")
+	var/static/regex/italics = regex(@"\|(\S[\w\W]*?\S)\|", "g")
+	input = italics.Replace_char(input, "<i>$1</i>")
+	var/static/regex/bold = regex(@"\+(\S[\w\W]*?\S)\+", "g")
+	input = bold.Replace_char(input, "<b>$1</b>")
+	var/static/regex/underline = regex(@"_(\S[\w\W]*?\S)_", "g")
+	input = underline.Replace_char(input, "<u>$1</u>")
 	return input
 
 /// Quirky citadel proc for our custom sayverbs to strip the verb out. Snowflakey as hell, say rewrite 3.0 when?
