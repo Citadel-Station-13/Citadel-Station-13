@@ -663,24 +663,27 @@
 	var/instability = -dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70-instability,0)))
+	if(prob(max(70 + instability,0)))
 		switch(rand(0,3)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
 				gain_trauma(/datum/brain_trauma/severe/paralysis)
 			if(2)
+				drop_everything()
 				corgize()
 			if(3)
 				to_chat(src, "<span class='notice'>Oh, we actually feel quite alright!</span>")
 	else
 		switch(rand(0,3))
 			if(0)
+				drop_everything()
 				gib()
 			if(1)
+				drop_everything()
 				dust()
-
 			if(2)
+				drop_everything()
 				death()
 				petrify(INFINITY)
 			if(3)
