@@ -473,7 +473,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -54463,8 +54462,8 @@
 /area/maintenance/department/security/brig)
 "gjv" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1;
-	name = "Space Loop In"
+	name = "Space Loop In";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
