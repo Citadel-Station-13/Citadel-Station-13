@@ -23213,6 +23213,7 @@
 	pixel_x = 27
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aTC" = (
@@ -82905,8 +82906,8 @@
 /area/medical/morgue)
 "tID" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop Out";
-	dir = 4
+	dir = 4;
+	name = "Space Loop Out"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
@@ -83325,8 +83326,8 @@
 /area/maintenance/port/aft)
 "xHA" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop In";
-	dir = 8
+	dir = 8;
+	name = "Space Loop In"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
