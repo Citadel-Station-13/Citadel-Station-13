@@ -27,6 +27,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/slots_joined_as
 	/// Are we currently subject to respawn restrictions? Usually set by us using the "respawn" verb, but can be lifted by admins.
 	var/respawn_restrictions_active = FALSE
+	/// time of death we consider for respawns
+	var/respawn_time_of_death = -INFINITY
 
 	// Intra-round persistence end
 

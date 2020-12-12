@@ -316,6 +316,7 @@
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 	transfer_ckey(observer, FALSE)
 	observer.client = client
+	observer.client.prefs?.respawn_time_of_death = world.time
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.real_name
