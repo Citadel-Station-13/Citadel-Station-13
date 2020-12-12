@@ -660,10 +660,10 @@
 		return
 	if(dna.stability > 0)
 		return
-	var/instability = -dna.stability
+	var/instability = - dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70 + instability,0)))
+	if(prob(max(70 - instability,0)))
 		switch(rand(0,3)) //not complete and utter death
 			if(0)
 				monkeyize()
