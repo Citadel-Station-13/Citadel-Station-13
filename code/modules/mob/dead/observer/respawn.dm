@@ -15,7 +15,7 @@
 			continue
 		valid["[I.ckey] - Observing: [I]"] = I.ckey
 	for(var/mob/dead/new_player/I in GLOB.dead_mob_list)
-		if(!I.client || !I.prefs.respawn_restrictions_active)
+		if(!I.client || !I.client.prefs.respawn_restrictions_active)
 			continue
 		valid["[I.ckey] - IN LOBBY"] = I.ckey
 	var/ckey = valid[input(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn") as null|anything in valid]
@@ -39,7 +39,7 @@
 		if(confirm != "Yes")
 			return
 		message_admins("[key_name_admin(src)] removed [ckey]'s respawn restrictions.")
-		log_admins("[key_name(src)] removed [ckey]'s respawn restrictions")
+		log_admin("[key_name(src)] removed [ckey]'s respawn restrictions")
 		NP.client.prefs.respawn_restrictions_active = FALSE
 		to_chat(NP, "<span class='boldnotie'>Your respawn restrictions have been removed.")
 	else
@@ -54,7 +54,7 @@
 	set category = "Admin"
 
 	var/list/mob/dead/observer/valid = list()
-	for(var/mob/dead/observer/i in GLOB.dead_mob_list)
+	for(var/mob/dead/observer/I in GLOB.dead_mob_list)
 		if(!I.client)
 			continue
 		valid["[I.ckey] - [I.name]"] = I
@@ -98,6 +98,10 @@
 /mob/dead/observer/verb/respawn()
 	set name = "Respawn"
 	set category = "OOC"
+
+	if(!CONFIG_GET(flag/respawns_enabled))
+		to_chat(src, "<span class='warning'>Respawns are disabled in configuration.</span>")
+		return
 
 	var/timeleft = time_left_to_respawn()
 	if(timeleft)
@@ -145,36 +149,3 @@
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player
 	M.ckey = ckey
-
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
-
-	if (CONFIG_GET(flag/norespawn))
-		return
-	if ((stat != DEAD || !( SSticker )))
-		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
-		return
-
-	log_game("[key_name(usr)] used abandon mob.")
-
-	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
-
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		return
-	client.screen.Cut()
-	client.screen += client.void
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		return
-
-	var/mob/dead/new_player/M = new /mob/dead/new_player()
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		qdel(M)
-		return
-
-	M.key = key
-//	M.Login()	//wat
-	return

@@ -449,8 +449,8 @@
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
-	LAZYOR(prefs.slots_joined_as, prefs.slot)
-	LAZYOR(prefs.characters_joined_as, character.real_name))
+	LAZYOR(character.client.prefs.slots_joined_as, prefs.slot)
+	LAZYOR(character.client.prefs.characters_joined_as, character.real_name)
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
