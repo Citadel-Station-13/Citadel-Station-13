@@ -22,6 +22,8 @@ OOC_DURING_ROUND
 ## Comment this out if you want to disable emojis
 EMOJIS
 
+PAI_CUSTOM_HOLOFORMS
+
 ## MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
