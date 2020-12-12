@@ -246,9 +246,11 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	interaction_flags_atom = NONE  // interact() is called by BigClick()
+	//interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
+
+/* If someone would like to try to get this long-distance viewing thing working, be my guest. I tried everything I could possibly think of and it just refused to operate correctly.
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
@@ -257,6 +259,8 @@
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
 	interact(usr)
+
+*/
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 	if(on && icon_state == icon_state_off)
@@ -278,7 +282,7 @@
 	name = "circuitry telescreen"
 	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
 	network = list("rd")
-	
+
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."

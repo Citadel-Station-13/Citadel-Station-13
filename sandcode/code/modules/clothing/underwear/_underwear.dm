@@ -14,7 +14,6 @@
 	hide_underwear_examine = FALSE
 	var/under_type = /obj/item/clothing/underwear //i don't know what i'm gonna use this for
 	var/fitted = FEMALE_UNIFORM_TOP
-	var/has_colors = TRUE
 
 //Proc to check if underwear is hidden
 /mob/living/carbon/human/proc/underwear_hidden()

@@ -148,6 +148,7 @@
 #include "code\__DEFINES\mobs\slowdowns.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\stock_parts.dm"
+#include "code\__DEFINES\sandcode\loadout.dm"
 #include "code\__DEFINES\sandcode\medical_defines.dm"
 #include "code\__DEFINES\sandcode\traits.dm"
 #include "code\__DEFINES\skills\defines.dm"
