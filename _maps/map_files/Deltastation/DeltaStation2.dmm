@@ -79378,7 +79378,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/gear_painter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -110340,8 +110339,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4;
-	name = "Space Loop Out"
+	name = "Space Loop Out";
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
