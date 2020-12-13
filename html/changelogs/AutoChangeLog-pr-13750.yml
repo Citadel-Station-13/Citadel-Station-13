@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the conveyor belt issues in Delta Station's cargo wing"
-  - rscdel: "Removes some of the dirt around the affected area (presumably they would have cleaned it up while working on it)"
-  - rscadd: "Adds a floor light to fix the \"dark spot\" cargo had"
