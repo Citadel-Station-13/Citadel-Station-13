@@ -130,22 +130,22 @@
 	var/datum/browser/menu = new(user, "colormate","Color Mate Control Panel", 800, 600, src)
 	menu.set_content(dat.Join(""))
 	menu.open()
-	return
 
 /obj/machinery/gear_painter/Topic(href, href_list)
 	if((. = ..()))
 		return
 
-	usr.set_machine(src)
 	add_fingerprint(usr)
 
 	if(href_list["close"])
+		usr << browse(null, "window=colormate")
 		return
 
 	if(href_list["select"])
 		var/newcolor = input(usr, "Choose a color.", "", activecolor) as color|null
 		if(newcolor)
 			activecolor = newcolor
+		updateUsrDialog()
 
 	if(href_list["paint"])
 		if(!inserted)
@@ -154,9 +154,11 @@
 			return
 		inserted.add_atom_colour(activecolor, FIXED_COLOUR_PRIORITY)
 		playsound(src, 'sound/effects/spray3.ogg', 50, 1)
+		updateUsrDialog()
 
 	if(href_list["toggle_matrix_mode"])
 		matrix_mode = !matrix_mode
+		updateUsrDialog()
 
 	if(href_list["matrix_paint"])
 		if(!inserted)
@@ -181,21 +183,22 @@
 			return
 		inserted.add_atom_colour(cm, FIXED_COLOUR_PRIORITY)
 		playsound(src, 'sound/effects/spray3.ogg', 50, 1)
+		updateUsrDialog()
 
 	if(href_list["clear"])
 		if(!inserted)
 			return
 		inserted.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 		playsound(src, 'sound/effects/spray3.ogg', 50, 1)
+		updateUsrDialog()
 
 	if(href_list["eject"])
 		if(!inserted)
 			return
 		inserted.forceMove(drop_location())
 		inserted = null
-
-	update_icon()
-	updateUsrDialog()
+		update_icon()
+		updateUsrDialog()
 
 /obj/machinery/gear_painter/proc/check_valid_color(list/cm, mob/user)
 	if(!islist(cm))		// normal
