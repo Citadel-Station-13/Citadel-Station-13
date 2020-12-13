@@ -607,5 +607,5 @@
 	ThermicConstant = 5
 	HIonRelease 	= -0.15
 	RateUpLim 		= 4
-	PurityMin 		= 0.4
+	PurityMin 		= 0.5 //Good luck!
 	FermiChem 		= TRUE
