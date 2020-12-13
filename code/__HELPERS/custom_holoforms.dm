@@ -62,6 +62,9 @@
 					characters[name] = i
 			var/chosen_name = input(C, "Which character do you wish to use as your appearance.") as anything in characters
 			if(chosen_name)
+				if(C.prefs.last_custom_holoform > world.time - CUSTOM_HOLOFORM_DELAY)
+					to_chat(C.mob, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")
+					return
 				target_prefs = new(C)
 				if(!target_prefs.load_character(characters[chosen_name], TRUE))
 					target_prefs = C.prefs
