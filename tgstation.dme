@@ -1220,6 +1220,7 @@
 #include "code\game\objects\structures\ai_core.dm"
 #include "code\game\objects\structures\aliens.dm"
 #include "code\game\objects\structures\artstuff.dm"
+#include "code\game\objects\structures\barsigns.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
 #include "code\game\objects\structures\chess.dm"
 #include "code\game\objects\structures\destructible_structures.dm"
