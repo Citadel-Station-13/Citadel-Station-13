@@ -202,7 +202,7 @@
 
 /obj/machinery/gear_painter/proc/check_valid_color(list/cm, mob/user)
 	if(!islist(cm))		// normal
-		var/list/HSV = ReadHSV(cm)
+		var/list/HSV = ReadHSV(RGBtoHSV(cm))
 		if(HSV[3] < minimum_normal_lightness)
 			to_chat(user, "<span class='warning'>[cm] is far too dark (min lightness [minimum_normal_lightness]!</span>")
 			return FALSE
@@ -211,7 +211,7 @@
 		// We test using full red, green, blue, and white
 		// A predefined number of them must pass to be considered valid
 		var/passed = 0
-#define COLORTEST(thestring, thematrix) passed += (ReadHSV(RGBMatrixTransform(thestring, thematrix))[3] >= minimum_matrix_lightness)
+#define COLORTEST(thestring, thematrix) passed += (ReadHSV(RGBtoHSV(RGBMatrixTransform(thestring, thematrix)))[3] >= minimum_matrix_lightness)
 		COLORTEST("FF0000", cm)
 		COLORTEST("00FF00", cm)
 		COLORTEST("0000FF", cm)
