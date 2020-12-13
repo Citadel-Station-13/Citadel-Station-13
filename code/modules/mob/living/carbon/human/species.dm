@@ -176,6 +176,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	mutant_bodyparts["limbs_id"] = old_species.mutant_bodyparts["limbs_id"]
+	eye_type = old_species.eye_type
+	mutanttongue = old_species.mutanttongue
 	return
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
