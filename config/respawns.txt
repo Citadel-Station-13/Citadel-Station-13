@@ -5,7 +5,7 @@ RESPAWNS_ENABLED
 RESPAWN_DELAY 15.0
 
 ## Allow respawning as anything but an assistant.
-# ALLOW_NON_ASSISTANT_RESPAWN
+ALLOW_NON_ASSISTANT_RESPAWN
 
 ## Allow respawning as security and command. Only works if ALLOW_NON_ASSISTANT_RESPAWN is on.
 # ALLOW_COMBAT_ROLE_RESPAWN
