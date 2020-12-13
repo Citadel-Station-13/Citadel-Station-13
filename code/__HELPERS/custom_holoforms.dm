@@ -48,9 +48,6 @@
 
 //Prompts this client for custom holoform parameters.
 /proc/user_interface_custom_holoform(client/C)
-	if(C.prefs.last_custom_holoform > world.time - CUSTOM_HOLOFORM_DELAY)
-		to_chat(C.mob, "<span class='boldwarning'>You are attempting to set your custom holoform too fast!</span>")
-		return
 	var/datum/preferences/target_prefs = C.prefs
 	if(target_prefs.path)
 		var/list/characters = list()
