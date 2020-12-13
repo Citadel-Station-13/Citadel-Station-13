@@ -66,7 +66,7 @@
 		if(3)
 			dat += "<a href='byond://?src=[REF(src)];menu=1'><< Back</a><br><br>"
 			dat += "<h3>Recently stored objects</h3><br/><hr/><br/>"
-			if(!frozen_items.len)
+			if(!stored_packages.len)
 				dat += "There has been no storage usage at this terminal.<br/>"
 			else
 				for(var/obj/O in stored_packages)
@@ -314,7 +314,7 @@
 	if(storing.len)
 		var/obj/O = new item_storage_type
 		O.name = "cryogenic retrieval package: [mob_occupant.real_name]"
-		for(var/i in stored)
+		for(var/i in storing)
 			var/obj/item/I = i
 			I.forceMove(O)
 		O.forceMove(drop_to_ground? target_store.drop_location() : target_store)
@@ -389,11 +389,6 @@
 	QDEL_LIST(destroy_later)
 	open_machine()
 	name = initial(name)
-
-#undef CRYO_DESTROY
-#undef CRYO_PRESERVE
-#undef CRYO_IGNORE
-#undef CRYO_DESTROY_LATER
 
 /obj/machinery/cryopod/MouseDrop_T(mob/living/target, mob/user)
 	if(!istype(target) || user.incapacitated() || !target.Adjacent(user) || !Adjacent(user) || !ismob(target) || (!ishuman(user) && !iscyborg(user)) || !istype(user.loc, /turf) || target.buckled)
