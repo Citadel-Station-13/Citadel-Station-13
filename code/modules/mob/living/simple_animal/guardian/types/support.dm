@@ -6,14 +6,15 @@
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you have 30% damage reduction and may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
+	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you may toggle your basic attacks to a healing mode, but this removes your 30% damage reduction. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
+	spontaneous_fluff_string = "<span class='holoparasite'>You feel a presence within you, yet, simultaneously, standing beside you, and feel a benevolent aura emanating from you.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught a support carp. It's a kleptocarp!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Support modules active. Holoparasite swarm online.</span>"
 	toggle_button_type = /obj/screen/guardian/ToggleMode
 	var/obj/structure/receiving_pad/beacon
 	var/beacon_cooldown = 0
-	var/toggle = FALSE
+	var/healing = FALSE
 
 /mob/living/simple_animal/hostile/guardian/healer/Initialize()
 	. = ..()
@@ -27,7 +28,7 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
-	if(is_deployed() && toggle && iscarbon(target))
+	if(is_deployed() && healing && iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
 		C.adjustFireLoss(-5)
@@ -43,14 +44,14 @@
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(src.loc == summoner)
-		if(toggle)
+		healing = !healing
+		if(!healing)
 			a_intent = INTENT_HARM
 			speed = initial(speed)
 			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = initial(melee_damage_lower)
 			melee_damage_upper = initial(melee_damage_upper)
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
-			toggle = FALSE
 		else
 			a_intent = INTENT_HELP
 			speed = initial(speed)
@@ -58,7 +59,6 @@
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			to_chat(src, "<span class='danger'><B>You switch to healing mode.</span></B>")
-			toggle = TRUE
 	else
 		to_chat(src, "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>")
 

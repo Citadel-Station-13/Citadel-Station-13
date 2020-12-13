@@ -7,6 +7,7 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	playstyle_string = "<span class='holoparasite'>As a <b>standard</b> type you have no special abilities, but take half damage and have powerful attack capable of smashing through walls.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Assistant, faceless and generic, but never to be underestimated.</span>"
+	spontaneous_fluff_string = "<span class='holoparasite'>You feel a presence within you, yet, simultaneously, standing beside you. This presence wants to punch.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Standard combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It's really boring and standard. Better punch some walls to ease the tension.</span>"
 	var/battlecry = "AT"

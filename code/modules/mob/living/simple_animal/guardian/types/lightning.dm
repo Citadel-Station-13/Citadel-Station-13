@@ -13,6 +13,7 @@
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	playstyle_string = "<span class='holoparasite'>As a <b>lightning</b> type, you have 30% damage reduction, apply lightning chains to targets on attack and have a lightning chain to your summoner. Lightning chains will shock anyone near them.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
+	spontaneous_fluff_string = "<span class='holoparasite'>You feel a presence within you, yet, simultaneously, standing beside you, and instinctively feel its shocking nature. You feel it may be best not to let it out too often.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Lightning modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
 	var/datum/beam/summonerchain

@@ -57,6 +57,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
 	var/playstyle_string = "<span class='holoparasite bold'>You are a standard Guardian. You shouldn't exist!</span>"
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
+	var/spontaneous_fluff_string = "<span class='holoparasite'>Suddenly, you feel a presence. A buggy one. Tell a coder as soon as possible.</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 	/// sigh, fine.
@@ -99,7 +100,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(!theme)
 		theme = pick("magic", "tech", "carp")
 	switch(theme)//should make it easier to create new stand designs in the future if anyone likes that
-		if("magic")
+		if("magic", "spontaneous")
 			name = "Guardian Spirit"
 			real_name = "Guardian Spirit"
 			bubble_icon = "guardian"
@@ -134,6 +135,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	..()
 	if(mind)
 		mind.name = "[real_name]"
+		mind.add_antag_datum(/datum/antagonist/guardian_spirit)
 	if(!summoner)
 		to_chat(src, "<span class='holoparasite bold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>")
 		return
@@ -472,6 +474,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> is now online!</span>")
 					if("magic")
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been summoned!</span>")
+					if("spontaneous")
+						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> is yours!</span>")
 					if("carp")
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been caught!</span>")
 				guardians -= G
@@ -510,7 +514,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/use_message = "<span class='holoparasite'>You shuffle the deck...</span>"
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
-	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
+	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a soulless creature such as you.</span>"
 	var/list/possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
@@ -610,6 +614,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("carp")
 			to_chat(user, "[G.carp_fluff_string]")
 			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been caught!</span>")
+		if("spontaneous")
+			to_chat(user, "[G.spontaneous_fluff_string]")
+			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> is yours!</span>")
 	add_verb(user, list(/mob/living/proc/guardian_comm, \
 						/mob/living/proc/guardian_recall, \
 						/mob/living/proc/guardian_reset))
@@ -654,6 +661,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
 	return !used
+
+/obj/item/guardiancreator/spontaneous
+	theme = "spontaneous"
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"

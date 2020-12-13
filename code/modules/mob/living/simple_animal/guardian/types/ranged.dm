@@ -16,9 +16,10 @@
 	projectiletype = /obj/item/projectile/guardian
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
-	ranged = 1
+	ranged = TRUE
 	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have 10% damage reduction, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
+	spontaneous_fluff_string = "<span class='holoparasite'>You feel a presence within you, yet, simultaneously, standing beside you... and far away, too.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
 	see_invisible = SEE_INVISIBLE_LIVING
