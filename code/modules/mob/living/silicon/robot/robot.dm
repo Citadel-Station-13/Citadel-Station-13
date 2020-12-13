@@ -1022,6 +1022,32 @@
 	R.undeploy()
 	return TRUE
 
+/datum/action/innate/custom_holoform
+	name = "Select Custom Holoform"
+	desc = "Select one of your existing avatars to use as a holoform."
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "custom_holoform"
+	required_mobility_flags = NONE
+
+/datum/action/innate/custom_holoform/Trigger()
+	if(!..())
+		return FALSE
+	var/mob/living/silicon/S = owner
+
+	//if setting the holoform succeeds, attempt to set it as the current holoform for the pAI or AI
+	if(S.attempt_set_custom_holoform())
+		if(istype(S, /mob/living/silicon/pai))
+			var/mob/living/silicon/pai/P = S
+			P.chassis = "custom"
+		else if(istype(S, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/A = S
+			if(A.client?.prefs?.custom_holoform_icon)
+				A.holo_icon = A.client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
+			else
+				A.holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
+
+	return TRUE
+
 
 /mob/living/silicon/robot/proc/undeploy()
 
@@ -1042,6 +1068,8 @@
 	if(mainframe.laws)
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	mainframe = null
+
+
 
 /mob/living/silicon/robot/attack_ai(mob/user)
 	if(shell && (!connected_ai || connected_ai == user))

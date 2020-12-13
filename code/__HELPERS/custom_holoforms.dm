@@ -27,7 +27,6 @@
 		COMPILE_OVERLAYS(mannequin)
 		CHECK_TICK
 		var/icon/capture = getFlatIcon(mannequin)
-		capture.Shift(WEST,16,FALSE)
 		CHECK_TICK
 		combined.Insert(capture, dir = d)
 		CHECK_TICK
@@ -67,7 +66,6 @@
 			var/chosen_name = input(C, "Which character do you wish to use as your appearance.") as anything in characters
 			if(chosen_name)
 				target_prefs = new(C)
-				message_admins("reverse index is [characters[chosen_name]]")
 				if(!target_prefs.load_character(characters[chosen_name], TRUE))
 					target_prefs = C.prefs
 

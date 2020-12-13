@@ -131,6 +131,7 @@
 	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
 	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
 	var/datum/action/innate/pai/light/AL = new /datum/action/innate/pai/light
+	var/datum/action/innate/custom_holoform/custom_holoform = new /datum/action/innate/custom_holoform
 
 	var/datum/action/language_menu/ALM = new
 	SW.Grant(src)
@@ -139,6 +140,7 @@
 	AR.Grant(src)
 	AL.Grant(src)
 	ALM.Grant(src)
+	custom_holoform.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
 
 /mob/living/silicon/pai/ComponentInitialize()
