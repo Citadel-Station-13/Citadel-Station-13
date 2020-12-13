@@ -1034,3 +1034,8 @@
 			qdel(src)
 		else
 			return
+
+/mob/living/silicon/ai/emote(act, m_type=1, message = null, intentional = FALSE)
+	if(current && eyeobj)
+		return eyeobj.emote(act, m_type, message, intentional, forced = TRUE)
+	return ..()
