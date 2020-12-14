@@ -277,6 +277,11 @@ Works together with spawning an observer, noted above.
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
+	if(ckey && penalize)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey]
+		if(P)
+			P.respawn_restrictions_active = TRUE
+			P.respawn_time_of_death = world.time
 	transfer_ckey(ghost, FALSE)
 	ghost.client.init_verbs()
 	if(penalize)

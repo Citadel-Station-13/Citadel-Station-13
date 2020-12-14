@@ -308,7 +308,7 @@
 			storing += I
 
 	// get rid of mobs
-	for(var/mob/living/L in mob_occupant.GetAllContents())
+	for(var/mob/living/L in mob_occupant.GetAllContents() - mob_occupant)
 		L.forceMove(drop_location())
 
 	if(storing.len)
