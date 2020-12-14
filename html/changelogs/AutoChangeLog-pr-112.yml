@@ -1,0 +1,5 @@
+author: SandPoot
+delete-after: true
+changes:
+  - bugfix: The teleporter no longer "cryos" you (it will display the correct message
+      on radio).
