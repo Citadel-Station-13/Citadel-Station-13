@@ -2124,14 +2124,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(HAS_BONE in species_traits)
 		. |= BIO_JUST_BONE
 
-//a check for if you should render any overlays or not
-/datum/species/proc/should_render(mob/living/carbon/human/H)
-	return TRUE
-
-//a check for if you want to forcibly make CanPass return TRUE for the mob with this species
-/datum/species/proc/species_pass_check()
-	return FALSE
-
 /////////////
 //BREATHING//
 /////////////

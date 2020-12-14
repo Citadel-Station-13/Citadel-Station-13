@@ -121,7 +121,7 @@
 /datum/design/nanites/spreading
 	name = "Infective Exo-Locomotion"
 	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
-			resulting in an extremely infective strain of nanites."
+			resulting in an extremely infective strain of nanites. Bypasses antiviral defense"
 	id = "spreading_nanites"
 	program_type = /datum/nanite_program/spreading
 	category = list("Utility Nanites")
@@ -139,6 +139,21 @@
 			but it causes occasional software errors due to faulty copies. Not compatible with cloud sync."
 	id = "mitosis_nanites"
 	program_type = /datum/nanite_program/mitosis
+	category = list("Utility Nanites")
+
+/datum/design/nanites/antiviral
+	name = "Enhanced Error Correction"
+	desc = "The nanites self-propagate and replicate their program storage memory, preventing viral takeovers."
+	id = "antiviral_nanites"
+	program_type = /datum/nanite_program/lockout/antiviral
+	category = list("Utility Nanites")
+
+/datum/design/nanites/hostile_lockdown
+	name = "Hostile Lockdown"
+	desc = "The nanites constantly encrypt and scramble their own control sectors, preventing consoles from controlling them. Furthermore, \
+	if the host happens to be a synthetic organism with innate control over nanite strains, this will prevent them from acting on the nanites as well."
+	id = "hostile_lockdown"
+	program_type = /datum/nanite_program/lockout/hostile_lockdown
 	category = list("Utility Nanites")
 
 ////////////////////MEDICAL NANITES//////////////////////////////////////

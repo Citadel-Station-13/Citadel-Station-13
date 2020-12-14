@@ -54,6 +54,13 @@
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
 	var/list/datum/nanite_rule/rules = list()
 
+	/// Corruptable - able to have code/configuration changed
+	var/corruptable = TRUE
+	/// error flicking - able to be randomly toggled by errors
+	var/error_flicking = TRUE
+	/// immutable - cannot be overwritten by other programs
+	var/immutable = FALSE
+
 /datum/nanite_program/New()
 	. = ..()
 	register_extra_settings()
@@ -68,7 +75,14 @@
 		on_mob_remove()
 	if(nanites)
 		nanites.programs -= src
+		nanites.permanent_programs -= src
 	return ..()
+
+/**
+  * Checks if we're a permanent program
+  */
+/datum/nanite_program/proc/is_permanent()
+	return nanites && (src in nanites.permanent_programs)
 
 /datum/nanite_program/proc/copy()
 	var/datum/nanite_program/new_program = new type()
@@ -77,6 +91,8 @@
 	return new_program
 
 /datum/nanite_program/proc/copy_programming(datum/nanite_program/target, copy_activated = TRUE)
+	if(target.immutable)
+		return
 	if(copy_activated)
 		target.activated = activated
 	target.timer_restart = timer_restart
@@ -236,7 +252,7 @@
 /datum/nanite_program/proc/on_emp(severity)
 	if(program_flags & NANITE_EMP_IMMUNE)
 		return
-	if(prob(80 / severity))
+	if(prob(severity / 2))
 		software_error()
 
 /datum/nanite_program/proc/on_shock(shock_damage)
@@ -244,7 +260,7 @@
 		if(prob(10))
 			software_error()
 		else if(prob(33))
-			qdel(src)
+			self_destruct()
 
 /datum/nanite_program/proc/on_minor_shock()
 	if(!program_flags & NANITE_SHOCK_IMMUNE)
@@ -256,26 +272,29 @@
 
 /datum/nanite_program/proc/software_error(type)
 	if(!type)
-		type = rand(1,5)
+		type = rand(1,is_permanent()? 4 : 5)
 	switch(type)
 		if(1)
-			qdel(src) //kill switch
+			self_destruct() //kill switch
 			return
 		if(2) //deprogram codes
-			activation_code = 0
-			deactivation_code = 0
-			kill_code = 0
-			trigger_code = 0
+			if(corruptable)
+				activation_code = 0
+				deactivation_code = 0
+				kill_code = 0
+				trigger_code = 0
 		if(3)
-			toggle() //enable/disable
+			if(error_flicking)
+				toggle() //enable/disable
 		if(4)
-			if(can_trigger)
+			if(error_flicking && can_trigger)
 				trigger()
 		if(5) //Program is scrambled and does something different
-			var/rogue_type = pick(rogue_types)
-			var/datum/nanite_program/rogue = new rogue_type
-			nanites.add_program(null, rogue, src)
-			qdel(src)
+			if(corruptable)
+				var/rogue_type = pick(rogue_types)
+				var/datum/nanite_program/rogue = new rogue_type
+				nanites.add_program(null, rogue, src)
+				self_destruct()
 
 /datum/nanite_program/proc/receive_signal(code, source)
 	if(activation_code && code == activation_code && !activated)
@@ -287,9 +306,17 @@
 	if(can_trigger && trigger_code && code == trigger_code)
 		trigger()
 		host_mob.investigate_log("'s [name] nanite program was triggered by [source] with code [code].", INVESTIGATE_NANITES)
-	if(kill_code && code == kill_code)
+	if((kill_code && code == kill_code) && !is_permanent())
 		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
+
+/**
+  * Attempts to destroy ourselves
+  */
+/datum/nanite_program/proc/self_destruct()
+	if(is_permanent())
+		return
+	qdel(src)
 
 ///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
 //Moved to being 'normally' researched due to lack of B.E.P.I.S.

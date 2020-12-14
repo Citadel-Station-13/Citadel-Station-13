@@ -15,9 +15,6 @@
 	exotic_bloodtype = "GEL"
 	exotic_blood_color = "BLOOD_COLOR_SLIME"
 	damage_overlay_type = ""
-	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	var/datum/action/innate/slime_change/slime_change
-	var/datum/action/innate/slime_puddle/slime_puddle
 	liked_food = TOXIC | MEAT
 	disliked_food = null
 	toxic_food = ANTITOXIC
@@ -38,45 +35,25 @@
 	icon_state = "brain-slime"
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
-	if(slime_puddle && slime_puddle.is_puddle)
-		slime_puddle.Activate()
-	if(regenerate_limbs)
-		regenerate_limbs.Remove(C)
-	if(slime_change)
-		slime_change.Remove(C)
-	if(slime_puddle)
-		slime_puddle.Remove(C)
 	C.faction -= "slime"
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		H.remove_ability_from_source(list(INNATE_ABILITY_SLIME_BLOBFORM, INNATE_ABILITY_LIMB_REGROWTH, INNATE_ABILITY_HUMANOID_CUSTOMIZATION), ABILITY_SOURCE_SPECIES)
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-		regenerate_limbs = new
-		regenerate_limbs.Grant(C)
-		slime_change = new
-		slime_change.Grant(C)
-		slime_puddle = new
-		slime_puddle.Grant(C)
+		var/mob/living/carbon/human/H = C
+		H.grant_ability_from_source(list(INNATE_ABILITY_SLIME_BLOBFORM, INNATE_ABILITY_LIMB_REGROWTH, INNATE_ABILITY_HUMANOID_CUSTOMIZATION), ABILITY_SOURCE_SPECIES)
+		H.set_ability_property(INNATE_ABILITY_LIMB_REGROWTH, PROPERTY_LIMB_REGROWTH_USAGE_TYPE, REGROWTH_USES_BLOOD)
 	C.faction |= "slime"
 
 /datum/species/jelly/handle_body(mob/living/carbon/human/H)
 	. = ..()
 	//update blood color to body color
 	exotic_blood_color = "#" + H.dna.features["mcolor"]
-
-/datum/species/jelly/should_render()
-	if(slime_puddle && slime_puddle.is_puddle)
-		return FALSE
-	else
-		return ..()
-
-/datum/species/jelly/species_pass_check()
-	if(slime_puddle && slime_puddle.is_puddle)
-		return TRUE
-	else
-		return ..()
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD || HAS_TRAIT(H, TRAIT_NOMARROW)) //can't farm slime jelly from a dead slime/jelly person indefinitely, and no regeneration for blooduskers
@@ -95,8 +72,6 @@
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < (BLOOD_VOLUME_BAD*H.blood_ratio))
 		Cannibalize_Body(H)
-	if(regenerate_limbs)
-		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
@@ -111,47 +86,6 @@
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
 	qdel(consumed_limb)
 	H.blood_volume += 20
-
-/datum/action/innate/regenerate_limbs
-	name = "Regenerate Limbs"
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimeheal"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
-	required_mobility_flags = NONE
-
-/datum/action/innate/regenerate_limbs/IsAvailable(silent = FALSE)
-	if(..())
-		var/mob/living/carbon/human/H = owner
-		var/list/limbs_to_heal = H.get_missing_limbs()
-		if(limbs_to_heal.len < 1)
-			return 0
-		if(H.blood_volume >= (BLOOD_VOLUME_OKAY*H.blood_ratio)+40)
-			return 1
-		return 0
-
-/datum/action/innate/regenerate_limbs/Activate()
-	var/mob/living/carbon/human/H = owner
-	var/list/limbs_to_heal = H.get_missing_limbs()
-	if(limbs_to_heal.len < 1)
-		to_chat(H, "<span class='notice'>You feel intact enough as it is.</span>")
-		return
-	to_chat(H, "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>")
-	if(H.blood_volume >= 40*limbs_to_heal.len+(BLOOD_VOLUME_OKAY*H.blood_ratio))
-		H.regenerate_limbs()
-		H.blood_volume -= 40*limbs_to_heal.len
-		to_chat(H, "<span class='notice'>...and after a moment you finish reforming!</span>")
-		return
-	else if(H.blood_volume >= 40)//We can partially heal some limbs
-		while(H.blood_volume >= (BLOOD_VOLUME_OKAY*H.blood_ratio)+40)
-			var/healed_limb = pick(limbs_to_heal)
-			H.regenerate_limb(healed_limb)
-			limbs_to_heal -= healed_limb
-			H.blood_volume -= 40
-		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
-		return
-	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
-
 
 ////////////////////////////////////////////////////////SLIMEPEOPLE///////////////////////////////////////////////////////////////////
 
@@ -482,314 +416,6 @@
 	burnmod = 1
 
 	allowed_limb_ids = list(SPECIES_SLIME,SPECIES_STARGAZER,SPECIES_SLIME_LUMI)
-
-/datum/action/innate/slime_change
-	name = "Alter Form"
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "alter_form" //placeholder
-	icon_icon = 'modular_citadel/icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
-
-/datum/action/innate/slime_change/Activate()
-	var/mob/living/carbon/human/H = owner
-	if(!isjellyperson(H))
-		return
-	else
-		H.visible_message("<span class='notice'>[owner] gains a look of \
-		concentration while standing perfectly still.\
-		 Their body seems to shift and starts getting more goo-like.</span>",
-		"<span class='notice'>You focus intently on altering your body while \
-		standing perfectly still...</span>")
-		change_form()
-
-/datum/action/innate/slime_change/proc/change_form()
-	var/mob/living/carbon/human/H = owner
-	var/select_alteration = input(owner, "Select what part of your form to alter", "Form Alteration", "cancel") in list("Body Color","Hair Style", "Genitals", "Tail", "Snout", "Markings", "Ears", "Taur body", "Penis", "Vagina", "Penis Length", "Breast Size", "Breast Shape", "Cancel")
-
-	if(select_alteration == "Body Color")
-		var/new_color = input(owner, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
-		if(new_color)
-			var/temp_hsv = RGBtoHSV(new_color)
-			if(ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright
-				H.dna.features["mcolor"] = sanitize_hexcolor(new_color, 6)
-				H.update_body()
-				H.update_hair()
-			else
-				to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
-	else if(select_alteration == "Hair Style")
-		if(H.gender == MALE)
-			var/new_style = input(owner, "Select a facial hair style", "Hair Alterations")  as null|anything in GLOB.facial_hair_styles_list
-			if(new_style)
-				H.facial_hair_style = new_style
-		else
-			H.facial_hair_style = "Shaved"
-		//handle normal hair
-		var/new_style = input(owner, "Select a hair style", "Hair Alterations")  as null|anything in GLOB.hair_styles_list
-		if(new_style)
-			H.hair_style = new_style
-			H.update_hair()
-	else if (select_alteration == "Genitals")
-		var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") in list("add sexual organ", "remove sexual organ", "cancel")
-		switch(operation)
-			if("add sexual organ")
-				var/new_organ = input("Select sexual organ:", "Organ Manipulation") as null|anything in GLOB.genitals_list
-				if(!new_organ)
-					return
-				H.give_genital(GLOB.genitals_list[new_organ])
-
-			if("remove sexual organ")
-				var/list/organs = list()
-				for(var/obj/item/organ/genital/X in H.internal_organs)
-					var/obj/item/organ/I = X
-					organs["[I.name] ([I.type])"] = I
-				var/obj/item/O = input("Select sexual organ:", "Organ Manipulation", null) as null|anything in organs
-				var/obj/item/organ/genital/G = organs[O]
-				if(!G)
-					return
-				G.forceMove(get_turf(H))
-				qdel(G)
-				H.update_genitals()
-
-	else if (select_alteration == "Ears")
-		var/list/snowflake_ears_list = list("Normal" = null)
-		for(var/path in GLOB.mam_ears_list)
-			var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[path]
-			if(istype(instance, /datum/sprite_accessory))
-				var/datum/sprite_accessory/S = instance
-				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
-					snowflake_ears_list[S.name] = path
-		var/new_ears
-		new_ears = input(owner, "Choose your character's ears:", "Ear Alteration") as null|anything in snowflake_ears_list
-		if(new_ears)
-			H.dna.features["mam_ears"] = new_ears
-		H.update_body()
-
-	else if (select_alteration == "Snout")
-		var/list/snowflake_snouts_list = list("Normal" = null)
-		for(var/path in GLOB.mam_snouts_list)
-			var/datum/sprite_accessory/snouts/mam_snouts/instance = GLOB.mam_snouts_list[path]
-			if(istype(instance, /datum/sprite_accessory))
-				var/datum/sprite_accessory/S = instance
-				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
-					snowflake_snouts_list[S.name] = path
-		var/new_snout
-		new_snout = input(owner, "Choose your character's face:", "Face Alteration") as null|anything in snowflake_snouts_list
-		if(new_snout)
-			H.dna.features["mam_snouts"] = new_snout
-		H.update_body()
-
-	else if (select_alteration == "Markings")
-		var/list/snowflake_markings_list = list("None")
-		for(var/path in GLOB.mam_body_markings_list)
-			var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
-			if(istype(instance, /datum/sprite_accessory))
-				var/datum/sprite_accessory/S = instance
-				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
-					snowflake_markings_list[S.name] = path
-		var/new_mam_body_markings
-		new_mam_body_markings = input(H, "Choose your character's body markings:", "Marking Alteration") as null|anything in snowflake_markings_list
-		if(new_mam_body_markings)
-			H.dna.features["mam_body_markings"] = new_mam_body_markings
-		for(var/X in H.bodyparts) //propagates the markings changes
-			var/obj/item/bodypart/BP = X
-			BP.update_limb(FALSE, H)
-		H.update_body()
-
-	else if (select_alteration == "Tail")
-		var/list/snowflake_tails_list = list("Normal" = null)
-		for(var/path in GLOB.mam_tails_list)
-			var/datum/sprite_accessory/tails/mam_tails/instance = GLOB.mam_tails_list[path]
-			if(istype(instance, /datum/sprite_accessory))
-				var/datum/sprite_accessory/S = instance
-				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
-					snowflake_tails_list[S.name] = path
-		var/new_tail
-		new_tail = input(owner, "Choose your character's Tail(s):", "Tail Alteration") as null|anything in snowflake_tails_list
-		if(new_tail)
-			H.dna.features["mam_tail"] = new_tail
-			if(new_tail != "None")
-				H.dna.features["taur"] = "None"
-		H.update_body()
-
-	else if (select_alteration == "Taur body")
-		var/list/snowflake_taur_list = list("Normal" = null)
-		for(var/path in GLOB.taur_list)
-			var/datum/sprite_accessory/taur/instance = GLOB.taur_list[path]
-			if(istype(instance, /datum/sprite_accessory))
-				var/datum/sprite_accessory/S = instance
-				if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(H.client.ckey)))
-					snowflake_taur_list[S.name] = path
-		var/new_taur
-		new_taur = input(owner, "Choose your character's tauric body:", "Tauric Alteration") as null|anything in snowflake_taur_list
-		if(new_taur)
-			H.dna.features["taur"] = new_taur
-			if(new_taur != "None")
-				H.dna.features["mam_tail"] = "None"
-		H.update_body()
-
-	else if (select_alteration == "Penis")
-		for(var/obj/item/organ/genital/penis/X in H.internal_organs)
-			qdel(X)
-		var/new_shape
-		new_shape = input(owner, "Choose your character's dong", "Genital Alteration") as null|anything in GLOB.cock_shapes_list
-		if(new_shape)
-			H.dna.features["cock_shape"] = new_shape
-		H.update_genitals()
-		H.give_genital(/obj/item/organ/genital/testicles)
-		H.give_genital(/obj/item/organ/genital/penis)
-		H.apply_overlay()
-
-
-	else if (select_alteration == "Vagina")
-		for(var/obj/item/organ/genital/vagina/X in H.internal_organs)
-			qdel(X)
-		var/new_shape
-		new_shape = input(owner, "Choose your character's pussy", "Genital Alteration") as null|anything in GLOB.vagina_shapes_list
-		if(new_shape)
-			H.dna.features["vag_shape"] = new_shape
-		H.update_genitals()
-		H.give_genital(/obj/item/organ/genital/womb)
-		H.give_genital(/obj/item/organ/genital/vagina)
-		H.apply_overlay()
-
-	else if (select_alteration == "Penis Length")
-		for(var/obj/item/organ/genital/penis/X in H.internal_organs)
-			qdel(X)
-		var/min_D = CONFIG_GET(number/penis_min_inches_prefs)
-		var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
-		var/new_length = input(owner, "Penis length in inches:\n([min_D]-[max_D])", "Genital Alteration") as num|null
-		if(new_length)
-			H.dna.features["cock_length"] = clamp(round(new_length), min_D, max_D)
-		H.update_genitals()
-		H.apply_overlay()
-		H.give_genital(/obj/item/organ/genital/testicles)
-		H.give_genital(/obj/item/organ/genital/penis)
-
-	else if (select_alteration == "Breast Size")
-		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
-			qdel(X)
-		var/new_size = input(owner, "Breast Size", "Genital Alteration") as null|anything in CONFIG_GET(keyed_list/breasts_cups_prefs)
-		if(new_size)
-			H.dna.features["breasts_size"] = new_size
-		H.update_genitals()
-		H.apply_overlay()
-		H.give_genital(/obj/item/organ/genital/breasts)
-
-	else if (select_alteration == "Breast Shape")
-		for(var/obj/item/organ/genital/breasts/X in H.internal_organs)
-			qdel(X)
-		var/new_shape
-		new_shape = input(owner, "Breast Shape", "Genital Alteration") as null|anything in GLOB.breasts_shapes_list
-		if(new_shape)
-			H.dna.features["breasts_shape"] = new_shape
-		H.update_genitals()
-		H.apply_overlay()
-		H.give_genital(/obj/item/organ/genital/breasts)
-
-	else
-		return
-
-/datum/action/innate/slime_puddle
-	name = "Puddle Transformation"
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimepuddle"
-	icon_icon = 'icons/mob/actions/actions_slime.dmi'
-	background_icon_state = "bg_alien"
-	required_mobility_flags = MOBILITY_STAND
-	var/is_puddle = FALSE
-	var/in_transformation_duration = 12
-	var/out_transformation_duration = 7
-	var/puddle_into_effect = /obj/effect/temp_visual/slime_puddle
-	var/puddle_from_effect = /obj/effect/temp_visual/slime_puddle/reverse
-	var/puddle_icon = 'icons/mob/mob.dmi'
-	var/puddle_state = "puddle"
-	var/tracked_overlay
-	var/datum/component/squeak/squeak
-	var/transforming = FALSE
-	var/last_use
-
-/datum/action/innate/slime_puddle/IsAvailable()
-	if(!transforming)
-		return ..()
-	else
-		return FALSE
-
-/datum/action/innate/slime_puddle/Activate()
-	var/mob/living/carbon/human/H = owner
-	//if they have anything stuck to their hands, we immediately say 'no' and return
-	for(var/obj/item/I in H.held_items)
-		if(HAS_TRAIT(I, TRAIT_NODROP))
-			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
-			return
-	if(isjellyperson(owner) && IsAvailable())
-		transforming = TRUE
-		UpdateButtonIcon()
-		var/mutcolor = "#" + H.dna.features["mcolor"]
-		if(!is_puddle)
-			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
-				is_puddle = TRUE //so we know which transformation to use when its used
-				owner.cut_overlays() //we dont show our normal sprite, we show a puddle sprite
-				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
-				puddle_effect.color = mutcolor
-				H.Stun(in_transformation_duration, ignore_canstun = TRUE) //cant move while transforming
-
-				//series of traits that make up the puddle behaviour
-				ADD_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
-				ADD_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
-				H.update_disabled_bodyparts(silent = TRUE)	//silently update arms to be paralysed
-
-				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-
-				H.layer -= 1 //go one layer down so people go over you
-				ENABLE_BITFIELD(H.pass_flags, PASSMOB) //this actually lets people pass over you
-				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg')) //blorble noise when people step on you
-
-				//if the user is a changeling, retract their sting
-				H.unset_sting()
-
-				sleep(in_transformation_duration) //wait for animation to end
-
-				//set the puddle overlay up
-				var/mutable_appearance/puddle_overlay = mutable_appearance(icon = puddle_icon, icon_state = puddle_state)
-				puddle_overlay.color = mutcolor
-				tracked_overlay = puddle_overlay
-				owner.add_overlay(puddle_overlay)
-
-				transforming = FALSE
-				UpdateButtonIcon()
-		else
-			//like the above, but reverse everything done!
-			owner.cut_overlay(tracked_overlay)
-			var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
-			puddle_effect.color = mutcolor
-			H.Stun(out_transformation_duration, ignore_canstun = TRUE)
-			sleep(out_transformation_duration)
-			REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_PARALYSIS_R_ARM, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOPICKUP, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOUSE, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_SPRINT_LOCKED, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_COMBAT_MODE_LOCKED, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_MOBILITY_NOREST, SLIMEPUDDLE_TRAIT)
-			REMOVE_TRAIT(H, TRAIT_ARMOR_BROKEN, SLIMEPUDDLE_TRAIT)
-			H.update_disabled_bodyparts(silent = TRUE)
-			H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-			H.layer += 1 //go one layer back above!
-			DISABLE_BITFIELD(H.pass_flags, PASSMOB)
-			is_puddle = FALSE
-			if(squeak)
-				squeak.RemoveComponent()
-			owner.regenerate_icons()
-			transforming = FALSE
-			UpdateButtonIcon()
-	else
-		to_chat(owner, "<span class='warning'>You need to be standing up to do this!") //just assume they're a slime because it's such a weird edgecase to have it and not be one (it shouldn't even be possible)
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
 

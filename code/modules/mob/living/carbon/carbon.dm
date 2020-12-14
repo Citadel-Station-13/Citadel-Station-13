@@ -605,7 +605,7 @@
 			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
-	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT)
+	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT_REMOVAL_THRESHOLD)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
 		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
