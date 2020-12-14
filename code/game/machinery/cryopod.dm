@@ -295,7 +295,7 @@
 
 			if(tele)
 				despawn_occupant()
-				do_sparks(2, TRUE, src)
+				do_fake_sparks(2, TRUE, src)
 				playsound(src, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 
 #define CRYO_DESTROY 0
@@ -421,7 +421,7 @@
 
 	if(GLOB.announcement_systems.len)
 		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
-		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
+		announcer.announce("[tele ? "CRYOSTORAGE_TELE" : "CRYOSTORAGE"]", mob_occupant.real_name, announce_rank, list())
 		visible_message("<span class='notice'>\The [src] hums and hisses as it [tele ? "teleports" : "moves"] [mob_occupant.real_name] [tele ? "to centcom" : "into storage"].</span>")
 
 	// Ghost and delete the mob.

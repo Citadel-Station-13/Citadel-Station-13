@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/newhead = "%PERSON, %RANK, is the department head."
 	var/newheadToggle = TRUE
 	var/cryostorage = "%PERSON, %RANK, has been moved into cryogenic storage." // this shouldnt be changed
+	var/cryostorage_tele = "%PERSON, %RANK, has been teleported to CentCom."   // you saying it hat man.
 
 	var/greenlight = "Light_Green"
 	var/pinklight = "Light_Pink"
@@ -87,6 +88,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(newhead, user, rank)
 	else if(message_type == "CRYOSTORAGE")
 		message = CompileText(cryostorage, user, rank)
+	else if(message_type == "CRYOSTORAGE_TELE")
+		message = CompileText(cryostorage_tele, user, rank)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
