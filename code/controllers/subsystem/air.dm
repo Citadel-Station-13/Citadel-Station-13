@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(air)
 	var/cost_groups = 0
 	var/cost_highpressure = 0
 	var/cost_hotspots = 0
+	var/cost_post_process = 0
 	var/cost_superconductivity = 0
 	var/cost_pipenets = 0
 	var/cost_rebuilds = 0
@@ -46,8 +47,10 @@ SUBSYSTEM_DEF(air)
 	msg += "TH:[round(turf_process_time(),1)]|"
 	msg += "EG:[round(cost_groups,1)]|"
 	msg += "EQ:[round(cost_equalize,1)]|"
+	msg += "PO:[round(cost_post_process,1)]|"
 	msg += "HP:[round(cost_highpressure,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "HE:[round(heat_process_time(),1)]|"
 	msg += "SC:[round(cost_superconductivity,1)]|"
 	msg += "PN:[round(cost_pipenets,1)]|"
 	msg += "AM:[round(cost_atmos_machinery,1)]"
@@ -126,6 +129,16 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_excited_groups(resumed)
 		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_TURF_POST_PROCESS
+
+	if(currentpart == SSAIR_TURF_POST_PROCESS)
+		timer = TICK_USAGE_REAL
+		if(post_process_turfs(resumed,MC_TICK_REMAINING_MS))
+			pause()
+		cost_post_process = MC_AVERAGE(cost_post_process, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -268,11 +281,13 @@ SUBSYSTEM_DEF(air)
 		pause()
 
 /datum/controller/subsystem/air/proc/process_turfs_extools()
+/datum/controller/subsystem/air/proc/post_process_turfs()
 /datum/controller/subsystem/air/proc/process_turf_equalize_extools()
 /datum/controller/subsystem/air/proc/process_excited_groups_extools()
 /datum/controller/subsystem/air/proc/get_amt_gas_mixes()
 /datum/controller/subsystem/air/proc/get_max_gas_mixes()
 /datum/controller/subsystem/air/proc/turf_process_time()
+/datum/controller/subsystem/air/proc/heat_process_time()
 
 /datum/controller/subsystem/air/StartLoadingMap()
 	map_loading = TRUE

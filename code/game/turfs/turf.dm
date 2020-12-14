@@ -89,7 +89,7 @@
 
 	ComponentInitialize()
 
-	__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()))
+	__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()) && !planetary_atmos)
 
 	return INITIALIZE_HINT_NORMAL
 
