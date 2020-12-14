@@ -27,4 +27,5 @@
 			I.spawn_guardian(L, C.key)
 			control.weight *= 2 //they attract each other, after all
 			qdel(I)
-			break
+			return SUCCESSFUL_SPAWN
+	return NOT_ENOUGH_PLAYERS
