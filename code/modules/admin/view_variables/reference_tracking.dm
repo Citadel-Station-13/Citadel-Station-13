@@ -3,8 +3,9 @@
 GLOBAL_LIST_EMPTY(deletion_failures)
 
 /world/proc/enable_reference_tracking()
-	if (fexists(EXTOOLS))
-		call(EXTOOLS, "ref_tracking_initialize")()
+	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
+	if (fexists(extools))
+		call(extools, "ref_tracking_initialize")()
 
 /proc/get_back_references(datum/D)
 	CRASH("/proc/get_back_references not hooked by extools, reference tracking will not function!")
@@ -109,7 +110,7 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 	set name = "Find References"
 	set src in world
 
-	find_references(FALSE)
+	find_references_legacy(FALSE)
 
 
 /datum/proc/find_references_legacy(skip_alert)
@@ -164,7 +165,7 @@ GLOBAL_LIST_EMPTY(deletion_failures)
 
 	qdel(src, TRUE) //force a qdel
 	if(!running_find_references)
-		find_references(TRUE)
+		find_references_legacy(TRUE)
 
 
 /datum/verb/qdel_then_if_fail_find_references()

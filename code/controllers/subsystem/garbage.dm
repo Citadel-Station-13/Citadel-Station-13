@@ -1,3 +1,26 @@
+/*!
+## Debugging GC issues
+
+In order to debug `qdel()` failures, there are several tools available.
+To enable these tools, define `TESTING` in [_compile_options.dm](https://github.com/tgstation/-tg-station/blob/master/code/_compile_options.dm).
+
+First is a verb called "Find References", which lists **every** refererence to an object in the world. This allows you to track down any indirect or obfuscated references that you might have missed.
+
+Complementing this is another verb, "qdel() then Find References".
+This does exactly what you'd expect; it calls `qdel()` on the object and then it finds all references remaining.
+This is great, because it means that `Destroy()` will have been called before it starts to find references,
+so the only references you'll find will be the ones preventing the object from `qdel()`ing gracefully.
+
+If you have a datum or something you are not destroying directly (say via the singulo),
+the next tool is `QDEL_HINT_FINDREFERENCE`. You can return this in `Destroy()` (where you would normally `return ..()`),
+to print a list of references once it enters the GC queue.
+
+Finally is a verb, "Show qdel() Log", which shows the deletion log that the garbage subsystem keeps. This is helpful if you are having race conditions or need to review the order of deletions.
+
+Note that for any of these tools to work `TESTING` must be defined.
+By using these methods of finding references, you can make your life far, far easier when dealing with `qdel()` failures.
+*/
+
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = FIRE_PRIORITY_GARBAGE
@@ -6,7 +29,7 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(15 SECONDS, 30 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
@@ -24,10 +47,8 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-
 	#ifdef LEGACY_REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
-	var/list/reference_find_on_fail_types = list()
 	#endif
 
 
@@ -99,6 +120,9 @@ SUBSYSTEM_DEF(garbage)
 					state = SS_RUNNING
 				break
 
+
+
+
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
 		delslasttick = 0
@@ -135,7 +159,7 @@ SUBSYSTEM_DEF(garbage)
 			++totalgcs
 			pass_counts[level]++
 			#ifdef LEGACY_REFERENCE_TRACKING
-			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
+			reference_find_on_fail -= refID	//It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
 				return
@@ -149,10 +173,10 @@ SUBSYSTEM_DEF(garbage)
 				D.find_references()
 				#elif defined(LEGACY_REFERENCE_TRACKING)
 				if(reference_find_on_fail[refID])
-					D.find_references()
+					D.find_references_legacy()
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references()
+					D.find_references_legacy()
 				#endif
 				reference_find_on_fail -= refID
 				#endif
@@ -195,32 +219,12 @@ SUBSYSTEM_DEF(garbage)
 	var/gctime = world.time
 	var/refid = "\ref[D]"
 
-#ifdef LEGACY_REFERENCE_TRACKING
-	if(reference_find_on_fail_types[D.type])
-		reference_find_on_fail["\ref[D]"] = TRUE
-#endif
-
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
 	if (queue[refid])
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
 	queue[refid] = gctime
-
-#ifdef LEGACY_REFERENCE_TRACKING
-/datum/controller/subsystem/garbage/proc/add_type_to_findref(type)
-	if(!ispath(type))
-		return "NOT A VAILD PATH"
-	reference_find_on_fail_types |= typecacheof(type)
-
-/datum/controller/subsystem/garbage/proc/remove_type_from_findref(type)
-	if(!ispath(type))
-		return "NOT A VALID PATH"
-	reference_find_on_fail_types -= typesof(type)
-
-/datum/controller/subsystem/garbage/proc/clear_findref_types()
-	reference_find_on_fail_types = list()
-#endif
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
@@ -274,8 +278,10 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
-// Should be treated as a replacement for the 'del' keyword.
-// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
+
+/// Should be treated as a replacement for the 'del' keyword.
+///
+/// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE, ...)
 	if(!istype(D))
 		del(D)
@@ -330,9 +336,10 @@ SUBSYSTEM_DEF(garbage)
 			#ifdef LEGACY_REFERENCE_TRACKING
 			if (QDEL_HINT_FINDREFERENCE) //qdel will, if LEGACY_REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.Queue(D)
+				D.find_references_legacy()
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 				SSgarbage.Queue(D)
-				SSgarbage.reference_find_on_fail["\ref[D]"] = TRUE
+				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
 			#endif
 			else
 				#ifdef TESTING
@@ -343,18 +350,3 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
-
-#ifdef TESTING
-/proc/writeDatumCount()
-	var/list/datums = list()
-	for(var/datum/D in world)
-		datums[D.type] += 1
-	for(var/datum/D)
-		datums[D.type] += 1
-	datums = sortTim(datums, /proc/cmp_numeric_dsc, associative = TRUE)
-	if(fexists("data/DATUMCOUNT.txt"))
-		fdel("data/DATUMCOUNT.txt")
-	var/outfile = file("data/DATUMCOUNT.txt")
-	for(var/path in datums)
-		outfile << "[datums[path]]\t\t\t\t\t[path]"
-#endif

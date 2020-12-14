@@ -10,24 +10,27 @@ SUBSYSTEM_DEF(atoms)
 
 	var/old_initialized
 
-	var/list/late_loaders
+	var/list/late_loaders = list()
 
 	var/list/BadInitializeCalls = list()
 
+	initialized = INITIALIZATION_INSSATOMS
+
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
-	setupGenetics()
+	setupGenetics() //to set the mutations' sequence
+
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
+	initialized = INITIALIZATION_INNEW_REGULAR
 	return ..()
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
+	old_initialized = initialized
 	initialized = INITIALIZATION_INNEW_MAPLOAD
-
-	LAZYINITLIST(late_loaders)
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
@@ -49,7 +52,7 @@ SUBSYSTEM_DEF(atoms)
 	testing("Initialized [count] atoms")
 	pass(count)
 
-	initialized = INITIALIZATION_INNEW_REGULAR
+	initialized = old_initialized
 
 	if(late_loaders.len)
 		for(var/I in late_loaders)
@@ -58,6 +61,7 @@ SUBSYSTEM_DEF(atoms)
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
 
+/// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
 	if(QDELING(A))
@@ -150,8 +154,3 @@ SUBSYSTEM_DEF(atoms)
 	var/initlog = InitLog()
 	if(initlog)
 		text2file(initlog, "[GLOB.log_directory]/initialize.log")
-
-#undef BAD_INIT_QDEL_BEFORE
-#undef BAD_INIT_DIDNT_INIT
-#undef BAD_INIT_SLEPT
-#undef BAD_INIT_NO_HINT
