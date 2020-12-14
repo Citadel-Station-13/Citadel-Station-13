@@ -29,6 +29,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/respawn_restrictions_active = FALSE
 	/// time of death we consider for respawns
 	var/respawn_time_of_death = -INFINITY
+	/// did they DNR? used to prevent respawns.
+	var/dnr_triggered = FALSE
 
 	// Intra-round persistence end
 

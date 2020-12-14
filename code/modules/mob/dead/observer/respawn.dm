@@ -33,6 +33,7 @@
 		log_admin("[key_name(src)] gave [key_name(O)] a full respawn and sent them back to the lobby.")
 		to_chat(O, "<span class='userdanger'>You have been given a full respawn.</span>")
 		O.do_respawn(FALSE)
+		O.client.prefs.dnr_triggered = FALSE
 	else if(istype(M, /mob/dead/new_player))
 		var/mob/dead/new_player/NP = M
 		var/confirm = alert(src, "Remove [NP]'s respawn restrictions?", "Remove Restrictions", "Yes", "No")
@@ -41,6 +42,7 @@
 		message_admins("[key_name_admin(src)] removed [ckey]'s respawn restrictions.")
 		log_admin("[key_name(src)] removed [ckey]'s respawn restrictions")
 		NP.client.prefs.respawn_restrictions_active = FALSE
+		NP.client.prefs.dnr_triggered = FALSE
 		to_chat(NP, "<span class='boldnotie'>Your respawn restrictions have been removed.")
 	else
 		CRASH("Invalid mobtype")
@@ -105,6 +107,10 @@
 
 	if(!CONFIG_GET(flag/respawns_enabled))
 		to_chat(src, "<span class='warning'>Respawns are disabled in configuration.</span>")
+		return
+
+	if(client.prefs.dnr_triggered)
+		to_chat(src, "<span class='danger'>You cannot respawn as you have enabled DNR.</span>")
 		return
 
 	var/timeleft = time_left_to_respawn()

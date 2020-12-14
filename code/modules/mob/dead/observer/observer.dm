@@ -428,12 +428,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
 		return FALSE
 
-	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. ","Are you sure you want to stay dead?","Yes","No")
+	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. THIS WILL ALSO STOP YOU FROM RESPAWNING!!!","Are you sure you want to stay dead and never respawn?","Yes","No")
+
 	if(response != "Yes")
 		return
 
 	can_reenter_corpse = FALSE
-	to_chat(src, "You can no longer be brought back into your body.")
+	client.prefs?.dnr_triggered = TRUE
+	to_chat(src, "You can no longer be brought back into your body or respawn.")
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
