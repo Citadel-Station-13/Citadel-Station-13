@@ -31,7 +31,7 @@
 	for(var/obj/item/B in things)
 		if(B.get_part_rating() > lowest_rating)
 			things.Remove(B)
-	if(lowest_rating = INFINITY)
+	if(lowest_rating == INFINITY)
 		to_chat(M, "<span class='notice'>There's no parts to dump out from [parent].</span>")
 		return
 	to_chat(M, "<span class='notice'>You start dumping out tier/cell rating [lowest_rating] parts from [parent].</span>")
@@ -75,7 +75,7 @@
 	for(var/obj/item/B in things)
 		if(B.get_part_rating() > lowest_rating)
 			things.Remove(B)
-	if(lowest_rating = INFINITY)
+	if(lowest_rating == INFINITY)
 		to_chat(M, "<span class='notice'>There's no parts to dump out from [parent].</span>")
 		return
 	to_chat(M, "<span class='notice'>You start dumping out tier/cell rating [lowest_rating] parts from [parent].</span>")
