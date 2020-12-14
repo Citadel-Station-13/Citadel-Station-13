@@ -80,6 +80,8 @@
  * Checks if we can latejoin on the currently selected slot, taking into account respawn status.
  */
 /mob/dead/new_player/proc/respawn_latejoin_check(notify = FALSE)
+	if(!client.prefs.respawn_restrictions_active)
+		return TRUE
 	var/can_same_person = CONFIG_GET(flag/allow_same_character_respawn)
 	if(can_same_person)
 		return TRUE
