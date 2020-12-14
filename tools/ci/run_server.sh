@@ -6,6 +6,7 @@ rm ci_test/*.dll
 mkdir ci_test/config
 
 #test config
+cp libbyond-extools.so ci_test/libbyond-extools.so
 cp tools/ci/ci_config.txt ci_test/config/config.txt
 
 cd ci_test
