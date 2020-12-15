@@ -7,6 +7,11 @@
 	config_entry_value = 15.0
 	integer = FALSE
 
+/// Minutes before allowing respawn, if user cryo'd.
+/datum/config_entry/number/respawn_delay_cryo
+	config_entry_value = 5.0
+	integer = FALSE
+
 /// Allows respawning as non-assistant. Overrides all others of this type.
 /datum/config_entry/flag/allow_non_assistant_respawn
 	config_entry_value = FALSE

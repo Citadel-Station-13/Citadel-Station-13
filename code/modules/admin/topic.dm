@@ -1805,12 +1805,15 @@
 		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
 			return
 
-		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
-		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
+		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby, removing their respawn restrictions if they existed.")
+		message_admins("[key_name(usr)] has sent [key_name(M)] back to the Lobby, removing their respawn restrictions if they existed.")
 
 		var/mob/dead/new_player/NP = new()
 		NP.ckey = M.ckey
 		qdel(M)
+		if(GLOB.preferences_datums[NP.ckey])
+			var/datum/preferences/P = GLOB.preferences_datums[NP.ckey]
+			P.respawn_restrictions_active = FALSE
 
 	else if(href_list["tdome1"])
 		if(!check_rights(R_FUN))

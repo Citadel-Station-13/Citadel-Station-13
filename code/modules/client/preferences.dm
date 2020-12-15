@@ -31,6 +31,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/respawn_time_of_death = -INFINITY
 	/// did they DNR? used to prevent respawns.
 	var/dnr_triggered = FALSE
+	/// did they cryo on their last ghost?
+	var/respawn_did_cryo = FALSE
 
 	// Intra-round persistence end
 

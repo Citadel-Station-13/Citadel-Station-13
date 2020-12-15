@@ -18,7 +18,10 @@
 		if(!I.client || !I.client.prefs.respawn_restrictions_active)
 			continue
 		valid["[I.ckey] - IN LOBBY"] = I.ckey
-	var/ckey = valid[input(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn") as null|anything in valid]
+	if(!valid.len)
+		to_chat(src, "<span class='warning'>No player found that is either a ghost or is in lobby with restrictions active.</span>")
+		return
+	var/ckey = valid[input(src, "Choose a player (only showing logged in players who have restrictions)", "Unrestricted Respawn") as null|anything in valid
 	var/client/player = GLOB.directory[ckey]
 	if(!player)
 		to_chat(src, "<span class='warning'>Client not found.</span>")
@@ -60,7 +63,11 @@
 		if(!I.client)
 			continue
 		valid["[I.ckey] - [I.name]"] = I
-	var/mob/dead/observer/O = valid[input(src, "Choose a player (only showing logged in)", "Remove Respawn Timer") as null|anything in valid]
+
+	if(!valid.len)
+		to_chat(src, "<span class='warning'>No logged in ghosts found.</span>")
+		return
+	var/mob/dead/observer/O = valid[input(src, "Choose a player (only showing logged in)", "Remove Respawn Timer") as null|anything in valid
 
 	if(!O.client)
 		to_chat(src, "<span class='warning'>[O] has no client.</span>")
@@ -126,7 +133,7 @@
  */
 /mob/dead/observer/verb/time_left_to_respawn()
 	ASSERT(client)
-	return max(0, (CONFIG_GET(number/respawn_delay) MINUTES + client.prefs.respawn_time_of_death) - world.time)
+	return max(0, ((client.prefs.respawn_did_cryo? CONFIG_GET(number/respawn_delay_cryo) : CONFIG_GET(number/respawn_delay)) MINUTES + client.prefs.respawn_time_of_death) - world.time)
 
 /**
  * Handles respawning

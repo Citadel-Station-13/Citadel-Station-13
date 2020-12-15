@@ -264,7 +264,7 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE, cryo = FALSE)
 	var/sig_flags = SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize)
 	penalize = !(sig_flags & COMPONENT_DO_NOT_PENALIZE_GHOSTING) && (suiciding || penalize) // suicide squad.
 	voluntary_ghosted = voluntary
@@ -282,6 +282,7 @@ Works together with spawning an observer, noted above.
 		if(P)
 			P.respawn_restrictions_active = TRUE
 			P.respawn_time_of_death = world.time
+			P.respawn_did_cryo = cryo
 	transfer_ckey(ghost, FALSE)
 	ghost.client.init_verbs()
 	if(penalize)

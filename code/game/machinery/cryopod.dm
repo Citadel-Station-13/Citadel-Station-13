@@ -383,7 +383,7 @@
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
-		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE)
+		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE, cryo = TRUE)
 
 	QDEL_NULL(occupant)
 	QDEL_LIST(destroy_later)
