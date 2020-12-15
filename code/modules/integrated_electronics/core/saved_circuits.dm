@@ -104,7 +104,7 @@
 
 			var/datum/integrated_io/pin = inputs[index]
 			// The pins themselves validate the data.
-			pin.write_data_to_pin(input_value)
+			pin.write_data_to_pin(istext(input_value)? html_encode(input_value) : input_value)
 			// TODO: support for special input types, such as internal refs and maybe typepaths
 
 	if(!isnull(component_params["special"]))
