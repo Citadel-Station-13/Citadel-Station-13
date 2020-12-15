@@ -365,6 +365,33 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/grabbag/minor_start_chance()
 	return 100
 
+/datum/dynamic_storyteller/grabbag/minor_draft()
+	var/list/original_rules = ..()
+	var/list/drafted_rules = list()
+	for(var/R in original_rules)
+		var/datum/dynamic_ruleset/rule = R
+		if(rule.flags & MINOR_RULESET)
+			drafted_rules += R
+	return drafted_rules
+
+/datum/dynamic_storyteller/grabbag/midround_draft()
+	var/list/original_rules = ..()
+	var/list/drafted_rules = list()
+	for(var/R in original_rules)
+		var/datum/dynamic_ruleset/rule = R
+		if(rule.flags & MINOR_RULESET)
+			drafted_rules += R
+	return drafted_rules
+
+/datum/dynamic_storyteller/grabbag/latejoin_draft()
+	var/list/original_rules = ..()
+	var/list/drafted_rules = list()
+	for(var/R in original_rules)
+		var/datum/dynamic_ruleset/rule = R
+		if(rule.flags & MINOR_RULESET)
+			drafted_rules += R
+	return drafted_rules
+
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
 	config_tag = "calm"
