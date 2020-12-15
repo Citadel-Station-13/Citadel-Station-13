@@ -11,7 +11,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
-	
+
 	attack_hand_is_action = TRUE
 	attack_hand_unwieldlyness = CLICK_CD_MELEE
 	attack_hand_speed = 0
@@ -169,3 +169,11 @@
 	var/typing_indicator_timerid
 	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
 	var/mutable_appearance/typing_indicator_current
+
+	/// Ability system based on action buttons. Can be ported to base /mob or /mob/living later if needed, easily - the procs are currently on living/carbon/human/innate_abilities.dm
+	/// datum traits-style lazylist of abilities
+	var/list/innate_abilities
+	/// ability = action button instance.
+	var/list/ability_actions
+	/// ability = list(data). see __DEFINES/mobs/innate_abilities.dm
+	var/list/ability_properties
