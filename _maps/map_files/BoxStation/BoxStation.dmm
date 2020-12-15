@@ -53241,27 +53241,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
-"cTL" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/morgue)
-"cTM" = (
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/department/medical/morgue";
-	dir = 4;
-	name = "Morgue Maintenance APC";
-	pixel_x = 26
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/medical/morgue)
 "cTO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -101951,7 +101930,7 @@ bfL
 bhp
 biB
 biB
-cTL
+biB
 bkU
 bmX
 bpE
@@ -102208,7 +102187,7 @@ bfL
 bhq
 bhm
 bkb
-cTM
+bhm
 bla
 bmZ
 bpH
