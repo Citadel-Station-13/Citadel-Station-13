@@ -272,6 +272,9 @@
 	var/atom/target_store = (control_computer?.allow_items && control_computer) || src		//the double control computer check makes it return the control computer.
 	var/drop_to_ground = !istype(target_store, /obj/machinery/computer/cryopod)
 
+	var/mind_identity = mob_occupant.mind?.name
+	var/occupant_identity = mob_occupant.real_name
+
 	if(iscyborg(mob_occupant))
 		var/mob/living/silicon/robot/R = mob_occupant
 		if(R.mmi?.brain)
@@ -305,7 +308,21 @@
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				destroying += I
 				continue
-			storing += I
+			// WEE WOO SNOWFLAKE TIME
+			if(istype(I, /obj/item/pda))
+				var/obj/item/pda/P = I
+				if((P.owner == mind_identity) || (P.owner == occupant_identity))
+					destroying += P
+				else
+					storing += P
+			else if(istype(I, /obj/item/card/id))
+				var/obj/item/card/id/idcard = I
+				if((idcard.registered_name == mind_identity) || (idcard.registered_name == occupant_identity))
+					destroying += idcard
+				else
+					storing += idcard
+			else
+				storing += I
 
 	// get rid of mobs
 	for(var/mob/living/L in mob_occupant.GetAllContents() - mob_occupant)
