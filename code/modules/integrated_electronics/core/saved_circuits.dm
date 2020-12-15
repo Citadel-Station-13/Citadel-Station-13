@@ -91,7 +91,7 @@
 /obj/item/integrated_circuit/proc/load(list/component_params)
 	// Load name
 	if(component_params["name"])
-		displayed_name = component_params["name"]
+		displayed_name = html_encode(component_params["name"])
 
 	// Load input values
 	if(component_params["inputs"])
@@ -152,18 +152,16 @@
 /obj/item/electronic_assembly/proc/load(list/assembly_params)
 	// Load modified name, if any.
 	if(assembly_params["name"])
-		name = assembly_params["name"]
+		name = html_encode(assembly_params["name"])
 
 	// Load modified description, if any.
 	if(assembly_params["desc"])
-		desc = assembly_params["desc"]
+		desc = html_encode(assembly_params["desc"])
 
 	if(assembly_params["detail_color"])
 		detail_color = assembly_params["detail_color"]
 
 	update_icon()
-
-
 
 // Attempts to save an assembly into a save file format.
 // Returns null if assembly is not complete enough to be saved.
