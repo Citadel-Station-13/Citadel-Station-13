@@ -51,7 +51,7 @@ proc/get_top_level_mob(var/mob/S)
 		return FALSE
 
 	user.log_message(message, LOG_EMOTE)
-	message = "<b>[user]</b> " + "<i>[user.say_emphasis(message)]</i>"
+	message = "<span class='emote'><b>[user]</b> <i>[user.say_emphasis(message)]</i></span>"
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
@@ -107,7 +107,7 @@ proc/get_top_level_mob(var/mob/S)
 		return FALSE
 
 	user.log_message(message, LOG_SUBTLER)
-	message = "<b>[user]</b> " + "<i>[user.say_emphasis(message)]</i>"
+	message = "<span class='emote'><b>[user]</b> <i>[user.say_emphasis(message)]</i></span>"
 
 	user.visible_message(message = message, self_message = message, vision_distance = 1, ignored_mobs = GLOB.dead_mob_list, omni = TRUE)
 
