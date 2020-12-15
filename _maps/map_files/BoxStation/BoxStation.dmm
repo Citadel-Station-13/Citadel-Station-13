@@ -2981,14 +2981,14 @@
 /turf/open/floor/plating,
 /area/security/main)
 "afS" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Brig EVA Storage";
-	req_access_txt = "3"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security{
+	name = "Brig EVA Storage";
+	req_access_txt = "1"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "afT" = (
@@ -37536,33 +37536,21 @@
 /area/maintenance/aft)
 "bKK" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	areastring = "/area/medical/medbay/central";
-	dir = 4;
-	name = "Medbay APC";
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKL" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
+/obj/machinery/power/apc{
+	areastring = "/area/medical/medbay/central";
+	dir = 1;
+	name = "Medbay Central APC";
+	pixel_y = 24
 	},
 /obj/structure/cable{
-	icon_state = "2-8"
+	icon_state = "0-2"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "bKM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -46386,7 +46374,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/fueltank,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
@@ -46394,6 +46381,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cig" = (
@@ -46553,7 +46541,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "ciF" = (
@@ -55873,7 +55860,6 @@
 "juy" = (
 /obj/structure/mopbucket,
 /obj/item/mop,
-/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "juG" = (
@@ -98153,9 +98139,9 @@ cCQ
 cCS
 chg
 cCS
-bLK
-bLK
-bLK
+bMK
+bMK
+bMK
 gXs
 aaa
 aaa
@@ -98667,9 +98653,9 @@ aaf
 bMK
 chg
 bMK
-bLK
-bLK
-bLK
+bMK
+bMK
+bMK
 aaf
 aoV
 aoV
@@ -99399,8 +99385,8 @@ bfK
 bfK
 bfK
 bof
-bhh
-bsx
+bKL
+brf
 btV
 bvh
 bwH
@@ -99671,7 +99657,7 @@ bDR
 bDR
 bIn
 bJC
-bKL
+bUZ
 bLT
 bLT
 bLT
