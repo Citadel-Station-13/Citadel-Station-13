@@ -19,6 +19,10 @@
 				continue
 			if (HAS_TRAIT(L,TRAIT_EXEMPT_HEALTH_EVENTS))
 				continue
+			if(iscyborg(L))
+				var/mob/living/silicon/robot/R = L
+				if(R.shell)
+					continue
 			var/list/guardians = L.hasparasites()
 			if(length(guardians))
 				continue
