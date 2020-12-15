@@ -22,9 +22,47 @@
 	ambientsounds = MAINTENANCE
 	always_unpowered = FALSE //Sure you can have power if you want
 
+///Nova Edina Streets///
+
+
 /area/edina/street
 	name = "Nova Edina Streets"
 	icon_state = "edina_street"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/primary
+	name = "Nova Edina Streets"
+	icon_state = "edina_street"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/primary/princess
+	name = "Princess Street"
+	icon_state = "edina_street"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/primary/progress
+	name = "Progress Street"
+	icon_state = "edina_street"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/primary/perimeter
+	name = "Perimeter Way"
+	icon_state = "edina_street"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/secondary
+	name = "Nova Edina Streets"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/secondary/command
+	name = "Command Court"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/secondary/supply
+	name = "Supply Street"
+	icon_state = "edina_street2"
 	ambientsounds = null //TODO:add ?
 
 /area/edina/street/street2 //Just so laying areas is easier
