@@ -18,6 +18,14 @@
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
 
+/*
+/obj/vehicle/clowncar/vehicle_move(direction) //Prevent it from moving onto space
+	if(isspaceturf(get_step(src, direction)))
+		return FALSE
+	else
+		return ..()
+*/
+
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
