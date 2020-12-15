@@ -365,7 +365,7 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/grabbag/minor_start_chance()
 	return 100
 
-/datum/dynamic_storyteller/grabbag/minor_draft()
+/datum/dynamic_storyteller/grabbag/minor_rule_draft()
 	var/list/original_rules = ..()
 	var/list/drafted_rules = list()
 	for(var/R in original_rules)
