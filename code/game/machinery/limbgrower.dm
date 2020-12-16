@@ -40,8 +40,8 @@
 	create_reagents(100, OPENCONTAINER)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	for(var/i in categories)
-		var/fuck = categories[i]
-		stored_species[i] = new fuck()
+		var/species = categories[i]
+		stored_species[i] = new species()
 	. = ..()
 
 /obj/machinery/limbgrower/ui_interact(mob/user)
@@ -151,7 +151,7 @@
 	if(reagents.has_reagent(/datum/reagent/medicine/synthflesh, being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff))	//sanity check, if this happens we are in big trouble
 		reagents.remove_reagent(/datum/reagent/medicine/synthflesh, being_built.reagents_list[/datum/reagent/medicine/synthflesh]*prod_coeff)
 		var/buildpath = being_built.build_path
-		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spatghetti code, but i need to initiliaze a limb somehow
+		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spaghetti code, but i need to initiliaze a limb somehow
 			build_limb(buildpath)
 		else if(ispath(buildpath, /obj/item/organ/genital)) //genitals are uhh... customizable
 			build_genital(buildpath)
