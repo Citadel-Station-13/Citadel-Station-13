@@ -439,7 +439,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			potential_minor_rulesets -= rule
 		update_playercounts()
 		iterations++
-	message_admins("Minor antag roundstart rolls completed, with [num_rulesets_executed] antags or antag teams made.")
+	message_admins("Minor antag roundstart rolls completed, with [iterations] rolls done and [num_rulesets_executed] antags or antag teams made.")
 	log_game("DYNAMIC: Minor antag roundstart made [num_rulesets_executed] antags or antag teams.")
 
 
