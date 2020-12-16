@@ -28,7 +28,7 @@
 				continue
 			var/obj/item/guardiancreator/spontaneous/I = new
 			var/mob/C = pick(candidates)
-			I.spawn_guardian(L, C.key)
+			spawned_mobs += I.spawn_guardian(L, C.key)
 			control.weight *= 2 //they attract each other, after all
 			qdel(I)
 			return SUCCESSFUL_SPAWN
