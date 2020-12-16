@@ -50,6 +50,11 @@
 	icon_state = "edina_street"
 	ambientsounds = null //TODO:add ?
 
+/area/edina/street/primary/servitor
+	name = "Servitor Street"
+	icon_state = "edina_street"
+	ambientsounds = null //TODO:add ?
+
 /area/edina/street/secondary
 	name = "Nova Edina Streets"
 	icon_state = "edina_street2"
@@ -62,6 +67,46 @@
 
 /area/edina/street/secondary/supply
 	name = "Supply Street"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/secondary/castle
+	name = "Castle Way"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection
+	name = "Nova Edina Streets"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection/princessprogress
+	name = "Princess & Progress"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection/princessperimeter
+	name = "Princess & Perimeter"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection/princessprogress/north
+	name = "Perimeter & N Princess"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection/princessprogress/south
+	name = "Perimeter & S Princess"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection/princessservitor
+	name = "Servitor & Princess"
+	icon_state = "edina_street2"
+	ambientsounds = null //TODO:add ?
+
+/area/edina/street/intersection/servcastsupp
+	name = "Servitor, Supply, & Castle"
 	icon_state = "edina_street2"
 	ambientsounds = null //TODO:add ?
 
