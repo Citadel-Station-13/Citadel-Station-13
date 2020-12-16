@@ -75,7 +75,7 @@
 	var/call_bot_cooldown = 0		//time of next call bot command
 	var/apc_override = FALSE		//hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
-	var/obj/machinery/doomsday_device/doomsday_device
+	//var/obj/machinery/doomsday_device/doomsday_device
 
 	var/mob/camera/aiEye/eyeobj
 	var/sprint = 10

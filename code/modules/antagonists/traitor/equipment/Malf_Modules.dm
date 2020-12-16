@@ -4,7 +4,7 @@
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
 		/obj/machinery/power/supermatter_crystal,
-		/obj/machinery/doomsday_device,
+		// /obj/machinery/doomsday_device,
 		/obj/machinery/nuclearbomb,
 		/obj/machinery/nuclearbomb/selfdestruct,
 		/obj/machinery/nuclearbomb/syndicate,
@@ -233,7 +233,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/AI_Module/large //Big, powerful stuff that can only be used once.
 /datum/AI_Module/small //Weak, usually localized stuff with multiple uses.
 
-
+/* no fun allowed.
 //Doomsday Device: Starts the self-destruct timer. It can only be stopped by killing the AI completely.
 /datum/AI_Module/large/nuke_station
 	module_name = "Doomsday Device"
@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		L.dust()
 	to_chat(world, "<B>The AI cleansed the station of life with the doomsday device!</B>")
 	SSticker.force_ending = 1
-
+*/
 
 //AI Turret Upgrade: Increases the health and damage of all turrets.
 /datum/AI_Module/large/upgrade_turrets
