@@ -11,7 +11,7 @@
 		return FALSE
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC))
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC, BODYPART_NANITES))
 		if(!parts.len)
 			return FALSE
 	return ..()
@@ -19,7 +19,7 @@
 /datum/nanite_program/regenerative/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC))
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC, BODYPART_NANITES))
 		if(!parts.len)
 			return
 		for(var/obj/item/bodypart/L in parts)
@@ -121,7 +121,7 @@
 
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = list(BODYPART_ROBOTIC, BODYPART_HYBRID))
+		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = list(BODYPART_ROBOTIC, BODYPART_HYBRID, BODYPART_NANITES))
 		if(!parts.len)
 			return FALSE
 	else
@@ -132,7 +132,7 @@
 /datum/nanite_program/repairing/active_effect(mob/living/M)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = list(BODYPART_ROBOTIC, BODYPART_HYBRID))
+		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = list(BODYPART_ROBOTIC, BODYPART_HYBRID, BODYPART_NANITES))
 		if(!parts.len)
 			return
 		var/update = FALSE
@@ -176,12 +176,12 @@
 /datum/nanite_program/regenerative_advanced/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC))
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC, BODYPART_NANITES))
 		if(!parts.len)
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(3/parts.len, 3/parts.len, FALSE))
+			if(L.heal_damage(3/parts.len, 3/parts.len, 0))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()

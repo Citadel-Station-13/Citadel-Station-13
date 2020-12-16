@@ -170,7 +170,7 @@
 		if(istype(source,/obj/item/clothing/suit/hooded)) //so how come it be like this, where toggleable headslots are named separately (helmet/hood) anyways?
 			var/obj/item/clothing/suit/hooded/sourcesuit = source
 			H = sourcesuit.hood
-		else if(istype(source,/obj/item/clothing/suit/space/hardsuit)) 
+		else if(istype(source,/obj/item/clothing/suit/space/hardsuit))
 			var/obj/item/clothing/suit/space/hardsuit/sourcesuit = source
 			H = sourcesuit.helmet
 		else
