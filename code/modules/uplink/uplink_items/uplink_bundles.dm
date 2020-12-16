@@ -58,7 +58,7 @@
 	Please be aware that you will not be able to use dishonerable ranged weapons."
 	item = /obj/item/storage/box/syndie_kit/scarp
 	cost = 20
-	//player_minimum = 20
+	player_minimum = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/suits/infiltrator_bundle
