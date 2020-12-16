@@ -7,6 +7,7 @@
 	var/oxy_mod = 1     	// % of oxygen damage taken from all sources
 	var/clone_mod = 1   	// % of clone damage taken from all sources
 	var/stamina_mod = 1 	// % of stamina damage taken from all sources
+	var/stamina_buffer_mod = 1 // % of stamina buffer
 	var/brain_mod = 1   	// % of brain damage taken from all sources
 
 	var/pressure_mod = 1	// % of brute damage taken from low or high pressure (stacks with brute_mod)

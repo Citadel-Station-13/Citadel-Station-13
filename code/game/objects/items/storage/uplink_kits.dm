@@ -520,3 +520,9 @@
 	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
 	new /obj/item/lighter(src)
 
+/obj/item/storage/box/syndie_kit/scarp
+
+/obj/item/storage/box/syndie_kit/scarp/PopulateContents()
+	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/suit/hooded/carp_costume(src)
+	new /obj/item/staff/bostaff(src)
