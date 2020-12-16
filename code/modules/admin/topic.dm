@@ -508,7 +508,7 @@
 			if("constructwraith")
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
-				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+				M.change_mob_type( /mob/living/simple_animal/hostile/construct/shade , null, null, delmob )
 
 
 	/////////////////////////////////////new ban stuff

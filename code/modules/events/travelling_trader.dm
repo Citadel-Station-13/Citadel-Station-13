@@ -321,6 +321,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 	var/new_implant = new chosen_implant
 	var/obj/item/autosurgeon/reward = new(get_turf(src))
 	reward.insert_organ(new_implant)
+	reward.uses = 1
 
 /datum/outfit/otherworldly_surgeon
 	name = "Otherworldly Surgeon"

@@ -33,7 +33,9 @@
 	H.saved_socks = H.socks
 
 	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
-	H.dna.features["mcolor"] = random_short_color()
+	H.dna.features["mcolor"] = sanitize_hexcolor(random_short_color(), 6)
+	H.dna.features["mcolor2"] = sanitize_hexcolor(random_short_color(), 6)
+	H.dna.features["mcolor3"] = sanitize_hexcolor(random_short_color(), 6)
 	H.dna.features["tail_lizard"] = pick(GLOB.tails_list_lizard)
 	H.dna.features["snout"] = pick(GLOB.snouts_list)
 	H.dna.features["horns"] = pick(GLOB.horns_list)

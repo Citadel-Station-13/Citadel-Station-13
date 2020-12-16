@@ -34,7 +34,7 @@
 	desc = "Touch spell that allows you to channel the power of the Old Gods through you."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = "evocation"
-	charge_max = 150
+	charge_max = 100
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
@@ -104,57 +104,61 @@
 	desc = "Spreads rust onto nearby turfs."
 	range = 2
 
-/obj/effect/proc_holder/spell/targeted/touch/blood_siphon
+/obj/effect/proc_holder/spell/pointed/blood_siphon
 	name = "Blood Siphon"
-	desc = "Touch spell that heals you while damaging the enemy, has a chance to transfer wounds between you and your enemy."
-	hand_path = /obj/item/melee/touch_attack/blood_siphon
+	desc = "A touch spell that heals your wounds while damaging the enemy. It has a chance to transfer wounds between you and your enemy."
 	school = "evocation"
 	charge_max = 150
 	clothes_req = FALSE
-	invocation_type = "none"
+	invocation = "FL'MS O'ET'RN'ITY"
+	invocation_type = "whisper"
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "blood_siphon"
 	action_background_icon_state = "bg_ecult"
+	range = 9
 
-/obj/item/melee/touch_attack/blood_siphon
-	name = "Blood Siphon"
-	desc = "A sinister looking aura that distorts the flow of reality around it."
-	color = RUNE_COLOR_RED
-	icon_state = "disintegrate"
-	item_state = "disintegrate"
-	catchphrase = "SUN'AI'KINI'MAS"
-
-/obj/item/melee/touch_attack/blood_siphon/afterattack(atom/target, mob/user, proximity_flag, proximity)
-	if(!proximity_flag)
-		return
-	playsound(user, 'sound/effects/curseattack.ogg', 75, TRUE)
+/obj/effect/proc_holder/spell/pointed/blood_siphon/cast(list/targets, mob/user)
+	. = ..()
+	var/target = targets[1]
+	playsound(user, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+			tar.visible_message("<span class='danger'>The spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return ..()
-	var/mob/living/carbon/C2 = user
+	var/mob/living/carbon/carbon_user = user
 	if(isliving(target))
-		var/mob/living/L = target
-		L.adjustBruteLoss(20)
-		C2.adjustBruteLoss(-20)
+		var/mob/living/living_target = target
+		living_target.adjustBruteLoss(20)
+		carbon_user.adjustBruteLoss(-20)
 	if(iscarbon(target))
-		var/mob/living/carbon/C1 = target
-		for(var/obj/item/bodypart/bodypart in C2.bodyparts)
+		var/mob/living/carbon/carbon_target = target
+		for(var/bp in carbon_user.bodyparts)
+			var/obj/item/bodypart/bodypart = bp
 			for(var/i in bodypart.wounds)
 				var/datum/wound/iter_wound = i
 				if(prob(50))
 					continue
-				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in C1.bodyparts
+				var/obj/item/bodypart/target_bodypart = locate(bodypart.type) in carbon_target.bodyparts
 				if(!target_bodypart)
 					continue
 				iter_wound.remove_wound()
 				iter_wound.apply_wound(target_bodypart)
 
-		C1.blood_volume -= 20
-		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
-			C2.blood_volume += 20
-		return ..()
+		carbon_target.blood_volume -= 20
+		if(carbon_user.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
+			carbon_user.blood_volume += 20
+		return
+
+/obj/effect/proc_holder/spell/pointed/blood_siphon/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(target,/mob/living))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are unable to siphon [target]!</span>")
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/rust_wave
 	name = "Patron's Reach"
@@ -451,7 +455,7 @@
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
 			for(var/mob/living/livies in T.contents - centre)
-				livies.adjustFireLoss(10)
+				livies.adjustFireLoss(5)
 		_range++
 		sleep(3)
 
@@ -500,7 +504,7 @@
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(5)
+			livies.adjustFireLoss(2.5)
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
@@ -519,6 +523,7 @@
 	. = ..()
 	if(!istype(user,/mob/living/simple_animal/hostile/eldritch/armsy))
 		to_chat(user, "<span class='userdanger'>You try to contract your muscles but nothing happens...</span>")
+		return
 	var/mob/living/simple_animal/hostile/eldritch/armsy/armsy = user
 	armsy.contract_next_chain_into_single_tile()
 
@@ -727,7 +732,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(victim.anti_magic_check() || IS_HERETIC(victim) || victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
 		return
 	victim.apply_status_effect(STATUS_EFFECT_AMOK)
 	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))

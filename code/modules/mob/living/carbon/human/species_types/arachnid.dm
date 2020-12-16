@@ -1,6 +1,6 @@
 /datum/species/arachnid
 	name = "Arachnid"
-	id = "arachnid"
+	id = SPECIES_ARACHNID
 	override_bp_icon = 'icons/mob/arachnid_parts.dmi'
 	say_mod = "chitters"
 	default_color = "00FF00"
@@ -59,10 +59,10 @@
 	SW?.Remove(H)
 
 /datum/action/innate/spin_web
-    name = "Spin Web"
-    check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-    icon_icon = 'icons/mob/actions/actions_animal.dmi'
-    button_icon_state = "lay_web"
+	name = "Spin Web"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "lay_web"
 
 /datum/action/innate/spin_cocoon
 	name = "Spin Cocoon"

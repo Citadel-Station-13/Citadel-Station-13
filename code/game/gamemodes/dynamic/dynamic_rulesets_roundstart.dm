@@ -15,6 +15,7 @@
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster", "Cyborg")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
+	flags = TRAITOR_RULESET | MINOR_RULESET | ALWAYS_MAX_WEIGHT_RULESET
 	weight = 5
 	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 10
@@ -22,7 +23,6 @@
 	high_population_requirement = 40
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1, "valid" = 1)
-	always_max_weight = TRUE
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
@@ -57,6 +57,7 @@
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 2
+	flags = MINOR_RULESET
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -106,6 +107,7 @@
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 3
 	cost = 15
 	scaling_cost = 15
@@ -156,6 +158,7 @@
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 3
 	cost = 25
 	scaling_cost = 15
@@ -694,6 +697,7 @@
 	antag_datum = /datum/antagonist/devil
 	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -850,6 +854,7 @@
 	protected_roles = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 2
 	cost = 15
 	scaling_cost = 10

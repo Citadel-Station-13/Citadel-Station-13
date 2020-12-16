@@ -25,18 +25,15 @@
 
 /datum/accent/abductor/modify_speech(list/speech_args, datum/source)
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/mob/living/carbon/human/user = source
+	var/mob/living/carbon/user = source
+	var/obj/item/organ/tongue/abductor/A = user.getorgan(/obj/item/organ/tongue/abductor)
 	var/rendered = "<span class='abductor'><b>[user.name]:</b> [message]</span>"
 	user.log_talk(message, LOG_SAY, tag="abductor")
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		var/obj/item/organ/tongue/T = H.getorganslot(ORGAN_SLOT_TONGUE)
-		if(!T || T.type != type)
+	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
+		var/obj/item/organ/tongue/abductor/T = C.getorgan(/obj/item/organ/tongue/abductor)
+		if(!T || T.mothership != A.mothership)
 			continue
-		if(H.dna && H.dna.species.id == "abductor" && user.dna && user.dna.species.id == "abductor")
-			var/datum/antagonist/abductor/A = user.mind.has_antag_datum(/datum/antagonist/abductor)
-			if(!A || !(H.mind in A.team.members))
-				continue
-		to_chat(H, rendered)
+		to_chat(C, rendered)
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, user)
 		to_chat(M, "[link] [rendered]")

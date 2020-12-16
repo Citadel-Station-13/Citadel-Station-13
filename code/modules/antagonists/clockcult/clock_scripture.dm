@@ -167,7 +167,7 @@ Judgement 5 converts
 	set waitfor = FALSE
 	chanting = TRUE
 	for(var/invocation in invocations)
-		sleep(channel_time / invocations.len)
+		sleep(channel_time / (invocations.len + 1)) //So it always finishes the invocation
 		if(QDELETED(src) || QDELETED(slab) || !chanting)
 			return
 		if(multiple_invokers_used)
