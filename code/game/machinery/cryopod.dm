@@ -164,6 +164,10 @@
 /obj/machinery/computer/cryopod/contents_explosion()
 	return			//don't blow everyone's shit up.
 
+/// The box
+/obj/item/storage/box/blue/cryostorage_items
+	w_class = WEIGHT_CLASS_HUGE
+
 //Cryopods themselves.
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
@@ -182,7 +186,7 @@
 	var/despawn_world_time = null          // Used to keep track of the safe period.
 
 	var/obj/machinery/computer/cryopod/control_computer
-	var/item_storage_type = /obj/item/storage/box/blue		//with how storage components work this can be anything the player can open or anything with a storage component.
+	var/item_storage_type = /obj/item/storage/box/blue/cryostorage_items		//with how storage components work this can be anything the player can open or anything with a storage component.
 	var/last_no_computer_message = 0
 
 /obj/machinery/cryopod/Initialize(mapload)
