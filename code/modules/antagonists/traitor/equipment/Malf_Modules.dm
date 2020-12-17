@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	if (owner_AI.shunted)
 		return //prevent AI from activating doomsday while shunted.
 	if (istype(owner.loc, /obj/item/aicard))
-		return //prevent AI from activating doomsday while carded. If the AI gets carded after doomsdaying, there's already code to stop it then.
+		return // prevent AI from activating doomsday while carded. If the AI gets carded after doomsdaying, there's already code to stop it then.
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
