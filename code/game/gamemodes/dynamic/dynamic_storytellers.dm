@@ -128,7 +128,6 @@ Property weights are added to the config weight of the ruleset. They are:
 	var/list/drafted_rules = list()
 	for (var/datum/dynamic_ruleset/minor/rule in mode.minor_rules)
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
-			rule.candidates = mode.candidates.Copy()
 			rule.trim_candidates()
 			if (rule.ready() && rule.candidates.len > 0)
 				var/property_weight = 0

@@ -415,7 +415,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
 	if(minor_ruleset_start)
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/minor_roundstart),rand(1 MINUTES,5 MINUTES))
+		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/minor_roundstart),rand(1 MINUTES,3 MINUTES))
 	else
 		for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
