@@ -273,7 +273,7 @@
 			O.microwave_act()
 		else if(istype(A, /obj/item/grown/log))
 			qdel(A)
-			new /obj/item/stack/sheet/mineral/coal(loc, 1)
+			new /obj/item/stack/sheet/mineral/charcoal(loc, 1)
 
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())

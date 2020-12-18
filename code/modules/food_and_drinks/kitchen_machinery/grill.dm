@@ -24,11 +24,11 @@
 		icon_state = "grill_open"
 
 /obj/machinery/grill/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/mineral/coal) || istype(I, /obj/item/stack/sheet/mineral/wood))
+	if(istype(I, /obj/item/stack/sheet/mineral/charcoal) || istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/S = I
 		var/stackamount = S.get_amount()
 		to_chat(user, "<span class='notice'>You put [stackamount] [I]s in [src].</span>")
-		if(istype(I, /obj/item/stack/sheet/mineral/coal))
+		if(istype(I, /obj/item/stack/sheet/mineral/charcoal))
 			grill_fuel += (500 * stackamount)
 		else
 			grill_fuel += (50 * stackamount)

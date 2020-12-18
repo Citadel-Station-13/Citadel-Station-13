@@ -459,31 +459,31 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
  * Coal
  */
 
-/obj/item/stack/sheet/mineral/coal
-	name = "coal"
+/obj/item/stack/sheet/mineral/charcoal
+	name = "charcoal"
 	desc = "Someone's gotten on the naughty list."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "slag"
-	singular_name = "coal lump"
-	merge_type = /obj/item/stack/sheet/mineral/coal
-	grind_results = list(/datum/reagent/carbon = 20)
+	singular_name = "charcoal lump"
+	merge_type = /obj/item/stack/sheet/mineral/charcoal
+	grind_results = list(/datum/reagent/medicine/charcoal = 20)
 
-/obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/mineral/charcoal/attackby(obj/item/W, mob/user, params)
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
-		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Coal ignited by [key_name(user)] in [AREACOORD(T)]")
+		message_admins("Charcoal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Charcoal ignited by [key_name(user)] in [AREACOORD(T)]")
 		fire_act(W.get_temperature())
 		return TRUE
 	else
 		return ..()
 
-/obj/item/stack/sheet/mineral/coal/fire_act(exposed_temperature, exposed_volume)
+/obj/item/stack/sheet/mineral/charcoal/fire_act(exposed_temperature, exposed_volume)
 	atmos_spawn_air("co2=[amount*10];TEMP=[exposed_temperature]")
 	qdel(src)
 
-/obj/item/stack/sheet/mineral/coal/five
+/obj/item/stack/sheet/mineral/charcoal/five
 	amount = 5
 
-/obj/item/stack/sheet/mineral/coal/ten
+/obj/item/stack/sheet/mineral/charcoal/ten
 	amount = 10

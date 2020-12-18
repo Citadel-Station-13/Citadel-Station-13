@@ -128,9 +128,9 @@
 
 /datum/supply_pack/service/grill
 	name = "Grilling Starter Kit"
-	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT ONLY 5000 BUX GET NOW! Contains a cooking grill and five fuel coal sheets."
+	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT ONLY 5000 BUX GET NOW! Contains a cooking grill and five fuel charcoal sheets."
 	cost = 3000
-	contains = list(/obj/item/stack/sheet/mineral/coal/five,
+	contains = list(/obj/item/stack/sheet/mineral/charcoal/five,
 					/obj/machinery/grill/unwrenched)
 	crate_name = "grilling starter kit crate"
 	crate_type = /obj/structure/closet/crate
@@ -139,7 +139,7 @@
 	name = "Grilling Fuel Kit"
 	desc = "Contains coal and coal accessories. (Note: only ten coal sheets.)"
 	cost = 1000
-	contains = list(/obj/item/stack/sheet/mineral/coal/ten)
+	contains = list(/obj/item/stack/sheet/mineral/charcoal/ten)
 	crate_name = "grilling fuel kit crate"
 	crate_type = /obj/structure/closet/crate
 
@@ -281,4 +281,3 @@
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
-

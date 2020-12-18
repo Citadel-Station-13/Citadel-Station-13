@@ -1,14 +1,27 @@
+/*
+blacksmithing 2:
+bloomery/charcoal kiln/bio chaff
+bio chaff is made from 1 grown anything and a sharp object. can be ground to make fertilizer. TODO.
+charcoal is made with logs on a bonfire DONE.
+bloomery- input ore and charcoal, get out ore blooms. these can be worked on an anvil for more sheets than the ORM could process, but it takes a lot longer. can be used to process dawn/duskstone. BLOOMS/REFINING READY. BLOOMERY TODO.
+smithed armor: tin. light/heavy probably, few styles of helmets, greaves and gauntlets. TODO.
+dawnstone/duskstone. generates as small crag structures on lavaland. good for smithing, dawnstone radiates light and duskstone absorbs it. needs to be bloomery processed, cannot be smelted in the ORM. TODO.
+*/
+
+
+
 #define WORKPIECE_PRESENT 1
 #define WORKPIECE_INPROGRESS 2
 #define WORKPIECE_FINISHED 3
 #define WORKPIECE_SLAG 5
 
+//tools
 #define RECIPE_SMALLPICK "dbp" //draw bend punch
 #define RECIPE_LARGEPICK "ddbp" //draw draw bend punch
 #define RECIPE_SHOVEL "dfup" //draw fold upset punch
 #define RECIPE_HAMMER "sfp" //shrink fold punch
 
-
+//sordlike weapons
 #define RECIPE_SMALLKNIFE "sdd" //shrink draw draw
 #define RECIPE_SHORTSWORD "dff" //draw fold fold
 #define RECIPE_WAKI "dfsf" //draw  fold shrink fold
@@ -19,15 +32,24 @@
 #define RECIPE_ZWEIHANDER "udfsf" //upset draw fold shrink fold
 #define RECIPE_KATANA "fffff" //fold fold fold fold fold
 
-
+//misc weapons
 #define RECIPE_SCYTHE "bdf" //bend draw fold
 #define RECIPE_COGHEAD "bsf" //bend shrink fold.
 
-
+//pokey stick
 #define RECIPE_JAVELIN "dbf" //draw bend fold
 #define RECIPE_HALBERD "duffp" //draw upset fold fold punch
 #define RECIPE_GLAIVE "usfp" //upset shrink fold punch
 #define RECIPE_PIKE "ddbf" //draw draw bend fold
+
+//armor
+#define RECIPE_CENTHELM //centurion helmet
+#define RECIPE_SAMUHELM //weeb helmet
+#define RECIPE_BREASTPLATEHALF "dsfd" //full breastplate half
+#define RECIPE_HALFPLATEHALF "dsf" //half breastplate half.
+#define RECIPE_GREAVES //greaves, better armor more slowdown
+#define RECIPE_BOOTS //boots, less armor less slowdown
+#define RECIPE_GAUNTLETS //arm guards (negative siemens)
 
 /obj/structure/anvil
 	name = "anvil"
@@ -102,6 +124,24 @@
 			return FALSE
 		do_shaping(user, hammertime.qualitymod)
 		return
+	else if(istype(I, /obj/item/metalbloom))
+		if((workpiece_state == WORKPIECE_PRESENT || workpiece_state == WORKPIECE_INPROGRESS))
+			to_chat(user, "This anvil is already being worked!")
+			return FALSE
+		var/obj/item/heldI = user.get_inactive_held_item
+		var/obj/item/metalbloom/MB = I
+		if(heldI && istype(heldI, /obj/item/melee/smith/hammer))
+			var/iterator = MB.amount_to_create
+			while(iterator)
+				new MB.type_to_create(src)
+				iterator--
+			qdel(MB)
+			to_chat(user, "You work the bloom into something usable!")
+			return
+
+		else
+			to_chat(user, "You can't work the bloom without a hammer!")
+			return FALSE
 	return ..()
 
 /obj/structure/anvil/wrench_act(mob/living/user, obj/item/I)
@@ -204,17 +244,23 @@
 				finisheditem.artifact = TRUE
 			else
 				finisheditem.quality = min(currentquality, itemqualitymax)
+			var/skmult = 1
 			switch(finisheditem.quality)
 				if(-1000 to -8)
 					finisheditem.desc =  "It looks to be the most awfully made object you've ever seen."
+					skmult = 0.5
 				if(-8)
 					finisheditem.desc =  "It looks to be the second most awfully made object you've ever seen."
+					skmult = 0.7
 				if(-8 to 0)
 					finisheditem.desc =  "It looks to be barely passable as... whatever it's trying to pass for."
+					skmult = 0.85
 				if(0)
 					finisheditem.desc =  "It looks to be totally average."
+					skmult = 1
 				if(0 to INFINITY)
 					finisheditem.desc =  "It looks to be better than average."
+					skmult = 1.25
 			workpiece_state = FALSE
 			finisheditem.set_custom_materials(workpiece_material)
 			currentquality = anvilquality
@@ -223,7 +269,7 @@
 			outrightfailchance = 1
 			artifactrolled = FALSE
 			if(user.mind.skill_holder)
-				user.mind.auto_gain_experience(/datum/skill/level/dwarfy/blacksmithing, 50, 10000000, silent = FALSE)
+				user.mind.auto_gain_experience(/datum/skill/level/dwarfy/blacksmithing, 100 * skmult, 10000000, silent = FALSE)
 			break
 
 /obj/structure/anvil/debugsuper
