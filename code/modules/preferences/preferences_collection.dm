@@ -4,9 +4,9 @@
  */
 /datum/preferences_collection
 	/// Sort order. Lower is in front.
-	var/sort_order = PREFERENCES_COLLECTIONS_SORT_ORDER_DEFAULT
+	var/sort_order = PREFERENCES_SORT_ORDER_DEFAULT
 	/// Save key. This should NEVER BE MODIFIED WITHOUT A MIGRATION! See _preferences.dm for how this works.
-	var/save_key = PREFERENCES_COLLECTIONS_SAVE_KEY_DEFAULT
+	var/save_key = PREFERENCES_SAVE_KEY_DEFAULT
 
 /**
  * Renders HTML content

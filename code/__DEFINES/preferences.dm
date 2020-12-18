@@ -3,11 +3,34 @@
 #define PREFERENCES_SKIN_MAIN						"preferences_browser"
 #define PREFERENCES_SKIN_CHARACTER_SELECT			"preferences_character_select"
 
+// Sort orders. Can be freely changed. Lower is first.
+/// Default
+#define PREFERENCES_SORT_ORDER_DEFAULT 0
+
+// Save keys. THIS SHOULD NEVER, EVER BE CHANGED WITHOUT A MIGRATION, OR MASSIVE DATA LOSS WILL HAPPEN!
+/// Default
+#define PREFERENCES_SAVE_KEY_DEFAULT			"default"
+/// Metadata - used by preferences datum to store things like versioning.
+#define PREFERENCES_SAVE_KEY_METADATA			"metadata"
+
 // Collection OnTopic return flags
 /// Refresh view
 #define PREFERENCES_ONTOPIC_REFRESH					(1<<0)
 /// Regenerate character preview
 #define PREFERENCES_ONTOPIC_REGENERATE_PREVIEW		(1<<1)
+
+// Savefile versioning
+//This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
+#define SAVEFILE_VERSION_MIN	18
+
+//This is the current version, anything below this will attempt to update (if it's not obsolete)
+//	You do not need to raise this if you are adding new values that have sane defaults.
+//	Only raise this value when changing the meaning/format/name/layout of an existing value
+//	where you would want the updater procs below to run
+#define SAVEFILE_VERSION_MAX	50
+
+/// New-Savefile version start
+#define SAVEFILE_MODERN_START_VERSION		50
 
 //Preference toggles
 #define SOUND_ADMINHELP			(1<<0)
