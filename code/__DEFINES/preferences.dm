@@ -1,3 +1,13 @@
+// Skin element names
+#define PREFERENCES_SKIN_PREVIEW_MAP				"character_preview_map"
+#define PREFERENCES_SKIN_MAIN						"preferences_browser"
+#define PREFERENCES_SKIN_CHARACTER_SELECT			"preferences_character_select"
+
+// Collection OnTopic return flags
+/// Refresh view
+#define PREFERENCES_ONTOPIC_REFRESH					(1<<0)
+/// Regenerate character preview
+#define PREFERENCES_ONTOPIC_REGENERATE_PREVIEW		(1<<1)
 
 //Preference toggles
 #define SOUND_ADMINHELP			(1<<0)

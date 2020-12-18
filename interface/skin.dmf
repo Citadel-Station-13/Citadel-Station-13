@@ -246,23 +246,35 @@ window "popupwindow"
 window "preferences_window"
 	elem "preferences_window"
 		type = MAIN
-		pos = 281,0
-		size = 1280x1000
+		pos = 418,0
+		size = 1500x1000
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
-	elem "preferences_browser"
+		outer-size = 1522x1056
+		inner-size = 1500x1000
+	elem "preferences_character_select"
 		type = BROWSER
 		pos = 0,0
+		size = 220x1000
+		anchor1 = 100,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = ""
+	elem "preferences_browser"
+		type = BROWSER
+		pos = 220,0
 		size = 960x1000
 		anchor1 = 0,0
 		anchor2 = 75,100
+		background-color = none
 		saved-params = ""
 	elem "character_preview_map"
 		type = MAP
-		pos = 960,0
+		pos = 1180,0
 		size = 320x1000
 		anchor1 = 75,0
 		anchor2 = 100,100

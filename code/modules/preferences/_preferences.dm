@@ -1,5 +1,5 @@
 /// Preferences datums keyed to ckey = datum
-GLOBAL_LIST_EMPTY(preferences_datums
+GLOBAL_LIST_EMPTY(preferences_datums)
 
 /**
   * Preferences datums
@@ -7,7 +7,30 @@ GLOBAL_LIST_EMPTY(preferences_datums
   * Holds character setup and global settings information for players.
   */
 /datum/preferences
+	/// Owning client, if connected
+	var/client/parent
+	/// Owner ckey
+	var/ckey
+	/// Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
+	var/list/preferences
 
+/datum/preferences/New(client/C)
+	preferences = list()
+	var/ckey = istext(C)? C : C?.ckey
+	if(!ckey)
+		CRASH("Preferences datum instantiated with no client or ckey. Aborting initialization.")
+
+/**
+ * Directly sets to in-memory stores for a certain collection of a save key
+ */
+/datum/preferences/proc/set_preference_data(save_key, key, data)
+	LAZYSET(preferences[save_key], key, data)
+
+/**
+ * Directly reads from in-memory stores for a certain collection of a save key
+ */
+/datum/preferences/proc/load_preference_data(save_key, key)
+	return LAZYACCESS(preferences[save_key], key)
 
 
 /*
@@ -18,7 +41,6 @@ GLOBAL_LIST_EMPTY(preferences_datums
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences
-	var/client/parent
 	//doohickeys for savefiles
 	var/path
 	var/vr_path
