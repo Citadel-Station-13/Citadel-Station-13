@@ -7,7 +7,7 @@
 		return
 	if(!mob)
 		return
-	if(prefs.muted & MUTE_DEADCHAT)
+	if(persistent_variables.muted & MUTE_DEADCHAT)
 		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>", confidential = TRUE)
 		return
 

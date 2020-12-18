@@ -242,11 +242,11 @@
 	else
 		return
 
-	var/datum/preferences/P
+	var/datum/persistent_client_variables/P
 	if(C)
-		P = C.prefs
+		P = C.PCV
 	else
-		P = GLOB.preferences_datums[whom]
+		P = GLOB.persistent_client_variables[whom]
 	if(!P)
 		return
 

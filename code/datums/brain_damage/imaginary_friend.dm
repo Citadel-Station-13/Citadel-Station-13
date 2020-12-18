@@ -140,7 +140,7 @@
 		return
 
 	if (src.client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.persistent_variables.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))

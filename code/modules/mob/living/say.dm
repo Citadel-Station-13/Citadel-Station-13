@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 /mob/living/proc/can_speak_basic(message, ignore_spam = FALSE) //Check BEFORE handling of xeno and ling channels
 	if(client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.persistent_variables.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
 		if(!ignore_spam && client.handle_spam_prevention(message,MUTE_IC))

@@ -28,6 +28,9 @@
 		/////////
 		//OTHER//
 		/////////
+	/// Persistent variables like muting are stored in this datum
+	var/datum/persistent_client_variables/persistent_variables
+	/// Preferences datum
 	var/datum/preferences/prefs = null
 	var/last_turn = 0
 	var/move_delay = 0

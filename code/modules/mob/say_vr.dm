@@ -33,7 +33,7 @@ proc/get_top_level_mob(var/mob/S)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send subtle emotes (banned).")
 		return FALSE
-	else if(user.client && user.client.prefs.muted & MUTE_IC)
+	else if(user.client && user.client.persistent_variables.muted & MUTE_IC)
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
@@ -80,7 +80,7 @@ proc/get_top_level_mob(var/mob/S)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send subtle emotes (banned).")
 		return FALSE
-	else if(user.client && user.client.prefs.muted & MUTE_IC)
+	else if(user.client && user.client.persistent_variables.muted & MUTE_IC)
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)

@@ -517,7 +517,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 
 	//handle muting and automuting
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(persistent_variables.muted & MUTE_ADMINHELP)
 		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))

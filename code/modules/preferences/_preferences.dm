@@ -1,3 +1,16 @@
+/// Preferences datums keyed to ckey = datum
+GLOBAL_LIST_EMPTY(preferences_datums
+
+/**
+  * Preferences datums
+  *
+  * Holds character setup and global settings information for players.
+  */
+/datum/preferences
+
+
+
+/*
 #define DEFAULT_SLOT_AMT	2
 #define HANDS_SLOT_AMT		2
 #define BACKPACK_SLOT_AMT	4
@@ -10,7 +23,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/path
 	var/vr_path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 24
+	var/max_save_slots = 24E
 
 	var/icon/custom_holoform_icon
 	var/list/cached_holoform_icons
@@ -2939,3 +2952,4 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT
 #undef BACKPACK_SLOT_AMT
+*/

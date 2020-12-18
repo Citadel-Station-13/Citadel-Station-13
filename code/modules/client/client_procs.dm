@@ -220,6 +220,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
+	/// Create or link persistent variables
+	persistent_variables = get_persistent_client_variables_for(ckey)
+
 	// Instantiate tgui panel
 	tgui_panel = new(src)
 
@@ -271,8 +274,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	addtimer(CALLBACK(src, .proc/ensure_keys_set, prefs), 10)	//prevents possible race conditions
 
-	prefs.last_ip = address				//these are gonna be used for banning
-	prefs.last_id = computer_id			//these are gonna be used for banning
+	persistent_variables.last_ip = address				//these are gonna be used for banning
+	persistent_variables.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps //(prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
 
 	if(fexists(roundend_report_file()))
@@ -850,7 +853,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		log_click(object, location, control, params, src, "dropped (ab c [ab] s [middragtime])", TRUE)
 		return
 
-	if(prefs.log_clicks)
+	if(persistent_variables.log_clicks)
 		log_click(object, location, control, params, src)
 
 	if (prefs.hotkeys)

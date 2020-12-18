@@ -28,7 +28,7 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 		if(!GLOB.looc_allowed)
 			to_chat(src, "<span class='danger'> LOOC is globally muted</span>")
 			return
-		if(prefs.muted & MUTE_OOC)
+		if(persistent_variables.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'> You cannot use OOC (muted).</span>")
 			return
 		if(handle_spam_prevention(msg,MUTE_OOC))

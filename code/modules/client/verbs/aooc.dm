@@ -24,7 +24,7 @@ GLOBAL_VAR_INIT(normal_aooc_colour, "#ce254f")
 		if(!GLOB.aooc_allowed)
 			to_chat(src, "<span class='danger'>AOOC is currently muted.</span>")
 			return
-		if(prefs.muted & MUTE_OOC)
+		if(persistent_variables.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'>You cannot use AOOC (muted).</span>")
 			return
 		if(!is_special_character(mob))

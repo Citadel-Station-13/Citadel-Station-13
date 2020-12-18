@@ -11,7 +11,7 @@
 		return
 	log_prayer("[src.key]/([src.name]): [msg]")
 	if(usr.client)
-		if(usr.client.prefs.muted & MUTE_PRAY)
+		if(usr.client.persistent_variables.muted & MUTE_PRAY)
 			to_chat(usr, "<span class='danger'>You cannot pray (muted).</span>")
 			return
 		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
