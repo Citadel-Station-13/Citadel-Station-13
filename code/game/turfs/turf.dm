@@ -88,8 +88,11 @@
 	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
-
-	__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()) && !planetary_atmos)
+	if(isopenturf(src))
+		var/turf/open/O = src
+		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()) && !O.planetary_atmos)
+	else
+		__auxtools_update_turf_temp_info(isspaceturf(get_z_base_turf()))
 
 	return INITIALIZE_HINT_NORMAL
 

@@ -4,6 +4,9 @@
 
 /proc/extools_finalize_logging()
 
+/proc/auxtools_stack_trace(err)
+	stack_trace(err)
+
 GLOBAL_VAR_INIT(auxtools_initialized,FALSE)
 
 #define AUXTOOLS_CHECK\
