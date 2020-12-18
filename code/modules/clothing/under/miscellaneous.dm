@@ -169,6 +169,7 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	can_adjust = FALSE
+	body_parts_covered = NONE
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
