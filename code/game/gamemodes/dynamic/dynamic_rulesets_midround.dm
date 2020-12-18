@@ -48,6 +48,9 @@
 		if (!M.client) // Are they connected?
 			trimmed_list.Remove(M)
 			continue
+		if(M.client.prefs && M.client.prefs.toggles & MIDROUND_ANTAG)
+			trimmed_list.Remove(M)
+			continue
 		if(!mode.check_age(M.client, minimum_required_age))
 			trimmed_list.Remove(M)
 			continue
