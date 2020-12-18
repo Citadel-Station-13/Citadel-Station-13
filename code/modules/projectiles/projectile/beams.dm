@@ -69,8 +69,8 @@
 /obj/item/projectile/beam/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"
-	damage = 20
-	irradiate = 75
+	damage = 15
+	irradiate = 100
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF
 
