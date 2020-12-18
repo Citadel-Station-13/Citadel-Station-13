@@ -3,7 +3,7 @@
 #define PREFERENCES_SKIN_MAIN						"preferences_browser"
 #define PREFERENCES_SKIN_CHARACTER_SELECT			"preferences_character_select"
 
-// Sort orders. Can be freely changed. Lower is first.
+// Sort orders. Can be freely changed - HOWEVER, this is also the order of copy_to when instantiating a player character. Lower is first.
 /// Default
 #define PREFERENCES_SORT_ORDER_DEFAULT 0
 

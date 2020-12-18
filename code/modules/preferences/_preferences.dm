@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/client/parent
 	/// Owner ckey
 	var/ckey
+
 	/// Variable store for the actual preference collections. list(save_key = list(var1 = val1, ...), ...)
 	var/list/preferences
 
@@ -19,6 +20,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/key_bindings = list()
 	/// List with a key string associated to a list of keybindings. Unlike key_bindings, this one operates on raw key, allowing for binding a key that triggers regardless of if a modifier is depressed as long as the raw key is sent.
 	var/list/modless_key_bindings = list()
+
+	// Metadata begin
+
+	// Metadata end
+
+	// Other loaded settings begin - these aren't stored in [preferences] either because they're accessed super often, or for some other reason that makes the inherent slowness unfavorable
+
+	// End
 
 /datum/preferences/New(client/C)
 	preferences = list()

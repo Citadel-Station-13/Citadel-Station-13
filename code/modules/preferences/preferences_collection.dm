@@ -4,7 +4,7 @@
  */
 /datum/preferences_collection
 	/// Sort order. Lower is in front.
-	var/sort_order = PREFERENCES_SORT_ORDER_DEFAULT
+	var/sort_order = PREFERENCE_SORT_ORDER_DEFAULT
 	/// Save key. This should NEVER BE MODIFIED WITHOUT A MIGRATION! See _preferences.dm for how this works.
 	var/save_key = PREFERENCES_SAVE_KEY_DEFAULT
 
@@ -86,6 +86,12 @@
  * Used post loading to apply settings. Usually used for global settings.
  */
 /datum/preferences_collection/proc/post_load(datum/preferences/prefs)
+
+/**
+ * Applies settings to a character when a mob is being made for a player on joining the round
+ * MOB IS NOT NECESSARILY HUMAN! Always check type first.
+ */
+/datum/preferences_collection/proc/copy_to_mob(mob/M)
 
 /**
  * Used to export crosssave data.
