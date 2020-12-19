@@ -74,7 +74,6 @@
 	irradiate = 150
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
 	tracer_type = /obj/effect/projectile/tracer/xray
