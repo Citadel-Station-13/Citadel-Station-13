@@ -52,6 +52,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
+	var/dusts_master = TRUE
 	var/mob/living/carbon/summoner
 	var/range = 13 //how far from the user the spirit can be
 	var/toggle_button_type = /obj/screen/guardian/ToggleMode/Inactive //what sort of toggle button the hud uses
@@ -185,7 +186,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			for(var/obj/item/W in summoner)
 				if(!summoner.dropItemToGround(W))
 					qdel(W)
-			summoner.dust()
+			if(dusts_master)
+				summoner.dust()
 			death(TRUE)
 			qdel(src)
 	else
@@ -509,6 +511,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_syndicate_full"
 	var/used = FALSE
+	var/dusts_master = TRUE
 	var/theme = "magic"
 	var/mob_name = "Guardian Spirit"
 	var/use_message = "<span class='holoparasite'>You shuffle the deck...</span>"
@@ -603,6 +606,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.summoner = user
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
+	G.dusts_master = dusts_master
 	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
 		if("tech")
@@ -665,6 +669,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/guardiancreator/spontaneous
 	theme = "spontaneous"
+	dusts_master = FALSE
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
