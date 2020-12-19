@@ -124,6 +124,8 @@
 
 
 /mob/living/simple_animal/jacq/proc/poof()
+	if(!active)
+		return FALSE
 	last_poof = world.realtime
 	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
@@ -149,6 +151,8 @@
 
 	if(!targets.len)
 		targets = GLOB.generic_event_spawns
+	if(!targets)
+		return FALSE
 
 	for(var/i in 1 to 6) //Attempts a jump up to 6 times.
 		var/atom/A = pick(targets)

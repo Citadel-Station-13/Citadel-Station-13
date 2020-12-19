@@ -58,13 +58,13 @@
 	/// The list of z-levels that this weather is actively affecting
 	var/impacted_z_levels
 
-	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that. 
-	var/overlay_layer = AREA_LAYER 
+	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
+	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
 	var/overlay_plane = BLACKNESS_PLANE
-	/// If the weather has no purpose but aesthetics. 
+	/// If the weather has no purpose but aesthetics.
 	var/aesthetic = FALSE
-	/// Used by mobs to prevent them from being affected by the weather 
+	/// Used by mobs to prevent them from being affected by the weather
 	var/immunity_type = "storm"
 
 	/// The stage of the weather, from 1-4
@@ -206,10 +206,16 @@
 /datum/weather/proc/weather_act(mob/living/L)
 	return
 
+/datum/weather/proc/weather_act_turf(area/N) //What effect does this weather have on the area?
+	return
+
+
 /**
   * Updates the overlays on impacted areas
   *
   */
+
+
 /datum/weather/proc/update_areas()
 	for(var/V in impacted_areas)
 		var/area/N = V
@@ -221,6 +227,7 @@
 				N.icon_state = telegraph_overlay
 			if(MAIN_STAGE)
 				N.icon_state = weather_overlay
+				weather_act_turf(N)
 			if(WIND_DOWN_STAGE)
 				N.icon_state = end_overlay
 			if(END_STAGE)

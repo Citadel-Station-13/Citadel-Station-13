@@ -43,6 +43,10 @@ endmap
 map runtimestation
 endmap
 
+
+map festivestation
+endmap
+
 map multiz_debug
 endmap
 
