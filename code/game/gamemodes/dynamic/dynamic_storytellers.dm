@@ -128,10 +128,10 @@ Property weights are added to the config weight of the ruleset. They are:
 
 /datum/dynamic_storyteller/proc/minor_rule_draft()
 	var/list/drafted_rules = list()
-	for (var/datum/dynamic_ruleset/minor/rule in mode.minor_rules)
+	for (var/datum/dynamic_ruleset/rule in mode.minor_rules)
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
 			rule.trim_candidates()
-			if (rule.ready() && rule.candidates.len > 0)
+			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
@@ -363,39 +363,12 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/grabbag
 	name = "Grab Bag"
 	config_tag = "grabbag"
-	desc = "Crew antags (e.g. traitor, changeling, bloodsucker, heretic) only, all mixed together."
+	desc = "Crew antags (e.g. traitor, changeling, bloodsucker, heretic) only at round start, all mixed together."
 	weight = 4
 	flags = USE_PREF_WEIGHTS | USE_PREV_ROUND_WEIGHTS
 
 /datum/dynamic_storyteller/grabbag/minor_start_chance()
 	return 100
-
-/datum/dynamic_storyteller/grabbag/minor_rule_draft()
-	var/list/original_rules = ..()
-	var/list/drafted_rules = list()
-	for(var/R in original_rules)
-		var/datum/dynamic_ruleset/rule = R
-		if(rule.flags & MINOR_RULESET)
-			drafted_rules += R
-	return drafted_rules
-
-/datum/dynamic_storyteller/grabbag/midround_draft()
-	var/list/original_rules = ..()
-	var/list/drafted_rules = list()
-	for(var/R in original_rules)
-		var/datum/dynamic_ruleset/rule = R
-		if(rule.flags & MINOR_RULESET)
-			drafted_rules += R
-	return drafted_rules
-
-/datum/dynamic_storyteller/grabbag/latejoin_draft()
-	var/list/original_rules = ..()
-	var/list/drafted_rules = list()
-	for(var/R in original_rules)
-		var/datum/dynamic_ruleset/rule = R
-		if(rule.flags & MINOR_RULESET)
-			drafted_rules += R
-	return drafted_rules
 
 /datum/dynamic_storyteller/liteextended
 	name = "Calm"
