@@ -14492,7 +14492,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aym" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14503,6 +14502,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "ayn" = (
@@ -85505,8 +85505,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop Out";
-	dir = 8
+	dir = 8;
+	name = "Space Loop Out"
 	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"

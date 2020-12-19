@@ -46837,7 +46837,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdL" = (
@@ -54460,8 +54460,8 @@
 /area/maintenance/department/security/brig)
 "gjv" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop In";
-	dir = 1
+	dir = 1;
+	name = "Space Loop In"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
