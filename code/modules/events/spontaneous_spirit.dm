@@ -10,26 +10,16 @@
 	role_name = "guardian spirit"
 
 /datum/round_event/ghost_role/spontaneous_guardian_spirit/spawn_role()
-	var/list/candidates = get_candidates(ROLE_PAI, null, FALSE)
-	if(length(candidates))
-		for(var/mob/living/L in shuffle(GLOB.alive_mob_list))
-			if(!L.client)
-				continue
-			if(L.stat == DEAD)
-				continue
-			if (HAS_TRAIT(L,TRAIT_EXEMPT_HEALTH_EVENTS))
-				continue
-			if(iscyborg(L))
-				var/mob/living/silicon/robot/R = L
-				if(R.shell)
-					continue
-			var/list/guardians = L.hasparasites()
-			if(length(guardians))
-				continue
-			var/obj/item/guardiancreator/spontaneous/I = new
-			var/mob/C = pick(candidates)
-			spawned_mobs += I.spawn_guardian(L, C.key)
-			control.weight *= 2 //they attract each other, after all
-			qdel(I)
-			return SUCCESSFUL_SPAWN
-	return NOT_ENOUGH_PLAYERS
+	var/list/candidates = get_candidates(ROLE_PAI, null, ROLE_ALIEN)
+	if(!candidates.len)
+		return NOT_ENOUGH_PLAYERS
+
+	var/mob/dead/observer/selected = pick_n_take(candidates)
+
+	var/mob/camera/guardian/spirit = new /mob/camera/guardian(SSmapping.get_station_center())
+	selected.transfer_ckey(spirit, FALSE)
+	message_admins("[ADMIN_LOOKUPFLW(spirit)] has been made into a guardian spirit by an event.")
+	log_game("[key_name(spirit)] was spawned as a guardian spirit by an event.")
+	spawned_mobs += spirit
+	control.weight *= 2 //they attract each other, after all
+	return SUCCESSFUL_SPAWN
