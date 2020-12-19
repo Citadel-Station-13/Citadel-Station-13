@@ -670,6 +670,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/spontaneous
 	theme = "spontaneous"
 	dusts_master = FALSE
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
