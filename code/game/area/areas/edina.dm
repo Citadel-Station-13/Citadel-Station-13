@@ -22,6 +22,27 @@
 	ambientsounds = MAINTENANCE
 	always_unpowered = FALSE //Sure you can have power if you want
 
+/area/edina/backstreet/supply
+	name = "Supply Backstreets"
+	icon_state = "edina_alley"
+	clockwork_warp_allowed = TRUE
+	ambientsounds = MAINTENANCE
+	always_unpowered = FALSE //Sure you can have power if you want
+
+/area/edina/backstreet/research
+	name = "Research Backstreets"
+	icon_state = "edina_alley"
+	clockwork_warp_allowed = TRUE
+	ambientsounds = MAINTENANCE
+	always_unpowered = FALSE //Sure you can have power if you want
+
+/area/edina/backstreet/med
+	name = "Hospital Backstreets"
+	icon_state = "edina_alley"
+	clockwork_warp_allowed = TRUE
+	ambientsounds = MAINTENANCE
+	always_unpowered = FALSE //Sure you can have power if you want
+
 ///Nova Edina Streets///
 
 
