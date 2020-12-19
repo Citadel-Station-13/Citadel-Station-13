@@ -104,8 +104,16 @@
 	display_name = "Combat Cybernetic Implants"
 	description = "Military grade combat implants to improve performance."
 	prereq_ids = list("adv_cyber_implants","weaponry","NVGtech","high_efficiency")
-	design_ids = list("ci-xray", "ci-thermals", "ci-antidrop", "ci-antistun", "ci-thrusters", "ci-shield")
+	design_ids = list("ci-antidrop", "ci-antistun", "ci-thrusters", "ci-shield")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/illegal_occ_implants
+	id = "illegal_occ_implants"
+	display_name = "Illegal Occular Implants"
+	description = "Salvaged Syndicate designs for thermal and x-ray vision"
+	prereq_ids = list("combat_cyber_implants", "unregulated_bluespace", "bluespace_power")
+	design_ids = list("ci-xray", "ci-thermals")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 35000)
 
 /////////////////////////Advanced Surgery/////////////////////////
 /datum/techweb_node/imp_wt_surgery
