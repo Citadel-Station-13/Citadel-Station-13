@@ -26,13 +26,13 @@
 	false_report_weight = 1
 	restricted_jobs = list("AI","Cyborg")
 	protected_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	restricted_species = list(SPECIES_SYNTH_LIZARD, SPECIES_SYNTH, SPECIES_ANDROID, SPECIES_DULLAHAN, SPECIES_PLASMAMAN, SPECIES_SKELETON, SPECIES_VAMPIRE, SPECIES_VAMPIRE_WEAK)
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 4
 	reroll_friendly = FALSE
 	enemy_minimum_age = 7
 	round_ends_with_antag_death = FALSE
-	restricted_species = list("plasmaman", "shadow", "skeleton", "synthliz", "synth", "vampire", "ipc", "dullahan", "android")
 	announce_span = "danger"
 	announce_text = "Filthy, bloodsucking vampires are crawling around disguised as crewmembers!\n\
 	<span class='danger'>Bloodsuckers</span>: The crew are cattle, while you are both shepherd and slaughterhouse.\n\
