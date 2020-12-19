@@ -865,6 +865,42 @@
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_BULKY + WEIGHT_CLASS_NORMAL //katana and waki.
 
+/obj/item/melee/smith/twohand/katana/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/smith/twohand/katana/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/smith/wakizashi/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/smith/wakizashi/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/bokken/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/bokken/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
