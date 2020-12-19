@@ -10,12 +10,14 @@ GLOBAL_LIST(topic_status_cache)
 //So subsystems globals exist, but are not initialised
 
 /world/New()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_init")()
+		enable_debugging()
 	AUXTOOLS_CHECK
-	//enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
 #endif
-
 	world.Profile(PROFILE_START)
 
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
@@ -269,6 +271,10 @@ GLOBAL_LIST(topic_status_cache)
 
 /world/Del()
 	shutdown_logging() // makes sure the thread is closed before end, else we terminate
+	AUXTOOLS_SHUTDOWN
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_shutdown")()
 	..()
 
 /world/proc/update_status()

@@ -37,9 +37,16 @@ SUBSYSTEM_DEF(air)
 
 	var/log_explosive_decompression = TRUE // If things get spammy, admemes can turn this off.
 
-	var/monstermos_turf_limit = 10
-	var/monstermos_hard_turf_limit = 2000
-	var/monstermos_enabled = TRUE
+	// Max number of turfs equalization will grab.
+	var/equalize_turf_limit = 25
+	// Max number of turfs to look for a space turf, and max number of turfs that will be decompressed.
+	var/equalize_hard_turf_limit = 2000
+	// Whether equalization should be enabled at all.
+	var/equalize_enabled = TRUE
+	// Max number of times process_turfs will share in a tick.
+	var/share_max_steps = 1
+	// If process_turfs finds no pressure differentials larger than this, it'll stop for that tick.
+	var/share_pressure_diff_to_stop = 101.325
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -234,7 +241,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_turf_equalize(resumed = 0)
-	if(process_turf_equalize_extools(MC_TICK_REMAINING_MS))
+	if(process_turf_equalize_extools(resumed,MC_TICK_REMAINING_MS))
 		pause()
 	/*
 	//cache for sanic speed
@@ -254,7 +261,7 @@ SUBSYSTEM_DEF(air)
 	*/
 
 /datum/controller/subsystem/air/proc/process_turfs(resumed = 0)
-	if(process_turfs_extools(MC_TICK_REMAINING_MS))
+	if(process_turfs_extools(resumed,MC_TICK_REMAINING_MS))
 		pause()
 	/*
 	//cache for sanic speed
@@ -272,12 +279,8 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
-/proc/post_process_excited_turf(turf/open/T)
-	if(istype(T))
-		T.update_visuals()
-
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
-	if(!process_excited_groups_extools(MC_TICK_REMAINING_MS))
+	if(!process_excited_groups_extools(resumed,MC_TICK_REMAINING_MS))
 		pause()
 
 /datum/controller/subsystem/air/proc/process_turfs_extools()

@@ -4,11 +4,16 @@
 
 /proc/extools_finalize_logging()
 
-/proc/auxtools_stack_trace(err)
-	stack_trace(err)
+/proc/auxtools_stack_trace(msg)
+	CRASH(msg)
 
 GLOBAL_VAR_INIT(auxtools_initialized,FALSE)
 
 #define AUXTOOLS_CHECK\
 	if (!GLOB.auxtools_initialized && fexists(AUXTOOLS) && findtext(call(AUXTOOLS,"auxtools_init")(),"SUCCESS"))\
 		GLOB.auxtools_initialized = TRUE;\
+
+#define AUXTOOLS_SHUTDOWN\
+	if (GLOB.auxtools_initialized && fexists(AUXTOOLS))\
+		call(AUXTOOLS,"auxtools_shutdown")();\
+		GLOB.auxtools_initialized = FALSE;\
