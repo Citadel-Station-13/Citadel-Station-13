@@ -1,5 +1,7 @@
 /datum/config_entry/flag/dynamic_voting
 
+/datum/config_entry/flag/no_storyteller_threat_removal
+
 /datum/config_entry/number/dynamic_high_pop_limit
 	config_entry_value = 55
 	min_val = 1
@@ -74,7 +76,7 @@
 
 /datum/config_entry/number/dynamic_hijack_cost
 	config_entry_value = 5
-	
+
 /datum/config_entry/number/dynamic_glorious_death_cost
 	config_entry_value = 5
 
@@ -94,5 +96,13 @@
 	value_mode = VALUE_MODE_NUM
 
 /datum/config_entry/keyed_list/storyteller_min_players
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/storyteller_min_chaos
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/storyteller_max_chaos
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
