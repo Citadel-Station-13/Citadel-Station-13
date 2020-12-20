@@ -581,17 +581,16 @@
 			*/
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration? (default [VC.acceleration], max 2)\"</span>")
-			var/accl = VC.acceleration
-			accl = text2num(input(usr, "Acceleration? (default [VC.acceleration], max 1)", "[VC.acceleration]"))
+			var/accl = text2num(input(usr, "Acceleration? (default [VC.acceleration], max 2)", "[VC.acceleration]"))
 			accl = clamp(accl, 0, 2)
 			VC.acceleration = accl
 			points += accl*100
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Max_deceleration? (default [VC.max_deceleration], max 20)\"</span>")
-			var/deaccl = text2num(input(usr, "Max_deceleration? (default [VC.max_deceleration], max 10)", "[VC.max_deceleration]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum deceleration? (default [VC.max_deceleration], max 20)\"</span>")
+			var/deaccl = text2num(input(usr, "Max_deceleration? (default [VC.max_deceleration], max 20)", "[VC.max_deceleration]"))
 			deaccl = clamp(deaccl, 0, 20)
 			VC.max_deceleration = deaccl
-			points += deaccl*10
+			points += deaccl*5
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum velocity? (default [VC.max_velocity], max 200)\"</span>")
 			var/m_velo = text2num(input(usr, "Maximum velocity? (default [VC.max_velocity], max 200)", "[VC.max_velocity]"))
@@ -599,14 +598,14 @@
 			VC.max_velocity = m_velo
 			points += m_velo
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Boost power? (default [VC.boost_power], max 100)\"</span>")
-			var/boost = text2num(input(usr, "Boost power? (default [VC.boost_power], max 100)", "[VC.boost_power]"))
-			boost = clamp(boost, 0, 100)
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Boost power? (default [VC.boost_power], max 200)\"</span>")
+			var/boost = text2num(input(usr, "Boost power? (default [VC.boost_power], max 200)", "[VC.boost_power]"))
+			boost = clamp(boost, 0, 200)
 			VC.boost_power = boost
 			points += boost
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default [VC.max_integrity], max 500)\"</span>")
-			var/health = text2num(input(usr, "Health points? (default [VC.max_integrity], max 500)", "[VC.max_integrity]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default [VC.max_integrity], max 1000)\"</span>")
+			var/health = text2num(input(usr, "Health points? (default [VC.max_integrity], max 1000)", "[VC.max_integrity]"))
 			health = clamp(health, 0, 500)
 			VC.max_integrity = health
 			points += health/2
