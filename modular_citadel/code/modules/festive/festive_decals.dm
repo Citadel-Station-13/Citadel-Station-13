@@ -13,6 +13,9 @@
 	name = "Fairy lights"
 	desc = "A strand of smol glowing lights, almost as if the lights themselves were faries."
 	icon_state = "y_fairylights"
+	light_power = 1.6
+	light_range = 3
+	light_color = "#ffeeab"
 
 /obj/effect/decal/festive/mistletoe
 	name = "Mistletoe"

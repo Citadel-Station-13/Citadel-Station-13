@@ -7,8 +7,8 @@
 	density = TRUE
 	anchored = TRUE
 	light_power = 1.4
-	light_range = 10
-	light_color = "#ffeeab"
+	light_range = 15
+	light_color = "#ffffdd"
 
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post"
@@ -20,8 +20,8 @@
 	density = TRUE
 	anchored = TRUE
 	light_power = 1.6
-	light_range = 10
-	light_color = "#ffeeab"
+	light_range = 15
+	light_color = "#ffffdd"
 
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post_festive"
