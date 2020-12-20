@@ -513,6 +513,7 @@
 	AIStatus = AI_OFF
 	anchored = TRUE
 	spawn_cars = TRUE
+	active = FALSE
 
 /mob/living/simple_animal/jacq/car_spawner/Destroy()
 	visible_message("The <b>[src]</b> gives out an error sound, <span class='spooky'>\"Ey! Bugger off!\"</span>")
@@ -561,49 +562,51 @@
 			switch(choice_transm)
 				if("Manual")
 					VC = new /obj/vehicle/sealed/vectorcraft(loc)
-					points += 500
 				if("Automatic")
 					VC = new /obj/vehicle/sealed/vectorcraft/auto(loc)
+					points += 500
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum acceleration? (default 5.25, max 10)\"</span>")
-			var/max_accl = text2num(input(usr, "Maximum acceleration? (default 5.25, max 10)", "[VC.max_acceleration]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum acceleration? (default [VC.max_acceleration], max 10)\"</span>")
+			var/max_accl = text2num(input(usr, "Maximum acceleration? (default [VC.max_acceleration], max 10)", "[VC.max_acceleration]"))
 			max_accl = clamp(max_accl, 0, 10)
 			VC.max_acceleration = max_accl
 			points += max_accl*10
 
+			/*
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration step? (default 0.3, max 1)\"</span>")
 			var/max_accl_s = text2num(input(usr, "Acceleration step? (default 0.3, max 1)", "[VC.accel_step]"))
 			max_accl_s = clamp(max_accl_s, 0, 1)
 			VC.max_acceleration = max_accl_s
 			points += max_accl_s*100
+			*/
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration? (default 0.4, max 1)\"</span>")
 			var/accl = VC.acceleration
-			accl = text2num(input(usr, "Acceleration? (default 0.4, max 1)", "[VC.acceleration]"))
+			accl = text2num(input(usr, "Acceleration? (default [VC.acceleration], max 1)", "[VC.acceleration]"))
 			accl = clamp(accl, 0, 1)
 			VC.acceleration = accl
 			points += accl*100
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Max_deceleration? (default 4, max 10)\"</span>")
-			var/deaccl = text2num(input(usr, "Max_deceleration? (default 4, max 10)", "[VC.max_deceleration]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Max_deceleration? (default [[VC.max_deceleration], max 10)\"</span>")
+			var/deaccl = text2num(input(usr, "Max_deceleration? (default [VC.max_deceleration], max 10)", "[VC.max_deceleration]"))
 			deaccl = clamp(deaccl, 0, 10)
 			VC.max_deceleration = deaccl
 			points += deaccl*10
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum velocity? (default 90, max 200)\"</span>")
-			var/m_velo = text2num(input(usr, "Maximum velocity? (default 90, max 200)", "[VC.max_velocity]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum velocity? (default [VC.max_velocity], max 200)\"</span>")
+			var/m_velo = text2num(input(usr, "Maximum velocity? (default [VC.max_velocity], max 200)", "[VC.max_velocity]"))
 			m_velo = clamp(m_velo, 0, 200)
 			VC.max_velocity = m_velo
 			points += m_velo
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Boost power? (default 25, max 100)\"</span>")
-			var/boost = text2num(input(usr, "Boost power? (default 25, max 100)", "[VC.boost_power]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Boost power? (default [VC.boost_power], max 100)\"</span>")
+			var/boost = text2num(input(usr, "Boost power? (default [VC.boost_power], max 100)", "[VC.boost_power]"))
 			boost = clamp(boost, 0, 100)
 			VC.boost_power = boost
 			points += boost
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default 100, max 500)\"</span>")
-			var/health = text2num(input(usr, "Health points? (default 100, max 500)", "[VC.max_integrity]"))
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default [VC.max_integrity, max 500)\"</span>")
+			var/health = text2num(input(usr, "Health points? (default [VC.max_integrity, max 500)", "[VC.max_integrity]"))
 			health = clamp(health, 0, 500)
 			VC.max_integrity = health
 			points += health/2
