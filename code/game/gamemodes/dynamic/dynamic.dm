@@ -612,6 +612,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.ruletype == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
+	message_admins("DYNAMIC: Picked [rule]; executing soon...")
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
 	return TRUE
 
@@ -663,6 +664,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
+		message_admins("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		log_threat("[rule.ruletype] [rule.name] added [rule.cost]", verbose = TRUE)
 		if(rule.flags & HIGHLANDER_RULESET)
