@@ -421,7 +421,7 @@ Example config:
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
 	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
 	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
