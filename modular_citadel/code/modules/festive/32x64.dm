@@ -7,11 +7,11 @@
 	density = TRUE
 	anchored = TRUE
 	light_power = 1.4
-	light_range = 10
-	light_color = "#ffeeab"
-
+	light_range = 15
+	light_color = "#ffffdd"
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post"
+	max_integrity = 9999999
 
 /obj/structure/streetdecor/lampfestive
 	name = "festive lamp pole"
@@ -20,11 +20,11 @@
 	density = TRUE
 	anchored = TRUE
 	light_power = 1.6
-	light_range = 10
-	light_color = "#ffeeab"
-
+	light_range = 15
+	light_color = "#ffffdd"
 	icon = 'modular_citadel/code/modules/festive/32x64icons.dmi'
 	icon_state = "lamp_post_festive"
+	max_integrity = 9999999
 
 /obj/structure/streetdecor/wreathpole
 	name = "wreath pole"
@@ -55,6 +55,6 @@
 	light_power = 2
 	light_range = 30
 	light_color = "#ffeeab"
-
 	icon = 'modular_citadel/code/modules/festive/bigtree.dmi'
 	icon_state = "bigtree"
+	max_integrity = 9999999

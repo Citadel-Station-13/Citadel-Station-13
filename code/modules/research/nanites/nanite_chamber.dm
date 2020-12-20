@@ -41,12 +41,12 @@
 	update_icon()
 
 /obj/machinery/nanite_chamber/proc/set_safety(threshold)
-	if(!occupant)
+	if(!occupant || SEND_SIGNAL(occupant, COMSIG_NANITE_CHECK_CONSOLE_LOCK))
 		return
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_SAFETY, threshold)
 
 /obj/machinery/nanite_chamber/proc/set_cloud(cloud_id)
-	if(!occupant)
+	if(!occupant || SEND_SIGNAL(occupant, COMSIG_NANITE_CHECK_CONSOLE_LOCK))
 		return
 	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
 
@@ -82,7 +82,7 @@
 		return
 	if((stat & MAINT) || panel_open)
 		return
-	if(!occupant || busy)
+	if(!occupant || busy || SEND_SIGNAL(occupant, COMSIG_NANITE_CHECK_CONSOLE_LOCK))
 		return
 
 	var/locked_state = locked
@@ -173,7 +173,6 @@
 		return FALSE
 
 	..()
-
 	return TRUE
 
 /obj/machinery/nanite_chamber/relaymove(mob/user as mob)

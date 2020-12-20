@@ -660,27 +660,34 @@
 		return
 	if(dna.stability > 0)
 		return
-	var/instability = -dna.stability
+	var/instability = - dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70-instability,0)))
+	if(prob(max(70 - instability,0)))
 		switch(rand(0,3)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
 				gain_trauma(/datum/brain_trauma/severe/paralysis)
 			if(2)
+				unequip_everything()
+				drop_all_held_items()
 				corgize()
 			if(3)
 				to_chat(src, "<span class='notice'>Oh, we actually feel quite alright!</span>")
 	else
 		switch(rand(0,3))
 			if(0)
+				unequip_everything()
+				drop_all_held_items()
 				gib()
 			if(1)
+				unequip_everything()
+				drop_all_held_items()
 				dust()
-
 			if(2)
+				unequip_everything()
+				drop_all_held_items()
 				death()
 				petrify(INFINITY)
 			if(3)
@@ -689,6 +696,8 @@
 					if(BP)
 						BP.dismember()
 					else
+						unequip_everything()
+						drop_all_held_items()
 						gib()
 				else
 					set_species(/datum/species/dullahan)

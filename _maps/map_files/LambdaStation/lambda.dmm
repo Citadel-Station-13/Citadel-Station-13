@@ -53981,8 +53981,8 @@
 	pixel_y = -26
 	},
 /obj/structure/cable,
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "cvh" = (
@@ -67078,12 +67078,12 @@
 /area/engine/atmos)
 "kgv" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 4
+	dir = 4;
+	icon_state = "railing"
 	},
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plasteel/stairs/old,
 /area/maintenance/department/medical)
@@ -71237,12 +71237,12 @@
 "tcW" = (
 /obj/structure/stairs/west,
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 4
+	dir = 4;
+	icon_state = "railing"
 	},
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
