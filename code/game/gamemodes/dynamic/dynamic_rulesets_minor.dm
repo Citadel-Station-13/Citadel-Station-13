@@ -1,3 +1,46 @@
+/datum/dynamic_ruleset/minor/proc/trim_list(list/L = list())
+	var/list/trimmed_list = L.Copy()
+	for(var/mob/M in trimmed_list)
+		if (!ishuman(M))
+			trimmed_list.Remove(M)
+			continue
+		if (HAS_TRAIT(M, TRAIT_NO_MIDROUND_ANTAG))
+			trimmed_list.Remove(M)
+			continue
+		if (!M.client) // Are they connected?
+			trimmed_list.Remove(M)
+			continue
+		if(!mode.check_age(M.client, minimum_required_age))
+			trimmed_list.Remove(M)
+			continue
+		if(antag_flag_override)
+			if(!(antag_flag_override in M.client.prefs.be_special) || jobban_isbanned(M.ckey, antag_flag_override))
+				trimmed_list.Remove(M)
+				continue
+		else
+			if(!(antag_flag in M.client.prefs.be_special) || jobban_isbanned(M.ckey, antag_flag))
+				trimmed_list.Remove(M)
+				continue
+		if (M.mind)
+			if ((M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
+				trimmed_list.Remove(M)
+				continue
+			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
+				trimmed_list.Remove(M)
+				continue
+			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+				trimmed_list.Remove(M)
+				continue
+	return trimmed_list
+
+/datum/dynamic_ruleset/minor/trim_candidates()
+	//
+	// All you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
+	// Candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
+	// So for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
+	// Make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
+	// We're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
+	candidates = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 
 //////////////////////////////////////////////
 //                                          //
