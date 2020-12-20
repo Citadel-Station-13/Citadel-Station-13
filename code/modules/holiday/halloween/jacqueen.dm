@@ -572,7 +572,7 @@
 			VC.max_acceleration = max_accl
 			points += max_accl*10
 
-			/*
+			/* This is internally used
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration step? (default 0.3, max 1)\"</span>")
 			var/max_accl_s = text2num(input(usr, "Acceleration step? (default 0.3, max 1)", "[VC.accel_step]"))
 			max_accl_s = clamp(max_accl_s, 0, 1)
@@ -580,16 +580,16 @@
 			points += max_accl_s*100
 			*/
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration? (default [VC.acceleration], max 1)\"</span>")
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration? (default [VC.acceleration], max 2)\"</span>")
 			var/accl = VC.acceleration
 			accl = text2num(input(usr, "Acceleration? (default [VC.acceleration], max 1)", "[VC.acceleration]"))
-			accl = clamp(accl, 0, 1)
+			accl = clamp(accl, 0, 2)
 			VC.acceleration = accl
 			points += accl*100
 
-			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Max_deceleration? (default [VC.max_deceleration], max 10)\"</span>")
+			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Max_deceleration? (default [VC.max_deceleration], max 20)\"</span>")
 			var/deaccl = text2num(input(usr, "Max_deceleration? (default [VC.max_deceleration], max 10)", "[VC.max_deceleration]"))
-			deaccl = clamp(deaccl, 0, 10)
+			deaccl = clamp(deaccl, 0, 20)
 			VC.max_deceleration = deaccl
 			points += deaccl*10
 
