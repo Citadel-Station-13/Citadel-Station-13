@@ -86,6 +86,7 @@
 	var/mob/living/silicon/robot/deployed_shell = null //For shell control
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
+	var/datum/action/innate/custom_holoform/custom_holoform = new
 	var/chnotify = 0
 
 
@@ -152,6 +153,7 @@
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
 
 	deploy_action.Grant(src)
+	custom_holoform.Grant(src)
 
 	if(isturf(loc))
 		add_verb(src, list(/mob/living/silicon/ai/proc/ai_network_change, \
@@ -1032,3 +1034,8 @@
 			qdel(src)
 		else
 			return
+
+/mob/living/silicon/ai/emote(act, m_type=1, message = null, intentional = FALSE)
+	if(current && eyeobj)
+		return eyeobj.emote(act, m_type, message, intentional, forced = TRUE)
+	return ..()

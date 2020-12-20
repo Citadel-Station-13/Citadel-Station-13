@@ -361,8 +361,12 @@
 		// them win or lose based on cryo is silly so we remove the objective.
 		if(istype(O,/datum/objective/mutiny) && O.target == mob_occupant.mind)
 			qdel(O)
-		else if(O.target && istype(O.target, /datum/mind) && !O.check_midround_completion())
-			if(O.target == mob_occupant.mind && O.owner?.current)
+		else if(O.target && istype(O.target, /datum/mind))
+			if(O.target != mob_occupant.mind)
+				continue
+			if(O.check_midround_completion())
+				continue
+			if(O.owner && O.owner.current)
 				to_chat(O.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
 			O.target = null
 			spawn(10) //This should ideally fire after the occupant is deleted.

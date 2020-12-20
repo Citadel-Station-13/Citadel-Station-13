@@ -30,6 +30,8 @@
 	new /obj/item/construction/rcd/loaded/upgraded(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/ce(src)
 	new /obj/item/clothing/head/beret/ce/white(src)
+	new /obj/item/storage/bag/construction(src)
+	new /obj/item/storage/bag/material(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"
@@ -78,6 +80,8 @@
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/cartridge/engineering(src)
+	new /obj/item/storage/bag/construction(src)
+	new /obj/item/storage/bag/material(src)
 
 /obj/structure/closet/secure_closet/atmospherics
 	name = "\proper atmospheric technician's locker"
@@ -99,6 +103,8 @@
 	new /obj/item/clothing/glasses/meson/engine/tray(src)
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/cartridge/atmos(src)
+	new /obj/item/storage/bag/construction(src)
+	new /obj/item/storage/bag/material(src)
 
 /*
  * Empty lockers
