@@ -21,6 +21,7 @@
 	var/event_frequency_lower = 6 MINUTES // How rare events will be, at least.
 	var/event_frequency_upper = 20 MINUTES // How rare events will be, at most.
 	var/min_players = -1 // How many players are required for this one to start.
+	var/soft_antag_ratio_cap = 4 // how many players-per-antag there should be
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
@@ -105,6 +106,8 @@ Property weights are added to the config weight of the ruleset. They are:
 	if(mode.forced_injection)
 		mode.forced_injection = dry_run
 		return TRUE
+	if(mode.current_players[CURRENT_LIVING_PLAYERS].len < (mode.current_players[CURRENT_LIVING_ANTAGS].len * soft_antag_ratio_cap))
+		return FALSE
 	return mode.threat < mode.threat_level
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
@@ -215,6 +218,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
 	max_chaos = 50
+	soft_antag_ratio_cap = 1
 	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
 	min_players = 30
 	var/refund_cooldown = 0
@@ -267,6 +271,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	config_tag = "random"
 	weight = 1
 	max_chaos = 60
+	soft_antag_ratio_cap = 1
 	desc = "No weighting at all; every ruleset has the same chance of happening. Cooldowns vary wildly. As random as it gets."
 
 /datum/dynamic_storyteller/random/on_start()
@@ -380,6 +385,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	min_chaos = 30
 	weight = 3
 	dead_player_weight = 5
+	soft_antag_ratio_cap = 8
 	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
 
 /datum/dynamic_storyteller/liteextended/minor_start_chance()

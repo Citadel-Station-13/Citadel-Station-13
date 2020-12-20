@@ -64,6 +64,8 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/threat_average_weight = 0
 	/// Last time a threat average sample was taken. Used for weighting the rolling average.
 	var/last_threat_sample_time = 0
+	/// Maximum threat recorded so far, for cross-round chaos adjustment.
+	var/max_threat = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
@@ -744,6 +746,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			if(!M.voluntary_ghosted)
 				current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 	threat = storyteller.calculate_threat() + added_threat
+	max_threat = max(max_threat,threat)
 	if(threat_average_weight)
 		var/cur_sample_weight = world.time - last_threat_sample_time
 		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)
