@@ -103,7 +103,7 @@ Property weights are added to the config weight of the ruleset. They are:
 
 /datum/dynamic_storyteller/proc/should_inject_antag(dry_run = FALSE)
 	if(mode.forced_injection)
-		mode.forced_injection = !dry_run
+		mode.forced_injection = dry_run
 		return TRUE
 	return mode.threat < mode.threat_level
 
