@@ -27,8 +27,19 @@
 	var/gear
 	var/boost_cooldown
 
+	//Changes for custom
+	var/i_m_acell
+	var/i_m_decell
+	var/i_boost
+	var/i_acell
 
 	var/mob/living/carbon/human/driver
+
+/obj/vehicle/sealed/vectorcraft/Initialize()
+	i_m_acell = max_acceleration
+	i_m_decell = max_deceleration
+	i_boost = boost_power
+	i_acell = acceleration
 
 /obj/vehicle/sealed/vectorcraft/mob_enter(mob/living/M)
 	if(!driver)
@@ -71,7 +82,7 @@
 /obj/vehicle/sealed/vectorcraft/proc/stop_engine()
 	STOP_PROCESSING(SSvectorcraft, src)
 	vector = list("x" = 0, "y" = 0)
-	acceleration = initial(acceleration)
+	acceleration = i_acell
 
 /obj/vehicle/sealed/vectorcraft/proc/dead_check()
 	if(driver.stat > 0)
@@ -303,9 +314,9 @@
 /obj/vehicle/sealed/vectorcraft/proc/apply_damage(damage)
 	obj_integrity -= damage
 	var/healthratio = ((obj_integrity/max_integrity)/4) + 0.75
-	max_acceleration = initial(max_acceleration) * healthratio
-	max_deceleration = initial(max_deceleration) * healthratio
-	boost_power = initial(boost_power) * healthratio
+	max_acceleration = i_m_acell * healthratio
+	max_deceleration = i_m_decell * healthratio
+	boost_power = i_boost * healthratio
 
 	if(obj_integrity <= 0)
 		mob_exit(driver)
@@ -490,7 +501,7 @@ if(driver.sprinting && !(boost_cooldown))
 		return FALSE
 	if(gear == "auto")
 		acceleration += accel_step
-		acceleration = clamp(acceleration, initial(acceleration), max_acceleration)
+		acceleration = clamp(acceleration, i_acell, max_acceleration)
 		if(!enginesound_delay)
 			playsound(src.loc,'sound/vehicles/norm_eng.ogg', 25, 0)
 			enginesound_delay = world.time + 16
@@ -526,7 +537,7 @@ if(driver.sprinting && !(boost_cooldown))
 			enginesound_delay = world.time + 16
 		return
 
-	acceleration = clamp(acceleration, initial(acceleration), max_acceleration)
+	acceleration = clamp(acceleration, i_acell, max_acceleration)
 
 //calulate the vector change
 /obj/vehicle/sealed/vectorcraft/proc/calc_vector(direction)

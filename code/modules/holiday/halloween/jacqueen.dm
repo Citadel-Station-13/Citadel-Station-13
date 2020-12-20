@@ -570,6 +570,7 @@
 			var/max_accl = text2num(input(usr, "Maximum acceleration? (default [VC.max_acceleration], max 10)", "[VC.max_acceleration]"))
 			max_accl = clamp(max_accl, 0, 10)
 			VC.max_acceleration = max_accl
+			VC.i_m_acell = max_accl
 			points += max_accl*10
 
 			/* This is internally used
@@ -584,12 +585,14 @@
 			var/accl = text2num(input(usr, "Acceleration? (default [VC.acceleration], max 2)", "[VC.acceleration]"))
 			accl = clamp(accl, 0, 2)
 			VC.acceleration = accl
+			VC.i_acell = accl
 			points += accl*100
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum deceleration? (default [VC.max_deceleration], max 20)\"</span>")
 			var/deaccl = text2num(input(usr, "Max_deceleration? (default [VC.max_deceleration], max 20)", "[VC.max_deceleration]"))
 			deaccl = clamp(deaccl, 0, 20)
 			VC.max_deceleration = deaccl
+			VC.i_m_decell = deaccl
 			points += deaccl*5
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum velocity? (default [VC.max_velocity], max 200)\"</span>")
@@ -602,6 +605,7 @@
 			var/boost = text2num(input(usr, "Boost power? (default [VC.boost_power], max 200)", "[VC.boost_power]"))
 			boost = clamp(boost, 0, 200)
 			VC.boost_power = boost
+			VC.i_boost = boost
 			points += boost
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default [VC.max_integrity], max 1000)\"</span>")
