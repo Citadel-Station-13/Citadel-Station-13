@@ -606,7 +606,7 @@
 			points += boost
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default [VC.max_integrity], max 500)\"</span>")
-			var/health = text2num(input(usr, "Health points? (default [VC.max_integrity, max 500)", "[VC.max_integrity]"))
+			var/health = text2num(input(usr, "Health points? (default [VC.max_integrity], max 500)", "[VC.max_integrity]"))
 			health = clamp(health, 0, 500)
 			VC.max_integrity = health
 			points += health/2
