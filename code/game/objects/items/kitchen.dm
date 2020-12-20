@@ -189,7 +189,7 @@
 	else
 		set_light(0)
 
-/obj/item/kitchen/knife/combat/survival/update_overlays()
+/obj/item/kitchen/knife/combat/survival/knuckledagger/update_overlays()
 	. = ..()
 	if(light_on)
 		. += "[icon_state]_lit"
