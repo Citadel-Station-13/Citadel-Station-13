@@ -69,6 +69,9 @@
 /datum/config_entry/number/dynamic_third_rule_high_pop_requirement
 	config_entry_value = 70
 
+/datum/config_entry/number/dynamic_threat_baseline
+	config_entry_value = 50
+
 /datum/config_entry/number_list/dynamic_hijack_requirements
 
 /datum/config_entry/number/dynamic_hijack_high_population_requirement

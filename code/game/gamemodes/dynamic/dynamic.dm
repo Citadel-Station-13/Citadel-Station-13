@@ -145,6 +145,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		third_rule_req = list(101, 101, 101, 101, 101, 100, 90, 80, 70, 60)
 	high_pop_second_rule_req = CONFIG_GET(number/dynamic_second_rule_high_pop_requirement)
 	high_pop_third_rule_req = CONFIG_GET(number/dynamic_third_rule_high_pop_requirement)
+	added_threat = CONFIG_GET(number/dynamic_threat_baseline)
 	GLOB.dynamic_high_pop_limit = CONFIG_GET(number/dynamic_high_pop_limit)
 	GLOB.dynamic_latejoin_delay_min = CONFIG_GET(number/dynamic_latejoin_delay_min)*600
 	GLOB.dynamic_latejoin_delay_max = CONFIG_GET(number/dynamic_latejoin_delay_max)*600
