@@ -48,18 +48,22 @@ There are several things that need to be remembered:
 
 */
 
+/mob/living/carbon/human/ComponentInitialize()
+	. = ..()
+	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_HUMAN_NO_RENDER), /mob.proc/regenerate_icons)
+
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		dna.species.handle_hair(src)
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		dna.species.handle_mutant_bodyparts(src)
 
 /mob/living/carbon/human/update_body(update_genitals = FALSE)
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(BODY_LAYER)
 		dna.species.handle_body(src)
 		..()
@@ -69,11 +73,10 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_fire()
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
 
-
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		if(!..())
 			icon_render_key = null //invalidate bodyparts cache
 			update_body(TRUE)
@@ -102,7 +105,7 @@ There are several things that need to be remembered:
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 /mob/living/carbon/human/update_inv_w_uniform()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(UNIFORM_LAYER)
 
 		if(client && hud_used)
@@ -154,7 +157,7 @@ There are several things that need to be remembered:
 		update_mutant_bodyparts()
 
 /mob/living/carbon/human/update_inv_wear_id()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(ID_LAYER)
 
 		if(client && hud_used)
@@ -179,7 +182,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_inv_gloves()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(GLOVES_LAYER)
 
 		if(client && hud_used && hud_used.inv_slots[SLOT_GLOVES])
@@ -213,7 +216,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_inv_glasses()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(GLASSES_LAYER)
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
@@ -240,7 +243,7 @@ There are several things that need to be remembered:
 		apply_overlay(GLASSES_LAYER)
 
 /mob/living/carbon/human/update_inv_ears()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(EARS_LAYER)
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
@@ -266,7 +269,7 @@ There are several things that need to be remembered:
 		apply_overlay(EARS_LAYER)
 
 /mob/living/carbon/human/update_inv_shoes()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(SHOES_LAYER)
 
 		if(get_num_legs(FALSE) <2)
@@ -304,7 +307,7 @@ There are several things that need to be remembered:
 		apply_overlay(SHOES_LAYER)
 
 /mob/living/carbon/human/update_inv_s_store()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(SUIT_STORE_LAYER)
 
 		if(client && hud_used)
@@ -328,7 +331,7 @@ There are several things that need to be remembered:
 		apply_overlay(SUIT_STORE_LAYER)
 
 /mob/living/carbon/human/update_inv_head()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(HEAD_LAYER)
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -368,7 +371,7 @@ There are several things that need to be remembered:
 		update_mutant_bodyparts()
 
 /mob/living/carbon/human/update_inv_belt()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(BELT_LAYER)
 
 		if(client && hud_used)
@@ -390,7 +393,7 @@ There are several things that need to be remembered:
 		apply_overlay(BELT_LAYER)
 
 /mob/living/carbon/human/update_inv_wear_suit()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(SUIT_LAYER)
 
 		if(client && hud_used)
@@ -477,7 +480,7 @@ There are several things that need to be remembered:
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		remove_overlay(FACEMASK_LAYER)
 
 		if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -518,7 +521,7 @@ There are several things that need to be remembered:
 		update_mutant_bodyparts() //e.g. upgate needed because mask now hides lizard snout
 
 /mob/living/carbon/human/update_inv_back()
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		..()
 		var/mutable_appearance/back_overlay = overlays_standing[BACK_LAYER]
 		if(back_overlay)
@@ -747,7 +750,7 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 	if(!dna.species)
 		return
 
-	if(dna.species.should_render())
+	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
 		return
 
 	var/obj/item/bodypart/HD = get_bodypart("head")

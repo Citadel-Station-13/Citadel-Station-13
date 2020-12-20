@@ -235,7 +235,7 @@
 	icon_state = "tssuit"
 	item_state = "r_suit"
 	can_adjust = FALSE
-	mutantrace_variation = USE_TAUR_CLIP_MASK
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/under/misc/poly_shirt
 	name = "polychromic button-up shirt"

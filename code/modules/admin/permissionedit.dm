@@ -287,7 +287,7 @@
 	R = rank_names[new_rank]
 	if(!R) //rank with that name doesn't exist yet - make it
 		if(D)
-			R = new(new_rank, D.rank.rights) //duplicate our previous admin_rank but with a new name
+			R = new(new_rank, D.rank.rights, D.rank.exclude_rights, D.rank.can_edit_rights) //duplicate our previous admin_rank but with a new name
 		else
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
