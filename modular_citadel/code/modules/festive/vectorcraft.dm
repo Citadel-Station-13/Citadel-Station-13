@@ -36,6 +36,7 @@
 	var/mob/living/carbon/human/driver
 
 /obj/vehicle/sealed/vectorcraft/Initialize()
+	..()
 	i_m_acell = max_acceleration
 	i_m_decell = max_deceleration
 	i_boost = boost_power
