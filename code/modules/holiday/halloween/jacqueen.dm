@@ -522,6 +522,17 @@
 	visible_message("The <b>[src]</b> gives out an error sound, <span class='spooky'>\"Ey! Bugger off!\"</span>")
 	fully_heal(FALSE)
 
+/mob/living/simple_animal/jacq/car_spawner/poof()
+	if(!active)//if disabled, don't poof
+		return
+	var/datum/reagents/R = new/datum/reagents(100)//Hey, just in case.
+	var/datum/effect_system/smoke_spread/chem/s = new()
+	R.add_reagent(/datum/reagent/fermi/secretcatchem, 10)
+	s.set_up(R, 0, loc)
+	s.start()
+	stopmove()
+	health = 25
+
 /mob/living/simple_animal/jacq/car_spawner/spawn_cars(mob/living/carbon/C)
 	visible_message("<b>[src]</b> boots up and displays jacq's glowing smile, <span class='spooky'>\"Hallo there user! Merry Christmas! What ken type o' craft ken Ah offer ye? I can magic up a vectorcraft in manual, automatic or customise it if yer feeling technical.\"</span>")
 	jacqrunes("Hallo there user! What ken type o' craft ken Ah offer ye? I can magic up a vectorcraft in manual, automatic or customise it if yer feeling technical.", C)
@@ -555,43 +566,44 @@
 					VC = new /obj/vehicle/sealed/vectorcraft/auto(loc)
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum acceleration? (default 5.25, max 10)\"</span>")
-			var/max_accl = text2num(VC.max_acceleration)
+			var/max_accl = text2num(input(usr, "Maximum acceleration? (default 5.25, max 10)", "[VC.max_acceleration]"))
 			max_accl = clamp(max_accl, 0, 10)
 			VC.max_acceleration = max_accl
 			points += max_accl*10
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration step? (default 0.3, max 1)\"</span>")
-			var/max_accl_s = text2num(VC.accel_step)
+			var/max_accl_s = text2num(input(usr, "Acceleration step? (default 0.3, max 1)", "[VC.accel_step]"))
 			max_accl_s = clamp(max_accl_s, 0, 1)
 			VC.max_acceleration = max_accl_s
 			points += max_accl_s*100
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Acceleration? (default 0.4, max 1)\"</span>")
-			var/accl = text2num(VC.acceleration)
+			var/accl = VC.acceleration
+			accl = text2num(input(usr, "Acceleration? (default 0.4, max 1)", "[VC.acceleration]"))
 			accl = clamp(accl, 0, 1)
 			VC.acceleration = accl
 			points += accl*100
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Max_deceleration? (default 4, max 10)\"</span>")
-			var/deaccl = text2num(VC.max_deceleration)
+			var/deaccl = text2num(input(usr, "Max_deceleration? (default 4, max 10)", "[VC.max_deceleration]"))
 			deaccl = clamp(deaccl, 0, 10)
 			VC.max_deceleration = deaccl
 			points += deaccl*10
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Maximum velocity? (default 90, max 200)\"</span>")
-			var/m_velo = text2num(VC.max_velocity)
+			var/m_velo = text2num(input(usr, "Maximum velocity? (default 90, max 200)", "[VC.max_velocity]"))
 			m_velo = clamp(m_velo, 0, 200)
 			VC.max_velocity = m_velo
 			points += m_velo
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Boost power? (default 25, max 100)\"</span>")
-			var/boost = text2num(VC.boost_power)
+			var/boost = text2num(input(usr, "Boost power? (default 25, max 100)", "[VC.boost_power]"))
 			boost = clamp(boost, 0, 100)
 			VC.boost_power = boost
 			points += boost
 
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Health points? (default 100, max 500)\"</span>")
-			var/health = text2num(VC.max_integrity)
+			var/health = text2num(input(usr, "Health points? (default 100, max 500)", "[VC.max_integrity]"))
 			health = clamp(health, 0, 500)
 			VC.max_integrity = health
 			points += health/2
@@ -618,6 +630,7 @@
 			visible_message("The <b>[src]</b> pings, <span class='spooky'>\"Finally; what name are ye gonna give it?\"</span>")
 			var/choice_name = input(usr, "Pick a name!", "")
 			choice_name += " (Points cost:[points])"
+			VC.name = choice_name
 
 			visible_message("The <b>[src]</b> gives a final boop, <span class='spooky'>\"There ye be, enjoy!\"</span>")
 
