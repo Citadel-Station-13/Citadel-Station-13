@@ -29,7 +29,7 @@
 	config_entry_value = FALSE
 
 /// Minutes from roundstart before someone can respawn
-/datum/config_entry/flag/respawn_minimum_delay_roundstart
+/datum/config_entry/number/respawn_minimum_delay_roundstart
 	config_entry_value = 30.0
 	integer = FALSE
 

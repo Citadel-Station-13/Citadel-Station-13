@@ -122,12 +122,12 @@
 		to_chat(src, "<span class='danger'>You cannot respawn as you have enabled DNR.</span>")
 		return
 
-	var/roundstart_timeleft = world.time - (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600))
+	var/roundstart_timeleft = (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time
 	if(roundstart_timeleft > 0)
 		to_chat(src, "<span class='warning'>It's been too short of a time since the round started! Please wait [CEILING(roundstart_timeleft / 600, 0.1)] more minutes.</span>")
 		return
 
-	var/list/modes = CONFIG_GET(keyed_list/respawn_chaos_gamemodes)
+	var/list/banned_modes = CONFIG_GET(keyed_list/respawn_chaos_gamemodes)
 	if(SSticker.mode && banned_modes[lowertext(SSticker.mode.config_tag)])
 		to_chat(src, "<span class='warning'>The current mode tag, [SSticker.mode.config_tag], is not eligible for respawn.</span>")
 		return
