@@ -116,7 +116,6 @@ SUBSYSTEM_DEF(jukeboxes)
 					inrange = TRUE
 			else
 				song_played.status = SOUND_MUTE | SOUND_UPDATE	//Setting volume = 0 doesn't let the sound properties update at all, which is lame.
-
-			M.playsound_local(currentturf, null, 100, channel = jukeinfo[2], S = song_played, envwet = (inrange ? -250 : 0), envdry = (inrange ? 0 : -10000))
+			M.playsound_local(currentturf, null, 100, channel = jukeinfo[2], S = song_played, use_reverb = FALSE)
 			CHECK_TICK
 	return
