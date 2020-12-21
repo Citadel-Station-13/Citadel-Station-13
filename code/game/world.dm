@@ -34,14 +34,13 @@ GLOBAL_LIST(topic_status_cache)
  *			All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
-	if (fexists(extools))
-		call(extools, "maptick_initialize")()
-	#ifdef EXTOOLS_LOGGING
-		call(extools, "init_logging")()
+	if (fexists(EXTOOLS))
+		call(EXTOOLS, "maptick_initialize")()
+#ifdef EXTOOLS_LOGGING
+		call(EXTOOLS, "init_logging")()
 	else
-		CRASH("[extools] does not exist!")
-	#endif
+		CRASH("[EXTOOLS] does not exist!")
+#endif
 	enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
@@ -367,6 +366,10 @@ GLOBAL_LIST(topic_status_cache)
 	maxz++
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
+	world.refresh_atmos_grid()
+
+/// Extools atmos
+/world/proc/refresh_atmos_grid()
 
 /world/proc/change_fps(new_value = 20)
 	if(new_value <= 0)
