@@ -122,6 +122,16 @@
 		to_chat(src, "<span class='danger'>You cannot respawn as you have enabled DNR.</span>")
 		return
 
+	var/roundstart_timeleft = world.time - (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600))
+	if(roundstart_timeleft > 0)
+		to_chat(src, "<span class='warning'>It's been too short of a time since the round started! Please wait [CEILING(roundstart_timeleft / 600, 0.1)] more minutes.</span>")
+		return
+
+	var/list/modes = CONFIG_GET(keyed_list/respawn_chaos_gamemodes)
+	if(SSticker.mode && banned_modes[lowertext(SSticker.mode.config_tag]))
+		to_chat(src, "<span class='warning'>The current mode tag, [SSticker.mode.config_tag], is not eligible for respawn.</span>")
+		return
+
 	var/timeleft = time_left_to_respawn()
 	if(timeleft)
 		to_chat(src, "<span class='warning'>It's been too short of a time since you died/observed! Please wait [round(timeleft / 600, 0.1)] more minutes.</span>")
@@ -149,6 +159,7 @@
 	Remember to take heed of rules regarding round knowledge - notably, that ALL past lives are forgotten. \
 	Any character you join as has NO knowledge of round events unless specified otherwise by an admin.</span>")
 
+	message_admins("[key_name_admin(src)] was respawned to lobby [penalize? "with" : "without"] restrictions.")
 	log_game("[key_name(src)] was respawned to lobby [penalize? "with" : "without"] restrictions.")
 	transfer_to_lobby()
 

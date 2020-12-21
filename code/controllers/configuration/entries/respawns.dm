@@ -27,3 +27,21 @@
 /// Observing penalizes for respawns, not just joining.
 /datum/config_entry/flag/respawn_penalty_includes_observe
 	config_entry_value = FALSE
+
+/// Minutes from roundstart before someone can respawn
+/datum/config_entry/flag/respawn_minimum_delay_roundstart
+	config_entry_value = 30.0
+	integer = FALSE
+
+/// Gamemode config tags that are banned from respawning
+/datum/config_entry/keyed_list/respawn_chaos_gamemodes
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/respawn_chaos_gamemodes/ValidateListEntry(key_name, key_value)
+	. = ..()
+	return . && (key_name in config.modes)
+
+/datum/config_entry/keyed_list/respawn_chaos_gamemodes/preprocess_key(key)
+	. = ..()
+	return lowertext(key)

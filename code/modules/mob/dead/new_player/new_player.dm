@@ -294,7 +294,9 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
+	var/mintime = max(CONFIG_GET(number/respawn_delay), (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time, 0)
+
+	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to respawn for [round(mintime / 600, 0.1)] minutes!!","Player Setup","Yes","No")
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
