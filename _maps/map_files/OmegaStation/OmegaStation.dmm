@@ -22551,7 +22551,7 @@
 /area/hallway/primary/starboard)
 "aJa" = (
 /obj/structure/table,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
@@ -22871,7 +22871,7 @@
 /obj/machinery/requests_console{
 	department = "Genetics";
 	name = "Genetics RC";
-	pixel_x = 28	
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -24502,10 +24502,6 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -25146,13 +25142,13 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNg" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNh" = (
@@ -28655,7 +28651,7 @@
 "aTf" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

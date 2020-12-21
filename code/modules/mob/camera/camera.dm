@@ -12,6 +12,7 @@
 	sight = SEE_SELF
 	move_on_shuttle = FALSE
 
+
 /mob/camera/experience_pressure_difference()
 	return
 
@@ -23,5 +24,7 @@
 /mob/camera/canUseStorage()
 	return FALSE
 
-/mob/camera/emote(act, m_type=1, message = null, intentional = FALSE)
+/mob/camera/emote(act, m_type=1, message = null, intentional = FALSE, forced = FALSE)
+	if(forced)
+		return ..()
 	return

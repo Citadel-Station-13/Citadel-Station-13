@@ -53981,8 +53981,8 @@
 	pixel_y = -26
 	},
 /obj/structure/cable,
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "cvh" = (
@@ -63034,6 +63034,19 @@
 /obj/item/assembly/flash/handheld,
 /turf/open/floor/plating,
 /area/storage/tech)
+"cYI" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 3;
+	height = 5;
+	icon_state = "pinonfar";
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "dcB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -63774,6 +63787,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"etv" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "euD" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Server Room"
@@ -67057,12 +67078,12 @@
 /area/engine/atmos)
 "kgv" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 4
+	dir = 4;
+	icon_state = "railing"
 	},
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plasteel/stairs/old,
 /area/maintenance/department/medical)
@@ -68221,6 +68242,20 @@
 /obj/machinery/power/grounding_rod,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"mnL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Arrivals Dock Public Mining";
+	dir = 1;
+	name = "arrivals camera"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "mqh" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -69098,16 +69133,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
-"ohk" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "ojZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -69418,6 +69443,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"oTI" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "oUp" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/metal/fifty,
@@ -69460,6 +69490,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
+"oVP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/gps/mining{
+	gpstag = "MINE_PUB"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "oXg" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -69905,6 +69945,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"pPG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/flashlight,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pRv" = (
 /obj/machinery/air_sensor{
 	id_tag = "tox_sensor"
@@ -71189,12 +71237,12 @@
 "tcW" = (
 /obj/structure/stairs/west,
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 4
+	dir = 4;
+	icon_state = "railing"
 	},
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
@@ -103741,10 +103789,10 @@ nNI
 ngo
 bQW
 nNI
-aav
-aav
-aab
-aab
+nNI
+xMt
+xMt
+nNI
 aab
 aab
 aab
@@ -103996,15 +104044,15 @@ gLI
 ifC
 jEO
 uYv
-ohk
+uYv
+uYv
+jEO
+jEO
+cIu
 nNI
-aab
-aav
-aab
-aab
-aab
-aab
-aab
+xMt
+xMt
+nNI
 aab
 aab
 aab
@@ -104253,16 +104301,16 @@ rEw
 iiC
 jMW
 rEw
+rEw
+rEw
+rEw
+rEw
 cwD
-xMt
-aab
-aav
-aab
-aab
-aab
-aab
-aab
-aab
+oTI
+cxe
+cVf
+etv
+cYI
 aab
 aab
 aab
@@ -104510,15 +104558,15 @@ cvp
 iqD
 jto
 jto
-cvI
+jto
+jto
+pPG
+oVP
+mnL
+nNI
 xMt
-aab
-aav
-aab
-aab
-aab
-aab
-aab
+xMt
+nNI
 aab
 aab
 aab
@@ -104769,10 +104817,10 @@ xMt
 cWd
 nNI
 nNI
-aab
-aav
-aab
-aab
+nNI
+xMt
+xMt
+nNI
 aab
 aab
 aab
@@ -105027,7 +105075,7 @@ cJk
 nNI
 aab
 aab
-aav
+aab
 aab
 aab
 aab

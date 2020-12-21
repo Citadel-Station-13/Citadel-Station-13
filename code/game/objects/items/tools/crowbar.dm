@@ -8,6 +8,7 @@
 	usesound = 'sound/items/crowbar.ogg'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL

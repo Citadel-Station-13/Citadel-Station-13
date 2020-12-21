@@ -92,10 +92,17 @@
 /obj/item/implant/hijack/proc/hijack_remotely(obj/machinery/power/apc/apc)
 	if (apc.hijacker || hijacking)
 		return FALSE //can't remotely hijack an already hijacked APC
+
+	if(apc.being_hijacked)
+		to_chat(imp_in, "<span class='warning'>This APC is already being hijacked!</span>")
+		return FALSE
+
+	apc.being_hijacked = TRUE
 	hijacking = TRUE
 	to_chat(imp_in, "<span class='notice'>Establishing remote connection with APC.</span>")
 	if (!do_after(imp_in, 4 SECONDS,target=apc))
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+		apc.being_hijacked = FALSE
 		hijacking = FALSE
 		return TRUE
 	if (LAZYLEN(imp_in.siliconaccessareas) >= HIJACK_APC_MAX_AMOUNT)
@@ -118,6 +125,7 @@
 		toggle_eyes()
 	else
 		to_chat(imp_in, "<span class='warning'>Aborting.</span>")
+	apc.being_hijacked = FALSE
 	hijacking = FALSE
 	imp_in.light_power = 0
 	imp_in.light_range = 0

@@ -90,7 +90,7 @@ const PatientStateView = (props, context) => {
               </ProgressBar>
             </LabeledList.Item>
             {damageTypes.map(type => (
-              <LabeledList.Item key={type.type} label={type.label}>
+              <LabeledList.Item key={type.type} label={(patient.is_robotic_organism && type.label === 'Toxin') ? 'Corruption' : type.label}>
                 <ProgressBar
                   value={patient[type.type] / patient.maxHealth}
                   color="bad">

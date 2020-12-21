@@ -8,6 +8,7 @@ export const RoboticsControlConsole = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
     can_hack,
+    can_convert,
     cyborgs = [],
     drones = [],
   } = data;
@@ -34,7 +35,9 @@ export const RoboticsControlConsole = (props, context) => {
           </Tabs.Tab>
         </Tabs>
         {tab === 1 && (
-          <Cyborgs cyborgs={cyborgs} can_hack={can_hack} />
+          <Cyborgs cyborgs={cyborgs} 
+            can_hack={can_hack} 
+            can_convert={can_convert} />
         )}
         {tab === 2 && (
           <Drones drones={drones} />
@@ -45,7 +48,7 @@ export const RoboticsControlConsole = (props, context) => {
 };
 
 const Cyborgs = (props, context) => {
-  const { cyborgs, can_hack } = props;
+  const { cyborgs, can_hack, can_convert } = props;
   const { act, data } = useBackend(context);
   if (!cyborgs.length) {
     return (
@@ -67,6 +70,15 @@ const Cyborgs = (props, context) => {
                 content="Hack"
                 color="bad"
                 onClick={() => act('magbot', {
+                  ref: cyborg.ref,
+                })} />
+            )}
+            {!!can_convert && !cyborg.servant && (
+              <Button
+                icon="terminal"
+                content="Convert"
+                color="bad"
+                onClick={() => act('convert', {
                   ref: cyborg.ref,
                 })} />
             )}

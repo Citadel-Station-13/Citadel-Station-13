@@ -55,6 +55,7 @@
 		icon_state = "[src.base_state]open"
 
 /obj/machinery/door/window/update_atom_colour()
+	. = ..()
 	if((color && (color_hex2num(color) < 255)))
 		visible = TRUE
 		if(density)

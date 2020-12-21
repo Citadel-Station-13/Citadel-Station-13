@@ -50,8 +50,12 @@
 	/// Used for the roundend report
 	var/total_cost = 0
 	/// A flag that determines how the ruleset is handled
+	/// ONLY_RULESET are rulesets that prevent ALL other rulesets from rolling.
 	/// HIGHLANDER_RULESET are rulesets can end the round.
-	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
+	/// TRAITOR_RULESET are the "default" ruleset--they should always be addable to a round, if the round type allows antags and dynamic thinks there should be another.
+	/// MINOR_RULESET is for rulesets whose antags can have multiple instances without causing too much issue. As roundstarts, they have their weights reduced based on the storyteller's minor-antag-round chance.
+	/// FAKE_ANTAG_RULESET is for rulesets whose antags aren't actually antagonistic--essentially just flavor meant to spice the round up.
+	/// ALWAYS_MAX_WEIGHT_RULESET means that the ruleset doesn't have its weight reduced based on recency.
 	var/flags = 0
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
 	var/pop_per_requirement = 0
@@ -82,9 +86,6 @@
 	var/delay = 0
 	/// List of tags for use in storytellers.
 	var/list/property_weights = list()
-	/// Whether or not recent-round weight values are taken into account for this ruleset.
-	/// Weight reduction uses the same values as secret's recent-round mode weight reduction.
-	var/always_max_weight = FALSE
 	/// Weight reduction by recent-rounds. Saved on new.
 	var/weight_mult = 1
 
@@ -100,7 +101,7 @@
 	var/high_population_requirements = CONFIG_GET(keyed_list/dynamic_high_population_requirement)
 	var/list/repeated_mode_adjust = CONFIG_GET(number_list/repeated_mode_adjust)
 	if(config_tag in weights)
-		if(!always_max_weight && SSpersistence.saved_dynamic_rules.len == 3 && repeated_mode_adjust.len == 3)
+		if(!(flags & ALWAYS_MAX_WEIGHT_RULESET) && SSpersistence.saved_dynamic_rules.len == 3 && repeated_mode_adjust.len == 3)
 			var/saved_dynamic_rules = SSpersistence.saved_dynamic_rules
 			for(var/i in 1 to 3)
 				if(config_tag in saved_dynamic_rules[i])
@@ -118,6 +119,9 @@
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
+
+/datum/dynamic_ruleset/minor // drafted at roundstart in minor rounds, one antag at a time, for a "mixed" round
+	ruletype = "Minor"
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
@@ -175,7 +179,7 @@
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
 	return TRUE
-	
+
 /// Called on game mode pre_setup for roundstart rulesets.
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE

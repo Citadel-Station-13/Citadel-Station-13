@@ -5,7 +5,7 @@
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/list/features = list("FFF") //first value is mutant color
+	var/list/features = list("FFF", "body_size" = RESIZE_DEFAULT_SIZE) //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/nameless = FALSE
 	var/custom_species	//siiiiigh I guess this is important
@@ -660,27 +660,34 @@
 		return
 	if(dna.stability > 0)
 		return
-	var/instability = -dna.stability
+	var/instability = - dna.stability
 	dna.remove_all_mutations()
 	dna.stability = 100
-	if(prob(max(70-instability,0)))
+	if(prob(max(70 - instability,0)))
 		switch(rand(0,3)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
 				gain_trauma(/datum/brain_trauma/severe/paralysis)
 			if(2)
+				unequip_everything()
+				drop_all_held_items()
 				corgize()
 			if(3)
 				to_chat(src, "<span class='notice'>Oh, we actually feel quite alright!</span>")
 	else
 		switch(rand(0,3))
 			if(0)
+				unequip_everything()
+				drop_all_held_items()
 				gib()
 			if(1)
+				unequip_everything()
+				drop_all_held_items()
 				dust()
-
 			if(2)
+				unequip_everything()
+				drop_all_held_items()
 				death()
 				petrify(INFINITY)
 			if(3)
@@ -689,6 +696,8 @@
 					if(BP)
 						BP.dismember()
 					else
+						unequip_everything()
+						drop_all_held_items()
 						gib()
 				else
 					set_species(/datum/species/dullahan)
@@ -696,11 +705,19 @@
 /datum/dna/proc/update_body_size(old_size)
 	if(!holder || features["body_size"] == old_size)
 		return
+	//new size detected
 	holder.resize = features["body_size"] / old_size
 	holder.update_transform()
-	var/danger = CONFIG_GET(number/threshold_body_size_slowdown)
-	if(features["body_size"] < danger)
-		var/slowdown = (1 - round(features["body_size"] / danger, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
-		holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
-	else if(old_size < danger)
-		holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride)
+	if(iscarbon(holder))
+		var/mob/living/carbon/C = holder
+		var/penalty_threshold = CONFIG_GET(number/threshold_body_size_penalty)
+		if(features["body_size"] < penalty_threshold && old_size >= penalty_threshold)
+			C.maxHealth -= 10 //reduce the maxhealth
+			var/slowdown = (1 - round(features["body_size"] / penalty_threshold, 0.1)) * CONFIG_GET(number/body_size_slowdown_multiplier)
+			holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/small_stride, TRUE, slowdown)
+		else
+			if(old_size < penalty_threshold && features["body_size"] >= penalty_threshold)
+				C.maxHealth  += 10 //give the maxhealth back
+				holder.remove_movespeed_modifier(/datum/movespeed_modifier/small_stride) //remove the slowdown
+
+

@@ -1,0 +1,4 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - tweak: "Floor bots are now buildable with all toolboxes."

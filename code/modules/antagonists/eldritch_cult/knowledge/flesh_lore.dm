@@ -173,9 +173,9 @@
 /datum/eldritch_knowledge/summon/stalker
 	name = "Lonely Ritual"
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I have not seen before."
-	desc = "You can now summon a Stalker using a knife, a flower, a pen and a piece of paper using a transmutation circle. Stalkers possess the ability to shapeshift into various forms while assuming the vigor and powers of that form."
+	desc = "You can now summon a Stalker using a knife, a candle, a pen and a piece of paper using a transmutation circle. Stalkers possess the ability to shapeshift into various forms while assuming the vigor and powers of that form."
 	cost = 1
-	required_atoms = list(/obj/item/kitchen/knife,/obj/item/reagent_containers/food/snacks/grown/poppy,/obj/item/pen,/obj/item/paper)
+	required_atoms = list(/obj/item/kitchen/knife,/obj/item/candle,/obj/item/pen,/obj/item/paper)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker
 	next_knowledge = list(/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/summon/rusty,/datum/eldritch_knowledge/flesh_blade_upgrade_2)
 	route = PATH_FLESH
@@ -203,7 +203,7 @@
 	gain_text = "Our blood is all the same after all, the owl told me."
 	desc = "You are granted a spell that drains some of the targets health, and returns it to you. It also has a chance to transfer any wounds you possess onto the target."
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/blood_siphon
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/blood_siphon
 	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet,/datum/eldritch_knowledge/spell/area_conversion)
 
 /datum/eldritch_knowledge/final/flesh_final

@@ -2180,7 +2180,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afp" = (
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /obj/structure/table,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
@@ -10645,7 +10645,7 @@
 /area/crew_quarters/dorms)
 "ayo" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/dice,
+/obj/item/storage/dice,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayq" = (
@@ -32021,23 +32021,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
-"bwq" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Monastery Transit"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"bwr" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Monastery Transit"
-	},
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
 "bws" = (
 /obj/structure/closet,
 /obj/item/stack/cable_coil/random,
@@ -32812,9 +32795,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bxY" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/open/floor/plasteel/white,
 /area/hallway/secondary/entry)
 "bxZ" = (
@@ -33558,6 +33538,9 @@
 	name = "Monastery Monitor";
 	network = list("monastery");
 	pixel_x = 28
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/hallway/secondary/entry)
@@ -46854,7 +46837,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdL" = (
@@ -53109,6 +53092,16 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"deJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/gps/mining{
+	gpstag = "MINE_PUB"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "dgg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -54469,8 +54462,8 @@
 /area/maintenance/department/security/brig)
 "gjv" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop In";
-	dir = 1
+	dir = 1;
+	name = "Space Loop In"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science)
@@ -56534,12 +56527,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"kIc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel/white{
-	heat_capacity = 1e+006
-	},
-/area/hallway/secondary/entry)
 "kIo" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -58350,6 +58337,18 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
+"oQm" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "oRX" = (
 /obj/structure/closet,
 /turf/open/floor/plating,
@@ -58645,6 +58644,15 @@
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/exit/departure_lounge)
+"pqP" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "prQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -58707,9 +58715,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/chemistry)
-"pyw" = (
-/turf/open/space/basic,
-/area/hallway/secondary/entry)
 "pzF" = (
 /mob/living/simple_animal/opossum,
 /turf/open/floor/wood,
@@ -58751,6 +58756,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"pEH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/chair/comfy{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "pEL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -59281,6 +59295,15 @@
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
+"qRm" = (
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "qTV" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -59997,6 +60020,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"sIK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/flashlight,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "sJp" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/turf_decal/stripes/line,
@@ -61493,6 +61524,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"wjQ" = (
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "wkZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -80466,7 +80509,7 @@ aaa
 aaa
 aaa
 aaa
-pyw
+aaa
 bsl
 btL
 aZx
@@ -80723,7 +80766,7 @@ aaa
 aaa
 aaa
 aaa
-pyw
+aaa
 aZx
 bcX
 aZx
@@ -81759,7 +81802,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+oQm
 aaa
 aaa
 aaa
@@ -82015,9 +82058,9 @@ aZx
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aZx
+pqP
+aZx
 aaa
 aaa
 aaa
@@ -82272,9 +82315,9 @@ aZx
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aZx
+bcX
+aZx
 aaa
 aaa
 aaa
@@ -82526,12 +82569,12 @@ aZx
 bno
 bon
 aZx
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aZx
+aZx
+aZx
+aZx
+qRm
+aZx
 aaa
 aaa
 aht
@@ -82781,14 +82824,14 @@ bbQ
 bcX
 bdV
 bnp
-bon
+baK
+pEH
+deJ
+sIK
+wjQ
+pEH
+bbR
 aZx
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 aaa
 aht
 bBV
@@ -83038,15 +83081,15 @@ jzz
 aZx
 jzz
 bnp
-bon
-aZx
-aZx
-aZx
-aZx
-aZx
+baK
+baK
+baK
+baK
+baK
+baK
+baK
 aZx
 aaa
-aht
 bAI
 abI
 abI
@@ -83296,14 +83339,14 @@ bbR
 bbR
 bnp
 baK
-bbR
-bbR
-bbR
-bbR
-bbR
+baK
+baK
+baK
+baK
+baK
+baK
 aZx
-kIc
-kIc
+aZx
 bAJ
 bBX
 bBX
@@ -83558,7 +83601,7 @@ baK
 baK
 baK
 baK
-aZx
+baK
 bxY
 bzz
 kGe
@@ -83815,7 +83858,7 @@ bbT
 bbT
 bbT
 bbT
-bwq
+bbT
 bxZ
 bzA
 bAK
@@ -84072,7 +84115,7 @@ bqS
 bsm
 btN
 bfY
-bwr
+bfY
 bya
 bzB
 bAL
