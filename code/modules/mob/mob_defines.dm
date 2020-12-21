@@ -170,5 +170,13 @@
 	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
 	var/mutable_appearance/typing_indicator_current
 
+	/// Ability system based on action buttons. Can be ported to base /mob or /mob/living later if needed, easily - the procs are currently on living/carbon/human/innate_abilities.dm
+	/// datum traits-style lazylist of abilities
+	var/list/innate_abilities
+	/// ability = action button instance.
+	var/list/ability_actions
+	/// ability = list(data). see __DEFINES/mobs/innate_abilities.dm
+	var/list/ability_properties
+
 	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
 	var/sound_environment_override = SOUND_ENVIRONMENT_NONE

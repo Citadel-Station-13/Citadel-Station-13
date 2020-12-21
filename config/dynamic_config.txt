@@ -13,6 +13,9 @@ STORYTELLER_WEIGHT EXTENDED 0
 STORYTELLER_MIN_PLAYERS CHAOTIC 30
 STORYTELLER_MIN_PLAYERS TEAMWORK 30
 
+## If this is uncommented, Dynamic won't disable certain storytellers based on recent round threats
+#NO_STORYTELLER_THREAT_REMOVAL
+
 ## Injection delays: how long (in minutes) will pass before a midround or latejoin antag is injected.
 DYNAMIC_MIDROUND_DELAY_MIN 5
 DYNAMIC_MIDROUND_DELAY_MAX 15
@@ -171,8 +174,8 @@ DYNAMIC_COST LATEJOIN_REVOLUTION 20
 DYNAMIC_COST LATEJOIN_BLOODSUCKER 10
 DYNAMIC_COST LATEJOIN_COLLECTOR 1
 
-## Rule will not be generated with threat levels below requirement at a pop value. Pop values are determined by dynamic's pop-per-requirement. 
-## By default  it's 0-8, 9-17, 18-26, 27-35, 36-44, 45-53, 54-60, 61-69, 70-78, 79+. 
+## Rule will not be generated with threat levels below requirement at a pop value. Pop values are determined by dynamic's pop-per-requirement.
+## By default  it's 0-8, 9-17, 18-26, 27-35, 36-44, 45-53, 54-60, 61-69, 70-78, 79+.
 ## This means that 40 30 30 20 20 20 15 15 15 10 will not generate below 40 at 0-8, 30 at 9-17 etc.
 DYNAMIC_REQUIREMENTS TRAITOR 50 50 50 50 50 50 50 50 50 50
 DYNAMIC_REQUIREMENTS TRAITORBRO 101 101 101 101 101 101 101 101 101 101
@@ -301,6 +304,6 @@ DYNAMIC_GLORIOUS_DEATH_COST 5
 DYNAMIC_ASSASSINATE_COST 2
 
 ## This requirement uses threat level, rather than current threat, which is why it's higher.
-DYNAMIC_WAROPS_REQUIREMENT 60 
+DYNAMIC_WAROPS_REQUIREMENT 60
 
 DYNAMIC_WAROPS_COST 10

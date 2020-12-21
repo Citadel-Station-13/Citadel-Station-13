@@ -17,6 +17,9 @@
 			pixel_x = get_standard_pixel_x_offset(lying)
 			pixel_y = get_standard_pixel_y_offset(lying)
 
+/mob/living/proc/update_density()
+	density = !lying && !HAS_TRAIT(src, TRAIT_LIVING_NO_DENSITY)
+
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))
 		return TRUE
