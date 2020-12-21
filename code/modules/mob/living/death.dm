@@ -66,8 +66,8 @@
 	GLOB.alive_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
-	if(mind?.key)
-		var/datum/preferences/P = GLOB.preferences_datums[ckey(mind.key)]
+	if(ckey)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey]
 		if(P)
 			P.respawn_time_of_death = world.time
 	set_drugginess(0)
