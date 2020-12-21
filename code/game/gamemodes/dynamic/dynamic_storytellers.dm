@@ -15,10 +15,13 @@
 	*/
 	var/flags = 0
 	var/dead_player_weight = 1 // How much dead players matter for threat calculation
-	var/weight = 3 // Weights for randomly picking storyteller. Multiplied by score after voting.
+	var/weight = 0 // Weights for randomly picking storyteller. Multiplied by score after voting.
+	var/min_chaos = -1000 // Won't show up if recent rounds have been below this chaotic on average
+	var/max_chaos = 1000 // Won't show up if recent rounds have been above this chaotic on average
 	var/event_frequency_lower = 6 MINUTES // How rare events will be, at least.
 	var/event_frequency_upper = 20 MINUTES // How rare events will be, at most.
 	var/min_players = -1 // How many players are required for this one to start.
+	var/soft_antag_ratio_cap = 4 // how many players-per-antag there should be
 	var/datum/game_mode/dynamic/mode = null // Cached as soon as it's made, by dynamic.
 
 /**
@@ -101,8 +104,10 @@ Property weights are added to the config weight of the ruleset. They are:
 
 /datum/dynamic_storyteller/proc/should_inject_antag(dry_run = FALSE)
 	if(mode.forced_injection)
-		mode.forced_injection = !dry_run
+		mode.forced_injection = dry_run
 		return TRUE
+	if(mode.current_players[CURRENT_LIVING_PLAYERS].len < (mode.current_players[CURRENT_LIVING_ANTAGS].len * soft_antag_ratio_cap))
+		return FALSE
 	return mode.threat < mode.threat_level
 
 /datum/dynamic_storyteller/proc/roundstart_draft()
@@ -126,11 +131,10 @@ Property weights are added to the config weight of the ruleset. They are:
 
 /datum/dynamic_storyteller/proc/minor_rule_draft()
 	var/list/drafted_rules = list()
-	for (var/datum/dynamic_ruleset/minor/rule in mode.minor_rules)
+	for (var/datum/dynamic_ruleset/rule in mode.minor_rules)
 		if (rule.acceptable(mode.current_players[CURRENT_LIVING_PLAYERS].len, mode.threat_level))
-			rule.candidates = mode.candidates.Copy()
 			rule.trim_candidates()
-			if (rule.ready() && rule.candidates.len > 0)
+			if (rule.ready())
 				var/property_weight = 0
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
@@ -213,6 +217,8 @@ Property weights are added to the config weight of the ruleset. They are:
 	weight = 1
 	event_frequency_lower = 2 MINUTES
 	event_frequency_upper = 10 MINUTES
+	max_chaos = 50
+	soft_antag_ratio_cap = 1
 	flags = WAROPS_ALWAYS_ALLOWED | FORCE_IF_WON
 	min_players = 30
 	var/refund_cooldown = 0
@@ -235,12 +241,13 @@ Property weights are added to the config weight of the ruleset. They are:
 	desc = "Modes where the crew must band together. Nukies, xenos, blob. Only one antag threat at once."
 	curve_centre = 2
 	curve_width = 1.5
-	weight = 2
+	weight = 4
+	max_chaos = 75
 	min_players = 20
 	flags = WAROPS_ALWAYS_ALLOWED | USE_PREV_ROUND_WEIGHTS
 	property_weights = list("valid" = 3, "trust" = 5)
 
-/datum/dynamic_storyteller/chaotic/minor_start_chance()
+/datum/dynamic_storyteller/team/minor_start_chance()
 	return 0
 
 /datum/dynamic_storyteller/team/should_inject_antag(dry_run = FALSE)
@@ -256,13 +263,15 @@ Property weights are added to the config weight of the ruleset. They are:
 	flags = WAROPS_ALWAYS_ALLOWED
 	property_weights = list("valid" = 1, "conversion" = 20)
 
-/datum/dynamic_storyteller/chaotic/minor_start_chance()
+/datum/dynamic_storyteller/conversion/minor_start_chance()
 	return 0
 
 /datum/dynamic_storyteller/random
 	name = "Random"
 	config_tag = "random"
 	weight = 1
+	max_chaos = 60
+	soft_antag_ratio_cap = 1
 	desc = "No weighting at all; every ruleset has the same chance of happening. Cooldowns vary wildly. As random as it gets."
 
 /datum/dynamic_storyteller/random/on_start()
@@ -275,7 +284,7 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/random/should_inject_antag()
 	return prob(50)
 
-/datum/dynamic_storyteller/chaotic/minor_start_chance()
+/datum/dynamic_storyteller/random/minor_start_chance()
 	return 20
 
 /datum/dynamic_storyteller/random/roundstart_draft()
@@ -331,7 +340,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	name = "Story"
 	config_tag = "story"
 	desc = "Antags with options for loadouts and gimmicks. Traitor, wizard, nukies."
-	weight = 2
+	weight = 4
 	curve_width = 2
 	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("story_potential" = 2)
@@ -339,6 +348,7 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/classic
 	name = "Classic"
 	config_tag = "classic"
+	weight = 8
 	desc = "No special antagonist weights. Good variety, but not like random. Uses your chaos preference to weight."
 	flags = USE_PREF_WEIGHTS | USE_PREV_ROUND_WEIGHTS
 
@@ -346,7 +356,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	name = "Intrigue"
 	config_tag = "intrigue"
 	desc = "Antags that instill distrust in the crew. Traitors, bloodsuckers."
-	weight = 2
+	weight = 4
 	curve_width = 2
 	dead_player_weight = 2
 	flags = USE_PREV_ROUND_WEIGHTS
@@ -358,8 +368,8 @@ Property weights are added to the config weight of the ruleset. They are:
 /datum/dynamic_storyteller/grabbag
 	name = "Grab Bag"
 	config_tag = "grabbag"
-	desc = "Crew antags (e.g. traitor, changeling, bloodsucker, heretic) only, all mixed together."
-	weight = 2
+	desc = "Crew antags (e.g. traitor, changeling, bloodsucker, heretic) only at round start, all mixed together."
+	weight = 4
 	flags = USE_PREF_WEIGHTS | USE_PREV_ROUND_WEIGHTS
 
 /datum/dynamic_storyteller/grabbag/minor_start_chance()
@@ -372,12 +382,14 @@ Property weights are added to the config weight of the ruleset. They are:
 	curve_centre = -3
 	curve_width = 0.5
 	flags = NO_ASSASSIN
-	weight = 1
+	min_chaos = 30
+	weight = 3
 	dead_player_weight = 5
+	soft_antag_ratio_cap = 8
 	property_weights = list("extended" = 2, "chaos" = -1, "valid" = -1, "conversion" = -10)
 
 /datum/dynamic_storyteller/liteextended/minor_start_chance()
-	return 100
+	return 90
 
 /datum/dynamic_storyteller/no_antag
 	name = "Extended"
@@ -385,6 +397,7 @@ Property weights are added to the config weight of the ruleset. They are:
 	desc = "No standard antags."
 	curve_centre = -5
 	curve_width = 0.5
+	min_chaos = 40
 	flags = NO_ASSASSIN | FORCE_IF_WON
 	weight = 1
 	property_weights = list("extended" = 2)
