@@ -492,7 +492,7 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				GLOB.master_mode = "dynamic"
 				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-				for(var/T in config.storyteller_cache)
+				for(var/T in config.get_runnable_storytellers())
 					var/datum/dynamic_storyteller/S = T
 					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
 					if(probability > 0)

@@ -21880,7 +21880,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/secure_construction)
 "aVY" = (
@@ -70916,8 +70916,9 @@
 /area/science/mixing)
 "guK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/lattice,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "gDY" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
