@@ -128,7 +128,7 @@
 		return
 
 	var/list/modes = CONFIG_GET(keyed_list/respawn_chaos_gamemodes)
-	if(SSticker.mode && banned_modes[lowertext(SSticker.mode.config_tag)]))
+	if(SSticker.mode && banned_modes[lowertext(SSticker.mode.config_tag)])
 		to_chat(src, "<span class='warning'>The current mode tag, [SSticker.mode.config_tag], is not eligible for respawn.</span>")
 		return
 
