@@ -29,7 +29,7 @@
 #define EXTOOLS (__extools || __detect_extools())
 #endif
 
-// #define EXTOOLS_LOGGING // rust_g is used as a fallback if this is undefined
+#define EXTOOLS_LOGGING // rust_g is used as a fallback if this is undefined
 
 /proc/extools_log_write()
 
