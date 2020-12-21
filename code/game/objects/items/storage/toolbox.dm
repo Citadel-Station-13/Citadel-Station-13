@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
 	name = "toolbox"
-	desc = "An old, blue toolbox, it menaces with a sickening miasma of robust energies. You sure about this, Brain?"
+	desc = "An old, blue toolbox. It menaces with a sickening miasma of robust energies. You sure about this, Brain?"
 	icon_state = "toolbox_blue_clean"
 	force = 19
 	throwforce = 22
