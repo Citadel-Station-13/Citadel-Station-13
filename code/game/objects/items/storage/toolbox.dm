@@ -103,6 +103,30 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
 
+/obj/item/storage/toolbox/mechanical/old/clean // the assistant traitor toolbox, damage scales with TC inside
+	name = "toolbox"
+	desc = "An old, blue toolbox, it menaces with a sickening miasma of robust energies. You sure about this, Brain?"
+	icon_state = "toolbox_blue_clean"
+	force = 19
+	throwforce = 22
+	wound_bonus = 10
+	bare_wound_bonus = 10
+
+/obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
+	var/power = 0
+	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
+		power += TC.amount
+	force = 19 + power
+	throwforce = 22 + power
+
+/obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
+	calc_damage() // one damage for one telecrystal equals about thirty four damage if you pour ALL your tc
+	..()
+
+/obj/item/storage/toolbox/mechanical/old/clean/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	calc_damage()
+	..()
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
