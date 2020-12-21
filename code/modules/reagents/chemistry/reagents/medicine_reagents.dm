@@ -201,13 +201,13 @@
 		var/power = 0
 		switch(M.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
-				power = 2
+				power = 1.5
 			if(400 to 460)
-				power = 3
+				power = 2.5
 			else
-				power = 5
+				power = 3.5
 		if(M.on_fire)
-			power *= 2
+			power *= 1.5
 
 		M.adjustOxyLoss(-2 * power, 0)
 		M.adjustBruteLoss(-power, 0)
@@ -1236,6 +1236,7 @@
 	color = "#91D865"
 	taste_description = "jelly"
 	value = REAGENT_VALUE_COMMON
+	overdose_threshold = 20
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, FALSE)
@@ -1244,6 +1245,11 @@
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
 	. = 1
 	..()
+
+/datum/reagent/medicine/regen_jelly/overdose_process(mob/living/carbon/M)
+	if(prob(5))
+		to_chat(M, "<span class='warning'>[pick("You feel sick.", "You don't feel too good..", "Your skin feels slimy.", "Your blood burns!")]</span>")
+	M.adjustToxLoss(3*REM, 0, TRUE)
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"

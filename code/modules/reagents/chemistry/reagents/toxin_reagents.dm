@@ -134,12 +134,12 @@
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
-	if(prob(10))
+	if(prob(10) && !isjellyperson(M))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustToxLoss(rand(5,10)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM)
+		M.heal_bodypart_damage(2*REM)
 		. = 1
 	..()
 
