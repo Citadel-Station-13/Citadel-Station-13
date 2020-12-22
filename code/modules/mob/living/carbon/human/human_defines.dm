@@ -134,7 +134,7 @@
 	parry_imperfect_falloff_percent = 20
 	parry_efficiency_perfect = 100
 	parry_efficiency_perfect_override = list(
-		"[ATTACK_TYPE_PROJECTILE_TEXT]" = 60,
+		ATTACK_TYPE_PROJECTILE_TEXT = 60,
 	)
 
 	parry_efficiency_considered_successful = 0.01
