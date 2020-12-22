@@ -176,6 +176,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	mutant_bodyparts["limbs_id"] = old_species.mutant_bodyparts["limbs_id"]
+	eye_type = old_species.eye_type
+	mutanttongue = old_species.mutanttongue
 	return
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
@@ -1999,14 +2001,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		. |= BIO_JUST_FLESH
 	if(HAS_BONE in species_traits)
 		. |= BIO_JUST_BONE
-
-//a check for if you should render any overlays or not
-/datum/species/proc/should_render(mob/living/carbon/human/H)
-	return TRUE
-
-//a check for if you want to forcibly make CanPass return TRUE for the mob with this species
-/datum/species/proc/species_pass_check()
-	return FALSE
 
 /////////////
 //BREATHING//

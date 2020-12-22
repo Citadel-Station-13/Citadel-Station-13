@@ -921,7 +921,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (NAMEOF(src, view))
 			view_size.setDefault(var_value)
 			return TRUE
+		if(NAMEOF(src, computer_id))
+			return FALSE
+		if(NAMEOF(src, address))
+			return FALSE
 	. = ..()
+
+/client/vv_get_var(var_name)
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, computer_id))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
+		if(NAMEOF(src, address))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
 
 /client/proc/rescale_view(change, min, max)
 	var/viewscale = getviewsize(view)

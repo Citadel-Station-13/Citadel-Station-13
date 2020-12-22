@@ -18,6 +18,14 @@
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
 
+
+/obj/vehicle/sealed/car/clowncar/driver_move(mob/user, direction) //Prevent it from moving onto space
+	if(isspaceturf(get_step(src, direction)))
+		return FALSE
+	else
+		return ..()
+
+
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -56,7 +64,7 @@
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks him up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
-	else if(istype(M, /turf/closed))
+	else if(istype(M, /turf/closed) || istype(M, /obj/machinery/door/airlock/external))
 		visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
