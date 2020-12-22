@@ -2981,6 +2981,7 @@
 #include "code\modules\preferences\collections\character\basic.dm"
 #include "code\modules\preferences\collections\character\loadout.dm"
 #include "code\modules\preferences\collections\character\occupation.dm"
+#include "code\modules\preferences\collections\character\quirks.dm"
 #include "code\modules\preferences\collections\character\silicon.dm"
 #include "code\modules\preferences\collections\global\admin.dm"
 #include "code\modules\preferences\collections\global\antagonism.dm"
