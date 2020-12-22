@@ -2471,6 +2471,7 @@
 #include "code\modules\mob\living\living_defines.dm"
 #include "code\modules\mob\living\living_mobility.dm"
 #include "code\modules\mob\living\living_movement.dm"
+#include "code\modules\mob\living\living_signals.dm"
 #include "code\modules\mob\living\living_sprint.dm"
 #include "code\modules\mob\living\login.dm"
 #include "code\modules\mob\living\logout.dm"
