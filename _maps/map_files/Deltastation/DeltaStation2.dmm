@@ -49390,7 +49390,7 @@
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Security E.V.A. Storage";
-	req_access_txt = "3"
+	req_access_txt = "1"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -81571,12 +81571,12 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHt" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHu" = (
@@ -110341,8 +110341,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop Out";
-	dir = 4
+	dir = 4;
+	name = "Space Loop Out"
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)

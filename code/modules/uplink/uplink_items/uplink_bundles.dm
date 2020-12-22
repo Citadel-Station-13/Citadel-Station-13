@@ -52,6 +52,15 @@
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
+/datum/uplink_item/bundles_TC/scarp_bundle
+	name = "Sleeping Carp Bundle"
+	desc = "Become one with your inner carp!  Your ancient fish masters leave behind their legacy, and bestow to you their teachings, sacred uniform, and staff. \
+	Please be aware that you will not be able to use dishonerable ranged weapons."
+	item = /obj/item/storage/box/syndie_kit/scarp
+	cost = 20
+	player_minimum = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Insidious Infiltration Gear Case"
 	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
