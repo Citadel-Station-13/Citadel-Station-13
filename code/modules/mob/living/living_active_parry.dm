@@ -127,7 +127,7 @@
 	handle_parry_ending_effects(data, effect_text)
 	parrying = NOT_PARRYING
 	parry_start_time = 0
-	parry_end_time_last = world.time
+	parry_end_time_last = world.time + (successful? 0 : data.parry_failed_cooldown_duration)
 	successful_parries = null
 
 /**
