@@ -11,6 +11,7 @@ $include dynamic_config.txt
 $include plushies/defines.txt
 $include job_threats.txt
 $include policy.txt
+$include respawns.txt
 # Special Sandstorm configs
 $include sandstorm/config.txt
 
@@ -207,9 +208,6 @@ VOTE_AUTOTRANSFER_MAXIMUM 4
 
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
-
-## disable abandon mob
-NORESPAWN
 
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB

@@ -225,6 +225,8 @@
 		. += "[seperator]AUTOLOGIN"
 	if(rights & R_DBRANKS)
 		. += "[seperator]DBRANKS"
+	if(rights & R_SENSITIVE)
+		. += "[seperator]SENSITIVE"
 	if(!.)
 		. = "NONE"
 	return .

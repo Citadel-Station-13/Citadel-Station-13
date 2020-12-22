@@ -692,8 +692,8 @@
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	var/new_nores = !CONFIG_GET(flag/norespawn)
-	CONFIG_SET(flag/norespawn, new_nores)
+	var/new_nores = CONFIG_GET(flag/respawns_enabled)
+	CONFIG_SET(flag/respawns_enabled, !new_nores)
 	if (!new_nores)
 		to_chat(world, "<B>You may now respawn.</B>", confidential = TRUE)
 	else

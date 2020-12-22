@@ -264,9 +264,9 @@
 	return FALSE
 
 /mob/living/carbon/human/has_tail()
-	if(!dna || !dna.features)
+	if(!dna || !dna.species)
 		return ..()
-	var/list/L = dna.features		// caches list because i refuse to type it out and because performance
+	var/list/L = dna.species.mutant_bodyparts		// caches list because i refuse to type it out and because performance
 	return (L["mam_tail"] && (L["mam_tail"] != "None")) || (L["tail_human"] && (L["tail_human"] != "None")) || (L["tail_lizard"] && (L["tail_lizard"] != "None"))
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)

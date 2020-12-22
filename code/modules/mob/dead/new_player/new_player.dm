@@ -375,7 +375,9 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
+	var/mintime = max(CONFIG_GET(number/respawn_delay), (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time, 0)
+
+	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to respawn for [round(mintime / 600, 0.1)] minutes!!","Player Setup","Yes","No")
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -397,6 +399,7 @@
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 	transfer_ckey(observer, FALSE)
 	observer.client = client
+	observer.client.prefs?.respawn_time_of_death = world.time
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.real_name
@@ -463,6 +466,9 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	if(!respawn_latejoin_check(notify = TRUE))
+		return FALSE
+
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
@@ -526,6 +532,8 @@
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
+	LAZYOR(character.client.prefs.slots_joined_as, character.client.prefs.default_slot)
+	LAZYOR(character.client.prefs.characters_joined_as, character.real_name)
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)

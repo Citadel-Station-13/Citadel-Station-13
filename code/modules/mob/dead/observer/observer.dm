@@ -269,7 +269,7 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE, cryo = FALSE)
 	var/sig_flags = SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize)
 	penalize = !(sig_flags & COMPONENT_DO_NOT_PENALIZE_GHOSTING) && (suiciding || penalize) // suicide squad.
 	voluntary_ghosted = voluntary
@@ -282,6 +282,12 @@ Works together with spawning an observer, noted above.
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
+	if(ckey && penalize)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey]
+		if(P)
+			P.respawn_restrictions_active = TRUE
+			P.respawn_time_of_death = world.time
+			P.respawn_did_cryo = cryo
 	transfer_ckey(ghost, FALSE)
 	ghost.client.init_verbs()
 	if(penalize)
@@ -428,12 +434,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
 		return FALSE
 
-	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. ","Are you sure you want to stay dead?","Yes","No")
+	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. THIS WILL ALSO STOP YOU FROM RESPAWNING!!!","Are you sure you want to stay dead and never respawn?","Yes","No")
+
 	if(response != "Yes")
 		return
 
 	can_reenter_corpse = FALSE
-	to_chat(src, "You can no longer be brought back into your body.")
+	client.prefs?.dnr_triggered = TRUE
+	to_chat(src, "You can no longer be brought back into your body or respawn.")
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
