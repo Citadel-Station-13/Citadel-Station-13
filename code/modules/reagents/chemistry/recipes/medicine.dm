@@ -305,12 +305,6 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/jelly_convert
-	name = "Blood Jelly Conversion"
-	id = /datum/reagent/toxin/slimejelly
-	results = list(/datum/reagent/toxin/slimejelly = 1)
-	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/blood/jellyblood = 1)
-
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = /datum/reagent/medicine/corazone
