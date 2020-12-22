@@ -147,7 +147,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/handle_statpanel_click(list/href_list)
 	var/atom/target = locate(href_list["statpanel_item_target"])
-	Click(target, target.loc, null, "shift=[href_list["statpanel_item_shiftclick"]?1:0]&ctrl=[href_list["statpanel_item_ctrlclick"]?1:0]&alt=[href_list["statpanel_item_altclick"]?1:0]", FALSE, "statpanel")
+	Click(target, target.loc, null, "[href_list["statpanel_item_shiftclick"]?["shift=1;"]:null][href_list["statpanel_item_ctrlclick"]?["ctrl=1;"]:null]&alt=[href_list["statpanel_item_altclick"]?["alt=1;"]:null]", FALSE, "statpanel")
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
