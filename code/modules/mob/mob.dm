@@ -1002,6 +1002,12 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	switch(var_name)
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
+		if(NAMEOF(src, lastKnownIP))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
+		if(NAMEOF(src, computer_id))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
 	. = ..()
 
 /mob/vv_auto_rename(new_name)
