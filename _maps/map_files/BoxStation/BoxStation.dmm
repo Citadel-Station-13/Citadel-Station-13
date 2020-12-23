@@ -35222,7 +35222,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/smartfridge/organ/preloaded,
 /turf/closed/wall,
 /area/medical/surgery)
 "bFv" = (
@@ -35243,6 +35242,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = -28
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -35292,13 +35294,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bFB" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = -28
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_x = -23
-	},
+/obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "bFC" = (
@@ -35383,9 +35379,6 @@
 /turf/open/floor/engine,
 /area/science/storage)
 "bFJ" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -28
-	},
 /obj/structure/chair{
 	dir = 1
 	},
@@ -36321,21 +36314,25 @@
 /obj/item/bedsheet/medical,
 /obj/machinery/iv_drip,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/light,
-/turf/open/floor/plasteel/white/side{
-	dir = 1
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -23
 	},
-/area/medical/surgery)
-"bId" = (
 /obj/machinery/camera{
 	c_tag = "Surgery Operating";
 	dir = 1;
 	network = list("ss13","medbay");
 	pixel_x = 22
 	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/medical/surgery)
+"bId" = (
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
 /obj/machinery/iv_drip,
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bIe" = (
@@ -48835,6 +48832,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "cpI" = (
@@ -52071,7 +52072,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cCp" = (
-/obj/structure/closet/secure_closet/medical2,
+/obj/machinery/vending/wallmed{
+	pixel_y = -28
+	},
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "cCq" = (
@@ -53487,6 +53490,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/dark,
 /area/medical/paramedic)
 "dqb" = (
@@ -61721,6 +61725,10 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/cryopod)
+"woX" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "wph" = (
 /obj/docking_port/stationary{
 	area_type = /area/construction/mining/aux_base;
@@ -62121,16 +62129,15 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "xmD" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Paramedic's Office";
-	req_access_txt = "5;6;12;64"
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical{
+	name = Paramedic's Office;
+	req_access_txt = "5;6;12;64"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -97674,7 +97681,7 @@ nEu
 nEu
 bFu
 jex
-nEu
+woX
 bvd
 bKH
 bLK
