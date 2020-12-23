@@ -139,6 +139,9 @@
 		if(E.web_ready == FALSE)
 			to_chat(H, "<span class='warning'>You need to wait awhile to regenerate web fluid.</span>")
 			return
+		if(!isliving(A) && A.anchored)
+			to_chat(H, "<span class='warning'>[A] is bolted to the floor!</span>")
+			return
 		if(!do_after(H, 10 SECONDS, 1, A))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return
