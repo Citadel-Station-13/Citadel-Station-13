@@ -32688,7 +32688,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/computer/operating,
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "bzJ" = (
@@ -32765,8 +32766,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/computer/operating,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "bzT" = (
@@ -34009,8 +34009,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "bCD" = (
-/obj/structure/table,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/computer/operating,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "bCE" = (
@@ -52206,10 +52205,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/fore)
-"cDz" = (
-/obj/machinery/smartfridge/organ/preloaded,
-/turf/closed/wall,
-/area/medical/surgery)
 "cDB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55750,7 +55745,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "iRV" = (
-/obj/machinery/computer/operating,
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "iTq" = (
@@ -58036,6 +58032,10 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/bar)
+"ofj" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "ofU" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -97677,7 +97677,7 @@ nEu
 nEu
 bFu
 jex
-cDz
+ofj
 bvd
 bKH
 bLK
