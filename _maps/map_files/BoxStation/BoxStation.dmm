@@ -56869,7 +56869,7 @@
 /turf/open/floor/plasteel,
 /area/security/range)
 "laN" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "leE" = (
@@ -58387,6 +58387,10 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"oUR" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "oVo" = (
 /obj/structure/pool/ladder,
 /turf/open/pool,
@@ -61291,10 +61295,10 @@
 	},
 /area/maintenance/starboard/aft)
 "vxz" = (
-/obj/machinery/space_heater,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "vxX" = (
@@ -61380,10 +61384,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"vDo" = (
-/obj/machinery/smartfridge/organ/preloaded,
-/turf/closed/wall,
-/area/medical/surgery)
 "vEi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -97677,7 +97677,7 @@ nEu
 nEu
 bFu
 jex
-vDo
+oUR
 bvd
 bKH
 bLK
