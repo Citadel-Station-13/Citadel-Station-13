@@ -52206,6 +52206,10 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/fore)
+"cDz" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "cDB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -58387,10 +58391,6 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"oUR" = (
-/obj/machinery/smartfridge/organ/preloaded,
-/turf/closed/wall,
-/area/medical/surgery)
 "oVo" = (
 /obj/structure/pool/ladder,
 /turf/open/pool,
@@ -62132,7 +62132,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/medical{
-	name = Paramedic's Office;
+	name = "Paramedic's Office";
 	req_access_txt = "5;6;12;64"
 	},
 /turf/open/floor/plasteel/dark,
@@ -97677,7 +97677,7 @@ nEu
 nEu
 bFu
 jex
-oUR
+cDz
 bvd
 bKH
 bLK
