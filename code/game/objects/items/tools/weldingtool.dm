@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF
 
 	var/self_fueling = FALSE //Do we refill ourselves or not
-	var/nextrefueltick = 0 // How long it takes before we get a new fuel unit
+	var/nextrefueltick = 0 //When is the next tick we refuel?
 	var/refueling_interval = 10	//Every how many processing ticks does this refuel? (1 = every processing tick)
 
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
