@@ -488,7 +488,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)
@@ -634,7 +634,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	query_log_connection.Execute()
 	qdel(query_log_connection)
 
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 
 	if(new_player)
 		player_age = -1
