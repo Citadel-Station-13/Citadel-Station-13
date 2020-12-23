@@ -183,6 +183,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
+	var/list/loadout_progress = list()
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
