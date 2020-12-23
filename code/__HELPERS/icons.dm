@@ -1249,4 +1249,4 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 	color[1] = color[1] * cm[1] + color[2] * cm[2] + color[3] * cm[3] + cm[10] * 255
 	color[2] = color[1] * cm[4] + color[2] * cm[5] + color[3] * cm[6] + cm[11] * 255
 	color[3] = color[1] * cm[7] + color[2] * cm[8] + color[3] * cm[9] + cm[12] * 255
-	return rgb(color[1], color[2], color[3])
+	return rgb(clamp(color[1], 0, 255), clamp(color[2], 0, 255), clamp(color[3], 0, 255))
