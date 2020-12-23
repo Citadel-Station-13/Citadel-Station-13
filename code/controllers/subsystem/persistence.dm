@@ -43,6 +43,7 @@ SUBSYSTEM_DEF(persistence)
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
 	LoadPanicBunker()
+	LoadPaintings()
 	return ..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()

@@ -287,6 +287,21 @@
 	speed = 1.4
 	layer = 3
 
+/obj/screen/parallax_layer/random
+	blend_mode = BLEND_OVERLAY
+	speed = 3
+	layer = 3
+
+/obj/screen/parallax_layer/random/space_gas
+	icon_state = "space_gas"
+
+/obj/screen/parallax_layer/random/space_gas/Initialize(mapload, view)
+	. = ..()
+	src.add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
+
+/obj/screen/parallax_layer/random/asteroids
+	icon_state = "asteroids"
+
 /obj/screen/parallax_layer/planet
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
@@ -295,11 +310,11 @@
 	layer = 30
 
 /obj/screen/parallax_layer/planet/update_status(mob/M)
-	var/turf/T = get_turf(M)
-	if(is_station_level(T.z))
-		invisibility = 0
-	else
-		invisibility = INVISIBILITY_ABSTRACT
+	var/client/C = M.client
+	var/turf/posobj = get_turf(C.eye)
+	if(!posobj)
+		return
+	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
 
 /obj/screen/parallax_layer/planet/update_o()
-	return //Shit wont move
+	return //Shit won't move
