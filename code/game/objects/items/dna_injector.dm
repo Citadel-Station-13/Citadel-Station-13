@@ -415,6 +415,14 @@
 	name = "\improper DNA injector (Anti-Thermal Vision)"
 	remove_mutations = list(THERMAL)
 
+/obj/item/dnainjector/enhanced_vision
+	name = "\improper DNA injector (Enhanced Vision)"
+	add_mutations = list(ENVISION)
+
+/obj/item/dnainjector/antienhanced
+	name = "\improper DNA injector (Anti-Enhanced Vision)"
+	remove_mutations = list(ENVISION)
+
 /obj/item/dnainjector/glow
 	name = "\improper DNA injector (Glowy)"
 	add_mutations = list(GLOWY)

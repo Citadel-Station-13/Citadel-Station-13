@@ -43,6 +43,7 @@
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	time_coeff = 2
 	instability = 25
+	locked = TRUE
 	var/visionflag = TRAIT_THERMAL_VISION
 
 /datum/mutation/human/thermal/on_acquiring(mob/living/carbon/human/owner)
@@ -67,6 +68,27 @@
 	locked = TRUE
 	visionflag = TRAIT_XRAY_VISION
 
+//Enhance Vision increases your range of sight!
+/datum/mutation/human/enhanced_vision
+	name = "Enhanced Vision"
+	desc = "This genome lets the user see further, like a hawk!"
+	text_gain_indication = "<span class='notice'>Things seem to grow distant!</span>"
+	quality = POSITIVE
+	difficulty = 18
+	instability = 25
+	var/visionflag = TRAIT_ENHANCED_VISION
+
+/datum/mutation/human/enhanced_vision/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	ADD_TRAIT(owner, visionflag, GENETIC_MUTATION)
+	owner.update_sight()
+
+/datum/mutation/human/enhanced_vision/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	REMOVE_TRAIT(owner, visionflag, GENETIC_MUTATION)
+	owner.update_sight()
 
 //Laser Eyes lets you shoot lasers from your eyes!
 /datum/mutation/human/laser_eyes

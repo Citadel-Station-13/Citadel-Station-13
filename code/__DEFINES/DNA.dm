@@ -53,6 +53,7 @@
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
 #define SPIDER_WEB	/datum/mutation/human/webbing
+#define ENVISION	/datum/mutation/human/enhanced_vision
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

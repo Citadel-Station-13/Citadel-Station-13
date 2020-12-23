@@ -622,6 +622,7 @@
 		return
 
 	sight = initial(sight)
+	client.view_size.resetToDefault()
 	lighting_alpha = initial(lighting_alpha)
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
@@ -661,6 +662,19 @@
 		sight |= (SEE_MOBS)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
+	if(HAS_TRAIT(src, TRAIT_ENHANCED_VISION))
+		if(!src.client)
+			return
+		if(HAS_TRAIT(src, TRAIT_THERMAL_VISION) || HAS_TRAIT(src, TRAIT_XRAY_VISION))
+			make_blind()
+			return
+		if(getorgan(/obj/item/organ/eyes/robotic/xray) || getorgan(/obj/item/organ/eyes/robotic/thermals))
+			make_blind()
+			return
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, "enhanced_vision"))
+			cure_blind("enhanced_vision")
+		src.client.view_size.setTo(1)
+
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = max(see_in_dark, 8)
@@ -669,6 +683,11 @@
 		see_invisible = see_override
 	. = ..()
 
+//make blind helper for enhanced vision
+/mob/living/carbon/proc/make_blind()
+	to_chat(src, "<span class='warning'>Your eyes have a sensory overload from seeing too much!")
+	if(!HAS_TRAIT_FROM(src, TRAIT_BLIND, "enhanced_vision"))
+		become_blind("enhanced_vision")
 
 //to recalculate and update the mob's total tint from tinted equipment it's wearing.
 /mob/living/carbon/proc/update_tint()

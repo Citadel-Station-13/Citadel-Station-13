@@ -203,6 +203,7 @@
 #define TRAIT_FREESPRINT		"free_sprinting"
 #define TRAIT_XRAY_VISION       "xray_vision"
 #define TRAIT_THERMAL_VISION    "thermal_vision"
+#define TRAIT_ENHANCED_VISION   "enhanced_vision"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_NO_INTERNALS		"no-internals"
 #define TRAIT_TOXIC_ALCOHOL		"alcohol_intolerance"
