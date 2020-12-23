@@ -29,5 +29,5 @@
 #endif
 
 /world/proc/enable_debugger()
-	if (EXTOOLS)
+	if (fexists(EXTOOLS))
 		call(EXTOOLS, "debug_initialize")()
