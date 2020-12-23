@@ -689,8 +689,8 @@
 	wound_enhancement = 6
 	var/fast_enhancement = 6
 	var/fast_wound_enhancement = 6
-	var/slow_enhancement = 20
-	var/slow_wound_enhancement = 20
+	var/slow_enhancement = 12
+	var/slow_wound_enhancement = 15
 	silent = TRUE
 	inherited_trait = TRAIT_CHUNKYFINGERS // how do you expect to shoot anyone with bone covered hands
 	secondary_trait = TRAIT_MAULER // just punch them idiot

@@ -137,7 +137,7 @@
 		AM.set_anchored(TRUE)
 		flick("laserbox_burn", AM)
 		trigger()
-		QDEL_IN(AM, 15)
+		QDEL_IN(src, 15)
 
 // snowflake code until undertile elements
 /obj/item/pressure_plate/hologrid/hide()
