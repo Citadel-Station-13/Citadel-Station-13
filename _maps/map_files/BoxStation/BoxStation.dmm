@@ -48832,10 +48832,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_x = -23
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "cpI" = (
@@ -61384,6 +61380,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"vDo" = (
+/obj/machinery/smartfridge/organ/preloaded,
+/turf/closed/wall,
+/area/medical/surgery)
 "vEi" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -61725,10 +61725,6 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/cryopod)
-"woX" = (
-/obj/machinery/smartfridge/organ/preloaded,
-/turf/closed/wall,
-/area/medical/surgery)
 "wph" = (
 /obj/docking_port/stationary{
 	area_type = /area/construction/mining/aux_base;
@@ -97681,7 +97677,7 @@ nEu
 nEu
 bFu
 jex
-woX
+vDo
 bvd
 bKH
 bLK
