@@ -456,6 +456,7 @@
 
 /obj/structure/bloodsucker/candelabrum/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	return ..() //return a hint
 
 /obj/structure/bloodsucker/candelabrum/update_icon_state()
 	icon_state = "candelabrum[lit ? "_lit" : ""]"

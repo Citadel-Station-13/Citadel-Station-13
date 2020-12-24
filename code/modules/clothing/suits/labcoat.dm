@@ -64,6 +64,8 @@
 	icon_state = "labcoat_tox"
 
 // Departmental Jackets
+/obj/item/clothing/suit/toggle/labcoat/depjacket
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/toggle/labcoat/depjacket/sci
 	name = "science jacket"

@@ -9,6 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
@@ -20,6 +21,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
+
+	var/self_fueling = FALSE //Do we refill ourselves or not
+	var/nextrefueltick = 0 // How long it takes before we get a new fuel unit
 
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
@@ -82,11 +86,17 @@
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
 
+	//This handles refueling. Its looking at how much fuel the tool has and comparing that to how much it holds
+	//This then looks if the refuel tick has come based on world time.
+	//Then looks if we refuel ourselves or not.
+
+	if(get_fuel() < max_fuel && nextrefueltick < world.time && self_fueling)
+		nextrefueltick = world.time + 10
+		reagents.add_reagent(/datum/reagent/fuel, 1)
 
 /obj/item/weldingtool/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
-
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -109,17 +119,24 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
-		//only heal to 25 if limb is damaged to or past 25 brute, otherwise heal normally
-		var/difference = affecting.brute_dam - 25
+	if(affecting && affecting.is_robotic_limb() && user.a_intent != INTENT_HARM)
+		//only heal to threshhold_passed_mindamage if limb is damaged to or past threshhold, otherwise heal normally
+		var/damage
 		var/heal_amount = 15
-		if(difference >= 0)
-			heal_amount = difference
+
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>",
 					"<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 				if(!do_mob(user, H, 50))
+					return
+			damage = affecting.brute_dam
+			affecting.update_threshhold_state(burn = FALSE)
+			if(affecting.threshhold_brute_passed)
+				heal_amount = min(heal_amount, damage - affecting.threshhold_passed_mindamage)
+
+				if(!heal_amount)
+					to_chat(user, "<span class='notice'>[user == H ? "Your" : "[H]'s"] [affecting.name] appears to have suffered severe internal damage and requires surgery to repair further.</span>")
 					return
 			item_heal_robotic(H, user, heal_amount, 0)
 	else
@@ -311,7 +328,6 @@
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
 
-
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."
@@ -324,20 +340,6 @@
 /obj/item/weldingtool/mini/flamethrower_screwdriver()
 	return
 
-/obj/item/weldingtool/abductor
-	name = "alien welding tool"
-	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "welder"
-	toolspeed = 0.1
-	light_intensity = 0
-	change_icons = 0
-
-/obj/item/weldingtool/abductor/process()
-	if(get_fuel() <= max_fuel)
-		reagents.add_reagent(/datum/reagent/fuel, 1)
-	..()
-
 /obj/item/weldingtool/hugetank
 	name = "upgraded industrial welding tool"
 	desc = "An upgraded welder based of the industrial welder."
@@ -345,27 +347,6 @@
 	item_state = "upindwelder"
 	max_fuel = 80
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
-
-/obj/item/weldingtool/experimental
-	name = "experimental welding tool"
-	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
-	icon_state = "exwelder"
-	item_state = "exwelder"
-	max_fuel = 40
-	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
-	var/last_gen = 0
-	change_icons = 0
-	can_off_process = 1
-	light_intensity = 1
-	toolspeed = 0.5
-	var/nextrefueltick = 0
-
-/obj/item/weldingtool/experimental/brass
-	name = "brass welding tool"
-	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "clockwelder"
-	item_state = "brasswelder"
 
 /obj/item/weldingtool/bronze
 	name = "bronze plated welding tool"
@@ -375,24 +356,46 @@
 	icon_state = "brasswelder"
 	item_state = "brasswelder"
 
-/obj/item/weldingtool/experimental/process()
-	..()
-	if(get_fuel() < max_fuel && nextrefueltick < world.time)
-		nextrefueltick = world.time + 10
-		reagents.add_reagent(/datum/reagent/fuel, 1)
+//Self filling welders below
+
+/obj/item/weldingtool/experimental
+	name = "experimental welding tool"
+	desc = "An experimental welder capable of self-fuel generation and less harmful to the eyes."
+	icon_state = "exwelder"
+	item_state = "exwelder"
+	max_fuel = 40
+	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
+	change_icons = 0
+	self_fueling = TRUE
+	can_off_process = 1
+	light_intensity = 1
+	toolspeed = 0.5
+
+/obj/item/weldingtool/experimental/brass
+	name = "brass welding tool"
+	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	icon_state = "clockwelder"
+	item_state = "brasswelder"
+
+/obj/item/weldingtool/abductor
+	name = "alien welding tool"
+	desc = "An alien welding tool. Whatever fuel it uses, it never runs out."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "welder"
+	self_fueling = TRUE
+	toolspeed = 0.1
+	light_intensity = 0
+	change_icons = 0
 
 /obj/item/weldingtool/advanced
 	name = "advanced welding tool"
 	desc = "A modern welding tool combined with an alien welding tool, it never runs out of fuel and works almost as fast."
 	icon = 'icons/obj/advancedtools.dmi'
 	icon_state = "welder"
+	self_fueling = TRUE
 	toolspeed = 0.2
 	light_intensity = 0
 	change_icons = 0
-
-/obj/item/weldingtool/advanced/process()
-	if(get_fuel() <= max_fuel)
-		reagents.add_reagent(/datum/reagent/fuel, 1)
-	..()
 
 #undef WELDER_FUEL_BURN_INTERVAL

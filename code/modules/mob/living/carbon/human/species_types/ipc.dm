@@ -1,11 +1,11 @@
 /datum/species/ipc
 	name = "I.P.C."
-	id = "ipc"
+	id = SPECIES_IPC
 	say_mod = "beeps"
 	default_color = "00FF00"
 	blacklisted = 0
 	sexes = 0
-	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD)
+	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD, TRAIT_ROBOTIC_ORGANISM)
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,HAS_FLESH,HAS_BONE,HAIR,ROBOTIC_LIMBS)
 	hair_alpha = 210
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
@@ -28,7 +28,7 @@
 
 	exotic_bloodtype = "HF"
 	exotic_blood_color = BLOOD_COLOR_OIL
-	species_type = "robotic"
+	species_category = SPECIES_CATEGORY_ROBOT
 
 	var/datum/action/innate/monitor_change/screen
 

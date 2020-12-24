@@ -445,7 +445,7 @@
 					if(L.move_resist < MOVE_FORCE_STRONG)
 						var/atom/throw_target = get_edge_target_turf(L, user.dir)
 						L.throw_at(throw_target, 7, 1, user)
-			else if(!iscultist(L))
+			else if(!is_servant_of_ratvar(L))
 				L.DefaultCombatKnockdown(160)
 				L.adjustStaminaLoss(140) //Ensures hard stamcrit
 				L.flash_act(1,1)
@@ -465,7 +465,7 @@
 					C.drowsyness = max(10, C.drowsyness)
 					C.confused += clamp(20 - C.confused, 0, 10)
 				L.adjustBruteLoss(15)
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [is_servant_of_ratvar(L) ? "writhes in pain!" : "falls to the ground!"]</span>")
 		uses--
 	..()
 

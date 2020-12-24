@@ -366,6 +366,11 @@
 	flashlight_power = 0.8
 	custom_price = PRICE_CHEAP
 
+/obj/item/flashlight/lantern/heirloom_moth
+	name = "old lantern"
+	desc = "An old lantern that has seen plenty of use."
+	light_range = 4
+
 /obj/item/flashlight/lantern/jade
 	name = "jade lantern"
 	desc = "An ornate, green lantern."

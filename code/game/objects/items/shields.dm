@@ -136,15 +136,17 @@
 		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
+		if(!user.UseStaminaBuffer(shieldbash_stamcost, warn = TRUE))
+			return FALSE
 		bash_target(user, target, NONE, harmful)
 		user.do_attack_animation(target, used_item = src)
 		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 		last_shieldbash = world.time
-		user.adjustStaminaLossBuffered(shieldbash_stamcost)
 		return TRUE
 	// Directional sweep!
 	last_shieldbash = world.time
-	user.adjustStaminaLossBuffered(shieldbash_stamcost)
+	if(!user.UseStaminaBuffer(shieldbash_stamcost, warn = TRUE))
+		return FALSE
 	// Since we are in combat mode, we can probably safely use the user's dir instead of getting their mouse pointing cardinal dir.
 	var/bashdir = user.dir
 	do_shieldbash_effect(user, bashdir, harmful)

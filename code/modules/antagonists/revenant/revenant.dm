@@ -390,7 +390,7 @@
 	if(old_key)
 		for(var/mob/M in GLOB.dead_mob_list)
 			if(M.client && M.client.key == old_key) //Only recreates the mob if the mob the client is in is dead
-				M.transfer_ckey(revenant.key, FALSE)
+				M.transfer_ckey(revenant, FALSE)
 				key_of_revenant = TRUE
 				break
 	if(!key_of_revenant)
@@ -403,7 +403,7 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 		var/mob/C = pick(candidates)
-		C.transfer_ckey(revenant.key, FALSE)
+		C.transfer_ckey(revenant, FALSE)
 		if(!revenant.key)
 			qdel(revenant)
 			message_admins("No ckey was found for the new revenant. Oh well!")
@@ -411,8 +411,8 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 
-	message_admins("[key_of_revenant] has been [old_key == revenant.key ? "re":""]made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was [old_key == revenant.key ? "re":""]made as a revenant by reforming ectoplasm.")
+	message_admins("[revenant.key] has been [old_key == revenant.key ? "re":""]made into a revenant by reforming ectoplasm.")
+	log_game("[revenant.key] was [old_key == revenant.key ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
 
 	revenant.essence = essence

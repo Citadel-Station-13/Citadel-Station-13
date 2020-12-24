@@ -64,7 +64,7 @@ em						{font-style: normal;	font-weight: bold;}
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}
 
-.emote					{					font-style: italic;}
+.emote					{				}
 .selecteddna			{color: #ffffff; 	background-color: #001B1B}
 
 .attack					{color: #ff0000;}
@@ -167,6 +167,7 @@ h1.alert, h2.alert		{color: #000000;}
 .clown					{color: #FF69Bf;	font-size: 3;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
 .singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
+.spooky					{color: #FF9100;}
 .velvet					{color: #660015; 	font-weight: bold; animation: velvet 5000ms infinite;}
 @keyframes velvet {
 	0% { color: #400020; }

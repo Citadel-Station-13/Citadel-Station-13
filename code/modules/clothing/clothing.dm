@@ -45,11 +45,10 @@
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
 	//basically a restriction list.
-	var/list/species_restricted = null
+	var/list/species_restricted
 	//Basically syntax is species_restricted = list("Species Name","Species Name")
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects
-
 
 
 	// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
@@ -475,7 +474,6 @@ BLIND     // can't see anything
 				return FALSE
 
 	return TRUE
-
 
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged

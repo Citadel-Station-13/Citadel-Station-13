@@ -781,6 +781,12 @@
 	race = /datum/species/lizard/ashwalker
 	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
 
+/datum/reagent/mutationtoxin/arachnid
+	name = "Arachnid Mutation Toxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/arachnid
+	mutationtext = "<span class='danger'>The pain subsides. You feel... silky.</span>"
 
 //DANGEROUS RACES
 /datum/reagent/mutationtoxin/shadow
@@ -1977,6 +1983,11 @@
 	name = "Liquid Black Carpet"
 	color = "#363636"
 	carpet_type = /turf/open/floor/carpet/black
+
+/datum/reagent/carpet/arcade
+	name = "Liquid Arcade Carpet"
+	color = "#b51d05"
+	carpet_type = /turf/open/floor/carpet/arcade
 
 /datum/reagent/carpet/blackred
 	name = "Liquid Red Black Carpet"

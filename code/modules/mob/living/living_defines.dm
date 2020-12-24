@@ -32,6 +32,10 @@
 	// Combat - Blocking/Parrying system
 	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
 	var/datum/block_parry_data/block_parry_data = /datum/block_parry_data		// defaults to *something* because [combat_flags] dictates whether or not we can unarmed block/parry.
+	/// Default
+	var/datum/block_parry_data/default_block_parry_data = /datum/block_parry_data
+	/// If we're a pugilist
+	var/datum/block_parry_data/pugilist_block_parry_data = /datum/block_parry_data/unarmed/pugilist
 	// Blocking
 	/// The item the user is actively blocking with if any.
 	var/obj/item/active_block_item
@@ -53,6 +57,7 @@
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
+	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
@@ -148,9 +153,6 @@
 	var/combatmessagecooldown = 0
 
 	var/incomingstammult = 1
-	var/bufferedstam = 0
-	var/stambuffer = 20
-	var/stambufferregentime
 
 	//Sprint buffer---
 	var/sprint_buffer = 42					//Tiles
@@ -159,3 +161,13 @@
 	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
 	var/sprint_stamina_cost = 0.70			//stamina loss per tile while insufficient sprint buffer.
 	//---End
+
+	// Stamina Buffer---
+	/// Our stamina buffer
+	var/stamina_buffer
+	/// Stamina buffer regen modifier
+	var/stamina_buffer_regen_mod = 1
+	/// Last time stamina buffer regen was done
+	var/stamina_buffer_regen_last = 0
+	/// Last time we used stamina buffer
+	var/stamina_buffer_last_use = 0

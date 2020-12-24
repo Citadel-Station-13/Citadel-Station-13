@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 6
 	throw_speed = 3
 	throw_range = 7
@@ -68,6 +69,9 @@
 	icon_state = "cutters_clock"
 	random_color = FALSE
 	toolspeed = 0.5
+
+/obj/item/wirecutters/brass/family
+	toolspeed = 1
 
 /obj/item/wirecutters/bronze
 	name = "bronze plated wirecutters"

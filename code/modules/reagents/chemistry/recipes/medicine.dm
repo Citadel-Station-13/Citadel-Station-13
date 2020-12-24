@@ -305,12 +305,6 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/jelly_convert
-	name = "Blood Jelly Conversion"
-	id = /datum/reagent/toxin/slimejelly
-	results = list(/datum/reagent/toxin/slimejelly = 1)
-	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/blood/jellyblood = 1)
-
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = /datum/reagent/medicine/corazone
@@ -368,3 +362,9 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/(location)
+
+/datum/chemical_reaction/system_cleaner
+	name = "System Cleaner"
+	id = /datum/reagent/medicine/system_cleaner
+	results = list(/datum/reagent/medicine/system_cleaner = 4)
+	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)

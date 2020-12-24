@@ -206,9 +206,13 @@
 	. = other_airs + air
 	if(null in .)
 		stack_trace("[src]([REF(src)]) has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
-		return listclearnulls(.)
+		listclearnulls(.)
 
-/datum/pipeline/proc/reconcile_air()
+/datum/pipeline/proc/empty()
+	for(var/datum/gas_mixture/GM in get_all_connected_airs())
+		GM.clear()
+
+/datum/pipeline/proc/get_all_connected_airs()
 	var/list/datum/gas_mixture/GL = list()
 	var/list/datum/pipeline/PL = list()
 	PL += src
@@ -233,6 +237,10 @@
 				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
 				if(C.connected_device)
 					GL += C.portableConnectorReturnAir()
+	return GL
+
+/datum/pipeline/proc/reconcile_air()
+	var/list/datum/gas_mixture/GL = get_all_connected_airs()
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0

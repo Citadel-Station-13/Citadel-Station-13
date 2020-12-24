@@ -273,6 +273,13 @@
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
 
+/turf/open/floor/carpet/arcade
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "arcade"
+	floor_tile = /obj/item/stack/tile/carpet/arcade
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
+
 /turf/open/floor/carpet/blackred
 	icon = 'icons/turf/floors/carpet_blackred.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/blackred

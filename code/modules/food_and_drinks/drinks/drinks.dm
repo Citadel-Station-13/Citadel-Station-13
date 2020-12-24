@@ -618,3 +618,9 @@
 	icon_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/dwarf_mug //dwarf family heirloom (just a cup that always has the manly dorf icon!)
+	name = "ale mug"
+	desc = "An old stained mug used for filling with dwarven ale."
+	icon_state = "manlydorfglass"
+	isGlass = FALSE //it's a wooden mug!

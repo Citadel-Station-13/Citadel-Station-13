@@ -1,7 +1,7 @@
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
-	id = "iron golem"
+	id = SPECIES_GOLEM
 	species_traits = list(NOBLOOD,MUTCOLORS,NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
@@ -32,7 +32,7 @@
 	var/special_name_chance = 5
 	var/owner //dobby is a free golem
 
-	species_type = "golem"
+	species_category = SPECIES_CATEGORY_GOLEM
 
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)

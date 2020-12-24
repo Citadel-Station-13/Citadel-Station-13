@@ -1,0 +1,4 @@
+author: "BlackMajor"
+delete-after: True
+changes: 
+  - tweak: "Cyborg hypospray no longer injects if it means OD'ing while on help intent."

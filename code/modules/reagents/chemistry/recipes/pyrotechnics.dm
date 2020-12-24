@@ -484,12 +484,12 @@
 		return FALSE
 	var/list/D = holder.get_data("blood")
 	if(D && D["changeling_loudness"])
-		return (D["changeling_loudness"] >= 4 ? D["changeling_loudness"] : FALSE)
+		return (D["changeling_loudness"] >= LINGBLOOD_DETECTION_THRESHOLD ? D["changeling_loudness"] : FALSE)
 	else
 		return FALSE
 
 /datum/chemical_reaction/reagent_explosion/lingblood/on_reaction(datum/reagents/holder, multiplier, specialreact)
-	if(specialreact >= 10)
+	if(specialreact > LINGBLOOD_EXPLOSION_THRESHOLD)
 		return ..()
 	else
 		return FALSE

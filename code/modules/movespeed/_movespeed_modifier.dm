@@ -38,6 +38,12 @@ Key procs
 
 	/// Multiplicative slowdown
 	var/multiplicative_slowdown = 0
+	/// Next two variables depend on this: Should we do advanced calculations?
+	var/complex_calculation = FALSE
+	/// Absolute max tiles we can boost to
+	var/absolute_max_tiles_per_second
+	/// Max tiles per second we can boost
+	var/max_tiles_per_second_boost
 
 	/// Movetypes this applies to
 	var/movetypes = ALL
@@ -52,6 +58,16 @@ Key procs
 	. = ..()
 	if(!id)
 		id = "[type]" //We turn the path into a string.
+
+/**
+  * Returns new multiplicative movespeed after modification.
+  */
+/datum/movespeed_modifier/proc/apply_multiplicative(existing, mob/target)
+	if(!complex_calculation || (multiplicative_slowdown > 0))		// we aren't limiting how much things can slowdown.. yet.
+		return existing + multiplicative_slowdown
+	var/current_tiles = 10 / max(existing, world.tick_lag)
+	var/minimum_speed = 10 / min(current_tiles + max_tiles_per_second_boost, max(current_tiles, absolute_max_tiles_per_second))
+	return max(minimum_speed, existing + multiplicative_slowdown)
 
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
@@ -171,13 +187,15 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /// Set or update the global movespeed config on a mob
 /mob/proc/update_config_movespeed()
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/mob_config_speedmod, multiplicative_slowdown = get_config_multiplicative_speed())
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/mob_config_speedmod_floating, multiplicative_slowdown = get_config_multiplicative_speed(TRUE))
 
 /// Get the global config movespeed of a mob by type
-/mob/proc/get_config_multiplicative_speed()
-	if(!islist(GLOB.mob_config_movespeed_type_lookup) || !GLOB.mob_config_movespeed_type_lookup[type])
+/mob/proc/get_config_multiplicative_speed(floating = FALSE)
+	var/list/read = floating? GLOB.mob_config_movespeed_type_lookup_floating : GLOB.mob_config_movespeed_type_lookup
+	if(!islist(read) || !read[type])
 		return 0
 	else
-		return GLOB.mob_config_movespeed_type_lookup[type]
+		return read[type]
 
 /// Go through the list of movespeed modifiers and calculate a final movespeed. ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
 /mob/proc/update_movespeed()
@@ -198,7 +216,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 				conflict_tracker[conflict] = amt
 			else
 				continue
-		. += amt
+		. = M.apply_multiplicative(., src)
 	var/old = cached_multiplicative_slowdown		// CITAEDL EDIT - To make things a bit less jarring, when in situations where
 	// your delay decreases, "give" the delay back to the client
 	cached_multiplicative_slowdown = .
@@ -219,6 +237,13 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	for(var/id in get_movespeed_modifiers())
 		var/datum/movespeed_modifier/M = movespeed_modification[id]
 		. += M.multiplicative_slowdown
+
+/**
+  * Gets the movespeed modifier datum of a modifier on a mob. Returns null if not found.
+  * DANGER: IT IS UP TO THE PERSON USING THIS TO MAKE SURE THE MODIFIER IS NOT MODIFIED IF IT HAPPENS TO BE GLOBAL/CACHED.
+  */
+/mob/proc/get_movespeed_modifier_datum(id)
+	return movespeed_modification[id]
 
 /// Checks if a move speed modifier is valid and not missing any data
 /proc/movespeed_data_null_check(datum/movespeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.

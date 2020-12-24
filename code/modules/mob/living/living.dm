@@ -8,6 +8,8 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
+	stamina_buffer = INFINITY
+	UpdateStaminaBuffer()
 	GLOB.mob_living_list += src
 
 /mob/living/prepare_huds()
@@ -32,6 +34,7 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+	QDEL_LIST_ASSOC_VAL(ability_actions)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
@@ -256,6 +259,16 @@
 		AM.setDir(current_dir)
 	now_pushing = FALSE
 
+// i wish to have a "friendly chat" with whoever made three tail variables instead of one
+/mob/proc/has_tail()
+	return FALSE
+
+/mob/living/carbon/human/has_tail()
+	if(!dna || !dna.species)
+		return ..()
+	var/list/L = dna.species.mutant_bodyparts		// caches list because i refuse to type it out and because performance
+	return (L["mam_tail"] && (L["mam_tail"] != "None")) || (L["tail_human"] && (L["tail_human"] != "None")) || (L["tail_lizard"] && (L["tail_lizard"] != "None"))
+
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
@@ -294,9 +307,14 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>",
-				"<span class='warning'>You have grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>", target = M,
-				target_message = "<span class='warning'>[src] has grabbed you[(zone_selected == "l_arm" || zone_selected == "r_arm")? " by your hands":" passively"]!</span>")
+			if((zone_selected == BODY_ZONE_PRECISE_GROIN) && has_tail() && M.has_tail())
+				visible_message("<span class='warning'>[src] coils [p_their()] tail with [M]'s, pulling [M.p_them()] along!</span>", "You entwine tails with [M], pulling [M.p_them()] along!", ignored_mobs = M)
+				M.show_message("<span class='warning'>[src] has entwined [p_their()] tail with yours, pulling you along!</span>", MSG_VISUAL, "<span class='warning'>You feel <b>something</b> coiling around your tail, pulling you along!</span>")
+
+			else
+				visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>",
+					"<span class='warning'>You have grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>", target = M,
+					target_message = "<span class='warning'>[src] has grabbed you[(zone_selected == "l_arm" || zone_selected == "r_arm")? " by your hands":" passively"]!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -842,12 +860,12 @@
 		return
 	var/strip_mod = 1
 	var/strip_silence = FALSE
-	if (ishuman(src)) //carbon doesn't actually wear gloves
+	if(ishuman(src)) //carbon doesn't actually wear gloves
 		var/mob/living/carbon/C = src
-		var/obj/item/clothing/gloves/g = C.gloves
-		if (istype(g))
-			strip_mod = g.strip_mod
-			strip_silence = g.strip_silence
+		var/obj/item/clothing/gloves/G = C.gloves
+		if(istype(G))
+			strip_mod = G.strip_mod
+			strip_silence = G.strip_silence
 	if (!strip_silence)
 		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", target = src,
@@ -1030,7 +1048,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	stop_pulling()
 	. = ..()
 
@@ -1257,7 +1275,7 @@
 		SetUnconscious(clamp_unconscious_to)
 	HealAllImmobilityUpTo(clamp_immobility_to)
 	adjustStaminaLoss(min(0, -stamina_boost))
-	adjustStaminaLossBuffered(min(0, -stamina_buffer_boost))
+	RechargeStaminaBuffer(stamina_buffer_boost)		// this MUST GO AFTER ADJUSTSTAMINALOSS.
 	if(scale_stamina_loss_recovery)
 		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)

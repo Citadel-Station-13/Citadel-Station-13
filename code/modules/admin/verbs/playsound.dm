@@ -1,5 +1,5 @@
 /client/proc/play_sound(S as sound)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -42,7 +42,7 @@
 
 
 /client/proc/play_local_sound(S as sound)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -53,7 +53,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_web_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Internet Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -136,7 +136,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
 /client/proc/manual_play_web_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Manual Play Internet Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -182,7 +182,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manual Play Internet Sound")
 
 /client/proc/set_round_end_sound(S as sound)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Set Round End Sound"
 	if(!check_rights(R_SOUNDS))
 		return

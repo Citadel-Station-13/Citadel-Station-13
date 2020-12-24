@@ -8,6 +8,7 @@
 	usesound = 'sound/items/crowbar.ogg'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -36,6 +37,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "crowbar_clock"
 	toolspeed = 0.5
+
+/obj/item/crowbar/brass/family
+	toolspeed = 1
 
 /obj/item/crowbar/bronze
 	name = "bronze plated crowbar"

@@ -91,8 +91,6 @@
 	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
 
 /datum/wound/Destroy()
-	if(attached_surgery)
-		QDEL_NULL(attached_surgery)
 	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
 		remove_wound()
 	limb = null
@@ -110,7 +108,7 @@
   * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
   */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner) || !(L.is_organic_limb() || L.render_like_organic))
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner) || !L.is_organic_limb())
 		qdel(src)
 		return
 

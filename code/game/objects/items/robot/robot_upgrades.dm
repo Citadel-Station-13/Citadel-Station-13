@@ -27,6 +27,13 @@
 		return FALSE
 	return TRUE
 
+/*
+This proc gets called by upgrades after installing them. Use this for things that for example need to be moved into a specific borg item,
+as performing this in action() will cause the upgrade to end up in the borg instead of its intended location due to forceMove() being called afterwards..
+*/
+/obj/item/borg/upgrade/proc/afterInstall(mob/living/silicon/robot/R, user = usr)
+	return
+
 /obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/R, user = usr)
 	if (!(src in R.upgrades))
 		return FALSE
@@ -73,6 +80,7 @@
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
+	var/obj/effect/proc_holder/silicon/cyborg/vtecControl/VC
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -84,12 +92,14 @@
 
 		//R.speed = -2 // Gotta go fast.
         //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
-		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
+		VC = new /obj/effect/proc_holder/silicon/cyborg/vtecControl
+		R.AddAbility(VC)
 		R.cansprint = 0
 
 /obj/item/borg/upgrade/vtec/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
+		R.RemoveAbility(VC)
 		R.speed = initial(R.speed)
 		R.cansprint = 1
 

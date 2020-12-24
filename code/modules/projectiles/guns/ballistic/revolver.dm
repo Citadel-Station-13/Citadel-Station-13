@@ -85,9 +85,14 @@
 	. += "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/gun/ballistic/revolver/syndicate
+	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "revolver",
 						"Silver" = "russianrevolver",
-						"Robust" = "revolvercit")
+						"Robust" = "revolvercit",
+						"Bulky" = "revolverhakita",
+						"Polished" = "revolvertoriate",
+						"Soulless" = "revolveroldflip",
+						"Soul" = "revolverold")
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
@@ -324,7 +329,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	name = "improvised shotgun"
-	desc = "A shoddy break-action breechloaded shotgun. Its lacklustre construction shows in its lesser effectiveness."
+	desc = "A shoddy break-action breechloaded shotgun. Less ammo-efficient than an actual shotgun, but still packs a punch."
 	icon_state = "ishotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
@@ -334,7 +339,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
 	unique_reskin = null
-	projectile_damage_multiplier = 0.9
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)

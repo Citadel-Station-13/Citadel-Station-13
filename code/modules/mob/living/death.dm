@@ -66,6 +66,10 @@
 	GLOB.alive_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
+	if(ckey)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey]
+		if(P)
+			P.respawn_time_of_death = world.time
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
@@ -78,6 +82,7 @@
 	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
+	clear_typing_indicator()
 	if(!gibbed && !QDELETED(src))
 		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()

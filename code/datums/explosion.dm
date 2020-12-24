@@ -89,6 +89,8 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
+	
+	deadchat_broadcast("<span class='deadsay bold'>An explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) has occured at ([get_area(epicenter)])</span>", turf_target = get_turf(epicenter))
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y

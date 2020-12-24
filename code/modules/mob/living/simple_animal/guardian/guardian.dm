@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_state = "magicbase"
 	icon_living = "magicbase"
 	icon_dead = "magicbase"
-	speed = 0
+	speed = -0.5
 	blood_volume = 0
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -511,7 +511,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	var/list/possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
@@ -558,6 +558,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 		if("Chaos")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
+
+		if("Gravitokinetic")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
 		if("Standard")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
@@ -615,10 +618,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	random = FALSE
 
 /obj/item/guardiancreator/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/guardiancreator/choose/wizard
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/tech
@@ -634,7 +637,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	allowling = FALSE
 
 /obj/item/guardiancreator/tech/choose/traitor/check_uplink_validity()
@@ -644,10 +647,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	random = FALSE
 
 /obj/item/guardiancreator/tech/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/guardiancreator/tech/choose/nukie // lacks support and protector as encouraging nukies to play turtle isnt fun and dextrous is epic
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Ranged", "Standard")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Ranged", "Standard")
 
 /obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
 	return !used
@@ -665,6 +668,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
@@ -695,6 +700,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
+ <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
+ <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
  <b>Protector</b>: Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower.<br>
@@ -719,6 +726,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <b>Dextrous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>

@@ -1,7 +1,7 @@
 /datum/species/xeno
 	// A cloning mistake, crossing human and xenomorph DNA
 	name = "Xenomorph Hybrid"
-	id = "xeno"
+	id = SPECIES_XENOHYBRID
 	say_mod = "hisses"
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,CAN_SCAR)
@@ -15,4 +15,4 @@
 	exotic_bloodtype = "X*"
 	damage_overlay_type = "xeno"
 	liked_food = MEAT
-	species_type = "alien"
+	species_category = SPECIES_CATEGORY_ALIEN

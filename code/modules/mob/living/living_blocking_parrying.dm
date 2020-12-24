@@ -74,8 +74,12 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Ratio of stamina incurred by chest (so after [block_stamina_limb_ratio] runs) that is buffered.
 	var/block_stamina_buffer_ratio = 1
 
-	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
+	/// Stamina dealt directly via UseStaminaBuffer() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
+	/// Prevent stamina buffer regeneration while block?
+	var/block_no_stambuffer_regeneration = TRUE
+	/// Prevent stamina regeneration while block?
+	var/block_no_stamina_regeneration = FALSE
 
 	/// Bitfield for attack types that we can block while down. This will work in any direction.
 	var/block_resting_attack_types_anydir = ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED | ATTACK_TYPE_TACKLE
@@ -150,6 +154,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_failed_stagger_duration = 3.5 SECONDS
 	/// Clickdelay duration post-parry if you fail to parry an attack
 	var/parry_failed_clickcd_duration = 2 SECONDS
+	/// Parry cooldown post-parry if failed. This is ADDED to parry_cooldown!!!
+	var/parry_failed_cooldown_duration = 0 SECONDS
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
@@ -307,7 +313,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /mob/living/proc/handle_block_parry(seconds = 1)
 	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
 		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
-		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
+		UseStaminaBuffer(data.block_stamina_cost_per_second * seconds)
 
 /mob/living/on_item_dropped(obj/item/I)
 	if(I == active_block_item)

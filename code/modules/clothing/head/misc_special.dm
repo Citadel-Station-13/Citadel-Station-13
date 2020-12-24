@@ -190,7 +190,7 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
 	icon_state = "hair_vlong"
 	flags_inv = HIDEHAIR
 	color = "#000"

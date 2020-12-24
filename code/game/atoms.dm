@@ -1128,20 +1128,18 @@
 /atom/proc/rust_heretic_act()
 	return
 
-///Passes Stat Browser Panel clicks to the game and calls client click on an atom
-/atom/Topic(href, list/href_list)
-	. = ..()
-	if(!usr?.client)
+/**
+  * Used to set something as 'open' if it's being used as a supplypod
+  *
+  * Override this if you want an atom to be usable as a supplypod.
+  */
+/atom/proc/setOpened()
 		return
-	var/client/usr_client = usr.client
-	var/list/paramslist = list()
-	if(href_list["statpanel_item_shiftclick"])
-		paramslist["shift"] = "1"
-	if(href_list["statpanel_item_ctrlclick"])
-		paramslist["ctrl"] = "1"
-	if(href_list["statpanel_item_altclick"])
-		paramslist["alt"] = "1"
-	if(href_list["statpanel_item_click"])
-		// first of all make sure we valid
-		var/mouseparams = list2params(paramslist)
-		usr_client.Click(src, loc, null, mouseparams)
+
+/**
+  * Used to set something as 'closed' if it's being used as a supplypod
+  *
+  * Override this if you want an atom to be usable as a supplypod.
+  */
+/atom/proc/setClosed()
+		return

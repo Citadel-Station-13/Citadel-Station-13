@@ -38,7 +38,7 @@
 	display_name = "Advanced Plumbing Technology"
 	description = "Plumbing RCD."
 	prereq_ids = list("plumbing", "adv_engi")
-	design_ids = list("plumb_rcd", "autohydrotray")
+	design_ids = list("plumb_rcd", "autohydrotray", "rplunger")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 //////////////////////Cybernetics/////////////////////
@@ -96,7 +96,7 @@
 	display_name = "Advanced Cybernetic Implants"
 	description = "Upgraded and more powerful cybernetic implants."
 	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
-	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus")
+	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus", "ci-robot-radshielding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/combat_cyber_implants
