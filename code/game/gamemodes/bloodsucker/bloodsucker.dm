@@ -26,7 +26,7 @@
 	false_report_weight = 1
 	restricted_jobs = list("AI","Cyborg")
 	protected_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
-	restricted_species = list(SPECIES_SYNTH_LIZARD, SPECIES_SYNTH, SPECIES_ANDROID, SPECIES_DULLAHAN, SPECIES_PLASMAMAN, SPECIES_SKELETON, SPECIES_VAMPIRE, SPECIES_VAMPIRE_WEAK)
+	restricted_species = list(SPECIES_DULLAHAN, SPECIES_PLASMAMAN, SPECIES_SKELETON, SPECIES_VAMPIRE, SPECIES_VAMPIRE_WEAK)
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 4
