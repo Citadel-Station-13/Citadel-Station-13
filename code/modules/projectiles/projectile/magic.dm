@@ -144,7 +144,7 @@
 
 	var/mob/living/new_mob
 
-	var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	var/randomize = pick("monkey","robot","slime","xeno","animal")
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -210,22 +210,6 @@
 							/mob/living/simple_animal/chick,
 							/mob/living/simple_animal/pickle)
 			new_mob = new path(M.loc)
-
-		if("humanoid")
-			if(prob(50))
-				new_mob = new /mob/living/carbon/human(M.loc)
-			else
-				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
-				new_mob =new hooman(M.loc)
-
-			var/datum/preferences/A = new()	//Randomize appearance for the human
-			A.copy_to(new_mob, FALSE)
-
-			var/mob/living/carbon/human/H = new_mob
-			H.update_body()
-			H.update_hair()
-			H.update_body_parts()
-			H.dna.update_dna_identity()
 
 	if(!new_mob)
 		return
