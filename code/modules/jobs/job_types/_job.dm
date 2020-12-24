@@ -126,7 +126,7 @@
 /datum/job/proc/special_check_latejoin(client/C)
 	var/joined = LAZYLEN(C.prefs?.characters_joined_as)
 	if(C.prefs?.respawn_restrictions_active && (joined || CONFIG_GET(flag/respawn_penalty_includes_observe)))
-		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && always_can_respawn_as)
+		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && !always_can_respawn_as)
 			return FALSE
 		if(!CONFIG_GET(flag/allow_combat_role_respawn) && considered_combat_role)
 			return FALSE
