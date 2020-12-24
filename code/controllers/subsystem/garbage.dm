@@ -210,6 +210,21 @@ SUBSYSTEM_DEF(garbage)
 		queue.Cut(1,count+1)
 		count = 0
 
+#ifdef LEGACY_REFERENCE_TRACKING
+/datum/controller/subsystem/garbage/proc/add_type_to_findref(type)
+	if(!ispath(type))
+		return "NOT A VAILD PATH"
+	reference_find_on_fail_types |= typecacheof(type)
+
+/datum/controller/subsystem/garbage/proc/remove_type_from_findref(type)
+	if(!ispath(type))
+		return "NOT A VALID PATH"
+	reference_find_on_fail_types -= typesof(type)
+
+/datum/controller/subsystem/garbage/proc/clear_findref_types()
+	reference_find_on_fail_types = list()
+#endif
+
 /datum/controller/subsystem/garbage/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
 	if (isnull(D))
 		return
@@ -218,6 +233,11 @@ SUBSYSTEM_DEF(garbage)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[D]"
+
+#ifdef LEGACY_REFERENCE_TRACKING
+	if(reference_find_on_fail_types[D.type])
+		SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+#endif
 
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
@@ -350,3 +370,18 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
+
+#ifdef TESTING
+/proc/writeDatumCount()
+	var/list/datums = list()
+	for(var/datum/D in world)
+		datums[D.type] += 1
+	for(var/datum/D)
+		datums[D.type] += 1
+	datums = sortTim(datums, /proc/cmp_numeric_dsc, associative = TRUE)
+	if(fexists("data/DATUMCOUNT.txt"))
+		fdel("data/DATUMCOUNT.txt")
+	var/outfile = file("data/DATUMCOUNT.txt")
+	for(var/path in datums)
+		outfile << "[datums[path]]\t\t\t\t\t[path]"
+#endif
