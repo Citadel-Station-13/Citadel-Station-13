@@ -1,0 +1,7 @@
+author: SandPoot
+delete-after: true
+changes:
+  - rscadd: Added Tank holders from tg! (make some with rods!)
+  - rscadd: Added Generic gas tanks, they could have anything and the people won't
+      know!
+  - tweak: Tweaked emergency double tanks to have slightly more volume.
