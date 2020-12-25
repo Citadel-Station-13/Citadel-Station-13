@@ -2,6 +2,8 @@
   <ui-section label='Occupant'>
 	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
   </ui-section>
+
+  
   {{#if data.occupied}}
     <ui-section label='State'>
       <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>

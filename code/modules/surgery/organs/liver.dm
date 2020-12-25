@@ -96,7 +96,7 @@
 	if(prob(5))
 		to_chat(owner, "<span class='notice'>You feel a stange ache in your side, almost like a stitch. This pain is affecting your movements and making you feel lightheaded.</span>")
 	var/mob/living/carbon/human/H = owner
-	H.add_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY, TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = moveCalc)
+	//H.add_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY, TRUE, 100, NONE, update = TRUE, multiplicative_slowdown = moveCalc) - Add later when I figure out how to fix this
 	H.AdjustBloodVol(moveCalc/3)
 	sizeMoveMod(moveCalc, H)
 

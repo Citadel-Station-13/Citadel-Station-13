@@ -29,6 +29,7 @@
 	if(cube)
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
+	..()
 
 //feel free to change this when stasis is ported.
 

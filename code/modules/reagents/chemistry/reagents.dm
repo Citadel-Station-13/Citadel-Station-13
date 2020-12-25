@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 	if ((inverse_chem_val > purity) && (inverse_chem)) //INVERT
 		M.reagents.remove_reagent(type, amount, FALSE)
-		M.reagents.add_reagent(inverse_chem, amount, FALSE, other_purity = 1-cached_purity)
+		M.reagents.add_reagent(inverse_chem, amount, FALSE, added_purity = 1-cached_purity)
 		var/datum/reagent/R = M.reagents.has_reagent(inverse_chem)
 		if(R.chemical_flags & REAGENT_SNEAKYNAME)
 			R.name = name//Negative effects are hidden
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		var/impureVol = amount * (1 - purity)
 		if(!(chemical_flags & REAGENT_SPLITRETAINVOL))
 			M.reagents.remove_reagent(type, impureVol, FALSE)
-		M.reagents.add_reagent(impure_chem, impureVol, FALSE, other_purity = 1-cached_purity)
+		M.reagents.add_reagent(impure_chem, impureVol, FALSE, added_purity = 1-cached_purity)
 		log_reagent("MOB ADD: on_merge() (mixed purity): merged [volume - impureVol] of [type] and [volume] of [impure_chem]")
 
 /datum/reagent/proc/on_update(atom/A)
