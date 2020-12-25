@@ -356,7 +356,7 @@
 			. = TRUE
 		if("inject")
 			var/chem = text2path(params["chem"])
-			var/amount = text2num(params["volume"])
+			//var/amount = text2num(params["volume"])
 			if(!is_operational() || !mob_occupant || isnull(chem))
 				return
 			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
