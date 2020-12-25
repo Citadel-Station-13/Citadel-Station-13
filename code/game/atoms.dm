@@ -776,9 +776,12 @@
 			var/chosen_id = choose_reagent_id(usr)
 			if(chosen_id)
 				var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume) as num
+				var/purity = input(usr, "Choose the purity of the reagent.", "Choose the purity.", 1) as num
+                if(!purity)
+                    purity = 1
 				if(amount)
-					reagents.add_reagent(chosen_id, amount)
-					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
+					reagents.add_reagent(chosen_id, amount, added_purity = purity)
+					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] with a purity of [purity] to [src]")
 					message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to [src]</span>")
 	if(href_list[VV_HK_TRIGGER_EXPLOSION] && check_rights(R_FUN))
 		usr.client.cmd_admin_explosion(src)

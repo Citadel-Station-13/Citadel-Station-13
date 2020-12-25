@@ -51,3 +51,4 @@
 #define ORGAN_NO_SPOIL			(1<<5)	//Do not spoil under any circumstances
 #define ORGAN_NO_DISMEMBERMENT	(1<<6)	//Immune to disembowelment.
 #define ORGAN_EDIBLE			(1<<7)	//is a snack? :D
+#define ORGAN_LUNGS_DEFLATED    (1<<8)  //If a lung has collapsed
