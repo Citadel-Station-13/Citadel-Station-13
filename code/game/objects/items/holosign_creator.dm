@@ -78,9 +78,25 @@
 
 /obj/item/holosign_creator/atmos
 	name = "ATMOS holofan projector"
-	desc = "A holographic projector that creates holographic barriers that prevent changes in atmosphere conditions."
-	icon_state = "signmaker_engi"
+	desc = "A holographic projector that creates holographic fans that prevent changes in atmosphere conditions. Somehow."
+	icon_state = "signmaker_atmos"
 	holosign_type = /obj/structure/holosign/barrier/atmos
+	creation_time = 0
+	max_signs = 3
+
+/obj/item/holosign_creator/firelock
+	name = "ATMOS holofirelock projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in temperature conditions."
+	icon_state = "signmaker_engi"
+	holosign_type = /obj/structure/holosign/barrier/firelock
+	creation_time = 0
+	max_signs = 3
+
+/obj/item/holosign_creator/combifan
+	name = "ATMOS holo-combifan projector"
+	desc = "A holographic projector that creates holographic combi-fans that prevent changes in atmosphere and temperature conditions. Somehow."
+	icon_state = "signmaker_atmos"
+	holosign_type = /obj/structure/holosign/barrier/combifan
 	creation_time = 0
 	max_signs = 3
 

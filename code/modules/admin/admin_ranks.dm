@@ -23,8 +23,7 @@ GLOBAL_PROTECT(protected_ranks)
 	name = init_name
 	if(!name)
 		qdel(src)
-		throw EXCEPTION("Admin rank created without name.")
-		return
+		CRASH("Admin rank created without name.")
 	if(init_rights)
 		rights = init_rights
 	include_rights = rights
@@ -44,6 +43,11 @@ GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
+
+/datum/admin_rank/CanProcCall(procname)
+	. = ..()
+	if(!check_rights(R_SENSITIVE))
+		return FALSE
 
 /proc/admin_keyword_to_flag(word, previous_rights=0)
 	var/flag = 0
@@ -80,6 +84,8 @@ GLOBAL_PROTECT(protected_ranks)
 			flag = R_AUTOLOGIN
 		if("dbranks")
 			flag = R_DBRANKS
+		if("sensitive")
+			flag = R_SENSITIVE
 		if("@","prev")
 			flag = previous_rights
 	return flag
@@ -135,7 +141,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/previous_rights = 0
 	//load text from file and process each line separately
 	for(var/line in world.file2list("[global.config.directory]/admin_ranks.txt"))
-		if(!line || findtextEx(line,"#",1,2))
+		if(!line || findtextEx_char(line,"#",1,2))
 			continue
 		var/next = findtext(line, "=")
 		var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
@@ -145,7 +151,7 @@ GLOBAL_PROTECT(protected_ranks)
 		GLOB.protected_ranks += R
 		var/prev = findchar(line, "+-*", next, 0)
 		while(prev)
-			next = findchar(line, "+-*", prev + 1, 0)
+			next = findchar(line, "+-*", prev + length(line[prev]), 0)
 			R.process_keyword(copytext(line, prev, next), previous_rights)
 			prev = next
 		previous_rights = R.rights

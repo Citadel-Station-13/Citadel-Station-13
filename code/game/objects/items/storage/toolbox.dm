@@ -3,8 +3,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -13,16 +13,23 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	throw_speed = 2
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	custom_materials = list(/datum/material/iron = 500)
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	var/can_rubberify = TRUE
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //very protecc too
+	wound_bonus = -10
+	bare_wound_bonus = 5
+
+/obj/item/storage/toolbox/greyscale
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
+	can_rubberify = FALSE
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/item/storage/toolbox/Initialize(mapload)
-	. = ..()
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -30,16 +37,14 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 				latches = "triple_latch"
 	if(mapload && can_rubberify && prob(5))
 		rubberify()
+	. = ..()
 	update_icon()
 
-/obj/item/storage/toolbox/update_icon()
-	..()
-	cut_overlays()
-	if(blood_DNA && blood_DNA.len)
-		add_blood_overlay()
+/obj/item/storage/toolbox/update_overlays()
+	. = ..()
 	if(has_latches)
 		var/icon/I = icon('icons/obj/storage.dmi', latches)
-		add_overlay(I)
+		. += I
 
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
@@ -48,6 +53,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
+	icon_state = "red"
+	item_state = "toolbox_red"
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -134,7 +141,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat/insulated(src)
 
 /obj/item/storage/toolbox/drone
 	name = "mechanical toolbox"
@@ -171,7 +178,8 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 28
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
-	new fabricator_type(src)
+	if(fabricator_type)
+		new fabricator_type(src)
 	new /obj/item/screwdriver/brass(src)
 	new /obj/item/wirecutters/brass(src)
 	new /obj/item/wrench/brass(src)
@@ -225,27 +233,76 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	STR.max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
-	new/obj/item/storage/crayons(src)
-	new/obj/item/crowbar(src)
-	new/obj/item/stack/cable_coil/red(src)
-	new/obj/item/stack/cable_coil/yellow(src)
-	new/obj/item/stack/cable_coil/blue(src)
-	new/obj/item/stack/cable_coil/green(src)
-	new/obj/item/stack/cable_coil/pink(src)
-	new/obj/item/stack/cable_coil/orange(src)
-	new/obj/item/stack/cable_coil/cyan(src)
-	new/obj/item/stack/cable_coil/white(src)
+	new /obj/item/storage/crayons(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/stack/cable_coil/red(src)
+	new /obj/item/stack/cable_coil/yellow(src)
+	new /obj/item/stack/cable_coil/blue(src)
+	new /obj/item/stack/cable_coil/green(src)
+	new /obj/item/stack/cable_coil/pink(src)
+	new /obj/item/stack/cable_coil/orange(src)
+	new /obj/item/stack/cable_coil/cyan(src)
+	new /obj/item/stack/cable_coil/white(src)
 
-/obj/item/storage/toolbox/gold_real
+/obj/item/storage/toolbox/ammo
+	name = "ammunition case (7.62mm stripper clips)"
+	desc = "It contains a few 7.62 stripper clips."
+	icon_state = "ammobox"
+	item_state = "ammobox"
+	var/ammotype = /obj/item/ammo_box/a762 // make sure this is a typepath thanks
+
+/obj/item/storage/toolbox/ammo/PopulateContents()
+	for (var/i = 0, i < 7, i++)
+		new ammotype(src)
+
+/obj/item/storage/toolbox/ammo/surplus
+	name = "ammunition case (10mm rifle magazines)"
+	desc = "It contains a few 10mm rifle magazines."
+	ammotype = /obj/item/ammo_box/magazine/m10mm/rifle
+
+/obj/item/storage/toolbox/infiltrator
+	name = "insidious case"
+	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary while being quite the heavy bludgeoning implement when in a pinch."
+	icon_state = "infiltrator_case"
+	item_state = "infiltrator_case"
+	force = 12
+	throwforce = 16
+	w_class = WEIGHT_CLASS_NORMAL
+	has_latches = FALSE
+
+/obj/item/storage/toolbox/infiltrator/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.silent = TRUE
+	STR.max_items = 10
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/clothing/head/helmet/infiltrator,
+		/obj/item/clothing/suit/armor/vest/infiltrator,
+		/obj/item/clothing/under/syndicate/bloodred,
+		/obj/item/clothing/gloves/color/latex/nitrile/infiltrator,
+		/obj/item/clothing/gloves/tackler/combat/insulated/infiltrator,
+		/obj/item/clothing/mask/infiltrator,
+		/obj/item/clothing/shoes/combat/sneakboots,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box
+		))
+
+/obj/item/storage/toolbox/infiltrator/PopulateContents()
+	new /obj/item/clothing/head/helmet/infiltrator(src)
+	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
+	new /obj/item/clothing/under/syndicate/bloodred(src)
+	new /obj/item/clothing/gloves/tackler/combat/insulated/infiltrator(src)
+	new /obj/item/clothing/mask/infiltrator(src)
+	new /obj/item/clothing/shoes/combat/sneakboots(src)
+
+/obj/item/storage/toolbox/plastitanium/gold_real
 	name = "golden toolbox"
 	desc = "A larger then normal toolbox made of gold plated plastitanium."
 	icon_state = "gold"
 	item_state = "toolbox_gold"
 	has_latches = FALSE
-	force = 16 // Less then a spear
-	throwforce = 14
-	throw_speed = 5
-	throw_range = 10
 
 /obj/item/storage/toolbox/gold_real/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -254,7 +311,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool/ai_detect(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat/insulated(src)
 
 /obj/item/storage/toolbox/gold_real/ComponentInitialize()
 	. = ..()
@@ -278,7 +335,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	desc = replacetext(desc, "robust", "safe")
 	desc = replacetext(desc, "heavier", "bouncier")
 	DISABLE_BITFIELD(flags_1, CONDUCT_1)
-	materials = null
+	custom_materials = null
 	damtype = STAMINA
 	force += 3 //to compensate the higher stamina K.O. threshold compared to actual health.
 	throwforce += 3
@@ -300,10 +357,10 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	name = "rubber toolbox"
 	desc = "Bouncy. Very safe."
 	flags_1 = null
-	materials = null
+	custom_materials = null
 	damtype = STAMINA
-	force = 17
-	throwforce = 17
+	force = 15
+	throwforce = 15
 	attack_verb = list("robusted", "bounced")
 	can_rubberify = FALSE //we are already the future.
 

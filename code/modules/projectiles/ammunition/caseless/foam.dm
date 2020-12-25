@@ -5,12 +5,11 @@
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
-	materials = list(MAT_METAL = 11.25)
+	custom_materials = list(/datum/material/iron = 11.25)
 	harmful = FALSE
 	var/modified = FALSE
 
-/obj/item/ammo_casing/caseless/foam_dart/update_icon()
-	..()
+/obj/item/ammo_casing/caseless/foam_dart/update_icon_state()
 	if (modified)
 		icon_state = "foamdart_empty"
 		desc = "It's nerf or nothing! ... Although, this one doesn't look too safe."
@@ -62,4 +61,9 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
-	materials = list(MAT_METAL = 1125)
+	custom_materials = list(/datum/material/iron = 1125)
+
+/obj/item/ammo_casing/caseless/foam_dart/mag
+	name = "magfoam dart"
+	desc = "A foam dart with fun light-up projectiles powered by magnets!"
+	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/mag

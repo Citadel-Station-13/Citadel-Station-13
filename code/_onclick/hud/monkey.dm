@@ -7,21 +7,25 @@
 	action_intent.icon = ui_style
 	action_intent.icon_state = mymob.a_intent
 	action_intent.screen_loc = ui_acti
+	action_intent.hud = src
 	static_inventory += action_intent
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
+	using.hud = src
 	static_inventory += using
 
 	using = new/obj/screen/language_menu
 	using.icon = ui_style
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
+	using.hud = src
 	static_inventory += using
 
 	build_hand_slots()
@@ -30,12 +34,14 @@
 	using.icon = ui_style
 	using.icon_state = "swap_1_m"	//extra wide!
 	using.screen_loc = ui_swaphand_position(owner,1)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand_position(owner,2)
+	using.hud = src
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
@@ -76,30 +82,37 @@
 	throw_icon = new /obj/screen/throw_catch()
 	throw_icon.icon = ui_style
 	throw_icon.screen_loc = ui_drop_throw
+	throw_icon.hud = src
 	hotkeybuttons += throw_icon
 
 	internals = new /obj/screen/internals()
+	internals.hud = src
 	infodisplay += internals
 
 	healths = new /obj/screen/healths()
+	healths.hud = src
 	infodisplay += healths
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon(mymob)
 	pull_icon.screen_loc = ui_pull_resist
+	pull_icon.hud = src
+	pull_icon.update_icon()
 	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()
+	lingchemdisplay.hud = src
 	infodisplay += lingchemdisplay
 
 	lingstingdisplay = new /obj/screen/ling/sting()
+	lingstingdisplay.hud = src
 	infodisplay += lingstingdisplay
 
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.update_icon(mymob)
+	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 	mymob.client.screen = list()
@@ -107,6 +120,7 @@
 	using = new /obj/screen/resist()
 	using.icon = ui_style
 	using.screen_loc = ui_pull_resist
+	using.hud = src
 	hotkeybuttons += using
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))

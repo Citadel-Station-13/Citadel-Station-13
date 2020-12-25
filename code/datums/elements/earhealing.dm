@@ -4,7 +4,7 @@
 	var/list/user_by_item = list()
 
 /datum/element/earhealing/New()
-	START_PROCESSING(SSdcs, src)
+	START_PROCESSING(SSobj, src)
 
 /datum/element/earhealing/Attach(datum/target)
 	. = ..()

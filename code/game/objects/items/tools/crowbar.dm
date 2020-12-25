@@ -8,15 +8,19 @@
 	usesound = 'sound/items/crowbar.ogg'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50)
+	custom_materials = list(/datum/material/iron=50)
 
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+
+	wound_bonus = -10
+	bare_wound_bonus = 5
 
 /obj/item/crowbar/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -33,6 +37,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "crowbar_clock"
 	toolspeed = 0.5
+
+/obj/item/crowbar/brass/family
+	toolspeed = 1
 
 /obj/item/crowbar/bronze
 	name = "bronze plated crowbar"
@@ -55,7 +62,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
-	materials = list(MAT_METAL=70)
+	custom_materials = list(/datum/material/iron=70)
 	icon_state = "crowbar_large"
 	item_state = "crowbar"
 	toolspeed = 0.5
@@ -76,7 +83,7 @@
 	item_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
 
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
@@ -90,6 +97,7 @@
 /obj/item/crowbar/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
 	var/obj/item/wirecutters/power/cutjaws = new /obj/item/wirecutters/power(drop_location())
+	cutjaws.name = name
 	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 	qdel(src)
 	user.put_in_active_hand(cutjaws)

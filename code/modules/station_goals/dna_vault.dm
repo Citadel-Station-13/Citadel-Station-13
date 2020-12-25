@@ -174,13 +174,12 @@
 	. = ..()
 
 
-/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		roll_powers(user)
-		ui = new(user, src, ui_key, "dna_vault", name, 350, 400, master_ui, state)
+		ui = new(user, src, "DnaVault", name)
 		ui.open()
-
 
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
 	if(user in power_lottery)
@@ -276,8 +275,8 @@
 			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
-			H.add_movespeed_modifier(MOVESPEED_ID_DNA_VAULT, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
-			H.next_move_modifier = 0.5
+			H.action_cooldown_mod = 0.5
 	power_lottery[H] = list()

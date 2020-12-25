@@ -8,10 +8,11 @@
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	yield = 4
+	instability = 25
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
-	reagents_add = list("sacid" = 0.5)
+	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -25,7 +26,7 @@
 	yield = 2
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
-	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
+	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
@@ -90,6 +91,7 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
+	wound_bonus = CANT_WOUND
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/add_juice()
 	..()
@@ -98,7 +100,7 @@
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
-			user.Knockdown(100)
+			user.DefaultCombatKnockdown(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
@@ -111,5 +113,5 @@
 		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Unconscious(force / 0.3)
-			M.Knockdown(force / 0.75)
+			M.DefaultCombatKnockdown(force / 0.75)
 		M.drop_all_held_items()

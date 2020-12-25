@@ -9,3 +9,7 @@
 	projectile_type = /obj/item/projectile/plasma/adv
 	delay = 10
 	e_cost = 10
+
+/obj/item/ammo_casing/energy/plasma/weak
+	projectile_type = /obj/item/projectile/plasma/weak
+	e_cost = 100

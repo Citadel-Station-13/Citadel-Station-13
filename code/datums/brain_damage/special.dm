@@ -13,7 +13,7 @@
 /datum/brain_trauma/special/godwoken/on_life()
 	..()
 	if(prob(4))
-		if(prob(33) && (owner.IsStun() || owner.IsKnockdown() || owner.IsUnconscious()))
+		if(prob(33) && owner.HighestImmobilityAmount())
 			speak("unstun", TRUE)
 		else if(prob(60) && owner.health <= owner.crit_threshold)
 			speak("heal", TRUE)
@@ -103,8 +103,7 @@
 	. = ..()
 	QDEL_IN(src, 300)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)
+/obj/effect/hallucination/simple/bluespace_stream/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user != seer || !linked_to)
 		return
 	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\

@@ -53,6 +53,9 @@
 		new festive_tree(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/xmastree/hilbert
+	christmas_tree = /obj/structure/flora/tree/pine/xmas
+
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"
 	festive_tree = /obj/structure/festivus
@@ -75,7 +78,7 @@
 /datum/round_event/santa/start()
 	var/list/candidates = pollGhostCandidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 		C.transfer_ckey(santa, FALSE)
 

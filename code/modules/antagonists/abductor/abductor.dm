@@ -6,6 +6,8 @@
 	antagpanel_category = "Abductor"
 	job_rank = ROLE_ABDUCTOR
 	show_in_antagpanel = FALSE //should only show subtypes
+	threat = 5
+	show_to_ghosts = TRUE
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -20,6 +22,7 @@
 	landmark_type = /obj/effect/landmark/abductor/agent
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
 	show_in_antagpanel = TRUE
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 
 /datum/antagonist/abductor/scientist
 	name = "Abductor Scientist"
@@ -28,6 +31,7 @@
 	landmark_type = /obj/effect/landmark/abductor/scientist
 	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
+	skill_modifiers = list(/datum/skill_modifier/job/affinity/surgery)
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
@@ -56,8 +60,10 @@
 
 /datum/antagonist/abductor/greet()
 	to_chat(owner.current, "<span class='notice'>You are the [owner.special_role]!</span>")
-	to_chat(owner.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
-	to_chat(owner.current, "<span class='notice'>Try not to disturb the habitat, it could lead to dead specimens.</span>")
+	to_chat(owner.current, "<span class='notice'>You are an operative for your home planet's government. Your mission is to detain, experiment, and observe.</span>")
+	to_chat(owner.current, "<span class='notice'>Work together with your teammate to bring live subjects from the space station nearby onto your ship for experimentation.</span>")
+	to_chat(owner.current, "<span class='notice'>For the sake of the mission, do not damage the integrity of the station, do not kill anyone unless in self defense, always capture specimens first if you can, and do not steal equipment or belongings from abducted specimens.</span>")
+	to_chat(owner.current, "<span class='notice'>Your task is to observe and take notes of the effects of your experiments.</span>")
 	to_chat(owner.current, "<span class='notice'>[greet_text]</span>")
 	owner.announce_objectives()
 
@@ -65,6 +71,8 @@
 	//Equip
 	var/mob/living/carbon/human/H = owner.current
 	H.set_species(/datum/species/abductor)
+	var/obj/item/organ/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	T.mothership = "[team.name]"
 
 	H.real_name = "[team.name] [sub_role]"
 	H.equipOutfit(outfit)
@@ -156,35 +164,6 @@
 	result += printobjectives(objectives)
 
 	return "<div class='panel redborder'>[result.Join("<br>")]</div>"
-
-/datum/antagonist/abductee
-	name = "Abductee"
-	roundend_category = "abductees"
-	antagpanel_category = "Abductee"
-
-/datum/antagonist/abductee/on_gain()
-	give_objective()
-	. = ..()
-
-/datum/antagonist/abductee/greet()
-	to_chat(owner, "<span class='warning'><b>Your mind snaps!</b></span>")
-	to_chat(owner, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
-	owner.announce_objectives()
-
-/datum/antagonist/abductee/proc/give_objective()
-	var/mob/living/carbon/human/H = owner.current
-	if(istype(H))
-		H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
-	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
-	var/datum/objective/abductee/O = new objtype()
-	objectives += O
-
-/datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
-	update_abductor_icons_added(mob_override ? mob_override.mind : owner,"abductee")
-
-/datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
-	update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
-
 
 // LANDMARKS
 /obj/effect/landmark/abductor

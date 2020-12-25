@@ -44,8 +44,8 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	else
 		to_chat(user, "<span class='notice'>[I] doesn't appear to be an uplink...</span>")
 
-/obj/machinery/computer/telecrystals/uplinker/update_icon()
-	..()
+/obj/machinery/computer/telecrystals/uplinker/update_overlays()
+	. = ..()
 	if(uplinkholder)
 		add_overlay("[initial(icon_state)]-closed")
 
@@ -103,7 +103,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Receive Station", 700, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/telecrystals/uplinker/Topic(href, href_list)
@@ -136,7 +135,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/list/transferlog = list()
 
 /obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
-	transferlog += ("<b>[STATION_TIME_TIMESTAMP("hh:mm:ss")]</b> [logmessage]")
+	transferlog += ("<b>[STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
@@ -185,7 +184,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/telecrystals/boss/Topic(href, href_list)

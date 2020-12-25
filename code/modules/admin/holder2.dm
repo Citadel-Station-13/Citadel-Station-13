@@ -19,14 +19,19 @@ GLOBAL_PROTECT(href_token)
 	var/spamcooldown = 0
 
 	var/admincaster_screen = 0	//TODO: remove all these 5 variables, they are completly unacceptable
-	var/datum/newscaster/feed_message/admincaster_feed_message = new /datum/newscaster/feed_message
-	var/datum/newscaster/wanted_message/admincaster_wanted_message = new /datum/newscaster/wanted_message
-	var/datum/newscaster/feed_channel/admincaster_feed_channel = new /datum/newscaster/feed_channel
+	var/datum/news/feed_message/admincaster_feed_message = new /datum/news/feed_message
+	var/datum/news/wanted_message/admincaster_wanted_message = new /datum/news/wanted_message
+	var/datum/news/feed_channel/admincaster_feed_channel = new /datum/news/feed_channel
 	var/admin_signature
 
 	var/href_token
 
 	var/deadmined
+
+/datum/admins/CanProcCall(procname)
+	. = ..()
+	if(!check_rights(R_SENSITIVE))
+		return FALSE
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -39,12 +44,10 @@ GLOBAL_PROTECT(href_token)
 		return
 	if(!ckey)
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a ckey")
-		return
+		CRASH("Admin datum created without a ckey")
 	if(!istype(R))
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a rank")
-		return
+		CRASH("Admin datum created without a rank")
 	target = ckey
 	name = "[ckey]'s admin datum ([R])"
 	rank = R
@@ -93,7 +96,7 @@ GLOBAL_PROTECT(href_token)
 	var/client/C
 	if ((C = owner) || (C = GLOB.directory[target]))
 		disassociate()
-		C.verbs += /client/proc/readmin
+		add_verb(C, /client/proc/readmin)
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
@@ -113,7 +116,8 @@ GLOBAL_PROTECT(href_token)
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
-		owner.verbs -= /client/proc/readmin
+		remove_verb(owner, /client/proc/readmin)
+		owner.init_verbs() //re-initialize the verb list
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
@@ -125,6 +129,7 @@ GLOBAL_PROTECT(href_token)
 	if(owner)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
+		owner.init_verbs()
 		owner.holder = null
 		owner = null
 
@@ -147,6 +152,8 @@ GLOBAL_PROTECT(href_token)
 	return 0
 
 /datum/admins/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, fakekey))
+		return ..()
 	return FALSE //nice try trialmin
 
 /*

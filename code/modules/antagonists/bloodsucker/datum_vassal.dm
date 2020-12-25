@@ -8,7 +8,7 @@
 	return SSticker.mode.make_vassal(C,owner)
 
 /datum/antagonist/bloodsucker/proc/FreeAllVassals()
-	for (var/datum/antagonist/vassal/V in vassals)
+	for(var/datum/antagonist/vassal/V in vassals)
 		SSticker.mode.remove_vassal(V.owner)
 
 /datum/antagonist/vassal
@@ -19,10 +19,11 @@
 	var/datum/antagonist/bloodsucker/master		// Who made me?
 	var/list/datum/action/powers = list()// Purchased powers
 	var/list/datum/objective/objectives_given = list()	// For removal if needed.
+	threat = 1
 
 /datum/antagonist/vassal/can_be_owned(datum/mind/new_owner)
 	// If we weren't created by a bloodsucker, then we cannot be a vassal (assigned from antag panel)
-	if (!master)
+	if(!master)
 		return FALSE
 	return ..()
 
@@ -47,7 +48,7 @@
 	objectives += vassal_objective
 	objectives_given += vassal_objective
 	give_thrall_eyes()
-	owner.current.grant_language(/datum/language/vampiric)
+	owner.current.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 	// Add Antag HUD
 	update_vassal_icons_added(owner.current, "vassal")
 	. = ..()
@@ -56,11 +57,6 @@
 	var/obj/item/organ/eyes/vassal/E = new
 	E.Insert(owner.current)
 
-/obj/item/organ/eyes/vassal/
-	lighting_alpha = 180 //  LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE  <--- This is too low a value at 128. We need to SEE what the darkness is so we can hide in it.
-	see_in_dark = 12
-	flash_protect = -1 //These eyes are weaker to flashes, but let you see in the dark
-
 /datum/antagonist/vassal/proc/remove_thrall_eyes()
 	var/obj/item/organ/eyes/E = new
 	E.Insert(owner.current)
@@ -68,9 +64,9 @@
 /datum/antagonist/vassal/on_removal()
 	SSticker.mode.vassals -= owner // Add if not already in here (and you might be, if you were picked at round start)
 	// Mindslave Remove
-	if (master && master.owner)
+	if(master && master.owner)
 		master.vassals -= src
-		if (owner.enslaved_to == master.owner.current)
+		if(owner.enslaved_to == master.owner.current)
 			owner.enslaved_to = null
 	// Master Pinpointer
 	owner.current.remove_status_effect(/datum/status_effect/agent_pinpointer/vassal_edition)
@@ -85,7 +81,7 @@
 		qdel(O)
 	objectives_given = list()
 	remove_thrall_eyes()
-	owner.current.remove_language(/datum/language/vampiric)
+	owner.current.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_VASSAL)
 	// Clear Antag HUD
 	update_vassal_icons_removed(owner.current)
 

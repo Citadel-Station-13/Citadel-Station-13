@@ -31,7 +31,7 @@
 			return
 	say("It doesn't seem like that's magical enough!")
 
-/obj/item/barthpot/attack_hand(mob/user)
+/obj/item/barthpot/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!active)
 		say("Meow!")
 		return
@@ -88,7 +88,7 @@
 	/obj/item/t_scanner = 5,
 	/obj/item/airlock_painter = 1,
 	/obj/item/stack/cable_coil = 6,
-	/obj/item/stack/medical/bruise_pack = 1,
+	/obj/item/stack/medical/suture = 1,
 	/obj/item/stack/rods = 3,
 	/obj/item/stack/sheet/cardboard = 2,
 	/obj/item/stack/sheet/metal = 1,
@@ -117,7 +117,7 @@
 	/obj/item/weldingtool = 3,
 	/obj/item/wirecutters = 2,
 	/obj/item/wrench = 4,
-	/obj/item/weaponcrafting/receiver = 1,
+	/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
 	/obj/item/geiger_counter = 3,
 	/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 5,
 	/obj/item/assembly/infra = 1,
@@ -130,9 +130,13 @@
 	/obj/item/reagent_containers/pill = 2,
 	/obj/item/clothing/shoes = 8,
 	/obj/item/clothing/head = 3,
-	/obj/item/reagent_containers/food/snacks = 3,
+	/obj/item/reagent_containers/food/snacks = 5,
 	/obj/item/reagent_containers/syringe/dart = 2,
-	/obj/item/reagent_containers/food/drinks/soda_cans = 5)
+	/obj/item/reagent_containers/food/drinks/soda_cans = 5,
+	/obj/item/reagent_containers/food/drinks/drinkingglass = 4,
+	/obj/item/reagent_containers/food/drinks = 6,
+	/obj/item/reagent_containers/food/snacks/grown/apple = 1,
+	/obj/item/reagent_containers/food/snacks/grown/banana = 2)
 	if(length >= 5)
 		return TRUE
 	//var/metalist = pickweight(GLOB.maintenance_loot)

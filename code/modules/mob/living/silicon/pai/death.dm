@@ -2,7 +2,7 @@
 	if(stat == DEAD)
 		return
 	stat = DEAD
-	canmove = 0
+	update_mobility()
 	update_sight()
 	clear_fullscreens()
 

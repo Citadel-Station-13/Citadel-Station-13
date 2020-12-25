@@ -16,6 +16,9 @@
 	damage_deflection = 70
 	poddoor = TRUE
 
+/obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
@@ -77,7 +80,7 @@
 			flick("closing", src)
 			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
 
-/obj/machinery/door/poddoor/update_icon()
+/obj/machinery/door/poddoor/update_icon_state()
 	if(density)
 		icon_state = "closed"
 	else

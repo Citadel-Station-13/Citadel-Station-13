@@ -1,10 +1,13 @@
 //Dogs.
 
 /mob/living/simple_animal/pet/dog
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
@@ -13,8 +16,14 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
+	var/held_icon = "corgi"
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
+
+/mob/living/simple_animal/pet/dog/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/wuv, "yaps happily!", EMOTE_AUDIBLE, /datum/mood_event/pet_animal, "growls!", EMOTE_AUDIBLE)
+	AddElement(/datum/element/mob_holder, held_icon)
 
 //Corgis and pugs are now under one dog subtype
 
@@ -29,7 +38,6 @@
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
 	collar_type = "corgi"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
@@ -63,6 +71,7 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
+	held_icon = "pug"
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"
@@ -149,13 +158,6 @@
 	..()
 	update_corgi_fluff()
 
-/mob/living/simple_animal/pet/dog/corgi/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "corgi", null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi', FALSE)
-	if(!L.put_in_hands(holder))
-		qdel(holder)
-	else
-		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
-
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
 	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		usr << browse(null, "window=mob[REF(src)]")
@@ -200,7 +202,11 @@
 
 		switch(add_to)
 			if("collar")
-				add_collar(usr.get_active_held_item(), usr)
+				var/obj/item/clothing/neck/petcollar/P = usr.get_active_held_item()
+				if(!istype(P))
+					to_chat(usr,"<span class='warning'>That's not a collar.</span>")
+					return
+				add_collar(P, usr)
 				update_corgi_fluff()
 
 			if(BODY_ZONE_HEAD)
@@ -266,7 +272,7 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
@@ -329,9 +335,6 @@
 	desc = "It's the HoP's beloved corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 	var/age = 0
@@ -360,12 +363,15 @@
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
+		RemoveElement(/datum/element/mob_holder, held_icon)
+		AddElement(/datum/element/mob_holder, "old_corgi")
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
+/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/death()
 	if(!memory_saved)
@@ -414,11 +420,12 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
-/mob/living/simple_animal/pet/dog/corgi/Ian/Life()
-	..()
+/mob/living/simple_animal/pet/dog/corgi/Ian/BiologicalLife()
+	if(!(. = ..()))
+		return
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -440,7 +447,7 @@
 				sleep(3)
 				step_to(src,movement_target,1)
 
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+				if(movement_target?.loc)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
 						setDir(WEST)
 					else if (movement_target.loc.x > src.x)
@@ -485,8 +492,9 @@
 	nofur = TRUE
 	unique_pet = TRUE
 
-/mob/living/simple_animal/pet/dog/corgi/narsie/Life()
-	..()
+/mob/living/simple_animal/pet/dog/corgi/narsie/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && prob(5))
 			visible_message("<span class='warning'>[src] devours [P]!</span>", \
@@ -582,6 +590,7 @@
 	unsuitable_atmos_damage = 0
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40
+	held_icon = "void_puppy"
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
 	return 1	//Void puppies can navigate space.
@@ -598,11 +607,9 @@
 	icon_state = "lisa"
 	icon_living = "lisa"
 	icon_dead = "lisa_dead"
-	response_help  = "pets"
-	response_disarm = "bops"
-	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
+	held_icon = "lisa"
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
@@ -611,12 +618,13 @@
 		return
 	..()
 
-/mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
-	..()
+/mob/living/simple_animal/pet/dog/corgi/Lisa/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 
 	make_babies()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		if(prob(1))
 			emote("me", EMOTE_VISIBLE, pick("dances around.","chases her tail."))
 			spawn(0)
@@ -624,32 +632,13 @@
 					setDir(i)
 					sleep(1)
 
-/mob/living/simple_animal/pet/dog/pug/Life()
-	..()
-
-	if(!stat && !resting && !buckled)
+/mob/living/simple_animal/pet/dog/pug/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(!stat && CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) && !buckled)
 		if(prob(1))
 			emote("me", EMOTE_VISIBLE, pick("chases its tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					setDir(i)
 					sleep(1)
-
-/mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1,M)
-		if("harm")
-			wuv(-1,M)
-
-/mob/living/simple_animal/pet/dog/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				new /obj/effect/temp_visual/heart(loc)
-				emote("me", EMOTE_VISIBLE, "yaps happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
-		else
-			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
-				emote("me", EMOTE_VISIBLE, "growls!")

@@ -12,6 +12,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	var/datum/map_template/hilbertshotel/lore/hotelRoomTempLore
 	var/list/activeRooms = list()
 	var/list/storedRooms = list()
+	var/list/checked_in_ckeys = list()
 	var/storageTurf
 	//Lore Stuff
 	var/ruinSpawned = FALSE
@@ -44,7 +45,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
 	var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
-	if(!chosenRoomNumber)
+	if(!chosenRoomNumber || !user.CanReach(src))
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)
 		to_chat(user, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
@@ -52,8 +53,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
 		to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
 		return
-	if(ismob(loc))
-		if(user == loc) //Not always the same as user
+	if(!isturf(loc))
+		if((loc == user) || (loc.loc == user) || (loc.loc in user.contents) || (loc in user.GetAllContents(type)))		//short circuit, first three checks are cheaper and covers almost all cases (loc.loc covers hotel in box in backpack).
 			forceMove(get_turf(user))
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
@@ -63,12 +64,12 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 			GLOB.hhStorageTurf = locate(storageReservation.bottom_left_coords[1]+1, storageReservation.bottom_left_coords[2]+1, storageReservation.bottom_left_coords[3])
 		else
 			storageTurf = GLOB.hhStorageTurf
+	checked_in_ckeys |= user.ckey		//if anything below runtimes, guess you're outta luck!
 	if(tryActiveRoom(chosenRoomNumber, user))
 		return
 	if(tryStoredRoom(chosenRoomNumber, user))
 		return
 	sendToNewRoom(chosenRoomNumber, user)
-
 
 /obj/item/hilbertshotel/proc/tryActiveRoom(var/roomNumber, var/mob/user)
 	if(activeRooms["[roomNumber]"])
@@ -102,6 +103,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	else
 		return FALSE
 
+/// This is a BLOCKING OPERATION. Note the room load call, and the block reservation calls.
 /obj/item/hilbertshotel/proc/sendToNewRoom(var/roomNumber, var/mob/user)
 	var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
 	if(ruinSpawned)
@@ -172,6 +174,22 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 				var/turf/T = locate(_x, _y, _z)
 				A.forceMove(T)
 
+/obj/item/hilbertshotel/ghostdojo
+	name = "Infinite Dormitories"
+	anchored = TRUE
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+
+/obj/item/hilbertshotel/ghostdojo/interact(mob/user)
+	. = ..()
+	promptAndCheckIn(user)
+
+/obj/item/hilbertshotel/ghostdojo/linkTurfs(datum/turf_reservation/currentReservation, currentRoomnumber)
+	. = ..()
+	var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
+	for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
+		door.parentSphere = src
+		door.desc = "The door to this hotel room. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br /><span class='info'>Alt-Click to look through the peephole.</span>"
+
 //Template Stuff
 /datum/map_template/hilbertshotel
 	name = "Hilbert's Hotel Room"
@@ -190,7 +208,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /datum/map_template/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage"
 	mappath = '_maps/templates/hilbertshotelstorage.dmm'
-
 
 //Turfs and Areas
 /turf/closed/indestructible/hotelwall
@@ -239,7 +256,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 		to_chat(user, "<span class='warning'>The door seems to be malfunctioning and refuses to operate!</span>")
 		return
 	if(alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", "Leave", "Stay") == "Leave")
-		if(!user.canmove || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
+		if(!CHECK_MOBILITY(user, MOBILITY_MOVE) || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
 			return
 		user.forceMove(get_turf(parentSphere))
 		do_sparks(3, FALSE, get_turf(user))
@@ -253,7 +270,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /turf/closed/indestructible/hoteldoor/attack_tk(mob/user)
 	return //need to be close.
 
-/turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
+/turf/closed/indestructible/hoteldoor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_animal(mob/user)
@@ -350,6 +367,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
+		parentSphere?.checked_in_ckeys -= M.ckey
 		if(M.mind)
 			var/stillPopulated = FALSE
 			var/list/currentLivingMobs = GetAllContents(/mob/living) //Got to catch anyone hiding in anything
@@ -402,13 +420,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
-		M.notransform = TRUE
+		M.mob_transforming = TRUE
 
 /obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if(ismob(AM))
 		var/mob/M = AM
-		M.notransform = FALSE
+		M.mob_transforming = FALSE
 
 //Space Ruin stuff
 /area/ruin/space/has_grav/hilbertresearchfacility
@@ -452,7 +470,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 	id_access_list = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
 	instant = TRUE
 	id = /obj/item/card/id/silver
-	uniform = /obj/item/clothing/under/rank/research_director
+	uniform = /obj/item/clothing/under/rank/rnd/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	back = /obj/item/storage/backpack/satchel/leather
 	suit = /obj/item/clothing/suit/toggle/labcoat
@@ -463,29 +481,29 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /obj/item/paper/crumpled/docslogs/Initialize()
 	. = ..()
 	GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
-	info = {"<h4><center>Research Logs</center></h4>
-	I might just be onto something here!<br>
-	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
-	It's too soon to say for sure, but this might be the start of something quite important!<br>
-	I'll be sure to log any major future breakthroughs. This might be a lot more than I can manage on my own, perhaps I should hire that secretary after all...<br>
-	<h4>Breakthrough!</h4>
-	I can't believe it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.<br>
-	Exploiting the effects of space dilation caused by specific bluespace structures combined with a precise use of geometric calculus, I've discovered a way to correlate an infinite amount of space within a finite area!<br>
-	While the potential applications are endless, I utilized it in quite a nifty way so far by designing a system that recursively constructs subspace rooms and spatially links them to any of the infinite infinitesimally distinct points on the spheres surface.<br>
-	I call it: Hilbert's Hotel!<br>
-	<h4>Goodbye</h4>
-	I can't take this anymore. I know what happens next, and the fear of what is coming leaves me unable to continue working.<br>
-	Any fool in my field has heard the stories. It's not that I didn't believe them, it's just... I guess I underestimated the importance of my own research...<br>
-	Robert has reported a further increase in frequency of the strange, prying visitors who ask questions they have no business asking. I've requested him to keep everything on strict lockdown and have permanently dismissed all other assistants.<br>
-	I've also instructed him to use the encryption method we discussed for any important quantitative data. The poor lad... I don't think he truly understands what he's gotten himself into...<br>
-	It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.<br>
-	I can't stick around to the let that happen.<br>
-	I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.<br>
-	I'll be in <u>[uppertext(num2hex(GLOB.hhmysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
-	I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...<br>
-	Goodbye<br>
-	<br>
-	<i>Doctor Hilbert</i>"}
+	info = {"
+###  Research Logs
+I might just be onto something here!
+The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.
+It's too soon to say for sure, but this might be the start of something quite important!
+I'll be sure to log any major future breakthroughs. This might be a lot more than I can manage on my own, perhaps I should hire that secretary after all...
+###  Breakthrough!
+I can't believe it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.
+Exploiting the effects of space dilation caused by specific bluespace structures combined with a precise use of geometric calculus, I've discovered a way to correlate an infinite amount of space within a finite area!
+While the potential applications are endless, I utilized it in quite a nifty way so far by designing a system that recursively constructs subspace rooms and spatially links them to any of the infinite infinitesimally distinct points on the spheres surface.
+I call it: Hilbert's Hotel!
+<h4>Goodbye</h4>
+I can't take this anymore. I know what happens next, and the fear of what is coming leaves me unable to continue working.
+Any fool in my field has heard the stories. It's not that I didn't believe them, it's just... I guess I underestimated the importance of my own research...
+Robert has reported a further increase in frequency of the strange, prying visitors who ask questions they have no business asking. I've requested him to keep everything on strict lockdown and have permanently dismissed all other assistants.
+I've also instructed him to use the encryption method we discussed for any important quantitative data. The poor lad... I don't think he truly understands what he's gotten himself into...
+It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.
+I can't stick around to the let that happen.
+I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.
+I'll be in <u>[uppertext(num2hex(GLOB.hhmysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)
+I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...
+Goodbye
+     _Doctor Hilbert_"}
 
 /obj/item/paper/crumpled/robertsworkjournal
 	name = "Work Journal"
@@ -515,16 +533,15 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/paper/crumpled/bloody/docsdeathnote
 	name = "note"
-	info = {"This is it isn't it?<br>
-	No one's coming to help, that much has become clear.<br>
-	Sure, it's lonely, but do I have much choice? At least I brought the analyzer with me, they shouldn't be able to find me without it.<br>
-	Who knows who's waiting for me out there. Its either die out there in their hands, or die a slower, slightly more comfortable death in here.<br>
-	Everyday I can feel myself slipping away more and more, both physically and mentally. Who knows what happens now...<br>
-	Heh, so it's true then, this must be the inescapable path of all great minds... so be it then.<br>
-	<br>
-	<br>
-	<br>
-	<i>Choose a room, and enter the sphere<br>
-	Lay your head to rest, it soon becomes clear<br>
-	There's always more room around every bend<br>
-	Not all that's countable has an end...<i>"}
+	info = {"
+This is it isn't it?
+No one's coming to help, that much has become clear.
+Sure, it's lonely, but do I have much choice? At least I brought the analyzer with me, they shouldn't be able to find me without it.
+Who knows who's waiting for me out there. Its either die out there in their hands, or die a slower, slightly more comfortable death in here.
+Everyday I can feel myself slipping away more and more, both physically and mentally. Who knows what happens now...
+Heh, so it's true then, this must be the inescapable path of all great minds... so be it then.
+_Choose a room, and enter the sphere
+Lay your head to rest, it soon becomes clear
+There's always more room around every bend
+Not all that's countable has an end..._
+"}

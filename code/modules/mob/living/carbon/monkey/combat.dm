@@ -50,17 +50,11 @@
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
-	if(!canmove)
-		return 1
+	if(!CHECK_MOBILITY(src, MOBILITY_MOVE))
+		return TRUE
 	if(health <= 0 && checkDead)
-		return 1
-	if(IsUnconscious())
-		return 1
-	if(IsStun() || IsKnockdown())
-		return 1
-	if(stat)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/monkey/proc/battle_screech()
 	if(next_battle_screech < world.time)
@@ -87,7 +81,7 @@
 /mob/living/carbon/monkey/proc/pickup_and_wear(obj/item/I)
 	if(QDELETED(I) || I.loc != src)
 		return
-	equip_to_appropriate_slot(I)
+	equip_to_appropriate_slot(I, TRUE)
 
 /mob/living/carbon/monkey/resist_restraints()
 	var/obj/item/I = null
@@ -96,8 +90,7 @@
 	else if(legcuffed)
 		I = legcuffed
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		MarkResistTime()
 		cuff_resist(I)
 
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
@@ -117,7 +110,7 @@
 	if(pickupTarget)
 		if(restrained() || blacklistItems[pickupTarget] || HAS_TRAIT(pickupTarget, TRAIT_NODROP))
 			pickupTarget = null
-		else
+		else if(!isobj(loc) || istype(loc, /obj/item/clothing/head/mob_holder))
 			pickupTimer++
 			if(pickupTimer >= 4)
 				blacklistItems[pickupTarget] ++
@@ -132,6 +125,8 @@
 						pickupTarget = null
 						pickupTimer = 0
 					else if(ismob(pickupTarget.loc)) // in someones hand
+						if(istype(pickupTarget, /obj/item/clothing/head/mob_holder))
+							return//dont let them pickpocket themselves or hold other monkys.
 						var/mob/M = pickupTarget.loc
 						if(!pickpocketing)
 							pickpocketing = TRUE
@@ -358,11 +353,28 @@
 		battle_screech()
 		a_intent = INTENT_HARM
 
-/mob/living/carbon/monkey/attack_hand(mob/living/L)
+/mob/living/carbon/monkey/on_attack_hand(mob/living/L)
 	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
 		retaliate(L)
 	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
 		retaliate(L)
+	return ..()
+
+/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(M.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(M)
+	else if(M.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		retaliate(M)
+	return ..()
+
+/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(L)
+	return ..()
+
+/mob/living/carbon/monkey/attack_hulk(mob/living/carbon/human/user, does_attack_animation = FALSE)
+	if(user.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(user)
 	return ..()
 
 /mob/living/carbon/monkey/attack_paw(mob/living/L)
@@ -382,9 +394,9 @@
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
-/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

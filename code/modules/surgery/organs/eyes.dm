@@ -1,3 +1,7 @@
+#define BLURRY_VISION_ONE	1
+#define BLURRY_VISION_TWO	2
+#define BLIND_VISION_THREE	3
+
 /obj/item/organ/eyes
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
@@ -10,7 +14,7 @@
 	decay_factor = STANDARD_ORGAN_DECAY
 	maxHealth = 0.5 * STANDARD_ORGAN_THRESHOLD		//half the normal health max since we go blind at 30, a permanent blindness at 50 therefore makes sense unless medicine is administered
 	high_threshold = 0.3 * STANDARD_ORGAN_THRESHOLD	//threshold at 30
-	low_threshold = 0.15 * STANDARD_ORGAN_THRESHOLD	//threshold at 15
+	low_threshold = 0.2 * STANDARD_ORGAN_THRESHOLD	//threshold at 15
 
 	low_threshold_passed = "<span class='info'>Distant objects become somewhat less tangible.</span>"
 	high_threshold_passed = "<span class='info'>Everything starts to look a lot less clear.</span>"
@@ -22,46 +26,63 @@
 	var/sight_flags = 0
 	var/see_in_dark = 2
 	var/tint = 0
-	var/eye_color = "" //set to a hex code to override a mob's eye color
-	var/old_eye_color = "fff"
+	var/left_eye_color = "" //set to a hex code to override a mob's eye color
+	var/right_eye_color = ""
+	var/old_left_eye_color = "fff"
+	var/old_right_eye_color = "fff"
 	var/flash_protect = 0
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
-	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+	var/eye_damaged	= FALSE	//indicates that our eyes are undergoing some level of negative effect
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
 	if(!.)
 		return
-	if(damage == initial(damage))
-		clear_eye_trauma()
+	switch(eye_damaged)
+		if(BLURRY_VISION_ONE, BLURRY_VISION_TWO)
+			owner.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, eye_damaged)
+		if(BLIND_VISION_THREE)
+			owner.become_blind(EYE_DAMAGE)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		old_eye_color = H.eye_color
-		if(eye_color)
-			H.eye_color = eye_color
+		old_left_eye_color = H.left_eye_color
+		old_right_eye_color = H.right_eye_color
+
+		if(left_eye_color)
+			H.left_eye_color = left_eye_color
 		else
-			eye_color = H.eye_color
+			left_eye_color = H.left_eye_color
+
+		if(right_eye_color)
+			H.right_eye_color = right_eye_color
+		else
+			right_eye_color = H.right_eye_color
+
 		if(!special)
-			H.dna?.species?.handle_body() //regenerate eyeballs overlays.
-		if(HAS_TRAIT(H, TRAIT_NIGHT_VISION) && !lighting_alpha)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
-			see_in_dark = 8
+			H.dna?.species?.handle_body(H) //regenerate eyeballs overlays.
 	M.update_tint()
 	owner.update_sight()
 
-
-/obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
-	clear_eye_trauma()
+/obj/item/organ/eyes/Remove(special = FALSE)
 	. = ..()
-	if(ishuman(M) && eye_color)
-		var/mob/living/carbon/human/H = M
-		H.eye_color = old_eye_color
+	var/mob/living/carbon/C = .
+	if(QDELETED(C))
+		return
+	switch(eye_damaged)
+		if(BLURRY_VISION_ONE, BLURRY_VISION_TWO)
+			C.clear_fullscreen("eye_damage")
+		if(BLIND_VISION_THREE)
+			C.cure_blind(EYE_DAMAGE)
+	if(ishuman(C) && left_eye_color && right_eye_color)
+		var/mob/living/carbon/human/H = C
+		H.left_eye_color = old_left_eye_color
+		H.right_eye_color = old_right_eye_color
 		if(!special)
-			H.dna.species.handle_body()
+			H.dna.species.handle_body(H)
 	if(!special)
-		M.update_tint()
-		M.update_sight()
+		C.update_tint()
+		C.update_sight()
 
 /obj/item/organ/eyes/on_life()
 	..()
@@ -85,11 +106,30 @@
 		damaged = FALSE
 		C.clear_fullscreen("eye_damage")
 
-/obj/item/organ/eyes/proc/clear_eye_trauma()
-	var/mob/living/carbon/C = owner
-	C.clear_fullscreen("eye_damage")
-	C.cure_blind(EYE_DAMAGE)
-	damaged = FALSE
+/obj/item/organ/eyes/applyOrganDamage(d, maximum = maxHealth)
+	. = ..()
+	if(!.)
+		return
+	var/old_damaged = eye_damaged
+	switch(damage)
+		if(INFINITY to maxHealth)
+			eye_damaged = BLIND_VISION_THREE
+		if(maxHealth to high_threshold)
+			eye_damaged = BLURRY_VISION_TWO
+		if(high_threshold to low_threshold)
+			eye_damaged = BLURRY_VISION_ONE
+		else
+			eye_damaged = FALSE
+	if(eye_damaged == old_damaged || !owner)
+		return
+	if(old_damaged == BLIND_VISION_THREE)
+		owner.cure_blind(EYE_DAMAGE)
+	else if(eye_damaged == BLIND_VISION_THREE)
+		owner.become_blind(EYE_DAMAGE)
+	if(eye_damaged && eye_damaged != BLIND_VISION_THREE)
+		owner.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, eye_damaged)
+	else
+		owner.clear_fullscreen("eye_damage")
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
@@ -147,21 +187,23 @@
 		return
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)
-	if(severity == EMP_HEAVY)
+	if(severity >= 70)
 		owner.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
 
 
 /obj/item/organ/eyes/robotic/xray
 	name = "\improper X-ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
-	eye_color = "000"
+	left_eye_color = "000"
+	right_eye_color = "000"
 	see_in_dark = 8
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
 /obj/item/organ/eyes/robotic/thermals
 	name = "thermal eyes"
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."
-	eye_color = "FC0"
+	left_eye_color = "FC0"
+	right_eye_color = "FC0"
 	sight_flags = SEE_MOBS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = -1
@@ -170,7 +212,8 @@
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
 	desc = "It's two flashlights rigged together with some wire. Why would you put these in someone's head?"
-	eye_color ="fee5a3"
+	left_eye_color ="fee5a3"
+	right_eye_color ="fee5a3"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"
 	flash_protect = 2
@@ -189,13 +232,13 @@
 	eye.update_brightness(M)
 	M.become_blind("flashlight_eyes")
 
-
-/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, special = FALSE)
-	eye.on = FALSE
-	eye.update_brightness(M)
-	eye.forceMove(src)
-	M.cure_blind("flashlight_eyes")
-	..()
+/obj/item/organ/eyes/robotic/flashlight/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		eye.on = FALSE
+		eye.update_brightness(owner)
+		eye.forceMove(src)
+		owner.cure_blind("flashlight_eyes")
+	return ..()
 
 // Welding shield implant
 /obj/item/organ/eyes/robotic/shield
@@ -206,12 +249,13 @@
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext(definitionvar,2,3)][copytext(definitionvar,4,5)][copytext(definitionvar,6,7)]")
+#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
 
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
-	eye_color = "000"
+	left_eye_color = "000"
+	right_eye_color = "000"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
 	var/current_color_string = "#ffffff"
 	var/active = FALSE
@@ -231,7 +275,7 @@
 	terminate_effects()
 	. = ..()
 
-/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/eyes/robotic/glow/Remove(special = FALSE)
 	terminate_effects()
 	. = ..()
 
@@ -240,7 +284,6 @@
 		deactivate(TRUE)
 	active = FALSE
 	clear_visuals(TRUE)
-	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/item/organ/eyes/robotic/glow/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
@@ -259,17 +302,31 @@
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
+	if(!isnum(range))
+		return
 
-	set_distance(CLAMP(range, 0, max_light_beam_distance))
+	set_distance(clamp(range, 0, max_light_beam_distance))
 	assume_rgb(C)
 
+#define MAX_SATURATION 192
+#define MAX_LIGHTNESS 256
+
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
-	current_color_string = newcolor
-	eye_color = RGB2EYECOLORSTRING(current_color_string)
+	var/current_color = RGB2EYECOLORSTRING(newcolor)
+	left_eye_color = current_color
+	right_eye_color = current_color
+	var/list/hsv = ReadHSV(RGBtoHSV(newcolor))
+	hsv[2] = clamp(hsv[2], 0, MAX_SATURATION)
+	hsv[3] = clamp(hsv[3], 0, MAX_LIGHTNESS)
+	var/new_hsv = hsv(hsv[1], hsv[2], hsv[3])
+	current_color_string = HSVtoRGB(new_hsv)
 	sync_light_effects()
 	cycle_mob_overlay()
 	if(!QDELETED(owner) && ishuman(owner))		//Other carbon mobs don't have eye color.
 		owner.dna.species.handle_body(owner)
+
+#undef MAX_SATURATION
+#undef MAX_LIGHTNESS
 
 /obj/item/organ/eyes/robotic/glow/proc/cycle_mob_overlay()
 	remove_mob_overlay()
@@ -320,6 +377,8 @@
 	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
+		if(!scanning)
+			break
 		if(scanning.opacity || scanning.has_opaque_atom)
 			stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)
@@ -378,3 +437,26 @@
 	name = "insect eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = -1
+
+/obj/item/organ/eyes/ipc
+	name = "ipc eyes"
+	icon_state = "cybernetic_eyeballs"
+
+/obj/item/organ/eyes/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, "<span class='warning'>Alert: Perception visuals damaged!</span>")
+	owner.flash_act(visual = 1)
+	if(severity >= 70)
+		owner.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
+
+/obj/item/organ/eyes/night_vision/arachnid
+	name = "arachnid eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, offset by basic night vision."
+	see_in_dark = 4
+	flash_protect = -1
+
+#undef BLURRY_VISION_ONE
+#undef BLURRY_VISION_TWO
+#undef BLIND_VISION_THREE

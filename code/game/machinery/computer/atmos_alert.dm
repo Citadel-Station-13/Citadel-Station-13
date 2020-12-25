@@ -19,11 +19,10 @@
 	SSradio.remove_object(src, receive_frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
+		ui = new(user, src, "AtmosAlertConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_alert/ui_data(mob/user)
@@ -45,11 +44,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				to_chat(usr, "Priority alarm for [zone] cleared.")
+				to_chat(usr, "<span class='notice'>Priority alarm for [zone] cleared.</span>")
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				to_chat(usr, "Minor alarm for [zone] cleared.")
+				to_chat(usr, "<span class='notice'>Minor alarm for [zone] cleared.</span>")
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()
@@ -78,23 +77,20 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/atmos_alert/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/computer/atmos_alert/update_overlays()
+	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/overlay_state = icon_screen
 	if(stat & (NOPOWER|BROKEN))
-		add_overlay("[icon_keyboard]_off")
+		. |= "[icon_keyboard]_off"
 		return
-	add_overlay(icon_keyboard)
+	. |= icon_keyboard
 	if(priority_alarms.len)
 		overlay_state = "alert:2"
-		add_overlay("alert:2")
 	else if(minor_alarms.len)
 		overlay_state = "alert:1"
-		add_overlay("alert:1")
 	else
 		overlay_state = "alert:0"
-		add_overlay("alert:0")
+	. |= overlay_state
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha=128)

@@ -69,21 +69,22 @@
 	else
 		. = ..()
 
-/obj/structure/fireplace/update_icon()
-	cut_overlays()
-	if(lit)
-		switch(burn_time_remaining())
-			if(0 to 500)
-				add_overlay("fireplace_fire0")
-			if(500 to 1000)
-				add_overlay("fireplace_fire1")
-			if(1000 to 1500)
-				add_overlay("fireplace_fire2")
-			if(1500 to 2000)
-				add_overlay("fireplace_fire3")
-			if(2000 to MAXIMUM_BURN_TIMER)
-				add_overlay("fireplace_fire4")
-		add_overlay("fireplace_glow")
+/obj/structure/fireplace/update_overlays()
+	. = ..()
+	if(!lit)
+		return
+	switch(burn_time_remaining())
+		if(0 to 500)
+			. += "fireplace_fire0"
+		if(500 to 1000)
+			. += "fireplace_fire1"
+		if(1000 to 1500)
+			. += "fireplace_fire2"
+		if(1500 to 2000)
+			. += "fireplace_fire3"
+		if(2000 to MAXIMUM_BURN_TIMER)
+			. += "fireplace_fire4"
+	. += "fireplace_glow"
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)
@@ -129,7 +130,7 @@
 		if(burn_time_remaining() < MAXIMUM_BURN_TIMER)
 			flame_expiry_timer = world.time + MAXIMUM_BURN_TIMER
 	else
-		fuel_added = CLAMP(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
+		fuel_added = clamp(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
 
 /obj/structure/fireplace/proc/burn_time_remaining()
 	if(lit)

@@ -3,7 +3,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	light_range = 3
 	light_power = 0.9
 	light_color = "#CDDDFF"
@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	blood_volume = 0
-	has_unlimited_silicon_privilege = 1
+	silicon_privileges = PRIVILEDGES_BOT
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	verb_say = "states"
@@ -98,6 +98,14 @@
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
+	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
+	var/can_salute = TRUE
+	var/salute_delay = 60 SECONDS
+
+	//emotes/speech stuff
+	var/patrol_emote = "Engaging patrol mode."
+	var/patrol_fail_emote = "Unable to start patrol."
+
 /mob/living/simple_animal/bot/proc/get_mode()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		if(paicard)
@@ -111,11 +119,24 @@
 	else
 		return "<span class='average'>[mode_name[mode]]</span>"
 
+/**
+  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
+  */
+/mob/living/simple_animal/bot/proc/get_mode_ui()
+	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
+		return paicard ? "pAI Controlled" : "Autonomous"
+	else if(!on)
+		return "Inactive"
+	else if(!mode)
+		return "Idle"
+	else
+		return "[mode_name[mode]]"
+
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return FALSE
 	on = TRUE
-	canmove = TRUE
+	update_mobility()
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -123,7 +144,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
-	canmove = FALSE
+	update_mobility()
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -160,11 +181,11 @@
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
 
-/mob/living/simple_animal/bot/update_canmove()
+/mob/living/simple_animal/bot/update_mobility()
 	. = ..()
 	if(!on)
-		. = 0
-	canmove = .
+		. = NONE
+		mobility_flags = .
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)
@@ -182,8 +203,9 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/death(gibbed)
-	explode()
-	..()
+	. = ..()
+	if(!gibbed)
+		explode()
 
 /mob/living/simple_animal/bot/proc/explode()
 	qdel(src)
@@ -193,10 +215,12 @@
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
 		emagged = 1
-		to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
+		if(user)
+			to_chat(user, "<span class='notice'>You bypass [src]'s controls.</span>")
 		return TRUE
 	if(!open)
-		to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>You need to open maintenance panel first!</span>")
 		return
 	emagged = 2
 	remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
@@ -204,7 +228,8 @@
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, "<span class='userdanger'>(#$*#$^^( OVERRIDE DETECTED</span>")
-	log_combat(user, src, "emagged")
+	if(user)
+		log_combat(user, src, "emagged")
 	return TRUE
 
 /mob/living/simple_animal/bot/examine(mob/user)
@@ -247,6 +272,14 @@
 	if(!on || client)
 		return
 
+	if(!commissioned && can_salute)
+		for(var/mob/living/simple_animal/bot/B in get_hearers_in_view(5, get_turf(src)))
+			if(B.commissioned)
+				visible_message("<b>[src]</b> performs an elaborate salute for [B]!")
+				can_salute = FALSE
+				addtimer(VARSET_CALLBACK(src, can_salute, TRUE), salute_delay)
+				break
+
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
 		if(BOT_RESPONDING)	//Called by the AI.
 			call_mode()
@@ -257,7 +290,7 @@
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
-/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HELP)
 		interact(H)
 	else
@@ -302,7 +335,6 @@
 					user.visible_message("<span class='notice'>[user] uses [W] to pull [paicard] out of [bot_name]!</span>","<span class='notice'>You pull [paicard] out of [bot_name] with [W].</span>")
 					ejectpai(user)
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				to_chat(user, "<span class='warning'>[src] does not need a repair!</span>")
@@ -338,7 +370,7 @@
 		ejectpai(0)
 	if(on)
 		turn_off()
-	spawn(severity*300)
+	spawn(3 * severity)
 		stat &= ~EMPED
 		if(was_on)
 			turn_on()
@@ -441,7 +473,6 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		return scan_result
 	else
 		return FALSE //The current element failed assessment, move on to the next.
-	return
 
 /mob/living/simple_animal/bot/proc/check_bot(targ)
 	var/turf/T = get_turf(targ)
@@ -584,7 +615,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
 		auto_patrol = 0
 		tries = 0
-		speak("Unable to start patrol.")
+		speak(patrol_fail_emote)
 
 		return
 
@@ -600,7 +631,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				return
 			mode = BOT_PATROL
 	else					// no patrol target, so need a new one
-		speak("Engaging patrol mode.")
+		speak(patrol_emote)
 		find_patrol_target()
 		tries++
 	return
@@ -809,14 +840,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	switch(href_list["operation"])
 		if("patrol")
-			if(!issilicon(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
+			if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr) && !(bot_core.allowed(usr) || !locked))
 				return TRUE
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
 			remote_disabled = !remote_disabled
 		if("hack")
-			if(!issilicon(usr) && !IsAdminGhost(usr))
+			if(!hasSiliconAccessInArea(usr) && !IsAdminGhost(usr))
 				var/msg = "[key_name(usr)] attempted to hack a bot with a href that shouldn't be available!"
 				message_admins(msg)
 				log_admin(msg)
@@ -835,12 +866,12 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				bot_reset()
 		if("ejectpai")
-			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if(paicard && (!locked || hasSiliconAccessInArea(usr) || IsAdminGhost(usr)))
 				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name]</span>")
 				ejectpai(usr)
 	update_controls()
 
-/mob/living/simple_animal/bot/proc/update_icon()
+/mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][on]"
 
 // Machinery to simplify topic and access calls
@@ -862,13 +893,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return TRUE
-		else if(!issilicon(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
+		else if(!hasSiliconAccessInArea(user) && !IsAdminGhost(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
 	return FALSE
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
-	if(issilicon(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
+	if(hasSiliconAccessInArea(user) || IsAdminGhost(user)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
@@ -877,7 +908,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/eject = ""
-	if((!locked || issilicon(usr) || IsAdminGhost(usr)))
+	if((!locked || hasSiliconAccessInArea(usr) || IsAdminGhost(usr)))
 		if(paicard || allow_pai)
 			eject += "Personality card status: "
 			if(paicard)
@@ -908,7 +939,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_name = name
 				name = paicard.pai.name
 				faction = user.faction.Copy()
-				language_holder = paicard.pai.language_holder.copy(src)
 				log_combat(user, paicard.pai, "uploaded to [bot_name],")
 				return TRUE
 			else
@@ -1028,3 +1058,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(I)
 		I.icon_state = null
 	path.Cut(1, 2)
+
+/mob/living/silicon/rust_heretic_act()
+	adjustBruteLoss(500)

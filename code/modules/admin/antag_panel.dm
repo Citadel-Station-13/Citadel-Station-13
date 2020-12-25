@@ -104,7 +104,7 @@ GLOBAL_VAR(antag_prototypes)
 
 	var/special_statuses = get_special_statuses()
 	if(length(special_statuses))
-		out += get_special_statuses() + "<br>"
+		out += special_statuses + "<br>"
 
 	if(!GLOB.antag_prototypes)
 		GLOB.antag_prototypes = list()

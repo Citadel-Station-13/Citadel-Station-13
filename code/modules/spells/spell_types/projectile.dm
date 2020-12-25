@@ -37,8 +37,8 @@
 		var/projectile_type = text2path(proj_type)
 		projectile = new projectile_type(user)
 	if(istype(proj_type, /obj/effect/proc_holder/spell))
-		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
-		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
+		projectile = new /obj/effect/proc_holder/spell/pointed/trigger(user)
+		var/obj/effect/proc_holder/spell/pointed/trigger/T = projectile
 		T.linked_spells += proj_type
 	projectile.icon = proj_icon
 	projectile.icon_state = proj_icon_state

@@ -22,7 +22,7 @@
 	var/obj/machinery/atmospherics/oldN = nodes[i]
 	..()
 	if(oldN)
-		oldN.build_network()
+		SSair.add_to_rebuild_queue(oldN)
 
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
@@ -31,14 +31,6 @@
 	if(QDELETED(parent))
 		parent = new
 		parent.build_pipeline(src)
-
-/obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
-	if(nodes[1] && nodes[2])
-		icon_state = "intact[invisibility ? "-f" : "" ]"
-	else
-		var/have_node1 = nodes[1] ? TRUE : FALSE
-		var/have_node2 = nodes[2] ? TRUE : FALSE
-		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
 
 /obj/machinery/atmospherics/pipe/atmosinit()
 	var/turf/T = loc			// hide if turf is not intact
@@ -72,6 +64,7 @@
 
 /obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(parent.air, user, src)
+	return TRUE
 
 /obj/machinery/atmospherics/pipe/returnPipenet()
 	return parent
@@ -93,6 +86,13 @@
 			qdel(meter)
 	. = ..()
 
+/obj/machinery/atmospherics/pipe/update_icon()
+	. = ..()
+	update_alpha()
+
+/obj/machinery/atmospherics/pipe/proc/update_alpha()
+	alpha = invisibility ? 64 : 255
+
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])
@@ -112,3 +112,10 @@
 	pipe_color = paint_color
 	update_node_icon()
 	return TRUE
+
+/obj/machinery/atmospherics/pipe/attack_ghost(mob/dead/observer/O)
+	. = ..()
+	if(parent)
+		atmosanalyzer_scan(parent.air, O, src, FALSE)
+	else
+		to_chat(O, "<span class='warning'>[src] doesn't have a pipenet, which is probably a bug.</span>")

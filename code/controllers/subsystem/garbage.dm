@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(garbage)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
 
-	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+	var/list/collection_timeout = list(15 SECONDS, 30 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
 
 	//Stat tracking
 	var/delslasttick = 0			// number of del()'s we've done this tick
@@ -25,8 +25,9 @@ SUBSYSTEM_DEF(garbage)
 	//Queue
 	var/list/queues
 
-	#ifdef TESTING
+	#ifdef LEGACY_REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
+	var/list/reference_find_on_fail_types = list()
 	#endif
 
 
@@ -57,7 +58,7 @@ SUBSYSTEM_DEF(garbage)
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	msg += " P:[pass_counts.Join(",")]"
 	msg += "|F:[fail_counts.Join(",")]"
-	..(msg)
+	return ..()
 
 /datum/controller/subsystem/garbage/Shutdown()
 	//Adds the del() log to the qdel log file
@@ -98,9 +99,6 @@ SUBSYSTEM_DEF(garbage)
 					state = SS_RUNNING
 				break
 
-
-
-
 /datum/controller/subsystem/garbage/proc/HandleQueue(level = GC_QUEUE_CHECK)
 	if (level == GC_QUEUE_CHECK)
 		delslasttick = 0
@@ -136,7 +134,7 @@ SUBSYSTEM_DEF(garbage)
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
-			#ifdef TESTING
+			#ifdef LEGACY_REFERENCE_TRACKING
 			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
@@ -147,7 +145,9 @@ SUBSYSTEM_DEF(garbage)
 		fail_counts[level]++
 		switch (level)
 			if (GC_QUEUE_CHECK)
-				#ifdef TESTING
+				#ifdef REFERENCE_TRACKING
+				D.find_references()
+				#elif defined(LEGACY_REFERENCE_TRACKING)
 				if(reference_find_on_fail[refID])
 					D.find_references()
 				#ifdef GC_FAILURE_HARD_LOOKUP
@@ -158,7 +158,19 @@ SUBSYSTEM_DEF(garbage)
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
+				#ifdef TESTING
+				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
+				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
+					var/client/admin = c
+					if(!check_rights_for(admin, R_ADMIN))
+						continue
+					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
 				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
+				#endif
+				#ifdef REFERENCE_TRACKING
+				GLOB.deletion_failures += D //It should no longer be bothered by the GC, manual deletion only.
+				continue
+				#endif
 				I.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
@@ -183,12 +195,32 @@ SUBSYSTEM_DEF(garbage)
 	var/gctime = world.time
 	var/refid = "\ref[D]"
 
+#ifdef LEGACY_REFERENCE_TRACKING
+	if(reference_find_on_fail_types[D.type])
+		reference_find_on_fail["\ref[D]"] = TRUE
+#endif
+
 	D.gc_destroyed = gctime
 	var/list/queue = queues[level]
 	if (queue[refid])
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
 	queue[refid] = gctime
+
+#ifdef LEGACY_REFERENCE_TRACKING
+/datum/controller/subsystem/garbage/proc/add_type_to_findref(type)
+	if(!ispath(type))
+		return "NOT A VAILD PATH"
+	reference_find_on_fail_types |= typecacheof(type)
+
+/datum/controller/subsystem/garbage/proc/remove_type_from_findref(type)
+	if(!ispath(type))
+		return "NOT A VALID PATH"
+	reference_find_on_fail_types -= typesof(type)
+
+/datum/controller/subsystem/garbage/proc/clear_findref_types()
+	reference_find_on_fail_types = list()
+#endif
 
 //this is mainly to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
@@ -241,12 +273,6 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
-
-#ifdef TESTING
-/proc/qdel_and_find_ref_if_fail(datum/D, force = FALSE)
-	SSgarbage.reference_find_on_fail[REF(D)] = TRUE
-	qdel(D, force)
-#endif
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -301,16 +327,13 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.Queue(D, GC_QUEUE_HARDDELETE)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 				SSgarbage.HardDelete(D)
-			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
+			#ifdef LEGACY_REFERENCE_TRACKING
+			if (QDEL_HINT_FINDREFERENCE) //qdel will, if LEGACY_REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.Queue(D)
-				#ifdef TESTING
-				D.find_references()
-				#endif
 			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 				SSgarbage.Queue(D)
-				#ifdef TESTING
-				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
-				#endif
+				SSgarbage.reference_find_on_fail["\ref[D]"] = TRUE
+			#endif
 			else
 				#ifdef TESTING
 				if(!I.no_hint)
@@ -322,114 +345,16 @@ SUBSYSTEM_DEF(garbage)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
 #ifdef TESTING
-
-/datum/verb/find_refs()
-	set category = "Debug"
-	set name = "Find References"
-	set src in world
-
-	find_references(FALSE)
-
-/datum/proc/find_references(skip_alert)
-	running_find_references = type
-	if(usr && usr.client)
-		if(usr.client.running_find_references)
-			testing("CANCELLED search for references to a [usr.client.running_find_references].")
-			usr.client.running_find_references = null
-			running_find_references = null
-			//restart the garbage collector
-			SSgarbage.can_fire = 1
-			SSgarbage.next_fire = world.time + world.tick_lag
-			return
-
-		if(!skip_alert)
-			if(alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
-				running_find_references = null
-				return
-
-	//this keeps the garbage collector from failing to collect objects being searched for in here
-	SSgarbage.can_fire = 0
-
-	if(usr && usr.client)
-		usr.client.running_find_references = type
-
-	testing("Beginning search for references to a [type].")
-	last_find_references = world.time
-
-	DoSearchVar(GLOB) //globals
-	for(var/datum/thing in world) //atoms (don't beleive it's lies)
-		DoSearchVar(thing, "World -> [thing]")
-
-	for (var/datum/thing) //datums
-		DoSearchVar(thing, "World -> [thing]")
-
-	for (var/client/thing) //clients
-		DoSearchVar(thing, "World -> [thing]")
-
-	testing("Completed search for references to a [type].")
-	if(usr && usr.client)
-		usr.client.running_find_references = null
-	running_find_references = null
-
-	//restart the garbage collector
-	SSgarbage.can_fire = 1
-	SSgarbage.next_fire = world.time + world.tick_lag
-
-/datum/verb/qdel_then_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References"
-	set src in world
-
-	qdel(src, TRUE)		//Force.
-	if(!running_find_references)
-		find_references(TRUE)
-
-/datum/verb/qdel_then_if_fail_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References if GC failure"
-	set src in world
-
-	qdel_and_find_ref_if_fail(src, TRUE)
-
-/datum/proc/DoSearchVar(X, Xname, recursive_limit = 64)
-	if(usr && usr.client && !usr.client.running_find_references)
-		return
-	if (!recursive_limit)
-		return
-
-	if(istype(X, /datum))
-		var/datum/D = X
-		if(D.last_find_references == last_find_references)
-			return
-
-		D.last_find_references = last_find_references
-		var/list/L = D.vars
-
-		for(var/varname in L)
-			if (varname == "vars")
-				continue
-			var/variable = L[varname]
-
-			if(variable == src)
-				testing("Found [src.type] \ref[src] in [D.type]'s [varname] var. [Xname]")
-
-			else if(islist(variable))
-				DoSearchVar(variable, "[Xname] -> list", recursive_limit-1)
-
-	else if(islist(X))
-		var/normal = IS_NORMAL_LIST(X)
-		for(var/I in X)
-			if (I == src)
-				testing("Found [src.type] \ref[src] in list [Xname].")
-
-			else if (I && !isnum(I) && normal && X[I] == src)
-				testing("Found [src.type] \ref[src] in list [Xname]\[[I]\]")
-
-			else if (islist(I))
-				DoSearchVar(I, "[Xname] -> list", recursive_limit-1)
-
-#ifndef FIND_REF_NO_CHECK_TICK
-	CHECK_TICK
-#endif
-
+/proc/writeDatumCount()
+	var/list/datums = list()
+	for(var/datum/D in world)
+		datums[D.type] += 1
+	for(var/datum/D)
+		datums[D.type] += 1
+	datums = sortTim(datums, /proc/cmp_numeric_dsc, associative = TRUE)
+	if(fexists("data/DATUMCOUNT.txt"))
+		fdel("data/DATUMCOUNT.txt")
+	var/outfile = file("data/DATUMCOUNT.txt")
+	for(var/path in datums)
+		outfile << "[datums[path]]\t\t\t\t\t[path]"
 #endif

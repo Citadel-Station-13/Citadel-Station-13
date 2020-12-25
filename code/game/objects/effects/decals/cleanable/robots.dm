@@ -10,10 +10,11 @@
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
+	beauty = -50
 
 /obj/effect/decal/cleanable/robot_debris/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	reagents.add_reagent("liquidoilgibs", 5)
+	reagents.add_reagent(/datum/reagent/liquidgibs, 5)
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	set waitfor = 0
@@ -50,14 +51,16 @@
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
+	beauty = -100
 
 /obj/effect/decal/cleanable/oil/Initialize()
 	. = ..()
-	reagents.add_reagent("oil", 30)
-	reagents.add_reagent("liquidoilgibs", 5)
+	reagents.add_reagent(/datum/reagent/oil, 30)
+	reagents.add_reagent(/datum/reagent/liquidgibs/oil, 5)
 
 /obj/effect/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+	beauty = -50
 
 /obj/effect/decal/cleanable/oil/slippery
 

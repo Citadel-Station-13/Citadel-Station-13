@@ -8,7 +8,7 @@
 				/datum/surgery_step/bionecrosis,
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
-/datum/surgery/advanced/necrotic_revival/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/advanced/necrotic_revival/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	. = ..()
 	var/obj/item/organ/zombie_infection/ZI = target.getorganslot(ORGAN_SLOT_ZOMBIE)
 	if(ZI)
@@ -19,7 +19,7 @@
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	implements = list(/obj/item/reagent_containers/syringe = 100, /obj/item/pen = 30)
 	time = 50
-	chems_needed = list("zombiepowder", "rezadone")
+	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
 
 /datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

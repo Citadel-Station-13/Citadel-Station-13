@@ -2,7 +2,7 @@
 	name = "enhancement surgery"
 	var/bioware_target = BIOWARE_GENERIC
 
-/datum/surgery/advanced/bioware/can_start(mob/user, mob/living/carbon/human/target)
+/datum/surgery/advanced/bioware/can_start(mob/user, mob/living/carbon/human/target, obj/item/tool)
 	if(!..())
 		return FALSE
 	if(!istype(target))

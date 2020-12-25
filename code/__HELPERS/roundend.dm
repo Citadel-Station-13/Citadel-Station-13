@@ -3,6 +3,9 @@
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" 	//Emergency shuttle only.
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	gather_antag_data()
 	record_nuke_disk_location()
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
@@ -19,6 +22,9 @@
 		var/list/mob_data = list()
 		if(isnewplayer(m))
 			continue
+		if (m.client && m.client.prefs && m.client.prefs.auto_ooc)
+			if (!(m.client.prefs.chat_toggles & CHAT_OOC))
+				m.client.prefs.chat_toggles ^= CHAT_OOC
 		if(m.mind)
 			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
 				num_survivors++
@@ -68,9 +74,6 @@
 					mob_data += list("name" = m.name, "typepath" = m.type)
 				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
 				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
-	var/datum/station_state/end_state = new /datum/station_state()
-	end_state.count()
-	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	file_data["additional data"]["station integrity"] = station_integrity
 	WRITE_FILE(json_file, json_encode(file_data))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
@@ -108,7 +111,14 @@
 
 		if(A.objectives.len)
 			for(var/datum/objective/O in A.objectives)
-				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
+				var/result = "UNKNOWN"
+				var/actual_result = O.check_completion()
+				if(actual_result >= 1)
+					result = "SUCCESS"
+				else if(actual_result <= 0)
+					result = "FAIL"
+				else
+					result = "[actual_result*100]%"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
@@ -136,19 +146,19 @@
 	var/list/file_data = list()
 	var/pos = 1
 	for(var/V in GLOB.news_network.network_channels)
-		var/datum/newscaster/feed_channel/channel = V
+		var/datum/news/feed_channel/channel = V
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
 		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
 		for(var/M in channel.messages)
-			var/datum/newscaster/feed_message/message = M
+			var/datum/news/feed_message/message = M
 			if(!istype(message))
 				stack_trace("Non-message in newscaster channel messages list")
 				continue
 			var/list/comment_data = list()
 			for(var/C in message.comments)
-				var/datum/newscaster/feed_comment/comment = C
+				var/datum/news/feed_comment/comment = C
 				if(!istype(comment))
 					stack_trace("Non-message in newscaster message comments list")
 					continue
@@ -164,7 +174,7 @@
 
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
-		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
+		world.TgsTargetedChatBroadcast("[GLOB.round_end_notifiees.Join(", ")] the round has ended.", FALSE)
 
 	for(var/I in round_end_events)
 		var/datum/callback/cb = I
@@ -175,7 +185,7 @@
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
-
+	CONFIG_SET(flag/suicide_allowed,TRUE) // EORG suicides allowed
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
 
@@ -223,6 +233,7 @@
 	for(var/antag_name in total_antagonists)
 		var/list/L = total_antagonists[antag_name]
 		log_game("[antag_name]s :[L.Join(", ")].")
+	set_observer_default_invisibility(0, "<span class='warning'>The round is over! You are now visible to the living.</span>")
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
@@ -310,8 +321,10 @@
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
-		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
-		parts += "[FOURSPACES]Threat left: [mode.threat]"
+		mode.update_playercounts()
+		parts += "[FOURSPACES]Final threat level: [mode.threat_level]"
+		parts += "[FOURSPACES]Final threat: [mode.threat]"
+		parts += "[FOURSPACES]Average threat: [mode.threat_average]"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
@@ -320,6 +333,8 @@
 			parts += "[FOURSPACES][FOURSPACES][str]"
 		for(var/entry in mode.threat_tallies)
 			parts += "[FOURSPACES][FOURSPACES][entry] added [mode.threat_tallies[entry]]"
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat_level,"Final threat level")
+		SSblackbox.record_feedback("tally","dynamic_threat",mode.threat,"Final Threat")
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -334,7 +349,7 @@
 	if(!previous)
 		var/list/report_parts = list(personal_report(C), GLOB.common_report)
 		content = report_parts.Join()
-		C.verbs -= /client/proc/show_previous_roundend_report
+		remove_verb(C, /client/proc/show_previous_roundend_report)
 		fdel(filename)
 		text2file(content, filename)
 	else
@@ -342,7 +357,8 @@
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
-	roundend_report.open(0)
+	roundend_report.add_stylesheet("font-awesome", 'html/font-awesome/css/all.min.css')
+	roundend_report.open(FALSE)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
 	var/list/parts = list()
@@ -386,7 +402,7 @@
 	for (var/i in GLOB.ai_list)
 		var/mob/living/silicon/ai/aiPlayer = i
 		if(aiPlayer.mind)
-			parts += "<b>[aiPlayer.name]</b> (Played by: <b>[aiPlayer.mind.key]</b>)'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
+			parts += "<b>[aiPlayer.name]</b>[aiPlayer.mind.hide_ckey ? "" : " (Played by: <b>[aiPlayer.mind.key]</b>)"]'s laws [aiPlayer.stat != DEAD ? "at the end of the round" : "when it was <span class='redtext'>deactivated</span>"] were:"
 			parts += aiPlayer.laws.get_law_list(include_zeroth=TRUE)
 
 		parts += "<b>Total law changes: [aiPlayer.law_change_counter]</b>"
@@ -397,14 +413,14 @@
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
-					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
+					robolist += "<b>[robo.name]</b>[robo.mind.hide_ckey ? "" : " (Played by: <b>[robo.mind.key]</b>)"] [robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
 			parts += "[robolist]"
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
 	for (var/mob/living/silicon/robot/robo in GLOB.silicon_mobs)
 		if (!robo.connected_ai && robo.mind)
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
+			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b>[robo.mind.hide_ckey ? "" : " (Played by: <b>[robo.mind.key]</b>)"] [(robo.stat != DEAD)? "<span class='greentext'>survived</span> as an AI-less borg!" : "was <span class='redtext'>unable to survive</span> the rigors of being a cyborg without an AI."] Its laws were:"
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				parts += robo.laws.get_law_list(include_zeroth=TRUE)
@@ -498,7 +514,7 @@
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client, FALSE)
 
-/datum/action/report/IsAvailable()
+/datum/action/report/IsAvailable(silent = FALSE)
 	return 1
 
 /datum/action/report/Topic(href,href_list)
@@ -513,7 +529,7 @@
 	var/jobtext = ""
 	if(ply.assigned_role)
 		jobtext = " the <b>[ply.assigned_role]</b>"
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	var/text = "<b>[ply.hide_ckey ? "<b>[ply.name]</b>[jobtext] " : "[ply.key]</b> was <b>[ply.name]</b>[jobtext] and "]"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += " <span class='redtext'>died</span>"
@@ -545,10 +561,16 @@
 	var/list/objective_parts = list()
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
-		if(objective.check_completion())
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+		if(objective.completable)
+			var/completion = objective.check_completion()
+			if(completion >= 1)
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
+			else if(completion <= 0)
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			else
+				objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='yellowtext'>[completion*100]%</span>"
 		else
-			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			objective_parts += "<B>Objective #[count]</B>: [objective.explanation_text]"
 		count++
 	return objective_parts.Join("<br>")
 

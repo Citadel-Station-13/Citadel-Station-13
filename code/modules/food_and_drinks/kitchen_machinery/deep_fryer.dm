@@ -29,7 +29,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
-	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
+	var/obj/item/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
 	var/fry_speed = 1 //How quickly we fry food
@@ -52,7 +52,7 @@ God bless America.
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	reagents.add_reagent("cooking_oil", 25)
+	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
 	component_parts += new /obj/item/stock_parts/micro_laser(null)
@@ -66,10 +66,12 @@ God bless America.
 	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
 	fry_speed = oil_efficiency
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	. = ..()
 	if(frying)
 		. += "You can make out \a [frying] in the oil."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.</span>"
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -80,31 +82,36 @@ God bless America.
 		I.reagents.trans_to(src, I.reagents.total_volume)
 		qdel(I)
 		return
-	if(!reagents.has_reagent("cooking_oil"))
+	if(istype(I,/obj/item/clothing/head/mob_holder))
+		to_chat(user, "<span class='warning'>This does not fit in the fryer.</span>") // TODO: Deepfrying instakills mobs, spawns a whole deep-fried mob.
+		return
+	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
 	if(I.resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
 		return
-	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
+	if(I.GetComponent(/datum/component/fried))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
 		return
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
+	else if(I.reagents && !isfood(I))
+		return
 	else
 		if(is_type_in_typecache(I, deepfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
+			frying = I
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
-			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
 			icon_state = "fryer_on"
 			fry_loop.start()
 
 /obj/machinery/deepfryer/process()
 	..()
-	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent("cooking_oil")
+	var/datum/reagent/consumable/cooking_oil/C = reagents.has_reagent(/datum/reagent/consumable/cooking_oil)
 	if(!C)
 		return
 	reagents.chem_temp = C.fry_temperature
@@ -123,7 +130,7 @@ God bless America.
 /obj/machinery/deepfryer/attack_ai(mob/user)
 	return
 
-/obj/machinery/deepfryer/attack_hand(mob/user)
+/obj/machinery/deepfryer/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
@@ -139,6 +146,8 @@ God bless America.
 			fry_loop.stop()
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
+		if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+			return
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
@@ -147,6 +156,6 @@ God bless America.
 		reagents.reaction(C, TOUCH)
 		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
-		C.Knockdown(60)
-		user.changeNext_move(CLICK_CD_MELEE)
+		C.DefaultCombatKnockdown(60)
+		user.DelayNextAction()
 	return ..()

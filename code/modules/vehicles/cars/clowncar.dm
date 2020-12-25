@@ -18,10 +18,18 @@
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
 
+
+/obj/vehicle/sealed/car/clowncar/driver_move(mob/user, direction) //Prevent it from moving onto space
+	if(isspaceturf(get_step(src, direction)))
+		return FALSE
+	else
+		return ..()
+
+
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
+		if(H.mind && HAS_TRAIT(H.mind, TRAIT_CLOWN_MENTALITY)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
@@ -36,7 +44,7 @@
 		visible_message("<span class='danger'>[src] spews out a ton of space lube!</span>")
 		new /obj/effect/particle_effect/foam(loc) //YEET
 
-/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
+/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	. = ..()
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/banana))
 		var/obj/item/reagent_containers/food/snacks/grown/banana/banana = I
@@ -52,11 +60,11 @@
 		var/mob/living/L = M
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			C.Knockdown(40) //I play to make sprites go horizontal
+			C.DefaultCombatKnockdown(40) //I play to make sprites go horizontal
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks him up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
-	else if(istype(M, /turf/closed))
+	else if(istype(M, /turf/closed) || istype(M, /obj/machinery/door/airlock/external))
 		visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
@@ -107,7 +115,7 @@
 			visible_message("<span class='danger'>[user] has pressed one of the colorful buttons on [src] and the clown car spews out a cloud of laughing gas.</span>")
 			var/datum/reagents/R = new/datum/reagents(300)
 			R.my_atom = src
-			R.add_reagent("superlaughter", 50)
+			R.add_reagent(/datum/reagent/consumable/superlaughter, 50)
 			var/datum/effect_system/smoke_spread/chem/smoke = new()
 			smoke.set_up(R, 4)
 			smoke.attach(src)

@@ -1,16 +1,16 @@
 /datum/reagent/fermi/yamerol
 	name = "Yamerol"
-	id = "yamerol"
 	description = "For when you've trouble speaking or breathing, just yell YAMEROL! A chem that helps soothe any congestion problems and at high concentrations restores damaged lungs and tongues!"
 	taste_description = "a weird, syrupy flavour, yamero"
 	color = "#68e83a"
 	pH = 8.6
 	overdose_threshold = 35
-	impure_chem 			= "yamerol_tox"
+	impure_chem 			= /datum/reagent/impure/yamerol_tox
 	inverse_chem_val 		= 0.4
-	inverse_chem		= "yamerol_tox"
+	inverse_chem		= /datum/reagent/impure/yamerol_tox
 	can_synth = TRUE
 	var/templungs = FALSE
+	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/fermi/yamerol/on_mob_life(mob/living/carbon/C)
 	var/obj/item/organ/tongue/T = C.getorganslot(ORGAN_SLOT_TONGUE)
@@ -34,11 +34,11 @@
 				nT = new C.dna.species.mutanttongue()
 			else
 				nT = new()
-			T.Remove(C)
+			T.Remove()
 			qdel(T)
 			nT.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue.... unfluffify...?</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 	if(C.losebreath >= 6)
 		C.losebreath -= 3
 	..()
@@ -59,7 +59,7 @@
 			T.Insert(C)
 			to_chat(C, "<span class='notice'>You feel your tongue reform in your mouth.</span>")
 			qdel(T1)
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(type, 10)
 
 		//If we've a failed lung, replace it. If a lobe has collapsed,
 		if(!L || L.organ_flags & ORGAN_FAILING)
@@ -90,7 +90,6 @@
 
 /datum/reagent/impure/yamerol_tox
 	name = "Yamer oh no"
-	id = "yamerol_tox"
 	description = "A dangerous, cloying toxin that stucks to a patient’s respiratory system, damaging their tongue, lungs and causing suffocation."
 	taste_description = "a weird, syrupy flavour, yamero"
 	metabolization_rate = 0.35 //18u for lung collapse, just over a syringe
@@ -116,7 +115,6 @@
 
 /datum/reagent/medicine/synthtissue
 	name = "Synthtissue"
-	id = "synthtissue"
 	description = "Synthetic tissue used for grafting onto damaged organs during surgery, or for treating limb damage. Has a very tight growth window between 305-320, any higher and the temperature will cause the cells to die. Additionally, growth time is considerably long, so chemists are encouraged to leave beakers with said reaction ongoing, while they tend to their other duties."
 	pH = 7.6
 	metabolization_rate = 0.05 //Give them time to graft
@@ -126,6 +124,7 @@
 	color = "#FFDADA"
 	self_consuming = TRUE
 	chemical_flags = REAGENT_DEAD_PROCESS
+	value = REAGENT_VALUE_COMMON
 
 
 /datum/reagent/medicine/synthtissue/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
@@ -184,7 +183,7 @@
 		if(data["injected_vol"] > 14)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
-					C.reagents.remove_reagent(id, 10)
+					C.reagents.remove_reagent(type, 15)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 					data["injected_vol"] -= 10
 					return ..()
@@ -306,5 +305,27 @@
 	inverse_chem_val 	= 0.43
 	inverse_chem 		= "cryosenium_impure"
 	metabolization_rate = 0.05
-
 //Pauses decay! Does do something, I promise.
+
+/datum/reagent/fermi/zeolites
+	name = "Artificial Zeolites"
+	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination, as long as its purity is at least 0.7."
+	pH = 8
+	color = "#FFDADA"
+	metabolization_rate = 8 * REAGENTS_METABOLISM //Metabolizes fast but heals a lot! Lasts far longer if more pure.
+	value = REAGENT_VALUE_RARE //Relatively hard to make now, might be fine with VERY_RARE instead depending on feedback.
+
+/datum/reagent/fermi/zeolites/on_mob_life(mob/living/carbon/M)
+	metabolization_rate = (4 / purity) * REAGENTS_METABOLISM //Metab rate directly influenced by purity. Linear.
+	var/datum/component/radioactive/contamination = M.GetComponent(/datum/component/radioactive)
+	if(M.radiation > 0) //hey so apparently pentetic literally purges 1/50 (2%) of the rad amount on someone per tick no matter the 'true' amount, sooo uhh time to tweak this some more..
+		M.radiation -= clamp(round((M.radiation / 150) * (25 ** purity), 0.1), 0, M.radiation) //Purges between ~3% and ~16% of total rad amount, per tick, depending on purity. Exponential.
+	if(contamination && contamination.strength > 0)
+		contamination.strength -= min(contamination.strength, round(25 ** (0.5 + purity), 0.1)) //25 per tick at minimum purity; Tops out at ~125 per tick if purity is 1. Exponential.
+	..()
+
+/datum/reagent/fermi/zeolites/reaction_obj(obj/O, reac_volume)
+	var/datum/component/radioactive/contamination = O.GetComponent(/datum/component/radioactive)
+	if(contamination && reac_volume >= 5 && purity >= 0.7) //you need at least 0.7 purity to instantly purge all contam on an object.
+		qdel(contamination)
+		return

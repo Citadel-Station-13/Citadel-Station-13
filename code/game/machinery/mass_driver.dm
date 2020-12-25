@@ -11,6 +11,8 @@
 	var/id = 1
 	var/drive_range = 50	//this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
+/obj/machinery/mass_driver/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
 
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(stat & (BROKEN|NOPOWER))
@@ -36,3 +38,14 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	drive()
+
+/obj/machinery/mass_driver/pressure_plate
+	name = "pressure plated mass driver"
+	var/drive_delay = 10
+
+/obj/machinery/mass_driver/pressure_plate/Crossed(atom/movable/O)
+	. = ..()
+	if(isliving(O))
+		var/mob/living/L = O
+		to_chat(L, "<span class='warning'>You feel something click beneath you!</span>")
+	addtimer(CALLBACK(src, .proc/drive), drive_delay)

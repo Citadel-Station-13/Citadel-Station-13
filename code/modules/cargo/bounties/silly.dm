@@ -52,3 +52,15 @@
 	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
 	reward = 1000
 	wanted_types = list(/obj/item/relic)
+
+/datum/bounty/item/silly/coconut_bong
+	name = "Coconut Bong"
+	description = "Duuuude, what if we like, carved out a coconut, and smoked some stuff in it. It'd be like, coconut flavored maaaaaan."
+	reward = 2750
+	wanted_types = list(/obj/item/bong/coconut)
+
+/datum/bounty/item/silly/toy_swords
+	name = "Toy Swords"
+	description = "Nanotrasen has secured a contract in a reenactment of a famous movie, but we only have lethal energy based swords. Send us some convincing replicas so we save on medical costs."
+	reward = 1200
+	required_count = 3

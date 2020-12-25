@@ -6,7 +6,6 @@
 //Causes metabolic stress, and that's it.
 /datum/reagent/impure
 	name = "Chemical Isomers"
-	id = "generic_impure"
 	description = "Toxic chemical isomers made from impure reactions. At low volumes will cause light toxin damage, but as the volume increases, it deals larger amounts, damages the liver, then eventually the heart. This is default impure chem for all chems, and changes only if stated."
 	chemical_flags = REAGENT_INVISIBLE | REAGENT_SNEAKYNAME //by default, it will stay hidden on splitting, but take the name of the source on inverting
 	var/metastress = 1
@@ -21,9 +20,8 @@
 	..()
 
 /datum/reagent/impure/fermiTox
-	name = "Trans Chemical Isomers"
-	id = "fermiTox"
-	description = "Toxic chemical isomers that will deal direct toxin damage instead of metabolic damage."
+	name = "Potent Chemical Isomers"
+	description = "Toxic chemical isomers made from impure reactions. At low volumes will cause light toxin damage, but as the volume increases, it deals larger amounts, damages the liver, then eventually the heart. This is default impure chem for all chems, and changes only if stated."
 	data = "merge"
 	color = "FFFFFF"
 	can_synth = FALSE
@@ -50,7 +48,6 @@
 //I am incapable of making anything simple
 /datum/reagent/impure/neurine
 	name = "Neruwhine"
-	id = "neurine_impure"
 	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
 	color = "#DCDCAA"
 	pH = 13.4
@@ -83,7 +80,6 @@
 
 /datum/reagent/impure/corazone
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free.
-	id = "corazone_inverse"
 	description = "Can induce a Myocardial Infarction while in the patient if their heart is damaged."
 	color = "#5F5F5F"
 	self_consuming = TRUE
@@ -113,7 +109,6 @@
 
 /datum/reagent/impure/antihol
 	name = "Soothehol"
-	id = "antihol_impure"
 	description = "Soothes a patient's liver by reducing it's metabolic stress. Depending on it's purity, it can reduce it to levels where acute/chronic liver damage is healed."
 	taste_description = "coooked egg"
 	color = "#0004C8"
@@ -129,7 +124,6 @@
 
 /datum/reagent/impure/antihol/inverse
 	name = "Prohol"
-	id = "antihol_inverse"
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
 	taste_description = "alcohol" //mostly for sneaky slips
 	chemical_flags = REAGENT_INVISIBLE
@@ -143,7 +137,6 @@
 
 /datum/reagent/impure/oculine
 	name = "Oculater"
-	id = "oculine_impure"
 	description = "temporarily blinds the patient."
 	reagent_state = LIQUID
 	color = "#DDDDDD"
@@ -163,7 +156,6 @@
 
 /datum/reagent/impure/inacusiate
 	name = "Tinyacusiate"
-	id = "inacusiate_impure"
 	description = "Makes the patient hard of hearing, and slowly causes ear damage."
 	reagent_state = LIQUID
 	color = "#DDDDFF"
@@ -188,7 +180,6 @@
 
 /datum/reagent/impure/cryosenium
 	name = "Cyrogelidia"
-	id = "cryosenium_impure"
 	description = "Freezes the patient in an incuded cyrostasis where they won't take damage or heal. Useful for patients in critical condition so you can grab a cup of tea."
 	reagent_state = LIQUID
 	color = "#03dbfc"

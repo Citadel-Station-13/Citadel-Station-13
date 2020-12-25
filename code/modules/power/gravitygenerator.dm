@@ -23,11 +23,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	density = TRUE
+	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/safe_throw_at()
+/obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
@@ -38,13 +39,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(prob(20))
 		set_broken()
 
-/obj/machinery/gravity_generator/tesla_act(power, tesla_flags)
+/obj/machinery/gravity_generator/zap_act(power, zap_flags)
 	..()
-	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
+	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
-/obj/machinery/gravity_generator/update_icon()
-	..()
+/obj/machinery/gravity_generator/update_icon_state()
 	icon_state = "[get_status()]_[sprite_number]"
 
 /obj/machinery/gravity_generator/proc/get_status()
@@ -56,7 +56,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	qdel(src)
 
 /obj/machinery/gravity_generator/proc/set_broken()
-	stat |= BROKEN
+	obj_break()
 
 /obj/machinery/gravity_generator/proc/set_fix()
 	stat &= ~BROKEN
@@ -78,9 +78,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	return main_part.attackby(I, user)
 
 /obj/machinery/gravity_generator/part/get_status()
-	return main_part.get_status()
+	return main_part?.get_status()
 
-/obj/machinery/gravity_generator/part/attack_hand(mob/user)
+/obj/machinery/gravity_generator/part/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	return main_part.attack_hand(user)
 
 /obj/machinery/gravity_generator/part/set_broken()
@@ -155,6 +155,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		part.main_part = src
 		parts += part
 		part.update_icon()
+		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /atom/proc/update_icon)
 
 /obj/machinery/gravity_generator/main/proc/connected_parts()
 	return parts.len == 8
@@ -186,14 +187,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
-			if(istype(I, /obj/item/screwdriver))
+			if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
 				I.play_tool_sound(src)
 				broken_state++
 				update_icon()
 				return
 		if(GRAV_NEEDS_WELDING)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(I.use_tool(src, user, 0, volume=50, amount=1))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
 					broken_state++
@@ -205,59 +206,52 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				if(PS.get_amount() >= 10)
 					PS.use(10)
 					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+					playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
 					broken_state++
 					update_icon()
 				else
 					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
 				I.play_tool_sound(src)
 				set_fix()
 				return
 	return ..()
 
-/obj/machinery/gravity_generator/main/ui_interact(mob/user)
-	if(stat & BROKEN)
-		return
-	var/dat = "Gravity Generator Breaker: "
-	if(breaker)
-		dat += "<span class='linkOn'>ON</span> <A href='?src=[REF(src)];gentoggle=1'>OFF</A>"
-	else
-		dat += "<A href='?src=[REF(src)];gentoggle=1'>ON</A> <span class='linkOn'>OFF</span> "
+/obj/machinery/gravity_generator/main/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "GravityGenerator", name)
+		ui.open()
 
-	dat += "<br>Generator Status:<br><div class='statusDisplay'>"
-	if(charging_state != POWER_IDLE)
-		dat += "<font class='bad'>WARNING</font> Radiation Detected. <br>[charging_state == POWER_UP ? "Charging..." : "Discharging..."]"
-	else if(on)
-		dat += "Powered."
-	else
-		dat += "Unpowered."
+/obj/machinery/gravity_generator/main/ui_data(mob/user)
+	var/list/data = list()
 
-	dat += "<br>Gravity Charge: [charge_count]%</div>"
+	data["breaker"] = breaker
+	data["charge_count"] = charge_count
+	data["charging_state"] = charging_state
+	data["on"] = on
+	data["operational"] = (stat & BROKEN) ? FALSE : TRUE
 
-	var/datum/browser/popup = new(user, "gravgen", name)
-	popup.set_content(dat)
-	popup.open()
+	return data
 
-
-/obj/machinery/gravity_generator/main/Topic(href, href_list)
-
+/obj/machinery/gravity_generator/main/ui_act(action, params)
 	if(..())
 		return
 
-	if(href_list["gentoggle"])
-		breaker = !breaker
-		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
-		set_power()
-		src.updateUsrDialog()
+	switch(action)
+		if("gentoggle")
+			breaker = !breaker
+			investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
+			set_power()
+			. = TRUE
 
 // Power and Icon States
 
 /obj/machinery/gravity_generator/main/power_change()
-	..()
+	. = ..()
 	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
 	set_power()
 
@@ -265,11 +259,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(stat & BROKEN)
 		return "fix[min(broken_state, 3)]"
 	return on || charging_state != POWER_IDLE ? "on" : "off"
-
-/obj/machinery/gravity_generator/main/update_icon()
-	..()
-	for(var/obj/O in parts)
-		O.update_icon()
 
 // Set the charging state based on power/breaker.
 /obj/machinery/gravity_generator/main/proc/set_power()
@@ -325,7 +314,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/empulse.ogg', 100, 1)
+				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm." spam.
@@ -402,16 +391,13 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Misc
 
 /obj/item/paper/guides/jobs/engi/gravity_gen
-	name = "paper- 'Generate your own gravity!'"
-	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
-	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
-	energy and you have yourself gravity! You can turn the machine on or off when required but you must remember that the generator
-	will EMIT RADIATION when charging or discharging, you can tell it is charging or discharging by the noise it makes, so please WEAR PROTECTIVE CLOTHING.</p>
-	<br>
-	<h3>It blew up!</h3>
-	<p>Don't panic! The gravity generator was designed to be easily repaired. If, somehow, the sturdy framework did not survive then
-	please proceed to panic; otherwise follow these steps.</p><ol>
-	<li>Secure the screws of the framework with a screwdriver.</li>
-	<li>Mend the damaged framework with a welding tool.</li>
-	<li>Add additional plasteel plating.</li>
-	<li>Secure the additional plating with a wrench.</li></ol>"}
+	info = {"
+# Gravity Generator Instructions For Dummies
+Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of energy and you have yourself gravity! You can turn the machine on or off when required but you must remember that the generator will EMIT RADIATION when charging or discharging, you can tell it is charging or discharging by the noise it makes, so please WEAR PROTECTIVE CLOTHING.</p>
+### It blew up!
+Don't panic! The gravity generator was designed to be easily repaired. If, somehow, the sturdy framework did not survive then please proceed to panic; otherwise follow these steps.
+1. Secure the screws of the framework with a screwdriver.
+2. Mend the damaged framework with a welding tool.
+3. Add additional plasteel plating.
+4. Secure the additional plating with a wrench.
+"}

@@ -10,24 +10,27 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/chargelevel = -1
 	var/charge_rate = 500
 
-/obj/machinery/cell_charger/update_icon()
-	cut_overlays()
-	if(charging)
-		add_overlay(image(charging.icon, charging.icon_state))
-		add_overlay("ccharger-on")
-		if(!(stat & (BROKEN|NOPOWER)))
-			var/newlevel = 	round(charging.percent() * 4 / 100)
-			chargelevel = newlevel
-			add_overlay("ccharger-o[newlevel]")
+/obj/machinery/cell_charger/update_overlays()
+	. += ..()
+
+	if(!charging)
+		return
+
+	. += mutable_appearance(charging.icon, charging.icon_state)
+	. += "ccharger-on"
+	if(!(stat & (BROKEN|NOPOWER)))
+		var/newlevel = round(charging.percent() * 4 / 100)
+		. += "ccharger-o[newlevel]"
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
 	. += "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
 		. += "Current charge: [round(charging.percent(), 1)]%."
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.</span>"
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -44,7 +47,7 @@
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+			if(!a.powered(EQUIP)) // There's no APC in this area, don't try to cheat power!
 				to_chat(user, "<span class='warning'>[src] blinks red as you try to insert the cell!</span>")
 				return
 			if(!user.transferItemToLoc(W,src))
@@ -52,7 +55,6 @@
 
 			charging = W
 			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
-			chargelevel = -1
 			update_icon()
 	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
@@ -75,13 +77,9 @@
 /obj/machinery/cell_charger/proc/removecell()
 	charging.update_icon()
 	charging = null
-	chargelevel = -1
 	update_icon()
 
-/obj/machinery/cell_charger/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/cell_charger/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!charging)
 		return
 
@@ -102,7 +100,17 @@
 	removecell()
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
+	if(!charging)
+		return
+
+	charging.forceMove(loc)
+	to_chat(user, "<span class='notice'>You remotely disconnect the battery port and eject [charging] from [src].</span>")
+
+	removecell()
 	return
+
+/obj/machinery/cell_charger/attack_robot(mob/user)
+	attack_ai(user)
 
 /obj/machinery/cell_charger/emp_act(severity)
 	. = ..()

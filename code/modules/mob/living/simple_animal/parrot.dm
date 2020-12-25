@@ -50,13 +50,18 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
-	response_help  = "pets"
-	response_disarm = "gently moves aside"
-	response_harm   = "swats"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently moves aside"
+	response_disarm_simple = "gently move aside"
+	response_harm_continuous = "swats"
+	response_harm_simple = "swat"
 	stop_automated_movement = 1
 	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
-	attacktext = "chomps"
-	friendly = "grooms"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
+	friendly_verb_continuous = "grooms"
+	friendly_verb_simple = "groom"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -110,12 +115,12 @@
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
-	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
+	add_verb(src, list(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
 			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
 			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
 			  /mob/living/simple_animal/parrot/proc/perch_player, \
 			  /mob/living/simple_animal/parrot/proc/toggle_mode,
-			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
+			  /mob/living/simple_animal/parrot/proc/perch_mob_player))
 
 
 /mob/living/simple_animal/parrot/examine(mob/user)
@@ -137,11 +142,11 @@
 
 	..(gibbed)
 
-/mob/living/simple_animal/parrot/Stat()
-	..()
-	if(statpanel("Status"))
-		stat("Held Item", held_item)
-		stat("Mode",a_intent)
+/mob/living/simple_animal/parrot/get_status_tab_items()
+	. = ..()
+	. += ""
+	. += "Held Item: [held_item]"
+	. += "Mode: [a_intent]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode, atom/movable/source)
 	. = ..()
@@ -208,8 +213,8 @@
 				ears.forceMove(drop_location())
 				ears = null
 				for(var/possible_phrase in speak)
-					if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
-						possible_phrase = copytext(possible_phrase,3)
+					if(copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys)
+						possible_phrase = copytext_char(possible_phrase, 3)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
@@ -266,7 +271,7 @@
  * Attack responces
  */
 //Humans, monkeys, aliens
-/mob/living/simple_animal/parrot/attack_hand(mob/living/carbon/M)
+/mob/living/simple_animal/parrot/on_attack_hand(mob/living/carbon/M)
 	..()
 	if(client)
 		return
@@ -332,12 +337,12 @@
 		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
 		speech_shuffle_rate += 10
 		to_chat(user, "<span class='notice'>[src] eagerly devours the cracker.</span>")
-	..()
-	return
+		return // the cracker was deleted
+	return ..()
 
 //Bullets
 /mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
-	..()
+	. = ..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -347,15 +352,14 @@
 		//parrot_been_shot += 5
 		icon_state = icon_living
 		drop_held_item(0)
-	return
 
 
 /*
  * AI - Not really intelligent, but I'm calling it AI anyway.
  */
-/mob/living/simple_animal/parrot/Life()
-	..()
-
+/mob/living/simple_animal/parrot/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	//Sprite update for when a parrot gets pulled
 	if(pulledby && !stat && parrot_state != PARROT_WANDER)
 		if(buckled)
@@ -365,8 +369,6 @@
 		parrot_state = PARROT_WANDER
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
-		return
-
 
 //-----SPEECH
 	/* Parrot speech mimickry!
@@ -382,7 +384,7 @@
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
-	if(!isturf(src.loc) || !canmove || buckled)
+	if(!isturf(loc) || !CHECK_MOBILITY(src, MOBILITY_MOVE)  || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
 	if(client && stat == CONSCIOUS && parrot_state != icon_living)
@@ -420,8 +422,8 @@
 						if(prob(50))
 							useradio = 1
 
-						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = "[useradio?pick(available_channels):""][copytext(possible_phrase,3)]" //crop out the channel prefix
+						if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+							possible_phrase = "[useradio?pick(available_channels):""][copytext_char(possible_phrase, 3)]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""][possible_phrase]"
 
@@ -429,17 +431,12 @@
 
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
-						if((copytext(possible_phrase,1,2) in GLOB.department_radio_prefixes) && (copytext(possible_phrase,2,3) in GLOB.department_radio_keys))
-							possible_phrase = copytext(possible_phrase,3) //crop out the channel prefix
+						if((possible_phrase[1] in GLOB.department_radio_prefixes) && (copytext_char(possible_phrase, 2, 3) in GLOB.department_radio_keys))
+							possible_phrase = copytext_char(possible_phrase, 3) //crop out the channel prefix
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
-			//Search for item to steal
-			parrot_interest = search_for_item()
-			if(parrot_interest)
-				emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
-				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				icon_state = icon_living
+			INVOKE_ASYNC(src, .proc/attempt_item_theft)
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
@@ -468,11 +465,11 @@
 					return
 			return
 
-		if(parrot_interest && parrot_interest in view(src))
+		if(parrot_interest && (parrot_interest in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_STEAL
 			return
 
-		if(parrot_perch && parrot_perch in view(src))
+		if(parrot_perch && (parrot_perch in view(src)))
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
@@ -576,7 +573,12 @@
 					parrot_state = PARROT_WANDER
 				return
 
-			attacktext = pick("claws at", "chomps")
+			if(prob(50))
+				attack_verb_continuous = "claws at"
+				attack_verb_simple = "claw_at"
+			else
+				attack_verb_continuous = "chomps"
+				attack_verb_simple = "chomp"
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else
@@ -612,6 +614,14 @@
 	else
 		parrot_lastmove = src.loc
 	return 0
+
+/mob/living/simple_animal/parrot/proc/attempt_item_theft()
+	//Search for item to steal
+	search_for_item()
+	if(parrot_interest)
+		emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
+		parrot_state = PARROT_SWOOP | PARROT_STEAL
+		icon_state = icon_living
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -902,11 +912,12 @@
 	if(. && !client && prob(1) && prob(1)) //Only the one true bird may speak across dimensions.
 		world.TgsTargetedChatBroadcast("A stray squawk is heard... \"[message]\"", FALSE)
 
-/mob/living/simple_animal/parrot/Poly/Life()
+/mob/living/simple_animal/parrot/Poly/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE)
 		memory_saved = TRUE
-	..()
 
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
 	if(!memory_saved)
@@ -970,7 +981,8 @@
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
-	color = "#FFFFFF77"
+	color = "#FFFFFF"
+	alpha = 77
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = INCORPOREAL_MOVE_BASIC

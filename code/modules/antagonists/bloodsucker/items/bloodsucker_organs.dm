@@ -5,7 +5,8 @@
 	var/obj/item/organ/O
 	// Heart
 	O = owner.current.getorganslot(ORGAN_SLOT_HEART)
-	if(!istype(O, /obj/item/organ/heart/vampheart))
+
+	if(!istype(O, /obj/item/organ/heart/vampheart) && !istype(O, /obj/item/organ/heart/demon))
 		qdel(O)
 		var/obj/item/organ/heart/vampheart/H = new
 		H.Insert(owner.current)
@@ -30,10 +31,6 @@
 	beating = 0
 	var/fakingit = 0
 
-/obj/item/organ/heart/vampheart/prepare_eat()
-	..()
-	// Do cool stuff for eating vamp heart?
-
 /obj/item/organ/heart/vampheart/Restart()
 	beating = 0	// DONT run ..(). We don't want to start beating again.
 	return 0
@@ -50,6 +47,11 @@
 		return "a healthy"
 	return "<span class='danger'>no</span>"	// Bloodsuckers don't have a heartbeat at all when stopped (default is "an unstable")
 // 		EYES 		//
+
+/obj/item/organ/eyes/vassal/
+	lighting_alpha = 180 //  LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE  <--- This is too low a value at 128. We need to SEE what the darkness is so we can hide in it.
+	see_in_dark = 12
+	flash_protect = -1 //These eyes are weaker to flashes, but let you see in the dark
 
 /obj/item/organ/eyes/vassal/bloodsucker
 	flash_protect = 2 //Eye healing isnt working properly

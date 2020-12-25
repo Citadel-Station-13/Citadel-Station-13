@@ -239,7 +239,7 @@
 		if(!do_after(user, repair_values["healing_for_cycle"] * fabricator.speed_multiplier, target = src, \
 			extra_checks = CALLBACK(fabricator, /obj/item/clockwork/replica_fabricator.proc/fabricator_repair_checks, repair_values, src, user, TRUE)))
 			break
-		obj_integrity = CLAMP(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
+		obj_integrity = clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
 		adjust_clockwork_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
@@ -345,3 +345,8 @@
 	if(!power_amount)
 		power_amount = -(CLOCKCULT_POWER_UNIT*0.02)
 	return ..()
+
+
+// Winter coat
+/obj/item/clothing/suit/hooded/wintercoat/fabrication_vals(mob/living/user, obj/item/clockwork/replica_fabricator/fabricator, silent) //four sheets of metal
+	return list("operation_time" = 30, "new_obj_type" = /obj/item/clothing/suit/hooded/wintercoat/ratvar, "power_cost" = POWER_METAL * 4, "spawn_dir" = SOUTH)

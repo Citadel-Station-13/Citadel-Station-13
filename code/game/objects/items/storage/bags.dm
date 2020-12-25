@@ -48,7 +48,8 @@
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 30
 	STR.max_items = 30
-	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear))
+	STR.can_hold_extra = typecacheof(list(/obj/item/organ/lungs, /obj/item/organ/liver, /obj/item/organ/stomach, /obj/item/clothing/shoes)) - typesof(/obj/item/clothing/shoes/magboots, /obj/item/clothing/shoes/clown_shoes, /obj/item/clothing/shoes/jackboots, /obj/item/clothing/shoes/workboots)
+	STR.cant_hold = typecacheof(list(/obj/item/disk/nuclear, /obj/item/storage/wallet, /obj/item/organ/brain))
 	STR.limited_random_access = TRUE
 	STR.limited_random_access_stack_position = 3
 
@@ -57,14 +58,16 @@
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
-/obj/item/storage/bag/trash/update_icon()
-	if(contents.len == 0)
-		icon_state = "[initial(icon_state)]"
-	else if(contents.len < 12)
-		icon_state = "[initial(icon_state)]1"
-	else if(contents.len < 21)
-		icon_state = "[initial(icon_state)]2"
-	else icon_state = "[initial(icon_state)]3"
+/obj/item/storage/bag/trash/update_icon_state()
+	switch(contents.len)
+		if(0)
+			icon_state = "[initial(icon_state)]"
+		if(1 to 11)
+			icon_state = "[initial(icon_state)]1"
+		if(11 to 20)
+			icon_state = "[initial(icon_state)]2"
+		else
+			icon_state = "[initial(icon_state)]3"
 
 /obj/item/storage/bag/trash/cyborg
 	insertable = FALSE
@@ -110,9 +113,11 @@
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	var/range = null
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.can_hold = typecacheof(list(/obj/item/stack/ore))
@@ -128,9 +133,10 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
 	listeningTo = user
 
-/obj/item/storage/bag/ore/dropped()
+/obj/item/storage/bag/ore/dropped(mob/user)
 	. = ..()
-	UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 
 /obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
@@ -141,12 +147,21 @@
 		return
 	if (istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
+	if(issilicon(user))
+		var/mob/living/silicon/robot/borgo = user
+		for(var/obj/item/cyborg_clamp/C in borgo.module.modules)
+			for(var/obj/structure/ore_box/B in C)
+				box = B
+
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
 		for(var/A in tile)
 			if (!is_type_in_typecache(A, STR.can_hold))
 				continue
 			if (box)
+				if(range)
+					for(var/obj/item/stack/ore/ore in range(range, user))
+						user.transferItemToLoc(ore, box)
 				user.transferItemToLoc(A, box)
 				show_message = TRUE
 			else if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, A, user, TRUE))
@@ -168,6 +183,7 @@
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
+	range = 1
 
 /obj/item/storage/bag/ore/cyborg/ComponentInitialize()
 	. = ..()
@@ -218,7 +234,7 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 100
 	STR.max_items = 100
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/grown, /obj/item/reagent_containers/honeycomb, /obj/item/disk/plantgene))
 
 ////////
 
@@ -231,7 +247,8 @@
 	set name = "Activate Seed Extraction"
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.stat || !usr.canmove || usr.restrained())
+	var/mob/living/L = usr
+	if(istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
@@ -309,12 +326,16 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list(MAT_METAL=3000)
+	custom_materials = list(/datum/material/iron=3000)
+	var/max_items = 7
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food, /obj/item/reagent_containers/glass, /datum/reagent/consumable, /obj/item/kitchen/knife, /obj/item/kitchen/rollingpin, /obj/item/kitchen/fork, /obj/item/storage/box)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Kitchen Tools, and ingredient boxes.
 	STR.insert_preposition = "on"
+	STR.max_items = max_items
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -336,13 +357,16 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Knockdown(40)
+			M.DefaultCombatKnockdown(40)
 	update_icon()
 
-/obj/item/storage/bag/tray/update_icon()
-	cut_overlays()
+/obj/item/storage/bag/tray/update_overlays()
+	. = ..()
 	for(var/obj/item/I in contents)
-		add_overlay(new /mutable_appearance(I))
+		var/mutable_appearance/I_copy = new(I)
+		I_copy.plane = FLOAT_PLANE
+		I_copy.layer = FLOAT_LAYER
+		. += I_copy
 
 /obj/item/storage/bag/tray/Entered()
 	. = ..()
@@ -351,6 +375,14 @@
 /obj/item/storage/bag/tray/Exited()
 	. = ..()
 	update_icon()
+
+//bluespace tray, holds more items
+/obj/item/storage/bag/tray/bluespace
+	name = "bluespace tray"
+	icon_state = "bluespace_tray"
+	desc = "A tray created using bluespace technology to fit more food on it."
+	max_items = 30 // far more items
+	custom_materials = list(/datum/material/iron = 2000, /datum/material/bluespace = 500)
 
 /*
  *	Chemistry bag
@@ -361,16 +393,16 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
 	desc = "A bag for storing pills, patches, and bottles."
-	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_POCKET
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/chemistry/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 200
-	STR.max_items = 50
+	STR.storage_flags = STORAGE_FLAGS_VOLUME_DEFAULT
+	STR.max_volume = STORAGE_VOLUME_CHEMISTRY_BAG
 	STR.insert_preposition = "in"
-	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/syringe/dart))
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/syringe/dart, /obj/item/reagent_containers/chem_pack))
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
@@ -381,16 +413,18 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
-	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_POCKET
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows you to pick up Lungs, Liver, and Stomach
 	STR.max_combined_w_class = 200
 	STR.max_items = 25
 	STR.insert_preposition = "in"
-	STR.can_hold = typecacheof(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/monkeycube))
+	STR.can_hold = typecacheof(list(/obj/item/slime_extract, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/blood, /obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/food/snacks/deadmouse, /obj/item/reagent_containers/food/snacks/cube, /obj/item/organ, /obj/item/reagent_containers/food/snacks/meat/slab, /obj/item/bodypart))
+	STR.cant_hold = typecacheof(list(/obj/item/organ/brain, /obj/item/organ/liver/cybernetic, /obj/item/organ/heart/cybernetic, /obj/item/organ/lungs/cybernetic, /obj/item/organ/tongue/cybernetic, /obj/item/organ/ears/cybernetic, /obj/item/organ/eyes/robotic, /obj/item/organ/cyberimp))
 
 /obj/item/storage/bag/bio/holding
 	name = "bio bag of holding"
@@ -404,3 +438,63 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = INFINITY
 	STR.max_items = 100
+
+/obj/item/storage/bag/ammo
+	name = "ammo pouch"
+	desc = "A pouch for your ammo that goes in your pocket."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "ammopouch"
+	slot_flags = ITEM_SLOT_POCKET
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/ammo/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 30
+	STR.max_items = 3
+	STR.display_numerical_stacking = FALSE
+	STR.can_hold = typecacheof(list(/obj/item/ammo_box/magazine, /obj/item/ammo_casing))
+
+/*
+Bag for holding materials
+*/
+/obj/item/storage/bag/material
+	name = "material pouch"
+	desc = "A pouch for sheets and RCD ammunition that manages to hang where you would normally put things in your pocket."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "materialpouch"
+	slot_flags = ITEM_SLOT_POCKET
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/material/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = INFINITY
+	STR.max_items = 2
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/rcd_ammo, /obj/item/stack/sheet))
+
+/*
+ *  Construction bag (for engineering, holds stock parts and electronics)
+ */
+
+/obj/item/storage/bag/construction
+	name = "construction bag"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "construction_bag"
+	desc = "A bag for storing small construction components."
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/construction/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = 100
+	STR.max_items = 50
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.insert_preposition = "in"
+	STR.can_hold = typecacheof(list(/obj/item/stack/ore/bluespace_crystal, /obj/item/assembly, /obj/item/stock_parts, /obj/item/reagent_containers/glass/beaker, /obj/item/stack/cable_coil, /obj/item/circuitboard, /obj/item/electronics,/obj/item/wallframe/camera))

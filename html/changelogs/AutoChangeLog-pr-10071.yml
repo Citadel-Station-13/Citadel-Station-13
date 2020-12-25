@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes bubblegum's death not unlocking the arena shuttle buyment."

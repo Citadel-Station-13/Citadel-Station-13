@@ -10,10 +10,9 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 /proc/load_loadout_config(loadout_config)
 	if(!loadout_config)
 		loadout_config = "config/loadout_config.txt"
-	LAZYINITLIST(GLOB.loadout_whitelist_ids)
 	var/list/file_lines = world.file2list(loadout_config)
 	for(var/line in file_lines)
-		if(!line || findtextEx(line,"#",1,2))
+		if(!line || line[1] == "#")
 			continue
 		var/list/lineinfo = splittext(line, "|")
 		var/lineID = lineinfo[1]
@@ -21,18 +20,20 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 			var/sublinetypedef = findtext(subline, "=")
 			if(sublinetypedef)
 				var/sublinetype = copytext(subline, 1, sublinetypedef)
-				var/list/sublinecontent = splittext(copytext(subline, sublinetypedef+1), ",")
+				var/list/sublinecontent = splittext(copytext(subline, sublinetypedef+ length(sublinetypedef)), ",")
 				if(sublinetype == "WHITELIST")
 					GLOB.loadout_whitelist_ids["[lineID]"] = sublinecontent
 
 /proc/initialize_global_loadout_items()
-	LAZYINITLIST(GLOB.loadout_items)
 	load_loadout_config()
 	for(var/item in subtypesof(/datum/gear))
-		var/datum/gear/I = new item
-		if(!GLOB.loadout_items[slot_to_string(I.category)])
-			LAZYINITLIST(GLOB.loadout_items[slot_to_string(I.category)])
-		LAZYSET(GLOB.loadout_items[slot_to_string(I.category)], I.name, I)
+		var/datum/gear/I = item
+		if(!initial(I.name))
+			continue
+		I = new item
+		LAZYINITLIST(GLOB.loadout_items[I.category])
+		LAZYINITLIST(GLOB.loadout_items[I.category][I.subcategory])
+		GLOB.loadout_items[I.category][I.subcategory][I.name] = I
 		if(islist(I.geargroupID))
 			var/list/ggidlist = I.geargroupID
 			I.ckeywhitelist = list()
@@ -45,11 +46,15 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 
 /datum/gear
 	var/name
-	var/category
+	var/category = LOADOUT_CATEGORY_NONE
+	var/subcategory = LOADOUT_SUBCATEGORY_NONE
+	var/slot
 	var/description
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/geargroupID //defines the ID that the gear inherits from the config
+	var/loadout_flags = 0
+	var/list/loadout_initial_colors = list()
 
 	//NEW DONATOR SYTSEM STUFF
 	var/donoritem				//autoset on new if null

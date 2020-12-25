@@ -8,7 +8,7 @@
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
-	var/organ_flags = 0
+	var/organ_flags = ORGAN_EDIBLE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	var/damage = 0		//total damage this organ has sustained
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
@@ -25,7 +25,23 @@
 	var/now_fixed
 	var/high_threshold_cleared
 	var/low_threshold_cleared
-	rad_flags = RAD_NO_CONTAMINATE
+
+	///When you take a bite you cant jam it in for surgery anymore.
+	var/useable = TRUE
+	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+
+/obj/item/organ/Initialize()
+	. = ..()
+	if(organ_flags & ORGAN_EDIBLE)
+		AddComponent(/datum/component/edible, food_reagents, null, RAW | MEAT | GROSS, null, 10, null, null, null, CALLBACK(src, .proc/OnEatFrom))
+	START_PROCESSING(SSobj, src)
+
+/obj/item/organ/Destroy()
+	if(owner)
+		// The special flag is important, because otherwise mobs can die
+		// while undergoing transformation into different mobs.
+		Remove(TRUE)
+	return ..()
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -33,7 +49,7 @@
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = 1)
+		replaced.Remove(TRUE)
 		if(drop_if_replaced)
 			replaced.forceMove(get_turf(M))
 		else
@@ -54,20 +70,19 @@
 	return TRUE
 
 //Special is for instant replacement like autosurgeons
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = FALSE)
+/obj/item/organ/proc/Remove(special = FALSE)
+	if(owner)
+		owner.internal_organs -= src
+		if(owner.internal_organs_slot[slot] == src)
+			owner.internal_organs_slot.Remove(slot)
+		if((organ_flags & ORGAN_VITAL) && !special && !(owner.status_flags & GODMODE))
+			owner.death()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.Remove(owner)
+		. = owner //for possible subtypes specific post-removal code.
 	owner = null
-	if(M)
-		M.internal_organs -= src
-		if(M.internal_organs_slot[slot] == src)
-			M.internal_organs_slot.Remove(slot)
-		if((organ_flags & ORGAN_VITAL) && !special && !(M.status_flags & GODMODE))
-			M.death()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(M)
 	START_PROCESSING(SSobj, src)
-
-	return TRUE
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
@@ -110,9 +125,9 @@
 	if(istype(loc, /turf/))//Only concern is adding an organ to a freezer when the area around it is cold.
 		var/turf/T = loc
 		var/datum/gas_mixture/enviro = T.return_air()
-		local_temp = enviro.temperature
+		local_temp = enviro.return_temperature()
 
-	else if(istype(loc, /mob/) && !owner)
+	else if(!owner && ismob(loc))
 		var/mob/M = loc
 		if(is_type_in_typecache(M.loc, GLOB.freezing_objects))
 			if(!(organ_flags & ORGAN_FROZEN))
@@ -120,7 +135,7 @@
 			return TRUE
 		var/turf/T = M.loc
 		var/datum/gas_mixture/enviro = T.return_air()
-		local_temp = enviro.temperature
+		local_temp = enviro.return_temperature()
 
 	if(owner)
 		//Don't interfere with bodies frozen by structures.
@@ -138,21 +153,22 @@
 	organ_flags &= ~ORGAN_FROZEN
 	return FALSE
 
-/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing
-	if(organ_flags & ORGAN_FAILING)
-		return
-	if(is_cold())
-		return
-	passive_regen()
+/obj/item/organ/proc/on_life()	//repair organ damage if the organ is not failing or synthetic
+	if(organ_flags & ORGAN_FAILING || !owner)
+		return FALSE
+	if(!is_cold() && damage)
+		passive_regen()
+	return TRUE
 
 /obj/item/organ/proc/passive_regen(modifier = 1)
-	if(organ_flags & ORGAN_FAILING)
-		return
+	if(organ_flags & ORGAN_FAILING || !owner)
+		return FALSE
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
-	applyOrganDamage(healing_amount*modifier) //to FERMI_TWEAK
+	if(healing_amount)
+		applyOrganDamage(healing_amount*modifier) //to FERMI_TWEAK
 	//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)
@@ -166,59 +182,18 @@
 	if(damage > high_threshold)
 		. += "<span class='warning'>[src] is starting to look discolored.</span>"
 
-
-/obj/item/organ/proc/prepare_eat()
-	var/obj/item/reagent_containers/food/snacks/organ/S = new
-	S.name = name
-	S.desc = desc
-	S.icon = icon
-	S.icon_state = icon_state
-	S.w_class = w_class
-
-	return S
-
-/obj/item/reagent_containers/food/snacks/organ
-	name = "appendix"
-	icon_state = "appendix"
-	icon = 'icons/obj/surgery.dmi'
-	list_reagents = list("nutriment" = 5)
-	foodtype = RAW | MEAT | GROSS
-
-
-/obj/item/organ/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/organ/Destroy()
-	if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
-		Remove(owner, TRUE)
-	return ..()
-
-/obj/item/organ/attack(mob/living/carbon/M, mob/user)
-	if(M == user && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(status == ORGAN_ORGANIC)
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat()
-			if(S)
-				qdel(src)
-				if(H.put_in_active_hand(S))
-					S.attack(H, H)
-	else
-		..()
+/obj/item/organ/proc/OnEatFrom(eater, feeder)
+	useable = FALSE //You can't use it anymore after eating it you spaztic
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
-	if(!d) //Micro-optimization.
-		return
-	if(maximum < damage)
-		return
-	damage = CLAMP(damage + d, 0, maximum)
-	var/mess = check_damage_thresholds(owner)
+	if(!d || maximum < damage) //Micro-optimization.
+		return FALSE
+	damage = clamp(damage + d, 0, maximum)
+	var/mess = check_damage_thresholds()
 	prev_damage = damage
 	if(mess && owner)
 		to_chat(owner, mess)
@@ -236,7 +211,7 @@
   * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
   *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
   */
-/obj/item/organ/proc/check_damage_thresholds(var/M)
+/obj/item/organ/proc/check_damage_thresholds()
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
@@ -350,7 +325,7 @@
 				T = new dna.species.mutanttongue()
 			else
 				T = new()
-			oT.Remove(src)
+			oT.Remove()
 			qdel(oT)
 			T.Insert(src)
 

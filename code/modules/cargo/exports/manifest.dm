@@ -76,19 +76,3 @@
 /datum/export/manifest_correct_denied/get_cost(obj/O)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = O
 	return ..() - M.order_cost
-
-// Paper work done correctly
-
-/datum/export/paperwork_correct
-	cost = 120 // finicky number 20 x 120 = 2400 per crate
-	k_elasticity = 0
-	unit_name = "correct paperwork"
-	export_types = list(/obj/item/folder/paperwork_correct)
-
-// Paper work not done retruned
-
-/datum/export/paperwork_incorrect
-	cost = -500 // Failed to meet NT standers
-	k_elasticity = 0
-	unit_name = "returned incorrect paperwork"
-	export_types = list(/obj/item/folder/paperwork)

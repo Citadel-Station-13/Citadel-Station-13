@@ -22,7 +22,7 @@
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	repeatable = TRUE
 	time = 75
-	chems_needed = list("synthtissue")
+	chems_needed = list(/datum/reagent/synthtissue)
 	var/obj/item/organ/chosen_organ
 	var/health_restored = 10
 
@@ -41,7 +41,7 @@
 			chosen_organ = organs[chosen_organ]
 			if(!chosen_organ)
 				return -1
-			if(!target.reagents.has_reagent("synthtissue"))
+			if(!target.reagents.has_reagent(/datum/reagent/synthtissue))
 				to_chat(user, "<span class='notice'>There's no synthtissue available for use on [chosen_organ]</span>")
 				return -1
 			var/datum/reagent/medicine/synthtissue/Sf = locate(/datum/reagent/medicine/synthtissue) in target.reagents.reagent_list

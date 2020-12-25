@@ -3,8 +3,7 @@
 	desc = "Stabby stabby."
 	var/sting_icon = null
 
-/obj/effect/proc_holder/changeling/sting/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/sting/Trigger(mob/user)
 	if(!user || !user.mind)
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -74,8 +73,7 @@
 	action_icon_state = "ling_sting_transform"
 	action_background_icon_state = "bg_ling"
 
-/obj/effect/proc_holder/changeling/sting/transformation/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/sting/transformation/Trigger(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)
 		unset_sting(user)
@@ -104,11 +102,11 @@
 	var/mob/living/carbon/C = target
 	. = TRUE
 	if(istype(C))
-		if(C.reagents.has_reagent("changeling_sting_real"))
-			C.reagents.add_reagent("changeling_sting_real",120)
+		if(C.reagents.has_reagent(/datum/reagent/changeling_string))
+			C.reagents.add_reagent(/datum/reagent/changeling_string,120)
 			log_combat(user, target, "stung", "transformation sting", ", extending the duration.")
 		else
-			C.reagents.add_reagent("changeling_sting_real",120,list("desired_dna" = selected_dna.dna))
+			C.reagents.add_reagent(/datum/reagent/changeling_string,120,list("desired_dna" = selected_dna.dna))
 			log_combat(user, target, "stung", "transformation sting", " new identity is '[selected_dna.dna.real_name]'")
 
 
@@ -243,8 +241,8 @@
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "LSD sting")
 	if(target.reagents)
-		target.reagents.add_reagent("regenerative_materia", 5)
-		target.reagents.add_reagent("mindbreaker", 5)
+		target.reagents.add_reagent(/datum/reagent/blob/regenerative_materia, 5)
+		target.reagents.add_reagent(/datum/reagent/toxin/mindbreaker, 5)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/cryo
@@ -262,5 +260,5 @@
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	log_combat(user, target, "stung", "cryo sting")
 	if(target.reagents)
-		target.reagents.add_reagent("frostoil", 30)
+		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE

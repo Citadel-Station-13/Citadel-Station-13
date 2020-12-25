@@ -11,6 +11,8 @@
 	var/transfer_blood = 0
 	strip_delay = 20
 	equip_delay_other = 40
+	var/strip_mod = 1 //how much they alter stripping items time by, higher is quicker
+	var/strip_silence = FALSE //if it shows a warning when stripping
 
 /obj/item/clothing/gloves/ComponentInitialize()
 	. = ..()
@@ -24,15 +26,15 @@
 	user.visible_message("<span class='suicide'>\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!</span>")
 	return OXYLOSS
 
-/obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
-	. = list()
+/obj/item/clothing/gloves/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands", color = blood_DNA_to_color())
 
-/obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/gloves/update_clothes_damaged_state()
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

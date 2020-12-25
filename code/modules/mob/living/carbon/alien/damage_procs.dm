@@ -1,15 +1,13 @@
 
-/mob/living/carbon/alien/getToxLoss()
+/mob/living/carbon/alien/getToxLoss(toxins_type = TOX_OMNI)
 	return 0
 
-/mob/living/carbon/alien/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE) //alien immune to tox damage
+/mob/living/carbon/alien/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT) //alien immune to tox damage
 	return FALSE
 
-/* CIT CHANGE - Pffffffffffffhahahahahhaha-- No.
 //aliens are immune to stamina damage.
-/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_health = 1)
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
-/mob/living/carbon/alien/setStaminaLoss(amount, updating_health = 1)
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
-*/

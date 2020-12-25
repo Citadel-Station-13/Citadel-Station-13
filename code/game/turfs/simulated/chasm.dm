@@ -38,7 +38,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			PlaceOnTop(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
 
@@ -70,7 +70,7 @@
 				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
 				// Create a floor, which has this chasm underneath it
-				PlaceOnTop(/turf/open/floor/plating)
+				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			else
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
@@ -88,6 +88,15 @@
 	light_power = 0.65 //less bright, too
 	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
+// Chasms for Ice moon, with planetary atmos and glow
+/turf/open/chasm/icemoon
+	icon = 'icons/turf/floors/icechasms.dmi'
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/chasm/icemoon
+	light_range = 1.9
+	light_power = 0.65
+	light_color = LIGHT_COLOR_PURPLE
 
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle

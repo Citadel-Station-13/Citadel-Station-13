@@ -17,7 +17,7 @@ Buildable meters
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
@@ -63,7 +63,7 @@ Buildable meters
 	if(make_from.flipped)
 		do_a_flip()
 
-/obj/item/pipe/dropped()
+/obj/item/pipe/dropped(mob/user)
 	if(loc)
 		setPipingLayer(piping_layer)
 	return ..()
@@ -75,8 +75,7 @@ Buildable meters
 		new_layer = PIPING_LAYER_DEFAULT
 	piping_layer = new_layer
 
-	pixel_x += (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
-	pixel_y += (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	PIPING_LAYER_SHIFT(src, piping_layer)
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/item/pipe/proc/update()
@@ -91,7 +90,8 @@ Buildable meters
 	set name = "Flip Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() || !usr.canmove )
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
 		return
 
 	do_a_flip()
@@ -225,12 +225,11 @@ Buildable meters
 	to_chat(user, "<span class='notice'>You fasten the meter to the [loc.name].</span>")
 	qdel(src)
 
-/obj/item/pipe_meter/dropped()
+/obj/item/pipe_meter/dropped(mob/user)
 	. = ..()
 	if(loc)
 		setAttachLayer(piping_layer)
 
 /obj/item/pipe_meter/proc/setAttachLayer(new_layer = PIPING_LAYER_DEFAULT)
 	piping_layer = new_layer
-	pixel_x = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X
-	pixel_y = (new_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y
+	PIPING_LAYER_DOUBLE_SHIFT(src, piping_layer)

@@ -1,6 +1,6 @@
 /datum/element/cleaning/Attach(datum/target)
 	. = ..()
-	if(!ismovableatom(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/Clean)
 
@@ -45,4 +45,4 @@
 				cleaned_human.clean_blood()
 				cleaned_human.wash_cream()
 				cleaned_human.regenerate_icons()
-				to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
+				to_chat(cleaned_human, "<span class='danger'>[AM] cleans your face!</span>")

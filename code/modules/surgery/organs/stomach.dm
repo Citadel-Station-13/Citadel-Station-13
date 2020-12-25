@@ -8,7 +8,7 @@
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1
 
-	healing_factor = STANDARD_ORGAN_HEALING*3
+	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	low_threshold_passed = "<span class='info'>Your stomach flashes with pain before subsiding. Food doesn't seem like a good idea right now.</span>"
@@ -16,25 +16,28 @@
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
-	var/stomach_acid = "stomach_acid"
+	var/stomach_acid = /datum/reagent/metabolic/stomach_acid
+	var/stomach_acid_volume = 50
+	var/stomach_acid_opt_pH = 7 //what pH the stomach wants to be at
 
 /obj/item/organ/stomach/on_life()
+	. = ..()
 	if(is_cold())
 		return
 	if(!owner)
 		return
-	var/datum/reagent/consumable/nutriment/Nutri
-	var/mob/living/carbon/C = owner
-	var/mob/living/carbon/human/H = owner
+
 	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
 		if(!(organ_flags & ORGAN_FAILING))
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
 
+	var/mob/living/carbon/C = owner
 	if(!C.reagents)
 		return
 	var/deltapH = C.reagents.pH
-	if(deltapH>7)
+	if(deltapH>stomach_acid_opt_pH)
 		deltapH = 14-deltapH
 	switch(deltapH)
 		if(-INFINITY to 1)
@@ -64,24 +67,24 @@
 	if(organ_flags & ORGAN_FAILING)
 		return
 	//stomach acid stuff
-	if(C.reagents.pH > 7.25)
-		var/adjust = C.reagents.pH - (0.25-(damage/500))
-		C.reagents.pH = CLAMP(adjust, 0, 14)
-	else if (C.reagents.pH < 6.75)
-		var/adjust = C.reagents.pH + (0.25-(damage/500))
-		C.reagents.pH = CLAMP(adjust, 0, 14)
+	if(C.reagents.pH > stomach_acid_opt_pH + 0.25)
+		var/adjust = C.reagents.pH - (0.35-(damage/500))
+		C.reagents.pH = clamp(adjust, 0, 14)
+	else if (C.reagents.pH < stomach_acid_opt_pH - 0.25)
+		var/adjust = C.reagents.pH + (0.35-(damage/500))
+		C.reagents.pH = clamp(adjust, 0, 14)
 
 	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
 	if(!SA)
 		owner.reagents.add_reagent(stomach_acid, 1)
 		applyOrganDamage(5)
-	else if(SA.volume < 50)
-		SA.volume = CLAMP(SA.volume + 1, 0, 50)
+	else if(SA.volume < stomach_acid_volume)
+		SA.volume = clamp(SA.volume + 1, 0, stomach_acid_volume)
 
 	if(damage < low_threshold)
 		return
 
-	Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
+	var/datum/reagent/consumable/nutriment/Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
 
 	if(Nutri)
 		if(prob((damage/40) * Nutri.volume * Nutri.volume))
@@ -100,9 +103,9 @@
 	var/datum/reagent/metabolic/stomach_acid/SA = owner.reagents.has_reagent("stomach_acid")
 	if(!SA)
 		owner.reagents.add_reagent(stomach_acid, amount)
-	else if(SA.volume < 50)
-		SA.volume = CLAMP(SA.volume + amount, 0, 50)
-	owner.reagents.pH = 7
+	else if(SA.volume < stomach_acid_volume)
+		SA.volume = clamp(SA.volume + amount, 0, stomach_acid_volume)
+	owner.reagents.pH = stomach_acid_opt_pH
 
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
@@ -142,11 +145,11 @@
 
 /obj/item/organ/stomach/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	.=..()
-	regen_stomach_acid(50)
+	regen_stomach_acid(stomach_acid_volume)
 
 /obj/item/organ/stomach/Initialize()
 	..()
-	regen_stomach_acid(50)
+	regen_stomach_acid(stomach_acid_volume)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
@@ -154,7 +157,7 @@
 		H.clear_alert("disgust")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	if(owner.reagents)
-		owner.reagents.remove_reagent("stomach_acid", 50)
+		owner.reagents.remove_reagent(/datum/reagent/metabolic/stomach_acid, stomach_acid_volume)
 	..()
 
 /obj/item/organ/stomach/fly
@@ -166,3 +169,52 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+
+/obj/item/organ/stomach/ipc
+	name = "ipc cell"
+	icon_state = "stomach-ipc"
+	//stomach_acid = /datum/reagent/lube //TODO link sprint to lube? Also set up an ignored metabolic reagents list so that they're not processed. (see liver.dm)
+
+/obj/item/organ/stomach/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	switch(severity)
+		if(1)
+			owner.nutrition = min(owner.nutrition - 50, 0)
+			to_chat(owner, "<span class='warning'>Alert: Detected severe battery discharge!</span>")
+		if(2)
+			owner.nutrition = min(owner.nutrition - 100, 0)
+			to_chat(owner, "<span class='warning'>Alert: Minor battery discharge!</span>")
+
+/obj/item/organ/stomach/ethereal
+	name = "biological battery"
+	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
+	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	var/crystal_charge = ETHEREAL_CHARGE_FULL
+
+/obj/item/organ/stomach/ethereal/on_life()
+	..()
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
+
+/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	..()
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+
+/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
+	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	..()
+
+/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+	adjust_charge(amount / 70)
+
+/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_ILLUSION)
+		return
+	adjust_charge(shock_damage * siemens_coeff * 2)
+	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
+
+/obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
+	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)

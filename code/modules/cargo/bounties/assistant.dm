@@ -10,13 +10,13 @@
 /datum/bounty/item/assistant/skateboard
 	name = "Skateboard"
 	description = "Nanotrasen has determined walking to be wasteful. Ship a skateboard to CentCom to speed operations up."
-	reward = 750 // the tony hawk
+	reward = 800 // the tony hawk
 	wanted_types = list(/obj/vehicle/ridden/scooter/skateboard)
 
 /datum/bounty/item/assistant/stunprod
 	name = "Stunprod"
 	description = "CentCom demands a stunprod to use against dissidents. Craft one, then ship it."
-	reward = 800
+	reward = 950
 	wanted_types = list(/obj/item/melee/baton/cattleprod)
 
 /datum/bounty/item/assistant/soap
@@ -31,7 +31,7 @@
 	description = "CentCom's security forces are going through budget cuts. You will be paid if you ship a set of spears."
 	reward = 1000
 	required_count = 5
-	wanted_types = list(/obj/item/twohanded/spear)
+	wanted_types = list(/obj/item/spear)
 
 /datum/bounty/item/assistant/toolbox
 	name = "Toolboxes"
@@ -126,7 +126,7 @@
 /datum/bounty/item/assistant/shadyjims
 	name = "Shady Jim's"
 	description = "There's an irate officer at CentCom demanding that he receive a box of Shady Jim's cigarettes. Please ship one. He's starting to make threats."
-	reward = 750
+	reward = 1150
 	wanted_types = list(/obj/item/storage/fancy/cigarettes/cigpack_shadyjims)
 
 /datum/bounty/item/assistant/potted_plants
@@ -134,7 +134,7 @@
 	description = "Central Command is looking to commission a new BirdBoat-class station. You've been ordered to supply the potted plants."
 	reward = 2000
 	required_count = 8
-	wanted_types = list(/obj/item/twohanded/required/kirbyplants)
+	wanted_types = list(/obj/item/kirbyplants)
 
 // /datum/bounty/item/assistant/earmuffs
 // 	name = "Earmuffs"
@@ -148,19 +148,19 @@
 	reward = 1000
 	required_count = 5
 	wanted_types = list(/obj/item/restraints/handcuffs)
-
+/* I don't like that you can just buy a box of monkey cubes and finish this for -half- of them.
 /datum/bounty/item/assistant/monkey_cubes
 	name = "Monkey Cubes"
 	description = "Due to a recent genetics accident, Central Command is in serious need of monkeys. Your mission is to ship monkey cubes."
 	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/monkeycube)
-
+*/
 /datum/bounty/item/assistant/chainsaw
 	name = "Chainsaw"
 	description = "The chef at CentCom is having trouble butchering her animals. She requests one chainsaw, please."
 	reward = 2500
-	wanted_types = list(/obj/item/twohanded/required/chainsaw)
+	wanted_types = list(/obj/item/chainsaw)
 
 /datum/bounty/item/assistant/ied
 	name = "IED"
@@ -208,15 +208,22 @@
 	wanted_types = list(/obj/item/shield/makeshift)
 
 /datum/bounty/item/assistant/toolbelts
-	name = "Tool Belts" 
+	name = "Tool Belts" //Made it 5 so you can't just buy one set of toolbelts to finish the bounty.
 	description = "These things always seem to go missing. Ship us a few to help us restock."
 	reward = 1350
-	required_count = 3
+	required_count = 5
 	wanted_types = list(/obj/item/storage/belt/utility)
 
 /datum/bounty/item/assistant/gasmasks
 	name = "Gas Masks" 
 	description = "The good news is that we have more miasma than we'll ever need. The bad news is, somone opened the release valve on the canisters. Ship us some gas masks!"
-	reward = 1100
+	reward = 1250
 	required_count = 4
 	wanted_types = list(/obj/item/clothing/mask/gas)
+
+/datum/bounty/item/assistant/pneumatic_cannon
+	name = "Pneumatic Cannons"
+	description = "Have you ever launched a tennis ball, newspaper, or ***** at someones head from across the room? No? We haven't either. Help us rectify this."
+	reward = 2000
+	required_count = 2
+	wanted_types = list(/obj/item/pneumatic_cannon/ghetto)

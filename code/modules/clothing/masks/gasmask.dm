@@ -10,13 +10,26 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
-	mutantrace_variation = MUTANTRACE_VARIATION
+	mutantrace_variation = STYLE_MUZZLE
+	visor_flags_inv = HIDEFACE
+	var/flavor_adjust = TRUE //can it do the heehoo alt click to hide/show identity
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	if(flavor_adjust)
+		. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
+
+/obj/item/clothing/mask/gas/AltClick(mob/user)
+	. = ..()
+	if(flavor_adjust && adjustmask(user, TRUE))
+		return TRUE
 
 /obj/item/clothing/mask/gas/glass
 	name = "glass gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. This one doesn't obscure your face however." //More accurate
 	icon_state = "gas_clear"
 	flags_inv = HIDEEYES
+	flavor_adjust = FALSE
 
 
 // **** Welding gas mask ****
@@ -25,7 +38,7 @@
 	name = "welding mask"
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
-	materials = list(MAT_METAL=4000, MAT_GLASS=2000)
+	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	flash_protect = 2
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 55)
@@ -35,9 +48,16 @@
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+	flavor_adjust = FALSE
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
+
+/obj/item/clothing/mask/gas/welding/up
+
+/obj/item/clothing/mask/gas/welding/up/Initialize()
+	..()
+	visor_toggling()
 
 
 // ********************************************************************
@@ -62,22 +82,32 @@
 	clothing_flags = ALLOWINTERNALS
 	icon_state = "clown"
 	item_state = "clown_hat"
+	dye_color = "clown"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
+	var/static/list/clownmask_designs
+
+/obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
+	.=..()
+	if(!clownmask_designs)
+		clownmask_designs = list(
+			"True Form" = image(icon = src.icon, icon_state = "clown"),
+			"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
+			"The Jester" = image(icon = src.icon, icon_state = "chaos"),
+			"The Madman" = image(icon = src.icon, icon_state = "joker"),
+			"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
+			)
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/list/options = list()
-	options["True Form"] = "clown"
-	options["The Feminist"] = "sexyclown"
-	options["The Madman"] = "joker"
-	options["The Rainbow Color"] ="rainbow"
+	var/static/list/options = list("True Form" = "clown", "The Feminist" = "sexyclown", "The Madman" = "joker",
+								"The Rainbow Color" ="rainbow", "The Jester" = "chaos")
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
+	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -86,16 +116,14 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
-		return 1
+		return TRUE
 
-/obj/item/clothing/mask/gas/sexyclown
+/obj/item/clothing/mask/gas/clown_hat/sexy
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
-	clothing_flags = ALLOWINTERNALS
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
-	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	actions_types = list()
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -106,19 +134,25 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
+	var/static/list/mimemask_designs
 
+/obj/item/clothing/mask/gas/mime/Initialize(mapload)
+	.=..()
+	if(!mimemask_designs)
+		mimemask_designs = list(
+			"Blanc" = image(icon = src.icon, icon_state = "mime"),
+			"Excité" = image(icon = src.icon, icon_state = "sexymime"),
+			"Triste" = image(icon = src.icon, icon_state = "sadmime"),
+			"Effrayé" = image(icon = src.icon, icon_state = "scaredmime")
+			)
 
 /obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/list/options = list()
-	options["Blanc"] = "mime"
-	options["Triste"] = "sadmime"
-	options["Effrayé"] = "scaredmime"
-	options["Excité"] ="sexymime"
+	var/static/list/options = list("Blanc" = "mime", "Triste" = "sadmime", "Effrayé" = "scaredmime", "Excité" ="sexymime")
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
+	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -127,7 +161,14 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
-		return 1
+		return TRUE
+
+/obj/item/clothing/mask/gas/mime/sexy
+	name = "sexy mime mask"
+	desc = "A traditional female mime's mask."
+	icon_state = "sexymime"
+	item_state = "sexymime"
+	actions_types = list()
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -135,15 +176,6 @@
 	clothing_flags = ALLOWINTERNALS
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
-	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
-
-/obj/item/clothing/mask/gas/sexymime
-	name = "sexy mime mask"
-	desc = "A traditional female mime's mask."
-	clothing_flags = ALLOWINTERNALS
-	icon_state = "sexymime"
-	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 
@@ -176,22 +208,30 @@
 	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
 	item_state = "tiki_eyebrow"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.25)
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
+	var/list/tikimask_designs = list()
 
+
+/obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)
+	.=..()
+	tikimask_designs = list(
+		"Original Tiki" = image(icon = src.icon, icon_state = "tiki_eyebrow"),
+		"Happy Tiki" = image(icon = src.icon, icon_state = "tiki_happy"),
+		"Confused Tiki" = image(icon = src.icon, icon_state = "tiki_confused"),
+		"Angry Tiki" = image(icon = src.icon, icon_state = "tiki_angry")
+		)
 
 /obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 
 	var/mob/M = usr
-	var/list/options = list()
-	options["Original Tiki"] = "tiki_eyebrow"
-	options["Happy Tiki"] = "tiki_happy"
-	options["Confused Tiki"] = "tiki_confused"
-	options["Angry Tiki"] ="tiki_angry"
+	var/static/list/options = list("Original Tiki" = "tiki_eyebrow", "Happy Tiki" = "tiki_happy", "Confused Tiki" = "tiki_confused",
+							"Angry Tiki" = "tiki_angry")
 
-	var/choice = input(M,"To what form do you wish to change this mask?","Morph Mask") in options
+	var/choice = show_radial_menu(user,src, tikimask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
@@ -200,4 +240,17 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
-		return 1
+		return TRUE
+
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor
+	icon_state = "tiki_yalp"
+	item_state = "tiki_yalp"
+	actions_types = list()
+
+/obj/item/clothing/mask/gas/hunter
+	name = "bounty hunting mask"
+	desc = "A custom tactical mask with decals added."
+	icon_state = "hunter"
+	item_state = "hunter"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR

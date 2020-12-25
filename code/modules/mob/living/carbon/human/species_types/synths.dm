@@ -1,29 +1,31 @@
 /datum/species/synth
 	name = "Synthetic" //inherited from the real species, for health scanners and things
-	id = "synth"
+	id = SPECIES_SYNTH
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
 	species_traits = list(NOTRANSSTING,NOGENITALS,NOAROUSAL) //all of these + whatever we inherit from the real species
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
 	gib_types = /obj/effect/gibspawner/robot
 	damage_overlay_type = "synth"
-	limbs_id = "synth"
+	limbs_id = SPECIES_SYNTH
 	var/list/initial_species_traits = list(NOTRANSSTING) //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+	species_language_holder = /datum/language_holder/synthetic
+	species_category = SPECIES_CATEGORY_ROBOT
 
 /datum/species/synth/military
 	name = "Military Synth"
-	id = "military_synth"
+	id = SPECIES_SYNTH_MIL
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
-	punchstunthreshold = 14 //about 50% chance to stun
+	punchstunthreshold = 14
 	disguise_fail_health = 50
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
@@ -36,13 +38,11 @@
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "synthflesh")
+	if(chem.type == /datum/reagent/medicine/synthflesh)
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
-	else
-		return ..()
-
+		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		return TRUE
+	return ..()
 
 /datum/species/synth/proc/assume_disguise(datum/species/S, mob/living/carbon/human/H)
 	if(S && !istype(S, type))
@@ -59,10 +59,9 @@
 		meat = S.meat
 		mutant_bodyparts = S.mutant_bodyparts.Copy()
 		mutant_organs = S.mutant_organs.Copy()
-		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
-		limbs_id = S.limbs_id
+		limbs_id = S.mutant_bodyparts["limbs_id"]
 		use_skintones = S.use_skintones
 		fixed_mut_color = S.fixed_mut_color
 		hair_color = S.hair_color
@@ -76,14 +75,13 @@
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)
 		mutant_bodyparts = list()
-		default_features = list()
 		nojumpsuit = initial(nojumpsuit)
 		no_equip = list()
 		qdel(fake_species)
 		fake_species = null
 		meat = initial(meat)
-		limbs_id = "synth"
-		use_skintones = 0
+		limbs_id = SPECIES_SYNTH
+		use_skintones = FALSE
 		sexes = 0
 		fixed_mut_color = ""
 		hair_color = ""
@@ -102,13 +100,11 @@
 	else
 		return ..()
 
-
 /datum/species/synth/handle_body(mob/living/carbon/human/H)
 	if(fake_species)
 		fake_species.handle_body(H)
 	else
 		return ..()
-
 
 /datum/species/synth/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	if(fake_species)

@@ -3,15 +3,6 @@
 
 ////////////////////////////////////////////////SPAGHETTI////////////////////////////////////////////////
 
-/datum/crafting_recipe/food/tomatopasta
-	name = "Tomato pasta"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
-		/obj/item/reagent_containers/food/snacks/grown/tomato = 2
-	)
-	result = /obj/item/reagent_containers/food/snacks/pastatomato
-	subcategory = CAT_SPAGHETTI
-
 /datum/crafting_recipe/food/copypasta
 	name = "Copypasta"
 	reqs = list(
@@ -24,7 +15,7 @@
 	name = "Spaghetti meatball"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 2
+		/obj/item/reagent_containers/food/snacks/meatball = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatballspaghetti
 	subcategory = CAT_SPAGHETTI
@@ -33,10 +24,21 @@
 	name = "Spesslaw"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 4
+		/obj/item/reagent_containers/food/snacks/meatball = 4
 	)
 	result = /obj/item/reagent_containers/food/snacks/spesslaw
 	subcategory = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/tomatopasta
+	name = "Tomato pasta"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/boiledspaghetti = 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 2
+	)
+	result = /obj/item/reagent_containers/food/snacks/pastatomato
+	subcategory = CAT_SPAGHETTI
+
+////////////NOODLES///////////
 
 /datum/crafting_recipe/food/beefnoodle
 	name = "Beef noodle"

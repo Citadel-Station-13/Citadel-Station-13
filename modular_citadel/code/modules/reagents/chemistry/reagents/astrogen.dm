@@ -15,7 +15,6 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 
 /datum/reagent/fermi/astral // Gives you the ability to astral project for a moment!
 	name = "Astrogen"
-	id = "astral"
 	description = "An opalescent murky liquid that is said to distort your soul from your being."
 	color = "#A080H4" // rgb: , 0, 255
 	taste_description = "your mind"
@@ -31,6 +30,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	inverse_chem_val = 0.25
 	can_synth = FALSE
 	var/datum/action/chem/astral/AS = new/datum/action/chem/astral()
+	value = REAGENT_VALUE_AMAZING
 
 /datum/action/chem/astral
 	name = "Return to body"
@@ -41,7 +41,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	if(origin.mind && origin.mind != originalmind)
 		to_chat(originalmind.current, "<span class='warning'><b><i>There's a foreign presence in your body blocking your return!</b></i></span>")
 		return ..()
-	if(origin.reagents.has_reagent("astral") )
+	if(origin.reagents.has_reagent(/datum/reagent/fermi/astral) )
 		var/datum/reagent/fermi/astral/As = locate(/datum/reagent/fermi/astral) in origin.reagents.reagent_list
 		if(As.current_cycle < 10)
 			to_chat(originalmind.current, "<span class='warning'><b><i>The intensity of the astrogen in your body is too much allow you to return to yourself yet!</b></i></span>")
@@ -54,7 +54,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 /datum/reagent/fermi/astral/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/fakespace)
+		F.PlaceOnTop(/turf/open/floor/fakespace, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/fermi/astral/reaction_obj(obj/O, reac_volume)
@@ -67,7 +67,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	M.alpha = 255
 	if(current_cycle == 0)
 		originalmind = M.mind
-		log_game("FERMICHEM: [M] ckey: [M.key] became an astral ghost")
+		log_reagent("FERMICHEM: [M] ckey: [M.key] became an astral ghost")
 		origin = M
 		if (G == null)
 			G = new(get_turf(M.loc))
@@ -90,7 +90,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 		if(prob(50))
 			to_chat(G, "<span class='warning'>The high conentration of Astrogen in your blood causes you to lapse your concentration for a moment, bringing your projection back to yourself!</b></span>")
 			do_teleport(G, M.loc)
-	M.reagents.remove_reagent(id, current_cycle/10, FALSE)//exponent
+	metabolization_rate = current_cycle/10 //exponential
 	sleepytime+=5
 	if(G)//This is a mess because of how slow qdel is, so this is all to stop runtimes.
 		if(G.mind)
@@ -100,29 +100,25 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 	..()
 
 /datum/reagent/fermi/astral/on_mob_delete(mob/living/carbon/M)
-	if(!G)
-		if(M.mind)
-			var/mob/living/simple_animal/astral/G2 = new(get_turf(M.loc))
-			M.mind.transfer_to(G2)//Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
-			to_chat(G, "<span class='warning'>[M]'s conciousness snaps back to them as their astrogen runs out, kicking your projected mind out!'</b></span>")
-			log_game("FERMICHEM: [M]'s possesser has been booted out into a astral ghost!")
-			if(!G2.mind)
-				qdel(G2)
-		originalmind.transfer_to(M)
-	else if(G.mind)
-		G.mind.transfer_to(origin)
-		qdel(G)
+	if(!(G?.mind))
+		if(!G)
+			qdel(G)
+		return  ..()
+	if(M.mind) //Just in case someone else is inside of you, it makes them a ghost and should hopefully bring them home at the end.
+		var/mob/living/simple_animal/astral/G2 = new(get_turf(M))
+		M.mind.transfer_to(G2)
+		to_chat(G2, "<span class='warning'>[M]'s conciousness snaps back to them as [M.p_their()] astrogen runs out, kicking your projected mind out!'</b></span>")
+		log_reagent("FERMICHEM: [G2.mind.name] has been booted out of [M] as their original mind came back as the Astrogen reagent ran out!")
+	G.mind.transfer_to(origin)
+	qdel(G)
 	if(overdosed)
 		to_chat(M, "<span class='warning'>The high volume of astrogen you just took causes you to black out momentarily as your mind snaps back to your body.</b></span>")
 		M.Sleeping(sleepytime, 0)
 	antiGenetics = 255
-	if(G)//just in case
-		qdel(G)
-	log_game("FERMICHEM: [M] has astrally returned to their body!")
+	log_reagent("FERMICHEM: [M] has astrally returned to their body!")
 	if(M.mind && M.mind == originalmind)
 		M.remove_status_effect(/datum/status_effect/chem/astral_insurance)
-	//AS.Remove(M)
-	..()
+	return ..()
 
 //Okay so, this might seem a bit too good, but my counterargument is that it'll likely take all round to eventually kill you this way, then you have to be revived without a body. It takes approximately 50-80 minutes to die from this.
 /datum/reagent/fermi/astral/addiction_act_stage1(mob/living/carbon/M)
@@ -137,7 +133,7 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			to_chat(M, "<span class='warning'>You notice your body starting to disappear, maybe you took too much Astrogen...?</b></span>")
 			M.alpha--
 			antiGenetics--
-			log_game("FERMICHEM: [M] ckey: [M.key] has become addicted to Astrogen")
+			log_reagent("FERMICHEM: [M] ckey: [M.key] has become addicted to Astrogen")
 		if(220)
 			to_chat(M, "<span class='notice'>Your addiction is only getting worse as your body disappears. Maybe you should get some more, and fast?</b></span>")
 			M.alpha--
@@ -172,5 +168,5 @@ I'd like to point out from my calculations it'll take about 60-80 minutes to die
 			message_admins("[M] (ckey: [M.ckey]) has become one with the universe, and have continuous memories thoughout their lives should they find a way to come back to life (such as an inteligence potion, midround antag, ghost role).")
 			SSblackbox.record_feedback("tally", "fermi_chem", 1, "Astral obliterations")
 			qdel(M) //Approx 60minutes till death from initial addiction
-			log_game("FERMICHEM: [M] ckey: [M.key] has been obliterated from Astrogen addiction")
+			log_reagent("FERMICHEM: [M] ckey: [M.key] has been obliterated from Astrogen addiction")
 	..()

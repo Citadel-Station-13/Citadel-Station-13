@@ -60,13 +60,13 @@
 		_contents_limbo = null
 	if(_user_limbo)
 		for(var/i in _user_limbo)
-			show_to(i)
+			ui_show(i)
 		_user_limbo = null
 
 /datum/component/storage/concrete/_insert_physical_item(obj/item/I, override = FALSE)
 	. = TRUE
 	var/atom/real_location = real_location()
-	if(I.loc != real_location)
+	if(I.loc != real_location && real_location)
 		I.forceMove(real_location)
 	refresh_mob_views()
 
@@ -136,9 +136,7 @@
 		var/mob/M = parent.loc
 		I.dropped(M)
 	if(new_location)
-		//Reset the items values
-		_removal_reset(AM)
-		AM.forceMove(new_location)
+		AM.forceMove(new_location)		// exited comsig will handle removal reset.
 		//We don't want to call this if the item is being destroyed
 		AM.on_exit_storage(src)
 	else

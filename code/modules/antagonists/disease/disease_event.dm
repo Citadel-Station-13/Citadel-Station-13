@@ -3,7 +3,6 @@
 	name = "Spawn Sentient Disease"
 	typepath = /datum/round_event/ghost_role/sentient_disease
 	weight = 7
-	gamemode_blacklist = list("dynamic")
 	max_occurrences = 1
 	min_players = 5
 

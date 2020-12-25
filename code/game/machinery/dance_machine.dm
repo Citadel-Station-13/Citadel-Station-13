@@ -9,6 +9,7 @@
 	var/active = FALSE
 	var/list/rangers = list()
 	var/stop = 0
+	var/volume = 70
 	var/datum/track/selection = null
 
 /obj/machinery/jukebox/disco
@@ -45,80 +46,97 @@
 			return
 	return ..()
 
-/obj/machinery/jukebox/update_icon()
+/obj/machinery/jukebox/update_icon_state()
 	if(active)
 		icon_state = "[initial(icon_state)]-active"
 	else
 		icon_state = "[initial(icon_state)]"
 
-/obj/machinery/jukebox/ui_interact(mob/user)
-	. = ..()
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
-	if (!anchored)
+/obj/machinery/jukebox/ui_status(mob/user)
+	if(!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
-		return
-	if(!allowed(user))
+		return UI_CLOSE
+	if(!allowed(user) && !isobserver(user))
 		to_chat(user,"<span class='warning'>Error: Access Denied.</span>")
-		user.playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
-		return
-	if(!SSjukeboxes.songs.len)
+		user.playsound_local(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
+		return UI_CLOSE
+	if(!SSjukeboxes.songs.len && !isobserver(user))
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
-		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
-		return
-	var/list/dat = list()
-	dat +="<div class='statusDisplay' style='text-align:center'>"
-	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
-	dat += "</div><br>"
-	dat += "<A href='?src=[REF(src)];action=select'> Select Track</A><br>"
-	if(istype(selection))
-		dat += "Track Selected: [selection.song_name]<br>"
-		dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
-	else
-		dat += "Track Selected: None!<br><br>"
-	var/datum/browser/popup = new(user, "vending", "[name]", 400, 350)
-	popup.set_content(dat.Join())
-	popup.open()
+		playsound(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
+		return UI_CLOSE
+	return ..()
 
+/obj/machinery/jukebox/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Jukebox", name)
+		ui.open()
 
-/obj/machinery/jukebox/Topic(href, href_list)
-	if(..())
+/obj/machinery/jukebox/ui_data(mob/user)
+	var/list/data = list()
+	data["active"] = active
+	data["songs"] = list()
+	for(var/datum/track/S in SSjukeboxes.songs)
+		var/list/track_data = list(
+			name = S.song_name
+		)
+		data["songs"] += list(track_data)
+	data["track_selected"] = null
+	data["track_length"] = null
+	data["track_beat"] = null
+	if(selection)
+		data["track_selected"] = selection.song_name
+		data["track_length"] = DisplayTimeText(selection.song_length)
+		data["track_beat"] = selection.song_beat
+	data["volume"] = volume
+	return data
+
+/obj/machinery/jukebox/ui_act(action, list/params)
+	. = ..()
+	if(.)
 		return
-	add_fingerprint(usr)
-	switch(href_list["action"])
+
+	switch(action)
 		if("toggle")
-			if (QDELETED(src))
+			if(QDELETED(src))
 				return
 			if(!active)
 				if(stop > world.time)
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 					return
-				if(!istype(selection))
-					to_chat(usr, "<span class='warning'>Error: Severe user incompetence detected.</span>")
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
-					return
-				if(!activate_music())
-					to_chat(usr, "<span class='warning'>Error: Generic hardware failure.</span>")
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
-					return
-				updateUsrDialog()
-			else if(active)
+				activate_music()
+				START_PROCESSING(SSobj, src)
+				return TRUE
+			else
 				stop = 0
-				updateUsrDialog()
-		if("select")
+				return TRUE
+		if("select_track")
 			if(active)
 				to_chat(usr, "<span class='warning'>Error: You cannot change the song until the current one is over.</span>")
 				return
-
 			var/list/available = list()
 			for(var/datum/track/S in SSjukeboxes.songs)
 				available[S.song_name] = S
-			var/selected = input(usr, "Choose your song", "Track:") as null|anything in available
+			var/selected = params["track"]
 			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
 				return
 			selection = available[selected]
-			updateUsrDialog()
+			return TRUE
+		if("set_volume")
+			var/new_volume = params["volume"]
+			if(new_volume  == "reset")
+				volume = initial(volume)
+				return TRUE
+			else if(new_volume == "min")
+				volume = 0
+				return TRUE
+			else if(new_volume == "max")
+				volume = 100
+				return TRUE
+			else if(text2num(new_volume) != null)
+				volume = text2num(new_volume)
+				return TRUE
 
 /obj/machinery/jukebox/proc/activate_music()
 	var/jukeboxslottotake = SSjukeboxes.addjukebox(src, selection, 2)
@@ -202,6 +220,8 @@
 	for(var/i in 1 to 10)
 		spawn_atom_to_turf(/obj/effect/temp_visual/hierophant/telegraph/edge, src, 1, FALSE)
 		sleep(5)
+		if(QDELETED(src))
+			return
 
 #define DISCO_INFENO_RANGE (rand(85, 115)*0.01)
 
@@ -406,12 +426,11 @@
 	lying_prev = 0
 
 /obj/machinery/jukebox/proc/dance_over()
-	SSjukeboxes.removejukebox(SSjukeboxes.findjukeboxindex(src))
+	var/position = SSjukeboxes.findjukeboxindex(src)
+	if(!position)
+		return
+	SSjukeboxes.removejukebox(position)
 	STOP_PROCESSING(SSobj, src)
-	for(var/mob/living/L in rangers)
-		if(!L || !L.client)
-			continue
-		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	rangers = list()
 
 /obj/machinery/jukebox/disco/dance_over()
@@ -431,6 +450,6 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/M in rangers)
-			if(prob(5+(allowed(M)*4)) && M.canmove)
+		for(var/mob/living/M in rangers)
+			if(prob(5+(allowed(M)*4)) && CHECK_MOBILITY(M, MOBILITY_MOVE))
 				dance(M)

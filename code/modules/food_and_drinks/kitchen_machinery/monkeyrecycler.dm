@@ -1,6 +1,6 @@
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted." // except it literally never does
+	desc = "A machine used for recycling dead monkeys into monkey cubes." // except it literally never does
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
@@ -22,7 +22,11 @@
 		cubes_made = M.rating
 	cube_production = cubes_made
 	required_grind = req_grind
-	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
+
+/obj/machinery/monkey_recycler/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Producing <b>[cube_production]</b> cubes for every monkey inserted.</span>"
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
@@ -74,7 +78,7 @@
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
+			new /obj/item/reagent_containers/food/snacks/cube/monkey(src.loc)
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")

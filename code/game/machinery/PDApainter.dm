@@ -9,15 +9,11 @@
 	var/list/colorlist = list()
 
 
-/obj/machinery/pdapainter/update_icon()
-	cut_overlays()
+/obj/machinery/pdapainter/update_icon_state()
 
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
-
-	if(storedpda)
-		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
@@ -25,6 +21,15 @@
 		icon_state = "[initial(icon_state)]-off"
 
 	return
+
+/obj/machinery/pdapainter/update_overlays()
+	. = ..()
+
+	if(stat & BROKEN)
+		return
+
+	if(storedpda)
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize()
 	. = ..()
@@ -102,10 +107,7 @@
 			stat |= BROKEN
 			update_icon()
 
-/obj/machinery/pdapainter/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/pdapainter/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 
 	if(!storedpda)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")

@@ -207,6 +207,9 @@
 	message_admins("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) [is_special_character(src) ? "(ANTAG!) " : ""][ghosting ? "ghosted" : "committed suicide"] at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
+	if(!CONFIG_GET(flag/suicide_allowed))
+		to_chat(src, "Suicide is not enabled in the config.")
+		return FALSE
 	switch(stat)
 		if(CONSCIOUS)
 			return TRUE
@@ -221,7 +224,7 @@
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
-	if(IsStun() || IsKnockdown())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
+	if(!CHECK_MULTIPLE_BITFIELDS(mobility_flags, MOBILITY_MOVE|MOBILITY_USE))	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide while stunned! ((You can type Ghost instead however.))")
 		return
 	if(restrained())

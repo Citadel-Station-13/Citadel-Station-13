@@ -10,9 +10,10 @@
 	var/datum/outfit/outfit = /datum/outfit/ert/security
 	var/role = "Security Officer"
 	var/list/name_source
+	threat = -5
 	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
 	antag_moodlet = /datum/mood_event/focused
-	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
 	update_name()
@@ -34,6 +35,12 @@
 	. = ..()
 	name_source = GLOB.commando_names
 
+/datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
+	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+
+/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
+	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
+
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 
 /datum/antagonist/ert/security/amber
@@ -45,6 +52,7 @@
 /datum/antagonist/ert/engineer
 	role = "Engineer"
 	outfit = /datum/outfit/ert/engineer
+	skill_modifiers = list(/datum/skill_modifier/job/level/wiring)
 
 /datum/antagonist/ert/engineer/amber
 	outfit = /datum/outfit/ert/engineer/alert
@@ -55,6 +63,7 @@
 /datum/antagonist/ert/medic
 	role = "Medical Officer"
 	outfit = /datum/outfit/ert/medic
+	skill_modifiers = list(/datum/skill_modifier/job/affinity/surgery)
 
 /datum/antagonist/ert/medic/amber
 	outfit = /datum/outfit/ert/medic/alert

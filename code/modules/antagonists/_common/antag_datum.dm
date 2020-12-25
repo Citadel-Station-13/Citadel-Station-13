@@ -14,12 +14,20 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
-	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	var/antag_hud_type
+	var/antag_hud_name
+	/// If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
+	var/hijack_speed = 0
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
 	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
+	var/list/blacklisted_quirks = list(/datum/quirk/nonviolent,/datum/quirk/mute) // Quirks that will be removed upon gaining this antag. Pacifist and mute are default.
+	var/threat = 0 // Amount of threat this antag poses, for dynamic mode
+	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
+
+	var/list/skill_modifiers
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -59,19 +67,51 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
+// Adds the specified antag hud to the player. Usually called in an antag datum file
+/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.join_hud(mob_override)
+	set_antag_hud(mob_override, antag_hud_name)
+
+// Removes the specified antag hud from the player. Usually called in an antag datum file
+/datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.leave_hud(mob_override)
+	set_antag_hud(mob_override, null)
+
+// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
+/datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message, removing = TRUE)
+	var/mob/living/carbon/human/H = mob_override
+	if(H && istype(H) && owner.assigned_role == "Clown")
+		if(removing) // They're a clown becoming an antag, remove clumsy
+			H.dna.remove_mutation(CLOWNMUT)
+			if(!silent && message)
+				to_chat(H, "<span class='boldnotice'>[message]</span>")
+		else
+			H.dna.add_mutation(CLOWNMUT) // We're removing their antag status, add back clumsy
+
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)
 	return
 
 //Proc called when the datum is given to a mind.
 /datum/antagonist/proc/on_gain()
-	if(owner && owner.current)
-		if(!silent)
-			greet()
-		apply_innate_effects()
-		give_antag_moodies()
-		if(is_banned(owner.current) && replace_banned)
-			replace_banned_player()
+	if(!(owner?.current))
+		return
+	if(!silent)
+		greet()
+	apply_innate_effects()
+	give_antag_moodies()
+	remove_blacklisted_quirks()
+	if(is_banned(owner.current) && replace_banned)
+		replace_banned_player()
+	if(skill_modifiers)
+		for(var/A in skill_modifiers)
+			ADD_SINGLETON_SKILL_MODIFIER(owner, A, type)
+			var/datum/skill_modifier/job/M = GLOB.skill_modifiers[GET_SKILL_MOD_ID(A, type)]
+			if(istype(M))
+				M.name = "[name] Training"
+	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
@@ -81,9 +121,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
@@ -94,6 +134,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+		for(var/A in skill_modifiers)
+			owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
@@ -117,6 +159,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
+/datum/antagonist/proc/remove_blacklisted_quirks()
+	var/mob/living/L = owner.current
+	if(istype(L))
+		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
+		SSquirks.filter_quirks(my_quirks,blacklisted_quirks)
+		for(var/q in L.roundstart_quirks)
+			var/datum/quirk/Q = q
+			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
+				if(initial(Q.antag_removal_text))
+					to_chat(L, "<span class='boldannounce'>[initial(Q.antag_removal_text)]</span>")
+				L.remove_quirk(Q.type)
+
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
 	return
@@ -134,7 +188,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(objectives.len)
 		report += printobjectives(objectives)
 		for(var/datum/objective/objective in objectives)
-			if(!objective.check_completion())
+			if(objective.completable && !objective.check_completion())
 				objectives_complete = FALSE
 				break
 
@@ -210,10 +264,23 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = copytext(trim(input(user,"Write new memory", "Memory", antag_memory) as null|message),1,MAX_MESSAGE_LEN)
+	var/new_memo = stripped_multiline_input(user, "Write new memory", "Memory", antag_memory, MAX_MESSAGE_LEN)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
+
+/// Gets how fast we can hijack the shuttle, return 0 for can not hijack. Defaults to hijack_speed var, override for custom stuff like buffing hijack speed for hijack objectives or something.
+/datum/antagonist/proc/hijack_speed()
+	var/datum/objective/hijack/H = locate() in objectives
+	if(!isnull(H?.hijack_speed_override))
+		return H.hijack_speed_override
+	return hijack_speed
+
+/// Gets our threat level. Defaults to threat var, override for custom stuff like different traitor goals having different threats.
+/datum/antagonist/proc/threat()
+	. = CONFIG_GET(keyed_list/antag_threat)[lowertext(name)]
+	if(. == null)
+		return threat
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

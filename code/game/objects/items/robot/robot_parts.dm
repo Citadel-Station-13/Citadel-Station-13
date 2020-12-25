@@ -39,20 +39,20 @@
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
 	..()
 
-/obj/item/robot_suit/update_icon()
-	cut_overlays()
+/obj/item/robot_suit/update_overlays()
+	. = ..()
 	if(l_arm)
-		add_overlay("[l_arm.icon_state]+o")
+		. += "[l_arm.icon_state]+o"
 	if(r_arm)
-		add_overlay("[r_arm.icon_state]+o")
+		. += "[r_arm.icon_state]+o"
 	if(chest)
-		add_overlay("[chest.icon_state]+o")
+		. += "[chest.icon_state]+o"
 	if(l_leg)
-		add_overlay("[l_leg.icon_state]+o")
+		. += "[l_leg.icon_state]+o"
 	if(r_leg)
-		add_overlay("[r_leg.icon_state]+o")
+		. += "[r_leg.icon_state]+o"
 	if(head)
-		add_overlay("[head.icon_state]+o")
+		. += "[head.icon_state]+o"
 
 /obj/item/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -281,12 +281,12 @@
 			O.custom_name = created_name
 			O.locked = panel_locked
 			if(!aisync)
-				lawsync = 0
-				O.connected_ai = null
+				lawsync = FALSE
+				O.set_connected_ai(null)
 			else
 				O.notify_ai(NEW_BORG)
 				if(forced_ai)
-					O.connected_ai = forced_ai
+					O.set_connected_ai(forced_ai)
 			if(!lawsync)
 				O.lawupdate = 0
 				if(M.laws.id == DEFAULT_AI_LAWID)
@@ -317,8 +317,7 @@
 			O.robot_suit = src
 
 			if(!locomotion)
-				O.lockcharge = 1
-				O.update_canmove()
+				O.SetLockdown(TRUE)
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
@@ -338,10 +337,10 @@
 
 			if(!aisync)
 				lawsync = FALSE
-				O.connected_ai = null
+				O.set_connected_ai(null)
 			else
 				if(forced_ai)
-					O.connected_ai = forced_ai
+					O.set_connected_ai(forced_ai)
 				O.notify_ai(AI_SHELL)
 			if(!lawsync)
 				O.lawupdate = FALSE
@@ -356,8 +355,7 @@
 			forceMove(O)
 			O.robot_suit = src
 			if(!locomotion)
-				O.lockcharge = TRUE
-				O.update_canmove()
+				O.SetLockdown(TRUE)
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")

@@ -22,7 +22,7 @@ RLD
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=100000)
+	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -47,7 +47,11 @@ RLD
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "\A [src]. It currently holds [matter]/[max_matter] matter-units."
+	. += "It currently holds [matter]/[max_matter] matter-units."
+	if(upgrade & RCD_UPGRADE_FRAMES)
+		. += "It contains the design for machine frames, computer frames and deconstruction."
+	if(upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
+		. += "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -85,9 +89,11 @@ RLD
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else if(istype(W, /obj/item/rcd_upgrade))
 		to_chat(user, "<span class='notice'>You upgrade the RCD with the [W]!</span>")
-		upgrade = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		qdel(W)
+		var/obj/item/rcd_upgrade/rcd_up = W
+		if(!(upgrade & rcd_up.upgrade))
+			upgrade |= rcd_up.upgrade
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			qdel(W)
 	else
 		return ..()
 	update_icon()	//ensures that ammo counters (if present) get updated
@@ -116,10 +122,10 @@ RLD
 	if(matter < amount)
 		if(user)
 			to_chat(user, no_ammo_message)
-		return 0
+		return FALSE
 	matter -= amount
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
 	. = matter >= amount
@@ -129,6 +135,14 @@ RLD
 			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
+
+/obj/item/construction/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
 /obj/item/construction/proc/range_check(atom/A, mob/user)
 	if(!(A in range(custom_range, get_turf(user))))
 		to_chat(user, "<span class='warning'>The \'Out of Range\' light on [src] blinks red.</span>")
@@ -137,8 +151,8 @@ RLD
 	//if user can't be seen from A (only checks surroundings' opaqueness) and can't see A.
 	//jarring, but it should stop people from targetting atoms they can't see...
 	//excluding darkness, to allow RLD to be used to light pitch black dark areas.
-	if(!((user in view(view_range, A)) || (user in viewers(view_range, A))))
-		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in the given direction... to no avail.</span>")
+	if(!((user in view(view_range, A)) || (user in fov_viewers(view_range, A))))
+		to_chat(user, "<span class='warning'>You focus, pointing \the [src] at whatever outside your field of vision in that direction... to no avail.</span>")
 		return FALSE
 	return TRUE
 
@@ -148,6 +162,8 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_price = PRICE_ABOVE_EXPENSIVE
+	custom_premium_price = PRICE_ALMOST_ONE_GRAND
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
@@ -190,7 +206,7 @@ RLD
 
 /obj/item/construction/rcd/verb/change_airlock_access(mob/user)
 
-	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
+	if (!ishuman(user) && !user.silicon_privileges)
 		return
 
 	var/t1 = ""
@@ -226,7 +242,6 @@ RLD
 
 	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500, src)
 	popup.set_content(t1)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/item/construction/rcd/Topic(href, href_list)
@@ -267,13 +282,6 @@ RLD
 		MA.overlays += "fill_closed"
 	//Not scaling these down to button size because they look horrible then, instead just bumping up radius.
 	return MA
-
-/obj/item/construction/rcd/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
-		return FALSE
-	return TRUE
 
 /obj/item/construction/rcd/proc/change_computer_dir(mob/user)
 	if(!user)
@@ -439,18 +447,22 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/delay = rcd_results["delay"] * delay_mod
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
 	var/turf/the_turf = get_turf(A)
 	var/turf_coords = "[COORD(the_turf)]"
 	investigate_log("[user] is attempting to use [src] on [A] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
-	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+	if(do_after(user, delay, target = A))
 		if(checkResource(rcd_results["cost"], user))
 			var/atom/cached = A
 			if(A.rcd_act(user, src, rcd_results["mode"]))
+				rcd_effect.end_animation()
 				useResource(rcd_results["cost"], user)
 				activate()
 				investigate_log("[user] used [src] on [cached] (loc [turf_coords] at [the_turf]) with cost [rcd_results["cost"]], delay [rcd_results["delay"]], mode [rcd_results["mode"]].", INVESTIGATE_RCD)
 				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				return TRUE
+	qdel(rcd_effect)
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
@@ -467,7 +479,7 @@ RLD
 		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
 		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
 	)
-	if(upgrade)
+	if(upgrade & RCD_UPGRADE_FRAMES)
 		choices += list(
 		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
 		"Machine Frames" = image(icon = 'icons/mob/radial.dmi', icon_state = "machine"),
@@ -542,8 +554,8 @@ RLD
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
-/obj/item/construction/rcd/update_icon()
-	..()
+/obj/item/construction/rcd/update_overlays()
+	. = ..()
 	if(has_ammobar)
 		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
 		cut_overlays()	//To prevent infinite stacking of overlays
@@ -593,6 +605,7 @@ RLD
 	energyfactor = 66
 
 /obj/item/construction/rcd/loaded
+	custom_materials = list(/datum/material/iron = 48000, /datum/material/glass = 32000)
 	matter = 160
 
 /obj/item/construction/rcd/loaded/upgraded
@@ -624,13 +637,13 @@ RLD
 	item_state = "rcdammo"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	custom_materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
 	name = "large compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD. Has four times the matter packed into the same space as a normal cartridge."
-	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
+	custom_materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
 
@@ -666,18 +679,18 @@ RLD
 	icon_state = "rld"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	matter = 500
-	max_matter = 500
-	sheetmultiplier = 16
+	matter = 200
+	max_matter = 200
+	sheetmultiplier = 5
 	var/mode = LIGHT_MODE
 	actions_types = list(/datum/action/item_action/pick_color)
 	ammo_sections = 5
 	has_ammobar = TRUE
 
-	var/wallcost = 10
-	var/floorcost = 15
-	var/launchcost = 5
-	var/deconcost = 10
+	var/wallcost = 20
+	var/floorcost = 25
+	var/launchcost = 10
+	var/deconcost = 20
 
 	var/walldelay = 10
 	var/floordelay = 10
@@ -696,11 +709,10 @@ RLD
 	else
 		..()
 
-/obj/item/construction/rld/update_icon()
-	..()
+/obj/item/construction/rld/update_overlays()
+	. = ..()
 	var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
-	cut_overlays()	//To prevent infinite stacking of overlays
-	add_overlay("rld_light[ratio]")
+	. += "rld_light[ratio]"
 
 /obj/item/construction/rld/attack_self(mob/user)
 	..()
@@ -734,7 +746,7 @@ RLD
 			if(istype(A, /obj/machinery/light/))
 				if(checkResource(deconcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing [A]...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
@@ -748,7 +760,7 @@ RLD
 				var/turf/closed/wall/W = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a wall light...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 0)
 					if(do_after(user, floordelay, target = A))
@@ -794,7 +806,7 @@ RLD
 				var/turf/open/floor/F = A
 				if(checkResource(floorcost, user))
 					to_chat(user, "<span class='notice'>You start building a floor light...</span>")
-					user.Beam(A,icon_state="nzcrentrs_power",time=15)
+					user.Beam(A,icon_state="light_beam",time=15)
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(do_after(user, floordelay, target = A))
@@ -823,11 +835,102 @@ RLD
 				return TRUE
 			return FALSE
 
+/obj/item/construction/rld/mini
+	name = "mini-rapid-light-device (MRLD)"
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with metal, plasteel, glass or compressed matter cartridges."
+	matter = 100
+	max_matter = 100
+
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"
-	desc = "It contains the design for machine frames, computer frames, and deconstruction."
+	desc = "It seems to be empty."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "datadisk3"
+	var/upgrade
+
+/obj/item/rcd_upgrade/frames
+	desc = "It contains the design for machine frames, computer frames and deconstruction."
+	upgrade = RCD_UPGRADE_FRAMES
+
+/obj/item/rcd_upgrade/simple_circuits
+	desc = "It contains the design for firelock, air alarm, fire alarm, apc circuits and crap power cells."
+	upgrade = RCD_UPGRADE_SIMPLE_CIRCUITS
+
+/obj/item/construction/plumbing
+	name = "Plumbing Constructor"
+	desc = "An expertly modified RCD outfitted to construct plumbing machinery. Reload with compressed matter cartridges."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "arcd"
+	item_state = "oldrcd"
+	has_ammobar = FALSE
+	matter = 200
+	max_matter = 200
+
+	///type of the plumbing machine
+	var/blueprint = null
+	///index, used in the attack self to get the type. stored here since it doesnt change
+	var/list/choices = list()
+	///index, used in the attack self to get the type. stored here since it doesnt change
+	var/list/name_to_type = list()
+	///
+	var/list/machinery_data = list("cost" = list(), "delay" = list())
+
+/obj/item/construction/plumbing/attack_self(mob/user)
+	..()
+	if(!choices.len)
+		for(var/A in subtypesof(/obj/machinery/plumbing))
+			var/obj/machinery/plumbing/M = A
+			if(initial(M.rcd_constructable))
+				choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
+				name_to_type[initial(M.name)] = M
+				machinery_data["cost"][A] = initial(M.rcd_cost)
+				machinery_data["delay"][A] = initial(M.rcd_delay)
+
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+
+	blueprint = name_to_type[choice]
+	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
+	to_chat(user, "<span class='notice'>You change [name]s blueprint to '[choice]'.</span>")
+
+///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
+/obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
+	if(!machinery_data || !isopenturf(A))
+		return FALSE
+
+	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
+		if(do_after(user, machinery_data["delay"][blueprint], target = A))
+			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
+				useResource(machinery_data["cost"][blueprint], user)
+				activate()
+				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+				new blueprint (A, FALSE, FALSE)
+				return TRUE
+
+/obj/item/construction/plumbing/proc/canPlace(turf/T)
+	if(!isopenturf(T))
+		return FALSE
+	. = TRUE
+	for(var/obj/O in T.contents)
+		if(O.density) //let's not built ontop of dense stuff, like big machines and other obstacles, it kills my immershion
+			return FALSE
+
+/obj/item/construction/plumbing/afterattack(atom/A, mob/user)
+	. = ..()
+	if(!range_check(A, user))
+		return
+	if(istype(A, /obj/machinery/plumbing))
+		var/obj/machinery/plumbing/P = A
+		if(P.anchored)
+			to_chat(user, "<span class='warning'>The [P.name] needs to be unanchored!</span>")
+			return
+		if(do_after(user, 20, target = P))
+			P.deconstruct() //Let's not substract matter
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+	else
+		create_machine(A, user)
+
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

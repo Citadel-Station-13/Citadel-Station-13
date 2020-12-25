@@ -83,15 +83,15 @@ SUBSYSTEM_DEF(jukeboxes)
 		return
 	for(var/list/jukeinfo in activejukeboxes)
 		if(!jukeinfo.len)
-			EXCEPTION("Active jukebox without any associated metadata.")
+			stack_trace("Active jukebox without any associated metadata.")
 			continue
 		var/datum/track/juketrack = jukeinfo[1]
 		if(!istype(juketrack))
-			EXCEPTION("Invalid jukebox track datum.")
+			stack_trace("Invalid jukebox track datum.")
 			continue
 		var/obj/jukebox = jukeinfo[3]
 		if(!istype(jukebox))
-			EXCEPTION("Nonexistant or invalid object associated with jukebox.")
+			stack_trace("Nonexistant or invalid object associated with jukebox.")
 			continue
 		var/sound/song_played = sound(juketrack.song_path)
 		var/area/currentarea = get_area(jukebox)
@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(jukeboxes)
 		for(var/mob/M in GLOB.player_list)
 			if(!M.client)
 				continue
-			if(!(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			if(!(M.client.prefs.toggles & SOUND_INSTRUMENTS) || !M.can_hear())
 				M.stop_sound_channel(jukeinfo[2])
 				continue
 
