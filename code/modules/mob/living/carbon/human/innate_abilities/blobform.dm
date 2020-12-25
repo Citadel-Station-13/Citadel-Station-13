@@ -62,7 +62,6 @@
 
 				H.add_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
 
-				H.layer -= 1 //go one layer down so people go over you
 				ENABLE_BITFIELD(H.pass_flags, PASSMOB) //this actually lets people pass over you
 				squeak = H.AddComponent(/datum/component/squeak, custom_sounds = list('sound/effects/blobattack.ogg')) //blorble noise when people step on you
 
@@ -103,7 +102,6 @@
 	REMOVE_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
 	H.update_disabled_bodyparts(silent = TRUE)
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/slime_puddle)
-	H.layer += 1 //go one layer back above!
 	DISABLE_BITFIELD(H.pass_flags, PASSMOB)
 	is_puddle = FALSE
 	if(squeak)
