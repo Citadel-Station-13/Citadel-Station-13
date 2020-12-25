@@ -22,4 +22,4 @@
 /datum/tgs_chat_command/restart/Run(datum/tgs_chat_user/sender)
 	to_chat(world, "<span class='boldwarning'>Server restart - Initialized by [sender.friendly_name]</span>")
 	send2irc("Server", "[sender.friendly_name] forced a restart.")
-	return world.TgsEndProcess()
+	return addtimer(CALLBACK(world, TgsEndProcess()), 10)
