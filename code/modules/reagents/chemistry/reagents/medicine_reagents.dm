@@ -144,9 +144,9 @@
 	pH = 2
 	value = 10
 	purity = 0.8
-	impure_chem 		= "inacusiate_impure"
+	impure_chem 		= /datum/reagent/impure/inacusiate
 	inverse_chem_val 	= 0
-	inverse_chem		= "generic_impure"
+	inverse_chem		= /datum/reagent/impure
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/ears/E = M.getorganslot(ORGAN_SLOT_EARS)
@@ -874,9 +874,9 @@
 	pH = 10
 	purity = 0.8
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	impure_chem 		= "generic_impure"
+	impure_chem 		= /datum/reagent/impure
 	inverse_chem_val 	= 0.5
-	inverse_chem		= "oculine_impure"
+	inverse_chem		= /datum/reagent/impure/oculine
 	var/cached_light
 	var/cached_seerange
 
@@ -1051,9 +1051,9 @@
 	pH = 10.4
 	purity = 0.8
 	overdose_threshold = 15
-	impure_chem 		= "mannitol_impure"
+	impure_chem 		= /datum/reagent/impure/mannitol
 	inverse_chem_val 	= 0.5
-	inverse_chem		= "mannitol_impure"
+	inverse_chem		= /datum/reagent/impure/mannitol
 	chemical_flags		= REAGENT_SPLITRETAINVOL
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
@@ -1087,9 +1087,9 @@
 	color = "#EEFF8F"
 	purity = 0.8
 	pH = 11.4
-	impure_chem 		= "neurine_impure" //if people get grumpy, change this to generic_impure
+	impure_chem 		= /datum/reagent/impure/neurine //if people get grumpy, change this to generic_impure
 	inverse_chem_val 	= 0.5
-	inverse_chem		= "neurine_impure"
+	inverse_chem		= /datum/reagent/impure/neurine
 	chemical_flags 		= REAGENT_SPLITRETAINVOL
 	var/initial_Bdamage = 200
 
@@ -1147,9 +1147,9 @@
 	taste_description = "raw egg"
 	pH = 4
 	purity = 0.8
-	impure_chem 		= "antihol_impure" //
+	impure_chem 		= /datum/reagent/impure/antihol //
 	inverse_chem_val 	= 0.3
-	inverse_chem		= "antihol_inverse"
+	inverse_chem		= /datum/reagent/impure/antihol
 	chemical_flags		= REAGENT_DONOTSPLIT
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M)
@@ -1567,9 +1567,9 @@
 	self_consuming = TRUE
 	pH = 12.5
 	purity = 0.8
-	impure_chem 		= "generic_impure" //
+	impure_chem 		= /datum/reagent/impure //
 	inverse_chem_val 	= 0.5
-	inverse_chem		= "corazone_inverse"
+	inverse_chem		=  /datum/reagent/impure/corazone
 
 /datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
 	..()

@@ -3421,6 +3421,7 @@
 #include "code\modules\surgery\graft_synthtissue.dm"
 #include "code\modules\surgery\healing.dm"
 #include "code\modules\surgery\helpers.dm"
+#include "code\modules\surgery\Hepatectomy.dm"
 #include "code\modules\surgery\implant_removal.dm"
 #include "code\modules\surgery\limb_augmentation.dm"
 #include "code\modules\surgery\lipoplasty.dm"

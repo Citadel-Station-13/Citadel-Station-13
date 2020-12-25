@@ -249,7 +249,7 @@
 	pH = 7
 	chemical_flags 		= REAGENT_DONOTSPLIT
 	color = "#12aa95"
-	impure_chem 		= "generic_impure"
+	impure_chem 		= /datum/reagent/impure
 	inverse_chem_val 	= 0
 	//TODO: using it with kidney stones makes it worse
 	//OD gives kidney stones
@@ -297,9 +297,9 @@
 	pH = 8.6
 	purity = 1//for syringe
 	color = "#03f4fc"
-	impure_chem 		= "generic_impure"
+	impure_chem 		= /datum/reagent/impure
 	inverse_chem_val 	= 0.43
-	inverse_chem 		= "cryosenium_impure"
+	inverse_chem 		= /datum/reagent/impure/cryosenium
 	metabolization_rate = 0.05
 //Pauses decay! Does do something, I promise.
 
