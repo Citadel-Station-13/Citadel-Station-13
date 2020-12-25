@@ -124,7 +124,8 @@
 	return TRUE
 
 /datum/keybinding/living/hold_sprint
-	hotkey_keys = list("Shift")
+	hotkey_keys = list()
+	classic_keys = list()
 	name = "hold_sprint"
 	full_name = "Sprint (hold down)"
 	description = "Hold down to sprint"
@@ -144,7 +145,8 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_sprint
-	hotkey_keys = list()
+	hotkey_keys = list("Shift")
+	classic_keys = list("Shift")
 	name = "toggle_sprint"
 	full_name = "Sprint (toggle)"
 	description = "Press to toggle sprint"

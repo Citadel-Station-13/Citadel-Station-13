@@ -34,6 +34,7 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+	QDEL_LIST_ASSOC_VAL(ability_actions)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
@@ -263,9 +264,9 @@
 	return FALSE
 
 /mob/living/carbon/human/has_tail()
-	if(!dna || !dna.features)
+	if(!dna || !dna.species)
 		return ..()
-	var/list/L = dna.features		// caches list because i refuse to type it out and because performance
+	var/list/L = dna.species.mutant_bodyparts		// caches list because i refuse to type it out and because performance
 	return (L["mam_tail"] && (L["mam_tail"] != "None")) || (L["tail_human"] && (L["tail_human"] != "None")) || (L["tail_lizard"] && (L["tail_lizard"] != "None"))
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
