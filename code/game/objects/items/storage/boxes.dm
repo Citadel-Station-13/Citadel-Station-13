@@ -1147,6 +1147,7 @@ obj/item/storage/box/stingbangs
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
 	new /obj/item/circuitboard/computer/rdconsole(src)
+	new /obj/item/circuitboard/machine/mining_equipment_vendor/golem(src)
 
 /obj/item/storage/box/silver_sulf
 	name = "box of silver sulfadiazine patches"
