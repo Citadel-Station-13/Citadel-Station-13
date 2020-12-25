@@ -1082,11 +1082,12 @@
 		if("lockdown")
 			var/celluse = rand(20,35)
 			celluse = celluse /100
+			if(!cell.use(cell.maxcharge*celluse))
+				return
 			for (var/obj/machinery/door/D in GLOB.airlocks)
 				if (get_area(D) == area)
 					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
 					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
-			cell.charge -= cell.maxcharge*celluse
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
