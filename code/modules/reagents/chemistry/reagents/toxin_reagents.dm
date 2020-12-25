@@ -1035,7 +1035,7 @@
 		M.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
 	else
 		M.gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
-	M.reagents.remove_reagent(id, 5)
+	M.reagents.remove_reagent(type, 5)
 	..()
 
 /datum/reagent/toxin/bungotoxin

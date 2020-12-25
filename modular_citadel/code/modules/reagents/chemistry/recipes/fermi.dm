@@ -18,8 +18,8 @@
 			if(clear_conversion & REACTION_CLEAR_INVERSE && R.inverse_chem)
 				if(R.inverse_chem_val > R.purity)
 					if(GLOB.Debug2)
-						log_reagent("Inverting [cached_volume] [R.id] [R.purity] into [R.inverse_chem]")
-					holder.remove_reagent(R.id, cached_volume, TRUE)
+						log_reagent("Inverting [cached_volume] [R.type] [R.purity] into [R.inverse_chem]")
+					holder.remove_reagent(R.type, cached_volume, TRUE)
 					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
 					var/datum/reagent/R2 = holder.has_reagent("[R.inverse_chem]")
 					if(clear_conversion & REACTION_CLEAR_RETAIN)
@@ -30,7 +30,7 @@
 			if(clear_conversion & REACTION_CLEAR_IMPURE && R.impure_chem)
 				var/impureVol = cached_volume * (1 - R.purity)
 				if(GLOB.Debug2)
-					log_reagent("Impure [cached_volume] of [R.id] at [R.purity] into [impureVol] of [R.impure_chem] with [clear_conversion & REACTION_CLEAR_RETAIN ? "Clear conversion" : "Purification"] mechanics")
+					log_reagent("Impure [cached_volume] of [R.type] at [R.purity] into [impureVol] of [R.impure_chem] with [clear_conversion & REACTION_CLEAR_RETAIN ? "Clear conversion" : "Purification"] mechanics")
 				holder.remove_reagent(id, (impureVol), TRUE)
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
 				var/datum/reagent/R2 = holder.has_reagent("[R.impure_chem]")
@@ -553,7 +553,7 @@
 		R.pH += 0.5
 	else
 		R.pH -= 0.5
-	R.pH = CLAMP(R.pH, 0, 14)
+	R.pH = clamp(R.pH, 0, 14)
 
 /datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, var/atom/my_atom, added_volume)
 	var/datum/reagent/medicine/antacidpregen/A = holder.has_reagent("antacidpregen")
@@ -606,7 +606,7 @@
 		return
 	var/datum/reagent/medicine/cryosenium/C = R.has_reagent("cryosenium")
 	var/step_purity = ((R.chem_temp-50)/250)
-	C.purity = CLAMP(((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume)), 0, 1)
+	C.purity = clamp(((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume)), 0, 1)
 	..()
 
 /datum/chemical_reaction/cryosenium/FermiExplode(datum/reagents/R, var/atom/my_atom, volume, temp, pH)
@@ -621,8 +621,7 @@
 			continue
 		var/turf/open/T2 = I
 		T2.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 2*_radius, wet_time_to_add = 5)
-		var/datum/gas_mixture/turf/G = T2.air
-		G.temperature = temp
+		T2.temperature = temp
 
 	for(var/P in required_reagents)
 		R.remove_reagent(P, 15)

@@ -61,7 +61,7 @@
 	R.my_atom = my_atom //Give the gas a fingerprint
 
 	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		R.add_reagent(reagent.id, reagent.volume/3, added_purity = reagent.purity) //Seems fine? I think I fixed the infinite explosion bug.
+		R.add_reagent(reagent.type, reagent.volume/3, added_purity = reagent.purity) //Seems fine? I think I fixed the infinite explosion bug.
 
 		if (reagent.purity < 0.6)
 			ImpureTot = (ImpureTot + (1-reagent.purity)) / 2
@@ -79,7 +79,7 @@
 
 	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
 		ImpureTot *= volume
-		var/empVol = CLAMP (volume/10, 0, 15)
+		var/empVol = clamp(volume/10, 0, 15)
 		empulse(T, empVol, ImpureTot/10, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
@@ -91,14 +91,14 @@
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.my_atom = my_atom //Give the gas a fingerprint
 	for(var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		if(!(reagent.id in required_reagents) || !(reagent.id in results))
+		if(!(reagent.type in required_reagents) || !(reagent.type in results))
 			continue
 		if(reagent.inverse_chem)
 			R.add_reagent(reagent.inverse_chem, reagent.volume)
-			R0.remove_reagent(reagent.id, reagent.volume)
+			R0.remove_reagent(reagent.type, reagent.volume)
 			continue
-		R.add_reagent(reagent.id, reagent.volume, added_purity = reagent.purity)
-		R0.remove_reagent(reagent.id, reagent.volume)
+		R.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity)
+		R0.remove_reagent(reagent.type, reagent.volume)
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
@@ -111,9 +111,9 @@
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.my_atom = my_atom //Give the gas a fingerprint
 	for (var/datum/reagent/reagent in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		if((reagent.id in required_reagents) || (reagent.id in results))
-			R.add_reagent(reagent.id, reagent.volume, added_purity = reagent.purity)
-			R0.remove_reagent(reagent.id, reagent.volume)
+		if((reagent.type in required_reagents) || (reagent.type in results))
+			R.add_reagent(reagent.type, reagent.volume, added_purity = reagent.purity)
+			R0.remove_reagent(reagent.type, reagent.volume)
 	if(R.reagent_list)
 		s.set_up(R, (volume/5), my_atom)
 		s.start()
@@ -124,8 +124,8 @@
 	if(!R0)
 		return FALSE
 	for(var/datum/reagent/R in R0.reagent_list)
-		if(!(R.id in required_reagents))
+		if(!(R.type in required_reagents))
 			continue
-		R0.remove_reagent(R.id, R.volume)
+		R0.remove_reagent(R.type, R.volume)
 	R0.fermiEnd()
 	return TRUE

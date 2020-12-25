@@ -159,13 +159,13 @@
 				if(GLOB.Debug2)
 					message_admins("Stress:[stress], [ignoreTox ? (stress + (T.current_cycle/reagentCount)) : T.toxpwr/reagentCount]), cycle:[T.current_cycle] no.reagents:[reagentCount]")
 				if(T.volume <= toxTolerance*(1-(damage/100)))
-					C.reagents.remove_reagent(initial(pickedreagent.id), toxTolerance)
+					C.reagents.remove_reagent(pickedreagent.type, toxTolerance)
 					adjustMetabolicStress(stress)
 					continue
 				if(ignoreTox)
 					stress = stress + (T.current_cycle/reagentCount)
 					T.current_cycle++
-					C.reagents.remove_reagent(initial(pickedreagent.id), pickedreagent.metabolization_rate)
+					C.reagents.remove_reagent(pickedreagent.type, pickedreagent.metabolization_rate)
 					adjustMetabolicStress(stress)
 					continue
 				adjustMetabolicStress(stress)
@@ -189,7 +189,7 @@
 		minimum = min(0, metabolic_stress)
 	if(metabolic_stress>=maximum)
 		return FALSE
-	metabolic_stress = CLAMP(metabolic_stress + amount, minimum*minStressMod, maximum)
+	metabolic_stress = clamp(metabolic_stress + amount, minimum*minStressMod, maximum)
 	return TRUE
 
 /obj/item/organ/liver/proc/equilibrateMetabolicStress(amount, _absolute = FALSE)
@@ -208,6 +208,10 @@
 	name = "reagent processing crystal"
 	icon_state = "liver-p"
 	desc = "A large crystal that is somehow capable of metabolizing chemicals, these are found in plasmamen."
+
+/obj/item/organ/liver/ipc
+	name = "reagent processing liver"
+	icon_state = "liver-c"
 
 /obj/item/organ/liver/slime
 	name = "Filturatum"
@@ -320,8 +324,9 @@
 		minimum = -100
 	if(metabolic_stress>=maximum)
 		return FALSE
-	metabolic_stress = CLAMP(metabolic_stress + amount, minimum*minStressMod, maximum)
+	metabolic_stress = clamp(metabolic_stress + amount, minimum*minStressMod, maximum)
 	return TRUE
+
 
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"

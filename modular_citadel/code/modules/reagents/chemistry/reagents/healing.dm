@@ -66,14 +66,14 @@
 			var/obj/item/organ/lungs/yamerol/L2 = new()
 			L2.Insert(C)
 			to_chat(C, "<span class='notice'>You feel the yamerol merge together in your chest, forming a temporary airogel maxtrix.</span>")
-			holder.remove_reagent(src.id, "10")
+			holder.remove_reagent(src.type, "10")
 			//Potentially save the lungs on L2, and swap them back when L fails.
 			qdel(L)
 
 		else if (L.organ_flags & ORGAN_LUNGS_DEFLATED)
 			L.organ_flags &= ~ORGAN_LUNGS_DEFLATED
 			to_chat(C, "<span class='notice'>You feel the yamerol merge together in the side of your chest, aiding your breathing.</span>")
-			holder.remove_reagent(src.id, "5")
+			holder.remove_reagent(src.type, "5")
 			templungs = TRUE
 
 	C.adjustOxyLoss(-3)
@@ -164,7 +164,7 @@
 		if(data["injected_vol"] > 14)
 			if(volume >= 14)
 				if(C.regenerate_organs(only_one = TRUE))
-					C.reagents.remove_reagent(id, 10)
+					C.reagents.remove_reagent(type, 10)
 					to_chat(C, "<span class='notice'>You feel something reform inside of you!</span>")
 					data["injected_vol"] -= 10
 					return ..()
@@ -245,7 +245,6 @@
 
 /datum/reagent/medicine/antacidpregen
 	name = "Antacid pregenitor"
-	id = "antacidpregen"
 	description = "A chem that turns into an antacid or antbase depending on it's reaction conditions. At the end of a reaction it'll turn into either an antacid for treating acidic stomachs, or an antbase for alkaline. Upon conversion the purity is inverted, the more extreme the pH is on reaction, the more effective it is."
 	pH = 7
 	chemical_flags 		= REAGENT_DONOTSPLIT
@@ -266,7 +265,6 @@
 
 /datum/reagent/medicine/antacidpregen/antacid
 	name = "Antacid"
-	id = "antacid"
 	description = "Antacids neutralise overly acidic pHes in patients. The purer it is, the faster it reduces it. Treats Acute Stomach damage at neutral pHes."
 	color = "#f29b22"
 	purity = 0.8
@@ -280,7 +278,6 @@
 
 /datum/reagent/medicine/antacidpregen/antbase
 	name = "Antbase"
-	id = "antbase"
 	description = "Antbases neutralise overly basic pHes in patients. The purer it is, the faster it reduces it. Treats Acute Stomach damage at neutral pHes."
 	color = "#853cfa"
 	purity = 0.8
@@ -294,7 +291,6 @@
 
 /datum/reagent/medicine/cryosenium
 	name = "Cryosenium"
-	id = "cryosenium"
 	description = "Induces a cryostasis in the patient's organs, preventing them from decaying while dead."
 	taste_description = "ice"
 	chemical_flags = REAGENT_DEAD_PROCESS

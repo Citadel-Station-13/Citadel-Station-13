@@ -84,6 +84,7 @@
 		C.update_tint()
 		C.update_sight()
 
+/* Old - to remove. Kept here to bugfix
 /obj/item/organ/eyes/on_life()
 	..()
 	var/mob/living/carbon/C = owner
@@ -94,7 +95,7 @@
 		C.cure_blind(EYE_DAMAGE)
 	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
 	if(damage > low_threshold)
-		damaged = TRUE
+		eye_damaged = TRUE
 		if(organ_flags & ORGAN_FAILING)
 			C.become_blind(EYE_DAMAGE)
 		else if(damage > high_threshold)
@@ -102,9 +103,10 @@
 		else
 			C.overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
-	else if(damaged)
-		damaged = FALSE
+	else if(eye_damaged)
+		eye_damaged = FALSE
 		C.clear_fullscreen("eye_damage")
+		*/
 
 /obj/item/organ/eyes/applyOrganDamage(d, maximum = maxHealth)
 	. = ..()

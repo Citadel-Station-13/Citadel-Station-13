@@ -35,8 +35,7 @@
 	..()
 
 /datum/reagent/impure/mannitol
-	name = "Mannitoll"
-	id = "mannitol_impure"
+	name = "Mannitoil"
 	description = "Inefficiently causes brain damage."
 	color = "#CDCDFF"
 	pH = 12.4
@@ -176,7 +175,7 @@
 	..()
 
 /datum/reagent/impure/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
-	hearing_args[HEARING_SPANS] += "small"
+	hearing_args[HEARING_RAW_MESSAGE] += "small"
 
 /datum/reagent/impure/cryosenium
 	name = "Cyrogelidia"
@@ -196,7 +195,7 @@
 /datum/reagent/impure/cryosenium/on_mob_life(mob/living/carbon/M)
 	if(M.has_status_effect(/datum/status_effect/cryosenium))
 		return ..()
-	M.reagents.remove_reagent(id, volume)
+	M.reagents.remove_reagent(type, volume)
 	..()
 
 

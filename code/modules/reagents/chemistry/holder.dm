@@ -240,7 +240,7 @@
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
-		R.add_reagent(T.id, copy_amount * multiplier, trans_data, added_purity = T.purity)
+		R.add_reagent(T.type, copy_amount * multiplier, trans_data, added_purity = T.purity)
 
 	src.update_total()
 	R.update_total()

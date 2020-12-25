@@ -152,7 +152,7 @@
 		visible_message("[user] adds as much as they can to the [src] from the [I].")
 		return
 
-sleeper/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	if(isliving(user))
@@ -241,7 +241,7 @@ sleeper/MouseDrop_T(mob/target, mob/user)
 		R = GLOB.chemical_reagents_list[chem]
 		data["synthchems"] += list(list("name" = R.name, "id" = R.type, "synth_allowed" = synth_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "vol" = round(R.volume, 0.1), "purity" = round(R.purity, 0.01), "allowed" = chem_allowed(R.id)))
+		data["chems"] += list(list("name" = R.name, "id" = R.type, "vol" = round(R.volume, 0.1), "purity" = round(R.purity, 0.01), "allowed" = chem_allowed(R.type)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -467,7 +467,7 @@ sleeper/MouseDrop_T(mob/target, mob/user)
 		for(var/datum/reagent/R in C.reagents.reagent_list)
 			if(istype(R, /datum/reagent/metabolic))
 				continue
-			C.reagents.remove_reagent(R.id,R.volume/(40/efficiency))
+			C.reagents.remove_reagent(R.type,R.volume/(40/efficiency))
 	if(antirad)
 		if(!occupant && !isliving(occupant))
 			dialysis = FALSE

@@ -102,8 +102,8 @@
 
 /datum/chemical_reaction/synthtissue
 	name = "Synthtissue"
-	id = /datum/reagent/synthtissue
-	results = list(/datum/reagent/synthtissue = 5)
+	id = /datum/reagent/medicine/synthtissue
+	results = list(/datum/reagent/medicine/synthtissue = 5)
 	required_reagents = list(/datum/reagent/medicine/synthflesh = 1)
 	required_catalysts = list(/datum/reagent/consumable/sugar = 0.1)
 	//FermiChem vars:
@@ -124,7 +124,7 @@
 	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
 
 /datum/chemical_reaction/synthtissue/FermiCreate(datum/reagents/holder, added_volume, added_purity)
-	var/datum/reagent/synthtissue/St = holder.has_reagent(/datum/reagent/synthtissue)
+	var/datum/reagent/medicine/synthtissue/St = holder.has_reagent(/datum/reagent/medicine/synthtissue)
 	var/datum/reagent/N = holder.has_reagent(/datum/reagent/consumable/sugar)
 	if(!St)
 		return
@@ -136,7 +136,7 @@
 		St.purity = 1
 	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
-	St.data["grown_volume"] += CLAMP(0, RateUpLim, added_volume)
+	St.data["grown_volume"] += clamp(0, RateUpLim, added_volume)
 	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"
 
 /datum/chemical_reaction/styptic_powder

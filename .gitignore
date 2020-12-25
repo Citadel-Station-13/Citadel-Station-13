@@ -231,3 +231,10 @@ tools/LinuxOneShot/Database
 tools/LinuxOneShot/TGS_Config
 tools/LinuxOneShot/TGS_Instances
 tools/LinuxOneShot/TGS_Logs
+.vs/Citadel-Station-13/v15/Browse.VC.db
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/UnstandardnessTestForDM.csproj.CoreCompileInputs.cache
+tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Debug/UnstandardnessTestForDM.csprojAssemblyReference.cache
+tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Release/UnstandardnessTestForDM.csproj.CoreCompileInputs.cache
+tools/UnstandardnessTestForDM/UnstandardnessTestForDM/obj/x86/Release/UnstandardnessTestForDM.csprojAssemblyReference.cache
