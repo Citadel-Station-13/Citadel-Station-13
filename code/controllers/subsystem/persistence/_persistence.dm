@@ -21,13 +21,26 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/Initialize()
 	LoadServerPersistence()
 	LoadGamePersistence()
-	LoadMapPersistence()
+	var/map_persistence_path = get_map_persistence_path()
+	if(map_persistence_path)
+		LoadMapPersistence(map_persistence_path)
 	return ..()
+
+/**
+ * Gets the persistence path of the current map.
+ */
+/datum/controller/subsystem/persistence/proc/get_map_persistence_path()
+	ASSERT(SSmapping.config)
+	if(SSmapping.config.persistence_key == "NO_PERSIST")
+		return null
+	return "data/persistence/[ckey(SSmapping.config.persistence_key)]"
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	SaveServerPersistence()
 	SaveGamePersistence()
-	SaveMapPersistence()
+	var/map_persistence_path = get_map_persistence_path()
+	if(map_persistence_path)
+		SaveMapPersistence(map_persistence_path)
 
 /**
  * Loads persistent data relevant to the server: Configurations, past gamemodes, votes, etc
