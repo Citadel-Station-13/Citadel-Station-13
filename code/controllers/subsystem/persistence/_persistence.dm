@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadGamePersistence()
 	var/map_persistence_path = get_map_persistence_path()
 	if(map_persistence_path)
-		LoadMapPersistence(map_persistence_path)
+		LoadMapPersistence()
 	return ..()
 
 /**
@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(persistence)
 	SaveGamePersistence()
 	var/map_persistence_path = get_map_persistence_path()
 	if(map_persistence_path)
-		SaveMapPersistence(map_persistence_path)
+		SaveMapPersistence()
 
 /**
  * Loads persistent data relevant to the server: Configurations, past gamemodes, votes, etc
@@ -83,20 +83,14 @@ SUBSYSTEM_DEF(persistence)
 
 /**
  * Loads persistent data relevant to the current map: Objects, etc.
- *
- * @params
- * data_directory - The data directory to use. Each map with a persistence key has its own, and this is based on the persistence key.
  */
-/datum/controller/subsystem/persistence/proc/LoadMapPersistence(data_directory)
+/datum/controller/subsystem/persistence/proc/LoadMapPersistence()
 	return
 
 /**
  * Saves persistent data relevant to the current map: Objects, etc.
- *
- * @params
- * data_directory - The data directory to use. Each map with a persistence key has its own, and this is based on the persistence key.
  */
-/datum/controller/subsystem/persistence/proc/SaveMapPersistence(data_directory)
+/datum/controller/subsystem/persistence/proc/SaveMapPersistence()
 	return
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()

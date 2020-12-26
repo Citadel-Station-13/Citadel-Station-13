@@ -3,6 +3,8 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	/// Is this kind of cleanable decal persistent
 	var/persistent = FALSE
+	/// Can we stack multiple in one tile?
+	var/persistence_allow_stacking = FALSE
 
 	var/list/random_icon_states = null
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
@@ -36,20 +38,20 @@
 	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, beauty)), 0)
 
 /**
- * Returns a list of data
+ * A data list is passed into this.
+ * This should return null to skip saving, or the type of data to save. Type must be /cleanable.
  */
-/obj/effect/decal/cleanable/proc/PersistenceSave()
-	return null
+/obj/effect/decal/cleanable/proc/PersistenceSave(list/data)
+	return type
 
 /**
- * Laods from a data list.
+ * Loads from a data list.
  */
 /obj/effect/decal/cleanable/proc/PersistenceLoad(list/data)
 	return
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
-	if(mergeable_decal)
-		qdel(C)
+	return mergeable_decal
 
 /obj/effect/decal/cleanable/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
