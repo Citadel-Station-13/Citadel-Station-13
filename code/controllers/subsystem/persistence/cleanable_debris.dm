@@ -1,0 +1,3 @@
+/**
+ * Persistence for cleanable debris.
+ */

@@ -67,6 +67,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadPhotoPersistence()
 	LoadRandomizedRecipes()
+	LoadPaintings()
 
 /**
  * Saves persistent data relevant to the game in general: Trophies, antag reputation, etc
@@ -246,8 +247,6 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
 	saved_messages += list(M.pack()) // dm eats one list
-
-
 
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)

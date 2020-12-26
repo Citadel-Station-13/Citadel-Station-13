@@ -1,6 +1,9 @@
 /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = ABOVE_NORMAL_TURF_LAYER
+	/// Is this kind of cleanable decal persistent
+	var/persistent = FALSE
+
 	var/list/random_icon_states = null
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
@@ -9,6 +12,8 @@
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(mapload && persistent && CONFIG_GET(flag/persistent_debris_only))
+		return INITIALIZE_HINT_QDEL
 	LAZYINITLIST(blood_DNA) //Kinda needed
 	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
@@ -28,6 +33,18 @@
 			AddComponent(/datum/component/infective, diseases_to_add)
 
 	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, beauty)), 0)
+
+/**
+ * Returns a list of data
+ */
+/obj/effect/decal/cleanable/proc/PersistenceSave()
+	return null
+
+/**
+ * Laods from a data list.
+ */
+/obj/effect/decal/cleanable/proc/PersistenceLoad(list/data)
+	return
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
