@@ -38203,17 +38203,17 @@
 	pixel_y = 32
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bMu" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bMv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bMw" = (
 /obj/machinery/sparker/toxmix{
 	pixel_x = 25
@@ -38222,7 +38222,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bMx" = (
 /obj/machinery/airlock_sensor/incinerator_toxmix{
 	pixel_y = 24
@@ -38232,7 +38232,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bMy" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
@@ -38553,19 +38553,19 @@
 /area/medical/virology)
 "bNt" = (
 /turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bNu" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bNv" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bNw" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix,
 /turf/open/floor/engine,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bNx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -38981,7 +38981,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bOF" = (
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
@@ -38991,7 +38991,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/engine,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "bOG" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/binary/valve{
@@ -51898,7 +51898,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+/area/science/mixing)
 "cBF" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
