@@ -14,9 +14,6 @@
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	#warn OPTIMIZE THE BELOW LINE, CACHE THINGS, THIS IS INSANELY EXPENSIVE
-	if(mapload && persistent && CONFIG_GET(flag/persistent_debris_only) && (z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
-		return INITIALIZE_HINT_QDEL
 	LAZYINITLIST(blood_DNA) //Kinda needed
 	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)

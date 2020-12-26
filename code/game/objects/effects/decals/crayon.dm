@@ -36,7 +36,7 @@
 	. = ..()
 	if(icon != initial(icon))	// no support for alticons yet, awful system anyways
 		return null
-	data["icon_state"] = icon_stsate
+	data["icon_state"] = icon_state
 	data["paint_color"] = paint_colour
 	if(do_icon_rotate)
 		data["rotation"] = rotation
@@ -51,7 +51,7 @@
 		M.turn(data["rotation"])
 		transform = M
 	if(data["paint_color"])
-		paint_colour = data["paint_color"])
+		paint_colour = data["paint_color"]
 		add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
 	if(data["icon_state"])
 		icon_state = data["icon_state"]
