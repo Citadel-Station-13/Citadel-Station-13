@@ -88,6 +88,9 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, visionflag, GENETIC_MUTATION)
+	if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, "enhanced_vision"))
+		owner.cure_blind("enhanced_vision")
+	owner.client.view_size.resetToDefault()
 	owner.update_sight()
 
 //Laser Eyes lets you shoot lasers from your eyes!

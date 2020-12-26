@@ -622,7 +622,6 @@
 		return
 
 	sight = initial(sight)
-	client.view_size.resetToDefault()
 	lighting_alpha = initial(lighting_alpha)
 	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
