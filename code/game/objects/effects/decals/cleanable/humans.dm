@@ -8,6 +8,7 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	color = BLOOD_COLOR_HUMAN //default so we don't have white splotches everywhere.
 	beauty = -100
+	persistent = TRUE
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
 	if (C.blood_DNA)
@@ -24,7 +25,20 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	color = blood_DNA_to_color()
+	. = ..()
+	if(!fixed_color)
+		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
+
+/obj/effect/decal/cleanable/blood/PersistenceSave(list/data)
+	. = ..()
+	data["color"] = color
+	return /obj/effect/decal/cleanable/blood/old
+
+/obj/effect/decal/cleanable/blood/PersistenceLoad(list/data)
+	. = ..()
+	if(data["color"])
+		fixed_color = TRUE
+		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -38,6 +52,7 @@
 
 /obj/effect/decal/cleanable/blood/splats
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
+	persistence_allow_stacking = TRUE
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("splatter1", "splatter2", "splatter3", "splatter4", "splatter5")
@@ -48,16 +63,43 @@
 	random_icon_states = null
 	beauty = -50
 
+/obj/effect/decal/cleanable/blood/tracks/PersistenceSave(list/data)
+	. = ..()
+	data["dir"] = dir
+
+/obj/effect/decal/cleanable/blood/tracks/PersistenceLoad(list/data)
+	. = ..()
+	if(data["dir"])
+		setDir(data["dir"])
+
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
 	icon_state = "ltrails_1"
 	desc = "Your instincts say you shouldn't be following these."
 	random_icon_states = null
 	beauty = -50
+	persistent = TRUE
+	persistence_allow_stacking = TRUE
 	var/list/existing_dirs = list()
+	var/fixed_color = FALSE
+
+/obj/effect/decal/cleanable/trail_holder/PersistenceSave(list/data)
+	. = ..()
+	data["dir"] = dir
+	data["color"] = color
+
+/obj/effect/decal/cleanable/trail_holder/PersistenceLoad(list/data)
+	. = ..()
+	if(data["dir"])
+		setDir(data["dir"])
+	if(data["color"])
+		fixed_color = TRUE
+		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
 
 /obj/effect/decal/cleanable/trail_holder/update_icon()
-	color = blood_DNA_to_color()
+	. = ..()
+	if(!fixed_color)
+		add_atom_colour(blood_DNA_to_color())
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
@@ -84,7 +126,18 @@
 	var/entered_dirs = 0
 	var/exited_dirs = 0
 	blood_state = BLOOD_STATE_BLOOD //the icon state to load images from
+	persistent = TRUE
+	persistence_allow_stacking = TRUE
 	var/list/shoe_types = list()
+
+/obj/effect/decal/cleanable/blood/footprints/PersistenceSave(list/data)
+	. = ..()
+	data["dir"] = dir
+
+/obj/effect/decal/cleanable/blood/footprints/PersistenceLoad(list/data)
+	. = ..()
+	if(data["dir"])
+		setDir(data["dir"])
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
