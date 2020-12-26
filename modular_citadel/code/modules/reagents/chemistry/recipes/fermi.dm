@@ -524,9 +524,9 @@
 
 /datum/chemical_reaction/antacidpregen
 	name = "Antacid pregenitor"
-	id = "antacidpregen"
-	results = list("antacidpregen" = 6)
-	required_reagents = list("lye" = 3, "carbon" = 1, "oxygen" = 1, "hydrogen" = 1)
+	id = /datum/reagent/medicine/antacidpregen
+	results = list(/datum/reagent/medicine/antacidpregen = 6)
+	required_reagents = list(/datum/reagent/lye = 3, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1)
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
@@ -578,8 +578,8 @@
 /datum/chemical_reaction/cryosenium
 	name = "Cryosenium"
 	id = "cryosenium"
-	results = list("cryosenium" = 2.5)
-	required_reagents = list("cryoxadone" = 1, "ice" = 1, "cryostylane" = 1) //consider sterilizine if needed.
+	results = list(/datum/reagent/medicine/cryosenium = 3)
+	required_reagents = list(/datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/cryostylane = 1) //consider sterilizine if needed.
 	//FermiChem vars:
 	OptimalTempMin 	= 1
 	OptimalTempMax 	= 300

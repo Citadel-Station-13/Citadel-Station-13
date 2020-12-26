@@ -1,6 +1,6 @@
 import { round } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Section, LabeledList, Button, ProgressBar, Collapsible, Flex, NumberInput, Tabs, Table, Tooltip } from '../components';
+import { Box, Section, LabeledList, Button, ProgressBar, Collapsible, Flex, NumberInput, Tabs, Table} from '../components';
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 import { FlexItem } from '../components/Flex';

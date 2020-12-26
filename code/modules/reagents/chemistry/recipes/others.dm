@@ -886,9 +886,9 @@
 
 /datum/chemical_reaction/ice
 	name = "Ice"
-	id = "ice"
-	results = list("ice" = 1)
-	required_reagents = list("water" = 1)
+	id = /datum/reagent/consumable/ice
+	results = list(/datum/reagent/consumable/ice = 1)
+	required_reagents = list(/datum/reagent/water = 1)
 	is_cold_recipe = TRUE
 	required_temp = 250
 	mix_message = "The solution freezes up into ice!"
