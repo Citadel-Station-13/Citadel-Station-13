@@ -18,7 +18,7 @@
 /datum/element/ventcrawling/Detach(datum/target)
 	. = ..()
 
-	UnregisterSignal(target, COMSIG_HANDLE_VENTCRAWL)
+	UnregisterSignal(target, list(COMSIG_HANDLE_VENTCRAWL, COMSIG_CHECK_VENTCRAWL))
 
 /datum/element/ventcrawling/proc/handle_ventcrawl(datum/target,atom/A)
 	var/mob/living/person = target
