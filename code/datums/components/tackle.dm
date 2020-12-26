@@ -89,8 +89,8 @@
 		to_chat(user, "<span class='warning'>You can't tackle while tased!</span>")
 		return
 
-	left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
-	right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
+	var/left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
 	if(left && right_paralysis)
 		to_chat(user, "<span class='warning'>You can't tackle without the use of your arms!</span>")
 
@@ -285,8 +285,8 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
-	left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
-	right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
+	var/left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
 	if(left_paralysis || right_paralysis)
 		attack_mod -= 2
 
