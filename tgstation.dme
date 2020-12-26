@@ -3605,6 +3605,7 @@
 #include "modular_citadel\code\modules\client\loadout\shoes.dm"
 #include "modular_citadel\code\modules\client\loadout\suit.dm"
 #include "modular_citadel\code\modules\client\loadout\uniform.dm"
+#include "modular_citadel\code\modules\client\loadout\unlockable.dm"
 #include "modular_citadel\code\modules\client\verbs\who.dm"
 #include "modular_citadel\code\modules\clothing\neck.dm"
 #include "modular_citadel\code\modules\clothing\trek.dm"

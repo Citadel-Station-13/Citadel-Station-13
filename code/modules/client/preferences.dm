@@ -180,10 +180,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gear_points = 10
 	var/list/gear_categories
 	var/list/loadout_data = list()
+	var/list/unlockable_loadout_data = list()
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
-	var/list/loadout_progress = list()
 
 	var/screenshake = 100
 	var/damagescreenshake = 2
@@ -879,7 +879,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
 						var/extra_color_data = ""
 						if(loadout_item)
-							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
+							if(gear.category != LOADOUT_CATEGORY_UNLOCKABLE || (can_use_unlockable(gear)))
+								class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
+							else
+								class_link = "style='white-space:normal;' class='linkOff'"
 							if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
 								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_polychromic=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
 								for(var/loadout_color in loadout_item[LOADOUT_COLOR])
@@ -890,7 +893,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									loadout_color_non_poly = loadout_item[LOADOUT_COLOR][1]
 								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
 								extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'>&nbsp;&nbsp;&nbsp;</span>"
-						else if(gear_points <= 0)
+						else if((gear_points - gear.cost) < 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)
 							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
@@ -2658,6 +2661,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(G.donoritem && !G.donator_ckey_check(user.ckey))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
+				if(istype(G, /datum/gear/unlockable) && !can_use_unlockable(G))
+					to_chat(user, "<span class='danger'>To use this item, you need to meet the defined requirements!</span>")
+					return
 				if(gear_points >= initial(G.cost))
 					var/list/new_loadout_data = list(LOADOUT_ITEM = "[G.type]")
 					if(length(G.loadout_initial_colors))
@@ -2942,6 +2948,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/find_gear = has_loadout_gear(save_slot, gear_type)
 	if(find_gear)
 		loadout_data["SAVE_[save_slot]"] -= list(find_gear)
+
+/datum/preferences/proc/can_use_unlockable(datum/gear/unlockable/unlockable_gear)
+	if(unlockable_loadout_data[unlockable_gear.progress_key] >= unlockable_gear.progress_required)
+		return TRUE
+	return FALSE
 
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT
