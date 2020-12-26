@@ -34032,6 +34032,9 @@
 /area/medical/surgery)
 "bCJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/light_switch{
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bCK" = (
@@ -36314,6 +36317,9 @@
 /obj/item/bedsheet/medical,
 /obj/machinery/iv_drip,
 /obj/machinery/light,
+/obj/machinery/vending/wallmed{
+	pixel_y = -28
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bIe" = (
@@ -52049,8 +52055,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cCp" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = -28
+/obj/machinery/light_switch{
+	pixel_y = -25
 	},
 /turf/open/floor/plasteel,
 /area/medical/surgery)
