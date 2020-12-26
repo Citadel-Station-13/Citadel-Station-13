@@ -87,8 +87,8 @@ export const Mrs = (props, context) => {
                     minValue={0}
                     maxValue={organ.max_damage}
                     textAlign={"center"}
-                    color={organ.color}
-                    >{organ.state}
+                    color={organ.color}>
+                    {organ.state}
                   </ProgressBar>
 
                   {organ.slot === "BRAIN" && (
