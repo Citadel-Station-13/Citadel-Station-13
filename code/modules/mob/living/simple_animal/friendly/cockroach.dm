@@ -22,7 +22,6 @@
 	response_harm_simple = "splat"
 	speak_emote = list("chitters")
 	density = FALSE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
@@ -31,6 +30,10 @@
 	verb_yell = "chitters loudly"
 	var/squish_chance = 50
 	del_on_death = 1
+
+/mob/living/simple_animal/cockroach/Initialize()
+	. = ..()
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/cockroach/death(gibbed)
 	if(SSticker.mode && SSticker.mode.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.

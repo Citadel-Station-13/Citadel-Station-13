@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 
 //VENTCRAWLING
 
-/mob/living/proc/handle_ventcrawl(atom/A)
+/mob/living/proc/handle_ventcrawl(atom/A, ventcrawler)
 	if(!ventcrawler || !Adjacent(A))
 		return
 	. = TRUE //return value to stop the client from being shown the turf contents stat tab on alt-click.
@@ -59,10 +59,15 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 			if(!client)
 				return
 
-			if(iscarbon(src) && ventcrawler == VENTCRAWLER_NUDE)
-				if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
-					to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
-					return
+			if(iscarbon(src))
+				switch(ventcrawler)
+					if(VENTCRAWLER_NUDE)
+						if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
+							to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
+							return
+					if(VENTCRAWLER_IMPLANT)
+						if(getBackSlot() || getBeltSlot() || get_num_held_items())
+							to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with what you have equipped!")
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
 			forceMove(vent_found)
