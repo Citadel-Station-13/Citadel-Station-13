@@ -22,7 +22,11 @@
 		return
 	loaded_debris = TRUE
 	var/list/data = json_decode(file2text("[get_map_persistence_path()]/debris.json"))
-
+	var/list/z_lookup = list()
+	/// reverse it
+	for(var/z in SSmapping.z_to_station_z_index)
+		var/sz = SSmapping.z_to_station_z_index[z]
+		z_lookup[num2text(sz)] = z
 
 /datum/controller/subsystem/persistence/proc/SaveMapDebris()
 	if(fexists("[get_map_persistence_path()]/debris.json"))
@@ -32,6 +36,7 @@
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		allowed_z_cache[num2text(z)] = TRUE
 	var/list/data = list()
+	var/list/z_lookup = SSmapping.z_to_station_z_index
 
 	WRITE_FILE("[get_map_persistence_path()]/debris.json", json_encode(data))
 
