@@ -57,9 +57,9 @@
 					var/path = data["__PATH__"]
 					if(!path)
 						continue
-					var/obj/effect/cleanable/instantiated = new path(tile)
+					var/obj/effect/decal/cleanable/instantiated = new path(tile)
 					if(data)
-						instantiated.LoadPersistence(data)
+						instantiated.PersistenceLoad(data)
 
 /datum/controller/subsystem/persistence/proc/SaveMapDebris()
 	if(fexists("[get_map_persistence_path()]/debris.json"))
@@ -67,7 +67,7 @@
 	var/list/data = list()
 	var/list/z_lookup = SSmapping.z_to_station_z_index
 	var/list/debris = RelevantPersistentDebris()
-	var/obj/effect/cleanable/saving
+	var/obj/effect/decal/cleanable/saving
 	var/global_max = CONFIG_GET(number/persistent_debris_global_max)
 	var/type_max = CONFIG_GET(number/persistent_debris_type_max)
 	var/stored = 0
@@ -95,13 +95,13 @@
 		if(stored > global_max)
 			var/w = "Persistent debris saving globally aborted due to global max >= [global_max]. Either janitors never do their jobs or something is wrong."
 			message_admins(w)
-			subsystem_log(w))
+			subsystem_log(w)
 			return
 		stored_by_type[path] = stored_by_type[path]? stored_by_type[path] + 1 : 1
 		if(stored_by_type[path] > type_max)
 			var/w = "Persistent debris saving aborted for type [path] due to type max >= [global_max]. Either janitors never do their jobs or something is wrong."
 			message_admins(w)
-			subsystem_log(w))
+			subsystem_log(w)
 
 	subsystem_log({"
 	Debris saving completed:
@@ -110,7 +110,7 @@
 	"})
 	WRITE_FILE("[get_map_persistence_path()]/debris.json", json_encode(data))
 
-/datum/controller/subsystem/persistence/proc/IsValidDebrisLocation(turf/tile, list/allowed_typecache, list/allowed_zcache, type, loading = FALSE)
+/datum/controller/subsystem/persistence/proc/IsValidDebrisLocation(turf/tile, list/allowed_typecache, list/allowed_zcache, obj/effect/decal/cleanable/type, loading = FALSE)
 	if(!allowed_typecache[tile.type])
 		return FALSE
 	var/area/A = tile.loc
@@ -120,7 +120,7 @@
 		return FALSE
 	if(loading)
 		if(!initial(type.persistence_allow_stacking))
-			var/obj/effect/cleanable/C = locate(type) in tile
+			var/obj/effect/decal/cleanable/C = locate(type) in tile
 			if(!QDELETED(C))
 				return FALSE
 	// Saving verifies allow stacking in the save proc.
@@ -139,7 +139,7 @@
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		allowed_z_cache[num2text(z)] = TRUE
 	. = list()
-	for(var/obj/effect/cleanable/C in world)
+	for(var/obj/effect/decal/cleanable/C in world)
 		if(!C.loc || QDELETED(C))
 			continue
 		if(!C.persistent)
