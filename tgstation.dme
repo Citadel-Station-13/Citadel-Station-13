@@ -3730,6 +3730,7 @@
 #include "sandcode\code\game\objects\items\stacks\tiles\tile_types.dm"
 #include "sandcode\code\game\objects\items\stacks\tiles\tile_wooden.dm"
 #include "sandcode\code\game\objects\items\storage\backpack.dm"
+#include "sandcode\code\game\objects\items\storage\bags.dm"
 #include "sandcode\code\game\objects\items\tanks\tank_types.dm"
 #include "sandcode\code\game\objects\items\tanks\tanks.dm"
 #include "sandcode\code\game\objects\items\tools\crowbar.dm"
