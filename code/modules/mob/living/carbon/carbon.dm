@@ -1004,6 +1004,23 @@
 		var/obj/item/bodypart/BP = B
 		BP.update_disabled(silent)
 
+/mob/living/carbon/vv_get_header()
+	. = ..()
+	if(!GLOB.Debug2)
+		return
+	.+={"
+	<br><font size='1'>"}
+	var/refid = REF(src)
+	for(var/X in internal_organs)
+		var/obj/item/organ/Or = X
+		. += {"
+		[Or.name]<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];slot=[Or.slot];adjustDamage=organ' id='organ'>[getOrganLoss(Or.slot)]</a>"}
+		if(Or.slot == ORGAN_SLOT_STOMACH)
+			. += "pH:[reagents.pH], vol:[reagents.total_volume]</a>"
+
+
+
+
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")

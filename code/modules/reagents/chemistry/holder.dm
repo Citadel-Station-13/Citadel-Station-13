@@ -281,7 +281,7 @@
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE, chem_resist = null)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE, chem_resist = list())
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
@@ -291,7 +291,7 @@
 		var/delayprocess = FALSE
 		var/datum/reagent/R = reagent
 		if(chem_resist) //usually toxin.
-			if(istype(R, chem_resist))
+			if(is_type_in_list(R, chem_resist))
 				delayprocess = TRUE
 		if(QDELETED(R.holder))
 			continue

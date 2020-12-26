@@ -30,7 +30,7 @@
 		"<span class='notice'>[user] begins to make an incision in [target].</span>",
 		"<span class='notice'>[user] begins to make an incision in [target].</span>")
 
-/datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/H = target
 	var/obj/item/organ/liver/L = target.getorganslot(ORGAN_SLOT_LIVER)
 	L.maxHealth -= 10
@@ -39,7 +39,7 @@
 	display_results(user, target, "<span class='notice'>You successfully remove the damaged part of [target]'s liver.</span>",
 		"<span class='notice'>[user] successfully removes the damaged part of [target]'s liver.</span>",
 		"<span class='notice'>[user] successfully removes the damaged part of [target]'s liver.</span>")
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	var/mob/living/carbon/human/H = target

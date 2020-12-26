@@ -84,6 +84,8 @@
 //Just in case
 /obj/item/organ/liver/Remove(special = 0)
 	..()
+	if(!owner)
+		return
 	owner.remove_movespeed_modifier(LIVER_SWELLING_MOVE_MODIFY)
 	owner.ResetBloodVol() //At the moment, this shouldn't allow application twice. You either have this OR a thirsty ferret.
 	sizeMoveMod(1, owner)
@@ -110,6 +112,7 @@
 /obj/item/organ/liver/proc/metabolic_stress_calc()
 	var/mob/living/carbon/C = owner
 	var/ignoreTox = FALSE
+	var/immuneChems = list()
 	var/reagentCount = LAZYLEN(owner.reagents.reagent_list)
 	switch(metabolic_stress)
 		if(-INFINITY to -10)
@@ -170,12 +173,16 @@
 					continue
 				adjustMetabolicStress(stress)
 
+	
 	if(HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 		ignoreTox = FALSE
 	if(ignoreTox)
-		ignoreTox = /datum/reagent/toxin //lil hacky but it works
+		immuneChems += /datum/reagent/toxin //lil hacky but it works
+	var/obj/item/organ/stomach/S = C.getorganslot(ORGAN_SLOT_STOMACH)
+	if(S)
+		immuneChems += S.stomach_acid
 
-	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = ignoreTox)
+	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
 	var/metabolic_replenish = 0.25-((2*(((damage*100)/maxHealth)/100))/10)//0.05 - 0.25
 	equilibrateMetabolicStress(metabolic_replenish)
@@ -227,6 +234,7 @@
 /obj/item/organ/liver/slime/metabolic_stress_calc()
 	var/mob/living/carbon/C = owner
 	var/ignoreMeds = FALSE
+	var/immuneChems = list()
 	var/reagentCount = LAZYLEN(owner.reagents.reagent_list)
 	switch(metabolic_stress)
 		if(-INFINITY to -95)
@@ -305,9 +313,12 @@
 				adjustMetabolicStress(M.metabolization_rate/4, absolute = TRUE)
 
 	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
-		ignoreMeds = /datum/reagent/medicine
+		immuneChems += /datum/reagent/medicine
+	var/obj/item/organ/stomach/S = C.getorganslot(ORGAN_SLOT_STOMACH)
+	if(S)
+		immuneChems += S.stomach_acid
 
-	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = ignoreMeds)
+	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
 	var/metabolic_replenish = 0.15-(((((damage*100)/maxHealth)/100))/10) //0.05 - 0.15 - slower regen
 	equilibrateMetabolicStress(metabolic_replenish, TRUE)

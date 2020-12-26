@@ -74,7 +74,7 @@
 		var/adjust = C.reagents.pH + (0.35-(damage/500))
 		C.reagents.pH = clamp(adjust, 0, 14)
 
-	var/datum/reagent/metabolic/stomach_acid/SA = C.reagents.has_reagent("stomach_acid")
+	var/datum/reagent/SA = C.reagents.has_reagent(stomach_acid)
 	if(!SA)
 		owner.reagents.add_reagent(stomach_acid, 1)
 		applyOrganDamage(5)
@@ -100,7 +100,7 @@
 /obj/item/organ/stomach/proc/regen_stomach_acid(amount)
 	if(!owner || !owner.reagents)
 		return FALSE
-	var/datum/reagent/metabolic/stomach_acid/SA = owner.reagents.has_reagent("stomach_acid")
+	var/datum/reagent/metabolic/stomach_acid/SA = owner.reagents.has_reagent(stomach_acid)
 	if(!SA)
 		owner.reagents.add_reagent(stomach_acid, amount)
 	else if(SA.volume < stomach_acid_volume)

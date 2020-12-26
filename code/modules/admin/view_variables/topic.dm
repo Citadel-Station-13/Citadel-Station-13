@@ -1,4 +1,5 @@
 //DO NOT ADD MORE TO THIS FILE.
+//Remember to remove this - me. Unless it's okay to edit it?
 //Use vv_do_topic() for datums!
 /client/proc/view_var_Topic(href, href_list, hsrc)
 	if( (usr.client != src) || !src.holder || !holder.CheckAdminHref(href, href_list))
@@ -112,6 +113,11 @@
 				if("stamina")
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
+				if("organ")
+					var/slot = href_list["organSlot"]
+					var/mob/living/carbon/C = L
+					C.adjustOrganLoss(slot, amount)
+					newamt = C.getOrganLoss(slot)
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
 					return

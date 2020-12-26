@@ -209,7 +209,7 @@
 /obj/item/reagent_containers/syringe/cryosenium
 	name = "syringe (cryosenium)"
 	desc = "Contains cryosenium - used to freeze a corpse's organs for a short time. 5u is good for 3 minutes."
-	list_reagents = list("cryosenium" = 15)
+	list_reagents = list(/datum/reagent/medicine/cryosenium = 15)
 
 /obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"

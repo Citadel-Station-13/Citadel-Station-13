@@ -31,6 +31,10 @@
 
 	var/dialysis = FALSE //Is the patient currently undergoing dialysis?
 	var/antirad = FALSE //Is the patient currently undergoing radiation treatment?
+	var/monitor = FALSE //Check to see if we're checking bloodstream
+
+	//Units
+	var/dispense_amount = 10
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -55,10 +59,10 @@
 	for(var/i in available_chems)
 		var/datum/reagent/R = reagents.has_reagent(i)
 		if(!R)
-			reagents.add_reagent(i, (20))
+			reagents.add_reagent(i, 20, added_purity = 0.8)
 			continue
 		if(R.volume < 20)
-			reagents.add_reagent(i, (20 - R.volume))
+			reagents.add_reagent(i, (20 - R.volume), added_purity = 0.8)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -233,15 +237,19 @@
 	data["efficiency"] = efficiency
 	data["current_vol"] = reagents.total_volume
 	data["tot_capacity"] = reagents.maximum_volume
+	data["amount"] = dispense_amount
+	data["monitor"] = monitor
+	data["granularity"] = getCurVolEff()
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.type, "allowed" = chem_allowed(chem)))
-		R = GLOB.chemical_reagents_list[chem]
+		//data["chems"] += list(list("name" = R.name, "id" = R.type, "allowed" = chem_allowed(chem)))
+		//R = GLOB.chemical_reagents_list[chem]
 		data["synthchems"] += list(list("name" = R.name, "id" = R.type, "synth_allowed" = synth_allowed(chem)))
 	for(var/datum/reagent/R in reagents.reagent_list)
-		data["chems"] += list(list("name" = R.name, "id" = R.type, "vol" = round(R.volume, 0.1), "purity" = round(R.purity, 0.01), "allowed" = chem_allowed(R.type)))
+		var/purityLevel = purityToColor(R.purity)
+		data["chems"] += list(list("name" = R.name, "id" = R.type, "vol" = round(R.volume, 0.1), "purity" = round(R.purity, 0.01), "purityCol" = purityLevel, "allowed" = chem_allowed(R.type)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -275,7 +283,7 @@
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				if(R.chemical_flags & REAGENT_INVISIBLE)
 					continue
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = round(R.volume, 0.1)))
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if(L)
 			if(istype(L, /obj/item/organ/liver/slime))
@@ -330,16 +338,18 @@
 						blood_type = R.name
 					else
 						blood_type = blood_id
-				data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
+				data["occupant"]["blood"]["max"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
 				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
-				data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
+				data["occupant"]["blood"]["danger"] = BLOOD_VOLUME_SAFE
 				data["occupant"]["blood"]["bloodType"] = blood_type
 
 		data["occupant"]["is_robotic_organism"] = HAS_TRAIT(mob_occupant, TRAIT_ROBOTIC_ORGANISM)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+				if(R.chemical_flags & REAGENT_INVISIBLE && efficiency < 4) //Ignore invisible chems, except when upgraded
+					continue
+				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = round(R.volume, 0.01), "desc" = R.description, "OD" = R.overdose_threshold))
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
@@ -361,28 +371,43 @@
 				return
 			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
 				return
-			if(inject_chem(chem, usr))
+			var/datum/reagent/R = reagents.get_reagent(chem)
+			if(inject_chem(R, usr))
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
+
+		if("amount")
+			var/amount = params["amount"]
+			if(text2num(amount) != null)
+				amount = text2num(amount)
+				. = TRUE
+			if(.)
+				dispense_amount = clamp(amount, 0, 100)
+
 		if("synth")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			if(!is_operational())
 				return
-			reagents.add_reagent(chem_buttons[chem], 10) //added_purity = 0.75 for when the mechanics are in
+			var/amount = dispense_amount
+			var/datum/reagent/R = reagents.get_reagent(chem)
+			if(R)
+				if(R.volume+amount > 50)
+					amount = 50 - R.volume
+			reagents.add_reagent(chem_buttons[chem], amount, added_purity = 0.7)
 		if("purge")
-			var/chem = params["chem"]
+			var/chem = text2path(params["chem"])
 			if(allowed(usr))
 				if(!is_operational())
 					return
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, dispense_amount)
 				return
 			if(chem in available_chems)
 				if(!is_operational())
 					return
 				/*var/datum/reagent/R = reagents.has_reagent(chem) //For when purity effects are in
 				if(R.purity < 0.8)*/
-				reagents.remove_reagent(chem, 10)
+				reagents.remove_reagent(chem, dispense_amount)
 			else
 				visible_message("<span class='warning'>Access Denied.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -393,6 +418,8 @@
 			antirad = !(antirad)
 		if("dialysis")
 			dialysis = !(dialysis)
+		if("monitor")
+			monitor = !(monitor)
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	. = ..()
@@ -401,9 +428,18 @@
 	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 	return TRUE
 
-/obj/machinery/sleeper/proc/inject_chem(chem, mob/user)
-	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem_buttons[chem], 10) //emag effect kicks in here so that the "intended" chem is used for all checks, for extra FUUU
+/obj/machinery/sleeper/proc/inject_chem(chem, mob/user, volume = 10)
+	if(chem_allowed(chem))
+		var/datum/reagent/R
+		if(scrambled_chems) //We can't index from chem_buttoms because we also have the posibility of chems outside of the synthed ones, so we randomize the selection.
+			R = pick(reagents.reagent_list)
+		else //Works as expected otherwise
+			R = reagents.get_reagent(chem)
+		if(volume > R.volume)
+			volume = R.volume
+		var/trans_data = reagents.copy_data(R)
+		occupant.reagents.add_reagent(R.type, volume, trans_data, added_purity = R.purity)
+		reagents.remove_reagent(R.type, volume, safety = TRUE, ignore_pH = TRUE)
 		if(user)
 			log_combat(user, occupant, "injected [chem] into", addition = "via [src]")
 		return TRUE
@@ -415,6 +451,41 @@
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
 	return amount && occ_health
+
+/obj/machinery/sleeper/proc/getCurVolEff()
+	switch(efficiency)
+		if(1)
+			return 10
+		if(2)
+			return 5
+		if(3)
+			return 2
+		if(4)
+			return 1
+	return 1//just in case
+
+/obj/machinery/sleeper/proc/purityToColor(purity)
+	switch(purity)
+		if(0 to 0.4)
+			return "red"
+		if(0.4 to 0.6)
+			return "orange"
+		if(0.6 to 0.69) //Just so the default isn't an ugly yellow
+			return "average"
+		if(0.69 to 0.75)
+			return "olive"
+		if(0.75 to 0.8)
+			return "green"
+		if(0.8 to 0.85)
+			return "teal"
+		if(0.85 to 0.9)
+			return "blue"
+		if(0.9 to 0.95)
+			return "violet"
+		if(0.95 to 1)
+			return "purple"
+	return "brown"
+
 
 /obj/machinery/sleeper/proc/synth_allowed(chem)
 	var/datum/reagent/R = reagents.has_reagent(chem)
@@ -442,11 +513,12 @@
 			continue
 		var/datum/reagent/R = reagents.has_reagent(chem)
 		if(!R)
-			reagents.add_reagent(chem_buttons[chem], 50)
+			reagents.add_reagent(chem_buttons[chem], 50, added_purity = 0.7)
+			continue
 		if(R)
 			var/add_amount = 50 - R.volume
 			if(R.volume > 0)
-				reagents.add_reagent(chem_buttons[chem], add_amount)
+				reagents.add_reagent(chem_buttons[chem], add_amount, added_purity = 0.7)
 
 
 /obj/machinery/sleeper/process()
@@ -468,9 +540,20 @@
 			if(istype(R, /datum/reagent/metabolic))
 				continue
 			C.reagents.remove_reagent(R.type,R.volume/(40/efficiency))
+	if(monitor)
+		if(!occupant && !isliving(occupant))
+			monitor = FALSE
+			return
+		for(var/datum/reagent/R in C.reagents.reagent_list)
+			if(istype(R, /datum/reagent/metabolic))
+				continue
+			C.reagents.remove_reagent(R.type,0.1/efficiency)
+			R.purity -= 0.001
+		C.nutrition -= 0.1
+
 	if(antirad)
 		if(!occupant && !isliving(occupant))
-			dialysis = FALSE
+			antirad = FALSE
 			return
 		C.radiation -= max(C.radiation-RAD_MOB_SAFE, 0)/(150/efficiency)
 		C.randomOrganDamage(5.2/efficiency)

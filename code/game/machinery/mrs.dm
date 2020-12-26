@@ -8,7 +8,7 @@
 	circuit = /obj/item/circuitboard/machine/mrs
 	var/efficiency = 1
 	var/mob/living/carbon/scannedmob
-	var/scantime = 5
+	var/scantime = 7
 	var/current_cycle = 0
 	var/scanning
 	var/controls_inside = FALSE
@@ -165,7 +165,7 @@
 	data["scanmob"] = scannedmob ? 1 : 0
 	data["scanning"] = scanning
 	data["scantime"] = scantime
-	data["scancount"] = current_cycle
+	data["scancount"] = clamp(current_cycle, 0, scantime)
 	//Scanned mob state
 
 	if(scannedmob)
@@ -195,7 +195,7 @@
 						data["occupant"]["pHcolor"] = "basic"
 				data["occupant"]["pH"] = C.reagents.pH
 
-				var/datum/reagent/metabolic/stomach_acid/Sa = C.reagents.has_reagent("stomach_acid")
+				var/datum/reagent/metabolic/stomach_acid/Sa = C.reagents.has_reagent(/datum/reagent/metabolic/stomach_acid)
 				if(Sa)
 					data["occupant"]["stomachVol"] = Sa.volume
 					switch(Sa.volume)
@@ -238,7 +238,7 @@
 					if(LAZYLEN(C.get_traumas()))
 						for(var/datum/brain_trauma/B in C.get_traumas())
 							var/colorB = "average"
-							var/trauma
+							var/trauma = "Mild "
 							switch(B.resilience)
 								if(TRAUMA_RESILIENCE_SURGERY)
 									trauma += "Severe "
@@ -253,6 +253,24 @@
 						continue
 
 				//Stomach is handled above
+
+				//Heart
+				if(istype(Or, /obj/item/organ/heart))
+					if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+						var/blood_id = C.get_blood_id()
+						if(blood_id)
+							data["occupant"]["blood"] = list() // We can start populating this list.
+							var/blood_type = C.dna.blood_type
+							if(blood_id != "blood") // special blood substance
+								var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+								if(R)
+									blood_type = R.name
+								else
+									blood_type = blood_id
+							data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
+							data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
+							data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
+							data["occupant"]["blood"]["bloodType"] = blood_type
 
 
 				//Liver
