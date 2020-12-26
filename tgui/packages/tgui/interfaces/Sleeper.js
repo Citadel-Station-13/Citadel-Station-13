@@ -155,7 +155,7 @@ export const Sleeper = (props, context) => {
                         ranges={{
                           good: [data.occupant.blood.danger, Infinity],
                           average: [(data.occupant.blood.max / 2),
-                          data.occupant.blood.danger],
+                            data.occupant.blood.danger],
                           bad: [-Infinity, (data.occupant.blood.max / 2)],
                         }}>
                         {round(data.occupant.blood.currentBloodVolume)} cl
@@ -210,12 +210,11 @@ export const Sleeper = (props, context) => {
             mr={2}
             ml={2}
             p={1}
-            tooltip={
-            `Performs Dialysis on the patient - Reducing metabolic stress and
-            purging all chems in a patient’s system while slowly
-            reducing their blood volume.
-            If a liver is unstressed enough, it will begin to heal itself.
-            In a pinch, this can stand in for a missing liver.`
+            tooltip={`Performs Dialysis on the patient - Reducing metabolic stress and
+              purging all chems in a patient’s system while slowly
+              reducing their blood volume.
+              If a liver is unstressed enough, it will begin to heal itself.
+              In a pinch, this can stand in for a missing liver.`
             }
             tooltipPosition="bottom-right"
             disabled={!occupied}
@@ -228,8 +227,8 @@ export const Sleeper = (props, context) => {
             p={1}
             mr={2}
             tooltip={
-              `Performs rudimentary radiation purging,
-              at the cost of damaging the patient's organs.`
+            `Performs rudimentary radiation purging,
+            at the cost of damaging the patient's organs.`
             }
             tooltipPosition="bottom"
             disabled={!occupied}
@@ -242,9 +241,9 @@ export const Sleeper = (props, context) => {
             p={1}
             mr={2}
             tooltip={
-              `Detects chemicals present in a patient's blood stream,
-              while slightly reducing each reagent's effectiveness and
-              using of some of the patient's nourishment.`
+            `Detects chemicals present in a patient's blood stream,
+            while slightly reducing each reagent's effectiveness and
+            using of some of the patient's nourishment.`
             }
             tooltipPosition="bottom-left"
             disabled={!occupied}
@@ -303,18 +302,18 @@ export const Sleeper = (props, context) => {
           minHeight="165px"
           buttons={(
             <Button fluid={1}>SynthAll</Button>,
-            <NumberInput
-              width="65px"
-              unit="u"
-              step={data.granularity}
-              stepPixelSize={data.granularity}
-              value={(data.amount)}
-              minValue={0}
-              maxValue={100}
-              tooltipPosition="bottom-left"
-              onDrag={(e, value) => act('amount', {
-                amount: value,
-              })} />
+              <NumberInput
+                width="65px"
+                unit="u"
+                step={data.granularity}
+                stepPixelSize={data.granularity}
+                value={(data.amount)}
+                minValue={0}
+                maxValue={100}
+                tooltipPosition="bottom-left"
+                onDrag={(e, value) => act('amount', {
+                  amount: value,
+                })} />
           )}>
           <Tabs
             fluid={1}
