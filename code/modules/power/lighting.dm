@@ -149,6 +149,8 @@
 						newlight = new /obj/machinery/light/built(loc)
 					if("bulb")
 						newlight = new /obj/machinery/light/small/built(loc)
+					if("floor") 												//just so floor lights can be built
+						newlight = new /obj/machinery/light/floor/built(loc)	//this one too
 				newlight.setDir(dir)
 				transfer_fingerprints_to(newlight)
 				if(cell)
@@ -490,6 +492,9 @@
 			if("bulb")
 				newlight = new /obj/structure/light_construct/small(src.loc)
 				newlight.icon_state = "bulb-construct-stage[cur_stage]"
+			if("floor")															//deconstruction.
+				newlight = new /obj/structure/light_construct/floor(src.loc)	//this one too
+				newlight.icon_state = "floor-construct-stage[cur_stage]"		//this one too x2
 		newlight.setDir(src.dir)
 		newlight.stage = cur_stage
 		if(!disassembled)
@@ -621,7 +626,7 @@
 					else
 						to_chat(H, "<span class='warning'>You can't receive charge from the [fitting]!</span>")
 				return
-				
+
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -846,4 +851,4 @@
 	nightshift_brightness = 4
 	layer = 2.5
 	light_type = /obj/item/light/bulb
-	fitting = "bulb"
+	fitting = "floor" //making deconstruction give out the right type.
