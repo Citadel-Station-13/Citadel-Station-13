@@ -250,7 +250,7 @@ export const Sleeper = (props, context) => {
             disabled={!occupied}
             onClick={() => act('monitor')}
             selected={data.monitor}>
-            Monitor bloodstream
+            Monitor Bloodstream
           </Button>
 
           {!!data.monitor && (

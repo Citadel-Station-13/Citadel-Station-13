@@ -213,10 +213,10 @@
 
 			for(var/obj/item/organ/Or in C.internal_organs)
 				var/state = "Healthy"
-				var/textcolor = "healthy"
+				var/textcolor = "good"
 				if(Or.organ_flags & ORGAN_FAILING)
 					state = "End Stage"
-					textcolor = "bad"
+					textcolor = "black"
 				else if(Or.damage > Or.high_threshold)
 					state = "Chronic"
 					textcolor = "bad"
@@ -225,7 +225,7 @@
 					textcolor = "average"
 				else if (Or.damage < 0)
 					state = "OverHealed"
-					textcolor = "highlight"
+					textcolor = "teal"
 
 
 				if(efficiency > 3 && (Or.damage > 0 && Or.damage < Or.maxHealth))
@@ -259,18 +259,10 @@
 					if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
 						var/blood_id = C.get_blood_id()
 						if(blood_id)
-							data["occupant"]["blood"] = list() // We can start populating this list.
-							var/blood_type = C.dna.blood_type
-							if(blood_id != "blood") // special blood substance
-								var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
-								if(R)
-									blood_type = R.name
-								else
-									blood_type = blood_id
 							data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
 							data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
 							data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
-							data["occupant"]["blood"]["bloodType"] = blood_type
+							data["occupant"]["blood"]["bloodType"] = C.dna.blood_type
 
 
 				//Liver

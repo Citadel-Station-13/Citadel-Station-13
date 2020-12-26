@@ -87,11 +87,8 @@ export const Mrs = (props, context) => {
                     minValue={0}
                     maxValue={organ.max_damage}
                     textAlign={"center"}
-                    ranges={{
-                      good: [-Infinity, 30],
-                      average: [30, 70],
-                      bad: [70, Infinity],
-                    }}>{organ.state}
+                    color={organ.color}
+                    >{organ.state}
                   </ProgressBar>
 
                   {organ.slot === "BRAIN" && (
