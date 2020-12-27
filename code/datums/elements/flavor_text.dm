@@ -128,7 +128,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	for(var/i in L)
 		if(istype(i, /datum/element/flavor_text/carbon/temporary))
 			T = i
-	if(T)
+	if(!T)
 		to_chat(src, "<span class='warning'>Your mob type does not support temporary flavor text.</span>")
 		return
 	T.set_flavor(src)
