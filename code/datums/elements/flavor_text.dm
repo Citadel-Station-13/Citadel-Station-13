@@ -32,7 +32,6 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	always_show = _always_show
 	can_edit = _edit
 	save_key = _save_key
-	max_length = _max_length
 	examine_no_preview = _examine_no_preview
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
@@ -40,7 +39,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(can_edit && ismob(target)) //but only mobs receive the proc/verb for the time being
 		var/mob/M = target
 		LAZYOR(GLOB.mobs_with_editable_flavor_text[M], src)
-		M.verbs |= /mob/proc/manage_flavor_tests
+		add_verb(M, /mob/proc/manage_flavor_tests)
 
 	if(save_key && ishuman(target))
 		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
@@ -189,3 +188,10 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_text/carbon/temporary
 	examine_full_view = TRUE
 	max_len = 1024
+
+/datum/element/flavor_text/carbon/temporary/Attach(datum/target, text, _name, _addendum, _max_len, _always_show, _edit, _save_key, _examine_no_preview)
+	. = ..()
+	if(. & ELEMENT_INCOMPATIBLE)
+		return
+	if(ismob(target))
+		add_verb(target, /mob/proc/set_pose)
