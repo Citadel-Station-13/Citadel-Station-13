@@ -48,7 +48,7 @@
 		name = data["name"]
 	if(do_icon_rotate && data["rotation"])
 		var/matrix/M = matrix()
-		M.Turn(data["rotation"])
+		M.Turn(text2num(data["rotation"]))
 		transform = M
 	if(data["paint_color"])
 		paint_colour = data["paint_color"]

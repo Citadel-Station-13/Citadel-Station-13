@@ -83,7 +83,7 @@
 /obj/effect/decal/cleanable/dirt/PersistenceLoad(list/data)
 	. = ..()
 	if(data["alpha"])
-		alpha = data["alpha"]
+		alpha = text2num(data["alpha"])
 
 /obj/effect/decal/cleanable/dirt/Initialize()
 	. = ..()

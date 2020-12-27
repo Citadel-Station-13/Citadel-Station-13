@@ -71,7 +71,7 @@
 /obj/effect/decal/cleanable/blood/tracks/PersistenceLoad(list/data)
 	. = ..()
 	if(data["dir"])
-		setDir(data["dir"])
+		setDir(text2num(data["dir"]))
 
 /obj/effect/decal/cleanable/trail_holder //not a child of blood on purpose
 	name = "blood"
@@ -92,7 +92,7 @@
 /obj/effect/decal/cleanable/trail_holder/PersistenceLoad(list/data)
 	. = ..()
 	if(data["dir"])
-		setDir(data["dir"])
+		setDir(text2num(data["dir"]))
 	if(data["color"])
 		fixed_color = TRUE
 		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
@@ -138,7 +138,7 @@
 /obj/effect/decal/cleanable/blood/footprints/PersistenceLoad(list/data)
 	. = ..()
 	if(data["dir"])
-		setDir(data["dir"])
+		setDir(text2num(data["dir"]))
 
 /obj/effect/decal/cleanable/blood/footprints/Crossed(atom/movable/O)
 	if(ishuman(O))
