@@ -54092,8 +54092,8 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "eUy" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+/obj/machinery/door/airlock{
+	name = "Starboard Emergency Storage"
 	},
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
