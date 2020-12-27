@@ -124,7 +124,10 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	set category = "IC"
 
 	var/list/L = GLOB.mobs_with_editable_flavor_text[src]
-	var/datum/element/flavor_text/carbon/temporary/T = locate() in L
+	var/datum/element/flavor_text/carbon/temporary/T
+	for(var/i in L)
+		if(istype(i, /datum/element/flavor_text/carbon/temporary))
+			T = i
 	if(T)
 		to_chat(src, "<span class='warning'>Your mob type does not support temporary flavor text.</span>")
 		return
@@ -195,3 +198,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return
 	if(ismob(target))
 		add_verb(target, /mob/proc/set_pose)
+
+/datum/element/flavor_Text/carbon/temporary/Detach(datum/source, force)
+	. = ..()
+	if(ismob(source))
+		remove_verb(target, /mob/proc/set_pose)
