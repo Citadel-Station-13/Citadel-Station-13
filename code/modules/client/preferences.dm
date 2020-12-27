@@ -879,7 +879,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
 						var/extra_color_data = ""
 						if(loadout_item)
-							if(gear.category != LOADOUT_CATEGORY_UNLOCKABLE || (can_use_unlockable(gear)))
+							if(gear.category != LOADOUT_CATEGORY_UNLOCKABLE || can_use_unlockable(gear))
 								class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 							else
 								class_link = "style='white-space:normal;' class='linkOff'"
