@@ -171,7 +171,7 @@
 	var/wornonce = FALSE
 
 /obj/item/clothing/gloves/fingerless/ablative/proc/get_component_parry_data(datum/source, parrying_method, datum/parrying_item_mob_or_art, list/backup_items, list/override)
-	if(parrying_method && !(parrying_method == ITEM_PARRY))
+	if(parrying_method && !(parrying_method == UNARMED_PARRY))
 		return
 	override[src] = ITEM_PARRY
 
@@ -187,16 +187,21 @@
 		UnregisterSignal(user, COMSIG_LIVING_ACTIVE_PARRY_START)
 		wornonce = FALSE
 
-/obj/item/clothing/goves/fingerless/ablative/can_active_parry(mob/user)
+/obj/item/clothing/gloves/fingerless/ablative/can_active_parry(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		return FALSE
 	return src == H.gloves
 
+/obj/item/clothing/gloves/fingerless/ablative/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(parry_efficiency > 0)
+		owner.visible_message("<span class='warning'>[owner] deflects \the [object] with their armwraps!</span>")
+
 /datum/block_parry_data/ablative_armwraps
 	parry_stamina_cost = 4
 	parry_attack_types = ATTACK_TYPE_UNARMED | ATTACK_TYPE_PROJECTILE | ATTACK_TYPE_TACKLE | ATTACK_TYPE_THROWN | ATTACK_TYPE_MELEE
-	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK
+	parry_flags = NONE
 
 	parry_time_windup = 0
 	parry_time_spindown = 0
