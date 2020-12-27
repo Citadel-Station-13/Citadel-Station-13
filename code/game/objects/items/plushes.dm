@@ -116,7 +116,7 @@
 
 /obj/item/toy/plush/vv_get_var(var_name)
 	if(var_name == NAMEOF(src, __ADMIN_SET_TO_ID))
-		return debug_variables("__ADMIN: SET SNOWFLAKE ID", snowflake_id, 0, src)
+		return debug_variable("__ADMIN: SET SNOWFLAKE ID", snowflake_id, 0, src)
 	return ..()
 
 /obj/item/toy/plush/vv_edit_var(var_name, var_value)
