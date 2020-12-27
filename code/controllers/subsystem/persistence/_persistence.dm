@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(persistence)
  */
 /datum/controller/subsystem/persistence/proc/get_map_persistence_path()
 	ASSERT(SSmapping.config)
-	if(SSmapping.config.persistence_key == "NO_PERSIST")
+	if(!SSmapping.config.persistence_key || (SSmapping.config.persistence_key == "NO_PERSIST"))
 		return null
 	return "data/persistence/[ckey(SSmapping.config.persistence_key)]"
 

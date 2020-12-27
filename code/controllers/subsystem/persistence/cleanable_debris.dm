@@ -16,13 +16,13 @@
 		SaveMapDebris()
 
 /datum/controller/subsystem/persistence/proc/LoadMapDebris()
+	if(CONFIG_GET(flag/persistent_debris_only))
+		wipe_existing_debris()
 	if(!fexists("[get_map_persistence_path()]/debris.json"))
 		return
 	if(loaded_debris)
 		return
 	loaded_debris = TRUE
-	if(CONFIG_GET(flag/persistent_debris_only))
-		wipe_existing_debris()
 	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
 	var/list/allowed_z_cache = list()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
@@ -104,12 +104,16 @@
 			message_admins(w)
 			subsystem_log(w)
 
-	subsystem_log({"
-	Debris saving completed:
-	Total: [global_max]
-	By type: [english_list(stored_by_type)]
-	"})
-	WRITE_FILE("[get_map_persistence_path()]/debris.json", json_encode(data))
+	var/list/bytype = list()
+	for(var/path in stored_by_type)
+		bytype += "[path] - [stored_by_type[path]]"
+	subsystem_log(
+ 	{"Debris saving completed:
+	Total: [stored]
+	By type:
+	[bytype.Join("\n")]"}
+	)
+	WRITE_FILE(file("[get_map_persistence_path()]/debris.json"), json_encode(data))
 
 /datum/controller/subsystem/persistence/proc/IsValidDebrisLocation(turf/tile, list/allowed_typecache, list/allowed_zcache, obj/effect/decal/cleanable/type, loading = FALSE)
 	if(!allowed_typecache[tile.type])

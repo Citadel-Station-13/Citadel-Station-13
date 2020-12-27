@@ -105,10 +105,11 @@
 	persistence_key = ckey(map_name)
 
 	var/json_persistence_key = json["persistence_key"]
-	if(json_persistence_key == "NO_PERSIST")
-		persistence_key = null
-	else
-		persistence_key = json_persistence_key
+	if(json_persistence_key)
+		if(json_persistence_key == "NO_PERSIST")
+			persistence_key = null
+		else
+			persistence_key = json_persistence_key
 
 	// "map_file": "BoxStation.dmm"
 	if (istext(map_file))
