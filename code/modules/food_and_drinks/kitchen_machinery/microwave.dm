@@ -279,7 +279,7 @@
 
 /obj/machinery/microwave/proc/start(mob/user)
 	turn_on()
-	loop(MICROWAVE_NORMAL, 10, wait = max(12 - 2 * productivity, 2), user)
+	loop(MICROWAVE_NORMAL, 10, user = user)
 
 /obj/machinery/microwave/proc/start_can_fail()
 	turn_on()
