@@ -95,6 +95,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		#warn implement refresh
 	if(returned & PREFERENCES_ONTOPIC_REGENERATE_PREVIEW)
 		#warn implement preview regeneration
+	if(returned & PREFERENCES_ONTOPIC_CHARACTER_SWAP)
+		render_character_select(usr)
 
 /**
  * Handles topic input from a user.

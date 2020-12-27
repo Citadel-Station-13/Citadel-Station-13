@@ -2976,6 +2976,7 @@
 #include "code\modules\power\tesla\energy_ball.dm"
 #include "code\modules\power\tesla\generator.dm"
 #include "code\modules\preferences\_preferences.dm"
+#include "code\modules\preferences\character_select.dm"
 #include "code\modules\preferences\preferences_collection.dm"
 #include "code\modules\preferences\collections\character\appearance.dm"
 #include "code\modules\preferences\collections\character\basic.dm"

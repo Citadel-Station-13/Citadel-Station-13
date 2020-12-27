@@ -18,6 +18,8 @@
 #define PREFERENCES_ONTOPIC_REFRESH					(1<<0)
 /// Regenerate character preview
 #define PREFERENCES_ONTOPIC_REGENERATE_PREVIEW		(1<<1)
+/// Character swapped
+#define PREFERENCES_ONTOPIC_CHARACTER_SWAP			(1<<2)
 
 // Savefile versioning
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
