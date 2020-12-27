@@ -570,7 +570,7 @@
 /// Amount of dirtyness tiles need to spawn dirt.
 /datum/config_entry/number/turf_dirt_threshold
 	config_entry_value = 100
-	min_value = 1
+	min_val = 1
 	integer = TRUE
 
 /// Alpha dirt starts at

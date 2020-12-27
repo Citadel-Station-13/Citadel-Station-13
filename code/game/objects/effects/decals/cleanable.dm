@@ -6,7 +6,7 @@
 	/// Can we stack multiple in one tile?
 	var/persistence_allow_stacking = FALSE
 	/// Are we deleted by turf changes?
-	var/wiped_by_turf_change = FALSE
+	var/wiped_by_floor_change = FALSE
 
 	var/list/random_icon_states = null
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA

@@ -107,7 +107,7 @@
 /**
  * Attempts to make the floor dirty.
  */
-/mob/living/proc/dirt_buildup(strength =)
+/mob/living/proc/dirt_buildup(strength = 1)
 	var/turf/open/T = loc
 	if(!istype(T) || !T.dirt_buildup_allowed)
 		return
