@@ -108,11 +108,11 @@
  * Attempts to make the floor dirty.
  */
 /mob/living/proc/dirt_buildup(strength)
-	var/turf/T = loc
-	if(!istype(T) || !T.allow_dirt_buildup)
+	var/turf/open/T = loc
+	if(!istype(T) || !T.dirt_buildup_allowed)
 		return
 	var/area/A = T.loc
-	if(!A.allow_dirt_buildup)
+	if(!A.dirt_buildup_allowed)
 		return
 	var/obj/effect/decal/cleanable/dirt/D = locate() in T
 	if(D)
