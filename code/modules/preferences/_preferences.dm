@@ -83,7 +83,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(isnull(.))
 		return default
 
+/datum/preferences/Topic(href, list/href_list)
+	. = ..()
+	ASSERT(usr)
+	if(parent != usr)
+		log_admin("[key_name(usr)] sent a mismatched preferences setup href! Expected: [ckey], actual: [usr.ckey]")
+		message_admin("[key_name(usr)] sent a mismatched preferences setup href! Expected: [ckey], actual: [usr.ckey]")
+		return
+	var/returned = OnTopic(usr, href_list)
+	if(returned & PREFERENCES_ONTOPIC_REFRESH)
+		#warn implement refresh
+	if(returned & PREFERENCES_ONTOPIC_REGENERATE_PREVIEW)
+		#warn implement preview regeneration
 
+/**
+ * Handles topic input from a user.
+ * Assumes sanity checks have already been done to make sure the right person is calling tthis.
+ */
+/datum/preferences/proc/OnTopic(mob/user, list/href_list)
+	return NONE
 
 /**
  * Loads metadata

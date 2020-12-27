@@ -3,9 +3,9 @@ SUBSYSTEM_DEF(character_setup)
 	flags = SS_NO_FIRE
 
 	/// Holds all preferences collections
-	var/datum/preferences_collection/collections
+	var/list/datum/preferences_collection/collections
 	/// Holds all player preferences
-	var/datum/preferences/preferences
+	var/list/datum/preferences/preferences
 
 /datum/controller/subsystem/character_setup/PreInit()
 	. = ..()

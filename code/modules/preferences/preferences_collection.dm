@@ -22,8 +22,8 @@
 	if(!istype(prefs))
 		return
 	if(prefs.parent != usr)
-		log_admin("[key_name(usr)] sent a potentially maliciously mismatched preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
-		message_admin("[key_name(usr)] sent a potentially maliciously mismatched preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
+		log_admin("[key_name(usr)] sent a potentially preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
+		message_admin("[key_name(usr)] sent a potentially preferences setup href! Expected: [prefs.ckey], actual: [usr.ckey]")
 		return
 	var/returned = OnTopic(usr, prefs, href_list)
 	if(returned & PREFERENCES_ONTOPIC_REFRESH)
