@@ -53735,10 +53735,6 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 8
 	},
-/obj/item/bedsheet/medical{
-	pixel_x = 3;
-	pixel_y = 9
-	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "edj" = (
