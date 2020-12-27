@@ -2977,7 +2977,6 @@
 #include "code\modules\power\tesla\generator.dm"
 #include "code\modules\preferences\_preferences.dm"
 #include "code\modules\preferences\preferences_collection.dm"
-#include "code\modules\preferences\preferences_item.dm"
 #include "code\modules\preferences\collections\character\appearance.dm"
 #include "code\modules\preferences\collections\character\basic.dm"
 #include "code\modules\preferences\collections\character\loadout.dm"

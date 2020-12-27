@@ -18,3 +18,5 @@ SUBSYSTEM_DEF(character_setup)
 	collections = list()
 	for(var/subtype in subtypesof(/datum/preferences_collection))
 		collections += new subtype
+	sortTim(collections, /proc/cmp_preference_collection_priority)
+

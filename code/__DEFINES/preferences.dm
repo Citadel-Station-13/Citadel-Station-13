@@ -29,7 +29,7 @@
 //	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	50
 
-/// New-Savefile version start
+/// New-Savefile version start - This value should NEVER be changed!
 #define SAVEFILE_MODERN_START_VERSION		50
 
 //Preference toggles
