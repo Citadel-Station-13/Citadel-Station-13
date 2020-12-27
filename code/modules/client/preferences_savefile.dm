@@ -738,7 +738,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//gear loadout
 	loadout_data = safe_json_decode(S["loadout"])
 
-	unlockable_loadout_data = S["unlockable_loadout"]
+	unlockable_loadout_data = safe_json_decode(S["unlockable_loadout"])
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
@@ -1078,9 +1078,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["loadout"] << safe_json_encode(list())
 
 	if(length(unlockable_loadout_data))
-		S["unlockable_loadout"] << unlockable_loadout_data
+		S["unlockable_loadout"] << safe_json_encode(unlockable_loadout_data)
 	else
-		S["unlockable_loadout"] << list()
+		S["unlockable_loadout"] << safe_json_encode(list())
 
 	cit_character_pref_save(S)
 
