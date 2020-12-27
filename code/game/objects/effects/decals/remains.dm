@@ -2,7 +2,6 @@
 	name = "remains"
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
-	persistent = TRUE
 
 /obj/effect/decal/remains/acid_act()
 	visible_message("<span class='warning'>[src] dissolve[gender==PLURAL?"":"s"] into a puddle of sizzling goop!</span>")
