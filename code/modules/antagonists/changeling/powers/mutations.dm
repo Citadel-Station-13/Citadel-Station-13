@@ -150,7 +150,7 @@
 	dna_cost = 2
 	loudness = 2
 	req_human = 1
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -493,7 +493,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
 	suit_name_simple = "flesh shell"
 	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	blood_on_castoff = 1
 
 /obj/item/clothing/suit/space/changeling
@@ -542,7 +542,7 @@
 	dna_cost = 1
 	loudness = 2
 	req_human = 1
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_armor"
 	action_background_icon_state = "bg_ling"
@@ -672,7 +672,7 @@
 	dna_cost = 2
 	loudness = 2
 	req_human = 1
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_gauntlets"
 	action_background_icon_state = "bg_ling"
