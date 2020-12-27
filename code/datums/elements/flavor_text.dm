@@ -202,4 +202,4 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 /datum/element/flavor_Text/carbon/temporary/Detach(datum/source, force)
 	. = ..()
 	if(ismob(source))
-		remove_verb(target, /mob/proc/set_pose)
+		remove_verb(source, /mob/proc/set_pose)
