@@ -64,6 +64,7 @@
 	beauty = -75
 	mergeable_decal = TRUE
 	persistent = TRUE
+	wiped_by_turf_change = TRUE
 
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
