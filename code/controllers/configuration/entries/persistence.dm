@@ -15,3 +15,6 @@
 /datum/config_entry/number/persistent_debris_type_max
 	config_entry_value = 2000
 	integer = TRUE
+
+/// Wipe dirty stuff on nuke
+/datum/config_entry/flag/persistent_debris_wipe_on_nuke
