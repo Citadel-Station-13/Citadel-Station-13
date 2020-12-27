@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	var/save_key
 	/// Do not attempt to render a preview on examine. If this is on, it will display as \[flavor_name\]
 	var/examine_no_preview = FALSE
+	/// Examine FULLY views. Overrides examine_no_preview
+	var/examine_full_view = FALSE
 
 /datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key, _examine_no_preview = FALSE)
 	. = ..()
@@ -30,6 +32,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	always_show = _always_show
 	can_edit = _edit
 	save_key = _save_key
+	max_length = _max_length
 	examine_no_preview = _examine_no_preview
 
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/show_flavor)
@@ -71,6 +74,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		examine_list += "<span class='notice'><a href='?src=[REF(src)];show_flavor=[REF(target)]'>\[[flavor_name]\]</a></span>"
 		return
 	var/msg = replacetext(text, "\n", " ")
+	if(examine_full_view)
+		examine_list += "[msg]"
+		return
 	if(length_char(msg) <= 40)
 		examine_list += "<span class='notice'>[msg]</span>"
 	else
@@ -112,6 +118,18 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		return
 	var/datum/element/flavor_text/F = choices[chosen]
 	F.set_flavor(src)
+
+/mob/proc/set_pose()
+	set name = "Set Pose"
+	set desc = "Sets your temporary flavor text"
+	set category = "IC"
+
+	var/list/L = GLOB.mobs_with_editable_flavor_text[src]
+	var/datum/element/flavor_text/carbon/temporary/T = locate() in L
+	if(T)
+		to_chat(src, "<span class='warning'>Your mob type does not support temporary flavor text.</span>")
+		return
+	T.set_flavor(src)
 
 /datum/element/flavor_text/proc/set_flavor(mob/user)
 	if(!(user in texts_by_atom))
@@ -167,3 +185,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		texts_by_atom[user] = ""
 		if(user.dna)
 			user.dna.features[save_key] = ""
+
+/datum/element/flavor_text/carbon/temporary
+	examine_full_view = TRUE
+	max_len = 1024
