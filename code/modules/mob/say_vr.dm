@@ -170,7 +170,7 @@ proc/get_top_level_mob(var/mob/S)
 			processing |= other
 
 	for(var/i in show_to)
-		var/mob/M = show_to
+		var/mob/M = i
 		M.show_message(message)
 
 ///////////////// VERB CODE
