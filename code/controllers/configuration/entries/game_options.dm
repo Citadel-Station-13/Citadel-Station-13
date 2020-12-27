@@ -579,3 +579,7 @@
 	max_val = 255
 	min_val = 0
 	integer = TRUE
+
+/// Dirtyness multiplier for making turfs dirty
+/datum/config_entry/number/turf_dirty_multiplier
+	config_entry_value = 1

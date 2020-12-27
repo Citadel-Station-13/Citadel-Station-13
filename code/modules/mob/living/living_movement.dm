@@ -114,12 +114,14 @@
 	var/area/A = T.loc
 	if(!A.dirt_buildup_allowed)
 		return
+	var/multiplier = CONFIG_GET(number/turf_dirty_multiplier)
+	strength *= multiplier
 	var/obj/effect/decal/cleanable/dirt/D = locate() in T
 	if(D)
 		D.dirty(strength)
 	else
 		T.dirtyness += strength
-		if(T.dirtyness >= isnull(T.dirt_spawn_threshold)? CONFIG_GET(number/turf_dirt_threshold) : T.dirt_spawn_threshold)
+		if(T.dirtyness >= (isnull(T.dirt_spawn_threshold)? CONFIG_GET(number/turf_dirt_threshold) : T.dirt_spawn_threshold))
 			D = new /obj/effect/decal/cleanable/dirt(T)
 			D.dirty(T.dirt_spawn_threshold - T.dirtyness)
 			T.dirtyness = 0		// reset.

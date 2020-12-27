@@ -34,13 +34,19 @@
 		var/sz = SSmapping.z_to_station_z_index[z]
 		z_lookup[num2text(sz)] = z
 	for(var/z in data)
+		to_chat(world, "DEBUG: looking at z [z]")
 		var/actual_z = z_lookup[z]
+		to_chat(world, "DEBUG: actual z [actual_z]")
 		var/list/L1 = data[z]
 		for(var/x in L1)
+			to_chat(world, "DEBUG: looking at x [x]")
 			var/list/L2 = data[z][x]
 			for(var/y in L2)
+				to_chat(world, "DEBUG: looking at y [y]")
 				var/turf/tile = locate(x, y, actual_z)
+				to_chat(world, "DEBUG: finding turf [x] [y] [z]: [tile]")
 				if(!tile)
+					to_chat(world, "DEBUG: aborting due to no turf")
 					continue
 				var/list/objects = data[z][x][y]
 				for(var/_L in objects)
@@ -48,13 +54,15 @@
 					var/path
 					if(islist(_L))
 						objdata = _L
-						path = objdata["__PATH__"]
+						path = text2path(objdata["__PATH__"])
 					else
-						path = _L
+						path = text2path(_L)
 						objdata = objects[_L]
-					if(!IsValidDebrisLocation(tile, allowed_turf_typecache, allowed_z_cache, path, TRUE))
-						continue
 					if(!path)
+						to_chat(world, "DEBUG: Aborting: No path")
+						continue
+					if(!IsValidDebrisLocation(tile, allowed_turf_typecache, allowed_z_cache, path, TRUE))
+						to_chat(world, "DEBUG: Aborting: Invalid location")
 						continue
 					var/obj/effect/decal/cleanable/instantiated = new path(tile)
 					if(objdata)
@@ -81,9 +89,9 @@
 			continue
 		if(stored_by_type[path] > type_max)
 			continue
-		var/text_z = num2text(saving.z)
+		var/text_z = num2text(z_lookup[num2text(saving.z)])
 		var/text_y = num2text(saving.y)
-		var/text_x = num2text(z_lookup[num2text(saving.x)])
+		var/text_x = num2text(saving.x)
 		LAZYINITLIST(data[text_z])
 		LAZYINITLIST(data[text_z][text_x])
 		LAZYINITLIST(data[text_z][text_x][text_y])
