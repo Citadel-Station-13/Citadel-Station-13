@@ -107,7 +107,7 @@
 /**
  * Attempts to make the floor dirty.
  */
-/mob/living/proc/dirt_buildup(strength)
+/mob/living/proc/dirt_buildup(strength =)
 	var/turf/open/T = loc
 	if(!istype(T) || !T.dirt_buildup_allowed)
 		return
@@ -119,7 +119,7 @@
 		D.dirty(strength)
 	else
 		T.dirtyness += strength
-		if(T.dirtyness >= T.dirt_spawn_threshold)
+		if(T.dirtyness >= isnull(T.dirt_spawn_threshold)? CONFIG_GET(number/turf_dirt_threshold) : T.dirt_spawn_threshold)
 			D = new /obj/effect/decal/cleanable/dirt(T)
 			D.dirty(T.dirt_spawn_threshold - T.dirtyness)
 			T.dirtyness = 0		// reset.

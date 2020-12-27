@@ -65,7 +65,11 @@
 	mergeable_decal = TRUE
 	persistent = TRUE
 
-/obj/effect/decal/cleanable/dirt/proc/dirty(strength)
+/obj/effect/decal/cleanable/dirt/Initialize(mapload)
+	. = ..()
+	alpha = CONFIG_GET(number/dirt_alpha_starting)
+
+/obj/effect/decal/cleanable/dirt/proc/dirty(strength = 1)
 	if(alpha < 255)
 		alpha += strength
 		if(alpha > 255)
