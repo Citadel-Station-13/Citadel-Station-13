@@ -86,7 +86,7 @@
 		LAZYINITLIST(data[text_z])
 		LAZYINITLIST(data[text_z][text_x])
 		LAZYINITLIST(data[text_z][text_x][text_y])
-		if(storing.persistence_allow_stacking)
+		if(saving.persistence_allow_stacking)
 			serializing["__PATH__"] = path
 			data[text_z][text_x][text_y] += serializing
 		else
