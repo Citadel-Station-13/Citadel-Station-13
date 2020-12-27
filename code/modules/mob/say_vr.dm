@@ -156,7 +156,7 @@ proc/get_top_level_mob(var/mob/S)
 		if(get_dist(T, user) > 7)
 			continue		// nah
 		processing |= T
-		for(var/mob/M in range(T, 1))
+		for(var/mob/living/M in range(T, 1))		// no ghosts/cameramobs
 			show_to |= M
 		var/obj/structure/table/other
 		other = locate() in get_step(T, NORTH)
