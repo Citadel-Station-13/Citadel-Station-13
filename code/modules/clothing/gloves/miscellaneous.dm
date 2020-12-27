@@ -161,6 +161,68 @@
 
 	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
+/obj/item/clothing/gloves/fingerless/ablative
+	name = "ablative armwraps"
+	desc = "Armwraps made out of a highly durable, reflective metal. Has the side effect of absorbing shocks."
+	siemens_coefficient = 0
+	icon_state = "ablative_armwraps"
+	item_state = "ablative_armwraps"
+	block_parry_data = /datum/block_parry_data/ablative_armwraps
+	var/wornonce = FALSE
+
+/obj/item/clothing/gloves/fingerless/ablative/proc/get_component_parry_data(datum/source, parrying_method, datum/parrying_item_mob_or_art, list/backup_items, list/override)
+	if(parrying_method && !(parrying_method == ITEM_PARRY))
+		return
+	override[src] = ITEM_PARRY
+
+/obj/item/clothing/gloves/fingerless/ablative/equipped(mob/user, slot)
+	. = ..()
+	if(current_equipped_slot == SLOT_GLOVES)
+		RegisterSignal(user, COMSIG_LIVING_ACTIVE_PARRY_START, .proc/get_component_parry_data)
+		wornonce = TRUE
+
+/obj/item/clothing/gloves/fingerless/ablative/dropped(mob/user)
+	. = ..()
+	if(wornonce)
+		UnregisterSignal(user, COMSIG_LIVING_ACTIVE_PARRY_START)
+		wornonce = FALSE
+
+/obj/item/clothing/goves/fingerless/ablative/can_active_parry(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return FALSE
+	return src == H.gloves
+
+/datum/block_parry_data/ablative_armwraps
+	parry_stamina_cost = 4
+	parry_attack_types = ATTACK_TYPE_UNARMED | ATTACK_TYPE_PROJECTILE | ATTACK_TYPE_TACKLE | ATTACK_TYPE_THROWN | ATTACK_TYPE_MELEE
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK
+
+	parry_time_windup = 0
+	parry_time_spindown = 0
+	parry_time_active = 7.5
+
+	parry_time_perfect = 1
+	parry_time_perfect_leeway = 7.5
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_perfect = 100
+	parry_time_perfect_leeway_override = list(
+		TEXT_ATTACK_TYPE_MELEE = 1
+	)
+
+	parry_efficiency_considered_successful = 0.01
+	parry_efficiency_to_counterattack = INFINITY	// no auto counter
+	parry_max_attacks = INFINITY
+	parry_failed_cooldown_duration =  1.5 SECONDS
+	parry_failed_stagger_duration = 0
+	parry_cooldown = 0
+	parry_failed_clickcd_duration = 0
+
+	perfect_parry_block_return_flags = BLOCK_SHOULD_REDIRECT | BLOCK_SUCCESS
+	perfect_parry_block_return_list = list(
+		BLOCK_RETURN_REDIRECT_METHOD = REDIRECT_METHOD_RETURN_TO_SENDER
+	)
+
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."
