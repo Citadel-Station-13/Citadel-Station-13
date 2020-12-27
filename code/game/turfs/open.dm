@@ -1,5 +1,12 @@
 /turf/open
 	plane = FLOOR_PLANE
+	/// Does dirt buildup happen on us?
+	var/dirt_buildup_allowed = FALSE
+	/// Dirt level.
+	var/dirtyness = 0
+	/// Dirt level to spawn dirt.
+	var/dirt_spawn_threshold = 100
+	/// Slowdown applied to mobs on us.
 	var/slowdown = 0 //negative for faster, positive for slower
 
 	var/postdig_icon_change = FALSE

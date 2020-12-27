@@ -5,6 +5,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	baseturfs = /turf/open/floor/plating
+	dirt_buildup_allowed = TRUE
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

@@ -101,7 +101,28 @@
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
+	if(causes_dirt_buildup_on_floor && (movement_type & GROUND))
+		dirt_buildup()
 
+/**
+ * Attempts to make the floor dirty.
+ */
+/mob/living/proc/dirt_buildup(strength)
+	var/turf/T = loc
+	if(!istype(T) || !T.allow_dirt_buildup)
+		return
+	var/area/A = T.loc
+	if(!A.allow_dirt_buildup)
+		return
+	var/obj/effect/decal/cleanable/dirt/D = locate() in T
+	if(D)
+		D.dirty(strength)
+	else
+		T.dirtyness += strength
+		if(T.dirtyness >= T.dirt_spawn_threshold)
+			D = new /obj/effect/decal/cleanable/dirt(T)
+			D.dirty(T.dirt_spawn_threshold - T.dirtyness)
+			T.dirtyness = 0		// reset.
 
 /mob/living/Move_Pulled(atom/A)
 	. = ..()
