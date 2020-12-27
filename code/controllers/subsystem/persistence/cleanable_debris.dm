@@ -29,6 +29,11 @@
 		allowed_z_cache[num2text(z)] = TRUE
 	var/list/data = json_decode(file2text("[get_map_persistence_path()]/debris.json"))
 	var/list/z_lookup = list()
+	var/loaded = 0
+	var/list/loaded_by_type = list()
+	var/nopath = 0
+	var/badloc = 0
+	var/noturf = 0
 	/// reverse it
 	for(var/z in SSmapping.z_to_station_z_index)
 		var/sz = SSmapping.z_to_station_z_index[z]
@@ -41,6 +46,7 @@
 			for(var/y in L2)
 				var/turf/tile = locate(text2num(x), text2num(y), actual_z)
 				if(!tile)
+					noturf++
 					continue
 				var/list/objects = data[z][x][y]
 				for(var/_L in objects)
@@ -53,12 +59,29 @@
 						path = text2path(_L)
 						objdata = objects[_L]
 					if(!path)
+						nopath++
 						continue
 					if(!IsValidDebrisLocation(tile, allowed_turf_typecache, allowed_z_cache, path, TRUE))
+						badloc++
 						continue
 					var/obj/effect/decal/cleanable/instantiated = new path(tile)
+					loaded_by_type[path] += 1
+					loaded++
 					if(objdata)
 						instantiated.PersistenceLoad(objdata)
+	var/list/bytype = list()
+	for(var/path in loaded_by_type)
+		bytype += "[path] - [loaded_by_type[path]]"
+	subsystem_log(
+	{"Debris loading completed:
+	Errors:
+	No path: [nopath]
+	Invalid location: [badloc]
+	No turf on map: [noturf]
+	Total loaded: [loaded]
+	By type:
+	[bytype.Join("\n")]"}
+	)
 
 /datum/controller/subsystem/persistence/proc/SaveMapDebris()
 	if(fexists("[get_map_persistence_path()]/debris.json"))
@@ -89,7 +112,7 @@
 		LAZYINITLIST(data[text_z][text_x][text_y])
 		if(saving.persistence_allow_stacking)
 			serializing["__PATH__"] = path
-			data[text_z][text_x][text_y] += serializing
+			data[text_z][text_x][text_y] += list(serializing)
 		else
 			data[text_z][text_x][text_y][path] = serializing
 		stored++

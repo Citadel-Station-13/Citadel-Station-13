@@ -33,13 +33,15 @@
 /obj/effect/decal/cleanable/blood/PersistenceSave(list/data)
 	. = ..()
 	data["color"] = color
-	return /obj/effect/decal/cleanable/blood/old
 
 /obj/effect/decal/cleanable/blood/PersistenceLoad(list/data)
 	. = ..()
 	if(data["color"])
 		fixed_color = TRUE
 		add_atom_colour(data["color"], FIXED_COLOUR_PRIORITY)
+	name = "dried blood"
+	desc = "Looks like it's been here a while. Eew"
+	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
