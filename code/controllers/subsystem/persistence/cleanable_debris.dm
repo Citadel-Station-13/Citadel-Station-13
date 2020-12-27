@@ -32,21 +32,16 @@
 	/// reverse it
 	for(var/z in SSmapping.z_to_station_z_index)
 		var/sz = SSmapping.z_to_station_z_index[z]
-		z_lookup[num2text(sz)] = z
+		z_lookup[num2text(sz)] = text2num(z)
 	for(var/z in data)
-		to_chat(world, "DEBUG: looking at z [z]")
 		var/actual_z = z_lookup[z]
-		to_chat(world, "DEBUG: actual z [actual_z]")
 		var/list/L1 = data[z]
 		for(var/x in L1)
-			to_chat(world, "DEBUG: looking at x [x]")
 			var/list/L2 = data[z][x]
 			for(var/y in L2)
-				to_chat(world, "DEBUG: looking at y [y]")
-				var/turf/tile = locate(x, y, actual_z)
-				to_chat(world, "DEBUG: finding turf [x] [y] [z]: [tile]")
+				var/turf/tile = locate(text2num(x), text2num(y), actual_z)
 				if(!tile)
-					to_chat(world, "DEBUG: aborting due to no turf")
+					to_chat(world, "DEBUG: aborting due to no turf ([x] [y] [actual_z])")
 					continue
 				var/list/objects = data[z][x][y]
 				for(var/_L in objects)
@@ -59,10 +54,10 @@
 						path = text2path(_L)
 						objdata = objects[_L]
 					if(!path)
-						to_chat(world, "DEBUG: Aborting: No path")
+						to_chat(world, "DEBUG: Aborting: No path ([x] [y] [actual_z])")
 						continue
 					if(!IsValidDebrisLocation(tile, allowed_turf_typecache, allowed_z_cache, path, TRUE))
-						to_chat(world, "DEBUG: Aborting: Invalid location")
+						to_chat(world, "DEBUG: Aborting: Invalid location ([x] [y] [actual_z])")
 						continue
 					var/obj/effect/decal/cleanable/instantiated = new path(tile)
 					if(objdata)

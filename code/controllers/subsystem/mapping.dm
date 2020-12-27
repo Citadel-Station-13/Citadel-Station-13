@@ -264,8 +264,12 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/setup_station_z_index()
 	z_to_station_z_index = list()
 	var/sz = 1
-	for(var/i in station_start to (station_start + islist(config.map_file)? (length(config.map_file) - 1) : 0))
-		z_to_station_z_index["[i]"] = sz++
+	var/cz = station_start
+	if(islist(config.map_file))
+		for(var/map in config.map_file)
+			z_to_station_z_index["[cz++]"] = sz++
+	else
+		z_to_station_z_index["[station_start]"] = 1
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
