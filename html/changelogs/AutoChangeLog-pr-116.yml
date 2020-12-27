@@ -1,7 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - rscadd: Added floor light deconstruction! attack the floor with your small light
-      fixture assembly!
-  - tweak: Makes so deconstructing floor lights use their own sprite, literally has
-      no mechanical change.
