@@ -39,27 +39,26 @@
 		for(var/x in L1)
 			var/list/L2 = data[z][x]
 			for(var/y in L2)
-				var/turf/tile = locate(x, y, z)
+				var/turf/tile = locate(x, y, actual_z)
 				if(!tile)
 					continue
 				var/list/objects = data[z][x][y]
 				for(var/_L in objects)
-					var/list/data
+					var/list/objdata
 					var/path
 					if(islist(_L))
-						data = _L
-						path = data["__PATH__"]
+						objdata = _L
+						path = objdata["__PATH__"]
 					else
 						path = _L
-						data = objects[_L]
+						objdata = objects[_L]
 					if(!IsValidDebrisLocation(tile, allowed_turf_typecache, allowed_z_cache, path, TRUE))
 						continue
-					var/path = data["__PATH__"]
 					if(!path)
 						continue
 					var/obj/effect/decal/cleanable/instantiated = new path(tile)
-					if(data)
-						instantiated.PersistenceLoad(data)
+					if(objdata)
+						instantiated.PersistenceLoad(objdata)
 
 /datum/controller/subsystem/persistence/proc/SaveMapDebris()
 	if(fexists("[get_map_persistence_path()]/debris.json"))
@@ -82,7 +81,7 @@
 			continue
 		var/text_z = num2text(saving.z)
 		var/text_y = num2text(saving.y)
-		var/text_x = num2text(saving.x)
+		var/text_x = num2text(z_lookup[num2text(saving.x)])
 		LAZYINITLIST(data[text_z])
 		LAZYINITLIST(data[text_z][text_x])
 		LAZYINITLIST(data[text_z][text_x][text_y])
