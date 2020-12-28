@@ -81,6 +81,9 @@
 							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc
 							P.disconnect()
 							P.update_icon()
+						if(istype(item_to_retrieve.loc, /obj/machinery/disposal) || istype(item_to_retrieve.loc, /obj/structure/disposalpipe))	//If it's in disposals, only recall the item.
+							break
+
 
 						item_to_retrieve = item_to_retrieve.loc
 
