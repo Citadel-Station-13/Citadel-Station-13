@@ -219,14 +219,9 @@
 	parry_efficiency_to_counterattack = INFINITY	// no auto counter
 	parry_max_attacks = INFINITY
 	parry_failed_cooldown_duration = 2.25 SECONDS
-	parry_failed_stagger_duration = 0
+	parry_failed_stagger_duration = 2.25 SECONDS
 	parry_cooldown = 0
 	parry_failed_clickcd_duration = 0
-
-	perfect_parry_block_return_flags = BLOCK_SHOULD_REDIRECT | BLOCK_SUCCESS
-	perfect_parry_block_return_list = list(
-		BLOCK_RETURN_REDIRECT_METHOD = REDIRECT_METHOD_RETURN_TO_SENDER
-	)
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
