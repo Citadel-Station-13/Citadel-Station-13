@@ -14,7 +14,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	block_parry_data = /datum/block_parry_data/unarmed/human
-  default_block_parry_data = /datum/block_parry_data/unarmed/human
+	default_block_parry_data = /datum/block_parry_data/unarmed/human
 	causes_dirt_buildup_on_floor = TRUE
 
 	//Hair colour and style
