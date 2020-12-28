@@ -6,6 +6,11 @@ SUBSYSTEM_DEF(persistence)
 	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 
+	/// Marks if the station got horribly destroyed
+	var/station_was_destroyed = FALSE
+	/// Marks if persistence save should be disabled
+	var/station_persistence_save_disabled = FALSE
+
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/spawned_objects = list()
@@ -37,45 +42,47 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	SaveServerPersistence()
+	if(station_persistence_save_disabled)
+		return
 	SaveGamePersistence()
 	var/map_persistence_path = get_map_persistence_path()
 	if(map_persistence_path)
 		SaveMapPersistence()
 
 /**
- * Loads persistent data relevant to the server: Configurations, past gamemodes, votes, etc
+ * Loads persistent data relevant to the server: Configurations, past gamemodes, votes, antag rep, etc
  */
 /datum/controller/subsystem/persistence/proc/LoadServerPersistence()
 	for(var/client/C in GLOB.clients)
 		LoadSavedVote(C.ckey)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
+	LoadRandomizedRecipes()
 
 /**
- * Saves persistent data relevant to the server: Configurations, past gamemodes, votes, etc
+ * Saves persistent data relevant to the server: Configurations, past gamemodes, votes, antag rep, etc
  */
 /datum/controller/subsystem/persistence/proc/SaveServerPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
+	SaveRandomizedRecipes()
 
 /**
- * Loads persistent data relevant to the game in general: Trophies, antag reputation, etc
+ * Loads persistent data relevant to the game in general: Photos, etc
  *
  * Legacy map persistence systems also use this.
  */
 /datum/controller/subsystem/persistence/proc/LoadGamePersistence()
 	LoadChiselMessages()
 	LoadPhotoPersistence()
-	LoadRandomizedRecipes()
 	LoadPaintings()
 
 /**
- * Saves persistent data relevant to the game in general: Trophies, antag reputation, etc
+ * Saves persistent data relevant to the game in general: Photos, etc
  *
  * Legacy map persistence systems also use this.
  */
 /datum/controller/subsystem/persistence/proc/SaveGamePersistence()
-	SaveRandomizedRecipes()
 	CollectChiselMessages()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	SavePaintings()

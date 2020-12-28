@@ -86,7 +86,7 @@
 /datum/controller/subsystem/persistence/proc/SaveMapDebris()
 	if(fexists("[get_map_persistence_path()]/debris.json"))
 		fdel("[get_map_persistence_path()]/debris.json")
-	if(CONFIG_GET(flag/persistent_debris_wipe_on_nuke) && SSticker?.mode?.station_was_nuked)
+	if(CONFIG_GET(flag/persistent_debris_wipe_on_nuke) && station_was_destroyed)
 		return		// local janitor cheers on nukeop team to save some work
 	var/list/data = list()
 	var/list/z_lookup = SSmapping.z_to_station_z_index
