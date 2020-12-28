@@ -89,6 +89,11 @@
 		to_chat(user, "<span class='warning'>You can't tackle while tased!</span>")
 		return
 
+	var/left_paralysis = HAS_TRAIT(user, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(user, TRAIT_PARALYSIS_R_ARM)
+	if(left_paralysis && right_paralysis)
+		to_chat(user, "<span class='warning'>You can't tackle without the use of your arms!</span>")
+
 	user.face_atom(A)
 
 	var/list/modifiers = params2list(params)
@@ -283,6 +288,10 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
+	var/left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
+	if(left_paralysis || right_paralysis)
+		attack_mod -= 2
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker
