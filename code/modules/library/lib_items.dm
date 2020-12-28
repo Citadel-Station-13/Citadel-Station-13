@@ -159,7 +159,7 @@
 	new /obj/item/book/manual/wiki/medical_cloning(src)
 	new /obj/item/book/manual/wiki/cit/chemistry(src)
 	new /obj/item/book/manual/wiki/cit/organ_guide(src)
-	new /obj/item/book/manual/wiki/medicine(src)
+	new /obj/item/book/manual/wiki/cit/medicine(src)
 	new /obj/item/book/manual/wiki/surgery(src)
 	new /obj/item/book/manual/wiki/grenades(src)
 	update_icon()
