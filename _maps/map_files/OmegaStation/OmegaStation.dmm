@@ -33576,10 +33576,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbq" = (

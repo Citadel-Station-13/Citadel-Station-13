@@ -264,6 +264,7 @@
 							data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
 							data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
 							data["occupant"]["blood"]["bloodType"] = C.dna.blood_type
+					data["occupant"]["heartrate"] = rand(60,90) //TODO: add functionality later
 
 
 				//Liver

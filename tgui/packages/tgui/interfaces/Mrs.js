@@ -1,9 +1,10 @@
 import { useBackend } from '../backend';
 import { round, toFixed } from 'common/math';
-import { Box, Section, LabeledList, Button, ProgressBar, Flex } from '../components';
+import { Box, Section, LabeledList, Button, ProgressBar, Flex, Table } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { FlexItem } from '../components/Flex';
+import { TableCell, TableRow } from '../components/Table';
 
 export const Mrs = (props, context) => {
   const { act, data } = useBackend(context);
@@ -78,9 +79,9 @@ export const Mrs = (props, context) => {
               {organs.map(organ => (
                 <LabeledList.Item
                   key={organ.name}
-                  label={organ.name}>
+                  label={organ.name}
+                  width='20%'>
                   Damage:
-
                   <ProgressBar
                     title={'Health'}
                     value={organ.damage}
@@ -108,31 +109,37 @@ export const Mrs = (props, context) => {
                   )}
 
                   {organ.slot === "HEART" && (
-                    <Flex
-                      height="100%"
-                      width="100%"
-                      direction="row">
-
-                      <Flex.Item grow={1}>
-                        Blood volume:
-                      </Flex.Item>
-                      <Flex.Item grow={2}>
-                        <ProgressBar
-                          minValue={0}
-                          maxValue={data.occupant.blood.maxBloodVolume}
-                          value={round(data.occupant.blood.currentBloodVolume)}
-                          ranges={{
-                            good: [data.occupant.blood.dangerBloodVolume,
-                              Infinity],
-                            average: [(data.occupant.blood.maxBloodVolume / 2),
-                              data.occupant.blood.dangerBloodVolume],
-                            bad: [-Infinity,
-                              (data.occupant.blood.maxBloodVolume / 2)],
-                          }}>
-                          {round(data.occupant.blood.currentBloodVolume)} cl
-                        </ProgressBar>
-                      </Flex.Item>
-                    </Flex>
+                    <Table>
+                      <Table.Row>
+                        <Table.Cell grow={1} width='30' collapsing={true}>
+                          Blood volume:
+                        </Table.Cell>
+                        <Table.Cell grow={2} width='70%'>
+                          <ProgressBar
+                            minValue={0}
+                            maxValue={data.occupant.blood.maxBloodVolume}
+                            value={round(data.occupant.blood.currentBloodVolume)}
+                            ranges={{
+                              good: [data.occupant.blood.dangerBloodVolume,
+                                Infinity],
+                              average: [(data.occupant.blood.maxBloodVolume / 2),
+                                data.occupant.blood.dangerBloodVolume],
+                              bad: [-Infinity,
+                                (data.occupant.blood.maxBloodVolume / 2)],
+                            }}>
+                            {round(data.occupant.blood.currentBloodVolume)} cl
+                          </ProgressBar>
+                        </Table.Cell>
+                      </Table.Row>
+                      <Table.Row>
+                        <Table.Cell grow={1} width='30'>
+                          Heart rate:
+                        </Table.Cell>
+                        <Table.Cell grow={2} textAlign='center'>
+                          {70}{/*data.occupant.heartrate*/}
+                        </Table.Cell>
+                      </Table.Row>
+                    </Table>
                   )}
 
                   {organ.name === "LIVER" && (
