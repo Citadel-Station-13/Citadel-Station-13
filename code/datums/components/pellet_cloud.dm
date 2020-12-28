@@ -55,7 +55,7 @@
 	var/mob/living/shooter
 
 /datum/component/pellet_cloud/Initialize(projectile_type=/obj/item/shrapnel, magnitude=5)
-	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent))
+	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent) && !issupplypod(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(magnitude < 1)
@@ -66,7 +66,7 @@
 
 	if(isammocasing(parent))
 		num_pellets = magnitude
-	else if(isgrenade(parent) || islandmine(parent))
+	else if(isgrenade(parent) || islandmine(parent) || issupplypod(parent))
 		radius = magnitude
 
 /datum/component/pellet_cloud/Destroy(force, silent)
@@ -86,9 +86,11 @@
 		RegisterSignal(parent, COMSIG_GRENADE_PRIME, .proc/create_blast_pellets)
 	else if(islandmine(parent))
 		RegisterSignal(parent, COMSIG_MINE_TRIGGERED, .proc/create_blast_pellets)
+	else if(issupplypod(parent))
+		RegisterSignal(parent, COMSIG_SUPPLYPOD_LANDED, .proc/create_blast_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED, COMSIG_SUPPLYPOD_LANDED))
 
 /**
   * create_casing_pellets() is for directed pellet clouds for ammo casings that have multiple pellets (buckshot and scatter lasers for instance)

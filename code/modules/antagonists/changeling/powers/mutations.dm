@@ -679,25 +679,26 @@
 	item_state = "ling_gauntlets"
 	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching people, not so much for firearms."
 	transfer_prints = TRUE
+	item_flags = DROPDEL // whoops
 	body_parts_covered = ARMS|HANDS
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
-	enhancement = 9 // first, do harm. all of it. all of the harm. just fuck em up.
-	wound_enhancement = 9
-	var/fast_enhancement = 9
-	var/fast_wound_enhancement = 9
-	var/slow_enhancement = 20
-	var/slow_wound_enhancement = 20
+	enhancement = 6 // first, do harm. all of it. all of the harm. just fuck em up.
+	wound_enhancement = 6
+	var/fast_enhancement = 6
+	var/fast_wound_enhancement = 6
+	var/slow_enhancement = 12
+	var/slow_wound_enhancement = 15
 	silent = TRUE
-	inherited_trait = TRAIT_CHUNKYFINGERS // dummy thicc bone hands
-	secondary_trait = TRAIT_MAULER // its only violence from here, bucko
+	inherited_trait = TRAIT_CHUNKYFINGERS // how do you expect to shoot anyone with bone covered hands
+	secondary_trait = TRAIT_MAULER // just punch them idiot
 	var/fasthands = TRUE
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/examine(mob/user)
 	. = ..()
-	. += "[src] are formed to allow for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
+	. += "[src] are shaped for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
 	. += "Alt-click them to change between rapid strikes and strong blows."
 
 /obj/item/clothing/gloves/fingerless/pugilist/cling/AltClick(mob/user)

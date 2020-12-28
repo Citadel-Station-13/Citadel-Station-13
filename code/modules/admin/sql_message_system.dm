@@ -298,7 +298,9 @@
 		browse_messages(target_ckey = ckey(target_key), agegate = TRUE)
 	qdel(query_find_message_secret)
 
-/proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE)
+/proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE, override = FALSE)
+	if((!override || IsAdminAdvancedProcCall()) && !check_rights(R_SENSITIVE))
+		return
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return

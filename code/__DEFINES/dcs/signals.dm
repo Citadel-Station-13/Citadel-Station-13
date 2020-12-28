@@ -490,6 +490,17 @@
 #define COMPONENT_PROGRAM_INSTALLED		1					//Installation successful
 #define COMPONENT_PROGRAM_NOT_INSTALLED		2				//Installation failed, but there are still nanites
 #define COMSIG_NANITE_SYNC "nanite_sync"						//(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component
+/// Checks if a nanite component is able to be controlled by console
+#define COMSIG_NANITE_CHECK_CONSOLE_LOCK "is_console_locked"
+/// Checks if a nanite component is able to be interfaced with by a host with innate nanite control
+#define COMSIG_NANITE_CHECK_HOST_LOCK "is_host_locked"
+/// Checks if a nanite component is able to be overwritten by viral replica
+#define COMSIG_NANITE_CHECK_VIRAL_PREVENTION "is_virus_locked"
+	#define NANITE_CHANGES_LOCKED 1
+// Internal signals that programs register to and respond with to not require for loops
+#define COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK "naniteiconsolelocked"
+#define COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK "naniteihostlocked"
+#define COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK "naniteiviruslocked"
 
 // /datum/component/storage signals
 #define COMSIG_CONTAINS_STORAGE "is_storage"						//() - returns bool.

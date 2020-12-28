@@ -156,7 +156,7 @@
 
 /obj/item/reagent_containers/food/snacks/meatballsub
 	name = "meatball sub"
-	desc = "At some point, you need to be the cheif sub."
+	desc = "At some point, you need to be the chief sub."
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = "meatballsub"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)

@@ -204,3 +204,7 @@
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE
+
+/mob/camera/aiEye/emote(act, m_type=1, message = null, intentional = FALSE, forced = FALSE)
+	if(ai?.current)
+		..()

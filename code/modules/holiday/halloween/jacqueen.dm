@@ -50,6 +50,13 @@
 	var/cached_z
 	/// I'm busy, don't move.
 	var/busy = FALSE
+	var/static/blacklisted_items = typecacheof(list(
+	/obj/effect,
+	/obj/belly,
+	/obj/mafia_game_board,
+	/obj/docking_port,
+	/obj/shapeshift_holder,
+	/obj/screen))
 
 /mob/living/simple_animal/jacq/Initialize()
 	..()
@@ -112,7 +119,7 @@
 
 /mob/living/simple_animal/jacq/proc/jacqrunes(message, mob/living/carbon/C) //Displays speechtext over Jacq for the user only.
 	var/atom/hearer = C
-	var/list/spans = list("spooky") 
+	var/list/spans = list("spooky")
 	new /datum/chatmessage(message, src, hearer, spans)
 
 
@@ -228,10 +235,13 @@
 				return
 
 			var/new_obj = pick(subtypesof(/obj))
-			//for(var/item in blacklist)
-			//	if(new_obj == item)
-			//  	panic()
+			for(var/item in blacklisted_items)
+				if(is_type_in_typecache(new_obj, blacklisted_items))
+					new_obj = /obj/item/reagent_containers/food/snacks/special_candy
 			var/reward = new new_obj(C.loc)
+			if(new_obj == /obj/item/reagent_containers/food/snacks/special_candy)
+				new new_obj(C.loc)
+				new new_obj(C.loc) //Giving them back their candies in case it's something from the blacklist or if the game literally rolled candies. What rotten luck.
 			C.put_in_hands(reward)
 			visible_message("<b>[src]</b> waves her hands, magicking up a [reward] from thin air, <span class='spooky'>\"There ye are [gender], enjoy! \"</span>")
 			jacqrunes("There ye are [gender], enjoy!", C)

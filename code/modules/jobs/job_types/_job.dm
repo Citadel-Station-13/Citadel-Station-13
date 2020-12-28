@@ -73,6 +73,12 @@
 	/// Starting skill modifiers.
 	var/list/starting_modifiers
 
+	// These can be flags but I don't care because they're never changed
+	/// Can you always join as this job even while respawning (should probably only be on for assistant)
+	var/always_can_respawn_as = FALSE
+	/// Is this job considered a combat role for respawning? (usually sec/command)
+	var/considered_combat_role = FALSE
+
 /**
   * Checks if we should be created on a certain map
   */
@@ -118,6 +124,12 @@
 
 //Used for a special check of whether to allow a client to latejoin as this job.
 /datum/job/proc/special_check_latejoin(client/C)
+	var/joined = LAZYLEN(C.prefs?.characters_joined_as)
+	if(C.prefs?.respawn_restrictions_active && (joined || CONFIG_GET(flag/respawn_penalty_includes_observe)))
+		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && !always_can_respawn_as)
+			return FALSE
+		if(!CONFIG_GET(flag/allow_combat_role_respawn) && considered_combat_role)
+			return FALSE
 	return TRUE
 
 /datum/job/proc/GetAntagRep()

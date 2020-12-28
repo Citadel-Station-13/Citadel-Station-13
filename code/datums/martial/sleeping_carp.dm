@@ -134,6 +134,28 @@
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
 
+/datum/block_parry_data/sleeping_carp
+	parry_time_windup = 0
+	parry_time_active = 25
+	parry_time_spindown = 0
+	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
+	parry_time_windup_visual_override = 1
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 12
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		//can attack while
+	parry_time_perfect = 2.5		// first ds isn't perfect
+	parry_time_perfect_leeway = 1.5
+	parry_imperfect_falloff_percent = 5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 65		// VERY generous
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 4 SECONDS
+	parry_cooldown = 0.5 SECONDS
+
+/mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
+	amount *= physiology? physiology.stamina_buffer_mod : 1
+	return ..()
+
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
 	if(!.)
@@ -144,12 +166,12 @@
 	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
-	H.physiology.stamina_mod *= 0.5 //You take less stamina damage overall, but you do not reduce the damage from stun batons
+	H.physiology.stamina_mod *= 0.4 //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
 	H.physiology.stun_mod *= 0.3 //for those rare stuns
 	H.physiology.pressure_mod *= 0.3 //go hang out with carp
 	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they do stack however
 	H.physiology.heat_mod *= 2 //this is mostly so sleeping carp has a viable weakness. Cooking them alive. Setting them on fire and heating them will be their biggest weakness. The reason for this is....filet jokes.
-
+	H.physiology.stamina_buffer_mod *= 0.75 //to help with some stamina
 	H.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
@@ -165,7 +187,7 @@
 	H.physiology.pressure_mod = initial(H.physiology.pressure_mod) //no more carpies
 	H.physiology.cold_mod = initial(H.physiology.cold_mod)
 	H.physiology.heat_mod = initial(H.physiology.heat_mod)
-
+	H.physiology.stamina_buffer_mod = initial(H.physiology.stamina_buffer_mod)
 	H.faction -= "carp" //:(
 
 /mob/living/carbon/human/proc/sleeping_carp_help()

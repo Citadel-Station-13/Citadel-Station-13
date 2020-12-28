@@ -1,0 +1,5 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - bugfix: "ninja gloves no longer hardstun"
+  - balance: "ninja gloves now cost half as much to use to compensate"

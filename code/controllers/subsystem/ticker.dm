@@ -371,6 +371,11 @@ SUBSYSTEM_DEF(ticker)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
 			player.create_character(FALSE)
+			if(player.new_character && player.client && player.client.prefs) // we cannot afford a runtime, ever
+				LAZYOR(player.client.prefs.slots_joined_as, player.client.prefs.default_slot)
+				LAZYOR(player.client.prefs.characters_joined_as, player.new_character.real_name)
+			else
+				stack_trace("WARNING: Either a player did not have a new_character, did not have a client, or did not have preferences. This is VERY bad.")
 		else
 			player.new_player_panel()
 		CHECK_TICK
@@ -482,18 +487,7 @@ SUBSYSTEM_DEF(ticker)
 		INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 	else
 		var/vote_type = CONFIG_GET(string/map_vote_type)
-		switch(vote_type)
-			if("PLURALITY")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
-			if("APPROVAL")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = APPROVAL_VOTING)
-			if("IRV")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = INSTANT_RUNOFF_VOTING)
-			if("SCORE")
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = MAJORITY_JUDGEMENT_VOTING)
-			else
-				SSvote.initiate_vote("map","server", display = SHOW_RESULTS)
-		// fallback
+		SSvote.initiate_vote("map","server", display = SHOW_RESULTS, votesystem = vote_type)
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING

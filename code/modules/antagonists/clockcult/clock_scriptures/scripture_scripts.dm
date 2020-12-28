@@ -393,45 +393,49 @@
 	<b>Left-click a target to fire, quickly!</b></span>"
 	timeout_time = 20
 
-/datum/clockwork_scripture/channeled/void_volt
-	descname = "Channeled, Power Drain"
+/datum/clockwork_scripture/void_volt
+	descname = "Pulse, Power Drain"
 	name = "Void Volt"
-	desc = "A channeled spell that quickly drains any powercells in a radius of eight tiles, but burns the invoker. \
-	Can be channeled with more cultists to increase range and split the caused damage evenly over all invokers. \
+	desc = "A spell that releases a pulse which drains the power of anything in a radius of eight tiles, but burns the invoker. \
+	Can be used with more servants to increase range and split the caused damage evenly among all invokers. \
 	Also charges clockwork power by a small percentage of the drained power amount, which can help offset this scriptures powercost."
-	invocations = list("Channel their energy through my body... ", "... so it may fuel Engine!")
-	chant_invocations = list("Make their lights fall dark!", "They shall be powerless!", "Rob them of their power!")
-	chant_amount = 20
-	chant_interval = 10 //100KW drain per pulse for guns / APCs / 1MW for other cells = 10 chants / 100ds / 10s to drain a charged weapon or a baton with a nonupgraded cell
-	channel_time = 50
-	power_cost = 300
+	invocations = list("Take the energy...", "...of their inventions...", "...and grant it to Engine...",  "...for they already live in utter darkness!")
+	channel_time = 130 //You need alot of time, but it pays off. - ten times as powerful as a regular drain (done by transmission sigils) and recurses + affects weapons - incredibly useful if you can pull this off before a big fight.
+	power_cost = 500 //Relatively medium powercost, but can be offset due to it adding a part of drained power to the power pool.
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
-	usage_tip = "It may be useful to end channelling early if the burning becomes too much to handle.."
+	usage_tip = "Be sure to not be injured when using this, or the power channeled through you may overwhelm your body."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 11
 	quickbind = TRUE
-	quickbind_desc = "Quickly drains power in an area around the invoker, causing burns proportional to the amount of energy drained.<br><b>Maximum of 20 chants.</b>"
+	quickbind_desc = "Quickly drains power in an area around the invoker, causing burns proportional to the amount of energy drained."
 
-/datum/clockwork_scripture/channeled/void_volt/scripture_effects()
+/datum/clockwork_scripture/void_volt/chant()
 	invoker.visible_message("<span class='warning'>[invoker] glows in a brilliant golden light!</span>")
 	invoker.add_atom_colour("#FFD700", ADMIN_COLOUR_PRIORITY)
 	invoker.light_power = 2
 	invoker.light_range = 4
 	invoker.light_color = LIGHT_COLOR_FIRE
 	invoker.update_light()
-	return ..()
+	addtimer(CALLBACK(invoker, /mob.proc/stop_void_volt_glow), channel_time)
+	..()//Do the timer & Chant
 
+/mob/proc/stop_void_volt_glow() //Needed so the scripture being qdel()d doesn't prevent it.
+	visible_message("<span class='warning'>[src] stops glowing...</span>")
+	remove_atom_colour(ADMIN_COLOUR_PRIORITY)
+	light_power = 0
+	light_range = 0
+	update_light()
 
-/datum/clockwork_scripture/channeled/void_volt/chant_effects(chant_number)
+/datum/clockwork_scripture/void_volt/scripture_effects()
 	var/power_drained = 0
 	var/power_mod = 0.005 //Amount of power drained (generally) is multiplied with this, and subsequently dealt in damage to the invoker, then 15 times that is added to the clockwork cult's power reserves.
-	var/drain_range = 8
+	var/drain_range = 12
 	var/additional_chanters = 0
 	var/list/chanters = list()
 	chanters += invoker
-	for(var/mob/living/L in range(1, invoker))
+	for(var/mob/living/L in orange(1, invoker))
 		if(!L.stat && is_servant_of_ratvar(L))
 			additional_chanters++
 			chanters += L
@@ -440,22 +444,14 @@
 		var/turf/T = t
 		for(var/M in T)
 			var/atom/movable/A = M
-			power_drained += A.power_drain(TRUE, TRUE) //Yes, this absolutely does drain weaponry. 10 pulses to drain guns / batons, though of course they can just be recharged.
+			power_drained += A.power_drain(TRUE, TRUE, TRUE, MIN_CLOCKCULT_POWER * 10) //Yes, this absolutely does drain weaponry, aswell as recurse through objects. No more hiding in lockers / mechs to avoid it.
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(invoker.loc, 1 + (power_drained * power_mod))
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(round(1 + (power_drained * power_mod), 1), 0, get_turf(invoker))
 	S.start()
 	adjust_clockwork_power(power_drained * power_mod * 15)
 	for(var/mob/living/L in chanters)
-		L.adjustFireLoss(round(clamp(power_drained * power_mod / (1 + additional_chanters), 0, 20), 0.1)) //No you won't just immediately melt if you do this in a very power-rich area
+		L.adjustFireLoss(round(clamp(power_drained * power_mod / (1 + additional_chanters), 0, 70), 0.1)) //No you won't just immediately melt if you do this in a very power-rich area, but it'll be close.
 
 
 	return TRUE
-
-/datum/clockwork_scripture/channeled/void_volt/chant_end_effects()
-	invoker.visible_message("<span class='warning'>[invoker] stops glowing...</span>")
-	invoker.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	invoker.light_power = 0
-	invoker.light_range = 0
-	invoker.update_light()
-	return ..()

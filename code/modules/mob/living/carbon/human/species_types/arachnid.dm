@@ -1,6 +1,6 @@
 /datum/species/arachnid
 	name = "Arachnid"
-	id = "arachnid"
+	id = SPECIES_ARACHNID
 	override_bp_icon = 'icons/mob/arachnid_parts.dmi'
 	say_mod = "chitters"
 	default_color = "00FF00"
@@ -59,10 +59,10 @@
 	SW?.Remove(H)
 
 /datum/action/innate/spin_web
-    name = "Spin Web"
-    check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
-    icon_icon = 'icons/mob/actions/actions_animal.dmi'
-    button_icon_state = "lay_web"
+	name = "Spin Web"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "lay_web"
 
 /datum/action/innate/spin_cocoon
 	name = "Spin Cocoon"
@@ -139,6 +139,18 @@
 		if(E.web_ready == FALSE)
 			to_chat(H, "<span class='warning'>You need to wait awhile to regenerate web fluid.</span>")
 			return
+		if(!H.Adjacent(A))	//No.
+			return
+		if(!isliving(A) && A.anchored)
+			to_chat(H, "<span class='warning'>[A] is bolted to the floor!</span>")
+			return
+		if(istype(A, /obj/structure/arachnid))
+			to_chat(H, "<span class='warning'>No double wrapping.</span>")
+			return
+		if(istype(A, /obj/effect))
+			to_chat(H, "<span class='warning'>You cannot wrap this.</span>")
+			return
+		H.visible_message("<span class='danger'>[H] starts to wrap [A] into a cocoon!</span>","<span class='warning'>You start to wrap [A] into a cocoon.</span>")
 		if(!do_after(H, 10 SECONDS, 1, A))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return

@@ -591,19 +591,21 @@
 /datum/chemical_reaction/fermi/zeolites
 	name = "Zeolites"
 	id = /datum/reagent/fermi/zeolites
-	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot!
+	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot! - But it's now somewhat dangerous, and needs a bit of gold to catalyze the reaction
 	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
+	required_catalysts = list(/datum/reagent/gold = 5)
 	//FermiChem vars:
-	OptimalTempMin 	= 300
-	OptimalTempMax 	= 900
-	ExplodeTemp 	= 1000 //check to see overflow doesn't happen!
-	OptimalpHMin 	= 4.0
-	OptimalpHMax 	= 6.0
-	ReactpHLim 		= 4
+	OptimalTempMin 	= 500
+	OptimalTempMax 	= 750
+	ExplodeTemp 	= 850
+	OptimalpHMin 	= 4.8
+	OptimalpHMax 	= 7
+	ReactpHLim 		= 5
 	//CatalystFact 	= 0
-	CurveSharpT 	= 4
-	CurveSharppH 	= 0
-	ThermicConstant = 0
-	HIonRelease 	= 0.01
-	RateUpLim 		= 15
+	CurveSharpT 	= 1.5
+	CurveSharppH 	= 3
+	ThermicConstant = 5
+	HIonRelease 	= -0.15
+	RateUpLim 		= 4
+	PurityMin 		= 0.5 //Good luck!
 	FermiChem 		= TRUE

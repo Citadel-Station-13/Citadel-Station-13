@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - tweak: "Meth and changeling adrenals no longer ignore all slowdowns, rather damage slowdowns."

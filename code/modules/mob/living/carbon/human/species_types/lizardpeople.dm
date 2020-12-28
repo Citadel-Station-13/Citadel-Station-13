@@ -28,7 +28,7 @@
 
 	tail_type = "tail_lizard"
 	wagging_type = "waggingtail_lizard"
-	species_category = "lizard"
+	species_category = SPECIES_CATEGORY_LIZARD
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -47,7 +47,7 @@
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_ASHWALKER
-	limbs_id = "lizard"
+	limbs_id = SPECIES_LIZARD
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS)
 	mutantlungs = /obj/item/organ/lungs/ashwalker

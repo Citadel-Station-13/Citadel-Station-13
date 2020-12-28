@@ -16,9 +16,9 @@
 		return
 	var/dist = get_dist(user.loc,target.loc)
 	var/dir = get_dir(user.loc,target.loc)
-	
+
 	if(user.z != target.z)
-		to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
+		to_chat(user,"<span class='warning'>[target.real_name] is on another plane of existance!</span>")
 	else
 		switch(dist)
 			if(0 to 15)
@@ -32,6 +32,34 @@
 
 	if(target.stat == DEAD)
 		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
+
+/datum/action/innate/heretic_shatter
+	name = "Shattering Offer"
+	desc = "By breaking your blade, you will be granted salvation from a dire situation. (Teleports you to a random safe turf on your current z level, but destroys your blade.)"
+	background_icon_state = "bg_ecult"
+	button_icon_state = "shatter"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	check_flags = MOBILITY_HOLD|MOBILITY_MOVE|MOBILITY_USE
+	var/mob/living/carbon/human/holder
+	var/obj/item/melee/sickly_blade/sword
+
+/datum/action/innate/heretic_shatter/Grant(mob/user, obj/object)
+	sword = object
+	holder = user
+	//i know what im doing
+	return ..()
+
+/datum/action/innate/heretic_shatter/IsAvailable()
+	if(IS_HERETIC(holder) || IS_HERETIC_MONSTER(holder))
+		return TRUE
+	else
+		return FALSE
+
+/datum/action/innate/heretic_shatter/Activate()
+	var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
+	do_teleport(holder,safe_turf,forceMove = TRUE)
+	to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
+	qdel(sword)
 
 /obj/item/melee/sickly_blade
 	name = "eldritch blade"
@@ -50,14 +78,27 @@
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "tore", "lacerated", "ripped", "diced", "rended")
+	var/datum/action/innate/heretic_shatter/linked_action
+
+/obj/item/melee/sickly_blade/Initialize()
+	. = ..()
+	linked_action = new(src)
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	if(!IS_HERETIC(user))
+	if(!(IS_HERETIC(user) || !IS_HERETIC_MONSTER(user)))
 		to_chat(user,"<span class='danger'>You feel a pulse of some alien intellect lash out at your mind!</span>")
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return FALSE
 	return ..()
+
+/obj/item/melee/sickly_blade/pickup(mob/user)
+	. = ..()
+	linked_action.Grant(user, src)
+
+/obj/item/melee/sickly_blade/dropped(mob/user, silent)
+	. = ..()
+	linked_action.Remove(user, src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -103,7 +144,7 @@
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && user.mind && slot == SLOT_NECK && IS_HERETIC(user))
+	if(ishuman(user) && user.mind && slot == SLOT_NECK && (IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
 		ADD_TRAIT(user, trait, CLOTHING_TRAIT)
 		user.update_sight()
 
@@ -136,6 +177,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// slightly better than normal cult robes
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50,"energy" = 50, "bomb" = 35, "bio" = 20, "rad" = 0, "fire" = 20, "acid" = 20)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/reagent_containers/glass/beaker/eldritch
 	name = "flask of eldritch essence"

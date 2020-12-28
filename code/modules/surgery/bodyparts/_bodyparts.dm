@@ -639,7 +639,11 @@
 
 		//body marking memes
 		var/list/colorlist = list()
+		//var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
 		colorlist.Cut()
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_secondary"]]00") : ReadRGB("[H.dna.features["mcolor2"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_tertiary"]]00") : ReadRGB("[H.dna.features["mcolor3"]]00")
 		colorlist += ReadRGB("[H.dna.features["mcolor"]]00")
 		colorlist += ReadRGB("[H.dna.features["mcolor2"]]00")
 		colorlist += ReadRGB("[H.dna.features["mcolor3"]]00")
@@ -695,6 +699,8 @@
 		else
 			if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
 				base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+			else
+				base_bp_icon = DEFAULT_BODYPART_ICON
 
 		if(base_bp_icon != DEFAULT_BODYPART_ICON)
 			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)

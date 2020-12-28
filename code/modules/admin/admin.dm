@@ -679,8 +679,8 @@
 	set category = "Server"
 	set desc="Respawn basically"
 	set name="Toggle Respawn"
-	var/new_nores = !CONFIG_GET(flag/norespawn)
-	CONFIG_SET(flag/norespawn, new_nores)
+	var/new_nores = CONFIG_GET(flag/respawns_enabled)
+	CONFIG_SET(flag/respawns_enabled, !new_nores)
 	if (!new_nores)
 		to_chat(world, "<B>You may now respawn.</B>", confidential = TRUE)
 	else
@@ -783,7 +783,8 @@
 	if(ispath(chosen, /turf))
 		T.ChangeTurf(chosen)
 	else
-		var/obj/structure/closet/supplypod/centcompod/pod = new()
+		var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+		var/obj/structure/closet/supplypod/centcompod/pod = new(pick(get_area_turfs(pod_storage_area))) //Lets just have it in the pod bay for a moment instead of runtiming
 		var/atom/A = new chosen(pod)
 		A.flags_1 |= ADMIN_SPAWNED_1
 		new /obj/effect/pod_landingzone(T, pod)

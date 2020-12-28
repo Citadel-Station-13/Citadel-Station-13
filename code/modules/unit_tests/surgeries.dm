@@ -41,6 +41,8 @@
 	TEST_ASSERT(surgery_for_zero.step_in_progress, "Surgery on patient zero was not initiated")
 
 	var/datum/surgery/organ_manipulation/surgery_for_one = new
+	
+	sleep(0.2) // if we don't have this, then the next surgery step can start *before* the previous one does, which is no good
 
 	// Without waiting for the incision to complete, try to start a new surgery
 	TEST_ASSERT(!surgery_step.initiate(user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one), "Was allowed to start a second surgery without the rod of asclepius")

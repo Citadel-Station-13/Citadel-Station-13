@@ -101,6 +101,8 @@
 	name = "Polychromic winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/polychromic
 	cost = 4 //too many people with neon green coats is hard on the eyes
+	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#6A6964", "#C4B8A6", "#0000FF")
 
 /datum/gear/suit/coat/med
 	name = "Medical winter coat"

@@ -80,6 +80,7 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
+	var/obj/effect/proc_holder/silicon/cyborg/vtecControl/VC
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -91,12 +92,14 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 
 		//R.speed = -2 // Gotta go fast.
         //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
-		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
+		VC = new /obj/effect/proc_holder/silicon/cyborg/vtecControl
+		R.AddAbility(VC)
 		R.cansprint = 0
 
 /obj/item/borg/upgrade/vtec/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
+		R.RemoveAbility(VC)
 		R.speed = initial(R.speed)
 		R.cansprint = 1
 
