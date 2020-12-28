@@ -736,9 +736,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			belly_prefs = json_from_file["belly_prefs"]
 
 	//gear loadout
-	loadout_data = safe_json_decode(S["loadout"])
+	if(S["loadout"])
+		loadout_data = safe_json_decode(S["loadout"])
+	else
+		loadout_data = list()
 
-	unlockable_loadout_data = safe_json_decode(S["unlockable_loadout"])
+	if(S["unlockable_loadout"])
+		unlockable_loadout_data = safe_json_decode(S["unlockable_loadout"])
+	else
+		unlockable_loadout_data = list()
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
