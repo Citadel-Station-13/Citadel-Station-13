@@ -12,9 +12,7 @@
 		if(cold_one.required_temp < warm_one.required_temp)
 			//the range of temperatures does not overlap, so there is no conflict
 			return FALSE
-		if(cold_one.is_cold_recipe)//If it's a freezing recipe
-			if(cold_one.required_temp > warm_one.required_temp)
-				return FALSE
+
 
 	//find the reactions with the shorter and longer required_reagents list
 	var/datum/chemical_reaction/long_req

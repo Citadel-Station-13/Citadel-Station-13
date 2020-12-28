@@ -518,7 +518,7 @@
 
 /obj/item/book/manual/wiki/cit/medicine
 	name = "Medical Space Compendium, Volume 1242"
-	icon_state = "book8"
+	icon_state = "medicalbook"
 	author = "Medical Journal"
 	title = "Medical Space Compendium, Volume 1242"
 	page_link = "Guide_to_medicine"
