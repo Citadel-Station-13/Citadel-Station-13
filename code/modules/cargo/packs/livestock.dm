@@ -34,7 +34,7 @@
 
 /datum/supply_pack/critter/parrot/generate()
 	. = ..()
-	for(var/i in 2 to 6)
+	for(var/i in 1 to 5)
 		switch(rand(1, 23))
 			if(1)
 				new /mob/living/simple_animal/parrot(.)
