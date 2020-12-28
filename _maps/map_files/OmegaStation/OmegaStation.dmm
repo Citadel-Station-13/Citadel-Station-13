@@ -30181,6 +30181,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "aVT" = (
@@ -30439,12 +30440,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "aWm" = (
-/obj/structure/table,
-/obj/item/storage/box/gloves{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/beakers,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
@@ -30455,6 +30450,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/MRS,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aWn" = (
@@ -31400,6 +31396,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXU" = (
@@ -31967,6 +31964,7 @@
 	pixel_y = 6
 	},
 /obj/item/storage/pill_bottle/mannitol,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aYQ" = (
@@ -33578,6 +33576,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bbq" = (
@@ -34124,8 +34126,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bci" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -34134,6 +34134,12 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/table,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/gloves{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone3)
@@ -34583,13 +34589,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/zone3)
 "bcY" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
@@ -34600,6 +34603,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/bed/roller,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bcZ" = (

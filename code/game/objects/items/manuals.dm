@@ -307,8 +307,8 @@
 					myframe.style.display = "block";
 				}
 			</script>
-			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
+			<p id='loading'>You start skimming through the manual...(This means the page is loading! Don't close the window!)</p>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl][page_link]" frameborder="0" id="main_frame"></iframe>
 			</body>
 
 			</html>
@@ -320,21 +320,21 @@
 	icon_state ="chemistrybook"
 	author = "Nanotrasen"
 	title = "Chemistry Textbook"
-	page_link = "main/guides/guide_chemistry"
+	page_link = "Guide_to_chemistry"
 
-/obj/item/book/manual/wiki/cit/chem_recipies
+/obj/item/book/manual/wiki/cit/dog/chem_recipies
 	name = "Chemistry Recipies"
 	icon_state ="chemrecibook"
 	author = "Chemcat"
 	title = "Chemistry Recipies"
-	page_link = "main/guides/chem_recipies"
+	page_link = "https://katlin.dog/citadel-wiki/chem_recipies"
 
 /obj/item/book/manual/wiki/cit/organ_guide
 	name = "Indepth Organ Textbook"
 	icon_state ="organbook"
 	author = "Chemcat"
 	title = "Organ Textbook"
-	page_link = "main/guides/guide_organs"
+	page_link = "Guide_to_Organs"
 
 /obj/item/book/manual/wiki/chemistry
 	name = "Outdated Chemistry Textbook"
@@ -346,7 +346,43 @@
 /obj/item/book/manual/wiki/chemistry/Initialize()
 	..()
 	new /obj/item/book/manual/wiki/cit/chemistry(loc)
-	new /obj/item/book/manual/wiki/cit/chem_recipies(loc)
+	new /obj/item/book/manual/wiki/cit/dog/chem_recipies(loc)
+
+/obj/item/book/manual/wiki/cit/dog
+	name = "Dog infobook"
+	icon_state ="book8"
+	author = "Nanotrasen"
+	title = "Dog infobook"
+	page_link = ""
+	window_size = "1500x800" //Too squashed otherwise
+
+/obj/item/book/manual/wiki/cit/dog/initialize_wikibook()
+	var/wikiurl = CONFIG_GET(string/wikiurldog)
+	if(wikiurl)
+		dat = {"
+
+			<html><head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+			<style>
+				iframe {
+					display: none;
+				}
+			</style>
+			</head>
+			<body>
+			<script type="text/javascript">
+				function pageloaded(myframe) {
+					document.getElementById("loading").style.display = "none";
+					myframe.style.display = "block";
+				}
+			</script>
+			<p id='loading'>You start skimming through the manual...(This means the page is loading! Don't close the window!)</p>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[wikiurl]/[page_link]" frameborder="0" id="main_frame"></iframe>
+			</body>
+
+			</html>
+
+			"}
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
@@ -478,6 +514,13 @@
 	icon_state = "book8"
 	author = "Medical Journal"
 	title = "Medical Space Compendium, Volume 638"
+	page_link = "Guide_to_medicine"
+
+/obj/item/book/manual/wiki/cit/medicine
+	name = "Medical Space Compendium, Volume 1242"
+	icon_state = "book8"
+	author = "Medical Journal"
+	title = "Medical Space Compendium, Volume 1242"
 	page_link = "Guide_to_medicine"
 
 /obj/item/book/manual/wiki/surgery

@@ -24609,6 +24609,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "lIn" = (
@@ -27305,6 +27306,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "nsv" = (
@@ -39427,6 +39429,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
 "utY" = (
@@ -40281,6 +40284,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "uUJ" = (

@@ -9390,15 +9390,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/item/reagent_containers/spray/cleaner,
-/obj/item/crowbar,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/storage/box/gloves{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/storage/box/masks,
-/obj/structure/table,
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "asM" = (
@@ -32406,16 +32398,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bzd" = (
-/obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/pen,
-/obj/machinery/requests_console{
-	department = "Medbay";
-	departmentType = 1;
-	name = "Medbay RC";
-	pixel_y = 30
-	},
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bze" = (
@@ -32760,6 +32743,7 @@
 /obj/item/cautery{
 	pixel_x = 4
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzT" = (
@@ -32771,7 +32755,15 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "bzU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/crowbar,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/storage/box/gloves{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/storage/box/masks,
+/obj/structure/table,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -33289,9 +33281,11 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bBe" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -54581,6 +54575,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
+"fXH" = (
+/obj/structure/table,
+/obj/item/stack/packageWrap,
+/obj/item/stack/packageWrap,
+/obj/item/pen,
+/obj/machinery/requests_console{
+	department = "Medbay";
+	departmentType = 1;
+	name = "Medbay RC";
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "fZm" = (
 /obj/structure/chair/sofa/left,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -55518,6 +55525,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/pool)
+"iCe" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "iDo" = (
 /obj/structure/grille,
 /turf/open/space/basic,
@@ -97831,8 +97842,8 @@ bDR
 bDR
 bDR
 bzc
-bDR
-bDZ
+iCe
+bAW
 bCK
 bFy
 bFF
@@ -100914,7 +100925,7 @@ bua
 bua
 bua
 bua
-bhh
+fXH
 bhh
 btV
 bof

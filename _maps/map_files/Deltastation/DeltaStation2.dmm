@@ -103013,6 +103013,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "dsS" = (
@@ -126248,6 +126249,16 @@
 /mob/living/simple_animal/opossum,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"krS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/MRS,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "ktK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -127161,6 +127172,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
+"qVD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/bookcase/manuals/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "rhO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -175006,7 +175027,7 @@ cSU
 cRh
 cWw
 cSS
-cZJ
+krS
 dbt
 ddf
 deE
@@ -177067,7 +177088,7 @@ dbz
 ddk
 deK
 cPy
-dhj
+qVD
 diN
 dkv
 dma

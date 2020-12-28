@@ -23765,18 +23765,22 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
 "aNr" = (
-/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
-	req_access_txt = "5"
+/obj/machinery/shower{
+	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/obj/effect/turf_decal/box,
+/turf/open/floor/plasteel/showroomfloor,
 /area/medical/storage)
 "aNs" = (
 /obj/structure/closet/cardboard,
@@ -24379,27 +24383,9 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aOw" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/box,
-/obj/machinery/shower{
-	dir = 4;
-	name = "emergency shower"
-	},
-/turf/open/floor/plasteel,
-/area/medical/medbay/central)
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/medical/storage)
 "aOx" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
@@ -24755,8 +24741,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aOW" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/MRS,
+/turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aOX" = (
 /obj/effect/turf_decal/tile/blue,
@@ -25343,25 +25330,18 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aPU" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
+/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/firealarm{
-	pixel_y = 26
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage";
+	req_access_txt = "5"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aPV" = (
 /obj/structure/table/glass,
@@ -25803,18 +25783,18 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "aQG" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage";
+	req_access_txt = "5"
+	},
+/turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aQH" = (
 /obj/machinery/vending/medical,
@@ -26767,6 +26747,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "aSb" = (
@@ -26888,6 +26869,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/cit/chem_recipies,
+/obj/item/book/manual/wiki/cit/chemistry,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "aSj" = (
@@ -28461,6 +28444,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/storage)
 "aUx" = (
@@ -29847,18 +29831,22 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aWp" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	icon_state = "4-8"
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
-	req_access_txt = "5"
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/showroomfloor,
 /area/medical/storage)
 "aWq" = (
 /obj/effect/turf_decal/tile/blue,
@@ -32254,6 +32242,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "bat" = (
@@ -104340,7 +104329,7 @@ afX
 ahc
 aPx
 aPx
-aOZ
+aOw
 aPU
 aQG
 aQJ
@@ -104854,7 +104843,7 @@ afD
 aSa
 aLj
 aMD
-aOw
+aMD
 aQa
 aQK
 aQJ

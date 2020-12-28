@@ -38177,8 +38177,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/structure/table,
-/obj/item/storage/box/cups,
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bDq" = (
@@ -38587,19 +38586,13 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/crowbar,
-/obj/item/wrench/medical,
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bEr" = (
@@ -38798,6 +38791,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/structure/bed/roller,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bFb" = (
@@ -55077,6 +55072,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "cxF" = (
@@ -55199,6 +55195,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "cxT" = (
@@ -70332,6 +70329,14 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
+"qUK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/storage/box/cups,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qVj" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
@@ -71754,6 +71759,17 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation)
+"ueB" = (
+/obj/item/crowbar,
+/obj/item/wrench/medical,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/plasteel/white,
+/area/medical/cryo)
 "ufs" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -119664,7 +119680,7 @@ bvy
 bgA
 bhE
 bDp
-blG
+qUK
 bGh
 jXM
 bJv
@@ -120439,7 +120455,7 @@ bEo
 bGk
 bEo
 bJy
-bKr
+ueB
 bLr
 bjJ
 bkZ

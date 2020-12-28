@@ -39626,6 +39626,7 @@
 /area/security/checkpoint/customs)
 "bIs" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bIt" = (
@@ -41352,6 +41353,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bMb" = (
@@ -56259,7 +56261,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "cqm" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -56267,6 +56268,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "cqn" = (
@@ -62109,6 +62111,7 @@
 	dir = 8
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "cBe" = (

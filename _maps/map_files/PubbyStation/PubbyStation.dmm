@@ -223,6 +223,9 @@
 /obj/structure/sign/poster/official/medical_green_cross{
 	pixel_x = 32
 	},
+/obj/item/kirbyplants{
+	icon_state = "plant-11"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "aay" = (
@@ -27965,9 +27968,6 @@
 	dir = 8;
 	pixel_x = 28
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-11"
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	light_color = "#ffc1c1"
@@ -27976,6 +27976,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
 "bnz" = (

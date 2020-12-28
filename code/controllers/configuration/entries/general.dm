@@ -202,6 +202,9 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
+	config_entry_value = "https://citadel-station.net/wikimain/index.php?title="
+
+/datum/config_entry/string/wikiurldog
 	config_entry_value = "https://katlin.dog/citadel-wiki"
 
 /datum/config_entry/string/wikiurltg

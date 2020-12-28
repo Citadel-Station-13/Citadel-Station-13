@@ -210,12 +210,11 @@ export const Sleeper = (props, context) => {
             mr={2}
             ml={2}
             p={1}
-            tooltip={`Performs Dialysis on the patient - Reducing metabolic stress and
-              purging all chems in a patient’s system while slowly
+            tooltip={`Performs Dialysis on the patient - Reducing metabolic 
+              stress and purging all chems in a patient’s system while slowly
               reducing their blood volume.
               If a liver is unstressed enough, it will begin to heal itself.
-              In a pinch, this can stand in for a missing liver.`
-            }
+              In a pinch, this can stand in for a missing liver.`}
             tooltipPosition="bottom-right"
             disabled={!occupied}
             onClick={() => act('dialysis')}
@@ -226,10 +225,8 @@ export const Sleeper = (props, context) => {
             icon={'power-off'}
             p={1}
             mr={2}
-            tooltip={
-            `Performs rudimentary radiation purging,
-            at the cost of damaging the patient's organs.`
-            }
+            tooltip={`Performs rudimentary radiation purging,
+              at the cost of damaging the patient's organs.`}
             tooltipPosition="bottom"
             disabled={!occupied}
             onClick={() => act('antirad')}
@@ -240,11 +237,9 @@ export const Sleeper = (props, context) => {
             icon={'power-off'}
             p={1}
             mr={2}
-            tooltip={
-            `Detects chemicals present in a patient's blood stream,
-            while slightly reducing each reagent's effectiveness and
-            using of some of the patient's nourishment.`
-            }
+            tooltip={`Detects chemicals present in a patient's blood stream,
+              while slightly reducing each reagent's effectiveness and
+              using of some of the patient's nourishment.`}
             tooltipPosition="bottom-left"
             disabled={!occupied}
             onClick={() => act('monitor')}
@@ -302,7 +297,7 @@ export const Sleeper = (props, context) => {
           minHeight="165px"
           buttons={(
             <Button fluid={1}>SynthAll</Button>,
-              <NumberInput
+            <NumberInput
                 width="65px"
                 unit="u"
                 step={data.granularity}
@@ -312,9 +307,7 @@ export const Sleeper = (props, context) => {
                 maxValue={100}
                 tooltipPosition="bottom-left"
                 onDrag={(e, value) => act('amount', {
-                  amount: value,
-                })} />
-          )}>
+                amount: value })} />)}>
           <Tabs
             fluid={1}
             textAlign="center">
