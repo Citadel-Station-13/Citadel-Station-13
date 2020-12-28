@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - tweak: "temperature slowdown divisor nerfed to 35 from 20."
