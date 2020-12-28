@@ -916,10 +916,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							//we add the user's progress to the description assuming they have progress
 							var/datum/gear/unlockable/unlockable = gear
 							var/progress_made = unlockable_loadout_data[unlockable.progress_key]
-							if(progress_made)
-								dat += "</td><td><font size=2><i>[gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
-							else
-								dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+							if(!progress_made)
+								progress_made = 0
+							dat += "</td><td><font size=2><i>[gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
 
 					dat += "</table>"
 		if(4) // Content preferences
