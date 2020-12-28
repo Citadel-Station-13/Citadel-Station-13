@@ -59038,6 +59038,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"qvS" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "qyj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
@@ -62522,6 +62526,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ycQ" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "ycY" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -100471,7 +100479,7 @@ aJI
 aRC
 aSK
 aVz
-aVz
+qvS
 aVz
 aYL
 aJI
@@ -103042,7 +103050,7 @@ fzd
 fFA
 fFA
 aVK
-aRJ
+ycQ
 aRJ
 aRJ
 bbB
