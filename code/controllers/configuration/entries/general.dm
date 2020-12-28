@@ -205,7 +205,7 @@
 	config_entry_value = "https://citadel-station.net/wikimain/index.php?title="
 
 /datum/config_entry/string/wikiurldog
-	config_entry_value = "https://katlin.dog/citadel-wiki"
+	config_entry_value = "https://katlin.dog/citadel-wiki" 
 
 /datum/config_entry/string/wikiurltg
 	config_entry_value = "http://www.tgstation13.org/wiki"

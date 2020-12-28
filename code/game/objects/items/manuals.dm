@@ -327,7 +327,7 @@
 	icon_state ="chemrecibook"
 	author = "Chemcat"
 	title = "Chemistry Recipies"
-	page_link = "https://katlin.dog/citadel-wiki/chem_recipies"
+	page_link = "chem_recipies"
 
 /obj/item/book/manual/wiki/cit/organ_guide
 	name = "Indepth Organ Textbook"

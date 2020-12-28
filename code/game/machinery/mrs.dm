@@ -256,9 +256,10 @@
 
 				//Heart
 				if(istype(Or, /obj/item/organ/heart))
-					if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
+					if(C.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
 						var/blood_id = C.get_blood_id()
 						if(blood_id)
+							data["occupant"]["blood"] = list()
 							data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
 							data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
 							data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE

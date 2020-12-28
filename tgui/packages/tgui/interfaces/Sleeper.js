@@ -294,20 +294,20 @@ export const Sleeper = (props, context) => {
 
         <Section fitted
           title="Medicines"
-          minHeight="165px"
           buttons={(
-            <Button fluid={1}>SynthAll</Button>,
             <NumberInput
-                width="65px"
-                unit="u"
-                step={data.granularity}
-                stepPixelSize={data.granularity}
-                value={(data.amount)}
-                minValue={0}
-                maxValue={100}
-                tooltipPosition="bottom-left"
-                onDrag={(e, value) => act('amount', {
-                amount: value })} />)}>
+              unit="u"
+              step={data.granularity}
+              stepPixelSize={data.granularity}
+              value={(data.amount)}
+              minValue={0}
+              maxValue={100}
+              tooltipPosition="bottom-left"
+              onDrag={(e, value) => act('amount', {
+                amount: value })}
+              width="65px" /> 
+          )}
+          minHeight="165px">
           <Tabs
             fluid={1}
             textAlign="center">

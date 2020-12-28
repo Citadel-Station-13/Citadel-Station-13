@@ -221,7 +221,7 @@
 	icon_state = "liver-c"
 
 /obj/item/organ/liver/slime
-	name = "Filturatum"
+	name = "Viscoplasmic reticulum"
 	icon_state = "liver-s"
 	desc = "A sponge like organ that absorbs and filters out impure reagents when unstressed."
 	maxHealth = 90 //Slimes can treat liver damage a lot easier than most.
