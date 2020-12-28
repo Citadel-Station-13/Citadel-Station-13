@@ -55453,6 +55453,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"ijO" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "ikk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56016,6 +56020,10 @@
 /obj/structure/closet/athletic_mixed,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"jwH" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "jxF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -59038,10 +59046,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
-"qvS" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
 "qyj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
@@ -61309,6 +61313,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "vxX" = (
@@ -62526,10 +62531,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"ycQ" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "ycY" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -100479,7 +100480,7 @@ aJI
 aRC
 aSK
 aVz
-qvS
+ijO
 aVz
 aYL
 aJI
@@ -103050,7 +103051,7 @@ fzd
 fFA
 fFA
 aVK
-ycQ
+jwH
 aRJ
 aRJ
 bbB
