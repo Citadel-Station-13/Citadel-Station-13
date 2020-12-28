@@ -79,8 +79,7 @@ export const Mrs = (props, context) => {
               {organs.map(organ => (
                 <LabeledList.Item
                   key={organ.name}
-                  label={organ.name}
-                  width='20%'>
+                  label={organ.name}>
                   Damage:
                   <ProgressBar
                     title={'Health'}
@@ -111,18 +110,18 @@ export const Mrs = (props, context) => {
                   {organ.slot === "HEART" && (
                     <Table>
                       <Table.Row>
-                        <Table.Cell grow={1} width='30' collapsing={true}>
+                        <Table.Cell grow={1} width="30" collapsing={1}>
                           Blood volume:
                         </Table.Cell>
-                        <Table.Cell grow={2} width='70%'>
+                        <Table.Cell grow={2} width="70%">
                           <ProgressBar
                             minValue={0}
                             maxValue={data.occupant.blood.maxBloodVolume}
-                            value={round(data.occupant.blood.currentBloodVolume)}
+                            value={round(data.occupant.blood.currentBloodVol)}
                             ranges={{
                               good: [data.occupant.blood.dangerBloodVolume,
                                 Infinity],
-                              average: [(data.occupant.blood.maxBloodVolume / 2),
+                              average: [(data.occupant.blood.maxBloodVolume/2),
                                 data.occupant.blood.dangerBloodVolume],
                               bad: [-Infinity,
                                 (data.occupant.blood.maxBloodVolume / 2)],
@@ -132,11 +131,11 @@ export const Mrs = (props, context) => {
                         </Table.Cell>
                       </Table.Row>
                       <Table.Row>
-                        <Table.Cell grow={1} width='30'>
+                        <Table.Cell grow={1} width="30">
                           Heart rate:
                         </Table.Cell>
-                        <Table.Cell grow={2} textAlign='center'>
-                          {70}{/*data.occupant.heartrate*/}
+                        <Table.Cell grow={2} textAlign="center">
+                          {data.occupant.heartrate} bpm
                         </Table.Cell>
                       </Table.Row>
                     </Table>

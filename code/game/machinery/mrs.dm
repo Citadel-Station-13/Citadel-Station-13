@@ -261,10 +261,10 @@
 						if(blood_id)
 							data["occupant"]["blood"] = list()
 							data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-							data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
+							data["occupant"]["blood"]["currentBloodVol"] = C.blood_volume
 							data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
 							data["occupant"]["blood"]["bloodType"] = C.dna.blood_type
-					data["occupant"]["heartrate"] = rand(60,90) //TODO: add functionality later
+					data["occupant"]["heartrate"] = rand(60,80) //TODO: add functionality later
 
 
 				//Liver
