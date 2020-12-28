@@ -879,10 +879,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
 						var/extra_color_data = ""
 						if(loadout_item)
-							if(gear.category != LOADOUT_CATEGORY_UNLOCKABLE || can_use_unlockable(gear))
-								class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
-							else
-								class_link = "style='white-space:normal;' class='linkOff'"
+							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 							if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
 								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_polychromic=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
 								for(var/loadout_color in loadout_item[LOADOUT_COLOR])
@@ -897,8 +894,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)
 							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
-						else
+						else if(!istype(gear, /datum/gear/unlockable) || can_use_unlockable(gear))
 							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
+						else
+							class_link = "style='white-space:normal;background:#eb2e2e;' class='linkOff'"
 						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a>[extra_color_data]</td>"
 						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 						if(islist(gear.restricted_roles))
@@ -911,7 +910,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									dat += "<font size=2>"
 									dat += gear.restricted_roles.Join(";")
 									dat += "</font>"
-						dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+						if(!istype(gear, /datum/gear/unlockable))
+							dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+						else
+							//we add the user's progress to the description assuming they have progress
+							var/datum/gear/unlockable/unlockable = gear
+							var/progress_made = unlockable_loadout_data[unlockable.progress_key]
+							if(progress_made)
+								dat += "</td><td><font size=2><i>[gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
+							else
+								dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+
 					dat += "</table>"
 		if(4) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
