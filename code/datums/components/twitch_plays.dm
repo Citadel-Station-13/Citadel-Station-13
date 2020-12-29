@@ -72,3 +72,26 @@
 	. = text2num(pickweight(total, 0))
 	if(wipe_votes)
 		votes.len = 0
+
+/datum/component/twitch_plays/simple_movement/auto
+	var/move_delay = 2
+	var/last_move = 0
+
+/datum/component/twitch_plays/simple_movement/auto/Initialize(...)
+	. = ..()
+	if(. & COMPONENT_INCOMPATIBLE)
+		return
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/component/twitch_plays/simple_movement/auto/Destroy(force, silent)
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/datum/component/twitch_plays/simple_movement/auto/process()
+	var/dir = fetch_data(null, TRUE)
+	if(!dir)
+		return
+	if(world.time < (last_move + move_delay))
+		return
+	last_move = world.time
+	step(parent, dir)
