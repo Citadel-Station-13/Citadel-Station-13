@@ -899,4 +899,4 @@
 	results = list(/datum/reagent/water = 0.92)
 	required_reagents = list(/datum/reagent/consumable/ice = 1)
 	required_temp = 274
-	mix_message = "The solution freezes up into ice!"
+	mix_message = "The ice melts back into water!"

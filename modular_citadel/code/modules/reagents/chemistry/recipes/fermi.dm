@@ -577,7 +577,7 @@
 
 /datum/chemical_reaction/cryosenium
 	name = "Cryosenium"
-	id = "cryosenium"
+	id = /datum/reagent/medicine/cryosenium
 	results = list(/datum/reagent/medicine/cryosenium = 3)
 	required_reagents = list(/datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/cryostylane = 1) //consider sterilizine if needed.
 	//FermiChem vars:

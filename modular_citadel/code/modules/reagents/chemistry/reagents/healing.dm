@@ -298,7 +298,7 @@
 	purity = 1//for syringe
 	color = "#03f4fc"
 	impure_chem 		= /datum/reagent/impure
-	inverse_chem_val 	= 0.43
+	inverse_chem_val 	= 0.5 //If OP, reduce to 0.43
 	inverse_chem 		= /datum/reagent/impure/cryosenium
 	metabolization_rate = 0.05
 //Pauses decay! Does do something, I promise.

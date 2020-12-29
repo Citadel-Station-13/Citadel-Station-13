@@ -875,7 +875,7 @@
 	purity = 0.8
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	impure_chem 		= /datum/reagent/impure
-	inverse_chem_val 	= 0.5
+	inverse_chem_val 	= 0.55
 	inverse_chem		= /datum/reagent/impure/oculine
 	var/cached_light
 	var/cached_seerange

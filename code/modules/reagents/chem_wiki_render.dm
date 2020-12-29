@@ -95,31 +95,31 @@
 				continue
 
 			for(var/datum/reagent/Y in dispensable_reagents) //Why do you have to do this
-				if(R == Y)
+				if(R.name == Y.name)
 					basic += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in components)
-				if(R == Y)
+				if(R.name == Y.name)
 					upgraded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in dispence_drinks)
-				if(R == Y)
+				if(R.name == Y.name)
 					drinks += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in dispence_alco)
-				if(R == Y)
+				if(R.name == Y.name)
 					alco += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in grind)
-				if(R == Y)
+				if(R.name == Y.name)
 					grinded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue

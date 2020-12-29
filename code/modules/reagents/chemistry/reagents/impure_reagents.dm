@@ -50,7 +50,7 @@
 	description = "Induces a temporary brain trauma in the patient by redirecting neuron activity."
 	color = "#DCDCAA"
 	pH = 13.4
-	metabolization_rate = 0.4 * REM
+	metabolization_rate = 0.05 * REM
 	metastress = 0.5
 	var/datum/brain_trauma/temp_trauma
 
@@ -58,7 +58,7 @@
 	.=..()
 	if(temp_trauma)
 		return
-	if(!(prob(cached_purity*10)))
+	if(!(prob(1 - cached_purity)*10)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
@@ -92,6 +92,8 @@
 	if(!C)
 		return
 	var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
+	if(cached_purity < 0.4) //Explosive purity is 0.35 - so they get 0.4, then they have to work for it
+		C.adjustOrganLoss(ORGAN_SLOT_HEART, 0.05) //If this gets powergamed - remove this line only.
 	if(!H)
 		return
 	if(!(prob(min(H.damage*2, 100))))
@@ -139,7 +141,7 @@
 	description = "temporarily blinds the patient."
 	reagent_state = LIQUID
 	color = "#DDDDDD"
-	metabolization_rate = 2
+	metabolization_rate = 0.1
 	metastress = 0.75
 	taste_description = "funky toxin"
 	pH = 13
@@ -188,7 +190,7 @@
 	taste_description = "your tongue freezing, shortly followed by your thoughts. Brr!"
 	pH = 14
 	chemical_flags = REAGENT_DEAD_PROCESS
-	metabolization_rate = 2
+	metabolization_rate = 1
 
 /datum/reagent/impure/cryosenium/on_mob_add(mob/living/carbon/M, amount)
 	M.apply_status_effect(/datum/status_effect/cryosenium)
