@@ -16,8 +16,11 @@
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
+	low_threshold = STANDARD_ORGAN_THRESHOLD * 0.25
+	high_threshold = STANDARD_ORGAN_THRESHOLD * 0.6
+
 	var/stomach_acid = /datum/reagent/metabolic/stomach_acid //IF you change this - the mob will be IMMUNE to this chem - it will do nothing to them.
-	var/stomach_acid_volume = 50
+	var/stomach_acid_volume = 70
 	var/stomach_acid_opt_pH = 7 //what pH the stomach wants to be at
 
 /obj/item/organ/stomach/on_life()
@@ -40,26 +43,26 @@
 	if(deltapH < 0)
 		deltapH = -deltapH //Normalise around middle
 	switch(deltapH)
-		if(5.5 to INFINITY)
+		if(6 to INFINITY)
 			applyOrganDamage(0.4)
-			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4) //heartburn!
+			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.3) //heartburn!
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 2.5)
 			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 0.25)
 			C.apply_damage(0.5, BURN, C.get_bodypart(BODY_ZONE_CHEST))
 			if(prob(1))
 				to_chat("Your throat feels like it's on fire!")
 				owner.adjustStaminaLoss(10)
-		if(4 to 5.5)
+		if(5 to 6)
 			applyOrganDamage(0.3)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.25) //heartburn!
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1.25)
 			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 0.1)
 			if(prob(1))
 				to_chat("You feel a burning sensation in your chest!")
-		if(2.5 to 4)
+		if(3.5 to 5)
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 			applyOrganDamage(0.2)
-		if(1 to 2.5)
+		if(2 to 3.5)
 			applyOrganDamage(0.1)
 		if(-INFINITY to 1)
 			passive_regen()
@@ -164,7 +167,7 @@
 	name = "insectoid stomach"
 	icon_state = "stomach-x" //xenomorph liver? It's just a black liver so it fits.
 	desc = "A mutant stomach designed to handle the unique diet of a flyperson."
-	stomach_acid_volume = 30
+	stomach_acid_volume = 50
 	stomach_acid = /datum/reagent/toxin/acid //You need strong acid to be a fly
 	stomach_acid_opt_pH = 2.75
 
@@ -172,7 +175,7 @@
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
-	stomach_acid_volume = 40
+	stomach_acid_volume = 60
 	stomach_acid = /datum/reagent/toxin/plasma //HOPEFULLY won't cause unexpected bad things
 	stomach_acid_opt_pH = 4 //same as plasma
 

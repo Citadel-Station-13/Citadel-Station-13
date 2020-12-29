@@ -153,7 +153,7 @@
 	if(!E)
 		return
 
-	if(E.damage > 0 && cached_purity > 0.95)
+	if(E.damage > 0 && cached_purity > 0.9)
 		M.restoreEars()
 	else
 		M.cureOrganDamage(ORGAN_SLOT_EARS, -cached_purity*5, ORGAN_TREAT_END_STAGE)
@@ -646,12 +646,12 @@
 		if(R == src)
 			continue
 		if(istype(R, /datum/reagent/metabolic))
-			M.reagents.remove_reagent(R.type,1.75)
+			M.reagents.remove_reagent(R.type,1)
 			continue
 		M.reagents.remove_reagent(R.type,2)
 	if(slime_friendly)
 		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		L.equilibrateMetabolicStress(0.1, TRUE)
+		L.equilibrateMetabolicStress(0.2, TRUE)
 
 	..()
 	. = 1
@@ -882,9 +882,9 @@
 
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/L)
 	cached_light = L.lighting_alpha
-	L.lighting_alpha -= cached_purity*15
+	L.lighting_alpha -= cached_purity*20
 	cached_seerange = L.see_in_dark
-	L.see_in_dark += 2
+	L.see_in_dark += 3
 	..()
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
@@ -1121,9 +1121,9 @@
 	if(prob(cached_purity*20))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	if(initial_Bdamage < C.getOrganLoss(ORGAN_SLOT_BRAIN))
-		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*4)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*5)
 	else
-		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
+		C.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*2, ORGAN_TREAT_END_STAGE)
 	..()
 
 /datum/reagent/medicine/mutadone

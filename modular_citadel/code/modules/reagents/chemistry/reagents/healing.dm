@@ -19,7 +19,7 @@
 	if(T)
 		C.cureOrganDamage(ORGAN_SLOT_TONGUE, (-cached_purity*5)*REM, ORGAN_TREAT_CHRONIC)
 	if(L)
-		if(cached_purity > 0.90)
+		if(cached_purity > 0.8)
 			C.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity*5)*REM, ORGAN_TREAT_CHRONIC)
 		else
 			C.cureOrganDamage(ORGAN_SLOT_LUNGS, (-cached_purity*5)*REM, ORGAN_TREAT_ACUTE)

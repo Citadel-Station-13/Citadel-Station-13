@@ -98,11 +98,11 @@
 		if(-INFINITY to -10)
 			ignoreTox = TRUE
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.5, ORGAN_TREAT_CHRONIC)
-			owner.adjustToxLoss(-0.2, TRUE, TRUE)
+			owner.adjustToxLoss(-0.5, TRUE, TRUE)
 		if(-10 to -0.1)
 			ignoreTox = TRUE
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.25, ORGAN_TREAT_ACUTE)
-			owner.adjustToxLoss(-0.1, TRUE, TRUE)
+			owner.adjustToxLoss(-0.2, TRUE, TRUE)
 		if(-0.1 to 15)
 			if(damage != 0)
 				passive_regen(1/(reagentCount+1)) //pesky zeroes!
@@ -224,20 +224,20 @@
 			ignoreMeds = TRUE
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_END_STAGE)
 			owner.Jitter(5)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 			owner.Dizzy(2)
 		if(-95 to -80)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_CHRONIC)
 			ignoreMeds = TRUE
 			owner.Jitter(2)
 			owner.Dizzy(1.5)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.3)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.15)
 		if(-80 to -55)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_CHRONIC)
 			ignoreMeds = TRUE
 			owner.Jitter(1.5)
 			owner.Dizzy(1)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1)
 		if(-50 to -35)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.35, ORGAN_TREAT_CHRONIC)
 			owner.Jitter(0.5)
