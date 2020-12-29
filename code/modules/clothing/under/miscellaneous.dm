@@ -171,19 +171,14 @@
 	can_adjust = TRUE
 	body_parts_covered = CHEST|GROIN
 
-/obj/item/clothing/under/misc/gear_harness/rolldown()
-	if(!can_use(usr))
-		return
+/obj/item/clothing/under/misc/gear_harness/toggle_jumpsuit_adjust()
 	if(!body_parts_covered)
 		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
 		body_parts_covered = CHEST|GROIN
 	else
 		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
 		body_parts_covered = NONE
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.update_inv_w_uniform()
-		H.update_body()
+	return !body_parts_covered
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
