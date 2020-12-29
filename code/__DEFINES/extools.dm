@@ -29,7 +29,9 @@
 #define EXTOOLS (__extools || __detect_extools())
 #endif
 
+#ifndef UNIT_TESTS // use default logging as extools is broken on travis
 #define EXTOOLS_LOGGING // rust_g is used as a fallback if this is undefined
+#endif
 
 /proc/extools_log_write()
 
