@@ -19827,6 +19827,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/stack/ore/silver{
+	amount = 2
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "aJC" = (
@@ -20222,6 +20225,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "aKq" = (
