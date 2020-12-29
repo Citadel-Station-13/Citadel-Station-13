@@ -1578,7 +1578,7 @@
 
 /datum/reagent/medicine/corazone/on_mob_life(mob/living/carbon/M)
 	M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
-	if(cached_purity > 0.95)
+	if(cached_purity > 0.90)
 		M.cureOrganDamage(ORGAN_SLOT_HEART, (-cached_purity/5)*REM, ORGAN_TREAT_CHRONIC)
 	..()
 

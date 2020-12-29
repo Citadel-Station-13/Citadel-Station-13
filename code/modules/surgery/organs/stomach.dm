@@ -83,6 +83,8 @@
 		applyOrganDamage(1)
 	else if(SA.volume < stomach_acid_volume)
 		SA.volume = clamp(SA.volume + 2, 0, stomach_acid_volume)
+	else if (SA.volume > stomach_acid_volume)
+		SA.volume -= 0.2 //Incase of other stomachs consuimg their stomach acid reagent
 
 	if(damage < low_threshold)
 		return
@@ -201,7 +203,7 @@
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
-	//stomach_acid = /datum/reagent/fermi/astral //SHOULDN'T do anything to someone who has this added (pH is 7)- WILL BE ENABLED WHEN ASTRAL IS FIXED IN ATOMISED PR
+	//stomach_acid = /datum/reagent/fermi/astral //SHOULDN'T do anything to someone who has this added (pH is 7)- WILL BE (maybe?) ENABLED WHEN ASTRAL IS FIXED IN ATOMISED PR
 	stomach_acid_volume = 30 //25 is Addiction - BUT you should be okay - since you always have some in you! You're just buggered if you lose your stomach.
 
 /obj/item/organ/stomach/ethereal/on_life()
