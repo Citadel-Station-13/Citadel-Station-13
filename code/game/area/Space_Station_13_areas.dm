@@ -469,6 +469,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "yellow"
 	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
 
+/area/crew_quarters/arcade
+	name = "Arcade"
+	icon_state = "abandoned_g_den"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
