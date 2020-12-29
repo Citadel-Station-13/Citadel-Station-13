@@ -1391,10 +1391,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neuroweak/on_mob_life(mob/living/carbon/M)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
 		M.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
-		M.reagents.remove_reagent("fentanyl", 0.75 * REAGENTS_METABOLISM, FALSE)
+		M.reagents.remove_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 0.75 * REAGENTS_METABOLISM, FALSE)
 	else if(holder.has_reagent(/datum/reagent/toxin/fentanyl))
 		M.cureOrganDamage(ORGAN_SLOT_BRAIN, -cached_purity*REM, ORGAN_TREAT_CHRONIC)
-		M.reagents.remove_reagent("neurotoxin", 1.5 * REAGENTS_METABOLISM, FALSE)
+		M.reagents.remove_reagent(/datum/reagent/toxin/fentanyl, 1.5 * REAGENTS_METABOLISM, FALSE)
 	else
 		M.cureOrganDamage(ORGAN_SLOT_BRAIN, (-cached_purity/2)*REM, ORGAN_TREAT_ACUTE)
 		M.dizziness +=2

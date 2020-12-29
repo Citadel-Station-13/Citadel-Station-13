@@ -184,6 +184,10 @@
 #define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS)))
 #define STANDARD_ORGAN_DECAY		(1/(15 MINUTES / (2 SECONDS)))		//designed to fail organs when left to decay for ~15 minutes. 2 SECOND is SSmobs tickrate.
 
+//organ healing thresholds
+#define ORGAN_TREAT_ACUTE "acute"
+#define ORGAN_TREAT_CHRONIC "chronic"
+#define ORGAN_TREAT_END_STAGE "end_stage"
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

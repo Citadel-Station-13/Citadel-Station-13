@@ -184,7 +184,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.25-((2*(((damage*100)/maxHealth)/100))/10)//0.05 - 0.25
+	var/metabolic_replenish = 0.30-((2*(((damage*100)/maxHealth)/100))/10)//0.1 - 0.3
 	equilibrateMetabolicStress(metabolic_replenish)
 
 /obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum, absolute = FALSE)
@@ -194,8 +194,7 @@
 		maximum = 105
 	if(!minimum)
 		minimum = min(0, metabolic_stress)
-	if(metabolic_stress>=maximum)
-		return FALSE
+
 	metabolic_stress = clamp(metabolic_stress + amount, minimum*minStressMod, maximum)
 	return TRUE
 
@@ -221,7 +220,7 @@
 	icon_state = "liver-c"
 
 /obj/item/organ/liver/slime
-	name = "Viscoplasmic reticulum"
+	name = "Viscoplasmeium"
 	icon_state = "liver-s"
 	desc = "A sponge like organ that absorbs and filters out impure reagents when unstressed."
 	maxHealth = 90 //Slimes can treat liver damage a lot easier than most.
@@ -241,20 +240,20 @@
 			ignoreMeds = TRUE
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_END_STAGE)
 			owner.Jitter(5)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.15)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
 			owner.Dizzy(2)
 		if(-95 to -80)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.05, ORGAN_TREAT_CHRONIC)
 			ignoreMeds = TRUE
 			owner.Jitter(2)
 			owner.Dizzy(1.5)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.1)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.3)
 		if(-80 to -55)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.1, ORGAN_TREAT_CHRONIC)
 			ignoreMeds = TRUE
 			owner.Jitter(1.5)
 			owner.Dizzy(1)
-			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.05)
+			C.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 		if(-50 to -35)
 			owner.cureOrganDamage(ORGAN_SLOT_LIVER, 0.35, ORGAN_TREAT_CHRONIC)
 			owner.Jitter(0.5)
@@ -285,14 +284,14 @@
 			owner.adjustToxLoss(0.2, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.15)
 			owner.adjustStaminaLoss(1)
-			swelling += 0.02
+			swelling += 0.01
 			owner.slurring += 1
 		if(90 to INFINITY)
 			applyOrganDamage(0.25)
 			owner.adjustToxLoss(0.25, TRUE, TRUE)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2)
 			owner.adjustStaminaLoss(2)
-			swelling += 0.1
+			swelling += 0.02
 			owner.slurring += 2
 
 
@@ -320,7 +319,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.15-(((((damage*100)/maxHealth)/100))/10) //0.05 - 0.15 - slower regen
+	var/metabolic_replenish = 0.2-(((((damage*100)/maxHealth)/100))/10) //0.1 - 0.2 - slower regen
 	equilibrateMetabolicStress(metabolic_replenish, TRUE)
 
 //Slimes are inverse

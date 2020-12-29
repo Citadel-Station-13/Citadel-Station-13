@@ -156,7 +156,7 @@
 			data["injected_vol"] = reac_volume
 			var/obj/item/organ/heart/H = C.getorganslot(ORGAN_SLOT_HEART)
 			if(data["grown_volume"] > 50 && H.organ_flags & ORGAN_FAILING)
-				H.applyOrganDamage(-20)
+				H.applyOrganDamage(-20, cureThreshold = ORGAN_TREAT_END_STAGE)
 	..()
 
 /datum/reagent/medicine/synthtissue/on_mob_life(mob/living/carbon/C)

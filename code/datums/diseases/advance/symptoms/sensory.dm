@@ -103,7 +103,7 @@
 					M.set_blindness(0)
 					M.set_blurriness(0)
 				else if(eyes.damage > 0)
-					eyes.applyOrganDamage(-1)
+					eyes.applyOrganDamage(-1, cureThreshold = ORGAN_TREAT_CHRONIC)
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your healing feels more acute.")]</span>")

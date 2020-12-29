@@ -17,7 +17,7 @@
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
 	var/stomach_acid = /datum/reagent/metabolic/stomach_acid
-	var/stomach_acid_volume = 50
+	var/stomach_acid_volume = 100
 	var/stomach_acid_opt_pH = 7 //what pH the stomach wants to be at
 
 /obj/item/organ/stomach/on_life()
@@ -46,7 +46,7 @@
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 2.5)
 			owner.adjustOrganLoss(ORGAN_SLOT_TONGUE, 0.25)
 			C.apply_damage(0.5, BURN, C.get_bodypart(BODY_ZONE_CHEST))
-			if(prob(10))
+			if(prob(1))
 				to_chat("Your throat feels like it's on fire!")
 				owner.adjustStaminaLoss(10)
 		if(1 to 2.5)
@@ -67,11 +67,11 @@
 	if(organ_flags & ORGAN_FAILING)
 		return
 	//stomach acid stuff
-	if(C.reagents.pH > stomach_acid_opt_pH + 0.25)
-		var/adjust = C.reagents.pH - (0.35-(damage/500))
+	if(C.reagents.pH > stomach_acid_opt_pH + 0.2)
+		var/adjust = C.reagents.pH - (0.1-(damage/2000))
 		C.reagents.pH = clamp(adjust, 0, 14)
-	else if (C.reagents.pH < stomach_acid_opt_pH - 0.25)
-		var/adjust = C.reagents.pH + (0.35-(damage/500))
+	else if (C.reagents.pH < stomach_acid_opt_pH - 0.2)
+		var/adjust = C.reagents.pH + (0.1-(damage/2000))
 		C.reagents.pH = clamp(adjust, 0, 14)
 
 	var/datum/reagent/SA = C.reagents.has_reagent(stomach_acid)
@@ -148,7 +148,7 @@
 	regen_stomach_acid(stomach_acid_volume)
 
 /obj/item/organ/stomach/Initialize()
-	..()
+	.=..()
 	regen_stomach_acid(stomach_acid_volume)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)

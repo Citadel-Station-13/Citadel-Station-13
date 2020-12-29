@@ -114,7 +114,7 @@
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
 				if("organ")
-					var/slot = href_list["organSlot"]
+					var/slot = href_list["slot"]
 					var/mob/living/carbon/C = L
 					C.adjustOrganLoss(slot, amount)
 					newamt = C.getOrganLoss(slot)

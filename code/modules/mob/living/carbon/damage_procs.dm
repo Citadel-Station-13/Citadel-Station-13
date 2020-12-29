@@ -1,7 +1,3 @@
-#define ORGAN_TREAT_ACUTE "acute"
-#define ORGAN_TREAT_CHRONIC "chronic"
-#define ORGAN_TREAT_END_STAGE "end_stage"
-
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
@@ -135,7 +131,7 @@
 /** cureOrganDamage
 	used for treating certain thresholds of damage.*/
 	//Lets you limit cures to threshold levels
-/mob/living/carbon/cureOrganDamage(slot, amount, threshold = ORGAN_TREAT_END_STAGE)//defaults to healing acute.
+/mob/living/carbon/cureOrganDamage(slot, amount, threshold = ORGAN_TREAT_ACUTE)//defaults to healing acute.
 	var/obj/item/organ/O = getorganslot(slot)
 	if(!O)
 		return

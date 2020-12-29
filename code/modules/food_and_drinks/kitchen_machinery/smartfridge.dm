@@ -436,7 +436,7 @@
 		var/obj/item/organ/O = organ
 		if(!istype(O))
 			return
-		O.applyOrganDamage(-repair_rate)
+		O.applyOrganDamage(-repair_rate, cureThreshold = ORGAN_TREAT_CHRONIC)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()

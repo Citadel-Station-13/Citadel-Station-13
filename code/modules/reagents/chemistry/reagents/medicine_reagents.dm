@@ -1106,7 +1106,7 @@
 	var/obj/item/organ/brain/B = M.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B || (!(B.organ_flags & ORGAN_FAILING)))
 		return
-	B.applyOrganDamage(-20)
+	B.applyOrganDamage(-20, cureThreshold = ORGAN_TREAT_END_STAGE)
 	if(prob(80))
 		B.gain_trauma_type(BRAIN_TRAUMA_MILD)
 	else if(prob(50))

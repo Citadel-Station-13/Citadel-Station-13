@@ -25,6 +25,8 @@
 	var/now_fixed
 	var/high_threshold_cleared
 	var/low_threshold_cleared
+	
+	var/damagedLastTick = FALSE //Prevents passive regen if the organ was hurt in this current tick (i.e. lets passive damage actually damage instead of being overwritten by regen)
 
 	///When you take a bite you cant jam it in for surgery anymore.
 	var/useable = TRUE
@@ -100,7 +102,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/mob/living/carbon/C  = owner
-	if(C && C.reagents && C.reagents.has_reagent("cryosenium")) //Prevents organ decay
+	if(C && C.reagents && C.reagents.has_reagent(/datum/reagent/medicine/cryosenium)) //Prevents organ decay
 		return
 	is_cold()
 	if(organ_flags & ORGAN_FROZEN)
@@ -163,12 +165,15 @@
 /obj/item/organ/proc/passive_regen(modifier = 1)
 	if(organ_flags & ORGAN_FAILING || !owner)
 		return FALSE
+	if(damagedLastTick)
+		damagedLastTick = FALSE
+		return FALSE
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = -(maxHealth * healing_factor)
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
 	if(healing_amount)
-		applyOrganDamage(healing_amount*modifier) //to FERMI_TWEAK
+		regenOrganDamage(healing_amount*modifier)
 	//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)
@@ -189,15 +194,46 @@
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
-/obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
+/obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth, cureThreshold = ORGAN_TREAT_ACUTE)	//use for damaging effects
 	if(!d || maximum < damage) //Micro-optimization.
 		return FALSE
+	if(d > 0)
+		damagedLastTick = TRUE
+	else
+		if(!canCureThresh(cureThreshold)) //Make sure we can cure this
+			return FALSE
 	damage = clamp(damage + d, 0, maximum)
 	var/mess = check_damage_thresholds()
 	prev_damage = damage
 	if(mess && owner)
 		to_chat(owner, mess)
 	onDamage(d, maximum)
+
+/obj/item/organ/proc/regenOrganDamage(var/d)
+	if(d > 0) //If we're not negative
+		d = -d
+	if(organ_flags & ORGAN_FAILING)//End stage
+		return FALSE
+	else if(damage >= high_threshold)//Chronic
+		damage = clamp(damage + d, high_threshold+1, maxHealth) //+1 so that it appears as chronic/acute under scanners
+	else if(damage >= low_threshold) //Acute
+		damage = clamp(damage + d, low_threshold+1, maxHealth)
+	else if(damage > 0) //minor
+		damage = clamp(damage + d, 0, maxHealth)
+	var/mess = check_damage_thresholds()
+	prev_damage = damage
+	if(mess && owner)
+		to_chat(owner, mess)
+	onDamage(d, maxHealth)
+		
+
+/obj/item/organ/proc/canCureThresh(threshold)
+	if(threshold == ORGAN_TREAT_ACUTE && damage>high_threshold) //0-45%
+		return FALSE
+	if(threshold == ORGAN_TREAT_CHRONIC && damage>=maxHealth)//45-100%
+		return FALSE
+	return TRUE
+
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals

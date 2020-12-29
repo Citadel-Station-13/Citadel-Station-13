@@ -121,7 +121,7 @@
 	L.adjustMetabolicStress(-treat_amount, -cached_purity*15) //Handles liver healing, needs over 0.66 for chronic
 	..()
 
-/datum/reagent/impure/antihol/inverse
+/datum/reagent/impure/antihol_inverse
 	name = "Prohol"
 	description = "Promotes alcoholic substances within the patients body, making their effects more potent."
 	taste_description = "alcohol" //mostly for sneaky slips
@@ -129,7 +129,7 @@
 	metastress = 0.35
 	color = "#4C8000"
 
-/datum/reagent/impure/antihol/inverse/on_mob_life(mob/living/carbon/C)
+/datum/reagent/impure/antihol_inverse/on_mob_life(mob/living/carbon/C)
 	for(var/datum/reagent/consumable/ethanol/alch in C.reagents.reagent_list)
 		alch.boozepwr += 2
 	..()
@@ -155,14 +155,16 @@
 
 /datum/reagent/impure/inacusiate
 	name = "Tinyacusiate"
-	description = "Makes the patient hard of hearing, and slowly causes ear damage."
+	description = "Makes the patient's hearing temporarily funky', and slowly causes ear damage."
 	reagent_state = LIQUID
 	color = "#DDDDFF"
 	metastress = 0.75
 	taste_description = "the heat evaporating from your mouth."
 	pH = 1
+	var/randomSpan = "clown"
 
 /datum/reagent/impure/inacusiate/on_mob_add(mob/living/L)
+	randomSpan = pick(list("clown", "small", "big", "spooky", "velvet", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(L, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	..()
 
@@ -175,7 +177,7 @@
 	..()
 
 /datum/reagent/impure/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
-	hearing_args[HEARING_RAW_MESSAGE] += "small"
+	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
 
 /datum/reagent/impure/cryosenium
 	name = "Cyrogelidia"

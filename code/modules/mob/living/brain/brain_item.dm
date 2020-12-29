@@ -10,7 +10,7 @@
 	organ_flags = ORGAN_VITAL
 	attack_verb = list("attacked", "slapped", "whacked")
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
-	decay_factor = STANDARD_ORGAN_DECAY	/ 4		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise (I think this is sped up with my changes?)
+	decay_factor = STANDARD_ORGAN_DECAY	/ 3		//30 minutes of decaying to result in a fully damaged brain, since a fast decay rate would be unfun gameplay-wise (I think this is sped up with my changes?)
 	healing_factor = STANDARD_ORGAN_HEALING / 2
 
 	maxHealth	= BRAIN_DAMAGE_DEATH
@@ -225,7 +225,7 @@
 	else
 		..()
 
-/obj/item/organ/brain/applyOrganDamage(var/d, var/maximum = maxHealth)
+/obj/item/organ/brain/applyOrganDamage(var/d, var/maximum = maxHealth, cureThreshold = ORGAN_TREAT_ACUTE)
 	. = ..()
 	if(!. || !owner)
 		return
@@ -245,7 +245,7 @@
 	if(damage > high_threshold) //Stops brains from fully decaying
 		return
 	var/mob/living/carbon/C  = owner
-	if(C && C.reagents && C.reagents.has_reagent("cryosenium")) //Prevents organ decay
+	if(C && C.reagents && C.reagents.has_reagent(/datum/reagent/medicine/cryosenium)) //Prevents organ decay
 		return
 	is_cold()
 	if(organ_flags & ORGAN_FROZEN)

@@ -108,7 +108,7 @@
 		C.clear_fullscreen("eye_damage")
 		*/
 
-/obj/item/organ/eyes/applyOrganDamage(d, maximum = maxHealth)
+/obj/item/organ/eyes/applyOrganDamage(d, maximum = maxHealth, cureThreshold = ORGAN_TREAT_END_STAGE)
 	. = ..()
 	if(!.)
 		return

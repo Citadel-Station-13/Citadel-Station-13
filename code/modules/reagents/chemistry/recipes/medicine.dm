@@ -335,7 +335,7 @@
 
 /datum/chemical_reaction/antihol/FermiFinish(datum/reagents/holder, added_volume, added_purity)
 	..()
-	var/datum/reagent/impure/antihol/Ah = holder.has_reagent("antihol_impure")
+	var/datum/reagent/impure/antihol/Ah = holder.has_reagent(/datum/reagent/impure/antihol)
 	if(!Ah)
 		return
 	//Normalises 0.3 - 1 for impure to 1 to 0. (i.e. normalsise and inverts)

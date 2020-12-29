@@ -307,19 +307,24 @@
 				switch(L.metabolic_stress)
 					if(-INFINITY to -10)
 						data["occupant"]["metabolicColour"] = "basic"
-						data["occupant"]["metabolicStress"] = "Chronic liver treatment"
+						data["occupant"]["metabolicStress"] = "Chronic liver treatment [round(L.metabolic_stress, 0.1)]"
+						data["occupant"]["metabolicVal"] = -round(L.metabolic_stress, 0.1)
 					if(-10 to -0.5)
 						data["occupant"]["metabolicColour"] = "highlight"
-						data["occupant"]["metabolicStress"] = "Acute liver treatment"
+						data["occupant"]["metabolicStress"] = "Acute liver treatment [round(L.metabolic_stress, 0.1)]"
+						data["occupant"]["metabolicVal"] = -round(L.metabolic_stress, 0.1)
 					if(-0.5 to 15)
 						data["occupant"]["metabolicColour"] = "good"
 						data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+						data["occupant"]["metabolicVal"] = round(L.metabolic_stress, 0.1)
 					if(15 to 25)
 						data["occupant"]["metabolicColour"] = "average"
 						data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+						data["occupant"]["metabolicVal"] = round(L.metabolic_stress, 0.1)
 					if(25 to INFINITY)
 						data["occupant"]["metabolicColour"] = "bad"
 						data["occupant"]["metabolicStress"] = round(L.metabolic_stress, 0.1)
+						data["occupant"]["metabolicVal"] = round(L.metabolic_stress, 0.1)
 		data["occupant"]["failing_organs"] = list()
 		if(C)
 			for(var/obj/item/organ/Or in C.getFailingOrgans())

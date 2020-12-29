@@ -21,7 +21,7 @@
 						log_reagent("Inverting [cached_volume] [R.type] [R.purity] into [R.inverse_chem]")
 					holder.remove_reagent(R.type, cached_volume, TRUE)
 					holder.add_reagent(R.inverse_chem, cached_volume, FALSE, added_purity = 1)
-					var/datum/reagent/R2 = holder.has_reagent("[R.inverse_chem]")
+					var/datum/reagent/R2 = holder.has_reagent(R.inverse_chem)
 					if(clear_conversion & REACTION_CLEAR_RETAIN)
 						R2.cached_purity = 1-R.purity
 						R2.purity = R2.cached_purity
@@ -33,7 +33,7 @@
 					log_reagent("Impure [cached_volume] of [R.type] at [R.purity] into [impureVol] of [R.impure_chem] with [clear_conversion & REACTION_CLEAR_RETAIN ? "Clear conversion" : "Purification"] mechanics")
 				holder.remove_reagent(id, (impureVol), TRUE)
 				holder.add_reagent(R.impure_chem, impureVol, FALSE, added_purity = 1)
-				var/datum/reagent/R2 = holder.has_reagent("[R.impure_chem]")
+				var/datum/reagent/R2 = holder.has_reagent(R.impure_chem)
 				if(clear_conversion & REACTION_CLEAR_RETAIN)
 					R2.cached_purity = 1-temp_purity
 					R2.purity = R2.cached_purity
@@ -556,19 +556,19 @@
 	R.pH = clamp(R.pH, 0, 14)
 
 /datum/chemical_reaction/antacidpregen/FermiFinish(datum/reagents/holder, var/atom/my_atom, added_volume)
-	var/datum/reagent/medicine/antacidpregen/A = holder.has_reagent("antacidpregen")
+	var/datum/reagent/medicine/antacidpregen/A = holder.has_reagent(/datum/reagent/medicine/antacidpregen)
 	if(!A)
 		return
 	if(holder.pH < 7)
 		holder.remove_reagent(id, added_volume)
-		holder.add_reagent("antbase", added_volume, added_purity = 1-A.purity)
-		var/datum/reagent/medicine/antacidpregen/antbase/B = holder.has_reagent("antbase")
+		holder.add_reagent(/datum/reagent/medicine/antacidpregen/antbase, added_volume, added_purity = 1-A.purity)
+		var/datum/reagent/medicine/antacidpregen/antbase/B = holder.has_reagent(/datum/reagent/medicine/antacidpregen/antbase)
 		B.cached_purity = 1-A.purity
 
 	else
 		holder.remove_reagent(id, added_volume)
-		holder.add_reagent("antacid", added_volume, added_purity = 1-A.purity)
-		var/datum/reagent/medicine/antacidpregen/antacid/A2 = holder.has_reagent("antacid")
+		holder.add_reagent(/datum/reagent/medicine/antacidpregen/antacid, added_volume, added_purity = 1-A.purity)
+		var/datum/reagent/medicine/antacidpregen/antacid/A2 = holder.has_reagent(/datum/reagent/medicine/antacidpregen/antacid)
 		A2.cached_purity = 1-A.purity
 
 /datum/chemical_reaction/antacidpregen/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
@@ -604,7 +604,7 @@
 	if(R.chem_temp < 20)
 		FermiExplode(R, R.my_atom, R.total_volume, R.chem_temp, R.pH)
 		return
-	var/datum/reagent/medicine/cryosenium/C = R.has_reagent("cryosenium")
+	var/datum/reagent/medicine/cryosenium/C = R.has_reagent(/datum/reagent/medicine/cryosenium)
 	var/step_purity = ((R.chem_temp-50)/250)
 	C.purity = clamp(((C.purity * C.volume) + (step_purity * added_volume)) /((C.volume + added_volume)), 0, 1)
 	..()

@@ -518,7 +518,7 @@
 		failed = TRUE
 		to_chat(owner, "<span class='userdanger'>You feel your lung collapse within your chest as you gasp for air, unable to inflate them anymore!</span>")
 
-/obj/item/organ/lungs/applyOrganDamage(d, maximum = maxHealth)
+/obj/item/organ/lungs/applyOrganDamage(d, maximum = maxHealth, cureThreshold = ORGAN_TREAT_ACUTE)
 	. = ..()
 	if(!.)
 		return

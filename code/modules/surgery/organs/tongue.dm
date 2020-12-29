@@ -45,15 +45,7 @@
 	for(var/datum/accent/speech_modifier in accents)
 		speech_args = speech_modifier.modify_speech(speech_args, source, owner)
 
-/obj/item/organ/tongue/applyOrganDamage(d, maximum = maxHealth)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(organ_flags & ORGAN_SYNTHETIC)
-		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request", "the friends we made along the way")
-		owner.say("The pH is approximately [pick(errormessage)].")
-
-/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth)
+/obj/item/organ/tongue/applyOrganDamage(var/d, var/maximum = maxHealth, cureThreshold = ORGAN_TREAT_ACUTE)
 	if(!d) //Micro-optimization.
 		return
 	if(maximum < damage)
@@ -73,6 +65,11 @@
 			to_chat(owner, "<span class='warning'>Your tongue feels like it's about to fall out!.</span>")
 		else if ((damage / maxHealth) > 0.5)
 			to_chat(owner, "<span class='notice'>Your tongue is really starting to hurt.</span>")
+
+	if(organ_flags & ORGAN_SYNTHETIC && prob(10))
+		var/errormessage = list("Runtime in tongue.dm, line 39: Undefined operation \"zapzap ow my tongue\"", "afhsjifksahgjkaslfhashfjsak", "-1.#IND", "Graham's number", "inside you all along", "awaiting at least 1 approving review before merging this taste request", "the friends we made along the way")
+		owner.say("The pH is approximately [pick(errormessage)].")
+
 
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
@@ -192,7 +189,7 @@
 	initial_accents += pick(phomeme_types)
 	. = ..()
 
-/obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth)
+/obj/item/organ/tongue/bone/applyOrganDamage(var/d, var/maximum = maxHealth, cureThreshold = ORGAN_TREAT_ACUTE)
 	if(d < 0)
 		return
 	if(!owner)

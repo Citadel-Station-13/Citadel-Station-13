@@ -146,10 +146,10 @@
 		if(GLOB.ratvar_awakens)
 			H.cure_nearsighted(list(EYE_DAMAGE))
 			H.cure_blind(list(EYE_DAMAGE))
-			eyes?.applyOrganDamage(-eye_damage_done)
+			eyes?.applyOrganDamage(-eye_damage_done, cureThreshold = ORGAN_TREAT_END_STAGE)
 			eye_damage_done = 0
 		else if(prob(50) && eye_damage_done)
-			eyes?.applyOrganDamage(-1)
+			eyes?.applyOrganDamage(-1, cureThreshold = ORGAN_TREAT_END_STAGE)
 			eye_damage_done = max(0, eye_damage_done - 1)
 		if(!eye_damage_done)
 			qdel(src)

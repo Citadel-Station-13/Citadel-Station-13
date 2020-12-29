@@ -22,7 +22,7 @@
 	return ..()
 
 /datum/status_effect/cryosenium/tick()
-	if(!cube || owner.loc != cube || !owner.reagents.has_reagent("cryosenium_impure")) //mostly a just in case kinda thing.
+	if(!cube || owner.loc != cube || !owner.reagents.has_reagent(/datum/reagent/impure/cryosenium)) //mostly a just in case kinda thing.
 		owner.remove_status_effect(src)
 
 /datum/status_effect/cryosenium/on_remove()

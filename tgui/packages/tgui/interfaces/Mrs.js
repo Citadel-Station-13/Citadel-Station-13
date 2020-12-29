@@ -72,7 +72,8 @@ export const Mrs = (props, context) => {
         {!!occupied && (
           <Section
             title={'Organ Status'}
-            minHeight="420px">
+            minHeight="420px"
+            minWidth="300px">
 
             {/* Process each organ in an incredbily janky way */}
             <LabeledList>
@@ -110,7 +111,7 @@ export const Mrs = (props, context) => {
                   {organ.slot === "HEART" && (
                     <Table>
                       <Table.Row>
-                        <Table.Cell grow={1} width="30" collapsing={1}>
+                        <Table.Cell grow={1} width="30">
                           Blood volume:
                         </Table.Cell>
                         <Table.Cell grow={2} width="70%">
@@ -126,7 +127,7 @@ export const Mrs = (props, context) => {
                               bad: [-Infinity,
                                 (data.occupant.blood.maxBloodVolume / 2)],
                             }}>
-                            {round(data.occupant.blood.currentBloodVolume)} cl
+                            {round(data.occupant.blood.currentBloodVol)} cl
                           </ProgressBar>
                         </Table.Cell>
                       </Table.Row>
@@ -141,7 +142,7 @@ export const Mrs = (props, context) => {
                     </Table>
                   )}
 
-                  {organ.name === "LIVER" && (
+                  {organ.slot === "LIVER" && (
                     <Flex
                       height="100%"
                       width="100%"
@@ -155,13 +156,7 @@ export const Mrs = (props, context) => {
                           minValue={data.occupant.metabolicStressMin}
                           maxValue={data.occupant.metabolicStressMax}
                           value={data.occupant.metabolicStressVal}
-                          ranges={{
-                            violet: [-Infinity, -10],
-                            blue: [-10, 0],
-                            good: [0, 15],
-                            average: [15, 40],
-                            bad: [40, Infinity],
-                          }}>
+                          color={data.occupant.metabolicColour}>
                           {data.occupant.metabolicStress}
                         </ProgressBar>
                       </Flex.Item>

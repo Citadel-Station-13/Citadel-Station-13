@@ -332,7 +332,7 @@ GENETICS SCANNER
 				else if(O.damage > O.low_threshold && advanced)
 					damage_message += " <span class='alert'>Acute [O.name] failure detected.</span>"
 				else if(O.damage > 0 && advanced)
-					damage_message += " <font color='red'>Minor [O.name] failure detected.</span>"
+					damage_message += " <font color='red'>Minor [O.name] damage detected.</span>" //This isn't really failure at this point.
 
 			if(temp_message || damage_message)
 				msg += "\t<b><span class='info'>[uppertext(O.name)]:</b></span> [damage_message] [temp_message]\n"
