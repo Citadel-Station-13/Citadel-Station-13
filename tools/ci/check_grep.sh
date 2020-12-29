@@ -70,7 +70,7 @@ while read f; do
 done < <(find . -type f -name '*.dm')
 if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
-    st=1
+    # st=1 # annoy the coders instead of causing it to fail
 fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
