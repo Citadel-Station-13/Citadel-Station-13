@@ -178,6 +178,10 @@
 			maximum = O.maxHealth
 		O.applyOrganDamage(amount, maximum)
 		O.onDamage(amount, maximum)
+	
+/mob/living/carbon/proc/cureAllOrganLoss(amount, threshold = ORGAN_TREAT_ACUTE)
+	for(var/obj/item/organ/O in internal_organs)
+		cureOrganDamage(O.slot, amount, threshold)
 
 /mob/living/carbon/proc/randomOrganDamage(amount, maximum)
 	var/organ_list = internal_organs

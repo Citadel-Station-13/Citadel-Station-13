@@ -303,6 +303,10 @@
 	metabolization_rate = 0.05
 //Pauses decay! Does do something, I promise.
 
+/datum/reagent/medicine/cryosenium/on_mob_dead(mob/living/carbon/M)
+	. = ..()
+	M.cureAllOrganLoss(0.2, ORGAN_TREAT_CHRONIC)	
+
 /datum/reagent/fermi/zeolites
 	name = "Artificial Zeolites"
 	description = "Lab made Zeolite, used to clear radiation from people and items alike! Splashing just a small amount(5u) onto any item can clear away large amounts of contamination, as long as its purity is at least 0.7."

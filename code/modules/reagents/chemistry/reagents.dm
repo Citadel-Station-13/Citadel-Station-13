@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 //called when a mob processes chems when dead.
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/M)
 	if(!(chemical_flags & REAGENT_DEAD_PROCESS)) //justincase
-		return
+		return FALSE
 	current_cycle++
 	if(holder)
 		holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.

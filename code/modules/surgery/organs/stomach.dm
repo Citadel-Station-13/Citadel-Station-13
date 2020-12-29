@@ -68,18 +68,18 @@
 		return
 	//stomach acid stuff
 	if(C.reagents.pH > stomach_acid_opt_pH + 0.2)
-		var/adjust = C.reagents.pH - (0.1-(damage/2000))
+		var/adjust = C.reagents.pH - (0.1-(damage/1000))
 		C.reagents.pH = clamp(adjust, 0, 14)
 	else if (C.reagents.pH < stomach_acid_opt_pH - 0.2)
-		var/adjust = C.reagents.pH + (0.1-(damage/2000))
+		var/adjust = C.reagents.pH + (0.1-(damage/1000))
 		C.reagents.pH = clamp(adjust, 0, 14)
 
 	var/datum/reagent/SA = C.reagents.has_reagent(stomach_acid)
 	if(!SA)
-		owner.reagents.add_reagent(stomach_acid, 1)
-		applyOrganDamage(5)
+		owner.reagents.add_reagent(stomach_acid, 2)
+		applyOrganDamage(1)
 	else if(SA.volume < stomach_acid_volume)
-		SA.volume = clamp(SA.volume + 1, 0, stomach_acid_volume)
+		SA.volume = clamp(SA.volume + 2, 0, stomach_acid_volume)
 
 	if(damage < low_threshold)
 		return
