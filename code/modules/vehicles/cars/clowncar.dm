@@ -144,10 +144,13 @@
 	. = ..()
 	AddComponent(/datum/component/twitch_plays/simple_movement)
 	START_PROCESSING(SSfastprocess, src)
+	GLOB.poi_list |= src
+	notify_ghosts("Twitch Plays: Clown Car")
 
 /obj/vehicle/sealed/car/clowncar/twitch_plays/Destroy()
-	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
+	GLOB.poi_list -= src
+	return ..()
 
 /obj/vehicle/sealed/car/clowncar/twitch_plays/process()
 	var/dir = SEND_SIGNAL(src, COMSIG_TWITCH_PLAYS_MOVEMENT_DATA, TRUE)
