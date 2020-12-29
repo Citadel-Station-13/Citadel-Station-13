@@ -770,6 +770,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medbay3"
 	ambientsounds = MEDICAL
 
+/area/medical/clinic
+	name = "Clinic"
+	icon_state = "medbay3"
+	ambientsounds = MEDICAL
+
 /area/medical/abandoned
 	name = "Abandoned Medbay"
 	icon_state = "medbay3"
@@ -1062,6 +1067,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science
 	name = "Science Division"
 	icon_state = "toxlab"
+
+/area/science/observatory
+	name = "Research Observatory"
+	icon_state = "toxmisc"
 
 /area/science/lab
 	name = "Research and Development"
@@ -1443,6 +1452,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Engineering
 
+/area/engine/teg
+	name = "Thermo-Electric Generator"
+	icon_state = "engine"
+
 /area/engine/teg_hot
 	name = "Hot Loop"
 	icon_state = "red"
@@ -1454,6 +1467,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/workshop
 	name = "Engineering Workshop"
 	icon_state = "engine"
+
+/area/engine/substation
+	name = "Electrical Substation"
+	icon_state = "engine"
+
+/area/engine/atmos/aftair
+	name = "Aft Air Hookup"
+	icon_state = "atmos"
+	flags_1 = NONE
 
 /area/security/courtroom/jury
 	name = "Jury Room"
