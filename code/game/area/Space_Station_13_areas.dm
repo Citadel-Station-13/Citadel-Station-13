@@ -325,10 +325,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Service Hallway"
 	icon_state = "hall_service"
 
-/area/hallway/secondary/civilian
-	name = "Civilian Wing"
-	icon_state = "hallFS"
-
 
 //Command
 
@@ -483,6 +479,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Recreation Area"
 	icon_state = "fitness"
 	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/fitness/pool
+	name = "Pool Area"
+	icon_state = "pool"
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
@@ -1046,8 +1046,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "janitor"
 	flags_1 = NONE
 
+/area/janitor/aux
+	name = "Auxiliary Custodial Closet"
+	icon_state = "janitor"
+	flags_1 = NONE
+
 /area/hydroponics
 	name = "Hydroponics"
+	icon_state = "hydro"
+
+/area/hydroponics/lobby
+	name = "Hydroponics Lobby"
 	icon_state = "hydro"
 
 /area/hydroponics/garden
@@ -1199,6 +1208,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Secure Storage"
 	icon_state = "storage"
 	clockwork_warp_allowed = FALSE
+
+/area/storage/emergency
+	name = "Emergency Storage"
+	icon_state = "emergencystorage"
 
 /area/storage/emergency/starboard
 	name = "Starboard Emergency Storage"
@@ -1409,113 +1422,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
-/area/crew_quarters/fitness/pool
-	name = "Pool Area"
-	icon_state = "pool"
-
-/area/crew_quarters/dorms/blue
-	name = "Blue Dorms"
-	icon_state = "Sleep"
-	nightshift_public_area = NIGHTSHIFT_AREA_NONE
-
-/area/crew_quarters/dorms/purple
-	name = "Purple Dorms"
-	icon_state = "Sleep"
-	nightshift_public_area = NIGHTSHIFT_AREA_NONE
-
-/area/crew_quarters/lounge/jazz
-	name = "Jazz Lounge"
-	icon_state = "yellow"
-	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
-	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
-
-
-/area/crew_quarters/fitness/recreation
-	name = "Recreation Area"
-	icon_state = "fitness"
-	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
-
-/area/crew_quarters/fitness/cogpool
-	name = "Pool"
-	icon_state = "fitness"
-	clockwork_warp_fail = "Pool's closed."
-	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
-
-/area/crew_quarters/barbershop
-	name = "Barbershop"
-	icon_state = "blue"
-	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
-
-/area/crew_quarters/observatory
-	name = "Observatory"
-	icon_state = "Sleep"
-
-//Engineering
-
-/area/engine/teg
-	name = "Thermo-Electric Generator"
-	icon_state = "engine"
-
-/area/engine/teg_hot
-	name = "Hot Loop"
-	icon_state = "red"
-
-/area/engine/teg_cold
-	name = "Cold Loop"
-	icon_state = "blue"
-
-/area/engine/workshop
-	name = "Engineering Workshop"
-	icon_state = "engine"
-
-/area/engine/substation
-	name = "Electrical Substation"
-	icon_state = "engine"
-
-/area/engine/atmos/aftair
-	name = "Aft Air Hookup"
-	icon_state = "atmos"
-	flags_1 = NONE
-
-/area/security/courtroom/jury
-	name = "Jury Room"
-	icon_state = "courtroom"
-
-/area/quartermaster/miningdock/airless
-	name = "Mining Dock"
-	icon_state = "mining"
-	has_gravity = STANDARD_GRAVITY
-	valid_territory = FALSE
-	outdoors = TRUE
-	ambientsounds = SPACE
-	blob_allowed = FALSE //While part of the station, what good will it do you?
-
-/area/quartermaster/miningdock/airless/no_grav
-	name = "Mining Dock"
-	icon_state = "mining"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
-	power_light = FALSE
-	power_equip = FALSE
-	power_environ = FALSE
-	valid_territory = FALSE
-	outdoors = TRUE
-	ambientsounds = SPACE
-	blob_allowed = FALSE //While part of the station, what good will it do you?
-
-/area/janitor/aux
-	name = "Auxiliary Custodial Closet"
-	icon_state = "janitor"
-	flags_1 = NONE
-
-/area/hydroponics/lobby
-	name = "Hydroponics Lobby"
-	icon_state = "hydro"
-
-//Storage
-
-/area/storage/emergency/generic
-	name = "Emergency Storage"
-	icon_state = "emergencystorage"
 
 //Construction
 
@@ -1572,10 +1478,99 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Storage Wing"
 	icon_state = "storage_wing"
 
-//Routers
+//Areas that predominantly only apply to CogStation
+
+/area/crew_quarters/dorms/blue
+	name = "Blue Dorms"
+	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
+
+/area/crew_quarters/dorms/purple
+	name = "Purple Dorms"
+	icon_state = "Sleep"
+	nightshift_public_area = NIGHTSHIFT_AREA_NONE
+
+/area/crew_quarters/lounge/jazz
+	name = "Jazz Lounge"
+	icon_state = "yellow"
+	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/fitness/cogpool
+	name = "Pool"
+	icon_state = "fitness"
+	clockwork_warp_fail = "Pool's closed."
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/barbershop
+	name = "Barbershop"
+	icon_state = "blue"
+	nightshift_public_area = NIGHTSHIFT_AREA_RECREATION
+
+/area/crew_quarters/observatory
+	name = "Observatory"
+	icon_state = "Sleep"
+
+/area/hallway/secondary/civilian
+	name = "Civilian Wing"
+	icon_state = "hallFS"
+
+/area/engine/atmos/aftair
+	name = "Aft Air Hookup"
+	icon_state = "atmos"
+	flags_1 = NONE
+
+/area/engine/teg
+	name = "Thermo-Electric Generator"
+	icon_state = "engine"
+
+/area/engine/teg/hotloop
+	name = "Hot Loop"
+	icon_state = "red"
+
+/area/engine/teg/coldloop
+	name = "Cold Loop"
+	icon_state = "blue"
+
+/area/engine/workshop
+	name = "Engineering Workshop"
+	icon_state = "engine"
+
+/area/engine/substation
+	name = "Electrical Substation"
+	icon_state = "engine"
+
+/area/security/courtroom/jury
+	name = "Jury Room"
+	icon_state = "courtroom"
+
+/area/quartermaster/miningdock/airless
+	name = "Mining Dock"
+	icon_state = "mining"
+	has_gravity = STANDARD_GRAVITY
+	valid_territory = FALSE
+	outdoors = TRUE
+	ambientsounds = SPACE
+	blob_allowed = FALSE //While part of the station, what good will it do you?
+
+/area/quartermaster/miningdock/airless/no_grav
+	name = "Mining Dock"
+	icon_state = "mining"
+	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	power_light = FALSE
+	power_equip = FALSE
+	power_environ = FALSE
+	valid_territory = FALSE
+	outdoors = TRUE
+	ambientsounds = SPACE
+	blob_allowed = FALSE //While part of the station, what good will it do you?
+
+
+
+//Routers (currently exclusive to CogStation)
 
 /area/router
-	name = "Router"
+	name = "Routing Depot"
 	icon_state = "yellow"
 	ambientsounds = ENGINEERING
 
