@@ -36,7 +36,7 @@
 	var/mob/living/carbon/C = owner
 	if(!C.reagents)
 		return
-	var/deltapH = (C.reagents.pH - stomach_acid_opt_pH)) 
+	var/deltapH = C.reagents.pH - stomach_acid_opt_pH
 	if(deltapH < 0)
 		deltapH = -deltapH //Normalise around middle
 	switch(deltapH)

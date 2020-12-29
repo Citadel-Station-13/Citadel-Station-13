@@ -25,7 +25,7 @@
 ! scope=\"col\" style='background-color:#FFDD66;'|pH
 |-
 "}
-	var/input_reagent = replacetext(lowertext(input("Input the name/type of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input") as text), " ", "") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
+	var/input_reagent = replacetext(lowertext(input("Input the datum typepath of a reagent to get it's description on it's own, or leave blank to parse every chem.", "Input") as text), " ", "") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(input_reagent)
 		var/input_reagent2 = find_reagent(input_reagent)
 		if(!input_reagent2)
@@ -95,31 +95,36 @@
 				continue
 
 			for(var/datum/reagent/Y in dispensable_reagents) //Why do you have to do this
-				if(ispath(R, Y))
+				var/datum/reagent/Y2 = GLOB.name2reagent[Y.name]
+				if(ispath(R, Y2))
 					basic += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in components)
-				if(ispath(R, Y))
+				var/datum/reagent/Y2  = GLOB.name2reagent[Y.name]
+				if(ispath(R, Y2))
 					upgraded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in dispence_drinks)
-				if(ispath(R, Y))
+				var/datum/reagent/Y2  = GLOB.name2reagent[Y.name]
+				if(ispath(R, Y2))
 					drinks += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in dispence_alco)
-				if(ispath(R, Y))
+				var/datum/reagent/Y2  = GLOB.name2reagent[Y.name]
+				if(ispath(R, Y2))
 					alco += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
 			for(var/datum/reagent/Y in grind)
-				if(ispath(R, Y))
+				var/datum/reagent/Y2  = GLOB.name2reagent[Y.name]
+				if(ispath(R, Y2))
 					grinded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
