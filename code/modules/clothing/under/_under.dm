@@ -244,8 +244,7 @@
 /obj/item/clothing/under/proc/rolldown()
 	if(!can_use(usr))
 		return
-	toggle_jumpsuit_adjust()
-	if(ishuman(usr))
+	if(toggle_jumpsuit_adjust() && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.update_inv_w_uniform()
 		H.update_body()
@@ -253,7 +252,7 @@
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
 	if(!can_adjust)
 		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
-		return
+		return FALSE
 	adjusted = !adjusted
 
 	if(adjusted)
@@ -271,7 +270,7 @@
 			if(initial(mutantrace_variation) & USE_TAUR_CLIP_MASK)
 				mutantrace_variation |= USE_TAUR_CLIP_MASK
 
-	return adjusted
+	return TRUE
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
