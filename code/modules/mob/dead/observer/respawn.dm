@@ -155,16 +155,18 @@
 		penalize = client.prefs.respawn_restrictions_active
 	client.prefs.respawn_restrictions_active = penalize
 
-	to_chat(src, "<span class='userdanger'>You have been respawned to the lobby. \
+	message_admins("[key_name_admin(src)] was respawned to lobby [penalize? "with" : "without"] restrictions.")
+	log_game("[key_name(src)] was respawned to lobby [penalize? "with" : "without"] restrictions.")
+	var/mob/dead/new_player/N = transfer_to_lobby()
+
+	to_chat(N, "<span class='userdanger'>You have been respawned to the lobby. \
 	Remember to take heed of rules regarding round knowledge - notably, that ALL past lives are forgotten. \
 	Any character you join as has NO knowledge of round events unless specified otherwise by an admin.</span>")
 
-	message_admins("[key_name_admin(src)] was respawned to lobby [penalize? "with" : "without"] restrictions.")
-	log_game("[key_name(src)] was respawned to lobby [penalize? "with" : "without"] restrictions.")
-	transfer_to_lobby()
-
 /**
  * Actual proc that removes us and puts us back on lobby
+ * 
+ * Returns the new mob.
  */
 /mob/dead/observer/proc/transfer_to_lobby()
 	if(!client)		// if no one's in us we can just be deleted
@@ -179,3 +181,4 @@
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player
 	M.ckey = ckey
+	return M
