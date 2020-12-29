@@ -438,12 +438,19 @@
 		return
 	else
 		linked_alert.icon_state = "fleshmend"
-	owner.adjustBruteLoss(-10, FALSE)
-	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
 	if(!iscarbon(owner))
+		owner.adjustBruteLoss(-10, FALSE)
+		owner.adjustFireLoss(-5, FALSE)
 		return
 	var/mob/living/carbon/C = owner
+	var/list/damaged_parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC, BODYPART_HYBRID, BODYPART_NANITES))
+	if(damaged_parts.len)
+		for(var/obj/item/bodypart/part in damaged_parts)
+			part.heal_damage(10/damaged_parts.len, 5/damaged_parts.len, only_organic = FALSE, updating_health = FALSE)
+		C.updatehealth()
+		C.update_damage_overlays()
+
 	QDEL_LIST(C.all_scars)
 
 /obj/screen/alert/status_effect/fleshmend
@@ -599,7 +606,7 @@
 
 	//Heal brain damage and toxyloss, alongside trauma
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -8)
-	owner.adjustToxLoss(-6, forced = TRUE)
+	owner.adjustToxLoss(-6, forced = TRUE, toxins_type = TOX_OMNI)
 	M.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	//Purges 50 rads per tick
 	if(owner.radiation > 0)

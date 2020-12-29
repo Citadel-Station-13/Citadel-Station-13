@@ -154,6 +154,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_failed_stagger_duration = 3.5 SECONDS
 	/// Clickdelay duration post-parry if you fail to parry an attack
 	var/parry_failed_clickcd_duration = 2 SECONDS
+	/// Parry cooldown post-parry if failed. This is ADDED to parry_cooldown!!!
+	var/parry_failed_cooldown_duration = 0 SECONDS
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
