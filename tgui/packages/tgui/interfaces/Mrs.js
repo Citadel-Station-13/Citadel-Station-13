@@ -172,7 +172,8 @@ export const Mrs = (props, context) => {
 
                         <Flex.Item grow={1}>
                           <Box color={data.occupant.stomachColor}>
-                            {data.occupant.stomachAcidType} Vol: {data.occupant.stomachVol}u
+                            {data.occupant.stomachAcidType} 
+                            Vol:{data.occupant.stomachVol}u
                           </Box>
                         </Flex.Item>
                         <FlexItem grow={2}>
