@@ -7,7 +7,7 @@
 
 /datum/component/twitch_plays/Initialize(...)
 	. = ..()
-	if(!isatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/on_start_orbit)
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, .proc/on_end_orbit)
