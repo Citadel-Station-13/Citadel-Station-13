@@ -19,7 +19,7 @@
 	var/prefix = {"{| class=\"wikitable sortable\" style=\"width:100%; text-align:left; border: 3px solid #FFDD66; cellspacing=0; cellpadding=2; background-color:white;\"
 ! scope=\"col\" style='width:150px; background-color:#FFDD66;'|Name
 ! scope=\"col\" class=\"unsortable\" style='width:150px; background-color:#FFDD66;'|Recipe
-! scope=\"col\" class=\"unsortable\" style='background-color:#FFDD66;'|Reaction vars
+! scope=\"col\" class=\"unsortable\" style='width:200px; style='background-color:#FFDD66;'|Reaction vars
 ! scope=\"col\" class=\"unsortable\" style='background-color:#FFDD66;'|Description
 ! scope=\"col\" class=\"unsortable\" style='background-color:#FFDD66;'|Chemical properties
 ! scope=\"col\" style='background-color:#FFDD66;'|pH
@@ -31,13 +31,13 @@
 		if(!input_reagent2)
 			to_chat(usr, "Unable to find reagent, stopping proc.")
 		var/single_parse = generate_chemwiki_line(input_reagent2, input_reagent, FALSE)
-		text2file(single_parse, "[GLOB.log_directory]/chem_parse.wiki")
+		text2file(single_parse, "[GLOB.log_directory]/chem_parse.txt")
 		to_chat(usr, "[single_parse].")
 
 		single_parse = generate_chemwiki_line(input_reagent2, input_reagent, FALSE)
-		text2file(single_parse, "[GLOB.log_directory]/chem_parse.wiki")
+		text2file(single_parse, "[GLOB.log_directory]/chem_parse.txt")
 		to_chat(usr, "[single_parse].")
-		to_chat(usr, "Saved line to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.wiki OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .wiki default program! Try downloading it instead, and use that file to set a default program! Also have a cute day.)")
+		to_chat(usr, "Saved line to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.txt OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .txt default program! Try downloading it instead, and use that file to set a default program! Also have a cute day.)")
 		//Do things here
 		return
 	to_chat(usr, "Generating big list")
@@ -94,32 +94,32 @@
 			if(!R.description) //No description? It's not worth my time.
 				continue
 
-			for(var/Y in dispensable_reagents) //Why do you have to do this
-				if(R.type == Y)
+			for(var/datum/reagent/Y in dispensable_reagents) //Why do you have to do this
+				if(R == Y)
 					basic += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
-			for(var/Y in components)
-				if(R.type == Y)
+			for(var/datum/reagent/Y in components)
+				if(R == Y)
 					upgraded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
-			for(var/Y in dispence_drinks)
-				if(R.type == Y)
+			for(var/datum/reagent/Y in dispence_drinks)
+				if(R == Y)
 					drinks += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
-			for(var/Y in dispence_alco)
-				if(R.type == Y)
+			for(var/datum/reagent/Y in dispence_alco)
+				if(R == Y)
 					alco += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
 
-			for(var/Y in grind)
-				if(R.type == Y)
+			for(var/datum/reagent/Y in grind)
+				if(R == Y)
 					grinded += generate_chemwiki_line(R, X, processCR)
 					breakout = TRUE
 					continue
@@ -190,10 +190,10 @@
 		for(var/datum/chemical_reaction/CR in GLOB.chemical_reactions_list[reagent])
 			CRparse += generate_chemreactwiki_line(CR)
 
-	wholeString += ("\n= CHEMICAL REACTIONS\n\n[prefix][CRparse]\n")
-	text2file(wholeString, "[GLOB.log_directory]/chem_parse.wiki")
+	wholeString += ("\n= CHEMICAL REACTIONS = \n\n[prefix][CRparse]|}\n")
+	text2file(wholeString, "[GLOB.log_directory]/chem_parse.txt")
 	to_chat(usr, "finished reactions")
-	to_chat(usr, "Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.wiki OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .wiki default program! Try downloading it instead, and use that file to set a default program! Also have a cute day.)")
+	to_chat(usr, "Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.txt OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .txt default program! Try downloading it instead, and use that file to set a default program! Also have a cute day.)")
 
 
 
@@ -230,9 +230,9 @@
 
 	//REACTION VARS
 	if(CR)
-		outstring += "[(CR.FermiChem?"<br>Min react temp: [CR.OptimalTempMin]K":"[(CR.required_temp?"<br>Min react temp: [CR.required_temp]K":"")]")] [(CR.FermiChem?"<br>Explosion_temp: [CR.ExplodeTemp]K":"")] [(CR.FermiChem?"<br>pH range: [max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"")] "
+		outstring += "[(CR.FermiChem?"<br><b>Min react temp:</b> [CR.OptimalTempMin]K":"[(CR.required_temp?"<br><b>Min react temp:</b> [CR.required_temp]K":"")]")] [(CR.FermiChem?"<br><b>Explosion_temp:</b> [CR.ExplodeTemp]K":"")] [(CR.FermiChem?"<br><b>pH range:</b> [max((CR.OptimalpHMin - CR.ReactpHLim), 0)] to [min((CR.OptimalpHMax + CR.ReactpHLim), 14)]":"")] "
 		if(CR.FermiChem)
-			outstring += "[(CR.PurityMin?"<br>Min explosive purity: [CR.PurityMin]":"")] [(CR.FermiExplode?"<br>Special explosion: Yes":"")]"
+			outstring += "[(CR.PurityMin?"<br><b>Min explosive purity:</b> [CR.PurityMin]":"")] [(CR.FermiExplode?"<br><b>Special explosion:</b> Yes":"")]"
 	else
 		outstring += ""
 
@@ -255,7 +255,7 @@
 				if(9.9 to 19.9)
 					outstring += "<br>Extremely exothermic "
 				if(19.9 to INFINITY )
-					outstring += "<br>**Dangerously exothermic** "
+					outstring += "<br><b>Dangerously exothermic</b> "
 				//if("cheesey")
 					//outstring += "<br>Dangerously Cheesey"
 
@@ -268,11 +268,11 @@
 
 	if(R.impure_chem && R.impure_chem != /datum/reagent/impure/fermiTox)
 		R3 = GLOB.chemical_reagents_list[R.impure_chem]
-		outstring += "<br>Impure chem:\[\[#[R3.name]\]\][R3.name]"
+		outstring += "<br>Impure: \[\[#[R3.name]|[R3.name]\]\]"
 
 	if(R.inverse_chem && R.impure_chem != /datum/reagent/impure/fermiTox)
 		R3 = GLOB.chemical_reagents_list[R.inverse_chem]
-		outstring += "<br>Inverse chem:\[\[#[R3.name]\]\][R3.name] [(R3.inverse_chem_val?"<br>Inverse purity: [R3.inverse_chem_val]":"")] "
+		outstring += "<br>Inverse: \[\[#[R3.name]|[R3.name]\]\] [(R3.inverse_chem_val?"<br>Inverse purity: [R3.inverse_chem_val]":"")] "
 
 	if(CR)
 		if(CR.required_container)
@@ -296,11 +296,11 @@
 	var/datum/reagent/R3
 	for(var/R2 in CR.required_reagents)
 		R3 = GLOB.chemical_reagents_list[R2]
-		outstring += "\[\[#[R3.name]\]\][R3.name]: [CR.required_reagents[R3.type]]u <br>"
+		outstring += "\[\[#[R3.name]|[R3.name]\]\]: [CR.required_reagents[R3.type]]u <br>"
 	if(CR.required_catalysts)
 		for(var/R2 in CR.required_catalysts)
 			R3 = GLOB.chemical_reagents_list[R2]
-			outstring += "Catalyst: \[\[#[R3.name]\]\][R3.name]: [CR.required_catalysts[R3.type]]u<br>"
+			outstring += "Catalyst: \[\[#[R3.name]|[R3.name]\]\]: [CR.required_catalysts[R3.type]]u<br>"
 	outstring += " \n|"
 
 	//Reaction vars
@@ -318,5 +318,5 @@
 	//description
 	outstring += "\n| fill in manually "
 
-	outstring += "|-\n"
+	outstring += "\n|-\n"
 	return outstring
