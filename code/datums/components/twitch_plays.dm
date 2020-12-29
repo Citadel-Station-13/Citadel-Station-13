@@ -10,7 +10,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/on_start_orbit)
-	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, .proc/on_stop_orbit)
+	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, .proc/on_end_orbit)
 
 /datum/component/twitch_plays/proc/on_start_orbit(datum/source, atom/movable/orbiter)
 	if(!isobserver(orbiter))
@@ -61,7 +61,7 @@
 	if(allow_diagonal || !((dir - 1) & dir))
 		votes[source] = dir
 	else		// pick one or the other
-		votes[source] = prob(50) (dir & ~(dir - 1)) : (dir & (dir - 1))
+		votes[source] = prob(50)? (dir & ~(dir - 1)) : (dir & (dir - 1))
 
 /datum/component/twitch_plays/simple_movement/proc/fetch_data(datum/source, wipe_votes)
 	if(votes.len)
