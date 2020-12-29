@@ -8,8 +8,10 @@ mkdir ci_test/config
 #test config
 cp tools/ci/ci_config.txt ci_test/config/config.txt
 
-#c(o)p(y) extools
-cp ./libbyond-extools.so ci_test/libbyond-extools.so
+#throw extools into ldd
+cp libbyond-extools.so ~/.byond/bin/libbyond-extools.so
+chmod +x ~/.byond/bin/libbyond-extools.so
+ldd ~/.byond/bin/libbyond-extools.so
 
 cd ci_test
 DreamDaemon tgstation.dmb -close -trusted -verbose -params "log-directory=ci"
