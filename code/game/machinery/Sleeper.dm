@@ -333,18 +333,13 @@
 				data["occupant"]["failing_organs"] += list(list("name" = "[uppertext(Or.name)] "))
 
 		if(mob_occupant.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-			var/blood_id = C.get_blood_id()
-			if(blood_id)
-				data["occupant"]["blood"] = list()
-				data["occupant"]["blood"]["max"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
-				data["occupant"]["blood"]["danger"] = BLOOD_VOLUME_SAFE
+			data["occupant"]["blood"] = list()
+			data["occupant"]["blood"]["max"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
+			data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
+			data["occupant"]["blood"]["danger"] = BLOOD_VOLUME_SAFE
+			if(C.dna)
 				data["occupant"]["blood"]["bloodType"] = C.dna.blood_type
 			else
-				data["occupant"]["blood"] = list()
-				data["occupant"]["blood"]["max"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
-				data["occupant"]["blood"]["danger"] = BLOOD_VOLUME_SAFE
 				data["occupant"]["blood"]["bloodType"] = "Unable to detect"
 
 			

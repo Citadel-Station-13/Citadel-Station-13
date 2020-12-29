@@ -19,7 +19,7 @@ export const Mrs = (props, context) => {
 
   return (
     <Window
-      width={480}
+      width={530}
       height={700}>
       <Window.Content>
         <Section
@@ -172,7 +172,7 @@ export const Mrs = (props, context) => {
 
                         <Flex.Item grow={1}>
                           <Box color={data.occupant.stomachColor}>
-                            Volume: {data.occupant.stomachVol}u
+                            {data.occupant.stomachAcidType} Vol: {data.occupant.stomachVol}u
                           </Box>
                         </Flex.Item>
                         <FlexItem grow={2}>

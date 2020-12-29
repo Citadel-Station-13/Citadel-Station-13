@@ -239,31 +239,34 @@
 
 				//Stomach is partially handled above
 				if(istype(Or, /obj/item/organ/stomach))
-				var/obj/item/organ/stomach/St = Or
-				var/datum/reagent/Sa = C.reagents.has_reagent(St.stomach_acid)
-				if(Sa)
-					data["occupant"]["stomachVol"] = Sa.volume
-					switch(Sa.volume)
-						if(0 to St.stomach_acid_volume/20)
-							data["occupant"]["stomachColor"] = "bad"
-						if(St.stomach_acid_volume/20 to St.stomach_acid_volume/6)
-							data["occupant"]["stomachColor"] = "average"
-						if(St.stomach_acid_volume/6 to St.stomach_acid_volume)
-							data["occupant"]["stomachColor"] = "good"
-				else
-					data["occupant"]["stomachVol"] = 0
-					data["occupant"]["stomachColor"] = "bad"
+					var/obj/item/organ/stomach/St = Or
+					var/datum/reagent/Sa = C.reagents.has_reagent(St.stomach_acid)
+					if(Sa)
+						data["occupant"]["stomachVol"] = Sa.volume
+						switch(Sa.volume)
+							if(0 to St.stomach_acid_volume/20)
+								data["occupant"]["stomachColor"] = "bad"
+							if(St.stomach_acid_volume/20 to St.stomach_acid_volume/6)
+								data["occupant"]["stomachColor"] = "average"
+							if(St.stomach_acid_volume/6 to St.stomach_acid_volume)
+								data["occupant"]["stomachColor"] = "good"
+						data["occupant"]["stomachAcidType"] = Sa.name
+					else
+						data["occupant"]["stomachVol"] = 0
+						data["occupant"]["stomachColor"] = "bad"
+						data["occupant"]["stomachAcidType"] = "Empty"
 
 				//Heart
 				if(istype(Or, /obj/item/organ/heart))
 					if(C.has_dna()) // Blood-stuff is mostly a copy-paste from the healthscanner.
-						var/blood_id = C.get_blood_id()
-						if(blood_id)
-							data["occupant"]["blood"] = list()
-							data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
-							data["occupant"]["blood"]["currentBloodVol"] = C.blood_volume
-							data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
+						data["occupant"]["blood"] = list()
+						data["occupant"]["blood"]["maxBloodVolume"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
+						data["occupant"]["blood"]["currentBloodVol"] = C.blood_volume
+						data["occupant"]["blood"]["dangerBloodVolume"] = BLOOD_VOLUME_SAFE
+						if(C.dna)
 							data["occupant"]["blood"]["bloodType"] = C.dna.blood_type
+						else
+							data["occupant"]["blood"]["bloodType"] = "Unable to detect"
 					data["occupant"]["heartrate"] = rand(68,73) //TODO: add functionality later
 
 
