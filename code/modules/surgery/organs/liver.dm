@@ -1,6 +1,6 @@
 #define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
 #define LIVER_DEFAULT_TOX_TOLERANCE 2 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_LETHALITY 0.1 //lower values lower how harmful toxins are to the liver
+#define LIVER_DEFAULT_TOX_LETHALITY 1 //lower values lower how harmful toxins are to the liver
 #define LIVER_SWELLING_MOVE_MODIFY "pharma"
 
 /obj/item/organ/liver
@@ -19,7 +19,7 @@
 	high_threshold_cleared = "<span class='notice'>The stitching ache in your abdomen passes away, unencumbering your movements.</span>"
 	now_fixed = "<span class='notice'>The stabbing pain in your abdomen slowly calms down into a more tolerable ache.</span>"
 
-	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
+	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol (This does nothing???)
 	var/failing //is this liver failing?
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
@@ -60,26 +60,6 @@
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
-
-/obj/item/organ/liver/on_life()
-	. = ..()
-	if(!. || !owner)//can't process reagents with a failing liver
-		return
-
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-		//handle liver toxin filtration
-		for(var/datum/reagent/toxin/T in owner.reagents.reagent_list)
-			var/thisamount = owner.reagents.get_reagent_amount(T.type)
-			if (thisamount && thisamount <= toxTolerance)
-				owner.reagents.remove_reagent(T.type, 1)
-			else
-				damage += (thisamount*toxLethality)
-
-	//metabolize reagents
-	owner.reagents.metabolize(owner, can_overdose=TRUE)
-
-	if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-		to_chat(owner, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 //Just in case
 /obj/item/organ/liver/Remove(special = 0)
@@ -162,7 +142,7 @@
 				var/datum/reagent/toxin/T = I
 				var/stress = 0.5
 				if((T.toxpwr/reagentCount) > stress)
-					stress = (T.toxpwr/reagentCount)
+					stress = ((T.toxpwr*toxLethality)/reagentCount)
 				if(GLOB.Debug2) //To remove
 					message_admins("Stress:[stress], Whole stress:[ignoreTox ? (stress + (T.current_cycle/reagentCount)) : T.toxpwr/reagentCount]), cycle:[T.current_cycle] no.reagents:[reagentCount]")
 				if(T.volume <= toxTolerance*(1-(damage/100)))
@@ -358,8 +338,8 @@
 	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	toxTolerance = 5 //can shrug off up to 5u of toxins
-	toxLethality = 0.08 //20% less damage than a normal liver
+	toxTolerance = 3.5 //can shrug off up to 3.5u of toxins
+	toxLethality = 0.8 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
 	. = ..()
