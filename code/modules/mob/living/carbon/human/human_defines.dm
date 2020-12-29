@@ -14,7 +14,7 @@
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	block_parry_data = /datum/block_parry_data/unarmed/human
-	default_block_parry_data = /datum/block_parry_data/unarmed/pugilist
+	default_block_parry_data = /datum/block_parry_data/unarmed/human
 
 	//Hair colour and style
 	var/hair_color = "000"

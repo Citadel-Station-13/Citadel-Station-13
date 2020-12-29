@@ -5,7 +5,7 @@
 	silent = FALSE
 	losebreath = 0
 
-	if(!gibbed)
+	if(!gibbed && !HAS_TRAIT(src, TRAIT_DEATHCOMA))
 		emote("deathgasp")
 
 	. = ..()

@@ -133,12 +133,12 @@
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/antag_rep)[ckey(title)]
 	if(. == null)
 		return antag_rep
 
 /datum/job/proc/GetThreat()
-	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/job_threat)[ckey(title)]
 	if(. == null)
 		return threat
 
