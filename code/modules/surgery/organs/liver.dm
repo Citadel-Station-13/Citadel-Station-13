@@ -188,7 +188,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.05+((maxHealth/(damage+0.01))/5)//0.15 - 0.25
+	var/metabolic_replenish = 0.05+((maxHealth-damage)/500)//0.15 - 0.25
 	equilibrateMetabolicStress(metabolic_replenish)
 
 /obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum, absolute = FALSE)
@@ -326,7 +326,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.05+((maxHealth/(damage+0.01))/20)  //0.05 - 0.1 - slower regen
+	var/metabolic_replenish = 0.05+((maxHealth-damage)/2000)  //0.05 - 0.1 - slower regen
 	equilibrateMetabolicStress(metabolic_replenish, TRUE)
 
 //Slimes are inverse
