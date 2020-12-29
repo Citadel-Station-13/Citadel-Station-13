@@ -137,6 +137,9 @@
 /obj/vehicle/sealed/car/clowncar/proc/StopDroppingOil()
 	droppingoil = FALSE
 
+/obj/vehicle/sealed/car/clowncar/twitch_plays
+	key_type = null
+
 /obj/vehicle/sealed/car/clowncar/twitch_plays/Initialize()
 	. = ..()
 	AddComponent(/datum/component/twitch_plays/simple_movement)

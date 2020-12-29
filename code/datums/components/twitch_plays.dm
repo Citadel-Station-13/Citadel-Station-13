@@ -64,7 +64,7 @@
 		votes[source] = prob(50)? (dir & ~(dir - 1)) : (dir & (dir - 1))
 
 /datum/component/twitch_plays/simple_movement/proc/fetch_data(datum/source, wipe_votes)
-	if(votes.len)
+	if(!votes.len)
 		return
 	var/list/total = list(TEXT_NORTH, TEXT_SOUTH, TEXT_EAST, TEXT_WEST)
 	for(var/i in votes)
