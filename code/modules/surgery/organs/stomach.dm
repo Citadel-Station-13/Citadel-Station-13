@@ -36,11 +36,11 @@
 	var/mob/living/carbon/C = owner
 	if(!C.reagents)
 		return
-	var/deltapH = C.reagents.pH
-	if(deltapH>stomach_acid_opt_pH)
-		deltapH = 14-deltapH
+	var/deltapH = (C.reagents.pH - stomach_acid_opt_pH)) 
+	if(deltapH < 0)
+		deltapH = -deltapH //Normalise around middle
 	switch(deltapH)
-		if(-INFINITY to 1)
+		if(5.5 to INFINITY)
 			applyOrganDamage(0.4)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4) //heartburn!
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 2.5)
@@ -49,7 +49,7 @@
 			if(prob(1))
 				to_chat("Your throat feels like it's on fire!")
 				owner.adjustStaminaLoss(10)
-		if(1 to 2.5)
+		if(4 to 5.5)
 			applyOrganDamage(0.3)
 			owner.adjustOrganLoss(ORGAN_SLOT_HEART, 0.25) //heartburn!
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1.25)
@@ -59,9 +59,9 @@
 		if(2.5 to 4)
 			owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 			applyOrganDamage(0.2)
-		if(4 to 5.5)
+		if(1 to 2.5)
 			applyOrganDamage(0.1)
-		if(5.5 to INFINITY)
+		if(-INFINITY to 1)
 			passive_regen()
 
 	if(organ_flags & ORGAN_FAILING)

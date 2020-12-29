@@ -149,18 +149,22 @@
 			owner.adjustStaminaLoss(2)
 			swelling += 0.1
 
-
+	var/obj/item/organ/stomach/S = C.getorganslot(ORGAN_SLOT_STOMACH)
 	if(filterToxins)
 		//handle liver toxin filtration
 		for(var/I in owner.reagents.reagent_list)
 			var/datum/reagent/pickedreagent = I
 			if(istype(pickedreagent, /datum/reagent/toxin))
+				if(S)
+					if(ispath(S.stomach_acid, pickedreagent)) //Why are reagent checks so funky now?? ispath works, but istype doesn't.
+						continue
+						
 				var/datum/reagent/toxin/T = I
 				var/stress = 0.5
 				if((T.toxpwr/reagentCount) > stress)
 					stress = (T.toxpwr/reagentCount)
-				if(GLOB.Debug2)
-					message_admins("Stress:[stress], [ignoreTox ? (stress + (T.current_cycle/reagentCount)) : T.toxpwr/reagentCount]), cycle:[T.current_cycle] no.reagents:[reagentCount]")
+				if(GLOB.Debug2) //To remove
+					message_admins("Stress:[stress], Whole stress:[ignoreTox ? (stress + (T.current_cycle/reagentCount)) : T.toxpwr/reagentCount]), cycle:[T.current_cycle] no.reagents:[reagentCount]")
 				if(T.volume <= toxTolerance*(1-(damage/100)))
 					C.reagents.remove_reagent(pickedreagent.type, toxTolerance)
 					adjustMetabolicStress(stress)
@@ -178,13 +182,13 @@
 		ignoreTox = FALSE
 	if(ignoreTox)
 		immuneChems += /datum/reagent/toxin //lil hacky but it works
-	var/obj/item/organ/stomach/S = C.getorganslot(ORGAN_SLOT_STOMACH)
+
 	if(S)
 		immuneChems += S.stomach_acid
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.05+((maxHealth/damage)/5)//0.15 - 0.25
+	var/metabolic_replenish = 0.05+((maxHealth/(damage+0.01))/5)//0.15 - 0.25
 	equilibrateMetabolicStress(metabolic_replenish)
 
 /obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum, absolute = FALSE)
@@ -294,11 +298,14 @@
 			swelling += 0.02
 			owner.slurring += 2
 
-
+	var/obj/item/organ/stomach/S = C.getorganslot(ORGAN_SLOT_STOMACH)
 	if(filterToxins)
 		//handle liver toxin filtration
 		for(var/I in owner.reagents.reagent_list)
 			var/datum/reagent/pickedreagent = I
+			if(S)
+				if(istype(pickedreagent, S.stomach_acid))
+					continue
 			//toxins reduce stress
 			if(istype(pickedreagent, /datum/reagent/toxin))
 				var/datum/reagent/toxin/T = I
@@ -313,13 +320,13 @@
 
 	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
 		immuneChems += /datum/reagent/medicine
-	var/obj/item/organ/stomach/S = C.getorganslot(ORGAN_SLOT_STOMACH)
+
 	if(S)
 		immuneChems += S.stomach_acid
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.05+((maxHealth/damage)/20)  //0.05 - 0.1 - slower regen
+	var/metabolic_replenish = 0.05+((maxHealth/(damage+0.01))/20)  //0.05 - 0.1 - slower regen
 	equilibrateMetabolicStress(metabolic_replenish, TRUE)
 
 //Slimes are inverse
