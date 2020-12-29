@@ -12,6 +12,11 @@
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/on_start_orbit)
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, .proc/on_end_orbit)
 
+/datum/component/twitch_plays/Destroy(force, silent)
+	for(var/i in players)
+		DetachPlayer(i)
+	return ..()
+
 /datum/component/twitch_plays/proc/on_start_orbit(datum/source, atom/movable/orbiter)
 	if(!isobserver(orbiter))
 		return
