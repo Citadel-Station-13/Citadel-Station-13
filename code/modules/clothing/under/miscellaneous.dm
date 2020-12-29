@@ -172,6 +172,8 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/misc/gear_harness/rolldown()
+	if(!can_use(usr))
+		return
 	if(!body_parts_covered)
 		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
 		body_parts_covered = CHEST|GROIN
