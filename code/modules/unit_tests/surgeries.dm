@@ -2,14 +2,14 @@
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
 
-	TEST_ASSERT_EQUAL(patient.get_missing_limbs().len, 0, "Patient is somehow missing limbs before surgery")
+	TEST_ASSERT_EQUAL(length(patient.get_missing_limbs()), 0, "Patient is somehow missing limbs before surgery")
 
 	var/datum/surgery/amputation/surgery = new(patient, BODY_ZONE_R_ARM, patient.get_bodypart(BODY_ZONE_R_ARM))
 
 	var/datum/surgery_step/sever_limb/sever_limb = new
 	sever_limb.success(user, patient, BODY_ZONE_R_ARM, null, surgery)
 
-	TEST_ASSERT_EQUAL(patient.get_missing_limbs().len, 1, "Patient did not lose any limbs")
+	TEST_ASSERT_EQUAL(length(patient.get_missing_limbs()), 1, "Patient did not lose any limbs")
 	TEST_ASSERT_EQUAL(patient.get_missing_limbs()[1], BODY_ZONE_R_ARM, "Patient is missing a limb that isn't the one we operated on")
 
 /datum/unit_test/brain_surgery/Run()
