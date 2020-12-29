@@ -7,7 +7,7 @@
 
 /datum/component/twitch_plays/Initialize(...)
 	. = ..()
-	if(!ismovable(parent))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/on_start_orbit)
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_END, .proc/on_end_orbit)
@@ -83,6 +83,8 @@
 	var/last_move = 0
 
 /datum/component/twitch_plays/simple_movement/auto/Initialize(...)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	if(. & COMPONENT_INCOMPATIBLE)
 		return
