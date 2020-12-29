@@ -16,8 +16,8 @@
 	high_threshold_cleared = "<span class='info'>The pain in your stomach dies down for now, but food still seems unappealing.</span>"
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
-	var/stomach_acid = /datum/reagent/metabolic/stomach_acid
-	var/stomach_acid_volume = 100
+	var/stomach_acid = /datum/reagent/metabolic/stomach_acid //IF you change this - the mob will be IMMUNE to this chem - it will do nothing to them.
+	var/stomach_acid_volume = 50
 	var/stomach_acid_opt_pH = 7 //what pH the stomach wants to be at
 
 /obj/item/organ/stomach/on_life()
@@ -157,23 +157,29 @@
 		H.clear_alert("disgust")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	if(owner.reagents)
-		owner.reagents.remove_reagent(/datum/reagent/metabolic/stomach_acid, stomach_acid_volume)
+		owner.reagents.remove_reagent(/datum/reagent/metabolic/stomach_acid, stomach_acid_volume) //Since stomach acid is inert, we do this. The otherones have bonuses if you remove them, so lets keep them!
 	..()
 
 /obj/item/organ/stomach/fly
 	name = "insectoid stomach"
 	icon_state = "stomach-x" //xenomorph liver? It's just a black liver so it fits.
 	desc = "A mutant stomach designed to handle the unique diet of a flyperson."
+	stomach_acid_volume = 30
+	stomach_acid = /datum/reagent/toxin/acid //You need strong acid to be a fly
+	stomach_acid_opt_pH = 2.75
 
 /obj/item/organ/stomach/plasmaman
 	name = "digestive crystal"
 	icon_state = "stomach-p"
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
+	stomach_acid_volume = 40
+	stomach_acid = /datum/reagent/toxin/plasma //HOPEFULLY won't cause unexpected bad things
+	stomach_acid_opt_pH = 4 //same as plasma
 
 /obj/item/organ/stomach/ipc
 	name = "ipc cell"
 	icon_state = "stomach-ipc"
-	//stomach_acid = /datum/reagent/lube //TODO link sprint to lube? Also set up an ignored metabolic reagents list so that they're not processed. (see liver.dm)
+	stomach_acid = /datum/reagent/lube //Also see ignored metabolic reagents list so that they're not processed. (see liver.dm)
 
 /obj/item/organ/stomach/ipc/emp_act(severity)
 	. = ..()
@@ -192,6 +198,8 @@
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
+	//stomach_acid = /datum/reagent/fermi/astral //SHOULDN'T do anything to someone who has this added (pH is 7)- WILL BE ENABLED WHEN ASTRAL IS FIXED IN ATOMISED PR
+	stomach_acid_volume = 30 //25 is Addiction - BUT you should be okay - since you always have some in you! You're just buggered if you lose your stomach.
 
 /obj/item/organ/stomach/ethereal/on_life()
 	..()

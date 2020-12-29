@@ -184,7 +184,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.30-((2*(((damage*100)/maxHealth)/100))/10)//0.1 - 0.3
+	var/metabolic_replenish = 0.05+((maxHealth/damage)/5)//0.15 - 0.25
 	equilibrateMetabolicStress(metabolic_replenish)
 
 /obj/item/organ/liver/proc/adjustMetabolicStress(amount, minimum, maximum, absolute = FALSE)
@@ -220,7 +220,7 @@
 	icon_state = "liver-c"
 
 /obj/item/organ/liver/slime
-	name = "Viscoplasmeium"
+	name = "Viscoplasm"
 	icon_state = "liver-s"
 	desc = "A sponge like organ that absorbs and filters out impure reagents when unstressed."
 	maxHealth = 90 //Slimes can treat liver damage a lot easier than most.
@@ -309,7 +309,7 @@
 				var/datum/reagent/medicine/M = I
 				if(M.slime_friendly)
 					continue
-				adjustMetabolicStress(M.metabolization_rate/4, absolute = TRUE)
+				adjustMetabolicStress(M.metabolization_rate/3, absolute = TRUE)
 
 	if(ignoreMeds) //If we're really unstressed, medicines are ignored.
 		immuneChems += /datum/reagent/medicine
@@ -319,7 +319,7 @@
 
 	C.reagents.metabolize(C, can_overdose=TRUE, chem_resist = immuneChems)
 
-	var/metabolic_replenish = 0.2-(((((damage*100)/maxHealth)/100))/10) //0.1 - 0.2 - slower regen
+	var/metabolic_replenish = 0.05+((maxHealth/damage)/20)  //0.05 - 0.1 - slower regen
 	equilibrateMetabolicStress(metabolic_replenish, TRUE)
 
 //Slimes are inverse

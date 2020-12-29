@@ -9386,19 +9386,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/item/reagent_containers/spray/cleaner,
-/obj/item/crowbar,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/storage/box/gloves{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/storage/box/masks,
-/obj/structure/table,
+/obj/machinery/MRS,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "asM" = (
@@ -32404,16 +32392,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bzd" = (
-/obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/pen,
-/obj/machinery/requests_console{
-	department = "Medbay";
-	departmentType = 1;
-	name = "Medbay RC";
-	pixel_y = 30
-	},
+/obj/structure/bookcase/manuals/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bze" = (
@@ -32672,6 +32651,7 @@
 	},
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "bzJ" = (
@@ -32974,6 +32954,7 @@
 "bAt" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench/medical,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "bAu" = (
@@ -53889,6 +53870,19 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/library)
+"etT" = (
+/obj/structure/table,
+/obj/item/stack/packageWrap,
+/obj/item/stack/packageWrap,
+/obj/item/pen,
+/obj/machinery/requests_console{
+	department = "Medbay";
+	departmentType = 1;
+	name = "Medbay RC";
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "eus" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/stripes/line{
@@ -54559,6 +54553,15 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/security/processing)
+"fKi" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -23
+	},
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
 "fKl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
@@ -55736,6 +55739,7 @@
 "iRV" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/book/manual/wiki/cit/organ_guide,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "iTq" = (
@@ -56998,6 +57002,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"lwJ" = (
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/crowbar,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/storage/box/gloves{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/storage/box/masks,
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "lwN" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -98961,12 +98980,12 @@ btX
 bof
 bwG
 bxR
-bxR
+fKi
 bof
 bof
 bzW
 bqQ
-bCR
+lwJ
 bGR
 bIj
 bJC
@@ -101276,7 +101295,7 @@ bua
 bua
 bua
 bua
-bhh
+etT
 bhh
 btV
 bof

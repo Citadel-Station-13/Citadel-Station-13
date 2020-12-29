@@ -58,7 +58,7 @@
 	.=..()
 	if(temp_trauma)
 		return
-	if(!(prob(1 - cached_purity)*10)))
+	if(!(prob(cached_purity)*10))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
 	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.

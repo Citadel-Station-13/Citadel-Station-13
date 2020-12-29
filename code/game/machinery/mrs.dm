@@ -182,33 +182,18 @@
 						data["occupant"]["pHState"] = "Extremely acidic"
 						data["occupant"]["pHcolor"] = "bad"
 					if(4 to 5.5)
-						data["occupant"]["pHState"] = "Too acidic"
+						data["occupant"]["pHState"] = "Acidic"
 						data["occupant"]["pHcolor"] = "average"
 					if(5.5 to 8.5)
-						data["occupant"]["pHState"] = "Healthy pH" //bad index once? But why?
+						data["occupant"]["pHState"] = "Neutral" //bad index once? But why?
 						data["occupant"]["pHcolor"] = "good"
 					if(8.5 to 10)
-						data["occupant"]["pHState"] = "Too basic"
+						data["occupant"]["pHState"] = "Basic"
 						data["occupant"]["pHcolor"] = "blue"
 					if(10 to INFINITY)
 						data["occupant"]["pHState"] = "Extremely basic"
 						data["occupant"]["pHcolor"] = "violet"
 				data["occupant"]["pH"] = C.reagents.pH
-
-				var/datum/reagent/metabolic/stomach_acid/Sa = C.reagents.has_reagent(/datum/reagent/metabolic/stomach_acid)
-				if(Sa)
-					data["occupant"]["stomachVol"] = Sa.volume
-					switch(Sa.volume)
-						if(0 to 5)
-							data["occupant"]["stomachColor"] = "bad"
-						if(5 to 30)
-							data["occupant"]["stomachColor"] = "average"
-						if(30 to 50)
-							data["occupant"]["stomachColor"] = "good"
-				else
-					data["occupant"]["stomachVol"] = 0
-					data["occupant"]["stomachColor"] = "bad"
-
 
 
 			for(var/obj/item/organ/Or in C.internal_organs)
@@ -252,7 +237,22 @@
 							data["occupant"]["traumalist"] += list(list("Bname" = B.name, "colourB" = colorB, "resist" = trauma))
 						continue
 
-				//Stomach is handled above
+				//Stomach is partially handled above
+				if(istype(Or, /obj/item/organ/stomach))
+				var/obj/item/organ/stomach/St = Or
+				var/datum/reagent/Sa = C.reagents.has_reagent(St.stomach_acid)
+				if(Sa)
+					data["occupant"]["stomachVol"] = Sa.volume
+					switch(Sa.volume)
+						if(0 to St.stomach_acid_volume/20)
+							data["occupant"]["stomachColor"] = "bad"
+						if(St.stomach_acid_volume/20 to St.stomach_acid_volume/6)
+							data["occupant"]["stomachColor"] = "average"
+						if(St.stomach_acid_volume/6 to St.stomach_acid_volume)
+							data["occupant"]["stomachColor"] = "good"
+				else
+					data["occupant"]["stomachVol"] = 0
+					data["occupant"]["stomachColor"] = "bad"
 
 				//Heart
 				if(istype(Or, /obj/item/organ/heart))

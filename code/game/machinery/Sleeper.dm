@@ -340,6 +340,14 @@
 				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
 				data["occupant"]["blood"]["danger"] = BLOOD_VOLUME_SAFE
 				data["occupant"]["blood"]["bloodType"] = C.dna.blood_type
+			else
+				data["occupant"]["blood"] = list()
+				data["occupant"]["blood"]["max"] = (BLOOD_VOLUME_NORMAL*C.blood_ratio)
+				data["occupant"]["blood"]["currentBloodVolume"] = C.blood_volume
+				data["occupant"]["blood"]["danger"] = BLOOD_VOLUME_SAFE
+				data["occupant"]["blood"]["bloodType"] = "Unable to detect"
+
+			
 
 		data["occupant"]["is_robotic_organism"] = HAS_TRAIT(mob_occupant, TRAIT_ROBOTIC_ORGANISM)
 		data["occupant"]["reagents"] = list()
