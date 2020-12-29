@@ -37300,8 +37300,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bKk" = (
-/obj/item/stack/ore/silver,
-/obj/item/stack/ore/silver,
+/obj/item/stack/ore/silver{
+	amount = 2
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
