@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - tweak: "Nyctophobia quirk now has some light lag compensation."

@@ -74,7 +74,6 @@
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
 	landingDelay = 25 //Longer than others
-	reverseOptionList = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE)
 
 /obj/structure/closet/supplypod/centcompod
 	style = STYLE_CENTCOM
