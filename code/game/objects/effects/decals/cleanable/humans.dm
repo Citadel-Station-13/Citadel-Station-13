@@ -12,10 +12,14 @@
 	var/fixed_color = FALSE
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
+	if(C.fixed_color)
+		qdel(C)
+		return FALSE
 	if (C.blood_DNA)
 		blood_DNA |= C.blood_DNA
+	qdel(C)
 	update_icon()
-	..()
+	return FALSE
 
 /obj/effect/decal/cleanable/blood/transfer_blood_dna()
 	..()
@@ -199,7 +203,7 @@
 		return
 	if(color != C.color)
 		return
-	..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
