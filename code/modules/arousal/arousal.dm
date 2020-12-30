@@ -72,6 +72,8 @@
 	overlay_fullscreen("flash", /obj/screen/fullscreen/flash) // To be more true to the hentai
 	clear_fullscreen("flash", 20)
 
+	src.newtonian_move(turn(src.dir, 180))
+
 	G.last_orgasmed = world.time
 	R.clear_reagents()
 
