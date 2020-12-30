@@ -5,7 +5,6 @@
 	gender = PLURAL
 	name = "asteroid sand"
 	baseturfs = /turf/open/floor/plating/asteroid
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	postdig_icon_change = TRUE
@@ -26,10 +25,10 @@
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
-	. = ..()
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
+	. = ..()
 
 /// Drops itemstack when dug and changes icon
 /turf/open/floor/plating/asteroid/proc/getDug()
@@ -92,7 +91,6 @@
 /turf/open/floor/plating/asteroid/basalt
 	name = "volcanic floor"
 	baseturfs = /turf/open/floor/plating/asteroid/basalt
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
