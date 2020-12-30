@@ -155,5 +155,5 @@ GLOBAL_LIST_EMPTY(power_sinks)
 
 	if(power_drained >= max_power)
 		STOP_PROCESSING(SSobj, src)
-		explosion(src.loc, 4,8,16,32)
+		explosion(src.loc, 3,7,14,28)
 		qdel(src)
