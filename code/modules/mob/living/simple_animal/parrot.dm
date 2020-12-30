@@ -1045,6 +1045,12 @@
 
 /mob/living/simple_animal/parrot/eclectus
 	name = "Eclectus"
+	icon_state = "eclectusr-flap"
+	icon_living = "eclectusr-flap"
+	icon_dead = "eclectusr-dead"
+
+/mob/living/simple_animal/parrot/eclectus
+	name = "Eclectus"
 	icon_state = "eclectus-flap"
 	icon_living = "eclectus-flap"
 	icon_dead = "eclectus-dead"
