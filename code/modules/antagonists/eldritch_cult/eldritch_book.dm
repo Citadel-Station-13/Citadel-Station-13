@@ -2,8 +2,10 @@
 	name = "Codex Cicatrix"
 	desc = "Book describing the secrets of the veil."
 	icon = 'icons/obj/eldritch.dmi'
-	icon_state = "book"
-	item_state = "book"
+	icon_state = "codex"
+	item_state = "codex"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	///Last person that touched this
 	var/mob/living/last_user
