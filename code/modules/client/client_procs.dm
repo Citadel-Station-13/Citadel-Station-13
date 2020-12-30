@@ -1011,7 +1011,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!length(unlockable_loadout_data))
 			unlockable_loadout_data = list()
 			unlockable_loadout_data[key] = amount
-			S["unlockable_loadout"] << unlockable_loadout_data
+			WRITE_FILE(S["unlockable_loadout"], unlockable_loadout_data)
 			prefs.unlockable_loadout_data = unlockable_loadout_data
 			return TRUE
 		else
@@ -1019,7 +1019,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				unlockable_loadout_data[key] += amount
 			else
 				unlockable_loadout_data[key] = amount
-			S["unlockable_loadout"] << unlockable_loadout_data
+			WRITE_FILE(S["unlockable_loadout"], unlockable_loadout_data)
 			prefs.unlockable_loadout_data = unlockable_loadout_data
 			return TRUE
 	return FALSE
