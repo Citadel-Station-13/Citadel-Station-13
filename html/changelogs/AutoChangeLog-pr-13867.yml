@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - balance: "Zeolites now only generate 1/5 the heat when reacting and don't require a catalyst."

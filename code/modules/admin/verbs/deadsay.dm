@@ -23,13 +23,6 @@
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[uppertext(holder.rank)]([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
 
-	// var/rank_name = holder.rank
-	// var/admin_name = key
-	// if(holder.fakekey)
-	// 	rank_name = pick(strings("admin_nicknames.json", "ranks", "config")) please use this soon.
-	// 	admin_name = pick(strings("admin_nicknames.json", "names", "config"))
-	// var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[rank_name]([admin_name])</span> says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
-
 	for (var/mob/M in GLOB.player_list)
 		if(isnewplayer(M))
 			continue

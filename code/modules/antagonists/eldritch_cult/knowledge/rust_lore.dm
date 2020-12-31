@@ -69,7 +69,7 @@
 	var/mob/living/living_user = user
 	living_user.adjustBruteLoss(-3, FALSE)
 	living_user.adjustFireLoss(-3, FALSE)
-	living_user.adjustToxLoss(-3, FALSE)
+	living_user.adjustToxLoss(-3, FALSE, TRUE)
 	living_user.adjustOxyLoss(-1, FALSE)
 	living_user.adjustStaminaLoss(-6)
 

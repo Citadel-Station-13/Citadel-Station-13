@@ -66,6 +66,9 @@
 	GLOB.alive_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
+	if(ckey)
+		var/datum/persistent_client_variables = client.persistent_variables
+		P?.respawn_time_of_death = world.time
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)

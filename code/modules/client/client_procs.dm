@@ -101,6 +101,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			keyUp(keycode)
 		return
 
+	if(href_list["statpanel_item_target"])
+		handle_statpanel_click(href_list)
+		return
+
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return
@@ -140,6 +144,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	..()	//redirect to hsrc.Topic()
+
+/client/proc/handle_statpanel_click(list/href_list)
+	var/atom/target = locate(href_list["statpanel_item_target"])
+	Click(target, target.loc, null, "[href_list["statpanel_item_shiftclick"]?"shift=1;":null][href_list["statpanel_item_ctrlclick"]?"ctrl=1;":null]&alt=[href_list["statpanel_item_altclick"]?"alt=1;":null]", FALSE, "statpanel")
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -801,7 +809,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
-/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
+/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE, extra_info)
 	if(last_click > world.time - world.tick_lag)
 		return
 	last_click = world.time
@@ -924,7 +932,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (NAMEOF(src, view))
 			view_size.setDefault(var_value)
 			return TRUE
+		if(NAMEOF(src, computer_id))
+			return FALSE
+		if(NAMEOF(src, address))
+			return FALSE
 	. = ..()
+
+/client/vv_get_var(var_name)
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, computer_id))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
+		if(NAMEOF(src, address))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
 
 /client/proc/rescale_view(change, min, max)
 	var/viewscale = getviewsize(view)

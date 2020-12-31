@@ -18,7 +18,7 @@
 	var/mode = HEATER_MODE_STANDBY
 	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
-	var/heatingPower = 40000
+	var/heatingPower = 10000
 	var/efficiency = 20000
 	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
@@ -74,45 +74,54 @@
 
 	if(cell && cell.charge > 0)
 		var/turf/L = loc
-		if(!istype(L))
-			if(mode != HEATER_MODE_STANDBY)
-				mode = HEATER_MODE_STANDBY
-				update_icon()
-			return
+		PerformHeating(L)
 
-		var/datum/gas_mixture/env = L.return_air()
+		for(var/direction in GLOB.alldirs)
+			L=get_step(src,direction)
+			if(!locate(/turf/closed) in L) // we don't want to heat walls and cause jank
+				PerformHeating(L)
 
-		var/newMode = HEATER_MODE_STANDBY
-		if(setMode != HEATER_MODE_COOL && env.return_temperature() < targetTemperature - temperatureTolerance)
-			newMode = HEATER_MODE_HEAT
-		else if(setMode != HEATER_MODE_HEAT && env.return_temperature() > targetTemperature + temperatureTolerance)
-			newMode = HEATER_MODE_COOL
-
-		if(mode != newMode)
-			mode = newMode
-			update_icon()
-
-		if(mode == HEATER_MODE_STANDBY)
-			return
-
-		var/heat_capacity = env.heat_capacity()
-		var/requiredPower = abs(env.return_temperature() - targetTemperature) * heat_capacity
-		requiredPower = min(requiredPower, heatingPower)
-
-		if(requiredPower < 1)
-			return
-
-		var/deltaTemperature = requiredPower / heat_capacity
-		if(mode == HEATER_MODE_COOL)
-			deltaTemperature *= -1
-		if(deltaTemperature)
-			env.set_temperature(env.return_temperature() + deltaTemperature)
-			air_update_turf()
-		cell.use(requiredPower / efficiency)
 	else
 		on = FALSE
 		update_icon()
 		return PROCESS_KILL
+
+/obj/machinery/space_heater/proc/PerformHeating(turf/L)
+	if(!istype(L))
+		if(mode != HEATER_MODE_STANDBY)
+			mode = HEATER_MODE_STANDBY
+			update_icon()
+		return
+
+	var/datum/gas_mixture/env = L.return_air()
+
+	var/newMode = HEATER_MODE_STANDBY
+	if(setMode != HEATER_MODE_COOL && env.return_temperature() < targetTemperature - temperatureTolerance)
+		newMode = HEATER_MODE_HEAT
+	else if(setMode != HEATER_MODE_HEAT && env.return_temperature() > targetTemperature + temperatureTolerance)
+		newMode = HEATER_MODE_COOL
+
+	if(mode != newMode)
+		mode = newMode
+		update_icon()
+
+	if(mode == HEATER_MODE_STANDBY)
+		return
+
+	var/heat_capacity = env.heat_capacity()
+	var/requiredPower = abs(env.return_temperature() - targetTemperature) * heat_capacity
+	requiredPower = min(requiredPower, heatingPower)
+
+	if(requiredPower < 1)
+		return
+
+	var/deltaTemperature = requiredPower / heat_capacity
+	if(mode == HEATER_MODE_COOL)
+		deltaTemperature *= -1
+	if(deltaTemperature)
+		env.set_temperature(env.return_temperature() + deltaTemperature)
+		air_update_turf()
+	cell.use(requiredPower / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 2
@@ -122,7 +131,7 @@
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
-	heatingPower = laser * 40000
+	heatingPower = laser * 10000
 
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
