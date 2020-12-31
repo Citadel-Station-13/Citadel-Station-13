@@ -68,7 +68,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
-	desc = "Plants Alien weeds whichspread resin which heals any alien. These weeds also regenerate plasma faster Costs 50 Plasma."
+	desc = "Plants Alien weeds which spread resin which heals any alien. These weeds also regenerate plasma faster Costs 50 Plasma."
 	plasma_cost = 50
 	check_turf = TRUE
 	action_icon_state = "alien_plant"
