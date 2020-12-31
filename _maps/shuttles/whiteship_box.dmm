@@ -1560,6 +1560,7 @@
 /area/shuttle/abandoned/bridge)
 "cc" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

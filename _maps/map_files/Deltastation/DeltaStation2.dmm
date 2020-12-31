@@ -32972,6 +32972,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/ore/silver{
+	amount = 2
+	},
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "biu" = (
