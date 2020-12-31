@@ -156,7 +156,10 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 	if(!SSdbcore.Connect())
 		return -1
-	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
+	var/datum/db_query/exp_read = SSdbcore.NewQuery(
+		"SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!exp_read.Execute(async = TRUE))
 		qdel(exp_read)
 		return -1
@@ -188,7 +191,10 @@ GLOBAL_PROTECT(exp_to_update)
 	else
 		prefs.db_flags |= newflag
 
-	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
+	var/datum/db_query/flag_update = SSdbcore.NewQuery(
+		"UPDATE [format_table_name("player")] SET flags=:flags WHERE ckey=:ckey",
+		list("flags" = "[prefs.db_flags]", "ckey" = ckey)
+	)
 
 	if(!flag_update.Execute())
 		qdel(flag_update)
@@ -268,7 +274,10 @@ GLOBAL_PROTECT(exp_to_update)
 	if(!SSdbcore.Connect())
 		return FALSE
 
-	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[ckey]'")
+	var/datum/db_query/flags_read = SSdbcore.NewQuery(
+		"SELECT flags FROM [format_table_name("player")] WHERE ckey=:ckey",
+		list("ckey" = ckey)
+	)
 
 	if(!flags_read.Execute(async = TRUE))
 		qdel(flags_read)
@@ -280,3 +289,4 @@ GLOBAL_PROTECT(exp_to_update)
 		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE
+

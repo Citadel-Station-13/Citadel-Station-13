@@ -160,7 +160,7 @@ GLOBAL_PROTECT(protected_ranks)
 			if(!no_update)
 				sync_ranks_with_db()
 		else
-			var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
+			var/datum/db_query/query_load_admin_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 			if(!query_load_admin_ranks.Execute())
 				message_admins("Error loading admin ranks from database. Loading from backup.")
 				log_sql("Error loading admin ranks from database. Loading from backup.")
@@ -168,7 +168,7 @@ GLOBAL_PROTECT(protected_ranks)
 			else
 				while(query_load_admin_ranks.NextRow())
 					var/skip
-					var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
+					var/rank_name = query_load_admin_ranks.item[1]
 					for(var/datum/admin_rank/R in GLOB.admin_ranks)
 						if(R.name == rank_name) //this rank was already loaded from txt override
 							skip = 1
@@ -234,20 +234,12 @@ GLOBAL_PROTECT(protected_ranks)
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		rank_names[R.name] = R
 	//ckeys listed in admins.txt are always made admins before sql loading is attempted
-	var/list/lines = world.file2list("[global.config.directory]/admins.txt")
-	for(var/line in lines)
-		if(!length(line) || findtextEx(line, "#", 1, 2))
-			continue
-		var/list/entry = splittext(line, "=")
-		if(entry.len < 2)
-			continue
-		var/ckey = ckey(entry[1])
-		var/rank = ckeyEx(entry[2])
-		if(!ckey || !rank)
-			continue
-		new /datum/admins(rank_names[rank], ckey, 0, 1)
+	var/admins_text = file2text("[global.config.directory]/admins.txt")
+	var/regex/admins_regex = new(@"^(?!#)(.+?)\s+=\s+(.+)", "gm")
+	while(admins_regex.Find(admins_text))
+		new /datum/admins(rank_names[admins_regex.group[2]], ckey(admins_regex.group[1]), FALSE, TRUE)
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
-		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] ORDER BY rank")
+		var/datum/db_query/query_load_admins = SSdbcore.NewQuery("SELECT ckey, `rank` FROM [format_table_name("admin")] ORDER BY `rank`")
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
 			log_sql("Error loading admins from database. Loading from backup.")
@@ -255,7 +247,7 @@ GLOBAL_PROTECT(protected_ranks)
 		else
 			while(query_load_admins.NextRow())
 				var/admin_ckey = ckey(query_load_admins.item[1])
-				var/admin_rank = ckeyEx(query_load_admins.item[2])
+				var/admin_rank = query_load_admins.item[2]
 				var/skip
 				if(rank_names[admin_rank] == null)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
