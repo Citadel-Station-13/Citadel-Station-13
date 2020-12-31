@@ -296,8 +296,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 7 //how much harm mode damage we do
-	var/stamina_damage_increment = 4 //how much extra damage do we do when in non-harm mode
+	force = 8 //how much harm mode damage we do
+	var/stamina_damage_increment = 5 //how much extra damage do we do when in non-harm mode
 	throwforce = 10
 	damtype = STAMINA
 	attack_verb = list("whacked", "smacked", "struck")
@@ -409,6 +409,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		. += " There's a metal rod shoved into the base."
 	if(burnt)
 		. += " Burned into the \"blade\" is [burned_in]."
+
+/obj/item/melee/bokken/waki
+	name = "wakizashi bokken"
+	desc = "A space-Japanese training sword made of wood and shaped like a wakizashi."
+	icon_state = "wakibokken"
+	item_state = "wakibokken"
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 7 
+	stamina_damage_increment = 4
 
 /obj/item/melee/bokken/debug
 	name = "funny debug parrying stick"

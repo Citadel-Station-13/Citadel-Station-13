@@ -72,6 +72,28 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_MELEE
 
+/datum/crafting_recipe/bokken
+	name = "Training Bokken"
+	result = /obj/item/melee/bokken
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 10,
+				/obj/item/stack/sheet/durathread = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 60
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/bokken
+	name = "Training Wakizashi Bokken"
+	result = /obj/item/melee/bokken/waki
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,
+				/obj/item/stack/sheet/cloth = 1,
+				/obj/item/stack/sheet/leather = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
 /datum/crafting_recipe/bola
 	name = "Bola"
 	result = /obj/item/restraints/legcuffs/bola
