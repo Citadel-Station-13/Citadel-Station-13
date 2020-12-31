@@ -84,7 +84,7 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	log_reagent("SPRAY: [key_name(usr)] fired [src] ([REF(src)]) [COORD(T)] at [A] ([REF(A)]) [COORD(A)] (chempuff: [D.reagents.log_string()])")
+	log_reagent("SPRAY: [key_name(usr)] fired [src] ([REF(src)]) [COORD(T)] at [A] ([REF(A)]) [COORD(A)] (chempuff: [D.reagents.log_list()])")
 	var/wait_step = max(round(2+ spray_delay * INVERSE(range)), 2)
 	last_spray = world.time
 	INVOKE_ASYNC(src, .proc/do_spray, A, wait_step, D, range, puff_reagent_left)

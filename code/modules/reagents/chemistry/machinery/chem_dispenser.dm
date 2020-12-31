@@ -330,7 +330,7 @@
 			if(saved_recipes[name] && alert("\"[name]\" already exists, do you want to overwrite it?",, "Yes", "No") == "No")
 				return
 			if(name && recording_recipe)
-				var/logstring = list()
+				var/list/logstring = list()
 				for(var/reagent in recording_recipe)
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					logstring += "[reagent_id] = [recording_recipe[reagent]]"
