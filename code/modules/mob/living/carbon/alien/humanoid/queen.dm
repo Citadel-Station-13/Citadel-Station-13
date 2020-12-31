@@ -77,7 +77,7 @@
 //Button to let queen choose her praetorian.
 /obj/effect/proc_holder/alien/royal/queen/promote
 	name = "Create Royal Parasite"
-	desc = desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian. Costs 500 Plasma."
+	desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian. Costs 500 Plasma."
 	plasma_cost = 500 //Plasma cost used on promotion, not spawning the parasite.
 
 	action_icon_state = "alien_queen_promote"
