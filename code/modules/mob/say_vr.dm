@@ -148,7 +148,7 @@ proc/get_top_level_mob(var/mob/S)
 	var/safety = 25
 	for(var/obj/structure/table/T in range(user, 1))
 		processing |= T
-	for(var/i in processing)
+	for(var/i = 1; i <= processing.len; ++i)
 		var/obj/structure/table/T = i
 		if(safety-- <= 0)
 			to_chat(user, "Table scan aborted early, some people might have not received the message (max 25)")
