@@ -52,9 +52,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/savefile/S = new savefile(savefile_path)
 	// Load metadata
 	load_metadata(S)
-	// Load preferences
+	// Store if we need to do migrations first.
+	S.cd = "/"
+	var/current_version
+	S["version"] >> current_version
+	var/migration_needed = current_version < SAVEFILE_VERSION_MAX
+	if(migration_needed)
+		#warn todo: save backup of file
+		S["version"] << SAVEFILE_VERSION_MAX
+	// Load preferences - This will perform migrations if needed
 	load_preferences(S, migration_errors)
+	// If needed, migrate ALL character slots
+	if(migration_needed)
+		for(var/i in 1 to CONFIG_GET(number/max_save_slots))
+			load_character(S, i, null, migration_errors)		// will perform migrations
 	// Load default slot
+	S.cd = "/metadata"
+	S["selected_slot"] >> selected_slot
 	assert_character_selected(S, migration_errors)
 
 /**
