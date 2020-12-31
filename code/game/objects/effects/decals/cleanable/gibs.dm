@@ -97,8 +97,6 @@
 	icon_state = "1"
 	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
 	bloodiness = 0
-	persistent = TRUE
-	persistence_allow_stacking = TRUE
 	var/drips = 1
 
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
