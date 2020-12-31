@@ -175,7 +175,7 @@
 
 /obj/item/kitchen/knife/combat/survival/knuckledagger/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 50, 120, 5) // it's good for butchering stuff
+	AddComponent(/datum/component/butchering, 30, 130, 20) // it's good for butchering stuff
 
 /obj/item/kitchen/knife/combat/survival/knuckledagger/ui_action_click(mob/user, actiontype)
 	light_on = !light_on
@@ -188,6 +188,11 @@
 		set_light(brightness_on)
 	else
 		set_light(0)
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/update_overlays()
+	. = ..()
+	if(light_on)
+		. += "[icon_state]_lit"
 
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
