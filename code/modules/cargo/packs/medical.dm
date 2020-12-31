@@ -92,7 +92,7 @@
 
 /datum/supply_pack/medical/paramedicevasuit
 	name = "Paramedic EVA Suit"
-	desc = "Has some greytide been floating amongst carp for a dozen minutes now? Chemistry vented in a meth experiment gone wrong? Be the blue saviour this station desperately needs and get your Paramedical EVA suit today! Requires medical access to open."
+	desc = "Greytide pushing up daisies with the carp outside the station? Chemistry vented in a meth experiment gone wrong? Be the blue saviour this station desperately needs and get your Paramedical EVA suit today! Requires medical access to open."
 	cost = 1975
 	access = ACCESS_MEDICAL
 	contains = list(/obj/item/tank/internals/emergency_oxygen,
