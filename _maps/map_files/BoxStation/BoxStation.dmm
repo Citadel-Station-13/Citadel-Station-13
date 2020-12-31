@@ -49405,6 +49405,7 @@
 	name = "MiniSat External Access";
 	req_access_txt = "65;13"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctb" = (
@@ -54809,16 +54810,6 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
-"gqQ" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 1"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "grc" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -55296,18 +55287,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"hCl" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "supply dock loading door"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "hCn" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -56610,6 +56589,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"kuo" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "supply dock loading door"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "kuA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/radio/intercom{
@@ -56899,6 +56890,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"kYJ" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access_txt = "10; 13"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "kZS" = (
 /obj/machinery/light{
 	dir = 8
@@ -58108,6 +58107,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/pool)
+"ojx" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "okK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -58616,18 +58625,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
-"poD" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "QMLoad2"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor2";
-	name = "supply dock loading door"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "ppw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -59895,14 +59892,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
-"sqH" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 1"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "srk" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/maintenance/starboard/aft)
@@ -60573,6 +60562,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"tOZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "tPT" = (
 /obj/machinery/chem_dispenser/drinks/beer,
 /obj/structure/table/wood,
@@ -61909,6 +61906,18 @@
 	},
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"wHe" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "QMLoad2"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "supply dock loading door"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "wHk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -72267,7 +72276,7 @@ awZ
 ayl
 azy
 auP
-gqQ
+ojx
 aaa
 aaa
 aaa
@@ -72275,7 +72284,7 @@ aaa
 aaa
 aaa
 aaa
-sqH
+tOZ
 auP
 cIh
 ayl
@@ -74066,7 +74075,7 @@ axh
 aIK
 azy
 auP
-gqQ
+ojx
 aaa
 aaa
 aaa
@@ -74074,7 +74083,7 @@ aaa
 aaa
 aaa
 aaa
-sqH
+tOZ
 auP
 cIh
 ayl
@@ -80264,11 +80273,11 @@ aPz
 aaa
 aaa
 boI
-poD
+wHe
 brJ
 boI
 brJ
-hCl
+kuo
 boI
 aaa
 aaa
@@ -104465,7 +104474,7 @@ czY
 cNW
 bAw
 bAw
-iSe
+kYJ
 aag
 gJi
 aaa
