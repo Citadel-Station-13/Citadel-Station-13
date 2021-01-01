@@ -23,7 +23,7 @@
 	var/fermianalyze //Give more detail on fermireactions on analysis
 
 /obj/machinery/chem_master/Initialize()
-	create_reagents(100)
+	create_reagents(0)
 
 	//Calculate the span tags and ids fo all the available pill icons
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
@@ -257,9 +257,9 @@
 		var/amount = text2num(params["amount"])
 		if(amount == null)
 			amount = text2num(input(usr,
-				"Max 10. Buffer content will be split evenly.",
+				"Max 20. Buffer content will be split evenly.",
 				"How many to make?", 1))
-		amount = clamp(round(amount), 0, 10)
+		amount = clamp(round(amount), 0, 20)
 		if (amount <= 0)
 			return FALSE
 		// Get units per item
@@ -273,7 +273,7 @@
 		else if (item_type == "bottle")
 			vol_each_max = min(30, vol_each_max)
 		else if (item_type == "condimentPack")
-			vol_each_max = min(10, vol_each_max)
+			vol_each_max = min(, vol_each_max)
 		else if (item_type == "condimentBottle")
 			vol_each_max = min(50, vol_each_max)
 		else if (item_type == "hypoVial")
