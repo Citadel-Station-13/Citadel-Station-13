@@ -41,6 +41,10 @@
 	if(do_icon_rotate)
 		data["rotation"] = rotation
 	data["name"] = name
+	if(pixel_x != initial(pixel_x))
+		data["pixel_x"] = pixel_x
+	if(pixel_y != initial(pixel_y))
+		data["pixel_y"] = pixel_y
 
 /obj/effect/decal/cleanable/crayon/PersistenceLoad(list/data)
 	. = ..()
@@ -55,3 +59,7 @@
 		add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
 	if(data["icon_state"])
 		icon_state = data["icon_state"]
+	if(data["pixel_x"])
+		pixel_x = data["pixel_x"]
+	if(data["pixel_y"])
+		pixel_y = data["pixel_y"]
