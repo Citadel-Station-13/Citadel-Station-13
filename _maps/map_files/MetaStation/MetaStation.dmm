@@ -53185,9 +53185,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/vehicle/ridden/wheelchair{
-	dir = 8
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cbP" = (
@@ -55177,9 +55174,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/vehicle/ridden/wheelchair{
-	dir = 4
-	},
+/obj/vehicle/ridden/wheelchair,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfL" = (
@@ -57970,6 +57965,9 @@
 /area/medical/medbay/central)
 "cln" = (
 /obj/effect/turf_decal/tile/blue,
+/obj/vehicle/ridden/wheelchair{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "clo" = (
@@ -80245,7 +80243,6 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/medical/surgery";
-	dir = 4;
 	name = "Surgery APC";
 	pixel_y = -26
 	},
