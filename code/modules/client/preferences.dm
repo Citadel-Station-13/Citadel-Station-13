@@ -12,11 +12,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/max_save_slots = 24
 
-	//non-preference stuff
-	var/muted = 0
+	// Intra-round persistence begin
+	/// Flags for admin mutes
+	var/muted = NONE
+	/// Last IP the person was seen on
 	var/last_ip
+	/// Last CID the person was seen on
 	var/last_id
+	/// Do we log their clicks to disk?
 	var/log_clicks = FALSE
+	/// Characters they have joined the round under - Lazylist of names
+	var/list/characters_joined_as
+	/// Slots they have joined the round under - Lazylist of numbers
+	var/list/slots_joined_as
+	/// Are we currently subject to respawn restrictions? Usually set by us using the "respawn" verb, but can be lifted by admins.
+	var/respawn_restrictions_active = FALSE
+	/// time of death we consider for respawns
+	var/respawn_time_of_death = -INFINITY
+	/// did they DNR? used to prevent respawns.
+	var/dnr_triggered = FALSE
+	/// did they cryo on their last ghost?
+	var/respawn_did_cryo = FALSE
+
+	// Intra-round persistence end
 
 	var/icon/custom_holoform_icon
 	var/list/cached_holoform_icons

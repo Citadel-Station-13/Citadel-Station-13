@@ -807,6 +807,11 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/fitness/pool)
+"abU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/xmastree,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "abV" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
@@ -824,6 +829,13 @@
 "abY" = (
 /turf/open/floor/plasteel/white,
 /area/ai_monitored/turret_protected/ai)
+"abZ" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/landmark/xmastree,
+/turf/open/floor/grass,
+/area/hydroponics/garden/monastery)
 "acc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -47489,12 +47501,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"cgj" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/grass,
-/area/hydroponics/garden/monastery)
 "cgk" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -61209,6 +61215,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"vzp" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/silver{
+	amount = 2
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "vzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -79792,7 +79806,7 @@ cuE
 cgK
 cgJ
 cgH
-cgj
+abZ
 cvj
 bWV
 cfn
@@ -94890,7 +94904,7 @@ aYg
 aZd
 beB
 bbq
-beB
+abU
 bdx
 beB
 bft
@@ -103631,7 +103645,7 @@ bbI
 bcG
 bdM
 beP
-bfH
+vzp
 bfH
 bhv
 bbI
@@ -110827,7 +110841,7 @@ bcQ
 aaa
 aaa
 aaa
-abN
+bBW
 aaa
 aEj
 aEj
@@ -111084,7 +111098,7 @@ bcQ
 aaa
 aaa
 aaa
-aaa
+cFB
 aaa
 aEl
 bnl

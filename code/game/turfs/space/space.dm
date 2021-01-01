@@ -163,6 +163,8 @@
 
 		while (pulling != null)
 			var/next_pulling = pulling.pulling
+			if(next_pulling == pulling)
+				break		// no loops
 
 			var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
 			pulling.can_be_z_moved = FALSE

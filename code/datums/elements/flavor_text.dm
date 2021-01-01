@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	var/save_key
 	/// Do not attempt to render a preview on examine. If this is on, it will display as \[flavor_name\]
 	var/examine_no_preview = FALSE
+	/// Examine FULLY views. Overrides examine_no_preview
+	var/examine_full_view = FALSE
 
 /datum/element/flavor_text/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key, _examine_no_preview = FALSE)
 	. = ..()
@@ -37,7 +39,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	if(can_edit && ismob(target)) //but only mobs receive the proc/verb for the time being
 		var/mob/M = target
 		LAZYOR(GLOB.mobs_with_editable_flavor_text[M], src)
-		M.verbs |= /mob/proc/manage_flavor_tests
+		add_verb(M, /mob/proc/manage_flavor_tests)
 
 	if(save_key && ishuman(target))
 		RegisterSignal(target, COMSIG_HUMAN_PREFS_COPIED_TO, .proc/update_prefs_flavor_text)
@@ -71,6 +73,9 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		examine_list += "<span class='notice'><a href='?src=[REF(src)];show_flavor=[REF(target)]'>\[[flavor_name]\]</a></span>"
 		return
 	var/msg = replacetext(text, "\n", " ")
+	if(examine_full_view)
+		examine_list += "[msg]"
+		return
 	if(length_char(msg) <= 40)
 		examine_list += "<span class='notice'>[msg]</span>"
 	else
@@ -113,6 +118,21 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	var/datum/element/flavor_text/F = choices[chosen]
 	F.set_flavor(src)
 
+/mob/proc/set_pose()
+	set name = "Set Pose"
+	set desc = "Sets your temporary flavor text"
+	set category = "IC"
+
+	var/list/L = GLOB.mobs_with_editable_flavor_text[src]
+	var/datum/element/flavor_text/carbon/temporary/T
+	for(var/i in L)
+		if(istype(i, /datum/element/flavor_text/carbon/temporary))
+			T = i
+	if(!T)
+		to_chat(src, "<span class='warning'>Your mob type does not support temporary flavor text.</span>")
+		return
+	T.set_flavor(src)
+
 /datum/element/flavor_text/proc/set_flavor(mob/user)
 	if(!(user in texts_by_atom))
 		return FALSE
@@ -135,7 +155,7 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 	var/static/list/i_dont_even_know_who_you_are = typecacheof(list(/datum/antagonist/abductor, /datum/antagonist/ert,
 													/datum/antagonist/nukeop, /datum/antagonist/wizard))
 
-/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key = "flavor_text", _examine_no_preview = FALSE)
+/datum/element/flavor_text/carbon/Attach(datum/target, text = "", _name = "Flavor Text", _addendum, _max_len = MAX_FLAVOR_LEN, _always_show = FALSE, _edit = TRUE, _save_key, _examine_no_preview = FALSE)
 	if(!iscarbon(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
@@ -167,3 +187,19 @@ GLOBAL_LIST_EMPTY(mobs_with_editable_flavor_text) //et tu, hacky code
 		texts_by_atom[user] = ""
 		if(user.dna)
 			user.dna.features[save_key] = ""
+
+/datum/element/flavor_text/carbon/temporary
+	examine_full_view = TRUE
+	max_len = 1024
+
+/datum/element/flavor_text/carbon/temporary/Attach(datum/target, text, _name, _addendum, _max_len, _always_show, _edit, _save_key, _examine_no_preview)
+	. = ..()
+	if(. & ELEMENT_INCOMPATIBLE)
+		return
+	if(ismob(target))
+		add_verb(target, /mob/proc/set_pose)
+
+/datum/element/flavor_Text/carbon/temporary/Detach(datum/source, force)
+	. = ..()
+	if(ismob(source))
+		remove_verb(source, /mob/proc/set_pose)
