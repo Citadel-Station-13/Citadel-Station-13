@@ -1029,7 +1029,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/increment_progress(key, amount)
 	if(prefs)
 		var/savefile/S = new /savefile(prefs.path)
-		var/list/unlockable_loadout_data = S["unlockable_loadout"]
+		var/list/unlockable_loadout_data = prefs.unlockable_loadout_data
 		if(!length(unlockable_loadout_data))
 			unlockable_loadout_data = list()
 			unlockable_loadout_data[key] = amount
