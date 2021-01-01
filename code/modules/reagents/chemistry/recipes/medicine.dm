@@ -155,7 +155,7 @@
 	required_reagents = list(/datum/reagent/medicine/pen_acid = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)

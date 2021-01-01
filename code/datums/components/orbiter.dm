@@ -54,6 +54,7 @@
 	move_react()
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(orbiter.orbiting)
 		if(orbiter.orbiting == src)
 			orbiter.orbiting.end_orbit(orbiter, TRUE)
@@ -87,6 +88,7 @@
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(!orbiters[orbiter])
 		return
+	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_END, orbiter, refreshing)
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	orbiter.SpinAnimation(0, 0)
 	if(istype(orbiters[orbiter],/matrix)) //This is ugly.

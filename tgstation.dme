@@ -492,6 +492,7 @@
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\tackle.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\twitch_plays.dm"
 #include "code\datums\components\twohanded.dm"
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\virtual_reality.dm"
