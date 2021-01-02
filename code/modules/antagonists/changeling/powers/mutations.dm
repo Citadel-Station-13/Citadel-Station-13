@@ -21,6 +21,7 @@
 	chemical_cost = 1000
 	dna_cost = -1
 
+	var/recharge_slowdown = 0
 	var/silent = FALSE
 	var/weapon_type
 	var/weapon_name_simple
@@ -37,6 +38,8 @@
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.chem_recharge_slowdown -= recharge_slowdown
 		user.update_inv_hands()
 		return 1
 
@@ -57,6 +60,8 @@
 	user.put_in_hands(W)
 	if(!silent)
 		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.chem_recharge_slowdown += recharge_slowdown
 	return W
 
 /obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
@@ -141,10 +146,11 @@
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form. This ability is loud, and might cause our blood to react violently to heat."
-	chemical_cost = 10
+	chemical_cost = 5
 	dna_cost = 2
 	loudness = 2
 	req_human = 1
+	recharge_slowdown = 0.6
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -487,7 +493,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
 	suit_name_simple = "flesh shell"
 	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	blood_on_castoff = 1
 
 /obj/item/clothing/suit/space/changeling
@@ -532,11 +538,11 @@
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a constant expenditure of chemicals, resulting in a reduced chemical generation. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form. This ability is loud, and might cause our blood to react violently to heat."
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = 1
 	loudness = 2
 	req_human = 1
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_armor"
 	action_background_icon_state = "bg_ling"
@@ -662,10 +668,11 @@
 	name = "Bone Gauntlets"
 	desc = "We turn our hands into solid bone and chitin, sacrificing dexterity for raw strength."
 	helptext = "These grotesque, bone-and-chitin gauntlets are remarkably good at beating victims senseless, and cannot be used in lesser form. This ability is loud, and might cause our blood to react violently to heat."
-	chemical_cost = 10 // same cost as armblade because its a sidegrade (sacrifice utility for punching people violently)
+	chemical_cost = 5 // same cost as armblade because its a sidegrade (sacrifice utility for punching people violently)
 	dna_cost = 2
 	loudness = 2
 	req_human = 1
+	recharge_slowdown = 0.6
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_gauntlets"
 	action_background_icon_state = "bg_ling"
