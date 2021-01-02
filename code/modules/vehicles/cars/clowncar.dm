@@ -18,13 +18,11 @@
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
 
-
 /obj/vehicle/sealed/car/clowncar/driver_move(mob/user, direction) //Prevent it from moving onto space
 	if(isspaceturf(get_step(src, direction)))
 		return FALSE
 	else
 		return ..()
-
 
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
@@ -138,3 +136,24 @@
 
 /obj/vehicle/sealed/car/clowncar/proc/StopDroppingOil()
 	droppingoil = FALSE
+
+/obj/vehicle/sealed/car/clowncar/twitch_plays
+	key_type = null
+
+/obj/vehicle/sealed/car/clowncar/twitch_plays/Initialize()
+	. = ..()
+	AddComponent(/datum/component/twitch_plays/simple_movement)
+	START_PROCESSING(SSfastprocess, src)
+	GLOB.poi_list |= src
+	notify_ghosts("Twitch Plays: Clown Car")
+
+/obj/vehicle/sealed/car/clowncar/twitch_plays/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	GLOB.poi_list -= src
+	return ..()
+
+/obj/vehicle/sealed/car/clowncar/twitch_plays/process()
+	var/dir = SEND_SIGNAL(src, COMSIG_TWITCH_PLAYS_MOVEMENT_DATA, TRUE)
+	if(!dir)
+		return
+	driver_move(null, dir)
