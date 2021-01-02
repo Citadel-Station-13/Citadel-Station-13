@@ -45,9 +45,9 @@
 			new_size = 1
 		if(7 to 11) //If large
 			new_size = 2
-		if(12 to 20) //If massive
+		if(12 to 24) //If massive
 			new_size = 3
-		if(21 to 34) //If massive and due for large effects
+		if(25 to 34) //If massive and due for large effects
 			new_size = 3
 			enlargement = TRUE
 		if(35 to INFINITY) //If comical
