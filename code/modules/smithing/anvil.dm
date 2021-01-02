@@ -93,7 +93,7 @@ dawnstone/duskstone. generates as small crag structures on lavaland. good for sm
 	RECIPE_SAMUHELM = /obj/item/smithing/samuhelm,
 	RECIPE_BREASTPLATEHALF = /obj/item/smithing/breastplate,
 	RECIPE_HALFPLATEHALF = /obj/item/smithing/halfplate,
-	RECIPE_GREAVES = /obj/item/smithing/graves,
+	RECIPE_GREAVES = /obj/item/smithing/greaves,
 	RECIPE_BOOTS = /obj/item/smithing/boots,
 	RECIPE_GAUNTLETS = /obj/item/smithing/gauntlets)
 
@@ -165,7 +165,7 @@ dawnstone/duskstone. generates as small crag structures on lavaland. good for sm
 	var/stepdone = input(user, "How would you like to work the metal?") in shapingsteps
 	var/steptime = 50
 	if(user.mind.skill_holder)
-		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/10 + 1
+		var/skillmod = user.mind.get_skill_level(/datum/skill/level/dwarfy/blacksmithing)/5 + 1
 		steptime = 50 / skillmod
 	playsound(src, 'sound/effects/clang2.ogg',40, 2)
 	if(!do_after(user, steptime, target = src))
