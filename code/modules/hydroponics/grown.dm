@@ -5,6 +5,7 @@
 
 // Base type. Subtypes are found in /grown dir.
 /obj/item/reagent_containers/food/snacks/grown
+	name = "grown plant"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""

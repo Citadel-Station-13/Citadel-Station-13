@@ -290,7 +290,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Tybel gb-Ratvar"
 	color = "#917010"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
-	strength_modifier = 1.3 // Replicant Alloy is very good for skull beatings..
+	strength_modifier = 1.3 // Replicant Alloy is very good for skull beatings.
 	sheet_type = /obj/item/stack/tile/brass
 	value_per_unit = 0.75
 	armor_modifiers = list("melee" = 1.4, "bullet" = 1.4, "laser" = 0, "energy" = 0, "bomb" = 1.4, "bio" = 1.2, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5) //But it has.. a few problems that can't easily be compensated for.
@@ -376,3 +376,49 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
+
+/datum/material/dawnstone
+	name = "dawnstone"
+	desc = "It's not actually made of a star. Probably radioactive, seeing how it glows and all."
+	color = "#D4AF37"
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = FALSE)
+	sheet_type = /obj/item/stack/sheet/mineral/dawnstone
+	strength_modifier = 1.3
+	value_per_unit = 0.003
+	armor_modifiers = list("melee" = 1.25, "bullet" = 1.25, "laser" = 1, "energy" = 0.5, "bomb" = 1.25, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 2)
+	beauty_modifier = 0.6 //beautiful.
+
+/datum/material/dawnstone/on_applied_obj(obj/source, amount, material_flags)
+	. = ..()
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/glowy = source
+		glowy.set_light(3, 3, "#D4AF37")
+
+/datum/material/dawnstone/on_removed_obj(obj/source, material_flags)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/glowy = source
+		glowy.set_light(0)
+	return ..()
+
+/datum/material/duskstone
+	name = "duskstone"
+	desc = "It's not actually made of a moon. Probably magic, seeing how it absorbs light."
+	color = "#AAD84B"
+	strength_modifier = 1.3
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = FALSE)
+	sheet_type = /obj/item/stack/sheet/mineral/duskstone
+	value_per_unit = 0.003
+	armor_modifiers = list("melee" = 1.1, "bullet" = 1, "laser" = 1.5, "energy" = 1.5, "bomb" = 1, "bio" = 1, "rad" = 2, "fire" = 2, "acid" = 1)
+	beauty_modifier = 0.6 //beautiful.
+
+/datum/material/duskstone/on_applied_obj(obj/source, amount, material_flags)
+	. = ..()
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/glowy = source
+		glowy.set_light(2, 3, "#AAD84B")
+
+/datum/material/duskstone/on_removed_obj(obj/source, material_flags)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/glowy = source
+		glowy.set_light(0)
+	return ..()

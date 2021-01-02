@@ -154,3 +154,19 @@
             /obj/item/shovel/spade = 1)
 	result = /obj/item/shovel/serrated
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/stonehammer
+	name = "Stone Hammer"
+	result = /obj/item/melee/smith/hammer/stone
+	reqs = list(/obj/item/basaltblock = 1,
+							/obj/item/stick = 1)
+	time = 40
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/biochaff
+	name = "Biochaff"
+	tools = list(TOOL_WIRECUTTER)
+	result = /obj/item/biochaff
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown = 1)
+	time = 20
+	category = CAT_PRIMAL

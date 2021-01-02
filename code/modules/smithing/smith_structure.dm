@@ -38,7 +38,12 @@
 			to_chat(user, "You heat the [notsword] in the [src].")
 			notsword.workability = "shapeable"
 		else
-			to_chat(user, "The furnace isn't working!.")
+			to_chat(user, "The furnace isn't working!")
+	else if(istype(I, /obj/item/stack/sheet/mineral/charcoal))
+		to_chat(user, "You toss the [I] in the [src].")
+		var/obj/item/stack/sheet/mineral/charcoal/CC = I
+		reagents.add_reagent(/datum/reagent/fuel, 5*CC.amount)
+		qdel(CC)
 	else
 		..()
 
@@ -103,8 +108,8 @@
 	if(!raw || !fuel)
 		return FALSE
 	to_chat(user, "<span class='notice'>You watch the [name], carefully waiting for the right moment to take the bloom out.")
-	if(do_after(user, 50, target = src))
-			to_chat(user, "<span class='notice'>You remove the bloom from the [name]!")
+	if(do_after(user, 300, target = src))
+		to_chat(user, "<span class='notice'>You remove the bloom from the [name]!")
 	else
 		to_chat(user, "<span class='notice'>The bloom condenses into a useless mass of slag!")
 		qdel(raw)
@@ -112,10 +117,10 @@
 		fuel = 0
 		new /obj/item/stack/ore/slag(get_turf(src))
 		return FALSE
-	var/obj/item/metalbloom/newbloom = /obj/item/metalbloom
-	new newbloom(src)
+	var/obj/item/metalbloom/newbloom = new /obj/item/metalbloom(src)
+	var/obj/item/bloom_stuff
 	if(isitem(raw.refined_type))
-		var/obj/item/bloom_stuff = raw.refined_type
+		bloom_stuff = raw.refined_type
 	else
 		return FALSE
 	newbloom.type_to_create = bloom_stuff

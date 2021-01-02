@@ -203,6 +203,22 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
+/obj/item/stack/ore/dawn
+	name = "dawnstone chunk"
+	icon_state = "Titanium ore" //paceholder
+	item_state = "Titanium ore"
+	max_amount = 1
+	custom_materials = list(/datum/material/dawnstone=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/dawnstone
+
+/obj/item/stack/ore/dusk
+	name = "duskstone chunk"
+	icon_state = "Titanium ore"//paceholder
+	item_state = "Titanium ore"
+	max_amount = 1
+	custom_materials = list(/datum/material/duskstone=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/duskstone
+
 /obj/item/stack/ore/slag
 	name = "slag"
 	desc = "Completely useless."

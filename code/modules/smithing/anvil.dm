@@ -43,13 +43,13 @@ dawnstone/duskstone. generates as small crag structures on lavaland. good for sm
 #define RECIPE_PIKE "ddbf" //draw draw bend fold
 
 //armor
-#define RECIPE_CENTHELM //centurion helmet
-#define RECIPE_SAMUHELM //weeb helmet
-#define RECIPE_BREASTPLATEHALF "dsfd" //full breastplate half
+#define RECIPE_HELM "dfsu"//helmet
+#define RECIPE_SAMUHELM "dfus"//weeb helmet
+#define RECIPE_BREASTPLATEHALF "dsdf" //full breastplate half
 #define RECIPE_HALFPLATEHALF "dsf" //half breastplate half.
-#define RECIPE_GREAVES //greaves, better armor more slowdown
-#define RECIPE_BOOTS //boots, less armor less slowdown
-#define RECIPE_GAUNTLETS //arm guards (negative siemens)
+#define RECIPE_GREAVES "fdsb" //greaves, better armor more slowdown
+#define RECIPE_BOOTS "fdb"//boots, less armor less slowdown
+#define RECIPE_GAUNTLETS "fsb"//arm guards (negative siemens)
 
 /obj/structure/anvil
 	name = "anvil"
@@ -88,7 +88,14 @@ dawnstone/duskstone. generates as small crag structures on lavaland. good for sm
 	RECIPE_KATANA = /obj/item/smithing/katanablade,
 	RECIPE_HALBERD = /obj/item/smithing/halberdhead,
 	RECIPE_GLAIVE = /obj/item/smithing/glaivehead,
-	RECIPE_PIKE = /obj/item/smithing/pikehead)
+	RECIPE_PIKE = /obj/item/smithing/pikehead,
+	RECIPE_HELM = /obj/item/smithing/helm,
+	RECIPE_SAMUHELM = /obj/item/smithing/samuhelm,
+	RECIPE_BREASTPLATEHALF = /obj/item/smithing/breastplate,
+	RECIPE_HALFPLATEHALF = /obj/item/smithing/halfplate,
+	RECIPE_GREAVES = /obj/item/smithing/graves,
+	RECIPE_BOOTS = /obj/item/smithing/boots,
+	RECIPE_GAUNTLETS = /obj/item/smithing/gauntlets)
 
 /obj/structure/anvil/Initialize()
 	..()
@@ -128,7 +135,7 @@ dawnstone/duskstone. generates as small crag structures on lavaland. good for sm
 		if((workpiece_state == WORKPIECE_PRESENT || workpiece_state == WORKPIECE_INPROGRESS))
 			to_chat(user, "This anvil is already being worked!")
 			return FALSE
-		var/obj/item/heldI = user.get_inactive_held_item
+		var/obj/item/heldI = user.get_inactive_held_item()
 		var/obj/item/metalbloom/MB = I
 		if(heldI && istype(heldI, /obj/item/melee/smith/hammer))
 			var/iterator = MB.amount_to_create

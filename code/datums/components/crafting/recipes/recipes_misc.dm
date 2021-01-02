@@ -435,6 +435,15 @@
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
+/datum/crafting_recipe/armorfinish
+	name = "Cloth Strap"
+	time = 30
+	reqs = list(/obj/item/stack/sheet/cloth = 2)
+	result = /obj/item/armorfinish
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
+
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"
 	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)

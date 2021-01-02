@@ -273,3 +273,12 @@
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
+
+/obj/item/biochaff
+	name = "bio chaff"
+	desc = "It's biomass."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "grass"
+	w_class = WEIGHT_CLASS_TINY
+	attack_verb = list("skubbed")
+	grind_results = list(/datum/reagent/biomash = 7)

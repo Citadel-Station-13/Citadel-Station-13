@@ -141,7 +141,7 @@
 		if(5)
 			finaldesc += "is encrusted with [pick("","synthetic ","multi-faceted ","magical ","sparkling ") + pick("rubies","emeralds","jade","opals","lapis lazuli")],laced with studs of [pick("gold","silver","aluminium","titanium")], encircled with bands of [pick("durasteel","metallic hydrogen","ferritic-alloy","plasteel","duranium")] and menaces with spikes of [pick("ytterbium","uranium","white pearl","black steel")]."
 	finalitem.desc = finaldesc
-	finalitem.name = pick("Delersibnir", "Nekolangrir", "Zanoreshik","Öntakrítin", "Nogzatan", "Vunomam", "Nazushagsaldôbar", "Sergeb", "Zafaldastot", "Vudnis", "Dostust", "Shotom", "Mugshith", "Angzak", "Oltud", "Deleratîs", "Nökornomal") //one of these is literally BLOOD POOL CREATE.iirc its Nazushagsaldôbar.
+	finalitem.name = pick("Delersibnir", "Nekolangrir", "Zanoreshik","Öntakrítin", "Nogzatan", "Vunomam", "Nazushagsaldôbar", "Sergeb", "Zafaldastot", "Vudnis", "Dostust", "Shotom", "Mugshith", "Angzak", "Oltud", "Deleratîs", "Nökornomal") //one of these is literally BLOOD POOL CREATE (Nazushagsaldôbar.) god i fucking love df
 
 /obj/item/smithing/hammerhead
 	name = "smithed hammer head"
@@ -405,12 +405,111 @@
 	finalitem = finalforreal
 	..()
 
+/obj/item/smithing/breastplate
+	name = "unfinished breastplate"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/suit/armor/smithed/breastplate
+	icon_state = "katana"
+
+/obj/item/smithing/breastplate/startfinish()
+	var/obj/item/clothing/suit/armor/smithed/breastplate/finalforreal = new /obj/item/clothing/suit/armor/smithed/breastplate(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/halfplate
+	name = "unfinished half-plate"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/suit/armor/smithed/halfplate
+	icon_state = "katana"
+
+/obj/item/smithing/halfplate/startfinish()
+	var/obj/item/clothing/suit/armor/smithed/halfplate/finalforreal = new /obj/item/clothing/suit/armor/smithed/halfplate(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/helm
+	name = "unfinished helmet"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/head/smithed/helm
+	icon_state = "katana"
+
+/obj/item/smithing/helm/startfinish()
+	var/obj/item/clothing/head/smithed/helm/finalforreal = new /obj/item/clothing/head/smithed/helm(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/samuhelm
+	name = "unfinished samurai helm"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/head/smithed/helm/samurai
+	icon_state = "katana"
+
+/obj/item/smithing/samuhelm/startfinish()
+	var/obj/item/clothing/head/smithed/helm/samurai/finalforreal = new /obj/item/clothing/head/smithed/helm/samurai(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
+
+/obj/item/smithing/gauntlets
+	name = "unfinished gauntlets"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/gloves/smithed/gauntlets
+	icon_state = "katana"
+
+/obj/item/smithing/gauntlets/startfinish()
+	var/obj/item/clothing/gloves/smithed/gauntlets/finalforreal = new /obj/item/clothing/gloves/smithed/gauntlets(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/greaves
+	name = "unfinished greaves"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/shoes/smithed/greaves
+	icon_state = "katana"
+
+/obj/item/smithing/greaves/startfinish()
+	var/obj/item/clothing/shoes/smithed/greaves/finalforreal = new /obj/item/clothing/shoes/smithed/greaves(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
+/obj/item/smithing/boots
+	name = "unfinished armored boots"
+	finishingitem = /obj/item/armorfinish
+	finalitem = /obj/item/clothing/shoes/smithed/boots
+	icon_state = "katana"
+
+/obj/item/smithing/boots/startfinish()
+	var/obj/item/clothing/shoes/smithed/boots/finalforreal = new /obj/item/clothing/shoes/smithed/boots(src)
+	for(var/E in finalforreal.armor)
+		armor[E]+= 2*quality
+	finalitem = finalforreal
+	..()
+
 /obj/item/stick
 	name = "wooden rod"
 	desc = "It's a rod, suitable for use of a handle of a tool. Also could serve as a weapon, in a pinch."
 	icon = 'icons/obj/smith.dmi'
 	icon_state = "stick"
 	force = 7
+
+/obj/item/armorfinish
+	name = "cloth strap"
+	desc = "A strip of cloth. Good for making armor actually usable."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "stick"
+	item_flags = NOBLUDGEON
 
 /obj/item/swordhandle
 	name = "sword handle"

@@ -33,8 +33,8 @@
 	item_flags = NEEDS_PERMIT //it's a bigass sword/spear. beepsky is going to give you shit for it.
 	sharpness = SHARP_EDGED
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-	force = 10
-	wielded_mult = 1.75
+	force = 7
+	wielded_mult = 1.5
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/smith/twohand/ComponentInitialize()
@@ -115,8 +115,8 @@
 	icon_state = "halberd"
 	w_class = WEIGHT_CLASS_HUGE
 	overlay_state = "spearhandle"
+	wielded_mult = 1.9 //24.7 force quality 6, 28.5 force quality 8. two hands and huge so same logistically as the bloodbastard
 	slot_flags = ITEM_SLOT_BACK
-	wielded_mult = 2.5
 
 /obj/item/melee/smith/twohand/halberd/ComponentInitialize()
 	. = ..()
@@ -126,7 +126,7 @@
 	name = "javelin"
 	icon_state = "javelin"
 	overlay_state = "longhandle"
-	wielded_mult = 1.5
+	wielded_mult = 1.2
 	slot_flags = ITEM_SLOT_BACK
 	sharpness = SHARP_POINTY
 
@@ -140,7 +140,6 @@
 	icon_state = "glaive"
 	overlay_state = "longhandle"
 	slot_flags = ITEM_SLOT_BACK
-	wielded_mult = 2
 
 /obj/item/melee/smith/twohand/glaive/ComponentInitialize()
 	. = ..()
@@ -168,19 +167,19 @@
 	var/qualitymod = 0
 
 /obj/item/scythe/smithed //we need to inherit scythecode, but that's about it.
+	force = 11
 	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 
 /obj/item/melee/smith/cogheadclub
 	name = "coghead club"
+	force = 11
 	icon_state = "coghead"
-	item_flags = NEEDS_PERMIT
 	overlay_state = "stick"
 
 /obj/item/melee/smith/shortsword
 	name = "gladius"
-	force = 9
-	item_flags = NEEDS_PERMIT
+	force = 11
 	sharpness = SHARP_EDGED
 	icon_state = "gladius"
 	overlay_state = "gladiushilt"
@@ -194,7 +193,7 @@
 /obj/item/melee/smith/wakizashi
 	name = "wakizashi"
 	sharpness = SHARP_EDGED
-	force = 7
+	force = 8
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
 	obj_flags = UNIQUE_RENAME
 	icon_state = "waki"
@@ -213,39 +212,39 @@
 	parry_efficiency_considered_successful = 80
 	parry_efficiency_perfect = 120
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1.9)
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1.6)
 
 /obj/item/melee/smith/twohand/broadsword
 	name = "broadsword"
 	icon_state = "broadsword"
 	overlay_state = "broadhilt"
-	wielded_mult = 1.8
+	wielded_mult = 1.4
 
 /obj/item/melee/smith/twohand/zweihander
 	name = "zweihander"
 	icon_state = "zwei"
 	overlay_state = "zweihilt"
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON * 2
-	force = 4
-	wielded_mult = 3 //affected more by quality. a -1 is 25% less damage, a +1 is 25% more. These bonuses are tripled when wielded.
+	force = 2
+	wielded_mult = 2.5 //affected more by quality. a -1 is 25% less damage, a +1 is 25% more. These bonuses are tripled when wielded.
 
 /obj/item/melee/smith/twohand/katana
 	name = "katana"
 	icon_state = "katana"
 	overlay_state = "katanahilt"
-	force = 7
-	wielded_mult = 2
+	wielded_mult = 1.4
 	item_flags = ITEM_CAN_PARRY | NEEDS_PERMIT //want to name your katana "DEMON BLADE" or some shit? go ahead, idiot.
 	obj_flags = UNIQUE_RENAME
-	block_parry_data = /datum/block_parry_data/captain_saber //todo
+	//lost their parry, bringing them in line with the rest of the melee weapons
 
 /obj/item/melee/smith/sabre
 	name = "sabre"
 	icon_state = "sabre"
 	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_BULKY
 	overlay_state = "sabrehilt"
 	armour_penetration = 15
-	force = 9
+	force = 10
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/captain_saber //yeah this is fine i guess
@@ -254,6 +253,7 @@
 	name = "rapier"
 	icon_state = "rapier"
 	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_BULKY
 	overlay_state = "rapierhilt"
 	force = 6 //less force, stronger parry
 	sharpness = SHARP_POINTY
@@ -273,7 +273,8 @@
 	parry_efficiency_to_counterattack = 100
 	parry_efficiency_considered_successful = 120
 	parry_efficiency_perfect = 120
-	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 4)
+	parry_data = list(PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 4) //quality 6 rapier gives a 48 damage counterattack which is probbably fine given the low force on the weapon anyways (12)
+	//are parries a good mechanic even? is this a fun weapon? idk either man
 
 //unique hammers
 /obj/item/melee/smith/hammer/toolbox
@@ -283,6 +284,15 @@
 	icon_state = "toolbox"
 	overlay_state = "hammerhandle"
 	qualitymod = -2
+
+/obj/item/melee/smith/hammer/stone
+	name = "stone brick hammer"
+	desc = "BRICK ON A STICK"
+	w_class = WEIGHT_CLASS_BULKY
+	icon_state = "rock"
+	overlay_state = "hammerhandle"
+	qualitymod = -1
+
 
 /obj/item/melee/smith/hammer/narsie
 	name = "runemetal hammer"
@@ -307,8 +317,15 @@
 /obj/item/melee/smith/hammer/ratvar
 	name = "brass hammer"
 	custom_materials = list(/datum/material/bronze = 12000)
-	desc = "A brass hammer inscribed with... writing? You can't read it."
+	desc = "A brass hammer inscribed with strange writing."
 	qualitymod = 1
+
+/obj/item/melee/smith/hammer/ratvar/examine(mob/user)
+	. = ..()
+	if(is_servant_of_ratvar(user))
+		. += "<span class = 'notice'>The writing says 'Hit things with this.'</span>"
+	else
+		. += "<span class = 'notice'>The writing is indecipherable!</span>"
 
 /obj/item/melee/smith/hammer/ratvar/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_servant_of_ratvar(user))
@@ -327,3 +344,46 @@
 	name = "debugging hammer"
 	desc = "A DEBUGGING HAMMER!! EPIC!!."
 	qualitymod = 10
+
+//////////////////////////
+//         Armour       //
+///////////////////////////
+
+/obj/item/clothing/suit/armor/smithed/breastplate
+	name = "curiass"
+	armor = list("melee" = 35, "bullet" = 25, "laser" = 35, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 85, "acid" = 75, "wound" = 10)
+	body_parts_covered = CHEST|GROIN
+	slowdown = 0.5
+
+/obj/item/clothing/suit/armor/smithed/halfplate
+	name = "half-plate"
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50, "wound" = 5)
+	body_parts_covered = CHEST
+
+/obj/item/clothing/head/smithed/helm
+	name = "helmet"
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 15,"energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 35, "acid" = 35)
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACE
+	flags_cover = HEADCOVERSEYES
+	strip_delay = 60
+	resistance_flags = NONE
+
+/obj/item/clothing/head/smithed/helm/samurai
+	name = "samurai helmet"
+	flags_inv = HIDEEARS|HIDEHAIR
+
+/obj/item/clothing/gloves/smithed/gauntlets
+	name =  "gauntlets"
+	armor = list("melee" = 15, "bullet" = 10, "laser" = 10,"energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 35, "acid" = 35)
+	body_parts_covered = ARMS
+
+/obj/item/clothing/shoes/smithed/greaves
+	name = "greaves"
+	armor = list("melee" = 35, "bullet" = 25, "laser" = 35, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 85, "acid" = 75)
+	body_parts_covered = LEGS
+	slowdown = 0.5
+
+/obj/item/clothing/shoes/smithed/boots
+	name = "boots"
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	body_parts_covered = LEGS

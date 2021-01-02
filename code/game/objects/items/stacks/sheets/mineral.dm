@@ -487,3 +487,25 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/charcoal/ten
 	amount = 10
+
+/obj/item/stack/sheet/mineral/dawnstone
+	name = "dawnstone"
+	desc = "DEBUG"
+	singular_name = "dawnstone sheet"
+	icon_state = "sheet-plastic"
+	item_state = "sheet-plastic"
+	custom_materials = list(/datum/material/dawnstone=MINERAL_MATERIAL_AMOUNT)
+	throwforce = 6
+	material_type = /datum/material/dawnstone
+	merge_type = /obj/item/stack/sheet/mineral/dawnstone
+
+/obj/item/stack/sheet/mineral/duskstone
+	name = "duskstone"
+	desc = "DEBUG"
+	singular_name = "duskstone sheet"
+	icon_state = "sheet-plastic"
+	item_state = "sheet-plastic"
+	custom_materials = list(/datum/material/duskstone=MINERAL_MATERIAL_AMOUNT)
+	throwforce = 6
+	material_type = /datum/material/duskstone
+	merge_type = /obj/item/stack/sheet/mineral/duskstone

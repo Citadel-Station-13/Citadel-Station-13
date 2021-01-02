@@ -2663,3 +2663,14 @@ datum/reagent/eldritch
 	M.SetSleeping(0, 0)
 	..()
 
+/datum/reagent/biomash
+	name = "Organic Fertilizer"
+	description = "Fertilizer made from grinding plant matter."
+	color = "#22aa22"
+
+/datum/reagent/biomash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.3))
+		if(myseed && prob(5))
+			myseed.adjust_yield(1)
