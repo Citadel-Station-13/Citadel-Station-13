@@ -699,6 +699,8 @@
 		else
 			if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
 				base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+			else
+				base_bp_icon = DEFAULT_BODYPART_ICON
 
 		if(base_bp_icon != DEFAULT_BODYPART_ICON)
 			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
