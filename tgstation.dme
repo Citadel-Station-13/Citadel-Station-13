@@ -3785,6 +3785,7 @@
 #include "sandcode\code\modules\language\dragon.dm"
 #include "sandcode\code\modules\language\language.dm"
 #include "sandcode\code\modules\mining\machine_bluespaceminer.dm"
+#include "sandcode\code\modules\mining\machine_vending.dm"
 #include "sandcode\code\modules\mining\equipment\kinetic_crusher.dm"
 #include "sandcode\code\modules\mining\equipment\regenerative_core.dm"
 #include "sandcode\code\modules\mining\lavaland\necropolis_chests.dm"
