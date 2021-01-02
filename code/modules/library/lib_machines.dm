@@ -28,7 +28,7 @@
 	var/search_page = 0
 	COOLDOWN_DECLARE(library_visitor_topic_cooldown)
 	clockwork = TRUE
-	
+
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
 	var/list/dat = list() // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -158,7 +158,8 @@
 
 /*
  * Library Computer
- * After 860 days, it's finally a buildable computer.
+ * After 860 days, it's finally a buildable computer.*
+ * * i cannot change maps because you are a buch of fucks who ignore map changes
  */
 // TODO: Make this an actual /obj/machinery/computer that can be crafted from circuit boards and such
 // It is August 22nd, 2012... This TODO has already been here for months.. I wonder how long it'll last before someone does something about it.
@@ -173,7 +174,7 @@
 
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 
-	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
+	// var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 
 	var/arcanecheckout = 0
 	var/buffer_book
@@ -187,13 +188,13 @@
 	var/printer_cooldown = 0
 	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
-/obj/machinery/computer/bookmanagement/Initialize()
+/obj/machinery/computer/libraryconsole/bookmanagement/Initialize()
 	. = ..()
 	if(circuit)
 		circuit.name = "Book Inventory Management Console (Machine Board)"
-		circuit.build_path = /obj/machinery/computer/bookmanagement
+		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
-/obj/machinery/computer/bookmanagement/ui_interact(mob/user)
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user)
 	. = ..()
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
@@ -324,17 +325,17 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/computer/bookmanagement/proc/findscanner(viewrange)
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/findscanner(viewrange)
 	for(var/obj/machinery/libraryscanner/S in range(viewrange, get_turf(src)))
 		return S
 	return null
 
-/obj/machinery/computer/bookmanagement/proc/print_forbidden_lore(mob/user)
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
 	user.visible_message("<span class='warning'>[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.</span>", 2)
 
-/obj/machinery/computer/bookmanagement/attackby(obj/item/W, mob/user, params)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = W
 		scanner.computer = src
@@ -343,11 +344,11 @@
 	else
 		return ..()
 
-/obj/machinery/computer/bookmanagement/emag_act(mob/user)
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
 	if(density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 
-/obj/machinery/computer/bookmanagement/Topic(href, href_list)
+/obj/machinery/computer/libraryconsole/bookmanagement/Topic(href, href_list)
 	if(!COOLDOWN_FINISHED(src, library_console_topic_cooldown))
 		return
 	COOLDOWN_START(src, library_console_topic_cooldown, 1 SECONDS)
@@ -583,7 +584,7 @@
 		return ..()
 
 /obj/machinery/bookbinder/proc/bind_book(mob/user, obj/item/paper/P)
-	if(machine_stat)
+	if(stat)
 		return
 	if(busy)
 		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
@@ -596,7 +597,7 @@
 	sleep(rand(200,400))
 	busy = FALSE
 	if(P)
-		if(!machine_stat)
+		if(!stat)
 			visible_message("<span class='notice'>[src] whirs as it prints and binds a new book.</span>")
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
