@@ -37,7 +37,7 @@
 	HIonRelease 		= 0.08 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 50 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	FermiExplode		= FERMI_EXPLOSION_REDUCE_PURITY
 	PurityMin 			= 0
 
 /datum/chemical_reaction/synaptizine
@@ -231,7 +231,7 @@
 	HIonRelease 		= 0.06 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 14.5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	FermiExplode		= FERMI_EXPLOSION_REDUCE_PURITY
 	PurityMin 			= 0
 
 /datum/chemical_reaction/atropine
@@ -278,7 +278,7 @@
 	HIonRelease 		= 0 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 10	 	// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	FermiExplode		= FERMI_EXPLOSION_REDUCE_YIELD
 	PurityMin 			= 0.4
 
 /datum/chemical_reaction/mutadone
@@ -306,7 +306,7 @@
 	HIonRelease 		= 0.015 	// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 15 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode		= FERMI_EXPLOSION_TYPE_INVERTSMOKE
+	FermiExplode		= FERMI_EXPLOSION_REDUCE_PURITY
 	PurityMin 			= 0.35
 
 /datum/chemical_reaction/antihol
@@ -329,7 +329,7 @@
 	HIonRelease 		= 0.02 		// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 7.5 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	FermiExplode		= FERMI_EXPLOSION_REDUCE_YIELD
 	PurityMin 			= 0
 	clear_conversion	= REACTION_CLEAR_INVERSE | REACTION_CLEAR_IMPURE | REACTION_CLEAR_RETAIN
 
@@ -417,7 +417,7 @@
 	HIonRelease 		= -0.02 	// pH change per 1u reaction (inverse for some reason)
 	RateUpLim 			= 15 		// Optimal/max rate possible if all conditions are perfect
 	FermiChem 			= TRUE		// If the chemical uses the Fermichem reaction mechanics
-	FermiExplode		= FERMI_EXPLOSION_TYPE_SMOKE
+	FermiExplode		= FERMI_EXPLOSION_REDUCE_YIELD
 	PurityMin 			= 0.35
 
 /datum/chemical_reaction/morphine

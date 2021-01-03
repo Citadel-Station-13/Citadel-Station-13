@@ -291,8 +291,9 @@
 		var/delayprocess = FALSE
 		var/datum/reagent/R = reagent
 		if(chem_resist) //usually toxin.
-			if(is_type_in_list(R, chem_resist))
-				delayprocess = TRUE
+			if(!R.chemical_flags & REAGENT_LIVER_STRESS_BYPASS) //Some chems are forced to work regardless of liver immunities
+				if(is_type_in_list(R, chem_resist))
+					delayprocess = TRUE
 		if(QDELETED(R.holder))
 			continue
 		if(liverless && !R.self_consuming) //need to be metabolized

@@ -11,6 +11,10 @@
 			FermiExplodeSmoke(R0, my_atom, volume, temp, pH, Exploding)
 		if(FERMI_EXPLOSION_TYPE_INVERTSMOKE)
 			FermiExplodeInvertSmoke(R0, my_atom, volume, temp, pH, Exploding)
+		if(FERMI_EXPLOSION_REDUCE_YIELD)
+			FermiExplodeReduceYield(R0, my_atom, volume, temp, pH, Exploding)
+		if(FERMI_EXPLOSION_REDUCE_PURITY)
+			FermiExplodeReducePurity(R0, my_atom, volume, temp, pH, Exploding)
 
 //Produces an explosion based on the properties of the beaker
 /datum/chemical_reaction/proc/FermiExplodeMixed(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
@@ -53,8 +57,6 @@
 					new /obj/effect/hotspot(turf)
 				volume*=1.6
 
-
-	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	log_game("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
@@ -84,6 +86,8 @@
 
 	my_atom.reagents.clear_reagents() //just in case
 	return
+
+// Medium explosions
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/FermiExplodeInvertSmoke(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
@@ -119,6 +123,24 @@
 		s.start()
 	clear_reactants(R0)
 	return
+
+//Gentle "explosions"
+
+/datum/chemical_reaction/proc/FermiExplodeReduceYield(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+	for (var/datum/reagent/R in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+		if((reagent.type in required_reagents) || (reagent.type in results))
+			R.volume -= R.volume/20
+	R0.temperature -= R0.temperature/20 //knock it down
+	R0.holder.visible_message("The mixture bubbles as some of it evaporates off!")
+
+
+/datum/chemical_reaction/proc/FermiExplodeReducePurity(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
+	var/datum/reagent/R = R0.has_reagent(id)
+	if(!R) //I dunno how you'd get here but it's just in case
+		return
+	R.purity -= R.purity/20
+	R0.temperature =
+	R0.holder.visible_message("The mixture gurgles as its colour is tainted.")
 
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/R0)
 	if(!R0)

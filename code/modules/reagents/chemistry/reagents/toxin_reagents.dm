@@ -351,6 +351,7 @@
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
+	chemical_flags = REAGENT_LIVER_STRESS_BYPASS //works from the get go
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	pH = 11
@@ -420,6 +421,7 @@
 	name = "Mute Toxin"
 	description = "A nonlethal poison that inhibits speech in its victim."
 	color = "#F0F8FF" // rgb: 240, 248, 255
+	chemical_flags = REAGENT_LIVER_STRESS_BYPASS //works from the get go
 	toxpwr = 0
 	taste_description = "silence"
 	pH = 12.2

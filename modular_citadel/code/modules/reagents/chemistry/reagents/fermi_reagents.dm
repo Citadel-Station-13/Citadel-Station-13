@@ -460,7 +460,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 /datum/reagent/fermi/dooplium
 	name = "Dooplium"
-	description = "A strange reagent that morphs to match any and all reagents currently in the recipents bloodstream doubling their effects."
+	description = "A strange reagent that morphs to match any and all reagents currently in the recipients bloodstream doubling their effects."
 	taste_description = "a sensation that can only be described as licking your own tongue."
 	color = "#88aa24"
 	metabolization_rate = 0
@@ -472,7 +472,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 			continue
 		if(istype(R, /datum/reagent/metabolic))
 			continue
-		if(R.volume < 5)
+		if(R.volume < 3)
 			continue
 		R.on_mob_life(C)
 		C.reagents.remove_reagent(type, R.metabolization_rate)

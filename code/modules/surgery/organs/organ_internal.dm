@@ -173,7 +173,7 @@
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
 	healing_amount -= owner.satiety > 0 ? 4 * healing_factor * owner.satiety / MAX_SATIETY : 0
 	if(healing_amount)
-		regenOrganDamage(healing_amount*modifier)
+		regenOrganDamage(healing_amount*modifier, overrideLimits = TRUE)
 	//Make it so each threshold is stuck.
 
 /obj/item/organ/examine(mob/user)
@@ -209,10 +209,12 @@
 		to_chat(owner, mess)
 	onDamage(d, maximum)
 
-/obj/item/organ/proc/regenOrganDamage(var/d)
+/obj/item/organ/proc/regenOrganDamage(var/d, overrideLimits = FALSE)
 	if(d > 0) //If we're not negative
 		d = -d
-	if(organ_flags & ORGAN_FAILING)//End stage
+	if(overrideLimits)
+		damage = clamp(damage + d, 0, maxHealth)
+	else if(organ_flags & ORGAN_FAILING)//End stage
 		return FALSE
 	else if(damage >= high_threshold)//Chronic
 		damage = clamp(damage + d, high_threshold+1, maxHealth) //+1 so that it appears as chronic/acute under scanners

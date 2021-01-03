@@ -72,13 +72,16 @@
 #define REAGENT_FORCEONNEW			(1<<5)  //Forces a on_new() call without a data overhead
 #define REAGENT_SNEAKYNAME          (1<<6)  //When inverted, the inverted chem uses the name of the original chem
 #define REAGENT_SPLITRETAINVOL      (1<<7)  //Retains initial volume of chem when splitting
+#define REAGENT_LIVER_STRESS_BYPASS (1<<8)  //If the liver will always process this regardless of stress
 
 //Chemical reaction flags, for determining reaction specialties
 #define REACTION_CLEAR_IMPURE       (1<<0)  //Convert into impure/pure on reaction completion
 #define REACTION_CLEAR_INVERSE      (1<<1)  //Convert into inverse on reaction completion when purity is low enough
 #define REACTION_CLEAR_RETAIN		(1<<2)	//Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
 
-//Explosion flags for using different explosive handlers
+//Explosion flags for using generic explosive handlers
 #define FERMI_EXPLOSION_TYPE_MIXED "mixed"
 #define FERMI_EXPLOSION_TYPE_INVERTSMOKE "invertsmoke"
 #define FERMI_EXPLOSION_TYPE_SMOKE "smoke"
+#define FERMI_EXPLOSION_REDUCE_YIELD "yield"
+#define FERMI_EXPLOSION_REDUCE_PURITY "purity"
