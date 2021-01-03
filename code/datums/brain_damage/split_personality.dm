@@ -219,7 +219,7 @@
 
 //////////////////////////EPITAPH//////////////////////////
 
-/*/datum/brain_trauma/severe/split_personality/epitaph
+/datum/brain_trauma/severe/split_personality/epitaph
 	name = "Split Personality"
 	desc = "Patient's brain shows a strangely unique amalgamation between the lobes, yet a clear fracture shows. You doubt this will be fixable at all."
 	scan_desc = "lobe fracture"
@@ -426,7 +426,7 @@
 	var/input = stripped_input(owner, "Please enter a message to tell your other personality through a nearby object.", "Epitaph", "")
 	if(!input)
 		return
-	to_chat(epitaphparent.owner, "<span class='hear'>[epitaphOuija] communes \"[input]\"</span>")*/
+	to_chat(epitaphparent.owner, "<span class='hear'>[epitaphOuija] communes \"[input]\"</span>")
 
 #undef OWNER
 #undef STRANGER
