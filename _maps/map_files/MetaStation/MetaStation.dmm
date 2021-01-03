@@ -56434,8 +56434,10 @@
 	},
 /area/medical/surgery)
 "cid" = (
-/obj/structure/sign/poster/official/cleanliness,
-/turf/closed/wall,
+/obj/structure/curtain{
+	icon_state = "closed"
+	},
+/turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "cie" = (
 /obj/machinery/firealarm{
@@ -57112,6 +57114,9 @@
 "cjB" = (
 /obj/machinery/iv_drip,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/vending/wallmed{
+	pixel_y = 29
+	},
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "cjC" = (
@@ -58903,11 +58908,8 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cnm" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
+/obj/structure/sign/poster/official/cleanliness,
+/turf/closed/wall,
 /area/medical/surgery)
 "cnp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -60433,8 +60435,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/machinery/light_switch{
-	pixel_y = -27
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
 	},
 /turf/open/floor/plasteel/dark/side{
 	dir = 1
@@ -101953,7 +101955,7 @@ cia
 cjw
 ckU
 cmk
-cnm
+cnt
 coy
 cUH
 crj
@@ -102978,7 +102980,7 @@ dux
 cdl
 dwb
 cia
-cia
+cnm
 cia
 cid
 cnq
