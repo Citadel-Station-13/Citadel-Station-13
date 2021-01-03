@@ -127,11 +127,11 @@
 //Gentle "explosions"
 
 /datum/chemical_reaction/proc/FermiExplodeReduceYield(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
-	for (var/datum/reagent/R in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
-		if((reagent.type in required_reagents) || (reagent.type in results))
+	for(var/datum/reagent/R in R0.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
+		if((R.type in required_reagents) || (R.type in results))
 			R.volume -= R.volume/20
-	R0.temperature -= R0.temperature/20 //knock it down
-	R0.holder.visible_message("The mixture bubbles as some of it evaporates off!")
+	R0.chem_temp -= R0.chem_temp/20 //knock it down
+	my_atom.visible_message("The mixture bubbles as some of it evaporates off!")
 
 
 /datum/chemical_reaction/proc/FermiExplodeReducePurity(datum/reagents/R0, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
@@ -139,8 +139,8 @@
 	if(!R) //I dunno how you'd get here but it's just in case
 		return
 	R.purity -= R.purity/20
-	R0.temperature =
-	R0.holder.visible_message("The mixture gurgles as its colour is tainted.")
+	R0.chem_temp = R0.chem_temp/20
+	my_atom.visible_message("The mixture gurgles as its colour is tainted.")
 
 /datum/chemical_reaction/proc/clear_reactants(datum/reagents/R0)
 	if(!R0)
