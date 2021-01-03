@@ -178,7 +178,7 @@
 	else
 		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
 		body_parts_covered = NONE
-	return !body_parts_covered
+	return TRUE
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
