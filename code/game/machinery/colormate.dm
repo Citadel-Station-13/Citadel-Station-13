@@ -106,15 +106,15 @@
 			dat += "<input type='hidden' name='matrix_paint' value='1'"
 			dat += "<br><br>"
 			dat += MATRIX_FIELD("rr", color_matrix_last[1])
-			dat += MATRIX_FIELD("rg", color_matrix_last[2])
-			dat += MATRIX_FIELD("rb", color_matrix_last[3])
+			dat += MATRIX_FIELD("gr", color_matrix_last[2])
+			dat += MATRIX_FIELD("br", color_matrix_last[3])
 			dat += "<br><br>"
-			dat += MATRIX_FIELD("gr", color_matrix_last[4])
+			dat += MATRIX_FIELD("rg", color_matrix_last[4])
 			dat += MATRIX_FIELD("gg", color_matrix_last[5])
-			dat += MATRIX_FIELD("gb", color_matrix_last[6])
+			dat += MATRIX_FIELD("bg", color_matrix_last[6])
 			dat += "<br><br>"
-			dat += MATRIX_FIELD("br", color_matrix_last[7])
-			dat += MATRIX_FIELD("bg", color_matrix_last[8])
+			dat += MATRIX_FIELD("rb", color_matrix_last[7])
+			dat += MATRIX_FIELD("gb", color_matrix_last[8])
 			dat += MATRIX_FIELD("bb", color_matrix_last[9])
 			dat += "<br><br>"
 			dat += MATRIX_FIELD("cr", color_matrix_last[10])

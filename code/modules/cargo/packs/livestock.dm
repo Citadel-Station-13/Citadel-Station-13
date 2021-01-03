@@ -35,7 +35,7 @@
 /datum/supply_pack/critter/parrot/generate()
 	. = ..()
 	for(var/i in 1 to 5)
-		switch(rand(1, 23))
+		switch(rand(1, 24))
 			if(1)
 				new /mob/living/simple_animal/parrot(.)
 			if(2)
@@ -82,6 +82,8 @@
 				new /mob/living/simple_animal/parrot/hooded_too(.)
 			if(23)
 				new /mob/living/simple_animal/parrot/pink_too(.)
+			if(24)
+				new /mob/living/simple_animal/parrot/eclectusr(.)
 
 
 /datum/supply_pack/critter/butterfly
