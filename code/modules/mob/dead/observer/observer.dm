@@ -380,6 +380,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc

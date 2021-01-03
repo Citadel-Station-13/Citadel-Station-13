@@ -632,7 +632,6 @@
 	id = /datum/reagent/fermi/zeolites
 	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot! - But it's now somewhat dangerous, and needs a bit of gold to catalyze the reaction
 	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
-	required_catalysts = list(/datum/reagent/gold = 5)
 	//FermiChem vars:
 	OptimalTempMin 	= 500
 	OptimalTempMax 	= 750
@@ -643,7 +642,7 @@
 	//CatalystFact 	= 0
 	CurveSharpT 	= 1.5
 	CurveSharppH 	= 3
-	ThermicConstant = 5
+	ThermicConstant = 1
 	HIonRelease 	= -0.15
 	RateUpLim 		= 4
 	PurityMin 		= 0.5 //Good luck!
