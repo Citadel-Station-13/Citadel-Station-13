@@ -11,7 +11,7 @@
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-/obj/structure/destructible/clockwork/eminence_spire/attack_hand(mob/living/user)
+/obj/structure/destructible/clockwork/eminence_spire/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -26,9 +26,6 @@
 		return
 	if(C.clock_team.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
-		return
-	if(!GLOB.servants_active)
-		to_chat(user, "<span class='warning'>The Ark isn't active!</span>")
 		return
 	if(eminence_nominee) //This could be one large proc, but is split into three for ease of reading
 		if(eminence_nominee == user)

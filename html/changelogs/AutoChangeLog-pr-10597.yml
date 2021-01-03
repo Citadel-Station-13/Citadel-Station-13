@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - code_imp: "demodularized player panel code, mostly"
-  - admin: "added ghost role eligibility delay removal to player panel"

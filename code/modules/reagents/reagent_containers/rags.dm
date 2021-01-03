@@ -8,9 +8,10 @@
 	reagent_flags = REFILLABLE | DRAINABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
-	APTFT_altclick = FALSE
+	container_flags = APTFT_VERB
 	volume = 5
 	spillable = FALSE
+	reagent_value = NO_REAGENTS_VALUE
 	var/wipe_sound
 	var/soak_efficiency = 1
 	var/extinguish_efficiency = 0
@@ -26,7 +27,7 @@
 	if(reagents.total_volume)
 		. += "<span class='notice'>It's soaked. Alt-Click to squeeze it dry, and perhaps gather the liquids into another held open container.</span>"
 
-/obj/item/reagent_containers/rag/afterattack(atom/A as obj|turf|area, mob/user,proximity)
+/obj/item/reagent_containers/rag/afterattack(atom/A, mob/user,proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -35,26 +36,29 @@
 		var/reagentlist = pretty_string_from_reagent_list(reagents)
 		var/log_object = "a damp rag containing [reagentlist]"
 		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
-			reagents.reaction(C, INGEST)
-			reagents.trans_to(C, 5)
-			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
-			log_combat(user, C, "smothered", log_object)
+			C.visible_message("<span class='danger'>[user] is trying to smother \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] is trying to smother you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
+			if(do_after(user, 20, target = C))
+				reagents.reaction(C, INGEST)
+				reagents.trans_to(C, 5)
+				C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and a heavy breath taken.</span>")
+				log_combat(user, C, "smothered", log_object)
 		else
-			reagents.reaction(C, TOUCH)
-			reagents.remove_all(5)
-			C.visible_message("<span class='notice'>[user] has touched \the [C] with \the [src].</span>")
-			log_combat(user, C, "touched", log_object)
+			C.visible_message("<span class='notice'>[user] is trying to wipe \the [C] with \the [src].</span>")
+			if(do_after(user, 20, target = C))
+				reagents.reaction(C, TOUCH)
+				reagents.remove_all(5)
+				C.visible_message("<span class='notice'>[user] has wiped \the [C] with \the [src].</span>")
+				log_combat(user, C, "touched", log_object)
 
-	else if(istype(A) && src in user)
+	else if(istype(A) && (src in user))
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user, action_speed, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-	return
 
-/obj/item/reagent_containers/rag/pre_altattackby(mob/living/M, mob/living/user, params)
+/obj/item/reagent_containers/rag/alt_pre_attack(mob/living/M, mob/living/user, params)
 	if(istype(M) && user.a_intent == INTENT_HELP)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(M.on_fire)
 			user.visible_message("<span class='warning'>\The [user] uses \the [src] to pat out [M == user ? "[user.p_their()]" : "\the [M]'s"] flames!</span>")
 			if(hitsound)

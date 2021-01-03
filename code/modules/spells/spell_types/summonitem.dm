@@ -3,7 +3,7 @@
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
 	school = "transmutation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "GAR YOK"
 	invocation_type = "whisper"
 	range = -1
@@ -38,7 +38,7 @@
 				else
 					message = "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>"
 
-		else if(marked_item && marked_item in hand_items) //unlinking item to the spell
+		else if(marked_item && (marked_item in hand_items)) //unlinking item to the spell
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
 			name = "Instant Summons"
 			marked_item = 		null
@@ -58,7 +58,7 @@
 					if(organ.owner)
 						// If this code ever runs I will be happy
 						log_combat(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
-						organ.Remove(organ.owner)
+						organ.Remove()
 			else
 				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
 					if(isitem(item_to_retrieve.loc))
@@ -76,25 +76,17 @@
 							break
 						M.dropItemToGround(item_to_retrieve)
 
-						if(iscarbon(M)) //Edge case housekeeping
-							var/mob/living/carbon/C = M
-							if(C.stomach_contents && item_to_retrieve in C.stomach_contents)
-								C.stomach_contents -= item_to_retrieve
-							for(var/X in C.bodyparts)
-								var/obj/item/bodypart/part = X
-								if(item_to_retrieve in part.embedded_objects)
-									part.embedded_objects -= item_to_retrieve
-									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
-									if(!C.has_embedded_objects())
-										C.clear_alert("embeddedobject")
-										SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-									break
-
 					else
 						if(istype(item_to_retrieve.loc, /obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
 							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc
 							P.disconnect()
 							P.update_icon()
+						else if(istype(item_to_retrieve.loc, /obj/machinery/disposal) || istype(item_to_retrieve.loc, /obj/structure/disposalpipe))	//If it's in disposals, only recall the item.
+							break
+						else if(istype(item_to_retrieve.loc, /obj/machinery/nuclearbomb))	//I feel like yandev
+							break	//Just to be sure.
+
+
 
 						item_to_retrieve = item_to_retrieve.loc
 
@@ -105,7 +97,7 @@
 
 			if(item_to_retrieve.loc)
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
-			if(!L.put_in_hands(item_to_retrieve))
+			if(!isitem(item_to_retrieve) || !L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)

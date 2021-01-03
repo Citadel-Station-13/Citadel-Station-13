@@ -1,12 +1,6 @@
 //				INTEGRATION: Adding Procs and Datums to existing "classes"
-/mob/living/proc/AmBloodsucker(falseIfInDisguise=FALSE)
-	// No Datum
-	if(!mind || !mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER))
-		return FALSE
-	return TRUE
 
-
-/mob/living/proc/HaveBloodsuckerBodyparts(var/displaymessage="") // displaymessage can be something such as "rising from death" for Torpid Sleep. givewarningto is the person receiving messages.
+/mob/living/proc/HaveBloodsuckerBodyparts(displaymessage = "") // displaymessage can be something such as "rising from death" for Torpid Sleep. givewarningto is the person receiving messages.
 	if(!getorganslot(ORGAN_SLOT_HEART))
 		if(displaymessage != "")
 			to_chat(src, "<span class='warning'>Without a heart, you are incapable of [displaymessage].</span>")
@@ -21,33 +15,6 @@
 		return FALSE
 	return TRUE
 
-
-
-// 			GET DAMAGE
-
-
-// Do NOT count the damage on prosthetics for this.
-/mob/living/proc/getBruteLoss_nonProsthetic()
-	return getBruteLoss()
-
-/mob/living/proc/getFireLoss_nonProsthetic()
-	return getFireLoss()
-
-/mob/living/carbon/getBruteLoss_nonProsthetic()
-	var/amount = 0
-	for(var/obj/item/bodypart/BP in bodyparts)
-		if(BP.status < 2)
-			amount += BP.brute_dam
-	return amount
-
-/mob/living/carbon/getFireLoss_nonProsthetic()
-	var/amount = 0
-	for(var/obj/item/bodypart/BP in bodyparts)
-		if(BP.status < 2)
-			amount += BP.burn_dam
-	return amount
-
-/mob/living/carbon
 // 			EXAMINING
 /mob/living/carbon/human/proc/ReturnVampExamine(var/mob/viewer)
 	if(!mind || !viewer.mind)
@@ -146,3 +113,5 @@
 
 /mob/living/proc/StartFrenzy(inTime = 120)
 	set waitfor = FALSE
+
+

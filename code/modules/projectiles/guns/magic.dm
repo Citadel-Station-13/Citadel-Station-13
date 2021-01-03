@@ -9,7 +9,7 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
-	var/checks_antimagic = FALSE
+	var/checks_antimagic = TRUE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
@@ -73,9 +73,6 @@
 		recharge_newshot()
 	return 1
 
-/obj/item/gun/magic/update_icon()
-	return
-
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")
 
@@ -86,6 +83,6 @@
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()
-	switch (var_name)
-		if ("charges")
+	switch(var_name)
+		if(NAMEOF(src, charges))
 			recharge_newshot()

@@ -5,6 +5,7 @@
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
+	plane = ABOVE_WALL_PLANE
 	alpha = 50
 	resistance_flags = NONE
 	var/affects_servants = FALSE
@@ -26,8 +27,7 @@
 /obj/effect/clockwork/sigil/attack_tk(mob/user)
 	return //you can't tk stomp sigils, but you can hit them with something
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/clockwork/sigil/attack_hand(mob/user)
+/obj/effect/clockwork/sigil/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(iscarbon(user) && !user.stat)
 		if(is_servant_of_ratvar(user) && user.a_intent != INTENT_HARM)
 			return ..()
@@ -80,7 +80,7 @@
 	if(iscultist(L)) //No longer stuns cultists, instead sets them on fire and burns them
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustFireLoss(10)
-		L.Knockdown(20, FALSE)
+		L.DefaultCombatKnockdown(20, FALSE)
 		L.adjust_fire_stacks(5) //Burn!
 		L.IgniteMob()
 	else
@@ -155,7 +155,7 @@
 		if(brutedamage || burndamage)
 			L.adjustBruteLoss(-(brutedamage * 0.25))
 			L.adjustFireLoss(-(burndamage * 0.25))
-	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
+	L.DefaultCombatKnockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
@@ -216,6 +216,28 @@
 	else if(get_clockwork_power())
 		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 
+/obj/effect/clockwork/sigil/transmission/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/clockwork/sigil/transmission/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/effect/clockwork/sigil/transmission/process()
+    var/power_drained = 0
+    var/power_mod = 0.005
+    for(var/t in spiral_range_turfs(SIGIL_ACCESS_RANGE, src))
+        var/turf/T = t
+        for(var/M in T)
+            var/atom/movable/A = M
+            power_drained += A.power_drain(TRUE)
+
+        CHECK_TICK
+
+    adjust_clockwork_power(power_drained * power_mod * 15)
+    new /obj/effect/temp_visual/ratvar/sigil/transmission(loc, 1 + (power_drained * 0.0035))
+
 /obj/effect/clockwork/sigil/transmission/proc/charge_cyborg(mob/living/silicon/robot/cyborg)
 	if(!cyborg_checks(cyborg))
 		return
@@ -251,6 +273,7 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/update_icon()
+	. = ..()
 	var/power_charge = get_clockwork_power()
 	if(GLOB.ratvar_awakens)
 		alpha = 255
@@ -278,8 +301,14 @@
 	sigil_name = "Vitality Matrix"
 	var/revive_cost = 150
 	var/sigil_active = FALSE
+	var/min_drain_health = -INFINITY
+	var/can_dust = TRUE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
+
+/obj/effect/clockwork/sigil/vitality/neutered
+	min_drain_health = 20
+	can_dust = FALSE
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	. = ..()
@@ -305,7 +334,7 @@
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = 0
-			if(L.stat == DEAD && !consumed_vitality)
+			if(L.stat == DEAD && !consumed_vitality && can_dust)
 				consumed_vitality = TRUE //Prevent the target from being consumed multiple times
 				vitality_drained = L.maxHealth
 				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
@@ -317,7 +346,7 @@
 					if(!L.dropItemToGround(W))
 						qdel(W)
 				L.dust()
-			else
+			else if(L.health > min_drain_health)
 				if(!GLOB.ratvar_awakens && L.stat == CONSCIOUS)
 					vitality_drained = L.adjustToxLoss(1, forced = TRUE)
 				else
@@ -351,9 +380,9 @@
 				break
 			if(!L.client || L.client.is_afk())
 				set waitfor = FALSE
-				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", ROLE_SERVANT_OF_RATVAR, null, ROLE_SERVANT_OF_RATVAR, 50, L)
+				var/list/mob/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", ROLE_SERVANT_OF_RATVAR, null, ROLE_SERVANT_OF_RATVAR, 50, L)
 				if(LAZYLEN(candidates))
-					var/mob/dead/observer/C = pick(candidates)
+					var/mob/C = pick(candidates)
 					to_chat(L, "<span class='userdanger'>Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!</span>")
 					message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(L)]) to replace an inactive clock cultist.")
 					L.ghostize(0)
@@ -384,3 +413,50 @@
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)
+
+/obj/effect/clockwork/sigil/rite
+	name = "radiant sigil"
+	desc = "A sigil glowing with barely-contained power."
+	clockwork_desc = "A sigil that will allow you to perform certain rites on it, provided you have access to sufficient power and materials."
+	icon_state = "sigiltransmission" //am big lazy - recolored transmission sigil
+	sigil_name = "Sigil of Rites"
+	alpha = 255
+	var/performing_rite = FALSE
+	color = "#ffe63a"
+	light_color = "#ffe63a"
+	light_range = 1
+	light_power = 2
+
+/obj/effect/clockwork/sigil/rite/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	. = ..()
+	if(.)
+		return
+	if(!is_servant_of_ratvar(user))
+		return
+	if(!GLOB.all_clockwork_rites.len) //Did we already generate the list?
+		generate_all_rites()
+	if(performing_rite)
+		to_chat(user, "<span class='warning'>Someone is already performing a rite here!")
+		return
+	var/list/possible_rites = list()
+	for(var/datum/clockwork_rite/R in GLOB.all_clockwork_rites)
+		if(is_servant_of_ratvar(user, require_full_power = TRUE) || !R.requires_full_power)
+			possible_rites[R] = R
+	var/input_key = input(user, "Choose a rite", "Choosing a rite") as null|anything in possible_rites
+	if(!input_key)
+		return
+	var/datum/clockwork_rite/CR = possible_rites[input_key]
+	if(!CR)
+		return
+	var/choice = alert(user, "What to do with this rite?", "What to do?", "Cast", "Show Info", "Cancel")
+	switch(choice)
+		if("Cast")
+			CR.try_cast(src, user)
+		if("Show Info")
+			var/infotext = CR.build_info()
+			to_chat(user, infotext)
+
+/obj/effect/clockwork/sigil/rite/proc/generate_all_rites() //The first time someone uses a sigil of rites, all the rites are actually generated. No need to have a bunch of random datums laying around all the time.
+	for(var/V in subtypesof(/datum/clockwork_rite))
+		var/datum/clockwork_rite/R = new V
+		GLOB.all_clockwork_rites += R

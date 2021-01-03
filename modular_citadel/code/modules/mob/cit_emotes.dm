@@ -3,10 +3,6 @@
 /mob
 	var/nextsoundemote = 1
 
-//Disables the custom emote blacklist from TG that normally applies to slimes.
-/datum/emote/living/custom
-	mob_type_blacklist_typecache = list(/mob/living/brain)
-
 /datum/emote/living/insult
 	key = "insult"
 	key_third_person = "insults"
@@ -14,13 +10,10 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/insult/run_emote(mob/living/user, params)
-	var/insult_message = ""
-	var/miming = user.mind ? user.mind.miming : 0
-	if(!user.is_muzzled())
-		insult_message += pick_list_replacements(INSULTS_FILE, "insult_gen")
-		message = insult_message
-	else if(miming)
+	if(user.mind?.miming)
 		message = "creatively gesticulates."
+	else if(!user.is_muzzled())
+		message = pick_list_replacements(INSULTS_FILE, "insult_gen")
 	else
 		message = "muffles something."
 	. = ..()
@@ -36,7 +29,7 @@
 			sound = 'modular_citadel/sound/voice/scream_silicon.ogg'
 			if(iscyborg(user))
 				var/mob/living/silicon/robot/S = user
-				if(S.cell.charge < 20)
+				if(S.cell?.charge < 20)
 					to_chat(S, "<span class='warning'>Scream module deactivated. Please recharge.</span>")
 					return
 				S.cell.use(200)
@@ -49,6 +42,11 @@
 			sound = pick('modular_citadel/sound/voice/scream_m1.ogg', 'modular_citadel/sound/voice/scream_m2.ogg')
 			if(user.gender == FEMALE)
 				sound = pick('modular_citadel/sound/voice/scream_f1.ogg', 'modular_citadel/sound/voice/scream_f2.ogg')
+			if(is_species(user, /datum/species/jelly))
+				if(user.gender == FEMALE)
+					sound = pick('modular_citadel/sound/voice/scream_jelly_f1.ogg', 'modular_citadel/sound/voice/scream_jelly_f2.ogg')
+				else
+					sound = pick('modular_citadel/sound/voice/scream_jelly_m1.ogg', 'modular_citadel/sound/voice/scream_jelly_m2.ogg')
 			if(is_species(user, /datum/species/android) || is_species(user, /datum/species/synth) || is_species(user, /datum/species/ipc))
 				sound = 'modular_citadel/sound/voice/scream_silicon.ogg'
 			if(is_species(user, /datum/species/lizard))
@@ -77,7 +75,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -94,7 +91,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap2/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -111,7 +107,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/snap3/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -128,7 +123,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/awoo/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -138,6 +132,54 @@
 	user.nextsoundemote = world.time + 7
 	playsound(user, 'modular_citadel/sound/voice/awoo.ogg', 50, 1, -1)
 
+/datum/emote/living/hiss
+	key = "hiss"
+	key_third_person = "hisses"
+	message = "hisses!"
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	restraint_check = FALSE
+
+/datum/emote/living/hiss/run_emote(mob/living/user, params)
+	if(!(. = ..()))
+		return
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	playsound(user, 'modular_citadel/sound/voice/hiss.ogg', 50, 1, -1)
+
+/datum/emote/living/meow
+	key = "meow"
+	key_third_person = "mrowls"
+	message = "mrowls!"
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	restraint_check = FALSE
+
+/datum/emote/living/meow/run_emote(mob/living/user, params)
+	if(!(. = ..()))
+		return
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	playsound(user, 'modular_citadel/sound/voice/meow1.ogg', 50, 1, -1)
+
+/datum/emote/living/purr
+	key = "purr"
+	key_third_person = "purrs softly"
+	message = "purrs softly."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	restraint_check = FALSE
+
+/datum/emote/living/purr/run_emote(mob/living/user, params)
+	if(!(. = ..()))
+		return
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	playsound(user, 'modular_citadel/sound/voice/purr.ogg', 50, 1, -1)
+
 /datum/emote/living/nya
 	key = "nya"
 	key_third_person = "lets out a nya"
@@ -145,7 +187,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/nya/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -162,7 +203,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/weh/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -179,7 +219,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/peep/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -203,7 +242,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/mothsqueak/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -220,7 +258,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/merp/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -237,7 +274,6 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	restraint_check = FALSE
-	mob_type_allowed_typecache = list(/mob/living/carbon, /mob/living/silicon/pai)
 
 /datum/emote/living/bark/run_emote(mob/living/user, params)
 	if(!(. = ..()))
@@ -246,4 +282,21 @@
 		return
 	user.nextsoundemote = world.time + 7
 	var/sound = pick('modular_citadel/sound/voice/bark1.ogg', 'modular_citadel/sound/voice/bark2.ogg')
+	playsound(user, sound, 50, 1, -1)
+
+/datum/emote/living/squish
+	key = "squish"
+	key_third_person = "squishes"
+	message = "squishes!"
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	restraint_check = FALSE
+
+/datum/emote/living/squish/run_emote(mob/living/user, params)
+	if(!(. = ..()))
+		return
+	if(user.nextsoundemote >= world.time)
+		return
+	user.nextsoundemote = world.time + 7
+	var/sound = pick('sound/voice/slime_squish.ogg')
 	playsound(user, sound, 50, 1, -1)

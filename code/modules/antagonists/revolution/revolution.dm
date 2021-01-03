@@ -7,6 +7,7 @@
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
+	threat = 2
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
 
@@ -148,6 +149,7 @@
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
 	hud_type = "rev_head"
+	threat = 8
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
@@ -249,7 +251,7 @@
 			"left pocket" = SLOT_L_STORE,
 			"right pocket" = SLOT_R_STORE
 		)
-		var/where = H.equip_in_one_of_slots(T, slots)
+		var/where = H.equip_in_one_of_slots(T, slots, critical = TRUE)
 		if (!where)
 			to_chat(H, "The Syndicate were unfortunately unable to get you a flash.")
 		else

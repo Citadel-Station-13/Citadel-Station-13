@@ -10,7 +10,7 @@
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
 
-/obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases)
+/obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases, list/blood_dna)
 	. = ..()
 	if(gibtypes.len != gibamounts.len)
 		stack_trace("Gib list amount length mismatch!")
@@ -33,11 +33,11 @@
 	var/body_coloring = ""
 	if(source_mob)
 		if(!issilicon(source_mob))
-			dna_to_add = source_mob.get_blood_dna_list() //ez pz
+			dna_to_add = blood_dna || source_mob.get_blood_dna_list() //ez pz
 		if(ishuman(source_mob))
 			var/mob/living/carbon/human/H = source_mob
 			if(H.dna.species.use_skintones)
-				body_coloring = "#[skintone2hex(H.skin_tone)]"
+				body_coloring = SKINTONE2HEX(H.skin_tone)
 			else
 				body_coloring = "#[H.dna.features["mcolor"]]"
 
@@ -49,7 +49,7 @@
 				H.set_species(gib_mob_species)
 				dna_to_add = temp_mob.get_blood_dna_list()
 				if(H.dna.species.use_skintones)
-					body_coloring = "#[skintone2hex(H.skin_tone)]"
+					body_coloring = SKINTONE2HEX(H.skin_tone)
 				else
 					body_coloring = "#[H.dna.features["mcolor"]]"
 			else

@@ -31,6 +31,10 @@
 	START_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/clothing/glasses/meson/engine/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/clothing/glasses/meson/engine/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -93,14 +97,14 @@
 		if(get_dist(user, place) >= range*8)	//Rads are easier to see than wires under the floor
 			continue
 		var/strength = round(rad_places[i] / 1000, 0.1)
-		var/image/pic = new(loc = place)
+		var/image/pic = image(loc = place)
 		var/mutable_appearance/MA = new()
-		MA.alpha = 180
-		MA.maptext = "[strength]k"
-		MA.color = "#64C864"
-		MA.layer = FLY_LAYER
+		MA.maptext = "<span class='maptext'>[strength]k</span>"
+		MA.color = "#04e604"
+		MA.layer = RAD_TEXT_LAYER
+		MA.plane = GAME_PLANE
 		pic.appearance = MA
-		flick_overlay(pic, list(user.client), 8)
+		flick_overlay(pic, list(user.client), 10)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
 	var/mob/living/carbon/human/user = loc
@@ -120,18 +124,8 @@
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
 			flick_overlay(pic, list(user.client), 8)
 
-/obj/item/clothing/glasses/meson/engine/update_icon()
+/obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = "trayson-[mode]"
-	update_mob()
-
-/obj/item/clothing/glasses/meson/engine/proc/update_mob()
-	item_state = icon_state
-	if(isliving(loc))
-		var/mob/living/user = loc
-		if(user.get_item_by_slot(SLOT_GLASSES) == src)
-			user.update_inv_glasses()
-		else
-			user.update_inv_hands()
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
 	name = "optical t-ray scanner"

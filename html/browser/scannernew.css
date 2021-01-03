@@ -16,3 +16,24 @@
 	float: left;
 }
 
+img.selected
+{
+	border: 1px solid blue;
+}
+img.unselected
+{
+	border: 2px solid black;
+}
+div>table {
+	float: left;
+}
+td
+{
+	text-align: center;
+}
+a.clean
+{
+	background: none;
+	border: none;
+	marging: none;
+} 

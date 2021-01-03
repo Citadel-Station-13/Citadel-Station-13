@@ -92,6 +92,14 @@
 	creation_time = 0
 	max_signs = 3
 
+/obj/item/holosign_creator/combifan
+	name = "ATMOS holo-combifan projector"
+	desc = "A holographic projector that creates holographic combi-fans that prevent changes in atmosphere and temperature conditions. Somehow."
+	icon_state = "signmaker_atmos"
+	holosign_type = /obj/structure/holosign/barrier/combifan
+	creation_time = 0
+	max_signs = 3
+
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"
 	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."

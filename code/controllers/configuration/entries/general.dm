@@ -1,3 +1,5 @@
+/datum/config_entry/flag/auto_profile // Automatically start profiler on server start
+
 /datum/config_entry/flag/autoadmin  // if autoadmin is enabled
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -54,6 +56,8 @@
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/log_pda	// log pda messages
 
 /datum/config_entry/flag/log_telecomms	// log telecomms messages
@@ -79,6 +83,24 @@
 /datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	config_entry_value = 600
 	min_val = 0
+
+/// Length of time before the first autotransfer vote is called (deciseconds, default 2 hours)
+/// Set to 0 to disable the subsystem altogether.
+/datum/config_entry/number/vote_autotransfer_initial
+	config_entry_value = 72000
+	min_val = 0
+
+///length of time to wait before subsequent autotransfer votes (deciseconds, default 30 minutes)
+/datum/config_entry/number/vote_autotransfer_interval
+	config_entry_value = 18000
+	min_val = 0
+
+/// maximum extensions until the round autoends.
+/// Set to 0 to force automatic crew transfer after the 'vote_autotransfer_initial' elapsed.
+/// Set to -1 to disable the maximum extensions cap.
+/datum/config_entry/number/vote_autotransfer_maximum
+	config_entry_value = 4
+	min_val = -1
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
 
@@ -149,8 +171,6 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/hostedby
-
-/datum/config_entry/flag/norespawn
 
 /datum/config_entry/flag/guest_jobban
 
@@ -267,6 +287,9 @@
 
 /datum/config_entry/flag/tgstyle_maprotation
 
+/datum/config_entry/string/map_vote_type
+	config_entry_value = APPROVAL_VOTING
+
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
 	min_val = 0
@@ -301,6 +324,9 @@
 
 /datum/config_entry/number/notify_new_player_account_age	// how long do we notify admins of a new byond account
 	min_val = 0
+
+/datum/config_entry/flag/age_verification //are we using the automated age verification which asks users if they're 18+?
+	config_entry_value = TRUE
 
 /datum/config_entry/flag/irc_first_connection_alert	// do we notify the irc channel when somebody is connecting for the first time?
 
@@ -347,6 +373,10 @@
 	config_entry_value = null
 	min_val = 500
 
+/datum/config_entry/number/client_warn_version
+	config_entry_value = null
+	min_val = 500
+
 /datum/config_entry/string/client_warn_message
 	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
@@ -358,6 +388,10 @@
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+/datum/config_entry/number/client_error_build
+	config_entry_value = null
+	min_val = 0
 
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null
@@ -389,6 +423,13 @@
 	config_entry_value = 50
 
 /datum/config_entry/flag/irc_announce_new_game
+	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+
+/datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
+	return ""	//default broadcast
+
+/datum/config_entry/string/chat_announce_new_game
+	config_entry_value = null
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -428,6 +469,18 @@
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"
 
+/datum/config_entry/string/default_view_square
+	config_entry_value = "15x15"
+
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
+
+/datum/config_entry/number/max_bunker_days
+	config_entry_value = 7
+	min_val = 1
+
+/datum/config_entry/flag/minimaps_enabled
+	config_entry_value = TRUE
+
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API

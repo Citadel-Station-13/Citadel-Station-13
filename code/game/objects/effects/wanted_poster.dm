@@ -8,6 +8,7 @@
 
 /obj/structure/sign/poster/wanted
 	var/wanted_name
+	poster_item_type = /obj/item/poster/wanted
 
 /obj/structure/sign/poster/wanted/Initialize(mapload, icon/person_icon, person_name, description)
 	. = ..()

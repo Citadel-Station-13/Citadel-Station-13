@@ -35,7 +35,7 @@
 	var/objectives_complete = TRUE
 	if(objectives.len)
 		for(var/datum/objective/objective in objectives)
-			if(!objective.check_completion())
+			if(objective.completable && !objective.check_completion())
 				objectives_complete = FALSE
 				break
 

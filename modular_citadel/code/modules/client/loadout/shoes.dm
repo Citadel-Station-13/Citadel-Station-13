@@ -1,84 +1,71 @@
-/datum/gear/laceup
+/datum/gear/shoes
+	category = LOADOUT_CATEGORY_SHOES
+	slot = SLOT_SHOES
+
+/datum/gear/shoes/laceup
 	name = "Laceup shoes"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/laceup
 
-/datum/gear/workboots
+/datum/gear/shoes/workboots
 	name = "Work boots"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/workboots
 
-/datum/gear/jackboots
+/datum/gear/shoes/jackboots
 	name = "Jackboots"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/jackboots
 
-/datum/gear/winterboots
+/datum/gear/shoes/winterboots
 	name = "Winter boots"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/winterboots
 
-/datum/gear/sandals
+/datum/gear/shoes/sandals
 	name = "Sandals"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sandal
 
-/datum/gear/blackshoes
+/datum/gear/shoes/blackshoes
 	name = "Black shoes"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sneakers/black
 
-/datum/gear/brownshoes
+/datum/gear/shoes/brownshoes
 	name = "Brown shoes"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sneakers/brown
 
-/datum/gear/whiteshoes
+/datum/gear/shoes/whiteshoes
 	name = "White shoes"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/sneakers/white
 
-/datum/gear/gildedcuffs
+/datum/gear/shoes/gildedcuffs
 	name = "Gilded leg wraps"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/wraps
 
-/datum/gear/silvercuffs
+/datum/gear/shoes/silvercuffs
 	name = "Silver leg wraps"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/wraps/silver
 
-/datum/gear/redcuffs
+/datum/gear/shoes/redcuffs
 	name = "Red leg wraps"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/wraps/red
 
-/datum/gear/bluecuffs
+/datum/gear/shoes/bluecuffs
 	name = "Blue leg wraps"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/wraps/blue
 
-/datum/gear/christmasbootsr
+/datum/gear/shoes/christmasbootsr
 	name = "Red Christmas Boots"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/winterboots/christmasbootsr
 
-/datum/gear/christmasbootsg
+/datum/gear/shoes/christmasbootsg
 	name = "Green Christmas Boots"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/winterboots/christmasbootsg
 
-/datum/gear/santaboots
+/datum/gear/shoes/santaboots
 	name = "Santa Boots"
-	category = SLOT_SHOES
 	path= /obj/item/clothing/shoes/winterboots/santaboots
 
-/datum/gear/cowboyboots
+/datum/gear/shoes/cowboyboots
 	name = "Cowboy Boots, Brown"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/cowboyboots
 
-/datum/gear/cowboyboots/black
+/datum/gear/shoes/cowboyboots/black
 	name = "Cowboy Boots, Black"
-	category = SLOT_SHOES
 	path = /obj/item/clothing/shoes/cowboyboots/black

@@ -3,7 +3,7 @@
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 // cost = 700- Minimum cost, or infinite points are possible.
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////// Engineering /////////////////////////////////////
+///////////////////////////// Engineering ////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/engineering
@@ -45,6 +45,7 @@
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/engihardsuit
 	name = "Engineering Hardsuit"
@@ -55,6 +56,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/suit/space/hardsuit/engine)
 	crate_name = "engineering hardsuit"
+	crate_type = /obj/structure/closet/crate/secure/engineering
 
 /datum/supply_pack/engineering/atmoshardsuit
 	name = "Atmospherics Hardsuit"
@@ -88,16 +90,6 @@
 	crate_name = "industrial rcd"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
-/datum/supply_pack/engineering/powergamermitts
-	name = "Insulated Gloves Crate"
-	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
-	cost = 2300	//Made of pure-grade bullshittinium
-	contains = list(/obj/item/clothing/gloves/color/yellow,
-					/obj/item/clothing/gloves/color/yellow,
-					/obj/item/clothing/gloves/color/yellow)
-	crate_name = "insulated gloves crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
-
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard cell-based equipment anytime, anywhere. Contains two Inducers."
@@ -113,6 +105,22 @@
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engineering/airpump
+	name = "Portable Air Pump Crate"
+	desc = "We all know you work in a high pressure workplace. Keep it that way with two additional air pumps!"
+	cost = 3000
+	contains = list(/obj/machinery/portable_atmospherics/pump,
+					/obj/machinery/portable_atmospherics/pump)
+	crate_name = "portable air pump crate"
+
+/datum/supply_pack/engineering/airscrubber
+	name = "Portable Scrubber Crate"
+	desc = "Miasma got you down? Plasma in the vents? Freshen up with these two brand-new air scrubbers!"
+	cost = 3000
+	contains = list(/obj/machinery/portable_atmospherics/scrubber,
+					/obj/machinery/portable_atmospherics/scrubber)
+	crate_name = "portable scrubber crate"
 
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"
@@ -144,6 +152,7 @@
 					/obj/item/storage/toolbox/mechanical)
 	cost = 1200
 	crate_name = "toolbox crate"
+	special = TRUE //Department resupply shuttle loan event.
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"

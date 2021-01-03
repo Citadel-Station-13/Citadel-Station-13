@@ -85,6 +85,20 @@
 	tastes = list("cake" = 4, "cream cheese" = 3)
 	foodtype = GRAIN | DAIRY
 
+/obj/item/reagent_containers/food/snacks/store/cake/brioche
+	name = "brioche cake"
+	desc = "A ring of sweet, glazed buns."
+	icon_state = "briochecake"
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/brioche
+	slices_num = 6
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
+
+/obj/item/reagent_containers/food/snacks/cakeslice/brioche
+	name = "brioche cake slice"
+	desc = "Delicious sweet-bread. Who needs anything else?"
+	icon_state = "briochecake_slice"
+	filling_color = "#FFD700"
+
 /obj/item/reagent_containers/food/snacks/cakeslice/cheese
 	name = "cheese cake slice"
 	desc = "Slice of pure cheestisfaction."
@@ -119,7 +133,7 @@
 	slices_num = 5
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
-	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtype = GRAIN | DAIRY | FRUIT | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/lime
 	name = "lime cake slice"
@@ -127,7 +141,7 @@
 	icon_state = "limecake_slice"
 	filling_color = "#00FF00"
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
-	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtype = GRAIN | DAIRY | FRUIT | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/store/cake/lemon
 	name = "lemon cake"
@@ -298,7 +312,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	name = "pound cake"
 	desc = "A condensed cake made for filling people up quickly."
 	icon_state = "pound_cake"
-	slices_num = 7 //Its ment to feed the party
+	slices_num = 7 //Its meant to feed the party
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 60)
 	tastes = list("cake" = 5, "sweetness" = 1, "batter" = 1)
@@ -375,7 +389,7 @@ obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 /obj/item/reagent_containers/food/snacks/cakeslice/peach_slice
 	name = "peach cake slice"
 	desc = "A slice of peach cake."
-	icon_state = "peach_slice"
+	icon_state = "peachcake_slice"
 	filling_color = "#00FFFF"
 	tastes = list("cake" = 1, "sugar" = 1, "peachjuice" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY

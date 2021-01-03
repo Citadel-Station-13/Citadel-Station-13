@@ -6,7 +6,7 @@
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden, /obj/structure/closet/crate/bin)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
@@ -24,13 +24,13 @@
 	export_types = list(/obj/structure/ore_box)
 
 /datum/export/large/crate/wood
-	cost = 140 //
+	cost = 140
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
 
 /datum/export/large/barrel
-	cost = 500 //150 to make meaning proffit of 350
+	cost = 300 //double the wooden cost of a coffin.
 	unit_name = "wooden barrel"
 	export_types = list(/obj/structure/fermenting_barrel)
 
@@ -40,19 +40,11 @@
 	export_types = list(/obj/structure/closet/crate/coffin)
 
 /datum/export/large/reagent_dispenser
-	cost = 100 // +0-400 depending on amount of reagents left
-	var/contents_cost = 400
-
-/datum/export/large/reagent_dispenser/get_cost(obj/O)
-	var/obj/structure/reagent_dispensers/D = O
-	var/ratio = D.reagents.total_volume / D.reagents.maximum_volume
-
-	return ..() + round(contents_cost * ratio)
+	cost = 100
 
 /datum/export/large/reagent_dispenser/water
 	unit_name = "watertank"
 	export_types = list(/obj/structure/reagent_dispensers/watertank)
-	contents_cost = 200
 
 /datum/export/large/reagent_dispenser/fuel
 	unit_name = "fueltank"
@@ -60,7 +52,6 @@
 
 /datum/export/large/reagent_dispenser/beer
 	unit_name = "beer keg"
-	contents_cost = 700
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
 /datum/export/large/pipedispenser
@@ -120,7 +111,7 @@
 	include_subtypes = FALSE
 
 /datum/export/large/am_control_unit
-	cost = 4000
+	cost = 2000
 	unit_name = "antimatter control unit"
 	export_types = list(/obj/machinery/power/am_control_unit)
 
@@ -178,15 +169,13 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
-	var/gases = C.air_contents.gases
-
-	worth += gases[/datum/gas/bz]*4
-	worth += gases[/datum/gas/stimulum]*25
-	worth += gases[/datum/gas/hypernoblium]*1000
-	worth += gases[/datum/gas/miasma]*4
-	worth += gases[/datum/gas/tritium]*7
-	worth += gases[/datum/gas/pluoxium]*6
-	worth += gases[/datum/gas/nitryl]*30
+	worth += C.air_contents.get_moles(/datum/gas/bz)*3
+	worth += C.air_contents.get_moles(/datum/gas/stimulum)*25
+	worth += C.air_contents.get_moles(/datum/gas/hypernoblium)*1000
+	worth += C.air_contents.get_moles(/datum/gas/miasma)*2
+	worth += C.air_contents.get_moles(/datum/gas/tritium)*7
+	worth += C.air_contents.get_moles(/datum/gas/pluoxium)*6
+	worth += C.air_contents.get_moles(/datum/gas/nitryl)*30
 	return worth
 
 
@@ -312,7 +301,7 @@
 	export_types = list(/obj/mecha/combat/durand)
 
 /datum/export/large/mech/phazon
-	cost = 35000 //Little over half do to needing a core
+	cost = 35000 //Little over half due to needing a core
 	unit_name = "working phazon"
 	export_types = list(/obj/mecha/combat/phazon)
 

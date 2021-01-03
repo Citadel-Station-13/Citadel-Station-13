@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Refactored code to allow all living mobs to use shields and not only humans."
-  - tweak: "Monkys will now retaliate against aliens attacking them (as if they even posed a threat to start with)."

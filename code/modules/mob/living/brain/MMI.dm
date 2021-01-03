@@ -14,20 +14,23 @@
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
 
-/obj/item/mmi/update_icon()
+/obj/item/mmi/update_icon_state()
 	if(!brain)
 		icon_state = "mmi_off"
-		return
-	if(istype(brain, /obj/item/organ/brain/alien))
+	else if(istype(brain, /obj/item/organ/brain/alien))
 		icon_state = "mmi_brain_alien"
-		braintype = "Xenoborg" //HISS....Beep.
 	else
 		icon_state = "mmi_brain"
-		braintype = "Cyborg"
+
+/obj/item/mmi/update_overlays()
+	. = ..()
+	. += add_mmi_overlay()
+
+/obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
-		add_overlay("mmi_alive")
+		. += "mmi_alive"
 	else
-		add_overlay("mmi_dead")
+		. += "mmi_dead"
 
 /obj/item/mmi/Initialize()
 	. = ..()
@@ -36,7 +39,9 @@
 	laws.set_laws_config()
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	user.DelayNextAction()
 	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
@@ -68,6 +73,10 @@
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
+		if(istype(brain, /obj/item/organ/brain/alien))
+			braintype = "Xenoborg" //HISS....Beep.
+		else
+			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
@@ -85,7 +94,7 @@
 		to_chat(user, "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>")
 		eject_brain(user)
 		update_icon()
-		name = "Man-Machine Interface"
+		name = initial(name)
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	brainmob.container = null //Reset brainmob mmi var.
@@ -129,7 +138,10 @@
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	update_icon()
-	return
+	if(istype(brain, /obj/item/organ/brain/alien))
+		braintype = "Xenoborg" //HISS....Beep.
+	else
+		braintype = "Cyborg"
 
 /obj/item/mmi/proc/replacement_ai_name()
 	return brainmob.name
@@ -157,13 +169,7 @@
 	if(!brainmob || iscyborg(loc))
 		return
 	else
-		switch(severity)
-			if(1)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(20,30), 30)
-			if(2)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
-			if(3)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
+		brainmob.emp_damage = min(brainmob.emp_damage + rand(-5,5) + severity/3, 30)
 		brainmob.emote("alarm")
 
 /obj/item/mmi/Destroy()

@@ -11,7 +11,7 @@
 
 //Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
-	if(!user || user.notransform)
+	if(!user || user.mob_transforming)
 		return 0
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 

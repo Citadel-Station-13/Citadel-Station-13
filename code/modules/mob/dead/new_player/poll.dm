@@ -229,7 +229,7 @@
 			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x250")
 		if(POLLTYPE_IRV)
-			var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/IRV)
+			var/datum/asset/irv_assets = get_asset_datum(/datum/asset/group/irv)
 			irv_assets.send(src)
 
 			var/datum/DBQuery/query_irv_get_votes = SSdbcore.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -288,7 +288,8 @@
 			var/output = {"
 				<html>
 				<head>
-				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+				<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<script src="jquery.min.js"></script>
 				<script src="jquery-ui.custom-core-widgit-mouse-sortable-min.js"></script>
 				<style>

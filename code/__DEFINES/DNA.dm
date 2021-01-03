@@ -2,32 +2,57 @@
 
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
 
-//Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
-#define HULK		"Hulk"
-#define XRAY		"X Ray Vision"
-#define COLDRES		"Cold Resistance"
-#define TK			"Telekinesis"
-#define NERVOUS		"Nervousness"
-#define EPILEPSY	"Epilepsy"
-#define MUTATE		"Unstable DNA"
-#define COUGH		"Cough"
-#define DWARFISM	"Dwarfism"
-#define CLOWNMUT	"Clumsiness"
-#define TOURETTES	"Tourettes Syndrome"
-#define DEAFMUT		"Deafness"
-#define BLINDMUT	"Blindness"
-#define RACEMUT		"Monkified"
-#define BADSIGHT	"Near Sightness"
-#define LASEREYES	"Laser Eyes"
-#define CHAMELEON	"Chameleon"
-#define WACKY		"Wacky"
-#define MUT_MUTE	"Mute"
-#define SMILE		"Smile"
-#define STONER		"Stoner"
-#define UNINTELLIGIBLE		"Unintelligible"
-#define SWEDISH		"Swedish"
-#define CHAV		"Chav"
-#define ELVIS		"Elvis"
+//Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
+#define HULK		/datum/mutation/human/hulk
+#define XRAY		/datum/mutation/human/thermal/x_ray
+#define SPACEMUT	/datum/mutation/human/space_adaptation
+#define TK			/datum/mutation/human/telekinesis
+#define NERVOUS		/datum/mutation/human/nervousness
+#define EPILEPSY	/datum/mutation/human/epilepsy
+#define MUTATE		/datum/mutation/human/bad_dna
+#define COUGH		/datum/mutation/human/cough
+#define DWARFISM	/datum/mutation/human/dwarfism
+#define GIGANTISM	/datum/mutation/human/gigantism
+#define CLOWNMUT	/datum/mutation/human/clumsy
+#define TOURETTES	/datum/mutation/human/tourettes
+#define DEAFMUT		/datum/mutation/human/deaf
+#define BLINDMUT	/datum/mutation/human/blind
+#define RACEMUT		/datum/mutation/human/race
+#define BADSIGHT	/datum/mutation/human/nearsight
+#define LASEREYES	/datum/mutation/human/laser_eyes
+#define CHAMELEON	/datum/mutation/human/chameleon
+#define WACKY		/datum/mutation/human/wacky
+#define MUT_MUTE	/datum/mutation/human/mute
+#define SMILE		/datum/mutation/human/smile
+#define STONER		/datum/mutation/human/stoner
+#define UNINTELLIGIBLE		/datum/mutation/human/unintelligible
+#define SWEDISH		/datum/mutation/human/swedish
+#define CHAV		/datum/mutation/human/chav
+#define ELVIS		/datum/mutation/human/elvis
+#define RADIOACTIVE	/datum/mutation/human/radioactive
+#define GLOWY		/datum/mutation/human/glow
+#define ANTIGLOWY	/datum/mutation/human/glow/anti
+#define TELEPATHY	/datum/mutation/human/telepathy
+#define FIREBREATH	/datum/mutation/human/firebreath
+#define VOID		/datum/mutation/human/void
+#define TONGUESPIKE	/datum/mutation/human/tongue_spike
+#define TONGUESPIKECHEM		/datum/mutation/human/tongue_spike/chem
+#define STRONG    	/datum/mutation/human/strong
+#define STIMMED		/datum/mutation/human/stimmed
+#define FIRESWEAT	/datum/mutation/human/fire
+#define THERMAL		/datum/mutation/human/thermal
+#define ANTENNA		/datum/mutation/human/antenna
+#define PARANOIA	/datum/mutation/human/paranoia
+#define MINDREAD	/datum/mutation/human/mindreader
+#define INSULATED	/datum/mutation/human/insulated
+#define SHOCKTOUCH	/datum/mutation/human/shock
+#define OLFACTION	/datum/mutation/human/olfaction
+#define ACIDFLESH	/datum/mutation/human/acidflesh
+#define BADBLINK	/datum/mutation/human/badblink
+#define SPASTIC		/datum/mutation/human/spastic
+#define GELADIKINESIS		/datum/mutation/human/geladikinesis
+#define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define SPIDER_WEB	/datum/mutation/human/webbing
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -39,31 +64,40 @@
 //Types of usual mutations
 #define	POSITIVE 			1
 #define	NEGATIVE			2
-#define	MINOR_NEGATIVE		3
+#define	MINOR_NEGATIVE		4
 
-//Mutations that cant be taken from genetics and are not in SE
-#define	NON_SCANNABLE		-1
+//Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
+#define MUT_NORMAL 1
+#define MUT_EXTRA 2
+#define MUT_OTHER 3
+
+//species use_skintones defines
+#define NO_SKINTONES 0
+#define USE_SKINTONES 1
+#define USE_SKINTONES_GRAYSCALE_CUSTOM 2 //adds a "_g" suffix to limb overlays icon states if the skin_tone is a custom one.
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		14
+#define DNA_UNI_IDENTITY_BLOCKS		15
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
-#define DNA_EYE_COLOR_BLOCK			4
-#define DNA_GENDER_BLOCK			5
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
-#define DNA_HAIR_STYLE_BLOCK		7
-#define DNA_COLOR_ONE_BLOCK			8
-#define DNA_COLOR_TWO_BLOCK			9
-#define DNA_COLOR_THREE_BLOCK		10
-#define DNA_MUTANTTAIL_BLOCK		11
-#define DNA_MUTANTEAR_BLOCK			12
-#define DNA_MUTANTMARKING_BLOCK		13
-#define DNA_TAUR_BLOCK 				14
+#define DNA_LEFT_EYE_COLOR_BLOCK	4
+#define DNA_RIGHT_EYE_COLOR_BLOCK	5
+#define DNA_GENDER_BLOCK			6
+#define DNA_FACIAL_HAIR_STYLE_BLOCK	7
+#define DNA_HAIR_STYLE_BLOCK		8
+#define DNA_COLOR_ONE_BLOCK			9
+#define DNA_COLOR_TWO_BLOCK			10
+#define DNA_COLOR_THREE_BLOCK		11
+#define DNA_MUTANTTAIL_BLOCK		12
+#define DNA_MUTANTEAR_BLOCK			13
+#define DNA_MUTANTMARKING_BLOCK		14
+#define DNA_TAUR_BLOCK 				15
 
-#define DNA_STRUC_ENZYMES_BLOCKS	18
+#define DNA_SEQUENCE_LENGTH			4
+#define DNA_MUTATION_BLOCKS			8
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -75,6 +109,8 @@
 #define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
+#define TR_KEEPREAGENTS	(1<<10)
+#define TR_KEEPSTUNS	(1<<9)
 
 
 #define CLONER_FRESH_CLONE "fresh"
@@ -104,8 +140,14 @@
 #define NOGENITALS		21	//Cannot create, use, or otherwise have genitals
 #define MATRIXED		22	//if icon is color matrix'd
 #define SKINTONE		23	//uses skin tones
-#define HORNCOLOR		24
-#define WINGCOLOR		25
+#define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
+#define HORNCOLOR		25
+#define WINGCOLOR		26
+#define ROBOTIC_LIMBS	27 //has robotic limbs that render like organic ones
+#define CAN_SCAR		28 // If this species can be scarred (fleshy)
+/// Used for determining which wounds are applicable to this species.
+#define HAS_FLESH	29 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
+#define HAS_BONE	30 /// if we have bones (can suffer bone wounds)
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"
@@ -129,6 +171,7 @@
 #define ORGAN_SLOT_HEART_AID "heartdrive"
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
+#define ORGAN_SLOT_BRAIN_ROBOT_RADSHIELDING "brain_robot_radshielding"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PENIS "penis"
 #define ORGAN_SLOT_WOMB "womb"
@@ -138,8 +181,14 @@
 
 ////organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
-#define STANDARD_ORGAN_HEALING 		0.001
-#define STANDARD_ORGAN_DECAY		0.00222		//designed to fail organs when left to decay for ~15 minutes
+#define STANDARD_ORGAN_HEALING 		(1/(15 MINUTES / (2 SECONDS)))
+#define STANDARD_ORGAN_DECAY		(1/(15 MINUTES / (2 SECONDS)))		//designed to fail organs when left to decay for ~15 minutes. 2 SECOND is SSmobs tickrate.
+
+
+//used for the can_chromosome var on mutations
+#define CHROMOSOME_NEVER 0
+#define CHROMOSOME_NONE 1
+#define CHROMOSOME_USED 2
 
 #define G_MALE 1
 #define G_FEMALE 2

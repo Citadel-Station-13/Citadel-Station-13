@@ -1,4 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - tweak: "made it so trait blacklisting removes random positives instead of removing everything"

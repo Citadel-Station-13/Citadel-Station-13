@@ -11,7 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
+	custom_materials = list(/datum/material/iron=2000) //one sheet, but where can you make them?
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
@@ -46,7 +46,7 @@
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=1000)
+	custom_materials = list(/datum/material/iron=1000)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -55,7 +55,7 @@
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
-	materials = list(MAT_SILVER=4000)
+	custom_materials = list(/datum/material/silver=4000)
 
 /obj/item/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
@@ -64,7 +64,33 @@
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
-	materials = list(MAT_DIAMOND=4000)
+	custom_materials = list(/datum/material/diamond=4000)
+
+/obj/item/pickaxe/rosegold
+	name = "rose gold pickaxe"
+	icon_state = "rgpickaxe"
+	item_state = "rgpickaxe"
+	toolspeed = 0.1
+	desc = "A pickaxe with a light rose gold head and some red glowing runes. Extremely robust at cracking rock walls and digging up dirt."
+	force = 19
+	custom_materials = list(/datum/material/gold=4000)
+	digrange = 3
+
+/obj/item/pickaxe/plasteel
+	name = "plasteel-tipped pickaxe"
+	icon_state = "titaxe"
+	toolspeed = 0.5
+	desc = "A pickaxe with a plasteel pick head. Less robust at cracking rock walls and digging up dirt than the titanium pickaxe, but better at cracking open skulls."
+	force = 19
+	custom_materials = list(/datum/material/iron=2000, /datum/material/plasma=2000)
+
+/obj/item/pickaxe/titanium
+	name = "titanium-tipped pickaxe"
+	icon_state = "psteelaxe"
+	toolspeed = 0.3
+	desc = "A pickaxe with a titanium pick head. Extremely robust at cracking rock walls and digging up dirt, but less than the plasteel pickaxe at cracking open skulls."
+	force = 17
+	custom_materials = list(/datum/material/titanium=4000)
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
@@ -125,9 +151,9 @@
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=350)
+	custom_materials = list(/datum/material/iron=350)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/shovel/Initialize()
 	. = ..()
@@ -150,5 +176,19 @@
 	toolspeed = 0.5
 	force = 5
 	throwforce = 7
-	materials = list(MAT_METAL=50)
+	custom_materials = list(/datum/material/iron=50)
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/shovel/serrated
+	name = "serrated bone shovel"
+	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
+	icon_state = "shovel_bone"
+	item_state = "shovel_bone"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	force = 15
+	throwforce = 12
+	w_class = WEIGHT_CLASS_NORMAL
+	toolspeed = 0.7
+	attack_verb = list("slashed", "impaled", "stabbed", "sliced")
+	sharpness = SHARP_EDGED

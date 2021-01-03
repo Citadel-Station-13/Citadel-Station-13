@@ -21,7 +21,7 @@
 
 /obj/item/mop/New()
 	..()
-	create_reagents(mopcap)
+	create_reagents(mopcap, NONE, NO_REAGENTS_VALUE)
 
 
 /obj/item/mop/proc/clean(turf/A)
@@ -42,7 +42,7 @@
 
 	var/mob/living/L = user
 
-	if(istype(L) && L.getStaminaLoss() >= STAMINA_SOFTCRIT)
+	if(istype(L) && IS_STAMCRIT(L))
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
 		return
 
@@ -56,21 +56,19 @@
 		return
 
 	if(T)
+		if(!L.UseStaminaBuffer(stamusage, warn = TRUE))
+			return
 		user.visible_message("[user] cleans \the [T] with [src].", "<span class='notice'>You clean \the [T] with [src].</span>")
 		clean(T)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(T, used_item = src)
-		if(istype(L))
-			L.adjustStaminaLossBuffered(stamusage)
 		playsound(T, "slosh", 50, 1)
-
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mop) || istype(I, /obj/item/soap))
 		return
 	else
 		return ..()
-
 
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)

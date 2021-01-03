@@ -1,6 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - rscadd: "Limbs now regenerate their stamina faster while disabled"
-  - rscadd: "Limbs now have the same incoming stamina damage multiplier mechanics as spacemen, where the more staminaloss they take while disabled, the less staminaloss they'll take."
-  - balance: "Limbs have had their base stamina regen rate doubled to match the doubled stamina regen rate of standard spacemen."

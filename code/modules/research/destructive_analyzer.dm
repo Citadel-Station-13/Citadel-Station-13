@@ -51,7 +51,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	update_icon()
 	reset_busy()
 
-/obj/machinery/rnd/destructive_analyzer/update_icon()
+/obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	if(loaded_item)
 		icon_state = "d_analyzer_l"
 	else
@@ -61,12 +61,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 	. = 0
 	var/datum/component/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
-		for(var/material in thing.materials)
-			var/can_insert = min((storage.max_amount - storage.total_amount), (max(thing.materials[material]*(decon_mod/10), thing.materials[material])))
-			storage.insert_amount(can_insert, material)
+		for(var/material in thing.custom_materials)
+			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.custom_materials[material]*(decon_mod/10), thing.custom_materials[material])))
+			storage.insert_amount_mat(can_insert, material)
 			. += can_insert
 		if (.)
-			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.materials)
+			linked_console.linked_lathe.materials.silo_log(src, "reclaimed", 1, "[thing.name]", thing.custom_materials)
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))
@@ -101,7 +101,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(!istype(loaded_item) || !istype(linked_console))
 		return FALSE
 
-	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID)
+	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID && id != RESEARCH_DEEP_SCAN_ID)
 		var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
@@ -125,14 +125,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
 
-	else
+	else if(id == RESEARCH_MATERIAL_RECLAMATION_ID)
 		var/list/point_value = techweb_item_point_check(loaded_item)
 		if(linked_console.stored_research.deconstructed_items[loaded_item.type])
 			point_value = list()
 		var/user_mode_string = ""
 		if(length(point_value))
 			user_mode_string = " for [json_encode(point_value)] points"
-		else if(loaded_item.materials.len)
+		else if(loaded_item.custom_materials?.len)
 			user_mode_string = " for material reclamation"
 		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
@@ -143,6 +143,15 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.add_point_list(point_value)
 			linked_console.stored_research.deconstructed_items[loaded_type] = point_value
+	else if(id == RESEARCH_DEEP_SCAN_ID)
+		var/list/return_list = list()
+		. = SEND_SIGNAL(loaded_item, COMSIG_ITEM_DECONSTRUCTOR_DEEPSCAN, src, user, return_list)
+		flick("d_analyzer_process", src)
+		if(. & COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION)
+			say("New information uncovered from item deep scan[length(return_list)? ": [english_list(return_list)]" : ""].")
+		else
+			say("Item deep scan uncovered no new information.")
+
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()

@@ -14,6 +14,7 @@
 /obj/item/organ/heart/gland/access/proc/free_access(datum/source, obj/O)
 	return TRUE
 
-/obj/item/organ/heart/gland/access/Remove(mob/living/carbon/M, special = 0)
-	UnregisterSignal(owner, COMSIG_MOB_ALLOWED)
-	..()
+/obj/item/organ/heart/gland/access/Remove(special = FALSE)
+	if(!QDELETED(owner))
+		UnregisterSignal(owner, COMSIG_MOB_ALLOWED)
+	return ..()

@@ -42,9 +42,9 @@
 		/obj/item/clothing/mask/facehugger/toy = ARCADE_WEIGHT_RARE,
 		/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = ARCADE_WEIGHT_TRICK,
 		/obj/item/hot_potato/harmless/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
-		/obj/item/twohanded/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/hypereutactic/toy = ARCADE_WEIGHT_RARE,
+		/obj/item/dualsaber/hypereutactic/toy/rainbow = ARCADE_WEIGHT_RARE,
 
 		/obj/item/storage/box/snappops = ARCADE_WEIGHT_TRICK,
 		/obj/item/clothing/under/syndicate/tacticool = ARCADE_WEIGHT_TRICK,
@@ -55,7 +55,7 @@
 		/obj/item/stack/tile/fakespace/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/stack/tile/fakepit/loaded = ARCADE_WEIGHT_TRICK,
 		/obj/item/restraints/handcuffs/fake = ARCADE_WEIGHT_TRICK,
-		/obj/item/clothing/gloves/rapid/hug = ARCADE_WEIGHT_TRICK,
+		/obj/item/clothing/gloves/fingerless/pugilist/hug = ARCADE_WEIGHT_TRICK,
 
 		/obj/item/grenade/chem_grenade/glitter/pink = ARCADE_WEIGHT_TRICK,
 		/obj/item/grenade/chem_grenade/glitter/blue = ARCADE_WEIGHT_TRICK,
@@ -126,13 +126,22 @@
 		return
 
 	var/empprize = null
-	var/num_of_prizes = 0
-	switch(severity)
-		if(1)
-			num_of_prizes = rand(1,4)
-		if(2)
-			num_of_prizes = rand(0,2)
+	var/num_of_prizes = rand(round(severity/50),round(severity/100))
 	for(var/i = num_of_prizes; i > 0; i--)
 		empprize = pickweight(prizes)
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+
+/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/stack/arcadeticket))
+		var/obj/item/stack/arcadeticket/T = O
+		var/amount = T.get_amount()
+		if(amount <2)
+			to_chat(user, "<span class='warning'>You need 2 tickets to claim a prize!</span>")
+			return
+		prizevend(user)
+		T.pay_tickets()
+		T.update_icon()
+		O = T
+		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
+		return

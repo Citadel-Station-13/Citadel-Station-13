@@ -7,4 +7,7 @@
 		var/datum/antagonist/bloodsucker/V = mind.has_antag_datum(/datum/antagonist/bloodsucker)
 		if(V)
 			mind.remove_antag_datum(V)
+		var/datum/antagonist/gang/G = mind.has_antag_datum(/datum/antagonist/gang)
+		if(G)
+			mind.remove_antag_datum(G)
 	..()

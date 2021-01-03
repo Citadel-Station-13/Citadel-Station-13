@@ -1,5 +1,0 @@
-author: "Kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Fixes successful projectile hits also striking another atom on the same turf should the first one be not the target the projectile was meant for."
-  - rscdel: "Removes infinite reflector loops."

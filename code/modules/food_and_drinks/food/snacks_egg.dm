@@ -41,7 +41,7 @@
 /obj/item/reagent_containers/food/snacks/egg/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
-		var/clr = C.item_color
+		var/clr = C.crayon_color
 
 		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
 			to_chat(usr, "<span class='notice'>[src] refuses to take on this colour!</span>")
@@ -49,41 +49,32 @@
 
 		to_chat(usr, "<span class='notice'>You colour [src] with [W].</span>")
 		icon_state = "egg-[clr]"
-		item_color = clr
 	else
 		..()
 
 /obj/item/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
-	item_color = "blue"
 
 /obj/item/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
-	item_color = "green"
 
 /obj/item/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
-	item_color = "mime"
 
 /obj/item/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
-	item_color = "orange"
 
 /obj/item/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
-	item_color = "purple"
 
 /obj/item/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
-	item_color = "rainbow"
 
 /obj/item/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
-	item_color = "red"
 
 /obj/item/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
-	item_color = "yellow"
 
 /obj/item/reagent_containers/food/snacks/friedegg
 	name = "fried egg"
@@ -94,6 +85,16 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
+	foodtype = MEAT | FRIED | BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/baconegg
+	name = "bacon and eggs"
+	desc = "A fried egg with a side of bacon. Delicious!"
+	icon_state = "baconegg"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bitesize = 2
+	filling_color = "#FFFFF0"
+	tastes = list("egg" = 2, "bacon" = 2, "salt" = 1, "pepper" = 1)
 	foodtype = MEAT | FRIED | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/boiledegg
@@ -141,8 +142,17 @@
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4)
-	trash = /obj/item/trash/plate
 	w_class = WEIGHT_CLASS_NORMAL
+	trash = /obj/item/trash/plate
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("egg" = 1, "bacon" = 1, "bun" = 1)
 	foodtype = MEAT | BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/scotchegg
+	name = "scotch egg"
+	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
+	icon_state = "scotchegg"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
+	bitesize = 3
+	filling_color = "#FFFFF0"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6)

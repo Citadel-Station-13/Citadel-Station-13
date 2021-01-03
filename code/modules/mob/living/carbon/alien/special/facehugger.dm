@@ -58,8 +58,7 @@
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
 	return attack_hand(user)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/clothing/mask/facehugger/attack_hand(mob/user)
+/obj/item/clothing/mask/facehugger/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Leap(user))
 			return
@@ -88,6 +87,7 @@
 		Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
+	. = ..()
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/target)
@@ -212,7 +212,7 @@
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
-		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		if((!LC || !LC.is_robotic_limb(FALSE)) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
 
 	else
@@ -247,11 +247,13 @@
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(M.stat == DEAD)
-		return 0
+		return FALSE
 	if(M.getorgan(/obj/item/organ/alien/hivenode))
-		return 0
+		return FALSE
+	if(AmBloodsucker(M))
+		return FALSE
 
 	if(ismonkey(M))
 		return 1
@@ -260,9 +262,9 @@
 	if(ishuman(C) && !(SLOT_WEAR_MASK in C.dna.species.no_equip))
 		var/mob/living/carbon/human/H = C
 		if(H.is_mouth_covered(head_only = 1))
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

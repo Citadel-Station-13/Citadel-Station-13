@@ -37,6 +37,10 @@
 	name = "double-barrel shotgun internal magazine"
 	max_ammo = 2
 
+/obj/item/ammo_box/magazine/internal/shot/dual/heck
+	name = "heckgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
 /obj/item/ammo_box/magazine/internal/shot/improvised
 	name = "improvised shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/improvised
@@ -46,3 +50,8 @@
 	name = "riot shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/internal/shot/bounty
+	name = "triple-barrel shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/incapacitate
+	max_ammo = 3

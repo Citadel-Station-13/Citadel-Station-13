@@ -1,0 +1,5 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Self-fueling weldingtools recharge fuel properly again."
+  - bugfix: "Brass welders now actually recharge faster than experimental ones."

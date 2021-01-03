@@ -18,7 +18,7 @@
 		return
 	. = COMPONENT_NO_ATTACK_HAND
 	if(!check_locked(source, user, TRUE))
-		show_to(user)
+		ui_show(user)
 		A.do_jiggle()
 		if(rustle_sound)
 			playsound(A, "rustle", 50, 1, -5)

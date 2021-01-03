@@ -32,6 +32,9 @@
 	to_chat(user, "<span class='notice'>You will now apply the medspray's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/medspray/attack(mob/living/L, mob/user, def_zone)
+	INVOKE_ASYNC(src, .proc/attempt_spray, L, user, def_zone)		// this is shitcode because the params for attack aren't even right but i'm not in the mood to refactor right now.
+
+/obj/item/reagent_containers/medspray/proc/attempt_spray(mob/living/L, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
@@ -43,9 +46,11 @@
 			return
 		if(!L.can_inject(user, TRUE, user.zone_selected, FALSE, TRUE)) //stopped by clothing, like patches
 			return
-		if(affecting.status != BODYPART_ORGANIC)
+		if(!affecting.is_organic_limb())
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 			return
+		else if(!affecting.is_organic_limb(FALSE))
+			to_chat(user, "<span class='notice'>Medical sprays won't work on a biomechanical limb!</span>")
 
 	if(L == user)
 		L.visible_message("<span class='notice'>[user] attempts to [apply_method] [src] on [user.p_them()]self.</span>")

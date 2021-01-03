@@ -1,0 +1,675 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted,
+/area/mafia)
+"c" = (
+/turf/closed/wall/rust,
+/area/mafia)
+"d" = (
+/turf/open/floor/plating,
+/area/mafia)
+"e" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"f" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+"g" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"h" = (
+/obj/structure/grille/indestructable,
+/turf/open/floor/plating,
+/area/mafia)
+"i" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mafia)
+"j" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	max_integrity = 99999;
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/mafia)
+"k" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating,
+/area/mafia)
+"l" = (
+/obj/structure/closet/cabinet{
+	anchored = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"m" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"n" = (
+/obj/effect/landmark/mafia,
+/turf/open/floor/plasteel,
+/area/mafia)
+"o" = (
+/obj/structure/closet/cabinet{
+	anchored = 1
+	},
+/turf/open/floor/plasteel,
+/area/mafia)
+"p" = (
+/obj/machinery/door/poddoor/preopen{
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
+	id = "mafia";
+	max_integrity = 99999;
+	name = "Station Night Shutters"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/mafia)
+"q" = (
+/turf/open/floor/plasteel/dark,
+/area/mafia)
+"r" = (
+/turf/open/floor/plasteel,
+/area/mafia)
+"s" = (
+/turf/open/floor/fakespace,
+/area/mafia)
+"t" = (
+/turf/open/floor/plasteel/solarpanel,
+/area/mafia)
+"u" = (
+/obj/effect/baseturf_helper/asteroid,
+/obj/effect/landmark/mafia/town_center,
+/turf/open/floor/plasteel/solarpanel,
+/area/mafia)
+"v" = (
+/obj/mafia_game_board,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+c
+g
+h
+d
+d
+d
+d
+d
+e
+d
+d
+d
+d
+d
+h
+k
+c
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+c
+h
+d
+d
+e
+a
+a
+j
+a
+j
+a
+a
+d
+d
+i
+h
+c
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+c
+i
+a
+a
+j
+a
+l
+q
+a
+r
+o
+a
+j
+a
+a
+d
+c
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+c
+c
+d
+a
+o
+r
+p
+m
+q
+p
+r
+n
+p
+q
+l
+a
+d
+c
+c
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+c
+d
+d
+a
+n
+r
+a
+a
+q
+a
+r
+a
+a
+q
+m
+a
+d
+d
+c
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+c
+d
+a
+a
+p
+r
+r
+p
+q
+p
+r
+p
+q
+q
+p
+a
+a
+d
+c
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+c
+d
+a
+l
+p
+a
+p
+p
+p
+p
+p
+p
+p
+a
+p
+o
+a
+d
+c
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+c
+d
+j
+m
+q
+q
+q
+p
+s
+t
+s
+p
+r
+r
+r
+n
+j
+e
+c
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+c
+e
+a
+a
+p
+a
+p
+p
+t
+u
+t
+p
+p
+a
+p
+a
+a
+d
+c
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+c
+d
+j
+n
+r
+r
+r
+p
+s
+t
+s
+p
+q
+q
+q
+m
+j
+d
+c
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+c
+d
+a
+o
+p
+a
+p
+p
+p
+p
+p
+p
+p
+a
+p
+l
+a
+i
+c
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+c
+d
+a
+a
+p
+q
+q
+p
+r
+p
+q
+p
+r
+r
+p
+a
+a
+d
+c
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+c
+f
+d
+a
+m
+q
+a
+a
+r
+a
+q
+a
+a
+r
+n
+a
+d
+d
+c
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+c
+c
+d
+a
+l
+q
+p
+n
+r
+p
+q
+m
+p
+r
+o
+a
+d
+c
+c
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+c
+d
+a
+a
+j
+a
+o
+r
+a
+q
+l
+a
+j
+a
+a
+d
+c
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+c
+h
+i
+d
+d
+a
+a
+j
+a
+j
+a
+a
+d
+e
+d
+h
+c
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+c
+k
+h
+d
+d
+e
+d
+d
+d
+d
+d
+d
+d
+d
+h
+v
+c
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

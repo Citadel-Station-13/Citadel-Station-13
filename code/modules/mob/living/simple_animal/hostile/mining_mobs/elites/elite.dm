@@ -20,10 +20,12 @@
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 	hud_type = /datum/hud/lavaland_elite
+	has_field_of_vision = FALSE //You are a frikkin mini-boss
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
 	var/obj/loot_drop = null
+	var/crate_type = /obj/structure/closet/crate/necropolis/tendril
 	var/owner
 
 //Gives player-controlled variants the ability to swap attacks
@@ -146,7 +148,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	desc = "You're not quite sure how a signal can be menacing."
 	invisibility = 100
 
-/obj/structure/elite_tumor/attack_hand(mob/user)
+/obj/structure/elite_tumor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(ishuman(user))
 		switch(activity)
@@ -161,7 +163,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				INVOKE_ASYNC(src, .proc/arena_checks)
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
-				var/mob/dead/observer/elitemind = null
+				var/mob/elitemind = null
 				visible_message("<span class='boldwarning'>[src] begins to convulse.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(!boosted)
@@ -181,7 +183,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					activator = null
 
 
-obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
+/obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
 	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
@@ -192,7 +194,7 @@ obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	icon_state = "tumor_popped"
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
-obj/structure/elite_tumor/proc/return_elite()
+/obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
 	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
@@ -270,11 +272,11 @@ obj/structure/elite_tumor/proc/return_elite()
 		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above [src]!</span>")
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 
-obj/structure/elite_tumor/proc/onEliteLoss()
+/obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
 	visible_message("<span class='boldwarning'>[src] begins to convulse violently before beginning to dissipate.</span>")
 	visible_message("<span class='boldwarning'>As [src] closes, something is forced up from down below.</span>")
-	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
+	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new mychild.crate_type(loc)
 	if(!boosted)
 		mychild = null
 		activator = null
@@ -289,7 +291,7 @@ obj/structure/elite_tumor/proc/onEliteLoss()
 	activator = null
 	qdel(src)
 
-obj/structure/elite_tumor/proc/onEliteWon()
+/obj/structure/elite_tumor/proc/onEliteWon()
 	activity = TUMOR_PASSIVE
 	activator = null
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
@@ -325,6 +327,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 			return
 		E.faction = list("neutral")
 		E.revive(full_heal = TRUE, admin_revive = TRUE)
+		E.grab_ghost()
 		user.visible_message("<span class='notice'>[user] stabs [E] with [src], reviving it.</span>")
 		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
 		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")

@@ -34,6 +34,10 @@
 	filling_color = "#FF69B4"
 	return TRUE
 
+/// Returns the sprite of the donut while in a donut box
+/obj/item/reagent_containers/food/snacks/donut/proc/in_box_sprite()
+	return "[icon_state]_inbox"
+
 /obj/item/reagent_containers/food/snacks/donut/checkLiked(fraction, mob/M)	//Sec officers always love donuts
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
@@ -144,6 +148,15 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 
+/obj/item/reagent_containers/food/snacks/donut/laugh
+	name = "sweet pea donut"
+	desc = "Goes great with a glass of Bastion Burbon!"
+	icon_state = "donut_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("donut" = 3, "fizzy tutti frutti" = 1,)
+	is_decorated = TRUE
+	filling_color = "#803280"
+
 //////////////////////JELLY DONUTS/////////////////////////
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
@@ -155,6 +168,10 @@
 	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR | BREAKFAST
+
+// Jelly donuts don't have holes, but look the same on the outside
+/obj/item/reagent_containers/food/snacks/donut/jelly/in_box_sprite()
+	return "[replacetext(icon_state, "jelly", "donut")]_inbox"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/Initialize()
 	. = ..()
@@ -201,10 +218,10 @@
 /obj/item/reagent_containers/food/snacks/donut/jelly/choco
 	name = "chocolate jelly donut"
 	desc = "Goes great with a glass of warm milk."
-	icon_state = "jelly_choc"
+	icon_state = "jelly_choco"
 	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	decorated_icon = "jelly_choc_sprinkles"
+	decorated_icon = "jelly_choco_sprinkles"
 	filling_color = "#4F230D"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin
@@ -233,6 +250,15 @@
 	tastes = list("jelly" = 1, "donut" = 3, "matcha" = 1)
 	is_decorated = TRUE
 	filling_color = "#879630"
+
+/obj/item/reagent_containers/food/snacks/donut/jelly/laugh
+	name = "sweet pea jelly donut"
+	desc = "Goes great with a glass of Bastion Burbon!"
+	icon_state = "jelly_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
+	is_decorated = TRUE
+	filling_color = "#803280"
 
 //////////////////////////SLIME DONUTS/////////////////////////
 
@@ -315,6 +341,15 @@
 	is_decorated = TRUE
 	filling_color = "#879630"
 
+/obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/laugh
+	name = "sweet pea jelly donut"
+	desc = "Goes great with a glass of Bastion Burbon!"
+	icon_state = "jelly_laugh"
+	bonus_reagents = list(/datum/reagent/consumable/laughter = 3)
+	tastes = list("jelly" = 3, "donut" = 1, "fizzy tutti frutti" = 1)
+	is_decorated = TRUE
+	filling_color = "#803280"
+
 /obj/item/reagent_containers/food/snacks/donut/glaze
 	name = "glazed donut"
 	desc = "A sugar glazed donut."
@@ -352,6 +387,13 @@
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 	tastes = list("muffin" = 3, "spookiness" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR | BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/muffin/poppy
+	name = "poppy muffin"
+	icon_state = "poppymuffin"
+	desc = "A classic lemon poppy seed muffin. Do not consume prior to drug testing."
+	tastes = list("muffin" = 3, "lemon" = 1, "seeds" = 1)
+	foodtype = GRAIN | SUGAR | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/chawanmushi
 	name = "chawanmushi"
@@ -433,6 +475,40 @@
 	filling_color = "#CD853F"
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtype = GRAIN
+	var/list/cached_reagents_amount
+	var/previous_typepath
+
+/obj/item/reagent_containers/food/snacks/donkpocket/Initialize(mapload)
+	. = ..()
+	if(!cooked_type) //maploaded cooked donk pockets won't cool down anyway.
+		desc += " This one will stay warm for a long time, great."
+
+/obj/item/reagent_containers/food/snacks/donkpocket/initialize_cooked_food(obj/item/reagent_containers/food/snacks/donkpocket/S, cooking_efficiency = 1)
+	. = ..()
+	if(istype(S))
+		S.desc = initial(S.desc) //reset the desc since will now cool down.
+		for(var/R in S.bonus_reagents)
+			LAZYSET(S.cached_reagents_amount, R, S.reagents.get_reagent_amount(R))
+		S.previous_typepath = type
+		addtimer(CALLBACK(S, .proc/cool_down), 7 MINUTES) //canonically they reverted back to normal after 7 minutes.
+
+/obj/item/reagent_containers/food/snacks/donkpocket/proc/cool_down()
+	if(!previous_typepath) //This shouldn't happen.
+		qdel(src)
+		return
+	var/spoiled = FALSE
+	for(var/R in cached_reagents_amount)
+		var/amount = cached_reagents_amount[R]
+		if(reagents.get_reagent_amount(R) < amount)
+			spoiled = TRUE
+		reagents.remove_reagent(R, amount) //no reagent duping please.
+	var/obj/item/reagent_containers/food/snacks/donkpocket/D = new previous_typepath(drop_location())
+	D.create_reagents(D.volume, reagent_flags, reagent_value)
+	reagents.trans_to(D, reagents.total_volume)
+	if(spoiled)
+		D.cooked_type = null
+		D.desc += " This one has gone cold and mushy, pretty unsuitable for cooking."
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -441,7 +517,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 3)
 	cooked_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
-	foodtype = GRAIN
+	foodtype = GRAIN | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/dankpocket
 	name = "\improper Dank-pocket"
@@ -488,9 +564,11 @@
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 		bonus_reagents = list(/datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+		foodtype += ANTITOXIC
 	. = ..()
 	if(fey)
 		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
+		foodtype += ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/cracker
 	name = "cracker"

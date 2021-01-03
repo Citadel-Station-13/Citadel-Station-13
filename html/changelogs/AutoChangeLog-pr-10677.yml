@@ -1,6 +1,0 @@
-author: "Arkatos, Zxaber, Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Certain AI abilities now dynamically show their remaining uses on the mouse hover over their respective action buttons."
-  - bugfix: "Malfunctioning AIs can no longer abuse the confirmation popup to create extra (unstoppable) doomsdays."
-  - bugfix: "Fixed AIs being able to use some of their abilities such as the doomsday whilst dead, and the doomsday loading phase not halting upon AI death."

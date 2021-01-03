@@ -51,7 +51,7 @@
 	if (LAZYLEN(buckled_mobs))
 		. += "Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine."
 
-/obj/structure/guillotine/attack_hand(mob/user)
+/obj/structure/guillotine/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 
 	// Currently being used by something
@@ -108,7 +108,7 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/bladeslice.ogg', 100, 1)
+		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
@@ -130,7 +130,7 @@
 			// The crowd is pleased
 			// The delay is to making large crowds have a longer laster applause
 			var/delay_offset = 0
-			for(var/mob/M in viewers(src, 7))
+			for(var/mob/M in fov_viewers(world.view, src))
 				var/mob/living/carbon/human/C = M
 				if (ishuman(M))
 					addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)

@@ -53,7 +53,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
-	itempath = /obj/item/reagent_containers/food/snacks/monkeycube
+	itempath = /obj/item/reagent_containers/food/snacks/cube/monkey
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange

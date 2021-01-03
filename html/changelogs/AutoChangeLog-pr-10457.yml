@@ -1,5 +1,0 @@
-author: "r4d6"
-delete-after: True
-changes: 
-  - rscadd: "Added a playback device"
-  - bugfix: "Made the Voice Analyzer actually care about languages"

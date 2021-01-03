@@ -248,7 +248,7 @@
 		if(used || QDELETED(src))
 			return
 		used = TRUE
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)

@@ -22,7 +22,7 @@ Bonus
 	stealth = -3
 	resistance = -4
 	stage_speed = 0
-	transmittable = -4
+	transmittable = -3
 	level = 6
 	severity = 5
 	base_message_chance = 50
@@ -30,8 +30,10 @@ Bonus
 	symptom_delay_max = 60
 	var/bleed = FALSE
 	var/pain = FALSE
-	threshold_desc = "<b>Resistance 7:</b> Host will bleed profusely during necrosis.<br>\
-					  <b>Transmission 8:</b> Causes extreme pain to the host, weakening it."
+	threshold_desc = list(
+		"Resistance 7" = "Erodes the host's skin, causing them to bleed profusely.",
+		"Transmission 8" = "Eat's away at the host's musclemass, causing increased fatigue."
+	)
 
 /datum/symptom/flesh_eating/Start(datum/disease/advance/A)
 	if(!..())
@@ -61,7 +63,8 @@ Bonus
 	if(bleed)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.bleed_rate += 5 * power
+			var/obj/item/bodypart/random_part = pick(H.bodyparts)
+			random_part.generic_bleedstacks += 5 * power
 	return 1
 
 /*
@@ -96,8 +99,11 @@ Bonus
 	symptom_delay_max = 6
 	var/chems = FALSE
 	var/zombie = FALSE
-	threshold_desc = "<b>Stage Speed 7:</b> Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.<br>\
-					  <b>Stealth 5:</b> The symptom remains hidden until active."
+	threshold_desc = list(
+		"Stage Speed 7" = "Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.",
+		"Stealth 5" = "The symptom remains hidden until active.",
+	)
+
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	if(!..())

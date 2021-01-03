@@ -19,6 +19,27 @@
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
 	mood_change = -15
 
+//charge
+/datum/mood_event/supercharged
+	description = "<span class='boldwarning'>I can't possibly keep all this power inside, I need to release some quick!</span>\n"
+	mood_change = -10
+
+/datum/mood_event/overcharged
+	description = "<span class='warning'>I feel dangerously overcharged, perhaps I should release some power.</span>\n"
+	mood_change = -4
+
+/datum/mood_event/charged
+	description = "<span class='nicegreen'>I feel the power in my veins!</span>\n"
+	mood_change = 6
+
+/datum/mood_event/lowpower
+	description = "<span class='warning'>My power is running low, I should go charge up somewhere.</span>\n"
+	mood_change = -6
+
+/datum/mood_event/decharged
+	description = "<span class='boldwarning'>I'm in desperate need of some electricity!</span>\n"
+	mood_change = -10
+
 //Disgust
 /datum/mood_event/gross
 	description = "<span class='warning'>I saw something gross.</span>\n"

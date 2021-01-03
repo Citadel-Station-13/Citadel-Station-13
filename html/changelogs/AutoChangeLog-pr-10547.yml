@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - tweak: "Ghost dojo spawns will dust if their owner suicides or uses the \"ghost\" verb."

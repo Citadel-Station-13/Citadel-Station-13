@@ -1,5 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - tweak: "Shockcolar and electropack uses the new signaler ui"
-  - tweak: "Renaming shockcolar requires a pen"

@@ -16,3 +16,8 @@
 /obj/item/projectile/temp/hot
 	name = "heat beam"
 	temperature = 400
+
+/obj/item/projectile/temp/cryo
+	name = "cryo beam"
+	range = 3
+	temperature = -240 // Single slow shot reduces temp greatly

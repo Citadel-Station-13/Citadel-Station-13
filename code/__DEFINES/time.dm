@@ -18,6 +18,7 @@
 #define VALENTINES				"Valentine's Day"
 #define APRIL_FOOLS				"April Fool's Day"
 #define EASTER					"Easter"
+#define PRIDE_MONTH				"Pride Month"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
@@ -38,6 +39,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define SATURDAY	"Sat"
 #define SUNDAY		"Sun"
 
+#define WEEKDAY2NUM(D) (D == SUNDAY ? 1 : D == MONDAY ? 2 : D == TUESDAY ? 3 : D == WEDNESDAY ? 4 : D == THURSDAY ? 5 : D == FRIDAY ? 6 : 7) //this looks ugly, but switch statements can't be used as vars, so *shrug
+
 #define SECONDS *10
 
 #define MINUTES SECONDS*60
@@ -54,5 +57,5 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define WORLDTIME2TEXT(format) GAMETIMESTAMP(format, world.time)
 #define WORLDTIMEOFDAY2TEXT(format) GAMETIMESTAMP(format, world.timeofday)
 #define TIME_STAMP(format, showds) showds ? "[WORLDTIMEOFDAY2TEXT(format)]:[world.timeofday % 10]" : WORLDTIMEOFDAY2TEXT(format)
-#define STATION_TIME(display_only) ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
-#define STATION_TIME_TIMESTAMP(format) time2text(STATION_TIME(TRUE), format)
+#define STATION_TIME(display_only, wtime) ((((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
+#define STATION_TIME_TIMESTAMP(format, wtime) time2text(STATION_TIME(TRUE, wtime), format)

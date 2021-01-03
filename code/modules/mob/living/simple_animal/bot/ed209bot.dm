@@ -44,8 +44,6 @@
 	var/cell_type = /obj/item/stock_parts/cell
 	var/vest_type = /obj/item/clothing/suit/armor/vest
 
-	do_footstep = TRUE
-
 
 /mob/living/simple_animal/bot/ed209/Initialize(mapload,created_name,created_lasercolor)
 	. = ..()
@@ -110,7 +108,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]<BR>"},
 
 "<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user)|| IsAdminGhost(user))
+	if(!locked || hasSiliconAccessInArea(user)|| IsAdminGhost(user))
 		if(!lasercolor)
 			dat += text({"<BR>
 Arrest Unidentifiable Persons: []<BR>
@@ -179,7 +177,7 @@ Auto Patrol[]"},
 		target = H
 		mode = BOT_HUNT
 
-/mob/living/simple_animal/bot/ed209/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/ed209/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HARM)
 		retaliate(H)
 	return ..()
@@ -238,7 +236,7 @@ Auto Patrol[]"},
 	if(targets.len>0)
 		var/mob/living/carbon/t = pick(targets)
 		if((t.stat!=2) && (t.lying != 1) && (!t.handcuffed)) //we don't shoot people who are dead, cuffed or lying down.
-			shootAt(t)
+			INVOKE_ASYNC(src, .proc/shootAt, t)
 	switch(mode)
 
 		if(BOT_IDLE)		// idle
@@ -256,7 +254,7 @@ Auto Patrol[]"},
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-					stun_attack(target)
+					INVOKE_ASYNC(src, .proc/stun_attack, target)
 
 					mode = BOT_PREP_ARREST
 					anchored = TRUE
@@ -276,7 +274,7 @@ Auto Patrol[]"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) || !target.recoveringstam || target.getStaminaLoss() <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
+			if(!Adjacent(target) || !isturf(target.loc) || !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) || target.getStaminaLoss() <= 120) // CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 
@@ -303,7 +301,7 @@ Auto Patrol[]"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !target.recoveringstam && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !(target.combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && target.getStaminaLoss() <= 120)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again. CIT CHANGE - replaces amountknockdown with recoveringstam and staminaloss checks
 				back_to_hunt()
 				return
 			else
@@ -461,12 +459,10 @@ Auto Patrol[]"},
 
 
 /mob/living/simple_animal/bot/ed209/emp_act(severity)
-	if(severity == 2 && prob(70))
-		severity = 1
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if (severity >= 2)
+	if (severity >= 65)
 		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
@@ -520,12 +516,12 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/redtag
 	lasercolor = "r"
 
-/mob/living/simple_animal/bot/ed209/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/ed209/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(!on)
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.canmove || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
+		if(CHECK_MOBILITY(C, MOBILITY_STAND|MOBILITY_MOVE|MOBILITY_USE) || arrest_type) // CIT CHANGE - makes sentient ed209s check for canmove rather than !isstun.
 			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
@@ -534,8 +530,10 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/RangedAttack(atom/A)
 	if(!on)
-		return
+		return ..()
 	shootAt(A)
+	DelayNextAction()
+	return TRUE
 
 /mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
@@ -543,7 +541,7 @@ Auto Patrol[]"},
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
 	var/threat = 5
-	C.Knockdown(100)
+	C.DefaultCombatKnockdown(100)
 	C.stuttering = 5
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

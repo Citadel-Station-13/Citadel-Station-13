@@ -8,7 +8,7 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = FALSE
+	requires_bodypart_type = BODYPART_ORGANIC
 	replaced_by = /datum/surgery
 	ignore_clothes = TRUE
 	var/healing_step_type
@@ -25,7 +25,7 @@
 	name = "repair body"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 65, /obj/item/pen = 55)
 	repeatable = TRUE
-	time = 25
+	time = 15
 	var/brutehealing = 0
 	var/burnhealing = 0
 	var/missinghpbonus = 0 //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
@@ -87,7 +87,7 @@
 		urdamageamt_brute += round((target.getBruteLoss()/ (missinghpbonus*2)),0.1)
 		urdamageamt_burn += round((target.getFireLoss()/ (missinghpbonus*2)),0.1)
 
-	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn)
+	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn, wound_bonus=CANT_WOUND)
 	return FALSE
 
 /***************************BRUTE***************************/
@@ -117,15 +117,15 @@
 /********************BRUTE STEPS********************/
 /datum/surgery_step/heal/brute/basic
 	name = "tend bruises"
-	brutehealing = 5
+	brutehealing = 10
 	missinghpbonus = 15
 
 /datum/surgery_step/heal/brute/upgraded
-	brutehealing = 5
+	brutehealing = 10
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/brute/upgraded/femto
-	brutehealing = 5
+	brutehealing = 10
 	missinghpbonus = 5
 
 /***************************BURN***************************/
@@ -155,15 +155,15 @@
 /********************BURN STEPS********************/
 /datum/surgery_step/heal/burn/basic
 	name = "tend burn wounds"
-	burnhealing = 5
+	burnhealing = 10
 	missinghpbonus = 15
 
 /datum/surgery_step/heal/burn/upgraded
-	burnhealing = 5
+	burnhealing = 10
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/burn/upgraded/femto
-	burnhealing = 5
+	burnhealing = 10
 	missinghpbonus = 5
 
 /***************************COMBO***************************/
@@ -193,19 +193,19 @@
 /********************COMBO STEPS********************/
 /datum/surgery_step/heal/combo
 	name = "tend physical wounds"
-	brutehealing = 3
-	burnhealing = 3
+	brutehealing = 6
+	burnhealing = 6
 	missinghpbonus = 15
-	time = 10
+	time = 6
 
 /datum/surgery_step/heal/combo/upgraded
-	brutehealing = 3
-	burnhealing = 3
+	brutehealing = 6
+	burnhealing = 6
 	missinghpbonus = 10
 
 /datum/surgery_step/heal/combo/upgraded/femto
-	brutehealing = 1
-	burnhealing = 1
+	brutehealing = 3
+	burnhealing = 3
 	missinghpbonus = 2.5
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

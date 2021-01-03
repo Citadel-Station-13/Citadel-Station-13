@@ -18,6 +18,7 @@
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
+	var/static/regex/stop_bad_mime = regex(@"says|exclaims|yells|asks")
 
 /datum/emote/New()
 	if(key_third_person)
@@ -54,7 +55,7 @@
 		return
 
 	user.log_message(msg, LOG_EMOTE)
-	msg = "<b>[user]</b> " + msg
+	msg = "<span class='emote'><b>[user]</b> [msg]</span>"
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
@@ -65,8 +66,12 @@
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg)
-	else
+	else if(emote_type == EMOTE_VISIBLE)
 		user.visible_message(msg)
+	else if(emote_type == EMOTE_BOTH)
+		user.visible_message(msg, blind_message = msg)
+	else if(emote_type == EMOTE_OMNI)
+		user.visible_message(msg, omni = TRUE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -101,8 +106,9 @@
 
 /datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
 	. = TRUE
-	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
-		return FALSE
+	if(mob_type_allowed_typecache) //empty list = anyone can use it unless specifically blacklisted
+		if(!is_type_in_typecache(user, mob_type_allowed_typecache))
+			return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
@@ -117,7 +123,8 @@
 				if(DEAD)
 					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && (user.IsStun() || user.IsKnockdown()))
+		var/mob/living/L = user
+		if(restraint_check && (istype(L) && !CHECK_MOBILITY(L, MOBILITY_USE)))
 			if(!intentional)
 				return FALSE
 			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
@@ -137,7 +144,7 @@
 	var/sound //Sound to play when emote is called
 	var/vary = FALSE	//used for the honk borg emote
 	var/volume = 50
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/camera/aiEye)
 
 /datum/emote/sound/run_emote(mob/user, params)
 	. = ..()

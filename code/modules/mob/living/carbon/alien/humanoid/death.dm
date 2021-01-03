@@ -4,7 +4,7 @@
 
 	. = ..()
 
-	update_canmove()
+	update_mobility()
 	update_icons()
 	status_flags |= CANPUSH
 

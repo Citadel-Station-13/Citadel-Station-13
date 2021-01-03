@@ -83,7 +83,6 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				if(!P.tool_start_check(user, amount=5))
 					return
-
 				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50, amount=5))
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
@@ -119,6 +118,9 @@
 
 			if(istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/B = P
+				if(!B.build_path)
+					to_chat(user, "<span class'warning'>This circuitboard seems to be broken.</span>")
+					return
 				if(!anchored && B.needs_anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return

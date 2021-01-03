@@ -91,7 +91,7 @@
 /obj/item/integrated_circuit/proc/load(list/component_params)
 	// Load name
 	if(component_params["name"])
-		displayed_name = component_params["name"]
+		displayed_name = html_encode(component_params["name"])
 
 	// Load input values
 	if(component_params["inputs"])
@@ -104,7 +104,7 @@
 
 			var/datum/integrated_io/pin = inputs[index]
 			// The pins themselves validate the data.
-			pin.write_data_to_pin(input_value)
+			pin.write_data_to_pin(istext(input_value)? html_encode(input_value) : input_value)
 			// TODO: support for special input types, such as internal refs and maybe typepaths
 
 	if(!isnull(component_params["special"]))
@@ -152,18 +152,16 @@
 /obj/item/electronic_assembly/proc/load(list/assembly_params)
 	// Load modified name, if any.
 	if(assembly_params["name"])
-		name = assembly_params["name"]
+		name = html_encode(assembly_params["name"])
 
 	// Load modified description, if any.
 	if(assembly_params["desc"])
-		desc = assembly_params["desc"]
+		desc = html_encode(assembly_params["desc"])
 
 	if(assembly_params["detail_color"])
 		detail_color = assembly_params["detail_color"]
 
 	update_icon()
-
-
 
 // Attempts to save an assembly into a save file format.
 // Returns null if assembly is not complete enough to be saved.
@@ -260,7 +258,7 @@
 	blocks["max_space"] = assembly.max_components
 
 	// Start keeping track of total metal cost
-	blocks["metal_cost"] = assembly.materials[MAT_METAL]
+	blocks["metal_cost"] = assembly.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 
 	// Block 2. Components.
@@ -291,7 +289,7 @@
 		// Update estimated assembly complexity, taken space and material cost
 		blocks["complexity"] += component.complexity
 		blocks["used_space"] += component.size
-		blocks["metal_cost"] += component.materials[MAT_METAL]
+		blocks["metal_cost"] += component.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
 
 		// Check if the assembly requires printer upgrades
 		if(!(component.spawn_flags & IC_SPAWN_DEFAULT))

@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Dynamic storytellers, a new voting paradigm for dynamic"
-  - rscadd: "Support for approval voting and condorcet (ranked choice) voting in server votes"

@@ -1,13 +1,12 @@
-
-/* EMOTE DATUMS */
-/datum/emote/living
-	mob_type_allowed_typecache = /mob/living
-	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
-
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
+
+/datum/emote/living/blush/run_emote(mob/user, params)
+	. = ..()
+	if(. && isipcperson(user))
+		do_fake_sparks(5,FALSE,user)
 
 /datum/emote/living/bow
 	key = "bow"
@@ -125,7 +124,7 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		if(H.dna.features["wings"] != "None")
-			if("wingsopen" in H.dna.species.mutant_bodyparts)
+			if(H.dna.species.mutant_bodyparts["wingsopen"])
 				open = TRUE
 				H.CloseWings()
 			else
@@ -200,25 +199,25 @@
 	message_param = "blows a kiss to %t."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh
+/datum/emote/living/audio_emote
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/audio_emote/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent && (!C.mind || !C.mind.miming)
+
+/datum/emote/living/audio_emote/laugh
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
 	message_mime = "laughs silently!"
-	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
-	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
-
-/datum/emote/living/laugh/run_emote(mob/user, params)
+/datum/emote/living/audio_emote/laugh/run_emote(mob/user, params)
 	. = ..()
 	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
-		if(!C.mind || C.mind.miming)
-			return
 		if(iscatperson(C))	//we ask for is cat first because they're a subtype that tests true for ishumanbasic because HERESY
 			playsound(C, pick('sound/voice/catpeople/nyahaha1.ogg',
 			'sound/voice/catpeople/nyahaha2.ogg',
@@ -226,11 +225,41 @@
 			'sound/voice/catpeople/nyahehe.ogg'),
 			50, 1)
 			return
-		if(ishumanbasic(C))
+		else if(isinsect(C))
+			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+		else if(isjellyperson(C))
+			var/mob/living/carbon/human/H = C
+			if(H.dna.features["mam_ears"] == "Cat" || H.dna.features["mam_ears"] == "Cat, Big") //slime have cat ear. slime go nya.
+				playsound(C, pick('sound/voice/jelly/nyahaha1.ogg',
+				'sound/voice/jelly/nyahaha2.ogg',
+				'sound/voice/jelly/nyaha.ogg',
+				'sound/voice/jelly/nyahehe.ogg'),
+				50, 1)
+				return
+			else if(user.gender == FEMALE)
+				playsound(C, 'sound/voice/jelly/womanlaugh.ogg', 50, 1)
+				return
+			else
+				playsound(C, pick('sound/voice/jelly/manlaugh1.ogg', 'sound/voice/jelly/manlaugh2.ogg'), 50, 1)
+				return
+		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
 				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
 				playsound(C, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+
+/datum/emote/living/audio_emote/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters."
+	message_mime = "chitters silently!"
+
+/datum/emote/living/audio_emote/chitter/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
+		var/mob/living/carbon/C = user
+		if(isinsect(C))
+			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
 	key = "look"
@@ -258,7 +287,7 @@
 		if(H.get_num_arms() == 0)
 			if(H.get_num_legs() != 0)
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
-				H.Knockdown(20)
+				H.DefaultCombatKnockdown(20)
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
@@ -311,6 +340,11 @@
 	key_third_person = "smiles"
 	message = "smiles."
 
+/datum/emote/living/smirk
+	key = "smirk"
+	key_third_person = "smirks"
+	message = "smirks."
+
 /datum/emote/living/sneeze
 	key = "sneeze"
 	key_third_person = "sneezes"
@@ -362,7 +396,7 @@
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
-		L.Knockdown(200)
+		L.DefaultCombatKnockdown(200)
 
 /datum/emote/living/sway
 	key = "sway"
@@ -409,19 +443,13 @@
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	emote_type = EMOTE_BOTH
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
-	. = TRUE
-	if(copytext(input,1,5) == "says")
+	if(stop_bad_mime.Find(input, 1, 1))
 		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,9) == "exclaims")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,6) == "yells")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else if(copytext(input,1,5) == "asks")
-		to_chat(user, "<span class='danger'>Invalid emote.</span>")
-	else
-		. = FALSE
+		return TRUE
+	return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
 	if(jobban_isbanned(user, "emote"))
@@ -433,25 +461,14 @@
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as message|null), 1, MAX_MESSAGE_LEN) //CIT CHANGE - expands emote textbox
+		var/custom_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
-			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
-			switch(type)
-				if("Visible")
-					emote_type = EMOTE_VISIBLE
-				if("Hearable")
-					emote_type = EMOTE_AUDIBLE
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
-					return
 			message = custom_emote
 	else
 		message = params
-		if(type_override)
-			emote_type = type_override
+	message = user.say_emphasis(message)
 	. = ..()
 	message = null
-	emote_type = EMOTE_VISIBLE
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
@@ -492,7 +509,7 @@
 	message = "beeps."
 	message_param = "beeps at %t."
 	sound = 'sound/machines/twobeep.ogg'
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/carbon/human)
+	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon, /mob/living/carbon/human, /mob/camera/aiEye)
 
 /datum/emote/living/circle
 	key = "circle"
@@ -522,3 +539,29 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+
+/datum/emote/living/audio_emote/blorble
+	key = "blorble"
+	key_third_person = "blorbles"
+	message = "blorbles."
+	message_param = "blorbles at %t."
+
+/datum/emote/living/audio_emote/blorble/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			playsound(C, 'sound/effects/attackblob.ogg', 50, 1)
+
+/datum/emote/living/audio_emote/blurp
+	key = "blurp"
+	key_third_person = "blurps"
+	message = "blurps."
+	message_param = "blurps at %t."
+
+/datum/emote/living/audio_emote/blurp/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			pick(playsound(C, 'sound/effects/meatslap.ogg', 50, 1),playsound(C, 'sound/effects/gib_step.ogg', 50, 1))

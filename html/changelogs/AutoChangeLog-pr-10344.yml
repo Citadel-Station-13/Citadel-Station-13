@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Chestbursters won't delete the host's brain somewhat anymore."

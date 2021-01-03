@@ -1,5 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - rscadd: "added atmos holofirelocks and temperature blocking"
-  - tweak: "tweaked how atmos holofan looks"

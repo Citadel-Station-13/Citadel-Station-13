@@ -9,17 +9,16 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=600, MAT_GLASS=200)
+	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
 	var/obj/item/implant/imp = null
 	var/imp_type = null
 
 
-/obj/item/implanter/update_icon()
+/obj/item/implanter/update_icon_state()
 	if(imp)
 		icon_state = "implanter1"
 	else
 		icon_state = "implanter0"
-
 
 /obj/item/implanter/attack(mob/living/M, mob/user)
 	if(!istype(M))
@@ -75,3 +74,7 @@
 /obj/item/implanter/stealth
 	name = "implanter (stealth)"
 	imp_type = /obj/item/implant/stealth
+
+/obj/item/implanter/hijack
+	name = "implanter (hijack)"
+	imp_type = /obj/item/implant/hijack

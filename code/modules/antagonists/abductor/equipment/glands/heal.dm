@@ -39,7 +39,7 @@
 		if(!limb)
 			replace_limb(zone)
 			return
-		if((limb.get_damage() >= (limb.max_damage / 2)) || (limb.status == BODYPART_ROBOTIC))
+		if((limb.get_damage() >= (limb.max_damage / 2)) || limb.is_robotic_limb(FALSE))
 			replace_limb(zone, limb)
 			return
 
@@ -58,21 +58,21 @@
 		return
 
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
-	if((chest.get_damage() >= (chest.max_damage / 4)) || (chest.status == BODYPART_ROBOTIC))
+	if((chest.get_damage() >= (chest.max_damage / 4)) || chest.is_robotic_limb(FALSE))
 		replace_chest(chest)
 		return
 
 /obj/item/organ/heart/gland/heal/proc/reject_implant(obj/item/organ/cyberimp/implant)
 	owner.visible_message("<span class='warning'>[owner] vomits up his [implant.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [implant.name]!</span>")
 	owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
-	implant.Remove(owner)
+	implant.Remove()
 	implant.forceMove(owner.drop_location())
 
 /obj/item/organ/heart/gland/heal/proc/replace_liver(obj/item/organ/liver/liver)
 	if(liver)
 		owner.visible_message("<span class='warning'>[owner] vomits up his [liver.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [liver.name]!</span>")
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
-		liver.Remove(owner)
+		liver.Remove()
 		liver.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble in your bowels...</span>")
@@ -87,7 +87,7 @@
 	if(lungs)
 		owner.visible_message("<span class='warning'>[owner] vomits up his [lungs.name]!</span>", "<span class='userdanger'>You suddenly vomit up your [lungs.name]!</span>")
 		owner.vomit(0, TRUE, TRUE, 1, FALSE, FALSE, FALSE, TRUE)
-		lungs.Remove(owner)
+		lungs.Remove()
 		lungs.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble inside your chest...</span>")
@@ -102,7 +102,7 @@
 	if(eyes)
 		owner.visible_message("<span class='warning'>[owner]'s [eyes.name] fall out of their sockets!</span>", "<span class='userdanger'>Your [eyes.name] fall out of their sockets!</span>")
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
-		eyes.Remove(owner)
+		eyes.Remove()
 		eyes.forceMove(owner.drop_location())
 	else
 		to_chat(owner, "<span class='warning'>You feel a weird rumble behind your eye sockets...</span>")
@@ -158,7 +158,7 @@
 		addtimer(CALLBACK(src, .proc/keep_replacing_blood), 30)
 
 /obj/item/organ/heart/gland/heal/proc/replace_chest(obj/item/bodypart/chest/chest)
-	if(chest.status == BODYPART_ROBOTIC)
+	if(chest.is_robotic_limb(FALSE))
 		owner.visible_message("<span class='warning'>[owner]'s [chest.name] rapidly expels its mechanical components, replacing them with flesh!</span>", "<span class='userdanger'>Your [chest.name] rapidly expels its mechanical components, replacing them with flesh!</span>")
 		playsound(owner, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()

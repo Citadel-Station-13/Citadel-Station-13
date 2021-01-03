@@ -79,6 +79,9 @@
 		if(PTURRET_INTERNAL_ARMOUR_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
 				var/obj/item/gun/energy/E = I
+				if(!E.can_turret)
+					to_chat(user, "<span class='warning'>[src] can't be fit into turrets.</span>")
+					return
 				if(!user.transferItemToLoc(E, src))
 					return
 				installed_gun = E
@@ -148,6 +151,7 @@
 					turret.installation = installed_gun.type
 					turret.setup(installed_gun)
 					qdel(src)
+					return
 
 			else if(istype(I, /obj/item/crowbar))
 				I.play_tool_sound(src, 75)
@@ -168,10 +172,7 @@
 	return ..()
 
 
-/obj/machinery/porta_turret_construct/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/porta_turret_construct/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	switch(build_step)
 		if(PTURRET_GUN_EQUIPPED)
 			build_step = PTURRET_INTERNAL_ARMOUR_ON

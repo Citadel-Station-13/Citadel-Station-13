@@ -19,7 +19,6 @@
 	stepsound = null
 	turnsound = null
 	opacity = 0
-	spawn_tracked = FALSE
 
 /obj/mecha/combat/reticence/loaded/Initialize()
 	. = ..()

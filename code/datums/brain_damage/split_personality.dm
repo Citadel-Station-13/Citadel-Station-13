@@ -20,6 +20,7 @@
 	..()
 	make_backseats()
 	get_ghost()
+	RegisterSignal(M, COMSIG_MOB_DEATH, .proc/revert_to_normal)
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
@@ -27,9 +28,9 @@
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
+	var/list/mob/candidates = pollCandidatesForMob("Do you want to play as [owner]'s split personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+		var/mob/C = pick(candidates)
 		C.transfer_ckey(stranger_backseat, FALSE)
 		log_game("[key_name(stranger_backseat)] became [key_name(owner)]'s split personality.")
 		message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
@@ -37,23 +38,23 @@
 		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/on_life()
-	if(owner.stat == DEAD)
-		if(current_controller != OWNER)
-			switch_personalities()
-		qdel(src)
-	else if(prob(3))
+	if(prob(3))
 		switch_personalities()
 	..()
 
 /datum/brain_trauma/severe/split_personality/on_lose()
 	if(current_controller != OWNER) //it would be funny to cure a guy only to be left with the other personality, but it seems too cruel
-		switch_personalities()
+		switch_personalities(TRUE)
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
+	UnregisterSignal(owner, COMSIG_MOB_DEATH)
 	..()
 
-/datum/brain_trauma/severe/split_personality/proc/switch_personalities()
-	if(QDELETED(owner) || owner.stat == DEAD || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
+/datum/brain_trauma/severe/split_personality/proc/revert_to_normal()
+	qdel(src)
+
+/datum/brain_trauma/severe/split_personality/proc/switch_personalities(forced = FALSE)
+	if(QDELETED(owner) || (owner.stat == DEAD && !forced) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
 		return
 
 	var/mob/living/split_personality/current_backseat
@@ -122,20 +123,16 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life()
+/mob/living/split_personality/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
-
-	if((body.stat == DEAD && trauma.owner_backseat == src))
-		trauma.switch_personalities()
-		qdel(trauma)
 
 	//if one of the two ghosts, the other one stays permanently
 	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
-
-	..()
 
 /mob/living/split_personality/Login()
 	..()

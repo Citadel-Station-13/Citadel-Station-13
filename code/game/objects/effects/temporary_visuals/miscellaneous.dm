@@ -139,12 +139,22 @@
 /obj/effect/temp_visual/dir_setting/curse/hand
 	icon_state = "cursehand"
 
-/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
-	. = ..()
-	update_icon()
+/obj/effect/temp_visual/bsa_splash
+	name = "\improper Bluespace energy wave"
+	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
+	icon = 'icons/effects/beam_splash.dmi'
+	icon_state = "beam_splash_l"
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_y = -16
+	duration = 50
 
-/obj/item/projectile/curse_hand/update_icon()
-	icon_state = "[icon_state][handedness]"
+/obj/effect/temp_visual/bsa_splash/Initialize(mapload, dir)
+	. = ..()
+	switch(dir)
+		if(WEST)
+			icon_state = "beam_splash_w"
+		if(EAST)
+			icon_state = "beam_splash_e"
 
 /obj/effect/temp_visual/wizard
 	name = "water"
@@ -474,7 +484,7 @@
 	else
 		update_icon()
 
-/obj/effect/constructing_effect/update_icon()
+/obj/effect/constructing_effect/update_icon_state()
 	icon_state = "rcd"
 	if (delay < 10)
 		icon_state += "_shortest"
@@ -494,3 +504,23 @@
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/temp_visual/dir_setting/space_wind
+	icon = 'icons/effects/atmospherics.dmi'
+	icon_state = "space_wind"
+	layer = FLY_LAYER
+	duration = 20
+	mouse_opacity = 0
+
+/obj/effect/temp_visual/dir_setting/space_wind/Initialize(mapload, set_dir, set_alpha = 255)
+	. = ..()
+	alpha = set_alpha
+
+/obj/effect/temp_visual/slime_puddle
+	icon = 'icons/mob/mob.dmi'
+	duration = 12
+	icon_state = "to_puddle"
+
+/obj/effect/temp_visual/slime_puddle/reverse
+	icon_state = "from_puddle"
+	duration = 7

@@ -26,7 +26,8 @@
 	..()
 
 /mob/living/silicon/ai/get_message_mode(message)
-	if(copytext(message, 1, 3) in list(":h", ":H", ".h", ".H", "#h", "#H"))
+	var/static/regex/holopad_finder = regex(@"[:.#][hH]")
+	if(holopad_finder.Find(message, 1, 1))
 		return MODE_HOLOPAD
 	else
 		return ..()
@@ -170,10 +171,3 @@
 
 #undef VOX_DELAY
 #endif
-
-/mob/living/silicon/ai/could_speak_in_language(datum/language/dt)
-	if(is_servant_of_ratvar(src))
-		// Ratvarian AIs can only speak Ratvarian
-		. = ispath(dt, /datum/language/ratvar)
-	else
-		. = ..()

@@ -8,6 +8,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
+	instability = 10
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
@@ -26,6 +27,12 @@
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+
+/obj/item/reagent_containers/food/snacks/grown/banana/generate_trash(atom/location)
+	. = ..()
+	var/obj/item/grown/bananapeel/peel = .
+	if(istype(peel))
+		peel.grind_results = list(/datum/reagent/consumable/banana_peel = seed.potency * 0.2)
 
 /obj/item/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -151,7 +158,7 @@
 	spawn(30)
 		if(!QDELETED(src))
 			var/mob/living/simple_animal/banana_spider/S = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
-			S.speed += round(10 / seed.potency)
+			S.speed += round(10 / max(seed.potency, 1), 1)
 			S.visible_message("<span class='notice'>The banana spider chitters as it stretches its legs.</span>")
 			qdel(src)
 

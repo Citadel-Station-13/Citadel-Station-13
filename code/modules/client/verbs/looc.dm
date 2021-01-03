@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 	if(!mob)
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
 
@@ -38,15 +38,19 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
 		if(mob.stat)
-			to_chat(src, "<span class='danger'>You cannot salt in LOOC while unconscious or dead.</span>")
+			to_chat(src, "<span class='danger'>You cannot use LOOC while unconscious or dead.</span>")
 			return
-		if(istype(mob, /mob/dead))
+		if(isdead(mob))
 			to_chat(src, "<span class='danger'>You cannot use LOOC while ghosting.</span>")
 			return
+		if(HAS_TRAIT(mob, TRAIT_LOOC_MUTE))
+			to_chat(src, "<span class='danger'>You cannot use LOOC right now.</span>")
+			return
+
 
 	msg = emoji_parse(msg)
 
-	mob.log_talk(msg,LOG_OOC, tag="(LOOC)")
+	mob.log_talk(msg,LOG_OOC, tag="LOOC")
 
 	var/list/heard = get_hearers_in_view(7, get_top_level_mob(src.mob))
 	for(var/mob/M in heard)

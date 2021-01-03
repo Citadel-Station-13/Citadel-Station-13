@@ -13,7 +13,7 @@
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -37,12 +37,13 @@
 	var/lock_in_use = FALSE //Someone is doing some stuff with the lock here, better not proceed further
 	var/eigen_teleport = FALSE //If the closet leads to Mr Tumnus.
 	var/obj/structure/closet/eigen_target //Where you go to.
-
+	var/should_populate_contents = TRUE
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 	update_icon()
-	PopulateContents()
+	if(should_populate_contents)
+		PopulateContents()
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, .proc/take_contents), 0)
 	if(secure)
@@ -58,30 +59,40 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
-	if(opened & icon_door_override)
-		add_overlay("[icon_door]_open")
+	. = ..()
+	if(!opened)
 		layer = OBJ_LAYER
-		return
-	else if(opened)
-		add_overlay("[icon_state]_open")
-		return
-	if(icon_door)
-		add_overlay("[icon_door]_door")
 	else
 		layer = BELOW_OBJ_LAYER
-		add_overlay("[icon_state]_door")
-	if(welded)
-		add_overlay("welded")
-	if(!secure)
-		return
-	if(broken)
-		add_overlay("off")
-		add_overlay("sparking")
-	else if(locked)
-		add_overlay("locked")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
+		else
+			. += "[icon_state]_door"
+		if(welded)
+			. += "welded"
+		if(!secure)
+			return
+		if(broken)
+			. += "off"
+			. += "sparking"
+		else if(locked)
+			. += "locked"
+		else
+			. += "unlocked"
 	else
-		add_overlay("unlocked")
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
+
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
@@ -100,6 +111,9 @@
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
 			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
+	if(isobserver(user))
+		. += "<span class='info'>It contains: [english_list(contents)].</span>"
+		investigate_log("had its contents examined by [user] as a ghost.", INVESTIGATE_GHOST)
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
@@ -111,7 +125,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || (horizontal && L.mob_size > MOB_SIZE_TINY && L.density))
 			if(user)
 				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
 			return FALSE
@@ -123,7 +137,7 @@
 		if(closet != src && !closet.wall_mounted)
 			return FALSE
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something too large in [src], preventing it from closing.</span>")
 			return FALSE
@@ -206,7 +220,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return FALSE
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
+		if(L.move_resist >= MOVE_FORCE_VERY_STRONG || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return FALSE
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
@@ -359,7 +373,7 @@
 								"<span class='italics'>You hear [welder ? "welding" : "rustling of screws and metal"].</span>")
 				deconstruct(TRUE)
 				return
-		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+		if(user.a_intent != INTENT_HARM && user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return TRUE
 	else if(istype(W, /obj/item/electronics/airlock))
 		handle_lock_addition(user, W)
@@ -431,9 +445,12 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Knockdown(40)
-			O.forceMove(T)
-			close()
+				L.DefaultCombatKnockdown(40)
+			if(istype(src, /obj/structure/closet/supplypod/extractionpod))
+				O.forceMove(src)
+			else
+				O.forceMove(T)
+				close()
 	else
 		O.forceMove(T)
 	return 1
@@ -441,17 +458,14 @@
 /obj/structure/closet/relaymove(mob/user)
 	if(user.stat || !isturf(loc) || !isliving(user))
 		return
-	if(locked)
+	if(locked || welded)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	container_resist(user)
 
-/obj/structure/closet/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/closet/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
@@ -474,8 +488,9 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return
+	var/mob/living/L = usr
+	if(!istype(L) || !CHECK_MOBILITY(L, MOBILITY_USE))
+		return FALSE
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		return attack_hand(usr)
@@ -494,9 +509,7 @@
 /obj/structure/closet/container_resist(mob/living/user)
 	if(opened)
 		return
-	if(ismovableatom(loc))
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
+	if(ismovable(loc))
 		var/atom/movable/AM = loc
 		AM.relay_container_resist(user, src)
 		return
@@ -505,12 +518,10 @@
 		return
 
 	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='warning'>[src] begins to shake violently!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear banging from [src].</span>")
-	if(do_after(user,(breakout_time), target = src))
+	if(do_after(user,(breakout_time), target = src, required_mobility_flags = MOBILITY_RESIST))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
@@ -532,7 +543,7 @@
 /obj/structure/closet/CtrlShiftClick(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_SKITTISH))
 		return ..()
-	if(!user.canUseTopic(src) || !isturf(user.loc))
+	if(!user.canUseTopic(src) || !isturf(user.loc) || !user.Adjacent(src) || !user.CanReach(src))
 		return
 	dive_into(user)
 
@@ -563,10 +574,10 @@
 			O.emp_act(severity)
 	if(!secure || broken)
 		return ..()
-	if(prob(50 / severity))
+	if(prob(severity/2))
 		locked = !locked
 		update_icon()
-	if(prob(20 / severity) && !opened)
+	if(prob(severity/5) && !opened)
 		if(!locked)
 			open()
 		else
@@ -603,12 +614,12 @@
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
-		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		user.set_resting(TRUE, TRUE)
 		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
-			user.resting = FALSE
+			user.set_resting(FALSE, TRUE)
 			return
-		user.resting = FALSE
+		user.set_resting(FALSE, TRUE)
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
 

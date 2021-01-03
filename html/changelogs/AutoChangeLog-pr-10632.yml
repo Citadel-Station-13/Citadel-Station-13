@@ -1,5 +1,0 @@
-author: "Commandersand"
-delete-after: True
-changes: 
-  - balance: "lightning bolt,tesla,forcewall,emp spells have lower cooldown"
-  - balance: "fireball has a 10 second starting cooldown"

@@ -1,8 +1,4 @@
-
-
 // organ_internal.dm   --   /obj/item/organ
-
-
 
 // Do I have a stake in my heart?
 /mob/living/AmStaked()
@@ -13,16 +9,14 @@
 		if (istype(I,/obj/item/stake/))
 			return TRUE
 	return FALSE
+
 /mob/proc/AmStaked()
 	return FALSE
-
 
 /mob/living/proc/StakeCanKillMe()
 	return IsSleeping() || stat >= UNCONSCIOUS || blood_volume <= 0 || HAS_TRAIT(src, TRAIT_DEATHCOMA) // NOTE: You can't go to sleep in a coffin with a stake in you.
 
-
-///obj/item/weapon/melee/stake
-/obj/item/stake/
+/obj/item/stake
 	name = "wooden stake"
 	desc = "A simple wooden stake carved to a sharp point."
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -36,7 +30,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 6
 	throwforce = 10
-	embedding = list("embed_chance" = 25, "embedded_fall_chance" = 0.5) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
+	embedding = list("embed_chance" = 25, "fall_chance" = 0.5) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
 	//embed_chance = 25  // Look up "is_pointed" to see where we set stakes able to do this.
 	//embedded_fall_chance = 0.5 // Chance it will fall out.
 	obj_integrity = 30
@@ -96,9 +90,10 @@
 	user.dropItemToGround(src, TRUE) //user.drop_item() // "drop item" doesn't seem to exist anymore. New proc is user.dropItemToGround() but it doesn't seem like it's needed now?
 	var/obj/item/bodypart/B = C.get_bodypart("chest")  // This was all taken from hitby() in human_defense.dm
 	B.embedded_objects |= src
+	embedded()
 	add_mob_blood(target)//Place blood on the stake
 	loc = C // Put INSIDE the character
-	B.receive_damage(w_class * embedding.embedded_impact_pain_multiplier)
+	B.receive_damage(w_class * embedding["pain_mult"])
 	if(C.mind)
 		var/datum/antagonist/bloodsucker/bloodsucker = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if(bloodsucker)
@@ -112,8 +107,7 @@
 
 // Can this target be staked? If someone stands up before this is complete, it fails. Best used on someone stationary.
 /mob/living/carbon/proc/can_be_staked()
-	//return resting || IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_FAKEDEATH)) || resting || IsStun() || IsFrozen() || (pulledby && pulledby.grab_state >= GRAB_NECK)
-	return (resting || lying || IsUnconscious() || pulledby && pulledby.grab_state >= GRAB_NECK)
+	return !CHECK_MOBILITY(src, MOBILITY_STAND)
 	// ABOVE:  Taken from update_mobility() in living.dm
 
 /obj/item/stake/hardened
@@ -124,7 +118,7 @@
 	force = 8
 	throwforce = 12
 	armour_penetration = 10
-	embedding = list("embed_chance" = 50, "embedded_fall_chance" = 0) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
+	embedding = list("embed_chance" = 50, "fall_chance" = 0) // UPDATE 2/10/18 embedding_behavior.dm is how this is handled
 	obj_integrity = 120
 	max_integrity = 120
 
@@ -173,4 +167,4 @@
 				///obj/item/pipe = 2)
 	time = 80
 	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+	subcategory = CAT_MELEE

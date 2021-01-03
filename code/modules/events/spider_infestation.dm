@@ -2,7 +2,6 @@
 	name = "Spider Infestation"
 	typepath = /datum/round_event/spider_infestation
 	weight = 5
-	gamemode_blacklist = list("dynamic")
 	max_occurrences = 1
 	min_players = 15
 
@@ -35,6 +34,6 @@
 		var/spawn_type = /obj/structure/spider/spiderling
 		if(prob(66))
 			spawn_type = /obj/structure/spider/spiderling/nurse
-		spawn_atom_to_turf(spawn_type, vent, 1, FALSE)
+		announce_to_ghosts(spawn_atom_to_turf(spawn_type, vent, 1, FALSE))
 		vents -= vent
 		spawncount--

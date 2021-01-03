@@ -84,7 +84,7 @@
 		busy = FALSE
 		update_icon()
 
-/obj/machinery/doorButtons/access_button/update_icon()
+/obj/machinery/doorButtons/access_button/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "access_button_off"
 	else
@@ -249,7 +249,7 @@
 		else if(A.id_tag == idExterior)
 			exteriorAirlock = A
 
-/obj/machinery/doorButtons/airlock_controller/update_icon()
+/obj/machinery/doorButtons/airlock_controller/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "access_control_off"
 		return
@@ -260,7 +260,6 @@
 
 /obj/machinery/doorButtons/airlock_controller/ui_interact(mob/user)
 	var/datum/browser/popup = new(user, "computer", name)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(returnText())
 	popup.open()
 

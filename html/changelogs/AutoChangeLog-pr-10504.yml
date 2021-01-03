@@ -1,5 +1,0 @@
-author: "Xantholne"
-delete-after: True
-changes: 
-  - rscadd: "Botany bee pet, Bumbles"
-  - rscadd: "New bee models that aren't 1 tile big of 0 opacity pixels"

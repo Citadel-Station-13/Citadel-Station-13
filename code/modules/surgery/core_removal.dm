@@ -6,7 +6,7 @@
 	lying_required = FALSE
 	ignore_clothes = TRUE
 
-/datum/surgery/core_removal/can_start(mob/user, mob/living/target)
+/datum/surgery/core_removal/can_start(mob/user, mob/living/target, obj/item/tool)
 	if(target.stat == DEAD)
 		return 1
 	return 0

@@ -2524,7 +2524,7 @@
 /area/awaymission/snowdin/post)
 "fF" = (
 /obj/structure/closet,
-/obj/item/clothing/under/assistantformal,
+/obj/item/clothing/under/misc/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/effect/turf_decal/bot,

@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/proc/check_nightshift()
 	var/emergency = GLOB.security_level >= SEC_LEVEL_RED
 	var/announcing = TRUE
-	var/time = STATION_TIME(FALSE)
+	var/time = STATION_TIME(FALSE, world.time)
 	var/night_time = (time < nightshift_end_time) || (time > nightshift_start_time)
 	if(high_security_mode != emergency)
 		high_security_mode = emergency

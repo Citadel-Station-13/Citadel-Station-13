@@ -11,7 +11,7 @@
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, user))
+	if(do_after(user,50, TRUE, user))
 		if(remarks.len)
 			to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		else
@@ -53,10 +53,39 @@
 				on_reading_stopped()
 				reading = FALSE
 				return
-		if(do_after(user,50, user))
+		if(do_after(user,50, TRUE, user))
 			on_reading_finished(user)
 		reading = FALSE
 	return TRUE
+///TRAITS///
+
+/obj/item/book/granter/trait
+	var/granted_trait
+	var/traitname = "being cool"
+
+/obj/item/book/granter/trait/already_known(mob/user)
+	if(!granted_trait)
+		return TRUE
+	if(HAS_TRAIT(user, granted_trait))
+		to_chat(user, "<span class ='notice'>You already have all the insight you need about [traitname].")
+		return TRUE
+	return FALSE
+
+/obj/item/book/granter/trait/on_reading_start(mob/user)
+	to_chat(user, "<span class='notice'>You start reading about [traitname]...</span>")
+
+/obj/item/book/granter/trait/on_reading_finished(mob/user)
+	to_chat(user, "<span class='notice'>You feel like you've got a good handle on [traitname]!</span>")
+	ADD_TRAIT(user, granted_trait, BOOK_TRAIT)
+
+/obj/item/book/granter/trait/rifleman
+	name = "The Neo-Russian Rifleman\'s Primer"
+	desc = "A book with stains of vodka and...blood? The back is hard to read, but says something about bolt-actions. Or pump-actions. Both, maybe."
+	oneuse = FALSE
+	granted_trait = TRAIT_FAST_PUMP
+	traitname = "riflery"
+	icon_state = "book1"
+	remarks = list("One smooth motion...", "Palm the bolt...", "Push up, rotate back, push forward, down...", "Don't slap yourself with the bolt...", "Wait, what's this about pumping?", "Who just scribbled \"Z\" and \"LMB\" on this page?")
 
 ///ACTION BUTTONS///
 
@@ -220,13 +249,11 @@
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
-	if(user.nutrition)
-		user.nutrition = 200
-		if(user.nutrition <= 0)
-			user.nutrition = 0
+	if(user.nutrition > NUTRITION_LEVEL_STARVING + 50)
+		user.set_nutrition(NUTRITION_LEVEL_STARVING + 50)
 
 /obj/item/book/granter/spell/blind
-	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spell = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	spellname = "blind"
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
@@ -238,7 +265,7 @@
 	user.blind_eyes(10)
 
 /obj/item/book/granter/spell/mindswap
-	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
@@ -262,7 +289,7 @@
 	if(stored_swap == user)
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
 	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
 		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
 		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
@@ -294,10 +321,10 @@
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(40)
+	user.DefaultCombatKnockdown(40)
 
 /obj/item/book/granter/spell/barnyard
-	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
@@ -324,7 +351,7 @@
 /obj/item/book/granter/spell/charge/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>[src] suddenly feels very warm!</span>")
-	empulse(src, 1, 1)
+	empulse_using_range(src, 1)
 
 /obj/item/book/granter/spell/summonitem
 	spell = /obj/effect/proc_holder/spell/targeted/summonitem
@@ -402,10 +429,11 @@
 	martialname = "sleeping carp"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
 	greet = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
-	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
+	directed toward you while in Throw Mode. Your body is also honed to protect you from damage and punctures, and even briefly survive space. \
+	However, you are also unable to use any ranged weaponry, and some medical supplies will prove useless to you. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
-	remarks = list("I must prove myself worthy to the masters of the sleeping carp...", "Stance means everything...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Grab them first so they don't retaliate...", "I must prove myself worthy of this power...")
+	remarks = list("Wait, a high protein diet is really all it takes to become bulletproof...?", "Overwhelming force, immovable object...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Become one with the carp...", "Glub...")
 
 /obj/item/book/granter/martial/carp/onlearned(mob/living/carbon/user)
 	..()
@@ -449,6 +477,23 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
+/obj/item/book/granter/martial/krav_maga
+	martial = /datum/martial_art/krav_maga
+	name = "parchment scroll"
+	martialname = "krav maga"
+	desc = "A worn parchment scrap written in an ancient language. Somehow you can still understand the lessons!"
+	greet = "<span class='sciradio'>You have learned the ancient martial art of Krav Maga. You have special attacks with which to take down your foes.</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	remarks = list("Sweep the legs...", "Chop the throat...", "Punch the lungs...", "Get the gold...", "Where are my sick gloves..?")
+
+/obj/item/book/granter/martial/krav_maga/onlearned(mob/living/carbon/user)
+	. = ..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
 
 
@@ -482,7 +527,7 @@
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")
 
-/obj/item/book/granter/crafting_recipe/coldcooking //IceCream
+/obj/item/book/granter/crafting_recipe/coldcooking //Icecream
 	name = "Cooking with Ice"
 	desc = "A cook book that teaches you many old icecream treats."
 	crafting_recipe_types = list(/datum/crafting_recipe/food/banana_split, /datum/crafting_recipe/food/root_float, /datum/crafting_recipe/food/bluecharrie_float, /datum/crafting_recipe/food/charrie_float)
@@ -490,7 +535,13 @@
 	oneuse = FALSE
 	remarks = list("Looks like these would sell much better in a plasma fire...", "Using glass bowls rather then cones?", "Mixing soda and ice-cream?", "Tall glasses with of liquids and solids...", "Just add a bit of icecream and cherry on top?")
 
-//Later content when I have free time - Trilby Date:24-Aug-2019
+/obj/item/book/granter/crafting_recipe/bone_bow //Bow crafting for non-ashwalkers
+	name = "bowyery sandstone slab" // this is an actual word
+	desc = "A sandstone slab with inscriptions describing the Ash Walkers of Lavaland's bowyery."
+	crafting_recipe_types = list(/datum/crafting_recipe/bone_arrow, /datum/crafting_recipe/bone_bow, /datum/crafting_recipe/ashen_arrow, /datum/crafting_recipe/quiver, /datum/crafting_recipe/bow_tablet)
+	icon_state = "stone_tablet"
+	oneuse = FALSE
+	remarks = list("Sticking burning arrows into the sand makes them stronger...", "Breaking the bone apart to get shards, not sharpening the bone...", "Sinew is just like rope...")
 
 /obj/item/book/granter/crafting_recipe/under_the_oven //Illegal cook book
 	name = "Under The Oven"

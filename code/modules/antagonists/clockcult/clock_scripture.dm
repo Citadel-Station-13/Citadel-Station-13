@@ -3,8 +3,9 @@ Tiers and Requirements
 
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
-Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 100 CV
+Scripts: 35k power or one convert
+Applications: 50k or three converts
+Judgement 5 converts
 */
 
 /datum/clockwork_scripture
@@ -30,6 +31,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	var/primary_component
 	var/important = FALSE //important scripture will be italicized in the slab's interface
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
+	var/requires_full_power = FALSE		//requires the user to be a full, non neutered servant of ratvar
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
 	var/static/list/neovgre_penalty = list("Go to the station.", "Useless.", "Don't waste time.", "Pathetic.", "Wasteful.")
@@ -76,6 +78,9 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 /datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
 	if(!invoker || !slab || invoker.get_active_held_item() != slab)
+		return FALSE
+	if(!is_servant_of_ratvar(invoker, requires_full_power))
+		to_chat(invoker, "<span class='warning'>You aren't strongly connected enough to Ratvar to invoke this!</span>")
 		return FALSE
 	if(!invoker.can_speak_vocal())
 		to_chat(invoker, "<span class='warning'>You are unable to speak the words of the scripture!</span>")
@@ -125,11 +130,11 @@ Applications: 8 servants, 3 caches, and 100 CV
 			SEND_SOUND(invoker, sound('sound/magic/clockwork/invoke_general.ogg'))
 	return TRUE
 
-/datum/clockwork_scripture/proc/check_offstation_penalty()
+/datum/clockwork_scripture/proc/check_offstation_penalty()//don't cast spells away from the station
 	var/turf/T = get_turf(invoker)
 	if(!T || (!is_centcom_level(T.z) && !is_station_level(T.z) && !is_mining_level(T.z) && !is_reebe(T.z)))
-		channel_time *= 2
-		power_cost *= 2
+		channel_time *= 3
+		power_cost *= 3
 		return TRUE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
@@ -162,7 +167,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 	set waitfor = FALSE
 	chanting = TRUE
 	for(var/invocation in invocations)
-		sleep(channel_time / invocations.len)
+		sleep(channel_time / (invocations.len + 1)) //So it always finishes the invocation
 		if(QDELETED(src) || QDELETED(slab) || !chanting)
 			return
 		if(multiple_invokers_used)
@@ -199,6 +204,10 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(!do_after(invoker, chant_interval, target = invoker, extra_checks = CALLBACK(src, .proc/can_recite)))
 			break
 		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
+		if(multiple_invokers_used)
+			for(var/mob/living/L in range(1, get_turf(invoker)))
+				if(can_recite_scripture(L) && L != invoker)
+					clockwork_say(L, text2ratvar(pick(chant_invocations)), whispered)
 		if(!chant_effects(i))
 			break
 	if(invoker && slab)
@@ -236,17 +245,20 @@ Applications: 8 servants, 3 caches, and 100 CV
 		return FALSE
 	return TRUE
 
+/datum/clockwork_scripture/create_object/proc/get_spawn_path(mob/user)
+	return object_path
+
 /datum/clockwork_scripture/create_object/scripture_effects()
 	if(creator_message && observer_message)
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
 		to_chat(invoker, creator_message)
-	var/obj/O = new object_path (get_turf(invoker))
+	var/to_spawn = get_spawn_path(invoker)
+	var/obj/O = new to_spawn(get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
 	if(isitem(O) && put_object_in_hands)
 		invoker.put_in_hands(O)
 	return TRUE
-
 
 //Used specifically to create construct shells.
 /datum/clockwork_scripture/create_object/construct

@@ -35,12 +35,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
 	var/turf/endT = spaceDebrisFinishLoc(startside, z)
-	new /obj/effect/immovablerod(startT, endT, C.special_target)
+	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target)
+	announce_to_ghosts(rod)
 
 /obj/effect/immovablerod
 	name = "immovable rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
+	movement_type = FLOATING
 	icon_state = "immrod"
 	throwforce = 100
 	move_force = INFINITY
@@ -61,10 +63,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	z_original = z
 	destination = end
 	special_target = aimed_at
-	if(notify)
-		notify_ghosts("\A [src] is inbound!",
-			enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>",
-			source=src, action=NOTIFY_ORBIT)
 	GLOB.poi_list += src
 
 	var/special_target_valid = FALSE
@@ -146,7 +144,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(L && (L.density || prob(10)))
 		L.ex_act(EXPLODE_HEAVY)
 
-obj/effect/immovablerod/attack_hand(mob/living/user)
+obj/effect/immovablerod/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.job in list("Research Director"))

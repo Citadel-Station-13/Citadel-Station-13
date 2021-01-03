@@ -83,7 +83,9 @@
 			<hr style='background:#000000; border:0; height:1px'>"}
 		qdel(query_check_unused_rank)
 	else if(!action)
-		output += {"<head>
+		output += {"
+		<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>Permissions Panel</title>
 		<script type='text/javascript' src='search.js'></script>
 		</head>
@@ -285,7 +287,7 @@
 	R = rank_names[new_rank]
 	if(!R) //rank with that name doesn't exist yet - make it
 		if(D)
-			R = new(new_rank, D.rank.rights) //duplicate our previous admin_rank but with a new name
+			R = new(new_rank, D.rank.rights, D.rank.exclude_rights, D.rank.can_edit_rights) //duplicate our previous admin_rank but with a new name
 		else
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
