@@ -84,11 +84,34 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_MELEE
 
-/datum/crafting_recipe/bokken
+/datum/crafting_recipe/bokken_steelwood
+	name = "Training Bokken"
+	result = /obj/item/melee/bokken/steelwood
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/bokken_steelblade = 1,
+				/obj/item/bokken_hilt = 1,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 60
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/wakibokken
 	name = "Training Wakizashi Bokken"
 	result = /obj/item/melee/bokken/waki
 	tools = list(TOOL_SCREWDRIVER)
 	reqs = list(/obj/item/wakibokken_blade = 1,
+				/obj/item/bokken_hilt = 1,
+				/obj/item/stack/sheet/cloth = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/wakibokken_steelwood
+	name = "Training Wakizashi Steelwood Bokken"
+	result = /obj/item/melee/bokken/waki/steelwood
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/wakibokken_steelblade = 1,
 				/obj/item/bokken_hilt = 1,
 				/obj/item/stack/sheet/cloth = 1)
 	time = 40
@@ -478,9 +501,9 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
-/datum/crafting_recipe/bokken_ironblade
+/datum/crafting_recipe/bokken_steelblade
 	name = "Training Ironwood Bokken Blade"
-	result = /obj/item/bokken_ironblade
+	result = /obj/item/bokken_steelblade
 	tools = list(/obj/item/hatchet, TOOL_WELDER)
 	reqs = list(/obj/item/grown/log/steel = 2)
 	time = 20
@@ -489,7 +512,7 @@
 
 /datum/crafting_recipe/wakibokken_blade
 	name = "Training Wakizashi Ironwood Bokken Blade"
-	result = /obj/item/wakibokken_ironblade
+	result = /obj/item/wakibokken_steelblade
 	tools = list(/obj/item/hatchet, TOOL_WELDER)
 	reqs = list(/obj/item/grown/log/steel = 1)
 	time = 20
