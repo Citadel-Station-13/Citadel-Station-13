@@ -10,6 +10,8 @@ export const ChemDispenser = (props, context) => {
   const recording = !!data.recordingRecipe;
   const [hasCol, setHasCol] = useLocalState(
     context, 'fs_title', false);
+  const [modeToggle, setModeToggle] = useLocalState(
+    context, 'mode_toggle', true);
   const {
     storedContents = [],
   } = data;
@@ -33,17 +35,26 @@ export const ChemDispenser = (props, context) => {
   return (
     <Window
       width={565}
-      height={680}
+      height={720}
       resizable>
       <Window.Content scrollable>
         <Section
           title="Status"
-          buttons={recording && (
-            <Box inline mx={1} color="red">
-              <Icon name="circle" mr={1} />
-              Recording
-            </Box>
-          )}>
+          buttons={
+            [recording && (
+              <Box inline mx={1} color="red">
+                <Icon name="circle" mr={1} />
+                Recording
+              </Box>),
+              <Button 
+                key="colorButton"
+                icon="cog"
+                disabled={!data.isBeakerLoaded}
+                tooltip="Alternate between buttons and radial input"
+                tooltipPosition="bottom-left"
+                selected={modeToggle}
+                onClick={() => setModeToggle(!modeToggle)}/>
+            ]}>
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar
@@ -108,20 +119,37 @@ export const ChemDispenser = (props, context) => {
           </Box>
         </Section>
         <Section
+          key="dispense"
           title="Dispense"
           buttons={(
-            [<NumberInput
-              width="65px"
-              unit="u"
-              step={data.stepAmount}
-              stepPixelSize={data.stepAmount}
-              value={data.amount}
-              minValue={0}
-              maxValue={data.beakerMaxVolume}
-              onDrag={(e, amount) => act('amount', {
-                target: amount,
-              })} />,
-            <Button icon="cog"
+            [modeToggle ? (
+              beakerTransferAmounts.map(amount => (
+                <Button
+                  key={amount}
+                  icon="plus"
+                  selected={amount === data.amount}
+                  content={amount}
+                  onClick={() => act('amount', {
+                    target: amount,
+                  })} />
+              ))) : (!!data.isBeakerLoaded &&
+                <NumberInput
+                  key="dispenseInput"
+                  width="65px"
+                  unit="u"
+                  step={data.stepAmount}
+                  stepPixelSize={data.stepAmount}
+                  disabled={!data.isBeakerLoaded}
+                  value={data.amount}
+                  minValue={1}
+                  maxValue={data.beakerMaxVolume}
+                  onDrag={(e, amount) => act('amount', {
+                    target: amount,
+                  })} />
+            ),
+            <Button 
+                key="colorButton"
+                icon="cog"
                 tooltip="Color code the reagents by pH"
                 tooltipPosition="bottom-left"
                 selected={hasCol}
@@ -136,7 +164,7 @@ export const ChemDispenser = (props, context) => {
                 lineHeight={1.75}
                 content={chemical.title}
                 tooltip={"pH: "+chemical.pH}
-                color={hasCol ? chemical.pHCol : "blue"}
+                backgroundColor={hasCol ? chemical.pHCol : "blue"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />
@@ -144,10 +172,20 @@ export const ChemDispenser = (props, context) => {
           </Box>
         </Section>
         <Section
-          title="Storage">
+          title="Storage"
+          buttons={
+            <Box>
+              Transfer amount: 
+              <AnimatedNumber
+                initial={5}
+                value={data.amount} />
+              u
+            </Box>
+          }
+          >
           <ProgressBar
             value={data.storedVol / data.maxVol}>
-            {toFixed(data.storedVol) + ' units'} 
+            {toFixed(data.storedVol) + ' units / ' + data.maxVol + ' units'} 
           </ProgressBar>
           <ChemicalBuffer>
             {storedContents.map(chemical => (
@@ -240,7 +278,7 @@ const ChemicalBufferEntry = (props, context) => {
         <Button
           content="Dispense"
           icon="download"
-          disabled={!!data.recordingRecipe}
+          disabled={!!data.recordingRecipe || !data.isBeakerLoaded}
           mt={0.5}
           onClick={() => act('unstore', {
             id: chemical.id,

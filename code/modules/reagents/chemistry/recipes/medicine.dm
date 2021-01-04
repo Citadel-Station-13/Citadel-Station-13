@@ -116,6 +116,7 @@
 		holder.remove_reagent(id, added_volume*temp_ratio)
 	if(St.purity < 1)
 		St.volume *= St.purity
+		added_volume *= St.purity
 		St.purity = 1
 	if(!N)
 		return

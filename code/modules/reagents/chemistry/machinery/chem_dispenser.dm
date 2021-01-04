@@ -203,12 +203,12 @@
 	var/beakerCurrentVolume = 0
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "id" = R.type, "volume" = R.volume))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "id" = R.type, "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
 
 	if (beaker)
-		data["beakerCurrentVolume"] = beakerCurrentVolume
+		data["beakerCurrentVolume"] = round(beakerCurrentVolume, 0.01)
 		data["beakerMaxVolume"] = beaker.volume
 		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
 		//pH accuracy
@@ -389,6 +389,9 @@
 		amount = inputAmount
 		return
 	inputAmount -= inputAmount % dispenceUnit
+	if(inputAmount == 0) //Prevent ghost entries in macros
+		amount = dispenceUnit
+		return
 	amount = inputAmount
 	
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
