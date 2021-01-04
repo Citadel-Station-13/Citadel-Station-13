@@ -1123,6 +1123,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Research Division Server Room"
 	icon_state = "server"
 
+/area/science/server/compcore
+	name = "Computer Core"
+	icon_state = "server"
+
 /area/science/explab
 	name = "Experimentation Lab"
 	icon_state = "toxmisc"
