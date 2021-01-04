@@ -57,12 +57,3 @@
 	build_path = /obj/item/circuitboard/machine/bluespace_miner
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
-
-//Spaceship beacon
-/datum/design/board/spaceship_navigation_beacon
-	name = "Machine Design (Bluespace Navigation Gigabeacon)"
-	desc = "Allows the creation of a beacon that you can fly to with your ship."
-	id = "shuttle_beacon"
-	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
-	category = list("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
