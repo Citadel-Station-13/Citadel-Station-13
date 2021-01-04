@@ -25068,14 +25068,14 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "bcZ" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/smes{
+	charge = 5e+006
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
@@ -26858,9 +26858,6 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "bgY" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/status_display,
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
@@ -27034,11 +27031,12 @@
 /turf/open/floor/plasteel,
 /area/engine/secure_construction)
 "bht" = (
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/power/terminal,
+/obj/structure/grille,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
@@ -29611,13 +29609,14 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bmM" = (
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/terminal,
+/obj/structure/grille,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai)
@@ -43319,9 +43318,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/camera/motion{
 	c_tag = "AI Foyer";
 	network = list("minisat");
@@ -43339,7 +43335,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/turret_protected/ai)
+/area/ai_monitored/turret_protected/ai_upload_foyer)
 "bQc" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -43401,9 +43397,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
 /turf/open/floor/plasteel,
@@ -44273,9 +44266,6 @@
 /area/science/robotics/lab)
 "bRW" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
@@ -44403,9 +44393,6 @@
 /area/science/xenobiology)
 "bSk" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -44492,9 +44479,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bSr" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -44502,18 +44486,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "bSs" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "bSt" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -44715,9 +44693,6 @@
 /area/science/lab)
 "bSO" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -45238,9 +45213,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
@@ -45337,9 +45309,6 @@
 "bUi" = (
 /obj/machinery/light_switch{
 	pixel_y = 24
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
@@ -46114,9 +46083,6 @@
 /area/engine/atmos)
 "bVF" = (
 /obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
@@ -46465,9 +46431,6 @@
 /area/science/mixing)
 "bWm" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "AI SMES Access";
 	req_one_access_txt = "10;24"
@@ -46569,9 +46532,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bWv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 8
 	},
@@ -51567,7 +51527,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/cable,
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
@@ -51960,9 +51919,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "chy" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 10
 	},
@@ -52085,9 +52041,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "chN" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/closed/wall/r_wall,
 /area/engine/teg/hotloop)
@@ -55095,9 +55048,6 @@
 /turf/open/space/basic,
 /area/quartermaster/warehouse)
 "cnR" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -71347,6 +71297,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"uYy" = (
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "vcb" = (
 /obj/machinery/atmospherics/pipe/simple/brown/visible,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
@@ -105741,7 +105699,7 @@ cgD
 cdV
 chy
 chN
-bWQ
+uYy
 bWQ
 cdo
 aPg
