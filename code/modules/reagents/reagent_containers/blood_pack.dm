@@ -137,7 +137,7 @@
 	var/fraction = min(gulp_size / reagents.total_volume, 1)
 	reagents.reaction(C, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
 	reagents.trans_to(C, gulp_size)
-	reagents.remove_reagent(src, 2) //Inneficency, so hey, IVs are usefull.
+	reagents.remove_reagent(src, 5) //Inneficency, so hey, IVs are usefull.
 	playsound(C.loc,'sound/items/drink.ogg', rand(10, 50), TRUE)
 
 
