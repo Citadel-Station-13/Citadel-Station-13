@@ -6034,11 +6034,14 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/machinery/door/firedoor,
 /obj/item/flashlight/lamp,
 /obj/machinery/door/window/westright{
 	name = "Security Checkpoint";
 	req_access_txt = "1"
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "west facing firelock"
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
@@ -9593,11 +9596,14 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/machinery/door/firedoor,
 /obj/item/folder/red,
 /obj/machinery/door/window/westleft{
 	name = "Security Checkpoint";
 	req_access_txt = "1"
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "west facing firelock"
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
@@ -23201,7 +23207,25 @@
 /area/hallway/primary/port/fore)
 "aYW" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
+/obj/item/pen/blue,
+/obj/machinery/camera{
+	c_tag = "Customs - Fore";
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "HoPFore";
+	name = "HoP Fore Desk Shutters"
+	},
+/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "north facing firelock"
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/checkpoint/customs)
+"aYX" = (
+/obj/structure/table/reinforced,
 /obj/machinery/door/window/northright{
 	name = "Customs Desk";
 	req_access_txt = "57"
@@ -23210,16 +23234,9 @@
 	id = "HoPFore";
 	name = "HoP Fore Desk Shutters"
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/checkpoint/customs)
-"aYX" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/flashlight/lamp,
-/obj/structure/window/reinforced/spawner/north,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "HoPFore";
-	name = "HoP Fore Desk Shutters"
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "north facing firelock"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/checkpoint/customs)
@@ -25410,7 +25427,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bdM" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -25688,7 +25705,7 @@
 /area/security/courtroom)
 "bey" = (
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bez" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -25764,7 +25781,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "beI" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -25778,7 +25795,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "beJ" = (
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -25967,7 +25984,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "bfi" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 10
@@ -25985,13 +26002,13 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "bfk" = (
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bfl" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -26943,7 +26960,7 @@
 	icon_state = "2-4"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bhm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -27313,7 +27330,7 @@
 	icon_state = "4-8"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bia" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -27399,7 +27416,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bik" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -27415,7 +27432,7 @@
 "bil" = (
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plasteel/dark,
-/area/science/server)
+/area/science/server/compcore)
 "bim" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -27513,7 +27530,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/server)
+/area/science/server/compcore)
 "bix" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
@@ -27576,7 +27593,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/server)
+/area/science/server/compcore)
 "biF" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -27615,7 +27632,7 @@
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "biI" = (
 /obj/machinery/light{
 	dir = 4;
@@ -28416,7 +28433,7 @@
 	},
 /obj/machinery/photocopier,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bku" = (
 /obj/structure/closet,
 /turf/open/floor/plasteel,
@@ -28455,7 +28472,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bkA" = (
 /obj/machinery/light_switch{
 	pixel_y = -24
@@ -28566,7 +28583,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bkK" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -28674,7 +28691,7 @@
 /area/maintenance/department/eva)
 "bkW" = (
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bkX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -28918,25 +28935,26 @@
 "blv" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "blw" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "blx" = (
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
+	areastring = "/area/science/server/compcore";
 	dir = 1;
 	name = "Computer Core APC";
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bly" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29001,7 +29019,7 @@
 	light_color = "#e8eaff"
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "blE" = (
 /obj/machinery/light{
 	dir = 8
@@ -29216,7 +29234,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bma" = (
 /obj/structure/chair{
 	dir = 8
@@ -29522,7 +29540,7 @@
 	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bmG" = (
 /turf/open/floor/engine,
 /area/gateway)
@@ -30215,7 +30233,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bnT" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -30228,7 +30246,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bnU" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/fragile,
@@ -30280,18 +30298,16 @@
 /area/engine/teg)
 "bnZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/pen/blue,
-/obj/machinery/camera{
-	c_tag = "Customs - Fore";
-	dir = 4
-	},
+/obj/item/flashlight/lamp,
 /obj/structure/window/reinforced/spawner/north,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "HoPFore";
 	name = "HoP Fore Desk Shutters"
 	},
-/obj/machinery/atmospherics/pipe/simple/orange/hidden,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "north facing firelock"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/checkpoint/customs)
 "boa" = (
@@ -30314,24 +30330,22 @@
 /area/crew_quarters/heads/chief)
 "bod" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
+/obj/item/stack/packageWrap,
+/obj/item/hand_labeler,
+/obj/machinery/camera{
+	c_tag = "Customs - Aft";
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "HoPAft";
+	name = "HoP Aft Desk Shutters"
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
-	name = "Primary Tool Storage Desk";
-	req_access_txt = "11"
-	},
-/obj/item/folder/yellow,
-/turf/open/floor/plasteel,
-/area/storage/primary)
+/turf/open/floor/plasteel/dark,
+/area/security/checkpoint/customs)
 "boe" = (
 /obj/machinery/door/airlock/vault{
 	name = "Vault Door";
@@ -30351,7 +30365,7 @@
 	req_access = list(16)
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bog" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/machinery/door/airlock/engineering/glass{
@@ -30380,7 +30394,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "boj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30451,7 +30465,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "boq" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -30464,7 +30478,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bor" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -30503,7 +30517,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bou" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L2"
@@ -30859,7 +30873,7 @@
 	},
 /obj/item/book/manual/wiki/robotics_cyborgs,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bpi" = (
 /obj/machinery/firealarm{
 	pixel_y = 26
@@ -31095,7 +31109,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bpL" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -31105,7 +31119,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bpM" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
@@ -31116,7 +31130,7 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bpO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -31164,7 +31178,7 @@
 /obj/effect/turf_decal/tile/green,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bpW" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -31350,7 +31364,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bqu" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -31546,7 +31560,7 @@
 	},
 /obj/item/storage/box/disks,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bqP" = (
 /obj/machinery/camera{
 	c_tag = "Engine Room - Port Quarter";
@@ -34882,7 +34896,7 @@
 	},
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plasteel/dark,
-/area/science/server)
+/area/science/server/compcore)
 "byf" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Telecommunications Mainframe";
@@ -35576,7 +35590,7 @@
 "bzN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "bzO" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "recycler";
@@ -35605,7 +35619,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bzS" = (
 /obj/structure/table,
 /obj/machinery/light/small{
@@ -35924,7 +35938,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bAz" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 1
@@ -36037,7 +36051,7 @@
 	},
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plasteel/dark,
-/area/science/server)
+/area/science/server/compcore)
 "bAI" = (
 /obj/machinery/photocopier,
 /obj/machinery/requests_console{
@@ -36545,7 +36559,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/rnd/server,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bBT" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -36623,10 +36637,10 @@
 	name = "RD Server Lockup"
 	},
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bCb" = (
 /turf/open/floor/circuit/green,
-/area/science/server)
+/area/science/server/compcore)
 "bCc" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable{
@@ -36998,7 +37012,7 @@
 "bCW" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/circuit/green,
-/area/science/server)
+/area/science/server/compcore)
 "bCX" = (
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
@@ -38773,7 +38787,7 @@
 "bGv" = (
 /obj/item/caution,
 /turf/open/floor/plasteel,
-/area/science/server)
+/area/science/server/compcore)
 "bGw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -38897,7 +38911,7 @@
 /obj/item/circuitboard/machine/rdserver,
 /obj/item/disk/tech_disk,
 /turf/open/floor/circuit/green,
-/area/science/server)
+/area/science/server/compcore)
 "bGL" = (
 /obj/structure/chair{
 	dir = 1
@@ -38946,7 +38960,7 @@
 /obj/machinery/light,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/circuit/green,
-/area/science/server)
+/area/science/server/compcore)
 "bGQ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
@@ -39522,7 +39536,7 @@
 	network = list("minisat")
 	},
 /turf/open/floor/circuit/green,
-/area/science/server)
+/area/science/server/compcore)
 "bIh" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/delivery/white,
@@ -40062,7 +40076,7 @@
 	icon_state = "1-4"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bJo" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -40233,7 +40247,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "bJG" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
@@ -40574,7 +40588,7 @@
 	icon_state = "1-8"
 	},
 /turf/closed/wall/r_wall,
-/area/science/server)
+/area/science/server/compcore)
 "bKt" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -42597,7 +42611,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "bOA" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -42830,17 +42844,22 @@
 /area/science/xenobiology)
 "bOY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/stack/packageWrap,
-/obj/item/hand_labeler,
-/obj/machinery/camera{
-	c_tag = "Customs - Aft";
-	dir = 4
+/obj/item/clipboard,
+/obj/item/stamp/denied{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/structure/window/reinforced/spawner,
+/obj/item/stamp,
+/obj/machinery/door/window/southright{
+	name = "Customs Desk";
+	req_access_txt = "57"
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "HoPAft";
 	name = "HoP Aft Desk Shutters"
+	},
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/checkpoint/customs)
@@ -44439,7 +44458,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/science/server)
+/area/science/server/compcore)
 "bSp" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoload"
@@ -46307,26 +46326,17 @@
 /area/engine/atmos)
 "bVY" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
+/obj/item/flashlight/lamp,
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "HoPAft";
+	name = "HoP Aft Desk Shutters"
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southright{
-	name = "Primary Tool Storage Desk";
-	req_access_txt = "11"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
+/turf/open/floor/plasteel/dark,
+/area/security/checkpoint/customs)
 "bVZ" = (
 /obj/machinery/power/apc{
 	name = "Cargo Bay APC";
@@ -54609,26 +54619,26 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cmT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/item/folder/red,
-/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/machinery/door/window/northright{
-	name = "Security Checkpoint";
-	req_access_txt = "1"
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/full,
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "north facing firelock"
 	},
 /turf/open/floor/plasteel,
-/area/security/checkpoint/supply)
+/area/engine/workshop)
 "cmU" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -57988,20 +57998,25 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ctl" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/white/full,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/modular_computer/console/preset/engineering,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /obj/structure/window/reinforced/spawner/north,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "north facing firelock"
+	},
 /turf/open/floor/plasteel,
 /area/engine/workshop)
 "ctm" = (
@@ -58202,21 +58217,17 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "ctE" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/southleft{
+	name = "Workshop Desk";
+	req_access_txt = "11"
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/machinery/modular_computer/console/preset/engineering,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plasteel,
 /area/engine/workshop)
 "ctF" = (
@@ -59567,34 +59578,38 @@
 /area/science/xenobiology)
 "cvZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/clipboard,
-/obj/item/stamp/denied{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/stamp,
 /obj/machinery/door/window/southright{
-	name = "Customs Desk";
-	req_access_txt = "57"
+	name = "Workshop Desk";
+	req_access_txt = "11"
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "HoPAft";
-	name = "HoP Aft Desk Shutters"
+/obj/item/folder/yellow,
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/checkpoint/customs)
+/turf/open/floor/plasteel,
+/area/engine/workshop)
 "cwa" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/flashlight/lamp,
-/obj/structure/window/reinforced/spawner,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "HoPAft";
-	name = "HoP Aft Desk Shutters"
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
-/area/security/checkpoint/customs)
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/door/window/southleft{
+	name = "Primary Tool Storage Desk";
+	req_access_txt = "11"
+	},
+/obj/item/folder/yellow,
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "cwb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -60704,6 +60719,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/toilet/restrooms";
 	dir = 4;
 	name = "Restrooms APC";
 	pixel_x = 24
@@ -68681,6 +68697,30 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/router/air)
+"cNm" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/door/window/southright{
+	name = "Primary Tool Storage Desk";
+	req_access_txt = "11"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor/border_only{
+	name = "south facing firelock"
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "cNn" = (
 /obj/machinery/conveyor/auto{
 	dir = 8;
@@ -68693,26 +68733,28 @@
 /area/engine/workshop)
 "cNp" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
-	name = "Workshop Desk";
-	req_access_txt = "11"
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
-/area/engine/workshop)
-"cNq" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southright{
-	name = "Workshop Desk";
-	req_access_txt = "11"
+/obj/effect/turf_decal/tile/red{
+	dir = 4
 	},
-/obj/item/folder/yellow,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/item/folder/red,
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+/obj/machinery/door/window/northright{
+	name = "Security Checkpoint";
+	req_access_txt = "1"
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "north facing firelock"
+	},
 /turf/open/floor/plasteel,
-/area/engine/workshop)
+/area/security/checkpoint/supply)
 "cNr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -94872,11 +94914,11 @@ aUV
 aYB
 bbg
 bcH
-bnZ
+aYW
 bqi
 bIl
 bcJ
-bOY
+bod
 bdr
 beJ
 beJ
@@ -95129,11 +95171,11 @@ bcN
 aYJ
 aNL
 aVJ
-aYW
+aYX
 baF
 bIr
 bcx
-cvZ
+bOY
 bdr
 beJ
 beT
@@ -95386,11 +95428,11 @@ bcQ
 aUC
 aNL
 aVJ
-aYX
+bnZ
 baD
 bIV
 bKg
-cwa
+bVY
 bdr
 beJ
 bfd
@@ -107000,7 +107042,7 @@ cvb
 cvd
 cvd
 cNa
-cNp
+ctE
 ber
 cIQ
 cgB
@@ -107257,7 +107299,7 @@ cuV
 cyv
 cuV
 cNb
-cNq
+cvZ
 beW
 cIM
 cgB
@@ -108022,7 +108064,7 @@ cqs
 cqG
 crt
 cdm
-ctl
+cmT
 cuL
 cvd
 cAp
@@ -108279,7 +108321,7 @@ bxz
 bwP
 cBn
 cBH
-ctE
+ctl
 cuM
 cvg
 cBa
@@ -111626,7 +111668,7 @@ ciL
 cLr
 cwQ
 bPx
-bod
+cwa
 beW
 bXX
 cIM
@@ -111883,7 +111925,7 @@ con
 coo
 cwR
 bPy
-bVY
+cNm
 bWn
 bYO
 cJc
@@ -117286,7 +117328,7 @@ bdM
 cNA
 bhb
 ciE
-cmT
+cNp
 cnB
 csh
 cHV
