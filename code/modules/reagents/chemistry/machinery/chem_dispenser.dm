@@ -28,6 +28,7 @@
 	var/amount = 30
 	var/recharge_amount = 10
 	var/recharge_counter = 0
+	var/canStore = TRUE//If this can hold reagents or not
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -198,6 +199,7 @@
 	data["maxVol"] = reagents.maximum_volume
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["stepAmount"] = dispenceUnit
+	data["canStore"] = canStore
 
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
@@ -563,6 +565,7 @@
 	working_state = null
 	nopower_state = null
 	pass_flags = PASSTABLE
+	canStore = FALSE
 	dispensable_reagents = list(
 		/datum/reagent/water,
 		/datum/reagent/consumable/ice,
@@ -695,12 +698,14 @@
 	dispensable_reagents = list(/datum/reagent/toxin/mutagen)
 	upgrade_reagents = null
 	emagged_reagents = list(/datum/reagent/toxin/plasma)
+	canStore = FALSE
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
 	flags_1 = NODECONSTRUCT_1
+	canStore = FALSE
 
 	dispensable_reagents = list(
 		/datum/reagent/toxin/mutagen,
@@ -823,6 +828,7 @@
 	working_state = "minidispenser_working"
 	nopower_state = "minidispenser_nopower"
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/apothecary
+	canStore = FALSE
 	powerefficiency = 0.0833333
 	dispensable_reagents = list( //radium and stable plasma moved to upgrade tier 1 and 2, they've little to do with most medicines anyway.
 		/datum/reagent/hydrogen,

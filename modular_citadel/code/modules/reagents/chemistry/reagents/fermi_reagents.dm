@@ -341,7 +341,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	pH = 0
 	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = TRUE
-	var/strength = 1
+	var/strength = 1.5
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
@@ -370,7 +370,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	color = "#fbf344"
 	pH = 4
 	can_synth = TRUE
-	strength = 0.2
+	strength = 0.25
 
 /datum/reagent/fermi/basic_buffer
 	name = "Strong basic buffer"
@@ -379,7 +379,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	pH = 14
 	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = TRUE
-	var/strength = 1
+	var/strength = 1.5
 
 /datum/reagent/fermi/basic_buffer/weak
 	name = "Basic buffer"
@@ -387,7 +387,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	color = "#5873c4"
 	pH = 10
 	can_synth = TRUE
-	strength = 0.2
+	strength = 0.25
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
 	if(!holder)

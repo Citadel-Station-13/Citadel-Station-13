@@ -35,26 +35,28 @@ export const ChemDispenser = (props, context) => {
   return (
     <Window
       width={565}
-      height={720}
+      height={data.canStore ? 720 : 620}
       resizable>
       <Window.Content scrollable>
         <Section
           title="Status"
           buttons={
-            [recording && (
+            [(recording && (
               <Box inline mx={1} color="red">
                 <Icon name="circle" mr={1} />
                 Recording
-              </Box>),
-              <Button 
-                key="colorButton"
-                icon="cog"
-                disabled={!data.isBeakerLoaded}
-                tooltip="Alternate between buttons and radial input"
-                tooltipPosition="bottom-left"
-                selected={modeToggle}
-                onClick={() => setModeToggle(!modeToggle)}/>
-            ]}>
+              </Box>
+            )
+            ),
+            <Button
+              key="colorButton"
+              icon="cog"
+              disabled={!data.isBeakerLoaded}
+              tooltip="Alternate between buttons and radial input"
+              tooltipPosition="bottom-left"
+              selected={modeToggle}
+              onClick={() => setModeToggle(!modeToggle)} />]
+          }>
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar
@@ -132,8 +134,8 @@ export const ChemDispenser = (props, context) => {
                   onClick={() => act('amount', {
                     target: amount,
                   })} />
-              ))) : (!!data.isBeakerLoaded &&
-                <NumberInput
+              ))) : (!!data.isBeakerLoaded
+                && <NumberInput
                   key="dispenseInput"
                   width="65px"
                   unit="u"
@@ -145,15 +147,14 @@ export const ChemDispenser = (props, context) => {
                   maxValue={data.beakerMaxVolume}
                   onDrag={(e, amount) => act('amount', {
                     target: amount,
-                  })} />
-            ),
-            <Button 
-                key="colorButton"
-                icon="cog"
-                tooltip="Color code the reagents by pH"
-                tooltipPosition="bottom-left"
-                selected={hasCol}
-                onClick={() => setHasCol(!hasCol)} />]
+                  })} />),
+            <Button
+              key="colorButton"
+              icon="cog"
+              tooltip="Color code the reagents by pH"
+              tooltipPosition="bottom-left"
+              selected={hasCol}
+              onClick={() => setHasCol(!hasCol)} />]
           )}>
           <Box mr={-1}>
             {data.chemicals.map(chemical => (
@@ -163,7 +164,7 @@ export const ChemDispenser = (props, context) => {
                 width="129.5px"
                 lineHeight={1.75}
                 content={chemical.title}
-                tooltip={"pH: "+chemical.pH}
+                tooltip={"pH: " + chemical.pH}
                 backgroundColor={hasCol ? chemical.pHCol : "blue"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
@@ -171,31 +172,32 @@ export const ChemDispenser = (props, context) => {
             ))}
           </Box>
         </Section>
-        <Section
-          title="Storage"
-          buttons={
-            <Box>
-              Transfer amount: 
-              <AnimatedNumber
-                initial={5}
-                value={data.amount} />
-              u
-            </Box>
-          }
-          >
-          <ProgressBar
-            value={data.storedVol / data.maxVol}>
-            {toFixed(data.storedVol) + ' units / ' + data.maxVol + ' units'} 
-          </ProgressBar>
-          <ChemicalBuffer>
-            {storedContents.map(chemical => (
-              <ChemicalBufferEntry
-                key={chemical.id}
-                chemical={chemical}
-                transferTo="beaker" />
-            ))}
-          </ChemicalBuffer>
-        </Section>
+        {!!data.canStore && (
+          <Section
+            title="Storage"
+            buttons={
+              <Box>
+                Transfer amount:
+                <AnimatedNumber
+                  initial={5}
+                  value={data.amount} />
+                u
+              </Box>
+            }>
+            <ProgressBar
+              value={data.storedVol / data.maxVol}>
+              {toFixed(data.storedVol) + ' units / ' + data.maxVol + ' units'}
+            </ProgressBar>
+            <ChemicalBuffer>
+              {storedContents.map(chemical => (
+                <ChemicalBufferEntry
+                  key={chemical.id}
+                  chemical={chemical}
+                  transferTo="beaker" />
+              ))}
+            </ChemicalBuffer>
+          </Section>
+        )}
         <Section
           title="Beaker"
           buttons={(
@@ -221,14 +223,14 @@ export const ChemDispenser = (props, context) => {
               {recording
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
-                  && (
-                    <Fragment>
-                      <AnimatedNumber
-                        initial={0}
-                        value={data.beakerCurrentVolume} />
-                      /{data.beakerMaxVolume} units
-                    </Fragment>
-                  )
+                && (
+                  <Fragment>
+                    <AnimatedNumber
+                      initial={0}
+                      value={data.beakerCurrentVolume} />
+                    /{data.beakerMaxVolume} units
+                  </Fragment>
+                )
                 || 'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -300,17 +302,19 @@ const ChemicalBeakerEntry = (props, context) => {
           value={chemical.volume}
           initial={0} />
         {` units of ${chemical.name}`}
-      </Table.Cell> 
-      <Table.Cell collapsing>
-        <Button
-          content="Store"
-          icon="upload"
-          disabled={!!data.recordingRecipe}
-          mt={0.5}
-          onClick={() => act('store', {
-            id: chemical.id,
-          })} />
       </Table.Cell>
+      {!!data.canStore && (
+        <Table.Cell collapsing>
+          <Button
+            content="Store"
+            icon="upload"
+            disabled={!!data.recordingRecipe}
+            mt={0.5}
+            onClick={() => act('store', {
+              id: chemical.id,
+            })} />
+        </Table.Cell>
+      )}
     </Table.Row>
   );
 };
