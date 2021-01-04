@@ -1,7 +1,6 @@
 GLOBAL_LIST_EMPTY(exp_to_update)
 GLOBAL_PROTECT(exp_to_update)
 
-
 // Procs
 /datum/job/proc/required_playtime_remaining(client/C)
 	if(!C)
@@ -57,6 +56,7 @@ GLOBAL_PROTECT(exp_to_update)
 			amount += explist[job]
 	return amount
 
+// todo: port tgui exp
 /client/proc/get_exp_report()
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		return "Tracking is disabled in the server configuration file."
@@ -121,12 +121,11 @@ GLOBAL_PROTECT(exp_to_update)
 		return_text += "</LI></UL>"
 	return return_text
 
-
-/client/proc/get_exp_living()
-	if(!prefs.exp)
-		return "No data"
+/client/proc/get_exp_living(pure_numeric = FALSE)
+	if(!prefs.exp || !prefs.exp[EXP_TYPE_LIVING])
+		return pure_numeric ? 0 : "No data"
 	var/exp_living = text2num(prefs.exp[EXP_TYPE_LIVING])
-	return get_exp_format(exp_living)
+	return pure_numeric ? exp_living : get_exp_format(exp_living)
 
 /proc/get_exp_format(expnum)
 	if(expnum > 60)
@@ -148,7 +147,7 @@ GLOBAL_PROTECT(exp_to_update)
 	set waitfor = FALSE
 	var/list/old_minutes = GLOB.exp_to_update
 	GLOB.exp_to_update = null
-	SSdbcore.MassInsert(format_table_name("role_time"), old_minutes, "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
+	SSdbcore.MassInsert(format_table_name("role_time"), old_minutes, duplicate_key = "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
 
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
@@ -262,8 +261,8 @@ GLOBAL_PROTECT(exp_to_update)
 			CRASH("invalid job value [jtype]:[jvalue]")
 		LAZYINITLIST(GLOB.exp_to_update)
 		GLOB.exp_to_update.Add(list(list(
-			"job" = "'[sanitizeSQL(jtype)]'",
-			"ckey" = "'[sanitizeSQL(ckey)]'",
+			"job" = jtype,
+			"ckey" = ckey,
 			"minutes" = jvalue)))
 		prefs.exp[jtype] += jvalue
 	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox/proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -289,4 +288,3 @@ GLOBAL_PROTECT(exp_to_update)
 		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE
-

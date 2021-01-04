@@ -440,7 +440,7 @@
 		if(!GLOB.news_network)
 			alert("No news network found on station. Aborting.")
 		var/channelexists = 0
-		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+		for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
 				channelexists = 1
 				break
@@ -490,9 +490,9 @@
 	if(href_list["printbible"])
 		if(printer_cooldown < world.time)
 			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(src.loc)
-			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
+			if(GLOB.bible_icon_state && GLOB.bible_item_state)
 				B.icon_state = GLOB.bible_icon_state
-				B.inhand_icon_state = GLOB.bible_inhand_icon_state
+				B.item_state = GLOB.bible_item_state
 				B.name = GLOB.bible_name
 				B.deity_name = GLOB.deity
 			printer_cooldown = world.time + PRINTER_COOLDOWN
