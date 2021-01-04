@@ -257,9 +257,9 @@
 		var/amount = text2num(params["amount"])
 		if(amount == null)
 			amount = text2num(input(usr,
-				"Max 10. Buffer content will be split evenly.",
+				"Max 20. Buffer content will be split evenly.",
 				"How many to make?", 1))
-		amount = clamp(round(amount), 0, 10)
+		amount = clamp(round(amount), 0, 20)
 		if (amount <= 0)
 			return FALSE
 		// Get units per item

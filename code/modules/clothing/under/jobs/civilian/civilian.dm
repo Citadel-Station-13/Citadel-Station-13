@@ -24,7 +24,7 @@
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/under/rank/civilian/util
-	name = "generic utility uniform"
+	name = "utility uniform"
 	desc = "A utility uniform worn by various crew."
 	icon_state = "utilgen"
 	item_state = "utilgen"
