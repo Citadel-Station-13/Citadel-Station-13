@@ -40,17 +40,18 @@
 	var/rounded_length = round(length)
 	var/new_size
 	var/enlargement = FALSE
+	var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
 	switch(rounded_length)
 		if(0 to 6) //If modest size
 			new_size = 1
 		if(7 to 11) //If large
 			new_size = 2
-		if(12 to 20) //If massive
+		if(12 to max_D) //If massive
 			new_size = 3
-		if(21 to 34) //If massive and due for large effects
+		if(max_D + 1 to max_D+13) //If massive and due for large effects, modified in case some server owner running recent citcode decides to be insane with dick sizes in the config
 			new_size = 3
 			enlargement = TRUE
-		if(35 to INFINITY) //If comical
+		if(max_D+14 to INFINITY) //If comical
 			new_size = 4 //no new sprites for anything larger yet
 			enlargement = TRUE
 	if(owner)
