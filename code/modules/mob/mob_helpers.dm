@@ -508,7 +508,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
 	
-	var/list/timestamped_message = list("\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)]" = colored_message)
+	var/list/timestamped_message = list("\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 

@@ -212,6 +212,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/gear_points = 10
 	var/list/gear_categories
 	var/list/loadout_data = list()
+	var/list/unlockable_loadout_data = list()
 	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
@@ -948,12 +949,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									loadout_color_non_poly = loadout_item[LOADOUT_COLOR][1]
 								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
 								extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'>&nbsp;&nbsp;&nbsp;</span>"
-						else if(gear_points <= 0)
+						else if((gear_points - gear.cost) < 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)
 							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
-						else
+						else if(!istype(gear, /datum/gear/unlockable) || can_use_unlockable(gear))
 							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
+						else
+							class_link = "style='white-space:normal;background:#eb2e2e;' class='linkOff'"
 						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a>[extra_color_data]</td>"
 						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 						if(islist(gear.restricted_roles))
@@ -966,7 +969,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									dat += "<font size=2>"
 									dat += gear.restricted_roles.Join(";")
 									dat += "</font>"
-						dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+						if(!istype(gear, /datum/gear/unlockable))
+							dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+						else
+							//we add the user's progress to the description assuming they have progress
+							var/datum/gear/unlockable/unlockable = gear
+							var/progress_made = unlockable_loadout_data[unlockable.progress_key]
+							if(!progress_made)
+								progress_made = 0
+							dat += "</td><td><font size=2><i>[gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
+
 					dat += "</table>"
 		if(4) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
@@ -2867,6 +2879,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(G.donoritem && !G.donator_ckey_check(user.ckey))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
+				if(istype(G, /datum/gear/unlockable) && !can_use_unlockable(G))
+					to_chat(user, "<span class='danger'>To use this item, you need to meet the defined requirements!</span>")
+					return
 				if(gear_points >= initial(G.cost))
 					var/list/new_loadout_data = list(LOADOUT_ITEM = "[G.type]")
 					if(length(G.loadout_initial_colors))
@@ -3153,6 +3168,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/find_gear = has_loadout_gear(save_slot, gear_type)
 	if(find_gear)
 		loadout_data["SAVE_[save_slot]"] -= list(find_gear)
+
+/datum/preferences/proc/can_use_unlockable(datum/gear/unlockable/unlockable_gear)
+	if(unlockable_loadout_data[unlockable_gear.progress_key] >= unlockable_gear.progress_required)
+		return TRUE
+	return FALSE
 
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT

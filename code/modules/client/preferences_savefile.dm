@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	47
+#define SAVEFILE_VERSION_MAX	48
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -285,6 +285,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["loadout"] = safe_json_encode(loadout_data)
 
+	if(current_version < 48) //unlockable loadout items but we need to clear bad data from a mistake
+		S["unlockable_loadout"] = list()
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -434,6 +437,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
+	if(S["unlockable_loadout"])
+		unlockable_loadout_data = safe_json_decode(S["unlockable_loadout"])
+	else
+		unlockable_loadout_data = list()
+
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
@@ -542,6 +550,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//SKYRAT CHANGES BEGIN
 	WRITE_FILE(S["see_chat_emotes"], see_chat_emotes)
 	//SKYRAT CHANGES END
+
+	if(length(unlockable_loadout_data))
+		WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+	else
+		WRITE_FILE(S["unlockable_loadout"], safe_json_encode(list()))
 
 	return 1
 
@@ -754,7 +767,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			belly_prefs = json_from_file["belly_prefs"]
 
 	//gear loadout
-	loadout_data = safe_json_decode(S["loadout"])
+	if(S["loadout"])
+		loadout_data = safe_json_decode(S["loadout"])
+	else
+		loadout_data = list()
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.

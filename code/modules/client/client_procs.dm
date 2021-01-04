@@ -1029,3 +1029,25 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		verb_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+
+//increment progress for an unlockable loadout item
+/client/proc/increment_progress(key, amount)
+	if(prefs)
+		var/savefile/S = new /savefile(prefs.path)
+		var/list/unlockable_loadout_data = prefs.unlockable_loadout_data
+		if(!length(unlockable_loadout_data))
+			unlockable_loadout_data = list()
+			unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+		else
+			if(unlockable_loadout_data[key])
+				unlockable_loadout_data[key] += amount
+			else
+				unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+	return FALSE
+
