@@ -403,7 +403,7 @@ const AnalysisResults = (props, context) => {
         <LabeledList.Item label="Purity">
           {analyzeVars.purityF}
         </LabeledList.Item>
-        {!! data.fermianalyze && ( // why did you do that before? it's fucking bad.
+        {!! data.fermianalyze && ( // why did you do that before? it's bad.
           <Fragment>
             <LabeledList.Item label="Inverse Ratio">
               {analyzeVars.inverseRatioF}

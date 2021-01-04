@@ -33,7 +33,6 @@
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
 	var/obj/item/reagent_containers/beaker = null
-	var/list/stored_beakers = list()
 	var/list/dispensable_reagents = list(
 		/datum/reagent/hydrogen,
 		/datum/reagent/lithium,
@@ -363,10 +362,11 @@
 				return 
 			var/reagent = text2path(params["id"])
 			var/datum/reagent/R = beaker.reagents.has_reagent(reagent)
-			if(reagents.total_volume+amount > reagents.maximum_volume)
+			var/potentialAmount = min(amount, R.volume)
+			if(reagents.total_volume+potentialAmount > reagents.maximum_volume)
 				say("Not enough storage space left!")
 				return
-			beaker.reagents.trans_id_to(src, R.type, amount)
+			beaker.reagents.trans_id_to(src, R.type, potentialAmount)
 			work_animation()				
 			. = TRUE
 		
@@ -455,13 +455,13 @@
 		if(M.rating > 3)
 			dispensable_reagents |= upgrade_reagents3
 		switch(M.rating)
-			if(0)
+			if(-INFINITY to 1)
 				dispenceUnit = 5
-			if(1)
-				dispenceUnit = 3
 			if(2)
+				dispenceUnit = 3
+			if(3)
 				dispenceUnit = 2
-			if(3 to INFINITY)
+			if(4 to INFINITY)
 				dispenceUnit = 1
 	powerefficiency = round(newpowereff, 0.01)
 

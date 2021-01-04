@@ -111,21 +111,21 @@ export const ChemDispenser = (props, context) => {
           title="Dispense"
           buttons={(
             [<NumberInput
-                width="65px"
-                unit="u"
-                step={data.stepAmount}
-                stepPixelSize={data.stepAmount}
-                value={data.amount}
-                minValue={0}
-                maxValue={data.beakerMaxVolume}
-                onDrag={(e, amount) => act('amount', {
-                  target: amount,
-                })} />,
+              width="65px"
+              unit="u"
+              step={data.stepAmount}
+              stepPixelSize={data.stepAmount}
+              value={data.amount}
+              minValue={0}
+              maxValue={data.beakerMaxVolume}
+              onDrag={(e, amount) => act('amount', {
+                target: amount,
+              })} />,
             <Button icon="cog"
-                    tooltip="Color code the reagents by pH"
-                    tooltipPosition="bottom-left"
-                    selected={hasCol}
-                    onClick={() => setHasCol(!hasCol)} />]
+                tooltip="Color code the reagents by pH"
+                tooltipPosition="bottom-left"
+                selected={hasCol}
+                onClick={() => setHasCol(!hasCol)} />]
           )}>
           <Box mr={-1}>
             {data.chemicals.map(chemical => (
@@ -150,12 +150,12 @@ export const ChemDispenser = (props, context) => {
             {toFixed(data.storedVol) + ' units'} 
           </ProgressBar>
           <ChemicalBuffer>
-          {storedContents.map(chemical => (
-            <ChemicalBufferEntry
-              key={chemical.id}
-              chemical={chemical}
-              transferTo="beaker" />
-          ))}
+            {storedContents.map(chemical => (
+              <ChemicalBufferEntry
+                key={chemical.id}
+                chemical={chemical}
+                transferTo="beaker" />
+            ))}
           </ChemicalBuffer>
         </Section>
         <Section
@@ -206,7 +206,7 @@ export const ChemDispenser = (props, context) => {
                     chemical={chemical}
                     transferTo="beaker" />
                 ))}
-                </ChemicalBeaker>
+              </ChemicalBeaker>
               <Box
                 key={"pH"}>
                 pH:
@@ -226,7 +226,7 @@ export const ChemDispenser = (props, context) => {
 const ChemicalBuffer = Table;
 
 const ChemicalBufferEntry = (props, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend(context);
   const { chemical, transferTo } = props;
   return (
     <Table.Row key={chemical.id}>
@@ -240,6 +240,7 @@ const ChemicalBufferEntry = (props, context) => {
         <Button
           content="Dispense"
           icon="download"
+          disabled={!!data.recordingRecipe}
           mt={0.5}
           onClick={() => act('unstore', {
             id: chemical.id,
@@ -252,7 +253,7 @@ const ChemicalBufferEntry = (props, context) => {
 const ChemicalBeaker = Table;
 
 const ChemicalBeakerEntry = (props, context) => {
-  const { act } = useBackend(context);
+  const { act, data } = useBackend(context);
   const { chemical, transferTo } = props;
   return (
     <Table.Row key={chemical.id}>
@@ -261,11 +262,12 @@ const ChemicalBeakerEntry = (props, context) => {
           value={chemical.volume}
           initial={0} />
         {` units of ${chemical.name}`}
-      </Table.Cell>
+      </Table.Cell> 
       <Table.Cell collapsing>
         <Button
           content="Store"
           icon="upload"
+          disabled={!!data.recordingRecipe}
           mt={0.5}
           onClick={() => act('store', {
             id: chemical.id,

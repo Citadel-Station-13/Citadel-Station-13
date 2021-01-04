@@ -345,12 +345,16 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
+	if(!holder)
+		return ..()
+	if(holder.reagents_holder_flags & NO_REACT)
+		return..()
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return ..()
-	holder.pH = ((holder.pH * (holder.total_volume-volume))+(pH * (volume*strength)))/(holder.total_volume + volume)
+	holder.pH = ((holder.pH * (holder.total_volume-volume))+(pH * volume*strength))/holder.total_volume //This is BEFORE removal
 	holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
@@ -382,12 +386,16 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	strength = 0.4
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
+	if(!holder)
+		return ..()
+	if(holder.reagents_holder_flags & NO_REACT)
+		return..()
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return ..()
-	holder.pH = ((holder.pH * (holder.total_volume-volume))+(pH * (volume*strength)))/(holder.total_volume + volume)
+	holder.pH = ((holder.pH * (holder.total_volume-volume))+(pH * volume*strength))/holder.total_volume //This is BEFORE removal
 	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
