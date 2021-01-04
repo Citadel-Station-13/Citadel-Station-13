@@ -449,7 +449,7 @@
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
 		if(reagents)
-			reagents.maximum_volume = 200*(M.rating+1)
+			reagents.maximum_volume = 200*(M.rating)
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -507,7 +507,7 @@
 		if(2 to 3)
 			return "average"
 		if(3 to 4)
-			return "yellow" //yellow looks really bad for some reason
+			return "yellow" 
 		if(4 to 5)
 			return "olive"
 		if(5 to 6)
