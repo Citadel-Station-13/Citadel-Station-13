@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	icon_state = "toolbox_blue_clean"
 	force = 19
 	throwforce = 22
-	wound_bonus = 10
+	wound_bonus = 0
 	bare_wound_bonus = 10
 
 /obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(rubber_toolbox_icons)
 	throwforce = 22 + power
 
 /obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
-	calc_damage() // one damage for one telecrystal equals about thirty four damage if you pour ALL your tc
+	calc_damage() // one damage for one telecrystal equals about thirty seven(?) damage if you pour ALL your tc
 	..()
 
 /obj/item/storage/toolbox/mechanical/old/clean/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
