@@ -117,6 +117,8 @@
 	if(St.purity < 1)
 		St.volume *= St.purity
 		St.purity = 1
+	if(!N)
+		return
 	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
