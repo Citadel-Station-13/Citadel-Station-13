@@ -195,7 +195,7 @@
 /obj/machinery/microwave/AltClick(mob/user)
 	. = ..()
 	if(user.canUseTopic(src, !hasSiliconAccessInArea(user)))
-		cook()
+		cook(user)
 		return TRUE
 
 /obj/machinery/microwave/ui_interact(mob/user)
@@ -226,7 +226,7 @@
 		if("eject")
 			eject()
 		if("use")
-			cook()
+			cook(user)
 		if("examine")
 			examine(user)
 
@@ -236,7 +236,7 @@
 		AM.forceMove(drop_location())
 	ingredients.Cut()
 
-/obj/machinery/microwave/proc/cook()
+/obj/machinery/microwave/proc/cook(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating || broken > 0 || panel_open || !anchored || dirty == 100)
@@ -257,7 +257,7 @@
 			start_can_fail()
 			return
 		break
-	start()
+	start(user)
 
 /obj/machinery/microwave/proc/turn_on()
 	visible_message("\The [src] turns on.", "<span class='italics'>You hear a microwave humming.</span>")
@@ -277,9 +277,9 @@
 #define MICROWAVE_MUCK 1
 #define MICROWAVE_PRE 2
 
-/obj/machinery/microwave/proc/start()
+/obj/machinery/microwave/proc/start(mob/user)
 	turn_on()
-	loop(MICROWAVE_NORMAL, 10)
+	loop(MICROWAVE_NORMAL, 10, user = user)
 
 /obj/machinery/microwave/proc/start_can_fail()
 	turn_on()
@@ -292,7 +292,7 @@
 	update_icon()
 	loop(MICROWAVE_MUCK, 4)
 
-/obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * productivity, 2)) // standard wait is 10
+/obj/machinery/microwave/proc/loop(type, time, wait = max(12 - 2 * productivity, 2), mob/user) // standard wait is 10
 	if(stat & (NOPOWER|BROKEN))
 		if(type == MICROWAVE_PRE)
 			pre_fail()
@@ -300,7 +300,7 @@
 	if(!time)
 		switch(type)
 			if(MICROWAVE_NORMAL)
-				loop_finish()
+				loop_finish(user)
 			if(MICROWAVE_MUCK)
 				muck_finish()
 			if(MICROWAVE_PRE)
@@ -308,16 +308,21 @@
 		return
 	time--
 	use_power(500)
-	addtimer(CALLBACK(src, .proc/loop, type, time, wait), wait)
+	addtimer(CALLBACK(src, .proc/loop, type, time, wait, user), wait)
 
-/obj/machinery/microwave/proc/loop_finish()
+/obj/machinery/microwave/proc/loop_finish(mob/user)
 	operating = FALSE
 
 	var/metal = 0
+	var/cooked_food = 0
 	for(var/obj/item/O in ingredients)
-		O.microwave_act(src)
+		var/cooked_result = O.microwave_act(src)
+		if(!istype(cooked_result, /obj/item/reagent_containers/food/snacks/badrecipe))
+			cooked_food += 1
 		if(O.custom_materials?.len)
 			metal += O.custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)]
+	if(cooked_food && user.client)
+		user.client.increment_progress("cook", cooked_food)
 
 	if(metal)
 		spark()
@@ -336,8 +341,8 @@
 	spark()
 	after_finish_loop()
 
-/obj/machinery/microwave/proc/pre_success()
-	loop(MICROWAVE_NORMAL, 10)
+/obj/machinery/microwave/proc/pre_success(mob/user)
+	loop(MICROWAVE_NORMAL, 10, user)
 
 /obj/machinery/microwave/proc/muck_finish()
 	visible_message("<span class='warning'>\The [src] gets covered in muck!</span>")
