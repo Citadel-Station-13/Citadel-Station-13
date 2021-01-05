@@ -412,11 +412,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(burnt)
 		. += " Burned into the \"blade\" is [burned_in]."
 
-/obj/item/melee/bokken/ironwood
-	name = "ironwood bokken"
-	desc = "A misnomer of sorts, this is effectively a blunt katana made from ironwood, a dense organic wood derived from ironcaps. Why ironwood? Druids can use it. Duh."
-	icon_state = "bokken_iron"
-	item_state = "bokken_iron"
+/obj/item/melee/bokken/steelwood
+	name = "steelwood bokken"
+	desc = "A misnomer of sorts, this is effectively a blunt katana made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
+	icon_state = "bokken_steel"
+	item_state = "bokken_steel"
 	force = 12 
 	stamina_damage_increment = 3
 
@@ -463,11 +463,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /datum/block_parry_data/bokken/waki/quick_parry/proj
 	parry_efficiency_perfect_override = list()
 
-/obj/item/melee/bokken/waki/ironwood
-	name = "wakizashi ironwood bokken"
-	desc = "A misnomer of sorts, this is effectively a blunt wakizashi made from ironwood, a dense organic wood derived from ironcaps. Why ironwood? Druids can use it. Duh."
-	icon_state = "wakibokken_iron"
-	item_state = "wakibokken_iron"
+/obj/item/melee/bokken/waki/steelwood
+	name = "wakizashi steelwood bokken"
+	desc = "A misnomer of sorts, this is effectively a blunt wakizashi made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
+	icon_state = "wakibokken_steel"
+	item_state = "wakibokken_steel"
 	force = 8 
 	stamina_damage_increment = 2
 
@@ -510,11 +510,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/bokken_ironblade
-	name = "training bokken ironwood blade"
-	desc = "The blade piece of a ironwood bokken katana."
+/obj/item/bokken_steelblade
+	name = "training bokken steelwood blade"
+	desc = "The blade piece of a steelwood bokken katana."
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "bokken_iron"
+	icon_state = "bokken_steel"
 	item_state = "switchblade_ext"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -530,11 +530,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/wakibokken_ironblade
-	name = "training bokken ironwood wakizashi blade"
-	desc = "The blade piece of a ironwood bokken katana."
+/obj/item/wakibokken_steelblade
+	name = "training bokken steelwood wakizashi blade"
+	desc = "The blade piece of a steelwood bokken katana."
 	icon = 'icons/obj/smith.dmi'
-	icon_state = "wakibokken_iron"
+	icon_state = "wakibokken_steel"
 	item_state = "switchblade_ext"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
