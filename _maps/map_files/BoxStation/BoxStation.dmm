@@ -11434,10 +11434,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"ayC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/maintenance/fore)
 "ayD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
@@ -82417,7 +82413,7 @@ lZN
 amC
 jIW
 ddI
-arP
+alU
 fgG
 rqW
 aGD
@@ -82674,7 +82670,7 @@ alU
 amC
 ntt
 ugq
-arP
+alU
 rPU
 fne
 aGr
@@ -82931,7 +82927,7 @@ alU
 aFJ
 ntt
 aAY
-arP
+alU
 aCh
 pIf
 kCo
@@ -83188,7 +83184,7 @@ alU
 alU
 atO
 axp
-ayC
+aue
 azH
 eEe
 aGv
