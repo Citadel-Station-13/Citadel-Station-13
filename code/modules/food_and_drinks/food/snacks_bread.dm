@@ -7,16 +7,11 @@
 	foodtype = GRAIN
 	dunkable = TRUE
 
-/obj/item/reagent_containers/food/snacks/store/bread/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTED , .proc/bread_teleport)
-
-/obj/item/reagent_containers/food/snacks/store/bread/proc/bread_teleport(channel)
+/obj/item/reagent_containers/food/snacks/store/bread/proc/bread_teleport()
 	// you did WHAT?
-	if(channel == TELEPORT_CHANNEL_BLUESPACE || channel == TELEPORT_CHANNEL_QUANTUM)
-		new /mob/living/simple_animal/bread(get_turf(src))
-		visible_message("<span class='warning'>The [src] begins to deform and grow grotesque tumors!</span>")
-		qdel(src)
+	new /mob/living/simple_animal/hostile/bread(get_turf(src))
+	visible_message("<span class='warning'>[src] begins to deform and grow grotesque tumors!</span>")
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
