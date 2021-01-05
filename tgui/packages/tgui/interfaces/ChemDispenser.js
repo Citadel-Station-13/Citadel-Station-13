@@ -46,9 +46,8 @@ export const ChemDispenser = (props, context) => {
                 <Icon name="circle" mr={1} />
                 Recording
               </Box>
-            )
-            ),
-            <Button
+            )),
+            <Button     // eslint-disable-line
               key="colorButton"
               icon="cog"
               disabled={!data.isBeakerLoaded}
@@ -148,7 +147,7 @@ export const ChemDispenser = (props, context) => {
                   onDrag={(e, amount) => act('amount', {
                     target: amount,
                   })} />),
-            <Button
+            <Button       // eslint-disable-line
               key="colorButton"
               icon="cog"
               tooltip="Color code the reagents by pH"
