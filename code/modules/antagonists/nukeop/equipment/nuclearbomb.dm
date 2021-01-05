@@ -620,6 +620,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
+	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
+
 	if(!fake)
 		GLOB.poi_list |= src
 		last_disk_move = world.time
@@ -646,7 +648,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 				disk_comfort_level++
 
 		if(disk_comfort_level >= 2) //Sleep tight, disky.
-			return
+			visible_message("<span class='notice'>[src] sleeps soundly. Sleep tight, disky.</span>")
 		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
