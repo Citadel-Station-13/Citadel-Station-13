@@ -1,0 +1,10 @@
+author: Drulikar
+delete-after: true
+changes:
+  - rscadd: Added TGUI for Dogborg sleepers again
+  - rscadd: Added resist chance and help intent struggle messages (to suggest maybe
+      a different intent is required for escape)
+  - tweak: Doubled dogborg sleepers cleaning cycle time
+  - tweak: Tweaked dogborg sleepers messages and sounds
+  - rscadd: Added game_options config ENABLE_DOGBORG_SLEEPERS to determine whether
+      recreational sleepers or normal sleepers should be added to dogborgs
