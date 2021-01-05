@@ -716,3 +716,43 @@
 	overlay = mutable_appearance(icon, overlay_state)
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
+
+/obj/item/melee/epitaphhand
+	name = "Epitaph's Hand"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "disintegrate"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file ='icons/mob/inhands/items_righthand.dmi'
+	force = 5
+	throwforce = 0
+	armour_penetration = 75
+	wound_bonus = 0
+	bare_wound_bonus = 0
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("smacked", "brutally punched", "eviscerated")
+	block_parry_data = /datum/block_parry_data/epitaphhand
+
+/datum/block_parry_data/epitaphhand
+	parry_time_windup = 0.5
+	parry_time_active = 4
+	parry_time_spindown = 1
+	parry_time_perfect = 0.75
+	parry_time_perfect_leeway = 0.75
+	parry_imperfect_falloff_percent = 30
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 3 SECONDS
+	parry_failed_clickcd_duration = 2 SECONDS
+	parry_cooldown = 5 SECONDS
+
+/obj/item/melee/epitaphhand/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	. = ..()
+
+/obj/item/melee/epitaphhand/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(!attacker)
+		return
+	do_teleport(owner, get_step(attacker, turn(attacker.dir, 180)), TRUE, TRUE)
+
+
+
+

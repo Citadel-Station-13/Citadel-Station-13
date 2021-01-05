@@ -239,7 +239,7 @@
 
 /datum/brain_trauma/severe/split_personality/epitaph/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s Epitaph personality?", ROLE_PAI, null, null, 75, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s Epitaph personality?", ROLE_PAI, null, null, 300, stranger_backseat, POLL_IGNORE_SPLITPERSONALITY)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		C.transfer_ckey(stranger_backseat, FALSE)
@@ -276,12 +276,17 @@
 /datum/brain_trauma/severe/split_personality/epitaph/switch_personalities()
 	. = ..()
 	nextswitch = world.time + 15 MINUTES
+	if(current_controller != OWNER)
+		ADD_TRAIT(owner, TRAIT_PUGILIST, EPITAPH_TRAIT)
+	else
+		REMOVE_TRAIT(owner, TRAIT_PUGILIST, EPITAPH_TRAIT)
 
 //EPITAPH BODYCHANGES aka copypasta galore
 /datum/action/cooldown/epitaphswitch
 	name = "Epitaph"
 	desc = "Relent your mind inwards to allow for your other self to take the reins."
-	button_icon_state = "power_veil"
+	button_icon = 'icons/obj/implants.dmi'
+	button_icon_state = "epitaph"
 	cooldown_time = 3 MINUTES
 	var/amToggle = FALSE
 	var/datum/brain_trauma/severe/split_personality/epitaph/epitaphparent
