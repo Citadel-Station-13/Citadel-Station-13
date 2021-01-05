@@ -7,3 +7,7 @@
 ## Roundstart ping
 ## Won't do anything if unset
 #NEW_ROUND_PING
+
+## Dogborg Sleeper Mechanics ###
+## Uncomment to enable regular dogborg sleepers (otherwise will use recreational)
+#ENABLE_DOGBORG_SLEEPERS
