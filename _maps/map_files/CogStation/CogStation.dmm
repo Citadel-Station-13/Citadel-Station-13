@@ -48763,7 +48763,7 @@
 /turf/open/floor/engine,
 /area/science/storage)
 "cbh" = (
-/obj/machinery/rnd/experimentor,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/science/explab)
 "cbi" = (
@@ -49607,13 +49607,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "ccL" = (
-/obj/effect/landmark/event_spawn,
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/rdconsole/experiment{
+	dir = 1
 	},
-/obj/machinery/rnd/bepis,
-/turf/open/floor/engine,
+/turf/open/floor/plasteel,
 /area/science/explab)
 "ccM" = (
 /obj/structure/disposalpipe/segment{
@@ -56687,9 +56685,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cqS" = (
-/obj/machinery/computer/rdconsole/experiment{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/requests_console{
 	department = "Science";
@@ -56698,6 +56693,8 @@
 	pixel_x = -30;
 	receive_ore_updates = 1
 	},
+/obj/structure/table,
+/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cqT" = (
@@ -70823,6 +70820,10 @@
 	dir = 1
 	},
 /area/engine/atmos)
+"eJy" = (
+/obj/machinery/rnd/experimentor,
+/turf/open/floor/engine,
+/area/science/explab)
 "eKM" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/visible,
 /turf/open/floor/plasteel,
@@ -71222,6 +71223,10 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"sSg" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "sVC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -92116,7 +92121,7 @@ cHj
 cqS
 cav
 cav
-ccL
+ctb
 caX
 caX
 caX
@@ -92370,13 +92375,13 @@ aVF
 caw
 caA
 cHk
-caP
+ccL
 caT
 caX
-caX
+eJy
 caX
 cbh
-caX
+sSg
 caX
 cbx
 cav
