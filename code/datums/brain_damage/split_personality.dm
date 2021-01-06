@@ -423,7 +423,7 @@
 	name = "Communicate"
 	desc = "Use nearby objects to commune with your other self."
 	icon_icon = 'icons/mob/actions/epitaph.dmi'
-	button_icon_state = "epitaphcommunicate"
+	button_icon_state = "epitaphcommune"
 	var/datum/brain_trauma/severe/split_personality/epitaph/epitaphparent
 
 /datum/action/epitaphCommunicate/Trigger()
