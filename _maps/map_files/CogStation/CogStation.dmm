@@ -52028,18 +52028,13 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6
-	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "chM" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "chN" = (
@@ -67073,8 +67068,8 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "cJH" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -67679,11 +67674,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"cLc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
-/turf/open/floor/plating,
-/area/engine/atmos)
 "cLd" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -68104,13 +68094,13 @@
 /turf/open/floor/plating,
 /area/engine/storage)
 "cMa" = (
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
+	},
+/obj/machinery/airlock_sensor/incinerator_atmos{
+	pixel_x = -8;
+	pixel_y = 24
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -68251,16 +68241,21 @@
 	pixel_x = -40;
 	pixel_y = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 4
+	},
+/obj/machinery/button/ignition/incinerator/atmos{
+	pixel_x = -24;
+	pixel_y = -9
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cMw" = (
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	name = "Waste Release"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -68379,10 +68374,13 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "cMI" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 9
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "cMJ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -68420,10 +68418,8 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "cMO" = (
+/obj/machinery/atmospherics/pipe/layer_manifold,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "cMP" = (
@@ -70774,6 +70770,13 @@
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"dnN" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 5
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "dpO" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
 	dir = 4
@@ -70793,6 +70796,14 @@
 	},
 /turf/open/floor/plating,
 /area/router)
+"dSZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/turf/open/floor/plating,
+/area/engine/atmos)
 "dVR" = (
 /obj/machinery/atmospherics/pipe/simple/violet/visible,
 /turf/open/floor/plasteel,
@@ -70810,11 +70821,12 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "eCy" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
+	pixel_x = -25;
+	pixel_y = 7
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -71029,6 +71041,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"jAv" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "kzb" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/hidden{
 	dir = 4
@@ -71065,6 +71084,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"mqE" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/turf/closed/wall/r_wall,
+/area/engine/atmos)
 "mxW" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
@@ -71072,6 +71095,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"mDW" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
 "mEa" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
@@ -71214,8 +71244,8 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "rUl" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -71295,8 +71325,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "tZC" = (
-/obj/machinery/atmospherics/pipe/manifold/orange/visible{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -118825,7 +118855,7 @@ bNE
 cww
 cpO
 bYP
-cRg
+cMI
 cMH
 cww
 cMb
@@ -119602,7 +119632,7 @@ chn
 eCy
 chL
 cMv
-cMI
+cMJ
 anr
 aaa
 aaa
@@ -119859,7 +119889,7 @@ chp
 chx
 chM
 gDY
-jiZ
+mqE
 anr
 aaa
 aaa
@@ -120113,7 +120143,7 @@ uVD
 mqB
 dpO
 tZC
-qWY
+cwB
 rUl
 cMw
 cfs
@@ -120627,8 +120657,8 @@ sRD
 nAF
 cgz
 cJH
-cwB
-cMl
+qWY
+cJH
 cMx
 cMJ
 cxc
@@ -121391,7 +121421,7 @@ bSb
 cKS
 cKY
 bQO
-cLc
+cMO
 eIh
 bYd
 tXV
@@ -121401,7 +121431,7 @@ cwB
 cMc
 cMm
 cMy
-cML
+dSZ
 cLa
 cKY
 cLu
@@ -122419,7 +122449,7 @@ bTH
 cKU
 cKY
 cLa
-cLc
+cMO
 fgS
 car
 cwB
@@ -122429,7 +122459,7 @@ cwB
 cMg
 cMq
 cMB
-cML
+dSZ
 cMQ
 cKY
 cLw
@@ -123200,8 +123230,8 @@ cLs
 cLs
 cMs
 cME
-cMN
-aaU
+mDW
+dnN
 bZR
 caJ
 bpq
@@ -123447,7 +123477,7 @@ bTK
 cKW
 cKY
 bQV
-cLc
+cMO
 cLk
 ctk
 prx
@@ -123458,7 +123488,7 @@ prx
 iQY
 cMF
 cMO
-cMS
+jAv
 cMT
 cLy
 blM
