@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "gear harness alt-click is now sane"
-  - code_imp: "rolldown() and toggle_jumpsuit_adjust() now no longer mix behavior-that-should-be-overridden and behavior-that-shouldn't-be-overridden in ways that make no sense."
