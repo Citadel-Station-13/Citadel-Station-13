@@ -584,7 +584,6 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 		R.resize = 2
 		R.hasExpanded = TRUE
 		R.update_transform()
-*/
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -592,6 +591,7 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 		R.resize = 0.5
 		R.hasExpanded = FALSE
 		R.update_transform()
+*/
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg BSRPED"
