@@ -1,0 +1,4 @@
+author: Drulikar
+delete-after: true
+changes:
+  - bugfix: Fixed borg expand module double undoing its size change when unequipped
