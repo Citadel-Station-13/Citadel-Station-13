@@ -119,6 +119,6 @@
 /datum/uplink_item/implants/epitaph
 	name = "Epitaph Implant"
 	desc = "An implant that will go straight into one's brain. It will grant the user a killer personality that will give both the ability to skip time in their parries."
-	item = /obj/item/implant/epitaph
+	item = /obj/item/implanter/epitaph
 	cost = 17
 	surplus = 0

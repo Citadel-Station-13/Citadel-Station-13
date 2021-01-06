@@ -756,7 +756,7 @@
 	var/obj/item/bodypart/chest/epitaphwoundtarget = C.get_bodypart(BODY_ZONE_CHEST)
 	if(!epitaphwoundtarget)
 		return
-	var/datum/wound/slash/severe/epitaphwound = new /datum/wound/slash/severe
+	var/datum/wound/slash/critical/epitaphwound = new /datum/wound/slash/critical
 	epitaphwound.apply_wound(epitaphwoundtarget)
 
 /obj/item/melee/epitaphhand/melee_attack_chain(mob/user, atom/target, params, attackchain_flags, damage_multiplier)
