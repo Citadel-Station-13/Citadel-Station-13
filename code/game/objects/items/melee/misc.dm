@@ -731,6 +731,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("smacked", "brutally punched", "eviscerated")
 	block_parry_data = /datum/block_parry_data/epitaphhand
+	item_flags = ITEM_CAN_PARRY | DROPDEL | ABSTRACT
 
 /datum/block_parry_data/epitaphhand
 	parry_time_windup = 0.5
@@ -743,16 +744,35 @@
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_failed_clickcd_duration = 2 SECONDS
 	parry_cooldown = 5 SECONDS
+	parry_sounds = list('sound/weapons/Epitaph.ogg')
 
 /obj/item/melee/epitaphhand/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	. = ..()
+	if(!attacker)
+		return
+	if(!iscarbon(attacker))
+		return
+	var/mob/living/carbon/C = attacker
+	var/obj/item/bodypart/chest/epitaphwoundtarget = C.get_bodypart(BODY_ZONE_CHEST)
+	if(!epitaphwoundtarget)
+		return
+	var/datum/wound/slash/severe/epitaphwound = new /datum/wound/slash/severe
+	epitaphwound.apply_wound(epitaphwoundtarget)
+
+/obj/item/melee/epitaphhand/melee_attack_chain(mob/user, atom/target, params, attackchain_flags, damage_multiplier)
+	if(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)
+		if(damage_multiplier)
+			damage_multiplier *= 6
+		else
+			damage_multiplier = 6
 	. = ..()
 
 /obj/item/melee/epitaphhand/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
 	. = ..()
 	if(!attacker)
 		return
-	do_teleport(owner, get_step(attacker, turn(attacker.dir, 180)), TRUE, TRUE)
+	do_teleport(owner, get_step(attacker, turn(attacker.dir, 180)), FALSE, TRUE)
 
-
-
-
+/obj/item/melee/epitaphhand/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, EPITAPH_TRAIT)

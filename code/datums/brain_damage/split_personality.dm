@@ -229,6 +229,7 @@
 	var/epitaphname
 	var/datum/action/epitaphCommunicate/communicateOne
 	var/datum/action/epitaphCommunicate/communicateTwo
+	var/datum/action/cooldown/epitaphHandsummon/handAction
 
 /datum/brain_trauma/severe/split_personality/epitaph/on_gain()
 	. = ..()
@@ -254,6 +255,9 @@
 		communicateTwo.epitaphparent = src
 		communicateOne.Grant(owner_backseat)
 		communicateTwo.Grant(stranger_backseat)
+		handAction = new /datum/action/cooldown/epitaphHandsummon
+		handAction.Grant(owner)
+
 	else
 		qdel(src)
 
@@ -271,6 +275,8 @@
 		communicateOne.Remove()
 	if(communicateTwo)
 		communicateTwo.Remove()
+	if(handAction)
+		handAction.Remove()
 	..()
 
 /datum/brain_trauma/severe/split_personality/epitaph/switch_personalities()
@@ -285,8 +291,8 @@
 /datum/action/cooldown/epitaphswitch
 	name = "Epitaph"
 	desc = "Relent your mind inwards to allow for your other self to take the reins."
-	button_icon = 'icons/obj/implants.dmi'
-	button_icon_state = "epitaph"
+	button_icon = 'icons/mob/actions/epitaph.dmi'
+	button_icon_state = "epitaphswitch"
 	cooldown_time = 3 MINUTES
 	var/amToggle = FALSE
 	var/datum/brain_trauma/severe/split_personality/epitaph/epitaphparent
@@ -416,7 +422,8 @@
 /datum/action/epitaphCommunicate
 	name = "Communicate"
 	desc = "Use nearby objects to commune with your other self."
-	button_icon_state = "power_veil"
+	icon_icon = 'icons/mob/actions/epitaph.dmi'
+	button_icon_state = "epitaphcommunicate"
 	var/datum/brain_trauma/severe/split_personality/epitaph/epitaphparent
 
 /datum/action/epitaphCommunicate/Trigger()
@@ -432,6 +439,36 @@
 	if(!input)
 		return
 	to_chat(epitaphparent.owner, "<span class='hear'>[epitaphOuija] communes \"[input]\"</span>")
+
+//ZE HANDO ACTION
+
+/datum/action/cooldown/epitaphHandsummon
+	name = "Epitaph's Hand"
+	desc = "Skip past time to avoid your attacker's movements via parries."
+	icon_icon = 'icons/mob/actions/epitaph.dmi'
+	button_icon_state = "epitaphhand"
+	cooldown_time = 30 SECONDS
+	var/amToggle = FALSE
+	var/obj/item/melee/epitaphhand/EH
+
+/datum/action/cooldown/epitaphHandsummon/Trigger()
+	. = ..()
+	if(!.)
+		return
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	if(!amToggle)
+		EH = new /obj/item/melee/epitaphhand(get_turf(C))
+		if(!C.put_in_hands(EH))
+			qdel(EH)
+		else
+			amToggle = !amToggle
+	else
+		if(EH)
+			C.dropItemToGround(EH, TRUE)
+		amToggle = !amToggle
+		StartCooldown()
 
 #undef OWNER
 #undef STRANGER
