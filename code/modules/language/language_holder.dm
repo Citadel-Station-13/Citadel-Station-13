@@ -312,12 +312,16 @@ Key procs
 								/datum/language/machine = list(LANGUAGE_ATOM),
 								/datum/language/draconic = list(LANGUAGE_ATOM),
 								/datum/language/slime = list(LANGUAGE_ATOM),
-								/datum/language/dwarf = list(LANGUAGE_ATOM))
+								/datum/language/dwarf = list(LANGUAGE_ATOM),
+								/datum/language/voltaic = list(LANGUAGE_ATOM),
+								/datum/language/nekomimetic = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/machine = list(LANGUAGE_ATOM),
 							/datum/language/draconic = list(LANGUAGE_ATOM),
 							/datum/language/slime = list(LANGUAGE_ATOM),
-							/datum/language/dwarf = list(LANGUAGE_ATOM))
+							/datum/language/dwarf = list(LANGUAGE_ATOM),
+							/datum/language/voltaic = list(LANGUAGE_ATOM),
+							/datum/language/nekomimetic = list(LANGUAGE_ATOM))
 
 /datum/language_holder/venus
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
@@ -335,6 +339,12 @@ Key procs
 								/datum/language/arachnid = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/arachnid = list(LANGUAGE_ATOM))
+
+/datum/language_holder/felinid
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/nekomimetic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/nekomimetic = list(LANGUAGE_ATOM))
 
 /datum/language_holder/empty
 	understood_languages = list()

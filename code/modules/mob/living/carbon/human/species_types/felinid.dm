@@ -3,6 +3,7 @@
 	name = "Felinid"
 	id = SPECIES_FELINID
 	limbs_id = SPECIES_HUMAN
+	species_language_holder = /datum/language_holder/felinid
 
 	mutant_bodyparts = list("mam_tail" = "Cat", "mam_ears" = "Cat", "deco_wings" = "None")
 

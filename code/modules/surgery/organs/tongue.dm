@@ -24,6 +24,7 @@
 		/datum/language/aphasia,
 		/datum/language/slime,
 		/datum/language/vampiric,
+		/datum/language/nekomimetic,
 		/datum/language/dwarf,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
@@ -252,6 +253,7 @@
 		/datum/language/beachbum,
 		/datum/language/aphasia,
 		/datum/language/sylvan,
+		/datum/language/nekomimetic,
 		/datum/language/voltaic
 	))
 
