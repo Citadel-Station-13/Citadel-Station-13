@@ -36,6 +36,9 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 	GLOB.human_list += src
 
+	if(H.key == silicons)
+		H.socks = stockings
+
 
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
