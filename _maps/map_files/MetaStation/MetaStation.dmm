@@ -65296,9 +65296,6 @@
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "czd" = (
-/obj/machinery/light_switch{
-	pixel_x = 23
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
