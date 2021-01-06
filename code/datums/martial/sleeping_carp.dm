@@ -126,7 +126,7 @@
 		return BULLET_ACT_HIT
 	if(!isturf(A.loc)) //NO MOTHERFLIPPIN MECHS!
 		return BULLET_ACT_HIT
-	if(A.in_throw_mode)
+	if(SEND_SIGNAL(A, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		A.visible_message("<span class='danger'>[A] effortlessly swats the projectile aside! They can deflect projectile with their bare hands!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
