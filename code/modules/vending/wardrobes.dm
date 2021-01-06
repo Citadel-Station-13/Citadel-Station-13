@@ -375,7 +375,7 @@
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
-					/obj/item/caution = 8,
+					/obj/item/clothing/suit/caution = 8,
 					/obj/item/holosign_creator = 2,
 					/obj/item/lightreplacer = 2,
 					/obj/item/soap = 2,

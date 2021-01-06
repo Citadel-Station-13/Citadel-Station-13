@@ -12681,7 +12681,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "axL" = (
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

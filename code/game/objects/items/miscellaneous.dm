@@ -1,4 +1,4 @@
-/obj/item/caution
+/obj/item/clothing/suit/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
 	icon = 'icons/obj/janitor.dmi'
