@@ -816,7 +816,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 351.9
+	initial_temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "bX" = (
@@ -824,7 +824,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 351.9
+	initial_temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "bY" = (
@@ -2264,7 +2264,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "eK" = (
@@ -2635,7 +2635,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fo" = (
@@ -2871,7 +2871,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fK" = (
@@ -3050,7 +3050,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "gg" = (
@@ -3198,7 +3198,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gC" = (
@@ -3412,7 +3412,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/research)
 "he" = (
@@ -3423,7 +3423,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hf" = (
@@ -3455,7 +3455,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hi" = (
@@ -4790,7 +4790,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "jM" = (
@@ -4824,7 +4824,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/research)
 "jR" = (
@@ -6607,7 +6607,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mJ" = (
@@ -8357,7 +8357,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "pv" = (
@@ -8368,7 +8368,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "pw" = (
@@ -8380,7 +8380,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "px" = (
@@ -8671,7 +8671,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qb" = (
@@ -8903,7 +8903,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qA" = (
@@ -8914,7 +8914,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qB" = (
@@ -8925,7 +8925,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "qC" = (
@@ -11107,7 +11107,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "uc" = (
@@ -11753,7 +11753,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "vm" = (
@@ -11979,7 +11979,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/research)
 "vI" = (
@@ -12265,7 +12265,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wk" = (
@@ -13484,7 +13484,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "yh" = (
@@ -13493,7 +13493,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yi" = (
@@ -13502,7 +13502,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yj" = (
@@ -13513,7 +13513,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yk" = (
@@ -13523,7 +13523,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yl" = (
@@ -13534,7 +13534,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "ym" = (
@@ -13544,7 +13544,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yn" = (
@@ -13553,7 +13553,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yo" = (
@@ -13563,7 +13563,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yp" = (
@@ -13573,7 +13573,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yq" = (
@@ -13582,7 +13582,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yr" = (
@@ -13591,7 +13591,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yt" = (
@@ -13601,7 +13601,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yu" = (
@@ -13611,7 +13611,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yw" = (
@@ -13621,7 +13621,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yz" = (
@@ -13630,7 +13630,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yA" = (
@@ -13640,7 +13640,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yB" = (
@@ -13649,7 +13649,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yC" = (
@@ -13659,7 +13659,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yD" = (
@@ -13670,7 +13670,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "yH" = (
@@ -13681,7 +13681,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9
+	initial_temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "KE" = (
