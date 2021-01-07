@@ -287,6 +287,8 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/clothing/neck/cloak/polychromic/polyce
 	ckeywhitelist = list("worksbythesea", "blakeryan")
+	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#808080", "#8CC6FF", "#FF3535")
 
 /datum/gear/donator/ssk
 	name = "Stun Sword Kit"
@@ -528,4 +530,11 @@
 	slot = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/custom/vest
 	ckeywhitelist = list("maylowfox")
+
+/datum/gear/donator/exo
+	name = "exo frame"
+	slot = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/custom/exo
+	ckeywhitelist = list("jesterz7")
+
 

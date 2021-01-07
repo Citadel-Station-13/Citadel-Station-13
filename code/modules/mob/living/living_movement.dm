@@ -1,8 +1,6 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
-	//Hide typing indicator if we move.
-	clear_typing_indicator()
 	update_pixel_shifting(TRUE)
 
 /mob/living/setDir(newdir, ismousemovement)
@@ -18,6 +16,9 @@
 			is_shifted = FALSE
 			pixel_x = get_standard_pixel_x_offset(lying)
 			pixel_y = get_standard_pixel_y_offset(lying)
+
+/mob/living/proc/update_density()
+	density = !lying && !HAS_TRAIT(src, TRAIT_LIVING_NO_DENSITY)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))

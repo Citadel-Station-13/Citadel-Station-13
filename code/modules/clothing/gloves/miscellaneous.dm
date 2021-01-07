@@ -20,6 +20,7 @@
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	strip_delay = 300 //you can't just yank them off
+	obj_flags = UNIQUE_RENAME
 	/// did you ever get around to wearing these or no
 	var/wornonce = FALSE
 	///Extra damage through the punch.

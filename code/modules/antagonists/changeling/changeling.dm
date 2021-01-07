@@ -18,7 +18,6 @@
 
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
-	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
 	/// did we get succed by another changeling
 	var/hostile_absorbed = FALSE
@@ -252,12 +251,6 @@
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
-	if(stored_profiles.len)
-		var/datum/changelingprofile/prof = stored_profiles[1]
-		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
-			if(verbose)
-				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
-			return
 	if(!target)
 		return
 	if(NO_DNA_COPY in target.dna.species.species_traits)
@@ -317,9 +310,6 @@
 	return prof
 
 /datum/antagonist/changeling/proc/add_profile(datum/changelingprofile/prof)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
 
 	if(!first_prof)
 		first_prof = prof
@@ -339,19 +329,6 @@
 				continue
 			stored_profiles -= prof
 			qdel(prof)
-
-/datum/antagonist/changeling/proc/get_profile_to_remove()
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		if(!prof.protected)
-			return prof
-
-/datum/antagonist/changeling/proc/push_out_profile()
-	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
-	if(removeprofile)
-		stored_profiles -= removeprofile
-		return 1
-	return 0
-
 
 /datum/antagonist/changeling/proc/create_initial_profile()
 	var/mob/living/carbon/C = owner.current	//only carbons have dna now, so we have to typecaste

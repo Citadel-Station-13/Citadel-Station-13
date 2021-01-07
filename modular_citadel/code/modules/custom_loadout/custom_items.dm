@@ -577,3 +577,11 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = STYLE_DIGITIGRADE
 
+/obj/item/clothing/suit/custom/exo
+	name = "Full ExoFrame"
+	desc = "A suit specially designed for those who live and breath hardware with custom tooled robotic manipulators for working with precision even on the most hazardous of jobs."
+	icon_state = "frame"
+	item_state = "frame"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE

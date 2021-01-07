@@ -28,6 +28,11 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
+/datum/admins/CanProcCall(procname)
+	. = ..()
+	if(!check_rights(R_SENSITIVE))
+		return FALSE
+
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
@@ -147,6 +152,8 @@ GLOBAL_PROTECT(href_token)
 	return 0
 
 /datum/admins/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, fakekey))
+		return ..()
 	return FALSE //nice try trialmin
 
 /*

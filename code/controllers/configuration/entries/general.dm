@@ -172,8 +172,6 @@
 
 /datum/config_entry/string/hostedby
 
-/datum/config_entry/flag/norespawn
-
 /datum/config_entry/flag/guest_jobban
 
 /datum/config_entry/flag/usewhitelist
@@ -326,6 +324,9 @@
 
 /datum/config_entry/number/notify_new_player_account_age	// how long do we notify admins of a new byond account
 	min_val = 0
+
+/datum/config_entry/flag/age_verification //are we using the automated age verification which asks users if they're 18+?
+	config_entry_value = TRUE
 
 /datum/config_entry/flag/irc_first_connection_alert	// do we notify the irc channel when somebody is connecting for the first time?
 

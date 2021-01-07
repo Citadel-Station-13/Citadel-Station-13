@@ -80,6 +80,17 @@
 		to_chat(user, "<span class='notice'>You insert the credits into [src].</span>")
 		update_icon()
 		qdel(H)
+	if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/ID = I
+		if(!ID.registered_account)
+			to_chat(user, "<span class='warning'>[ID] doesn't have a linked account to deposit into!</span>")
+			return
+		for(var/obj/item/holochip/money in src.loc.contents)
+			ID.attackby(money, user)
+		for(var/obj/item/stack/spacecash/money in src.loc.contents)
+			ID.attackby(money, user)
+		for(var/obj/item/coin/money in src.loc.contents)
+			ID.attackby(money, user)
 
 /obj/item/holochip/AltClick(mob/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

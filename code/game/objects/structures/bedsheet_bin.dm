@@ -243,7 +243,7 @@ LINEN BINS
 
 /obj/item/bedsheet/random/Initialize()
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon))
+	var/type = pick(typesof(/obj/item/bedsheet) - (list(/obj/item/bedsheet/random, /obj/item/bedsheet/chameleon) + typesof(/obj/item/bedsheet/unlockable)))
 	new type(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -257,8 +257,31 @@ LINEN BINS
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/bedsheet
 	chameleon_action.chameleon_name = "Bedsheet"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/bedsheet/chameleon, /obj/item/bedsheet/random), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/bedsheet/chameleon, /obj/item/bedsheet/random, /obj/item/bedsheet/unlockable), only_root_path = FALSE)
 	chameleon_action.initialize_disguises()
+
+//unlockable bedsheets
+/obj/item/bedsheet/unlockable
+	name = "unlockable bedsheet"
+	desc = "this shouldn't be here!"
+
+//janitor: clean 100 messes with mop as janitor
+/obj/item/bedsheet/unlockable/janitor
+	name = "janitor bedsheet"
+	desc = "A white bedsheet, with a warning sign on the front."
+	icon_state = "sheetjanitor"
+
+//cook: use microwave 100 times properly (contents must make one good item) as cook
+/obj/item/bedsheet/unlockable/cook
+	name = "cook bedsheet"
+	desc = "A grey bedsheet, with a microwave on the front."
+	icon_state = "sheetcook"
+
+//miner: redeem 100,000 mining points
+/obj/item/bedsheet/unlockable/miner
+	name = "miner bedsheet"
+	desc = "A red and black bedsheet. It seems to be made with goliath hide."
+	icon_state = "sheetminer"
 
 //bedsheet bin
 /obj/structure/bedsheetbin

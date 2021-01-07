@@ -5,6 +5,7 @@
 #define SPECIES_ANDROID				"android"
 #define SPECIES_ANGEL				"angel"
 #define SPECIES_MAMMAL				"mammal"
+	#define SPECIES_MAMMAL_SYNTHETIC "mammal_synthetic"
 #define SPECIES_ARACHNID			"arachnid"
 #define SPECIES_INSECT				"insect"
 #define SPECIES_DULLAHAN			"dullahan"
@@ -34,6 +35,7 @@
 #define SPECIES_SYNTH				"synth"
 	#define SPECIES_SYNTH_MIL		"military_synth"
 #define SPECIES_VAMPIRE				"vampire"
+	#define SPECIES_VAMPIRE_WEAK	"vampire_roundstart"
 #define SPECIES_XENOHYBRID			"xeno"
 #define SPECIES_ZOMBIE				"zombie"
 

@@ -633,7 +633,7 @@
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -970,7 +970,7 @@
 					M.emote("gasp")
 					log_combat(M, M, "revived", src)
 					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
-					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
 					var/late = timelimit && (tplus > timelimit)
 					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
 					if(policy)
@@ -1321,7 +1321,7 @@
 	pH = 11
 	value = REAGENT_VALUE_COMMON //not any higher. Ambrosia is a milestone for hydroponics already.
 
-	
+
 //Earthsblood is still a wonderdrug. Just... don't expect to be able to mutate something that makes plants so healthy.
 /datum/reagent/medicine/earthsblood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
@@ -1335,7 +1335,7 @@
 			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
 			myseed.adjust_endurance(round(chems.get_reagent_amount(src.type) * 0.5))
 			myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.5))
-	
+
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-3 * REM, FALSE)
 	M.adjustFireLoss(-3 * REM, FALSE)
@@ -1693,3 +1693,26 @@
 	name = "Synthi-Sanguirite"
 	description = "A synthetic coagulant used to help bleeding wounds clot faster. Not quite as effective as name brand Sanguirite, especially on patients with lots of cuts."
 	clot_coeff_per_wound = 0.8
+
+//Sloowly heals system corruption in robotic organisms. Causes mild toxins damage in nonrobots.
+/datum/reagent/medicine/system_cleaner
+	name = "System Cleaner"
+	description = "A reagent with special properties causing it to slowly reduce corruption in robots. Mildly toxic for organics."
+	reagent_state = LIQUID
+	color = "#D7C9C6"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/system_cleaner/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
+		M.adjustToxLoss(-0.2, toxins_type = TOX_SYSCORRUPT)
+	else
+		M.adjustToxLoss(0.5)
+
+/datum/reagent/medicine/system_cleaner/overdose_process(mob/living/carbon/M)
+	. = ..()
+	if(HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM))
+		M.adjustToxLoss(0.4, toxins_type = TOX_SYSCORRUPT) //inverts its positive effect on overdose, for organics it's just more toxic
+	else
+		M.adjustToxLoss(0.5)

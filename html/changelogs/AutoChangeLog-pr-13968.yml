@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - tweak: "Prayers to admins now do a wee ding sound for all prayers, instead of just chaplains"
