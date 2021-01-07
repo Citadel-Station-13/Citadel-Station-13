@@ -7,13 +7,13 @@
 /proc/auxtools_stack_trace(msg)
 	CRASH(msg)
 
-GLOBAL_VAR_INIT(auxtools_initialized,FALSE)
+GLOBAL_LIST_EMPTY(auxtools_initialized)
 
-#define AUXTOOLS_CHECK\
-	if (!GLOB.auxtools_initialized && fexists(AUXTOOLS) && findtext(call(AUXTOOLS,"auxtools_init")(),"SUCCESS"))\
-		GLOB.auxtools_initialized = TRUE;\
+#define AUXTOOLS_CHECK(LIB)\
+	if (!GLOB.auxtools_initialized[LIB] && fexists(LIB) && findtext(call(LIB,"auxtools_init")(),"SUCCESS"))\
+		GLOB.auxtools_initialized[LIB] = TRUE;\
 
-#define AUXTOOLS_SHUTDOWN\
-	if (GLOB.auxtools_initialized && fexists(AUXTOOLS))\
-		call(AUXTOOLS,"auxtools_shutdown")();\
-		GLOB.auxtools_initialized = FALSE;\
+#define AUXTOOLS_SHUTDOWN(LIB)\
+	if (GLOB.auxtools_initialized[LIB] && fexists(LIB))\
+		call(LIB,"auxtools_shutdown")();\
+		GLOB.auxtools_initialized[LIB] = FALSE;\

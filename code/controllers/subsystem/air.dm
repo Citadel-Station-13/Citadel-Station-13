@@ -280,7 +280,7 @@ SUBSYSTEM_DEF(air)
 	*/
 
 /datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
-	if(!process_excited_groups_extools(resumed,MC_TICK_REMAINING_MS))
+	if(process_excited_groups_extools(resumed,MC_TICK_REMAINING_MS))
 		pause()
 
 /datum/controller/subsystem/air/proc/process_turfs_extools()
