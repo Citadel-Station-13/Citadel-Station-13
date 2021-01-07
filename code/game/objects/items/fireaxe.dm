@@ -50,12 +50,10 @@
 	. = ..()
 	if(!proximity || !wielded || IS_STAMCRIT(user))
 		return
-	if(istype(A, /obj/structure/window)) //destroys windows and grilles in one hit (or more if it has a ton of health like plasmaglass)
-		var/obj/structure/window/W = A
-		W.take_damage(200, BRUTE, "melee", 0)
-	else if(istype(A, /obj/structure/grille))
-		var/obj/structure/grille/G = A
-		G.take_damage(40, BRUTE, "melee", 0)
+	if(wielded) //destroys windows and grilles in one hit
+		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
+			var/obj/structure/W = A
+			W.obj_destruction("fireaxe")
 
 /*
  * Bone Axe
