@@ -283,6 +283,7 @@ effective or pretty fucking useless.
         var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
         turret.faction = list("[REF(user)]")
         qdel(src)
+		return
 
     ..()
 
