@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/glass_amount = 1
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
@@ -506,7 +506,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list("melee" = 90, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	max_integrity = 75
 	explosion_block = 1
 	damage_deflection = 11
@@ -562,12 +562,12 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 					setAnchored(FALSE)
 				return
 	return ..()
-	
+
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
 		state = RWINDOW_SECURE
 		visible_message("<span class='notice'>The bolts on \the [src] look like they've cooled off...</span>")
-	
+
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
 	switch(state)
@@ -678,7 +678,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 					setAnchored(FALSE)
 				return
 	return ..()
-	
+
 /obj/structure/window/plasma/reinforced/examine(mob/user)
 	. = ..()
 	switch(state)
