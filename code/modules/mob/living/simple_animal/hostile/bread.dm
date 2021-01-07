@@ -1,11 +1,13 @@
+//funny reference to the video 'Expiration Date'
+
 /mob/living/simple_animal/hostile/bread
 	name = "tumor bread"
 	desc = "I have done nothing but teleport bread for three days."
 	icon_state = "tumorbread"
 	health = 1
 	maxHealth = 1
-	turns_per_move = 5			//this isn't player speed =|
-	speed = 2				//this is player speed
+	turns_per_move = 5  //this isn't player speed =|
+	speed = 2  //this is player speed
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	obj_damage = 0
@@ -64,4 +66,4 @@
 	return
 
 /mob/living/simple_animal/hostile/bread/start_pulling()
-	return FALSE			//No.
+	return FALSE
