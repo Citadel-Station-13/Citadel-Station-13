@@ -1,6 +1,3 @@
-#define EXTOOLS (world.system_type == MS_WINDOWS ? "byond-extools.dll" : "libbyond-extools.so")
-
-/*
 // _extools_api.dm - DM API for extools extension library
 // (blatently stolen from rust_g)
 //
@@ -31,7 +28,6 @@
 
 #define EXTOOLS (__extools || __detect_extools())
 #endif
-*/
 
 #ifndef UNIT_TESTS // use default logging as extools is broken on travis
 #define EXTOOLS_LOGGING // rust_g is used as a fallback if this is undefined
