@@ -53,7 +53,12 @@
 	directional_vehicle_layers["[dir]"] = layer
 
 /datum/component/riding/proc/vehicle_moved(datum/source)
-	var/atom/movable/AM = parent
+	SIGNAL_HANDLER
+
+	var/atom/movable/movable_parent = parent
+	if (isnull(dir))
+		dir = movable_parent.dir
+	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
 	handle_vehicle_offsets()

@@ -76,6 +76,7 @@
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
+		set_glide_size(DELAY_TO_GLIDE_SIZE(ticks * world.tick_lag))
 		curr = curr.transfer(src)
 		if(!curr && active)
 			last.expel(src, loc, dir)
