@@ -17,6 +17,9 @@
 /mob/living/proc/initiate_parry_sequence()
 	if(parrying)
 		return		// already parrying
+	if(!(mobility_flags & MOBILITY_USE))
+		to_chat(src, "<span class='warning'>You can't move your arms!</span>")
+		return
 	if(!(combat_flags & COMBAT_FLAG_PARRY_CAPABLE))
 		to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
 		return
