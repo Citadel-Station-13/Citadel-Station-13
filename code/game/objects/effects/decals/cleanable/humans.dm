@@ -106,7 +106,7 @@
 /obj/effect/decal/cleanable/trail_holder/update_icon()
 	. = ..()
 	if(!fixed_color)
-		add_atom_colour(blood_DNA_to_color())
+		add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)
 
 /obj/effect/cleanable/trail_holder/Initialize()
 	. = ..()
