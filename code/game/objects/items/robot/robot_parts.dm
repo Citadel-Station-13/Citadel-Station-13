@@ -304,9 +304,10 @@
 
 			O.job = "Cyborg"
 
-			O.cell = chest.cell
-			chest.cell.forceMove(O)
-			chest.cell = null
+			if(chest.cell)
+				O.cell = chest.cell
+				chest.cell.forceMove(O)
+				chest.cell = null
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
@@ -346,10 +347,10 @@
 				O.lawupdate = FALSE
 				O.make_laws()
 
-
-			O.cell = chest.cell
-			chest.cell.forceMove(O)
-			chest.cell = null
+			if(chest.cell)
+				O.cell = chest.cell
+				chest.cell.forceMove(O)
+				chest.cell = null
 			O.locked = panel_locked
 			O.job = "Cyborg"
 			forceMove(O)
