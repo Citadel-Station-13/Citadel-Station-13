@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	gender = NEUTER
 	mob_biotypes = NONE
 	bubble_icon = "guardian"

@@ -375,7 +375,7 @@
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
-					/obj/item/caution = 8,
+					/obj/item/clothing/suit/caution = 8,
 					/obj/item/holosign_creator = 2,
 					/obj/item/lightreplacer = 2,
 					/obj/item/soap = 2,
@@ -544,7 +544,7 @@
 					/obj/item/clothing/glasses/sunglasses/gar/supergar = 1,
 					/obj/item/clothing/gloves/color/captain = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe
-	payment_department = ACCOUNT_CIV
+	payment_department = ACCOUNT_SEC
 	default_price = PRICE_ALMOST_EXPENSIVE
 	extra_price = PRICE_ABOVE_EXPENSIVE
 

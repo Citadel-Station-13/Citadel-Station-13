@@ -251,7 +251,6 @@
 	. = pulledby
 	pulledby = new_pulledby
 
-
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
 		return FALSE
@@ -270,13 +269,6 @@
 		return FALSE
 	pulling.Move(get_step(pulling.loc, move_dir), move_dir, glide_size)
 	return TRUE
-
-/mob/living/Move_Pulled(atom/A)
-	. = ..()
-	if(!. || !isliving(A))
-		return
-	var/mob/living/L = A
-	set_pull_offsets(L, grab_state)
 
 /atom/movable/proc/check_pulling()
 	if(pulling)

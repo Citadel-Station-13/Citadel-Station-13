@@ -3,6 +3,7 @@
 	icon_state = "0"
 	name = "\proper space"
 	intact = 0
+	dirt_buildup_allowed = FALSE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
