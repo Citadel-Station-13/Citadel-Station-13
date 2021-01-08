@@ -774,6 +774,9 @@
 	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
+/obj/machinery/porta_turret/syndicate/pod/toolbox
+	max_integrity = 100
+
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
