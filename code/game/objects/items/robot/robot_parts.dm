@@ -304,10 +304,9 @@
 
 			O.job = "Cyborg"
 
-			if(chest.cell)
-				O.cell = chest.cell
-				chest.cell.forceMove(O)
-				chest.cell = null
+			O.cell = chest.cell
+			chest.cell.forceMove(O)
+			chest.cell = null
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
@@ -327,6 +326,9 @@
 	else if(istype(W, /obj/item/borg/upgrade/ai))
 		var/obj/item/borg/upgrade/ai/M = W
 		if(check_completion())
+			if(!chest.cell)
+				to_chat(user, "<span class='warning'>The endoskeleton still needs a power cell!</span>")
+				return
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You cannot install[M], the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
@@ -347,10 +349,9 @@
 				O.lawupdate = FALSE
 				O.make_laws()
 
-			if(chest.cell)
-				O.cell = chest.cell
-				chest.cell.forceMove(O)
-				chest.cell = null
+			O.cell = chest.cell
+			chest.cell.forceMove(O)
+			chest.cell = null
 			O.locked = panel_locked
 			O.job = "Cyborg"
 			forceMove(O)
