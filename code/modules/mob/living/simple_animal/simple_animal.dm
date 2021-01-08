@@ -352,10 +352,9 @@
 	. += "Health: [round((health / maxHealth) * 100)]%"
 
 /mob/living/simple_animal/proc/drop_loot()
-	if(!length(loot))
-		return
-	for(var/i in loot)
-		new i(loc)
+	if(loot.len)
+		for(var/i in loot)
+			new i(loc, dir = src.dir)
 
 /mob/living/simple_animal/death(gibbed)
 	movement_type &= ~FLYING

@@ -11,6 +11,7 @@ $include dynamic_config.txt
 $include plushies/defines.txt
 $include job_threats.txt
 $include policy.txt
+$include persistence.txt
 $include respawns.txt
 # Special Sandstorm configs
 $include sandstorm/config.txt

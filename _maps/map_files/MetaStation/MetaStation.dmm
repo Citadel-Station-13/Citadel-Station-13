@@ -12681,7 +12681,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "axL" = (
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -39921,9 +39921,6 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bzU" = (
-/obj/structure/chair/comfy/teal{
-	dir = 4
-	},
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
@@ -65296,9 +65293,6 @@
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "czd" = (
-/obj/machinery/light_switch{
-	pixel_x = 23
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},

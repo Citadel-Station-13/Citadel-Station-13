@@ -24603,7 +24603,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "beS" = (
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "beU" = (

@@ -155,6 +155,18 @@
 	name = "White Fly"
 	icon_state = "whitefly"
 
+/datum/sprite_accessory/deco_wings/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/deco_wings/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"
+
+/datum/sprite_accessory/deco_wings/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
 //INSECT WINGS
 
 /datum/sprite_accessory/insect_wings

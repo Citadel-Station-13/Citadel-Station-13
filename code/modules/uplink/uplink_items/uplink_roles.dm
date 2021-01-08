@@ -250,3 +250,11 @@
 	cost = 2
 	item = /obj/item/clothing/shoes/magboots/crushing
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
+/datum/uplink_item/role_restricted/turretbox
+	name = "Disposable Sentry Gun"
+	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
+	item = /obj/item/storage/toolbox/emergency/turret
+	cost = 11
+	restricted_roles = list("Station Engineer")
+	
