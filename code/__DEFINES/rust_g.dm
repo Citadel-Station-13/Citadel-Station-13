@@ -63,8 +63,6 @@
 #define rustg_file_write(text, fname) call(RUST_G, "file_write")(text, fname)
 #define rustg_file_append(text, fname) call(RUST_G, "file_append")(text, fname)
 
-#define RUSTG_OVERRIDE_BUILTINS
-
 #ifdef RUSTG_OVERRIDE_BUILTINS
 	#define file2text(fname) rustg_file_read("[fname]")
 	#define text2file(text, fname) rustg_file_append(text, "[fname]")
@@ -100,3 +98,4 @@
 #define rustg_sql_connected(handle) call(RUST_G, "sql_connected")(handle)
 #define rustg_sql_disconnect_pool(handle) call(RUST_G, "sql_disconnect_pool")(handle)
 #define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")
+
