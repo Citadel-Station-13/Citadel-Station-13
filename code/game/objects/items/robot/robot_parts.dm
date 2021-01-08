@@ -392,6 +392,7 @@
 			created_name = new_name
 		else
 			created_name = ""
+		log_game("[key_name(usr)] renamed [src] ([REF(src)]) to [created_name].")
 
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
