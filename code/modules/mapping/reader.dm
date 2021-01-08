@@ -213,6 +213,7 @@
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
+	var/did_expand = FALSE
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 	var/datum/map_orientation_pattern/mode = forced_pattern || GLOB.map_orientation_patterns["[orientation]"] || GLOB.map_orientation_patterns["[SOUTH]"]
 	var/invert_y = mode.invert_y
@@ -235,6 +236,7 @@
 			else
 				while(parsed_z > world.maxz)
 					world.incrementMaxZ()
+					did_expand = TRUE
 			if(!no_changeturf)
 				WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
 		//these values are the same until a new gridset is reached.
@@ -256,11 +258,13 @@
 						continue
 					else
 						world.maxx = placement_x
+						did_expand = TRUE
 				if(placement_y > world.maxy)
 					if(cropMap)
 						break
 					else
 						world.maxy = placement_y
+						did_expand = TRUE
 				if(placement_x < 1)
 					actual_x += xi
 					continue
@@ -300,6 +304,9 @@
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
+
+	if(did_expand)
+		world.refresh_atmos_grid()
 
 	return TRUE
 

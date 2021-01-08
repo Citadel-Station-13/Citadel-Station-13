@@ -82,15 +82,27 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	set waitfor = FALSE
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
 
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
+	var/ic_blocked = FALSE
+	/*
+	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
+		//The filter doesn't act on the sanitized message, but the raw message.
+		ic_blocked = TRUE
+	*/
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
+		return
+
+	if(ic_blocked)
+		//The filter warning message shows the sanitized message though.
+		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
 		return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]

@@ -13,6 +13,8 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/toilet/Initialize()
 	. = ..()
@@ -26,18 +28,16 @@
 			AM.forceMove(loc)
 	return ..()
 
-/obj/structure/toilet/attack_hand(mob/living/user)
+/obj/structure/toilet/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
 	if(swirlie)
-		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, 1)
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
 	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
-		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -131,15 +131,12 @@
 		return ..()
 
 /obj/structure/toilet/secret
-	var/obj/item/secret
 	var/secret_type = null
 
-/obj/structure/toilet/secret/Initialize(mapload)
+/obj/structure/toilet/secret/Initialize()
 	. = ..()
 	if (secret_type)
-		secret = new secret_type(src)
-		secret.desc += "" //In case you want to add something to the item that spawns
-		contents += secret
+		new secret_type(src)
 
 /obj/structure/toilet/secret/LateInitialize()
 	. = ..()
@@ -167,6 +164,8 @@
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
@@ -174,17 +173,13 @@
 	..()
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
-/obj/structure/urinal/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/urinal/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
 				to_chat(user, "<span class='notice'>[GM.name] needs to be on [src].</span>")
 				return
-			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
 			GM.adjustBruteLoss(8)
 		else
@@ -492,7 +487,7 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 
-/obj/structure/sink/attack_hand(mob/living/user)
+/obj/structure/sink/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -707,8 +702,7 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/sink/puddle/attack_hand(mob/M)
+/obj/structure/sink/puddle/on_attack_hand(mob/M)
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
@@ -784,10 +778,7 @@
 
 	return TRUE
 
-/obj/structure/curtain/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/curtain/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
 

@@ -115,6 +115,15 @@
 	result = /obj/item/reagent_containers/food/snacks/tuna_sandwich
 	subcategory = CAT_SANDWICH
 
+/datum/crafting_recipe/food/meatballsub
+	name = "Meatball sub"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meatball = 3,
+		/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/meatballsub
+	subcategory = CAT_SANDWICH
+	
 /datum/crafting_recipe/food/hotdog
 	name = "Hot dog"
 	reqs = list(

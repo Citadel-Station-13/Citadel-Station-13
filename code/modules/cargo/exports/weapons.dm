@@ -5,7 +5,7 @@
 
 /datum/export/weapon/makeshift_shield
 	cost = 30
-	unit_name = "unknown shield"
+	unit_name = "nonstandard shield"
 	export_types = list(/obj/item/shield/riot, /obj/item/shield/riot/roman, /obj/item/shield/riot/buckler, /obj/item/shield/makeshift)
 
 /datum/export/weapon/riot_shield
@@ -37,7 +37,7 @@
 
 /datum/export/weapon/taser
 	cost = 200
-	unit_name = "advanced taser"
+	unit_name = "hybrid taser"
 	export_types = list(/obj/item/gun/energy/e_gun/advtaser)
 
 /datum/export/weapon/laser
@@ -104,12 +104,12 @@
 
 /datum/export/weapon/aeg
 	cost = 200 //Endless power
-	unit_name = "advance engery gun"
+	unit_name = "advanced energy gun"
 	export_types = list(/obj/item/gun/energy/e_gun/nuclear)
 
 /datum/export/weapon/deconer
 	cost = 600
-	unit_name = "deconer"
+	unit_name = "decloner"
 	export_types = list(/obj/item/gun/energy/decloner)
 
 /datum/export/weapon/ntsniper
@@ -123,9 +123,8 @@
 	export_types = list(/obj/item/gun/syringe/rapidsyringe)
 
 /datum/export/weapon/temp_gun
-	cost = 175 //Its just smaller
+	cost = 175
 	unit_name = "small temperature gun"
-	k_elasticity = 1/30 //Its just a smaller temperature gun, easy to mass make
 	export_types = list(/obj/item/gun/energy/temperature)
 
 /datum/export/weapon/flowergun
@@ -139,8 +138,7 @@
 	export_types = list(/obj/item/gun/energy/xray)
 
 /datum/export/weapon/ioncarbine
-	cost = 200
-	k_elasticity = 1/30 //Its just a smaller temperature gun, easy to mass make
+	cost = 200 
 	unit_name = "ion carbine"
 	export_types = list(/obj/item/gun/energy/ionrifle/carbine)
 
@@ -194,7 +192,7 @@
 	export_types = list(/obj/item/firing_pin/test_range)
 
 /datum/export/weapon/techslug
-	cost = 25
+	cost = 30
 	k_elasticity = 0
 	unit_name = "advanced shotgun shell"
 	export_types = list(/obj/item/ammo_casing/shotgun/dragonsbreath, /obj/item/ammo_casing/shotgun/meteorslug, /obj/item/ammo_casing/shotgun/pulseslug, /obj/item/ammo_casing/shotgun/frag12, /obj/item/ammo_casing/shotgun/ion, /obj/item/ammo_casing/shotgun/laserslug)
@@ -215,7 +213,7 @@
 
 /datum/export/weapon/bow_teaching
 	cost = 500
-	unit_name = "stone tablets"
+	unit_name = "bowyery tablet"
 	export_types = list(/obj/item/book/granter/crafting_recipe/bone_bow)
 
 /datum/export/weapon/quiver
@@ -230,48 +228,48 @@
 
 /datum/export/weapon/pistol
 	cost = 120
-	unit_name = "illegal firearm"
+	unit_name = "nonstandard sidearm"
 	export_types = list(/obj/item/gun/ballistic/automatic/pistol)
 
 /datum/export/weapon/revolver
 	cost = 200
-	unit_name = "large handgun"
+	unit_name = "large-caliber revolver"
 	export_types = list(/obj/item/gun/ballistic/revolver)
 	exclude_types = list(/obj/item/gun/ballistic/revolver/russian, /obj/item/gun/ballistic/revolver/doublebarrel)
 
 /datum/export/weapon/rocketlauncher
 	cost = 1000
-	unit_name = "rocketlauncher"
+	unit_name = "PML-9 rocket-propelled grenade launcher"
 	export_types = list(/obj/item/gun/ballistic/rocketlauncher)
 
 /datum/export/weapon/antitank
 	cost = 300
-	unit_name = "hand cannon"
+	unit_name = "anti-tank pistol"
 	export_types = list(/obj/item/gun/ballistic/automatic/pistol/antitank/syndicate)
 
 /datum/export/weapon/clownstuff
 	cost = 500
-	unit_name = "clown war tech"
-	export_types = list(/obj/item/pneumatic_cannon/pie/selfcharge, /obj/item/shield/energy/bananium, /obj/item/melee/transforming/energy/sword/bananium, )
+	unit_name = "clown combat equipment"
+	export_types = list(/obj/item/pneumatic_cannon/pie/selfcharge, /obj/item/shield/energy/bananium, /obj/item/melee/transforming/energy/sword/bananium)
 
 /datum/export/weapon/bulldog
 	cost = 400
-	unit_name = "drum loaded shotgun"
+	unit_name = "drum-fed compact combat shotgun"
 	export_types = list(/obj/item/gun/ballistic/automatic/shotgun/bulldog)
 
 /datum/export/weapon/smg
 	cost = 350
-	unit_name = "automatic c-20r"
+	unit_name = "C-20r sub-machine gun"
 	export_types = list(/obj/item/gun/ballistic/automatic/c20r)
 
 /datum/export/weapon/duelsaber
-	cost = 360 //Get it?
-	unit_name = "energy saber"
+	cost = 360
+	unit_name = "double-bladed energy saber"
 	export_types = list(/obj/item/dualsaber)
 
 /datum/export/weapon/esword
 	cost = 130
-	unit_name = "energy sword"
+	unit_name = "energy saber"
 	export_types = list(/obj/item/melee/transforming/energy/sword/cx/traitor, /obj/item/melee/transforming/energy/sword/saber)
 
 /datum/export/weapon/rapier
@@ -286,32 +284,32 @@
 
 /datum/export/weapon/gloves
 	cost = 90
-	unit_name = "star struck gloves"
+	unit_name = "anomalous armwraps"
 	export_types = list(/obj/item/clothing/gloves/fingerless/pugilist/rapid)
 
 /datum/export/weapon/l6
 	cost = 500
-	unit_name = "law 6 saw"
+	unit_name = "Aussec Armory L6 SAW"
 	export_types = list(/obj/item/gun/ballistic/automatic/l6_saw)
 
 /datum/export/weapon/m90
 	cost = 400
-	unit_name = "assault class weapon"
+	unit_name = "M90-gl carbine"
 	export_types = list(/obj/item/gun/ballistic/automatic/m90)
 
 /datum/export/weapon/powerglove
 	cost = 100
-	unit_name = "hydraulic glove"
+	unit_name = "pneumatic gauntlet"
 	export_types = list(/obj/item/melee/powerfist)
 
 /datum/export/weapon/sniper
 	cost = 750
-	unit_name = ".50 sniper"
+	unit_name = "anti-materiel rifle"
 	export_types = list(/obj/item/gun/ballistic/automatic/sniper_rifle/syndicate)
 
 /datum/export/weapon/ebow
 	cost = 600
-	unit_name = "mini crossbow"
+	unit_name = "compact energy crossbow"
 	export_types = list(/obj/item/gun/energy/kinetic_accelerator/crossbow)
 
 /datum/export/weapon/m10mm
@@ -333,12 +331,12 @@
 
 /datum/export/weapon/smg_mag
 	cost = 45
-	unit_name = "smg magazine"
+	unit_name = "SMG/carbine magazine"
 	export_types = list(/obj/item/ammo_box/magazine/smgm45, /obj/item/ammo_box/magazine/m556)
 
 /datum/export/weapon/l6sawammo
 	cost = 60
-	unit_name = "law 6 saw ammo box"
+	unit_name = "L6 SAW ammo box"
 	export_types = list(/obj/item/ammo_box/magazine/mm195x129)
 	include_subtypes = TRUE
 
@@ -355,13 +353,13 @@
 
 /datum/export/weapon/fletcher_ammo
 	cost = 60
-	unit_name = "illegal ammo magazines"
+	unit_name = "flechette launcher magazine"
 	export_types = list(/obj/item/ammo_box/magazine/flechette)
 	include_subtypes = TRUE
 
 /datum/export/weapon/dj_a_pizzabomb
 	cost = -6000
-	unit_name = "Repair Costs"
+	unit_name = "undeclared ordinance and subsequent repair costs"
 	export_types = list(/obj/item/pizzabox/bomb, /obj/item/sbeacondrop/bomb)
 
 /datum/export/weapon/real_toolbox
@@ -371,12 +369,12 @@
 
 /datum/export/weapon/melee
 	cost = 50
-	unit_name = "unlisted weapon"
+	unit_name = "any other melee weapon"
 	export_types = list(/obj/item/melee)
 	include_subtypes = TRUE
 
 /datum/export/weapon/gun
 	cost = 50
-	unit_name = "unlisted weapon"
+	unit_name = "any other weapon"
 	export_types = list(/obj/item/gun)
 	include_subtypes = TRUE

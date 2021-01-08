@@ -91,6 +91,7 @@
 		return " (as [get_id_name("Unknown")])"
 
 /mob/living/carbon/human/proc/forcesay(list/append) //this proc is at the bottom of the file because quote fuckery makes notepad++ cri
+	set waitfor = FALSE		// WINGET IS A SLEEP. DO. NOT. SLEEP.
 	if(stat == CONSCIOUS)
 		if(client)
 			var/temp = winget(client, "input", "text")

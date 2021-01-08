@@ -11,7 +11,7 @@
 	integrity_failure = 0
 	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100)
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
@@ -55,6 +55,7 @@
 		icon_state = "[src.base_state]open"
 
 /obj/machinery/door/window/update_atom_colour()
+	. = ..()
 	if((color && (color_hex2num(color) < 255)))
 		visible = TRUE
 		if(density)
@@ -66,9 +67,9 @@
 /obj/machinery/door/window/proc/open_and_close()
 	open()
 	if(src.check_access(null))
-		sleep(50)
+		sleep(60)
 	else //secure doors close faster
-		sleep(20)
+		sleep(40)
 	close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)
@@ -397,7 +398,7 @@
 	return ..()
 
 /obj/machinery/door/window/clockwork/emp_act(severity)
-	if(prob(80/severity))
+	if(prob(severity/1.25))
 		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()

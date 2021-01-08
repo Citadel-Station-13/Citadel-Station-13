@@ -726,9 +726,9 @@ obj/item/storage/box/stingbangs
 	return (BRUTELOSS)
 
 /obj/item/storage/box/hug/attack_self(mob/user)
-	..()
-	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, 1, -5)
+	. = ..()
+	user.DelayNextAction(CLICK_CD_MELEE)
+	playsound(src, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT,"hugbox", /datum/mood_event/hugbox)
 
@@ -1418,3 +1418,9 @@ obj/item/storage/box/stingbangs
 	new /obj/item/reagent_containers/glass/beaker/meta(src)
 	new /obj/item/reagent_containers/glass/beaker/noreact(src)
 	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+
+/obj/item/storage/box/strange_seeds_5pack
+
+/obj/item/storage/box/strange_seeds_5pack/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/seeds/random(src)

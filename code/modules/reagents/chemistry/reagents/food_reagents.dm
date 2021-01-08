@@ -17,8 +17,9 @@
 	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
-	current_cycle++
-	M.adjust_nutrition(nutriment_factor, max_nutrition)
+	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
+		current_cycle++
+		M.adjust_nutrition(nutriment_factor, max_nutrition)
 	M.CheckBloodsuckerEatFood(nutriment_factor)
 	holder.remove_reagent(type, metabolization_rate)
 
@@ -49,10 +50,11 @@
 	var/burn_heal = 0
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
-	if(prob(50))
-		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
-		. = 1
-	..()
+	if(!HAS_TRAIT(M, TRAIT_NO_PROCESS_FOOD))
+		if(prob(50))
+			M.heal_bodypart_damage(brute_heal,burn_heal, 0)
+			. = 1
+		..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)
@@ -115,11 +117,11 @@
 
 /datum/reagent/consumable/cooking_oil/reaction_obj(obj/O, reac_volume)
 	if(holder && holder.chem_temp >= fry_temperature)
-		if(isitem(O) && !istype(O, /obj/item/reagent_containers/food/snacks/deepfryholder) && !(O.resistance_flags & (FIRE_PROOF|INDESTRUCTIBLE)))
+		if(isitem(O) && !O.GetComponent(/datum/component/fried) && !(O.resistance_flags & (FIRE_PROOF|INDESTRUCTIBLE)) && (!O.reagents || isfood(O))) //don't fry stuff we shouldn't
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location(), O)
-			F.fry(volume)
-			F.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
+			O.fry(volume)
+			if(O.reagents)
+				O.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
 
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
@@ -132,8 +134,8 @@
 			"<span class='userdanger'>You're covered in boiling oil!</span>")
 			M.emote("scream")
 			playsound(M, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-			var/oil_damage = max((holder.chem_temp / fry_temperature) * 0.33,1) //Damage taken per unit
-			M.adjustFireLoss(oil_damage * max(reac_volume,20)) //Damage caps at 20
+			var/oil_damage = min((holder.chem_temp / fry_temperature) * 0.33,1) //Damage taken per unit
+			M.adjustFireLoss(oil_damage * min(reac_volume,20)) //Damage caps at 20
 	else
 		..()
 	return TRUE
@@ -141,10 +143,9 @@
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
 	if(!istype(T) || isgroundlessturf(T))
 		return
-	if(reac_volume >= 5)
+	if(reac_volume >= 5 && holder && holder.chem_temp >= fry_temperature)
 		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-		T.name = "deep-fried [initial(T.name)]"
-		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+		T.fry(reac_volume/4)
 
 /datum/reagent/consumable/sugar
 	name = "Sugar"
@@ -157,6 +158,13 @@
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	value = REAGENT_VALUE_NONE
+
+// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
+/datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWeeds(rand(2,3))
+		mytray.adjustPests(rand(1,2))
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
@@ -174,6 +182,12 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 	taste_description = "watery milk"
+
+// Compost for EVERYTHING
+/datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -271,7 +285,7 @@
 		if(isopenturf(T))
 			var/turf/open/OT = T
 			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
-			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
+			OT.air.set_temperature(OT.air.return_temperature() - MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity()) // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
@@ -506,7 +520,7 @@
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.set_temperature(max( min(lowertemp.return_temperature()-2000,lowertemp.return_temperature() / 2) ,0))
 		lowertemp.react(src)
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -769,7 +783,6 @@
 	color = "#97ee63"
 	taste_description = "pure electricity"
 
-/* //We don't have ethereals here, so I'll just comment it out.
 /datum/reagent/consumable/liquidelectricity/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	if((method == INGEST || method == INJECT || method == PATCH) && iscarbon(M))
 
@@ -777,10 +790,9 @@
 		var/obj/item/organ/stomach/ethereal/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
 		if(istype(stomach))
 			stomach.adjust_charge(reac_volume * REM)
-*/
 
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
-	if(prob(25)) // && !isethereal(M))
+	if(prob(25) && !isethereal(M))
 		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
 		playsound(M, "sparks", 50, TRUE)
 	return ..()

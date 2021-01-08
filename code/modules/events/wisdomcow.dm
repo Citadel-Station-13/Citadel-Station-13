@@ -2,7 +2,7 @@
 	name = "Wisdom cow"
 	typepath = /datum/round_event/wisdomcow
 	max_occurrences = 1
-	weight = 20
+	weight = 10
 
 /datum/round_event/wisdomcow/announce(fake)
 	priority_announce("A wise cow has been spotted in the area. Be sure to ask for her advice.", "Nanotrasen Cow Ranching Agency")

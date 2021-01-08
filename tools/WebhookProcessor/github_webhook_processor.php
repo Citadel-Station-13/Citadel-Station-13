@@ -392,12 +392,14 @@ function handle_pr($payload) {
 			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
+			/*
 			if(get_pr_code_friendliness($payload) <= 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
 				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
 					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
 			}
+			*/
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);

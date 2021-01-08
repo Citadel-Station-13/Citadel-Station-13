@@ -42,8 +42,7 @@
 	actions_types = list()
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/gyropistol/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/gyropistol/update_icon_state()
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
 
 /obj/item/gun/ballistic/automatic/speargun
@@ -54,6 +53,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	can_suppress = FALSE
+	automatic_burst_overlay = FALSE
 	mag_type = /obj/item/ammo_box/magazine/internal/speargun
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	burst_size = 1
@@ -62,8 +62,9 @@
 	actions_types = list()
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/speargun/update_icon()
-	return
+/obj/item/gun/ballistic/automatic/speargun/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/gun/ballistic/automatic/speargun/attack_self()
 	return
@@ -137,7 +138,7 @@
 			chamber_round()
 			update_icon()
 
-/obj/item/gun/ballistic/rocketlauncher/update_icon()
+/obj/item/gun/ballistic/rocketlauncher/update_icon_state()
 	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)

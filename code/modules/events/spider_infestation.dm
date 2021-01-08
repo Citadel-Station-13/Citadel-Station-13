@@ -2,7 +2,6 @@
 	name = "Spider Infestation"
 	typepath = /datum/round_event/spider_infestation
 	weight = 5
-	gamemode_blacklist = list("dynamic")
 	max_occurrences = 1
 	min_players = 15
 

@@ -17,9 +17,6 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	name = "donut box"
-	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
@@ -59,24 +56,58 @@
 	fancy_open = TRUE
 	update_icon()
 
+#define DONUT_INBOX_SPRITE_WIDTH 3
+
 /*
  * Donut Box
  */
 
 /obj/item/storage/fancy/donut_box
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	icon_type = "donut"
 	name = "donut box"
+	desc = "Mmm. Donuts."
+	icon = 'icons/obj/food/donut.dmi'
+	icon_state = "donutbox_inner"
+	icon_type = "donut"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
 	custom_price = PRICE_NORMAL
+	appearance_flags = KEEP_TOGETHER
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
+
+/obj/item/storage/fancy/donut_box/PopulateContents()
+	. = ..()
+	update_icon()
+
+/obj/item/storage/fancy/donut_box/update_icon_state()
+	if(fancy_open)
+		icon_state = "donutbox_inner"
+	else
+		icon_state = "donutbox"
+
+/obj/item/storage/fancy/donut_box/update_overlays()
+	. = ..()
+
+	if (!fancy_open)
+		return
+
+	var/donuts = 0
+
+	for (var/_donut in contents)
+		var/obj/item/reagent_containers/food/snacks/donut/donut = _donut
+		if (!istype(donut))
+			continue
+
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		donuts += 1
+
+	. += image(icon = initial(icon), icon_state = "donutbox_top")
+
+#undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
  * Egg Box
@@ -168,13 +199,19 @@
 		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
+	var/obj/item/lighter/L = locate() in contents
+	if(L)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, L, user)
+		user.put_in_hands(L)
+		to_chat(user, "<span class='notice'>You take \a [L] out of the pack.</span>")
+		return TRUE
+	var/obj/item/clothing/mask/cigarette/W = locate() in contents
 	if(W && contents.len > 0)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
-		contents -= W
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
@@ -397,6 +434,20 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
+
+/obj/item/storage/fancy/cracker_pack
+	name = "cracker pack"
+	desc = "A pack of delicious crackers. Keep away from parrots!"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "crackerbox"
+	icon_type = "cracker"
+	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
+
+/obj/item/storage/fancy/cracker_pack/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
 
 /*
  * Ring Box

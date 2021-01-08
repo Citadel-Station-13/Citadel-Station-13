@@ -132,7 +132,6 @@
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/slot_machine/Topic(href, href_list)
@@ -151,9 +150,9 @@
 	. = ..()
 	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
-	if(prob(15 * severity))
+	if(prob(1500 / severity))
 		return
-	if(prob(1)) // :^)
+	if(prob(1 * severity/100)) // :^)
 		obj_flags |= EMAGGED
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)

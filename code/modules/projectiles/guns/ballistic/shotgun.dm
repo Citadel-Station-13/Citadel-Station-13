@@ -44,10 +44,9 @@
 	if(HAS_TRAIT(user, TRAIT_FAST_PUMP))
 		recentpump = world.time + 2
 	else
+		if(!user.UseStaminaBuffer(2, warn = TRUE))
+			return
 		recentpump = world.time + 10
-		if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
-			user.adjustStaminaLossBuffered(2) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
-	return
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
@@ -164,10 +163,10 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/shotgun/boltaction/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/shotgun/boltaction/improvised/update_overlays()
+	. = ..()
 	if(slung)
-		icon_state += "sling"
+		. += "[icon_state]sling"
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -272,7 +271,7 @@
 		spread = 2
 	update_icon()
 
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon()
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/update_icon_state()
 	icon_state = "[current_skin ? unique_reskin[current_skin] : "cshotgun"][stock ? "" : "c"]"
 
 //Dual Feed Shotgun

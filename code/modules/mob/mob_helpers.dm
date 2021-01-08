@@ -379,7 +379,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting && affecting.is_robotic_limb())
 		var/dam //changes repair text based on how much brute/burn was supplied
 		if(brute_heal > burn_heal)
 			dam = 1
@@ -431,7 +431,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/living/getImplant(type)
 	return locate(type) in implants
 
-/proc/offer_control(mob/M)
+/proc/offer_control(mob/M,ignore_category=null)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
@@ -445,7 +445,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+	var/list/mob/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M, ignore_category)
 
 	if(LAZYLEN(candidates))
 		var/mob/C = pick(candidates)
@@ -496,8 +496,19 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			colored_message = "<font color=[color]>[message]</font>"
 		else
 			colored_message = "<font color='[color]'>[message]</font>"
-
-	var/list/timestamped_message = list("[LAZYLEN(logging[smessage_type]) + 1]\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)]" = colored_message)
+	
+	//This makes readability a bit better for admins.
+	switch(message_type)
+		if(LOG_WHISPER)
+			colored_message = "(WHISPER) [colored_message]"
+		if(LOG_OOC)
+			colored_message = "(OOC) [colored_message]"
+		if(LOG_ASAY)
+			colored_message = "(ASAY) [colored_message]"
+		if(LOG_EMOTE)
+			colored_message = "(EMOTE) [colored_message]"
+	
+	var/list/timestamped_message = list("\[[TIME_STAMP("hh:mm:ss", FALSE)]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 
@@ -558,3 +569,17 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
 	return stat == DEAD || silicon_privileges //Dead guys and silicons can always see reagents
+
+/mob/proc/is_blind()
+	SHOULD_BE_PURE(TRUE)
+	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
+
+/mob/proc/can_read(obj/O)
+	if(is_blind())
+		to_chat(src, "<span class='warning'>As you are trying to read [O], you suddenly feel very stupid!</span>")
+		return
+	if(!is_literate())
+		to_chat(src, "<span class='notice'>You try to read [O], but can't comprehend any of it.</span>")
+		return
+	return TRUE
+

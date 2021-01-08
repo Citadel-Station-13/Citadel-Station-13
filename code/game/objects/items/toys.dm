@@ -447,7 +447,7 @@
 	block_parry_data = null
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 
 /obj/item/dualsaber/toy/ComponentInitialize()
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
@@ -466,7 +466,7 @@
 	attack_verb = list("attacked", "struck", "hit")
 	total_mass_on = TOTAL_MASS_TOY_SWORD
 	slowdown_wielded = 0
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 
 /obj/item/dualsaber/hypereutactic/toy/ComponentInitialize()
 	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=0, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
@@ -574,10 +574,7 @@
 	else
 		. = ..()
 
-/obj/item/toy/prize/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/toy/prize/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		attack_self(user)
 
@@ -811,9 +808,8 @@
 	cards += "Ace of Clubs"
 	cards += "Ace of Diamonds"
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
@@ -1234,7 +1230,7 @@
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "dread_ipad"
+	icon_state = "clockwork_slab"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0

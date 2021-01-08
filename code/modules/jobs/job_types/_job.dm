@@ -46,6 +46,7 @@
 	var/minimal_player_age = 0
 
 	var/outfit = null
+	var/plasma_outfit = null //the outfit given to plasmamen
 
 	var/exp_requirements = 0
 
@@ -72,6 +73,37 @@
 	/// Starting skill modifiers.
 	var/list/starting_modifiers
 
+	// These can be flags but I don't care because they're never changed
+	/// Can you always join as this job even while respawning (should probably only be on for assistant)
+	var/always_can_respawn_as = FALSE
+	/// Is this job considered a combat role for respawning? (usually sec/command)
+	var/considered_combat_role = FALSE
+
+/**
+  * Checks if we should be created on a certain map
+  */
+/datum/job/proc/map_check(datum/map_config/C)
+	return (length(C.job_whitelist)? (type in C.job_whitelist) : !(type in C.job_blacklist))
+
+/**
+  * Processes map specific overrides
+  */
+/datum/job/proc/process_map_overrides(datum/map_config/C)
+	if(type in C.job_override_spawn_positions)
+		spawn_positions = C.job_override_spawn_positions[type]
+	if(type in C.job_override_total_positions)
+		total_positions = C.job_override_total_positions[type]
+	if(type in C.job_access_override)
+		access = C.job_access_override[type]
+		minimal_access = access
+	else
+		if(type in C.job_access_add)
+			access += C.job_access_add[type]
+			minimal_access += C.job_access_add[type]
+		if(type in C.job_access_remove)
+			access -= C.job_access_add[type]
+			minimal_access -= C.job_access_remove[type]
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -79,6 +111,9 @@
 	if(mind_traits)
 		for(var/t in mind_traits)
 			ADD_TRAIT(H.mind, t, JOB_TRAIT)
+	if(/datum/quirk/paraplegic in blacklisted_quirks)
+		H.regenerate_limbs() //if you can't be a paraplegic, attempt to regenerate limbs to stop amputated limb selection
+		H.set_resting(FALSE, TRUE) //they probably shouldn't be on the floor because they had no legs then suddenly had legs
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -89,15 +124,21 @@
 
 //Used for a special check of whether to allow a client to latejoin as this job.
 /datum/job/proc/special_check_latejoin(client/C)
+	var/joined = LAZYLEN(C.prefs?.characters_joined_as)
+	if(C.prefs?.respawn_restrictions_active && (joined || CONFIG_GET(flag/respawn_penalty_includes_observe)))
+		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && !always_can_respawn_as)
+			return FALSE
+		if(!CONFIG_GET(flag/allow_combat_role_respawn) && considered_combat_role)
+			return FALSE
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/antag_rep)[ckey(title)]
 	if(. == null)
 		return antag_rep
 
 /datum/job/proc/GetThreat()
-	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/job_threat)[ckey(title)]
 	if(. == null)
 		return threat
 
@@ -171,9 +212,6 @@
 /datum/job/proc/config_check()
 	return TRUE
 
-/datum/job/proc/map_check()
-	return TRUE
-
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")
 
@@ -203,21 +241,24 @@
 	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
-	switch(preference_source?.prefs.backbag)
-		if(GBACKPACK)
-			back = /obj/item/storage/backpack //Grey backpack
-		if(GSATCHEL)
-			back = /obj/item/storage/backpack/satchel //Grey satchel
-		if(GDUFFELBAG)
-			back = /obj/item/storage/backpack/duffelbag //Grey Duffel bag
-		if(LSATCHEL)
-			back = /obj/item/storage/backpack/satchel/leather //Leather Satchel
-		if(DSATCHEL)
-			back = satchel //Department satchel
-		if(DDUFFELBAG)
-			back = duffelbag //Department duffel bag
-		else
-			back = backpack //Department backpack
+	var/preference_backpack = preference_source?.prefs.backbag
+
+	if(preference_backpack)
+		switch(preference_backpack)
+			if(DBACKPACK)
+				back = backpack //Department backpack
+			if(DSATCHEL)
+				back = satchel //Department satchel
+			if(DDUFFELBAG)
+				back = duffelbag //Department duffel bag
+			else
+				var/find_preference_backpack = GLOB.backbaglist[preference_backpack] //attempt to find non-department backpack
+				if(find_preference_backpack)
+					back = find_preference_backpack
+				else //tried loading in a backpack that we don't allow as a loadout one
+					back = backpack
+	else //somehow doesn't have a preference set, should never reach this point but just-in-case
+		back = backpack
 
 	//converts the uniform string into the path we'll wear, whether it's the skirt or regular variant
 	var/holder

@@ -1,4 +1,3 @@
-
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
@@ -6,7 +5,7 @@
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder)		//This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
-		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
+		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>", confidential = TRUE)
 		return
 
 	if(!D)
@@ -26,7 +25,6 @@
 
 	if(istype(D, /atom))
 		sprite = getFlatIcon(D)
-		hash = md5(sprite)
 		if(sprite)
 			hash = md5(sprite)
 			src << browse_rsc(sprite, "vv[hash].png")
@@ -61,6 +59,7 @@
 			"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
 			"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
 			"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+			"View References" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_VIEW_REFERENCES),
 			"---"
 			)
 		for(var/i in 1 to length(dropdownoptions))
@@ -96,7 +95,7 @@
 	<head>
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
-		<link rel="stylesheet" type="text/css" href="view_variables.css">
+		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
@@ -121,11 +120,13 @@
 				}
 				return "";
 			}
+
 			// main search functionality
 			var last_filter = "";
 			function updateSearch() {
 				var filter = document.getElementById('filter').value.toLowerCase();
 				var vars_ol = document.getElementById("vars");
+
 				if (filter === last_filter) {
 					// An event triggered an update but nothing has changed.
 					return;
@@ -145,6 +146,7 @@
 					while (vars_ol.hasChildNodes()) {
 						vars_ol.removeChild(vars_ol.lastChild);
 					}
+
 					for (var i = 0; i < complete_list.length; ++i) {
 						try {
 							var li = complete_list\[i];
@@ -154,9 +156,12 @@
 						} catch(err) {}
 					}
 				}
+
 				last_filter = filter;
 				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
+
 			}
+
 			// onkeydown
 			function handle_keydown() {
 				if(event.keyCode == 116) {  //F5 (to refresh properly)
@@ -166,10 +171,12 @@
 				}
 				return true;
 			}
+
 			// onkeyup
 			function handle_keyup() {
 				updateSearch();
 			}
+
 			// onchange
 			function handle_dropdown(list) {
 				var value = list.options\[list.selectedIndex].value;
@@ -179,6 +186,7 @@
 				list.selectedIndex = 0;
 				document.getElementById('filter').focus();
 			}
+
 			// byjax
 			function replace_span(what) {
 				var idx = what.indexOf(':');

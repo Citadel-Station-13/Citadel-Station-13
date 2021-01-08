@@ -2,12 +2,16 @@
 // Hair Definitions //
 //////////////////////
 /datum/sprite_accessory/hair
-	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
 	// try to capitalize the names please~
 	// try to spell
 	// you do not need to define _s or _l sub-states, game automatically does this for you
+
+/datum/sprite_accessory/hair/bald //this is exempt from the alphabetical sort
+	name = "Bald"
+	icon_state = "bald"
 
 /datum/sprite_accessory/hair/afro
 	name = "Afro"
@@ -24,10 +28,6 @@
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
-
-/datum/sprite_accessory/hair/bald
-	name = "Bald"
-	icon_state = "bald"
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
@@ -790,6 +790,10 @@
 /datum/sprite_accessory/hair/volaju
 	name = "Volaju"
 	icon_state = "hair_volaju"
+
+/datum/sprite_accessory/hair/volajupompless
+	name = "Volaju (Alt)"
+	icon_state = "hair_volajupompless"
 
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"

@@ -57,6 +57,10 @@
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
 
+
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die (literally, we'll toss a nuke at whever your ip turns up)
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 #define THRESHOLD_UNHUSK 50 // health threshold for synthflesh/rezadone to unhusk someone
 
 //reagent bitflags, used for altering how they works

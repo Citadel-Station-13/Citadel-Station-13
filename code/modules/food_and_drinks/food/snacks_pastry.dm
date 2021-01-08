@@ -34,6 +34,10 @@
 	filling_color = "#FF69B4"
 	return TRUE
 
+/// Returns the sprite of the donut while in a donut box
+/obj/item/reagent_containers/food/snacks/donut/proc/in_box_sprite()
+	return "[icon_state]_inbox"
+
 /obj/item/reagent_containers/food/snacks/donut/checkLiked(fraction, mob/M)	//Sec officers always love donuts
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
@@ -164,6 +168,10 @@
 	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT | SUGAR | BREAKFAST
+
+// Jelly donuts don't have holes, but look the same on the outside
+/obj/item/reagent_containers/food/snacks/donut/jelly/in_box_sprite()
+	return "[replacetext(icon_state, "jelly", "donut")]_inbox"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/Initialize()
 	. = ..()
@@ -509,7 +517,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/omnizine = 3)
 	cooked_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
-	foodtype = GRAIN
+	foodtype = GRAIN | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/dankpocket
 	name = "\improper Dank-pocket"
@@ -556,9 +564,11 @@
 		name = "exceptional plump helmet biscuit"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 		bonus_reagents = list(/datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+		foodtype += ANTITOXIC
 	. = ..()
 	if(fey)
 		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
+		foodtype += ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/cracker
 	name = "cracker"

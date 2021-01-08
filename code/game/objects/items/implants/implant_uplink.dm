@@ -9,7 +9,7 @@
 
 /obj/item/implant/uplink/Initialize(mapload, _owner)
 	. = ..()
-	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc, GLOB.not_incapacitated_state)
+	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
 
 /obj/item/implanter/uplink
 	name = "implanter (uplink)"

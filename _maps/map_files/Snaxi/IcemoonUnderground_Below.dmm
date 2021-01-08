@@ -5,6 +5,9 @@
 "b" = (
 /turf/closed/mineral/random/high_chance/snow,
 /area/icemoon/underground/unexplored/rivers)
+"c" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
 "d" = (
 /turf/closed/wall,
 /area/icemoon/underground/explored)
@@ -19,6 +22,9 @@
 /obj/item/gps/mining,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"G" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/mine/maintenance)
 "N" = (
 /obj/item/flashlight/lantern{
 	on = 1
@@ -32,6 +38,22 @@
 "T" = (
 /obj/structure/ladder,
 /turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"X" = (
+/obj/machinery/telecomms/relay/preset/mining,
+/obj/machinery/bluespace_beacon,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/window/eastright{
+	dir = 8;
+	req_access_txt = "48"
+	},
+/turf/open/floor/circuit,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"
@@ -39499,9 +39521,9 @@ a
 a
 a
 a
-a
-a
-a
+c
+c
+c
 a
 a
 a
@@ -40011,13 +40033,13 @@ a
 a
 a
 a
-a
+c
 e
 i
 h
 h
 e
-a
+c
 a
 a
 a
@@ -40268,13 +40290,13 @@ a
 a
 a
 a
-a
+c
 h
 h
 T
 h
 h
-a
+c
 a
 a
 a
@@ -40525,13 +40547,13 @@ a
 a
 a
 a
-a
+c
 e
 N
 h
-h
+G
 e
-a
+c
 a
 a
 a
@@ -40786,7 +40808,7 @@ a
 d
 O
 h
-e
+X
 d
 a
 a
@@ -41041,9 +41063,9 @@ a
 a
 a
 a
-a
-a
-a
+c
+c
+c
 a
 a
 a

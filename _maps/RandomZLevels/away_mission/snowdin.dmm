@@ -2514,27 +2514,6 @@
 "fF" = (
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
-"fG" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"fH" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"fI" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
 "fJ" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar,
@@ -2894,29 +2873,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
-"gw" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
 "gx" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/gateway/away,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gy" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -3263,15 +3229,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hl" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hm" = (
-/obj/machinery/gateway,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -3283,9 +3245,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hn" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -26601,8 +26560,8 @@ bE
 az
 en
 fh
-fG
-gw
+gy
+hl
 hl
 hR
 iA
@@ -26858,7 +26817,7 @@ bE
 dK
 eo
 fh
-fH
+gy
 gx
 hm
 hS
@@ -27115,7 +27074,7 @@ dk
 dK
 ep
 fh
-fI
+gy
 gy
 hn
 hT

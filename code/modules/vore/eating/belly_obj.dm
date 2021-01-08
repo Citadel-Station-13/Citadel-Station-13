@@ -14,6 +14,7 @@
 /obj/belly
 	name = "belly"							// Name of this location
 	desc = "It's a belly! You're in it!"	// Flavor text description of inside sight/sound/smells/feels.
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 	var/vore_sound = "Gulp"					// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/release_sound = "Splatter"			// Sound for letting someone out.
@@ -541,8 +542,6 @@
 /obj/belly/proc/relay_resist(var/mob/living/R)
 	if (!(R in contents))
 		return  // User is not in this belly
-
-	R.changeNext_move(CLICK_CD_BREAKOUT*0.5)
 
 	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
 		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")

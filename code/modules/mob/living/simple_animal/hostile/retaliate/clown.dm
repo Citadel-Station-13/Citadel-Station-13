@@ -37,6 +37,10 @@
 	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent
 
+/mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
+	. = ..()
+	faction |= "clown"
+
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(10)
@@ -47,7 +51,7 @@
 	else
 		clear_alert("temp")
 
-/mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/retaliate/clown/on_attack_hand(mob/living/carbon/human/M)
 	..()
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 

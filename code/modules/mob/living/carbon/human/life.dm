@@ -96,6 +96,8 @@
 			throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		else if(S.breathid == "n2")
 			throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+		else if(S.breathid == "ch3br")
+			throw_alert("not_enough_ch3br", /obj/screen/alert/not_enough_ch3br)
 
 		return FALSE
 	else
@@ -266,9 +268,9 @@
 	return round(thermal_protection/max_protection, 0.001)
 
 /mob/living/carbon/human/handle_random_events()
-	//Puke if toxloss is too high
+	//Puke if toxloss is too high and we aren't a robot, because those have advanced toxins (corruption) handling
 	if(!stat)
-		if(getToxLoss() >= 45 && nutrition > 20)
+		if(getToxLoss() >= 45 && nutrition > 20 && !HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
 			lastpuke += prob(50)
 			if(lastpuke >= 50) // about 25 second delay I guess
 				vomit(20, toxic = TRUE)

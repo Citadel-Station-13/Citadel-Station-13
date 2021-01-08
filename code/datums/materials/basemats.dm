@@ -35,23 +35,24 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.025
 	beauty_modifier = 0.075
 
-///Slight force increase
+///Slight force decrease. It's gold, it's soft as fuck.
 /datum/material/gold
 	name = "gold"
 	desc = "Gold"
 	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
-	strength_modifier = 1.2
+	strength_modifier = 0.8
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	value_per_unit = 0.0625
 	beauty_modifier = 0.15
 	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 1.15, "energy" = 1.15, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1.1)
 
-///Has no special properties
+///Small force increase, for diamond swords
 /datum/material/diamond
 	name = "diamond"
 	desc = "Highly pressurized carbon"
 	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	strength_modifier = 1.1
 	alpha = 132
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
@@ -106,6 +107,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties"
 	color = list(119/255, 217/255, 396/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	integrity_modifier = 0.2 //these things shatter when thrown.
 	alpha = 200
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	beauty_modifier = 0.5
@@ -139,7 +141,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "titanium"
 	desc = "Titanium"
 	color = "#b3c0c7"
-	strength_modifier = 1.3
+	strength_modifier = 1.1
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	value_per_unit = 0.0625
@@ -203,7 +205,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "adamantine"
 	desc = "A powerful material made out of magic, I mean science!"
 	color = "#6d7e8e"
-	strength_modifier = 1.5
+	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
 	value_per_unit = 0.25
@@ -276,18 +278,31 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Mir'ntrath barhah Nar'sie."
 	color = "#3C3434"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
+	strength_modifier = 1.2
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 0.75
 	armor_modifiers = list("melee" = 1.2, "bullet" = 1.2, "laser" = 1, "energy" = 1, "bomb" = 1.2, "bio" = 1.2, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 
+/datum/material/brass
+	name = "brass"
+	desc = "Tybel gb-Ratvar"
+	color = "#917010"
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
+	strength_modifier = 1.3 // Replicant Alloy is very good for skull beatings..
+	sheet_type = /obj/item/stack/tile/brass
+	value_per_unit = 0.75
+	armor_modifiers = list("melee" = 1.4, "bullet" = 1.4, "laser" = 0, "energy" = 0, "bomb" = 1.4, "bio" = 1.2, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5) //But it has.. a few problems that can't easily be compensated for.
+	beauty_modifier = 0.3 //It really beats the cold plain plating of the station, doesn't it?
+
 /datum/material/bronze
 	name = "bronze"
 	desc = "Clock Cult? Never heard of it."
 	color = "#92661A"
+	strength_modifier = 1.1
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
-	sheet_type = /obj/item/stack/tile/bronze
+	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 0.025
 	armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
 	beauty_modifier = 0.2

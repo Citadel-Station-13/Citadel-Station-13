@@ -1,17 +1,16 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Anthromorphic Lizard"
-	id = "lizard"
+	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR)
-	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur", "deco_wings")
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5
 	heatmod = 0.67
-	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "snout" = "Round",
+	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "mam_snouts" = "Round",
 							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
 							  "legs" = "Digitigrade", "taur" = "None", "deco_wings" = "None")
 	attack_verb = "slash"
@@ -27,6 +26,10 @@
 	inert_mutation = FIREBREATH
 	species_language_holder = /datum/language_holder/lizard
 
+	tail_type = "tail_lizard"
+	wagging_type = "waggingtail_lizard"
+	species_category = SPECIES_CATEGORY_LIZARD
+
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
@@ -38,51 +41,17 @@
 
 	return randname
 
-/datum/species/lizard/qualifies_for_rank(rank, list/features)
-	return TRUE
-
-//I wag in death
-/datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		stop_wagging_tail(H)
-
-/datum/species/lizard/spec_stun(mob/living/carbon/human/H,amount)
-	if(H)
-		stop_wagging_tail(H)
-	. = ..()
-
-/datum/species/lizard/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["tail_lizard"] || mutant_bodyparts["waggingtail_lizard"]
-
-/datum/species/lizard/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["waggingtail_lizard"]
-
-/datum/species/lizard/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["tail_lizard"])
-		mutant_bodyparts["waggingtail_lizard"] = mutant_bodyparts["tail_lizard"]
-		mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
-		mutant_bodyparts -= "tail_lizard"
-		mutant_bodyparts -= "spines"
-	H.update_body()
-
-/datum/species/lizard/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["waggingtail_lizard"])
-		mutant_bodyparts["tail_lizard"] = mutant_bodyparts["waggingtail_lizard"]
-		mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
-		mutant_bodyparts -= "waggingtail_lizard"
-		mutant_bodyparts -= "waggingspines"
-	H.update_body()
-
 /*
  Lizard subspecies: ASHWALKERS
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "ashlizard"
-	limbs_id = "lizard"
+	id = SPECIES_ASHWALKER
+	limbs_id = SPECIES_LIZARD
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS)
 	mutantlungs = /obj/item/organ/lungs/ashwalker
+	mutanteyes = /obj/item/organ/eyes/night_vision
 	burnmod = 0.9
 	brutemod = 0.9
 	species_language_holder = /datum/language_holder/lizard/ash

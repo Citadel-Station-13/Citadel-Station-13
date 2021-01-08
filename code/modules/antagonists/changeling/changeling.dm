@@ -18,8 +18,9 @@
 
 	var/list/stored_profiles = list() //list of datum/changelingprofile
 	var/datum/changelingprofile/first_prof = null
-	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	/// did we get succed by another changeling
+	var/hostile_absorbed = FALSE
 	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
@@ -36,8 +37,9 @@
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/loudfactor = 0 //Used for blood tests. At 4, blood tests will succeed. At 10, blood tests will result in an explosion.
-	var/bloodtestwarnings = 0 //Used to track if the ling has been notified that they will pass blood tests.
+	var/loudfactor = 0 //Used for blood tests. This is is the average loudness of the ling's abilities calculated with the below two vars
+	var/loudtotal = 0 //Used to keep track of the sum of the ling's loudness
+	var/totalpurchases = 0 //Used to keep track of how many purchases the ling's made after free abilities have been added
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
@@ -92,6 +94,7 @@
 			B.decoy_override = FALSE
 	remove_changeling_powers()
 	owner.special_role = null
+	owner.current.hud_used?.lingchemdisplay?.invisibility = INVISIBILITY_ABSTRACT
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()
@@ -136,8 +139,6 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
-	loudfactor = 0
-	bloodtestwarnings = 0
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -145,6 +146,9 @@
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
+	loudfactor = 0
+	loudtotal = 0
+	totalpurchases = 0
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
@@ -189,13 +193,18 @@
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
 	thepower.on_purchase(owner.current)
-	loudfactor += thepower.loudness
-	if(loudfactor >= 4 && !bloodtestwarnings)
-		to_chat(owner.current, "<span class='warning'>Our blood is growing flammable. Our blood will react violently to heat.</span>")
-		bloodtestwarnings = 1
-	if(loudfactor >= 10 && bloodtestwarnings < 2)
-		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will react explosively to heat.</span>")
-		bloodtestwarnings = 2
+	loudtotal += thepower.loudness
+	totalpurchases++
+	var/oldloudness = loudfactor
+	loudfactor = loudtotal/max(totalpurchases,1)
+	if(loudfactor >= LINGBLOOD_DETECTION_THRESHOLD && oldloudness < LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown flammable. Our blood will now react violently to heat.</span>")
+	else if(loudfactor < LINGBLOOD_DETECTION_THRESHOLD && oldloudness >= LINGBLOOD_DETECTION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has stabilized, and will no longer react violently to heat.</span>")
+	if(loudfactor > LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness <= LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='warning'>Our blood has grown extremely flammable. Our blood will now react explosively to heat.</span>")
+	else if(loudfactor <= LINGBLOOD_EXPLOSION_THRESHOLD && oldloudness > LINGBLOOD_EXPLOSION_THRESHOLD)
+		to_chat(owner.current, "<span class='notice'>Our blood has slightly stabilized, and will no longer explode when exposed to heat.</span>")
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
@@ -223,6 +232,8 @@
 		else //not dead? no chem/geneticdamage caps.
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 			geneticdamage = max(0, geneticdamage-1)
+		owner.current.hud_used?.lingchemdisplay?.invisibility = 0
+		owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(chem_charges)]</font></div>"
 
 
 /datum/antagonist/changeling/proc/get_dna(dna_owner)
@@ -240,12 +251,6 @@
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
-	if(stored_profiles.len)
-		var/datum/changelingprofile/prof = stored_profiles[1]
-		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
-			if(verbose)
-				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
-			return
 	if(!target)
 		return
 	if(NO_DNA_COPY in target.dna.species.species_traits)
@@ -305,9 +310,6 @@
 	return prof
 
 /datum/antagonist/changeling/proc/add_profile(datum/changelingprofile/prof)
-	if(stored_profiles.len > dna_max)
-		if(!push_out_profile())
-			return
 
 	if(!first_prof)
 		first_prof = prof
@@ -328,19 +330,6 @@
 			stored_profiles -= prof
 			qdel(prof)
 
-/datum/antagonist/changeling/proc/get_profile_to_remove()
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		if(!prof.protected)
-			return prof
-
-/datum/antagonist/changeling/proc/push_out_profile()
-	var/datum/changelingprofile/removeprofile = get_profile_to_remove()
-	if(removeprofile)
-		stored_profiles -= removeprofile
-		return 1
-	return 0
-
-
 /datum/antagonist/changeling/proc/create_initial_profile()
 	var/mob/living/carbon/C = owner.current	//only carbons have dna now, so we have to typecaste
 	if(ishuman(C))
@@ -355,10 +344,12 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 	update_changeling_icons_added()
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/regenerate)
 	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 

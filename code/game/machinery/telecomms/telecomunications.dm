@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/update_power()
 	if(toggled)
 		// if powered, on. if not powered, off. if too damaged, off
-		if(CHECK_BITFIELD(stat, (BROKEN | NOPOWER | EMPED))) 
+		if(CHECK_BITFIELD(stat, (BROKEN | NOPOWER | EMPED)))
 			on = FALSE
 		else
 			on = TRUE
@@ -139,9 +139,9 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	. = ..()
 	if(CHECK_BITFIELD(., EMP_PROTECT_SELF))
 		return
-	if(prob(100 / severity))
+	if(prob(severity))
 		if(!CHECK_BITFIELD(stat, EMPED))
 			ENABLE_BITFIELD(stat, EMPED)
-			var/duration = (300 * 10) / severity
+			var/duration = severity * 35
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
 				DISABLE_BITFIELD(stat, EMPED)

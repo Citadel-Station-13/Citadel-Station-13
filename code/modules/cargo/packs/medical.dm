@@ -90,6 +90,18 @@
 	crate_name = "medical hardsuit"
 	crate_type = /obj/structure/closet/crate/secure/medical
 
+/datum/supply_pack/medical/paramedicevasuit
+	name = "Paramedic EVA Suit"
+	desc = "Greytide pushing up daisies with the carp outside the station? Chemistry vented in a meth experiment gone wrong? Be the blue saviour this station desperately needs and get your Paramedical EVA suit today! Requires medical access to open."
+	cost = 1975
+	access = ACCESS_MEDICAL
+	contains = list(/obj/item/tank/internals/emergency_oxygen,
+					/obj/item/clothing/head/helmet/space/eva/paramedic,
+					/obj/item/clothing/suit/space/eva/paramedic,
+					/obj/item/clothing/mask/breath)
+	crate_name = "paramedic EVA suit"
+	crate_type = /obj/structure/closet/crate/secure/medical
+
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
 	desc = "Contains seven beakers, syringes, and bodybags. Three morphine bottles, four insulin pills. Two charcoal bottles, epinephrine bottles, antitoxin bottles, and large beakers. Finally, a single roll of medical gauze, as well as a bottle of stimulant pills for long, hard work days. German doctor not included."
@@ -114,7 +126,9 @@
 					/obj/item/storage/box/medsprays,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/pill_bottle/stimulant)
+					/obj/item/storage/pill_bottle/stimulant,
+					/obj/item/stack/medical/bone_gel,
+					/obj/item/stack/medical/bone_gel)
 	crate_name = "medical supplies crate"
 
 /datum/supply_pack/medical/adv_surgery_tools
@@ -216,3 +230,18 @@
 					/obj/item/storage/box/beakers)
 	crate_name = "virus containment unit crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/medical/medipen_variety
+	name = "Medipen Variety-Pak"
+	desc = "Contains eight different medipens in three different varieties, to assist in quickly treating seriously injured patients."
+	cost = 2000
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/ekit,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss,
+					/obj/item/reagent_containers/hypospray/medipen/blood_loss)
+
+	crate_name = "medipen crate"

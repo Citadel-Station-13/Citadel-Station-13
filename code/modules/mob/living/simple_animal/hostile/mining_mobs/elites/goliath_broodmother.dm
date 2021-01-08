@@ -25,7 +25,6 @@
 	icon_aggro = "broodmother"
 	icon_dead = "egg_sac"
 	icon_gib = "syndicate_gib"
-	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 30
@@ -41,6 +40,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathmessage = "explodes into gore!"
 	loot_drop = /obj/item/crusher_trophy/broodmother_tongue
+	crate_type = /obj/structure/closet/crate/necropolis/tendril/weapon_armor
 
 	attack_action_types = list(/datum/action/innate/elite_attack/tentacle_patch,
 								/datum/action/innate/elite_attack/spawn_children,

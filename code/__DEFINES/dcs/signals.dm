@@ -5,9 +5,21 @@
 // global signals
 // These are signals which can be listened to by any component on any parent
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
-#define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
-#define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
-#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
+/// from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
+#define COMSIG_GLOB_NEW_Z "!new_z"
+/// called after a successful var edit somewhere in the world: (list/args)
+#define COMSIG_GLOB_VAR_EDIT "!var_edit"
+/// called after an explosion happened : (epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+#define COMSIG_GLOB_EXPLOSION "!explosion"
+/// mob was created somewhere : (mob)
+#define COMSIG_GLOB_MOB_CREATED "!mob_created"
+/// mob died somewhere : (mob , gibbed)
+#define COMSIG_GLOB_MOB_DEATH "!mob_death"
+/// global living say plug - use sparingly: (mob/speaker , message)
+#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
+/// called by datum/cinematic/play() : (datum/cinematic/new_cinematic)
+#define COMSIG_GLOB_PLAY_CINEMATIC "!play_cinematic"
+	#define COMPONENT_GLOB_BLOCK_CINEMATIC 1
 
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (azimuth)
@@ -15,34 +27,49 @@
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
-#define COMSIG_COMPONENT_ADDED "component_added"				//sent to the new datum parent when a component is added to them: (/datum/component)
-#define COMSIG_COMPONENT_REMOVING "component_removing"			//sent to the datum parent before a component is removed from them because of RemoveComponent: (/datum/component)
-#define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent" //sent to the component itself when unregistered from a parent
-#define COMSIG_COMPONENT_REGISTER_PARENT "component_register_parent"	 //sent to the component itself when registered to a parent
-#define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"			//before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
-#define COMSIG_PARENT_QDELETING "parent_qdeleting"				//just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
-
-/// Trait signals
-#define COMPONENT_ADD_TRAIT (1<<0)
-#define COMPONENT_REMOVE_TRAIT (1<<1)
+/// when a component is added to a datum: (/datum/component)
+#define COMSIG_COMPONENT_ADDED "component_added"
+/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
+#define COMSIG_COMPONENT_REMOVING "component_removing"
+/// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
+#define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_PARENT_QDELETING "parent_qdeleting"
+/// generic topic handler (usr, href_list)
+#define COMSIG_TOPIC "handle_topic"
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
 /// fires on the target datum when an element is attached to it  (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
+/// sent to the component itself when unregistered from a parent
+#define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent"
+/// sent to the component itself when registered to a parent
+#define COMSIG_COMPONENT_REGISTER_PARENT "component_register_parent"
+
+/// Trait signals
+#define COMPONENT_ADD_TRAIT (1<<0)
+#define COMPONENT_REMOVE_TRAIT (1<<1)
+
 // /atom signals
+//from base of atom/proc/Initialize(): sent any time a new atom is created
+#define COMSIG_ATOM_CREATED "atom_created"
+//from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
+#define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"				//from base of atom/animal_attack(): (/mob/user)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from base of atom/examine(): (/mob, list/examine_return_text)
-#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"		//from base of atom/get_examine_name(): (/mob, list/overrides)
+///from base of atom/get_examine_name(): (/mob, list/overrides)
+#define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
+#define COMSIG_PARENT_EXAMINE_MORE "atom_examine_more"                    ///from base of atom/examine_more(): (/mob)
 	//Positions for overrides list
-	#define EXAMINE_POSITION_ARTICLE 1
-	#define EXAMINE_POSITION_BEFORE 2
+	#define EXAMINE_POSITION_ARTICLE (1<<0)
+	#define EXAMINE_POSITION_BEFORE (1<<1)
 	//End positions
-	#define COMPONENT_EXNAME_CHANGED 1
+	#define COMPONENT_EXNAME_CHANGED (1<<0)
 #define COMSIG_ATOM_UPDATE_ICON "atom_update_icon"				//from base of atom/update_icon(): ()
 	#define COMSIG_ATOM_NO_UPDATE_ICON_STATE 1
 	#define COMSIG_ATOM_NO_UPDATE_OVERLAYS		2
@@ -52,30 +79,54 @@
 #define COMSIG_ATOM_EXIT "atom_exit"							//from base of atom/Exit(): (/atom/movable/exiting, /atom/newloc)
 	#define COMPONENT_ATOM_BLOCK_EXIT 1
 #define COMSIG_ATOM_EXITED "atom_exited"						//from base of atom/Exited(): (atom/movable/exiting, atom/newloc)
-#define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
-#define COMSIG_ATOM_EMP_ACT "atom_emp_act"						//from base of atom/emp_act(): (severity)
-#define COMSIG_ATOM_FIRE_ACT "atom_fire_act"					//from base of atom/fire_act(): (exposed_temperature, exposed_volume)
-#define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"				//from base of atom/bullet_act(): (/obj/item/projectile, def_zone)
-#define COMSIG_ATOM_BLOB_ACT "atom_blob_act"					//from base of atom/blob_act(): (/obj/structure/blob)
-#define COMSIG_ATOM_ACID_ACT "atom_acid_act"					//from base of atom/acid_act(): (acidpwr, acid_volume)
-#define COMSIG_ATOM_EMAG_ACT "atom_emag_act"					//from base of atom/emag_act(): ()
-#define COMSIG_ATOM_RAD_ACT "atom_rad_act"						//from base of atom/rad_act(intensity)
-#define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"				//from base of atom/narsie_act(): ()
-#define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"				//from base of atom/ratvar_act(): ()
-#define COMSIG_ATOM_RCD_ACT "atom_rcd_act"						//from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
-#define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull(): (S, current_size)
-#define COMSIG_ATOM_SET_LIGHT "atom_set_light"					//from base of atom/set_light(): (l_range, l_power, l_color)
-#define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"				//from base of atom/setDir(): (old_dir, new_dir)
-#define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"			//from base of atom/handle_atom_del(): (atom/deleted)
-#define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"				//from base of atom/has_gravity(): (turf/location, list/forced_gravities)
-#define COMSIG_ATOM_RAD_PROBE "atom_rad_probe"					//from proc/get_rad_contents(): ()
-	#define COMPONENT_BLOCK_RADIATION 1
-#define COMSIG_ATOM_RAD_CONTAMINATING "atom_rad_contam"			//from base of datum/radiation_wave/radiate(): (strength)
-	#define COMPONENT_BLOCK_CONTAMINATION 1
-#define COMSIG_ATOM_RAD_WAVE_PASSING "atom_rad_wave_pass"		//from base of datum/radiation_wave/check_obstructions(): (datum/radiation_wave, width)
-	#define COMPONENT_RAD_WAVE_HANDLED 1
-#define COMSIG_ATOM_CANREACH "atom_can_reach"					//from internal loop in atom/movable/proc/CanReach(): (list/next)
-	#define COMPONENT_BLOCK_REACH 1
+///from base of atom/ex_act(): (severity, target)
+#define COMSIG_ATOM_EX_ACT "atom_ex_act"
+///from base of atom/emp_act(): (severity)
+#define COMSIG_ATOM_EMP_ACT "atom_emp_act"
+///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
+#define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
+///from base of atom/bullet_act(): (/obj/item/projectile, def_zone)
+#define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
+///from base of atom/blob_act(): (/obj/structure/blob)
+#define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
+///from base of atom/acid_act(): (acidpwr, acid_volume)
+#define COMSIG_ATOM_ACID_ACT "atom_acid_act"
+///from base of atom/emag_act(): (/mob/user)
+#define COMSIG_ATOM_EMAG_ACT "atom_emag_act"
+///from base of atom/rad_act(intensity)
+#define COMSIG_ATOM_RAD_ACT "atom_rad_act"
+///from base of atom/narsie_act(): ()
+#define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
+///from base of atom/ratvar_act(): ()
+#define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"
+///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
+#define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
+///from base of atom/singularity_pull(): (S, current_size)
+#define COMSIG_ATOM_SING_PULL "atom_sing_pull"
+///from obj/machinery/bsa/full/proc/fire(): ()
+#define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
+	#define COMSIG_ATOM_BLOCKS_BSA_BEAM (1<<0)
+///from base of atom/set_light(): (l_range, l_power, l_color)
+#define COMSIG_ATOM_SET_LIGHT "atom_set_light"
+///from base of atom/setDir(): (old_dir, new_dir). Called before the direction changes.
+#define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"
+///from base of atom/handle_atom_del(): (atom/deleted)
+#define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
+///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
+#define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
+///from proc/get_rad_contents(): ()
+#define COMSIG_ATOM_RAD_PROBE "atom_rad_probe"
+	#define COMPONENT_BLOCK_RADIATION (1<<0)
+///from base of datum/radiation_wave/radiate(): (strength)
+#define COMSIG_ATOM_RAD_CONTAMINATING "atom_rad_contam"
+	#define COMPONENT_BLOCK_CONTAMINATION (1<<0)
+///from base of datum/radiation_wave/check_obstructions(): (datum/radiation_wave, width)
+#define COMSIG_ATOM_RAD_WAVE_PASSING "atom_rad_wave_pass"
+  #define COMPONENT_RAD_WAVE_HANDLED (1<<0)
+///from internal loop in atom/movable/proc/CanReach(): (list/next)
+#define COMSIG_ATOM_CANREACH "atom_can_reach"
+	#define COMPONENT_BLOCK_REACH (1<<0)
+
 #define COMSIG_ATOM_SCREWDRIVER_ACT "atom_screwdriver_act"		//from base of atom/screwdriver_act(): (mob/living/user, obj/item/I)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin, turf/destination)
 	#define COMPONENT_BLOCK_TELEPORT 1
@@ -85,11 +136,15 @@
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"				//from base of atom/attack_hand(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"				//from base of atom/attack_paw(): (mob/user)
 	#define COMPONENT_NO_ATTACK_HAND 1							//works on all 3.
+/////////////////
+
 //This signal return value bitflags can be found in __DEFINES/misc.dm
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"	//called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 
-
-/////////////////
+/// Called from orbit component: (atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+#define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
+/// Called from orbit component: (atom/movable/orbiter, refreshing)
+#define COMSIG_ATOM_ORBIT_END "atom_orbit_end"
 
 #define COMSIG_ENTER_AREA "enter_area" 						//from base of area/Entered(): (/area)
 #define COMSIG_EXIT_AREA "exit_area" 							//from base of area/Exited(): (/area)
@@ -147,6 +202,7 @@
 //	#define HEARING_SOURCE 8
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"			//from base of do_teleport(): (channel, turf/origin, turf/destination)
+#define COMSIG_MOVABLE_CHASM_DROP "movable_chasm_drop"			//from base of /datum/component/chasm/drop() (/datum/component/chasm)
 
 // /mind signals
 #define  COMSIG_PRE_MIND_TRANSFER "pre_mind_transfer"			//from base of mind/transfer_to() before it's done: (new_character, old_character)
@@ -179,6 +235,10 @@
 #define COMSIG_MOB_THROW "mob_throw"							//from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_KEY_CHANGE "mob_key_change"					//from base of /mob/transfer_ckey(): (new_character, old_character)
 #define COMSIG_MOB_PRE_PLAYER_CHANGE "mob_pre_player_change"	//sent to the target mob from base of /mob/transfer_ckey() and /mind/transfer_to(): (our_character, their_character)
+///from /mob/living/handle_eye_contact(): (mob/living/other_mob)
+#define COMSIG_MOB_EYECONTACT "mob_eyecontact"
+	/// return this if you want to block printing this message to this person, if you want to print your own (does not affect the other person's message)
+	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 //	#define COMPONENT_STOP_MIND_TRANSFER 1
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"				//from base of /mob/update_sight(): ()
 #define COMSIG_MOB_ON_NEW_MIND "mob_on_new_mind"			//called when a new mind is assigned to a mob: ()
@@ -200,6 +260,10 @@
 #define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"					//from base of mob/swap_hand(): (obj/item)
 	#define COMPONENT_BLOCK_SWAP 1
+
+#define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
+///from base of mob/AltClickOn(): (atom/A)
+#define COMSIG_MOB_ALTCLICKON "mob_altclickon"
 
 // /client signals
 #define COMSIG_MOB_CLIENT_LOGIN "mob_client_login"					//sent when a mob/login() finishes: (client)
@@ -244,7 +308,18 @@
 	#define COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 1		// interrupt biological processes
 	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
 
-// /mob/living/carbon signals
+#define COMSIG_LIVING_BIOLOGICAL_LIFE "biological_life"			//from base of mob/living/BiologicalLife() (seconds, times_fired)
+
+#define COMSIG_LIVING_PHYSICAL_LIFE "physical_life"				//from base of mob/living/PhysicalLife() (seconds, times_fired)
+
+// /mob/living/carbon physiology signals
+#define COMSIG_CARBON_GAIN_WOUND "carbon_gain_wound"				//from /datum/wound/proc/apply_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+#define COMSIG_CARBON_LOSE_WOUND "carbon_lose_wound"				//from /datum/wound/proc/remove_wound() (/mob/living/carbon/C, /datum/wound/W, /obj/item/bodypart/L)
+///from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
+#define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
+	#define COMPONENT_NO_ATTACH (1<<0)
+#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"			//from base of /obj/item/bodypart/proc/drop_limb(special, dismembered)
+
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_IDENTITY_TRANSFERRED_TO "carbon_id_transferred_to" //from datum/dna/transfer_identity(): (datum/dna, transfer_SE)
 #define COMSIG_CARBON_TACKLED "carbon_tackled"						//sends from tackle.dm on tackle completion
@@ -262,6 +337,7 @@
 #define COMSIG_OBJ_DECONSTRUCT 	"obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_BREAK		"obj_break"						//from base of /obj/obj_break(): (damage_flag)
 #define COMSIG_OBJ_SETANCHORED 	"obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
+#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH	"obj_default_unfasten_wrench" //called exclusively in plumbing, for now
 #define COMSIG_OBJ_ATTACK_GENERIC "obj_attack_generic"			//from base of atom/animal_attack(): (/mob/user)
 	#define COMPONENT_STOP_GENERIC_ATTACK 1
 
@@ -309,6 +385,8 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"						///from [/obj/effect/mine/proc/triggermine]:
 	// Uncovered information
 	#define COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION		1
+///from [/obj/structure/closet/supplypod/proc/endlaunch]:
+#define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
 // /obj/item/grenade signals
 #define COMSIG_GRENADE_PRIME "grenade_prime"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -341,10 +419,10 @@
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
 // /obj/item/projectile signals (sent to the firer)
-#define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
-#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+#define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"			///from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			///from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle, hit_limb)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/item/projectile/proc/fire(): (obj/item/projectile, atom/original_target)
-#define COMSIG_PROJECTILE_FIRE "projectile_fire"				///from the base of /obj/projectile/proc/fire(): ()
+#define COMSIG_PROJECTILE_FIRE "projectile_fire"				///from the base of /obj/item/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"				// sent to targets during the process_hit proc of projectiles
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"					// sent when trying to force an embed (mainly for projectiles, only used in the embed element)
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				///sent to targets during the process_hit proc of projectiles
@@ -354,6 +432,7 @@
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_HUMAN_PREFS_COPIED_TO "human_prefs_copied_to"					//from datum/preferences/copy_to(): (datum/preferences, icon_updates, roundstart_checks)
 #define COMSIG_HUMAN_HARDSET_DNA "human_hardset_dna"							//from mob/living/carbon/human/hardset_dna(): (ui, list/mutation_index, newreal_name, newblood_type, datum/species, newfeatures)
@@ -415,6 +494,17 @@
 #define COMPONENT_PROGRAM_INSTALLED		1					//Installation successful
 #define COMPONENT_PROGRAM_NOT_INSTALLED		2				//Installation failed, but there are still nanites
 #define COMSIG_NANITE_SYNC "nanite_sync"						//(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component
+/// Checks if a nanite component is able to be controlled by console
+#define COMSIG_NANITE_CHECK_CONSOLE_LOCK "is_console_locked"
+/// Checks if a nanite component is able to be interfaced with by a host with innate nanite control
+#define COMSIG_NANITE_CHECK_HOST_LOCK "is_host_locked"
+/// Checks if a nanite component is able to be overwritten by viral replica
+#define COMSIG_NANITE_CHECK_VIRAL_PREVENTION "is_virus_locked"
+	#define NANITE_CHANGES_LOCKED 1
+// Internal signals that programs register to and respond with to not require for loops
+#define COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK "naniteiconsolelocked"
+#define COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK "naniteihostlocked"
+#define COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK "naniteiviruslocked"
 
 // /datum/component/storage signals
 #define COMSIG_CONTAINS_STORAGE "is_storage"						//() - returns bool.
@@ -436,6 +526,9 @@
 	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"					//from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 
+// /datum/component/squeak signals
+#define COMSIG_CROSS_SQUEAKED "cross_squeaked"							// sent when a squeak component squeaks from crossing something, to delay anything else crossing that might squeak to prevent ear hurt.
+
 // /datum/action signals
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
@@ -447,3 +540,7 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+// twitch plays
+/// Returns direction: (wipe_votes)
+#define COMSIG_TWITCH_PLAYS_MOVEMENT_DATA "twitch_plays_movement_data"

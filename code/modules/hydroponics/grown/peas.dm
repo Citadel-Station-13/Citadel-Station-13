@@ -8,6 +8,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/peas
 	maturation = 3
 	potency = 25
+	instability = 15
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "peas-grow"
@@ -61,6 +62,7 @@
 	filling_color = "#ee7bee"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list (/datum/reagent/consumable/laughsyrup = 0)
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-graphic rabbit dancing on your tongue"
@@ -78,6 +80,7 @@
 	potency = 75
 	yield = 1
 	production = 10
+	instability = 45 //The world is a very unstable place. Constantly changing.
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "worldpeas-grow"

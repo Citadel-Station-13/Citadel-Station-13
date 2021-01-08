@@ -113,8 +113,7 @@
 		for(var/i in 1 to healseverity)
 			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
 		if(totaldamage)
-			L.adjustBruteLoss(-brutedamage)
-			L.adjustFireLoss(-burndamage)
+			L.heal_overall_damage(brutedamage, burndamage, only_organic = FALSE) //Maybe a machine god shouldn't murder augmented followers instead of healing them
 			L.adjustOxyLoss(-oxydamage)
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
@@ -224,7 +223,7 @@
 				L.flash_act(1, 1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 			else //for Nar'sian weaklings
 				to_chat(L, "<span class='heavy_brass'>\"How does it feel to see the light, dog?\"</span>")
 				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \

@@ -36,12 +36,11 @@
 
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/machinery/computer/message_monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE,\
-														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/message_monitor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "telepdalog", name, 727, 510, master_ui, state)
+		ui = new(user, src, "TelecommsPDALog", name)
 		ui.open()
 
 /obj/machinery/computer/message_monitor/ui_static_data(mob/user)
@@ -389,7 +388,6 @@
 
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
 	info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-	info_links = info
 	add_overlay("paper_words")
 
 /obj/item/paper/monitorkey/LateInitialize()

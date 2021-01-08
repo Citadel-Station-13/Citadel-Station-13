@@ -42,6 +42,8 @@
 		return
 
 	. = ..()
+	if(!.)
+		return
 	new /obj/item/grown/bananapeel(target)
 
 /obj/effect/proc_holder/spell/aimed/banana_peel/update_icon()

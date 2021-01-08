@@ -369,3 +369,12 @@
 	icon_state = "plastics"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 20, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = -40)
 	flags_inv = HIDEACCESSORY
+
+//necklace
+/obj/item/clothing/accessory/necklace
+	name = "necklace"
+	desc = "A necklace."
+	icon_state = "locket"
+	obj_flags = UNIQUE_RENAME
+	custom_materials = list(/datum/material/iron=100)
+	resistance_flags = FIRE_PROOF

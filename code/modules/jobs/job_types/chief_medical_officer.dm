@@ -15,8 +15,10 @@
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_MEDICAL
+	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/cmo
+	plasma_outfit = /datum/outfit/plasmaman/cmo
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
 			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
@@ -45,7 +47,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/storage/firstaid/regular
-	suit_store = /obj/item/flashlight/pen
+	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/storage/backpack/medic

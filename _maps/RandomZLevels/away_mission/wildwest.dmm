@@ -63,72 +63,11 @@
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
-"ar" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"as" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"at" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"au" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"av" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
-	},
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
 "aw" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"ax" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
-"ay" = (
-/obj/machinery/gateway,
-/turf/open/floor/plating/ironsand{
-	icon_state = "ironsand1"
-	},
-/area/awaymission/wildwest/mines)
+	})
 "az" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -32745,9 +32684,9 @@ aT
 aN
 aN
 aT
-ar
-au
-ax
+aT
+aT
+aT
 aT
 aT
 aT
@@ -33002,9 +32941,9 @@ aT
 aN
 aN
 aT
-as
-av
-ay
+aT
+aT
+aT
 aT
 aT
 aT
@@ -33259,7 +33198,7 @@ aT
 aN
 aN
 aT
-at
+aT
 aw
 az
 aT

@@ -6,6 +6,7 @@
 	gender = PLURAL //placeholder
 	///How much blud it has for bloodsucking
 	blood_volume = 550
+	rad_flags = RAD_NO_CONTAMINATE
 
 	status_flags = CANPUSH
 
@@ -140,6 +141,15 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	//How much wounding power it has
+	var/wound_bonus = CANT_WOUND
+	//How much bare wounding power it has
+	var/bare_wound_bonus = 0
+	//If the attacks from this are sharp
+	var/sharpness = SHARP_NONE
+	//Generic flags
+	var/simple_mob_flags = NONE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
@@ -252,14 +262,11 @@
 	if(isturf(src.loc) && isopenturf(src.loc))
 		var/turf/open/ST = src.loc
 		if(ST.air)
-			var/ST_gases = ST.air.gases
 
-			var/tox = ST_gases[/datum/gas/plasma]
-			var/oxy = ST_gases[/datum/gas/oxygen]
-			var/n2  = ST_gases[/datum/gas/nitrogen]
-			var/co2 = ST_gases[/datum/gas/carbon_dioxide]
-
-			GAS_GARBAGE_COLLECT(ST.air.gases)
+			var/tox = ST.air.get_moles(/datum/gas/plasma)
+			var/oxy = ST.air.get_moles(/datum/gas/oxygen)
+			var/n2  = ST.air.get_moles(/datum/gas/nitrogen)
+			var/co2 = ST.air.get_moles(/datum/gas/carbon_dioxide)
 
 			if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])
 				. = FALSE
@@ -339,16 +346,15 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
-/mob/living/simple_animal/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Health: [round((health / maxHealth) * 100)]%")
-		return 1
+/mob/living/simple_animal/get_status_tab_items()
+	. = ..()
+	. += ""
+	. += "Health: [round((health / maxHealth) * 100)]%"
 
 /mob/living/simple_animal/proc/drop_loot()
 	if(loot.len)
 		for(var/i in loot)
-			new i(loc)
+			new i(loc, dir = src.dir)
 
 /mob/living/simple_animal/death(gibbed)
 	movement_type &= ~FLYING

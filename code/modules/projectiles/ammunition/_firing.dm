@@ -16,10 +16,7 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
 		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 
-	if(click_cooldown_override)
-		user.changeNext_move(click_cooldown_override)
-	else
-		user.changeNext_move(CLICK_CD_RANGE)
+	user.DelayNextAction(considered_action = TRUE, immediate = FALSE)
 	user.newtonian_move(get_dir(target, user))
 	update_icon()
 	return 1
@@ -39,6 +36,14 @@
 	if(isgun(fired_from))
 		var/obj/item/gun/G = fired_from
 		BB.damage *= G.projectile_damage_multiplier
+		if(HAS_TRAIT(user, TRAIT_INSANE_AIM))
+			BB.ricochets_max = max(BB.ricochets_max, 10) //bouncy!
+			BB.ricochet_chance = max(BB.ricochet_chance, 100) //it wont decay so we can leave it at 100 for always bouncing
+			BB.ricochet_auto_aim_range = max(BB.ricochet_auto_aim_range, 3)
+			BB.ricochet_auto_aim_angle = max(BB.ricochet_auto_aim_angle, 360) //it can turn full circle and shoot you in the face because our aim? is insane.
+			BB.ricochet_decay_chance = 0
+			BB.ricochet_decay_damage = max(BB.ricochet_decay_damage, 0.1)
+			BB.ricochet_incidence_leeway = 0
 
 	if(reagents && BB.reagents)
 		reagents.trans_to(BB, reagents.total_volume) //For chemical darts/bullets

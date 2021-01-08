@@ -161,12 +161,12 @@
 
 /datum/spellbook_entry/blind
 	name = "Blind"
-	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spell_type = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	cost = 1
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
-	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell_type = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	category = "Mobility"
 
 /datum/spellbook_entry/forcewall
@@ -246,7 +246,7 @@
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
-	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 
 /datum/spellbook_entry/charge
 	name = "Charge"
@@ -293,6 +293,11 @@
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
 	return dat
+
+/datum/spellbook_entry/item/timestop_katana
+	name = "Temporal Katana"
+	desc = "An oddly-weighted katana, reinforced to allow parrying, with a temporal anomaly magically shoved into it. Successful ripostes prove devastating to those unprepared."
+	item_path = /obj/item/katana/timestop
 
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
@@ -503,6 +508,7 @@
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
 	dynamic_requirement = 60
+	limit = 1
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
@@ -521,6 +527,7 @@
 	name = "Summon Magic"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
 	dynamic_requirement = 60
+	limit = 1
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map

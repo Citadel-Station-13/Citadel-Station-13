@@ -104,6 +104,9 @@
 			rack.AddComponent(/datum/component/magnetic_catch)
 
 //Whatever special stuff you want
+/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+	return
+		
 /datum/map_template/shuttle/proc/on_bought()
 	return
 
@@ -405,6 +408,13 @@
 	if("emagged" in SSshuttle.shuttle_purchase_requirements_met)
 		return TRUE
 	return FALSE
+
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "nature"
+	name = "Dynamic Environmental Interaction Shuttle"
+	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
+	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
+	credit_cost = 8000
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"

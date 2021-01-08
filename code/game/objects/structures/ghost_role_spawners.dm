@@ -75,6 +75,8 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
+		H.undershirt = "Nude"
+		H.socks = "Nude"
 		H.update_body()
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
@@ -186,10 +188,7 @@
 	else
 		new_spawn.mind.assigned_role = "Free Golem"
 
-/obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/effect/mob_spawn/human/golem/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(isgolem(user) && can_transfer)
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes" || QDELETED(src) || uses <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERY, NO_TK))

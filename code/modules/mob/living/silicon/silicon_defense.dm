@@ -70,7 +70,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/silicon/attack_hand(mob/living/carbon/human/M)
+/mob/living/silicon/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //the attack was blocked
 		return
@@ -105,14 +105,10 @@
 	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			src.take_bodypart_damage(20)
-		if(2)
-			src.take_bodypart_damage(10)
+	src.take_bodypart_damage(severity/5)
 	to_chat(src, "<span class='userdanger'>*BZZZT*</span>")
 	for(var/mob/living/M in buckled_mobs)
-		if(prob(severity*50))
+		if(prob(severity/2))
 			unbuckle_mob(M)
 			M.DefaultCombatKnockdown(40)
 			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>",

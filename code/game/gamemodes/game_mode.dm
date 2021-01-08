@@ -543,6 +543,8 @@
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
 		return 0
+	if(C.prefs?.db_flags & DB_FLAG_EXEMPT)
+		return 0
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
 	if(!isnum(C.player_age))

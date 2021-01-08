@@ -438,9 +438,20 @@
 		return
 	else
 		linked_alert.icon_state = "fleshmend"
-	owner.adjustBruteLoss(-10, FALSE)
-	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
+	if(!iscarbon(owner))
+		owner.adjustBruteLoss(-10, FALSE)
+		owner.adjustFireLoss(-5, FALSE)
+		return
+	var/mob/living/carbon/C = owner
+	var/list/damaged_parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC, BODYPART_HYBRID, BODYPART_NANITES))
+	if(damaged_parts.len)
+		for(var/obj/item/bodypart/part in damaged_parts)
+			part.heal_damage(10/damaged_parts.len, 5/damaged_parts.len, only_organic = FALSE, updating_health = FALSE)
+		C.updatehealth()
+		C.update_damage_overlays()
+
+	QDEL_LIST(C.all_scars)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
@@ -577,3 +588,62 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 	owner.updatehealth()
+
+/datum/status_effect/panacea
+	id = "Anatomic Panacea"
+	duration = 100
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/panacea
+
+/obj/screen/alert/status_effect/panacea
+	name = "Panacea"
+	desc = "We purge the impurities from our body."
+	icon_state = "panacea"
+
+// Changeling's anatomic panacea now in buff form. Directly fixes issues instead of injecting chems
+/datum/status_effect/panacea/tick()
+	var/mob/living/carbon/M = owner
+
+	//Heal brain damage and toxyloss, alongside trauma
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -8)
+	owner.adjustToxLoss(-6, forced = TRUE, toxins_type = TOX_OMNI)
+	M.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	//Purges 50 rads per tick
+	if(owner.radiation > 0)
+		owner.radiation -= min(owner.radiation, 50)
+	//Mutadone effects
+	owner.jitteriness = 0
+	if(owner.has_dna())
+		M.dna.remove_all_mutations(mutadone = TRUE)
+	if(!QDELETED(owner)) //We were a monkey, now a human
+		..()
+	// Purges toxins
+	for(var/datum/reagent/toxin/R in owner.reagents.reagent_list)
+		owner.reagents.remove_reagent(R.type, 5)
+	//Antihol effects
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 10, 0, 1)
+	M.drunkenness = max(M.drunkenness - 10, 0)
+	owner.dizziness = 0
+	owner.drowsyness = 0
+	owner.slurring = 0
+	owner.confused = 0
+	//Organ and disease cure moved from panacea.dm to buff proc
+	var/list/bad_organs = list(
+		owner.getorgan(/obj/item/organ/body_egg),
+		owner.getorgan(/obj/item/organ/zombie_infection))
+	for(var/o in bad_organs)
+		var/obj/item/organ/O = o
+		if(!istype(O))
+			continue
+		O.Remove()
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			C.vomit(0, toxic = TRUE)
+		O.forceMove(get_turf(owner))
+	if(isliving(owner))
+		var/mob/living/L = owner
+		for(var/thing in L.diseases)
+			var/datum/disease/D = thing
+			if(D.severity == DISEASE_SEVERITY_POSITIVE)
+				continue
+			D.cure()

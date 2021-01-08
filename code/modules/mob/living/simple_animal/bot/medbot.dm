@@ -574,17 +574,20 @@
 			if(!C.reagents.has_reagent(R.type))
 				return TRUE
 
+	var/list/brute_damaged_bodyparts = C.get_damaged_bodyparts(TRUE, FALSE, status = list(BODYPART_ORGANIC))
+	var/list/burn_damaged_bodyparts = C.get_damaged_bodyparts(FALSE, TRUE, status = list(BODYPART_ORGANIC))
+
 	//They're injured enough for it!
-	if((!C.reagents.has_reagent(treatment_brute_avoid)) && (C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
+	if(brute_damaged_bodyparts.len && (!C.reagents.has_reagent(treatment_brute_avoid)) && (C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
 		return TRUE //If they're already medicated don't bother!
 
 	if((!C.reagents.has_reagent(treatment_oxy_avoid)) && (C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(treatment_oxy)))
 		return TRUE
 
-	if((!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
+	if(burn_damaged_bodyparts.len && (!C.reagents.has_reagent(treatment_fire_avoid)) && (C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_fire)))
 		return TRUE
 	var/treatment_toxavoid = get_avoidchem_toxin(C)
-	if(((isnull(treatment_toxavoid) || !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
+	if(!HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) && ((isnull(treatment_toxavoid) || !C.reagents.has_reagent(treatment_toxavoid))) && (C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(get_healchem_toxin(C))))
 		return TRUE
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
@@ -604,7 +607,7 @@
 /mob/living/simple_animal/bot/medbot/proc/get_healchem_toxin(mob/M)
 	return HAS_TRAIT(M, TRAIT_TOXINLOVER)? treatment_tox_toxlover : treatment_tox
 
-/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/medbot/on_attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
 
@@ -625,7 +628,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		patient = C

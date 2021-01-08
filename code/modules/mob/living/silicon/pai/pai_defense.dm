@@ -7,8 +7,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	take_holo_damage(50/severity)
-	DefaultCombatKnockdown(400/severity)
+	take_holo_damage(severity/2)
+	DefaultCombatKnockdown(severity*4)
 	silent = max(silent, (PAI_EMP_SILENCE_DURATION) / SSmobs.wait / severity)
 	if(holoform)
 		fold_in(force = TRUE)
@@ -28,8 +28,7 @@
 			fold_in(force = 1)
 			DefaultCombatKnockdown(200)
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
+/mob/living/silicon/pai/on_attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)
 			visible_message("<span class='notice'>[user] gently pats [src] on the head, eliciting an off-putting buzzing from its holographic field.</span>",
@@ -88,7 +87,7 @@
 /mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/pai/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
 	return FALSE
 
 /mob/living/silicon/pai/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -112,7 +111,7 @@
 /mob/living/silicon/pai/getFireLoss()
 	return emittermaxhealth - emitterhealth
 
-/mob/living/silicon/pai/getToxLoss()
+/mob/living/silicon/pai/getToxLoss(toxins_type = TOX_OMNI)
 	return FALSE
 
 /mob/living/silicon/pai/getOxyLoss()
@@ -130,7 +129,7 @@
 /mob/living/silicon/pai/setStaminaLoss()
 	return FALSE
 
-/mob/living/silicon/pai/setToxLoss()
+/mob/living/silicon/pai/setToxLoss(toxins_type = TOX_OMNI)
 	return FALSE
 
 /mob/living/silicon/pai/setOxyLoss()

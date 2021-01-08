@@ -1,12 +1,10 @@
 /obj/mecha/proc/get_armour_facing(relative_dir)
 	switch(relative_dir)
-		if(0) // BACKSTAB!
+		if(180) // BACKSTAB!
 			return facing_modifiers[BACK_ARMOUR]
-		if(45, 90, 270, 315)
-			return facing_modifiers[SIDE_ARMOUR]
-		if(225, 180, 135)
+		if(0, 45) // direct or 45 degrees off
 			return facing_modifiers[FRONT_ARMOUR]
-	return 1 //always return non-0
+	return facing_modifiers[SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
 
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -43,7 +41,7 @@
 				break
 
 	if(attack_dir)
-		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
+		var/facing_modifier = get_armour_facing(abs(dir2angle(dir) - dir2angle(attack_dir)))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
@@ -54,11 +52,7 @@
 		. *= booster_damage_modifier
 
 
-/obj/mecha/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+/obj/mecha/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -146,8 +140,8 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
-		take_damage(30 / severity, BURN, "energy", 1)
+		use_power(cell.charge*severity/100)
+		take_damage(severity/3, BURN, "energy", 1)
 	mecha_log_message("EMP detected", color="red")
 
 	if(istype(src, /obj/mecha/combat))
@@ -255,7 +249,7 @@
 		return
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
@@ -272,12 +266,8 @@
 		return 1
 
 	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>")
-			return
-		trackers += W
-		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
-		diag_hud_set_mechtracking()
+		var/obj/item/mecha_parts/mecha_tracking/tracker = W
+		tracker.try_attach_part(user, src)
 		return
 	else
 		return ..()
@@ -319,7 +309,7 @@
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 
 /obj/mecha/narsie_act()
-	emp_act(EMP_HEAVY)
+	emp_act(100)
 
 /obj/mecha/ratvar_act()
 	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)

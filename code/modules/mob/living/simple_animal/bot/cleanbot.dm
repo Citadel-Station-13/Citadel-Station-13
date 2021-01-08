@@ -313,7 +313,7 @@
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/cleanable/semen,
-		/obj/effect/decal/cleanable/femcum,
+		/obj/effect/decal/cleanable/semen/femcum,
 		/obj/effect/decal/cleanable/generic,
 		/obj/effect/decal/cleanable/glass,,
 		/obj/effect/decal/cleanable/cobweb,
@@ -341,7 +341,7 @@
 
 	target_types = typecacheof(target_types)
 
-/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(istype(A, /obj/effect/decal/cleanable))
 		anchored = TRUE
 		icon_state = "cleanbot-c"

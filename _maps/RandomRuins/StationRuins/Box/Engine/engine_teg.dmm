@@ -71,8 +71,9 @@
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
 "di" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "dl" = (
 /obj/structure/cable{
@@ -304,12 +305,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "kH" = (
@@ -523,6 +518,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/sign/warning/enginesafety{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "qv" = (
@@ -543,7 +541,13 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "qN" = (
 /obj/structure/table/reinforced,
@@ -848,6 +852,10 @@
 /obj/machinery/igniter{
 	id = "TEG_igniter"
 	},
+/mob/living/carbon/monkey{
+	name = "Mumkey Jones"
+	},
+/obj/item/clothing/head/hardhat/atmos,
 /turf/open/floor/engine/vacuum,
 /area/engine/engineering)
 "An" = (
@@ -882,14 +890,6 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "TEG - North Center";
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "AX" = (
@@ -1042,12 +1042,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"EI" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/atmospherics/pipe/simple/orange/visible,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "EL" = (
 /turf/closed/wall,
 /area/engine/engineering)
@@ -1080,6 +1074,11 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"Fs" = (
+/obj/structure/rack,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "FG" = (
@@ -1218,11 +1217,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Jd" = (
-/obj/machinery/light,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/pipe/manifold/orange/visible,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1312,15 +1306,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "LD" = (
@@ -1372,6 +1357,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Nz" = (
@@ -1429,12 +1415,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	locked = 0;
-	pixel_y = -22
-	},
 /obj/machinery/light,
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Pz" = (
@@ -1451,6 +1435,9 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1522,12 +1509,11 @@
 /turf/open/space,
 /area/space/nearstation)
 "Rl" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Rz" = (
@@ -1602,7 +1588,13 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "TE" = (
-/obj/structure/closet/crate/internals,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "TH" = (
@@ -1648,6 +1640,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/camera{
+	c_tag = "TEG - North Center";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Uq" = (
@@ -1671,17 +1667,14 @@
 /area/engine/engineering)
 "UT" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "UY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1811,10 +1804,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/structure/extinguisher_cabinet{
-	dir = 4;
-	pixel_y = -27
-	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "YC" = (
@@ -1837,9 +1826,10 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "YP" = (
-/obj/structure/rack,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/item/pipe_dispenser,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "YQ" = (
@@ -1878,7 +1868,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "Zu" = (
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 6
+	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1887,13 +1879,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/sign/warning/securearea{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ZC" = (
@@ -2170,7 +2155,7 @@ iD
 MP
 MP
 MP
-ij
+MP
 yX
 qn
 qn
@@ -2251,11 +2236,11 @@ ME
 QS
 uB
 Ok
-Ok
-Ok
+di
+di
 Ok
 Bz
-Zu
+lI
 Wc
 Ok
 zG
@@ -2307,8 +2292,8 @@ iP
 wk
 go
 fF
-EI
-EI
+UT
+UT
 sn
 qc
 Nh
@@ -2367,7 +2352,7 @@ KA
 KA
 Ok
 dZ
-bO
+Zu
 ev
 tl
 qb
@@ -2477,7 +2462,7 @@ IP
 Zs
 sD
 Jd
-EL
+YP
 YG
 AX
 PK
@@ -2505,7 +2490,7 @@ SX
 ou
 vG
 Zv
-di
+Xe
 qJ
 Lw
 Xe
@@ -2595,7 +2580,7 @@ PK
 Dv
 Dv
 bO
-YP
+sH
 As
 yN
 yN
@@ -2651,7 +2636,7 @@ eh
 zx
 XW
 ST
-Ok
+Fs
 MP
 tw
 tw

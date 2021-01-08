@@ -51,7 +51,8 @@
 #define INIT_ORDER_FAIL2TOPIC		99
 #define INIT_ORDER_TITLE			98
 #define INIT_ORDER_GARBAGE			95
-#define INIT_ORDER_DBCORE			93
+#define INIT_ORDER_DBCORE			94
+#define INIT_ORDER_STATPANELS		93
 #define INIT_ORDER_BLACKBOX			92
 #define INIT_ORDER_SERVER_MAINT		91
 #define INIT_ORDER_INPUT			90
@@ -86,6 +87,7 @@
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
 
 
@@ -93,7 +95,6 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_VORE			5
-#define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10
@@ -107,6 +108,7 @@
 #define FIRE_PRIORITY_INSTRUMENTS	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
+#define FIRE_PRIORITY_HUDS			40
 #define FIRE_PRIORITY_NETWORKS		40
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40
@@ -120,7 +122,9 @@
 #define FIRE_PRIORITY_PROJECTILES	200
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_STATPANEL		390
 #define FIRE_PRIORITY_CHAT			400
+#define FIRE_PRIORITY_RUNECHAT		410
 #define FIRE_PRIORITY_OVERLAYS		500
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 
@@ -137,28 +141,26 @@
 // SSair run section
 #define SSAIR_PIPENETS 1
 #define SSAIR_ATMOSMACHINERY 2
-#define SSAIR_REACTQUEUE 3
-#define SSAIR_EXCITEDGROUPS 4
-#define SSAIR_HIGHPRESSURE 5
-#define SSAIR_HOTSPOTS 6
-#define SSAIR_SUPERCONDUCTIVITY 7
-#define SSAIR_REBUILD_PIPENETS 8
+#define SSAIR_EXCITEDGROUPS 3
+#define SSAIR_HIGHPRESSURE 4
+#define SSAIR_HOTSPOTS 5
+#define SSAIR_SUPERCONDUCTIVITY 6
+#define SSAIR_REBUILD_PIPENETS 7
+#define SSAIR_EQUALIZE 8
+#define SSAIR_ACTIVETURFS 9
 
+// |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
-		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
-			rm.Cut();\
+			A.remove_overlays = null;\
 		}\
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
-			ad.Cut();\
-		}\
-		if(LAZYLEN(po)){\
-			A.overlays |= po;\
+			A.add_overlays = null;\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

@@ -46,13 +46,6 @@
 	range = 4
 	log_override = TRUE
 
-/obj/item/gun/energy/kinetic_accelerator/premiumka/update_icon()
-	..()
-	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
-
 /obj/item/gun/energy/kinetic_accelerator/getinaccuracy(mob/living/user, bonus_spread, stamloss)
 	var/old_fire_delay = fire_delay //It's pretty irrelevant tbh but whatever.
 	fire_delay = overheat_time
@@ -112,9 +105,19 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
+/obj/item/gun/energy/kinetic_accelerator/cyborg/Destroy()
+	for(var/obj/item/borg/upgrade/modkit/M in modkits)
+		M.uninstall(src)
+	return ..()
+
 /obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg
 	holds_charge = TRUE
 	unique_frequency = TRUE
+
+/obj/item/gun/energy/kinetic_accelerator/premiumka/cyborg/Destroy()
+	for(var/obj/item/borg/upgrade/modkit/M in modkits)
+		M.uninstall(src)
+	return ..()
 
 /obj/item/gun/energy/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
@@ -186,12 +189,10 @@
 	update_icon()
 	overheat = FALSE
 
-/obj/item/gun/energy/kinetic_accelerator/update_icon()
-	..()
+/obj/item/gun/energy/kinetic_accelerator/update_overlays()
+	. = ..()
 	if(!can_shoot())
-		add_overlay("[icon_state]_empty")
-	else
-		cut_overlays()
+		. += "[icon_state]_empty"
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
@@ -293,11 +294,11 @@
 	else
 		..()
 
-/obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-			return install(H, usr)
+/obj/item/borg/upgrade/modkit/afterInstall(mob/living/silicon/robot/R)
+	for(var/obj/item/gun/energy/kinetic_accelerator/H in R.module.modules)
+		if(install(H, R)) //It worked
+			return
+	to_chat(R, "<span class='alert'>Upgrade error - Aborting Kinetic Accelerator linking.</span>") //No applicable KA found, insufficient capacity, or some other problem.
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
@@ -331,12 +332,6 @@
 	else
 		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
 		. = FALSE
-
-/obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (.)
-		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module.modules)
-			uninstall(KA)
 
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA, forcemove = TRUE)
 	KA.modkits -= src

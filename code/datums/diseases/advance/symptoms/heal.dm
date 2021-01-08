@@ -263,18 +263,18 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
+	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
+		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
+		active_coma = TRUE
+		addtimer(CALLBACK(src, .proc/coma, M), 60)
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
-	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
-		return power * 0.9
 	else if(M.stat == SOFT_CRIT)
 		return power * 0.5
 	else if(M.IsSleeping())
 		return power * 0.25
-	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
-		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
-		active_coma = TRUE
-		addtimer(CALLBACK(src, .proc/coma, M), 60)
+	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+		return power * 0.9
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
@@ -404,7 +404,7 @@
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
-		plasmamount = environment.gases[/datum/gas/plasma]
+		plasmamount = environment.get_moles(/datum/gas/plasma)
 		if(plasmamount && plasmamount > GLOB.meta_gas_visibility[/datum/gas/plasma]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma))

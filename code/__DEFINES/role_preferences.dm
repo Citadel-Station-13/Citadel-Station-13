@@ -17,6 +17,7 @@
 #define ROLE_ALIEN					"xenomorph"
 #define ROLE_PAI					"pAI"
 #define ROLE_CULTIST				"cultist"
+#define ROLE_HERETIC				"Heretic"
 #define ROLE_BLOB					"blob"
 #define ROLE_NINJA					"space ninja"
 #define ROLE_MONKEY					"monkey"
@@ -39,6 +40,7 @@
 //#define ROLE_MONSTERHUNTER			"monster hunter" Disabled for now
 #define ROLE_GHOSTCAFE				"ghostcafe"
 #define ROLE_MINOR_ANTAG			"minorantag"
+#define ROLE_RESPAWN				"respawnsystem"
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role
@@ -64,6 +66,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE,
 	ROLE_GANG = /datum/game_mode/gang,
+	ROLE_HERETIC = /datum/game_mode/heretics,
 	ROLE_BLOODSUCKER = /datum/game_mode/bloodsucker
 	//ROLE_MONSTERHUNTER Disabled for now
 ))

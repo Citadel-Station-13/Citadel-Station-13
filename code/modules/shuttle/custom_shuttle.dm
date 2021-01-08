@@ -68,7 +68,6 @@
 
 	popup = new(user, "computer", M ? M.name : "shuttle", 350, 450)
 	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/custom_shuttle/Topic(href, href_list)
@@ -257,7 +256,7 @@
 		return
 	..()
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/custom/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/shuttle_docker/custom/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!shuttleId)
 		to_chat(user, "<span class='warning'>You must link the console to a shuttle first.</span>")
 		return

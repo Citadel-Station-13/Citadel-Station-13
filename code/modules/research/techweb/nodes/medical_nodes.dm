@@ -24,6 +24,23 @@
 	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/plumbing
+	id = "plumbing"
+	display_name = "Reagent Plumbing Technology"
+	description = "Plastic tubes, and machinery used for manipulating things in them."
+	prereq_ids = list("base")
+	design_ids = list("acclimator", "disposer", "plumb_filter", "plumb_synth", "plumb_grinder", "reaction_chamber", "duct_print", "plumb_splitter", "pill_press", "plumb_pump", "plumb_in", "plumb_out", "plumb_tank", "medipen_refiller")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
+
+/datum/techweb_node/advplumbing
+	id = "advplumbing"
+	display_name = "Advanced Plumbing Technology"
+	description = "Plumbing RCD."
+	prereq_ids = list("plumbing", "adv_engi")
+	design_ids = list("plumb_rcd", "autohydrotray", "rplunger")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 //////////////////////Cybernetics/////////////////////
 
 /datum/techweb_node/surplus_limbs
@@ -63,7 +80,7 @@
 	display_name = "Upgraded Cybernetic Organs"
 	description = "We have the technology to upgrade him."
 	prereq_ids = list("cyber_organs")
-	design_ids = list("cybernetic_ears_u", "cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u")
+	design_ids = list("cybernetic_ears_u", "cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u", "ipc_stomach")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/cyber_implants
@@ -71,7 +88,7 @@
 	display_name = "Cybernetic Implants"
 	description = "Electronic implants that improve humans."
 	prereq_ids = list("adv_biotech", "adv_datatheory")
-	design_ids = list("ci-nutriment", "ci-breather", "ci-gloweyes", "ci-welding", "ci-medhud", "ci-sechud", "ci-service")
+	design_ids = list("ci-nutriment", "ci-breather", "ci-gloweyes", "ci-welding", "ci-medhud", "ci-sechud", "ci-service", "ci-power-cord")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/adv_cyber_implants
@@ -79,7 +96,7 @@
 	display_name = "Advanced Cybernetic Implants"
 	description = "Upgraded and more powerful cybernetic implants."
 	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
-	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus")
+	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus", "ci-robot-radshielding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/combat_cyber_implants
@@ -104,7 +121,7 @@
 	display_name = "Advanced Surgery Tools"
 	description = "Refined and improved redesigns for the run-of-the-mill medical utensils."
 	prereq_ids = list("adv_biotech", "adv_surgery")
-	design_ids = list("drapes", "retractor_adv", "surgicaldrill_adv", "scalpel_adv")
+	design_ids = list("drapes", "retractor_adv", "surgicaldrill_adv", "scalpel_adv", "bonesetter", "surgical_tape")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/adv_surgery

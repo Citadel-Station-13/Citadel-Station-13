@@ -39,7 +39,7 @@
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
-	verbs += /mob/living/proc/lay_down
+	add_verb(src, /mob/living/proc/lay_down)
 
 /mob/living/simple_animal/pet/cat/ComponentInitialize()
 	. = ..()
@@ -283,7 +283,7 @@
 		if(!D.is_decorated)
 			D.decorate_donut()
 
-/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
+/mob/living/simple_animal/pet/cat/cak/on_attack_hand(mob/living/L)
 	. = ..()
 	if(.) //the attack was blocked
 		return

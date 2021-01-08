@@ -83,7 +83,7 @@
 	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/analyzer(src)
+	new /obj/item/analyzer/ranged(src)
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -120,7 +120,7 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
-	new /obj/item/multitool(src)
+	new /obj/item/multitool/advanced/brass(src)
 	new /obj/item/stack/cable_coil(src, 30, "yellow")
 
 /obj/item/storage/belt/medical
@@ -162,6 +162,7 @@
 		/obj/item/surgical_drapes, //for true paramedics
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
 		/obj/item/surgicaldrill,
 		/obj/item/retractor,
 		/obj/item/cautery,
@@ -181,7 +182,8 @@
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
-		/obj/item/reagent_containers/chem_pack
+		/obj/item/reagent_containers/chem_pack,
+		/obj/item/stack/sticky_tape //surgical tape
 		))
 
 /obj/item/storage/belt/medical/surgery_belt_adv
@@ -444,10 +446,11 @@
 
 /obj/item/storage/belt/durathread
 	name = "durathread toolbelt"
-	desc = "A toolbelt made out of durathread, it seems resistant enough to hold even big tools like an RCD, it also has higher capacity."
+	desc = "A toolbelt made out of durathread, it seems robust enough to hold bigger tools like RCDs or RPDs, with enough pouches to hold more gear than a normal belt."
 	icon_state = "webbing-durathread"
 	item_state = "webbing-durathread"
 	resistance_flags = FIRE_PROOF
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE //If normal belts get this, the upgraded version should too
 
 /obj/item/storage/belt/durathread/ComponentInitialize()
 	. = ..()
@@ -467,7 +470,7 @@
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/geiger_counter,
-		/obj/item/extinguisher/mini,
+		/obj/item/extinguisher,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
@@ -475,7 +478,7 @@
 		/obj/item/assembly/signaler,
 		/obj/item/lightreplacer,
 		/obj/item/rcd_ammo,
-		/obj/item/construction/rcd,
+		/obj/item/construction,
 		/obj/item/pipe_dispenser,
 		/obj/item/stack/rods,
 		/obj/item/stack/tile/plasteel,
@@ -488,6 +491,7 @@
 	desc = "A belt for holding grenades."
 	icon_state = "grenadebeltnew"
 	item_state = "security"
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/item/storage/belt/grenade/ComponentInitialize()
 	. = ..()
@@ -798,7 +802,8 @@
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/storage/belt/sabre/PopulateContents()
-	new starting_sword(src)
+	if(starting_sword)
+		new starting_sword(src)
 
 /obj/item/storage/belt/sabre/rapier
 	name = "rapier sheath"
@@ -812,3 +817,113 @@
 	fitting_swords = list(/obj/item/melee/rapier)
 	starting_sword = /obj/item/melee/rapier
 
+/obj/item/storage/belt/sabre/secbelt
+	name = "security sheath"
+	desc = "A statement on modern practical fashion; this limber black sheath is fitted to a lightened security belt, allowing one to look fashionable with their sword-shaped stun-baton, while of course carrying less things."
+	icon_state = "secsheath"
+	item_state = "secsheath"
+	w_class = WEIGHT_CLASS_BULKY
+	starting_sword = /obj/item/melee/baton/stunsword
+	content_overlays = TRUE
+
+/obj/item/storage/belt/sabre/secbelt/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 5
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.rustle_sound = TRUE
+	STR.quickdraw = FALSE
+	STR.can_hold = typecacheof(list( // cannot carry other batons
+		/obj/item/melee/baton/stunsword,
+		/obj/item/grenade,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash/handheld,
+		/obj/item/clothing/glasses,
+		/obj/item/reagent_containers/food/snacks/donut,
+		/obj/item/flashlight/seclite,
+		/obj/item/radio,
+		/obj/item/clothing/gloves,
+		/obj/item/restraints/legcuffs/bola
+		))
+
+/obj/item/storage/belt/sabre/secbelt/PopulateContents()
+	new /obj/item/melee/baton/stunsword(src)
+	update_icon()
+
+/obj/item/storage/belt/sabre/twin
+	name = "twin sheath"
+	desc = "Two sheaths. One is capable of holding a katana (or bokken) and the other a wakizashi. You could put two wakizashis in if you really wanted to. Now you can really roleplay as a samurai."
+	icon_state = "2sheath"
+	item_state = "katana" //this'll do.
+	w_class = WEIGHT_CLASS_BULKY
+	fitting_swords = list(/obj/item/melee/smith/wakizashi, /obj/item/melee/smith/twohand/katana, /obj/item/melee/bokken)
+	starting_sword = null
+
+/obj/item/storage/belt/sabre/twin/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 2
+	STR.max_w_class = WEIGHT_CLASS_BULKY + WEIGHT_CLASS_NORMAL //katana and waki.
+	STR.max_combined_w_class = 7
+
+/obj/item/melee/smith/twohand/katana/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/smith/twohand/katana/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/smith/wakizashi/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/smith/wakizashi/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/bokken/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/melee/bokken/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/twin/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	. = ..()
+
+/obj/item/storage/belt/plant
+	name = "botanical belt"
+	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	icon_state = "plantbelt"
+	item_state = "plantbelt"
+	content_overlays = TRUE
+
+/obj/item/storage/belt/plant/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/plant_analyzer,
+		/obj/item/seeds,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/hatchet,
+		/obj/item/shovel/spade,
+		/obj/item/gun/energy/floragun
+	))

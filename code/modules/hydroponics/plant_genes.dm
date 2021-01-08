@@ -89,6 +89,12 @@
 /datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
 	S.potency = value
 
+/datum/plant_gene/core/instability
+	name = "Stability"
+	value = 10
+
+/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/S)
+	S.instability = value
 
 /datum/plant_gene/core/weed_rate
 	name = "Weed Growth Rate"
@@ -157,12 +163,12 @@
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
-	reagent_id = "polypyr"
+	reagent_id = /datum/reagent/medicine/polypyr
 	rate = 0.15
 
 /datum/plant_gene/reagent/liquidelectricity
 	name = "Liquid Electricity"
-	reagent_id = "liquidelectricity"
+	reagent_id = /datum/reagent/consumable/liquidelectricity
 	rate = 0.1
 
 // Various traits affecting the product. Each must be somehow useful.

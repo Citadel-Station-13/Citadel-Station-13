@@ -10,7 +10,7 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+/obj/machinery/wish_granter/on_attack_hand(mob/living/carbon/user)
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return
@@ -31,7 +31,7 @@
 			user.dna.add_mutation(XRAY)
 			user.dna.add_mutation(SPACEMUT)
 			user.dna.add_mutation(TK)
-			user.next_move_modifier *= 0.5	//half the delay between attacks!
+			user.action_cooldown_mod *= 0.5
 			to_chat(user, "Things around you feel slower!")
 			charges--
 			insisting = FALSE
@@ -84,7 +84,7 @@
 						if(is_station_level(T.z))
 							destinations += B
 					var/chosen_beacon = pick(destinations)
-					var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
+					var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
 					try_move_adjacent(J)
 					playsound(src,'sound/effects/sparks4.ogg',50,1)
 					charges--
@@ -101,7 +101,7 @@
 						to_chat(user, "[killreward] materializes into your hands!")
 					else
 						to_chat(user, "[killreward] materializes onto the floor.")
-					user.next_move_modifier *= 0.8	//20% less delay between attacks!
+					user.action_cooldown_mod *= 0.8
 					to_chat(user, "Things around you feel slightly slower!")
 					var/mob/living/simple_animal/hostile/venus_human_trap/killwish = new /mob/living/simple_animal/hostile/venus_human_trap(loc)
 					killwish.maxHealth = 1500

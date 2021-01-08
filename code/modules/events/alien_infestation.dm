@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
 	gamemode_blacklist = list("dynamic")
-	min_players = 10
+	min_players = 25
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/alien_infestation

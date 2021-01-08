@@ -232,7 +232,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //lollipop, but vitamins = toxins
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
-	foodtype = JUNKFOOD | SUGAR
+	foodtype = JUNKFOOD | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/tobiko
 	name = "tobiko"
@@ -451,7 +451,7 @@
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
-	foodtype = JUNKFOOD | SUGAR
+	foodtype = JUNKFOOD | SUGAR | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/lollipop/Initialize()
 	. = ..()
@@ -556,6 +556,26 @@
 	filling_color = "#FFD700"
 	tastes = list("butter" = 1)
 	foodtype = JUNKFOOD
+
+/obj/item/reagent_containers/food/snacks/mashedpotato
+	name = "mashed potatoes"
+	desc = "A diced and smashed potato, served with sour cream."
+	icon_state = "mashedpotato"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#FFD700"
+	tastes = list("butter" = 1, "sour cream" = 1)
+	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/butteredpotato
+	name = "buttered potatoes"
+	desc = "Mashed potatoes served with an ample serving of butter, and sour cream."
+	icon_state = "buttermash"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sodiumchloride = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#FFD700"
+	tastes = list("potatoes" = 1, "sour cream" = 1, "butter" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/reagent_containers/food/snacks/onionrings
 	name = "onion rings"

@@ -5,6 +5,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	baseturfs = /turf/open/floor/plating
+	dirt_buildup_allowed = TRUE
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -13,7 +14,7 @@
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.004
 	heat_capacity = 10000
 	intact = 1
 	var/broken = 0
@@ -46,7 +47,7 @@
 					"basalt0","basalt1","basalt2","basalt3","basalt4",
 					"basalt5","basalt6","basalt7","basalt8","basalt9","basalt10","basalt11","basalt12",
 					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "carpetsymbol", "carpetstar",
-					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
+					"carpetcorner", "carpetside", "carpet", "arcade", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
 					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 					"ironsand12", "ironsand13", "ironsand14", "ironsand15",
 					"snow", "snow0", "snow1", "snow2", "snow3", "snow4", "snow5", "snow6", "snow7", "snow8", "snow9", "snow10", "snow11", "snow12", "snow-ice", "snow_dug",
@@ -137,6 +138,9 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
+	for(var/obj/effect/decal/cleanable/C in src)
+		if(C.wiped_by_floor_change)
+			qdel(C)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
@@ -162,7 +166,7 @@
 	return 0
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	return intact ? pry_tile(I, user) : FALSE
+	return intact ? FORCE_BOOLEAN(pry_tile(I, user)) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)

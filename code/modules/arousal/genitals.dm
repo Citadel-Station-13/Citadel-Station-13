@@ -16,7 +16,7 @@
 	var/fluid_efficiency = 1
 	var/fluid_rate = CUM_RATE
 	var/fluid_mult = 1
-	var/time_since_last_orgasm = 500
+	var/last_orgasmed = 0
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/obj/item/organ/genital/linked_organ
 	var/linked_organ_slot //used for linking an apparatus' organ to its other half on update_link().
@@ -24,10 +24,6 @@
 
 /obj/item/organ/genital/Initialize(mapload, do_update = TRUE)
 	. = ..()
-	if(fluid_id)
-		create_reagents(fluid_max_volume, NONE, NO_REAGENTS_VALUE)
-		if(CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
-			reagents.add_reagent(fluid_id, fluid_max_volume)
 	if(do_update)
 		update()
 
@@ -140,8 +136,6 @@
 /obj/item/organ/genital/proc/modify_size(modifier, min = -INFINITY, max = INFINITY)
 	fluid_max_volume += modifier*2.5
 	fluid_rate += modifier/10
-	if(reagents)
-		reagents.maximum_volume = fluid_max_volume
 	return
 
 /obj/item/organ/genital/proc/update_size()
@@ -151,18 +145,14 @@
 	if(!owner || owner.stat == DEAD)
 		aroused_state = FALSE
 
-/obj/item/organ/genital/on_life()
-	. = ..()
-	if(!reagents || !.)
-		return
-	reagents.maximum_volume = fluid_max_volume
-	if(fluid_id && CHECK_BITFIELD(genital_flags, GENITAL_FUID_PRODUCTION))
-		time_since_last_orgasm++
-
 /obj/item/organ/genital/proc/generate_fluid(datum/reagents/R)
-	var/amount = clamp(fluid_rate * time_since_last_orgasm * fluid_mult,0,fluid_max_volume)
+	var/amount = clamp((fluid_rate * ((world.time - last_orgasmed) / (10 SECONDS)) * fluid_mult),0,fluid_max_volume)
 	R.clear_reagents()
-	R.add_reagent(fluid_id,amount)
+	R.maximum_volume = fluid_max_volume
+	if(fluid_id)
+		R.add_reagent(fluid_id,amount)
+	else if(linked_organ?.fluid_id)
+		R.add_reagent(linked_organ.fluid_id,amount)
 	return TRUE
 
 /obj/item/organ/genital/proc/update_link()
@@ -231,23 +221,6 @@
 
 /obj/item/organ/genital/proc/get_features(mob/living/carbon/human/H)
 	return
-
-
-//procs to handle sprite overlays being applied to humans
-
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
-	. = ..()
-	if(!. && I && slot && !(slot in GLOB.no_genitals_update_slots)) //the item was successfully equipped, and the chosen slot wasn't merely storage, hands or cuffs.
-		update_genitals()
-
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
-	var/no_update = FALSE
-	if(!I || I == l_store || I == r_store || I == s_store || I == handcuffed || I == legcuffed || get_held_index_of_item(I)) //stops storages, cuffs and held items from triggering it.
-		no_update = TRUE
-	. = ..()
-	if(!. || no_update)
-		return
-	update_genitals()
 
 /mob/living/carbon/human/proc/update_genitals()
 	if(QDELETED(src))

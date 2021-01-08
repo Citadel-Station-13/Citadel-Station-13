@@ -91,7 +91,7 @@
 	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
 	var/light_range = FLOOR(nanite_amount/50, 1) - 1
 	explosion(host_mob, 0, heavy_range, light_range)
-	qdel(nanites)
+	nanites.delete_nanites()
 
 //TODO make it defuse if triggered again
 
@@ -123,7 +123,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/emp/on_trigger(comm_message)
-	empulse(host_mob, 1, 2)
+	empulse_using_range(host_mob, 3)
 
 /datum/nanite_program/pyro/active_effect()
 	host_mob.fire_stacks += 1

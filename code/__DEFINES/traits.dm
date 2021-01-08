@@ -104,7 +104,9 @@
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
+#define TRAIT_BOMBIMMUNE		"bomb_immunity"
 #define TRAIT_RADIMMUNE			"rad_immunity"
+#define TRAIT_GENELESS			"geneless"
 #define TRAIT_VIRUSIMMUNE		"virus_immunity"
 #define TRAIT_PIERCEIMMUNE		"pierce_immunity"
 #define TRAIT_NODISMEMBER		"dismember_immunity"
@@ -116,6 +118,8 @@
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
 #define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
 #define TRAIT_TOXINLOVER		"toxinlover"
+#define TRAIT_ROBOTIC_ORGANISM	"robotic_organism"
+#define TRAIT_ROBOT_RADSHIELDING	"robot_radshielding"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
@@ -162,6 +166,7 @@
 #define TRAIT_NO_MIDROUND_ANTAG	"no-midround-antag" //can't be turned into an antag by random events
 #define TRAIT_PUGILIST	"pugilist" //This guy punches people for a living
 #define TRAIT_KI_VAMPIRE	"ki-vampire" //when someone with this trait rolls maximum damage on a punch and stuns the target, they regain some stamina and do clone damage
+#define TRAIT_MAULER	"mauler" // this guy punches the shit out of people to hurt them, not to drain their stamina
 #define TRAIT_PASSTABLE			"passtable"
 #define TRAIT_GIANT				"giant"
 #define TRAIT_DWARF				"dwarf"
@@ -178,6 +183,7 @@
 #define TRAIT_FREERUNNING		"freerunning"
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
+#define TRAIT_INSANE_AIM		"insane_aim" //they don't miss. they never miss. it was all part of their immaculate plan.
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 #define TRAIT_DRUNK_HEALING		"drunk_healing"
 #define TRAIT_TAGGER			"tagger"
@@ -199,10 +205,18 @@
 #define TRAIT_THERMAL_VISION    "thermal_vision"
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 #define TRAIT_NO_INTERNALS		"no-internals"
-#define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
+#define TRAIT_TOXIC_ALCOHOL		"alcohol_intolerance"
 #define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 #define TRAIT_FAST_PUMP				"fast_pump"
-#define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good....
+#define TRAIT_NO_PROCESS_FOOD	"no-process-food" // You don't get benefits from nutriment, nor nutrition from reagent consumables
+#define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good...
+#define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen" /// Prevents stamina buffer regeneration
+#define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen" /// Prevents stamina regeneration
+#define TRAIT_ARMOR_BROKEN		"armor_broken" //acts as if you are wearing no clothing when taking damage, does not affect non-clothing sources of protection
+/// forces update_density to make us not dense
+#define TRAIT_LIVING_NO_DENSITY			"living_no_density"
+/// forces us to not render our overlays
+#define TRAIT_HUMAN_NO_RENDER			"human_no_render"
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -215,6 +229,8 @@
 #define TRAIT_MOBILITY_NOPICKUP		"mobility_nopickup"
 /// Disallow item use
 #define TRAIT_MOBILITY_NOUSE		"mobility_nouse"
+///Disallow resting/unresting
+#define TRAIT_MOBILITY_NOREST		"mobility_norest"
 
 #define TRAIT_SWIMMING			"swimming"			//only applied by /datum/element/swimming, for checking
 
@@ -228,7 +244,7 @@
 #define TRAIT_SPRINT_LOCKED				"sprint_locked"
 
  //non-mob traits
-#define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
+#define TRAIT_PARALYSIS				"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
 
@@ -256,6 +272,7 @@
 #define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
+#define CLOTHING_TRAIT "clothing"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 #define GHOSTROLE_TRAIT "ghostrole"
 #define APHRO_TRAIT "aphro"
@@ -296,6 +313,7 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
+#define ROBOT_RADSHIELDING_IMPLANT_TRAIT "robot-radshielding-implant"
 #define MARTIAL_ARTIST_TRAIT "martial_artist"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
 #define RISING_BASS_TRAIT "rising_bass"
@@ -306,8 +324,11 @@
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
+#define SLIMEPUDDLE_TRAIT "slimepuddle"
+#define CORRUPTED_SYSTEM "corrupted-system"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
+#define TRAIT_SACRIFICED "sacrificed" //Makes sure that people cant be cult sacrificed twice.

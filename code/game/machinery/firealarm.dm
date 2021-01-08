@@ -103,7 +103,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	if(prob(50 / severity))
+	if(prob(severity/1.8))
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)
@@ -141,7 +141,7 @@
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/attack_hand(mob/user)
+/obj/machinery/firealarm/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(buildstage != 2)
 		return ..()
 	add_fingerprint(user)

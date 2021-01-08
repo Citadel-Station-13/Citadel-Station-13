@@ -932,7 +932,6 @@
 /obj/machinery/airalarm/all_access{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/dark,

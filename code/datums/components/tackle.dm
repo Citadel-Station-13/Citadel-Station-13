@@ -62,6 +62,7 @@
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
 	tackle = TT
+	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
@@ -87,6 +88,11 @@
 	if(user.has_status_effect(STATUS_EFFECT_TASED)) // can't tackle if you just got tased
 		to_chat(user, "<span class='warning'>You can't tackle while tased!</span>")
 		return
+
+	var/left_paralysis = HAS_TRAIT(user, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(user, TRAIT_PARALYSIS_R_ARM)
+	if(left_paralysis && right_paralysis)
+		to_chat(user, "<span class='warning'>You can't tackle without the use of your arms!</span>")
 
 	user.face_atom(A)
 
@@ -279,6 +285,10 @@
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_GIANT))
 		attack_mod += 2
+	var/left_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_L_ARM)
+	var/right_paralysis = HAS_TRAIT(sacker, TRAIT_PARALYSIS_R_ARM)
+	if(left_paralysis || right_paralysis)
+		attack_mod -= 2
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/S = sacker

@@ -8,10 +8,12 @@
 	force = 15 //Extra damage is dealt to targets in attack()
 	throwforce = 25
 	armour_penetration = 10
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
+	block_parry_data = /datum/block_parry_data/ratvarian_spear
+	item_flags = ITEM_CAN_PARRY
 	var/bonus_burn = 5
 
 /obj/item/clockwork/weapon/ratvarian_spear/ratvar_act()
@@ -43,7 +45,7 @@
 		else if(iscultist(target) || isconstruct(target))
 			to_chat(target, "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>")
 			bonus_damage *= 3 //total 30 damage on cultists, 50 with ratvar
-		GLOB.clockwork_vitality += target.adjustFireLoss(bonus_damage) //adds the damage done to existing vitality
+		GLOB.clockwork_vitality += max(0, target.adjustFireLoss(bonus_damage)) //adds the damage done to existing vitality
 
 /obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
@@ -78,5 +80,17 @@
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
-		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
+		action.weapon_reset(RATVARIAN_WEAPON_COOLDOWN)
 
+//A very short, very effective parry that counts on you predicting when the enemy will attack.
+/datum/block_parry_data/ratvarian_spear
+	parry_time_windup = 0 //Very good for predicting
+	parry_time_active = 3 //Very short
+	parry_time_spindown = 1
+	parry_time_perfect = 2
+	parry_efficiency_perfect = 110 //Very low leeway for counterattacks...
+	parry_efficiency_considered_successful = 0.8
+	parry_efficiency_to_counterattack = 1
+	parry_cooldown = 15 //But also very low cooldown..
+	parry_failed_stagger_duration = 2 SECONDS //And relatively small penalties for failing.
+	parry_failed_clickcd_duration = 1 SECONDS

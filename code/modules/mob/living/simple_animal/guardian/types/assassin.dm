@@ -1,5 +1,7 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -26,11 +28,10 @@
 	if(loc == summoner && toggle)
 		ToggleMode(0)
 
-/mob/living/simple_animal/hostile/guardian/assassin/Stat()
-	..()
-	if(statpanel("Status"))
-		if(stealthcooldown >= world.time)
-			stat(null, "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/assassin/get_status_tab_items()
+	. = ..()
+	if(stealthcooldown >= world.time)
+		. += "Stealth Cooldown Remaining: [DisplayTimeText(stealthcooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	. = ..()

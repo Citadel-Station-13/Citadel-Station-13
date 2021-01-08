@@ -16,12 +16,18 @@
 
 	/// If it's valid territory for gangs/cults to summon
 	var/valid_territory = TRUE
+	/// malf ais can hack this
+	var/valid_malf_hack = TRUE
 	/// if blobs can spawn there and if it counts towards their score.
 	var/blob_allowed = TRUE
 	/// whether servants can warp into this area from Reebe
 	var/clockwork_warp_allowed = TRUE
 	/// Message to display when the clockwork warp fails
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
+	/// Persistent debris alowed
+	var/persistent_debris_allowed = TRUE
+	/// Dirty flooring allowed
+	var/dirt_buildup_allowed = TRUE
 
 	/// If mining tunnel generation is allowed in this area
 	var/tunnel_allowed = FALSE
@@ -31,6 +37,9 @@
 	var/mob_spawn_allowed = FALSE
 	/// If megafauna can be spawned by natural random generation
 	var/megafauna_spawn_allowed = FALSE
+
+	/// Considered space for hull shielding
+	var/considered_hull_exterior = FALSE
 
 	var/fire = null
 	var/atmos = TRUE
@@ -516,7 +525,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			used_environ += amount
 
 
-/area/Entered(atom/movable/M)
+/area/Entered(atom/movable/M, atom/OldLoc)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
 	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
@@ -524,6 +533,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 
 	var/mob/living/L = M
+	var/turf/oldTurf = get_turf(OldLoc)
+	var/area/A = oldTurf?.loc
+	if(A && (A.has_gravity != has_gravity))
+		L.update_gravity(L.mob_has_gravity())
+
 	if(!L.ckey)
 		return
 
@@ -567,6 +581,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_environ = FALSE
 	always_unpowered = FALSE
 	valid_territory = FALSE
+	valid_malf_hack = FALSE
 	blob_allowed = FALSE
 	addSorted()
 

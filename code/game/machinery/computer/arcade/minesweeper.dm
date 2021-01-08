@@ -178,9 +178,12 @@
 								table[y1][x1] += 10
 				if(href_list["same_board"])	//Reset the board... kinda
 					if(game_status != MINESWEEPER_GAME_PLAYING)
+						mine_sound = TRUE
 						game_status = MINESWEEPER_GAME_PLAYING
 					if(table[y1][x1] >= 10)	//If revealed, become unrevealed!
-						playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
+						if(mine_sound)
+							playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
+							mine_sound = FALSE
 						table[y1][x1] -= 10
 				if(table[y1][x1] > 10 && !reset_board)
 					safe_squares_revealed += 1

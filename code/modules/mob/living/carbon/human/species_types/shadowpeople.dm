@@ -4,16 +4,18 @@
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
-	id = "shadow"
+	id = SPECIES_SHADOW
 	sexes = 0
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(NOBLOOD,NOEYES)
+	species_traits = list(NOBLOOD,NOEYES,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
+
+	species_category = SPECIES_CATEGORY_SHADOW
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -30,8 +32,8 @@
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
-	id = "nightmare"
-	limbs_id = "shadow"
+	id = SPECIES_NIGHTMARE
+	limbs_id = SPECIES_SHADOW
 	burnmod = 1.5
 	blacklisted = TRUE
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
@@ -80,12 +82,10 @@
 	M.AddSpell(SW)
 	shadowwalk = SW
 
-
 /obj/item/organ/brain/nightmare/Remove(special = FALSE)
 	if(shadowwalk && owner)
 		owner.RemoveSpell(shadowwalk)
 	return ..()
-
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
@@ -141,7 +141,7 @@
 			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
-		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
+		if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 			var/mob/living/carbon/old_owner = owner
 			Remove(HEART_SPECIAL_SHADOWIFY)
 			old_owner.set_species(/datum/species/shadow)
@@ -164,7 +164,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/light_eater/Initialize()
@@ -183,6 +183,8 @@
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else if(isliving(AM))
 		var/mob/living/L = AM
+		if(isethereal(AM))
+			AM.emp_act(50)
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)
@@ -201,6 +203,15 @@
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
 			disintegrate(I)
+	else if (isstructure(AM))
+		var/obj/structure/S = AM
+		if(istype(S, /obj/structure/glowshroom) || istype(S, /obj/structure/marker_beacon))
+			qdel(S)
+			visible_message("<span class='danger'>[S] is disintegrated by [src]!</span>")
+	else if(AM.light_range && AM.light_power  && !(istype(AM, /obj/machinery/power/apc) || istype(AM, /obj/machinery/airalarm)))
+		var/obj/target_object = AM
+		target_object.take_damage(force * 5, BRUTE, "melee", 0)
+
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
 	if(istype(O, /obj/item/pda))

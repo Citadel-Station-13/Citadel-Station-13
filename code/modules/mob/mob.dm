@@ -39,6 +39,7 @@
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
+	initialize_actionspeed()
 	hook_vr("mob_new",list(src))
 
 /mob/GenerateTag()
@@ -66,11 +67,10 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/t =	"<span class='notice'>Coordinates: [x],[y] \n</span>"
-	t +=	"<span class='danger'>Temperature: [environment.temperature] \n</span>"
-	for(var/id in environment.gases)
-		var/gas = environment.gases[id]
-		if(gas)
-			t+="<span class='notice'>[GLOB.meta_gas_names[id]]: [gas] \n</span>"
+	t +=	"<span class='danger'>Temperature: [environment.return_temperature()] \n</span>"
+	for(var/id in environment.get_gases())
+		if(environment.get_moles(id))
+			t+="<span class='notice'>[GLOB.meta_gas_names[id]]: [environment.get_moles(id)] \n</span>"
 
 	to_chat(usr, t)
 
@@ -127,8 +127,9 @@
   * * ignored_mobs (optional) doesn't show any message to any given mob in the list.
   * * target (optional) is the other mob involved with the visible message. For example, the attacker in many combat messages.
   * * target_message (optional) is what the target mob will see e.g. "[src] does something to you!"
+  * * omni (optional) if TRUE, will show to users no matter what.
   */
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, ignored_mobs, mob/target, target_message, omni = FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
@@ -139,19 +140,25 @@
 
 	if(target_message && target && istype(target) && target.client)
 		hearers -= target
-		//This entire if/else chain could be in two lines but isn't for readibilties sake.
-		var/msg = target_message
-		if(target.see_invisible<invisibility) //if src is invisible to us,
-			msg = blind_message
-		//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
-		else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
-			msg = blind_message
-		if(msg)
-			target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
+		if(omni)
+			target.show_message(target_message)
+		else
+			//This entire if/else chain could be in two lines but isn't for readibilties sake.
+			var/msg = target_message
+			if(target.see_invisible<invisibility) //if src is invisible to us,
+				msg = blind_message
+			//the light object is dark and not invisible to us, darkness does not matter if you're directly next to the target
+			else if(T.lighting_object && T.lighting_object.invisibility <= target.see_invisible && T.is_softly_lit() && !in_range(T,target))
+				msg = blind_message
+			if(msg)
+				target.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 	if(self_message)
 		hearers -= src
 	for(var/mob/M in hearers)
 		if(!M.client)
+			continue
+		if(omni)
+			M.show_message(message)
 			continue
 		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
@@ -167,10 +174,13 @@
 		M.show_message(msg, MSG_VISUAL,blind_message, MSG_AUDIBLE)
 
 ///Adds the functionality to self_message.
-mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message)
+/mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, mob/target, target_message, omni = FALSE)
 	. = ..()
 	if(self_message && target != src)
-		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+		if(!omni)
+			show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+		else
+			show_message(self_message)
 
 /**
   * Show a message to all mobs in earshot of this atom
@@ -288,8 +298,14 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	. = view(dist, src)
 	SEND_SIGNAL(src, COMSIG_MOB_FOV_VIEW, .)
 
-//mob verbs are faster than object verbs. See https://secure.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
-/mob/verb/examinate(atom/A as mob|obj|turf in fov_view()) //It used to be oview(12), but I can't really say why
+/**
+  * Examine a mob
+  *
+  * mob verbs are faster than object verbs. See
+  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
+  * for why this isn't atom/verb/examine()
+  */
+/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
 
@@ -297,18 +313,63 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind(src))
+	if(is_blind())
 		to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
 		return
 
 	face_atom(A)
-	var/flags = SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
-	if(flags & COMPONENT_DENY_EXAMINATE)
-		if(flags & COMPONENT_EXAMINATE_BLIND)
-			to_chat(src, "<span class='warning'>Something is there but you can't see it!</span>")
-		return
-	var/list/result = A.examine(src)
+	var/list/result
+	if(client)
+		LAZYINITLIST(client.recent_examines)
+		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time)
+			result = A.examine(src)
+			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
+			RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/clear_from_recent_examines, override=TRUE) // to flush the value if deleted early
+			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
+			handle_eye_contact(A)
+		else
+			result = A.examine_more(src)
+	else
+		result = A.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
+
 	to_chat(src, result.Join("\n"))
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+
+/mob/proc/clear_from_recent_examines(atom/A)
+	if(!client)
+		return
+	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(client.recent_examines, A)
+
+/**
+  * handle_eye_contact() is called when we examine() something. If we examine an alive mob with a mind who has examined us in the last second within 5 tiles, we make eye contact!
+  *
+  * Note that if either party has their face obscured, the other won't get the notice about the eye contact
+  * Also note that examine_more() doesn't proc this or extend the timer, just because it's simpler this way and doesn't lose much.
+  *	The nice part about relying on examining is that we don't bother checking visibility, because we already know they were both visible to each other within the last second, and the one who triggers it is currently seeing them
+  */
+/mob/proc/handle_eye_contact(mob/living/examined_mob)
+	return
+
+/mob/living/handle_eye_contact(mob/living/examined_mob)
+	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client || !examined_mob.client?.recent_examines || !(src in examined_mob.client.recent_examines))
+		return
+
+	if(get_dist(src, examined_mob) > EYE_CONTACT_RANGE)
+		return
+
+	var/mob/living/carbon/examined_carbon = examined_mob
+	// check to see if their face is blocked (or if they're not a carbon, in which case they can't block their face anyway)
+	if(!istype(examined_carbon) || (!(examined_carbon.wear_mask && examined_carbon.wear_mask.flags_inv & HIDEFACE) && !(examined_carbon.head && examined_carbon.head.flags_inv & HIDEFACE)))
+		if(SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
+			var/msg = "<span class='smallnotice'>You make eye contact with [examined_mob].</span>"
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, src, msg), 3) // so the examine signal has time to fire and this will print after
+
+	var/mob/living/carbon/us_as_carbon = src // i know >casting as subtype, but this isn't really an inheritable check
+	if(!istype(us_as_carbon) || (!(us_as_carbon.wear_mask && us_as_carbon.wear_mask.flags_inv & HIDEFACE) && !(us_as_carbon.head && us_as_carbon.head.flags_inv & HIDEFACE)))
+		if(SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
+			var/msg = "<span class='smallnotice'>[src] makes eye contact with you.</span>"
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, examined_mob, msg), 3)
 
 //same as above
 //note: ghosts can point, this is intended
@@ -396,50 +457,18 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	else
 		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
 
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
-
-	if (CONFIG_GET(flag/norespawn))
-		return
-	if ((stat != DEAD || !( SSticker )))
-		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
-		return
-
-	log_game("[key_name(usr)] used abandon mob.")
-
-	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
-
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		return
-	client.screen.Cut()
-	client.screen += client.void
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		return
-
-	var/mob/dead/new_player/M = new /mob/dead/new_player()
-	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
-		qdel(M)
-		return
-
-	M.key = key
-//	M.Login()	//wat
-	return
-
 /mob/proc/transfer_ckey(mob/new_mob, send_signal = TRUE)
 	if(!new_mob || (!ckey && new_mob.ckey))
 		CRASH("transfer_ckey() called [new_mob ? "on ckey-less mob with a player mob as target" : "without a valid mob target"]!")
 	if(!ckey)
 		return
 	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
-	if (client && client.prefs && client.prefs.auto_ooc)
-		if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
-			client.prefs.chat_toggles ^= CHAT_OOC
-		if (!(client.prefs.chat_toggles & CHAT_OOC) && isdead(new_mob))
-			client.prefs.chat_toggles ^= CHAT_OOC
+	if (client)
+		if(client.prefs?.auto_ooc)
+			if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
+				client.prefs.chat_toggles ^= CHAT_OOC
+			if (!(client.prefs.chat_toggles & CHAT_OOC) && isdead(new_mob))
+				client.prefs.chat_toggles ^= CHAT_OOC
 	new_mob.ckey = ckey
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
@@ -536,87 +565,34 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/is_muzzled()
 	return FALSE
 
-/mob/Stat()
-	..()
+/// Adds this list to the output to the stat browser
+/mob/proc/get_status_tab_items()
+	. = list()
 
-	//This is only called from client/Stat(), let's assume client exists.
-
-	if(statpanel("Status"))
-		var/list/L = list()
-		L += "Ping: [round(client.lastping,1)]ms (Avg: [round(client.avgping,1)]ms)"
-		L += SSmapping.stat_map_name
-		L += "Round ID: [GLOB.round_id || "NULL"]"
-		L += SStime_track.stat_time_text
-		L += SSshuttle.emergency_shuttle_stat_text
-		stat(null, "[L.Join("\n\n")]")
-
-	if(client.holder)
-		if(statpanel("MC"))
-			var/turf/T = get_turf(client.eye)
-			stat("Location:", COORD(T))
-			stat("CPU:", "[world.cpu]")
-			stat("Instances:", "[num2text(world.contents.len, 10)]")
-			stat("World Time:", "[world.time]")
-			GLOB.stat_entry()
-			config.stat_entry()
-			stat(null)
-			if(Master)
-				Master.stat_entry()
-			else
-				stat("Master Controller:", "ERROR")
-			if(Failsafe)
-				Failsafe.stat_entry()
-			else
-				stat("Failsafe Controller:", "ERROR")
-			if(Master)
-				stat(null)
-				for(var/datum/controller/subsystem/SS in Master.statworthy_subsystems)
-					SS.stat_entry()
-			GLOB.cameranet.stat_entry()
-		if(statpanel("Tickets"))
-			GLOB.ahelp_tickets.stat_entry()
-		if(length(GLOB.sdql2_queries))
-			if(statpanel("SDQL2"))
-				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
-				for(var/i in GLOB.sdql2_queries)
-					var/datum/SDQL2_query/Q = i
-					Q.generate_stat()
-	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			var/list/overrides = list()
-			for(var/image/I in client.images)
-				if(I.loc && I.loc.loc == listed_turf && I.override)
-					overrides += I.loc
-			for(var/atom/A in listed_turf)
-				if(!A.mouse_opacity)
-					continue
-				if(A.invisibility > see_invisible)
-					continue
-				if(overrides.len && (A in overrides))
-					continue
-				if(A.IsObscured())
-					continue
-				statpanel(listed_turf.name, null, A)
+/// Gets all relevant proc holders for the browser statpenl
+/mob/proc/get_proc_holders()
+	. = list()
 	if(mind)
-		add_spells_to_statpanel(mind.spell_list)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			add_stings_to_statpanel(changeling.purchasedpowers)
-	add_spells_to_statpanel(mob_spell_list)
+		. += get_spells_for_statpanel(mind.spell_list)
+	. += get_spells_for_statpanel(mob_spell_list)
 
-/mob/proc/add_spells_to_statpanel(list/spells)
+/**
+  * Convert a list of spells into a displyable list for the statpanel
+  *
+  * Shows charge and other important info
+  */
+/mob/proc/get_spells_for_statpanel(list/spells)
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if((!S.mobs_blacklist || !S.mobs_blacklist[src]) && (!S.mobs_whitelist || S.mobs_whitelist[src]))
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
 				if("charges")
-					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, REF(S))
 				if("holdervar")
-					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
+	return L
 
 /mob/proc/add_stings_to_statpanel(list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -748,6 +724,8 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
+	if(client)
+		client << output(null, "statbrowser:check_spells")
 
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	if(!magic && !holy && !tinfoil)
@@ -991,6 +969,12 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 	switch(var_name)
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
+		if(NAMEOF(src, lastKnownIP))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
+		if(NAMEOF(src, computer_id))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
 	. = ..()
 
 /mob/vv_auto_rename(new_name)

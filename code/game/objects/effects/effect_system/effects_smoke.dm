@@ -166,15 +166,13 @@
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			if(!distcheck || get_dist(T, location) < blast) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
-				G.temperature = temperature
+				G.set_temperature(temperature)
 			T.air_update_turf()
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
-			var/list/G_gases = G.gases
-			if(G_gases[/datum/gas/plasma])
-				G_gases[/datum/gas/nitrogen] += (G_gases[/datum/gas/plasma])
-				G_gases[/datum/gas/plasma] = 0
-				GAS_GARBAGE_COLLECT(G.gases)
+			if(G.get_moles(/datum/gas/plasma))
+				G.adjust_moles(/datum/gas/nitrogen, G.get_moles(/datum/gas/plasma))
+				G.set_moles(/datum/gas/plasma, 0)
 		if (weldvents)
 			for(var/obj/machinery/atmospherics/components/unary/U in T)
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.

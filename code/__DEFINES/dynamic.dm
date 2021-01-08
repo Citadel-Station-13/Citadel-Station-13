@@ -1,7 +1,7 @@
 #define CURRENT_LIVING_PLAYERS	1
 #define CURRENT_LIVING_ANTAGS	2
 #define CURRENT_DEAD_PLAYERS	3
-#define CURRENT_OBSERVERS	    4
+#define CURRENT_OBSERVERS		4
 
 #define NO_ASSASSIN				(1<<0)
 #define WAROPS_ALWAYS_ALLOWED	(1<<1)
@@ -9,9 +9,11 @@
 #define FORCE_IF_WON			(1<<3)
 #define USE_PREV_ROUND_WEIGHTS	(1<<4)
 
-#define ONLY_RULESET       (1<<0)
-#define HIGHLANDER_RULESET (1<<1)
-#define TRAITOR_RULESET    (1<<2)
-#define MINOR_RULESET      (1<<3)
+#define ONLY_RULESET				(1<<0)
+#define HIGHLANDER_RULESET			(1<<1)
+#define TRAITOR_RULESET				(1<<2)
+#define MINOR_RULESET				(1<<3)
+#define FAKE_ANTAG_RULESET			(1<<4)
+#define ALWAYS_MAX_WEIGHT_RULESET	(1<<5)
 
 #define RULESET_STOP_PROCESSING 1

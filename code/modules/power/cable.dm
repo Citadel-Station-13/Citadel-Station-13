@@ -548,12 +548,24 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
+	if(affecting && affecting.is_robotic_limb())
+		//only heal to threshhold_passed_mindamage if limb is damaged to or past threshhold, otherwise heal normally
+		var/damage
+		var/heal_amount = 15
+
 		if(user == H)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
 				return
-		if(item_heal_robotic(H, user, 0, 15))
+		damage = affecting.burn_dam
+		affecting.update_threshhold_state(brute = FALSE)
+		if(affecting.threshhold_burn_passed)
+			heal_amount = min(heal_amount, damage - affecting.threshhold_passed_mindamage)
+
+			if(!heal_amount)
+				to_chat(user, "<span class='notice'>[user == H ? "Your" : "[H]'s"] [affecting.name] appears to have suffered severe internal damage and requires surgery to repair further.</span>")
+				return
+		if(item_heal_robotic(H, user, 0, heal_amount))
 			use(1)
 		return
 	else
@@ -564,10 +576,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 
-/obj/item/stack/cable_coil/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/stack/cable_coil/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/obj/item/stack/cable_coil/new_cable = ..()
 	if(istype(new_cable))
 		new_cable.color = color

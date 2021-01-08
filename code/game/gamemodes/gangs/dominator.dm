@@ -42,7 +42,7 @@
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
-	take_damage(100, BURN, "energy", 0)
+	take_damage(75+severity/4, BURN, "energy", 0)
 	..()
 
 /obj/machinery/dominator/hulk_damage()
@@ -149,7 +149,7 @@
 	add_fingerprint(user)
 	return ..()
 
-/obj/machinery/dominator/attack_hand(mob/user)
+/obj/machinery/dominator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(operating || (stat & BROKEN))
 		examine(user)
 		return

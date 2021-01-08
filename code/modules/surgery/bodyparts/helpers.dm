@@ -10,6 +10,16 @@
 		if(L.body_zone == zone)
 			return L
 
+///Get the bodypart for whatever hand we have active, Only relevant for carbons
+/mob/proc/get_active_hand()
+	return FALSE
+
+/mob/living/carbon/get_active_hand()
+	var/which_hand = BODY_ZONE_PRECISE_L_HAND
+	if(!(active_hand_index % 2))
+		which_hand = BODY_ZONE_PRECISE_R_HAND
+	return get_bodypart(check_zone(which_hand))
+
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(i)
 		var/obj/item/bodypart/L = hand_bodyparts[i]

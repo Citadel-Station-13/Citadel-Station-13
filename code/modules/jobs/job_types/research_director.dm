@@ -15,8 +15,10 @@
 	exp_type_department = EXP_TYPE_SCIENCE
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
+	considered_combat_role = TRUE
 
 	outfit = /datum/outfit/job/rd
+	plasma_outfit = /datum/outfit/plasmaman/rd
 
 	access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_TOX, ACCESS_GENETICS, ACCESS_MORGUE,
 						ACCESS_TOX_STORAGE, ACCESS_TELEPORTER, ACCESS_SEC_DOORS,

@@ -12,7 +12,8 @@
 					/obj/item/reagent_containers/food/snacks/no_raisin = 5,
 					/obj/item/reagent_containers/food/snacks/spacetwinkie = 5,
 					/obj/item/reagent_containers/food/snacks/cheesiehonkers = 5,
-					/obj/item/reagent_containers/food/snacks/cornchips = 5)
+					/obj/item/reagent_containers/food/snacks/cornchips = 5,
+					/obj/item/reagent_containers/food/snacks/energybar = 6)
 	contraband = list(
 					/obj/item/reagent_containers/food/snacks/cracker = 10,
 					/obj/item/reagent_containers/food/snacks/honeybar = 5,

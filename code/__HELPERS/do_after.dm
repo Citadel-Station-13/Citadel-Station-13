@@ -38,11 +38,11 @@
 		return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 		return FALSE
+	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
+		delay *= living_user.cached_multiplicative_actions_slowdown
 	var/starttime = world.time
 	var/endtime = world.time + delay
 	var/obj/item/initially_held_item = mob_redirect?.get_active_held_item()
-	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
-		delay *= living_user.do_after_coefficent()
 	var/atom/movable/AM_user = ismovable(user) && user
 	var/drifting = AM_user?.Process_Spacemove(NONE) && AM_user.inertia_dir
 	var/initial_dx = targetturf.x - userturf.x
@@ -166,6 +166,9 @@
 
 	var/target_loc = target.loc
 
+	LAZYADD(user.do_afters, target)
+	LAZYADD(target.targeted_by, user)
+
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if (progress)
@@ -183,6 +186,13 @@
 			break
 		if(uninterruptible)
 			continue
+		if(!(target in user.do_afters))
+			. = FALSE
+			break
+
+		if(!(target in user.do_afters))
+			. = FALSE
+			break
 
 		if(drifting && !user.inertia_dir)
 			drifting = 0
@@ -191,13 +201,16 @@
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || (!ignorehelditem && user.get_active_held_item() != holding) || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
-	if (progress)
+	if(progress)
 		qdel(progbar)
 
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
 /mob/proc/break_do_after_checks(list/checked_health, check_clicks)
-	if(check_clicks && next_move > world.time)
+	if(check_clicks && !CheckActionCooldown())
 		return FALSE
 	return TRUE
 
@@ -216,6 +229,10 @@
 	if(target && !isturf(target))
 		Tloc = target.loc
 
+	if(target)
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
+
 	var/atom/Uloc = user.loc
 
 	var/drifting = 0
@@ -228,7 +245,7 @@
 	if(holding)
 		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
 
-	delay *= user.do_after_coefficent()
+	delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
 	if (progress)
@@ -260,6 +277,10 @@
 				. = 0
 				break
 
+		if(target && !(target in user.do_afters))
+			. = FALSE
+			break
+
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to pull some item/tool out of the construction
@@ -270,12 +291,14 @@
 			if(user.get_active_held_item() != holding)
 				. = 0
 				break
-	if (progress)
+	if(progress)
 		qdel(progbar)
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
 
-/mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
-	. = 1
-	return
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 /proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
@@ -291,11 +314,15 @@
 	var/list/originalloc = list()
 	for(var/atom/target in targets)
 		originalloc[target] = target.loc
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/holding = user.get_active_held_item()
 	var/datum/progressbar/progbar
 	if(progress)
 		progbar = new(user, time, targets[1])
+
+	time *= user.cached_multiplicative_actions_slowdown
 
 	var/endtime = world.time + time
 	var/starttime = world.time
@@ -321,3 +348,8 @@
 					break mainloop
 	if(progbar)
 		qdel(progbar)
+	for(var/thing in targets)
+		var/atom/target = thing
+		if(!QDELETED(target))
+			LAZYREMOVE(user.do_afters, target)
+			LAZYREMOVE(target.targeted_by, user)

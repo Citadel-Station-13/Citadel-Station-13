@@ -63,7 +63,6 @@
 #define MOVESPEED_ID_TASED_STATUS						"TASED"
 #define MOVESPEED_ID_ELECTROSTAFF						"ELECTROSTAFF"
 
-#define MOVESPEED_ID_SHOVE 								"SHOVE"
 #define MOVESPEED_ID_FAT                                "FAT"
 #define MOVESPEED_ID_COLD                               "COLD"
 #define MOVESPEED_ID_HUNGRY                             "HUNGRY"

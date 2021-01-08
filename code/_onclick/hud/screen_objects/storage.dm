@@ -9,12 +9,9 @@
 /obj/screen/storage/Click(location, control, params)
 	if(!insertion_click)
 		return ..()
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
+	if(hud?.mymob && (hud.mymob != usr))
+		return
+	// just redirect clicks
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
@@ -125,13 +122,13 @@
 	if(pixel_size == pixels)
 		return
 	pixel_size = pixels
-	cut_overlays(TRUE)
+	cut_overlays()
 	//our icon size is 32 pixels.
 	transform = matrix((pixels - (VOLUMETRIC_STORAGE_BOX_BORDER_SIZE * 2)) / VOLUMETRIC_STORAGE_BOX_ICON_SIZE, 0, 0, 0, 1, 0)
 	left.pixel_x = -((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) - VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	right.pixel_x = ((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) + VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
-	add_overlay(left, TRUE)
-	add_overlay(right, TRUE)
+	add_overlay(left)
+	add_overlay(right)
 
 /obj/screen/storage/volumetric_edge
 	layer = VOLUMETRIC_STORAGE_BOX_LAYER

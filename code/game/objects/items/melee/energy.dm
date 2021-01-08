@@ -102,7 +102,7 @@
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 	armour_penetration = 35
 	item_flags = NEEDS_PERMIT | ITEM_CAN_PARRY
@@ -147,6 +147,12 @@
 		return NONE
 	return ..()
 
+/obj/item/melee/transforming/energy/sword/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	. = ..()
+	if(parry_efficiency >= 80)		// perfect parry
+		block_return[BLOCK_RETURN_REDIRECT_METHOD] = REDIRECT_METHOD_RETURN_TO_SENDER
+		. |= BLOCK_SHOULD_REDIRECT
+
 /obj/item/melee/transforming/energy/sword/cyborg
 	sword_color = "red"
 	light_color = "#ff0000"
@@ -174,7 +180,7 @@
 	sword_color = null //stops icon from breaking when turned on.
 	hitcost = 75 //Costs more than a standard cyborg esword
 	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	light_color = "#40ceff"
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.7
@@ -184,12 +190,53 @@
 
 /obj/item/melee/transforming/energy/sword/saber
 	possible_colors = list("red" = LIGHT_COLOR_RED, "blue" = LIGHT_COLOR_LIGHT_CYAN, "green" = LIGHT_COLOR_GREEN, "purple" = LIGHT_COLOR_LAVENDER)
+	unique_reskin = list("Sword" = "sword0", "saber" = "esaber0")
 	var/hacked = FALSE
+	var/saber = FALSE
 
-/obj/item/melee/transforming/energy/sword/saber/set_sword_color()
-	if(LAZYLEN(possible_colors))
+/obj/item/melee/transforming/energy/sword/saber/transform_weapon(mob/living/user, supress_message_text)
+	. = ..()
+	if(.)
+		if(active)
+			if(sword_color)
+				if(saber)
+					icon_state = "esaber[sword_color]"
+				else
+					icon_state = "sword[sword_color]"
+		else
+			if(saber)
+				icon_state = "esaber0"
+			else
+				icon_state = "sword0"
+
+/obj/item/melee/transforming/energy/sword/saber/reskin_obj(mob/M)
+	. = ..()
+	if(icon_state == "esaber0")
+		saber = TRUE
+	if(active)
+		if(saber)
+			icon_state = "esaber[sword_color]"
+		else
+			icon_state = "sword[sword_color]"
+
+/obj/item/melee/transforming/energy/sword/saber/set_sword_color(var/color_forced)
+	if(color_forced) // wow i really do not like this at fucking all holy SHIT
+		if(color_forced == "red")
+			sword_color = "red"
+			light_color = LIGHT_COLOR_RED
+		else if(color_forced == "blue")
+			sword_color = "blue"
+			light_color = LIGHT_COLOR_LIGHT_CYAN
+		else if(color_forced == "green")
+			sword_color = "green"
+			light_color = LIGHT_COLOR_GREEN
+		else if(color_forced == "purple")
+			sword_color = "purple"
+			light_color = LIGHT_COLOR_LAVENDER
+	else if(LAZYLEN(possible_colors))
 		sword_color = pick(possible_colors)
 		light_color = possible_colors[sword_color]
+	return
 
 /obj/item/melee/transforming/energy/sword/saber/process()
 	. = ..()
@@ -198,30 +245,59 @@
 		light_color = possible_colors[set_color]
 		update_light()
 
-/obj/item/melee/transforming/energy/sword/saber/red
-	possible_colors = list("red" = LIGHT_COLOR_RED)
+/obj/item/melee/transforming/energy/sword/saber/red/Initialize(mapload)
+	. = ..()
+	set_sword_color("red")
 
-/obj/item/melee/transforming/energy/sword/saber/blue
-	possible_colors = list("blue" = LIGHT_COLOR_LIGHT_CYAN)
+/obj/item/melee/transforming/energy/sword/saber/blue/Initialize(mapload)
+	. = ..()
+	set_sword_color("blue")
 
-/obj/item/melee/transforming/energy/sword/saber/green
-	possible_colors = list("green" = LIGHT_COLOR_GREEN)
+/obj/item/melee/transforming/energy/sword/saber/green/Initialize(mapload)
+	. = ..()
+	set_sword_color("green")
 
-/obj/item/melee/transforming/energy/sword/saber/purple
-	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
+/obj/item/melee/transforming/energy/sword/saber/purple/Initialize(mapload)
+	. = ..()
+	set_sword_color("purple")
+
+/obj/item/melee/transforming/energy/sword/saber/proc/select_sword_color(mob/user) /// this is for the radial
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/static/list/options = list(
+			"red" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordred-blade"),
+			"blue" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordblue-blade"),
+			"green" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordgreen-blade"),
+			"purple" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "swordpurple-blade")
+			)
+
+	var/choice = show_radial_menu(user, src, options, custom_check = FALSE, radius = 36, require_near = TRUE)
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		set_sword_color(choice)
+		to_chat(user, "<span class='notice'>[src] is now [choice].</span>")
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/multitool))
+		if(user.a_intent == INTENT_DISARM)
+			if(!active)
+				to_chat(user, "<span class='warning'>COLOR_SET</span>")
+				hacked = FALSE
+				select_sword_color(user)
+				return
+			else
+				to_chat(user, "<span class='notice'>Turn it off first - getting that close to an active sword is not a great idea.</span>")
+				return
 		if(!hacked)
 			hacked = TRUE
 			sword_color = "rainbow"
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
-
 			if(active)
 				icon_state = "swordrainbow"
 				user.update_inv_hands()
 		else
-			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
+			to_chat(user, "<span class='warning'>It's already fabulous!</span> <span class='notice'>If you wanted to reset the color, though, try a disarming intent while it's off.</span>")
 	else
 		return ..()
 
@@ -249,7 +325,7 @@
 	throw_range = 1
 	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/melee/transforming/energy/blade/Initialize()
@@ -285,7 +361,7 @@
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 20, "embedded_fall_chance" = 60)
 	armour_penetration = 10
 	block_chance = 35

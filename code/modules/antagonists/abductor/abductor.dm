@@ -7,6 +7,7 @@
 	job_rank = ROLE_ABDUCTOR
 	show_in_antagpanel = FALSE //should only show subtypes
 	threat = 5
+	show_to_ghosts = TRUE
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -59,8 +60,10 @@
 
 /datum/antagonist/abductor/greet()
 	to_chat(owner.current, "<span class='notice'>You are the [owner.special_role]!</span>")
-	to_chat(owner.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
-	to_chat(owner.current, "<span class='notice'>Try not to disturb the habitat, it could lead to dead specimens.</span>")
+	to_chat(owner.current, "<span class='notice'>You are an operative for your home planet's government. Your mission is to detain, experiment, and observe.</span>")
+	to_chat(owner.current, "<span class='notice'>Work together with your teammate to bring live subjects from the space station nearby onto your ship for experimentation.</span>")
+	to_chat(owner.current, "<span class='notice'>For the sake of the mission, do not damage the integrity of the station, do not kill anyone unless in self defense, always capture specimens first if you can, and do not steal equipment or belongings from abducted specimens.</span>")
+	to_chat(owner.current, "<span class='notice'>Your task is to observe and take notes of the effects of your experiments.</span>")
 	to_chat(owner.current, "<span class='notice'>[greet_text]</span>")
 	owner.announce_objectives()
 

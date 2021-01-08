@@ -116,3 +116,19 @@
 /obj/item/clothing/under/suit/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, list("#FFFFFF", "#FFFFFF", "#808080"), 3)
+
+/obj/item/clothing/under/suit/turtle
+	desc = "a debatably stylish turtleneck."
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/teal
+	name = "teal turtleneck"
+	icon_state = "tealturtle"
+	item_state = "tealturtle"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/grey
+	name = "grey turtleneck"
+	icon_state = "greyturtle"
+	item_state = "greyturtle"
+	can_adjust = FALSE

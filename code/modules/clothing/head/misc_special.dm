@@ -50,6 +50,8 @@
 	flags_cover = HEADCOVERSEYES
 	heat = 1000
 
+	beepsky_fashion = /datum/beepsky_fashion/cake
+
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
 	if(ishuman(location))
@@ -131,6 +133,7 @@
 	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
+	beepsky_fashion = /datum/beepsky_fashion/cat
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == SLOT_HEAD)
@@ -187,7 +190,7 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
 	icon_state = "hair_vlong"
 	flags_inv = HIDEHAIR
 	color = "#000"
@@ -287,7 +290,7 @@
 	if(!target.IsUnconscious())
 		to_chat(target, "<span class='warning'>Your zealous conspirationism rapidly dissipates as the donned hat warps up into a ruined mess. All those theories starting to sound like nothing but a ridicolous fanfare.</span>")
 
-/obj/item/clothing/head/foilhat/attack_hand(mob/user)
+/obj/item/clothing/head/foilhat/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!warped && iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)

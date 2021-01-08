@@ -7,6 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -17,6 +18,9 @@
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+
+	wound_bonus = -10
+	bare_wound_bonus = 5
 
 /obj/item/wrench/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -36,6 +40,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	icon_state = "wrench_clock"
 	toolspeed = 0.5
+
+/obj/item/wrench/brass/family
+	toolspeed = 1
 
 /obj/item/wrench/bronze
 	name = "bronze plated wrench"

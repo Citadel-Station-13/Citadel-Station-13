@@ -45,8 +45,9 @@
 
 /datum/fantasy_affix/tactical/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/tactical)
-	comp.appliedElements += list(/datum/element/tactical)
+	var/list/dat = list(/datum/element/tactical)
+	master._AddElement(dat)
+	comp.appliedElements += list(dat)
 	return "tactical [newName]"
 
 /datum/fantasy_affix/pyromantic

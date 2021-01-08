@@ -51,7 +51,8 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 
-	owner.create_reagents(volume, INJECTABLE)
+	if(!owner.reagents) //we don't want to override what's in the item if it possibly contains reagents already
+		owner.create_reagents(volume, INJECTABLE)
 
 	if(initial_reagents)
 		for(var/rid in initial_reagents)

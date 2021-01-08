@@ -9,16 +9,21 @@ GLOBAL_LIST(topic_status_cache)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || "./byond-extools.dll"
-	if (fexists(extools))
-		call(extools, "maptick_initialize")()
+	if (fexists(EXTOOLS))
+		call(EXTOOLS, "maptick_initialize")()
+	#ifdef EXTOOLS_LOGGING
+		call(EXTOOLS, "init_logging")()
+	else
+		CRASH("[EXTOOLS] does not exist!")
+	#endif
 	enable_debugger()
+#ifdef REFERENCE_TRACKING
+	enable_reference_tracking()
+#endif
 
 	world.Profile(PROFILE_START)
 
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
-
-	SetupExternalRSC()
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
@@ -85,17 +90,6 @@ GLOBAL_LIST(topic_status_cache)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
 
-/world/proc/SetupExternalRSC()
-#if (PRELOAD_RSC == 0)
-	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
-	var/i=1
-	while(i<=GLOB.external_rsc_urls.len)
-		if(GLOB.external_rsc_urls[i])
-			i++
-		else
-			GLOB.external_rsc_urls.Cut(i,i+1)
-#endif
-
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
 	if(!override_dir)
@@ -132,11 +126,13 @@ GLOBAL_LIST(topic_status_cache)
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
 	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
+	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.subsystem_log = "[GLOB.log_directory]/subsystem.log"
 	GLOB.reagent_log = "[GLOB.log_directory]/reagents.log"
 	GLOB.world_crafting_log = "[GLOB.log_directory]/crafting.log"
 	GLOB.click_log = "[GLOB.log_directory]/click.log"
+	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 
 
 #ifdef UNIT_TESTS
@@ -276,6 +272,10 @@ GLOBAL_LIST(topic_status_cache)
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
+/world/Del()
+	shutdown_logging() // makes sure the thread is closed before end, else we terminate
+	..()
+
 /world/proc/update_status()
 
 	var/list/features = list()
@@ -344,3 +344,6 @@ GLOBAL_LIST(topic_status_cache)
 	maxz++
 	SSmobs.MaxZChanged()
 	SSidlenpcpool.MaxZChanged()
+	world.refresh_atmos_grid()
+
+/world/proc/refresh_atmos_grid()

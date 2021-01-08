@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/openspace
+	/turf/open/transparent/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
+#define istransparentturf(A) (istype(A, /turf/open/transparent)||istype(A, /turf/open/space/transparent))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -65,9 +67,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
-#define ismoth(A) (is_species(A, /datum/species/insect))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
-#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
+#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define isangel(A) (is_species(A, /datum/species/angel))
@@ -75,16 +76,17 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
+#define isethereal(A) (is_species(A, /datum/species/ethereal))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
 #define issynthliz(A) (is_species(A, /datum/species/synthliz))
 #define ismammal(A) (is_species(A, /datum/species/mammal))
-#define isavian(A) (is_species(A, /datum/species/avian))
-#define isaquatic(A) (is_species(A, /datum/species/aquatic))
 #define isinsect(A) (is_species(A, /datum/species/insect))
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
 #define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
+#define isarachnid(A) (is_species(A, /datum/species/arachnid))
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -123,7 +125,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
-#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+#define isshade(A) (istype(A, /mob/living/simple_animal/hostile/construct/shade))
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
@@ -186,6 +188,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
 
+#define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
+
 #define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 
 #define isidcard(I) (istype(I, /obj/item/card/id))
@@ -202,21 +206,13 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
-
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 #define isprojectile(A) (istype(A, /obj/item/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
-#define isfood(A) (istype(A, /obj/item/reagent_containers/food))
+#define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
@@ -242,3 +238,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+#define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)

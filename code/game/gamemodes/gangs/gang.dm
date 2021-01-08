@@ -197,7 +197,7 @@
 
 	if(gangtool)//Here is where all of the text occurs when a gang boss first spawns in.
 		var/obj/item/device/gangtool/G = new()
-		var/where = H.equip_in_one_of_slots(G, slots)
+		var/where = H.equip_in_one_of_slots(G, slots, critical = TRUE)
 		if (!where)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a Gangtool.")
 		else
@@ -207,7 +207,7 @@
 
 	if(pen)
 		var/obj/item/pen/gang/T = new()
-		var/where2 = H.equip_in_one_of_slots(T, slots)
+		var/where2 = H.equip_in_one_of_slots(T, slots, critical = TRUE)
 		if (!where2)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a recruitment pen to start.")
 		else
@@ -215,7 +215,7 @@
 
 	if(spraycan)
 		var/obj/item/toy/crayon/spraycan/gang/SC = new(null,gang)
-		var/where3 = H.equip_in_one_of_slots(SC, slots)
+		var/where3 = H.equip_in_one_of_slots(SC, slots, critical = TRUE)
 		if (!where3)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a territory spraycan to start.")
 		else
@@ -223,7 +223,7 @@
 
 	if(hud)
 		var/obj/item/clothing/glasses/hud/security/chameleon/C = new(null,gang)
-		var/where4 = H.equip_in_one_of_slots(C, slots)
+		var/where4 = H.equip_in_one_of_slots(C, slots, critical = TRUE)
 		if (!where4)
 			to_chat(H, "Your Syndicate benefactors were unfortunately unable to get you a chameleon security HUD.")
 		else

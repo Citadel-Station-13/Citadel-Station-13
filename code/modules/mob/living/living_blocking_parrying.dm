@@ -74,8 +74,12 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Ratio of stamina incurred by chest (so after [block_stamina_limb_ratio] runs) that is buffered.
 	var/block_stamina_buffer_ratio = 1
 
-	/// Stamina dealt directly via adjustStaminaLossBuffered() per SECOND of block.
+	/// Stamina dealt directly via UseStaminaBuffer() per SECOND of block.
 	var/block_stamina_cost_per_second = 1.5
+	/// Prevent stamina buffer regeneration while block?
+	var/block_no_stambuffer_regeneration = TRUE
+	/// Prevent stamina regeneration while block?
+	var/block_no_stamina_regeneration = FALSE
 
 	/// Bitfield for attack types that we can block while down. This will work in any direction.
 	var/block_resting_attack_types_anydir = ATTACK_TYPE_MELEE | ATTACK_TYPE_UNARMED | ATTACK_TYPE_TACKLE
@@ -126,6 +130,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/list/parry_imperfect_falloff_percent_override
 	/// Efficiency in percent on perfect parry.
 	var/parry_efficiency_perfect = 120
+	/// Override for attack types, list("[ATTACK_TYPE_DEFINE]" = perecntage) for perfect efficiency.
+	var/parry_efficiency_perfect_override
 	/// Parry effect data.
 	var/list/parry_data = list(
 		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1
@@ -148,6 +154,8 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_failed_stagger_duration = 3.5 SECONDS
 	/// Clickdelay duration post-parry if you fail to parry an attack
 	var/parry_failed_clickcd_duration = 2 SECONDS
+	/// Parry cooldown post-parry if failed. This is ADDED to parry_cooldown!!!
+	var/parry_failed_cooldown_duration = 0 SECONDS
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
@@ -180,7 +188,11 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	if(isnull(leeway))
 		leeway = parry_time_perfect_leeway
 	difference -= leeway
-	. = parry_efficiency_perfect
+	var/perfect = attack_type_list_scan(parry_efficiency_perfect_override, attack_type)
+	if(isnull(perfect))
+		. = parry_efficiency_perfect
+	else
+		. = perfect
 	if(difference <= 0)
 		return
 	var/falloff = attack_type_list_scan(parry_imperfect_falloff_percent_override, attack_type)
@@ -276,6 +288,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		RENDER_VARIABLE_SIMPLE(parry_imperfect_falloff_percent, "Linear falloff in percent per decisecond for attacks parried outside of perfect window.")
 		RENDER_OVERRIDE_LIST(parry_imperfect_falloff_percent_override, "Override for the above for each attack type")
 		RENDER_VARIABLE_SIMPLE(parry_efficiency_perfect, "Efficiency in percentage a parry in the perfect window is considered.")
+		RENDER_OVERRIDE_LIST(parry_efficiency_perfect_override, "Override for the above for each attack type")
 		// parry_data
 		dat += ""
 		RENDER_VARIABLE_SIMPLE(parry_efficiency_considered_successful, "Minimum parry efficiency to be considered a successful parry.")
@@ -300,7 +313,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 /mob/living/proc/handle_block_parry(seconds = 1)
 	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
 		var/datum/block_parry_data/data = return_block_parry_datum(active_block_item.block_parry_data)
-		adjustStaminaLossBuffered(data.block_stamina_cost_per_second * seconds)
+		UseStaminaBuffer(data.block_stamina_cost_per_second * seconds)
 
 /mob/living/on_item_dropped(obj/item/I)
 	if(I == active_block_item)

@@ -22,12 +22,10 @@
 #define SURGICAL_TOOL						(1<<10)
 ///Can be worn on certain slots (currently belt and id) that would otherwise require an uniform.
 #define NO_UNIFORM_REQUIRED					(1<<11)
-///Damage when attacking people is not affected by combat mode.
-#define NO_COMBAT_MODE_FORCE_MODIFIER		(1<<12)
 /// This item can be used to parry. Only a basic check used to determine if we should proceed with parry chain at all.
-#define ITEM_CAN_PARRY						(1<<13)
+#define ITEM_CAN_PARRY						(1<<12)
 /// This item can be used in the directional blocking system. Only a basic check used to determine if we should proceed with directional block handling at all.
-#define ITEM_CAN_BLOCK						(1<<14)
+#define ITEM_CAN_BLOCK						(1<<13)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -52,4 +50,4 @@
 #define ORGAN_VITAL				(1<<4)	//Currently only the brain
 #define ORGAN_NO_SPOIL			(1<<5)	//Do not spoil under any circumstances
 #define ORGAN_NO_DISMEMBERMENT	(1<<6)	//Immune to disembowelment.
-#define ORGAN_EDIBLE			(1<<5)	//is a snack? :D
+#define ORGAN_EDIBLE			(1<<7)	//is a snack? :D

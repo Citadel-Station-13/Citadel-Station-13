@@ -10,7 +10,6 @@
 	speak_chance = 0
 	turns_per_move = 5
 	speed = 0
-	threat = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5

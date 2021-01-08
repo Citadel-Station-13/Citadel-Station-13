@@ -69,18 +69,18 @@
 	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
 	var/list/block_return = list()
-	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ((attackchain_flags & ATTACKCHAIN_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, block_return) & BLOCK_SUCCESS))
+	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, block_return) & BLOCK_SUCCESS))
 		return FALSE
 	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.name, totitemdamage)
+	send_item_attack_message(I, user, affecting.name, affecting, totitemdamage)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
-		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
+		apply_damage(totitemdamage, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness()) //CIT CHANGE - replaces I.force with totitemdamage
+		if(I.damtype == BRUTE && affecting.is_organic_limb(FALSE))
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)
@@ -100,19 +100,12 @@
 						head.add_mob_blood(src)
 						update_inv_head()
 
-		//dismemberment
-		var/probability = I.get_dismemberment_chance(affecting)
-		if(prob(probability))
-			if(affecting.dismember(I.damtype))
-				I.add_mob_blood(src)
-				playsound(get_turf(src), I.get_dismember_sound(), 80, 1)
 		return TRUE //successful attack
 
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/on_attack_hand(mob/living/carbon/human/user, act_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //was the attack blocked?
 		return
@@ -127,11 +120,15 @@
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		if(act_intent == INTENT_HELP || act_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, user.a_intent))
+				if(S.next_step(user, act_intent))
 					return TRUE
 
+	for(var/i in all_wounds)
+		var/datum/wound/W = i
+		if(W.try_handling(user))
+			return TRUE
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
@@ -148,15 +145,14 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return TRUE
 
 	. = ..()
 	if(.) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
-		return 1
-
+		return TRUE
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	. = ..()
@@ -216,6 +212,11 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		//EMPs fuck robots over. Up to ~11.5 corruption per EMP if hit by the full power. They also get up to 15 burn damage per EMP (up to 2.5 per limb), plus short hardstun
+		//Though, note that the burn damage is linear, while corruption is logarythmical, which means at lower severities you still get corruption, but far less burn / stun
+		//Note than as compensation, they only take half the limb burn damage someone fully augmented would take, which would be up to 30 burn.
+		adjustToxLoss(round(log(severity)*2.5, 0.1), toxins_type = TOX_SYSCORRUPT)
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
@@ -295,12 +296,12 @@
 						target_message = "<span class='notice'>[M] gives you a pat on the head to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
-			if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
-				var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
-				for(var/T in many_tails)
-					if(S.mutant_bodyparts[T] && dna.features[T] != "None")
-						emote("wag")
-						break
+			if(!(client?.prefs.cit_toggles & NO_AUTO_WAG))
+				if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
+					var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
+					for(var/T in many_tails)
+						if(S.mutant_bodyparts[T] && dna.features[T] != "None")
+							emote("wag")
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			M.visible_message( \
@@ -354,10 +355,10 @@
 
 	return embeds
 
-/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash, override_protection = 0)
 	. = ..()
 
-	var/damage = intensity - get_eye_protection()
+	var/damage = override_protection ? intensity : intensity - get_eye_protection()
 	if(.) // we've been flashed
 		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 		if (!eyes)
@@ -397,7 +398,7 @@
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
-		return 1
+		return TRUE
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
@@ -457,13 +458,50 @@
 /mob/living/carbon/getBruteLoss_nonProsthetic()
 	var/amount = 0
 	for(var/obj/item/bodypart/BP in bodyparts)
-		if (BP.status < 2)
+		if (BP.is_organic_limb())
 			amount += BP.brute_dam
 	return amount
 
 /mob/living/carbon/getFireLoss_nonProsthetic()
 	var/amount = 0
 	for(var/obj/item/bodypart/BP in bodyparts)
-		if (BP.status < 2)
+		if (BP.is_organic_limb())
 			amount += BP.burn_dam
 	return amount
+
+/mob/living/carbon/proc/get_interaction_efficiency(zone)
+	var/obj/item/bodypart/limb = get_bodypart(zone)
+	if(!limb)
+		return
+
+/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart, totitemdamage)
+	var/message_verb = "attacked"
+	if(length(I.attack_verb))
+		message_verb = "[pick(I.attack_verb)]"
+	else if(!I.force)
+		return
+
+	var/extra_wound_details = ""
+	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
+		var/mangled_state = hit_bodypart.get_mangled_state()
+		var/bio_state = get_biological_state()
+		if(mangled_state == BODYPART_MANGLED_BOTH)
+			extra_wound_details = ", threatening to sever it entirely"
+		else if((mangled_state == BODYPART_MANGLED_FLESH && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_BONE && bio_state == BIO_JUST_BONE))
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the bone"
+		else if((mangled_state == BODYPART_MANGLED_BONE && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_FLESH && bio_state == BIO_JUST_FLESH))
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining tissue"
+
+	var/message_hit_area = ""
+	if(hit_area)
+		message_hit_area = " in the [hit_area]"
+	var/attack_message = "[src] is [message_verb][message_hit_area] with [I][extra_wound_details]!"
+	var/attack_message_local = "You're [message_verb][message_hit_area] with [I][extra_wound_details]!"
+	if(user in viewers(src, null))
+		attack_message = "[user] [message_verb] [src][message_hit_area] with [I][extra_wound_details]!"
+		attack_message_local = "[user] [message_verb] you[message_hit_area] with [I][extra_wound_details]!"
+	if(user == src)
+		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I][extra_wound_details]"
+	visible_message("<span class='danger'>[attack_message]</span>",\
+		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
+	return TRUE

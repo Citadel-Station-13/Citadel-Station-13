@@ -218,10 +218,10 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			dat += "<b>Message Authentication</b> <br><br>"
 			dat += "<b>Message for [dpt]:</b> [message] <br><br>"
 			dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div> <br>"
-	
+
 			dat += "<b>Validated by:</b> [msgVerified ? "<span class='good'><b>[msgVerified]</b></span>" : "<i>Not Validated</i>"] <br>"
 			dat += "<b>Stamped by:</b> [msgStamped ? "<span class='boldnotice'>[msgStamped]</span>" : "<i>Not Stamped</i>"] <br><br>"
-	
+
 			dat += "<a href='?src=[REF(src)];department=[dpt]'>Send Message</a> <br><br>"
 			dat += "<a href='?src=[REF(src)];setScreen=0'><< Discard Message</a> <br>"
 
@@ -271,7 +271,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 
 	var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/requests_console/Topic(href, href_list)
@@ -279,7 +278,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		return
 	usr.set_machine(src)
 	add_fingerprint(usr)
-	
+
 	if(href_list["write"])
 		dpt = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
 		var/new_message = stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
@@ -358,7 +357,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				workingServer = TRUE
 
 		if(!workingServer)
-			screen = 7 
+			screen = 7
 			say("NOTICE: No server detected! Please contact your local engineering team.")
 			updateUsrDialog()
 			return
@@ -539,7 +538,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				to_chat(user, "<span class='warning'>You are not authorized to send announcements!</span>")
 			updateUsrDialog()
 		return
-	
+
 	if(istype(O, /obj/item/stamp))
 		if(screen == 9)
 			var/obj/item/stamp/T = O

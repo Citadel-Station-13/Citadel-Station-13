@@ -1,6 +1,6 @@
 
 
-/mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/on_attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(.) //the attack was blocked
 		return

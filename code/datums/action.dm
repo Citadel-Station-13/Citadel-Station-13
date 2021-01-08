@@ -157,7 +157,7 @@
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
-		current_button.cut_overlays(TRUE)
+		current_button.cut_overlays()
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
@@ -174,7 +174,7 @@
 	M.ghostize(can_reenter_corpse = TRUE, voluntary = TRUE)
 
 /datum/action/proc/OnUpdatedIcon()
-	UpdateButtonIcon()
+	addtimer(CALLBACK(src, .proc/UpdateButtonIcon), 1) //Hopefully runs after new icon overlays have been compiled.
 
 //Presets for item actions
 /datum/action/item_action
@@ -270,6 +270,13 @@
 
 /datum/action/item_action/toggle_welding_screen/Trigger()
 	var/obj/item/clothing/head/hardhat/weldhat/H = target
+	if(istype(H))
+		H.toggle_welding_screen(owner)
+
+/datum/action/item_action/toggle_welding_screen/plasmaman
+
+/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger()
+	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 

@@ -25,11 +25,10 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			take_damage(50, BRUTE, "energy", 0)
+	if(severity >= 70)
+		qdel(src)
+	else
+		take_damage(severity/1.3, BRUTE, "energy", 0)
 
 /obj/structure/emergency_shield/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

@@ -165,8 +165,8 @@
 	// Broadcast Message
 	if(amSilent)
 		//if (!iscarbon(target))
-		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>", \
-		//					 	 "<span class='notice'>You secretly slip your fangs into [target]'s flesh.</span>", \
+		//	user.visible_message("<span class='notice'>[user] shifts [target] closer to [user.p_their()] mouth.</span>",
+		//					 	 "<span class='notice'>You secretly slip your fangs into [target]'s flesh.</span>",
 		//					 	 vision_distance = 2, ignored_mobs=target) // Only people who AREN'T the target will notice this action.
 		//else
 		var/deadmessage = target.stat == DEAD ? "" : " <i>[target.p_they(TRUE)] looks dazed, and will not remember this.</i>"
@@ -226,7 +226,9 @@
 				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
-					H.bleed_rate += 5
+					var/obj/item/bodypart/head_part = H.get_bodypart(BODY_ZONE_HEAD)
+					if(head_part)
+						head_part.generic_bleedstacks += 5
 				target.add_splatter_floor(get_turf(target))
 				user.add_mob_blood(target) // Put target's blood on us. The donor goes in the ( )
 				target.add_mob_blood(target)

@@ -30,6 +30,8 @@
 			if(points)
 				if(I)
 					I.mining_points += points
+					if(usr.client)
+						usr.client.increment_progress("miner", points)
 					points = 0
 				else
 					to_chat(usr, "<span class='warning'>No ID detected.</span>")

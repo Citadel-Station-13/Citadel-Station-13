@@ -26,11 +26,11 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+				playsound(loc, pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg'),50, TRUE, -1)
 		return (BRUTELOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		return (BRUTELOSS)
 
 
@@ -42,11 +42,12 @@
 	if(storedpaper)
 		. += "paper"
 
+
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)
 		if(!user.transferItemToLoc(P, src))
 			return
-		playsound(loc, "pageturn", 60, 1)
+		playsound(loc, "pageturn", 60, TRUE)
 		to_chat(user, "<span class='notice'>You place [P] in [src].</span>")
 		storedpaper = P
 		update_icon()
@@ -59,20 +60,17 @@
 		storedcutter = P
 		update_icon()
 		return
-	if(istype(P, /obj/item/screwdriver) && storedcutter)
+	if(P.tool_behaviour == TOOL_SCREWDRIVER && storedcutter)
 		P.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>")
 		cuttersecured = !cuttersecured
 		return
 	..()
 
-/obj/item/papercutter/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/papercutter/on_attack_hand(mob/user)
 	add_fingerprint(user)
 	if(!storedcutter)
-		to_chat(user, "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>")
+		to_chat(user, "<span class='warning'>The cutting blade is gone! You can't use [src] now.</span>")
 		return
 
 	if(!cuttersecured)
@@ -82,7 +80,7 @@
 		update_icon()
 
 	if(storedpaper)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
 		to_chat(user, "<span class='notice'>You neatly cut [storedpaper].</span>")
 		storedpaper = null
 		qdel(storedpaper)
@@ -91,6 +89,7 @@
 		update_icon()
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/M = usr
 	if(M.incapacitated() || !Adjacent(M))
 		return
@@ -101,10 +100,6 @@
 	else if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
-	else
-	 . = ..()
-
 	add_fingerprint(M)
 
 /obj/item/paperslip
@@ -114,6 +109,12 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+
+/obj/item/paperslip/attackby(obj/item/I, mob/living/user, params)
+	if(burn_paper_product_attackby_check(I, user))
+		return
+	return ..()
+
 
 /obj/item/paperslip/Initialize()
 	. = ..()
@@ -127,5 +128,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "cutterblade"
 	item_state = "knife"
+	// inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'

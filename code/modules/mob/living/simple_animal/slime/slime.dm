@@ -106,6 +106,7 @@
 	set_colour(new_colour)
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	set_nutrition(rand(650, 800))
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -208,21 +209,20 @@
 /mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
-/mob/living/simple_animal/slime/Stat()
-	if(..())
-
-		if(!docile)
-			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(is_adult)
-				stat(null, "You can reproduce!")
-			else
-				stat(null, "You can evolve!")
+/mob/living/simple_animal/slime/get_status_tab_items()
+	. = ..()
+	if(!docile)
+		. += "Nutrition: [nutrition]/[get_max_nutrition()]"
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(is_adult)
+			. += "You can reproduce!"
+		else
+			. += "You can evolve!"
 
 		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of BZ!")
+			. += "You are knocked out by high levels of BZ!"
 		else
-			stat(null,"Power Level: [powerlevel]")
+			. += "Power Level: [powerlevel]"
 
 
 /mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -296,7 +296,7 @@
 		discipline_slime(user)
 		return ..()
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/slime/on_attack_hand(mob/living/carbon/human/M)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
@@ -356,7 +356,7 @@
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
-			user.changeNext_move(CLICK_CD_MELEE)
+			W.ApplyAttackCooldown(user, src)
 			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??

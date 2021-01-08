@@ -24,7 +24,6 @@
 	icon_aggro = "pandora"
 	icon_dead = "pandora_dead"
 	icon_gib = "syndicate_gib"
-	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 15
@@ -39,7 +38,7 @@
 	deathsound = 'sound/magic/repulse.ogg'
 	deathmessage = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
-
+	crate_type = /obj/structure/closet/crate/necropolis/tendril/magic
 	attack_action_types = list(/datum/action/innate/elite_attack/singular_shot,
 								/datum/action/innate/elite_attack/magic_box,
 								/datum/action/innate/elite_attack/pandora_teleport,

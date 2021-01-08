@@ -22,7 +22,7 @@
 	if(alerts[category])
 		thealert = alerts[category]
 		if(thealert.override_alerts)
-			return 0
+			return thealert
 		if(new_master && new_master != thealert.master)
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [thealert.master]")
 
@@ -36,7 +36,7 @@
 				clear_alert(category)
 				return .()
 			else //no need to update
-				return 0
+				return thealert
 	else
 		thealert = new type()
 		thealert.override_alerts = override
@@ -149,6 +149,27 @@
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "too_much_tox"
+
+/obj/screen/alert/not_enough_ch4
+	name = "Choking (No CH4)"
+	desc = "You're not getting enough methane. Find some good air before you pass out!"
+	icon_state = "not_enough_ch4"
+
+/obj/screen/alert/too_much_ch4
+	name = "Choking (CH4)"
+	desc = "There's too much methane in the air, and you're breathing it in! Find some good air before you pass out!"
+	icon_state = "too_much_ch4"
+
+/obj/screen/alert/not_enough_ch3br
+	name = "Choking (No CH3Br)"
+	desc = "You're not getting enough methyl bromide. Find some good air before you pass out!"
+	icon_state = "not_enough_tox"
+
+/obj/screen/alert/too_much_ch3br
+	name = "Choking (CH3Br)"
+	desc = "There's highly toxic methyl bromide in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	icon_state = "too_much_tox"
+
 //End gas alerts
 
 
@@ -184,13 +205,22 @@
 
 /obj/screen/alert/hot
 	name = "Too Hot"
-	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	desc = "The air around you is pretty toasty! Consider putting on some insulating clothing, or moving to a cooler area."
 	icon_state = "hot"
 
 /obj/screen/alert/cold
 	name = "Too Cold"
-	desc = "You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit."
+	desc = "The air around you is pretty cold! Consider wearing a coat, or moving to a warmer area."
 	icon_state = "cold"
+
+/obj/screen/alert/sweat
+	name = "Sweating"
+	desc = "You're sweating! Get somewhere cooler and take off any insulating clothing like a fire suit."
+	icon_state = "sweat"
+
+/obj/screen/alert/shiver
+	name = "Shivering"
+	desc = "You're shivering! Get somewhere warmer and take off any insulating clothing like a space suit." 
 
 /obj/screen/alert/lowpressure
 	name = "Low Pressure"
@@ -272,7 +302,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
+	L.MarkResistTime()
 	if(CHECK_MOBILITY(L, MOBILITY_MOVE))
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
@@ -447,8 +477,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			var/time_name
 			if(G.seconds_until_activation)
 				time_name = "until the Ark activates"
-			else if(G.grace_period)
-				time_name = "of grace period remaining"
 			else if(G.progress_in_seconds)
 				time_name = "until the Ark finishes summoning"
 			if(time_info)
@@ -494,6 +522,16 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "lowcell"
+
+/obj/screen/alert/etherealcharge
+	name = "Low Blood Charge"
+	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
+	icon_state = "etherealcharge"
+
+/obj/screen/alert/ethereal_overcharge
+	name = "Blood Overcharge"
+	desc = "Your blood's electric charge is becoming dangerously high, find an outlet for your energy. Use Grab Intent on an APC to channel your energy into it."
+	icon_state = "ethereal_overcharge"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /obj/screen/alert/hacked
@@ -600,17 +638,32 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if(CHECK_MOBILITY(L, MOBILITY_MOVE) && (L.last_special <= world.time))
-		return L.resist_restraints()
+	L.MarkResistTime()
+	return L.resist_restraints()
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
-	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.last_special <= world.time)
-		return L.resist_buckle()
+	L.MarkResistTime()
+	return L.resist_buckle()
+
+/obj/screen/alert/shoes/untied
+	name = "Untied Shoes"
+	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/knotted
+	name = "Knotted Shoes"
+	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
+	icon_state = "shoealert"
+
+/obj/screen/alert/shoes/Click()
+	var/mob/living/carbon/C = usr
+	if(!istype(C) || !C.can_resist() || C != mob_viewer || !C.shoes)
+		return
+	C.MarkResistTime()
+	C.shoes.handle_tying(C)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

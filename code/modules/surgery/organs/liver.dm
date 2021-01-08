@@ -73,8 +73,8 @@
 /obj/item/organ/liver/proc/sizeMoveMod(value, mob/living/carbon/C)
 	if(cachedmoveCalc == value)
 		return
-	C.next_move_modifier /= cachedmoveCalc
-	C.next_move_modifier *= value
+	C.action_cooldown_mod /= cachedmoveCalc
+	C.action_cooldown_mod *= value
 	cachedmoveCalc = value
 
 /obj/item/organ/liver/fly
@@ -112,8 +112,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			damage+=100
-		if(2)
-			damage+=50
+	damage += severity

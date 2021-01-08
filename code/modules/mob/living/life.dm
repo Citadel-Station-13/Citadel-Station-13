@@ -1,9 +1,9 @@
 /**
-  * Called by SSmobs at (hopefully) an interval of 1 second.
+  * Called by SSmobs at an interval of 2 seconds.
   * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
   */
 /mob/living/proc/Life(seconds, times_fired)
-	set waitfor = FALSE		// yeah hey we're kind of on a subsystem, no sleeping will be tolerated here!
+	//SHOULD_NOT_SLEEP(TRUE)
 	if(mob_transforming)
 		return
 
@@ -43,7 +43,10 @@
   * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
   */
 /mob/living/proc/BiologicalLife(seconds, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, seconds, times_fired)
 	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+	handle_wounds()
 
 	// Everything after this shouldn't process while dead (as of the time of writing)
 	if(stat == DEAD)
@@ -76,11 +79,12 @@
   * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
   */
 /mob/living/proc/PhysicalLife(seconds, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_PHYSICAL_LIFE, seconds, times_fired)
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
+		INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 
 	if(!loc)
 		return FALSE
@@ -109,6 +113,9 @@
 /mob/living/proc/handle_diseases()
 	return
 
+/mob/living/proc/handle_wounds()
+	return
+
 /mob/living/proc/handle_diginvis()
 	if(!digitaldisguise)
 		src.digitaldisguise = image(loc = src)
@@ -134,7 +141,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.gases[/datum/gas/oxygen] < 1)
+	if(!G.get_moles(/datum/gas/oxygen, 1))
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)

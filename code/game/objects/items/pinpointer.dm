@@ -200,3 +200,11 @@
 /obj/item/pinpointer/shuttle/Destroy()
 	shuttleport = null
 	. = ..()
+
+/obj/item/pinpointer/ian
+	name = "ian pinpointer"
+	desc = "A handheld tracking device that locates Ian. Made with real corgis!"
+	icon_state = "pinpointer_ian"
+
+/obj/item/pinpointer/ian/scan_for_target()
+	target = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list

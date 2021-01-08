@@ -5,6 +5,7 @@
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_ADJ_LAYER)
+	mutant_part_string = "body_markings"
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -15,6 +16,13 @@
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
 	gender_specific = 1
+
+/datum/sprite_accessory/body_markings/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/body_markings/ltiger
 	name = "Light Tiger Body"
@@ -41,6 +49,7 @@
 	gender_specific = 0
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
+	matrixed_sections = MATRIX_ALL
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -48,11 +57,7 @@
 	ckeys_allowed = list("yousshouldnteverbeseeingthisyoumeme")
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
 	relevant_layers = null
-
-/datum/sprite_accessory/mam_body_markings/plain
-	name = "Plain"
-	icon_state = "plain"
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	matrixed_sections = 0
 
 /datum/sprite_accessory/mam_body_markings/redpanda
 	name = "Redpanda"
@@ -77,13 +82,13 @@
 	icon_state = "bellyslim"
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
 
-/datum/sprite_accessory/mam_body_markings/corgi
-	name = "Corgi"
-	icon_state = "corgi"
-
 /datum/sprite_accessory/mam_body_markings/cow
 	name = "Bovine"
 	icon_state = "bovine"
+
+/datum/sprite_accessory/mam_body_markings/corgi
+	name = "Corgi"
+	icon_state = "corgi"
 
 /datum/sprite_accessory/mam_body_markings/corvid
 	name = "Corvid"
@@ -139,14 +144,18 @@
 	name = "Hyena"
 	icon_state = "hyena"
 
-/datum/sprite_accessory/mam_body_markings/lab
-	name = "Lab"
-	icon_state = "lab"
-
 /datum/sprite_accessory/mam_body_markings/insect
 	name = "Insect"
 	icon_state = "insect"
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+
+/datum/sprite_accessory/mam_body_markings/lab
+	name = "Lab"
+	icon_state = "lab"
+
+/datum/sprite_accessory/mam_body_markings/orca
+	name = "Orca"
+	icon_state = "orca"
 
 /datum/sprite_accessory/mam_body_markings/otie
 	name = "Otie"
@@ -156,13 +165,14 @@
 	name = "Otter"
 	icon_state = "otter"
 
-/datum/sprite_accessory/mam_body_markings/orca
-	name = "Orca"
-	icon_state = "orca"
-
 /datum/sprite_accessory/mam_body_markings/panther
 	name = "Panther"
 	icon_state = "panther"
+
+/datum/sprite_accessory/mam_body_markings/plain
+	name = "Plain"
+	icon_state = "plain"
+	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
 
 /datum/sprite_accessory/mam_body_markings/possum
 	name = "Possum"
@@ -171,6 +181,10 @@
 /datum/sprite_accessory/mam_body_markings/raccoon
 	name = "Raccoon"
 	icon_state = "raccoon"
+
+/datum/sprite_accessory/mam_body_markings/sergal
+	name = "Sergal"
+	icon_state = "sergal"
 
 /datum/sprite_accessory/mam_body_markings/pede
 	name = "Scolipede"
@@ -181,17 +195,13 @@
 	name = "Shark"
 	icon_state = "shark"
 
-/datum/sprite_accessory/mam_body_markings/skunk
-	name = "Skunk"
-	icon_state = "skunk"
-
-/datum/sprite_accessory/mam_body_markings/sergal
-	name = "Sergal"
-	icon_state = "sergal"
-
 /datum/sprite_accessory/mam_body_markings/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
+
+/datum/sprite_accessory/mam_body_markings/skunk
+	name = "Skunk"
+	icon_state = "skunk"
 
 /datum/sprite_accessory/mam_body_markings/tajaran
 	name = "Tajaran"
@@ -223,80 +233,19 @@
 	icon = 'icons/mob/wings.dmi'
 	color_src = 0
 	relevant_layers = list(BODY_FRONT_LAYER)
+	mutant_part_string = "insect_fluff"
+
+/datum/sprite_accessory/insect_fluff/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	return (!H.dna.features["insect_fluff"] || H.dna.features["insect_fluff"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 
 /datum/sprite_accessory/insect_fluff/none
 	name = "None"
 	icon_state = "none"
 	relevant_layers = null
 
-/datum/sprite_accessory/insect_fluff/plain
-	name = "Plain"
-	icon_state = "plain"
-
-/datum/sprite_accessory/insect_fluff/reddish
-	name = "Reddish"
-	icon_state = "redish"
-
-/datum/sprite_accessory/insect_fluff/royal
-	name = "Royal"
-	icon_state = "royal"
-
-/datum/sprite_accessory/insect_fluff/gothic
-	name = "Gothic"
-	icon_state = "gothic"
-
-/datum/sprite_accessory/insect_fluff/lovers
-	name = "Lovers"
-	icon_state = "lovers"
-
-/datum/sprite_accessory/insect_fluff/whitefly
-	name = "White Fly"
-	icon_state = "whitefly"
-
 /datum/sprite_accessory/insect_fluff/punished
 	name = "Burnt Off"
 	icon_state = "punished"
-
-/datum/sprite_accessory/insect_fluff/firewatch
-	name = "Firewatch"
-	icon_state = "firewatch"
-
-/datum/sprite_accessory/insect_fluff/deathhead
-	name = "Deathshead"
-	icon_state = "deathhead"
-
-/datum/sprite_accessory/insect_fluff/poison
-	name = "Poison"
-	icon_state = "poison"
-
-/datum/sprite_accessory/insect_fluff/ragged
-	name = "Ragged"
-	icon_state = "ragged"
-
-/datum/sprite_accessory/insect_fluff/moonfly
-	name = "Moon Fly"
-	icon_state = "moonfly"
-
-/datum/sprite_accessory/insect_fluff/snow
-	name = "Snow"
-	icon_state = "snow"
-
-/datum/sprite_accessory/insect_fluff/oakworm
-	name = "Oak Worm"
-	icon_state = "oakworm"
-
-/datum/sprite_accessory/insect_fluff/jungle
-	name = "Jungle"
-	icon_state = "jungle"
-
-/datum/sprite_accessory/insect_fluff/witchwing
-	name = "Witch Wing"
-	icon_state = "witchwing"
-
-/datum/sprite_accessory/insect_fluff/colored
-	name = "Colored (Hair)"
-	icon_state = "snow"
-	color_src = HAIR
 
 /datum/sprite_accessory/insect_fluff/colored1
 	name = "Colored (Primary)"
@@ -312,3 +261,68 @@
 	name = "Colored (Tertiary)"
 	icon_state = "snow"
 	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/insect_fluff/colored
+	name = "Colored (Hair)"
+	icon_state = "snow"
+	color_src = HAIR
+
+/datum/sprite_accessory/insect_fluff/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
+
+/datum/sprite_accessory/insect_fluff/firewatch
+	name = "Firewatch"
+	icon_state = "firewatch"
+
+/datum/sprite_accessory/insect_fluff/gothic
+	name = "Gothic"
+	icon_state = "gothic"
+
+/datum/sprite_accessory/insect_fluff/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
+/datum/sprite_accessory/insect_fluff/lovers
+	name = "Lovers"
+	icon_state = "lovers"
+
+/datum/sprite_accessory/insect_fluff/moonfly
+	name = "Moon Fly"
+	icon_state = "moonfly"
+
+/datum/sprite_accessory/insect_fluff/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/insect_fluff/plain
+	name = "Plain"
+	icon_state = "plain"
+
+/datum/sprite_accessory/insect_fluff/poison
+	name = "Poison"
+	icon_state = "poison"
+
+/datum/sprite_accessory/insect_fluff/ragged
+	name = "Ragged"
+	icon_state = "ragged"
+
+/datum/sprite_accessory/insect_fluff/reddish
+	name = "Reddish"
+	icon_state = "redish"
+
+/datum/sprite_accessory/insect_fluff/royal
+	name = "Royal"
+	icon_state = "royal"
+
+/datum/sprite_accessory/insect_fluff/snow
+	name = "Snow"
+	icon_state = "snow"
+
+/datum/sprite_accessory/insect_fluff/whitefly
+	name = "White Fly"
+	icon_state = "whitefly"
+
+/datum/sprite_accessory/insect_fluff/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"

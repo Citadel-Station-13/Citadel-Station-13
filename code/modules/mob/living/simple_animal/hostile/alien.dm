@@ -7,7 +7,6 @@
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
-	threat = 1
 	response_help_continuous = "pokes"
 	response_help_simple = "poke"
 	response_disarm_continuous = "shoves"
@@ -69,7 +68,6 @@
 	icon_state = "aliens"
 	icon_living = "aliens"
 	icon_dead = "aliens_dead"
-	threat = 3
 	health = 150
 	maxHealth = 150
 	melee_damage_lower = 15
@@ -87,7 +85,6 @@
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
 	pixel_x = -16
-	threat = 8
 	health = 250
 	maxHealth = 250
 	melee_damage_lower = 15
@@ -167,7 +164,6 @@
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	threat = -1
 	a_intent = INTENT_HELP
 	friendly_verb_continuous = "caresses"
 	friendly_verb_simple = "caress"

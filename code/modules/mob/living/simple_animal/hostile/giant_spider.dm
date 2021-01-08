@@ -17,7 +17,6 @@
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
-	threat = 1
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
@@ -369,7 +368,8 @@
 	var/turf/T = get_turf(S)
 
 	var/obj/structure/spider/stickyweb/W = locate() in T
-	if(W)
+	var/obj/structure/arachnid/W2 = locate() in T
+	if(W || W2)
 		to_chat(S, "<span class='warning'>There's already a web here!</span>")
 		return
 

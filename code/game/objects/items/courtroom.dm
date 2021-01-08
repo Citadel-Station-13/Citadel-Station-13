@@ -32,6 +32,6 @@
 	if(istype(I, /obj/item/gavelhammer))
 		playsound(loc, 'sound/items/gavel.ogg', 100, 1)
 		user.visible_message("<span class='warning'>[user] strikes [src] with [I].</span>")
-		user.changeNext_move(CLICK_CD_MELEE)
+		return TRUE
 	else
 		return ..()

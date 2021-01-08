@@ -87,7 +87,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/broken_bottle/Initialize()
 	. = ..()

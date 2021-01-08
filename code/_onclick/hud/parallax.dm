@@ -128,7 +128,7 @@
 		deltimer(C.parallax_animate_timer)
 	var/datum/callback/CB = CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform)
 	if(skip_windups)
-		CB.Invoke()
+		CB.InvokeAsync()
 	else
 		C.parallax_animate_timer = addtimer(CB, min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
 
@@ -219,6 +219,7 @@
 		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
+	set waitfor = FALSE
 	if(length(client_mobs_in_contents))
 		for(var/thing in client_mobs_in_contents)
 			var/mob/M = thing

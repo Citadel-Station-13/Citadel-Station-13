@@ -11,13 +11,11 @@
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/preyloop_refresh
-	M.verbs += /mob/living/proc/lick
-	M.verbs += /mob/living/proc/escapeOOC
+	add_verb(M, list(/mob/living/proc/preyloop_refresh, /mob/living/proc/lick, /mob/living/proc/escapeOOC))
 
 	if(M.vore_flags & NO_VORE) //If the mob isn't supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
 		return TRUE
-	M.verbs += /mob/living/proc/insidePanel
+	add_verb(M, /mob/living/proc/insidePanel)
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	spawn(2 SECONDS) // long delay because the server delays in its startup. just on the safe side.
@@ -116,7 +114,7 @@
 		testing("[user] attempted to feed [prey] to [pred], via [lowertext(belly.name)] but it went wrong.")
 		return
 
-	if (!prey.vore_flags & DEVOURABLE)
+	if (!CHECK_BITFIELD(prey.vore_flags, DEVOURABLE))
 		to_chat(user, "This can't be eaten!")
 		return FALSE
 
@@ -275,16 +273,7 @@
 		to_chat(src,"<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>")
 		return FALSE
 	ENABLE_BITFIELD(vore_flags,VOREPREF_INIT)
-
-	// garbage data coming back the other way or breaking absorbed would be bad, so instead we do this
-	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,DIGESTABLE) // set to 1 if prefs is 1
-	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,DEVOURABLE)
-	vore_flags |= CHECK_BITFIELD(client.prefs.vore_flags,FEEDING)
-
-	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,DIGESTABLE) // set to 0 if prefs is 0
-	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,DEVOURABLE)
-	vore_flags &= CHECK_BITFIELD(client.prefs.vore_flags,FEEDING)
-
+	COPY_SPECIFIC_BITFIELDS(vore_flags,client.prefs.vore_flags,DIGESTABLE | DEVOURABLE | FEEDING | LICKABLE)
 	vore_taste = client.prefs.vore_taste
 
 	release_vore_contents(silent = TRUE)
@@ -349,27 +338,28 @@
 	if(incapacitated(ignore_restraints = TRUE))
 		to_chat(src, "<span class='warning'>You can't do that while incapacitated.</span>")
 		return
-	if(next_move > world.time)
+	if(!CheckActionCooldown())
 		to_chat(src, "<span class='warning'>You can't do that so fast, slow down.</span>")
 		return
 
-	var/list/choices
+	DelayNextAction(CLICK_CD_MELEE, flush = TRUE)
+
+	var/list/lickable = list()
 	for(var/mob/living/L in view(1))
 		if(L != src && (!L.ckey || L.client?.prefs.vore_flags & LICKABLE) && Adjacent(L))
-			LAZYADD(choices, L)
+			LAZYADD(lickable, L)
+	for(var/mob/living/listed in lickable)
+		lickable[listed] = new /mutable_appearance(listed)
 
-	if(!choices)
+	if(!lickable)
 		return
 
-	var/mob/living/tasted = input(src, "Who would you like to lick? (Excluding yourself and those with the preference disabled)", "Licking") as null|anything in choices
+	var/mob/living/tasted = show_radial_menu(src, src, lickable, radius = 40, require_near = TRUE)
 
 	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.vore_flags & LICKABLE)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
 		return
 
-	changeNext_move(CLICK_CD_MELEE)
-
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
-
 
 /mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
 	if(!vore_taste && !allow_generic)

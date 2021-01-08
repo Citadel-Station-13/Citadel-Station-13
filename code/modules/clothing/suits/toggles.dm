@@ -5,9 +5,9 @@
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 
-/obj/item/clothing/suit/hooded/New()
+/obj/item/clothing/suit/hooded/Initialize()
+	. = ..()
 	hood = MakeHelmet()
-	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
@@ -48,7 +48,7 @@
 
 /obj/item/clothing/suit/hooded/update_icon_state()
 	icon_state = "[initial(icon_state)]"
-	if(ishuman(hood.loc))
+	if(ishuman(hood?.loc))
 		var/mob/living/carbon/human/H = hood.loc
 		if(H.head == hood)
 			icon_state += "_t"
@@ -76,6 +76,7 @@
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/hooded/Destroy()
 	suit = null
@@ -130,8 +131,8 @@
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()
-	helmet = MakeHelmet()
 	. = ..()
+	helmet = MakeHelmet()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	if(helmet)

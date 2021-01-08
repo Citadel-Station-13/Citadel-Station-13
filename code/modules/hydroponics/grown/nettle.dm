@@ -8,6 +8,7 @@
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	yield = 4
+	instability = 25
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
@@ -90,6 +91,7 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
+	wound_bonus = CANT_WOUND
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/add_juice()
 	..()

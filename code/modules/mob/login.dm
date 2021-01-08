@@ -13,9 +13,7 @@
 		hud_used.show_hud(hud_used.hud_version)
 		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
-	next_move = 1
-
-	..()
+	. = ..()
 
 	reset_perspective(loc)
 
@@ -41,8 +39,7 @@
 	update_client_colour()
 	update_mouse_pointer()
 	if(client)
-		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
-
+		client.view_size?.resetToDefault()
 		if(client.player_details && istype(client.player_details))
 			if(client.player_details.player_actions.len)
 				for(var/datum/action/A in client.player_details.player_actions)
@@ -51,6 +48,8 @@
 			for(var/foo in client.player_details.post_login_callbacks)
 				var/datum/callback/CB = foo
 				CB.Invoke()
+
+	mind?.hide_ckey = client?.prefs?.hide_ckey
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)

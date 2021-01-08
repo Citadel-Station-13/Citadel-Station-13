@@ -64,7 +64,7 @@
 	. = ..()
 
 	air_contents = new(volume) //liters
-	air_contents.temperature = T20C
+	air_contents.set_temperature(T20C)
 
 	populate_gas()
 
@@ -92,7 +92,7 @@
 
 	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = src.air_contents.return_temperature()-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -123,6 +123,7 @@
 
 /obj/item/tank/analyzer_act(mob/living/user, obj/item/I)
 	atmosanalyzer_scan(air_contents, user, src)
+	return TRUE
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -143,7 +144,6 @@
 			if(prob(50))
 				step(W, pick(GLOB.alldirs))
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.bleed_rate = 5
 		H.gib_animation()
 		sleep(3)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
@@ -164,11 +164,13 @@
 	else
 		. = ..()
 
-/obj/item/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/tank/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "tanks", name, 400, 120, master_ui, state)
+		ui = new(user, src, "Tank", name)
 		ui.open()
 
 /obj/item/tank/ui_data(mob/user)
@@ -205,10 +207,6 @@
 			else if(pressure == "max")
 				pressure = TANK_MAX_RELEASE_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New release pressure ([TANK_MIN_RELEASE_PRESSURE]-[TANK_MAX_RELEASE_PRESSURE] kPa):", name, distribute_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
@@ -235,7 +233,7 @@
 	if(tank_pressure < distribute_pressure)
 		distribute_pressure = tank_pressure
 
-	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.return_temperature())
 
 	return remove_air(moles_needed)
 

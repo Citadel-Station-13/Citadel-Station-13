@@ -9,6 +9,7 @@
 	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
 	var/init_vis_overlay = TRUE
+	rad_flags = RAD_NO_CONTAMINATE
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
@@ -25,12 +26,12 @@
 		projector = null
 	return ..()
 
-/obj/structure/holosign/attack_hand(mob/living/user)
+/obj/structure/holosign/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
 
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -94,8 +95,12 @@
 	alpha = 150
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/firelock/blocksTemperature()
+/obj/structure/holosign/barrier/firelock/BlockSuperconductivity()
 	return TRUE
+
+/obj/structure/holosign/barrier/firelock/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
 
 /obj/structure/holosign/barrier/combifan
 	name = "holo combifan"
@@ -110,7 +115,7 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = FIRE_PROOF
 
-/obj/structure/holosign/barrier/combifan/blocksTemperature()
+/obj/structure/holosign/barrier/combifan/BlockSuperconductivity()
 	return TRUE
 
 /obj/structure/holosign/barrier/combifan/Initialize()
@@ -162,7 +167,7 @@
 				return TRUE //nice or benign diseases!
 	return TRUE
 
-/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
+/obj/structure/holosign/barrier/medical/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(CanPass(user) && user.a_intent == INTENT_HELP)
 		force_allaccess = !force_allaccess
 		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
@@ -182,7 +187,7 @@
 /obj/structure/holosign/barrier/cyborg/hacked/proc/cooldown()
 	shockcd = FALSE
 
-/obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user)
+/obj/structure/holosign/barrier/cyborg/hacked/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

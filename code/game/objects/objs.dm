@@ -10,6 +10,11 @@
 	var/damtype = BRUTE
 	var/force = 0
 
+	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
+	var/wound_bonus = 0
+	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
+	var/bare_wound_bonus = 0
+
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
@@ -37,12 +42,8 @@
 		if("anchored")
 			setAnchored(vval)
 			return TRUE
-		if("obj_flags")
+		if(NAMEOF(src, obj_flags))
 			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
-				return FALSE
-		if("control_object")
-			var/obj/O = vval
-			if(istype(O) && (O.obj_flags & DANGEROUS_POSSESSION))
 				return FALSE
 	return ..()
 
@@ -303,18 +304,45 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	var/dat = "<b>Reskin options for [name]:</b>\n"
-	for(var/V in unique_reskin)
-		var/output = icon2html(src, M, unique_reskin[V])
-		dat += "[V]: <span class='reallybig'>[output]</span>\n"
-	to_chat(M, dat)
 
-	var/choice = input(M, always_reskinnable ? "Choose the a reskin for [src]" : "Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(QDELETED(src) || !choice || (current_skin && !always_reskinnable) || M.incapacitated() || !in_range(M,src) || !unique_reskin[choice] || unique_reskin[choice] == current_skin)
+	var/list/items = list()
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		items += list("[reskin_option]" = item_image)
+	sortList(items)
+
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
+	if(!pick)
 		return
-	current_skin = choice
-	icon_state = unique_reskin[choice]
-	to_chat(M, "[src] is now skinned as '[choice]'.")
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+	icon_state = unique_reskin[pick]
+	to_chat(M, "[src] is now skinned as '[pick].'")
+
+/**
+  * Checks if we are allowed to interact with a radial menu for reskins
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/obj/proc/check_reskin_menu(mob/user)
+	if(QDELETED(src))
+		return FALSE
+	if(current_skin)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
+/obj/update_overlays()
+	. = ..()
+	if(acid_level)
+		. += GLOB.acid_overlay
+	if(resistance_flags & ON_FIRE)
+		. += GLOB.fire_overlay
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
@@ -328,3 +356,6 @@
 	. = ..()
 	if(. && ricochet_damage_mod)
 		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet
+
+/obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	return

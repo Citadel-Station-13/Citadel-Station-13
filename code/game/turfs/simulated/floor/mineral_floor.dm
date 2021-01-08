@@ -58,6 +58,12 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
+// Plasma floor that can't be removed, for disco
+
+/turf/open/floor/mineral/plasma/disco
+	name = "disco floor"
+/turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)
+	return
 
 //GOLD
 
@@ -149,7 +155,7 @@
 	if(!.)
 		honk()
 
-/turf/open/floor/mineral/bananium/attack_hand(mob/user)
+/turf/open/floor/mineral/bananium/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	.=..()
 	if(!.)
 		honk()
@@ -202,7 +208,7 @@
 	if(!.)
 		radiate()
 
-/turf/open/floor/mineral/uranium/attack_hand(mob/user)
+/turf/open/floor/mineral/uranium/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	.=..()
 	if(!.)
 		radiate()

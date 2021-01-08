@@ -210,7 +210,9 @@
 	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(isnull(N))
 		return ..()
-	N.nanite_volume += -cached_purity*5//0.5 seems to be the default to me, so it'll neuter them.
+	if(HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM))
+		C.adjustToxLoss(1, toxins_type = TOX_SYSCORRUPT) //Interferes with robots. Rare chem, so, pretty good at that too.
+	N.adjust_nanites(-cached_purity*5) //0.5 seems to be the default to me, so it'll neuter them.
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
@@ -221,11 +223,11 @@
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(10))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel a strange tingling sensation come from your core.</b></span>")
 	if(isnull(N))
 		return ..()
-	N.nanite_volume += -10*cached_purity
+	N.adjust_nanites(-10*cached_purity)
 	..()
 
 datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
@@ -233,7 +235,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		if(O == active_obj)
 			return
 	react_objs += O
-	O.emp_act(EMP_HEAVY)
+	O.emp_act(80)
 
 /datum/reagent/fermi/nanite_b_goneTox
 	name = "Electromagnetic crystals"
@@ -248,7 +250,7 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 		C.electrocute_act(10, (get_turf(C)), 1, SHOCK_ILLUSION)
 	if(prob(50))
 		var/atom/T = C
-		T.emp_act(EMP_HEAVY)
+		T.emp_act(80)
 		to_chat(C, "<span class='warning'>You feel your hair stand on end as you glow brightly for a moment!</b></span>")
 	..()
 

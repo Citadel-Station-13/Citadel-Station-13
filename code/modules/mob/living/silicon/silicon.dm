@@ -13,6 +13,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	speech_span = SPAN_ROBOT
+	deathsound = 'sound/voice/borg_deathsound.ogg'
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	vore_flags = NO_VORE
 
@@ -430,3 +431,6 @@
 
 /mob/living/silicon/handle_high_gravity(gravity)
 	return
+
+/mob/living/silicon/rust_heretic_act()
+	adjustBruteLoss(500)

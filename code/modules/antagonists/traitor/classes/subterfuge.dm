@@ -1,7 +1,7 @@
 /datum/traitor_class/human/subterfuge
 	name = "MI13 Operative"
 	employer = "MI13"
-	weight = 20
+	weight = 36
 	chaos = -5
 
 /datum/traitor_class/human/subterfuge/forge_single_objective(datum/antagonist/traitor/T)
@@ -23,18 +23,23 @@
 			maroon_objective.find_target()
 			T.add_objective(maroon_objective)
 	else
-		if(prob(15) && !(locate(/datum/objective/download) in T.objectives) && !(T.owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
-			var/datum/objective/download/download_objective = new
-			download_objective.owner = T.owner
-			download_objective.gen_amount_goal()
-			T.add_objective(download_objective)
-		else if(prob(70)) // cum. not counting download: 40%.
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = T.owner
-			steal_objective.find_target()
-			T.add_objective(steal_objective)
-		else
-			var/datum/objective/sabotage/sabotage_objective = new
-			sabotage_objective.owner = T.owner
-			sabotage_objective.find_target()
-			T.add_objective(sabotage_objective)
+		var/list/weights = list()
+		weights["sabo"] = length(subtypesof(/datum/sabotage_objective))
+		weights["steal"] = length(subtypesof(/datum/objective_item/steal))
+		weights["download"] = !(locate(/datum/objective/download) in T.objectives || (T.owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
+		switch(pickweight(weights))
+			if("sabo")
+				var/datum/objective/sabotage/sabotage_objective = new
+				sabotage_objective.owner = T.owner
+				sabotage_objective.find_target()
+				T.add_objective(sabotage_objective)
+			if("steal")
+				var/datum/objective/steal/steal_objective = new
+				steal_objective.owner = T.owner
+				steal_objective.find_target()
+				T.add_objective(steal_objective)
+			if("download")
+				var/datum/objective/download/download_objective = new
+				download_objective.owner = T.owner
+				download_objective.gen_amount_goal()
+				T.add_objective(download_objective)

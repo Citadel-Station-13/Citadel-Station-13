@@ -150,6 +150,74 @@
 	name = "Space Diner Solar Array"
 	icon_state = "yellow"
 
+//Ruin of "Skelter" ship
+
+/area/ruin/space/has_grav/skelter
+	name = "The Skelter"
+	icon_state = "red"
+
+/area/ruin/space/has_grav/skelter/admin
+	name = "Administration"
+	icon_state = "bridge"
+
+/area/ruin/space/has_grav/skelter/comms
+	name = "Communications"
+	icon_state = "tcomsatcomp"
+
+/area/ruin/space/has_grav/skelter/sec
+	name = "Security Office"
+	icon_state = "security"
+
+/area/ruin/space/has_grav/skelter/cafe
+	name = "Cafeteria"
+	icon_state = "cafeteria"
+
+/area/ruin/space/has_grav/skelter/crew
+	name = "Crew Quarters"
+	icon_state = "crew_quarters"
+
+/area/ruin/space/has_grav/skelter/med
+	name = "Med Bay"
+	icon_state = "medbay3"
+
+/area/ruin/space/has_grav/skelter/engine
+	name = "Reactor"
+	icon_state = "engine"
+
+/area/ruin/space/has_grav/skelter/engine/upper
+	name = "Port Engine"
+
+/area/ruin/space/has_grav/skelter/engine/lower
+	name = "Starboard Engine"
+
+/area/ruin/space/has_grav/skelter/engine/powerstorage
+	name = "Electrical"
+	icon_state = "engine_smes"
+
+/area/ruin/space/has_grav/skelter/oxy
+	name = "02"
+	icon_state = "atmos"
+
+/area/ruin/space/has_grav/skelter/nav
+	name = "Navigation"
+	icon_state = "start"
+
+/area/ruin/space/has_grav/skelter/forehall
+	name = "Forward Hallway"
+	icon_state = "hallF"
+
+/area/ruin/space/has_grav/skelter/afthall
+	name = "Aft Hallway"
+	icon_state = "hallA"
+
+/area/ruin/space/has_grav/skelter/storage
+	name = "Storage"
+	icon_state = "storage"
+
+/area/ruin/space/has_grav/skelter/shields
+	name = "Shields"
+	icon_state = "green"
+
 //Ruin of Derelict Oupost
 
 /area/ruin/space/has_grav/derelictoutpost

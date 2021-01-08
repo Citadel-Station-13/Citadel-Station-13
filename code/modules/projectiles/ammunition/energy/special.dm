@@ -76,3 +76,8 @@
 	projectile_type = /obj/item/projectile/beam/shrink
 	select_name = "shrink ray"
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/pickle //ammo for an adminspawn gun
+	projectile_type = /obj/item/projectile/energy/pickle
+	select_name = "pickle ray"
+	e_cost = 0

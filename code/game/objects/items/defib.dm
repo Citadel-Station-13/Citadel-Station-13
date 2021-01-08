@@ -4,7 +4,7 @@
 /obj/item/defibrillator
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -23,8 +23,8 @@
 	var/obj/item/stock_parts/cell/cell
 	var/combat = FALSE //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
-	var/healdisk = FALSE // Will we shock people dragging the body?
-	var/pullshocksafely = FALSE //Dose the unit have the healdisk upgrade?
+	var/healdisk = FALSE // Does the unit have the healdisk upgrade?
+	var/pullshocksafely = FALSE // Will we shock people dragging the body?
 	var/primetime = 0 // is the defib faster
 	var/timedeath = 10
 	var/disarm_shock_time = 10
@@ -77,8 +77,7 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/defibrillator/attack_hand(mob/user)
+/obj/item/defibrillator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(loc == user)
 		if(slot_flags == ITEM_SLOT_BACK)
 			if(user.get_item_by_slot(SLOT_BACK) == src)
@@ -141,7 +140,7 @@
 /obj/item/defibrillator/emp_act(severity)
 	. = ..()
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
-		deductcharge(1000 / severity)
+		deductcharge(severity*10)
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(safety)
@@ -262,7 +261,7 @@
 /obj/item/shockpaddles
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -395,8 +394,6 @@
 			to_chat(user, "<span class='warning'>[src] are recharging!</span>")
 		return
 
-	user.stop_pulling() //User has hands full, and we don't care about anyone else pulling on it, their problem. CLEAR!!
-
 	if(user.a_intent == INTENT_DISARM)
 		do_disarm(M, user)
 		return
@@ -448,8 +445,7 @@
 	if(do_after(user, isnull(defib?.disarm_shock_time)? disarm_shock_time : defib.disarm_shock_time, target = M))
 		M.visible_message("<span class='danger'>[user] zaps [M] with [src]!</span>", \
 				"<span class='userdanger'>[user] zaps [M] with [src]!</span>")
-		M.adjustStaminaLoss(50)
-		M.DefaultCombatKnockdown(100)
+		M.DefaultCombatKnockdown(140)
 		M.updatehealth() //forces health update before next life tick
 		playsound(src,  'sound/machines/defib_zap.ogg', 50, 1, -1)
 		M.emote("gasp")
@@ -619,6 +615,13 @@
 					if(req_defib)
 						if(defib.healdisk)
 							H.heal_overall_damage(25, 25)
+					var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+					var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
+					var/late = timelimit && (tplus > timelimit)
+					var/policy = late? policies[POLICYCONFIG_ON_DEFIB_LATE] : policies[POLICYCONFIG_ON_DEFIB_INTACT]
+					if(policy)
+						to_chat(H, policy)
+					H.log_message("revived using a defibrillator, [tplus] deciseconds from time of death, considered [late? "late" : "memory-intact"] revival under configured policy limits.", LOG_GAME)
 				if(req_defib)
 					defib.deductcharge(revivecost)
 					cooldown = 1
@@ -679,7 +682,7 @@
 
 /obj/item/shockpaddles/cyborg
 	name = "cyborg defibrillator paddles"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
@@ -700,7 +703,7 @@
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
 	combat = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/defibrillators.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE

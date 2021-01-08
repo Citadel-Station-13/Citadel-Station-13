@@ -24,7 +24,10 @@ GLOBAL_LIST_INIT(default_weight_class_to_volume, list(
 // Let's keep all of this in one place. given what we put above anyways..
 
 // volume amount for items
+/// volume for a data disk
 #define ITEM_VOLUME_DISK					1
+/// volume for a shotgun stripper clip holding 4 shells
+#define ITEM_VOLUME_STRIPPER_CLIP			(DEFAULT_VOLUME_NORMAL * 0.5)
 
 // #define SAMPLE_VOLUME_AMOUNT 2
 

@@ -98,6 +98,11 @@
 	config_entry_value = 6
 	min_val = 1
 
+/datum/config_entry/number/ecult_scaling_coeff		//how much does the amount of players get divided by to determine e_cult
+	config_entry_value = 6
+	integer = FALSE
+	min_val = 1
+
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
 	config_entry_value = 8
 	min_val = 1
@@ -225,14 +230,7 @@
 /datum/config_entry/keyed_list/multiplicative_movespeed
 	key_mode = KEY_MODE_TYPE
 	value_mode = VALUE_MODE_NUM
-	config_entry_value = list(			//DEFAULTS
-	/mob/living/simple_animal = 1,
-	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/sentinel = 0.25,
-	/mob/living/carbon/alien/humanoid/drone = 0.5,
-	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
-	/mob/living/carbon/alien/humanoid/royal/queen = 3
-	)
+	abstract_type = /datum/config_entry/keyed_list/multiplicative_movespeed
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
@@ -243,6 +241,26 @@
 	. = ..()
 	if(. && (var_name == NAMEOF(src, config_entry_value)))
 		update_config_movespeed_type_lookup(TRUE)
+
+/datum/config_entry/keyed_list/multiplicative_movespeed/normal
+	name = "multiplicative_movespeed"
+	config_entry_value = list(			//DEFAULTS
+	/mob/living/simple_animal = 1,
+	/mob/living/silicon/pai = 1,
+	/mob/living/carbon/alien/humanoid/sentinel = 0.25,
+	/mob/living/carbon/alien/humanoid/drone = 0.5,
+	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
+	/mob/living/carbon/alien/humanoid/royal/queen = 3
+	)
+
+/datum/config_entry/keyed_list/multiplicative_movespeed/floating
+	name = "multiplicative_movespeed_floating"
+	config_entry_value = list(
+		/mob/living = 0,
+		/mob/living/carbon/alien/humanoid = 0,
+		/mob/living/carbon/alien/humanoid/royal/praetorian = 0,
+		/mob/living/carbon/alien/humanoid/royal/queen = 2
+	)
 
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
 	abstract_type = /datum/config_entry/number/movedelay
@@ -275,6 +293,12 @@
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
 
+/datum/config_entry/number/movedelay/sprint_max_tiles_increase
+	config_entry_value = 5
+
+/datum/config_entry/number/movedelay/sprint_absolute_max_tiles
+	config_entry_value = 13
+
 /datum/config_entry/number/movedelay/sprint_buffer_max
 	config_entry_value = 24
 
@@ -286,7 +310,7 @@
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
-	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
+	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed/normal
 	abstract_type = /datum/config_entry/number/outdated_movedelay
 
 	var/movedelay_type
@@ -485,21 +509,21 @@
 
 //Body size configs, the feature will be disabled if both min and max have the same value.
 /datum/config_entry/number/body_size_min
-	config_entry_value = RESIZE_DEFAULT_SIZE
+	config_entry_value = 0.9
 	min_val = 0.1 //to avoid issues with zeros and negative values.
 	max_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE
 
 /datum/config_entry/number/body_size_max
-	config_entry_value = RESIZE_DEFAULT_SIZE
+	config_entry_value = 1.25
 	min_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE
 
-//Pun-Pun movement slowdown given to characters with a body size smaller than this value,
+//Penalties given to characters with a body size smaller than this value,
 //to compensate for their smaller hitbox.
 //To disable, just make sure the value is lower than 'body_size_min'
-/datum/config_entry/number/threshold_body_size_slowdown
-	config_entry_value = RESIZE_DEFAULT_SIZE * 0.85
+/datum/config_entry/number/threshold_body_size_penalty
+	config_entry_value = RESIZE_DEFAULT_SIZE
 	min_val = 0
 	max_val = RESIZE_DEFAULT_SIZE
 	integer = FALSE
@@ -507,8 +531,8 @@
 //multiplicative slowdown multiplier. See 'dna.update_body_size' for the operation.
 //doesn't apply to floating or crawling mobs
 /datum/config_entry/number/body_size_slowdown_multiplier
-	config_entry_value = 0.25
-	min_val = 0.1 //To encourage folks to disable the slowdown through the above config instead.
+	config_entry_value = 0
+	min_val = 0
 	integer = FALSE
 
 //Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
@@ -529,4 +553,33 @@
 	config_entry_value = 6
 
 /datum/config_entry/number/max_shuttle_size
-	config_entry_value = 250
+	config_entry_value = 500
+
+//wound config stuff (increases the max injury roll, making injuries more likely)
+/datum/config_entry/number/wound_exponent
+	config_entry_value = WOUND_DAMAGE_EXPONENT
+	min_val = 0
+	integer = FALSE
+
+//adds a set amount to any injury rolls on a limb using get_damage() multiplied by this number
+/datum/config_entry/number/wound_damage_multiplier
+	config_entry_value = 0.333
+	min_val = 0
+	integer = FALSE
+
+/// Amount of dirtyness tiles need to spawn dirt.
+/datum/config_entry/number/turf_dirt_threshold
+	config_entry_value = 100
+	min_val = 1
+	integer = TRUE
+
+/// Alpha dirt starts at
+/datum/config_entry/number/dirt_alpha_starting
+	config_entry_value = 127
+	max_val = 255
+	min_val = 0
+	integer = TRUE
+
+/// Dirtyness multiplier for making turfs dirty
+/datum/config_entry/number/turf_dirty_multiplier
+	config_entry_value = 1

@@ -7,6 +7,7 @@
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+	block_parry_data = /datum/block_parry_data/sleeping_carp
 	pugilist = TRUE
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -44,7 +45,7 @@
 	else
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 		log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
-	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting)
+	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
 	return TRUE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -56,7 +57,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
-	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST)
+	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return TRUE
 
@@ -66,14 +67,14 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if((D.mobility_flags & MOBILITY_STAND))
-		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD)
+		D.apply_damage(damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.DefaultCombatKnockdown(50, override_hardstun = 0.01, override_stamdmg = 0)
-		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD) //A cit specific change form the tg port to really punish anyone who tries to stand up
+		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND) //A cit specific change form the tg port to really punish anyone who tries to stand up
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	else
-		D.apply_damage(damage*0.5, BRUTE, BODY_ZONE_HEAD)
-		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD)
+		D.apply_damage(damage*0.5, BRUTE, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
+		D.apply_damage(damage + 35, STAMINA, BODY_ZONE_HEAD, wound_bonus = CANT_WOUND)
 		D.drop_all_held_items()
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
@@ -99,7 +100,7 @@
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	D.apply_damage(damage, BRUTE, affecting)
+	D.apply_damage(damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND) && damage >= stunthreshold)
 		to_chat(D, "<span class='danger'>You stumble and fall!</span>")
@@ -130,9 +131,31 @@
 		playsound(get_turf(A), pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		P.firer = A
 		P.setAngle(rand(0, 360))//SHING
-		A.adjustStaminaLossBuffered (3) //Citadel change to stop infinite bullet sponging as you run away, but it is buffered!
+		A.adjustStaminaLoss(3)
 		return BULLET_ACT_FORCE_PIERCE
 	return BULLET_ACT_HIT
+
+/datum/block_parry_data/sleeping_carp
+	parry_time_windup = 0
+	parry_time_active = 25
+	parry_time_spindown = 0
+	// we want to signal to players the most dangerous phase, the time when automatic counterattack is a thing.
+	parry_time_windup_visual_override = 1
+	parry_time_active_visual_override = 3
+	parry_time_spindown_visual_override = 12
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK		//can attack while
+	parry_time_perfect = 2.5		// first ds isn't perfect
+	parry_time_perfect_leeway = 1.5
+	parry_imperfect_falloff_percent = 5
+	parry_efficiency_to_counterattack = 100
+	parry_efficiency_considered_successful = 65		// VERY generous
+	parry_efficiency_perfect = 100
+	parry_failed_stagger_duration = 4 SECONDS
+	parry_cooldown = 0.5 SECONDS
+
+/mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
+	amount *= physiology? physiology.stamina_buffer_mod : 1
+	return ..()
 
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
@@ -144,12 +167,12 @@
 	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
-	H.physiology.stamina_mod *= 0.5 //You take less stamina damage overall, but you do not reduce the damage from stun batons
+	H.physiology.stamina_mod *= 0.4 //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
 	H.physiology.stun_mod *= 0.3 //for those rare stuns
 	H.physiology.pressure_mod *= 0.3 //go hang out with carp
 	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they do stack however
 	H.physiology.heat_mod *= 2 //this is mostly so sleeping carp has a viable weakness. Cooking them alive. Setting them on fire and heating them will be their biggest weakness. The reason for this is....filet jokes.
-
+	H.physiology.stamina_buffer_mod *= 0.75 //to help with some stamina
 	H.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
@@ -165,7 +188,7 @@
 	H.physiology.pressure_mod = initial(H.physiology.pressure_mod) //no more carpies
 	H.physiology.cold_mod = initial(H.physiology.cold_mod)
 	H.physiology.heat_mod = initial(H.physiology.heat_mod)
-
+	H.physiology.stamina_buffer_mod = initial(H.physiology.stamina_buffer_mod)
 	H.faction -= "carp" //:(
 
 /mob/living/carbon/human/proc/sleeping_carp_help()

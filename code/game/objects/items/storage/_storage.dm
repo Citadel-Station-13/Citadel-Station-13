@@ -19,8 +19,9 @@
 	return TRUE
 
 /obj/item/storage/contents_explosion(severity, target)
+	var/in_storage = istype(loc, /obj/item/storage)? (max(0, severity - 1)) : (severity)
 	for(var/atom/A in contents)
-		A.ex_act(severity, target)
+		A.ex_act(in_storage, target)
 		CHECK_TICK
 
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"

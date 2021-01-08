@@ -198,8 +198,8 @@ obj/item/organ/heart/slime
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 20/severity SECONDS)
-	damage += 100/severity
+	addtimer(CALLBACK(src, .proc/Restart), 0.2*severity SECONDS)
+	damage += severity
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"

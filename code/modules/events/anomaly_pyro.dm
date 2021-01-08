@@ -4,7 +4,6 @@
 
 	max_occurrences = 5
 	weight = 20
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/anomaly/anomaly_pyro
 	startWhen = 3

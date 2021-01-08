@@ -21,7 +21,7 @@
 
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
-		air_contents.gases[gas_type] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+		air_contents.set_moles(gas_type, ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)))
 
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
@@ -55,6 +55,8 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack)
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
@@ -63,6 +65,7 @@
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	allow_thrust(0.01, user)

@@ -553,12 +553,6 @@
 			if(D.vars[varname] == value)
 				return D
 
-//remove all nulls from a list
-/proc/removeNullsFromList(list/L)
-	while(L.Remove(null))
-		continue
-	return L
-
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -681,3 +675,11 @@
 			continue
 		if(istype(D, path))
 			return TRUE
+
+/proc/safe_json_encode(list/L, default = "")
+	. = default
+	return json_encode(L)
+
+/proc/safe_json_decode(string, default = list())
+	. = default
+	return json_decode(string)

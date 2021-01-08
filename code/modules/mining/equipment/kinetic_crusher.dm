@@ -17,7 +17,7 @@
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/list/trophies = list()
 	var/charged = TRUE
@@ -174,6 +174,60 @@
 		. += "[icon_state]_uncharged"
 	if(light_on)
 		. += "[icon_state]_lit"
+
+/obj/item/kinetic_crusher/glaive
+	name = "proto-kinetic glaive"
+	desc = "A modified design of a proto-kinetic crusher, it is still little more of a combination of various mining tools cobbled together \
+	and kit-bashed into a high-tech cleaver on a stick - with a handguard and a goliath hide grip. While it is still of little use to any \
+	but the most skilled and/or suicidal miners against local fauna, it's an elegant weapon for a more civilized hunter."
+	attack_verb = list("stabbed", "diced", "sliced", "cleaved", "chopped", "lacerated", "cut", "jabbed", "punctured")
+	icon_state = "crusher-glaive"
+	item_state = "crusher0-glaive"
+	block_parry_data = /datum/block_parry_data/crusherglaive
+	//ideas: altclick that lets you pummel people with the handguard/handle?
+	//parrying functionality?
+
+/datum/block_parry_data/crusherglaive // small perfect window, active for a fair while, time it right or use the Forbidden Technique
+	parry_time_windup = 0
+	parry_time_active = 8
+	parry_time_spindown = 0
+	parry_time_perfect = 1
+	parry_time_perfect_leeway = 2
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_to_counterattack = 100 // perfect parry or you're cringe
+	parry_failed_stagger_duration = 1.5 SECONDS // a good time to reconsider your actions...
+	parry_failed_clickcd_duration = 1.5 SECONDS // or your failures
+
+/obj/item/kinetic_crusher/glaive/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time) // if you're dumb enough to go for a parry...
+	var/turf/proj_turf = owner.loc // destabilizer bolt, ignoring cooldown
+	if(!isturf(proj_turf))
+		return
+	var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(proj_turf)
+	for(var/t in trophies)
+		var/obj/item/crusher_trophy/T = t
+		T.on_projectile_fire(D, owner)
+	D.preparePixelProjectile(attacker, owner)
+	D.firer = owner
+	D.hammer_synced = src
+	playsound(owner, 'sound/weapons/plasma_cutter.ogg', 100, 1)
+	D.fire()
+
+/obj/item/kinetic_crusher/glaive/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+	if(owner.Adjacent(attacker) && (!attacker.anchored || ismegafauna(attacker))) // free backstab, if you perfect parry
+		attacker.dir = get_dir(owner,attacker)
+
+/// triggered on wield of two handed item
+/obj/item/kinetic_crusher/glaive/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+	item_flags |= (ITEM_CAN_PARRY)
+
+/// triggered on unwield of two handed item
+/obj/item/kinetic_crusher/glaive/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+	item_flags &= ~(ITEM_CAN_PARRY)
+
+/obj/item/kinetic_crusher/glaive/update_icon_state()
+	item_state = "crusher[wielded]-glaive" // this is not icon_state and not supported by 2hcomponent
 
 //destablizing force
 /obj/item/projectile/destabilizer

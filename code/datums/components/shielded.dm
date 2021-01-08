@@ -14,6 +14,7 @@
 	var/mob/living/holder //who is currently benefiting from the shield.
 	var/dissipating = FALSE //Is this shield meant to dissipate over time instead of recharging.
 	var/del_on_overload = FALSE //will delete itself once it has no charges left.
+	var/cached_vis_overlay //text identifier of the visual overlay.
 
 /datum/component/shielded/Initialize(current, max = 3, delay = 20 SECONDS, rate = 1, slots, state = "shield-old", broken, \
 									sound = 'sound/magic/charge.ogg', end_sound = 'sound/machines/ding.ogg', diss = FALSE, del_overload = FALSE)
@@ -47,9 +48,8 @@
 		holder = L
 		var/to_add = charges >= 1 ? shield_state : broken_state
 		if(to_add)
-			var/mutable_appearance/M = mutable_appearance('icons/effects/effects.dmi', to_add)
-			M.layer = (L.layer > MOB_LAYER ? L.layer : MOB_LAYER) + 0.01
-			holder.add_overlay(M, TRUE)
+			var/layer = (L.layer > MOB_LAYER ? L.layer : MOB_LAYER) + 0.01
+			SSvis_overlays.add_vis_overlay(L, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, L.dir)
 
 /datum/component/shielded/UnregisterFromParent()
 	. = ..()
@@ -57,9 +57,9 @@
 		UnregisterSignal(parent, list(COMSIG_ITEM_RUN_BLOCK,COMSIG_ITEM_CHECK_BLOCK,COMSIG_ITEM_EQUIPPED,COMSIG_ITEM_DROPPED))
 	if(holder)
 		UnregisterSignal(holder, list(COMSIG_LIVING_RUN_BLOCK, COMSIG_LIVING_GET_BLOCKING_ITEMS))
-		var/to_remove = charges >= 1 ? shield_state : broken_state
-		if(to_remove)
-			holder.cut_overlay(mutable_appearance('icons/effects/effects.dmi', to_remove), TRUE)
+		if(cached_vis_overlay)
+			SSvis_overlays.remove_vis_overlay(holder, cached_vis_overlay)
+			cached_vis_overlay = null
 		holder = null
 
 /datum/component/shielded/process()
@@ -80,7 +80,7 @@
 			holder.visible_message("[holder]'s shield overloads!")
 		qdel(src)
 		return
-	if(holder && (old_charges < 1 && charges >= 1) || (!del_on_overload && old_charges >= 1 && charges < 1))
+	if(holder && ((old_charges < 1 && charges >= 1) || (!del_on_overload && old_charges >= 1 && charges < 1)))
 		update_shield_overlay(charges < 1)
 
 /datum/component/shielded/proc/adjust_charges(amount)
@@ -93,20 +93,19 @@
 			holder.visible_message("[holder]'s shield overloads!")
 		qdel(src)
 		return
-	if(holder && (old_charges < 1 && charges >= 1) || (!del_on_overload && old_charges >= 1 && charges < 1))
+	if(holder && ((old_charges < 1 && charges >= 1) || (!del_on_overload && old_charges >= 1 && charges < 1)))
 		update_shield_overlay(charges < 1)
 
 /datum/component/shielded/proc/update_shield_overlay(broken)
 	if(!holder)
 		return
-	var/to_remove = broken ? shield_state : broken_state
 	var/to_add = broken ? broken_state : shield_state
-	if(to_remove)
-		holder.cut_overlay(mutable_appearance('icons/effects/effects.dmi', to_remove), TRUE)
+	if(cached_vis_overlay)
+		SSvis_overlays.remove_vis_overlay(holder, cached_vis_overlay)
+		cached_vis_overlay = null
 	if(to_add)
-		var/mutable_appearance/M = mutable_appearance('icons/effects/effects.dmi', to_add)
-		M.layer = (holder.layer > MOB_LAYER ? holder.layer : MOB_LAYER) + 0.01
-		holder.add_overlay(M, TRUE)
+		var/layer = (holder.layer > MOB_LAYER ? holder.layer : MOB_LAYER) + 0.01
+		SSvis_overlays.add_vis_overlay(holder, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, holder.dir)
 
 /datum/component/shielded/proc/on_equip(obj/item/source, mob/living/equipper, slot)
 	if(!(accepted_slots & slotdefine2slotbit(slot)))
@@ -117,17 +116,16 @@
 	RegisterSignal(equipper, COMSIG_LIVING_GET_BLOCKING_ITEMS, .proc/include_shield)
 	var/to_add = charges >= 1 ? shield_state : broken_state
 	if(to_add)
-		var/mutable_appearance/M = mutable_appearance('icons/effects/effects.dmi', to_add)
-		M.layer = (holder.layer > MOB_LAYER ? holder.layer : MOB_LAYER) + 0.01
-		equipper.add_overlay(M, TRUE)
+		var/layer = (holder.layer > MOB_LAYER ? holder.layer : MOB_LAYER) + 0.01
+		cached_vis_overlay = SSvis_overlays.add_vis_overlay(holder, 'icons/effects/effects.dmi', to_add, layer, GAME_PLANE, holder.dir)
 
 /datum/component/shielded/proc/on_drop(obj/item/source, mob/dropper)
 	if(holder == dropper)
 		UnregisterSignal(holder, COMSIG_LIVING_GET_BLOCKING_ITEMS)
 		UnregisterSignal(parent, list(COMSIG_ITEM_RUN_BLOCK, COMSIG_ITEM_CHECK_BLOCK))
-		var/to_remove = charges >= 1 ? shield_state : broken_state
-		if(to_remove)
-			holder.cut_overlay(mutable_appearance('icons/effects/effects.dmi', to_remove), TRUE)
+		if(cached_vis_overlay)
+			SSvis_overlays.remove_vis_overlay(holder, cached_vis_overlay)
+			cached_vis_overlay = null
 		holder = null
 
 /datum/component/shielded/proc/include_shield(mob/source, list/items)
