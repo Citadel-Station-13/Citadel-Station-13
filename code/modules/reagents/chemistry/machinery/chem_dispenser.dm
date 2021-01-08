@@ -283,7 +283,7 @@
 			if(!LAZYLEN(chemicals_to_dispense))
 				return
 			var/list/logstring = list()
-			var/earlyabort = TRUE
+			var/earlyabort = FALSE
 			for(var/key in chemicals_to_dispense)
 				var/reagent = GLOB.name2reagent[translate_legacy_chem_id(key)]
 				var/dispense_amount = chemicals_to_dispense[key]
