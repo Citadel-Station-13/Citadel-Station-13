@@ -51,6 +51,7 @@
 #include "code\__DEFINES\economy.dm"
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\exosuit_fabs.dm"
+#include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
