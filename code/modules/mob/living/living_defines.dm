@@ -63,6 +63,8 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+	/// Do we make floors dirty as we move?
+	var/causes_dirt_buildup_on_floor = FALSE
 
 	var/list/roundstart_quirks = list()
 
