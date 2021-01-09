@@ -11030,18 +11030,12 @@
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"axo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "axp" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "axq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -11439,10 +11433,6 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/maintenance/fore)
-"ayC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
 /area/maintenance/fore)
 "ayD" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -14253,10 +14243,6 @@
 "aGg" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/fore)
-"aGh" = (
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGi" = (
@@ -45279,7 +45265,7 @@
 /area/maintenance/aft)
 "cfq" = (
 /obj/structure/mopbucket,
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cfr" = (
@@ -53350,7 +53336,7 @@
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "ddM" = (
 /obj/structure/sign/poster/official/the_owl{
 	pixel_x = 32
@@ -53734,7 +53720,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/wood_diagonal,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "edA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -54930,7 +54916,7 @@
 "gKG" = (
 /obj/structure/bedsheetbin/towel,
 /turf/open/floor/wood/wood_diagonal,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "gLz" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -56208,7 +56194,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "jJF" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable{
@@ -56998,7 +56984,7 @@
 	dir = 8
 	},
 /turf/closed/wall,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "lzt" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/stripes/line,
@@ -57590,7 +57576,7 @@
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "nbT" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -59057,7 +59043,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/wood_diagonal,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "qIw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -59648,12 +59634,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/paramedic)
-"rWw" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/floor/wood/wood_diagonal,
-/area/maintenance/fore)
 "rXl" = (
 /obj/structure/chair/office/light,
 /obj/machinery/firealarm{
@@ -59773,7 +59753,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/wood_diagonal,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "sqg" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/misc/pj/red,
@@ -60210,7 +60190,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/wood_diagonal,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "trb" = (
 /obj/machinery/light{
 	dir = 4
@@ -60628,7 +60608,7 @@
 /obj/structure/girder,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/maintenance/port/fore)
 "ugu" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -82433,7 +82413,7 @@ lZN
 amC
 jIW
 ddI
-arP
+alU
 fgG
 rqW
 aGD
@@ -82684,13 +82664,13 @@ amC
 htu
 alU
 edj
-rWw
+ygb
 gKG
-arP
-aqR
-awb
+alU
+amC
+ntt
 ugq
-arP
+alU
 rPU
 fne
 aGr
@@ -82943,11 +82923,11 @@ alU
 tqG
 spR
 qGw
-arP
-aGh
-awb
-axo
-arP
+alU
+aFJ
+ntt
+aAY
+alU
 aCh
 pIf
 kCo
@@ -83197,14 +83177,14 @@ ali
 ali
 ali
 alU
-arP
+alU
 lzk
-arP
-arP
-arP
-avZ
+alU
+alU
+alU
+atO
 axp
-ayC
+aue
 azH
 eEe
 aGv
