@@ -471,8 +471,7 @@
 	if(paused || !isturf(loc))
 		return
 
-	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
-	var/required_pixels = (pixels_per_second * ds * 0.1) + pixels_tick_leftover
+	var/required_pixels = (pixels_per_second * ds) + pixels_tick_leftover
 	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
 		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, ds, SSprojectiles.global_projectile_speed_multiplier)
