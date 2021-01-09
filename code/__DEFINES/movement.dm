@@ -14,3 +14,13 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// The whole result is then clamped to within the range above.
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
+
+/// Enables smooth movement
+#define SMOOTH_MOVEMENT
+
+/// Set appearance flags in vars
+#ifdef SMOOTH_MOVEMENT
+	#define SET_APPEARANCE_FLAGS(flags) appearance_flags = (flags | LONG_GLIDE)
+#else
+	#define SET_APPEARANCE_FLAGS(flags) appearance_flags = flags
+#endif

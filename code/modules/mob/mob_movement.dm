@@ -96,9 +96,6 @@
 
 	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
-		mob.last_move_diagonal = TRUE
-	else
-		mob.last_move_diagonal = FALSE
 	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay), FALSE)
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
@@ -108,6 +105,8 @@
 	var/atom/movable/AM = L.pulling
 	if(AM && AM.density && !SEND_SIGNAL(L, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) && !ismob(AM))
 		L.setDir(turn(L.dir, 180))
+
+	last_move = world.time
 
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVE, src, direction, n, oldloc, add_delay)
 

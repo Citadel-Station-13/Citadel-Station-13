@@ -3,7 +3,7 @@
 	real_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
-	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
+	SET_APPEARANCE_FLAGS(KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE)
 
 /mob/living/carbon/human/Initialize()
 	add_verb(src, /mob/living/proc/mob_sleep)

@@ -1,7 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	glide_size = 8
-	appearance_flags = TILE_BOUND|PIXEL_SCALE
+	SET_APPEARANCE_FLAGS(TILE_BOUND | PIXEL_SCALE)
 	var/last_move = null
 	var/last_move_time = 0
 	var/anchored = FALSE
@@ -305,8 +305,6 @@
 /atom/movable/proc/set_glide_size(target = 8, recursive = TRUE)
 	// SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
-	if(ismob(src) && src:client)
-		to_chat(world, "DEBUG: [src] ([REF(src)]) setting glide size to [target]")
 
 	for(var/m in buckled_mobs)
 		var/mob/buckled_mob = m

@@ -224,6 +224,18 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	if((diff > 0) && client)
 		if(client.move_delay > world.time + 1.5)
 			client.move_delay -= diff
+		var/timeleft = world.time - client.move_delay
+		var/elapsed = world.time - client.last_move
+		var/glide_size_current = glide_size
+		if((timeleft <= 0) || (elapsed > 20))
+			set_glide_size(16, TRUE)
+			return
+		var/pixels_moved = glide_size_current * elapsed * (1 / world.tick_lag)
+		// calculate glidesize needed to move to the next tile within timeleft deciseconds
+		var/ticks_allowed = timeleft / world.tick_lag
+		var/pixels_per_tick = pixels_moved / ticks_allowed
+		set_glide_size(pixels_per_tick * GLOB.glide_size_multiplier, TRUE)
+
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()
