@@ -73,6 +73,7 @@
 /obj/structure/disposalholder/proc/move()
 	set waitfor = FALSE
 	var/obj/structure/disposalpipe/last
+	var/ticks = 1
 	while(active)
 		var/obj/structure/disposalpipe/curr = loc
 		last = curr
@@ -81,7 +82,7 @@
 		if(!curr && active)
 			last.expel(src, loc, dir)
 
-		stoplag()
+		ticks = stoplag()
 		if(!(count--))
 			active = FALSE
 

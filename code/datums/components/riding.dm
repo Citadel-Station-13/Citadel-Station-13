@@ -36,6 +36,9 @@
 	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
 		qdel(src)
 
+/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M)
+	return
+
 /datum/component/riding/proc/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
 	var/static/list/defaults = list(TEXT_NORTH = OBJ_LAYER, TEXT_SOUTH = ABOVE_MOB_LAYER, TEXT_EAST = ABOVE_MOB_LAYER, TEXT_WEST = ABOVE_MOB_LAYER)
@@ -55,7 +58,7 @@
 	var/atom/movable/AM = parent
 	if (isnull(dir))
 		dir = AM.dir
-	movable_parent.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
+	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
 	handle_vehicle_offsets(dir)
