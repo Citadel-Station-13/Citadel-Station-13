@@ -620,6 +620,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
+	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
+
 	if(!fake)
 		GLOB.poi_list |= src
 		last_disk_move = world.time
@@ -634,7 +636,19 @@ This is here to make the tiles around the station mininuke change when it's arme
 		STOP_PROCESSING(SSobj, src)
 		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
 	var/turf/newturf = get_turf(src)
+
 	if(newturf && lastlocation == newturf)
+
+	// How comfy is disky?
+		var/disk_comfort_level = 0
+
+		// Checking for items that make disky comfy
+		for(var/obj/comfort_item in loc)
+			if(istype(comfort_item, /obj/item/bedsheet) || istype(comfort_item, /obj/structure/bed))
+				disk_comfort_level++
+
+		if(disk_comfort_level >= 2) //Sleep tight, disky.
+			visible_message("<span class='notice'>[src] sleeps soundly. Sleep tight, disky.</span>")
 		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop) && loneop.occurrences < loneop.max_occurrences)
