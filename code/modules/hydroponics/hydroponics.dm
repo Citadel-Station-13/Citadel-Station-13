@@ -130,7 +130,7 @@
 				reagents.remove_any(min(0.5, nutridrain))
 			else
 				reagents.remove_any(nutridrain)
-			
+
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-rand(1,3))
@@ -501,7 +501,7 @@
 		if(visi_msg)
 			visible_message("<span class='notice'>[visi_msg].</span>")
 
-		
+
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
@@ -675,7 +675,7 @@
 			idle_power_usage = 0
 			self_sustaining = FALSE
 	update_icon()
-	
+
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
 	waterlevel = clamp(waterlevel + adjustamt, 0, maxwater)
