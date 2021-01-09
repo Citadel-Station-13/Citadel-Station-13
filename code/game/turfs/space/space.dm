@@ -12,7 +12,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	var/static/datum/gas_mixture/immutable/space/space_gas
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
@@ -26,6 +26,8 @@
 
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
+	if(!space_gas)
+		space_gas = new
 	air = space_gas
 	update_air_ref(0)
 	vis_contents.Cut() //removes inherited overlays

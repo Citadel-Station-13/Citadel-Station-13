@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	var/initial_volume = CELL_VOLUME //liters
 	var/list/reaction_results
 	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
-	var/_extools_pointer_gasmixture = 0 // Contains the index in the gas vector for this gas mixture in rust land. Don't. Touch. This. Var.
+	var/_extools_pointer_gasmixture // Contains the index in the gas vector for this gas mixture in rust land. Don't. Touch. This. Var.
 
 GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 

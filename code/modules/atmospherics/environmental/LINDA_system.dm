@@ -52,17 +52,19 @@
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = direction
 			T.atmos_adjacent_turfs[src] = opp_dir
-			T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()))
 		else
 			if (atmos_adjacent_turfs)
 				atmos_adjacent_turfs -= T
 			if (T.atmos_adjacent_turfs)
 				T.atmos_adjacent_turfs -= src
-				T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()))
 			UNSETEMPTY(T.atmos_adjacent_turfs)
+		T.__update_auxtools_turf_adjacency_info(isspaceturf(T.get_z_base_turf()), -1)
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+	set_sleeping(!(canpass || canvpass))
 	__update_auxtools_turf_adjacency_info(isspaceturf(get_z_base_turf()))
+
+/turf/proc/set_sleeping(should_sleep)
 
 /turf/proc/__update_auxtools_turf_adjacency_info()
 

@@ -112,7 +112,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_EQUALIZE
+		currentpart = equalize_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
