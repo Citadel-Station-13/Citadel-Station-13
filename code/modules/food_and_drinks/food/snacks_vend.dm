@@ -13,6 +13,28 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
+/obj/item/reagent_containers/food/snacks/lollipop_vender
+	name = "candy lollipop"
+	desc = "Takes countless licks!"
+	icon_state = "lollipop"
+	trash = /obj/item/trash/candy
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 6)
+	junkiness = 25
+	filling_color = "#D2691E"
+	tastes = list("candy" = 1)
+	foodtype = JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/candy/candydrop
+	name = "wrapped sugar bomb"
+	desc = "A blue berry flavoured sugar blast! Goes well with cream soda."
+	icon_state = "candy_drop"
+	trash = /obj/item/trash/candy
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 4, /datum/reagent/consumable/berryjuice = 2)
+	junkiness = 25
+	filling_color = "#D2691E"
+	tastes = list("blueberries" = 1)
+	foodtype = JUNKFOOD | SUGAR
+
 /obj/item/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
