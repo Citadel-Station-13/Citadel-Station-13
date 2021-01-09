@@ -1028,7 +1028,7 @@
 			return
 
 	stop_pulling()
-	riding_datum.handle_vehicle_layer()
+	riding_datum.handle_vehicle_layer(dir)
 	riding_datum.fireman_carrying = fireman
 	. = ..(target, force, check_loc)
 
