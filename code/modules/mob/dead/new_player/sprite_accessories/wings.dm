@@ -65,7 +65,7 @@
 	icon_state = "bat"
 
 /datum/sprite_accessory/deco_wings/bee
-	name = "Large Bee"
+	name = "Bee"
 	icon_state = "bee"
 
 /datum/sprite_accessory/deco_wings/bee2
@@ -85,7 +85,7 @@
 	icon_state = "fairy"
 
 /datum/sprite_accessory/deco_wings/featheredwing
-	name = "Feathered"
+	name = "Feathery"
 	icon_state = "feathery"
 
 /datum/sprite_accessory/deco_wings/featheredwingmedium
@@ -220,21 +220,22 @@
 	icon = 'icons/mob/wings.dmi'
 	color_src = WINGCOLOR
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER)
+
 //non insect wings
-/datum/sprite_accessory/insect_wings/bat
+/datum/sprite_accessory/deco_wings/bat
 	name = "Bat"
 	icon_state = "bat"
 
 /datum/sprite_accessory/insect_wings/bee
-	name = "Bee Wings 1"
+	name = "Bee"
 	icon_state = "bee"
 
 /datum/sprite_accessory/insect_wings/bee2
-	name = "Bee Wings 2"
+	name = "Small Bee"
 	icon_state = "beewings"
 
 /datum/sprite_accessory/insect_wings/dragon
-	name = "Dragon Wings"
+	name = "Dragon"
 	icon_state = "dragon"
 
 /datum/sprite_accessory/insect_wings/dragonfly
@@ -246,35 +247,35 @@
 	icon_state = "fairy"
 
 /datum/sprite_accessory/insect_wings/featheredwing
-	name = "Feathered Wings, Colorable"
+	name = "Feathery"
 	icon_state = "feathery"
 
 /datum/sprite_accessory/insect_wings/featheredwingmedium
-	name = "Medium Feathered Wings, colorable"
+	name = "Medium Feathered"
 	icon_state = "feathered3"
 
 /datum/sprite_accessory/insect_wings/featheredwinglarge
-	name = "Large Feathered Wings (colorable)"
+	name = "Large Feathered"
 	icon_state = "feathered2"
 
 /datum/sprite_accessory/insect_wings/harpywings
-	name = "Harpy Wings"
+	name = "Harpy"
 	icon_state = "harpywings"
 
 /datum/sprite_accessory/insect_wings/roboticwing
-	name = "Robotic Wings"
+	name = "Robotic"
 	icon_state = "drago"
 
 /datum/sprite_accessory/insect_wings/succubusblack
-	name = "Succubus Wings Black"
+	name = "Succubus Black"
 	icon_state = "succubusblack"
 
 /datum/sprite_accessory/insect_wings/succubuspurple
-	name = "Succubus Wings Purple"
+	name = "Succubus Purple"
 	icon_state = "succubuspurple"
 
 /datum/sprite_accessory/insect_wings/succubusred
-	name = "Succubus Wings Red"
+	name = "Succubus Red"
 	icon_state = "succubusred"
 
 /datum/sprite_accessory/insect_wings/xenobackplate
