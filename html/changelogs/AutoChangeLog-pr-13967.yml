@@ -1,6 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - balance: "Blob Resource Tower to 2 points per instead of 1 point per."
-  - balance: "Blob Factory Towers can be placed 5 tiles apart instead of 7."
-  - bugfix: "Fixes Blobbernaut Factories consuming Factories if no naut is chosen."
