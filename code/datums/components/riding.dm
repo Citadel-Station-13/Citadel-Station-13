@@ -58,7 +58,7 @@
 	var/atom/movable/AM = parent
 	if (isnull(dir))
 		dir = AM.dir
-	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
+	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay), FALSE)
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
 	handle_vehicle_offsets(dir)

@@ -149,7 +149,7 @@
 			return FALSE
 	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, T)
 
-/atom/movable/vv_edit_var(var_name, var_value)
+/atom/movable/vv_edit_var(var_name, var_value, massedit)
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
 	var/static/list/careful_edits = list("bound_x" = TRUE, "bound_y" = TRUE, "bound_width" = TRUE, "bound_height" = TRUE)
 	if(banned_edits[var_name])
@@ -161,24 +161,24 @@
 		if(NAMEOF(src, x))
 			var/turf/T = locate(var_value, y, z)
 			if(T)
-				forceMove(T)
+				admin_teleport(T, !massedit)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, y))
 			var/turf/T = locate(x, var_value, z)
 			if(T)
-				forceMove(T)
+				admin_teleport(T, !massedit)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, z))
 			var/turf/T = locate(x, y, var_value)
 			if(T)
-				forceMove(T)
+				admin_teleport(T, !massedit)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, loc))
 			if(isatom(var_value) || isnull(var_value))
-				forceMove(var_value)
+				admin_teleport(var_value, !massedit)
 				return TRUE
 			return FALSE
 		if(NAMEOF(src, anchored))
@@ -270,6 +270,19 @@
 	pulling.Move(get_step(pulling.loc, move_dir), move_dir, glide_size)
 	return TRUE
 
+/**
+ * Recursively set glide size for atom's pulled things
+ */
+/atom/movable/proc/recursive_pulled_glidesize_update()
+	var/list/ran = list()
+	var/atom/movable/updating = pulling
+	while(updating)
+		if(ran[updating])
+			return
+		updating.set_glide_size(glide_size, FALSE)
+		ran[updating] = TRUE
+		updating = updating.pulling
+
 /atom/movable/proc/check_pulling()
 	if(pulling)
 		var/atom/movable/pullee = pulling
@@ -289,14 +302,18 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-
-/atom/movable/proc/set_glide_size(target = 8)
+/atom/movable/proc/set_glide_size(target = 8, recursive = TRUE)
 	// SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
+	if(ismob(src) && src:client)
+		to_chat(world, "DEBUG: [src] ([REF(src)]) setting glide size to [target]")
 
 	for(var/m in buckled_mobs)
 		var/mob/buckled_mob = m
 		buckled_mob.set_glide_size(target)
+
+	if(recursive)
+		recursive_pulled_glidesize_update()
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)

@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(processing)
 /datum/controller/subsystem/processing/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
-	var/delta_time = (flags & SS_TICKER)? (wait * world.tick_lag) : (wait * 0.1)
+	var/delta_time = (flags & SS_TICKER)? (wait * world.tick_lag * 0.1) : (wait * 0.1)
 	//cache for sanic speed (lists are references anyways)
 	var/list/current_run = currentrun
 

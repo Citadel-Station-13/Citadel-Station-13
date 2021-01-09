@@ -62,6 +62,11 @@
 	var/mod = CONFIG_GET(number/movedelay/walk_delay)
 	multiplicative_slowdown = isnum(mod)? mod : initial(multiplicative_slowdown)
 
+/datum/movespeed_modifier/config_wak_run/walk/apply_multiplicative(existing, mob/target)
+	. = ..()
+	if(HAS_TRAIT(target, TRAIT_SPEEDY_STEP))
+		. -= 1.25
+
 /datum/movespeed_modifier/config_walk_run/run/sync()
 	var/mod = CONFIG_GET(number/movedelay/run_delay)
 	multiplicative_slowdown = isnum(mod)? mod : initial(multiplicative_slowdown)

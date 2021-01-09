@@ -16,6 +16,9 @@
 	attack_hand_unwieldlyness = CLICK_CD_MELEE
 	attack_hand_speed = 0
 
+	/// Was our last move diagonal
+	var/last_move_diagonal = FALSE
+
 	/// What receives our keyboard input. src by default.
 	var/datum/focus
 

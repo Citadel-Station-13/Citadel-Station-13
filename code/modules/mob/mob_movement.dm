@@ -73,7 +73,7 @@
 		return FALSE
 	//We are now going to move
 	var/add_delay = mob.movement_delay()
-	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direction) && EWCOMPONENT(direction)) ? 2 : 1 ) )) // set it now in case of pulled objects
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direction) && EWCOMPONENT(direction)) ? 2 : 1 ) ), FALSE) // set it now in case of pulled objects
 	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay
 	else
@@ -96,7 +96,10 @@
 
 	if((direction & (direction - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
-	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
+		mob.last_move_diagonal = TRUE
+	else
+		mob.last_move_diagonal = FALSE
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay), FALSE)
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
