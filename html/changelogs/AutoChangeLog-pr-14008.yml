@@ -1,0 +1,4 @@
+author: "TheSpaghetti"
+delete-after: True
+changes: 
+  - bugfix: "no more tumor bread double punctuation"

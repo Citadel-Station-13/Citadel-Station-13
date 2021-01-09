@@ -271,7 +271,7 @@
 	icon = 'icons/effects/atmospherics.dmi'
 	gender = NEUTER
 	mergeable_decal = TRUE
-	persistent = TRUE
+	persistent = FALSE
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"

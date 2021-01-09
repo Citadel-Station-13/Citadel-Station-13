@@ -31,6 +31,7 @@
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
 	owner.teach_crafting_recipe(/datum/crafting_recipe/heretic/codex)
+	owner.special_role = ROLE_HERETIC
 	if(ishuman(current))
 		forge_primary_objectives()
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
@@ -49,7 +50,7 @@
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_lose(owner.current)
-
+	owner.special_role = null
 	if(!silent)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
