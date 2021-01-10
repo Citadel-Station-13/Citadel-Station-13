@@ -3677,6 +3677,7 @@
 #include "sandcode\code\datums\action.dm"
 #include "sandcode\code\datums\ai_laws.dm"
 #include "sandcode\code\datums\shuttles.dm"
+#include "sandcode\code\datums\components\riding.dm"
 #include "sandcode\code\datums\components\container_item\container_item.dm"
 #include "sandcode\code\datums\components\container_item\tank_holder.dm"
 #include "sandcode\code\datums\components\crafting\recipes\recipes_misc.dm"
