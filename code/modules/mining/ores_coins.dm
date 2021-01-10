@@ -397,7 +397,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		else
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
-	if(istype(W, /obj/item/card/id))
+	else if(istype(W, /obj/item/card/id))
 		var/obj/item/card/id/ID = W
 		if(!ID.registered_account)
 			to_chat(user, "<span class='warning'>[ID] doesn't have a linked account to deposit into!</span>")
