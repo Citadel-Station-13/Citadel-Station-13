@@ -456,6 +456,7 @@
 //Mood
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
+#define COMSIG_VOID_MASK_ACT "void_mask_act"//Sent to everyone in range of being affected by mask of madness
 #define COMSIG_MODIFY_SANITY "modify_sanity" //Called when you want to increase or decrease sanity from anywhere in the code.
 
 //NTnet

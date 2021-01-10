@@ -2,7 +2,7 @@
 	name = "Blacksmith's Tale"
 	desc = "Inducts you into the Path of Rust. Allows you to transmute an eldritch blade with any trash item into a Blade of Rust."
 	gain_text = "'Let me tell you a story,' The Blacksmith said as he gazed into his rusty blade."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final)
+	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/rust_fist)
 	required_atoms = list(/obj/item/melee/sickly_blade,/obj/item/trash)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
@@ -23,7 +23,7 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
+		var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)  || H.has_status_effect(/datum/status_effect/eldritch/void)
 		if(E)
 			E.on_effect()
 			H.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_EARS,ORGAN_SLOT_EYES,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_HEART),25)
@@ -42,7 +42,7 @@
 	gain_text = "All wise men know not to touch the bound king."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
-	next_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/spell/rust_wave)
+	next_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/crucible,/datum/eldritch_knowledge/spell/rust_wave)
 	route = PATH_RUST
 
 /datum/eldritch_knowledge/spell/rust_wave
@@ -118,17 +118,17 @@
 	desc = "You can now create eldritch armor using a built table and a gas mask on top of a transmutation rune."
 	gain_text = "For I am the heir to the throne of doom."
 	cost = 1
-	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/flesh_ghoul)
+	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/cold_snap)
 	required_atoms = list(/obj/structure/table,/obj/item/clothing/mask/gas)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 
 /datum/eldritch_knowledge/essence
 	name = "Priest's Ritual"
-	desc = "You can now transmute a tank of water into a bottle of eldritch fluid."
+	desc = "You can now transmute a tank of water and a glass shard into a bottle of eldritch water."
 	gain_text = "This is an old recipe, I got it from an owl."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/spell/ashen_shift)
-	required_atoms = list(/obj/structure/reagent_dispensers/watertank)
+	required_atoms = list(/obj/structure/reagent_dispensers/watertank,/obj/item/shard)
 	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
 
 /datum/eldritch_knowledge/rust_fist_upgrade

@@ -747,3 +747,134 @@
 		return 3
 	else
 		return 2
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form
+	name = "Shed form"
+	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
+	invocation_type = "shout"
+	invocation = "REALITY UNCOIL!"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 100
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "worm_ascend"
+	var/segment_length = 10
+
+/obj/effect/proc_holder/spell/targeted/shed_human_form/cast(list/targets, mob/user)
+	. = ..()
+	var/mob/living/target = user
+	var/mob/living/mob_inside = locate() in target.contents - target
+
+	if(!mob_inside)
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,segment_length)
+		target.mind.transfer_to(outside, TRUE)
+		target.forceMove(outside)
+		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
+		for(var/mob/living/carbon/human/humie in view(9,outside)-target)
+			if(IS_HERETIC(humie) || IS_HERETIC_MONSTER(humie))
+				continue
+			SEND_SIGNAL(humie, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+			///They see the very reality uncoil before their eyes.
+			if(prob(25))
+				var/trauma = pick(subtypesof(BRAIN_TRAUMA_MILD) + subtypesof(BRAIN_TRAUMA_SEVERE))
+				humie.gain_trauma(new trauma(), TRAUMA_RESILIENCE_LOBOTOMY)
+		return
+
+	if(iscarbon(mob_inside))
+		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
+		if(mob_inside.remove_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT))
+			mob_inside.forceMove(armsy.loc)
+		armsy.mind.transfer_to(mob_inside, TRUE)
+		segment_length = armsy.get_length()
+		qdel(armsy)
+		return
+
+/obj/effect/proc_holder/spell/pointed/void_blink
+	name = "Void Phase"
+	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location. It has a minimum range of 3 tiles and a maximum range of 9 tiles."
+	invocation_type = "whispeR"
+	invocation = "RE'L'TY PH'S'E"
+	clothes_req = FALSE
+	range = 9
+	action_background_icon_state = "bg_ecult"
+	charge_max = 300
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "voidblink"
+	selection_type = "range"
+
+/obj/effect/proc_holder/spell/pointed/void_blink/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(get_dist(get_turf(user),get_turf(target)) < 3 )
+		return FALSE
+
+/obj/effect/proc_holder/spell/pointed/void_blink/cast(list/targets, mob/user)
+	. = ..()
+	var/target = targets[1]
+	var/turf/targeted_turf = get_turf(target)
+
+	playsound(user,'sound/magic/voidblink.ogg',100)
+	playsound(targeted_turf,'sound/magic/voidblink.ogg',100)
+
+	new /obj/effect/temp_visual/voidin(user.drop_location())
+	new /obj/effect/temp_visual/voidout(targeted_turf)
+
+	for(var/mob/living/living_mob in range(1,user)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(40)
+
+	for(var/mob/living/living_mob in range(1,targeted_turf)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(40)
+
+	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE)
+
+/obj/effect/temp_visual/voidin
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_in"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/temp_visual/voidout
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "void_blink_out"
+	alpha = 150
+	duration = 6
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/proc_holder/spell/targeted/void_pull
+	name = "Void Pull"
+	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
+	invocation_type = "whisper"
+	invocation = "BR'NG F'RTH TH'M T' M'"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 400
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "voidpull"
+
+/obj/effect/proc_holder/spell/targeted/void_pull/cast(list/targets, mob/user)
+	. = ..()
+	for(var/mob/living/living_mob in range(1,user)-user)
+		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+			continue
+		living_mob.adjustBruteLoss(30)
+
+	playsound(user,'sound/magic/voidblink.ogg',100)
+	new /obj/effect/temp_visual/voidin(user.drop_location())
+	for(var/mob/living/livies in view(7,user)-user)
+
+		if(get_dist(user,livies) < 4)
+			livies.AdjustKnockdown(3 SECONDS)
+			livies.AdjustParalyzed(0.5 SECONDS)
+
+		for(var/i in 1 to 3)
+			livies.forceMove(get_step_towards(livies,user))

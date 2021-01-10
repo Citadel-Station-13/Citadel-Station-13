@@ -77,6 +77,7 @@
 #define PATH_ASH "Ash"
 #define PATH_RUST "Rust"
 #define PATH_FLESH "Flesh"
+#define PATH_VOID "Void"
 
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300

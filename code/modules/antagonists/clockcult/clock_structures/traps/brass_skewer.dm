@@ -63,7 +63,7 @@
 			"<span class='userdanger'>A massive brass spike rams through your chest, hoisting you into the air!</span>")
 			squirrel.emote("scream")
 			playsound(squirrel, 'sound/effects/splat.ogg', 50, TRUE)
-			playsound(squirrel, 'sound/misc/desceration-03.ogg', 50, TRUE)
+			playsound(squirrel, 'sound/misc/desecration-03.ogg', 50, TRUE)
 			squirrel.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 		mouse_opacity = MOUSE_OPACITY_OPAQUE //So players can interact with the tile it's on to pull them off
 		buckle_mob(squirrel, TRUE)
@@ -104,7 +104,7 @@
 			user.visible_message("<span class='warning'>[user] slides back down [src]!</span>")
 			user.emote("scream")
 			user.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
-			playsound(user, 'sound/misc/desceration-03.ogg', 50, TRUE)
+			playsound(user, 'sound/misc/desecration-03.ogg', 50, TRUE)
 			wiggle_wiggle = FALSE
 			return
 		wiggle_wiggle = FALSE
@@ -120,5 +120,5 @@
 	skewee.visible_message("<span class='danger'>[skewee] comes free of [src] with a squelching pop!</span>", \
 	"<span class='boldannounce'>You come free of [src]!</span>")
 	skewee.DefaultCombatKnockdown(30)
-	playsound(skewee, 'sound/misc/desceration-03.ogg', 50, TRUE)
+	playsound(skewee, 'sound/misc/desecration-03.ogg', 50, TRUE)
 	unbuckle_mob(skewee)

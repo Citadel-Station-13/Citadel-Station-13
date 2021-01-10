@@ -117,6 +117,12 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+/datum/status_effect/grouped/stasis
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	var/last_dead_time
+
 /datum/status_effect/no_combat_mode
 	id = "no_combat_mode"
 	alert_type = null
@@ -496,6 +502,16 @@
 	for(var/obj/item/I in carbon_owner.get_all_gear())	//Affects roughly 75% of items
 		if(!QDELETED(I) && prob(75)) //Just in case
 			I.take_damage(100)
+	return ..()
+
+/datum/status_effect/eldritch/void
+	id = "void_mark"
+	effect_sprite = "emark4"
+
+/datum/status_effect/eldritch/void/on_effect()
+	var/turf/open/turfie = get_turf(owner)
+	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-20)
 	return ..()
 
 /datum/status_effect/corrosion_curse
