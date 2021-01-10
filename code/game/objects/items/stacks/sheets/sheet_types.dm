@@ -253,7 +253,6 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 10),\
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("baseball bat", /obj/item/melee/baseball_bat, 5, time = 15),\
-	new/datum/stack_recipe("training bokken", /obj/item/melee/bokken, 10, time = 15),\
 	null, \
 	new/datum/stack_recipe("wooden chair", /obj/structure/chair/wood/, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("winged wooden chair", /obj/structure/chair/wood/wings, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
@@ -794,7 +793,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("shower curtain", /obj/structure/curtain, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	new /datum/stack_recipe("duct", /obj/item/stack/ducts,1), \
 	new /datum/stack_recipe("laser pointer case", /obj/item/glasswork/glass_base/laserpointer_shell, 30), \
-	new /datum/stack_recipe("wet floor sign", /obj/item/caution, 2)))
+	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
