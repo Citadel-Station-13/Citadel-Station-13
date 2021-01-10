@@ -284,6 +284,11 @@
 
 //moth wings
 
+/datum/sprite_accessory/insect_wings/none
+	name = "None"
+	icon_state = "none"
+	relevant_layers = null
+
 /datum/sprite_accessory/insect_wings/atlas
 	name = "Atlas"
 	icon_state = "atlas"
