@@ -232,7 +232,8 @@
 		P.Insert(H)
 
 	P.modify_size(0.1)
-	if (ISINRANGE_EX(P.length, 20.5, 21) && (H.w_uniform || H.wear_suit))
+	var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
+	if (ISINRANGE_EX(P.length, max_D + 0.5, max_D + 1) && (H.w_uniform || H.wear_suit))
 		var/target = H.get_bodypart(BODY_ZONE_CHEST)
 		if(!message_spam)
 			to_chat(H, "<span class='danger'>Your cock begin to strain against your clothes tightly!</b></span>")

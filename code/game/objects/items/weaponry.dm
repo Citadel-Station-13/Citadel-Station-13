@@ -296,8 +296,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	force = 7 //how much harm mode damage we do
-	var/stamina_damage_increment = 4 //how much extra damage do we do when in non-harm mode
+	force = 10 //how much harm mode damage we do
+	var/stamina_damage_increment = 5 //how much extra damage do we do when in non-harm mode
 	throwforce = 10
 	damtype = STAMINA
 	attack_verb = list("whacked", "smacked", "struck")
@@ -310,11 +310,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/quick_parry = FALSE // false = default parry, true = really small parry window
 	item_flags = ITEM_CAN_PARRY
 	block_parry_data = /datum/block_parry_data/bokken
+	var/default_parry_data = /datum/block_parry_data/bokken
+	var/quick_parry_data = /datum/block_parry_data/bokken/quick_parry
 	bare_wound_bonus = 0
 	wound_bonus = 0
 
 /datum/block_parry_data/bokken // fucked up parry data, emphasizing quicker, shorter parries
-	parry_stamina_cost = 8 // be wise about when you parry, though, else you won't be able to fight enough to make it count
+	parry_stamina_cost = 10 // be wise about when you parry, though, else you won't be able to fight enough to make it count
 	parry_time_windup = 0
 	parry_time_active = 10 // small parry window
 	parry_time_spindown = 0
@@ -330,11 +332,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	)
 	parry_failed_stagger_duration = 3 SECONDS
 	parry_data = list(
-		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 10*2.5 = 25, 11*2.5 = 27.5, 12*2.5 = 30, 13*2.5 = 32.5
 	)
 
 /datum/block_parry_data/bokken/quick_parry // emphasizing REALLY SHORT PARRIES
-	parry_stamina_cost = 6 // still more costly than most parries, but less than a full bokken parry
+	parry_stamina_cost = 8 // still more costly than most parries, but less than a full bokken parry
 	parry_time_active = 5 // REALLY small parry window
 	parry_time_perfect = 2.5 // however...
 	parry_time_perfect_leeway = 2 // the entire time, the parry is perfect
@@ -371,9 +373,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	quick_parry = !quick_parry
 	if(quick_parry)
-		block_parry_data = /datum/block_parry_data/bokken/quick_parry
+		block_parry_data = quick_parry_data
 	else
-		block_parry_data = /datum/block_parry_data/bokken
+		block_parry_data = default_parry_data
 	to_chat(user, "<span class='notice'>[src] is now [quick_parry ? "emphasizing shorter parries, forcing you to riposte or be staggered" : "emphasizing longer parries, with a shorter window to riposte but more forgiving parries"].</span>")
 
 /obj/item/melee/bokken/attackby(obj/item/I, mob/living/user, params)
@@ -410,23 +412,76 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(burnt)
 		. += " Burned into the \"blade\" is [burned_in]."
 
+/obj/item/melee/bokken/steelwood
+	name = "steelwood bokken"
+	desc = "A misnomer of sorts, this is effectively a blunt katana made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
+	icon_state = "bokken_steel"
+	item_state = "bokken_steel"
+	force = 12 
+	stamina_damage_increment = 3
+
+/obj/item/melee/bokken/waki
+	name = "wakizashi bokken"
+	desc = "A space-Japanese training sword made of wood and shaped like a wakizashi."
+	icon_state = "wakibokken"
+	item_state = "wakibokken"
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 6 
+	stamina_damage_increment = 4
+	block_parry_data = /datum/block_parry_data/bokken/waki
+	default_parry_data = /datum/block_parry_data/bokken/waki
+	quick_parry_data = /datum/block_parry_data/bokken/waki/quick_parry
+
+/datum/block_parry_data/bokken/waki // weaker parries than the bigger variant, but cheaper and faster recovery, like quick parry
+	parry_stamina_cost = 4
+	parry_time_windup = 0
+	parry_time_active = 6
+	parry_time_spindown = 0
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 7.5
+	parry_efficiency_to_counterattack = 120
+	parry_efficiency_considered_successful = 65	
+	parry_efficiency_perfect = 120
+	parry_efficiency_perfect_override = list(
+		TEXT_ATTACK_TYPE_PROJECTILE = 30,
+	)
+	parry_failed_stagger_duration = 2 SECONDS
+	parry_data = list(
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 1.5, // 6*1.5 = 9, 7*1.5 = 10.5, 8*1.5 = 12, 9*1.5 = 13.5
+	)
+
+/datum/block_parry_data/bokken/waki/quick_parry //For the parry spammer in you
+	parry_stamina_cost = 2 // Slam that parry button
+	parry_time_active = 2.5
+	parry_time_perfect = 1 
+	parry_time_perfect_leeway = 1
+	parry_failed_stagger_duration = 1 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS 
+
+/datum/block_parry_data/bokken/waki/quick_parry/proj
+	parry_efficiency_perfect_override = list()
+
+/obj/item/melee/bokken/waki/steelwood
+	name = "wakizashi steelwood bokken"
+	desc = "A misnomer of sorts, this is effectively a blunt wakizashi made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
+	icon_state = "wakibokken_steel"
+	item_state = "wakibokken_steel"
+	force = 8 
+	stamina_damage_increment = 2
+
 /obj/item/melee/bokken/debug
 	name = "funny debug parrying stick"
 	desc = "if you see this you've fucked up somewhere my good man"
 	block_parry_data = /datum/block_parry_data/bokken/debug
-
-/obj/item/melee/bokken/debug/AltClick(mob/user)
-	quick_parry = !quick_parry
-	if(quick_parry)
-		block_parry_data = /datum/block_parry_data/bokken/quick_parry/debug
-	else
-		block_parry_data = /datum/block_parry_data/bokken/debug
-	to_chat(user, "<span class='notice'>[src] is now [quick_parry ? "emphasizing shorter parries, forcing you to riposte or be staggered" : "emphasizing longer parries, with a shorter window to riposte but more forgiving parries"].</span>")
+	default_parry_data = /datum/block_parry_data/bokken/debug
+	quick_parry_data = /datum/block_parry_data/bokken/quick_parry/debug
 
 /datum/block_parry_data/bokken/debug
 	parry_efficiency_perfect_override = list()
 	parry_data = list(
-		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 10*2.5 = 25, 11*2.5 = 27.5, 12*2.5 = 30, 13*2.5 = 32.5
 		PARRY_DISARM_ATTACKER = TRUE,
 		PARRY_KNOCKDOWN_ATTACKER = 10,
 		PARRY_STAGGER_ATTACKER = 10,
@@ -436,13 +491,63 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /datum/block_parry_data/bokken/quick_parry/debug
 	parry_efficiency_perfect_override = list()
 	parry_data = list(
-		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 7*2.5 = 17.5, 8*2.5 = 20, 9*2.5 = 22.5, 10*2.5 = 25
+		PARRY_COUNTERATTACK_MELEE_ATTACK_CHAIN = 2.5, // 10*2.5 = 25, 11*2.5 = 27.5, 12*2.5 = 30, 13*2.5 = 32.5
 		PARRY_DISARM_ATTACKER = TRUE,
 		PARRY_KNOCKDOWN_ATTACKER = 10,
 		PARRY_STAGGER_ATTACKER = 10,
 		PARRY_DAZE_ATTACKER = 10,
 		)
 
+/// BOKKEN CRAFTNG PIECES
+
+/obj/item/bokken_blade
+	name = "training bokken wooden blade"
+	desc = "The blade piece of a bokken katana."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "bokken"
+	item_state = "bone_dagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/bokken_steelblade
+	name = "training bokken steelwood blade"
+	desc = "The blade piece of a steelwood bokken katana."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "bokken_steel"
+	item_state = "switchblade_ext"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/wakibokken_blade
+	name = "training bokken wooden wakizashi blade"
+	desc = "The blade piece of a bokken wakizashi."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "wakibokken"
+	item_state = "bone_dagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/wakibokken_steelblade
+	name = "training bokken steelwood wakizashi blade"
+	desc = "The blade piece of a steelwood bokken katana."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "wakibokken_steel"
+	item_state = "switchblade_ext"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/bokken_hilt
+	name = "training bokken hilt"
+	desc = "The hilt piece of a bokken. This hilt is appropriate for any potential blade length or material."
+	icon = 'icons/obj/smith.dmi'
+	icon_state = "bokken_hilt"
+	item_state = "bone_dagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 
 /obj/item/wirerod
 	name = "wired rod"

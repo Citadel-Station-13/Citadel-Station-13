@@ -55,6 +55,9 @@
 //donator items
 #define LOADOUT_CATEGORY_DONATOR	"Donator"
 
+//unlockable items
+#define LOADOUT_CATEGORY_UNLOCKABLE	"Unlockable"
+
 //how many prosthetics can we have
 #define MAXIMUM_LOADOUT_PROSTHETICS	2
 

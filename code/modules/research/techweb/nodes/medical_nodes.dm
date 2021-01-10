@@ -80,7 +80,7 @@
 	display_name = "Upgraded Cybernetic Organs"
 	description = "We have the technology to upgrade him."
 	prereq_ids = list("cyber_organs")
-	design_ids = list("cybernetic_ears_u", "cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u")
+	design_ids = list("cybernetic_ears_u", "cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u", "ipc_stomach")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/cyber_implants
@@ -88,7 +88,7 @@
 	display_name = "Cybernetic Implants"
 	description = "Electronic implants that improve humans."
 	prereq_ids = list("adv_biotech", "adv_datatheory")
-	design_ids = list("ci-nutriment", "ci-breather", "ci-gloweyes", "ci-welding", "ci-medhud", "ci-sechud", "ci-service")
+	design_ids = list("ci-nutriment", "ci-breather", "ci-gloweyes", "ci-welding", "ci-medhud", "ci-sechud", "ci-service", "ci-power-cord")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/adv_cyber_implants
