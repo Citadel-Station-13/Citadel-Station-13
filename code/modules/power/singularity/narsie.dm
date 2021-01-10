@@ -78,6 +78,7 @@
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
+	SSpersistence.station_was_destroyed = TRUE
 	sleep(600)
 	if(resolved == FALSE)
 		resolved = TRUE

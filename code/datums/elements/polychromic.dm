@@ -165,6 +165,15 @@
 /datum/element/polychromic/proc/on_examine(atom/source, mob/user, list/examine_list)
 	examine_list += "<span class='notice'>Alt-click to recolor it.</span>"
 
+/datum/element/polychromic/proc/connect_helmet(atom/I, var/applycolor)
+	if(isitem(I))
+		if(istype(I,/obj/item/clothing/suit/hooded))
+			var/obj/item/clothing/suit/hooded/Isuit = I
+			colors_by_atom[Isuit.hood] = applycolor
+		else if(istype(I,/obj/item/clothing/suit/space/hardsuit))
+			var/obj/item/clothing/suit/space/hardsuit/Isuit = I
+			colors_by_atom[Isuit.helmet] = applycolor
+
 /datum/element/polychromic/proc/register_helmet(atom/source, obj/item/clothing/head/H)
 	if(!isitem(H)) //backup in case if it messes up somehow
 		if(istype(source,/obj/item/clothing/suit/hooded)) //so how come it be like this, where toggleable headslots are named separately (helmet/hood) anyways?

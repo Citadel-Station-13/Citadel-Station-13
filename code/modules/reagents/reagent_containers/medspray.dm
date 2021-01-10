@@ -80,7 +80,7 @@
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(L, apply_type, fraction)
-		reagents.trans_to(L, amount_per_transfer_from_this)
+		reagents.trans_to(L, amount_per_transfer_from_this, log = TRUE)
 	return
 
 /obj/item/reagent_containers/medspray/styptic

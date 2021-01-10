@@ -205,7 +205,7 @@ const PackagingControlsItem = props => {
         stepPixelSize={15}
         value={amount}
         minValue={1}
-        maxValue={10}
+        maxValue={20}
         onChange={onChangeAmount} />
       <Button
         ml={1}
