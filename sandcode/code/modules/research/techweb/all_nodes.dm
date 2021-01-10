@@ -42,3 +42,7 @@
 /datum/techweb_node/nanite_smart/New()
 	design_ids += "signaler_nanites"
 	. = ..()
+
+/datum/techweb_node/engineering/New()
+	design_ids += "upgraded_welder"
+	. = ..()

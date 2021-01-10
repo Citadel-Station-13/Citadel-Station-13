@@ -17,3 +17,13 @@
 	build_path = /obj/item/computermath/default
 	category = list("Tool Designs")
 	departmental_flags =  DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/upgraded_welder
+	name = "Upgraded Industrial Welding Tool"
+	desc = "An upgraded welder based of the industrial welder."
+	id = "upgraded_welder"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=70, /datum/material/glass=120)
+	build_path = /obj/item/weldingtool/hugetank
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
