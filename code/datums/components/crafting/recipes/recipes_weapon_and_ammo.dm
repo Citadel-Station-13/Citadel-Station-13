@@ -85,7 +85,7 @@
 	subcategory = CAT_MELEE
 
 /datum/crafting_recipe/bokken_steelwood
-	name = "Training Bokken"
+	name = "Training Steelwood Bokken"
 	result = /obj/item/melee/bokken/steelwood
 	tools = list(TOOL_SCREWDRIVER)
 	reqs = list(/obj/item/bokken_steelblade = 1,
@@ -294,7 +294,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/ishotgun 
+/datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
@@ -510,7 +510,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
-/datum/crafting_recipe/wakibokken_blade
+/datum/crafting_recipe/wakibokken_steelblade
 	name = "Training Wakizashi Ironwood Bokken Blade"
 	result = /obj/item/wakibokken_steelblade
 	tools = list(/obj/item/hatchet, TOOL_WELDER)
