@@ -1,0 +1,4 @@
+author: SandPoot
+delete-after: true
+changes:
+  - tweak: Changing directions while carrying someone will make them turn too.
