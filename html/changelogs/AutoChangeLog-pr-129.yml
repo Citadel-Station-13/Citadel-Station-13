@@ -1,0 +1,7 @@
+author: SandPoot
+delete-after: true
+changes:
+  - rscadd: Suit storage units now use a radial menu.
+  - rscadd: Suit storage units have been modified to have both shoes and generic storage
+      slots.
+  - tweak: Suit storage units now put the items in your hand, rather than on the ground.
