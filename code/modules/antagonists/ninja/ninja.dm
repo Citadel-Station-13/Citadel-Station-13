@@ -66,7 +66,7 @@
 					var/datum/objective/assassinate/O = new /datum/objective/assassinate()
 					O.owner = owner
 					O.target = M
-					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]. You may let [M.p_they()] live, if they come back from death."
+					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
 					objectives += O
 				else										//protect
 					var/datum/objective/protect/O = new /datum/objective/protect()
