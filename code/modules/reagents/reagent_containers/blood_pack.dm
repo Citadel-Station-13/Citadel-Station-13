@@ -104,15 +104,17 @@
 		return ..()
 
 /obj/item/reagent_containers/blood/attack(mob/living/carbon/C, mob/user, def_zone)
-	if(!iscarbon(C) || !user.a_intent == INTENT_HELP || reagents.total_volume < 0)
+	if(!iscarbon(C) || !user.a_intent != INTENT_HELP || reagents.total_volume < 0)
 		..()
 
 	if(C.is_mouth_covered())
+		if(user != C)
+			to_chat(user, "<span class='notice'>You can't drink force [C] to drink from [src] while their mouth is covered.</span>")
+			return
 		to_chat(user, "<span class='notice'>You can't drink from the [src] while your mouth is covered.</span>")
 		return
 
 	if(!user.CheckActionCooldown())
-		to_chat(user, "<span class='notice'>You can't drink from the [src] so fast!</span>")
 		return
 	if(user != C)
 		user.visible_message("<span class='danger'>[user] forces [C] to drink from the [src].</span>", \
@@ -136,8 +138,8 @@
 	var/gulp_size = 3
 	var/fraction = min(gulp_size / reagents.total_volume, 1)
 	reagents.reaction(C, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
+	reagents.remove_any(5) //Inneficency, so hey, IVs are usefull.
 	reagents.trans_to(C, gulp_size)
-	reagents.remove_reagent(src, 5) //Inneficency, so hey, IVs are usefull.
 	playsound(C.loc,'sound/items/drink.ogg', rand(10, 50), TRUE)
 
 
