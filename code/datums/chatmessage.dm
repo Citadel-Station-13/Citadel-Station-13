@@ -236,7 +236,6 @@
 		return
 	//Skyrat changes
 	if(!message_language && (lang_treat(speaker, message_language, raw_message, spans, null, TRUE) == "makes a strange sound.") && !("emote" in spans))
-		var/image/r_icon = image('sandcode/icons/UI_Icons/chat/chat_icons.dmi', icon_state = "emote")
 		var/nospeak = "makes a strange sound."
 		new /datum/chatmessage(nospeak, speaker, src, list("emote", "italics"))
 	else if(message_language)
