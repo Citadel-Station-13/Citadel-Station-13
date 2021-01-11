@@ -40,7 +40,7 @@
 	target.updatehealth()
 	var/tplus = world.time - target.timeofdeath
 	if(target.revive())
-		target.visible_message("...[target]'s posibrain flickers to action once again!")
+		target.visible_message("...[target]'s posibrain flickers to life once again!")
 		target.emote("ping")
 		var/list/policies = CONFIG_GET(keyed_list/policyconfig)
 		var/timelimit = CONFIG_GET(number/defib_cmd_time_limit) * 10 //the config is in seconds, not deciseconds
