@@ -15,11 +15,11 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	icon_state = "window"
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
-	pressure_resistance = 4*ONE_ATMOSPHERE
+	pressure_resistance = 4 * ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
 	max_integrity = 25
 	var/ini_dir = null
-	var/state = WINDOW_OUT_OF_FRAME
+	var/state = WINDOW_SCREWED_TO_FRAME
 	var/reinf
 	var/extra_reinforced
 	var/heat_resistance = 800
@@ -149,9 +149,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(dir == FULLTILE_WINDOW_DIR)
-		return 0	//full tile window, you can't move into it!
+		return FALSE	//full tile window, you can't move into it!
 	if(get_dir(loc, target) == dir)
 		return !density
 	if(istype(mover, /obj/structure/window))
@@ -164,24 +164,24 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return FALSE
 	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
 		return FALSE
-	return 1
+	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, turf/target)
 	if(istype(O) && (O.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/window/attack_tk(mob/user)
 	user.DelayNextAction(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
-		return 1
+		return TRUE
 	. = ..()
 
 /obj/structure/window/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		return
 	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_paw(mob/user)
 	user.DelayNextAction()
@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 	add_fingerprint(user)
 
-	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -238,27 +238,34 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		make_electrochromatic(K.id)
 		qdel(K)
 		return
-	if(!(flags_1 & NODECONSTRUCT_1) && !(state >= RWINDOW_FRAME_BOLTED || !reinf))
+	if(!(flags_1 & NODECONSTRUCT_1) && !(state >= RWINDOW_FRAME_BOLTED))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			I.play_tool_sound(src, 75)
-			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
-			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-				setAnchored(!anchored)
-				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
-			return
-		else if(I.tool_behaviour == TOOL_CROWBAR && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
-			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
-			I.play_tool_sound(src, 75)
-			if(I.use_tool(src, user, 100, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-				if(state == WINDOW_OUT_OF_FRAME)
-					state = RWINDOW_SECURE
-					to_chat(user, "<span class='notice'>You pry the window into the frame.</span>")
-				else
-					state = WINDOW_OUT_OF_FRAME
-					to_chat(user, "<span class='notice'>You pry the window out of the frame.</span>")
+			if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME && anchored)
+				to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
+				if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					if(reinf && state == WINDOW_IN_FRAME)
+						state = RWINDOW_SECURE
+					else
+						state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
+					to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
+			else if(state == WINDOW_OUT_OF_FRAME)
+				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
+				if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+					setAnchored(!anchored)
+					to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
 			return
 
-		else if(istype(I, /obj/item/wrench) && !anchored)
+
+		else if(I.tool_behaviour == TOOL_CROWBAR && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME) && anchored)
+			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
+			I.play_tool_sound(src, 75)
+			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
+				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
+			return
+
+		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
 			I.play_tool_sound(src, 75)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
