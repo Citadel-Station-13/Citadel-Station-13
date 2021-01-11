@@ -177,7 +177,7 @@
 
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires an anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
