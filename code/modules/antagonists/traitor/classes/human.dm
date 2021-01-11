@@ -51,11 +51,6 @@
 			kill_objective.owner = T.owner
 			kill_objective.find_target()
 			T.add_objective(kill_objective)
-		else
-			var/datum/objective/assassinate/once/kill_objective = new
-			kill_objective.owner = T.owner
-			kill_objective.find_target()
-			T.add_objective(kill_objective)
 	else
 		if(prob(15) && !(locate(/datum/objective/download) in T.objectives) && !(T.owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
 			var/datum/objective/download/download_objective = new
