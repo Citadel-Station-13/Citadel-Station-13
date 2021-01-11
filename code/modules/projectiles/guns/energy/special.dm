@@ -200,7 +200,7 @@
 
 /obj/item/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires an anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
 	icon_state = "wormhole_projector"
