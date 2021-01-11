@@ -45,9 +45,9 @@
 			new_size = 1
 		if(7 to 11) //If large
 			new_size = 2
-		if(12 to 31) //If massive
+		if(12 to 36) //If massive
 			new_size = 3
-		if(32 to INFINITY) //If comical
+		if(37 to INFINITY) //If comical
 			new_size = 4 //no new sprites for anything larger yet
 	if(owner)
 		var/status_effect = owner.has_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
