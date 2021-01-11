@@ -23,7 +23,7 @@
 
 /datum/surgery_step/force_reboot
 	name = "initiate system reboot"
-	implements = list(TOOL_MULTITOOL = 100)
+	implements = list(TOOL_MULTITOOL = 100, /obj/item/borg/upgrade/restart = 100)
 	time = 100
 
 /datum/surgery_step/force_reboot/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
