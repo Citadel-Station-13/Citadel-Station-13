@@ -14,7 +14,7 @@
 	if(user.has_status_effect(STATUS_EFFECT_MANTRA))
 		user.remove_status_effect(STATUS_EFFECT_MANTRA)
 	else
-		user.add_status_effect(STATUS_EFFECT_MANTRA)
+		user.apply_status_effect(STATUS_EFFECT_MANTRA)
 
 /obj/effect/proc_holder/spell/self/asura
 	name = "Asura's Wrath"
@@ -32,4 +32,4 @@
 	if(user.has_status_effect(STATUS_EFFECT_ASURA))
 		user.remove_status_effect(STATUS_EFFECT_ASURA)
 	else
-		user.add_status_effect(STATUS_EFFECT_ASURA)
+		user.apply_status_effect(STATUS_EFFECT_ASURA)
