@@ -1,0 +1,9 @@
+author: Drulikar
+delete-after: true
+changes:
+  - tweak: Changed Hypnotic Stupor quirk to only reapply a trance after a minimum
+      amount of time from a previous hypnosis
+  - bugfix: Hypnosis phrase should now be properly escaped for regex (e.g. dangling
+      parentheses)
+  - config: Added configs for Hypnotic Stupor quirk tweaks (defaults on with a minimum
+      hypnosis duration between 10 and 20 minutes)
