@@ -39,7 +39,6 @@
 		return
 	var/rounded_length = round(length)
 	var/new_size
-	var/enlargement = FALSE
 	switch(rounded_length)
 		if(0 to 6) //If modest size
 			new_size = 1
@@ -49,12 +48,7 @@
 			new_size = 3
 		if(37 to INFINITY) //If comical
 			new_size = 4 //no new sprites for anything larger yet
-	if(owner)
-		var/status_effect = owner.has_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
-		if(enlargement && !status_effect)
-			owner.apply_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
-		else if(!enlargement && status_effect)
-			owner.remove_status_effect(STATUS_EFFECT_PENIS_ENLARGEMENT)
+
 	if(linked_organ)
 		linked_organ.size = clamp(size + new_size, BALLS_SIZE_MIN, BALLS_SIZE_MAX)
 		linked_organ.update()
