@@ -508,6 +508,7 @@
 		return
 	if(!affecting.threshhold_brute_passed && !affecting.threshhold_burn_passed)
 		to_chat(user, "<span class='warning'>There is no need to use this on [affecting]</span>")
+		return
 	if(affecting.threshhold_brute_passed && affecting.brute_dam == affecting.threshhold_passed_mindamage)
 		. = TRUE
 		affecting.threshhold_brute_passed = FALSE
