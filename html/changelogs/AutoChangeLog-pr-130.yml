@@ -1,5 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - bugfix: Fixes people who do not know any language speaking.
-  - bugfix: Fixes borgs having their speech misplaced for others and vice-versa.
