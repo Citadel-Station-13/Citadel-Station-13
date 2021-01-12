@@ -482,6 +482,7 @@
 	amount = 12
 	max_amount = 12	//Two synths worth of fixing, if every single bodypart of them has internal damage. Usually, probably more like 6-12.
 	icon_state = "nanogel"
+	item_state = "nanogel"
 	var/being_applied = FALSE	//No doafter stacking.
 
 /obj/item/stack/medical/nanogel/try_heal(mob/living/M, mob/user, silent = FALSE)
