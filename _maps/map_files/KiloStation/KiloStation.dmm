@@ -71327,15 +71327,16 @@
 	icon_gib = "magicarp_gib";
 	icon_living = "magicarp";
 	icon_state = "magicarp";
-	maxHealth = 200;
 	max_co2 = 5;
 	max_tox = 2;
+	maxHealth = 200;
 	melee_damage_lower = 15;
 	melee_damage_upper = 20;
 	min_oxy = 5;
 	name = "Lia";
 	real_name = "Lia";
-	!INVALID_VAR! = "pets";
+	response_help_continuous = "pets";
+	response_help_simple = "pet";
 	turns_per_move = 10
 	},
 /turf/open/floor/plasteel/dark,
