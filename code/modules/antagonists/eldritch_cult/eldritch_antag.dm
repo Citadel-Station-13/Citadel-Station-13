@@ -108,7 +108,7 @@
 	var/list/assasination = list()
 	var/list/protection = list()
 	for(var/i in 1 to 2)
-		var/pck = pick("assasinate","protect")
+		var/pck = pick("assasinate")
 		switch(pck)
 			if("assasinate")
 				var/datum/objective/assassinate/once/A = new
@@ -117,13 +117,6 @@
 				A.find_target(owners,protection)
 				assasination += A.target
 				objectives += A
-			if("protect")
-				var/datum/objective/protect/P = new
-				P.owner = owner
-				var/list/owners = P.get_owners()
-				P.find_target(owners,assasination)
-				protection += P.target
-				objectives += P
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
