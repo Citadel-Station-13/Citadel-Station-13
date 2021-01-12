@@ -11,7 +11,7 @@
 	cooldown_min = 100
 
 /obj/effect/proc_holder/spell/self/mantra/cast(mob/living/carbon/human/user)
-	if(user.has_status_effect(STATUS_EFFECT_MANTRA)
+	if(user.has_status_effect(STATUS_EFFECT_MANTRA))
 		user.remove_status_effect(STATUS_EFFECT_MANTRA)
 	else
 		user.add_status_effect(STATUS_EFFECT_MANTRA)
