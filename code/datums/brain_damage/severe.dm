@@ -262,6 +262,15 @@
 	scan_desc = "oneiric feedback loop"
 	gain_text = "<span class='warning'>You feel somewhat dazed.</span>"
 	lose_text = "<span class='notice'>You feel like a fog was lifted from your mind.</span>"
+	var/min_hypno_duration = 6000
+	var/max_hypno_duration = 12000
+	var/hypno_duration = -1 // 0 or some world time limits, whereas -1 has old behavior
+	
+/datum/brain_trauma/severe/hypnotic_stupor/on_gain()
+	..()
+	min_hypno_duration = CONFIG_GET(number/min_stupor_hypno_duration) // 6000
+	max_hypno_duration = CONFIG_GET(number/max_stupor_hypno_duration) // 12000
+	hypno_duration = CONFIG_GET(flag/limit_stupor_trances) ? 0 : -1
 
 /datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
 	..()
@@ -270,7 +279,12 @@
 /datum/brain_trauma/severe/hypnotic_stupor/on_life()
 	..()
 	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
-		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
+		if (world.time > hypno_duration) // Only re-trance every so often
+			owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE, hypno_duration > -1)
+			
+/datum/brain_trauma/severe/hypnotic_stupor/proc/on_hypnosis()
+	if (hypno_duration > -1)
+		hypno_duration = world.time + rand(min_hypno_duration, max_hypno_duration)
 
 /datum/brain_trauma/severe/hypnotic_trigger
 	name = "Hypnotic Trigger"

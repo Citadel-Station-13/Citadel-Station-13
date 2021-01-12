@@ -11,3 +11,10 @@
 ## Dogborg Sleeper Mechanics ###
 ## Uncomment to enable regular dogborg sleepers (otherwise will use recreational)
 #ENABLE_DOGBORG_SLEEPERS
+
+## Hypnotic Stupor Tweaks ###
+## Uncomment to limit hypnotic stupor trances.
+## Duration until a new trance is applied is random between MIN and MAX in deciseconds
+LIMIT_STUPOR_TRANCES
+MIN_STUPOR_HYPNO_DURATION 6000
+MAX_STUPOR_HYPNO_DURATION 12000

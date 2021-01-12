@@ -20,7 +20,7 @@
 		to_chat(usr, "<span class='danger'>Hypnosis New() skipped due to try/catch incompatibility with admin proccalling.</span>")
 		qdel(src)
 	try
-		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
+		target_phrase = new("(\\b[REGEX_QUOTE(hypnotic_phrase)]\\b)","ig")
 	catch(var/exception/e)
 		stack_trace("[e] on [e.file]:[e.line]")
 		qdel(src)
