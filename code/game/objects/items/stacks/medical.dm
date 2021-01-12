@@ -207,8 +207,8 @@
 	heal_brute = 6
 	self_delay = 45
 	other_delay = 15
-	absorption_rate = 0.4
-	absorption_capacity = 6
+	absorption_rate = 0.5
+	absorption_capacity = 12
 	splint_factor = 0.15
 
 /obj/item/stack/medical/gauze/adv/one
