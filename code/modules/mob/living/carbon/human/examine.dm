@@ -147,6 +147,9 @@
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
 
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		. += "<span class='notice'>[t_His] movements appear fairly artificial, similar to the movements of obsolete synthetic humanoids.</span>"
+
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
 	var/list/msg = list()

@@ -397,6 +397,8 @@ GENETICS SCANNER
 		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
 		if(mutant)
 			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
+		if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
+			msg += "\t<span class='info'>Subject's synthetic hardware is noticeably dated. Standard medical tools and supplies may be ineffective. It's strongly recommended to send this subject to Robotics for repairs.</span>\n"
 	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
