@@ -48007,8 +48007,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/mixed,
 /obj/machinery/light/small,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "bzo" = (
@@ -48767,7 +48768,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "bAA" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -48777,11 +48777,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/backpack{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/backpack,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 26
@@ -49398,6 +49393,7 @@
 	dir = 1;
 	name = "recreation camera"
 	},
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bBy" = (
@@ -54797,11 +54793,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "bKn" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -54810,6 +54801,11 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/obj/item/storage/backpack{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/backpack,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "bKo" = (
@@ -55425,6 +55421,12 @@
 	pixel_x = 28;
 	pixel_y = 22
 	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bLd" = (
@@ -60844,6 +60846,11 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/table,
+/obj/item/toy/figure/assistant{
+	pixel_x = 8;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bTD" = (
@@ -61021,6 +61028,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 10
 	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bTO" = (
@@ -61259,19 +61272,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
-/obj/item/toy/figure/assistant{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "bUi" = (
@@ -71323,15 +71325,16 @@
 	icon_gib = "magicarp_gib";
 	icon_living = "magicarp";
 	icon_state = "magicarp";
-	maxHealth = 200;
 	max_co2 = 5;
 	max_tox = 2;
+	maxHealth = 200;
 	melee_damage_lower = 15;
 	melee_damage_upper = 20;
 	min_oxy = 5;
 	name = "Lia";
 	real_name = "Lia";
-	response_help = "pets";
+	response_help_continuous = "pets";
+	response_help_simple = "pet";
 	turns_per_move = 10
 	},
 /turf/open/floor/plasteel/dark,

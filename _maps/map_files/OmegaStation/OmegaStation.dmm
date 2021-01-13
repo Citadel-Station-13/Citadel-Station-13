@@ -15268,6 +15268,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "axG" = (
@@ -19618,9 +19621,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "aEL" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
@@ -19635,6 +19635,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "aEM" = (

@@ -4826,6 +4826,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "aiU" = (
@@ -23177,6 +23178,9 @@
 	},
 /obj/machinery/light,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aTy" = (
@@ -23186,17 +23190,6 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/crew_quarters/locker)
-"aTz" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/light,
-/obj/machinery/newscaster{
-	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
@@ -81348,6 +81341,21 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"foN" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light,
+/obj/machinery/gear_painter,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/locker)
 "fpa" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -81974,6 +81982,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/cryopod)
+"lFR" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/vending/clothing,
+/turf/open/floor/plasteel/white/corner,
+/area/hallway/secondary/entry)
 "lGS" = (
 /obj/docking_port/stationary/public_mining_dock,
 /turf/open/floor/plating,
@@ -97547,7 +97565,7 @@ blU
 aiT
 bEs
 bHJ
-aiT
+lFR
 iSt
 mcS
 alK
@@ -118605,8 +118623,8 @@ aOD
 aPK
 aQV
 aOu
-aTz
-aUM
+aTt
+foN
 aUM
 aYe
 dnh
