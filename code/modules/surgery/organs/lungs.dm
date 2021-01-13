@@ -521,10 +521,13 @@
 		failed = FALSE
 
 /obj/item/organ/lungs/ipc
-	name = "ipc cooling system"
+	name = "hardened ipc cooling system"
 	icon_state = "lungs-c"
 
-/obj/item/organ/lungs/ipc/emp_act(severity) //Should probably put it somewhere else later
+/obj/item/organ/lungs/ipc/legacy
+	name = "ipc cooling system"
+
+/obj/item/organ/lungs/ipc/legacy/emp_act(severity) //Should probably put it somewhere else later
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return

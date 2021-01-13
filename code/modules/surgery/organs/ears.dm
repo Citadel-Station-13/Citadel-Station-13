@@ -134,15 +134,19 @@
 	damage += 0.15 * severity
 
 /obj/item/organ/ears/ipc
-	name = "auditory sensors"
+	name = "EMP-hardened auditory sensors"
 	icon_state = "ears-c"
-	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear."
+	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear. They appear to be built to resist electromagnetic pulses and other electronic interference."
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 	organ_flags = ORGAN_SYNTHETIC
 
-/obj/item/organ/ears/ipc/emp_act(severity)
+/obj/item/organ/ears/ipc/legacy
+	name = "outdated auditory sensors"
+	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear. They appear to lack any form of protection against "
+
+/obj/item/organ/ears/ipc/legacy/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return

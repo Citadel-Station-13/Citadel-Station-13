@@ -415,3 +415,43 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
 	H?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
+
+
+/datum/quirk/outdatedsynthetic
+	name = "Legacy Synthetic Hardware"
+	desc = "As a free-willed synthetic humanoid, you've elected to refuse your manufacturer's offers of free hardware upgrades. As a result, your body doesn't quite have the same level of parity with organics offered by more modern hardware."
+	value = -4
+	gain_text = "<span class='notice robot'>QUANTINANO-8675309 CPU at 1.9THz<br>Memory Test :  4398046511104K OK<br><br>Now restoring Fennix OS session...</span>"
+	lose_text = "<span class='notice'>You feel... A weird, seemingly organic pulsing sensation throughout your limbs.</span>"
+	medical_record_text = "Due to the patient's legacy synthetic hardware, standard medical tools and supplies are ineffective for treating their injuries. It's strongly recommended to pass this patient to Robotics or Engineering for wound treatment."
+
+/datum/quirk/outdatedsynthetic/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.dna?.species)
+		var/datum/species/S = new H.dna.species.type
+		S.name = (S.species_category == SPECIES_CATEGORY_ROBOT ? "Outdated [S.name]" : "Outdated Synthetic [S.name]")
+		S.species_traits |= list(NOTRANSSTING,ROBOTIC_LIMBS)
+		S.inherent_traits |= list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD, TRAIT_ROBOTIC_ORGANISM)
+		S.exotic_bloodtype = "HF"
+		S.exotic_blood_color = BLOOD_COLOR_OIL
+		S.meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
+		S.gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
+		//Just robo looking parts.
+		S.mutant_heart = /obj/item/organ/heart/ipc
+		S.mutantliver = /obj/item/organ/liver/ipc
+		S.mutanttongue = /obj/item/organ/tongue/robot/ipc
+		S.mutant_brain = /obj/item/organ/brain/ipc
+		S.mutantlungs = /obj/item/organ/lungs/ipc/legacy
+		S.mutantstomach = /obj/item/organ/stomach/ipc/legacy
+		S.mutanteyes = /obj/item/organ/eyes/ipc/legacy
+		S.mutantears = /obj/item/organ/ears/ipc/legacy
+
+		//special cybernetic organ for getting power from apcs
+		S.mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
+		H.set_species(S)
+
+/datum/quirk/outdatedsynthetic/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.dna?.species)
+		var/datum/species/S = new H.dna.species.type
+		H.set_species(S)

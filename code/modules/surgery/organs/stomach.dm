@@ -89,10 +89,13 @@
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 
 /obj/item/organ/stomach/ipc
-	name = "ipc cell"
+	name = "hardened ipc cell"
 	icon_state = "stomach-ipc"
 
-/obj/item/organ/stomach/ipc/emp_act(severity)
+/obj/item/organ/stomach/ipc/legacy
+	name = "ipc cell"
+
+/obj/item/organ/stomach/ipc/legacy/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return

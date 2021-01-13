@@ -418,10 +418,13 @@
 	flash_protect = -1
 
 /obj/item/organ/eyes/ipc
-	name = "ipc eyes"
+	name = "hardened ipc eyes"
 	icon_state = "cybernetic_eyeballs"
 
-/obj/item/organ/eyes/ipc/emp_act(severity)
+/obj/item/organ/eyes/ipc/legacy
+	name = "ipc eyes"
+
+/obj/item/organ/eyes/ipc/legacy/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
