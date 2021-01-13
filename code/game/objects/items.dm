@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	
+
 	attack_hand_speed = 0
 	attack_hand_is_action = FALSE
 	attack_hand_unwieldlyness = 0
@@ -467,6 +467,21 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				melee_attack_chain(usr, over)
 			usr.FlushCurrentAction()
 			return TRUE //returning TRUE as a "is this overridden?" flag
+	if(isrevenant(usr))
+		var/mob/living/simple_animal/revenant/spooker = usr
+		if(!anchored && !spooker.telekinesis_cooldown)
+			spooker.change_essence_amount(-5, FALSE, "telekinesis")
+			spooker.stun(10)
+			spooker.reveal(20)
+			spooker.telekinesis_cooldown = TRUE
+			float(TRUE, 2)
+			sleep(10)
+			throw_at(src_location)
+			new /obj/effect/temp_visual/telekinesis(get_turf(src))
+			addtimer(CALLBACK(src, /atom/movable.proc/float, FALSE), 2)
+			addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 30)
+			return
+
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
