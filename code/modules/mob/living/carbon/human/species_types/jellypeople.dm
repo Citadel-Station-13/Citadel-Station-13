@@ -95,7 +95,7 @@
 	name = "Xenobiological Slime Entity"
 	id = SPECIES_SLIME
 	default_color = "00FFFF"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,HAS_FLESH)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -405,7 +405,7 @@
 	id = SPECIES_SLIME_HYBRID
 	limbs_id = SPECIES_SLIME
 	default_color = "00FFFF"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,HAS_FLESH)
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "Plain", "mam_snouts" = "None", "taur" = "None", "legs" = "Plantigrade")
 	say_mod = "says"
