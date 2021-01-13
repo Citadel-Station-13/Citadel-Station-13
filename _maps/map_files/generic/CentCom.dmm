@@ -10524,6 +10524,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"yl" = (
+/obj/machinery/gear_painter,
+/turf/open/indestructible/hotelwood,
+/area/centcom/holding)
 "yn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum,
@@ -43992,7 +43996,7 @@ NS
 Nd
 ZL
 NS
-NS
+yl
 Nd
 CU
 NS

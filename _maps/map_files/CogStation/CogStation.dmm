@@ -33604,6 +33604,10 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
+/obj/item/kirbyplants{
+	icon_state = "plant-20";
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bvu" = (
@@ -38936,10 +38940,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-20";
-	pixel_y = 3
-	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bGN" = (
@@ -52867,7 +52868,7 @@
 	dir = 4;
 	pixel_x = -28
 	},
-/obj/item/kirbyplants/random,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "cjB" = (
@@ -71256,6 +71257,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/router/aux)
+"stP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "sAm" = (
 /obj/structure/plasticflaps,
 /obj/machinery/door/poddoor{
@@ -114255,7 +114263,7 @@ ckq
 bgf
 beB
 cxC
-bgq
+stP
 cjA
 biy
 bjN
