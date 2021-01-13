@@ -54,7 +54,7 @@
 		target.visible_message("...[target]'s posibrain flickers a few times, before the lights fade yet again...")
 		return FALSE
 
-/datum/surgery_step/revive/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/force_reboot/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You attempt to reboot [target]'s posibrain, but [target.p_they()] doesn't react.</span>",
 		"[user] attempts to reboot [target]'s posibrain, but [target.p_they()] doesn't react.",
 		"[user] attempts to reboot [target]'s posibrain, but [target.p_they()] doesn't react")
