@@ -124,6 +124,7 @@
 		last_move = 0
 		return
 
+	setDir(direct)
 	if(.)
 		Moved(oldloc, direct)
 	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
@@ -145,7 +146,6 @@
 		set_glide_size(glide_size_override, FALSE)
 
 	last_move = direct
-	setDir(direct)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
 

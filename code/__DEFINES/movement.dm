@@ -17,7 +17,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 /// Enables smooth movement
 #ifndef SMOOTH_MOVEMENT
-	#define SMOOTH_MOVEMENT TRUE
+	#define SMOOTH_MOVEMENT FALSE
 #endif
 
 /// Set appearance flags in vars

@@ -217,10 +217,9 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			else
 				continue
 		. = M.apply_multiplicative(., src)
-	var/old = cached_multiplicative_slowdown		// CITAEDL EDIT - To make things a bit less jarring, when in situations where
 	// your delay decreases, "give" the delay back to the client
 	cached_multiplicative_slowdown = .
-	var/diff = old - cached_multiplicative_slowdown
+	var/diff = (client.last_move - client.move_delay) - cached_multiplicative_slowdown
 	if((diff > 0) && client)
 		if(client.move_delay > world.time + 1.5)
 			client.move_delay -= diff
@@ -235,7 +234,6 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		var/ticks_allowed = timeleft / world.tick_lag
 		var/pixels_per_tick = pixels_moved / ticks_allowed
 		set_glide_size(pixels_per_tick * GLOB.glide_size_multiplier, TRUE)
-
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()
