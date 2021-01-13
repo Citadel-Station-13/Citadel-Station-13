@@ -243,16 +243,20 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 
 	//acounts for changes in temperature
 	var/turf/model_parent = model.parent_type
-	if(model.return_temperature() != initial(model.initial_temperature) || model.return_temperature() != initial(model_parent.initial_temperature))
-		set_temperature(model.return_temperature())
+	var/model_temp = model.return_temperature()
+	if(isnum(model_temp) && model_temp == model_temp && (model_temp != initial(model.initial_temperature) || model_temp != initial(model_parent.initial_temperature)))
+		set_temperature(model_temp)
 
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
-		set_temperature(text2num(gas["TEMP"]))
+		var/temp = text2num(gas["TEMP"])
 		gas -= "TEMP"
+		if(!isnum(temp) || temp < 2.7)
+			temp = 2.7
+		set_temperature(temp)
 	clear()
 	for(var/id in gas)
 		var/path = id
