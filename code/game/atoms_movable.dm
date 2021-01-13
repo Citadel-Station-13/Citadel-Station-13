@@ -303,6 +303,7 @@
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8, recursive = TRUE)
+#if SMOOTH_MOVEMENT
 	// SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 
@@ -312,6 +313,9 @@
 
 	if(recursive)
 		recursive_pulled_glidesize_update()
+#else
+	return
+#endif
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)

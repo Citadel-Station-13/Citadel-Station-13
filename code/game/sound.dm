@@ -174,9 +174,13 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 				if(A.sound_environment != SOUND_ENVIRONMENT_NONE)
 					S.environment = A.sound_environment
 
-		if(use_reverb && S.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
-			S.echo[3] = 0 //Room setting, 0 means normal reverb
-			S.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
+		if(use_reverb)
+			if(S.environment == SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
+				S.environment = SOUND_ENVIRONMENT_CONCERT_HALL
+				S.echo = list(0, null, -10000, null, null, null, null, null, null, null, null, null, null, 1, 1, 1, null, null)
+			else
+				S.echo[3] = 0 //Room setting, 0 means normal reverb
+				S.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
 
 	SEND_SOUND(src, S)
 
