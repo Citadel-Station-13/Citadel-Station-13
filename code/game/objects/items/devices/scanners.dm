@@ -397,8 +397,19 @@ GENETICS SCANNER
 		msg += "\t<span class='info'>Base Species: [S.name]</span>\n"
 		if(mutant)
 			msg += "\t<span class='info'>Subject has mutations present.</span>\n"
+		var/potential_complications
+		var/recommended_department = "<span class='medradio'>Medical</span>"
+		if(HAS_TRAIT(H, TRAIT_TOXINLOVER))
+			potential_complications += "<span class='medradio'>Inverted toxin damage</span>, <span class='medradio'>Cryogenic sensitivity</span>"
 		if(HAS_TRAIT(H, TRAIT_ROBOTIC_ORGANISM))
-			msg += "\t<span class='info'>Subject's synthetic hardware is noticeably dated. Standard medical tools and supplies may be ineffective. It's strongly recommended to send this subject to Robotics for repairs.</span>\n"
+			potential_complications += "[potential_complications ? ", " : ""]<span class='engradio'>Requires industrial tools for repairs</span>"
+			recommended_department = "<span class='sciradio'>Robotics</span>"
+		if(isplasmaman(H)) //Keep this at the end of the list to make sure the + Engineering notice doesn't get overwritten
+			potential_complications += "[potential_complications ? ", " : ""]<span class='sciradio'>Requires plasma chamber for cloning</span>"
+			recommended_department += " + <span class='engradio'>Engineering</span>"
+		if(potential_complications)
+			msg += "\t<span class='notice'>Treatment Complications: </span>[potential_complications]\n"
+		msg += "\t<span class='notice'>Recommended Department Involvement: </span>[recommended_department]\n"
 	msg += "\t<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
 
 	// Time of death
