@@ -308,7 +308,7 @@
 	materials = list(/datum/material/iron = 16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 	build_path = /obj/item/disk/medical/defib_heal
 	construction_time = 10
-	category = list("Misc")
+	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_shock
@@ -319,7 +319,7 @@
 	materials = list(/datum/material/iron = 16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 	build_path = /obj/item/disk/medical/defib_shock
 	construction_time = 10
-	category = list("Misc")
+	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_decay
@@ -330,7 +330,7 @@
 	materials = list(/datum/material/iron = 16000, /datum/material/glass = 18000, /datum/material/gold = 16000, /datum/material/silver = 6000, /datum/material/titanium = 2000)
 	build_path = /obj/item/disk/medical/defib_decay
 	construction_time = 10
-	category = list("Misc")
+	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defib_speed
@@ -341,7 +341,7 @@
 	build_path = /obj/item/disk/medical/defib_speed
 	materials = list(/datum/material/iron = 16000, /datum/material/glass = 8000, /datum/material/gold = 26000, /datum/material/silver = 26000)
 	construction_time = 10
-	category = list("Misc")
+	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/defibrillator_compact
