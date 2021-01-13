@@ -454,6 +454,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params) //Copypaste of /atom/MouseDrop() since this requires code in a very specific spot
 	if(!usr || !over)
 		return
+	message_admins("[src], [usr], [over], [src_location], [over_location], [src_control], [over_control], [params]")
 	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is receiving will verify themselves for adjacency.
 		return
 	if(over == src)
@@ -472,14 +473,19 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(!anchored && !spooker.telekinesis_cooldown)
 			spooker.change_essence_amount(-5, FALSE, "telekinesis")
 			spooker.stun(10)
-			spooker.reveal(20)
+			spooker.reveal(30)
 			spooker.telekinesis_cooldown = TRUE
 			float(TRUE, 2)
 			sleep(10)
-			throw_at(src_location)
-			new /obj/effect/temp_visual/telekinesis(get_turf(src))
+			safe_throw_at(over, 10, 2)
+			ADD_TRAIT(src, TRAIT_SPOOKY_THROW)
+			src.DoRevenantThrowEffects()
+			var/obj/effect/temp_visual/telekinesis/T = new(get_turf(src))
+			T.color = purple
 			addtimer(CALLBACK(src, /atom/movable.proc/float, FALSE), 2)
-			addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 30)
+			addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+			sleep(2)
+			REMOVE_TRAIT(src, TRAIT_SPOOKY_THROW)
 			return
 
 	if(!Adjacent(usr) || !over.Adjacent(usr))
@@ -487,7 +493,32 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	over.MouseDrop_T(src,usr)
 	return
-
+/obj/item/proc/DoRevenantThrowEffects()
+	var/hijink_to_do
+	switch(istype)
+		if(obj/item/gun)
+			hijink_to_do = "shoot"
+		if(obj/item/storage)
+			if(GetComponent(datum/component/storage))
+				hijink_to_do = "scatter items"
+		if(obj/item/card/id)
+			hijink_to_do = "flash id"
+		if(obj/item/weldingtool)
+			hijink_to_do = "welder toggle"
+		if(obj/item/tank)
+			hijink_to_do = "toggle tank"
+		if(obj/item/paper)
+			hijink_to_do = "paper into plane"
+		if(obj/item/paper_bin)
+			hijink_to_do = "paperbin scatter"
+		if(obj/item/assembly/flash)
+			hijink_to_do = "flash randomly"
+		if(obj/item/flashlight)
+			hijinks_to_do = "toggle flashlight"
+		if(obj/item/grenade/flashbang)
+			
+		if(obj/item/grenade/stingbang)
+	while(HAS_TRAIT(src, TRAIT_SPOOKY_THROW))
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
