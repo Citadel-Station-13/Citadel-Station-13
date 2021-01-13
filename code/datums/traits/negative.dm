@@ -432,6 +432,8 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 		S.name = (S.species_category == SPECIES_CATEGORY_ROBOT ? "Outdated [S.name]" : "Outdated Synthetic [S.name]")
 		S.species_traits |= list(NOTRANSSTING,ROBOTIC_LIMBS)
 		S.inherent_traits |= list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD, TRAIT_ROBOTIC_ORGANISM)
+		S.inherent_biotypes = S.inherent_biotypes|MOB_ROBOTIC
+		S.species_category = SPECIES_CATEGORY_ROBOT
 		S.exotic_bloodtype = "HF"
 		S.exotic_blood_color = BLOOD_COLOR_OIL
 		S.meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
