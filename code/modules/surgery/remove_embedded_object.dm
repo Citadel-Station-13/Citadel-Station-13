@@ -4,6 +4,7 @@
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 
 /datum/surgery/embedded_removal/robot
+	requires_bodypart_type = BODYPART_ROBOTIC
 	steps = list(/datum/surgery_step/mechanic_open, /datum/surgery_step/open_hatch, /datum/surgery_step/remove_object)
 
 /datum/surgery_step/remove_object
