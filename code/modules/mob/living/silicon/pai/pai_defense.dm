@@ -81,10 +81,10 @@
 		to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")
 	return amount
 
-/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/pai/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	return take_holo_damage(amount)
 
 /mob/living/silicon/pai/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
