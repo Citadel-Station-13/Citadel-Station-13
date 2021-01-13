@@ -328,7 +328,7 @@
 	if(turned_on)
 		if(ishuman(thrower))
 			var/mob/living/carbon/human/H = thrower
-			H.throw_mode_off() //so they can catch it on the return.
+			H.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
