@@ -359,6 +359,10 @@
 	if(QDELETED(tasted) || (tasted.ckey && !(tasted.client?.prefs.vore_flags & LICKABLE)) || !Adjacent(tasted) || incapacitated(ignore_restraints = TRUE))
 		return
 
+	if(ishuman(tasted))
+		var/mob/living/carbon/human/H = tasted
+		H.wash_cream()
+
 	visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
 
 /mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
