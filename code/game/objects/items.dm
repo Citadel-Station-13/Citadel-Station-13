@@ -487,6 +487,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	current_equipped_slot = slot
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
