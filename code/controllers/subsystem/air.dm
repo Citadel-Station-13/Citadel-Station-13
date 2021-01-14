@@ -43,6 +43,8 @@ SUBSYSTEM_DEF(air)
 	var/equalize_hard_turf_limit = 2000
 	// Whether equalization should be enabled at all.
 	var/equalize_enabled = TRUE
+	// Whether turf-to-turf heat exchanging should be enabled.
+	var/heat_enabled = FALSE
 	// Max number of times process_turfs will share in a tick.
 	var/share_max_steps = 1
 	// If process_turfs finds no pressure differentials larger than this, it'll stop for that tick.
@@ -83,6 +85,15 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
 
+	if(currentpart == SSAIR_ACTIVETURFS)
+		timer = TICK_USAGE_REAL
+		process_turfs(resumed)
+		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_REBUILD_PIPENETS
+
 	if(currentpart == SSAIR_REBUILD_PIPENETS)
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
 		for(var/thing in pipenet_rebuilds)
@@ -95,7 +106,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = FALSE
-		currentpart = SSAIR_PIPENETS
+		currentpart = SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
@@ -106,27 +117,21 @@ SUBSYSTEM_DEF(air)
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
+		if(finish_turf_processing(MC_TICK_REMAINING_MS))
+			pause()
+			return
 		timer = TICK_USAGE_REAL
 		process_atmos_machinery(resumed)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = equalize_enabled ? SSAIR_EQUALIZE : SSAIR_ACTIVETURFS
+		currentpart = equalize_enabled ? SSAIR_EQUALIZE : SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EQUALIZE)
 		timer = TICK_USAGE_REAL
 		process_turf_equalize(resumed)
 		cost_equalize = MC_AVERAGE(cost_equalize, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
-		currentpart = SSAIR_ACTIVETURFS
-
-	if(currentpart == SSAIR_ACTIVETURFS)
-		timer = TICK_USAGE_REAL
-		process_turfs(resumed)
-		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -167,7 +172,8 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_TURF_CONDUCTION
+		if(heat_enabled)
+			currentpart = SSAIR_TURF_CONDUCTION
 
 	if(currentpart == SSAIR_TURF_CONDUCTION)
 		timer = TICK_USAGE_REAL
@@ -177,7 +183,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-	currentpart = SSAIR_REBUILD_PIPENETS
+	currentpart = SSAIR_ACTIVETURFS
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
@@ -283,6 +289,7 @@ SUBSYSTEM_DEF(air)
 	if(process_excited_groups_extools(resumed,MC_TICK_REMAINING_MS))
 		pause()
 
+/datum/controller/subsystem/air/proc/finish_turf_processing()
 /datum/controller/subsystem/air/proc/process_turfs_extools()
 /datum/controller/subsystem/air/proc/post_process_turfs()
 /datum/controller/subsystem/air/proc/process_turf_equalize_extools()
