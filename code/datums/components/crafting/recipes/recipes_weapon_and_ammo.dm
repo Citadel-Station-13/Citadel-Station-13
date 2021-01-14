@@ -433,38 +433,6 @@
 // PARTS CRAFTING //
 ////////////////////
 
-// RECEIVERS
-
-/datum/crafting_recipe/rifle_receiver
-	name = "Improvised Rifle Receiver"
-	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 15)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 25
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-/datum/crafting_recipe/shotgun_receiver
-	name = "Improvised Shotgun Receiver"
-	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 10) // shotgun does less damage than the rifle and can't 1shot but is more portable
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 20
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-// MISC
-
-/datum/crafting_recipe/trigger_assembly
-	name = "Trigger Assembly"
-	result = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
-	reqs = list(/obj/item/stack/sheet/metal = 3,
-				/obj/item/assembly/igniter = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 20
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
 // BOKKEN CRAFTING
 
 /datum/crafting_recipe/bokken_blade
