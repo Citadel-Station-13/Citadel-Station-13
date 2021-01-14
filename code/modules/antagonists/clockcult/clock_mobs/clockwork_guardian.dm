@@ -1,7 +1,7 @@
 //Clockwork guardian: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
 /mob/living/simple_animal/hostile/clockwork/guardian
 	name = "clockwork guardian"
-	desc = "A stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield and stands ready by its master."
+	desc = "A stalwart apparition of a soldier, blazing with magenta flames. It's armed with a gladius and shield and stands ready by its master."
 	icon_state = "clockwork_marauder"
 	health = 300
 	maxHealth = 300
@@ -23,6 +23,7 @@
 	var/blockchance = 17 //chance to block attacks entirely
 	var/counterchance = 30 //chance to counterattack after blocking
 	var/static/list/damage_heal_order = list(OXY, BURN, BRUTE, TOX) //we heal our host's damage in this order
+	light_color = "#AF0AAF"
 	light_range = 2
 	light_power = 1.1
 	playstyle_string = "<span class='sevtug'>You are a clockwork guardian</span><b>, a living extension of Sevtug's will. As a guardian, you are somewhat slow, but may block attacks, \
@@ -319,7 +320,7 @@
 	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
-	host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='sevtug'>You feel [true_name]'s consciousness settle in your mind.</span>")
+	host.visible_message("<span class='warning'>[host]'s skin flashes magenta!</span>", "<span class='sevtug'>You feel [true_name]'s consciousness settle in your mind.</span>")
 	visible_message("<span class='warning'>[src] suddenly disappears!</span>", "<span class='sevtug'>You return to [host].</span>")
 	forceMove(host)
 	if(resulthealth > GUARDIAN_EMERGE_THRESHOLD && health != maxHealth)
