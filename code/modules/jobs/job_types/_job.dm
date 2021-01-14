@@ -126,19 +126,19 @@
 /datum/job/proc/special_check_latejoin(client/C)
 	var/joined = LAZYLEN(C.prefs?.characters_joined_as)
 	if(C.prefs?.respawn_restrictions_active && (joined || CONFIG_GET(flag/respawn_penalty_includes_observe)))
-		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && always_can_respawn_as)
+		if(!CONFIG_GET(flag/allow_non_assistant_respawn) && !always_can_respawn_as)
 			return FALSE
 		if(!CONFIG_GET(flag/allow_combat_role_respawn) && considered_combat_role)
 			return FALSE
 	return TRUE
 
 /datum/job/proc/GetAntagRep()
-	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/antag_rep)[ckey(title)]
 	if(. == null)
 		return antag_rep
 
 /datum/job/proc/GetThreat()
-	. = CONFIG_GET(keyed_list/job_threat)[lowertext(title)]
+	. = CONFIG_GET(keyed_list/job_threat)[ckey(title)]
 	if(. == null)
 		return threat
 

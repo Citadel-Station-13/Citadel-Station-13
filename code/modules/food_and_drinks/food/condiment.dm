@@ -55,7 +55,7 @@
 
 	var/fraction = min(10/reagents.total_volume, 1)
 	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, 10)
+	reagents.trans_to(M, 10, log = TRUE)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
@@ -73,7 +73,7 @@
 			to_chat(user, "<span class='warning'>[src] is full!</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log = TRUE)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
@@ -84,7 +84,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>you can't add anymore to [target]!</span>")
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, log = TRUE)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/reagent_containers/food/condiment/on_reagent_change(changetype)
@@ -270,7 +270,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
-			src.reagents.trans_to(target, amount_per_transfer_from_this)
+			src.reagents.trans_to(target, amount_per_transfer_from_this, log = TRUE)
 			qdel(src)
 
 /obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)

@@ -18,6 +18,7 @@
 /obj/item/paicard/Initialize()
 	SSpai.pai_card_list += src
 	add_overlay("pai-off")
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 	return ..()
 
 /obj/item/paicard/Destroy()

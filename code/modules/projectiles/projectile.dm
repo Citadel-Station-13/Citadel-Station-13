@@ -100,6 +100,10 @@
 	var/impact_light_intensity = 3
 	var/impact_light_range = 2
 	var/impact_light_color_override
+	// Normal lighting effects
+	var/fired_light_intensity = 1
+	var/fired_light_range = 0
+	var/fired_light_color = rgb(255, 255, 255)
 
 	//Homing
 	var/homing = FALSE
@@ -506,6 +510,7 @@
 		transform = M
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
+	set_light(fired_light_range, fired_light_intensity, fired_light_color)
 	trajectory_ignore_forcemove = FALSE
 	if(isnull(pixel_increment_amount))
 		pixel_increment_amount = SSprojectiles.global_pixel_increment_amount

@@ -86,15 +86,6 @@ proc/get_top_level_mob(var/mob/S)
 	else if(!params)
 		var/subtle_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Subtler" , null, MAX_MESSAGE_LEN)
 		if(subtle_emote && !check_invalid(user, subtle_emote))
-			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
-			switch(type)
-				if("Visible")
-					emote_type = EMOTE_VISIBLE
-				if("Hearable")
-					emote_type = EMOTE_AUDIBLE
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
-					return
 			message = subtle_emote
 		else
 			return FALSE
@@ -110,6 +101,80 @@ proc/get_top_level_mob(var/mob/S)
 	message = "<span class='emote'><b>[user]</b> <i>[user.say_emphasis(message)]</i></span>"
 
 	user.visible_message(message = message, self_message = message, vision_distance = 1, ignored_mobs = GLOB.dead_mob_list, omni = TRUE)
+
+///////////////// SUBTLE 3: DARE DICE
+
+/datum/emote/living/subtler_table
+	key = "subtler_table"
+	key_third_person = "subtler_table"
+	message = null
+	mob_type_blacklist_typecache = list(/mob/living/brain)
+
+/datum/emote/living/subtler_table/proc/check_invalid(mob/user, input)
+	if(stop_bad_mime.Find(input, 1, 1))
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
+		return TRUE
+	return FALSE
+
+/datum/emote/living/subtler_table/run_emote(mob/user, params, type_override = null)
+	if(!locate(/obj/structure/table) in range(user, 1))
+		to_chat(user, "There are no tables around you.")
+		return FALSE
+	if(jobban_isbanned(user, "emote"))
+		to_chat(user, "You cannot send subtle emotes (banned).")
+		return FALSE
+	else if(user.client && user.client.prefs.muted & MUTE_IC)
+		to_chat(user, "You cannot send IC messages (muted).")
+		return FALSE
+	else if(!params)
+		var/subtle_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Subtler" , null, MAX_MESSAGE_LEN)
+		if(subtle_emote && !check_invalid(user, subtle_emote))
+			message = subtle_emote
+		else
+			return FALSE
+	else
+		message = params
+		if(type_override)
+			emote_type = type_override
+	. = TRUE
+	if(!can_run_emote(user))
+		return FALSE
+
+	user.log_message("[message] (TABLE-WRAPPING)", LOG_SUBTLER)
+	message = "<span class='emote'><b>[user]</b> <i>[user.say_emphasis(message)]</i></span>"
+
+	var/list/show_to = list()
+	var/list/processing = list()
+	var/safety = 25
+	for(var/obj/structure/table/T in range(user, 1))
+		processing |= T
+	for(var/i = 1; i <= processing.len; ++i)
+		var/obj/structure/table/T = processing[i]
+		if(safety-- <= 0)
+			to_chat(user, "Table scan aborted early, some people might have not received the message (max 25)")
+			break
+		if(get_dist(T, user) > 7)
+			continue		// nah
+		processing |= T
+		for(var/mob/living/M in range(T, 1))		// no ghosts/cameramobs
+			show_to |= M
+		var/obj/structure/table/other
+		other = locate() in get_step(T, NORTH)
+		if(other)
+			processing |= other
+		other = locate() in get_step(T, SOUTH)
+		if(other)
+			processing |= other
+		other = locate() in get_step(T, WEST)
+		if(other)
+			processing |= other
+		other = locate() in get_step(T, EAST)
+		if(other)
+			processing |= other
+
+	for(var/i in show_to)
+		var/mob/M = i
+		M.show_message(message)
 
 ///////////////// VERB CODE
 /mob/living/verb/subtle()
@@ -128,3 +193,12 @@ proc/get_top_level_mob(var/mob/S)
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	usr.emote("subtler")
+
+///////////////// VERB CODE 3
+/mob/living/verb/subtler_table()
+	set name = "Subtler Around Table"
+	set category = "IC"
+	if(GLOB.say_disabled)	//This is dumb but it's here because heehoo copypaste, who the FUCK uses this to identify lag?
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+	usr.emote("subtler_table")
