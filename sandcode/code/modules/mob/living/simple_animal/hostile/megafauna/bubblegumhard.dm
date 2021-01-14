@@ -322,7 +322,7 @@ obj/item/gps/internal/bubblegum/hard
 	if(useoriginal)
 		charge(chargeat, delay, chargepast)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hard/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hard/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	. = ..()
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegumhard/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegumhard(loc)
@@ -466,7 +466,7 @@ obj/item/gps/internal/bubblegum/hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hard/hallucination/Life()
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hard/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hard/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hard/hallucination/OpenFire()
