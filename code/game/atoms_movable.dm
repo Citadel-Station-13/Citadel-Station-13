@@ -303,7 +303,7 @@
 		pulledby.stop_pulling()
 
 /atom/movable/proc/set_glide_size(target = 8, recursive = TRUE)
-#if SMOOTH_MOVEMENT
+#if (SMOOTH_MOVEMENT == TRUE)
 	// SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
 

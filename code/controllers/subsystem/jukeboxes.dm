@@ -95,6 +95,8 @@ SUBSYSTEM_DEF(jukeboxes)
 			continue
 		var/sound/song_played = sound(juketrack.song_path)
 		var/turf/currentturf = get_turf(jukebox)
+		var/area/currentarea = get_area(jukebox)
+		var/list/hearerscache = hearers(7, jukebox)
 
 		song_played.falloff = jukeinfo[4]
 
@@ -105,10 +107,15 @@ SUBSYSTEM_DEF(jukeboxes)
 				M.stop_sound_channel(jukeinfo[2])
 				continue
 
+			var/inrange = FALSE
 			if(jukebox.z == M.z)	//todo - expand this to work with mining planet z-levels when robust jukebox audio gets merged to master
 				song_played.status = SOUND_UPDATE
+				if(get_area(M) == currentarea)
+					inrange = TRUE
+				else if(M in hearerscache)
+					inrange = TRUE
 			else
 				song_played.status = SOUND_MUTE | SOUND_UPDATE	//Setting volume = 0 doesn't let the sound properties update at all, which is lame.
-			M.playsound_local(currentturf, null, 100, channel = jukeinfo[2], S = song_played, use_reverb = FALSE)
+			M.playsound_local(currentturf, null, 100, channel = jukeinfo[2], S = song_played, envwet = (inrange ? -250 : 0), envdry = (inrange ? 0 : -10000))
 			CHECK_TICK
 	return
