@@ -307,7 +307,7 @@
 			if((pulling == M) && (grab_state == GRAB_PASSIVE))
 				M.visible_message( \
 					"<span class='notice'>[M] squeezes [src]'s hand.</span>", \
-					"<span class='notice'>You shake [src]'s hand.</span>", target = src,
+					"<span class='notice'>You squeeze [src]'s hand.</span>", target = src,
 					target_message = "<span class='notice'>[M] squeezes your hand.</span>")
 			else
 				M.visible_message( \
