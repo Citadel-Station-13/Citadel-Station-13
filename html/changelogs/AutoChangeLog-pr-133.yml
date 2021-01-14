@@ -1,0 +1,5 @@
+author: Drulikar
+delete-after: true
+changes:
+  - bugfix: Fixed potential runtime error in Bubblegum hard's parameters for proc
+      adjustBruteLoss via Regenerative Core Tendrils
