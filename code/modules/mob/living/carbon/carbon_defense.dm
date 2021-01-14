@@ -306,7 +306,7 @@
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
 			if((pulling == M) && (grab_state == GRAB_PASSIVE))
 				M.visible_message( \
-					"<span class='notice'>[M] squeezes [src]'s hand.</span>, \
+					"<span class='notice'>[M] squeezes [src]'s hand.</span>", \
 					"<span class='notice'>You shake [src]'s hand.</span>", target = src,
 					target_message = "<span class='notice'>[M] squeezes your hand.</span>")
 			else
