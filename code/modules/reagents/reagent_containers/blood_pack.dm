@@ -104,7 +104,7 @@
 		return ..()
 
 /obj/item/reagent_containers/blood/attack(mob/living/carbon/C, mob/user, def_zone)
-	if(!iscarbon(C) || !user.a_intent != INTENT_HELP || reagents.total_volume < 0)
+	if(!iscarbon(C) || user.a_intent != INTENT_HELP || reagents.total_volume <= 0)
 		..()
 
 	if(C.is_mouth_covered())
