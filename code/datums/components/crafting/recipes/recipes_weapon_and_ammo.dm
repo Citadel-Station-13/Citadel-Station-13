@@ -296,7 +296,7 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
-	result = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
+	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
 	reqs = list(/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
