@@ -196,7 +196,7 @@
 			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
 				viewing += M.client
 		flick_overlay(I, viewing, 8)
-		L.adjustToxLoss(-3, TRUE, TRUE)
+		L.adjustToxLoss(-3, TRUE, TRUE, toxins_type = TOX_OMNI)
 
 /turf/open/floor/clockwork/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -278,4 +278,4 @@
 	heavyfootstep = FOOTSTEP_RUST
 
 /turf/open/floor/plating/rust/rust_heretic_act()
-	return 
+	return

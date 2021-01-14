@@ -573,13 +573,17 @@
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/regenerative_core
+	var/heal_amount = 25
 
 /datum/status_effect/regenerative_core/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
-	owner.adjustBruteLoss(-25)
+
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, but only get 1/5th of the healing. They can use this to get past the damage threshhold however, and then regularely heal from there.
+		heal_amount *= 0.2
+	owner.adjustBruteLoss(-heal_amount, only_organic = FALSE)
 	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
-		owner.adjustFireLoss(-25)
+		owner.adjustFireLoss(-heal_amount, only_organic = FALSE)
 	owner.remove_CC()
 	owner.bodytemperature = BODYTEMP_NORMAL
 	return TRUE
