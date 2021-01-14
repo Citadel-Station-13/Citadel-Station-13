@@ -49,6 +49,7 @@
 	move_force = MOVE_FORCE_EXTREMELY_STRONG
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
+	var/can_move_crush = FALSE
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
@@ -79,6 +80,11 @@
 		if(client)
 			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
 		return 0
+	return ..()
+
+/mob/living/simple_animal/hostile/statue/move_crush()
+	if(!can_move_crush)
+		return
 	return ..()
 
 /mob/living/simple_animal/hostile/statue/BiologicalLife(seconds, times_fired)
