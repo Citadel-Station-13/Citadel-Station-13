@@ -122,16 +122,6 @@
 	knife_x_offset = 27
 	knife_y_offset = 13
 
-/obj/item/gun/ballistic/shotgun/boltaction/improvised
-	name = "Makeshift 7.62mm Rifle"
-	icon_state = "ishotgun"
-	icon_state = "irifle"
-	item_state = "shotgun"
-	desc = "A bolt-action breechloaded rifle that takes 7.62mm bullets."
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/improvised
-	can_bayonet = FALSE
-	var/slung = FALSE
-
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
 	if(bolt_open)
@@ -151,22 +141,6 @@
 /obj/item/gun/ballistic/shotgun/boltaction/examine(mob/user)
 	. = ..()
 	. += "The bolt is [bolt_open ? "open" : "closed"]."
-
-/obj/item/gun/ballistic/shotgun/boltaction/improvised/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
-		if(A.use_tool(src, user, 0, 10, skill_gain_mult = EASY_USE_TOOL_MULT))
-			slot_flags = ITEM_SLOT_BACK
-			to_chat(user, "<span class='notice'>You tie the lengths of cable to the rifle, making a sling.</span>")
-			slung = TRUE
-			update_icon()
-		else
-			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
-
-/obj/item/gun/ballistic/shotgun/boltaction/improvised/update_overlays()
-	. = ..()
-	if(slung)
-		. += "[icon_state]sling"
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
@@ -318,7 +292,95 @@
 	pump()
 	return TRUE
 
-// DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
+/////////////////////////////
+// DOUBLE BARRELED SHOTGUN //
+/////////////////////////////
+
+/obj/item/gun/ballistic/shotgun/doublebarrel
+	name = "double-barreled shotgun"
+	desc = "A true classic."
+	icon_state = "dshotgun"
+	inhand_icon_state = "shotgun_db"
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	force = 10
+	flags_1 = CONDUCT_1
+	slot_flags = ITEM_SLOT_BACK
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
+	sawn_desc = "Omar's coming!"
+	obj_flags = UNIQUE_RENAME
+	rack_sound_volume = 0
+	unique_reskin = list("Default" = "dshotgun",
+						"Dark Red Finish" = "dshotgun_d",
+						"Ash" = "dshotgun_f",
+						"Faded Grey" = "dshotgun_g",
+						"Maple" = "dshotgun_l",
+						"Rosewood" = "dshotgun_p"
+						)
+	semi_auto = TRUE
+	bolt_type = BOLT_TYPE_NO_BOLT
+	can_be_sawn_off  = TRUE
+	pb_knockback = 3 // it's a super shotgun!
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
+	. = ..()
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+		reskin_obj(user)
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
+	. = ..()
+	if(.)
+		weapon_weight = WEAPON_MEDIUM
+
+// IMPROVISED SHOTGUN //
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised
+	name = "improvised shotgun"
+	desc = "Essentially a tube that aims shotgun shells."
+	icon_state = "ishotgun"
+	inhand_icon_state = "ishotgun"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 10
+	slot_flags = null
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
+	sawn_desc = "I'm just here for the gasoline."
+	unique_reskin = null
+	var/slung = FALSE
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
+	..()
+	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
+		var/obj/item/stack/cable_coil/C = A
+		if(C.use(10))
+			slot_flags = ITEM_SLOT_BACK
+			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
+			slung = TRUE
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon_state()
+	. = ..()
+	if(slung)
+		inhand_icon_state = "ishotgunsling"
+	if(sawn_off)
+		inhand_icon_state = "ishotgun_sawn"
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_overlays()
+	. = ..()
+	if(slung)
+		. += "ishotgunsling"
+	if(sawn_off)
+		. += "ishotgun_sawn"
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
+	. = ..()
+	if(. && slung) //sawing off the gun removes the sling
+		new /obj/item/stack/cable_coil(get_turf(src), 10)
+		slung = FALSE
+		update_icon()
+		lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+		righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 	name = "hook modified sawn-off shotgun"
