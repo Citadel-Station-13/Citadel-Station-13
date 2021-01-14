@@ -114,12 +114,15 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_ATMOSMACHINERY
-
-	if(currentpart == SSAIR_ATMOSMACHINERY)
+		currentpart = SSAIR_FINALIZE_TURFS
+	if(currentpart == SSAIR_FINALIZE_TURFS)
 		if(finish_turf_processing(MC_TICK_REMAINING_MS))
 			pause()
+		if(state != SS_RUNNING)
 			return
+		resumed = 0
+		currentpart = SSAIR_ATMOSMACHINERY
+	if(currentpart == SSAIR_ATMOSMACHINERY)
 		timer = TICK_USAGE_REAL
 		process_atmos_machinery(resumed)
 		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
