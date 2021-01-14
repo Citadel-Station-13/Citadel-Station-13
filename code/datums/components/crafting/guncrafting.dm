@@ -1,6 +1,7 @@
 // PARTS //
 /obj/item/weaponcrafting
 	icon = 'icons/obj/improvised.dmi'
+
 /obj/item/weaponcrafting/receiver
 	name = "modular receiver"
 	desc = "A prototype modular receiver and trigger assembly for a firearm."
