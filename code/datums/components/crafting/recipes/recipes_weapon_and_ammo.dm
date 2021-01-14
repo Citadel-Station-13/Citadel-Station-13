@@ -296,8 +296,8 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
-	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
+	result = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
+	reqs = list(/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
