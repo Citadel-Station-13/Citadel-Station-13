@@ -30,7 +30,6 @@
 	inverse_chem		= /datum/reagent/fermi/BEsmaller //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
 	value = REAGENT_VALUE_VERY_RARE
-	var/message_spam = FALSE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
@@ -180,7 +179,6 @@
 	inverse_chem		= /datum/reagent/fermi/PEsmaller //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
 	value = REAGENT_VALUE_VERY_RARE
-	var/message_spam = FALSE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
