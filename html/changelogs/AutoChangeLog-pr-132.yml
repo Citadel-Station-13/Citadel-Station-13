@@ -1,5 +1,0 @@
-author: Drulikar
-delete-after: true
-changes:
-  - bugfix: Added another nullcheck for a rare edge case runtime exception for a lost
-      reference during a sleep step in Hallucination.dm
