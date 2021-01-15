@@ -428,12 +428,13 @@
 
 /datum/action/epitaphCommunicate/Trigger()
 	var/obj/item/epitaphOuija
-	for(var/obj/item/I in oview(1, epitaphparent.owner))
+	for(var/obj/item/I in oview(3, epitaphparent.owner))
 		if(!istype(I.loc, /turf))
 			continue
 		epitaphOuija = I
 		break
 	if(!epitaphOuija)
+		to_chat(owner, "<span class='warning'>There's no object nearby to commune through.</span>")
 		return
 	var/input = stripped_input(owner, "Please enter a message to tell your other personality through a nearby object.", "Epitaph", "")
 	if(!input)

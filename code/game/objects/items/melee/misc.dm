@@ -725,8 +725,8 @@
 	righthand_file ='icons/mob/inhands/items_righthand.dmi'
 	force = 5
 	throwforce = 0
-	armour_penetration = 75
-	wound_bonus = 0
+	armour_penetration = 100
+	wound_bonus = 20
 	bare_wound_bonus = 0
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("smacked", "brutally punched", "eviscerated")
@@ -735,16 +735,17 @@
 
 /datum/block_parry_data/epitaphhand
 	parry_time_windup = 0.5
-	parry_time_active = 4
-	parry_time_spindown = 1
-	parry_time_perfect = 0.75
-	parry_time_perfect_leeway = 0.75
+	parry_time_active = 10
+	parry_time_spindown = 2
+	parry_time_perfect = 1.50
+	parry_time_perfect_leeway = 1.50
 	parry_imperfect_falloff_percent = 30
 	parry_efficiency_perfect = 100
-	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 2 SECONDS
-	parry_cooldown = 5 SECONDS
+	parry_failed_stagger_duration = 1 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS
+	parry_cooldown = 3 SECONDS
 	parry_sounds = list('sound/weapons/Epitaph.ogg')
+	parry_data = list(PARRY_DISARM_ATTACKER = TRUE)
 
 /obj/item/melee/epitaphhand/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
 	. = ..()
@@ -762,9 +763,9 @@
 /obj/item/melee/epitaphhand/melee_attack_chain(mob/user, atom/target, params, attackchain_flags, damage_multiplier)
 	if(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)
 		if(damage_multiplier)
-			damage_multiplier *= 6
+			damage_multiplier *= 10
 		else
-			damage_multiplier = 6
+			damage_multiplier = 10
 	. = ..()
 
 /obj/item/melee/epitaphhand/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
