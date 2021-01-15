@@ -1,4 +1,5 @@
-
+// /tg/ reverb disabled
+/*
 ///Default override for echo
 /sound
 	echo = list(
@@ -22,6 +23,7 @@
 		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
 	)
 	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
+*/
 
 /*! playsound
 
