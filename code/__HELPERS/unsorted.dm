@@ -271,6 +271,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(skip_mindless && (!M.mind && !M.ckey))
 			if(!isbot(M) && !iscameramob(M) && !ismegafauna(M))
 				continue
+		if(M.client?.holder?.fakekey && isobserver(M))
+			continue
 		var/name = avoid_assoc_duplicate_keys(M.name, namecounts)
 
 		if(M.real_name && M.real_name != M.name)
