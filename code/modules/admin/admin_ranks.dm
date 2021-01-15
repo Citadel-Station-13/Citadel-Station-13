@@ -44,6 +44,11 @@ GLOBAL_PROTECT(protected_ranks)
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
+/datum/admin_rank/CanProcCall(procname)
+	. = ..()
+	if(!check_rights(R_SENSITIVE))
+		return FALSE
+
 /proc/admin_keyword_to_flag(word, previous_rights=0)
 	var/flag = 0
 	switch(ckey(word))
@@ -79,6 +84,8 @@ GLOBAL_PROTECT(protected_ranks)
 			flag = R_AUTOLOGIN
 		if("dbranks")
 			flag = R_DBRANKS
+		if("sensitive")
+			flag = R_SENSITIVE
 		if("@","prev")
 			flag = previous_rights
 	return flag

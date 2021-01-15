@@ -1082,11 +1082,12 @@
 		if("lockdown")
 			var/celluse = rand(20,35)
 			celluse = celluse /100
+			if(!cell.use(cell.maxcharge*celluse))
+				return
 			for (var/obj/machinery/door/D in GLOB.airlocks)
 				if (get_area(D) == area)
 					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
 					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
-			cell.charge -= cell.maxcharge*celluse
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
@@ -1373,9 +1374,9 @@
 	// next: take from or charge to the cell, depending on how much is left
 	if(cell && !shorted)
 		if(cur_excess > 0)
-			var/charging_cell = min(cur_excess, cell.maxcharge * GLOB.CHARGELEVEL)
+			var/charging_cell = min(min(cur_excess*GLOB.CELLRATE, cell.maxcharge * GLOB.CHARGELEVEL), cell.maxcharge - cell.charge)
 			cell.give(charging_cell)
-			add_load(charging_cell)
+			add_load(charging_cell/GLOB.CELLRATE)
 			lastused_total += charging_cell
 			longtermpower = min(10,longtermpower + 1)
 			if(chargemode && !charging)
