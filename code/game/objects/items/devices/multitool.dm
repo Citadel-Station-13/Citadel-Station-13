@@ -21,13 +21,13 @@
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_MULTITOOL
+	item_flags = SURGICAL_TOOL
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
-	tool_behaviour = TOOL_MULTITOOL
 	usesound = 'sound/weapons/empty.ogg'
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0

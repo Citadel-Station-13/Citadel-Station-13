@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(typing_indicator_overlays)
   * @param force - shows even if src.typing_indcator_enabled is FALSE.
   */
 /mob/proc/display_typing_indicator(timeout_override = TYPING_INDICATOR_TIMEOUT, state_override = generate_typing_indicator(), force = FALSE)
-	if((!typing_indicator_enabled && !force) || typing_indicator_current)
+	if(((!typing_indicator_enabled || (stat != CONSCIOUS)) && !force) || typing_indicator_current)
 		return
 	typing_indicator_current = state_override
 	add_overlay(state_override)

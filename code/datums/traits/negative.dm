@@ -137,11 +137,17 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	var/lums = T.get_lumcount()
 	if(lums <= 0.2)
 		if(quirk_holder.m_intent == MOVE_INTENT_RUN)
-			to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
-			quirk_holder.toggle_move_intent()
+			addtimer(CALLBACK(src, .proc/recheck),2) //0.2 seconds of being in the dark
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
+
+/datum/quirk/nyctophobia/proc/recheck()
+	var/turf/T = get_turf(quirk_holder)
+	var/lums = T.get_lumcount()
+	if(lums <= 0.2) //check again, did they remain in the dark for 0.2 seconds?
+		to_chat(quirk_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+		quirk_holder.toggle_move_intent()
 
 /datum/quirk/lightless
 	name = "Light Sensitivity"

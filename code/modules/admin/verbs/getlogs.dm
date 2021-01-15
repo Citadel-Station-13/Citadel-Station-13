@@ -14,6 +14,8 @@
 	browseserverlogs("[GLOB.log_directory]/")
 
 /client/proc/browseserverlogs(path = "data/logs/")
+	if(!check_rights(R_SENSITIVE))
+		return
 	path = browse_files(path)
 	if(!path)
 		return

@@ -168,8 +168,17 @@
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
+	can_adjust = TRUE
 	body_parts_covered = CHEST|GROIN
-	can_adjust = FALSE
+
+/obj/item/clothing/under/misc/gear_harness/toggle_jumpsuit_adjust()
+	if(!body_parts_covered)
+		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
+		body_parts_covered = CHEST|GROIN
+	else
+		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
+		body_parts_covered = NONE
+	return TRUE
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
@@ -236,7 +245,7 @@
 	icon_state = "tssuit"
 	item_state = "r_suit"
 	can_adjust = FALSE
-	mutantrace_variation = USE_TAUR_CLIP_MASK
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/under/misc/poly_shirt
 	name = "polychromic button-up shirt"
@@ -325,7 +334,7 @@
 	desc = "A blue bathrobe."
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
-	
+
 /obj/item/clothing/under/misc/mechsuitred
 	name = "red mech suit"
 	desc = "What are you, stupid?"
@@ -337,10 +346,10 @@
 	desc = "...Mom?"
 	icon_state = "white_mech_suit"
 	item_state = "white_mech_suit"
-	
+
 /obj/item/clothing/under/misc/mechsuitblue
 	name = "blue mech suit"
 	desc = "Get in the damn robot already!"
 	icon_state = "blue_mech_suit"
 	item_state = "blue_mech_suit"
-	
+

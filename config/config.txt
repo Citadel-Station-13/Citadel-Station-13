@@ -11,6 +11,8 @@ $include dynamic_config.txt
 $include plushies/defines.txt
 $include job_threats.txt
 $include policy.txt
+$include persistence.txt
+$include respawns.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -205,9 +207,6 @@ VOTE_AUTOTRANSFER_MAXIMUM 4
 
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
-
-## disable abandon mob
-NORESPAWN
 
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB

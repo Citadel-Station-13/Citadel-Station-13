@@ -141,7 +141,8 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+//only_robotic and only_organic arg only relevant for carbons
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -168,20 +169,45 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/getToxLoss()
-	return toxloss
+//By default, returns toxins damage no matter what kind of tox damage the target is using.
+/mob/living/proc/getToxLoss(toxins_type = TOX_OMNI)
+	if(toxins_type == TOX_OMNI)
+		return toxloss
 
-/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+
+	if(toxins_type != affected_by)
+		return 0
+	else
+		return toxloss
+
+/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		return FALSE
+
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+//Defaults to omni here because setToxLoss is used by very few things that usually want to set all types
+/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_OMNI)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		return FALSE
+
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
@@ -190,7 +216,8 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+//only_robotic and only_organic arg only relevant for carbons
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)

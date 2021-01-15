@@ -24,6 +24,10 @@
 	var/clockwork_warp_allowed = TRUE
 	/// Message to display when the clockwork warp fails
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
+	/// Persistent debris alowed
+	var/persistent_debris_allowed = TRUE
+	/// Dirty flooring allowed
+	var/dirt_buildup_allowed = TRUE
 
 	/// If mining tunnel generation is allowed in this area
 	var/tunnel_allowed = FALSE

@@ -182,8 +182,9 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
+				log_combat(user, M, "injected with sleepypen", src, reagents.log_list())
 				reagents.reaction(M, INJECT)
-				reagents.trans_to(M, reagents.total_volume)
+				reagents.trans_to(M, reagents.total_volume, log = "sleepypen inject")
 
 
 /obj/item/pen/sleepy/Initialize()
