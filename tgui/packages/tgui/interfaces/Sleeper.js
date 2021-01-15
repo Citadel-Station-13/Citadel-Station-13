@@ -73,7 +73,7 @@ export const Sleeper = (props, context) => {
                 {damageTypes.map(type => (
                   <LabeledList.Item
                     key={type.type}
-                    label={type.label}>
+                    label={occupant.is_robotic_organism && type.label === 'Toxin' ? 'Corruption' : type.label}>
                     <ProgressBar
                       value={occupant[type.type]}
                       minValue={0}

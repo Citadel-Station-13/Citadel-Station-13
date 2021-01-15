@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - tweak: "anyone new to the server is lucky enough to have their sprint default to toggle instead of hold"

@@ -6,6 +6,12 @@ SUBSYSTEM_DEF(input)
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
+	/// KEEP THIS UP TO DATE!
+	var/static/list/all_macrosets = list(
+		SKIN_MACROSET_HOTKEYS,
+		SKIN_MACROSET_CLASSIC_HOTKEYS,
+		SKIN_MACROSET_CLASSIC_INPUT
+	)
 	/// Classic mode input focused macro set. Manually set because we can't define ANY or ANY+UP for classic.
 	var/static/list/macroset_classic_input
 	/// Classic mode map focused macro set. Manually set because it needs to be clientside and go to macroset_classic_input.
@@ -51,11 +57,6 @@ SUBSYSTEM_DEF(input)
 	// let's play the ascii game of A to Z (UPPERCASE)
 	for(var/i in 65 to 90)
 		classic_ctrl_override_keys += ascii2text(i)
-	// let's play the game of clientside bind overrides!
-	classic_ctrl_override_keys -= list("T", "O", "M", "L")
-	macroset_classic_input["Ctrl+T"] = "say"
-	macroset_classic_input["Ctrl+O"] = "ooc"
-	macroset_classic_input["Ctrl+L"] = "looc"
 	// let's play the list iteration game x2
 	for(var/key in classic_ctrl_override_keys)
 		// make sure to double double quote to ensure things are treated as a key combo instead of addition/semicolon logic.
@@ -67,20 +68,6 @@ SUBSYSTEM_DEF(input)
 
 	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
 
-	// HAHA - SIKE. Because of BYOND weirdness (tl;dr not specifically binding this way results in potentially duplicate chatboxes when
-	//  conflicts occur with something like say indicator vs say), we're going to snowflake this anyways
-	var/list/hard_binds = list(
-		"O" = "ooc",
-		"T" = "say",
-		"L" = "looc",
-		"M" = "me"
-		)
-	var/list/hard_bind_anti_collision = list()
-	var/list/anti_collision_modifiers = list("Ctrl", "Alt", "Shift", "Ctrl+Alt", "Ctrl+Shift", "Alt+Shift", "Ctrl+Alt+Shift")
-	for(var/key in hard_binds)
-		for(var/modifier in anti_collision_modifiers)
-			hard_bind_anti_collision["[modifier]+[key]"] = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
-
 	macroset_classic_hotkey = list(
 	"Any" = "\"KeyDown \[\[*\]\]\"",
 	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
@@ -88,9 +75,6 @@ SUBSYSTEM_DEF(input)
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	)
-
-	macroset_classic_hotkey |= hard_binds
-	macroset_classic_hotkey |= hard_bind_anti_collision
 
 	// And finally, the modern set.
 	macroset_hotkey = list(
@@ -101,24 +85,22 @@ SUBSYSTEM_DEF(input)
 	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
 	)
 
-	macroset_hotkey |= hard_binds
-	macroset_hotkey |= hard_bind_anti_collision
-
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
 	var/list/clients = GLOB.clients
 	for(var/i in 1 to clients.len)
 		var/client/user = clients[i]
-		user.set_macros()
-		user.update_movement_keys()
+		user.full_macro_assert()
 
 /datum/controller/subsystem/input/fire()
+	set waitfor = FALSE
 	var/list/clients = GLOB.clients // Let's sing the list cache song
 	for(var/i in 1 to clients.len)
 		var/client/C = clients[i]
 		C.keyLoop()
 
+#define NONSENSICAL_VERB "NONSENSICAL_VERB_THAT_DOES_NOTHING"
 /// *sigh
 /client/verb/NONSENSICAL_VERB_THAT_DOES_NOTHING()
-	set name = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
+	set name = "NONSENSICAL_VERB_THAT_DOES_NOTHING"
 	set hidden = TRUE

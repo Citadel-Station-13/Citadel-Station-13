@@ -55,6 +55,7 @@
 		icon_state = "[src.base_state]open"
 
 /obj/machinery/door/window/update_atom_colour()
+	. = ..()
 	if((color && (color_hex2num(color) < 255)))
 		visible = TRUE
 		if(density)
@@ -66,9 +67,9 @@
 /obj/machinery/door/window/proc/open_and_close()
 	open()
 	if(src.check_access(null))
-		sleep(50)
+		sleep(60)
 	else //secure doors close faster
-		sleep(20)
+		sleep(40)
 	close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)

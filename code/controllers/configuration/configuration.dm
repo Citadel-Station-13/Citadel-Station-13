@@ -388,15 +388,26 @@ Example config:
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
 	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
+	var/list/storyteller_min_chaos = Get(/datum/config_entry/keyed_list/storyteller_min_chaos)
+	var/list/storyteller_max_chaos = Get(/datum/config_entry/keyed_list/storyteller_max_chaos)
 	for(var/T in storyteller_cache)
 		var/datum/dynamic_storyteller/S = T
 		var/config_tag = initial(S.config_tag)
+		if(!config_tag)
+			continue
 		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
 		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
 		if(probability <= 0)
 			continue
 		if(length(GLOB.player_list) < min_players)
 			continue
+		if(!Get(/datum/config_entry/flag/no_storyteller_threat_removal))
+			var/min_chaos = (probabilities in storyteller_min_chaos) ? storyteller_min_chaos[config_tag] : initial(S.min_chaos)
+			var/max_chaos = (probabilities in storyteller_max_chaos) ? storyteller_max_chaos[config_tag] : initial(S.max_chaos)
+			if(SSpersistence.average_dynamic_threat < min_chaos)
+				continue
+			if(SSpersistence.average_dynamic_threat > max_chaos)
+				continue
 		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
 			var/name = initial(S.name)
 			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)

@@ -4,7 +4,7 @@
 	override_bp_icon = 'icons/mob/arachnid_parts.dmi'
 	say_mod = "chitters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYES, NO_UNDERWEAR)
+	species_traits = list(LIPS, NOEYES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("arachnid_legs" = "Plain", "arachnid_spinneret" = "Plain", "arachnid_mandibles" = "Plain")
 	attack_verb = "slash"
@@ -139,6 +139,18 @@
 		if(E.web_ready == FALSE)
 			to_chat(H, "<span class='warning'>You need to wait awhile to regenerate web fluid.</span>")
 			return
+		if(!H.Adjacent(A))	//No.
+			return
+		if(!isliving(A) && A.anchored)
+			to_chat(H, "<span class='warning'>[A] is bolted to the floor!</span>")
+			return
+		if(istype(A, /obj/structure/arachnid))
+			to_chat(H, "<span class='warning'>No double wrapping.</span>")
+			return
+		if(istype(A, /obj/effect))
+			to_chat(H, "<span class='warning'>You cannot wrap this.</span>")
+			return
+		H.visible_message("<span class='danger'>[H] starts to wrap [A] into a cocoon!</span>","<span class='warning'>You start to wrap [A] into a cocoon.</span>")
 		if(!do_after(H, 10 SECONDS, 1, A))
 			to_chat(H, "<span class='warning'>Your web spinning was interrupted!</span>")
 			return

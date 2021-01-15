@@ -101,6 +101,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			keyUp(keycode)
 		return
 
+	if(href_list["statpanel_item_target"])
+		handle_statpanel_click(href_list)
+		return
+
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
 		return
@@ -140,6 +144,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	..()	//redirect to hsrc.Topic()
+
+/client/proc/handle_statpanel_click(list/href_list)
+	var/atom/target = locate(href_list["statpanel_item_target"])
+	Click(target, target.loc, null, "[href_list["statpanel_item_shiftclick"]?"shift=1;":null][href_list["statpanel_item_ctrlclick"]?"ctrl=1;":null]&alt=[href_list["statpanel_item_altclick"]?"alt=1;":null]", FALSE, "statpanel")
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -269,7 +277,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
 
-	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
+	addtimer(CALLBACK(src, .proc/ensure_keys_set, prefs), 10)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -443,7 +451,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
-
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
@@ -474,11 +481,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	fit_viewport()
 	Master.UpdateTickRate()
-
-/client/proc/ensure_keys_set()
-	if(SSinput.initialized)
-		set_macros()
-		update_movement_keys(prefs)
 
 //////////////
 //DISCONNECT//
@@ -804,7 +806,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
-/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
+/client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE, extra_info)
 	if(last_click > world.time - world.tick_lag)
 		return
 	last_click = world.time
@@ -857,7 +859,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	if(prefs.log_clicks)
-		log_click(object, location, control, params, src)
+		log_click(object, location, control, params, src, extra_info? "clicked ([extra_info])" : null)
 
 	if (prefs.hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
@@ -927,7 +929,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (NAMEOF(src, view))
 			view_size.setDefault(var_value)
 			return TRUE
+		if(NAMEOF(src, computer_id))
+			return FALSE
+		if(NAMEOF(src, address))
+			return FALSE
 	. = ..()
+
+/client/vv_get_var(var_name)
+	. = ..()
+	switch(var_name)
+		if(NAMEOF(src, computer_id))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
+		if(NAMEOF(src, address))
+			if(!check_rights(R_SENSITIVE, FALSE))
+				return "SENSITIVE"
 
 /client/proc/rescale_view(change, min, max)
 	var/viewscale = getviewsize(view)
@@ -936,23 +952,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
 	view_size.setDefault("[x]x[y]")
-
-/client/proc/update_movement_keys(datum/preferences/direct_prefs)
-	var/datum/preferences/D = prefs || direct_prefs
-	if(!D?.key_bindings)
-		return
-	movement_keys = list()
-	for(var/key in D.key_bindings)
-		for(var/kb_name in D.key_bindings[key])
-			switch(kb_name)
-				if("North")
-					movement_keys[key] = NORTH
-				if("East")
-					movement_keys[key] = EAST
-				if("West")
-					movement_keys[key] = WEST
-				if("South")
-					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -1025,3 +1024,25 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		verb_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+
+//increment progress for an unlockable loadout item
+/client/proc/increment_progress(key, amount)
+	if(prefs)
+		var/savefile/S = new /savefile(prefs.path)
+		var/list/unlockable_loadout_data = prefs.unlockable_loadout_data
+		if(!length(unlockable_loadout_data))
+			unlockable_loadout_data = list()
+			unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+		else
+			if(unlockable_loadout_data[key])
+				unlockable_loadout_data[key] += amount
+			else
+				unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+	return FALSE
+

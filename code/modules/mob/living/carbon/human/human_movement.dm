@@ -101,7 +101,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/carbon/human/CanPass(atom/movable/mover, turf/target)
-	if(dna.species.species_pass_check())
-		return TRUE
+/mob/living/carbon/human/dirt_buildup(strength)
+	if(!shoes || !(shoes.body_parts_covered & FEET))
+		return	// barefoot advantage
 	return ..()

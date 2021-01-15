@@ -2,6 +2,7 @@
 	name = "Spontaneous Brain Trauma"
 	typepath = /datum/round_event/brain_trauma
 	weight = 25
+	min_players = 5
 
 /datum/round_event_control/brain_trauma/canSpawnEvent(var/players_amt, var/gamemode)
 	var/list/enemy_roles = list("Medical Doctor","Chief Medical Officer","Paramedic")

@@ -141,6 +141,8 @@
 		var/mob/living/L = target
 		if(!(L.mobility_flags & MOBILITY_STAND))
 			return
+	if(iscyborg(target))
+		return max(1, existing - 1)
 	var/static/datum/config_entry/number/movedelay/sprint_max_tiles_increase/SMTI
 	if(!SMTI)
 		SMTI = CONFIG_GET_ENTRY(number/movedelay/sprint_max_tiles_increase)

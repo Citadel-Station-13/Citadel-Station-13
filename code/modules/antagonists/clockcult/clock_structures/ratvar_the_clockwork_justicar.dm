@@ -29,6 +29,7 @@
 	sound_to_playing_players('sound/effects/ratvar_reveal.ogg')
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
+	SSpersistence.station_was_destroyed = TRUE
 	sleep(600)
 	INVOKE_ASYNC(src, .proc/purge_the_heresy)
 
