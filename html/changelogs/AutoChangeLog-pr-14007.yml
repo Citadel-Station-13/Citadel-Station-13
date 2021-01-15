@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Antagging / Deantagging Heretics now properly sets their special role."

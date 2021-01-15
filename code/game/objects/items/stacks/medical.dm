@@ -173,11 +173,11 @@
 					 "<span class='italics'>You hear cutting.</span>")
 		use(2)
 	else if(I.is_drainable() && I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine))
-		if(!I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 10))
+		if(!I.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine, 5))
 			to_chat(user, "<span class='warning'>There's not enough sterilizine in [I] to sterilize [src]!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] pours the contents of [I] onto [src], sterilizing it.</span>", "<span class='notice'>You pour the contents of [I] onto [src], sterilizing it.</span>")
-		I.reagents.remove_reagent(/datum/reagent/space_cleaner/sterilizine, 10)
+		user.visible_message("<span class='notice'>[user] sterilizes [src] with the contents of [I].</span>", "<span class='notice'>You pour the contents of [I] onto [src], sterilizing it.</span>")
+		I.reagents.remove_reagent(/datum/reagent/space_cleaner/sterilizine, 5)
 		new /obj/item/stack/medical/gauze/adv/one(user.drop_location())
 		use(1)
 	else
@@ -186,6 +186,9 @@
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
 	return OXYLOSS
+
+/obj/item/stack/medical/gauze/one
+	amount = 1
 
 /obj/item/stack/medical/gauze/improvised
 	name = "improvised gauze"
@@ -204,8 +207,9 @@
 	heal_brute = 6
 	self_delay = 45
 	other_delay = 15
-	absorption_rate = 0.4
-	absorption_capacity = 6
+	absorption_rate = 0.5
+	absorption_capacity = 12
+	splint_factor = 0.15
 
 /obj/item/stack/medical/gauze/adv/one
 	amount = 1
