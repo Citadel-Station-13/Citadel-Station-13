@@ -1125,7 +1125,7 @@
 /datum/reagent/space_cleaner/sterilizine/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
+		reac_volume = min((reac_volume / 5), G.amount)
 		new /obj/item/stack/medical/gauze/adv(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
