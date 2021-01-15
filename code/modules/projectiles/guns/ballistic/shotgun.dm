@@ -318,7 +318,7 @@
 	pump()
 	return TRUE
 
-// DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
+//due to code weirdness, and the fact that a refactor is coming soon anyway, the barman's shotgun and maint shotgun are in revolver.dm
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 	name = "hook modified sawn-off shotgun"
