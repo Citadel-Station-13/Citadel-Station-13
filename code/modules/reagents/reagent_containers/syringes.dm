@@ -11,7 +11,7 @@
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = FALSE		// needed for delayed drawing of blood
-	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
+	var/proj_piercing = 0 // does it pierce thickmaterial
 	var/show_filling = TRUE
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
@@ -71,7 +71,7 @@
 	var/mob/living/L
 	if(isliving(target))
 		L = target
-		if(!L.can_inject(user, 1))
+		if(!L.can_inject(user, 1, penetrate_thick = proj_piercing))
 			return
 
 	// chance of monkey retaliation
@@ -93,7 +93,7 @@
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 					busy = TRUE
-					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
+					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1, penetrate_thick = proj_piercing)))
 						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
@@ -138,12 +138,12 @@
 				return
 
 			if(L) //living mob
-				if(!L.can_inject(user, TRUE))
+				if(!L.can_inject(user, TRUE, penetrate_thick = proj_piercing))
 					return
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
-					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
+					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1, penetrate_thick = proj_piercing)))
 						return
 					if(!reagents.total_volume)
 						return
