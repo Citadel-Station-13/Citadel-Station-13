@@ -345,7 +345,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking needle attached to a beaker on it."
-	trap_damage = 15
+	trap_damage = 10
 
 /obj/item/restraints/legcuffs/beartrap/chem/Initialize()
 	..()
