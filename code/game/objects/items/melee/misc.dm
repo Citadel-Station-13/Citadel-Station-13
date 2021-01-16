@@ -737,8 +737,8 @@
 	parry_time_windup = 0.5
 	parry_time_active = 10
 	parry_time_spindown = 2
-	parry_time_perfect = 1.50
-	parry_time_perfect_leeway = 1.50
+	parry_time_perfect = 5
+	parry_time_perfect_leeway = 5
 	parry_imperfect_falloff_percent = 30
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 1 SECONDS
@@ -773,6 +773,14 @@
 	if(!attacker)
 		return
 	do_teleport(owner, get_step(attacker, turn(attacker.dir, 180)), FALSE, TRUE)
+
+/obj/item/melee/epitaphhand/on_end_parry(mob/living/owner, wassuccessful)
+	if(QDELETED(src))
+		return
+	. = ..()
+	if(!wassuccessful)
+		return
+	qdel(src)
 
 /obj/item/melee/epitaphhand/Initialize()
 	. = ..()

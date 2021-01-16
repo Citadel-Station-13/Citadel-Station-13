@@ -259,6 +259,8 @@
 		handAction.Grant(owner)
 
 	else
+		var/datum/action/cooldown/epitaphreoffer = new /datum/action/cooldown/epitaphreoffering
+		epitaphreoffer.Grant(owner)
 		qdel(src)
 
 /datum/brain_trauma/severe/split_personality/epitaph/on_life() //overrides parent proc
@@ -286,6 +288,27 @@
 		ADD_TRAIT(owner, TRAIT_PUGILIST, EPITAPH_TRAIT)
 	else
 		REMOVE_TRAIT(owner, TRAIT_PUGILIST, EPITAPH_TRAIT)
+
+//EPITAPH reoffering aka 'I wasted 17 TC for nothing admins hlep' fix
+/datum/action/cooldown/epitaphreoffering
+	name = "Reoffer"
+	desc = "Attempt to gain power once more."
+	button_icon = 'icons/mob/actions/epitaph.dmi'
+	button_icon_state = "epitaphswitch"
+	cooldown_time = 3 MINUTES
+
+/datum/action/cooldown/epitaphreoffering/New(Target)
+	. = ..()
+	StartCooldown()
+
+/datum/action/cooldown/epitaphreoffering/Trigger()
+	if(!..())
+		return
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	C.gain_trauma(/datum/brain_trauma/severe/split_personality/epitaph, TRAUMA_RESILIENCE_ABSOLUTE)
+	qdel(src)
 
 //EPITAPH BODYCHANGES aka copypasta galore
 /datum/action/cooldown/epitaphswitch
