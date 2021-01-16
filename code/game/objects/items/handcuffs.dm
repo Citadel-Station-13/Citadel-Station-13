@@ -344,7 +344,6 @@
 	icon_state = "chemtrap"
 	throw_speed = 1
 	throw_range = 1
-	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking needle attached to a beaker on it."
 	trap_damage = 10
 
