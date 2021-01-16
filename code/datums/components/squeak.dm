@@ -76,20 +76,25 @@
 
 /datum/component/squeak/proc/play_squeak()
 	SIGNAL_HANDLER
+	do_play_squeak()
 
-
+/datum/component/squeak/proc/do_play_squeak(bypass_cooldown = FALSE)
+	if(!bypass_cooldown && ((last_squeak + squeak_delay) >= world.time))
+		return FALSE
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
 			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
 		else
 			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
+		last_squeak = world.time
 		return TRUE
+	return FALSE
 
 /datum/component/squeak/proc/step_squeak()
 	SIGNAL_HANDLER
 
 	if(steps > step_delay)
-		play_squeak()
+		do_play_squeak(TRUE)
 		steps = 0
 	else
 		steps++
@@ -105,7 +110,7 @@
 		return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
-		if(play_squeak())
+		if(do_play_squeak())
 			SEND_SIGNAL(AM, COMSIG_CROSS_SQUEAKED)
 
 /datum/component/squeak/proc/use_squeak()
