@@ -270,12 +270,22 @@
 		icon_state = "[initial(icon_state)][armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
+/obj/item/restraints/legcuffs/beartrap/proc/do_special_trap(var/mob/living/target)
+
+/obj/item/restraints/legcuffs/beartrap/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/reagent_containers/syringe))
+		to_chat(user, "<span class='notice' You attach the syringe to the pressure plate of the bear trap. Diabolical!</span>")
+		qdel(I)
+		new /obj/item/restraints/legcuffs/beartrap/chem(get_turf(src))
+		qdel(src)
+
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(src.loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
 			var/snap = FALSE
 			var/def_zone = BODY_ZONE_CHEST
+			do_special_trap(L)
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				if(!C.lying)
@@ -326,6 +336,39 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
+
+/obj/item/restraints/legcuffs/beartrap/energy/attackby(obj/item/I, mob/user)
+
+/obj/item/restraints/legcuffs/beartrap/chem
+	name = "chemical bear trap"
+	throw_speed = 1
+	throw_range = 1
+	icon_state = "beartrap"
+	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking needle attached to a beaker on it."
+	trap_damage = 15
+
+/obj/item/restraints/legcuffs/beartrap/chem/Initialize()
+	..()
+	create_reagents(20, TRANSPARENT)
+
+/obj/item/restraints/legcuffs/beartrap/chem/attackby(obj/item/I, mob/user)
+	if(I.reagents)
+		I.reagents.trans_to(src, 15)
+		update_icon()
+	else
+		..()
+/obj/item/restraints/legcuffs/beartrap/do_special_trap(var/mob/living/target)
+	if(target.is_injectable())
+		reagents.trans_to(target, 15, log = TRUE)
+
+/obj/item/restraints/legcuffs/beartrap/chem/update_icon()
+	..()
+	update_overlays()
+
+/obj/item/restraints/legcuffs/beartrap/chem/update_overlays()
+	if(reagents.total_volume)
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "beartrapfill", color = mix_color_from_reagents(reagents.reagent_list))
+		. += filling
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"

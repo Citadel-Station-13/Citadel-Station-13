@@ -478,6 +478,15 @@
 	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
+/datum/crafting_recipe/chemtrap
+	name = "Chemical Bear Trap"
+	result = /obj/item/restraints/legcuffs/beartrap/chem
+	time = 10
+	reqs = list(/obj/item/stack/sheet/cardboard = 1,
+				/obj/item/stack/rods = 1)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
 	result = /obj/item/organ/eyes/robotic/flashlight
