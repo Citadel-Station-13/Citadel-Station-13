@@ -341,6 +341,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/chem
 	name = "chemical bear trap"
+	icon_state = "chemtrap"
 	throw_speed = 1
 	throw_range = 1
 	icon_state = "beartrap"
