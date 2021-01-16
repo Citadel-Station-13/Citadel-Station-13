@@ -18,3 +18,33 @@
 	species_category = SPECIES_CATEGORY_FURRY
 
 	allowed_limb_ids = list("mammal","aquatic","avian")
+
+/datum/species/mammal/synthetic
+	name = "Synthetic Anthromorph"
+	id = SPECIES_MAMMAL_SYNTHETIC
+
+	species_traits = list(MUTCOLORS,NOTRANSSTING,EYECOLOR,LIPS,HAIR,ROBOTIC_LIMBS,HAS_FLESH,HAS_BONE,WINGCOLOR,HORNCOLOR)
+	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD, TRAIT_ROBOTIC_ORGANISM)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID|MOB_BEAST
+
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
+	gib_types = list(/obj/effect/gibspawner/ipc, /obj/effect/gibspawner/ipc/bodypartless)
+	//Just robo looking parts.
+	mutant_heart = /obj/item/organ/heart/ipc
+	mutantlungs = /obj/item/organ/lungs/ipc
+	mutantliver = /obj/item/organ/liver/ipc
+	mutantstomach = /obj/item/organ/stomach/ipc
+	mutanteyes = /obj/item/organ/eyes/ipc
+	mutantears = /obj/item/organ/ears/ipc
+	mutanttongue = /obj/item/organ/tongue/robot/ipc
+	mutant_brain = /obj/item/organ/brain/ipc
+
+	//special cybernetic organ for getting power from apcs
+	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
+
+
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+
+	allowed_limb_ids = list("mammal","aquatic","avian", "human")

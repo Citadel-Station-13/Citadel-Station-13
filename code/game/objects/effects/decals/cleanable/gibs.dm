@@ -6,6 +6,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	bloodiness = 0				//This isn't supposed to be bloody.
+	persistent = TRUE
 	var/body_colors = "#e3ba84"	//a default color just in case.
 	var/gibs_reagent_id = /datum/reagent/liquidgibs
 	var/gibs_bloodtype = "A+"
@@ -30,6 +31,10 @@
 	flesh.appearance_flags = RESET_COLOR
 	flesh.color = body_colors
 	add_overlay(flesh)
+
+/obj/effect/decal/cleanable/blood/gibs/PersistenceSave(list/data)
+	. = ..()
+	return /obj/effect/decal/cleanable/blood/gibs/old
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -159,6 +164,10 @@
 	. = ..()
 	update_icon()
 
+/obj/effect/decal/cleanable/blood/gibs/slime/PersistenceSave(list/data)
+	. = ..()
+	return type
+
 /obj/effect/decal/cleanable/blood/gibs/slime/update_icon()
 	add_atom_colour(body_colors, FIXED_COLOUR_PRIORITY)
 	cut_overlays()
@@ -198,6 +207,10 @@
 	. = ..()
 	update_icon()
 
+/obj/effect/decal/cleanable/blood/gibs/synth/PersistenceSave(list/data)
+	. = ..()
+	return type
+
 //IPCs
 /obj/effect/decal/cleanable/blood/gibs/ipc
 	desc = "They look sharp yet oozing."
@@ -208,6 +221,10 @@
 /obj/effect/decal/cleanable/blood/gibs/ipc/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	update_icon()
+
+/obj/effect/decal/cleanable/blood/gibs/ipc/PersistenceSave(list/data)
+	. = ..()
+	return type
 
 /obj/effect/decal/cleanable/blood/gibs/ipc/update_icon()
 	add_atom_colour(blood_DNA_to_color(), FIXED_COLOUR_PRIORITY)

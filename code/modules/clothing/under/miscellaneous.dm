@@ -172,11 +172,13 @@
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/misc/gear_harness/toggle_jumpsuit_adjust()
-	adjusted = !adjusted
-	if(adjusted)
-		body_parts_covered = NONE
-	else
+	if(!body_parts_covered)
+		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
 		body_parts_covered = CHEST|GROIN
+	else
+		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
+		body_parts_covered = NONE
+	return TRUE
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"

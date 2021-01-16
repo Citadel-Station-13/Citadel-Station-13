@@ -14,6 +14,9 @@
 	if(.)
 		return
 	if(can_buckle && has_buckled_mobs())
+		if(ishuman(src)) //prevent people from unbuckling fireman-carried/piggybacked people unless on disarm or harm intents
+			if(act_intent == INTENT_HELP || act_intent == INTENT_GRAB)
+				return
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
 			if(user_unbuckle_mob(unbuckled,user))
