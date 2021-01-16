@@ -60579,8 +60579,8 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "tSm" = (
-/obj/structure/musician/piano,
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/musician/piano,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "tSo" = (
