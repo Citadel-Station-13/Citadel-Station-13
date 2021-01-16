@@ -36,8 +36,8 @@
 	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
 		qdel(src)
 
-/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M)
-	return
+/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force)
+	handle_vehicle_offsets()
 
 /datum/component/riding/proc/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
@@ -52,7 +52,7 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-/datum/component/riding/proc/vehicle_moved(datum/source, dir)
+/datum/component/riding/proc/vehicle_moved(datum/source, oldLoc, dir)
 	SIGNAL_HANDLER
 
 	var/atom/movable/AM = parent
