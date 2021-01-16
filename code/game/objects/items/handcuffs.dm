@@ -273,7 +273,7 @@
 /obj/item/restraints/legcuffs/beartrap/proc/do_special_trap(var/mob/living/target)
 
 /obj/item/restraints/legcuffs/beartrap/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/syringe))
+	if(istype(I, /obj/item/reagent_containers/syringe) && !armed)
 		to_chat(user, "<span class='notice' You attach the syringe to the pressure plate of the bear trap. Diabolical!</span>")
 		qdel(I)
 		new /obj/item/restraints/legcuffs/beartrap/chem(get_turf(src))
