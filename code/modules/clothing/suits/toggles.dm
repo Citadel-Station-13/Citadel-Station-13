@@ -68,6 +68,8 @@
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
+				hood.atom_colours = atom_colours.Copy()
+				hood.update_atom_colour()
 				suittoggled = TRUE
 				update_icon()
 				H.update_inv_wear_suit()
