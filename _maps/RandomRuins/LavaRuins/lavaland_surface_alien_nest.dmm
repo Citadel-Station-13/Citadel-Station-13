@@ -218,8 +218,8 @@
 "aY" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
-/mob/living/simple_animal/hostile/alien/drone,
 /obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien/drone,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "aZ" = (
@@ -530,10 +530,6 @@
 "lG" = (
 /obj/structure/alien/weeds,
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"pE" = (
-/obj/effect/mob_spawn/alien/corpse/humanoid/queen,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "wA" = (
@@ -1618,7 +1614,7 @@ ag
 wA
 ag
 ag
-pE
+ag
 ag
 at
 ag
@@ -1667,7 +1663,7 @@ ac
 ah
 af
 ac
-at
+ag
 ag
 ag
 ag
@@ -1719,7 +1715,7 @@ ar
 ah
 ak
 kp
-at
+ag
 ag
 ag
 aw
@@ -1769,7 +1765,7 @@ ac
 ak
 ac
 ac
-at
+ag
 ag
 av
 ag
