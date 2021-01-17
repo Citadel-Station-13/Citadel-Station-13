@@ -58,6 +58,11 @@
 	RemoveHood()
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
+	if(!hood)
+		to_chat(loc, "<span class='warning'>[src] seems to be missing its hood..</span>")
+		return
+	hood.atom_colours = atom_colours.Copy()
+	hood.update_atom_colour()
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
@@ -68,8 +73,6 @@
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
 			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
-				hood.atom_colours = atom_colours.Copy()
-				hood.update_atom_colour()
 				suittoggled = TRUE
 				update_icon()
 				H.update_inv_wear_suit()
@@ -193,7 +196,10 @@
 	if(!helmettype)
 		return
 	if(!helmet)
+		to_chat(H, "<span class='warning'>[src] seems to be missing its helmet..</span>")
 		return
+	helmet.atom_colours = atom_colours.Copy()
+	helmet.update_atom_colour()
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
