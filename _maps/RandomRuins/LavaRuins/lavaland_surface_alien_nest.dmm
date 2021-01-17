@@ -522,11 +522,6 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"kp" = (
-/obj/structure/alien/weeds,
-/obj/item/reagent_containers/syringe/alien,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "lG" = (
 /obj/structure/alien/weeds,
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
@@ -1714,7 +1709,7 @@ ah
 ar
 ah
 ak
-kp
+ag
 ag
 ag
 ag
