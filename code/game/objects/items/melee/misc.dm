@@ -723,7 +723,7 @@
 	icon_state = "disintegrate"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file ='icons/mob/inhands/items_righthand.dmi'
-	force = 5
+	force = 10
 	throwforce = 0
 	armour_penetration = 100
 	wound_bonus = 20

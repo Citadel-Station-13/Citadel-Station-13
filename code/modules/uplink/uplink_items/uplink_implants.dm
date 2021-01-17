@@ -120,5 +120,5 @@
 	name = "Epitaph Implant"
 	desc = "An implant that will go straight into one's brain. It will grant the user a killer personality that will give both the ability to skip time in their parries."
 	item = /obj/item/implanter/epitaph
-	cost = 17
+	cost = 14 //kinda like holoparasite but can fuck you up if your second personality is a retard, that's my justification for the price.
 	surplus = 0
