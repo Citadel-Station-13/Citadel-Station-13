@@ -13764,6 +13764,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "Jp" = (

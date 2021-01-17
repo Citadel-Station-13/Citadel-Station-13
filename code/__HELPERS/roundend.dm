@@ -238,8 +238,11 @@
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
 	//Collects persistence features
-	if(mode.allow_persistence_save)
-		SSpersistence.CollectData()
+	if(mode.station_was_nuked)
+		SSpersistence.station_was_destroyed = TRUE
+	if(!mode.allow_persistence_save)
+		SSpersistence.station_persistence_save_disabled = TRUE
+	SSpersistence.CollectData()
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()

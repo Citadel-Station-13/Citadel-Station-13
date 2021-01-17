@@ -117,7 +117,7 @@
 	/obj/item/weldingtool = 3,
 	/obj/item/wirecutters = 2,
 	/obj/item/wrench = 4,
-	/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
+	/obj/item/weaponcrafting/receiver = 1,
 	/obj/item/geiger_counter = 3,
 	/obj/item/reagent_containers/food/snacks/grown/citrus/orange = 5,
 	/obj/item/assembly/infra = 1,

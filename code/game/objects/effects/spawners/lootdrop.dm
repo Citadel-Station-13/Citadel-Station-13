@@ -664,9 +664,8 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 	loot = list("" = 50,
-		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 13,
-		/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 13,
-		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 12,
+		/obj/item/weaponcrafting/receiver = 25,
+		/obj/item/weaponcrafting/stock = 25,
 		)
 
 /obj/effect/spawner/lootdrop/weapon_parts
@@ -674,8 +673,8 @@
 	lootcount = 1
 	spawn_on_turf = FALSE
 	loot = list("" = 80,
-		/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 5,
-		/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 5,
+		/obj/item/weaponcrafting/receiver = 5,
+		/obj/item/weaponcrafting/stock = 5,
 		)
 
 /obj/effect/spawner/lootdrop/ammo
