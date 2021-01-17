@@ -481,7 +481,7 @@
 	build_path = /obj/item/holosign_creator/atmos
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
+/*
 /datum/design/holosignfirelock
 	name = "ATMOS Holofirelock Projector"
 	desc = "A holographic projector that creates holographic barriers that prevent changes in temperature conditions."
@@ -491,7 +491,7 @@
 	build_path = /obj/item/holosign_creator/firelock
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
+*/
 /datum/design/holosigncombifan
 	name = "ATMOS Holo-Combifan Projector"
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric and temperature conditions."

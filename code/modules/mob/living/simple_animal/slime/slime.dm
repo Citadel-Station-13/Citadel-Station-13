@@ -225,7 +225,7 @@
 			. += "Power Level: [powerlevel]"
 
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced)
 		amount = -abs(amount)
 	return ..() //Heals them

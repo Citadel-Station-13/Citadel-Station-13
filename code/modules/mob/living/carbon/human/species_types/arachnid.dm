@@ -4,7 +4,7 @@
 	override_bp_icon = 'icons/mob/arachnid_parts.dmi'
 	say_mod = "chitters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, NOEYES, NO_UNDERWEAR)
+	species_traits = list(LIPS, NOEYES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutant_bodyparts = list("arachnid_legs" = "Plain", "arachnid_spinneret" = "Plain", "arachnid_mandibles" = "Plain")
 	attack_verb = "slash"

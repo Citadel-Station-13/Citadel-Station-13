@@ -884,6 +884,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(get_turf(owner),1,2,4,flame_range = 5)
+		owner.remove_status_effect(/datum/status_effect/stabilized/oil)
 	return ..()
 
 /datum/status_effect/stabilized/black
