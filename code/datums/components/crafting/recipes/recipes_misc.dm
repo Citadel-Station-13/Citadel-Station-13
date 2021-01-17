@@ -172,11 +172,11 @@
 ///////////////////
 
 /datum/crafting_recipe/upgraded_gauze
-	name = "Improved Gauze"
+	name = "Sterilized Gauze"
 	result = /obj/item/stack/medical/gauze/adv/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
-				/datum/reagent/space_cleaner/sterilizine = 10)
+				/datum/reagent/space_cleaner/sterilizine = 5)
 	category = CAT_MISC
 	subcategory = CAT_TOOL
 
@@ -184,7 +184,7 @@
 	name = "Suture Pack"
 	result = /obj/item/stack/medical/suture/five
 	time = 1
-	reqs = list(/obj/item/stack/medical/gauze = 1,
+	reqs = list(/obj/item/stack/medical/gauze/adv = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
 	category = CAT_MISC
 	subcategory = CAT_TOOL
@@ -193,7 +193,7 @@
 	name = "Regenerative Mesh"
 	result = /obj/item/stack/medical/mesh/five
 	time = 1
-	reqs = list(/obj/item/stack/medical/gauze = 1,
+	reqs = list(/obj/item/stack/medical/gauze/adv = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
 	category = CAT_MISC
 	subcategory = CAT_TOOL

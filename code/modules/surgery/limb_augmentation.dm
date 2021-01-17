@@ -31,6 +31,12 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
+
+//The augmentation surgery for synthetic limbs
+/datum/surgery/augmentation/synth
+	requires_bodypart_type = BODYPART_HYBRID
+	steps = list(/datum/surgery_step/mechanic_open, /datum/surgery_step/pry_off_plating, /datum/surgery_step/cut_wires, /datum/surgery_step/prepare_electronics, /datum/surgery_step/replace_limb)
+
 //SURGERY STEP SUCCESSES
 /datum/surgery_step/replace_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/bodypart/tool, datum/surgery/surgery)
 	if(L)

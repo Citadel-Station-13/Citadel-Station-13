@@ -18,6 +18,8 @@
 	var/map_name = "Box Station"
 	var/map_path = "map_files/BoxStation"
 	var/map_file = "BoxStation.dmm"
+	/// Persistence key: Defaults to ckey(map_name). If set to "NO_PERSIST", this map will have NO persistence.
+	var/persistence_key
 
 	var/traits = null
 	var/space_ruin_levels = 4
@@ -99,6 +101,16 @@
 	map_path = json["map_path"]
 
 	map_file = json["map_file"]
+
+	persistence_key = ckey(map_name)
+
+	var/json_persistence_key = json["persistence_key"]
+	if(json_persistence_key)
+		if(json_persistence_key == "NO_PERSIST")
+			persistence_key = null
+		else
+			persistence_key = json_persistence_key
+
 	// "map_file": "BoxStation.dmm"
 	if (istext(map_file))
 		if (!fexists("_maps/[map_path]/[map_file]"))
