@@ -230,6 +230,23 @@
 	var/datum/action/epitaphCommunicate/communicateOne
 	var/datum/action/epitaphCommunicate/communicateTwo
 	var/datum/action/cooldown/epitaphHandsummon/handAction
+	// Outfit Vars
+	var/list/original_items = list()
+
+	// Identity Vars
+	var/prev_skin_tone
+	var/prev_hair_style
+	var/prev_facial_hair_style
+	var/prev_hair_color
+	var/prev_facial_hair_color
+	var/prev_underwear
+	var/prev_undie_color
+	var/prev_undershirt
+	var/prev_shirt_color
+	var/prev_socks
+	var/prev_socks_color
+	var/prev_disfigured
+	var/list/prev_features	// For lizards and such
 
 /datum/brain_trauma/severe/split_personality/epitaph/on_gain()
 	. = ..()
@@ -286,8 +303,10 @@
 	nextswitch = world.time + 15 MINUTES
 	if(current_controller != OWNER)
 		ADD_TRAIT(owner, TRAIT_PUGILIST, EPITAPH_TRAIT)
+		Epitaph_Disguise_FaceName()
 	else
 		REMOVE_TRAIT(owner, TRAIT_PUGILIST, EPITAPH_TRAIT)
+		DeactivatePower()
 
 //EPITAPH reoffering aka 'I wasted 17 TC for nothing admins hlep' fix
 /datum/action/cooldown/epitaphreoffering
@@ -317,29 +336,7 @@
 	button_icon = 'icons/mob/actions/epitaph.dmi'
 	button_icon_state = "epitaphswitch"
 	cooldown_time = 3 MINUTES
-	var/amToggle = FALSE
 	var/datum/brain_trauma/severe/split_personality/epitaph/epitaphparent
-
-	// Outfit Vars
-	var/list/original_items = list()
-
-	// Identity Vars
-	var/prev_skin_tone
-	var/prev_hair_style
-	var/prev_facial_hair_style
-	var/prev_hair_color
-	var/prev_facial_hair_color
-	var/prev_underwear
-	var/prev_undie_color
-	var/prev_undershirt
-	var/prev_shirt_color
-	var/prev_socks
-	var/prev_socks_color
-	var/prev_disfigured
-	var/list/prev_features	// For lizards and such
-
-/datum/action/cooldown/epitaphswitch/proc/ActivatePower()
-	Epitaph_Disguise_FaceName()
 
 /datum/action/cooldown/epitaphswitch/Trigger()
 	. = ..()
@@ -347,36 +344,14 @@
 		return FALSE
 	if(owner != epitaphparent.owner)
 		return FALSE
-	if(!amToggle)
-		ActivatePower()
-	else
-		DeactivatePower()
-	amToggle = !amToggle
 	epitaphparent.switch_personalities()
 	StartCooldown()
 
-/datum/brain_trauma/severe/split_personality/epitaph/proc/SelectName()
-	// Names
-	if (owner.gender == MALE)
-		. = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
-						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
-						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
-						"Melanthus","Teuthras","Orchamus","Amyntor","Axion",  // Greek
-						"Thoth","Thutmose","Osorkon,","Nofret","Minmotu","Khafra", // Egyptian
-						"Dio","Doppio","Diavolo")
-
-	else
-		. = pick("Islana","Tyrra","Greganna","Pytra","Hilda","Andra","Crina","Viorela","Viorica","Anemona","Camelia","Narcisa","Sorina","Alessia","Sophia","Gladda","Arcana","Morgan","Lasarra","Ioana","Elena", \
-						"Alina","Rodica","Teodora","Denisa","Mihaela","Svetla","Stefania","Diyana","Kelssa","Lilith", // Romanian/Ancient
-						"Alexia","Athanasia","Callista","Karena","Nephele","Scylla","Ursa",  // Latin
-						"Alcestis","Damaris","Elisavet","Khthonia","Teodora",  // Greek
-						"Nefret","Ankhesenpep") // Egyptian
-
-/datum/action/cooldown/epitaphswitch/proc/Epitaph_Disguise_FaceName()
+/datum/brain_trauma/severe/split_personality/epitaph/proc/Epitaph_Disguise_FaceName()
 
 	// Change Name/Voice
 	var/mob/living/carbon/human/H = owner
-	H.name_override = epitaphparent?.epitaphname
+	H.name_override = epitaphname
 	H.name = H.name_override
 	H.SetSpecialVoice(H.name_override)
 	to_chat(owner, "<span class='warning'>Your mind dives inwards. Your other self is now in control.</span>")
@@ -413,7 +388,7 @@
 	H.update_hair()
 	H.update_body_parts()
 
-/datum/action/cooldown/epitaphswitch/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
+/datum/brain_trauma/severe/split_personality/epitaph/proc/DeactivatePower(mob/living/user = owner)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 
@@ -439,6 +414,23 @@
 		H.update_body() // Outfit and underware, also body.
 		H.update_hair()
 		H.update_body_parts()	// Body itself, maybe skin color?
+
+/datum/brain_trauma/severe/split_personality/epitaph/proc/SelectName()
+	// Names
+	if (owner.gender == MALE)
+		. = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
+						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
+						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
+						"Melanthus","Teuthras","Orchamus","Amyntor","Axion",  // Greek
+						"Thoth","Thutmose","Osorkon,","Nofret","Minmotu","Khafra", // Egyptian
+						"Dio","Doppio","Diavolo")
+
+	else
+		. = pick("Islana","Tyrra","Greganna","Pytra","Hilda","Andra","Crina","Viorela","Viorica","Anemona","Camelia","Narcisa","Sorina","Alessia","Sophia","Gladda","Arcana","Morgan","Lasarra","Ioana","Elena", \
+						"Alina","Rodica","Teodora","Denisa","Mihaela","Svetla","Stefania","Diyana","Kelssa","Lilith", // Romanian/Ancient
+						"Alexia","Athanasia","Callista","Karena","Nephele","Scylla","Ursa",  // Latin
+						"Alcestis","Damaris","Elisavet","Khthonia","Teodora",  // Greek
+						"Nefret","Ankhesenpep") // Egyptian
 
 //COMMUNICATION
 
