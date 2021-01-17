@@ -32,7 +32,7 @@
 	var/cotton_type = /obj/item/stack/sheet/cotton
 	var/cotton_name = "raw cotton"
 
-/obj/item/grown/cotton/attack_self(mob/user, recursive)
+/obj/item/grown/cotton/attack_self(mob/user)
 	user.show_message("<span class='notice'>You pull some [cotton_name] out of the [name]!</span>", MSG_VISUAL)
 	var/cottonAmt = 1 + round(seed.potency / 25) // cotton inhand we're holding
 	for(var/obj/item/grown/cotton/ctn in user.loc) // cotton on the floor
