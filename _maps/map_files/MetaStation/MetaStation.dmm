@@ -68924,12 +68924,12 @@
 	pixel_x = -25;
 	pixel_y = -5
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/machinery/airalarm/unlocked{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
