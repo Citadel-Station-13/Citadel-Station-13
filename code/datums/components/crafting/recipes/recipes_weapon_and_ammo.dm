@@ -297,30 +297,15 @@
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
-				/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
-				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
-				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
+	reqs = list(/obj/item/pipe = 1,
+				/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/irifle // larger and less versatile gun, but a bit easier to make
-	name = "Improvised Rifle (7.62mm)"
-	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
-	reqs = list(/obj/item/pipe = 2, // above
-				/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 1,
-				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
-				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
-				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/packageWrap = 5)
-	tools = list(TOOL_SCREWDRIVER)
-	time = 100
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+//the Improvised Rifle will not be missed. Rest in Pieces 2019-2021
 
 //////////////////
 ///AMMO CRAFTING//
@@ -448,38 +433,6 @@
 ////////////////////
 // PARTS CRAFTING //
 ////////////////////
-
-// RECEIVERS
-
-/datum/crafting_recipe/rifle_receiver
-	name = "Improvised Rifle Receiver"
-	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 15)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 25
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-/datum/crafting_recipe/shotgun_receiver
-	name = "Improvised Shotgun Receiver"
-	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 10) // shotgun does less damage than the rifle and can't 1shot but is more portable
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 20
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-// MISC
-
-/datum/crafting_recipe/trigger_assembly
-	name = "Trigger Assembly"
-	result = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
-	reqs = list(/obj/item/stack/sheet/metal = 3,
-				/obj/item/assembly/igniter = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 20
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
 
 // BOKKEN CRAFTING
 
