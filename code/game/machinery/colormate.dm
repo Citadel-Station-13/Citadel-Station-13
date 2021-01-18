@@ -62,6 +62,8 @@
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
+		if(QDELETED(I))
+			return
 		user.visible_message("<span class='notice'>[user] inserts [I] into [src]'s receptable.</span>")
 
 		inserted = I
@@ -71,6 +73,11 @@
 
 /obj/machinery/gear_painter/AllowDrop()
 	return FALSE
+
+/obj/machinery/gear_painter/handle_atom_del(atom/movable/AM)
+	if(AM == inserrted)
+		inserted = null
+	return ..()
 
 /obj/machinery/gear_painter/AltClick(mob/user)
 	. = ..()
