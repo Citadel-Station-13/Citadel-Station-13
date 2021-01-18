@@ -34056,9 +34056,6 @@
 /area/medical/surgery)
 "bCJ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/light_switch{
-	pixel_y = 26
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bCK" = (
