@@ -91,6 +91,15 @@
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+
+/datum/uplink_item/role_restricted/hiveblessing
+	name = "Hive's Blessing"
+	desc = "A syringe full of goo that when injected will slowly turn them into a xenomorph larvae."
+	item = /obj/item/reagent_containers/syringe/alien
+	cost = 20
+	player_minimum = 30
+	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+
 /datum/uplink_item/role_restricted/clockwork_slab
 	name = "Clockwork Slab"
 	desc = "A reverse engineered clockwork slab. Is this really a good idea?."
@@ -257,4 +266,4 @@
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
 	restricted_roles = list("Station Engineer")
-	
+
