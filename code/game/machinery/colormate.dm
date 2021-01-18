@@ -75,7 +75,7 @@
 	return FALSE
 
 /obj/machinery/gear_painter/handle_atom_del(atom/movable/AM)
-	if(AM == inserrted)
+	if(AM == inserted)
 		inserted = null
 	return ..()
 
