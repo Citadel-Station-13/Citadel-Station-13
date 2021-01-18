@@ -193,7 +193,7 @@
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
 
-	if(!user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
+	if(user && !user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
 		return FALSE
 
 	if(!disarming)
@@ -314,12 +314,12 @@
 /obj/item/melee/baton/boomerang
 	name = "\improper OZtek Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
-	throw_speed = 1
+	throw_speed = 1.5
 	icon_state = "boomerang"
 	item_state = "boomerang"
 	force = 5
 	throwforce = 5
-	throw_range = 5
+	throw_range = 10
 	hitcost = 2000
 	throw_hit_chance = 99  //Have you prayed today?
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
@@ -328,7 +328,7 @@
 	if(turned_on)
 		if(ishuman(thrower))
 			var/mob/living/carbon/human/H = thrower
-			H.throw_mode_off() //so they can catch it on the return.
+			H.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
