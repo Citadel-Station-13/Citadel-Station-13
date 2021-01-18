@@ -96,7 +96,7 @@
 	name = "Hive's Blessing"
 	desc = "A syringe full of goo that when injected will slowly turn them into a xenomorph larvae."
 	item = /obj/item/reagent_containers/syringe/alien
-	cost = 20
+	cost = 24
 	player_minimum = 30
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
 
