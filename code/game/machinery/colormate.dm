@@ -11,7 +11,7 @@
 	var/list/color_matrix_last
 	var/matrix_mode = FALSE
 	/// Allow holder'd mobs
-	var/mobs_allowed = TRUE
+	var/allow_mobs = TRUE
 	/// Minimum lightness for normal mode
 	var/minimum_normal_lightness = 50
 	/// Minimum lightness for matrix mode, tested using 4 test colors of full red, green, blue, white.
