@@ -12,7 +12,7 @@
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_MUZZLE
 	visor_flags_inv = HIDEFACE
-	var/flavor_adjust = TRUE // can it do the heehoo alt click to hide/show identity
+	var/flavor_adjust = TRUE //can it do the heehoo alt click to hide/show identity
 
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
