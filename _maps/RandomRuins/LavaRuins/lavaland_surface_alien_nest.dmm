@@ -512,6 +512,12 @@
 /obj/item/clothing/mask/facehugger/impregnated,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"gA" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
 "iA" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -525,16 +531,19 @@
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"mw" = (
+"lM" = (
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
 /turf/open/chasm/lavaland,
 /area/ruin/unpowered/xenonest)
-"qL" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel,
+"nj" = (
+/obj/effect/mob_spawn/alien/corpse/humanoid/praetorian,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/unpowered/xenonest)
+"tY" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/mob_spawn/alien/corpse/humanoid/hunter,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "wA" = (
@@ -547,36 +556,32 @@
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
+"zj" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/chasm/lavaland,
+/area/ruin/unpowered/xenonest)
 "Dd" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/storage/backpack/duffelbag/sec/surgery,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"HN" = (
-/obj/structure/stone_tile/block/cracked{
-	dir = 1
-	},
-/turf/open/chasm/lavaland,
+"Ha" = (
+/obj/structure/alien/weeds,
+/obj/item/reagent_containers/syringe/alien,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "JM" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/mob_spawn/alien/corpse/humanoid/drone,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
-"Pl" = (
-/obj/structure/alien/weeds/node,
-/obj/effect/mob_spawn/alien/corpse/humanoid/hunter,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
 "QG" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/structure/alien/weeds/node,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered/xenonest)
-"SW" = (
-/obj/effect/mob_spawn/alien/corpse/humanoid/praetorian,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/xenonest)
 "Uh" = (
@@ -1139,7 +1144,7 @@ an
 an
 ac
 ac
-qL
+gA
 ac
 ac
 aJ
@@ -1373,7 +1378,7 @@ ab
 ac
 af
 ag
-Pl
+tY
 lG
 ag
 ag
@@ -1634,7 +1639,7 @@ ag
 wA
 ag
 ag
-SW
+nj
 ag
 at
 ag
@@ -1734,7 +1739,7 @@ ah
 ar
 ah
 ak
-ag
+Ha
 at
 ag
 ag
@@ -1758,7 +1763,7 @@ ac
 aZ
 bc
 bj
-mw
+lM
 aD
 bx
 aZ
@@ -1810,7 +1815,7 @@ ba
 bd
 bk
 bq
-HN
+zj
 by
 aZ
 ab
