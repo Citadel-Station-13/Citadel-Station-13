@@ -783,7 +783,7 @@
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
-	return		// until fixed - the rotations never stop
+	return ..()		// until fixed - the rotations never stop
 /*
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
