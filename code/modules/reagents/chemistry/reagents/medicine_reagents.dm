@@ -272,9 +272,9 @@
 	overdose_threshold = 50
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/stack/medical/gauze))
+	if(istype(O, /obj/item/stack/medical/gauze/adv))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
+		reac_volume = min((reac_volume / 5), G.amount)
 		new/obj/item/stack/medical/mesh(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
@@ -358,9 +358,9 @@
 	..()
 
 /datum/reagent/medicine/styptic_powder/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/stack/medical/gauze))
+	if(istype(O, /obj/item/stack/medical/gauze/adv))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
+		reac_volume = min((reac_volume / 5), G.amount)
 		new/obj/item/stack/medical/suture(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
