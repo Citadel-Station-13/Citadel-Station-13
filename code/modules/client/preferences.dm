@@ -2744,7 +2744,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			//renaming is only allowed if it has the flag for it
 			if(href_list["loadout_rename"] && (G.loadout_flags & LOADOUT_CAN_NAME))
-				var/new_name = stripped_input(user, "Enter new name for item. Maximum 32 characters.", "Loadout Item Naming", null,  32)
+				var/new_name = stripped_input(user, "Enter new name for item. Maximum [MAX_NAME_LEN] characters.", "Loadout Item Naming", null,  MAX_NAME_LEN)
 				if(new_name)
 					user_gear[LOADOUT_CUSTOM_NAME] = new_name
 

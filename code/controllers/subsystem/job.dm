@@ -707,12 +707,12 @@ SUBSYSTEM_DEF(job)
 						//handle non-polychromic items (they only have one color)
 						I.add_atom_colour(i[LOADOUT_COLOR][1], FIXED_COLOUR_PRIORITY)
 						I.update_icon()
-				//when inputting the data it's already sanitized, but it's best to be safe
+				//when inputting the data it's already sanitized
 				if(i[LOADOUT_CUSTOM_NAME])
-					var/custom_name = strip_html(i[LOADOUT_CUSTOM_NAME])
+					var/custom_name = i[LOADOUT_CUSTOM_NAME]
 					I.name = custom_name
 				if(i[LOADOUT_CUSTOM_DESCRIPTION])
-					var/custom_description = strip_html(i[LOADOUT_CUSTOM_DESCRIPTION])
+					var/custom_description = i[LOADOUT_CUSTOM_DESCRIPTION]
 					I.desc = custom_description
 			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
