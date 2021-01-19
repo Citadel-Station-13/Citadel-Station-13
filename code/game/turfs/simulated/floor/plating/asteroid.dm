@@ -382,7 +382,7 @@
 
 		new randumb(T)
 	return TRUE
-*/ //moved to sandcode
+*/ //moved to modular_sand
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
 

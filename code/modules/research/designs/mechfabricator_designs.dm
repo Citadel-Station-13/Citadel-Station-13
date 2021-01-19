@@ -796,7 +796,7 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/* moved to sandcode
+/* moved to modular_sand
 /datum/design/borg_upgrade_expand
 	name = "Cyborg Upgrade (Expand)"
 	id = "borg_upgrade_expand"

@@ -141,7 +141,7 @@
 	if(requires_rebuild)
 		rebuild_modules()
 	return I
-*/ //replaced by the one in sandcode
+*/ //replaced by the one in modular_sand
 
 //Adds flavoursome dogborg items to dogborg variants optionally without mechanical benefits
 /obj/item/robot_module/proc/dogborg_equip()

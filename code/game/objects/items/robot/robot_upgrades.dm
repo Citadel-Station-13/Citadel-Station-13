@@ -557,7 +557,7 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 	desc = "A cyborg resizer, it makes a cyborg huge."
 	icon_state = "cyborg_upgrade3"
 
-/* moved to sandcode
+/* moved to modular_sand
 /obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)

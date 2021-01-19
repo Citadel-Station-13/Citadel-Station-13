@@ -180,7 +180,7 @@
 /obj/item/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/* moved to sandcode
+/* moved to modular_sand
 /obj/item/gun/energy/kinetic_accelerator/proc/reload()
 	cell.give(cell.maxcharge)
 	if(!suppressed)

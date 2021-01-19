@@ -349,7 +349,7 @@
 		ADD_TRAIT(user, TRAIT_NODEATH, "memento_mori")
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, "memento_mori")
 		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, "memento_mori")
-		icon_state = "[initial(icon_state)]_active" //sandcode edit
+		icon_state = "[initial(icon_state)]_active" //modular_sand edit
 		active_owner = user
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/mori()

@@ -1,5 +1,5 @@
 //Special thing that i had to make it myself because skyrat uses old loadout
-//Underwear Sandcode changes
+//Underwear modular_sand changes
 #define LOADOUT_CATEGORY_GENERAL_UNDER			"General Underwear"
 #define LOADOUT_SUBCATEGORY_UNDERWEAR		"Underwear"
 #define LOADOUT_SUBCATEGORY_SHIRT		"Shirt"

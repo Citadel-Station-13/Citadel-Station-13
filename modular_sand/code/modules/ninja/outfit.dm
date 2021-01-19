@@ -4,6 +4,6 @@
 		if(istype(H.belt, belt))
 			S.energyKatana = H.belt
 		S.randomize_param()
-	H.grant_language(/datum/language/sandcode/neokanji, TRUE, TRUE, LANGUAGE_NINJA)
+	H.grant_language(/datum/language/modular_sand/neokanji, TRUE, TRUE, LANGUAGE_NINJA)
 	var/datum/language_holder/LH = H.get_language_holder()
-	LH.selected_language = /datum/language/sandcode/neokanji
+	LH.selected_language = /datum/language/modular_sand/neokanji

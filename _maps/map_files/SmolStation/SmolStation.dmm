@@ -3763,7 +3763,7 @@
 	height = 5;
 	id = "perma_station";
 	name = "Station Dock";
-	roundstart_template = /datum/map_template/shuttle/sandcode/permabrig;
+	roundstart_template = /datum/map_template/shuttle/modular_sand/permabrig;
 	width = 8
 	},
 /turf/open/space/basic,
@@ -9255,7 +9255,7 @@
 	height = 5;
 	id = "sciout_station";
 	name = "Science Shuttle Dock";
-	roundstart_template = /datum/map_template/shuttle/sandcode/scioutpost;
+	roundstart_template = /datum/map_template/shuttle/modular_sand/scioutpost;
 	width = 7
 	},
 /turf/open/floor/plasteel/elevatorshaft{
@@ -23207,7 +23207,7 @@
 	height = 5;
 	id = "ai_station";
 	name = "Station Access";
-	roundstart_template = /datum/map_template/shuttle/sandcode/satshuttle;
+	roundstart_template = /datum/map_template/shuttle/modular_sand/satshuttle;
 	width = 7
 	},
 /turf/open/space/basic,

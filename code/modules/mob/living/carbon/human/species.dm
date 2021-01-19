@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//the icon state of the eyes this species has
 	var/eye_type = "normal"
 
-	//sandcode tg port, very special
+	//modular_sand tg port, very special
 	var/flying_species = FALSE //is a flying species, just a check for some things
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
 	var/wings_icon = "Angel" //the icon used for the wings

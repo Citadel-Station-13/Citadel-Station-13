@@ -166,7 +166,7 @@
 		return
 	. = ..()
 
-/obj/item/airlock_painter/decal/AltClick(mob/user) //sandstorm change - everything that makes this work is on same path to this but on sandcode
+/obj/item/airlock_painter/decal/AltClick(mob/user) //sandstorm change - everything that makes this work is on same path to this but on modular_sand
 	. = ..()
 	var/decal_category = list(
 		"Decal" = image(icon = 'icons/turf/decals.dmi', icon_state = "[stored_decal]", dir = turn(stored_dir, 180)),
