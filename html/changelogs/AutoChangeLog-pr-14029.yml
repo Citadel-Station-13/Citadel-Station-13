@@ -1,0 +1,4 @@
+author: "HeroWithYay"
+delete-after: True
+changes: 
+  - tweak: "Wormhole Projector and Gravity Gun now require anomaly cores to function instead of firing pins."

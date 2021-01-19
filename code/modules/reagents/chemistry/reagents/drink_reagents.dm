@@ -625,8 +625,9 @@
 			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent(/datum/reagent/consumable/sugar,1)
-	if(prob(5))
+	if(prob(33))
+		M.reagents.add_reagent(/datum/reagent/consumable/sugar,1)
+	if(prob(1))
 		M.reagents.add_reagent(/datum/reagent/consumable/honey,1)
 	..()
 
