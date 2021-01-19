@@ -64,6 +64,11 @@
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.adjust_nutrition(30, NUTRITION_LEVEL_FULL)
+		if(/obj/item/projectile/energy/florarevolution)
+			H.show_message("<span class='notice'>The radiation beam leaves you feeling disoriented!</span>")
+			H.Dizzy(15)
+			H.emote("flip")
+			H.emote("spin")
 
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"
