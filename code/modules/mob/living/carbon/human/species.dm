@@ -1425,8 +1425,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 		var/punchwoundbonus = user.dna.species.punchwoundbonus
-		var/puncherstam = user.getStaminaLoss()
-		var/puncherbrute = user.getBruteLoss()
 		var/punchedstam = target.getStaminaLoss()
 		var/punchedbrute = target.getBruteLoss()
 
@@ -1446,19 +1444,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!affecting) //Maybe the bodypart is missing? Or things just went wrong..
 			affecting = target.get_bodypart(BODY_ZONE_CHEST) //target chest instead, as failsafe. Or hugbox? You decide.
 
-		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)
-			miss_chance = 0
-		else
-			if(user.dna.species.punchdamagelow)
-				if(atk_verb == ATTACK_EFFECT_KICK) //kicks never miss (provided your species deals more than 0 damage)
-					miss_chance = 0
-				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists, being good at Punching People, also never miss
-					miss_chance = 0
-				else
-					miss_chance = min(5 + max(puncherstam * 0.15, puncherbrute * 0.15), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
-
-		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
+		if(!damage || !affecting)//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
 			target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>", \
 							"<span class='danger'>You avoid [user]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", null, COMBAT_MESSAGE_RANGE, null, \
