@@ -1434,7 +1434,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			damage *= 1.2
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
-			damage *= 0.8
+			damage *= 0.65
 		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			damage *= 0.8
 		//END OF CITADEL CHANGES
@@ -1456,7 +1456,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				else if(HAS_TRAIT(user, TRAIT_PUGILIST)) //pugilists, being good at Punching People, also never miss
 					miss_chance = 0
 				else
-					miss_chance = min(10 + max(puncherstam * 0.5, puncherbrute * 0.5), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
+					miss_chance = min(5 + max(puncherstam * 0.15, puncherbrute * 0.15), 100) //probability of miss has a base of 10, and modified based on half brute total. Capped at max 100 to prevent weirdness in prob()
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
