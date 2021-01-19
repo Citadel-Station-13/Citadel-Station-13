@@ -232,9 +232,9 @@
 	var/list/choices = list()
 
 	if (locked)
-		choices["unlock"] = icon('sandcode/icons/hud/radial.dmi', "radial_unlock")
+		choices["unlock"] = icon('modular_sand/icons/hud/radial.dmi', "radial_unlock")
 	else if (state_open)
-		choices["close"] = icon('sandcode/icons/hud/radial.dmi', "radial_close")
+		choices["close"] = icon('modular_sand/icons/hud/radial.dmi', "radial_close")
 
 		for (var/item_key in items)
 			var/item = vars[item_key]
@@ -244,9 +244,9 @@
 				// If the item doesn't exist, put a silhouette in its place
 				choices[item_key] = items[item_key]
 	else
-		choices["open"] = icon('sandcode/icons/hud/radial.dmi', "radial_open")
-		choices["disinfect"] = icon('sandcode/icons/hud/radial.dmi', "radial_disinfect")
-		choices["lock"] = icon('sandcode/icons/hud/radial.dmi', "radial_lock")
+		choices["open"] = icon('modular_sand/icons/hud/radial.dmi', "radial_open")
+		choices["disinfect"] = icon('modular_sand/icons/hud/radial.dmi', "radial_disinfect")
+		choices["lock"] = icon('modular_sand/icons/hud/radial.dmi', "radial_lock")
 
 	var/choice = show_radial_menu(
 		user,

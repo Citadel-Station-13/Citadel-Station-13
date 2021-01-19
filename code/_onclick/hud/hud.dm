@@ -12,18 +12,18 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Slimecore" = 'icons/mob/screen_slimecore.dmi',
 	"Operative" = 'icons/mob/screen_operative.dmi',
 	"Clockwork" = 'icons/mob/screen_clockwork.dmi',
-	"Liteweb" = 'sandcode/icons/mob/screen_liteweb.dmi'
+	"Liteweb" = 'modular_sand/icons/mob/screen_liteweb.dmi'
 ))
 
 //skyrat edit
 GLOBAL_LIST_INIT(modular_ui_styles, list(
-	'icons/mob/screen_midnight.dmi' = 'sandcode/icons/mob/screen_midnight.dmi',
-	'icons/mob/screen_retro.dmi' = 'sandcode/icons/mob/screen_retro.dmi',
-	'icons/mob/screen_plasmafire.dmi' = 'sandcode/icons/mob/screen_plasmafire.dmi',
-	'icons/mob/screen_slimecore.dmi' = 'sandcode/icons/mob/screen_slimecore.dmi',
-	'icons/mob/screen_operative.dmi' = 'sandcode/icons/mob/screen_operative.dmi',
-	'icons/mob/screen_clockwork.dmi' = 'sandcode/icons/mob/screen_clockwork.dmi',
-	'sandcode/icons/mob/screen_liteweb.dmi' = 'sandcode/icons/mob/screen_liteweb.dmi'
+	'icons/mob/screen_midnight.dmi' = 'modular_sand/icons/mob/screen_midnight.dmi',
+	'icons/mob/screen_retro.dmi' = 'modular_sand/icons/mob/screen_retro.dmi',
+	'icons/mob/screen_plasmafire.dmi' = 'modular_sand/icons/mob/screen_plasmafire.dmi',
+	'icons/mob/screen_slimecore.dmi' = 'modular_sand/icons/mob/screen_slimecore.dmi',
+	'icons/mob/screen_operative.dmi' = 'modular_sand/icons/mob/screen_operative.dmi',
+	'icons/mob/screen_clockwork.dmi' = 'modular_sand/icons/mob/screen_clockwork.dmi',
+	'modular_sand/icons/mob/screen_liteweb.dmi' = 'modular_sand/icons/mob/screen_liteweb.dmi'
 ))
 //
 

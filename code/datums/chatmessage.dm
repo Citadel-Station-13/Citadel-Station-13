@@ -137,10 +137,10 @@
 	//Skyrat changes
 	// Append radio icon if from a virtual speaker
 	if (extra_classes.Find("emote"))
-		var/image/r_icon = image('sandcode/icons/UI_Icons/chat/chat_icons.dmi', icon_state = "emote")
+		var/image/r_icon = image('modular_sand/icons/UI_Icons/chat/chat_icons.dmi', icon_state = "emote")
 		text =  "\icon[r_icon]&nbsp;" + text
 	else if (extra_classes.Find("virtual-speaker"))
-		var/image/r_icon = image('sandcode/icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
+		var/image/r_icon = image('modular_sand/icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
 		text =  "\icon[r_icon]&nbsp;" + text
 	//End of skyrat changes
 

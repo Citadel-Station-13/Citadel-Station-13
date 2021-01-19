@@ -43,7 +43,7 @@
 	center = TRUE
 	dimension_y = 32
 	locked = TRUE
-	icon = 'sandcode/icons/mob/wings.dmi'
+	icon = 'modular_sand/icons/mob/wings.dmi'
 
 /datum/sprite_accessory/wings_open/dragon
 	name = "Dragon"
@@ -51,7 +51,7 @@
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32
-	icon = 'sandcode/icons/mob/wings.dmi'
+	icon = 'modular_sand/icons/mob/wings.dmi'
 
 // Decorative wings
 

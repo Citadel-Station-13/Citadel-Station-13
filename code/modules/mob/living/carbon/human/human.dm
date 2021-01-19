@@ -546,7 +546,7 @@
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
-	if(href_list["lookitem"]) //It's for the show item at sandcode/code/modules/mob/living/carbon/show.dm
+	if(href_list["lookitem"]) //It's for the show item at modular_sand/code/modules/mob/living/carbon/show.dm
 		var/obj/item/I = locate(href_list["lookitem"])
 		if(I in view(4))
 			src.examinate(I)

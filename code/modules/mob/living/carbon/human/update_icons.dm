@@ -183,11 +183,11 @@ There are several things that need to be remembered:
 			if(w_uniform && (w_uniform.flags_inv & HIDEUNDERWEAR))
 				return
 
-			var/alt_worn = U.mob_overlay_icon || 'sandcode/icons/mob/clothing/underwear.dmi'
+			var/alt_worn = U.mob_overlay_icon || 'modular_sand/icons/mob/clothing/underwear.dmi'
 			var/variant_flag = NONE
 
 			if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE && !(U.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
-				alt_worn = U.anthro_mob_worn_overlay || 'sandcode/icons/mob/clothing/underwear_digi.dmi'
+				alt_worn = U.anthro_mob_worn_overlay || 'modular_sand/icons/mob/clothing/underwear_digi.dmi'
 				variant_flag |= STYLE_DIGITIGRADE
 
 			var/mask
@@ -230,11 +230,11 @@ There are several things that need to be remembered:
 			if(w_uniform && (w_uniform.flags_inv & HIDEUNDERWEAR))
 				return
 
-			var/alt_worn = U.mob_overlay_icon || 'sandcode/icons/mob/clothing/underwear.dmi'
+			var/alt_worn = U.mob_overlay_icon || 'modular_sand/icons/mob/clothing/underwear.dmi'
 			var/variant_flag = NONE
 
 			if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE && !(U.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
-				alt_worn = U.anthro_mob_worn_overlay || 'sandcode/icons/mob/clothing/underwear_digi.dmi'
+				alt_worn = U.anthro_mob_worn_overlay || 'modular_sand/icons/mob/clothing/underwear_digi.dmi'
 				variant_flag |= STYLE_DIGITIGRADE
 
 			var/mask
@@ -277,11 +277,11 @@ There are several things that need to be remembered:
 			if(w_uniform && (w_uniform.flags_inv & HIDEUNDERWEAR))
 				return
 
-			var/alt_worn = U.mob_overlay_icon || 'sandcode/icons/mob/clothing/underwear.dmi'
+			var/alt_worn = U.mob_overlay_icon || 'modular_sand/icons/mob/clothing/underwear.dmi'
 			var/variant_flag = NONE
 
 			if((DIGITIGRADE in dna.species.species_traits) && U.mutantrace_variation & STYLE_DIGITIGRADE && !(U.mutantrace_variation & STYLE_NO_ANTHRO_ICON))
-				alt_worn = U.anthro_mob_worn_overlay || 'sandcode/icons/mob/clothing/underwear_digi.dmi'
+				alt_worn = U.anthro_mob_worn_overlay || 'modular_sand/icons/mob/clothing/underwear_digi.dmi'
 				variant_flag |= STYLE_DIGITIGRADE
 
 			var/mask
@@ -390,7 +390,7 @@ There are several things that need to be remembered:
 				if(hud_used.inventory_shown)
 					client.screen += wrists
 			update_observer_view(wrists,1)
-			overlays_standing[WRISTS_LAYER] = wrists.build_worn_icon(default_layer = WRISTS_LAYER, default_icon_file = 'sandcode/icons/mob/clothing/wrists.dmi')
+			overlays_standing[WRISTS_LAYER] = wrists.build_worn_icon(default_layer = WRISTS_LAYER, default_icon_file = 'modular_sand/icons/mob/clothing/wrists.dmi')
 			wrists_overlay = overlays_standing[WRISTS_LAYER]
 			if(OFFSET_WRISTS in dna.species.offset_features)
 				wrists_overlay.pixel_x += dna.species.offset_features[OFFSET_WRISTS][1]
@@ -444,7 +444,7 @@ There are several things that need to be remembered:
 					client.screen += ears					//add it to the client's screen
 			update_observer_view(ears,1)
 
-			overlays_standing[EAR_LEFT_LAYER] = ears.build_worn_icon(default_layer = EAR_LEFT_LAYER, default_icon_file = 'sandcode/icons/mob/clothing/ears.dmi', use_mob_overlay_icon = FALSE)
+			overlays_standing[EAR_LEFT_LAYER] = ears.build_worn_icon(default_layer = EAR_LEFT_LAYER, default_icon_file = 'modular_sand/icons/mob/clothing/ears.dmi', use_mob_overlay_icon = FALSE)
 			var/mutable_appearance/ears_overlay = overlays_standing[EAR_LEFT_LAYER]
 			if(OFFSET_EARS in dna.species.offset_features)
 				ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
@@ -470,7 +470,7 @@ There are several things that need to be remembered:
 					client.screen += ears_extra			//add it to the client's screen
 			update_observer_view(ears_extra,1)
 
-			overlays_standing[EAR_RIGHT_LAYER] = ears_extra.build_worn_icon(default_layer = EAR_RIGHT_LAYER, default_icon_file = 'sandcode/icons/mob/clothing/ears_extra.dmi', use_mob_overlay_icon = FALSE)
+			overlays_standing[EAR_RIGHT_LAYER] = ears_extra.build_worn_icon(default_layer = EAR_RIGHT_LAYER, default_icon_file = 'modular_sand/icons/mob/clothing/ears_extra.dmi', use_mob_overlay_icon = FALSE)
 			var/mutable_appearance/ears_overlay = overlays_standing[EAR_RIGHT_LAYER]
 			if(OFFSET_EARS in dna.species.offset_features)
 				ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
