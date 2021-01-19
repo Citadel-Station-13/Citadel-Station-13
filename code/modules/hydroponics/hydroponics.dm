@@ -613,7 +613,7 @@
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
 		if(myseed.endurance <= 20)
-			to_chat(user, "<span class='warning'>[myseed.plantname] isn't hardy enough to sequence it's mutation!</span>")
+			to_chat(user, "<span class='warning'>[myseed.plantname] isn't hardy enough to sequence its mutation!</span>")
 			return
 		if(!myseed.mutatelist)
 			to_chat(user, "<span class='warning'>[myseed.plantname] has nothing else to mutate into!</span>")
