@@ -96,7 +96,7 @@
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/analyzer(src)
 	new /obj/item/holosign_creator/atmos(src)
-	new /obj/item/holosign_creator/firelock(src)
+	new /obj/item/holosign_creator/firelock(src) //what if atmos techs could test things they are meant to test, wild, innit?
 	new /obj/item/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)
 	new /obj/item/clothing/head/hardhat/atmos(src)

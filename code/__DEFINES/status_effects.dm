@@ -40,6 +40,9 @@
 
 #define STATUS_EFFECT_DETERMINED /datum/status_effect/determined //currently in a combat high from being seriously wounded
 
+#define STATUS_EFFECT_MANTRA /datum/status_effect/mantra // a toggled self buff that makes you stronger and more resilient, but drains stamina over time
+#define STATUS_EFFECT_ASURA /datum/status_effect/asura // like a weaker version of mantra, drains HP instead of stamina and has no armor
+
 /////////////
 // DEBUFFS //
 /////////////
