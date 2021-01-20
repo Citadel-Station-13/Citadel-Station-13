@@ -32,11 +32,15 @@
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		I.use_tool(src, user, 0, 1)
-		has_sensor = HAS_SENSORS
-		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
-		return 1
+		if(damaged_clothes == CLOTHING_SHREDDED)
+			to_chat(user,"<span class='warning'>[src] is too damaged to have its suit sensors repaired! Repair it first.</span>")
+			return
+		else
+			var/obj/item/stack/cable_coil/C = I
+			I.use_tool(src, user, 0, 1)
+			has_sensor = HAS_SENSORS
+			to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
+			return 1
 	if(!attach_accessory(I, user))
 		return ..()
 
@@ -45,7 +49,7 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_w_uniform()
-	if(has_sensor > NO_SENSORS)
+	if(has_sensor > NO_SENSORS && damaged_clothes == CLOTHING_SHREDDED)
 		has_sensor = BROKEN_SENSORS
 
 /obj/item/clothing/under/New()
@@ -141,7 +145,7 @@
 		else
 			. += "Alt-click on [src] to wear it casually."
 	if (has_sensor == BROKEN_SENSORS)
-		. += "Its sensors appear to be shorted out."
+		. += "<span class='warning'>Its sensors appear to be shorted out. It can be repaired using cable.</span>"
 	else if(has_sensor > NO_SENSORS)
 		switch(sensor_mode)
 			if(SENSOR_OFF)

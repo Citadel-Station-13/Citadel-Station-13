@@ -147,7 +147,9 @@
 	if(!(def_zone in covered_limbs))
 		return
 
-	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration, FALSE) * 10 // only deal 10% of the damage to the general integrity damage, then multiply it by 10 so we know how much to deal to limb
+	//clothing with less part coverage will take less damage.
+	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration, FALSE) * body_parts_covered2count(initial(src.body_parts_covered))*2
+	// only deal 10% of the damage to the general integrity damage, then multiply it by part amount times two so we know how much to deal to limb
 	LAZYINITLIST(damage_by_parts)
 	damage_by_parts[def_zone] += damage_dealt
 	if(damage_by_parts[def_zone] > limb_integrity)
@@ -228,7 +230,7 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-		. += "<span class='warning'><b>It is completely shredded and requires mending before it can be worn again!</b></span>"
+		. += "<span class='warning'><b>It is completely shredded and requires mending!</b></span>"
 		return
 	for(var/zone in damage_by_parts)
 		var/pct_damage_part = damage_by_parts[zone] / limb_integrity * 100
@@ -432,12 +434,10 @@ BLIND     // can't see anything
 		damaged_clothes = CLOTHING_SHREDDED
 		body_parts_covered = NONE
 		name = "shredded [initial(name)]"
-		slot_flags = NONE
-		update_clothes_damaged_state()
+		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(ismob(loc))
 			var/mob/M = loc
-			M.visible_message("<span class='danger'>[M]'s [src.name] falls off, completely shredded!</span>", "<span class='warning'><b>Your [src.name] falls off, completely shredded!</b></span>", vision_distance = COMBAT_MESSAGE_RANGE)
-			M.dropItemToGround(src)
+			M.visible_message("<span class='danger'>[M]'s [src.name] is completely shredded!</span>", "<span class='userdanger'>Your [src.name] is completely shredded!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
 	else
 		..()
 

@@ -410,6 +410,31 @@
 
 	return covered_parts
 
+//Turns a Body_parts_covered bitfield into a count of limbs covered.
+/proc/body_parts_covered2count(bpc)
+	var/covered_parts_count = 0
+	if(!bpc)
+		return 0
+	if(bpc & HEAD)
+		covered_parts_count++
+	if(bpc & CHEST || bpc & GROIN)
+		covered_parts_count++
+	if(bpc & ARMS || bpc & HANDS)
+		covered_parts_count += 2
+	else
+		if(bpc & ARM_LEFT || bpc & HAND_LEFT)
+			covered_parts_count++
+		if(bpc & ARM_RIGHT || bpc & HAND_RIGHT)
+			covered_parts_count++
+	if(bpc & LEGS || bpc & FEET)
+		covered_parts_count += 2
+	else
+		if(bpc & LEG_LEFT || bpc & FOOT_LEFT)
+			covered_parts_count++
+		if(bpc & LEG_RIGHT || bpc & FOOT_RIGHT)
+			covered_parts_count++
+	return covered_parts_count
+
 /proc/slot2body_zone(slot)
 	switch(slot)
 		if(SLOT_BACK, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_BELT, SLOT_WEAR_ID)
