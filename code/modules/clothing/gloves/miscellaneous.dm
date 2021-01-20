@@ -36,7 +36,7 @@
 
 /obj/item/clothing/gloves/fingerless/pugilist/equipped(mob/user, slot)
 	. = ..()
-	if(current_equipped_slot == SLOT_GLOVES)
+	if(slot == SLOT_GLOVES)
 		use_buffs(user, TRUE)
 		wornonce = TRUE
 

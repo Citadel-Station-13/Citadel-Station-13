@@ -149,6 +149,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/handle_statpanel_click(list/href_list)
 	var/atom/target = locate(href_list["statpanel_item_target"])
+	if(!target)
+		return
 	Click(target, target.loc, null, "[href_list["statpanel_item_shiftclick"]?"shift=1;":null][href_list["statpanel_item_ctrlclick"]?"ctrl=1;":null]&alt=[href_list["statpanel_item_altclick"]?"alt=1;":null]", FALSE, "statpanel")
 
 /client/proc/is_content_unlocked()
@@ -501,7 +503,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)
@@ -647,7 +649,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	query_log_connection.Execute()
 	qdel(query_log_connection)
 
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 
 	if(new_player)
 		player_age = -1

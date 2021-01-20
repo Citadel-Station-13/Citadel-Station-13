@@ -2729,9 +2729,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
 "gx" = (
-/obj/machinery/door/firedoor{
-	pixel_x = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2742,9 +2740,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/shields)
 "gy" = (
-/obj/machinery/door/firedoor{
-	pixel_x = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Shields"

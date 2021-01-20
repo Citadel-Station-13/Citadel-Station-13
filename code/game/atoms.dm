@@ -1,12 +1,22 @@
+/**
+ * The base type for nearly all physical objects in SS13
+
+ * Lots and lots of functionality lives here, although in general we are striving to move
+ * as much as possible to the components/elements system
+ */
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	var/level = 2
-	var/article  // If non-null, overrides a/an/some in all cases
+	appearance_flags = TILE_BOUND
 
+	var/level = 2
+	///If non-null, overrides a/an/some in all cases
+	var/article
+
+	///First atom flags var
 	var/flags_1 = NONE
+	///Intearaction flags
 	var/interaction_flags_atom = NONE
-	var/datum/reagents/reagents = null
 
 	var/flags_ricochet = NONE
 
@@ -15,35 +25,52 @@
 	///When a projectile ricochets off this atom, it deals the normal damage * this modifier to this atom
 	var/ricochet_damage_mod = 0.33
 
-	//This atom's HUD (med/sec, etc) images. Associative list.
+	///Reagents holder
+	var/datum/reagents/reagents = null
+
+	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
-	//HUD images that this atom can provide.
+	///HUD images that this atom can provide.
 	var/list/hud_possible
 
-	//Value used to increment ex_act() if reactionary_explosions is on
+	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
-	var/list/atom_colours	 //used to store the different colors on an atom
-							//its inherent color, the colored paint applied on it, special color effect etc...
+	/**
+	  * used to store the different colors on an atom
+	  *
+	  * its inherent color, the colored paint applied on it, special color effect etc...
+	  */
+	var/list/atom_colours
 
-	var/list/remove_overlays // a very temporary list of overlays to remove
-	var/list/add_overlays // a very temporary list of overlays to add
 
-	var/list/managed_vis_overlays //vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
-	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	/// a very temporary list of overlays to remove
+	var/list/remove_overlays
+	/// a very temporary list of overlays to add
+	var/list/add_overlays
+
+	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
+	var/list/managed_vis_overlays
+	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc
 	var/list/managed_overlays
 
+	///Proximity monitor associated with this atom
 	var/datum/proximity_monitor/proximity_monitor
+	///Last fingerprints to touch this atom
 	var/fingerprintslast
 
 	var/list/filter_data //For handling persistent filters
 
+	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
+	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 
+	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
+	/// Radiation insulation types
 	var/rad_insulation = RAD_NO_INSULATION
 
 	///The custom materials this atom is made of, used by a lot of things like furniture, walls, and floors (if I finish the functionality, that is.)
@@ -76,6 +103,16 @@
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
 
+/**
+ * Called when an atom is created in byond (built in engine proc)
+ *
+ * Not a lot happens here in SS13 code, as we offload most of the work to the
+ * [Intialization][/atom/proc/Initialize] proc, mostly we run the preloader
+ * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
+ * result is that the Intialize proc is called.
+ *
+ * We also generate a tag here if the DF_USE_TAG flag is set on the atom
+ */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -91,24 +128,50 @@
 			//we were deleted
 			return
 
-//Called after New if the map is being loaded. mapload = TRUE
-//Called from base of New if the map is not being loaded. mapload = FALSE
-//This base must be called or derivatives must set initialized to TRUE
-//must not sleep
-//Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
-//Must return an Initialize hint. Defined in __DEFINES/subsystems.dm
-
-//Note: the following functions don't call the base for optimization and must copypasta:
-// /turf/Initialize
-// /turf/open/space/Initialize
-
+/**
+ * The primary method that objects are setup in SS13 with
+ *
+ * we don't use New as we have better control over when this is called and we can choose
+ * to delay calls or hook other logic in and so forth
+ *
+ * During roundstart map parsing, atoms are queued for intialization in the base atom/New(),
+ * After the map has loaded, then Initalize is called on all atoms one by one. NB: this
+ * is also true for loading map templates as well, so they don't Initalize until all objects
+ * in the map file are parsed and present in the world
+ *
+ * If you're creating an object at any point after SSInit has run then this proc will be
+ * immediately be called from New.
+ *
+ * mapload: This parameter is true if the atom being loaded is either being intialized during
+ * the Atom subsystem intialization, or if the atom is being loaded from the map template.
+ * If the item is being created at runtime any time after the Atom subsystem is intialized then
+ * it's false.
+ *
+ * You must always call the parent of this proc, otherwise failures will occur as the item
+ * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
+ * the item being completely unclickable)
+ *
+ * You must not sleep in this proc, or any subprocs
+ *
+ * Any parameters from new are passed through (excluding loc), naturally if you're loading from a map
+ * there are no other arguments
+ *
+ * Must return an [initialization hint][INITIALIZE_HINT_NORMAL] or a runtime will occur.
+ *
+ * Note: the following functions don't call the base for optimization and must copypasta handling:
+ * * [/turf/proc/Initialize]
+ * * [/turf/open/space/proc/Initialize]
+ */
 /atom/proc/Initialize(mapload, ...)
+	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+
 	//atom color stuff
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
@@ -130,14 +193,34 @@
 
 	return INITIALIZE_HINT_NORMAL
 
-//called if Initialize returns INITIALIZE_HINT_LATELOAD
+/**
+ * Late Intialization, for code that should run after all atoms have run Intialization
+ *
+ * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
+ *  proc must return the hint
+ * [INITIALIZE_HINT_LATELOAD] otherwise you will never be called.
+ *
+ * useful for doing things like finding other machines on GLOB.machines because you can guarantee
+ * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
+ * code has been run
+ */
 /atom/proc/LateInitialize()
-	return
+	set waitfor = FALSE
 
-// Put your AddComponent() calls here
+/// Put your [AddComponent] calls here
 /atom/proc/ComponentInitialize()
 	return
 
+/**
+ * Top level of the destroy chain for most atoms
+ *
+ * Cleans up the following:
+ * * Removes alternate apperances from huds that see them
+ * * qdels the reagent holder from atoms if it exists
+ * * clears the orbiters list
+ * * clears overlays and priority overlays
+ * * clears the light object
+ */
 /atom/Destroy()
 	if(alternate_appearances)
 		for(var/K in alternate_appearances)
@@ -146,6 +229,8 @@
 
 	if(reagents)
 		qdel(reagents)
+
+	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
 
@@ -183,6 +268,16 @@
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	return !density
 
+/**
+ * Is this atom currently located on centcom
+ *
+ * Specifically, is it on the z level and within the centcom areas
+ *
+ * You can also be in a shuttleshuttle during endgame transit
+ *
+ * Used in gamemode to identify mobs who have escaped and for some other areas of the code
+ * who don't want atoms where they shouldn't be
+ */
 /atom/proc/onCentCom()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -213,6 +308,13 @@
 				if(T in shuttle_area)
 					return TRUE
 
+/**
+ * Is the atom in any of the centcom syndicate areas
+ *
+ * Either in the syndie base on centcom, or any of their shuttles
+ *
+ * Also used in gamemode code for win conditions
+ */
 /atom/proc/onSyndieBase()
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -222,6 +324,23 @@
 		return FALSE
 
 	if(istype(T.loc, /area/shuttle/syndicate) || istype(T.loc, /area/syndicate_mothership) || istype(T.loc, /area/shuttle/assault_pod))
+		return TRUE
+
+	return FALSE
+
+/**
+ * Is the atom in an away mission
+ *
+ * Must be in the away mission z-level to return TRUE
+ *
+ * Also used in gamemode code for win conditions
+ */
+/atom/proc/onAwayMission()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+
+	if(is_away_level(T.z))
 		return TRUE
 
 	return FALSE
@@ -421,7 +540,7 @@
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 

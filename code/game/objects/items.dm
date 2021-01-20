@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	
+
 	attack_hand_speed = 0
 	attack_hand_is_action = FALSE
 	attack_hand_unwieldlyness = 0
@@ -431,18 +431,19 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
 
-/obj/item/proc/dropped(mob/user)
+/// Called when a mob drops an item.
+/obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	current_equipped_slot = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
 	if(item_flags & DROPDEL)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
-	if(SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user) & COMPONENT_DROPPED_RELOCATION)
-		. = ITEM_RELOCATED_BY_DROPPED
-	user.update_equipment_speed_mods()
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
+	// if(!silent)
+	// 	playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+	user?.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -476,22 +477,32 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	over.MouseDrop_T(src,usr)
 	return
 
-// called after an item is placed in an equipment slot
-// user is mob that equipped it
-// slot uses the slot_X defines found in setup.dm
-// for items that can be placed in multiple slots
-// note this isn't called during the initial dressing of a player
-/obj/item/proc/equipped(mob/user, slot)
+/**
+ * Called after an item is placed in an equipment slot.
+ *
+ * Note that hands count as slots.
+ *
+ * Arguments:
+ * * user is mob that equipped it
+ * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+ * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ */
+/obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	. = SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	current_equipped_slot = slot
-	if(!(. & COMPONENT_NO_GRANT_ACTIONS))
-		for(var/X in actions)
-			var/datum/action/A = X
-			if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
-				A.Grant(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
+			A.Grant(user)
 	item_flags |= IN_INVENTORY
+	// if(!initial)
+	// 	if(equip_sound && (slot_flags & slot))
+	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
+	// 	else if(slot == ITEM_SLOT_HANDS)
+	// 		playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
+
 
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
@@ -659,6 +670,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			else
 				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
 
+		// else
+		// 	playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
