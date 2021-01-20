@@ -273,10 +273,26 @@
 /obj/item/restraints/legcuffs/beartrap/proc/do_special_trap(var/mob/living/target)
 
 /obj/item/restraints/legcuffs/beartrap/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/syringe) && !armed)
-		to_chat(user, "<span class='notice' You attach the syringe to the pressure plate of the bear trap. Diabolical!</span>")
+	if(armed)
+		return FALSE
+	switch(I.type)
+	if(/obj/item/reagent_containers/syringe/piercing)
+		to_chat(user, "<span class='notice' You attach the piercing syringe to the pressure plate of the bear trap. Diabolical!</span>")
+		var/obj/item/restraints/legcuffs/beartrap/chem/newtrap = new /obj/item/restraints/legcuffs/beartrap/chem/pierce(get_turf(src))
+		I.reagents.trans_to(newtrap, 10)
 		qdel(I)
-		new /obj/item/restraints/legcuffs/beartrap/chem(get_turf(src))
+		qdel(src)
+	if(/obj/item/reagent_containers/syringe/bluespace)
+		to_chat(user, "<span class='notice' You attach the bluespace syringe to the pressure plate of the bear trap. Diabolical!</span>")
+		var/obj/item/restraints/legcuffs/beartrap/chem/newtrap = new /obj/item/restraints/legcuffs/beartrap/chem/bs(get_turf(src))
+		I.reagents.trans_to(newtrap, 60)
+		qdel(I)
+		qdel(src)
+	if(/obj/item/reagent_containers/syringe)
+		to_chat(user, "<span class='notice' You attach the syringe to the pressure plate of the bear trap. Diabolical!</span>")
+		var/obj/item/restraints/legcuffs/beartrap/chem/newtrap = new /obj/item/restraints/legcuffs/beartrap/chem(get_turf(src))
+		I.reagents.trans_to(newtrap, 15)
+		qdel(I)
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
@@ -344,12 +360,13 @@
 	icon_state = "chemtrap"
 	throw_speed = 1
 	throw_range = 1
-	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking needle attached to a beaker on it."
+	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking needle attached to a small glass vial."
 	trap_damage = 10
+	var/reagent_max = 20 //how many u of reagents do we have on init
 
 /obj/item/restraints/legcuffs/beartrap/chem/Initialize()
 	..()
-	create_reagents(20, TRANSPARENT)
+	create_reagents(reagent_max, TRANSPARENT)
 
 /obj/item/restraints/legcuffs/beartrap/chem/attackby(obj/item/I, mob/user)
 	if(I.reagents)
@@ -357,7 +374,8 @@
 		update_icon()
 	else
 		..()
-/obj/item/restraints/legcuffs/beartrap/do_special_trap(var/mob/living/target)
+
+/obj/item/restraints/legcuffs/beartrap/chem/do_special_trap(var/mob/living/target)
 	if(target.is_injectable())
 		reagents.trans_to(target, 15, log = TRUE)
 
@@ -370,6 +388,21 @@
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "beartrapfill", color = mix_color_from_reagents(reagents.reagent_list))
 		. += filling
 	..()
+
+/obj/item/restraints/legcuffs/beartrap/chem/bs
+	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking needle attached to a technological-looking vial."
+	trap_damage = 5
+	reagent_max = 60
+
+/obj/item/restraints/legcuffs/beartrap/chem/pierce
+	desc = "A trap used to catch bears and other legged creatures. This one has a wicked-looking diamond needle attached to a small glass vial."
+	trap_damage = 15
+	reagent_max = 10
+
+
+/obj/item/restraints/legcuffs/beartrap/chem/pierce/do_special_trap(var/mob/living/target)
+	if(iscarbon(target))
+		reagents.trans_to(target, 15, log = TRUE)
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
