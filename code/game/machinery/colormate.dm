@@ -67,7 +67,7 @@
 			return
 		if(!QDELETED(H))
 			H.release()
-		insert_mob(H, user)
+		insert_mob(victim, user)
 
 	if(is_type_in_list(I, allowed_types) && is_operational())
 		if(!user.transferItemToLoc(I, src))
