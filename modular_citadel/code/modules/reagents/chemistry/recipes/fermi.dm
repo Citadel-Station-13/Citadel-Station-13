@@ -94,7 +94,7 @@
 		e.start()
 
 	if(ImpureTot) //If impure, v.small emp (0.6 or less)
-		empulse(T, impureTot, 1)
+		empulse(T, ImpureTot, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
 	return
