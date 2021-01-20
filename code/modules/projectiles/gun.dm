@@ -148,8 +148,7 @@
 	return TRUE
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	if(user)
-		to_chat(user, "<span class='danger'>*click*</span>")
+	to_chat(user, "<span class='danger'>*click*</span>")
 	playsound(src, "gun_dry_fire", 30, 1)
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
@@ -188,7 +187,7 @@
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(user && !CheckAttackCooldown(user, target, TRUE))
+	if(!CheckAttackCooldown(user, target, TRUE))
 		return
 	process_afterattack(target, user, flag, params)
 
@@ -199,8 +198,6 @@
 	if(!target)
 		return
 	if(firing)
-		return
-	if(!user)
 		return
 	var/stamloss = user.getStaminaLoss()
 	if(flag) //It's adjacent, is the user, or is on the user's person
@@ -308,8 +305,7 @@
 	return busy_action || firing || ((last_fire + fire_delay) > world.time)
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0, stam_cost = 0)
-	if(user)
-		add_fingerprint(user)
+	add_fingerprint(user)
 
 	if(on_cooldown())
 		return
@@ -347,7 +343,7 @@
 				shoot_with_empty_chamber(user)
 				return
 			else
-				if(user && get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, 1, target, message, stam_cost)
 				else
 					shoot_live_shot(user, 0, target, message, stam_cost)
@@ -361,29 +357,29 @@
 	return TRUE
 
 /obj/item/gun/proc/do_burst_shot(mob/living/user, atom/target, message = TRUE, params=null, zone_override = "", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0, stam_cost = 0)
-	if(!firing)
+	if(!user || !firing)
+		firing = FALSE
 		return FALSE
-	if(user && !issilicon(user))
+	if(!issilicon(user))
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing = FALSE
 			return FALSE
 	if(chambered && chambered.BB)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				if(user)
-					to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread), 1)
 		else //Smart spread
 			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread), 1)
-		before_firing(target, user)
+		before_firing(target,user)
 		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
 			shoot_with_empty_chamber(user)
 			firing = FALSE
 			return FALSE
 		else
-			if(user && get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
+			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 				shoot_live_shot(user, 1, target, message, stam_cost)
 			else
 				shoot_live_shot(user, 0, target, message, stam_cost)
@@ -640,11 +636,3 @@
 	. = recoil
 	if(user && !user.has_gravity())
 		. = recoil*5
-
-
-/obj/item/gun/DoRevenantThrowEffects(atom/target)
-	var/picked_target
-	var/list/possible_targets = range(3,src)
-	picked_target = pick(possible_targets)
-	if(picked_target)
-		process_fire(null, picked_target)
