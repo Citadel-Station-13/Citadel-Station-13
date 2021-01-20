@@ -25,7 +25,13 @@
 	//This is used to optimize the map loader
 	return
 
+/**
+ * Space Initialize
+ *
+ * Doesn't call parent, see [/atom/proc/Initialize]
+ */
 /turf/open/space/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
 	update_air_ref()
@@ -35,6 +41,15 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	// if (length(smoothing_groups))
+	// 	sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
+	// 	SET_BITFLAG_LIST(smoothing_groups)
+	// if (length(canSmoothWith))
+	// 	sortTim(canSmoothWith)
+	// 	if(canSmoothWith[length(canSmoothWith)] > MAX_S_TURF) //If the last element is higher than the maximum turf-only value, then it must scan turf contents for smoothing targets.
+	// 		smoothing_flags |= SMOOTH_OBJ
+	// 	SET_BITFLAG_LIST(canSmoothWith)
 
 	var/area/A = loc
 	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
@@ -48,6 +63,13 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
 
 	ComponentInitialize()
 
@@ -74,6 +96,10 @@
 /turf/open/space/Assimilate_Air()
 	return
 
+//IT SHOULD RETURN NULL YOU MONKEY, WHY IN TARNATION WHAT THE FUCKING FUCK
+/turf/open/space/remove_air(amount)
+	return null
+
 /turf/open/space/proc/update_starlight()
 	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
@@ -90,9 +116,8 @@
 /turf/open/space/proc/CanBuildHere()
 	return TRUE
 
-/turf/open/space/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
-	if(lube & FLYING_DOESNT_HELP)
-		return ..()
+/turf/open/space/handle_slip()
+	return // no lube bullshit, this is space
 
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
@@ -107,15 +132,16 @@
 			return
 		if(L)
 			if(R.use(1))
+				qdel(L)
 				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
-				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 				new/obj/structure/lattice/catwalk(src)
 			else
 				to_chat(user, "<span class='warning'>You need two rods to build a catwalk!</span>")
 			return
 		if(R.use(1))
 			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 			ReplaceWithLattice()
 		else
 			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
@@ -126,7 +152,7 @@
 			var/obj/item/stack/tile/plasteel/S = C
 			if(S.use(1))
 				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
 				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			else

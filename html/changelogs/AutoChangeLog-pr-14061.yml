@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - tweak: "Improvised gauzes can now be crafted in stacks up to 10, like their maximum stacksize implies they should be capable of doing."
+  - bugfix: "Pouring sterilizine on gauze now takes the proper 5u per sterilized gauze instead of 10u."

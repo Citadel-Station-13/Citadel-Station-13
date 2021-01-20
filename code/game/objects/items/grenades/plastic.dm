@@ -85,6 +85,7 @@
 /obj/item/grenade/plastic/Crossed(atom/movable/AM)
 	if(nadeassembly)
 		nadeassembly.Crossed(AM)
+	. = ..()
 
 /obj/item/grenade/plastic/on_found(mob/finder)
 	if(nadeassembly)

@@ -99,7 +99,7 @@
 	new reward(get_turf(src))
 
 /mob/living/carbon/human/dummy/travelling_trader/Initialize()
-	..()
+	. = ..() // return a hint you fuck
 	add_atom_colour("#570d6b", FIXED_COLOUR_PRIORITY) //make them purple (otherworldly!)
 	set_light(1, -0.7, "#AAD84B")
 	ADD_TRAIT(src,TRAIT_PIERCEIMMUNE, "trader_pierce_immune") //don't let people take their blood
