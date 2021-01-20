@@ -5,8 +5,7 @@
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0)
-	set waitfor = FALSE			//n o
+/atom/movable/Move(atom/newloc, direct=0, glide_size_override = 0)
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
@@ -52,8 +51,7 @@
 //
 ////////////////////////////////////////
 
-/atom/movable/Move(atom/newloc, direct)
-	set waitfor = FALSE			//n o
+/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(!moving_from_pull)
@@ -61,6 +59,9 @@
 	if(!loc || !newloc)
 		return FALSE
 	var/atom/oldloc = loc
+	//Early override for some cases like diagonal movement
+	if(glide_size_override)
+		set_glide_size(glide_size_override, FALSE)
 
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
@@ -120,32 +121,38 @@
 			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = NONE
+		last_move = 0
 		return
 
+	setDir(direct)
 	if(.)
-		last_move = direct
-		setDir(direct)
-
-		if(has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-			return FALSE
-
-		if(pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
-			if(pulling.anchored)
-				stop_pulling()
-			else
-				var/pull_dir = get_dir(src, pulling)
-				//puller and pullee more than one tile away or in diagonal position
-				if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
-					pulling.moving_from_pull = src
-					pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-					pulling.moving_from_pull = null
 		Moved(oldloc, direct)
+	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
+		if(pulling.anchored)
+			stop_pulling()
+		else
+			var/pull_dir = get_dir(src, pulling)
+			//puller and pullee more than one tile away or in diagonal position
+			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+				pulling.moving_from_pull = src
+				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
+				pulling.moving_from_pull = null
+			check_pulling()
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
+
+	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
+	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
+	if(glide_size_override)
+		set_glide_size(glide_size_override, FALSE)
+
+	last_move = direct
+	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
+		return FALSE
+
+/atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct))
+		if(!buckled_mob.Move(newloc, direct, glide_size_override))
 			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
@@ -155,6 +162,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, Forced)
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
@@ -174,6 +182,8 @@
 
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
+	// SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 /atom/movable/Uncross(atom/movable/AM, atom/newloc)
@@ -204,7 +214,11 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
+///Proc to modify the movement_type and hook behavior associated with it changing.
 /atom/movable/proc/setMovetype(newval)
+	if(movement_type == newval)
+		return
+	. = movement_type
 	movement_type = newval
 
 ///////////// FORCED MOVEMENT /////////////
@@ -268,37 +282,44 @@
 				old_area.Exited(src, null)
 		loc = null
 
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
+/**
+ * Called whenever an object moves and by mobs when they attempt to move themselves through space
+ * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
+ *
+ * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+ *
+ * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
+ *
+ * Arguments:
+ * * movement_dir - 0 when stopping or any dir when trying to move
+ */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
 	if(has_gravity(src))
-		return 1
+		return TRUE
 
-	if(pulledby)
-		return 1
+	if(pulledby && (pulledby.pulledby != src || moving_from_pull))
+		return TRUE
 
 	if(throwing)
-		return 1
+		return TRUE
 
 	if(!isturf(loc))
-		return 1
+		return TRUE
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-	if(!loc || Process_Spacemove(0))
+/// Only moves the object if it's under no gravity
+/atom/movable/proc/newtonian_move(direction)
+	if(!isturf(loc) || Process_Spacemove(0))
 		inertia_dir = 0
-		return 0
+		return FALSE
 
 	inertia_dir = direction
 	if(!direction)
-		return 1
+		return TRUE
 	inertia_last_loc = loc
 	SSspacedrift.processing[src] = src
-	return 1
+	return TRUE
