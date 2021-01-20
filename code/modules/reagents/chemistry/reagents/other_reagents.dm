@@ -2534,7 +2534,7 @@
 		M.adjustStaminaLoss(-0.25*REM) // the more wounds, the more stamina regen
 	..()
 
-datum/reagent/eldritch
+/datum/reagent/eldritch
 	name = "Eldritch Essence"
 	description = "Strange liquid that defies the laws of physics"
 	taste_description = "Ag'hsj'saje'sh"

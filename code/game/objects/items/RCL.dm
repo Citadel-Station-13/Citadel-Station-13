@@ -166,7 +166,7 @@
 				last = C
 				break
 
-obj/item/rcl/proc/getMobhook(mob/to_hook)
+/obj/item/rcl/proc/getMobhook(mob/to_hook)
 	if(listeningTo == to_hook)
 		return
 	if(listeningTo)
