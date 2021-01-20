@@ -62,8 +62,8 @@
 		amount += BP.burn_dam
 	return amount
 
-
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+//In both these procs, only_organic / only_robotic are only used for healing, not for damaging. For now at least.
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -71,10 +71,10 @@
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health)
 	else
-		heal_overall_damage(abs(amount), 0, 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(abs(amount), 0, 0, only_robotic, only_organic, updating_health)
 	return amount
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
@@ -82,7 +82,7 @@
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health)
 	else
-		heal_overall_damage(0, abs(amount), 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(0, abs(amount), 0, only_robotic, only_organic, updating_health)
 	return amount
 
 

@@ -19,7 +19,14 @@
 	/// chance we'll be stopped from squeaking by cooldown when something crossing us squeaks
 	var/cross_squeak_delay_chance = 33		// about 3 things can squeak at a time
 
-/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override)
+	///extra-range for this component's sound
+	var/sound_extra_range = -1
+	///when sounds start falling off for the squeak
+	var/sound_falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE
+	///sound exponent for squeak. Defaults to 10 as squeaking is loud and annoying enough.
+	var/sound_falloff_exponent = 10
+
+/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override, extrarange, falloff_exponent, fallof_distance)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
@@ -45,6 +52,12 @@
 		step_delay = step_delay_override
 	if(isnum(use_delay_override))
 		use_delay = use_delay_override
+	if(isnum(extrarange))
+		sound_extra_range = extrarange
+	if(isnum(falloff_exponent))
+		sound_falloff_exponent = falloff_exponent
+	if(isnum(fallof_distance))
+		sound_falloff_distance = fallof_distance
 
 /datum/component/squeak/UnregisterFromParent()
 	if(!isatom(parent))
@@ -62,6 +75,7 @@
 	return ..()
 
 /datum/component/squeak/proc/play_squeak()
+	SIGNAL_HANDLER
 	do_play_squeak()
 
 /datum/component/squeak/proc/do_play_squeak(bypass_cooldown = FALSE)
@@ -69,14 +83,16 @@
 		return FALSE
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
-			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
+			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
 		else
-			playsound(parent, pickweight(override_squeak_sounds), volume, 1, -1)
+			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
 		last_squeak = world.time
 		return TRUE
 	return FALSE
 
 /datum/component/squeak/proc/step_squeak()
+	SIGNAL_HANDLER
+
 	if(steps > step_delay)
 		do_play_squeak(TRUE)
 		steps = 0
@@ -84,20 +100,22 @@
 		steps++
 
 /datum/component/squeak/proc/play_squeak_crossed(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
 			return
-		else if(istype(AM, /obj/item/projectile))
-			var/obj/item/projectile/P = AM
-			if(P.original != parent)
-				return
+	if(AM.movement_type & (FLYING|FLOATING) || !AM.has_gravity())
+		return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		if(do_play_squeak())
 			SEND_SIGNAL(AM, COMSIG_CROSS_SQUEAKED)
 
 /datum/component/squeak/proc/use_squeak()
+	SIGNAL_HANDLER
+
 	if(last_use + use_delay < world.time)
 		last_use = world.time
 		play_squeak()
@@ -118,6 +136,8 @@
 	RegisterSignal(holder, COMSIG_ATOM_DIR_CHANGE, .proc/holder_dir_change)
 
 /datum/component/squeak/proc/holder_dir_change(datum/source, old_dir, new_dir)
+	SIGNAL_HANDLER
+
 	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
 	if(old_dir != new_dir)
 		play_squeak()

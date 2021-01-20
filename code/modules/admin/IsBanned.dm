@@ -226,6 +226,14 @@
 	key_cache[key] = 0
 	return .
 
+/proc/restore_stickybans()
+	for (var/banned_ckey in GLOB.stickybanadmintexts)
+		world.SetConfig("ban", banned_ckey, GLOB.stickybanadmintexts[banned_ckey])
+	GLOB.stickybanadminexemptions = list()
+	GLOB.stickybanadmintexts = list()
+	if (GLOB.stickbanadminexemptiontimerid)
+		deltimer(GLOB.stickbanadminexemptiontimerid)
+	GLOB.stickbanadminexemptiontimerid = null
 
 #undef STICKYBAN_MAX_MATCHES
 #undef STICKYBAN_MAX_EXISTING_USER_MATCHES

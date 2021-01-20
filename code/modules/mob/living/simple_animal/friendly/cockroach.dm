@@ -37,23 +37,25 @@
 		return
 	..()
 
-/mob/living/simple_animal/cockroach/Crossed(var/atom/movable/AM)
-	if(ismob(AM))
-		if(isliving(AM))
-			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
-				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
-					adjustBruteLoss(1) //kills a normal cockroach
-				else
-					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
-	else
-		if(isstructure(AM))
+/mob/living/simple_animal/cockroach/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/A = AM
+		if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
+			if(HAS_TRAIT(A, TRAIT_PACIFISM))
+				A.visible_message("<span class='notice'>[A] carefully steps over [src].</span>", "<span class='notice'>You carefully step over [src] to avoid hurting it.</span>")
+				return
 			if(prob(squish_chance))
-				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
-				adjustBruteLoss(1)
+				A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
+				adjustBruteLoss(1) //kills a normal cockroach
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
+	else if(isstructure(AM))
+		if(prob(squish_chance))
+			AM.visible_message("<span class='notice'>[src] is crushed under [AM].</span>")
+			adjustBruteLoss(1)
+		else
+			visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
 /mob/living/simple_animal/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return

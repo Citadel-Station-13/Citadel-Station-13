@@ -147,6 +147,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/handle_statpanel_click(list/href_list)
 	var/atom/target = locate(href_list["statpanel_item_target"])
+	if(!target)
+		return
 	Click(target, target.loc, null, "[href_list["statpanel_item_shiftclick"]?"shift=1;":null][href_list["statpanel_item_ctrlclick"]?"ctrl=1;":null]&alt=[href_list["statpanel_item_altclick"]?"alt=1;":null]", FALSE, "statpanel")
 
 /client/proc/is_content_unlocked()
@@ -496,7 +498,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)
@@ -668,7 +670,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	query_log_connection.Execute()
 	qdel(query_log_connection)
 
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 
 	if(new_player)
 		player_age = -1
@@ -1061,3 +1063,25 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		verb_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+
+//increment progress for an unlockable loadout item
+/client/proc/increment_progress(key, amount)
+	if(prefs)
+		var/savefile/S = new /savefile(prefs.path)
+		var/list/unlockable_loadout_data = prefs.unlockable_loadout_data
+		if(!length(unlockable_loadout_data))
+			unlockable_loadout_data = list()
+			unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+		else
+			if(unlockable_loadout_data[key])
+				unlockable_loadout_data[key] += amount
+			else
+				unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+	return FALSE
+
