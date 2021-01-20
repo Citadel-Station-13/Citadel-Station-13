@@ -197,6 +197,14 @@ GLOBAL_LIST(topic_status_cache)
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
 
+	if(!SSfail2topic)
+		return "Server not initialized."
+	if(SSfail2topic.IsRateLimited(addr))
+		return "Rate limited."
+
+	if(length(T) > CONFIG_GET(number/topic_max_size))
+		return "Payload too large!"
+
 	var/static/list/topic_handlers = TopicHandlers()
 
 	var/list/input = params2list(T)

@@ -289,7 +289,7 @@
 //VERY SUPER BADASS NECKERCHIEFS//
 //////////////////////////////////
 
-obj/item/clothing/neck/neckerchief
+/obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
 	w_class = WEIGHT_CLASS_TINY
 	var/sourceBandanaType
