@@ -61,8 +61,9 @@
 	if(!hood)
 		to_chat(loc, "<span class='warning'>[src] seems to be missing its hood..</span>")
 		return
-	hood.atom_colours = atom_colours.Copy()
-	hood.update_atom_colour()
+	if(atom_colours)
+		hood.atom_colours = atom_colours.Copy()
+		hood.update_atom_colour()
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
@@ -198,8 +199,9 @@
 	if(!helmet)
 		to_chat(H, "<span class='warning'>[src] seems to be missing its helmet..</span>")
 		return
-	helmet.atom_colours = atom_colours.Copy()
-	helmet.update_atom_colour()
+	if(atom_colours)
+		helmet.atom_colours = atom_colours.Copy()
+		helmet.update_atom_colour()
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)
