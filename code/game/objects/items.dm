@@ -475,17 +475,16 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			spooker.stun(10)
 			spooker.reveal(30)
 			spooker.telekinesis_cooldown = TRUE
-			float(TRUE, 2)
+			float(TRUE, 1)
 			sleep(10)
 			safe_throw_at(over, 10, 2)
 			ADD_TRAIT(src, TRAIT_SPOOKY_THROW)
-			src.DoRevenantThrowEffects()
+			DoRevenantThrowEffects(over)
+			log_combat(usr, over, "spooky telekinesised at", src)
 			var/obj/effect/temp_visual/telekinesis/T = new(get_turf(src))
 			T.color = purple
 			addtimer(CALLBACK(src, /atom/movable.proc/float, FALSE), 2)
 			addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
-			sleep(2)
-			REMOVE_TRAIT(src, TRAIT_SPOOKY_THROW)
 			return
 
 	if(!Adjacent(usr) || !over.Adjacent(usr))
@@ -493,32 +492,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	over.MouseDrop_T(src,usr)
 	return
-/obj/item/proc/DoRevenantThrowEffects()
-	var/hijink_to_do
-	switch(istype)
-		if(obj/item/gun)
-			hijink_to_do = "shoot"
-		if(obj/item/storage)
-			if(GetComponent(datum/component/storage))
-				hijink_to_do = "scatter items"
-		if(obj/item/card/id)
-			hijink_to_do = "flash id"
-		if(obj/item/weldingtool)
-			hijink_to_do = "welder toggle"
-		if(obj/item/tank)
-			hijink_to_do = "toggle tank"
-		if(obj/item/paper)
-			hijink_to_do = "paper into plane"
-		if(obj/item/paper_bin)
-			hijink_to_do = "paperbin scatter"
-		if(obj/item/assembly/flash)
-			hijink_to_do = "flash randomly"
-		if(obj/item/flashlight)
-			hijinks_to_do = "toggle flashlight"
-		if(obj/item/grenade/flashbang)
-			
-		if(obj/item/grenade/stingbang)
-	while(HAS_TRAIT(src, TRAIT_SPOOKY_THROW))
+
+//Use this for effects you want to happen when a revenant throws itself, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
+/obj/item/proc/DoRevenantThrowEffects(atom/target)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR)
+
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm

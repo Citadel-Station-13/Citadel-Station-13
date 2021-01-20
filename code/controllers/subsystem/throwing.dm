@@ -71,6 +71,8 @@ SUBSYSTEM_DEF(throwing)
 	target = null
 	thrower = null
 	callback = null
+	if(HAS_TRAIT(thrownthing, TRAIT_SPOOKY_THROW)
+		REMOVE_TRAIT(thrownthing, TRAIT_SPOOKY_THROW)
 	return ..()
 
 /datum/thrownthing/proc/tick()

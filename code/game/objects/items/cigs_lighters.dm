@@ -136,6 +136,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+/obj/item/clothing/mask/cigarette/DoRevenantThrowEffects(atom/target)
+	attackby(src)
+
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
 	if(!lit && smoketime > 0)
 		var/lighting_text = W.ignition_effect(src, user)
