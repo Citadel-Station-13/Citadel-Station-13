@@ -29620,10 +29620,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bsU" = (
-/mob/living/simple_animal/hostile/retaliate/ghost,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "bsV" = (
@@ -45265,7 +45265,7 @@
 /area/maintenance/aft)
 "cfq" = (
 /obj/structure/mopbucket,
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cfr" = (
@@ -53488,6 +53488,10 @@
 	},
 /turf/closed/wall,
 /area/science/circuit)
+"dxF" = (
+/obj/machinery/gear_painter,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "dyE" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -56505,6 +56509,10 @@
 	},
 /turf/open/floor/wood/wood_diagonal,
 /area/maintenance/port/fore)
+"kqy" = (
+/obj/machinery/gear_painter,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "kqI" = (
 /obj/structure/window,
 /turf/open/floor/wood,
@@ -58551,6 +58559,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "pqR" = (
@@ -86334,7 +86343,7 @@ oKh
 oKh
 iiW
 iiW
-iiW
+dxF
 izv
 nfm
 bCq
@@ -98349,7 +98358,7 @@ awB
 att
 azh
 fHG
-fHG
+kqy
 kxf
 ufD
 alP

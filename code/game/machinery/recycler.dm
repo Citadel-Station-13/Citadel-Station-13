@@ -100,51 +100,54 @@
 	eat(AM)
 	. = ..()
 
-/obj/machinery/recycler/proc/eat(atom/AM0)
-	if(stat & (BROKEN|NOPOWER) || safety_mode)
+/obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
+	if(stat & (BROKEN|NOPOWER))
 		return
+	if(safety_mode)
+		return
+	if(!isturf(AM0.loc))
+		return //I don't know how you called Crossed() but stop it.
 
-	var/list/to_eat
+	var/list/to_eat = AM0.GetAllContents()
 
-	to_eat = list(AM0)
+	var/living_detected = FALSE //technically includes silicons as well but eh
+	var/list/nom = list()
+	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
-	var/items_recycled = 0
-	var/buzz = FALSE
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		if(QDELETED(AM))
-			continue
-		var/obj/item/bodypart/head/as_head = AM
-		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay)
-		if(brain_holder)
-			if(obj_flags & EMAGGED)
-				continue
-			else
-				emergency_stop(AM)
-				return
+		if(istype(AM, /obj/item))
+			var/obj/item/bodypart/head/as_head = AM
+			var/obj/item/mmi/as_mmi = AM
+			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+				living_detected = TRUE
+			nom += AM
 		else if(isliving(AM))
-			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
-				to_eat += crush_living(AM)
-			else
-				emergency_stop(AM)
-				return
-		else if(isitem(AM))
-			var/obj/O = AM
-			if(O.resistance_flags & INDESTRUCTIBLE)
-				buzz = TRUE
-				O.forceMove(loc)
-			else
-				to_eat += recycle_item(AM)
-				items_recycled++
-		else
-			buzz = TRUE
-			AM.forceMove(loc)
-
-	if(items_recycled)
-		playsound(src, item_recycle_sound, 50, 1)
-	if(buzz)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			living_detected = TRUE
+			crunchy_nom += AM
+	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
+	if(living_detected) // First, check if we have any living beings detected.
+		if(obj_flags & EMAGGED)
+			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
+				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					crush_living(CRUNCH)
+		else // Stop processing right now without eating anything.
+			emergency_stop()
+			return
+	for(var/nommed in nom)
+		recycle_item(nommed)
+	if(nom.len && sound)
+		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+	if(not_eaten)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+	if(!ismob(AM0))
+		AM0.moveToNullspace()
+		qdel(AM0)
+	else // Lets not move a mob to nullspace and qdel it, yes?
+		for(var/i in AM0.contents)
+			var/atom/movable/content = i
+			content.moveToNullspace()
+			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 
