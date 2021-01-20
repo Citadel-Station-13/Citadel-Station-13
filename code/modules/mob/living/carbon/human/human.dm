@@ -939,7 +939,7 @@
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	var/GS_needed = istype(target, /mob/living/silicon/pai)? GRAB_PASSIVE : GRAB_AGGRESSIVE
-	if(pulling == target && grab_state >= GS_NEEDED && stat == CONSCIOUS)
+	if(pulling == target && grab_state >= GS_needed && stat == CONSCIOUS)
 		//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
 		if(user == target && can_piggyback(target))
 			piggyback(target)
