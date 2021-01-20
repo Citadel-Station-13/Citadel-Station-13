@@ -108,6 +108,6 @@
 /datum/uplink_item/device_tools/ablative_armwraps
 	name = "Ablative Armwraps"
 	desc = "A pair of highly reinforced armwraps allowing the user to parry almost anything. Fully reflects projectiles, no downsides to failing, but is very hard to parry melee with."
-	cost = 12
+	cost = 6
 	item = /obj/item/clothing/gloves/fingerless/ablative
 	exclude_modes = list(/datum/game_mode/nuclear)
