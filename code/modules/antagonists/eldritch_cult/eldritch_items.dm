@@ -6,6 +6,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	///Target
 	var/mob/living/carbon/human/target
+	var/datum/antagonist/heretic/sac_targetter	//The heretic who used this to acquire the current target - gets cleared when target gets sacrificed.
+
+/obj/item/living_heart/Initialize()
+	. = ..()
+	GLOB.living_heart_cache.Add(src)	//Add is better than +=.
+
+/obj/item/living_heart/Destroy()
+	GLOB.living_heart_cache.Remove(src)
+	if(sac_targetter && target)
+		sac_targetter.sac_targetted.Remove(target.real_name)
+	return ..()
 
 /obj/item/living_heart/attack_self(mob/user)
 	. = ..()
