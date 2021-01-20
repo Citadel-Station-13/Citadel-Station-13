@@ -369,6 +369,7 @@
 	if(reagents.total_volume)
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "beartrapfill", color = mix_color_from_reagents(reagents.reagent_list))
 		. += filling
+	..()
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
