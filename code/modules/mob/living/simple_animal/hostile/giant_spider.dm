@@ -389,12 +389,13 @@
 	name = "Wrap"
 	panel = "Spider"
 	active = FALSE
-	datum/action/spell_action/action = null
 	desc = "Wrap something or someone in a cocoon. If it's a living being, you'll also consume them, allowing you to lay eggs."
 	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
+
+	var/datum/action/spell_action/action // hello?? how was this not causing the compiler to fail?
 
 /obj/effect/proc_holder/wrap/Initialize()
 	. = ..()
