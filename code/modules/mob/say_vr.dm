@@ -9,7 +9,7 @@
 	return src
 
 /proc/get_top_level_mob(mob/S)
-	if(ismob(src.loc) && S.loc != S)
+	if(ismob(S.loc) && S.loc != S)
 		var/mob/M = S.loc
 		return M.get_top_level_mob()
 	return S
