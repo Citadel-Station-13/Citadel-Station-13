@@ -395,8 +395,6 @@
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
 
-	var/datum/action/spell_action/action // hello?? how was this not causing the compiler to fail?
-
 /obj/effect/proc_holder/wrap/Initialize()
 	. = ..()
 	action = new(src)
