@@ -952,11 +952,11 @@
 	. = ..()
 
 //src is the user that will be carrying, target is the mob to be carried
-/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
-	return (istype(target) && target.stat == CONSCIOUS)
+/mob/living/carbon/human/proc/can_piggyback(mob/living/target)
+	return (istype(target, /mob/living/carbon) || istype(target, /mob/living/silicon)) && target.stat == CONSCIOUS
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND))
+	return (ishuman(target) || ispAI(target) && !CHECK_MOBILITY(target, MOBILITY_STAND)) || ispAI(target)
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
