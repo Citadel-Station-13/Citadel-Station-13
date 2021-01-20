@@ -85,6 +85,10 @@
 		to_chat(user, "<span class='warning'>You're not ready to tackle!</span>")
 		return
 
+	if(!user.mob_has_gravity() ||!user.loc.has_gravity() || isspaceturf(user.loc))
+		to_chat(user, "<span class='warning'>You can't find your footing without gravity!</span>")
+		return
+
 	if(user.has_status_effect(STATUS_EFFECT_TASED)) // can't tackle if you just got tased
 		to_chat(user, "<span class='warning'>You can't tackle while tased!</span>")
 		return
