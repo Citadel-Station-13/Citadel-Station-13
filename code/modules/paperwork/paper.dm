@@ -193,16 +193,13 @@
 	user.visible_message(ignition_message)
 	add_fingerprint(user)
 	fire_act(I.get_temperature())
-
+//I would have it become a paper plane before the throw, but that would risk runtimes
 /obj/item/paper/DoRevenantThrowEffects(atom/target)
-	sleep(5)
+	sleep(10)
 	if(HAS_TRAIT(src, TRAIT_SPOOKY_THROW))
-		sleep(5)
-		DoRevenantThrowEffects(atom/target)
 		return
-	var/obj/item/paperplane/plane = new(get_turf(src))
+	new /obj/item/paperplane(get_turf(src))
 	qdel(src)
-	plane.safe_throw_at(over, 10, 2)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user))

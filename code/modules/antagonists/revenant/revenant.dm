@@ -441,6 +441,30 @@
 		qdel(revenant)
 	..()
 
+/proc/RevenantThrow(over, mob/user, obj/item/throwable)
+	var/mob/living/simple_animal/revenant/spooker = user
+	if(!istype(throwable))
+		return
+	if(!throwable.anchored && !spooker.telekinesis_cooldown && spooker.castcheck(-5))
+		spooker.change_essence_amount(-5, FALSE, "telekinesis")
+		spooker.stun(20)
+		spooker.reveal(50)
+		spooker.telekinesis_cooldown = TRUE
+		throwable.float(TRUE)
+		sleep(10)
+		throwable.DoRevenantThrowEffects(over)
+		throwable.throw_at(over, 10, 2)
+		ADD_TRAIT(throwable, TRAIT_SPOOKY_THROW, "revenant")
+		throwable.float(FALSE, TRUE)
+		log_combat(throwable, over, "spooky telekinesised at", throwable)
+		var/obj/effect/temp_visual/telekinesis/T = new(get_turf(throwable))
+		T.color = "#8715b4"
+		addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+
+//Use this for effects you want to happen when a revenant throws itself, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
+/obj/item/proc/DoRevenantThrowEffects(atom/target)
+	return TRUE
+
 //objectives
 /datum/objective/revenant
 	var/targetAmount = 100

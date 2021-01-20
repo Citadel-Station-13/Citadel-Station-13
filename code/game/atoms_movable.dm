@@ -492,13 +492,13 @@
 	return TRUE
 
 //TODO: Better floating
-/atom/movable/proc/float(on, float_height)
-	if(throwing)
+/atom/movable/proc/float(on, throw_override)
+	if(throwing || !throw_override)
 		return
 	if(on && (!(movement_type & FLOATING) || floating_need_update))
-		animate(src, pixel_y = pixel_y + 2 + float_height, time = 10, loop = -1)
+		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
-		animate(src, pixel_y = pixel_y - 2 - float_height, time = 10, loop = -1)
+		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		if(!(movement_type & FLOATING))
 			setMovetype(movement_type | FLOATING)
 	else if (!on && movement_type & FLOATING)

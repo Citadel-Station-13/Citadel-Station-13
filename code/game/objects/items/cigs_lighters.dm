@@ -137,7 +137,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/DoRevenantThrowEffects(atom/target)
-	attackby(src)
+	if(lit)
+		attackby()
+	else
+		light()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/W, mob/user, params)
 	if(!lit && smoketime > 0)
@@ -519,6 +522,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
 	update_icon()
+
+/obj/item/lighter/DoRevenantThrowEffects(atom/target)
+	set_lit()
 
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)

@@ -626,10 +626,10 @@
 	if(user && !user.has_gravity())
 		. = recoil*5
 
+
 /obj/item/gun/DoRevenantThrowEffects(atom/target)
-	while(HAS_TRAIT(src, TRAIT_SPOOKY_THROW))
-		var/target
-		var/list/possible_targets = range(3,src)
-		target = pick(possible_targets)
-		if(target)
-			process_fire(null, target)
+	var/picked_target
+	var/list/possible_targets = range(3,src)
+	picked_target = pick(possible_targets)
+	if(picked_target)
+		process_fire(null, picked_target)

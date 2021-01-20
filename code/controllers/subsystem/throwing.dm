@@ -65,14 +65,14 @@ SUBSYSTEM_DEF(throwing)
 	var/last_move = 0
 
 /datum/thrownthing/Destroy()
+	if(HAS_TRAIT_FROM(thrownthing, TRAIT_SPOOKY_THROW, "revenant"))
+		REMOVE_TRAIT(thrownthing, TRAIT_SPOOKY_THROW, "revenant")
 	SSthrowing.processing -= thrownthing
 	thrownthing.throwing = null
 	thrownthing = null
 	target = null
 	thrower = null
 	callback = null
-	if(HAS_TRAIT(thrownthing, TRAIT_SPOOKY_THROW)
-		REMOVE_TRAIT(thrownthing, TRAIT_SPOOKY_THROW)
 	return ..()
 
 /datum/thrownthing/proc/tick()

@@ -469,22 +469,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			usr.FlushCurrentAction()
 			return TRUE //returning TRUE as a "is this overridden?" flag
 	if(isrevenant(usr))
-		var/mob/living/simple_animal/revenant/spooker = usr
-		if(!anchored && !spooker.telekinesis_cooldown)
-			spooker.change_essence_amount(-5, FALSE, "telekinesis")
-			spooker.stun(10)
-			spooker.reveal(30)
-			spooker.telekinesis_cooldown = TRUE
-			float(TRUE, 1)
-			sleep(10)
-			safe_throw_at(over, 10, 2)
-			ADD_TRAIT(src, TRAIT_SPOOKY_THROW)
-			DoRevenantThrowEffects(over)
-			log_combat(usr, over, "spooky telekinesised at", src)
-			var/obj/effect/temp_visual/telekinesis/T = new(get_turf(src))
-			T.color = purple
-			addtimer(CALLBACK(src, /atom/movable.proc/float, FALSE), 2)
-			addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+		if(RevenantThrow(over, usr, src))
 			return
 
 	if(!Adjacent(usr) || !over.Adjacent(usr))
@@ -492,12 +477,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	over.MouseDrop_T(src,usr)
 	return
-
-//Use this for effects you want to happen when a revenant throws itself, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
-/obj/item/proc/DoRevenantThrowEffects(atom/target)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	if(STR)
-
 
 // called after an item is placed in an equipment slot
 // user is mob that equipped it

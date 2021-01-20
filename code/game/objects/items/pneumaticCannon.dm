@@ -44,12 +44,11 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/pneumatic_cannon/DoRevenantThrowEffects(atom/target)
-	var/target
+	var/picked_target
 	var/list/possible_targets = range(3,src)
-	target = pick(possible_targets)
+	picked_target = pick(possible_targets)
 	if(target)
-		discharge = TRUE
-		Fire(null, target)
+		Fire(null, picked_target)
 
 /obj/item/pneumatic_cannon/process()
 	if(++charge_tick >= charge_ticks && charge_type)
@@ -148,7 +147,7 @@
 		if(!isliving(user))
 			return
 	var/discharge = 0
-	if(!can_trigger_gun(user))
+	if(user && !can_trigger_gun(user))
 		return
 	if(!loadedItems || !loadedWeightClass)
 		if(user)
@@ -174,14 +173,13 @@
 			var/list/possible_targets = range(3,src)
 			target = pick(possible_targets)
 		discharge = TRUE
-	if(!discharge)
+	if(!discharge && user)
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
-	if(user)
-		log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
 	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
 	if(user)
+		log_combat(user, target, "fired at", src)
 		fire_items(T, user)
 	else
 		fire_items(T)
