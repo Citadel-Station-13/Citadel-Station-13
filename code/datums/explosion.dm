@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
-	
+
 	deadchat_broadcast("<span class='deadsay bold'>An explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) has occured at ([get_area(epicenter)])</span>", turf_target = get_turf(epicenter))
 
 	var/x0 = epicenter.x
@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/sound/creaking_explosion_sound = sound(get_sfx("explosion_creaking"))
 		var/sound/hull_creaking_sound = sound(get_sfx("hull_creaking"))
 		var/sound/explosion_echo_sound = sound('sound/effects/explosion_distant.ogg')
-		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION) 
+		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
 		var/creaking_explosion = FALSE
 
 		if(prob(devastation_range*30+heavy_impact_range*5) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(explosions)
 						if(!baseshakeamount) // Devastating explosions rock the station and ground
 							baseshakeamount = devastation_range*3
 						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
-				
+
 				else if(M.can_hear() && !isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
 					var/echo_volume = 40
 					if(devastation_range)
@@ -230,8 +230,13 @@ GLOBAL_LIST_EMPTY(explosions)
 				atoms += A
 			for(var/i in atoms)
 				var/atom/A = i
-				if(!QDELETED(A))
-					A.ex_act(dist)
+				if(QDELETED(A))
+					continue
+				A.ex_act(dist, null, src)
+				if(QDELETED(A) || !ismovable(A))
+					continue
+				var/atom/movable/AM = A
+				LAZYADD(AM.acted_explosions, explosion_id)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
