@@ -85,7 +85,7 @@
 		to_chat(user, "<span class='warning'>You're not ready to tackle!</span>")
 		return
 
-	if(!user.mob_has_gravity() ||!user.loc.has_gravity() || istype(user.loc, /turf/open/space))
+	if(!user.mob_has_gravity() ||!user.loc.has_gravity() || isspaceturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't find your footing without gravity!</span>")
 		return
 
