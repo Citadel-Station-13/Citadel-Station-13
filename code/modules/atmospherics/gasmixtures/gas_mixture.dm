@@ -218,6 +218,18 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
+/datum/gas_mixture/proc/adjust_heat(amt)
+	//Adjusts the thermal energy of the gas mixture, rather than having to do the full calculation.
+	//Returns: null
+
+/datum/gas_mixture/proc/equalize_with(datum/gas_mixture/giver)
+	//Makes this mix have the same temperature and gas ratios as the giver, but with the same pressure, accounting for volume.
+	//Returns: null
+
+/proc/equalize_all_gases_in_list(list/L)
+	//Makes every gas in the given list have the same pressure, temperature and gas proportions.
+	//Returns: null
+
 /datum/gas_mixture/proc/__remove()
 /datum/gas_mixture/remove(amount)
 	var/datum/gas_mixture/removed = new type
