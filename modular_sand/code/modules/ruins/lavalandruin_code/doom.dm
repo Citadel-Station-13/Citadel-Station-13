@@ -74,6 +74,7 @@
 	var/shouldunlock = FALSE
 
 /obj/machinery/door/airlock/titanium/doomed/locked/obj/machinery/door/airlock/titanium/doomed/locked/Initialize()
+	. = ..()
 	for(var/mob/living/simple_animal/hostile/asteroid/elite/candy/C in view(15))
 		candylist += C
 	if(candylist.len)

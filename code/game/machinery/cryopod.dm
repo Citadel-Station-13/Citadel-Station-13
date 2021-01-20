@@ -270,7 +270,7 @@
 			if(tele)
 				despawn_occupant()
 				do_fake_sparks(2, TRUE, src)
-				playsound(src, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+				playsound(src, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff_exponent = 5)
 
 // This function can not be undone; do not call this unless you are sure
 /obj/machinery/cryopod/proc/despawn_occupant()
