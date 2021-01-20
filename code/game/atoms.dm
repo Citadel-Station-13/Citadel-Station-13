@@ -49,7 +49,7 @@
 	  *
 	  * its inherent color, the colored paint applied on it, special color effect etc...
 	  */
-
+	var/list/atom_colours
 
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
@@ -566,7 +566,8 @@
   * Returns explosion power to "allow through".
   */
 /atom/proc/wave_explode(power, datum/wave_explosion/explosion, dir)
-	SHOULD_NOT_SLEEP(TRUE)
+	set waitfor = FALSE
+	// SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
 	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
@@ -584,7 +585,7 @@
   * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
   */
 /atom/proc/wave_ex_act(power, datum/wave_explosion/explosion, dir)
-	SHOULD_NOT_SLEEP(TRUE)
+	// SHOULD_NOT_SLEEP(TRUE)
 	return power * wave_explosion_multiply - wave_explosion_block
 
 /atom/proc/blob_act(obj/structure/blob/B)
