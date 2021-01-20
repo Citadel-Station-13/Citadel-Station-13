@@ -67,9 +67,9 @@
 /obj/machinery/door/window/proc/open_and_close()
 	open()
 	if(src.check_access(null))
-		sleep(50)
+		sleep(60)
 	else //secure doors close faster
-		sleep(20)
+		sleep(40)
 	close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)

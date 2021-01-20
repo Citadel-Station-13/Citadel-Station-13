@@ -10,6 +10,7 @@
 	burnmod = 1.25
 	heatmod = 1.5
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
+	exotic_blood_color = BLOOD_COLOR_PLANT
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
 	species_language_holder = /datum/language_holder/sylvan
@@ -67,7 +68,7 @@
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"
 	id = SPECIES_POD_WEAK
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS,CAN_SCAR,HAS_FLESH,HAS_BONE)
 	mutant_bodyparts = list("mcolor" = "FFFFFF","mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = SPECIES_POD
 	light_nutrition_gain_factor = 3

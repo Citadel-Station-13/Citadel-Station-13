@@ -50,16 +50,18 @@
 	var/cached_z
 	/// I'm busy, don't move.
 	var/busy = FALSE
+
 	var/static/blacklisted_items = typecacheof(list(
-	/obj/effect,
-	/obj/belly,
-	/obj/mafia_game_board,
-	/obj/docking_port,
-	/obj/shapeshift_holder,
-	/obj/screen))
+		/obj/effect,
+		/obj/belly,
+		/obj/mafia_game_board,
+		/obj/docking_port,
+		/obj/shapeshift_holder,
+		/obj/screen
+	))
 
 /mob/living/simple_animal/jacq/Initialize()
-	..()
+	. = ..() //fuck you jacq, return a hint you shit
 	cached_z = z
 	poof()
 
@@ -158,23 +160,18 @@
 	return FALSE
 
 /mob/living/simple_animal/jacq/proc/gender_check(mob/living/carbon/C)
-	var/gender = "lamb"
-	if(C)
-		if(C.gender == MALE)
-			gender = "laddie"
-		if(C.gender == FEMALE)
-			gender = "lassie"
-	return gender
+	. = "lamb"
+	switch(C)
+		if(MALE)
+			. = "laddie"
+		if(FEMALE)
+			. = "lassie"
 
 //Ye wee bugger, gerrout of it. Ye've nae tae enjoy reading the code fer mae secrets like.
 /mob/living/simple_animal/jacq/proc/chit_chat(mob/living/carbon/C)
 	//Very important
 	var/gender = gender_check(C)
-	if(C)
-		if(C.gender == MALE)
-			gender = "laddie"
-		if(C.gender == FEMALE)
-			gender = "lassie"
+	// it physicaly cannot fail*. Why is there a fucking dupe
 
 	if(!progression["[C.real_name]"] ||  !(progression["[C.real_name]"] & JACQ_HELLO))
 		visible_message("<b>[src]</b> smiles ominously at [C], <span class='spooky'>\"Well halo there [gender]! Ah'm Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")

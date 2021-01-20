@@ -33,6 +33,8 @@
 	//--end of love :'(--
 
 	var/snowflake_id					//if we set from a config snowflake plushie.
+	/// wrapper, do not use, read only
+	var/__ADMIN_SET_TO_ID
 	var/can_random_spawn = TRUE			//if this is FALSE, don't spawn this for random plushies.
 
 /obj/item/toy/plush/random_snowflake/Initialize(mapload, set_snowflake_id)
@@ -46,6 +48,7 @@
 /obj/item/toy/plush/Initialize(mapload, set_snowflake_id)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -112,10 +115,21 @@
 
 	return ..()
 
+/obj/item/toy/plush/vv_get_var(var_name)
+	if(var_name == NAMEOF(src, __ADMIN_SET_TO_ID))
+		return debug_variable("__ADMIN: SET SNOWFLAKE ID", snowflake_id, 0, src)
+	return ..()
+
+/obj/item/toy/plush/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, __ADMIN_SET_TO_ID))
+		return set_snowflake_from_config(var_value)
+	return ..()
+
 /obj/item/toy/plush/proc/set_snowflake_from_config(id)
 	var/list/configlist = CONFIG_GET(keyed_list/snowflake_plushies)
 	var/list/jsonlist = configlist[id]
-	ASSERT(jsonlist)
+	if(!jsonlist)
+		return FALSE
 	jsonlist = json_decode(jsonlist)
 	if(jsonlist["inherit_from"])
 		var/path = text2path(jsonlist["inherit_from"])
@@ -151,6 +165,7 @@
 		var/datum/component/squeak/S = GetComponent(/datum/component/squeak)
 		S?.override_squeak_sounds = squeak_override
 	snowflake_id = id
+	return TRUE
 
 /obj/item/toy/plush/handle_atom_del(atom/A)
 	if(A == grenade)
@@ -447,6 +462,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
 

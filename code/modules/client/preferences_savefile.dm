@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	46
+#define SAVEFILE_VERSION_MAX	48
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -262,6 +262,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		features["color_scheme"] = OLD_CHARACTER_COLORING //advanced is off by default
 
+	if(current_version < 47) //loadout save gets changed to json
+		var/text_to_load
+		S["loadout"] >> text_to_load
+		var/list/saved_loadout_paths = splittext(text_to_load, "|")
+		//MAXIMUM_LOADOUT_SAVES save slots per loadout now
+		for(var/i=1, i<= MAXIMUM_LOADOUT_SAVES, i++)
+			loadout_data["SAVE_[i]"] = list()
+		for(var/some_gear_item in saved_loadout_paths)
+			if(!ispath(text2path(some_gear_item)))
+				message_admins("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
+				continue
+			var/datum/gear/gear_item = text2path(some_gear_item)
+			if(!(initial(gear_item.loadout_flags) & LOADOUT_CAN_COLOR_POLYCHROMIC))
+				loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item)) //for the migration we put their old save into the first save slot, which is loaded by default!
+			else
+				//the same but we setup some new polychromic data  (you can't get the initial value for a list so we have to do this horrible thing here)
+				var/datum/gear/temporary_gear_item = new gear_item
+				loadout_data["SAVE_1"] += list(list(LOADOUT_ITEM = some_gear_item, LOADOUT_COLOR = temporary_gear_item.loadout_initial_colors))
+				qdel(temporary_gear_item)
+			//it's double packed into a list because += will union the two lists contents
+
+		S["loadout"] = safe_json_encode(loadout_data)
+
+	if(current_version < 48) //unlockable loadout items but we need to clear bad data from a mistake
+		S["unlockable_loadout"] = list()
+
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -404,6 +430,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
+	if(S["unlockable_loadout"])
+		unlockable_loadout_data = safe_json_decode(S["unlockable_loadout"])
+	else
+		unlockable_loadout_data = list()
+
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
@@ -508,6 +539,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["preferred_chaos"], preferred_chaos)
 	WRITE_FILE(S["auto_ooc"], auto_ooc)
 	WRITE_FILE(S["no_tetris_storage"], no_tetris_storage)
+
+	if(length(unlockable_loadout_data))
+		WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+	else
+		WRITE_FILE(S["unlockable_loadout"], safe_json_encode(list()))
 
 	return 1
 
@@ -711,20 +747,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/json_from_file = json_decode(file2text(char_vr_path))
 		if(json_from_file)
 			belly_prefs = json_from_file["belly_prefs"]
+
 	//gear loadout
-	var/text_to_load
-	S["loadout"] >> text_to_load
-	var/list/saved_loadout_paths = splittext(text_to_load, "|")
-	chosen_gear = list()
-	gear_points = CONFIG_GET(number/initial_gear_points)
-	for(var/i in saved_loadout_paths)
-		var/datum/gear/path = text2path(i)
-		if(path)
-			var/init_cost = initial(path.cost)
-			if(init_cost > gear_points)
-				continue
-			chosen_gear += path
-			gear_points -= init_cost
+	if(S["loadout"])
+		loadout_data = safe_json_decode(S["loadout"])
+	else
+		loadout_data = list()
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
@@ -1058,11 +1086,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	//gear loadout
-	if(chosen_gear.len)
-		var/text_to_save = chosen_gear.Join("|")
-		S["loadout"] << text_to_save
+	if(length(loadout_data))
+		S["loadout"] << safe_json_encode(loadout_data)
 	else
-		S["loadout"] << "" //empty string to reset the value
+		S["loadout"] << safe_json_encode(list())
 
 	cit_character_pref_save(S)
 

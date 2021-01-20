@@ -10,13 +10,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/path
 	var/vr_path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 16
+	var/max_save_slots = 24
 
-	//non-preference stuff
-	var/muted = 0
+	// Intra-round persistence begin
+	/// Flags for admin mutes
+	var/muted = NONE
+	/// Last IP the person was seen on
 	var/last_ip
+	/// Last CID the person was seen on
 	var/last_id
+	/// Do we log their clicks to disk?
 	var/log_clicks = FALSE
+	/// Characters they have joined the round under - Lazylist of names
+	var/list/characters_joined_as
+	/// Slots they have joined the round under - Lazylist of numbers
+	var/list/slots_joined_as
+	/// Are we currently subject to respawn restrictions? Usually set by us using the "respawn" verb, but can be lifted by admins.
+	var/respawn_restrictions_active = FALSE
+	/// time of death we consider for respawns
+	var/respawn_time_of_death = -INFINITY
+	/// did they DNR? used to prevent respawns.
+	var/dnr_triggered = FALSE
+	/// did they cryo on their last ghost?
+	var/respawn_did_cryo = FALSE
+
+	// Intra-round persistence end
 
 	var/icon/custom_holoform_icon
 	var/list/cached_holoform_icons
@@ -179,7 +197,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///loadout stuff
 	var/gear_points = 10
 	var/list/gear_categories
-	var/list/chosen_gear = list()
+	var/list/loadout_data = list()
+	var/list/unlockable_loadout_data = list()
+	var/loadout_slot = 1 //goes from 1 to MAXIMUM_LOADOUT_SAVES
 	var/gear_category
 	var/gear_subcategory
 
@@ -210,7 +230,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 24
+				max_save_slots = 32
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -806,6 +826,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<br>"
 
 		if(3)
+			//calculate your gear points from the chosen item
+			gear_points = CONFIG_GET(number/initial_gear_points)
+			var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
+			if(chosen_gear)
+				for(var/loadout_item in chosen_gear)
+					var/loadout_item_path = loadout_item[LOADOUT_ITEM]
+					if(loadout_item_path)
+						var/datum/gear/loadout_gear = text2path(loadout_item_path)
+						if(loadout_gear)
+							gear_points -= initial(loadout_gear.cost)
+			else
+				chosen_gear = list()
+
 			dat += "<table align='center' width='100%'>"
 			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
@@ -861,15 +894,29 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(donoritem && !gear.donator_ckey_check(user.ckey))
 							continue
 						var/class_link = ""
-						if(gear.type in chosen_gear)
+						var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
+						var/extra_color_data = ""
+						if(loadout_item)
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
-						else if(gear_points <= 0)
+							if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
+								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_polychromic=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
+								for(var/loadout_color in loadout_item[LOADOUT_COLOR])
+									extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color];'>&nbsp;&nbsp;&nbsp;</span>"
+							else
+								var/loadout_color_non_poly = "#FFFFFF"
+								if(length(loadout_item[LOADOUT_COLOR]))
+									loadout_color_non_poly = loadout_item[LOADOUT_COLOR][1]
+								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
+								extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'>&nbsp;&nbsp;&nbsp;</span>"
+						else if((gear_points - gear.cost) < 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)
 							class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
-						else
+						else if(!istype(gear, /datum/gear/unlockable) || can_use_unlockable(gear))
 							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
-						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a></td>"
+						else
+							class_link = "style='white-space:normal;background:#eb2e2e;' class='linkOff'"
+						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a>[extra_color_data]</td>"
 						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 						if(islist(gear.restricted_roles))
 							if(gear.restricted_roles.len)
@@ -881,7 +928,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									dat += "<font size=2>"
 									dat += gear.restricted_roles.Join(";")
 									dat += "</font>"
-						dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+						if(!istype(gear, /datum/gear/unlockable))
+							dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+						else
+							//we add the user's progress to the description assuming they have progress
+							var/datum/gear/unlockable/unlockable = gear
+							var/progress_made = unlockable_loadout_data[unlockable.progress_key]
+							if(!progress_made)
+								progress_made = 0
+							dat += "</td><td><font size=2><i>[gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
+
 					dat += "</table>"
 		if(4) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
@@ -2609,8 +2665,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						current_tab = text2num(href_list["tab"])
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
-			chosen_gear = list()
-			gear_points = CONFIG_GET(number/initial_gear_points)
+			loadout_data["SAVE_[loadout_slot]"] = list()
 			save_preferences()
 		if(href_list["select_category"])
 			gear_category = html_decode(href_list["select_category"])
@@ -2623,19 +2678,59 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
-			if(!toggle && (G.type in chosen_gear))//toggling off and the item effectively is in chosen gear)
-				chosen_gear -= G.type
-				gear_points += initial(G.cost)
-			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
+			if(!toggle && has_loadout_gear(loadout_slot, "[G.type]"))//toggling off and the item effectively is in chosen gear)
+				remove_gear_from_loadout(loadout_slot, "[G.type]")
+			else if(toggle && !(has_loadout_gear(loadout_slot, "[G.type]")))
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
 					return
 				if(G.donoritem && !G.donator_ckey_check(user.ckey))
 					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
+				if(istype(G, /datum/gear/unlockable) && !can_use_unlockable(G))
+					to_chat(user, "<span class='danger'>To use this item, you need to meet the defined requirements!</span>")
+					return
 				if(gear_points >= initial(G.cost))
-					chosen_gear += G.type
-					gear_points -= initial(G.cost)
+					var/list/new_loadout_data = list(LOADOUT_ITEM = "[G.type]")
+					if(length(G.loadout_initial_colors))
+						new_loadout_data[LOADOUT_COLOR] = G.loadout_initial_colors
+					else
+						new_loadout_data[LOADOUT_COLOR] = list("#FFFFFF")
+					if(loadout_data["SAVE_[loadout_slot]"])
+						loadout_data["SAVE_[loadout_slot]"] += list(new_loadout_data) //double packed because it does the union of the CONTENTS of the lists
+					else
+						loadout_data["SAVE_[loadout_slot]"] = list(new_loadout_data) //double packed because you somehow had no save slot in your loadout?
+		if(href_list["loadout_color"])
+			var/name = html_decode(href_list["loadout_gear_name"])
+			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
+			if(!G)
+				return
+			var/user_gear = has_loadout_gear(loadout_slot, "[G.type]")
+			if(!user_gear)
+				return
+			if(!length(user_gear[LOADOUT_COLOR]))
+				user_gear[LOADOUT_COLOR] = list("#FFFFFF")
+			var/current_color = user_gear[LOADOUT_COLOR][1]
+			var/new_color = input(user, "Polychromic options", "Choose Color", current_color) as color|null
+			user_gear[LOADOUT_COLOR][1] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
+		if(href_list["loadout_color_polychromic"])
+			var/name = html_decode(href_list["loadout_gear_name"])
+			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
+			if(!G)
+				return
+			var/user_gear = has_loadout_gear(loadout_slot, "[G.type]")
+			if(!user_gear)
+				return
+			var/list/color_options = list()
+			for(var/i=1, i<=length(G.loadout_initial_colors), i++)
+				color_options += "Color [i]"
+			var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
+			if(color_to_change)
+				var/color_index = text2num(copytext(color_to_change, 7))
+				var/current_color = user_gear[LOADOUT_COLOR][color_index]
+				var/new_color = input(user, "Polychromic options", "Choose [color_to_change] Color", current_color) as color|null
+				if(new_color)
+					user_gear[LOADOUT_COLOR][color_index] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
 
 	ShowChoices(user)
 	return 1
@@ -2853,8 +2948,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/is_loadout_slot_available(slot)
 	var/list/L
 	LAZYINITLIST(L)
-	for(var/i in chosen_gear)
-		var/datum/gear/G = i
+	for(var/i in loadout_data["SAVE_[loadout_slot]"])
+		var/datum/gear/G = i[LOADOUT_ITEM]
 		var/occupied_slots = L[initial(G.category)] ? L[initial(G.category)] + 1 : 1
 		LAZYSET(L, initial(G.category), occupied_slots)
 	switch(slot)
@@ -2867,6 +2962,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		else
 			if(L[slot] < DEFAULT_SLOT_AMT)
 				return TRUE
+
+/datum/preferences/proc/has_loadout_gear(save_slot, gear_type)
+	var/list/gear_list = loadout_data["SAVE_[save_slot]"]
+	for(var/loadout_gear in gear_list)
+		if(loadout_gear[LOADOUT_ITEM] == gear_type)
+			return loadout_gear
+	return FALSE
+
+/datum/preferences/proc/remove_gear_from_loadout(save_slot, gear_type)
+	var/find_gear = has_loadout_gear(save_slot, gear_type)
+	if(find_gear)
+		loadout_data["SAVE_[save_slot]"] -= list(find_gear)
+
+/datum/preferences/proc/can_use_unlockable(datum/gear/unlockable/unlockable_gear)
+	if(unlockable_loadout_data[unlockable_gear.progress_key] >= unlockable_gear.progress_required)
+		return TRUE
+	return FALSE
 
 #undef DEFAULT_SLOT_AMT
 #undef HANDS_SLOT_AMT

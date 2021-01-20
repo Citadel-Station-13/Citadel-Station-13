@@ -56,6 +56,7 @@
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 /obj/structure/trap/Crossed(atom/movable/AM)
+	. = ..()
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
@@ -67,6 +68,7 @@
 			return
 		if(M.anti_magic_check())
 			flare()
+			return
 	if(charges <= 0)
 		return
 	flare()

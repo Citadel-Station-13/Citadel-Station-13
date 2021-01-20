@@ -1309,6 +1309,45 @@
 /obj/item/toy/poolnoodle/blue,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/pool)
+"acy" = (
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
+	id = "cargounload"
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"acz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"acA" = (
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "cargounload"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
+"acB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "acF" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -3496,9 +3535,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ajL" = (
@@ -3783,6 +3820,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
@@ -12918,18 +12958,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aAH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor_switch/oneway{
-	dir = 8;
-	id = "cargounload"
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "aAI" = (
 /obj/structure/cable/white,
 /obj/structure/cable/white{
@@ -13616,14 +13644,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"aBZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "aCa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown,
@@ -14261,23 +14281,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"aDf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock";
-	req_access_txt = "31"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -32962,6 +32965,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/ore/silver{
+	amount = 2
+	},
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "biu" = (
@@ -49388,7 +49395,7 @@
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Security E.V.A. Storage";
-	req_access_txt = "3"
+	req_access_txt = "1"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -79378,6 +79385,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -81569,12 +81577,12 @@
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHt" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display/ai{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/storage)
 "cHu" = (
@@ -110339,8 +110347,8 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop Out";
-	dir = 4
+	dir = 4;
+	name = "Space Loop Out"
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -125650,14 +125658,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
-"hdH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "cargoload"
-	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
 "hic" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_electronics/analyzer,
@@ -171852,7 +171852,7 @@ azy
 aAG
 aDb
 aAG
-aAG
+acB
 azy
 azy
 aAG
@@ -173134,7 +173134,7 @@ axk
 ayB
 azE
 azE
-aBZ
+acz
 azE
 azE
 azE
@@ -173390,9 +173390,9 @@ aoF
 axl
 ayC
 azF
-aAH
-aCa
-aCa
+acy
+aEf
+aEf
 aEf
 aEf
 aCa
@@ -173648,8 +173648,8 @@ axm
 ayD
 ayD
 ayD
-hdH
-azD
+acA
+aEe
 aaq
 azD
 kam
@@ -173906,7 +173906,7 @@ ayE
 azG
 aAI
 aCb
-aDf
+aFk
 avW
 aFk
 aGD

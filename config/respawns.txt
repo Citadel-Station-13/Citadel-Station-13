@@ -1,0 +1,29 @@
+## Allow usage of the respawn system
+RESPAWNS_ENABLED
+
+## Minutes delay before allowing respawns, either from death or observing. Not an integer.
+RESPAWN_DELAY 15.0
+
+## Minutes delay before allowing respawns, if the user cryo'd. Not an integer.
+RESPAWN_DELAY_CRYO 5.0
+
+## Allow respawning as anything but an assistant.
+ALLOW_NON_ASSISTANT_RESPAWN
+
+## Allow respawning as security and command. Only works if ALLOW_NON_ASSISTANT_RESPAWN is on.
+# ALLOW_COMBAT_ROLE_RESPAWN
+
+## Allow respawning as the same character
+# ALLOW_SAME_CHARACTER_RESPAWN
+
+## Observing is considered a respawn for the purposes of role lockouts. Defaults to disabled. When disabled, only RESPAWNING rather than returning from observe locks you out.
+# RESPAWN_PENALTY_INCLUDES_OBSERVE
+
+## Time in minutes from round start before respawn is enabled
+RESPAWN_MINIMUM_DELAY_ROUNDSTART 30.0
+
+## Gamemode (config tags!) banlist for respawn
+RESPAWN_CHAOS_GAMEMODES WIZARD
+RESPAWN_CHAOS_GAMEMODES NUCLEAR
+RESPAWN_CHAOS_GAMEMODES CLOWNOPS
+RESPAWN_CHAOS_GAMEMODES REVOLUTION

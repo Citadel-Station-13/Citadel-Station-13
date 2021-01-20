@@ -243,6 +243,12 @@
 		/obj/item/stack/sheet/glass = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
+/obj/item/circuitboard/machine/colormate
+	name = "Colormate (Machine Board)"
+	build_path = /obj/machinery/gear_painter
+	req_components = list()
+	def_components = list()
+
 /obj/item/circuitboard/machine/vendor
 	name = "Custom Vendor (Machine Board)"
 	desc = "You can turn the \"brand selection\" dial using a screwdriver."
@@ -257,6 +263,7 @@
 		/obj/machinery/vending/cola = "Robust Softdrinks",
 		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 		/obj/machinery/vending/games = "\improper Good Clean Fun",
+		/obj/machinery/vending/kink = "KinkMate",
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
 		/obj/machinery/vending/assist = "\improper Vendomat",
 		/obj/machinery/vending/engivend = "\improper Engi-Vend",
