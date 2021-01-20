@@ -109,16 +109,16 @@
 
 	if(C.is_mouth_covered())
 		if(user != C)
-			to_chat(user, "<span class='notice'>You can't drink force [C] to drink from [src] while their mouth is covered.</span>")
+			to_chat(user, "<span class='notice'>You can't force [C] to drink from [src] while their mouth is covered.</span>")
 			return
-		to_chat(user, "<span class='notice'>You can't drink from the [src] while your mouth is covered.</span>")
+		to_chat(user, "<span class='notice'>You can't drink from [src] while your mouth is covered.</span>")
 		return
 
 	if(!user.CheckActionCooldown())
 		return
 	if(user != C)
-		user.visible_message("<span class='danger'>[user] forces [C] to drink from the [src].</span>", \
-		"<span class='notice'>You force [C] to drink from the [src]</span>")
+		user.visible_message("<span class='danger'>[user] forces [C] to drink from [src].</span>", \
+		"<span class='notice'>You force [C] to drink from [src]</span>")
 		user.DelayNextAction(50)
 		if(do_mob(user, C, 50))
 			do_drink(C, user)
@@ -126,8 +126,8 @@
 	else
 		user.DelayNextAction(10)
 		if(do_mob(user, C, 10))
-			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>", \
-			"<span class='notice'>You take a sip from the [src].</span>")
+			user.visible_message("<span class='notice'>[user] puts [src] up to their mouth.</span>", \
+			"<span class='notice'>You take a sip from [src].</span>")
 			do_drink(C, user)
 
 
