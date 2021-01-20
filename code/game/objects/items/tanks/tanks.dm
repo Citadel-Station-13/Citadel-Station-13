@@ -75,9 +75,12 @@
 
 /obj/item/tank/DoRevenantThrowEffects(atom/target)
 	if(air_contents)
-		var/turf/location = get_turf(src)
-		location.assume_air(air_contents)
-		visible_message("<span class='warning'[src] leaks gas!")
+		var/turf/open/location = get_turf(src)
+		if(istype(location))
+			location.assume_air(air_contents)
+			air_contents.clear()
+			SSair.add_to_active(location)
+			visible_message("<span class='warning'[src] leaks gas!")
 
 /obj/item/tank/Destroy()
 	if(air_contents)
