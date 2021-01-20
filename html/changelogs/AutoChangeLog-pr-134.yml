@@ -1,5 +1,0 @@
-author: maksxpl
-delete-after: true
-changes:
-  - bugfix: changed sandcode/ dir with all it's paths to an actual standards
-  - bugfix: fixed trailing newlines in modular_sand
