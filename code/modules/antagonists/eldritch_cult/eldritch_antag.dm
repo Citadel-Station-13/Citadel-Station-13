@@ -229,7 +229,7 @@
 /datum/antagonist/heretic/antag_panel()
 	var/list/parts = list()
 	parts += ..()
-	parts += "<b>Targets currently assigned by living hearts (Can give a false negative if they stole someone elses living heart, check the other heretics if this is suspected to be the case):</b>"
+	parts += "<b>Targets currently assigned by living hearts (Can give a false negative if they stole someone elses living heart):</b>"
 	if(!sac_targetted.len)
 		parts += "None."
 	else
@@ -239,7 +239,8 @@
 		parts += "None."
 	else
 		parts += actually_sacced.Join(",")
-	return parts.Join("<br>")
+
+	return (parts.Join("<br>") + "<br>")
 
 
 ////////////////
