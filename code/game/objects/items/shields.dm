@@ -258,7 +258,7 @@
 	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 300
 
-obj/item/shield/riot/bullet_proof
+/obj/item/shield/riot/bullet_proof
 	name = "bullet resistant shield"
 	desc = "A far more frail shield made of resistant plastics and kevlar meant to block ballistics."
 	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)

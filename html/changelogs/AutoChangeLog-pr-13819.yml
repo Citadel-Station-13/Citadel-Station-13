@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "The survival dagger light on the sprite now actually turns on and off."
-  - balance: "The survival dagger in the glaive kit that can also be bought by itself is now better at butchering things."

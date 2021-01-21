@@ -1,6 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "the blacksmithing skill now works properly"
-  - tweak: "Anvils cannot be interacted with with hammers whilst they are already being used"
-  - tweak: "If someone has no gloves when interacting with heated ingots, they no longer ignore their effects."

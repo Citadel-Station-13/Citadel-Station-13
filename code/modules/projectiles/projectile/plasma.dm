@@ -1,4 +1,4 @@
-obj/item/projectile/energy/plasmabolt
+/obj/item/projectile/energy/plasmabolt
 	name = "plasma bolt"
 	icon_state = "plasma"
 	flag = "energy"

@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Fixes noodle size appearance for 12+ inch members."

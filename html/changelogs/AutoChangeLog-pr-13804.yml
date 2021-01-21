@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "circuits get pin data proc is sanitized when text is returned as data"

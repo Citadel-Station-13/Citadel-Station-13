@@ -308,7 +308,7 @@
 	tastes = list("cake" = 5, "sweetness" = 1, "clouds" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 
-obj/item/reagent_containers/food/snacks/store/cake/pound_cake
+/obj/item/reagent_containers/food/snacks/store/cake/pound_cake
 	name = "pound cake"
 	desc = "A condensed cake made for filling people up quickly."
 	icon_state = "pound_cake"

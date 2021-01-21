@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Some edge cases causing issues with system corruption shouldn't be able to occur anymore."

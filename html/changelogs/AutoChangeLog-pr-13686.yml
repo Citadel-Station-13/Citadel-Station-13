@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - bugfix: "Hopefully fixes whitescreen issues for TGUI UI's by giving assets more time to get to the client"

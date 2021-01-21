@@ -1,5 +1,0 @@
-author: "Bhijn"
-delete-after: True
-changes: 
-  - tweak: "Changeling loudness is now determined as an average of all their abilities, rather than the sum"
-  - tweak: "To compensate for this, blood tests now require a loudness value of 1 or higher to detect ling blood. Additionally, blood test explosions are now triggered only when the loudness value is higher than 2."
