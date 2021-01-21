@@ -1,4 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - bugfix: "Effects can no longer trigger landmines"

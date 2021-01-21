@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Changelings no longer double-deathgasp when activating the regen stasis ability while not dead."

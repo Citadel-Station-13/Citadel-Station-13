@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscdel: "now only poly gets a headset on spawn, not all birds."

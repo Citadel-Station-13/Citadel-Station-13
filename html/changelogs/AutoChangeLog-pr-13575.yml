@@ -1,5 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the subtle hotkey being weird with its input prompts."
-  - rscadd: "Adds a subtler anti-ghost hotkey. Default key is 6."

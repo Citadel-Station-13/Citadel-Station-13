@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Supplypods shouldn't cause runtimes anymore, and shrapnel (pelletclouds) should work for them."

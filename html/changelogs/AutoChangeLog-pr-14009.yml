@@ -1,7 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "Wings from Cit RP have been ported over"
-  - rscadd: "Moth wings from cit have been ported over"
-  - bugfix: "Cleaned up some pixels on existing moth wings."
-  - tweak: "Organized the lists for wings by if they are for moths or not and than by alphabetical."
