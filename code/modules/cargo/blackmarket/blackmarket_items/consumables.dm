@@ -51,7 +51,7 @@
 /datum/blackmarket_item/consumable/pumpup
 	name = "Shoddy Stimulants"
 	desc = "Feel the energy inside each needle!"
-	/obj/item/reagent_containers/hypospray/medipen/stimpack
+	item = /obj/item/reagent_containers/hypospray/medipen/stimpack
 	stock_max = 5
 	price_min = 50
 	price_max = 150
