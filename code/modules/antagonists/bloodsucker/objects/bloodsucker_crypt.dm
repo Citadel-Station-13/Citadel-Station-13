@@ -164,8 +164,8 @@
 	if(!buckle_mob(M)) // force=TRUE))
 		return
 	// Attempt Buckle
-	user.visible_message("<span class='notice'>[user] straps [M] into the rack, immobilizing them.</span>", \
-			  		 "<span class='boldnotice'>You secure [M] tightly in place. They won't escape you now.</span>")
+	user.visible_message("<span class='notice'>[user] straps [M] into the rack.</span>", \
+			  		 "<span class='boldnotice'>You secure [M] tightly in place.</span>")
 
 	playsound(src.loc, 'sound/effects/pop_expl.ogg', 25, 1)
 	//M.forceMove(drop_location()) <--- CANT DO! This cancels the buckle_mob() we JUST did (even if we foced the move)
@@ -278,17 +278,17 @@
 			if(convert_progress <= 0)
 				// FAIL: Can't be Vassal
 				if(!SSticker.mode.can_make_vassal(target, user, display_warning = FALSE) || HAS_TRAIT(target, TRAIT_MINDSHIELD)) // If I'm an unconvertable Antag ONLY
-					to_chat(user, "<span class='danger'>[target] doesn't respond to your persuasion. It doesn't appear they can be converted to follow you, they either have a mindshield or their external loyalties are too difficult for you to break.<i>\[ALT+click to release\]</span>")
+					to_chat(user, "<span class='danger'>[target] doesn't respond to your ritual. It doesn't appear they can be converted to follow you, they either have a mindshield or their external loyalties are too difficult for you to break.<i>\[ALT+click to release\]</span>")
 					convert_progress ++ // Pop it back up some. Avoids wasting Blood on a lost cause.
 				// SUCCESS: All done!
 				else
 					if(RequireDisloyalty(target))
-						to_chat(user, "<span class='boldwarning'>[target] has external loyalties! [target.p_they(TRUE)] will require more <i>persuasion</i> to break [target.p_them()] to your will!</span>")
+						to_chat(user, "<span class='boldwarning'>[target] has external loyalties! [target.p_they(TRUE)] will require more effort to force under your command!</span>")
 					else
 						to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
 			// Still Need More Persuasion...
 			else
-				to_chat(user, "<span class='notice'>[target] could use [convert_progress == 1?"a little":"some"] more <i>persuasion</i>.</span>")
+				to_chat(user, "<span class='notice'>[target] could use [convert_progress == 1?"a little":"some"] more time.</span>")
 		useLock = FALSE
 		return
 	// Check: Mindshield & Antag
@@ -296,7 +296,7 @@
 		if(!do_disloyalty(user,target))
 			to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		else if (!disloyalty_confirm)
-			to_chat(user, "<span class='danger'>[target] refuses to give into your persuasion. Perhaps a little more?</span>")
+			to_chat(user, "<span class='danger'>[target] refuses to give into your ritual. A little bit more effort may suffice.</span>")
 		else
 			to_chat(user, "<span class='notice'>[target] looks ready for the <b>Dark Communion</b>.</span>")
 		useLock = FALSE
@@ -306,10 +306,18 @@
 		to_chat(user, "<span class='notice'>You don't have enough blood to initiate the Dark Communion with [target], you need [convert_cost - user.blood_volume] units more!</span>")
 		useLock = FALSE
 		return
+<<<<<<< Updated upstream
 	bloodsuckerdatum.AddBloodVolume(-convert_cost)
 	target.add_mob_blood(user)
 	user.visible_message("<span class='notice'>[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!</span>", \
 				  	  "<span class='notice'>You paint a bloody marking across [target]'s forehead, place your wrist to [target.p_their()] mouth, and subject [target.p_them()] to the Dark Communion.</span>")
+=======
+	B.AddBloodVolume(-CONVERT_COST)
+	target.add_mob_blood(user, "<span class='danger'>Youve used [CONVERT_COST] amount of blood to gain a new vassal!</span>")
+	to_chat(user, )
+	user.visible_message("<span class='notice'>[user] paints a bloody rune on [target]'s forehead, marking them as a vassal!</span>", \
+				  	  "<span class='notice'>You paint a bloody rune across [target]'s forehead. They are now under your command.</span>")
+>>>>>>> Stashed changes
 	if(!do_mob(user, src, 50))
 		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		useLock = FALSE
@@ -325,7 +333,6 @@
 		target.playsound_local(null, 'sound/effects/explosion_distant.ogg', 40, 1) 	// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 		target.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) 		// Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 		target.Jitter(25)
-		target.emote("laugh")
 		//remove_victim(target) // Remove on CLICK ONLY!
 	useLock = FALSE
 
@@ -389,9 +396,9 @@
 		/*	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 				alert_text += "\n\nYou will no longer be loyal to the station!"
 			if(SSticker.mode.AmValidAntag(target.mind))  */
-			alert_text += "\n\nYou will not lose your current objectives, but they come second to the will of your new master!"
-			switch(alert(target, alert_text,"THE HORRIBLE PAIN! WHEN WILL IT END?!","Yes, Master!", "NEVER!"))
-				if("Yes, Master!")
+			alert_text += "\n\nYou will not lose your current objectives, but they come second to the orders of your new commander!"
+			switch(alert(target, alert_text,"The pain is starting to become unbearable!","FINE!", "NEVER!"))
+				if("FINE!")
 					disloyalty_accept(target)
 				else
 					disloyalty_refuse(target)
@@ -428,7 +435,7 @@
 	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 		for(var/obj/item/implant/I in target.implants)
 			if(I.type == /obj/item/implant/mindshield)
-				I.removed(target,silent=TRUE)
+				I.removed(target, silent = TRUE)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

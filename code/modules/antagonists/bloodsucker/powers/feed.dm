@@ -67,6 +67,10 @@
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Your victim's blood is not suitable for you to take.</span>")
 			return FALSE
+		if(HAS_TRAIT(src, TRAIT_WAS_MONKEY))
+			if(display_error)
+				to_chat(owner, "<span class='warning'>This being's blood is not of sufficent quality for one as old as you.</span>")
+			return FALSE
 	return TRUE
 
 // If I'm not grabbing someone, find me someone nearby.

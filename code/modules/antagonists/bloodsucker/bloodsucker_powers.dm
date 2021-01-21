@@ -30,6 +30,8 @@
 	var/can_be_staked = FALSE			// Only Feed can happen with a stake in you.
 	var/cooldown_static = FALSE			// Feed, Masquerade, and One-Shot powers don't improve their cooldown.
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
+	var/must_be_concious = TRUE			//Can't use this ability while unconcious.
+	var/list/ability_traits = list()
 
 /datum/action/bloodsucker/New()
 	if(bloodcost > 0)
@@ -140,10 +142,13 @@
 
 
 /datum/action/bloodsucker/proc/ActivatePower()
-
+	for(T in ability_traits)
+		ADD_TRAIT(owner, T, name)
 
 /datum/action/bloodsucker/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
 	active = FALSE
+	for(T in ability_traits)
+		REMOVE_TRAIT(owner, T, name)
 	UpdateButtonIcon()
 	StartCooldown()
 

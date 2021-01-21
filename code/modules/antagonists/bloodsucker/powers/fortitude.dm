@@ -11,18 +11,17 @@
 	bloodsucker_can_buy = TRUE
 	amToggle = TRUE
 	warn_constant_cost = TRUE
+	ability_traits = list(TRAIT_PIERCEIMMUNE, TRAIT_NODISMEMBER, TRAIT_STUNIMMUNE, TRAIT_NORUNNING)
+	var/was_running
 
 	var/this_resist // So we can raise and lower your brute resist based on what your level_current WAS.
 
 /datum/action/bloodsucker/fortitude/ActivatePower()
+	..()
 	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
 	to_chat(user, "<span class='notice'>Your flesh, skin, and muscles become as steel.</span>")
 	// Traits & Effects
-	ADD_TRAIT(user, TRAIT_PIERCEIMMUNE, "fortitude")
-	ADD_TRAIT(user, TRAIT_NODISMEMBER, "fortitude")
-	ADD_TRAIT(user, TRAIT_STUNIMMUNE, "fortitude")
-	ADD_TRAIT(user, TRAIT_NORUNNING, "fortitude")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		this_resist = max(0.3, 0.7 - level_current * 0.1)
@@ -38,17 +37,14 @@
 			bloodsuckerdatum.AddBloodVolume(-0.5) // Used to be 0.3 blood per 2 seconds, but we're making it more expensive to keep on.
 		sleep(20) // Check every few ticks that we haven't disabled this power
 	// Return to Running (if you were before)
-	if(was_running && user.m_intent != MOVE_INTENT_RUN)
-		user.toggle_move_intent()
 
 /datum/action/bloodsucker/fortitude/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..()
 	// Restore Traits & Effects
-	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, "fortitude")
-	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, "fortitude")
-	REMOVE_TRAIT(user, TRAIT_STUNIMMUNE, "fortitude")
-	REMOVE_TRAIT(user, TRAIT_NORUNNING, "fortitude")
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod /= this_resist//0.5
-		H.physiology.burn_mod /= this_resist//0.5
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	H.physiology.brute_mod /= this_resist//0.5
+	H.physiology.burn_mod /= this_resist//0.5
+	if(was_running && user.m_intent == MOVE_INTENT_WALK)
+		user.toggle_move_intent()
