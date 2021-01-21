@@ -279,5 +279,5 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		mind.add_antag_datum(/datum/antagonist/blob)
 
 //the same but it's forced to be allowed by default as cameras usually don't allow emoting
-/mob/camera/emote(act, m_type=1, message = null, intentional = FALSE, forced = TRUE)
+/mob/camera/blob/emote(act, m_type=1, message = null, intentional = FALSE, forced = TRUE)
 	. = ..()
