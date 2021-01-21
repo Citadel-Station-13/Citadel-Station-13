@@ -1,5 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - tweak: "You cannot spam drink from blood bags anymore"
-  - bugfix: "Blood bag drinking inefficiency is now the right way, so you loose some of the blood drinking it straight"

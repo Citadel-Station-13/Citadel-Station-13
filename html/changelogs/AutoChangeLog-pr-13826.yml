@@ -1,9 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - rscadd: "Coin & Holochip support for slot machine"
-  - admin: "Stickybans are now saved in the DB too"
-  - soundadd: "Immersive &trade; audio reverbs. (also adds multiz audio)"
-  - code_imp: "Semi-hardsync from TG"
-  - code_imp: "Updates rust-g"
-  - code_imp: "Uses git CI instead of travis/appveyor now"

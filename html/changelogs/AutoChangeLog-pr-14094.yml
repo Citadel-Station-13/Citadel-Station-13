@@ -1,4 +1,0 @@
-author: "kittycat2002"
-delete-after: True
-changes: 
-  - rscadd: "set the name of /datum/reagent/consumable/ethanol/species_drink to Species Drink"
