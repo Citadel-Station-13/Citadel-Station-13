@@ -80,12 +80,6 @@
 		to_chat(src, "<span class='notice'>Message: [msg]</span>", confidential = TRUE)
 		return
 
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
-		msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
-		if(!msg)
-			return
-
 	var/client/recipient
 	var/recipient_ckey // Stored in case client is deleted between this and after the message is input
 	var/datum/admin_help/recipient_ticket // Stored in case client is deleted between this and after the message is input
@@ -119,6 +113,11 @@
 			to_chat(src, "<span class='danger'>Error: Use the admin IRC/Discord channel, nerd.</span>", confidential = TRUE)
 			return
 
+	//clean the message if it's not sent by a high-rank admin
+	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
+		msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
+		if(!msg)
+			return
 
 	else
 		//get message text, limit it's length.and clean/escape html
