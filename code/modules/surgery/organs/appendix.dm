@@ -12,12 +12,10 @@
 	var/inflamed
 
 /obj/item/organ/appendix/on_life()
-	..()
-	if(!(organ_flags & ORGAN_FAILING))
+	. = ..()
+	if(. || !owner)
 		return
-	var/mob/living/carbon/M = owner
-	if(M)
-		M.adjustToxLoss(4, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
+	owner.adjustToxLoss(4, TRUE, TRUE)	//forced to ensure people don't use it to gain tox as slime person
 
 /obj/item/organ/appendix/update_icon_state()
 	if(inflamed)
@@ -39,9 +37,3 @@
 	..()
 	if(inflamed)
 		M.ForceContractDisease(new /datum/disease/appendicitis(), FALSE, TRUE)
-
-/obj/item/organ/appendix/prepare_eat()
-	var/obj/S = ..()
-	if(inflamed)
-		S.reagents.add_reagent(/datum/reagent/toxin/bad_food, 5)
-	return S

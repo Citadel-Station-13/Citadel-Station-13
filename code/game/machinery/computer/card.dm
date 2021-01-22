@@ -353,7 +353,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat = list("<tt>", header.Join(), body, "<br></tt>")
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
 	popup.set_content(dat.Join())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/card/Topic(href, href_list)
@@ -467,7 +466,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='alert'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
-
+					if(inserted_modify_id.registered_account)
+						inserted_modify_id.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
 					inserted_modify_id.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (inserted_modify_id)
 					inserted_modify_id.assignment = t1

@@ -23,6 +23,8 @@
 	climbable = TRUE
 	obj_flags = CAN_BE_HIT|SHOVABLE_ONTO
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/buildstack = /obj/item/stack/sheet/metal
@@ -60,7 +62,7 @@
 /obj/structure/table/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/table/attack_hand(mob/living/user)
+/obj/structure/table/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -71,7 +73,10 @@
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
-				tablepush(user, pushed_mob)
+				if(user.grab_state >= GRAB_NECK || HAS_TRAIT(user, TRAIT_MAULER))
+					tablelimbsmash(user, pushed_mob)
+				else
+					tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
@@ -103,7 +108,7 @@
 
 /obj/structure/table/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSTABLE)
 
@@ -134,7 +139,25 @@
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
+	if(iscatperson(H))
+		H.emote("nya")
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+
+/obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.Knockdown(30)
+	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
+	var/extra_wound = 0
+	if(HAS_TRAIT(user, TRAIT_HULK) || HAS_TRAIT(user, TRAIT_MAULER))
+		extra_wound = 20
+	banged_limb.receive_damage(30, wound_bonus = extra_wound)
+	pushed_mob.apply_damage(60, STAMINA)
+	take_damage(50)
+
+	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
+	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!</span>",
+								"<span class='userdanger'>[user] smashes your [banged_limb.name] against \the [src]</span>")
+	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
+	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
 
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
 	if(CHECK_MOBILITY(target, MOBILITY_STAND))
@@ -163,6 +186,9 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+			for(var/x in T.contents)
+				var/obj/item/item = x
+				AfterPutItemOnTable(item, user)
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("[user] empties [I] on [src].")
 			return
@@ -175,15 +201,21 @@
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 				return
 			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			return 1
+			I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			AfterPutItemOnTable(I, user)
+			return TRUE
 	else
 		return ..()
 
+/obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	return
+
 /obj/structure/table/alt_attack_hand(mob/user)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	user.DelayNextAction()
 	if(user && Adjacent(user) && !user.incapacitated())
-		user.setClickCooldown(4)
 		if(istype(user) && user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='warning'>[user] slams [user.p_their()] palms down on [src].</span>", "<span class='warning'>You slam your palms down on [src].</span>")
 			playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
@@ -213,6 +245,37 @@
 	icon_state = "table"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
+
+///Table on wheels
+/obj/structure/table/rolling
+	name = "Rolling table"
+	desc = "A NT brand \"Rolly poly\" rolling table. It can and will move."
+	anchored = FALSE
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
+	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
+	icon_state = "rollingtable"
+	var/list/attached_items = list()
+
+/obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
+	. = ..()
+	attached_items += I
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+
+/obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
+	if(newloc != loc) //Did we not move with the table? because that shit's ok
+		return FALSE
+	attached_items -= source
+	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+
+/obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+	. = ..()
+	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
+		M.forceMove(loc)
+	for(var/x in attached_items)
+		var/atom/movable/AM = x
+		if(!AM.Move(loc))
+			RemoveItemFromTable(AM, AM.loc)
 
 /*
  * Glass tables
@@ -513,7 +576,7 @@
 	change_construction_value(-2)
 	return ..()
 
-/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/reinforced/brass/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	.= ..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
@@ -534,10 +597,10 @@
 	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	buildstack = /obj/item/stack/tile/bronze
+	buildstack = /obj/item/stack/sheet/bronze
 	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
-/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/bronze/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
@@ -566,7 +629,7 @@
 			computer.table = src
 			break
 
-/obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
+/obj/structure/table/optable/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
@@ -595,6 +658,8 @@
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
 	max_integrity = 20
+	attack_hand_speed = CLICK_CD_MELEE
+	attack_hand_is_action = TRUE
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -610,7 +675,7 @@
 
 /obj/structure/rack/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSTABLE)
 
@@ -636,13 +701,12 @@
 /obj/structure/rack/attack_paw(mob/living/user)
 	attack_hand(user)
 
-/obj/structure/rack/attack_hand(mob/living/user)
+/obj/structure/rack/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
 	if(CHECK_MULTIPLE_BITFIELDS(user.mobility_flags, MOBILITY_STAND|MOBILITY_MOVE) || user.get_num_legs() < 2)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)

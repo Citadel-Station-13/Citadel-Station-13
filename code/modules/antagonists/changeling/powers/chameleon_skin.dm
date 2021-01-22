@@ -3,7 +3,6 @@
 	desc = "Our skin pigmentation rapidly changes to suit our current environment."
 	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
 	dna_cost = 2
-	chemical_cost = 25
 	req_human = 1
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_camouflage"

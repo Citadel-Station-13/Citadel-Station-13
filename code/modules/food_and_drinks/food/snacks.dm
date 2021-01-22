@@ -13,15 +13,31 @@ The nutriment reagent and bitesize variable replace the old heal_amt and amount 
 bitesize of 2, then it'll take 3 bites to eat. Unlike the old system, the contained reagents are evenly spread among all
 the bites. No more contained reagents = no more bites.
 
-Here is an example of the new formatting for anyone who wants to add more food items.
+Food formatting and crafting examples.
 ```
-/obj/item/reagent_containers/food/snacks/xenoburger			//Identification path for the object.
-	name = "Xenoburger"													//Name that displays in the UI.
-	desc = "Smells caustic. Tastes like heresy."						//Duh
-	icon_state = "xburger"												//Refers to an icon in food.dmi
-	list_reagents = list(/datum/reagent/xenomicrobes = 10,
-						/datum/reagent/consumable/nutriment = 2) 		//What's inside the snack.
-	bitesize = 3														//This is the amount each bite consumes.
+/obj/item/reagent_containers/food/snacks/saltedcornchips						//Identification path for the object.
+	name = "salted corn chips"													//Name that displays when hovered over.
+	desc = "Manufactured in a far away factory."								//Description on examine.
+	icon_state = "saltychip"													//Refers to an icon, usually in food.dmi
+	bitesize = 3																//How many reagents are consumed in each bite.
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6,				//What's inside the snack, but only if spawned. For example, from a chemical reaction, vendor, or slime core spawn.
+						/datum/reagent/consumable/nutriment/vitamin = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1,				//What's -added- to the food, in addition to the reagents contained inside the foods used to craft it. Basically, a reward for cooking.
+						/datum/reagent/consumable/nutriment/vitamin = 1)		^^For example. Egg+Egg = 2Egg + Bonus Reagents.
+	filling_color = "#F4A460"													//What color it will use if put in a custom food.
+	tastes = list("salt" = 1, "oil" = 1)										//Descriptive flavoring displayed when eaten. IE: "You taste a bit of salt and a bit of oil."
+	foodtype = GRAIN | JUNKFOOD													//Tag for racial or custom food preferences. IE: Most Lizards cannot have GRAIN.
+
+Crafting Recipe (See files in code/modules/food_and_drinks/recipes/tablecraft/)
+
+/datum/crafting_recipe/food/nachos
+	name ="Salted Corn Chips"													//Name that displays in the Crafting UI
+	reqs = list(																//The list of ingredients to make the food.
+		/obj/item/reagent_containers/food/snacks/tortilla = 1,
+		/datum/reagent/consumable/sodiumchloride = 1							//As a note, reagents and non-food items don't get added to the food. If you
+	)																			^^want the reagents, make sure the food item has it listed under bonus_reagents.
+	result = /obj/item/reagent_containers/food/snacks/saltedcornchips			//Resulting object.
+	subcategory = CAT_MISCFOOD													//Subcategory the food falls under in the Food Tab of the crafting menu.
 ```
 
 All foods are distributed among various categories. Use common sense.
@@ -81,9 +97,12 @@ All foods are distributed among various categories. Use common sense.
 	return
 
 
-/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)
+/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
+	INVOKE_ASYNC(src, .proc/attempt_forcefeed, M, user)
+
+/obj/item/reagent_containers/food/snacks/proc/attempt_forcefeed(mob/living/M, mob/living/user)
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
@@ -113,8 +132,6 @@ All foods are distributed among various categories. Use common sense.
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='danger'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0
-			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
@@ -143,7 +160,7 @@ All foods are distributed among various categories. Use common sense.
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
-				reagents.trans_to(M, bitesize)
+				reagents.trans_to(M, bitesize, log = TRUE)
 				bitecount++
 				On_Consume(M)
 				checkLiked(fraction, M)
@@ -151,8 +168,18 @@ All foods are distributed among various categories. Use common sense.
 
 	return 0
 
+/obj/item/reagent_containers/food/snacks/CheckAttackCooldown(mob/user, atom/target)
+	var/fast = HAS_TRAIT(user, TRAIT_VORACIOUS) && (user == target)
+	return user.CheckActionCooldown(fast? CLICK_CD_RANGE : CLICK_CD_MELEE)
+
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
 	. = ..()
+	if(food_quality >= 70)
+		. += "It is of a high quality."
+	else
+		if(food_quality <= 30)
+			. += "It is of a low quality."
+
 	if(bitecount == 0)
 		return
 	else if(bitecount == 1)
@@ -225,21 +252,9 @@ All foods are distributed among various categories. Use common sense.
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return FALSE
 
-	var/slices_lost = 0
-	if (accuracy >= IS_SHARP_ACCURATE)
-		user.visible_message( \
-			"[user] slices [src].", \
-			"<span class='notice'>You slice [src].</span>" \
-		)
-	else
-		user.visible_message( \
-			"[user] inaccurately slices [src] with [W]!", \
-			"<span class='notice'>You inaccurately slice [src] with your [W]!</span>" \
-		)
-		slices_lost = rand(1,min(1,round(slices_num/2)))
-
+	user.visible_message("[user] slices [src].", "<span class='notice'>You slice [src].</span>")
 	var/reagents_per_slice = reagents.total_volume/slices_num
-	for(var/i=1 to (slices_num-slices_lost))
+	for(var/i=1 to slices_num)
 		var/obj/item/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
@@ -254,6 +269,7 @@ All foods are distributed among various categories. Use common sense.
 		slice.desc = "[desc]"
 	if(foodtype != initial(foodtype))
 		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
+	slice.adjust_food_quality(food_quality)
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
@@ -283,9 +299,9 @@ All foods are distributed among various categories. Use common sense.
 	S.create_reagents(S.volume, reagent_flags, reagent_value)
 	if(reagents)
 		reagents.trans_to(S, reagents.total_volume)
-	if(S.bonus_reagents && S.bonus_reagents.len)
+	if(cooking_efficiency && length(S.bonus_reagents))
 		for(var/r_id in S.bonus_reagents)
-			var/amount = S.bonus_reagents[r_id] * cooking_efficiency
+			var/amount = round(S.bonus_reagents[r_id] * cooking_efficiency)
 			if(r_id == /datum/reagent/consumable/nutriment || r_id == /datum/reagent/consumable/nutriment/vitamin)
 				S.reagents.add_reagent(r_id, amount, tastes)
 			else
@@ -298,6 +314,10 @@ All foods are distributed among various categories. Use common sense.
 		result = new cooked_type(T)
 		if(istype(M))
 			initialize_cooked_food(result, M.efficiency)
+			//if the result is food, set its food quality to the original food item's quality
+			if(isfood(result))
+				var/obj/item/reagent_containers/food/food_output = result
+				food_output.adjust_food_quality(food_quality + M.quality_increase)
 		else
 			initialize_cooked_food(result, 1)
 		SSblackbox.record_feedback("tally", "food_made", 1, result.type)
@@ -339,7 +359,7 @@ All foods are distributed among various categories. Use common sense.
 		if(!M.is_drainable())
 			to_chat(user, "<span class='warning'>[M] is unable to be dunked in!</span>")
 			return
-		if(M.reagents.trans_to(src, dunk_amount))	//if reagents were transfered, show the message
+		if(M.reagents.trans_to(src, dunk_amount, log = TRUE))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dunk the [M].</span>")
 			return
 		if(!M.reagents.total_volume)
@@ -379,3 +399,13 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
+
+// //////////////////////////////////////////////Frying////////////////////////////////////////
+/atom/proc/fry(cook_time = 30) //you can truly fry anything
+	//don't fry reagent containers that aren't food items, indestructable items, or items that are already fried
+	if(isitem(src))
+		var/obj/item/fried_item = src
+		if(fried_item.resistance_flags & INDESTRUCTIBLE)
+			return
+	if(!GetComponent(/datum/component/fried) && (!reagents || isfood(src) || ismob(src)))
+		AddComponent(/datum/component/fried, frying_power = cook_time)

@@ -21,8 +21,7 @@
 	FG2.fields -= src
 	return ..()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/machinery/field/containment/attack_hand(mob/user)
+/obj/machinery/field/containment/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(get_dist(src, user) > 1)
 		return FALSE
 	else
@@ -57,12 +56,14 @@
 	else
 		..()
 
-/obj/machinery/field/containment/Crossed(mob/mover)
-	if(isliving(mover))
-		shock(mover)
+/obj/machinery/field/containment/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		shock(AM)
 
-	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
-		bump_field(mover)
+	if(ismachinery(AM) || isstructure(AM) || ismecha(AM))
+		bump_field(AM)
+
 
 /obj/machinery/field/containment/proc/set_master(master1,master2)
 	if(!master1 || !master2)

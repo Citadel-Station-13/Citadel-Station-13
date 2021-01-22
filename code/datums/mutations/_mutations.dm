@@ -11,7 +11,7 @@
 	var/lowest_value = 256 * 8
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
-	var/list/mutable_appearance/visual_indicators = list()
+	var/list/visual_indicators = list()
 	var/obj/effect/proc_holder/spell/power
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
@@ -42,6 +42,7 @@
 	var/synchronizer_coeff = -1 //makes the mutation hurt the user less
 	var/power_coeff = -1 //boosts mutation strength
 	var/energy_coeff = -1 //lowers mutation cooldown
+	var/list/valid_chrom_list = list() //List of strings of valid chromosomes this mutation can accept.
 
 /datum/mutation/human/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -90,7 +91,7 @@
 /datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_attack_hand(atom/target, proximity)
+/datum/mutation/human/proc/on_attack_hand(atom/target, proximity, act_intent, unarmed_attack_flags)
 	return
 
 /datum/mutation/human/proc/on_ranged_attack(atom/target, mouseparams)
@@ -116,7 +117,8 @@
 			owner.apply_overlay(layer_used)
 		if(power)
 			owner.RemoveSpell(power)
-			qdel(src)
+			qdel(power)
+		SEND_SIGNAL(owner, COMSIG_HUMAN_MUTATION_LOSS, src)
 		return 0
 	return 1
 
@@ -148,7 +150,6 @@
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
 
-
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
 		return
@@ -166,6 +167,7 @@
 	energy_coeff = HM.energy_coeff
 	mutadone_proof = HM.mutadone_proof
 	can_chromosome = HM.can_chromosome
+	valid_chrom_list = HM.valid_chrom_list
 
 /datum/mutation/human/proc/remove_chromosome()
 	stabilizer_coeff = initial(stabilizer_coeff)
@@ -191,3 +193,23 @@
 	power.panel = "Genetic"
 	owner.AddSpell(power)
 	return TRUE
+
+// Runs through all the coefficients and uses this to determine which chromosomes the
+// mutation can take. Stores these as text strings in a list.
+/datum/mutation/human/proc/update_valid_chromosome_list()
+	valid_chrom_list.Cut()
+
+	if(can_chromosome == CHROMOSOME_NEVER)
+		valid_chrom_list += "none"
+		return
+
+	valid_chrom_list += "Reinforcement"
+
+	if(stabilizer_coeff != -1)
+		valid_chrom_list += "Stabilizer"
+	if(synchronizer_coeff != -1)
+		valid_chrom_list += "Synchronizer"
+	if(power_coeff != -1)
+		valid_chrom_list += "Power"
+	if(energy_coeff != -1)
+		valid_chrom_list += "Energetic"

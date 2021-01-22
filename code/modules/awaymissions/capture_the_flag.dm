@@ -7,7 +7,9 @@
 #define AMMO_DROP_LIFETIME 300
 #define CTF_REQUIRED_PLAYERS 4
 
-/obj/item/twohanded/ctf
+
+
+/obj/item/ctf
 	name = "banner"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "banner"
@@ -22,22 +24,27 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
+	item_flags = SLOWS_WHILE_IN_HAND
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/anyonecanpickup = TRUE
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/twohanded/ctf/Destroy()
+/obj/item/ctf/Destroy()
 	QDEL_NULL(reset)
 	return ..()
 
-/obj/item/twohanded/ctf/Initialize()
+/obj/item/ctf/Initialize()
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/twohanded/ctf/process()
+/obj/item/ctf/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed)
+
+/obj/item/ctf/process()
 	if(is_ctf_target(loc)) //don't reset from someone's hands.
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
@@ -49,12 +56,12 @@
 		STOP_PROCESSING(SSobj, src)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/twohanded/ctf/attack_hand(mob/living/user)
+/obj/item/ctf/on_attack_hand(mob/living/user)
 	if(!is_ctf_target(user) && !anyonecanpickup)
-		to_chat(user, "Non players shouldn't be moving the flag!")
+		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
 		return
 	if(team in user.faction)
-		to_chat(user, "You can't move your own flag!")
+		to_chat(user, "<span class='warning'>You can't move your own flag!</span>")
 		return
 	if(loc == user)
 		if(!user.dropItemToGround(src))
@@ -64,7 +71,7 @@
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 		return
-	user.anchored = TRUE
+	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
@@ -73,9 +80,9 @@
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/twohanded/ctf/dropped(mob/user)
+/obj/item/ctf/dropped(mob/user)
 	..()
-	user.anchored = FALSE
+	user.set_anchored(FALSE)
 	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
@@ -86,7 +93,7 @@
 	anchored = TRUE
 
 
-/obj/item/twohanded/ctf/red
+/obj/item/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
@@ -95,7 +102,7 @@
 	reset_path = /obj/effect/ctf/flag_reset/red
 
 
-/obj/item/twohanded/ctf/blue
+/obj/item/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -168,20 +175,20 @@
 	GLOB.poi_list.Remove(src)
 	..()
 
-/obj/machinery/capture_the_flag/process()
+/obj/machinery/capture_the_flag/process(delta_time)
 	for(var/i in spawned_mobs)
 		if(!i)
 			spawned_mobs -= i
 			continue
 		// Anyone in crit, automatically reap
-		var/mob/living/M = i
-		if(M.InCritical() || M.stat == DEAD)
-			ctf_dust_old(M)
+		var/mob/living/living_participant = i
+		if(living_participant.InCritical() || living_participant.stat == DEAD)
+			ctf_dust_old(living_participant)
 		else
 			// The changes that you've been hit with no shield but not
 			// instantly critted are low, but have some healing.
-			M.adjustBruteLoss(-5)
-			M.adjustFireLoss(-5)
+			living_participant.adjustBruteLoss(-2.5 * delta_time)
+			living_participant.adjustFireLoss(-2.5 * delta_time)
 
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
@@ -208,6 +215,10 @@
 				toggle_all_ctf(user)
 			return
 
+
+		// if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
+		// 	to_chat(user, "<span class='warning'>CTF has been temporarily disabled by admins.</span>")
+		// 	return
 		people_who_want_to_play |= user.ckey
 		var/num = people_who_want_to_play.len
 		var/remaining = CTF_REQUIRED_PLAYERS - num
@@ -223,7 +234,7 @@
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!")
+			to_chat(user, "<span class='warning'>It must be more than [DisplayTimeText(respawn_cooldown)] from your last death to respawn!</span>")
 			return
 		var/client/new_team_member = user.client
 		if(user.mind && user.mind.current)
@@ -235,10 +246,10 @@
 		if(CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
-			to_chat(user, "No switching teams while the round is going!")
+			to_chat(user, "<span class='warning'>No switching teams while the round is going!</span>")
 			return
 		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] team to even things up.")
+			to_chat(user, "<span class='warning'>[src.team] has more team members than [CTF.team]! Try joining [CTF.team] team to even things up.</span>")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -254,7 +265,7 @@
 		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
 		body.dust()
 
-/obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
+/obj/machinery/capture_the_flag/proc/clear_cooldown(ckey)
 	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
@@ -266,7 +277,7 @@
 	M.equipOutfit(ctf_gear)
 	M.dna.species.punchdamagehigh = 25
 	M.dna.species.punchdamagelow = 25
-	M.AddElement(/datum/element/ghost_role_eligibility)
+	M.AddElement(/datum/element/ghost_role_eligibility) //??
 	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
@@ -276,8 +287,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/twohanded/ctf))
-		var/obj/item/twohanded/ctf/flag = I
+	if(istype(I, /obj/item/ctf))
+		var/obj/item/ctf/flag = I
 		if(flag.team != src.team)
 			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
@@ -289,14 +300,15 @@
 			victory()
 
 /obj/machinery/capture_the_flag/proc/victory()
-	for(var/mob/M in GLOB.mob_list)
-		var/area/mob_area = get_area(M)
+	for(var/mob/_competitor in GLOB.mob_living_list)
+		var/mob/living/competitor = _competitor
+		var/area/mob_area = get_area(competitor)
 		if(istype(mob_area, /area/ctf))
-			to_chat(M, "<span class='narsie [team_span]'>[team] team wins!</span>")
-			to_chat(M, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
-			for(var/obj/item/twohanded/ctf/W in M)
-				M.dropItemToGround(W)
-			M.dust()
+			to_chat(competitor, "<span class='narsie [team_span]'>[team] team wins!</span>")
+			to_chat(competitor, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
+			for(var/obj/item/ctf/W in competitor)
+				competitor.dropItemToGround(W)
+			competitor.dust()
 	for(var/obj/machinery/control_point/control in GLOB.machines)
 		control.icon_state = "dominator"
 		control.controlling = null
@@ -324,7 +336,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
@@ -335,7 +347,7 @@
 	var/list/ctf_object_typecache = typecacheof(list(
 				/obj/machinery,
 				/obj/effect/ctf,
-				/obj/item/twohanded/ctf
+				/obj/item/ctf
 			))
 	for(var/atm in A)
 		if (isturf(A) || ismob(A) || isarea(A))
@@ -351,10 +363,10 @@
 	ctf_enabled = FALSE
 	arena_reset = FALSE
 	var/area/A = get_area(src)
-	for(var/i in GLOB.mob_list)
-		var/mob/M = i
-		if((get_area(A) == A) && (M.ckey in team_members))
-			M.dust()
+	for(var/_competitor in GLOB.mob_living_list)
+		var/mob/living/competitor = _competitor
+		if((get_area(A) == A) && (competitor.ckey in team_members))
+			competitor.dust()
 	team_members.Cut()
 	spawned_mobs.Cut()
 	recently_dead_ckeys.Cut()
@@ -371,18 +383,18 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
-/proc/ctf_floor_vanish(atom/target)
-	if(isturf(target.loc))
-		qdel(target)
-
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
 	mag_type = /obj/item/ammo_box/magazine/m50/ctf
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped(mob/user)
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/ammo_box/magazine/m50/ctf
 	ammo_type = /obj/item/ammo_casing/a50/ctf
@@ -396,6 +408,7 @@
 /obj/item/projectile/bullet/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 60
+		return //PROJECTILE_PIERCE_NONE	/// hey uhh don't hit anyone behind them
 	. = ..()
 
 /obj/item/gun/ballistic/automatic/laser/ctf
@@ -403,16 +416,24 @@
 	desc = "This looks like it could really hurt in melee."
 	force = 50
 
-/obj/item/gun/ballistic/automatic/laser/ctf/dropped(mob/user)
+/obj/item/gun/ballistic/automatic/laser/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
+
+/obj/item/gun/ballistic/automatic/laser/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
-/obj/item/ammo_box/magazine/recharge/ctf/dropped(mob/user)
+/obj/item/ammo_box/magazine/recharge/ctf/dropped()
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
+
+/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/item/projectile/beam/ctf
@@ -424,15 +445,16 @@
 /obj/item/projectile/beam/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 150
+		return //PROJECTILE_PIERCE_NONE		/// hey uhhh don't hit anyone behind them
 	. = ..()
 
 /proc/is_ctf_target(atom/target)
 	. = FALSE
 	if(istype(target, /obj/structure/barricade/security/ctf))
 		. = TRUE
-	if(isliving(target))
-		var/mob/living/H = target
-		if((RED_TEAM in H.faction) || (BLUE_TEAM in H.faction))
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/shielded/ctf))
 			. = TRUE
 
 // RED TEAM GUNS
@@ -478,7 +500,11 @@
 
 /obj/item/claymore/ctf/dropped(mob/user)
 	. = ..()
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/ctf_floor_vanish, src), 1)
+	addtimer(CALLBACK(src, .proc/floor_vanish), 1)
+
+/obj/item/claymore/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -488,27 +514,27 @@
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/away
 	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf
 	back = /obj/item/claymore/ctf
 
-/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
 		return
 	var/list/no_drops = list()
 	var/obj/item/card/id/W = H.wear_id
 	no_drops += W
 	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label()
 
-	// The shielded hardsuit is already TRAIT_NODROP
-	no_drops += H.get_item_by_slot(SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_EARS)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
@@ -522,6 +548,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	id = /obj/item/card/id/syndicate_command //it's red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
@@ -532,12 +559,13 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
+	id = /obj/item/card/id/centcom //it's blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
-/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
@@ -545,7 +573,7 @@
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
 
-/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)
+/datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)
@@ -592,6 +620,10 @@
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))
 
+/obj/structure/table/reinforced/ctf
+	resistance_flags = INDESTRUCTIBLE
+	flags_1 = NODECONSTRUCT_1
+
 /obj/effect/ctf
 	density = FALSE
 	anchored = TRUE
@@ -614,10 +646,11 @@
 	QDEL_IN(src, AMMO_DROP_LIFETIME)
 
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
+	. = ..()
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bump(atom/movable/AM)
-	reload(AM)
+/obj/effect/ctf/ammo/Bump(atom/A)
+	reload(A)
 
 /obj/effect/ctf/ammo/Bumped(atom/movable/AM)
 	reload(AM)
@@ -633,7 +666,7 @@
 				qdel(G)
 			O.equip(M)
 			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
-			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
+			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, TRUE, -1)
 			qdel(src)
 			break
 
@@ -664,21 +697,18 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
-	var/point_rate = 1
+	var/point_rate = 0.5
 
-/obj/machinery/control_point/process()
+/obj/machinery/control_point/process(delta_time)
 	if(controlling)
-		controlling.control_points += point_rate
+		controlling.control_points += point_rate * delta_time
 		if(controlling.control_points >= controlling.control_points_to_win)
 			controlling.victory()
 
 /obj/machinery/control_point/attackby(mob/user, params)
 	capture(user)
 
-/obj/machinery/control_point/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/control_point/on_attack_hand(mob/user)
 	capture(user)
 
 /obj/machinery/control_point/proc/capture(mob/user)

@@ -161,12 +161,12 @@
 
 /datum/spellbook_entry/blind
 	name = "Blind"
-	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spell_type = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	cost = 1
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
-	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell_type = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	category = "Mobility"
 
 /datum/spellbook_entry/forcewall
@@ -188,6 +188,10 @@
 /datum/spellbook_entry/mutate
 	name = "Mutate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
+
+/datum/spellbook_entry/mantra
+	name = "Inner Mantra"
+	spell_type = /obj/effect/proc_holder/spell/self/mantra
 
 /datum/spellbook_entry/jaunt
 	name = "Ethereal Jaunt"
@@ -226,7 +230,11 @@
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return 1 on success
 	. = ..()
-	user.flags_1 |= TESLA_IGNORE_1
+	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
+
+/datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -242,7 +250,7 @@
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
-	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 
 /datum/spellbook_entry/charge
 	name = "Charge"
@@ -290,11 +298,16 @@
 		dat += "[surplus] left.<br>"
 	return dat
 
+/datum/spellbook_entry/item/timestop_katana
+	name = "Temporal Katana"
+	desc = "An oddly-weighted katana, reinforced to allow parrying, with a temporal anomaly magically shoved into it. Successful ripostes prove devastating to those unprepared."
+	item_path = /obj/item/katana/timestop
+
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
-	dynamic_requirement = 60
+	dynamic_requirement = 200
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -361,7 +374,7 @@
 	desc = "A collection of wands that allow for a wide variety of utility. Wands have a limited number of charges, so be conservative in use. Comes in a handy belt."
 	item_path = /obj/item/storage/belt/wands/full
 	category = "Defensive"
-	dynamic_requirement = 60
+	dynamic_requirement = 200
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
@@ -386,7 +399,7 @@
 	name = "Plasma Fist"
 	desc = "A forbidden martial art designed on the surging power of plasma. Use it to harness the ancient power."
 	item_path = /obj/item/book/granter/martial/plasma_fist
-	cost = 3
+	cost = 2
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
@@ -426,12 +439,12 @@
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
-	item_path = /obj/item/twohanded/mjollnir
+	item_path = /obj/item/mjollnir
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
-	item_path = /obj/item/twohanded/singularityhammer
+	item_path = /obj/item/singularityhammer
 
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
@@ -499,6 +512,7 @@
 	name = "Summon Guns"
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
 	dynamic_requirement = 60
+	limit = 1
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
@@ -517,6 +531,7 @@
 	name = "Summon Magic"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
 	dynamic_requirement = 60
+	limit = 1
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
@@ -555,6 +570,27 @@
 	if(times>0)
 		. += "You cast it [times] times.<br>"
 	return .
+
+/datum/spellbook_entry/summon/curse_of_madness
+	name = "Curse of Madness"
+	desc = "Curses the station, warping the minds of everyone inside, causing lasting traumas. Warning: this spell can affect you if not cast from a safe distance."
+	cost = 4
+
+/datum/spellbook_entry/summon/curse_of_madness/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+	active = TRUE
+	var/message = stripped_input(user, "Whisper a secret truth to drive your victims to madness.", "Whispers of Madness")
+	if(!message)
+		return FALSE
+	curse_of_madness(user, message)
+	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
+	playsound(user, 'sound/magic/mandswap.ogg', 50, 1)
+	return TRUE
+
+/datum/spellbook_entry/summon/curse_of_madness/IsAvailible()
+	if(!SSticker.mode) // In case spellbook is placed on map
+		return FALSE
+	return (!CONFIG_GET(flag/no_summon_traumas) && ..())
 
 /obj/item/spellbook
 	name = "spell book"

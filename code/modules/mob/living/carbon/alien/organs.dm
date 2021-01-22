@@ -1,7 +1,8 @@
 /obj/item/organ/alien
 	icon_state = "xgibmid2"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/list/alien_powers = list()
-	organ_flags = ORGAN_NO_SPOIL
+	organ_flags = ORGAN_NO_SPOIL|ORGAN_EDIBLE
 
 /obj/item/organ/alien/Initialize()
 	. = ..()
@@ -26,12 +27,6 @@
 			owner.RemoveAbility(P)
 	..()
 
-/obj/item/organ/alien/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
-	return S
-
-
 /obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
 	icon_state = "plasma"
@@ -39,16 +34,12 @@
 	zone = BODY_ZONE_CHEST
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
 
 	var/storedPlasma = 100
 	var/max_plasma = 250
 	var/heal_rate = 5
 	var/plasma_rate = 10
-
-/obj/item/organ/alien/plasmavessel/prepare_eat()
-	var/obj/S = ..()
-	S.reagents.add_reagent(/datum/reagent/toxin/plasma, storedPlasma/10)
-	return S
 
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
@@ -77,6 +68,9 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
 /obj/item/organ/alien/plasmavessel/on_life()
+	. = ..()
+	if(!.)
+		return
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)

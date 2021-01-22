@@ -111,7 +111,7 @@
 	include_subtypes = FALSE
 
 /datum/export/large/am_control_unit
-	cost = 4000
+	cost = 2000
 	unit_name = "antimatter control unit"
 	export_types = list(/obj/machinery/power/am_control_unit)
 
@@ -169,15 +169,13 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
-	var/gases = C.air_contents.gases
-
-	worth += gases[/datum/gas/bz]*4
-	worth += gases[/datum/gas/stimulum]*25
-	worth += gases[/datum/gas/hypernoblium]*1000
-	worth += gases[/datum/gas/miasma]*4
-	worth += gases[/datum/gas/tritium]*7
-	worth += gases[/datum/gas/pluoxium]*6
-	worth += gases[/datum/gas/nitryl]*30
+	worth += C.air_contents.get_moles(/datum/gas/bz)*3
+	worth += C.air_contents.get_moles(/datum/gas/stimulum)*25
+	worth += C.air_contents.get_moles(/datum/gas/hypernoblium)*1000
+	worth += C.air_contents.get_moles(/datum/gas/miasma)*2
+	worth += C.air_contents.get_moles(/datum/gas/tritium)*7
+	worth += C.air_contents.get_moles(/datum/gas/pluoxium)*6
+	worth += C.air_contents.get_moles(/datum/gas/nitryl)*30
 	return worth
 
 
@@ -303,7 +301,7 @@
 	export_types = list(/obj/mecha/combat/durand)
 
 /datum/export/large/mech/phazon
-	cost = 35000 //Little over half do to needing a core
+	cost = 35000 //Little over half due to needing a core
 	unit_name = "working phazon"
 	export_types = list(/obj/mecha/combat/phazon)
 

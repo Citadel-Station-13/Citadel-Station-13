@@ -12,6 +12,10 @@
 /obj/item/clothing/mask/balaclava/attack_self(mob/user)
 	adjustmask(user)
 
+/obj/item/clothing/mask/balaclava/breath
+	name = "breathaclava"
+	clothing_flags = ALLOWINTERNALS
+
 /obj/item/clothing/mask/infiltrator
 	name = "insidious balaclava"
 	desc = "An incredibly suspicious balaclava made with Syndicate nanofibers to absorb impacts slightly while obfuscating the voice and face using a garbled vocoder."

@@ -11,6 +11,12 @@
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
 
+//Toxins damage 'typeflag' - is this normal toxins damage or does it have to do with systems corruption (ROBOTIC_ORGANISM species trait)
+
+#define TOX_DEFAULT 1 //For normal toxins damage / healing (toxins, etc), adjustToxLoss() defaults to this
+#define TOX_SYSCORRUPT 2 //For toxins damage causing adverse effects to robotic organisms, up to and including fatal corruption, or healing that damage
+#define TOX_OMNI 3 //For tox damage / healing that affects both organics and robotic organisms. Used by very few things, e.g. aheals / by default setToxLoss()
+
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 		(1<<0)
 #define FIRELOSS 		(1<<1)
@@ -29,49 +35,56 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
-// /mob/living/combat_flags
-#define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
+// mob/living/var/combat_flags variable.
+/// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
+#define COMBAT_FLAGS_DEFAULT				(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
+/// Default combat flags for everyone else (so literally everyone but humans).
+#define COMBAT_FLAGS_SPRINT_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_SPRINT_FORCED | COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
+/// Default combat flags for those in stamina combat system
+#define COMBAT_FLAGS_STAMINA_COMBAT			(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE | COMBAT_FLAG_STAMINA_BUFFER)
 
-/// Default combat flags for those affected by ((stamina combat))
-#define COMBAT_FLAGS_DEFAULT					NONE
-/// Default combat flags for everyone else (so literally everyone but humans)
-#define COMBAT_FLAGS_STAMSYSTEM_EXEMPT			(COMBAT_FLAG_SPRINT_ACTIVE | COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_SPRINT_TOGGLED | COMBAT_FLAG_COMBAT_TOGGLED)
-/// Default combat flags for those only affected by sprint (so just silicons)
-#define COMBAT_FLAGS_STAMEXEMPT_YESSPRINT		(COMBAT_FLAG_COMBAT_ACTIVE | COMBAT_FLAG_COMBAT_TOGGLED)
-
-/// The user wants combat mode on
-#define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
 /// The user wants sprint mode on
-#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
-/// Combat mode is currently active
-#define COMBAT_FLAG_COMBAT_ACTIVE			(1<<2)
+#define COMBAT_FLAG_SPRINT_TOGGLED			(1<<0)
 /// Sprint is currently active
-#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<3)
+#define COMBAT_FLAG_SPRINT_ACTIVE			(1<<1)
 /// Currently attempting to crawl under someone
-#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<4)
+#define COMBAT_FLAG_ATTEMPTING_CRAWL		(1<<2)
 /// Currently stamcritted
-#define COMBAT_FLAG_HARD_STAMCRIT			(1<<5)
+#define COMBAT_FLAG_HARD_STAMCRIT			(1<<3)
 /// Currently attempting to resist up from the ground
-#define COMBAT_FLAG_RESISTING_REST			(1<<6)
+#define COMBAT_FLAG_RESISTING_REST			(1<<4)
 /// Intentionally resting
-#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
-/// Currently stamcritted but not as violently
-#define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
+#define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
+/// This mob requires stamina buffer to do things that require stamina buffer. Not having this exempts the mob from stamina combat.
+#define COMBAT_FLAG_STAMINA_BUFFER			(1<<6)
+/// Force sprint mode on at all times, overrides everything including sprint disable traits.
+#define COMBAT_FLAG_SPRINT_FORCED			(1<<7)
+/// This mob is capable of using the active parrying system.
+#define COMBAT_FLAG_PARRY_CAPABLE			(1<<8)
+/// This mob is capable of using the active blocking system.
+#define COMBAT_FLAG_BLOCK_CAPABLE			(1<<9)
+/// This mob is capable of unarmed parrying
+#define COMBAT_FLAG_UNARMED_PARRY			(1<<10)
+/// This mob is currently actively blocking
+#define COMBAT_FLAG_ACTIVE_BLOCKING			(1<<11)
+/// This mob is currently starting an active block
+#define COMBAT_FLAG_ACTIVE_BLOCK_STARTING	(1<<12)
 
 // Helpers for getting someone's stamcrit state. Cast to living.
 #define NOT_STAMCRIT 0
-#define SOFT_STAMCRIT 1
-#define HARD_STAMCRIT 2
+#define HARD_STAMCRIT 1
 
 // Stamcrit check helpers
 #define IS_STAMCRIT(mob)					(CHECK_STAMCRIT(mob) != NOT_STAMCRIT)
-#define CHECK_STAMCRIT(mob)					((mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)? HARD_STAMCRIT : ((mob.combat_flags & COMBAT_FLAG_SOFT_STAMCRIT)? SOFT_STAMCRIT : NOT_STAMCRIT))
+#define CHECK_STAMCRIT(mob)					(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 
 //stamina stuff
-#define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
-#define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
-#define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
-#define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
+/// crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
+#define STAMINA_CRIT						140
+/// Threshold for leaving stamina critical
+#define STAMINA_CRIT_REMOVAL_THRESHOLD		100
+/// Threshold under for which you are unable to draw from stamina health to replace stamina buffer
+#define STAMINA_NO_OVERDRAW_THRESHOLD		100
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
@@ -96,7 +109,6 @@
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
-#define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
 #define CLICK_CD_RESIST 20
 #define CLICK_CD_GRABBING 10
@@ -110,21 +122,6 @@
 #define GRAB_AGGRESSIVE				1
 #define GRAB_NECK					2
 #define GRAB_KILL					3
-
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
-
-/// Attack types for check_block()/run_block(). Flags, combinable.
-/// Attack was melee, whether or not armed.
-#define ATTACK_TYPE_MELEE			(1<<0)
-/// Attack was with a gun or something that should count as a gun (but not if a gun shouldn't count for a gun, crazy right?)
-#define ATTACK_TYPE_PROJECTILE		(1<<1)
-/// Attack was unarmed.. this usually means hand to hand combat.
-#define ATTACK_TYPE_UNARMED			(1<<2)
-/// Attack was a thrown atom hitting the victim.
-#define ATTACK_TYPE_THROWN			(1<<3)
-/// Attack was a bodyslam/leap/tackle. See: Xenomorph leap tackles.
-#define ATTACK_TYPE_TACKLE			(1<<4)
 
 //attack visual effects
 #define ATTACK_EFFECT_PUNCH		"punch"
@@ -158,17 +155,17 @@
 #define SHOVE_KNOCKDOWN_HUMAN 30
 #define SHOVE_KNOCKDOWN_TABLE 30
 #define SHOVE_KNOCKDOWN_COLLATERAL 10
-//for the shove slowdown, see __DEFINES/movespeed_modification.dm
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+/// how long they're staggered for
+#define SHOVE_STAGGER_DURATION 35
+/// how long they're off balance for
+#define SHOVE_OFFBALANCE_DURATION 30
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
 
 
-//Combat object defines
-
 //Embedded objects
+
 #define EMBEDDED_PAIN_CHANCE 					15	//Chance for embedded objects to cause pain (damage user)
 #define EMBEDDED_ITEM_FALLOUT 					5	//Chance for embedded object to fall out (causing pain but removing the object)
 #define EMBED_CHANCE							45	//Chance for an object to embed into somebody when thrown (if it's sharp)
@@ -177,7 +174,16 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_IMPACT_PAIN_MULTIPLIER			4	//Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
 #define EMBED_THROWSPEED_THRESHOLD				4	//The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
-#define EMBEDDED_UNSAFE_REMOVAL_TIME			150	//A Time in ticks, total removal time = (this/item.w_class)
+#define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
+#define EMBEDDED_JOSTLE_CHANCE					5	//Chance for embedded objects to cause pain every time they move (jostle)
+#define EMBEDDED_JOSTLE_PAIN_MULTIPLIER			1	//Coefficient of multiplication for the damage the item does while
+#define EMBEDDED_PAIN_STAM_PCT					0.0	//This percentage of all pain will be dealt as stam damage rather than brute (0-1)
+#define EMBED_CHANCE_TURF_MOD					-15	//You are this many percentage points less likely to embed into a turf (good for things glass shards and spears vs walls)
+
+#define EMBED_HARMLESS list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
+#define EMBED_HARMLESS_SUPERIOR list("pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE, "embed_chance" = 100, "fall_chance" = 0.1)
+#define EMBED_POINTY list("ignore_throwspeed_threshold" = TRUE)
+#define EMBED_POINTY_SUPERIOR list("embed_chance" = 100, "ignore_throwspeed_threshold" = TRUE)
 
 //Gun weapon weight
 #define WEAPON_LIGHT 1
@@ -192,10 +198,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EGUN_SELFCHARGE 1
 #define EGUN_SELFCHARGE_BORG 2
 
+//Gun suppression
+#define SUPPRESSED_NONE 0
+#define SUPPRESSED_QUIET 1 ///standard suppressed
+#define SUPPRESSED_VERY 2 /// no message
+
+//Nice shot bonus
+#define NICE_SHOT_RICOCHET_BONUS	10	//if the shooter has the NICE_SHOT trait and they fire a ricocheting projectile, add this to the ricochet chance and auto aim angle
+
+///Time to spend without clicking on other things required for your shots to become accurate.
+#define GUN_AIMING_TIME (2 SECONDS)
+
 //Object/Item sharpness
-#define IS_BLUNT			0
-#define IS_SHARP			1
-#define IS_SHARP_ACCURATE	2
+#define SHARP_NONE			0
+#define SHARP_EDGED			1
+#define SHARP_POINTY		2
 
 //His Grace.
 #define HIS_GRACE_SATIATED 0 //He hungers not. If bloodthirst is set to this, His Grace is asleep.
@@ -213,9 +230,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
 #define EXPLODE_GIB_THRESHOLD 50
-
-#define EMP_HEAVY 1
-#define EMP_LIGHT 2
 
 #define GRENADE_CLUMSY_FUMBLE 1
 #define GRENADE_NONCLUMSY_FUMBLE 2
@@ -239,71 +253,14 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.01
 
-//items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
-#define TOTAL_MASS_TINY_ITEM		1.25
-#define TOTAL_MASS_SMALL_ITEM		2.5
-#define TOTAL_MASS_NORMAL_ITEM		3.75
-#define TOTAL_MASS_BULKY_ITEM		5
-#define TOTAL_MASS_HUGE_ITEM		6.25
-#define TOTAL_MASS_GIGANTIC_ITEM	7.5
+//stamina recovery defines. Blocked if combat mode is on.
+#define STAM_RECOVERY_STAM_CRIT		-7.5
+#define STAM_RECOVERY_RESTING		-6
+#define STAM_RECOVERY_NORMAL		-3
+#define STAM_RECOVERY_LIMB			4 //limbs recover stamina separately from handle_status_effects(), and aren't blocked by combat mode.
 
-#define TOTAL_MASS_HAND_REPLACEMENT	5 //standard punching stamina cost. most hand replacements are huge items anyway.
-#define TOTAL_MASS_MEDIEVAL_WEAPON	3.6 //very, very generic average sword/warpick/etc. weight in pounds.
-#define TOTAL_MASS_TOY_SWORD 1.5
-
-//bullet_act() return values
-#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
-
-/// Bitflags for check_block() and handle_block(). Meant to be combined. You can be hit and still reflect, for example, if you do not use BLOCK_SUCCESS.
-/// Attack was not blocked
-#define BLOCK_NONE						NONE
-/// Attack was blocked, do not do damage. THIS FLAG MUST BE THERE FOR DAMAGE/EFFECT PREVENTION!
-#define BLOCK_SUCCESS					(1<<1)
-
-/// The below are for "metadata" on "how" the attack was blocked.
-
-/// Attack was and should be redirected according to list argument REDIRECT_METHOD (NOTE: the SHOULD here is important, as it says "the thing blocking isn't handling the reflecting for you so do it yourself"!)
-#define BLOCK_SHOULD_REDIRECT			(1<<2)
-/// Attack was redirected (whether by us or by SHOULD_REDIRECT flagging for automatic handling)
-#define BLOCK_REDIRECTED				(1<<3)
-/// Attack was blocked by something like a shield.
-#define BLOCK_PHYSICAL_EXTERNAL			(1<<4)
-/// Attack was blocked by something worn on you.
-#define BLOCK_PHYSICAL_INTERNAL			(1<<5)
-/// Attack outright missed because the target dodged. Should usually be combined with redirection passthrough or something (see martial arts)
-#define BLOCK_TARGET_DODGED				(1<<7)
-/// Meta-flag for run_block/do_run_block : By default, BLOCK_SUCCESS tells do_run_block() to assume the attack is completely blocked and not continue the block chain. If this is present, it will continue to check other items in the chain rather than stopping.
-#define BLOCK_CONTINUE_CHAIN			(1<<8)
-
-/// For keys in associative list/block_return as we don't want to saturate our (somewhat) limited flags.
-#define BLOCK_RETURN_REDIRECT_METHOD			"REDIRECT_METHOD"
-	/// Pass through victim
-	#define REDIRECT_METHOD_PASSTHROUGH			"passthrough"
-	/// Deflect at randomish angle
-	#define REDIRECT_METHOD_DEFLECT				"deflect"
-	/// reverse 180 angle, basically (as opposed to "realistic" wall reflections)
-	#define REDIRECT_METHOD_REFLECT				"reflect"
-	/// "do not taser the bad man with the desword" - actually aims at the firer/attacker rather than just reversing
-	#define REDIRECT_METHOD_RETURN_TO_SENDER		"no_you"
-
-/// These keys are generally only applied to the list if real_attack is FALSE. Used incase we want to make "smarter" mob AI in the future or something.
-/// Tells the caller how likely from 0 (none) to 100 (always) we are to reflect energy projectiles
-#define BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE					"reflect_projectile_chance"
-/// Tells the caller how likely we are to block attacks from 0 to 100 in general
-#define BLOCK_RETURN_NORMAL_BLOCK_CHANCE						"normal_block_chance"
-/// Tells the caller about how many hits we can soak on average before our blocking fails.
-#define BLOCK_RETURN_BLOCK_CAPACITY								"block_capacity"
-
-/// Default if the above isn't set in the list.
-#define DEFAULT_REDIRECT_METHOD_PROJECTILE REDIRECT_METHOD_DEFLECT
-
-/// Block priorities
-#define BLOCK_PRIORITY_HELD_ITEM				100
-#define BLOCK_PRIORITY_CLOTHING					50
-#define BLOCK_PRIORITY_WEAR_SUIT				75
-#define BLOCK_PRIORITY_UNIFORM					25
-
-#define BLOCK_PRIORITY_DEFAULT BLOCK_PRIORITY_HELD_ITEM
+/**
+  * should the current-attack-damage be lower than the item force multiplied by this value,
+  * a "inefficiently" prefix will be added to the message.
+  */
+#define FEEBLE_ATTACK_MSG_THRESHOLD 0.5

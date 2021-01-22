@@ -9,7 +9,7 @@
 	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
 		var/obj/item/clothing/glasses/GFP = src.glasses
 		number += GFP.flash_protect
- 
+
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
@@ -65,39 +65,22 @@
 		throw_mode_off()
 		return TRUE
 
-/mob/living/carbon/embed_item(obj/item/I)
-	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-	var/obj/item/bodypart/L = pick(bodyparts)
-	L.embedded_objects |= I
-	I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-	I.forceMove(src)
-	I.embedded()
-	L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
-	visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-
-/mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
-	//CIT CHANGES START HERE - combatmode and resting checks
-	var/totitemdamage = I.force
-	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		totitemdamage *= 0.5
-	if(!CHECK_MOBILITY(user, MOBILITY_STAND))
-		totitemdamage *= 0.5
-	if(!(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
-		totitemdamage *= 1.5
-	//CIT CHANGES END HERE
+/mob/living/carbon/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+	var/totitemdamage = pre_attacked_by(I, user) * damage_multiplier
 	var/impacting_zone = (user == src)? check_zone(user.zone_selected) : ran_zone(user.zone_selected)
-	if((user != src) && (run_block(I, totitemdamage, "the [I]", ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone) & BLOCK_SUCCESS))
+	var/list/block_return = list()
+	if((user != src) && (mob_run_block(I, totitemdamage, "the [I]", ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE) | ATTACK_TYPE_MELEE, I.armour_penetration, user, impacting_zone, block_return) & BLOCK_SUCCESS))
 		return FALSE
+	totitemdamage = block_calculate_resultant_damage(totitemdamage, block_return)
 	var/obj/item/bodypart/affecting = get_bodypart(impacting_zone)
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.name)
-	I.do_stagger_action(src, user)
+	send_item_attack_message(I, user, affecting.name, affecting, totitemdamage)
+	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
-		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
-		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
+		apply_damage(totitemdamage, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness()) //CIT CHANGE - replaces I.force with totitemdamage
+		if(I.damtype == BRUTE && affecting.is_organic_limb(FALSE))
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)
@@ -117,19 +100,12 @@
 						head.add_mob_blood(src)
 						update_inv_head()
 
-		//dismemberment
-		var/probability = I.get_dismemberment_chance(affecting)
-		if(prob(probability))
-			if(affecting.dismember(I.damtype))
-				I.add_mob_blood(src)
-				playsound(get_turf(src), I.get_dismember_sound(), 80, 1)
 		return TRUE //successful attack
 
 /mob/living/carbon/attack_drone(mob/living/simple_animal/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+/mob/living/carbon/on_attack_hand(mob/living/carbon/human/user, act_intent, unarmed_attack_flags)
 	. = ..()
 	if(.) //was the attack blocked?
 		return
@@ -144,11 +120,15 @@
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+		if(act_intent == INTENT_HELP || act_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, user.a_intent))
+				if(S.next_step(user, act_intent))
 					return TRUE
 
+	for(var/i in all_wounds)
+		var/datum/wound/W = i
+		if(W.try_handling(user))
+			return TRUE
 
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
@@ -165,15 +145,14 @@
 
 	if(M.a_intent == INTENT_HELP)
 		help_shake_act(M)
-		return 0
+		return TRUE
 
 	. = ..()
 	if(.) //successful monkey bite.
 		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
-		return 1
-
+		return TRUE
 
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	. = ..()
@@ -187,7 +166,8 @@
 				M.powerlevel = 0
 
 			visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-			"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+			"<span class='userdanger'>The [M.name] has shocked you!</span>", target = M,
+			target_message = "<span class='danger'>You have shocked [src]!</span>")
 
 			do_sparks(5, TRUE, src)
 			var/power = M.powerlevel + rand(0,3)
@@ -232,62 +212,78 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		//EMPs fuck robots over. Up to ~11.5 corruption per EMP if hit by the full power. They also get up to 15 burn damage per EMP (up to 2.5 per limb), plus short hardstun
+		//Though, note that the burn damage is linear, while corruption is logarythmical, which means at lower severities you still get corruption, but far less burn / stun
+		//Note than as compensation, they only take half the limb burn damage someone fully augmented would take, which would be up to 30 burn.
+		adjustToxLoss(round(log(severity)*2.5, 0.1), toxins_type = TOX_SYSCORRUPT)
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
 
+///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
 /mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
-		return FALSE
-	shock_damage *= siemens_coeff
-	if(dna && dna.species)
-		shock_damage *= dna.species.siemens_coeff
-	if(shock_damage < 1)
-		return 0
-	if(reagents.has_reagent(/datum/reagent/teslium))
-		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
-	if((flags & SHOCK_ILLUSION))
-		adjustStaminaLoss(shock_damage)
-	else
-		take_overall_damage(0,shock_damage)
-	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
-		)
-	jitteriness += 1000 //High numbers for violent convulsions
+	. = ..()
+	if(!.)
+		return
+	//Propagation through pulling, fireman carry
+	if(!(flags & SHOCK_ILLUSION))
+		var/list/shocking_queue = list()
+		if(iscarbon(pulling) && source != pulling)
+			shocking_queue += pulling
+		if(iscarbon(pulledby) && source != pulledby)
+			shocking_queue += pulledby
+		if(iscarbon(buckled) && source != buckled)
+			shocking_queue += buckled
+		for(var/mob/living/carbon/carried in buckled_mobs)
+			if(source != carried)
+				shocking_queue += carried
+		//Found our victims, now lets shock them all
+		for(var/victim in shocking_queue)
+			var/mob/living/carbon/C = victim
+			C.electrocute_act(shock_damage*0.75, src, 1, flags)
+	//Stun
+	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
+	if(should_stun)
+		Stun(40)
+	//Jitter and other fluff.
+	jitteriness += 1000
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
-		Stun(40)
-	spawn(20)
-		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if((!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN))
-			DefaultCombatKnockdown(60)
+	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
 	return shock_damage
+
+///Called slightly after electrocute act to reduce jittering and apply a secondary stun.
+/mob/living/carbon/proc/secondary_shock(should_stun)
+	jitteriness = max(jitteriness - 990, 10)
+	if(should_stun)
+		DefaultCombatKnockdown(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
+	if(M == src && check_self_for_injuries())
+		return
+
 	if(health >= 0 && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		var/friendly_check = FALSE
-		if(run_block(M, 0, M.name, ATTACK_TYPE_UNARMED))
+		if(mob_run_block(M, 0, M.name, ATTACK_TYPE_UNARMED, 0, null, null, null))
 			return
 		if(lying)
 			if(buckled)
 				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
 				return
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>", target = src,
+							target_message = "<span class='notice'>[M] shakes you trying to get you up!</span>")
 
 		else if(M.zone_selected == BODY_ZONE_PRECISE_MOUTH) // I ADDED BOOP-EH-DEH-NOSEH - Jon
 			M.visible_message( \
 				"<span class='notice'>[M] boops [src]'s nose.</span>", \
-				"<span class='notice'>You boop [src] on the nose.</span>", )
+				"<span class='notice'>You boop [src] on the nose.</span>", target = src,
+				target_message = "<span class='notice'>[M] boops your nose.</span>")
 			playsound(src, 'sound/items/Nose_boop.ogg', 50, 0)
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD)
@@ -296,24 +292,33 @@
 				S = dna.species
 
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>", target = src,
+						target_message = "<span class='notice'>[M] gives you a pat on the head to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "headpat", /datum/mood_event/headpat)
 			friendly_check = TRUE
-			if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
-				var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
-				for(var/T in many_tails)
-					if(S.mutant_bodyparts[T] && dna.features[T] != "None")
-						emote("wag")
-						break
+			if(!(client?.prefs.cit_toggles & NO_AUTO_WAG))
+				if(S?.can_wag_tail(src) && !dna.species.is_wagging_tail())
+					var/static/list/many_tails = list("tail_human", "tail_lizard", "mam_tail")
+					for(var/T in many_tails)
+						if(S.mutant_bodyparts[T] && dna.features[T] != "None")
+							emote("wag")
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
-			M.visible_message( \
-				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
-				"<span class='notice'>You shake [src]'s hand.</span>", )
+			if((pulling == M) && (grab_state == GRAB_PASSIVE))
+				M.visible_message( \
+					"<span class='notice'>[M] squeezes [src]'s hand.</span>", \
+					"<span class='notice'>You squeeze [src]'s hand.</span>", target = src,
+					target_message = "<span class='notice'>[M] squeezes your hand.</span>")
+			else
+				M.visible_message( \
+					"<span class='notice'>[M] shakes [src]'s hand.</span>", \
+					"<span class='notice'>You shake [src]'s hand.</span>", target = src,
+					target_message = "<span class='notice'>[M] shakes your hand.</span>")
 
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>", target = src,\
+						target_message = "<span class='notice'>[M] hugs you to make you feel better!</span>")
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 			friendly_check = TRUE
 
@@ -335,11 +340,31 @@
 		update_mobility()
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
+/// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
+/mob/living/carbon/proc/check_self_for_injuries()
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return
 
-/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	var/embeds = FALSE
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/LB = X
+		for(var/obj/item/I in LB.embedded_objects)
+			if(!embeds)
+				embeds = TRUE
+				// this way, we only visibly try to examine ourselves if we have something embedded, otherwise we'll still hug ourselves :)
+				visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
+					"<span class='notice'>You check yourself for shrapnel.</span>")
+			if(I.isEmbedHarmless())
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+			else
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+
+	return embeds
+
+/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash, override_protection = 0)
 	. = ..()
 
-	var/damage = intensity - get_eye_protection()
+	var/damage = override_protection ? intensity : intensity - get_eye_protection()
 	if(.) // we've been flashed
 		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 		if (!eyes)
@@ -379,7 +404,7 @@
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
 		if(has_bane(BANE_LIGHT))
 			mind.disrupt_spells(-500)
-		return 1
+		return TRUE
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			to_chat(src, "<span class='notice'>Something bright flashes in the corner of your vision!</span>")
@@ -435,3 +460,54 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(istype(ears) && !ears.deaf)
 		. = TRUE
+
+/mob/living/carbon/getBruteLoss_nonProsthetic()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if (BP.is_organic_limb())
+			amount += BP.brute_dam
+	return amount
+
+/mob/living/carbon/getFireLoss_nonProsthetic()
+	var/amount = 0
+	for(var/obj/item/bodypart/BP in bodyparts)
+		if (BP.is_organic_limb())
+			amount += BP.burn_dam
+	return amount
+
+/mob/living/carbon/proc/get_interaction_efficiency(zone)
+	var/obj/item/bodypart/limb = get_bodypart(zone)
+	if(!limb)
+		return
+
+/mob/living/carbon/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart, totitemdamage)
+	var/message_verb = "attacked"
+	if(length(I.attack_verb))
+		message_verb = "[pick(I.attack_verb)]"
+	else if(!I.force)
+		return
+
+	var/extra_wound_details = ""
+	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
+		var/mangled_state = hit_bodypart.get_mangled_state()
+		var/bio_state = get_biological_state()
+		if(mangled_state == BODYPART_MANGLED_BOTH)
+			extra_wound_details = ", threatening to sever it entirely"
+		else if((mangled_state == BODYPART_MANGLED_FLESH && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_BONE && bio_state == BIO_JUST_BONE))
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the bone"
+		else if((mangled_state == BODYPART_MANGLED_BONE && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_FLESH && bio_state == BIO_JUST_FLESH))
+			extra_wound_details = ", [I.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining tissue"
+
+	var/message_hit_area = ""
+	if(hit_area)
+		message_hit_area = " in the [hit_area]"
+	var/attack_message = "[src] is [message_verb][message_hit_area] with [I][extra_wound_details]!"
+	var/attack_message_local = "You're [message_verb][message_hit_area] with [I][extra_wound_details]!"
+	if(user in viewers(src, null))
+		attack_message = "[user] [message_verb] [src][message_hit_area] with [I][extra_wound_details]!"
+		attack_message_local = "[user] [message_verb] you[message_hit_area] with [I][extra_wound_details]!"
+	if(user == src)
+		attack_message_local = "You [message_verb] yourself[message_hit_area] with [I][extra_wound_details]"
+	visible_message("<span class='danger'>[attack_message]</span>",\
+		"<span class='userdanger'>[attack_message_local]</span>", null, COMBAT_MESSAGE_RANGE)
+	return TRUE

@@ -18,6 +18,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
+	rad_flags = RAD_NO_CONTAMINATE
 	custom_materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 
 	var/grace = RAD_GRACE_PERIOD

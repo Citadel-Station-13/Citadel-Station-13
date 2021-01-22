@@ -66,6 +66,14 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/bepis
+	name = "Machine Design (B.E.P.I.S. Board)"
+	desc = "The circuit board for a B.E.P.I.S."
+	id = "bepis"
+	build_path = /obj/item/circuitboard/machine/bepis
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/protolathe
 	name = "Machine Design (Protolathe Board)"
 	desc = "The circuit board for a protolathe."
@@ -151,5 +159,13 @@
 	desc = "The circuit board for a circuit imprinter."
 	id = "circuit_imprinter"
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/explosive_compressor
+	name = "Explosive Compressor (Machine Board)"
+	desc = "The circuit board for an explosive compressor, used to compress raw into finished anomaly cores."
+	id = "explosive_compressor"
+	build_path = /obj/item/circuitboard/machine/explosive_compressor
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

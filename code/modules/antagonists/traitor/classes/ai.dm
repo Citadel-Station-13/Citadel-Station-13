@@ -9,7 +9,7 @@
 		objective_count += forge_single_objective()
 
 	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
-		var/datum/objective/assassinate/kill_objective = new
+		var/datum/objective/assassinate/once/kill_objective = new
 		kill_objective.owner = T.owner
 		kill_objective.find_target()
 		T.add_objective(kill_objective)
@@ -49,7 +49,7 @@
 /datum/traitor_class/ai/on_removal(datum/antagonist/traitor/T)
 	var/mob/living/silicon/ai/A = T.owner.current
 	A.set_zeroth_law("")
-	A.verbs -= /mob/living/silicon/ai/proc/choose_modules
+	remove_verb(A, /mob/living/silicon/ai/proc/choose_modules)
 	A.malf_picker.remove_malf_verbs(A)
 	qdel(A.malf_picker)
 
@@ -65,5 +65,5 @@
 /datum/traitor_class/ai/finalize_traitor(datum/antagonist/traitor/T)
 	T.add_law_zero()
 	T.owner.current.playsound_local(get_turf(T.owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
-	T.owner.current.grant_language(/datum/language/codespeak)
+	T.owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 	return FALSE

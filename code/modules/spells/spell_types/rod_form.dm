@@ -18,7 +18,7 @@
 		W.damage_bonus += spell_level * 20 //You do more damage when you upgrade the spell
 		W.start_turf = start
 		M.forceMove(W)
-		M.notransform = 1
+		M.mob_transforming = 1
 		M.status_flags |= GODMODE
 
 //Wizard Version of the Immovable Rod
@@ -37,7 +37,7 @@
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)
 		wizard.status_flags &= ~GODMODE
-		wizard.notransform = 0
+		wizard.mob_transforming = 0
 		wizard.forceMove(get_turf(src))
 	return ..()
 

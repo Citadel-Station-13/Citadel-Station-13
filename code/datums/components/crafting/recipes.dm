@@ -23,3 +23,4 @@
   */
 /datum/crafting_recipe/proc/check_requirements(mob/user, list/collected_requirements)
 	return TRUE
+

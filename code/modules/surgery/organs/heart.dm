@@ -15,6 +15,7 @@
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
+	var/no_pump = FALSE
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
@@ -60,33 +61,34 @@
 		return "a healthy"
 	return "<span class='danger'>an unstable</span>"
 
-/obj/item/organ/heart/prepare_eat()
-	var/obj/S = ..()
-	S.icon_state = "[icon_base]-off"
-	return S
+/obj/item/organ/heart/OnEatFrom(eater, feeder)
+	. = ..()
+	beating = FALSE
+	update_icon()
 
 /obj/item/organ/heart/on_life()
-	..()
+	. = ..()
+	if(!owner || no_pump)
+		return
 	if(owner.client && beating)
 		failed = FALSE
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
-		var/mob/living/carbon/H = owner
 
-		if(H.health <= H.crit_threshold && beat != BEAT_SLOW)
+		if(owner.health <= owner.crit_threshold && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+			owner.playsound_local(get_turf(owner), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
-		if(beat == BEAT_SLOW && H.health > H.crit_threshold)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+		if(beat == BEAT_SLOW && owner.health > owner.crit_threshold)
+			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
-		if(H.jitteriness)
-			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
-				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+		if(owner.jitteriness)
+			if(owner.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
+				owner.playsound_local(get_turf(owner),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
 		else if(beat == BEAT_FAST)
-			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
 
 	if(organ_flags & ORGAN_FAILING)	//heart broke, stopped beating, death imminent
@@ -95,7 +97,7 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-obj/item/organ/heart/slime
+/obj/item/organ/heart/slime
 	name = "slime heart"
 	desc = "It seems we've gotten to the slimy core of the matter."
 	icon_state = "heart-s-on"
@@ -107,11 +109,12 @@ obj/item/organ/heart/slime
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
 	decay_factor = 0
+	no_pump = TRUE
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
 	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
-	var/blood_loss = 100 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
+	var/blood_loss = 50 //600 blood is human default, so 5 failures (below 122 blood is where humans die because reasons?)
 
 	//How much to heal per pump, negative numbers would HURT the player
 	var/heal_brute = 0
@@ -120,7 +123,11 @@ obj/item/organ/heart/slime
 
 
 /obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+
 	if(H == user && istype(H))
+		if(NOBLOOD in H.dna.species.species_traits)
+			to_chat(user, "<span class='danger'>[src] refuses to become one with [H]")
+			return
 		playsound(user,'sound/effects/singlebeat.ogg',40,1)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		Insert(user)
@@ -128,9 +135,14 @@ obj/item/organ/heart/slime
 		return ..()
 
 /obj/item/organ/heart/cursed/on_life()
+	. = ..()
+	if(!owner)
+		return
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
+			if(NOBLOOD in H.dna.species.species_traits) //Otherwise people without will be eternally stuck red
+				return
 			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
 				H.blood_volume = max(H.blood_volume - blood_loss, 0)
 				to_chat(H, "<span class = 'userdanger'>You have to keep pumping your blood!</span>")
@@ -150,6 +162,8 @@ obj/item/organ/heart/slime
 	return ..()
 
 /datum/action/item_action/organ_action/cursed_heart
+	check_flags = AB_CHECK_ALIVE //We wanna be able to do this always, else thisll just stupidly kill whoever has it
+	required_mobility_flags = NONE
 	name = "Pump your blood"
 
 //You are now brea- pumping blood manually
@@ -169,7 +183,8 @@ obj/item/organ/heart/slime
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
 			if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
+				if(H.blood_volume < BLOOD_VOLUME_NORMAL) //We don't need to go too high, otherwise we get annoying messages.
+					H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss * 0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
 				H.adjustBruteLoss(-cursed_heart.heal_brute)
@@ -178,7 +193,7 @@ obj/item/organ/heart/slime
 
 
 /datum/client_colour/cursed_heart_blood
-	priority = 100 //it's an indicator you're dieing, so it's very high priority
+	priority = 100 //it's an indicator you're dying, so it's very high priority
 	colour = "red"
 
 /obj/item/organ/heart/cybernetic
@@ -192,8 +207,8 @@ obj/item/organ/heart/slime
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 20/severity SECONDS)
-	damage += 100/severity
+	addtimer(CALLBACK(src, .proc/Restart), 0.2*severity SECONDS)
+	damage += severity
 
 /obj/item/organ/heart/cybernetic/upgraded
 	name = "upgraded cybernetic heart"
@@ -206,14 +221,16 @@ obj/item/organ/heart/slime
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
 
-obj/item/organ/heart/cybernetic/upgraded/on_life()
+/obj/item/organ/heart/cybernetic/upgraded/on_life()
 	. = ..()
+	if(!.)
+		return
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
 		owner.reagents.add_reagent(rid, ramount)
 		used_dose()
 	if(ramount < 10) //eats your nutrition to regen epinephrine
 		var/regen_amount = owner.nutrition/2000
-		owner.nutrition -= regen_amount
+		owner.adjust_nutrition(-regen_amount)
 		ramount += regen_amount
 
 /obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
@@ -233,7 +250,7 @@ obj/item/organ/heart/cybernetic/upgraded/on_life()
 
 /obj/item/organ/heart/freedom/on_life()
 	. = ..()
-	if(owner.health < 5 && world.time > min_next_adrenaline)
+	if(. && owner.health < 5 && world.time > min_next_adrenaline)
 		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
 		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
 		owner.heal_overall_damage(15, 15)

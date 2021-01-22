@@ -34,10 +34,9 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/stun_amount = 200/severity
+	var/stun_amount = 2*severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
-
 
 /obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
@@ -68,12 +67,11 @@
 		release_items()
 		to_chat(owner, "<span class='notice'>Your hands relax...</span>")
 
-
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/range = severity ? 10 : 5
+	var/range = severity/10
 	var/atom/A
 	if(active)
 		release_items()
@@ -102,8 +100,8 @@
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
 
 /obj/item/organ/cyberimp/brain/anti_stun/on_life()
-	..()
-	if(crit_fail || !(organ_flags & ORGAN_FAILING))
+	. = ..()
+	if(!. || crit_fail)
 		return
 	owner.adjustStaminaLoss(-3.5, FALSE) //Citadel edit, makes it more useful in Stamina based combat
 	owner.HealAllImmobilityUpTo(STUN_SET_AMOUNT)
@@ -114,11 +112,40 @@
 		return
 	crit_fail = TRUE
 	organ_flags |= ORGAN_FAILING
-	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
+	addtimer(CALLBACK(src, .proc/reboot), 0.9 * severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
 	organ_flags &= ~ORGAN_FAILING
+
+/obj/item/organ/cyberimp/brain/robot_radshielding
+	name = "ECC System Guard implant"
+	desc = "This implant can counteract the effects of harmful radiation in robots, effectively increasing their radiation tolerance significantly."
+	implant_color = "#0066ff"
+	slot = ORGAN_SLOT_BRAIN_ROBOT_RADSHIELDING
+
+/obj/item/organ/cyberimp/brain/robot_radshielding/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	if(!HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))
+		return //Why did you even get yourself implanted this if you aren't a robot?
+	owner.adjustToxLoss(severity / 10, toxins_type = TOX_SYSCORRUPT)
+	to_chat(owner, "<span class='warning'>Your ECC implant suddenly behaves very erratically, scrambling your system.</span>")
+
+/obj/item/organ/cyberimp/brain/robot_radshielding/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_ROBOT_RADSHIELDING, ROBOT_RADSHIELDING_IMPLANT_TRAIT) //Organics can get this, but it does literally nothing for them except cause more pain if EMPd, so uh, good on you?
+
+/obj/item/organ/cyberimp/brain/robot_radshielding/Remove(special = FALSE)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/C = .
+	REMOVE_TRAIT(C, TRAIT_ROBOT_RADSHIELDING, ROBOT_RADSHIELDING_IMPLANT_TRAIT)
+
 
 
 //[[[[MOUTH]]]]
@@ -136,6 +163,6 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	if(prob(60/severity))
+	if(prob(0.6*severity))
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2

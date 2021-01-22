@@ -189,12 +189,14 @@
 	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 		to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans! You should leave it alone.</span>")
 		user.dropItemToGround(src)
+		return
+	return ..()
 
 
 /obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
 	if(!reusable)
 		used = 1
-	visible_message("<span class='userdanger'>The die flare briefly.</span>")
+	visible_message("<span class='userdanger'>The die flares briefly.</span>")
 	switch(roll)
 		if(1)
 			//Dust

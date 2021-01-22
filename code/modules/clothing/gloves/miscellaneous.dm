@@ -4,13 +4,13 @@
 	desc = "Plain black gloves without fingertips for the hard working."
 	icon_state = "fingerless"
 	item_state = "fingerless"
-	item_color = null	//So they don't wash.
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	strip_mod = 0.9
+	custom_price = PRICE_ALMOST_CHEAP
 
 /obj/item/clothing/gloves/fingerless/pugilist
 	name = "armwraps"
@@ -20,8 +20,15 @@
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	strip_delay = 300 //you can't just yank them off
+	obj_flags = UNIQUE_RENAME
+	/// did you ever get around to wearing these or no
+	var/wornonce = FALSE
 	///Extra damage through the punch.
 	var/enhancement = 0 //it's a +0 to your punches because it isn't magical
+	///extra wound bonus through the punch (MAYBE DON'T BE GENEROUS WITH THIS)
+	var/wound_enhancement = 0
+	/// do we give the flavortext for wearing them
+	var/silent = FALSE
 	///Main trait added by the gloves to the user on wear.
 	var/inherited_trait = TRAIT_NOGUNS //what are you, dishonoroable?
 	///Secondary trait added by the gloves to the user on wear.
@@ -30,6 +37,17 @@
 /obj/item/clothing/gloves/fingerless/pugilist/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_GLOVES)
+		use_buffs(user, TRUE)
+		wornonce = TRUE
+
+/obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
+	. = ..()
+	if(wornonce)
+		use_buffs(user, FALSE)
+		wornonce = FALSE
+
+/obj/item/clothing/gloves/fingerless/pugilist/proc/use_buffs(mob/user, buff)
+	if(buff) // tarukaja
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			ADD_TRAIT(H, TRAIT_PUGILIST, GLOVE_TRAIT)
@@ -37,23 +55,26 @@
 			ADD_TRAIT(H, secondary_trait, GLOVE_TRAIT)
 			H.dna.species.punchdamagehigh += enhancement
 			H.dna.species.punchdamagelow += enhancement
-
-/obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
-
-	REMOVE_TRAIT(user, TRAIT_PUGILIST, GLOVE_TRAIT)
-	REMOVE_TRAIT(user, inherited_trait, GLOVE_TRAIT)
-	REMOVE_TRAIT(user, secondary_trait, GLOVE_TRAIT)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.dna.species.punchdamagehigh = initial(H.dna.species.punchdamagehigh)
-		H.dna.species.punchdamagelow = initial(H.dna.species.punchdamagelow)
-	return ..()
+			H.dna.species.punchwoundbonus += wound_enhancement
+			if(!silent)
+				to_chat(H, "<span class='notice'>With [src] on your arms, you feel ready to punch things.</span>")
+	else // dekaja
+		REMOVE_TRAIT(user, TRAIT_PUGILIST, GLOVE_TRAIT)
+		REMOVE_TRAIT(user, inherited_trait, GLOVE_TRAIT)
+		REMOVE_TRAIT(user, secondary_trait, GLOVE_TRAIT)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.dna.species.punchdamagehigh -= enhancement
+			H.dna.species.punchdamagelow -= enhancement
+			H.dna.species.punchwoundbonus -= wound_enhancement
+		if(!silent)
+			to_chat(user, "<span class='warning'>With [src] off of your arms, you feel less ready to punch things.</span>")
 
 /obj/item/clothing/gloves/fingerless/pugilist/chaplain
 	name = "armwraps of unyielding resolve"
 	desc = "A series of armwraps, soaked in holy water. Makes you pretty keen to smite evil magic users."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	enhancement = 1 //It is not magic that makes you punch harder, but force of will. Trust me.
+	enhancement = 2 //It is not magic that makes you punch harder, but force of will. Trust me.
 	secondary_trait = TRAIT_ANTIMAGIC
 	var/chaplain_spawnable = TRUE
 
@@ -93,6 +114,7 @@
 	icon_state = "rapid"
 	item_state = "rapid"
 	enhancement = 10 //omae wa mou shindeiru
+	wound_enhancement = 10
 	var/warcry = "AT"
 	secondary_trait = TRAIT_NOSOFTCRIT //basically extra health
 
@@ -105,25 +127,26 @@
 		return
 
 	var/mob/living/M = loc
-	M.changeNext_move(CLICK_CD_RAPID)
+	M.SetNextAction(CLICK_CD_RAPID)
 	if(warcry)
 		M.say("[warcry]", ignore_spam = TRUE, forced = TRUE)
 
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/fingerless/pugilist/rapid/AltClick(mob/user)
 	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
 	if(input)
 		warcry = input
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug
+/obj/item/clothing/gloves/fingerless/pugilist/hug
 	name = "Hugs of the North Star"
 	desc = "The armbands of a humble friend. Makes you pretty keen to go let everyone know how much you appreciate them!"
-	warcry = "owo" //Shouldn't ever come into play
+	icon_state = "rapid"
+	item_state = "rapid"
 	enhancement = 0
 	secondary_trait = TRAIT_PACIFISM //You are only here to hug and be friends!
 
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/Touch(mob/target, proximity = TRUE)
+/obj/item/clothing/gloves/fingerless/pugilist/hug/Touch(mob/target, proximity = TRUE)
 	if(!isliving(target))
 		return
 
@@ -134,12 +157,9 @@
 	if(target.stat != CONSCIOUS) //Can't hug people who are dying/dead
 		return FALSE
 	else
-		M.changeNext_move(CLICK_CD_RAPID)
+		M.SetNextAction(CLICK_CD_RAPID)
 
-	return FALSE
-
-/obj/item/clothing/gloves/fingerless/pugilist/rapid/hug/AltClick(mob/user)
-	return FALSE
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
@@ -177,7 +197,6 @@
 	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."
 	icon_state = "bracers"
 	item_state = "bracers"
-	item_color = null	//So they don't wash.
 	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
@@ -199,3 +218,19 @@
 	transfer_prints = FALSE
 	strip_mod = 5
 	strip_silence = TRUE
+
+/obj/item/clothing/gloves/evening
+	name = "evening gloves"
+	desc = "Thin, pretty gloves intended for use in regal feminine attire. A tag on the hem claims they were 'maid' in Space China, these were probably intended for use in some maid fetish."
+	icon_state = "evening"
+	item_state = "evening"
+	transfer_prints = TRUE
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	strip_mod = 0.9
+
+/obj/item/clothing/gloves/evening/black
+	name = "midnight gloves"
+	desc = "Thin, pretty gloves intended for use in sexy feminine attire. A tag on the hem claims they pair great with black stockings."
+	icon_state = "eveningblack"
+	item_state = "eveningblack"

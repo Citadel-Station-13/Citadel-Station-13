@@ -15,12 +15,16 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
 					/obj/item/reagent_containers/glass/beaker/waterbottle = 10)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
-					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
+					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6,
+					/obj/item/reagent_containers/glass/beaker/waterbottle/wataur = 2)
 	premium = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
 					/obj/item/reagent_containers/food/drinks/soda_cans/air = 1,
 					/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
 					/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1)
 	refill_canister = /obj/item/vending_refill/cola
+	default_price = PRICE_CHEAP_AS_FREE
+	extra_price = PRICE_ABOVE_NORMAL
+	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"

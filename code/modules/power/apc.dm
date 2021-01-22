@@ -38,6 +38,8 @@
 #define APC_CHARGING 1
 #define APC_FULLY_CHARGED 2
 
+#define MAXIMUM_COG_REGAIN 100 //How much charge drained by an integration cog can be priority-recharged in one processing-tick
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
 
@@ -48,7 +50,7 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
+	plane = ABOVE_WALL_PLANE
 	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
@@ -94,6 +96,7 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
 	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
+	var/cog_drained = 0 //How much of the cell's charge was drained by an integration cog, recovering this amount takes priority over the normal APC cell recharge calculations, but comes after powering Essentials.
 	var/longtermpower = 10
 	var/auto_name = 0
 	var/failure_timer = 0
@@ -108,6 +111,7 @@
 	var/obj/machinery/computer/apc_control/remote_control = null
 	var/mob/living/carbon/hijacker
 	var/hijackerlast = TRUE
+	var/being_hijacked = FALSE
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
@@ -196,19 +200,23 @@
 
 	switch(tdir)
 		if(NORTH)
+			pixel_x = 0
 			pixel_y = 23
 		if(SOUTH)
+			pixel_x = 0
 			pixel_y = -23
 		if(EAST)
+			pixel_y = 0
 			pixel_x = 24
 		if(WEST)
+			pixel_y = 0
 			pixel_x = -25
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -495,6 +503,7 @@
 			cell.forceMove(T)
 			cell.update_icon()
 			cell = null
+			cog_drained = 0 //No more cell means no more averting celldrain
 			charging = APC_NOT_CHARGING
 			update_icon()
 			return
@@ -593,19 +602,15 @@
 		user.visible_message("[user.name] adds cables to the APC frame.", \
 							"<span class='notice'>You start adding cables to the APC frame...</span>")
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src))
-			if (C.get_amount() < 10 || !C)
+		if(C.use_tool(src, user, 20, 10) && !terminal && opened && has_electronics)
+			var/turf/T = get_turf(src)
+			var/obj/structure/cable/N = T.get_cable_node()
+			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
+				do_sparks(5, TRUE, src)
 				return
-			if (C.get_amount() >= 10 && !terminal && opened && has_electronics)
-				var/turf/T = get_turf(src)
-				var/obj/structure/cable/N = T.get_cable_node()
-				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
-					do_sparks(5, TRUE, src)
-					return
-				C.use(10)
-				to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
-				make_terminal()
-				terminal.connect_to_network()
+			to_chat(user, "<span class='notice'>You add cables to the APC frame.</span>")
+			make_terminal()
+			terminal.connect_to_network()
 	else if (istype(W, /obj/item/electronics/apc) && opened)
 		if (has_electronics)
 			to_chat(user, "<span class='warning'>There is already a board inside the [src]!</span>")
@@ -701,7 +706,7 @@
 			START_PROCESSING(SSfastprocess, W)
 			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
 			opened = APC_COVER_CLOSED
-			locked = FALSE
+			locked = TRUE //Clockies get full APC access on cogged APCs, but they can't lock or unlock em unless they steal some ID to give all of them APC access, soo this is pretty much just QoL for them and makes cogs a tiny bit more stealthy
 			update_icon()
 		return
 	else if(panel_open && !opened && is_wire_tool(W))
@@ -833,10 +838,47 @@
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/apc/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_HARM)
+			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
+				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
+				return
+			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+			if(stomach.crystal_charge > 145)
+				to_chat(H, "<span class='warning'>Your charge is full!</span>")
+				return
+			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
+			if(do_after(user, 75, target = src))
+				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
+					return
+				if(istype(stomach))
+					to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
+					stomach.adjust_charge(10)
+					cell.charge -= 10
+				else
+					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
+			return
+		if(H.a_intent == INTENT_GRAB)
+			if(cell.charge == cell.maxcharge)
+				to_chat(H, "<span class='warning'>The APC is full!</span>")
+				return
+			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+			if(stomach.crystal_charge < 10)
+				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
+				return
+			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
+			if(do_after(user, 75, target = src))
+				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
+					return
+				if(istype(stomach))
+					to_chat(H, "<span class='notice'>You transfer some power to the APC.</span>")
+					stomach.adjust_charge(-10)
+					cell.charge += 10
+				else
+					to_chat(H, "<span class='warning'>You can't transfer power to the APC!</span>")
+			return
 	if(opened && (!issilicon(user)))
 		if(cell)
 			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
@@ -849,31 +891,23 @@
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
 
-/obj/machinery/power/apc/oui_canview(mob/user)
-	if(area.hasSiliconAccessInArea(user)) //some APCs are mapped outside their assigned area, so this is required.
-		return TRUE
-	return ..()
-
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-
+/obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "apc", name, 450, 460, master_ui, state)
+		ui = new(user, src, "Apc", name)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/obj/item/implant/hijack/H = user.getImplant(/obj/item/implant/hijack)
 	var/abilitiesavail = FALSE
-	if (H && !H.stealthmode && H.toggled)
+	if(H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
 		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE),
-		"lock_nightshift" = nightshift_requires_auth,
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = (cell?.percent() || null),
+		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
@@ -882,7 +916,8 @@
 		"malfStatus" = get_malf_status(user),
 		"emergencyLights" = !emergency_lights,
 		"nightshiftLights" = nightshift_lights,
-		"hijackable" = HAS_TRAIT(user,TRAIT_HIJACKER),
+		"hijackable" = HAS_TRAIT(user, TRAIT_HIJACKER),
+		"hijacked" = hijacker && hasSiliconAccessInArea(hijacker),
 		"hijacker" = hijacker == user ? TRUE : FALSE,
 		"drainavail" = cell && cell.percent() >= 85 && abilitiesavail,
 		"lockdownavail" = cell && cell.percent() >= 35 && abilitiesavail,
@@ -940,6 +975,9 @@
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
 /obj/machinery/power/apc/proc/update()
+	var/old_light = area.power_light
+	var/old_equip = area.power_equip
+	var/old_environ = area.power_environ
 	if(operating && !shorted && !failure_timer)
 		area.power_light = (lighting > 1)
 		area.power_equip = (equipment > 1)
@@ -948,7 +986,8 @@
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
-	area.power_change()
+	if(old_light != area.power_light || old_equip != area.power_equip || old_environ != area.power_environ)
+		area.power_change()
 
 /obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
 	if(IsAdminGhost(user))
@@ -981,41 +1020,35 @@
 /obj/machinery/power/apc/ui_act(action, params)
 	if(..() || !can_use(usr, 1))
 		return
-	if(failure_timer)
-		if(action == "reboot")
-			failure_timer = 0
-			update_icon()
-			update()
-	if (action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
+	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
 		hijack(usr)
 		return
-	var/authorized = (!locked || area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) || (integration_cog && (is_servant_of_ratvar(usr))))
-	if((action == "toggle_nightshift") && (!nightshift_requires_auth || authorized))
-		toggle_nightshift_lights()
-		return TRUE
-	if(!authorized)
+	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")
 			if(area.hasSiliconAccessInArea(usr))
 				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
-					to_chat(usr, "The APC does not respond to the command.")
+					to_chat(usr, "<span class='warning'>The APC does not respond to the command!</span>")
 				else
 					locked = !locked
 					update_icon()
-			return TRUE
+					. = TRUE
 		if("cover")
 			coverlocked = !coverlocked
-			return TRUE
+			. = TRUE
 		if("breaker")
-			toggle_breaker()
-			return TRUE
+			toggle_breaker(usr)
+			. = TRUE
+		if("toggle_nightshift")
+			toggle_nightshift_lights()
+			. = TRUE
 		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = APC_NOT_CHARGING
 				update_icon()
-			return TRUE
+			. = TRUE
 		if("channel")
 			if(params["eqp"])
 				equipment = setsubsystem(text2num(params["eqp"]))
@@ -1029,30 +1062,14 @@
 				environ = setsubsystem(text2num(params["env"]))
 				update_icon()
 				update()
-			return TRUE
+			. = TRUE
 		if("overload")
-			if(area.hasSiliconAccessInArea(usr))
+			if(area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE)) //usr.has_unlimited_silicon_privilege)
 				overload_lighting()
-			return TRUE
+				. = TRUE
 		if("hack")
 			if(get_malf_status(usr))
 				malfhack(usr)
-			return TRUE
-		if("occupy")
-			if(get_malf_status(usr))
-				malfoccupy(usr)
-			return TRUE
-		if("deoccupy")
-			if(get_malf_status(usr))
-				malfvacate()
-			return TRUE
-		if("emergency_lighting")
-			emergency_lights = !emergency_lights
-			for(var/obj/machinery/light/L in area)
-				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-					L.no_emergency = emergency_lights
-					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
-				CHECK_TICK
 		if("drain")
 			cell.use(cell.charge)
 			hijacker.toggleSiliconAccessArea(area)
@@ -1065,29 +1082,53 @@
 		if("lockdown")
 			var/celluse = rand(20,35)
 			celluse = celluse /100
+			if(!cell.use(cell.maxcharge*celluse))
+				return
 			for (var/obj/machinery/door/D in GLOB.airlocks)
 				if (get_area(D) == area)
 					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
 					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
-			cell.charge -= cell.maxcharge*celluse
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 3 MINUTES
+		if("occupy")
+			if(get_malf_status(usr))
+				malfoccupy(usr)
+		if("deoccupy")
+			if(get_malf_status(usr))
+				malfvacate()
+		if("reboot")
+			failure_timer = 0
+			update_icon()
+			update()
+		if("emergency_lighting")
+			emergency_lights = !emergency_lights
+			for(var/obj/machinery/light/L in area)
+				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+					L.no_emergency = emergency_lights
+					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+				CHECK_TICK
 	return TRUE
 
-/obj/machinery/power/apc/proc/toggle_breaker()
+/obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	if(!is_operational() || failure_timer)
 		return
 	operating = !operating
+	add_hiddenprint(user) //delete when runtime
+	log_game("[key_name(user)] turned [operating ? "on" : "off"] the [src] in [AREACOORD(src)]")
 	update()
 	update_icon()
 
 /obj/machinery/power/apc/proc/hijack(mob/living/L)
 	if (!istype(L))
 		return
+	if(being_hijacked)
+		to_chat(L, "<span class='warning'>This APC is already being hijacked!</span>")
+		return
 	if (hijacker && hijacker != L)
 		var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
 		to_chat(L, "<span class='warning'>Someone already has control of this APC. Beginning counter-hijack.</span>")
 		H.hijacking = TRUE
+		being_hijacked = TRUE
 		if (do_after(L,20 SECONDS,target=src))
 			hijacker.toggleSiliconAccessArea(area)
 			if (L.toggleSiliconAccessArea(area))
@@ -1095,23 +1136,28 @@
 				update_icon()
 				set_hijacked_lighting()
 			H.hijacking = FALSE
+			being_hijacked = FALSE
 			return
 		else
 			to_chat(L, "<span class='warning'>Aborting.</span>")
 			H.hijacking = FALSE
+			being_hijacked = FALSE
 			return
 	to_chat(L, "<span class='notice'>Beginning hijack of APC.</span>")
 	var/obj/item/implant/hijack/H = L.getImplant(/obj/item/implant/hijack)
 	H.hijacking = TRUE
+	being_hijacked = TRUE
 	if (do_after(L,H.stealthmode ? 12 SECONDS : 5 SECONDS,target=src))
 		if (L.toggleSiliconAccessArea(area))
 			hijacker = L
 			update_icon()
 			set_hijacked_lighting()
 			H.hijacking = FALSE
+			being_hijacked = FALSE
 	else
 		to_chat(L, "<span class='warning'>Aborting.</span>")
 		H.hijacking = FALSE
+		being_hijacked = FALSE
 		return
 
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
@@ -1121,6 +1167,10 @@
 		return
 	if(malf.malfhacking)
 		to_chat(malf, "You are already hacking an APC.")
+		return
+	var/area/ourarea = get_area(src)
+	if(!ourarea.valid_malf_hack)
+		to_chat(malf, "This APC is not well connected enough to the Exonet to provide any useful processing capabilities.")
 		return
 	to_chat(malf, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
 	malf.malfhack = src
@@ -1141,6 +1191,7 @@
 		return
 	if(!is_station_level(z))
 		return
+	malf.ShutOffDoomsdayDevice()
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
@@ -1153,7 +1204,7 @@
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
-	occupier.verbs += /mob/living/silicon/ai/proc/corereturn
+	add_verb(occupier, /mob/living/silicon/ai/proc/corereturn)
 	occupier.cancel_camera()
 
 
@@ -1165,7 +1216,7 @@
 		occupier.parent.shunted = 0
 		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
-		occupier.parent.verbs -= /mob/living/silicon/ai/proc/corereturn
+		remove_verb(occupier.parent, /mob/living/silicon/ai/proc/corereturn)
 		qdel(occupier)
 	else
 		to_chat(occupier, "<span class='danger'>Primary core damaged, unable to return core processes.</span>")
@@ -1314,13 +1365,18 @@
 		cur_used -= lastused_light
 		lighting_satisfied = TRUE
 
+	//If drained by an integration cog: Forcefully avert as much of the powerdrain as possible, though a maximum of MAXIMUM_COG_REGAIN
+	if(cur_excess && cog_drained && cell)
+		var/cog_regain = cell.give(min(min(cog_drained, cur_excess), MAXIMUM_COG_REGAIN))
+		cur_excess -= cog_regain
+		cog_drained = max(0, cog_drained - cog_regain)
 
 	// next: take from or charge to the cell, depending on how much is left
 	if(cell && !shorted)
 		if(cur_excess > 0)
-			var/charging_cell = min(cur_excess, cell.maxcharge * GLOB.CHARGELEVEL)
+			var/charging_cell = min(min(cur_excess*GLOB.CELLRATE, cell.maxcharge * GLOB.CHARGELEVEL), cell.maxcharge - cell.charge)
 			cell.give(charging_cell)
-			add_load(charging_cell)
+			add_load(charging_cell/GLOB.CELLRATE)
 			lastused_total += charging_cell
 			longtermpower = min(10,longtermpower + 1)
 			if(chargemode && !charging)
@@ -1350,7 +1406,7 @@
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			area.poweralert(0, src)
-		
+
 		else if(cell_percent < 15 && longtermpower < 0)	// <15%, turn off lighting & equipment
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
@@ -1411,6 +1467,7 @@
 		if(WIRE_POWER1, WIRE_POWER2)
 			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 				shorted = FALSE
+				update()
 		if(WIRE_AI)
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
@@ -1435,7 +1492,7 @@
 	environ = 0
 	update_icon()
 	update()
-	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), 600)
+	addtimer(CALLBACK(src, .proc/reset, APC_RESET_EMP), severity*8)
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
 	set_broken()
@@ -1447,7 +1504,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)
@@ -1575,8 +1632,11 @@
 #undef APC_UPOVERLAY_LOCKED
 #undef APC_UPOVERLAY_OPERATING
 
+#undef MAXIMUM_COG_REGAIN
+
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
+	custom_price = PRICE_CHEAP
 	desc = "Heavy-duty switching circuits for power control."

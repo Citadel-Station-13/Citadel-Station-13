@@ -30,6 +30,7 @@
 	item = /obj/item/gun/blastcannon
 	cost = 14							//High cost because of the potential for extreme damage in the hands of a skilled gas masked scientist.
 	restricted_roles = list("Research Director", "Scientist")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/role_restricted/alientech
 	name = "Alien Research Disk"
@@ -38,6 +39,14 @@
 	item = /obj/item/disk/tech_disk/abductor
 	cost = 12
 	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+
+/datum/uplink_item/device_tools/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor", "Roboticist")
+	cost = 5
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
@@ -51,7 +60,6 @@
 	cost = 15
 	restricted_roles = list("Clown")
 
-/*
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
 	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
@@ -60,16 +68,7 @@
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
 			are very sensetive. Now with our included lube defense mechanism which will protect you against any angry shitcurity!"
 	item = /obj/vehicle/sealed/car/clowncar
-	cost = 15
-	restricted_roles = list("Clown")
-*/
-
-/datum/uplink_item/role_restricted/clumsyDNA
-	name = "Clumsy Clown DNA"
-	desc = "A DNA injector that has been loaded with the clown gene that makes people clumsy.. \
-	Making someone clumsy will allow them to use clown firing pins as well as Reverse Revolvers. For a laugh try using this on the HOS to see how many times they shoot themselves in the foot!"
-	cost = 1
-	item = /obj/item/dnainjector/clumsymut
+	cost = 16
 	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
@@ -92,6 +91,26 @@
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/clockwork_slab
+	name = "Clockwork Slab"
+	desc = "A reverse engineered clockwork slab. Is this really a good idea?."
+	item = /obj/item/clockwork/slab/traitor
+	cost = 20
+	player_minimum = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
+
+/datum/uplink_item/role_restricted/arcane_tome
+	name = "Arcane Tome"
+	desc = "A replica of a Nar'sian tome. This is probably a bad idea.."
+	item = /obj/item/tome/traitor
+	cost = 20
+	player_minimum = 20
+	refundable = TRUE
+	restricted_roles = list("Chaplain")
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
+
 /datum/uplink_item/role_restricted/explosive_hot_potato
 	name = "Exploding Hot Potato"
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. \
@@ -100,19 +119,11 @@
 	cost = 4
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
-/datum/uplink_item/role_restricted/strange_seeds
-	name = "Pack of strange seeds"
-	desc = "Mysterious seeds as strange as their name implies. Spooky."
-	item = /obj/item/seeds/random
-	cost = 2
-	restricted_roles = list("Botanist")
-	illegal_tech = FALSE
-
 /datum/uplink_item/role_restricted/strange_seeds_10pack
-	name = "Pack of strange seeds x10"
+	name = "Pack of strange seeds"
 	desc = "Mysterious seeds as strange as their name implies. Spooky. These come in bulk"
 	item = /obj/item/storage/box/strange_seeds_10pack
-	cost = 20
+	cost = 10
 	restricted_roles = list("Botanist")
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
@@ -130,6 +141,14 @@
 	item = /obj/item/storage/toolbox/plastitanium/gold_real
 	cost = 4 // Has syndie tools + gloves + a robust weapon
 	restricted_roles = list("Assistant", "Curator") //Curator due to this being made of gold - It fits the theme
+
+/datum/uplink_item/role_restricted/oldtoolboxclean // this is the fourth item relating to toolboxes to be placed into this godforsaken bloated uplink
+	name = "Ancient Toolbox"
+	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
+	item = /obj/item/storage/toolbox/mechanical/old/clean
+	cost = 2 // with eighteen telecrystals you are still weaker than a desword and without any of its defenses -- the scary part comes from collaborating with allies for a fifty eight force toolbox oh fuck
+	restricted_roles = list("Assistant")
+	surplus = 0
 
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
@@ -231,3 +250,11 @@
 	cost = 2
 	item = /obj/item/clothing/shoes/magboots/crushing
 	restricted_roles = list("Chief Engineer", "Station Engineer", "Atmospheric Technician")
+
+/datum/uplink_item/role_restricted/turretbox
+	name = "Disposable Sentry Gun"
+	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
+	item = /obj/item/storage/toolbox/emergency/turret
+	cost = 11
+	restricted_roles = list("Station Engineer")
+	

@@ -24,14 +24,12 @@
 	icon_aggro = "herald"
 	icon_dead = "herald_dying"
 	icon_gib = "syndicate_gib"
-	threat = 10
 	maxHealth = 800
 	health = 800
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attacktext = "preaches to"
-	/*attack_verb_continuous = "preaches to"
-	attack_verb_simple = "preach to"*/
+	attack_verb_continuous = "preaches to"
+	attack_verb_simple = "preach to"
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
 	throw_message = "doesn't affect the purity of"
 	speed = 4
@@ -40,7 +38,7 @@
 	deathsound = 'sound/magic/demon_dies.ogg'
 	deathmessage = "begins to shudder as it becomes transparent..."
 	loot_drop = /obj/item/clothing/neck/cloak/herald_cloak
-
+	crate_type = /obj/structure/closet/crate/necropolis/tendril/magic
 	can_talk = 1
 
 	attack_action_types = list(/datum/action/innate/elite_attack/herald_trishot,
@@ -218,7 +216,7 @@
 	icon_state= "chronobolt"
 	damage = 15
 	armour_penetration = 60
-	speed = 2
+	pixels_per_second = TILES_TO_PIXELS(5)
 	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE

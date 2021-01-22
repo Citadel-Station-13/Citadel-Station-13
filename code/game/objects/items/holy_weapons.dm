@@ -122,7 +122,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	item_state = "cage"
 	worn_x_dimension = 64
@@ -168,6 +168,7 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
@@ -187,6 +188,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/book/bible, HOLY_WEAPONS, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"
@@ -223,6 +225,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
+	wound_bonus = -10
 	var/chaplain_spawnable = TRUE
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
 
@@ -238,19 +241,29 @@
 	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
+/**
+  * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
+  *
+  * Arguments:
+  * * M The mob choosing a nullrod reskin
+  */
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/living/L)
 	if(GLOB.holy_weapon_type)
 		return
 	var/obj/item/holy_weapon
 	var/list/holy_weapons_list = subtypesof(/obj/item/nullrod) + list(HOLY_WEAPONS)
 	var/list/display_names = list()
+	var/list/nullrod_icons = list()
 	for(var/V in holy_weapons_list)
 		var/obj/item/nullrod/rodtype = V
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
+			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
 
-	var/choice = input(L, "What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || !in_range(L, src) || !CHECK_MOBILITY(L, MOBILITY_USE) || reskinned)
+	nullrod_icons = sortList(nullrod_icons)
+
+	var/choice = show_radial_menu(L, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, L), radius = 42, require_near = TRUE)
+	if(!choice || !check_menu(L))
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
@@ -264,6 +277,21 @@
 		holy_weapon.reskinned = TRUE
 		qdel(src)
 		L.put_in_active_hand(holy_weapon)
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  */
+/obj/item/nullrod/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(QDELETED(src) || reskinned)
+		return FALSE
+	if(user.incapacitated() || !user.is_holding(src))
+		return FALSE
+	return TRUE
 
 /obj/item/nullrod/proc/jedi_spin(mob/living/user)
 	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
@@ -303,8 +331,8 @@
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
-/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/nullrod/staff/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(isinhands)
 		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
 
@@ -324,7 +352,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -424,7 +452,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 35
 	slot_flags = ITEM_SLOT_BACK
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
 /obj/item/nullrod/scythe/Initialize()
@@ -464,7 +492,7 @@
 	var/possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/process()
-	for(var/mob/living/simple_animal/shade/S in contents)
+	for(var/mob/living/simple_animal/hostile/construct/shade/S in contents)
 		if(S.mind)
 			return
 		else
@@ -488,12 +516,14 @@
 
 	if(LAZYLEN(candidates))
 		var/mob/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
+		var/mob/living/simple_animal/hostile/construct/shade/S = new(src)
 		S.real_name = name
 		S.name = name
 		S.ckey = C.ckey
 		S.status_flags |= GODMODE
-		S.language_holder = user.language_holder.copy(S)
+		S.copy_languages(user, LANGUAGE_MASTER)	//Make sure the sword can understand and communicate with the user.
+		S.update_atom_languages()
+		grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 		S.AddElement(/datum/element/ghost_role_eligibility,penalize_on_ghost = TRUE)
 		START_PROCESSING(SSprocessing,src)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
@@ -507,7 +537,7 @@
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
+	for(var/mob/living/simple_animal/hostile/construct/shade/S in contents)
 		to_chat(S, "You were destroyed!")
 		qdel(S)
 	return ..()
@@ -545,7 +575,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
@@ -564,7 +594,7 @@
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/nullrod/pride_hammer
@@ -615,7 +645,7 @@
 	throw_speed = 4
 	throw_range = 7
 	throwforce = 30
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	attack_verb = list("enlightened", "redpilled")
 
 /obj/item/nullrod/armblade
@@ -627,7 +657,9 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
+	wound_bonus = -20
+	bare_wound_bonus = 25
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/nullrod/armblade/Initialize()
@@ -667,7 +699,7 @@
 	force = 15
 	block_chance = 40
 	slot_flags = ITEM_SLOT_BACK
-	sharpness = IS_BLUNT
+	sharpness = SHARP_NONE
 	hitsound = "swing_hit"
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -722,7 +754,7 @@
 	name = "arrhythmic knife"
 	w_class = WEIGHT_CLASS_HUGE
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -750,7 +782,7 @@
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
@@ -771,6 +803,7 @@
 	force = 4
 	throwforce = 0
 	attack_verb = list("whipped", "repented", "lashed", "flagellated")
+	slot_flags = ITEM_SLOT_BELT
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 

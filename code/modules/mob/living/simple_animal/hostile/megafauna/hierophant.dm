@@ -37,14 +37,15 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant
 	name = "hierophant"
 	desc = "A massive metal club that hangs in the air as though waiting. It'll make you dance to its beat."
-	threat = 30
 	health = 2500
 	maxHealth = 2500
-	attacktext = "clubs"
+	attack_verb_continuous = "clubs"
+	attack_verb_simple = "club"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
-	friendly = "stares down"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
@@ -86,9 +87,10 @@ Difficulty: Normal
 /mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
 	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Life()
-	. = ..()
-	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
+/mob/living/simple_animal/hostile/megafauna/hierophant/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
+	if(spawned_beacon && !QDELETED(spawned_beacon) && !client)
 		if(target || loc == spawned_beacon.loc)
 			timeout_time = initial(timeout_time)
 		else
@@ -191,7 +193,7 @@ Difficulty: Normal
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = CLAMP(((maxHealth - health) / 42),0,50)
+	anger_modifier = clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
 
@@ -443,7 +445,7 @@ Difficulty: Normal
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
-		return altclick_listed_turf(A)
+		return AltClickNoInteract(src, A)
 	blink(A)
 
 //Hierophant overlays
@@ -640,7 +642,7 @@ Difficulty: Normal
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
-		L.apply_damage(damage, BURN, limb_to_hit, armor)
+		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
 			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)
@@ -659,7 +661,7 @@ Difficulty: Normal
 				continue
 			to_chat(M.occupant, "<span class='userdanger'>Your [M.name] is struck by a [name]!</span>")
 		playsound(M,'sound/weapons/sear.ogg', 50, 1, -4)
-		M.take_damage(damage, BURN, 0, 0)
+		M.take_damage(damage, BURN, 0, 0, null, 50)
 
 /obj/effect/hierophant
 	name = "hierophant beacon"

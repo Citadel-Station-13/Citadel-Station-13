@@ -84,3 +84,23 @@
 	desc = "A pair of gloves that are insulated and frictionless, allowing you to steal easily from anyone you see."
 	item = /obj/item/clothing/gloves/thief
 	cost = 4
+
+/datum/uplink_item/suits/wallwalkers
+	name = "Wall Walking Boots"
+	desc = "Through bluespace magic stolen from an organisation that hoards technology, these boots simply allow you to slip through the atoms that make up anything, but only while walking, for safety reasons. As well as this, they unfortunately cause minor breath loss as the majority of atoms in your lungs are sucked out into any solid object you walk through."
+	item = /obj/item/clothing/shoes/wallwalkers
+	cost = 6
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/device_tools/guerrillagloves
+	name = "Guerrilla Gloves"
+	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
+	item = /obj/item/clothing/gloves/tackler/combat/insulated
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cost = 2
+
+/datum/uplink_item/device_tools/syndicate_eyepatch
+	name = "Mechanical Eyepatch"
+	desc = "An eyepatch that connects itself to your eye socket, enhancing your shooting to an impossible degree, allowing your bullets to ricochet far more often than usual."
+	item = /obj/item/clothing/glasses/eyepatch/syndicate
+	cost = 8

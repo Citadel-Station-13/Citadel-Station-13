@@ -138,7 +138,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "o" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -237,7 +237,7 @@
 /area/shuttle/arrival)
 "C" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/pill_bottle/dice{
+/obj/item/storage/dice{
 	pixel_x = -2;
 	pixel_y = 8
 	},

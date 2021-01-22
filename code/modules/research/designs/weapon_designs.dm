@@ -91,7 +91,7 @@
 
 /datum/design/mag_oldsmg
 	name = "WT-550 Semi-Auto SMG Magazine (4.6x30mm)"
-	desc = "A 20 round magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000)
@@ -101,7 +101,7 @@
 
 /datum/design/mag_oldsmg/ap_mag
 	name = "WT-550 Semi-Auto SMG Armour Piercing Magazine (4.6x30mm AP)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_ap"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
@@ -109,7 +109,7 @@
 
 /datum/design/mag_oldsmg/ic_mag
 	name = "WT-550 Semi-Auto SMG Incendiary Magazine (4.6x30mm IC)"
-	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round armour piercing magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_ic"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/glass = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
@@ -117,7 +117,7 @@
 
 /datum/design/mag_oldsmg/tx_mag
 	name = "WT-550 Semi-Auto SMG Uranium Magazine (4.6x30mm TX)"
-	desc = "A 20 round uranium tipped magazine for the out of date security WT-550 Semi-Auto SMG."
+	desc = "A 32 round uranium tipped magazine for the out of date security WT-550 Semi-Auto SMG."
 	id = "mag_oldsmg_tx"
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 600, /datum/material/uranium = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
@@ -125,7 +125,7 @@
 
 /datum/design/mag_oldsmg/rubber_mag
 	name = "WT-550 Semi-Auto SMG rubberbullets Magazine (4.6x30mm rubber)"
-	desc = "A 20 round rubber shots magazine for the out of date security WT-550 Semi-Auto SMG"
+	desc = "A 32 round rubber shots magazine for the out of date security WT-550 Semi-Auto SMG"
 	id = "mag_oldsmg_rubber"
 	materials = list(/datum/material/iron = 6000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtrubber
@@ -134,6 +134,15 @@
 //////////////
 //Ammo Shells/
 //////////////
+
+/datum/design/shell_clip
+	name = "stripper clip (shotgun shells)"
+	id = "sec_shellclip"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000)
+	build_path = /obj/item/ammo_box/shotgun
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/beanbag_slug/sec
 	id = "sec_beanbag"
@@ -166,7 +175,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/incendiary_slug/sec
-	id = "sec_Islug"
+	id = "sec_islug"
 	build_type = PROTOLATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -225,13 +234,13 @@
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/pin_away
-	name = "Station Locked Pin"
-	desc = "This is a security firing pin which only authorizes users who are off station."
-	id = "pin_away"
+/datum/design/pin_explorer
+	name = "Outback Firing Pin"
+	desc = "This firing pin only shoots while ya ain't on station, fair dinkum!"
+	id = "pin_explorer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 2000)
-	build_path = /obj/item/firing_pin/away
+	materials = list(/datum/material/silver = 1000, /datum/material/gold = 1000, /datum/material/iron = 500)
+	build_path = /obj/item/firing_pin/explorer
 	category = list("Firing Pins")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
@@ -435,9 +444,9 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-//////////
-//MISC////
-//////////
+///////////
+//Shields//
+///////////
 
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
@@ -448,6 +457,30 @@
 	build_path = /obj/item/shield/riot/tele
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/laser_shield
+	name = "Laser Resistant Riot Shield"
+	desc = "An advanced riot shield made of darker glasses to prevent laser fire from passing through."
+	id = "laser_shield"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 4000, /datum/material/silver = 800, /datum/material/titanium = 600, /datum/material/plasma = 5000)
+	build_path = /obj/item/shield/riot/laser_proof
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/bullet_shield
+	name = "Bullet Resistant Riot Shield"
+	desc = "An advanced riot shield made bullet resistant plastics and heavy metals to protect against projectile harm."
+	id = "bullet_shield"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000, /datum/material/titanium = 1200, /datum/material/plastic = 2500)
+	build_path = /obj/item/shield/riot/bullet_proof
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+//////////
+//MISC////
+//////////
 
 /datum/design/suppressor
 	name = "Suppressor"
@@ -467,3 +500,13 @@
 	materials = list(MAT_CATEGORY_RIGID = 12000)
 	build_path = /obj/item/melee/cleric_mace
 	category = list("Imported")
+
+/datum/design/stun_boomerang
+	name = "OZtek Boomerang"
+	desc = "Uses reverse flow gravitodynamics to flip its personal gravity back to the thrower mid-flight. Also functions similar to a stun baton."
+	id = "stun_boomerang"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
+	build_path = /obj/item/melee/baton/boomerang
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

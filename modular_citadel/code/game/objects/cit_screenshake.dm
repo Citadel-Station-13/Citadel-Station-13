@@ -45,18 +45,6 @@
 	. = ..()
 	shake_camera(user, (pressureSetting * 0.75 + 1), (pressureSetting * 0.75))
 
-/obj/item/attack(mob/living/M, mob/living/user)
-	. = ..()
-	if(force >= 15)
-		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
-		if(M.client)
-			switch (M.client.prefs.damagescreenshake)
-				if (1)
-					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
-				if (2)
-					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
-						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
-
 /obj/item/attack_obj(obj/O, mob/living/user)
 	. = ..()
 	if(force >= 20)

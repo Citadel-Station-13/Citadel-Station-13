@@ -35,12 +35,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
 	var/turf/endT = spaceDebrisFinishLoc(startside, z)
-	new /obj/effect/immovablerod(startT, endT, C.special_target)
+	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target)
+	announce_to_ghosts(rod)
 
 /obj/effect/immovablerod
 	name = "immovable rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
+	movement_type = FLOATING
 	icon_state = "immrod"
 	throwforce = 100
 	move_force = INFINITY
@@ -61,10 +63,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	z_original = z
 	destination = end
 	special_target = aimed_at
-	if(notify)
-		notify_ghosts("\A [src] is inbound!",
-			enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>",
-			source=src, action=NOTIFY_ORBIT)
 	GLOB.poi_list += src
 
 	var/special_target_valid = FALSE
@@ -146,22 +144,23 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(L && (L.density || prob(10)))
 		L.ex_act(EXPLODE_HEAVY)
 
-obj/effect/immovablerod/attack_hand(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/U = user
-		if(U.job in list("Research Director"))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			for(var/mob/M in urange(8, src))
-				if(!M.stat)
-					shake_camera(M, 2, 3)
-			if(wizard)
-				U.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [U] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
-				to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [U] somehow manages to grab you, slamming you into the ground!</span>")
-				wizard.Stun(60)
-				wizard.apply_damage(25, BRUTE)
-				qdel(src)
-			else
-				U.visible_message("<span class='boldwarning'>[U] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
-				new /obj/structure/festivus/anchored(drop_location())
-				new /obj/effect/anomaly/flux(drop_location())
-				qdel(src)
+/obj/effect/immovablerod/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/U = user
+	if(U.job in list("Research Director"))
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		for(var/mob/M in urange(8, src))
+			if(!M.stat)
+				shake_camera(M, 2, 3)
+		if(wizard)
+			U.visible_message("<span class='boldwarning'>[src] transforms into [wizard] as [U] suplexes them!</span>", "<span class='warning'>As you grab [src], it suddenly turns into [wizard] as you suplex them!</span>")
+			to_chat(wizard, "<span class='boldwarning'>You're suddenly jolted out of rod-form as [U] somehow manages to grab you, slamming you into the ground!</span>")
+			wizard.Stun(60)
+			wizard.apply_damage(25, BRUTE)
+			qdel(src)
+		else
+			U.visible_message("<span class='boldwarning'>[U] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
+			new /obj/structure/festivus/anchored(drop_location())
+			new /obj/effect/anomaly/flux(drop_location())
+			qdel(src)

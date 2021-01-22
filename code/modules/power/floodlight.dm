@@ -15,8 +15,7 @@
 		state = FLOODLIGHT_NEEDS_WIRES
 		desc = "A bare metal frame looking vaguely like a floodlight. Requires wiring."
 	else if(istype(O, /obj/item/stack/cable_coil) && (state == FLOODLIGHT_NEEDS_WIRES))
-		var/obj/item/stack/S = O
-		if(S.use(5))
+		if(O.use_tool(src, user, 0, 5))
 			to_chat(user, "<span class='notice'>You wire [src].</span>")
 			name = "wired [name]"
 			desc = "A bare metal frame looking vaguely like a floodlight. Requires securing with a screwdriver."
@@ -93,10 +92,7 @@
 	else
 		. = ..()
 
-/obj/machinery/power/floodlight/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/floodlight/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	var/current = setting
 	if(current == 1)
 		current = light_setting_list.len

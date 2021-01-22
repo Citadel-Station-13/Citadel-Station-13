@@ -117,7 +117,7 @@
 			new /obj/item/pizzabox/bomb
 
 		if("darklord") //20 tc + tk + summon item close enough for now
-			new /obj/item/twohanded/dualsaber(src)
+			new /obj/item/dualsaber(src)
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/syndicate(src)
@@ -167,6 +167,14 @@
 /obj/item/storage/box/syndie_kit/imp_freedom/PopulateContents()
 	var/obj/item/implanter/O = new(src)
 	O.imp = new /obj/item/implant/freedom(O)
+	O.update_icon()
+
+/obj/item/storage/box/syndie_kit/imp_warp
+	name = "boxed warp implant (with injector)"
+
+/obj/item/storage/box/syndie_kit/imp_warp/PopulateContents()
+	var/obj/item/implanter/O = new(src)
+	O.imp = new /obj/item/implant/warp(O)
 	O.update_icon()
 
 /obj/item/storage/box/syndie_kit/imp_microbomb
@@ -294,18 +302,18 @@
 	name = "chameleon kit"
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
-	new /obj/item/clothing/under/chameleon(src)
-	new /obj/item/clothing/suit/chameleon(src)
-	new /obj/item/clothing/gloves/chameleon(src)
-	new /obj/item/clothing/shoes/chameleon(src)
-	new /obj/item/clothing/glasses/chameleon(src)
-	new /obj/item/clothing/head/chameleon(src)
-	new /obj/item/clothing/mask/chameleon(src)
-	new /obj/item/storage/backpack/chameleon(src)
-	new /obj/item/radio/headset/chameleon(src)
-	new /obj/item/stamp/chameleon(src)
-	new /obj/item/pda/chameleon(src)
-	new /obj/item/clothing/neck/cloak/chameleon(src)
+	new /obj/item/clothing/under/chameleon/syndicate(src)
+	new /obj/item/clothing/suit/chameleon/syndicate(src)
+	new /obj/item/clothing/gloves/chameleon/insulated/syndicate(src)
+	new /obj/item/clothing/shoes/chameleon/syndicate(src)
+	new /obj/item/clothing/glasses/chameleon/syndicate(src)
+	new /obj/item/clothing/head/chameleon/syndicate(src)
+	new /obj/item/clothing/mask/chameleon/syndicate(src)
+	new /obj/item/storage/backpack/chameleon/syndicate(src)
+	new /obj/item/radio/headset/chameleon/syndicate(src)
+	new /obj/item/stamp/chameleon/syndicate(src)
+	new /obj/item/pda/chameleon/syndicate(src)
+	new /obj/item/clothing/neck/cloak/chameleon/syndicate(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
@@ -327,6 +335,7 @@
 	new /obj/item/reagent_containers/glass/bottle/romerol(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/dropper(src)
+	new /obj/item/paper/guides/antag/romerol_instructions(src)
 
 /obj/item/storage/box/syndie_kit/ez_clean/PopulateContents()
 	for(var/i in 1 to 3)
@@ -401,7 +410,7 @@
 /obj/item/storage/box/syndie_kit/revolver
 
 /obj/item/storage/box/syndie_kit/revolver/PopulateContents()
-	new /obj/item/gun/ballistic/revolver(src)
+	new /obj/item/gun/ballistic/revolver/syndicate(src)
 	new /obj/item/ammo_box/a357(src)
 
 /obj/item/storage/box/syndie_kit/pistol
@@ -501,3 +510,19 @@
 	new item2(src)
 	new item3(src)
 	new /obj/item/paper/contractor_guide(src)	//Paper guide
+
+/obj/item/storage/box/syndie_kit/northstar
+
+/obj/item/storage/box/syndie_kit/northstar/PopulateContents()
+	new /obj/item/clothing/gloves/fingerless/pugilist/rapid(src)
+	new /obj/item/clothing/accessory/padding(src)
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(src)
+	new /obj/item/lighter(src)
+
+/obj/item/storage/box/syndie_kit/scarp
+
+/obj/item/storage/box/syndie_kit/scarp/PopulateContents()
+	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/suit/hooded/carp_costume(src)
+	new /obj/item/staff/bostaff(src)

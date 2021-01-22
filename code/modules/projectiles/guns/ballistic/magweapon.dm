@@ -14,7 +14,7 @@
 	spread = 0
 	recoil = 0.1
 	casing_ejector = FALSE
-	inaccuracy_modifier = 0
+	inaccuracy_modifier = 0.15
 	dualwield_spread_mult = 1.4
 	weapon_weight = WEAPON_MEDIUM
 	w_class = WEIGHT_CLASS_BULKY
@@ -46,15 +46,10 @@
 		return 0
 	. = ..()
 
-/obj/item/gun/ballistic/automatic/magrifle/shoot_live_shot()
+/obj/item/gun/ballistic/automatic/magrifle/shoot_live_shot(mob/living/user, pointblank = FALSE, mob/pbtarget, message = 1, stam_cost = 0)
 	var/obj/item/ammo_casing/caseless/magnetic/shot = chambered
 	cell.use(shot.energy_cost)
 	. = ..()
-
-/obj/item/gun/ballistic/automatic/magrifle/emp_act(severity)
-	. = ..()
-	if(!(. & EMP_PROTECT_CONTENTS))
-		cell.use(round(cell.charge / severity))
 
 /obj/item/gun/ballistic/automatic/magrifle/get_cell()
 	return cell
@@ -75,8 +70,7 @@
 	recoil = 2
 	weapon_weight = WEAPON_HEAVY
 
-/obj/item/gun/ballistic/automatic/magrifle/hyperburst/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/magrifle/hyperburst/update_icon_state()
 	icon_state = "hyperburst[magazine ? "-[get_ammo()]" : ""][chambered ? "" : "-e"]"
 
 ///magpistol///
@@ -92,12 +86,14 @@
 	fire_delay = 2
 	inaccuracy_modifier = 0.25
 	cell_type = /obj/item/stock_parts/cell/magnetic/pistol
+	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/magrifle/pistol/update_icon()
-	..()
-	cut_overlays()
+/obj/item/gun/ballistic/automatic/magrifle/pistol/update_overlays()
+	. = ..()
 	if(magazine)
-		add_overlay("magpistol-magazine")
+		. += "magpistol-magazine"
+
+/obj/item/gun/ballistic/automatic/magrifle/pistol/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/magrifle/pistol/nopin

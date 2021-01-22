@@ -56,6 +56,8 @@
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
 /datum/config_entry/flag/log_pda	// log pda messages
 
 /datum/config_entry/flag/log_telecomms	// log telecomms messages
@@ -169,8 +171,6 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/hostedby
-
-/datum/config_entry/flag/norespawn
 
 /datum/config_entry/flag/guest_jobban
 
@@ -288,7 +288,7 @@
 /datum/config_entry/flag/tgstyle_maprotation
 
 /datum/config_entry/string/map_vote_type
-	config_entry_value = "SCORE"
+	config_entry_value = APPROVAL_VOTING
 
 /datum/config_entry/number/maprotatechancedelta
 	config_entry_value = 0.75
@@ -324,6 +324,9 @@
 
 /datum/config_entry/number/notify_new_player_account_age	// how long do we notify admins of a new byond account
 	min_val = 0
+
+/datum/config_entry/flag/age_verification //are we using the automated age verification which asks users if they're 18+?
+	config_entry_value = TRUE
 
 /datum/config_entry/flag/irc_first_connection_alert	// do we notify the irc channel when somebody is connecting for the first time?
 
@@ -370,6 +373,10 @@
 	config_entry_value = null
 	min_val = 500
 
+/datum/config_entry/number/client_warn_version
+	config_entry_value = null
+	min_val = 500
+
 /datum/config_entry/string/client_warn_message
 	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
 
@@ -381,6 +388,10 @@
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+/datum/config_entry/number/client_error_build
+	config_entry_value = null
+	min_val = 0
 
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null
@@ -458,6 +469,9 @@
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"
 
+/datum/config_entry/string/default_view_square
+	config_entry_value = "15x15"
+
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
@@ -468,3 +482,5 @@
 
 /datum/config_entry/flag/minimaps_enabled
 	config_entry_value = TRUE
+
+/datum/config_entry/string/centcom_ban_db	// URL for the CentCom Galactic Ban DB API

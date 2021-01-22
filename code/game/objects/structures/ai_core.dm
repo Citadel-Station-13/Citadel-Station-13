@@ -131,7 +131,7 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
-						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use_tool(src, user, 0, 5))
 							to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 							state = CABLED_CORE
 							update_icon()

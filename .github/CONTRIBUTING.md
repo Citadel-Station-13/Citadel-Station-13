@@ -257,6 +257,12 @@ This prevents nesting levels from getting deeper then they need to be.
 	* Please attempt to clean out any dirty variables that may be contained within items you alter through var-editing. For example, due to how DM functions, changing the `pixel_x` variable from 23 to 0 will leave a dirty record in the map's code of `pixel_x = 0`. Likewise this can happen when changing an item's icon to something else and then back. This can lead to some issues where an item's icon has changed within the code, but becomes broken on the map due to it still attempting to use the old entry.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
+### User Interfaces
+* All new player-facing user interfaces must use TGUI.
+* Raw HTML is permitted for admin and debug UIs.
+* Documentation for TGUI can be found at:
+	* [tgui/README.md](../tgui/README.md)
+	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
@@ -337,7 +343,7 @@ for(var/obj/item/sword/S in bag_of_swords)
 	if(!best_sword || S.damage > best_sword.damage)
 		best_sword = S
 ```
-specifies a type for DM to filter by. 
+specifies a type for DM to filter by.
 
 With the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? Is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Wherever a list (or other container, such as an atom (in which case you're technically accessing their special contents list, but that's irrelevant)) contains datums of the same datatype or subtypes of the datatype you require for your loop's body,
 you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
@@ -374,7 +380,7 @@ mob
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 
-Isn't that confusing? 
+Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
@@ -394,6 +400,10 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
 
+* If your pull request is not finished make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
+
+* While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
+
 ## Porting features/sprites/sounds/tools from other codebases
 
 If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
@@ -404,9 +414,16 @@ Regarding sprites & sounds, you must credit the artist and possibly the codebase
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
 * Code where one line of code is split across mutiple lines (except for multiple, separate strings and comments; in those cases, existing longer lines must not be split up)
-* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
+
+## Content requiring prior approval
+Certain types of changes may require prior approval from maintainers. This currently includes:
+
+* Code adding, removing, or updating the availability of alien races/species/human mutants. This includes pull requests attempting to add or remove features from said races/species/mutants. (Requires approval from at least one maintainer)
+* Code adding, removing, or modifying the functionality of adult-oriented features (such as, but not limited to: vore, genitals, MKUltra, and more). This also includes pull requests attempting to add or remove these features outright. (Requires approval from at least half of the formal maintainer team)
+
+The above content requires approval from the specified amount of maintainers prior to PR creation. Seeking approval must be done via a @Maintainer ping in a relevant development/code or staff channel on the Discord, otherwise it will be considered insufficient. If a PR contains any of the above content, but the creator does not have sufficient approval prior to the PR's creation, then the PR may be closed by any maintainer, at any time, for any reason.
 
 ## A word on Git
 Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.

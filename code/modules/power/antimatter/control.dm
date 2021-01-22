@@ -30,7 +30,6 @@
 
 	var/stored_power = 0//Power to deploy per tick
 
-
 /obj/machinery/power/am_control_unit/Initialize()
 	. = ..()
 	linked_shielding = list()
@@ -43,7 +42,6 @@
 		qdel(AMS)
 	QDEL_NULL(fueljar)
 	return ..()
-
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
@@ -71,7 +69,6 @@
 		power_cycle = 0
 
 	return
-
 
 /obj/machinery/power/am_control_unit/proc/produce_power()
 	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
@@ -103,15 +100,9 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			if(active)
-				toggle_power()
-			stability -= rand(15,30)
-		if(2)
-			if(active)
-				toggle_power()
-			stability -= rand(10,20)
+	if(active)
+		toggle_power()
+	stability -= rand(round(severity/5),round(severity/3))
 
 /obj/machinery/power/am_control_unit/blob_act()
 	stability -= 20
@@ -123,19 +114,16 @@
 	check_stability()
 	return
 
-
 /obj/machinery/power/am_control_unit/ex_act(severity, target)
 	stability -= (80 - (severity * 20))
 	check_stability()
 	return
-
 
 /obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
 	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
 		check_stability()
-
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()
@@ -150,14 +138,12 @@
 
 	return
 
-
 /obj/machinery/power/am_control_unit/update_icon_state()
 	if(active)
 		icon_state = "control_on"
 	else
 		icon_state = "control"
 	//No other icons for it atm
-
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
@@ -192,7 +178,6 @@
 	else
 		return ..()
 
-
 /obj/machinery/power/am_control_unit/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
 		if(BRUTE)
@@ -221,7 +206,6 @@
 	update_shield_icons = 1
 	return 1
 
-
 /obj/machinery/power/am_control_unit/proc/remove_shielding(obj/machinery/am_shielding/AMS)
 	if(!istype(AMS))
 		return 0
@@ -231,12 +215,10 @@
 		toggle_power()
 	return 1
 
-
 /obj/machinery/power/am_control_unit/proc/check_stability()//TODO: make it break when low also might want to add a way to fix it like a part or such that can be replaced
 	if(stability <= 0)
 		qdel(src)
 	return
-
 
 /obj/machinery/power/am_control_unit/proc/toggle_power(powerfail = 0)
 	active = !active
@@ -248,7 +230,6 @@
 		visible_message("The [src.name] shuts down.")
 	update_icon()
 	return
-
 
 /obj/machinery/power/am_control_unit/proc/check_shield_icons()//Forces icon_update for all shields
 	if(shield_icon_delay)

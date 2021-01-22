@@ -123,7 +123,9 @@
 		trauma = _trauma
 	return ..()
 
-/mob/living/split_personality/Life()
+/mob/living/split_personality/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(QDELETED(body))
 		qdel(src) //in case trauma deletion doesn't already do it
 
@@ -131,8 +133,6 @@
 	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
-
-	..()
 
 /mob/living/split_personality/Login()
 	..()

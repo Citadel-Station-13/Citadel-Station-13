@@ -30,7 +30,7 @@
 		new /datum/data/mining_equipment("500 Point Transfer Card",		/obj/item/card/mining_point_card/mp500,								500),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
 		new /datum/data/mining_equipment("Jaunter",						/obj/item/wormhole_jaunter,											750),
-		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/twohanded/kinetic_crusher,								750),
+		new /datum/data/mining_equipment("Kinetic Crusher",				/obj/item/kinetic_crusher,											750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",			/obj/item/gun/energy/kinetic_accelerator,							750),
 		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			750),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									800),
@@ -42,7 +42,7 @@
 		new /datum/data/mining_equipment("Fulton Pack",					/obj/item/extraction_pack,											1000),
 		new /datum/data/mining_equipment("Lazarus Injector",			/obj/item/lazarus_injector,											1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",				/obj/item/pickaxe/silver,											1000),
-		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining_conscript,				1000),
+		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining/conscript,				1000),
 		new /datum/data/mining_equipment("1000 Point Transfer Card",	/obj/item/card/mining_point_card/mp1000,							1000),
 		new /datum/data/mining_equipment("1500 Point Transfer Card",	/obj/item/card/mining_point_card/mp1500,							1500),
 		new /datum/data/mining_equipment("2000 Point Transfer Card",	/obj/item/card/mining_point_card/mp2000,							2000),
@@ -53,8 +53,9 @@
 		new /datum/data/mining_equipment("Spare Suit Voucher",			/obj/item/suit_voucher,												2000),
 		new /datum/data/mining_equipment("Super Resonator",				/obj/item/resonator/upgraded,										2500),
 		new /datum/data/mining_equipment("Jump Boots",					/obj/item/clothing/shoes/bhop,										2500),
+		new /datum/data/mining_equipment("Ice hiking boots",            /obj/item/clothing/shoes/winterboots/ice_boots,				        2500),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule",		/obj/item/survivalcapsule/luxury,									3000),
-		new /datum/data/mining_equipment("Luxury Bar Capsule",			/obj/item/survivalcapsule/luxuryelite,								10000),
+		new /datum/data/mining_equipment("Luxury Bar Capsule",			/obj/item/survivalcapsule/luxury/elitebar,							10000),
 		new /datum/data/mining_equipment("Nanotrasen Minebot",			/mob/living/simple_animal/hostile/mining_drone,						800),
 		new /datum/data/mining_equipment("Minebot Melee Upgrade",		/obj/item/mine_bot_upgrade,											400),
 		new /datum/data/mining_equipment("Minebot Armor Upgrade",		/obj/item/mine_bot_upgrade/health,									400),
@@ -69,8 +70,10 @@
 		new /datum/data/mining_equipment("KA Damage Increase",			/obj/item/borg/upgrade/modkit/damage,								1000),
 		new /datum/data/mining_equipment("KA Cooldown Decrease",		/obj/item/borg/upgrade/modkit/cooldown,								1000),
 		new /datum/data/mining_equipment("KA AoE Damage",				/obj/item/borg/upgrade/modkit/aoe/mobs,								2000),
-		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining_cloned,					3000),
-		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000)
+		new /datum/data/mining_equipment("Miner Full Replacement",		/obj/item/storage/backpack/duffelbag/mining/cloned,					3000),
+		new /datum/data/mining_equipment("Premium Accelerator",			/obj/item/gun/energy/kinetic_accelerator/premiumka,					8000),
+		new /datum/data/mining_equipment("Kinetic Glaive Kit",			/obj/item/storage/backpack/duffelbag/mining/glaivekit,				2250),
+		new /datum/data/mining_equipment("Survival Dagger",				/obj/item/kitchen/knife/combat/survival/knuckledagger,				550),
 		)
 
 /datum/data/mining_equipment
@@ -83,9 +86,14 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/power_change()
-	..()
-	update_icon()
+/obj/machinery/mineral/equipment_vendor/Initialize()
+	. = ..()
+	build_inventory()
+
+/obj/machinery/mineral/equipment_vendor/proc/build_inventory()
+	for(var/p in prize_list)
+		var/datum/data/mining_equipment/M = p
+		GLOB.vending_products[M.equipment_path] = 1
 
 /obj/machinery/mineral/equipment_vendor/update_icon_state()
 	if(powered())
@@ -93,44 +101,82 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
-	. = ..()
-	var/list/dat = list()
-	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
+/obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/vending),
+	)
+
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MiningVendor", name)
+		ui.open()
+
+/obj/machinery/mineral/equipment_vendor/ui_static_data(mob/user)
+	. = list()
+	.["product_records"] = list()
 	for(var/datum/data/mining_equipment/prize in prize_list)
-		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=[REF(src)];purchase=[REF(prize)]'>Purchase</A></td></tr>"
-	dat += "</table>"
+		var/list/product_data = list(
+			path = replacetext(replacetext("[prize.equipment_path]", "/obj/item/", ""), "/", "-"),
+			name = prize.equipment_name,
+			price = prize.cost,
+			ref = REF(prize)
+		)
+		.["product_records"] += list(product_data)
 
-	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
-	popup.set_content(dat.Join())
-	popup.open()
-	return
+/obj/machinery/mineral/equipment_vendor/ui_data(mob/user)
+	. = list()
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard(TRUE)
+		if(C)
+			.["user"] = list()
+			.["user"]["points"] = C.mining_points
+			if(C.registered_account)
+				.["user"]["name"] = C.registered_account.account_holder
+				if(C.registered_account.account_job)
+					.["user"]["job"] = C.registered_account.account_job.title
+				else
+					.["user"]["job"] = "No Job"
 
-/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["purchase"])
-		var/mob/M = usr
-		var/obj/item/card/id/I = M.get_idcard(TRUE)
-		if(istype(I))
-			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
-			if (!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
+
+	switch(action)
+		if("purchase")
+			var/mob/M = usr
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			if(!istype(I))
+				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+				flick(icon_deny, src)
+				return
+			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
+			if(!prize || !(prize in prize_list))
+				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
 			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
+				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
-			else
-				I.mining_points -= prize.cost
-				to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
-				new prize.equipment_path(src.loc)
-				SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
-		else
-			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
-			flick(icon_deny, src)
-	updateUsrDialog()
-	return
+				return
+			I.mining_points -= prize.cost
+			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+			new prize.equipment_path(loc)
+			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
+			. = TRUE
+
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/mining_voucher))
+		RedeemVoucher(I, user)
+		return
+	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))
@@ -147,9 +193,14 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
+	var/items = list(	"Survival Capsule and Explorer's Webbing" = image(icon = 'icons/obj/storage.dmi', icon_state = "explorerpack"),
+						"Resonator Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
+						"Minebot Kit" = image(icon = 'icons/mob/aibots.dmi', icon_state = "mining_drone"),
+						"Extraction and Rescue Kit" = image(icon = 'icons/obj/fulton.dmi', icon_state = "extraction_pack"),
+						"Crusher Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher"),
+						"Mining Conscription Kit" = image(icon = 'icons/obj/storage.dmi', icon_state = "duffel"))
 
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()
@@ -170,9 +221,9 @@
 			new /obj/item/stack/marker_beacon/thirty(drop_location)
 		if("Crusher Kit")
 			new /obj/item/extinguisher/mini(drop_location)
-			new /obj/item/twohanded/kinetic_crusher(drop_location)
+			new /obj/item/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
-			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
+			new /obj/item/storage/backpack/duffelbag/mining/conscript(drop_location)
 
 	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
@@ -194,7 +245,7 @@
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id",       				/obj/item/card/id/mining, 				                   		250),
 		new /datum/data/mining_equipment("Science Goggles",       		/obj/item/clothing/glasses/science,								250),
-		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/monkeycube,        	300),
+		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/cube/monkey,        	300),
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
 		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),
@@ -278,11 +329,11 @@
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 
-/obj/item/storage/backpack/duffelbag/mining_conscript
+/obj/item/storage/backpack/duffelbag/mining/conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
+/obj/item/storage/backpack/duffelbag/mining/conscript/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
@@ -297,11 +348,11 @@
 
 	//CITADEL ADDITIONS BELOW
 
-/obj/item/storage/backpack/duffelbag/mining_cloned
+/obj/item/storage/backpack/duffelbag/mining/cloned
 	name = "mining replacement kit"
-	desc = "A large bag that has advance tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even has a new ID!"
+	desc = "A large bag that has advanced tools and a spare jumpsuit, boots, and gloves for a newly cloned miner to get back in the field. Even has a new ID!"
 
-/obj/item/storage/backpack/duffelbag/mining_cloned/PopulateContents()
+/obj/item/storage/backpack/duffelbag/mining/cloned/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
@@ -319,10 +370,17 @@
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/clothing/glasses/meson/prescription(src)
 
-/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
-	var/items = list("Exo-suit", "SEVA suit")
+/obj/item/storage/backpack/duffelbag/mining/glaivekit
 
-	var/selection = input(redeemer, "Pick your suit.", "Suit Voucher Redemption") as null|anything in items
+/obj/item/storage/backpack/duffelbag/mining/glaivekit/PopulateContents()
+	new /obj/item/kinetic_crusher/glaive(src)
+	new /obj/item/kitchen/knife/combat/survival/knuckledagger(src)
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/suit_voucher/voucher, mob/redeemer)
+	var/items = list(	"Exo-suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "exo"),
+						"SEVA suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "seva"))
+
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()

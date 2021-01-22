@@ -6,6 +6,7 @@
 	name = "gas sensor"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "gsensor1"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 0)
 
 	var/on = TRUE
 
@@ -53,14 +54,14 @@
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = air_sample.return_pressure(),
-			"temperature" = air_sample.temperature,
+			"temperature" = air_sample.return_temperature(),
 			"gases" = list()
 		))
 		var/total_moles = air_sample.total_moles()
 		if(total_moles)
-			for(var/gas_id in air_sample.gases)
+			for(var/gas_id in air_sample.get_gases())
 				var/gas_name = GLOB.meta_gas_names[gas_id]
-				signal.data["gases"][gas_name] = air_sample.gases[gas_id] / total_moles * 100
+				signal.data["gases"][gas_name] = air_sample.get_moles(gas_id) / total_moles * 100
 
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
@@ -91,8 +92,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
-	ui_x = 400
-	ui_y = 925
 
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
@@ -123,11 +122,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
-/obj/machinery/computer/atmos_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "AtmosControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)
@@ -265,13 +263,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		U.broadcast_status()
 
-/obj/machinery/computer/atmos_control/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "atmos_control", name, ui_x, ui_y, master_ui, state)
-		ui.open()
-
 /obj/machinery/computer/atmos_control/tank/ui_data(mob/user)
 	var/list/data = ..()
 	data["tank"] = TRUE
@@ -296,7 +287,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("rate")
 			var/target = text2num(params["rate"])
 			if(!isnull(target))
-				target = CLAMP(target, 0, MAX_TRANSFER_RATE)
+				target = clamp(target, 0, MAX_TRANSFER_RATE)
 				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
 				. = TRUE
 		if("output")
@@ -305,7 +296,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("pressure")
 			var/target = text2num(params["pressure"])
 			if(!isnull(target))
-				target = CLAMP(target, 0, MAX_OUTPUT_PRESSURE)
+				target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

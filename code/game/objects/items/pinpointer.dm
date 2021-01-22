@@ -78,6 +78,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
+	custom_price = PRICE_ABOVE_EXPENSIVE
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
 
@@ -182,3 +183,28 @@
 
 	A.other_pair = B
 	B.other_pair = A
+
+/obj/item/pinpointer/shuttle
+	name = "fugitive pinpointer"
+	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
+	icon_state = "pinpointer_hunter"
+	var/obj/shuttleport
+
+/obj/item/pinpointer/shuttle/Initialize(mapload)
+	. = ..()
+	shuttleport = SSshuttle.getShuttle("huntership")
+
+/obj/item/pinpointer/shuttle/scan_for_target()
+	target = shuttleport
+
+/obj/item/pinpointer/shuttle/Destroy()
+	shuttleport = null
+	. = ..()
+
+/obj/item/pinpointer/ian
+	name = "ian pinpointer"
+	desc = "A handheld tracking device that locates Ian. Made with real corgis!"
+	icon_state = "pinpointer_ian"
+
+/obj/item/pinpointer/ian/scan_for_target()
+	target = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list

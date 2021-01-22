@@ -28,6 +28,11 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
+/datum/admins/CanProcCall(procname)
+	. = ..()
+	if(!check_rights(R_SENSITIVE))
+		return FALSE
+
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
@@ -91,7 +96,7 @@ GLOBAL_PROTECT(href_token)
 	var/client/C
 	if ((C = owner) || (C = GLOB.directory[target]))
 		disassociate()
-		C.verbs += /client/proc/readmin
+		add_verb(C, /client/proc/readmin)
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
@@ -111,7 +116,8 @@ GLOBAL_PROTECT(href_token)
 		owner = C
 		owner.holder = src
 		owner.add_admin_verbs()	//TODO <--- todo what? the proc clearly exists and works since its the backbone to our entire admin system
-		owner.verbs -= /client/proc/readmin
+		remove_verb(owner, /client/proc/readmin)
+		owner.init_verbs() //re-initialize the verb list
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
@@ -123,6 +129,7 @@ GLOBAL_PROTECT(href_token)
 	if(owner)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()
+		owner.init_verbs()
 		owner.holder = null
 		owner = null
 
@@ -145,6 +152,8 @@ GLOBAL_PROTECT(href_token)
 	return 0
 
 /datum/admins/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, fakekey))
+		return ..()
 	return FALSE //nice try trialmin
 
 /*

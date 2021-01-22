@@ -4,7 +4,8 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attack_sound = 'sound/items/welder.ogg'
-	attacktext = "ignites"
+	attack_verb_continuous = "ignites"
+	attack_verb_simple = "ignite"
 	melee_damage_type = BURN
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.1, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you take 30% damage reduction to all but burn, which you are almost immune to. You will ignite any enemy you bump into. in addition, your melee attacks will cause human targets to see everyone as you.</span>"
@@ -12,8 +13,9 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Crowd control modules activated. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
 
-/mob/living/simple_animal/hostile/guardian/fire/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/fire/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(summoner)
 		summoner.ExtinguishMob()
 		summoner.adjust_fire_stacks(-20)

@@ -325,6 +325,12 @@
 	name = "Abductor Replication Lab"
 	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
 
+/datum/map_template/ruin/space/spacediner
+	id = "spacediner"
+	suffix = "spacediner.dmm"
+	name = "Space Diner"
+	description = "Come, traveler of the bluespace planes. Sit, enjoy a drink and take one of the fair maidens for a night. The exit is the way you came in, via that teleporter thingy, but do remember to stay safe."
+
 //Space ruins for the station z
 /datum/map_template/ruin/spacenearstation
 	prefix = "_maps/RandomRuins/SpaceRuinsStation/"

@@ -90,16 +90,6 @@
 	crate_name = "industrial rcd"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
-/datum/supply_pack/engineering/powergamermitts
-	name = "Insulated Gloves Crate"
-	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
-	cost = 2300	//Made of pure-grade bullshittinium
-	contains = list(/obj/item/clothing/gloves/color/yellow,
-					/obj/item/clothing/gloves/color/yellow,
-					/obj/item/clothing/gloves/color/yellow)
-	crate_name = "insulated gloves crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
-
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	desc = "No rechargers? No problem, with the NT-75 EPI, you can recharge any standard cell-based equipment anytime, anywhere. Contains two Inducers."
@@ -162,6 +152,7 @@
 					/obj/item/storage/toolbox/mechanical)
 	cost = 1200
 	crate_name = "toolbox crate"
+	special = TRUE //Department resupply shuttle loan event.
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"

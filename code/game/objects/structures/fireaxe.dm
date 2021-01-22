@@ -3,6 +3,7 @@
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
@@ -10,7 +11,7 @@
 	integrity_failure = 0.33
 	var/locked = TRUE
 	var/open = FALSE
-	var/obj/item/twohanded/fireaxe/fireaxe
+	var/obj/item/fireaxe/fireaxe
 
 /obj/structure/fireaxecabinet/Initialize()
 	. = ..()
@@ -49,8 +50,8 @@
 			obj_integrity = max_integrity
 			update_icon()
 	else if(open || broken)
-		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
-			var/obj/item/twohanded/fireaxe/F = I
+		if(istype(I, /obj/item/fireaxe) && !fireaxe)
+			var/obj/item/fireaxe/F = I
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
@@ -104,10 +105,7 @@
 		fireaxe = null
 	qdel(src)
 
-/obj/structure/fireaxecabinet/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/fireaxecabinet/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)

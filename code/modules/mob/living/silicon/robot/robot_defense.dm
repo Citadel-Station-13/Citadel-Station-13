@@ -32,15 +32,17 @@
 			var/obj/item/I = get_active_held_item()
 			if(I)
 				uneq_active()
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] has disabled your active module!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have disarmed [src]!</span>")
 				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
 				Paralyze(40)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>[M] has forced you back!</span>", null, COMBAT_MESSAGE_RANGE, null, M,
+					"<span class='danger'>You have forced back [src]!</span>")
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
@@ -60,8 +62,7 @@
 
 	return
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
+/mob/living/silicon/robot/on_attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(opened && !wiresexposed && cell && !issilicon(user))
 		cell.update_icon()
@@ -84,12 +85,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			Paralyze(160)
-		if(2)
-			Paralyze(60)
-
+	Paralyze(10 + severity/1.2)
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -137,8 +133,8 @@
 /mob/living/silicon/robot/proc/beep_boop_rogue_bot(mob/user)
 	SetEmagged(1)
 	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
-	lawupdate = 0
-	connected_ai = null
+	lawupdate = FALSE
+	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 	var/time = time2text(world.realtime,"hh:mm:ss")

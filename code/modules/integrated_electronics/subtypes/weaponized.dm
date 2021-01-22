@@ -45,6 +45,9 @@
 /obj/item/integrated_circuit/weaponized/weapon_firing/attackby(var/obj/O, var/mob/user)
 	if(istype(O, /obj/item/gun/energy))
 		var/obj/item/gun/gun = O
+		if(!gun.can_circuit)
+			to_chat(user, "<span class='warning'>[gun] does not fit into circuits.</span>")
+			return
 		if(installed_gun)
 			to_chat(user, "<span class='warning'>There's already a weapon installed.</span>")
 			return
@@ -81,7 +84,7 @@
 		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/weaponized/weapon_firing/do_work()
-	if(!assembly || !installed_gun)
+	if(!assembly || !installed_gun || !installed_gun.can_shoot())
 		return
 	if(isliving(assembly.loc))
 		var/mob/living/L = assembly.loc
@@ -102,8 +105,8 @@
 		yo.data = round(yo.data, 1)
 
 	var/turf/T = get_turf(assembly)
-	var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
-	var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
+	var/target_x = clamp(T.x + xo.data, 0, world.maxx)
+	var/target_y = clamp(T.y + yo.data, 0, world.maxy)
 
 	assembly.visible_message("<span class='danger'>[assembly] fires [installed_gun]!</span>")
 	shootAt(locate(target_x, target_y, T.z))
@@ -191,7 +194,7 @@
 		var/datum/integrated_io/detonation_time = inputs[1]
 		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			dt = CLAMP(detonation_time.data, 1, 12)*10
+			dt = clamp(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
 		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
@@ -246,7 +249,7 @@
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 	var/obj/item/integrated_circuit/atmospherics/AT = get_pin_data_as_type(IC_INPUT, 4, /obj/item/integrated_circuit/atmospherics)
 
-	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/twohanded) || istype(A, /obj/item/transfer_valve))
+	if(!A || A.anchored || A.throwing || A == assembly || istype(A, /obj/item/transfer_valve) || A.GetComponent(/datum/component/two_handed))
 		return
 
 	var/obj/item/I = get_object()
@@ -293,9 +296,10 @@
 	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
 	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
 
-	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
-	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
-	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	var/x_abs = clamp(T.x + target_x_rel, 0, world.maxx)
+	var/y_abs = clamp(T.y + target_y_rel, 0, world.maxy)
+	var/range = round(clamp(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	assembly.visible_message("<span class='danger'>\The [assembly] has thrown [A]!</span>")
 	log_attack("[assembly] [REF(assembly)] has thrown [A] with lethal force.")
 	A.forceMove(drop_location())
@@ -324,7 +328,7 @@
 
 
 /obj/item/integrated_circuit/weaponized/stun/do_work()
-	var/stunforce = CLAMP(get_pin_data(IC_INPUT, 1),1,70)
+	var/stunforce = clamp(get_pin_data(IC_INPUT, 1),1,70)
 	var/mob/living/L = assembly.loc
 	if(attempt_stun(L,stunforce))
 		activate_pin(2)

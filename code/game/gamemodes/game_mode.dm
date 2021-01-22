@@ -272,7 +272,7 @@
 		reports += config.mode_reports[config_tag]
 		Count++
 	for(var/i in Count to rand(3,5)) //Between three and five wrong entries on the list.
-		var/false_report_type = pickweightAllowZero(report_weights)
+		var/false_report_type = pickweight(report_weights, 0)
 		report_weights[false_report_type] = 0 //Make it so the same false report won't be selected twice
 		reports += config.mode_reports[false_report_type]
 
@@ -417,7 +417,7 @@
 				if(player.assigned_role == job)
 					candidates -= player
 
-	if(candidates.len < recommended_enemies)
+	if(candidates.len < recommended_enemies && CONFIG_GET(keyed_list/force_antag_count)[config_tag])
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
@@ -543,6 +543,8 @@
 /datum/game_mode/proc/get_remaining_days(client/C)
 	if(!C)
 		return 0
+	if(C.prefs?.db_flags & DB_FLAG_EXEMPT)
+		return 0
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
 	if(!isnum(C.player_age))
@@ -603,4 +605,8 @@
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()
+	return
+
+/// Mode specific info for ghost game_info
+/datum/game_mode/proc/ghost_info()
 	return

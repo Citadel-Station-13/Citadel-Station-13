@@ -2,11 +2,17 @@
 	name = "removal of embedded objects"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/remove_object)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
+
+/datum/surgery/embedded_removal/robot
+	requires_bodypart_type = BODYPART_ROBOTIC
+	steps = list(/datum/surgery_step/mechanic_open, /datum/surgery_step/open_hatch, /datum/surgery_step/remove_object)
+
 /datum/surgery_step/remove_object
 	name = "remove embedded objects"
 	time = 32
 	accept_hand = 1
 	var/obj/item/bodypart/L = null
+
 /datum/surgery_step/remove_object/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = surgery.operated_bodypart
 	if(L)
@@ -23,12 +29,7 @@
 			var/objects = 0
 			for(var/obj/item/I in L.embedded_objects)
 				objects++
-				I.forceMove(get_turf(H))
-				L.embedded_objects -= I
-				I.unembedded()
-			if(!H.has_embedded_objects())
-				H.clear_alert("embeddedobject")
-				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+				H.remove_embedded_object(I)
 
 			if(objects > 0)
 				display_results(user, target, "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>",

@@ -13,7 +13,7 @@
 		return 1
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
-	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/twohanded/required/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
+	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
 	var/organ_rejection_dam = 0
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -29,10 +29,10 @@
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/BP = tool
 		if(ismonkey(target))// monkey patient only accept organic monkey limbs
-			if(BP.status == BODYPART_ROBOTIC || BP.animal_origin != MONKEY_BODYPART)
+			if(BP.is_robotic_limb() || BP.animal_origin != MONKEY_BODYPART)
 				to_chat(user, "<span class='warning'>[BP] doesn't match the patient's morphology.</span>")
 				return -1
-		if(BP.status != BODYPART_ROBOTIC)
+		if(!BP.is_robotic_limb())
 			organ_rejection_dam = 10
 			if(ishuman(target))
 				if(BP.animal_origin)
@@ -79,7 +79,7 @@
 			"[user] finishes attaching [tool]!",
 			"[user] finishes the attachment procedure!")
 		qdel(tool)
-		if(istype(tool, /obj/item/twohanded/required/chainsaw))
+		if(istype(tool, /obj/item/chainsaw))
 			var/obj/item/mounted_chainsaw/new_arm = new(target)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1

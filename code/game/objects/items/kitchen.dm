@@ -3,6 +3,7 @@
  *		Fork
  *		Kitchen knives
  *		Ritual Knife
+ *		Bloodletter
  *		Butcher's cleaver
  *		Combat Knife
  *		Rolling Pins
@@ -17,7 +18,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
-	force = 5
+	force = 4
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
@@ -27,6 +28,7 @@
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
@@ -53,6 +55,14 @@
 	else
 		return ..()
 
+/obj/item/kitchen/fork/throwing
+	name = "throwing fork"
+	desc = "A fork, sharpened to perfection, making it a great weapon for throwing."
+	throwforce = 15
+	throw_speed = 4
+	throw_range = 6
+	embedding = list("pain_mult" = 2, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
+	sharpness = SHARP_EDGED
 
 /obj/item/kitchen/knife
 	name = "kitchen knife"
@@ -67,9 +77,12 @@
 	throw_range = 6
 	custom_materials = list(/datum/material/iron=12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
+	wound_bonus = -5
+	bare_wound_bonus = 10
+	custom_price = PRICE_NORMAL
 
 /obj/item/kitchen/knife/Initialize()
 	. = ..()
@@ -97,6 +110,28 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/kitchen/knife/bloodletter
+	name = "bloodletter"
+	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
+	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon_state = "bloodletter"
+	w_class = WEIGHT_CLASS_NORMAL
+	/// Bleed stacks applied when an organic mob target is hit
+	var/bleed_stacks_per_hit = 3
+
+/obj/item/kitchen/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!isliving(target) || !proximity_flag)
+		return
+	var/mob/living/M = target
+	if(!(M.mob_biotypes & MOB_ORGANIC))
+		return
+	var/datum/status_effect/stacking/saw_bleed/bloodletting/B = M.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
+	if(!B)
+		M.apply_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting, bleed_stacks_per_hit)
+	else
+		B.add_stacks(bleed_stacks_per_hit)
+
 /obj/item/kitchen/knife/butcher
 	name = "butcher's cleaver"
 	icon_state = "butch"
@@ -107,14 +142,16 @@
 	custom_materials = list(/datum/material/iron=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_price = PRICE_EXPENSIVE
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
 	icon_state = "buckknife"
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
-	force = 20
-	throwforce = 20
+	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
+	force = 16
+	throwforce = 16
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
@@ -123,9 +160,39 @@
 	icon_state = "survivalknife"
 	item_state = "knife"
 	desc = "A hunting grade survival knife."
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	force = 15
 	throwforce = 15
 	bayonet = TRUE
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger
+	name = "survival dagger"
+	icon_state = "glaive-dagger"
+	desc = "An enhanced hunting grade survival dagger, with a bright light and a handguard that makes it better for efficient butchery."
+	actions_types = list(/datum/action/item_action/toggle_light)
+	var/light_on = FALSE
+	var/brightness_on = 7
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 130, 20) // it's good for butchering stuff
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/ui_action_click(mob/user, actiontype)
+	light_on = !light_on
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_brightness(user)
+	update_icon()
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/proc/update_brightness(mob/user = null)
+	if(light_on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/update_overlays()
+	. = ..()
+	if(light_on)
+		. += "[icon_state]_lit"
 
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
@@ -134,6 +201,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	force = 15
 	throwforce = 15
 	custom_materials = null
@@ -173,7 +241,9 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	custom_price = PRICE_ALMOST_CHEAP
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -181,10 +251,10 @@
 /* Trays  moved to /obj/item/storage/bag */
 
 /obj/item/kitchen/knife/scimitar
-	name = "Scimitar knife"
+	name = "scimitar knife"
 	desc = "A knife used to cleanly butcher. Its razor-sharp edge has been honed for butchering, but has been poorly maintained over the years."
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/kitchen/knife/scimiar/Initialize()
+/obj/item/kitchen/knife/scimitar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force

@@ -11,6 +11,9 @@
 	minimal_player_age = 21
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
+	considered_combat_role = TRUE
+
+	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 

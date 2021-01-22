@@ -20,6 +20,11 @@
 	. = ..()
 	if(prob(1))
 		name = "auto-autopsy"
+	new_occupant_dir = dir
+
+/obj/machinery/harvester/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/harvester/RefreshParts()
 	interval = 0
@@ -45,7 +50,7 @@
 	harvesting = FALSE
 	warming_up = FALSE
 
-/obj/machinery/harvester/attack_hand(mob/user)
+/obj/machinery/harvester/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(state_open)
 		close_machine()
 	else if(!harvesting)

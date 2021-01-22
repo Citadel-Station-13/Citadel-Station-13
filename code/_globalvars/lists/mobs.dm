@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(joined_player_list)		//all clients that have joined the game a
 GLOBAL_LIST_EMPTY(silicon_mobs)				//all silicon mobs
 GLOBAL_LIST_EMPTY(mob_living_list)				//all instances of /mob/living and subtypes
 GLOBAL_LIST_EMPTY(carbon_list)				//all instances of /mob/living/carbon and subtypes, notably does not contain brains or simple animals
+GLOBAL_LIST_EMPTY(human_list)				//all instances of /mob/living/carbon/human and subtypes
 GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
@@ -39,19 +40,46 @@ GLOBAL_LIST_EMPTY(sentient_disease_instances)
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
+GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup_floating)
 
 GLOBAL_LIST_EMPTY(latejoiners) //CIT CHANGE - All latejoining people, for traitor-target purposes.
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
-	var/list/mob_types = list()
-	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed)
+	// NOTE: This is entirely based on the fact that byond typesof/subtypesof gets longer/deeper paths before shallower ones.
+	// If that ever breaks this entire proc breaks.
+	var/list/mob_types = typesof(/mob)
+	var/list/mob_types_floating = typesof(/mob)
+	var/list/entry_value = CONFIG_GET(keyed_list/multiplicative_movespeed/normal)
+	var/list/entry_value_floating = CONFIG_GET(keyed_list/multiplicative_movespeed/floating)
+	var/list/configured_types = list()
+	var/list/configured_types_floating = list()
 	for(var/path in entry_value)
 		var/value = entry_value[path]
-		if(!value)
+		if(isnull(value))
+			continue
+		// associative list sets for elements that already exist preserve order
+		mob_types[path] = value
+	for(var/path in entry_value_floating)
+		var/value = entry_value_floating[path]
+		if(isnull(value))
+			continue
+		mob_types_floating[path] = value
+	// now go back up through it to set everything, making absolute sure that base paths are overridden by child paths all the way down the path tree.
+	for(var/i in length(mob_types) to 1 step -1)
+		var/path = mob_types[i]
+		if(isnull(mob_types[path]))
+			continue
+		// we're going from bottom to top so it should be safe to do this without further checks..
+		for(var/subpath in typesof(path))
+			configured_types[subpath] = mob_types[path]
+	for(var/i in length(mob_types_floating) to 1 step -1)
+		var/path = mob_types_floating[i]
+		if(isnull(mob_types_floating[path]))
 			continue
 		for(var/subpath in typesof(path))
-			mob_types[subpath] = value
-	GLOB.mob_config_movespeed_type_lookup = mob_types
+			configured_types_floating[subpath] = mob_types_floating[path]
+	GLOB.mob_config_movespeed_type_lookup = configured_types
+	GLOB.mob_config_movespeed_type_lookup_floating = configured_types_floating
 	if(update_mobs)
 		update_mob_config_movespeeds()
 

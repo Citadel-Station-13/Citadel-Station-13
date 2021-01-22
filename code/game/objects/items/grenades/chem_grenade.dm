@@ -97,8 +97,7 @@
 		to_chat(user, "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>")
 
 	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		if (C.use(1))
+		if (I.use_tool(src, user, 0, 1, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(WIRED)
 			to_chat(user, "<span class='notice'>You rig the [initial(name)] assembly.</span>")
@@ -175,10 +174,11 @@
 	message_admins(message)
 	user.log_message("primed [src] ([reagent_string])",LOG_GAME)
 
-/obj/item/grenade/chem_grenade/prime()
+/obj/item/grenade/chem_grenade/prime(mob/living/lanced_by)
 	if(stage != READY)
 		return FALSE
 
+	. = ..()
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
@@ -218,7 +218,7 @@
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
 
-/obj/item/grenade/chem_grenade/large/prime()
+/obj/item/grenade/chem_grenade/large/prime(mob/living/lanced_by)
 	if(stage != READY)
 		return FALSE
 
@@ -287,7 +287,7 @@
 		return
 	..()
 
-/obj/item/grenade/chem_grenade/adv_release/prime()
+/obj/item/grenade/chem_grenade/adv_release/prime(mob/living/lanced_by)
 	if(stage != READY)
 		return FALSE
 

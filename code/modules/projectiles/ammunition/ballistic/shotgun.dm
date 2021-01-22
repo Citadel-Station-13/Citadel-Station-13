@@ -8,6 +8,18 @@
 	projectile_type = /obj/item/projectile/bullet/shotgun_slug
 	custom_materials = list(/datum/material/iron=4000)
 
+/obj/item/ammo_casing/shotgun/executioner
+	name = "executioner slug"
+	desc = "A 12 gauge lead slug purpose built to annihilate flesh on impact."
+	icon_state = "stunshell"
+	projectile_type = /obj/item/projectile/bullet/shotgun_slug/executioner
+
+/obj/item/ammo_casing/shotgun/pulverizer
+	name = "pulverizer slug"
+	desc = "A 12 gauge lead slug purpose built to annihilate bones on impact."
+	icon_state = "stunshell"
+	projectile_type = /obj/item/projectile/bullet/shotgun_slug/pulverizer
+
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"
 	desc = "A weak beanbag slug for riot control."
@@ -143,3 +155,12 @@
 	reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 5) //this and the acid equal about 25ish burn, not counting the minute toxin damage dealt by their metabolism, this makes each dart about as lethal as a stechkin shot in upfront damage
 	reagents.add_reagent(/datum/reagent/toxin/acid, 5)
 	reagents.add_reagent(/datum/reagent/consumable/frostoil, 10) //tempgun slowdown goes both ways and adds to the burn
+
+/obj/item/ammo_casing/shotgun/incapacitate
+	name = "custom incapacitating shot"
+	desc = "A shotgun casing filled with... something. used to incapacitate targets."
+	icon_state = "bountyshell"
+	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_incapacitate
+	pellets = 12//double the pellets, but half the stun power of each, which makes this best for just dumping right in someone's face.
+	variance = 25
+	custom_materials = list(/datum/material/iron=4000)

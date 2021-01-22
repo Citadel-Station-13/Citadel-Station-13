@@ -10,24 +10,14 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
-/* For later
-/datum/supply_pack/science/monkey
+/datum/supply_pack/science/ape  //Ape out!
 	name = "Ape Cube Crate"
 	desc = "Pss what a new test subject with supper strangth, speed, and love for bananas all at the same time? Say no more... Contains a single ape cube. Dont add water!"
 	contraband = TRUE
 	cost = 2500
-	contains = list (/obj/item/reagent_containers/food/snacks/monkeycube/ape)
+	contains = list (/obj/item/reagent_containers/food/snacks/cube/ape)
 	crate_name = "ape cube crate"
-*/
-
-/datum/supply_pack/science/aliens
-	name = "Advanced Alien Alloy Crate Crate"
-	desc = "Hello brothers from the stars!!! Our fellow brethren have made contact at long last and gave us gifts man! They really did build the prymi- Connection Error- Bro we’ll send you a sheet of advanced alien alloy."
-	cost = 15000
-	DropPodOnly = TRUE
-	contraband = TRUE
-	contains = list(/obj/item/stack/sheet/mineral/abductor)
-	crate_name = "alien bro alloy crate"
+	can_private_buy = FALSE
 
 /datum/supply_pack/science/beakers
 	name = "Chemistry Beakers Crate"
@@ -202,3 +192,49 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
+//////// RAW ANOMALY CORES
+
+/datum/supply_pack/science/raw_flux_anomaly
+	name = "Raw Flux Anomaly"
+	desc = "The raw core of a flux anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOX
+	contains = list(/obj/item/raw_anomaly_core/flux)
+	crate_name = "raw flux anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_grav_anomaly
+	name = "Raw Gravitational Anomaly"
+	desc = "The raw core of a gravitational anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOX
+	contains = list(/obj/item/raw_anomaly_core/grav)
+	crate_name = "raw pyro anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_vortex_anomaly
+	name = "Raw Vortex Anomaly"
+	desc = "The raw core of a vortex anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOX
+	contains = list(/obj/item/raw_anomaly_core/vortex)
+	crate_name = "raw vortex anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_bluespace_anomaly
+	name = "Raw Bluespace Anomaly"
+	desc = "The raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOX
+	contains = list(/obj/item/raw_anomaly_core/bluespace)
+	crate_name = "raw bluespace anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_pyro_anomaly
+	name = "Raw Pyro Anomaly"
+	desc = "The raw core of a pyro anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = 5000
+	access = ACCESS_TOX
+	contains = list(/obj/item/raw_anomaly_core/pyro)
+	crate_name = "raw pyro anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science

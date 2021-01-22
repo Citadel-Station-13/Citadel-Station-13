@@ -27,19 +27,25 @@
 	sight = SEE_SELF
 	throwforce = 0
 	blood_volume = 0
+	has_field_of_vision = FALSE //we are a spoopy ghost
+	rad_flags = RAD_NO_CONTAMINATE | RAD_PROTECT_CONTENTS
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	response_help   = "passes through"
-	response_disarm = "swings through"
-	response_harm   = "punches through"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "swings through"
+	response_disarm_simple = "swing through"
+	response_harm_continuous = "punches through"
+	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
-	friendly = "touches"
+	friendly_verb_continuous = "touches"
+	friendly_verb_simple = "touch"
 	status_flags = 0
 	wander = FALSE
 	density = FALSE
@@ -102,11 +108,12 @@
 		mind.add_antag_datum(/datum/antagonist/revenant)
 
 //Life, Stat, Hud Updates, and Say
-/mob/living/simple_animal/revenant/Life()
+/mob/living/simple_animal/revenant/Life(seconds, times_fired)
+	. = ..()
 	if(stasis)
 		return
 	if(revealed && essence <= 0)
-		death()
+		INVOKE_ASYNC(src, .proc/death)
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
@@ -115,21 +122,19 @@
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
-		notransform = FALSE
+		mob_transforming = FALSE
 		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
 		essence = min(essence_regen_cap, essence+essence_regen_amount)
 		update_action_buttons_icon() //because we update something required by our spells in life, we need to update our buttons
 	update_spooky_icon()
 	update_health_hud()
-	..()
 
-/mob/living/simple_animal/revenant/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Current essence: [essence]/[essence_regen_cap]E")
-		stat(null, "Stolen essence: [essence_accumulated]E")
-		stat(null, "Stolen perfect souls: [perfectsouls]")
+/mob/living/simple_animal/revenant/get_status_tab_items()
+	. = ..()
+	. += "Current essence: [essence]/[essence_regen_cap]E"
+	. += "Stolen essence: [essence_accumulated]E"
+	. += "Stolen perfect souls: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
 	if(hud_used)
@@ -213,7 +218,7 @@
 		return 0
 	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
-	notransform = TRUE
+	mob_transforming = TRUE
 	revealed = TRUE
 	invisibility = 0
 	playsound(src, 'sound/effects/screech.ogg', 100, 1)
@@ -255,7 +260,7 @@
 		return
 	if(time <= 0)
 		return
-	notransform = TRUE
+	mob_transforming = TRUE
 	if(!unstun_time)
 		to_chat(src, "<span class='revendanger'>You cannot move!</span>")
 		unstun_time = world.time + time
@@ -266,7 +271,7 @@
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
-		if(notransform)
+		if(mob_transforming)
 			if(draining)
 				icon_state = icon_drain
 			else
@@ -315,7 +320,7 @@
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0
-	notransform = 0
+	mob_transforming = 0
 	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
@@ -385,7 +390,7 @@
 	if(old_key)
 		for(var/mob/M in GLOB.dead_mob_list)
 			if(M.client && M.client.key == old_key) //Only recreates the mob if the mob the client is in is dead
-				M.transfer_ckey(revenant.key, FALSE)
+				M.transfer_ckey(revenant, FALSE)
 				key_of_revenant = TRUE
 				break
 	if(!key_of_revenant)
@@ -398,7 +403,7 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 		var/mob/C = pick(candidates)
-		C.transfer_ckey(revenant.key, FALSE)
+		C.transfer_ckey(revenant, FALSE)
 		if(!revenant.key)
 			qdel(revenant)
 			message_admins("No ckey was found for the new revenant. Oh well!")
@@ -406,8 +411,8 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 
-	message_admins("[key_of_revenant] has been [old_key == revenant.key ? "re":""]made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was [old_key == revenant.key ? "re":""]made as a revenant by reforming ectoplasm.")
+	message_admins("[revenant.key] has been [old_key == revenant.key ? "re":""]made into a revenant by reforming ectoplasm.")
+	log_game("[revenant.key] was [old_key == revenant.key ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
 
 	revenant.essence = essence

@@ -10,9 +10,12 @@
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/curator
+	plasma_outfit = /datum/outfit/plasmaman/curator
 
 	access = list(ACCESS_LIBRARY)
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION, ACCESS_MINING_STATION)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_CIV
 
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 	threat = 0.3
@@ -41,4 +44,4 @@
 	if(visualsOnly)
 		return
 
-	H.grant_all_languages(omnitongue=TRUE)
+	H.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_CURATOR)

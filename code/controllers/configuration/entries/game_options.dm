@@ -35,6 +35,13 @@
 /datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
+/datum/config_entry/keyed_list/force_antag_count
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/force_antag_count/ValidateListEntry(key_name, key_value)
+	return key_name in config.modes
+
 /datum/config_entry/keyed_list/policy
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_TEXT
@@ -74,6 +81,8 @@
 
 /datum/config_entry/flag/disable_peaceborg
 
+/datum/config_entry/flag/economy	//money money money money money money money money money money money money
+
 /datum/config_entry/number/minimum_secborg_alert	//Minimum alert level for secborgs to be chosen.
 	config_entry_value = 3
 
@@ -87,6 +96,11 @@
 
 /datum/config_entry/number/changeling_scaling_coeff	//how much does the amount of players get divided by to determine changelings
 	config_entry_value = 6
+	min_val = 1
+
+/datum/config_entry/number/ecult_scaling_coeff		//how much does the amount of players get divided by to determine e_cult
+	config_entry_value = 6
+	integer = FALSE
 	min_val = 1
 
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
@@ -159,11 +173,13 @@
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
-/datum/config_entry/flag/no_summon_guns	//No
+/datum/config_entry/flag/no_summon_guns		//No
 
 /datum/config_entry/flag/no_summon_magic	//Fun
 
 /datum/config_entry/flag/no_summon_events	//Allowed
+
+/datum/config_entry/flag/no_summon_traumas	//!
 
 /datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
 
@@ -214,13 +230,7 @@
 /datum/config_entry/keyed_list/multiplicative_movespeed
 	key_mode = KEY_MODE_TYPE
 	value_mode = VALUE_MODE_NUM
-	config_entry_value = list(			//DEFAULTS
-	/mob/living/simple_animal = 1,
-	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/hunter = -1,
-	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
-	/mob/living/carbon/alien/humanoid/royal/queen = 3
-	)
+	abstract_type = /datum/config_entry/keyed_list/multiplicative_movespeed
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()
 	. = ..()
@@ -231,6 +241,26 @@
 	. = ..()
 	if(. && (var_name == NAMEOF(src, config_entry_value)))
 		update_config_movespeed_type_lookup(TRUE)
+
+/datum/config_entry/keyed_list/multiplicative_movespeed/normal
+	name = "multiplicative_movespeed"
+	config_entry_value = list(			//DEFAULTS
+	/mob/living/simple_animal = 1,
+	/mob/living/silicon/pai = 1,
+	/mob/living/carbon/alien/humanoid/sentinel = 0.25,
+	/mob/living/carbon/alien/humanoid/drone = 0.5,
+	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
+	/mob/living/carbon/alien/humanoid/royal/queen = 3
+	)
+
+/datum/config_entry/keyed_list/multiplicative_movespeed/floating
+	name = "multiplicative_movespeed_floating"
+	config_entry_value = list(
+		/mob/living = 0,
+		/mob/living/carbon/alien/humanoid = 0,
+		/mob/living/carbon/alien/humanoid/royal/praetorian = 0,
+		/mob/living/carbon/alien/humanoid/royal/queen = 2
+	)
 
 /datum/config_entry/number/movedelay	//Used for modifying movement speed for mobs.
 	abstract_type = /datum/config_entry/number/movedelay
@@ -248,10 +278,26 @@
 
 /datum/config_entry/number/movedelay/run_delay
 
+/datum/config_entry/number/movedelay/run_delay/ValidateAndSet()
+	. = ..()
+	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/run)
+	M.sync()
+
 /datum/config_entry/number/movedelay/walk_delay
+
+/datum/config_entry/number/movedelay/walk_delay/ValidateAndSet()
+	. = ..()
+	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
+	M.sync()
 
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
+
+/datum/config_entry/number/movedelay/sprint_max_tiles_increase
+	config_entry_value = 5
+
+/datum/config_entry/number/movedelay/sprint_absolute_max_tiles
+	config_entry_value = 13
 
 /datum/config_entry/number/movedelay/sprint_buffer_max
 	config_entry_value = 24
@@ -264,7 +310,7 @@
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
-	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
+	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed/normal
 	abstract_type = /datum/config_entry/number/outdated_movedelay
 
 	var/movedelay_type
@@ -287,6 +333,8 @@
 /////////////////////////////////////////////////
 
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
+
+/datum/config_entry/flag/roundstart_vr 		//Will virtual reality missions be loaded?
 
 /datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
@@ -333,6 +381,11 @@
 
 /datum/config_entry/number/space_budget
 	config_entry_value = 16
+	min_val = 0
+
+/datum/config_entry/number/icemoon_budget
+	config_entry_value = 90
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/station_space_budget
@@ -408,6 +461,10 @@
 	config_entry_value = 64
 	min_val = 0
 
+/datum/config_entry/number/ratcap
+	config_entry_value = 64
+	min_val = 0
+
 /datum/config_entry/flag/disable_stambuffer
 
 /datum/config_entry/keyed_list/box_random_engine
@@ -449,3 +506,80 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 	config_entry_value = list(GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER) //refer to cit_helpers for all toggles.
+
+//Body size configs, the feature will be disabled if both min and max have the same value.
+/datum/config_entry/number/body_size_min
+	config_entry_value = 0.9
+	min_val = 0.1 //to avoid issues with zeros and negative values.
+	max_val = RESIZE_DEFAULT_SIZE
+	integer = FALSE
+
+/datum/config_entry/number/body_size_max
+	config_entry_value = 1.25
+	min_val = RESIZE_DEFAULT_SIZE
+	integer = FALSE
+
+//Penalties given to characters with a body size smaller than this value,
+//to compensate for their smaller hitbox.
+//To disable, just make sure the value is lower than 'body_size_min'
+/datum/config_entry/number/threshold_body_size_penalty
+	config_entry_value = RESIZE_DEFAULT_SIZE
+	min_val = 0
+	max_val = RESIZE_DEFAULT_SIZE
+	integer = FALSE
+
+//multiplicative slowdown multiplier. See 'dna.update_body_size' for the operation.
+//doesn't apply to floating or crawling mobs
+/datum/config_entry/number/body_size_slowdown_multiplier
+	config_entry_value = 0
+	min_val = 0
+	integer = FALSE
+
+//Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
+/datum/config_entry/flag/allow_custom_skintones
+
+///Initial loadout points
+/datum/config_entry/number/initial_gear_points
+	config_entry_value = 10
+
+/**
+  * Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.
+  * Camera mobs, AIs, ghosts and some other are of course exempt from this. This also doesn't influence simplemob AI, for the best.
+  */
+/datum/config_entry/flag/use_field_of_vision
+
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	config_entry_value = 6
+
+/datum/config_entry/number/max_shuttle_size
+	config_entry_value = 500
+
+//wound config stuff (increases the max injury roll, making injuries more likely)
+/datum/config_entry/number/wound_exponent
+	config_entry_value = WOUND_DAMAGE_EXPONENT
+	min_val = 0
+	integer = FALSE
+
+//adds a set amount to any injury rolls on a limb using get_damage() multiplied by this number
+/datum/config_entry/number/wound_damage_multiplier
+	config_entry_value = 0.333
+	min_val = 0
+	integer = FALSE
+
+/// Amount of dirtyness tiles need to spawn dirt.
+/datum/config_entry/number/turf_dirt_threshold
+	config_entry_value = 100
+	min_val = 1
+	integer = TRUE
+
+/// Alpha dirt starts at
+/datum/config_entry/number/dirt_alpha_starting
+	config_entry_value = 127
+	max_val = 255
+	min_val = 0
+	integer = TRUE
+
+/// Dirtyness multiplier for making turfs dirty
+/datum/config_entry/number/turf_dirty_multiplier
+	config_entry_value = 1

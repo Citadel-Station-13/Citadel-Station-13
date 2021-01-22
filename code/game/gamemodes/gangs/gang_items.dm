@@ -133,7 +133,7 @@
 	icon_state = "knuckles"
 	w_class = 3
 
-datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang member anyways?
+/datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang member anyways?
 	name = "Cool Sunglasses"
 	id = "glasses"
 	cost = 5
@@ -288,7 +288,7 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	name = "Fragmentation Grenade"
 	id = "frag nade"
 	cost = 5
-	item_path = /obj/item/grenade/syndieminibomb/concussion/frag
+	item_path = /obj/item/grenade/frag
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
@@ -313,13 +313,13 @@ datum/gang_item/clothing/shades //Addition: Why not have cool shades on a gang m
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
 
-datum/gang_item/equipment/shield
+/datum/gang_item/equipment/shield
 	name = "Riot Shield"
 	id = "riot_shield"
 	cost = 25
 	item_path = /obj/item/shield/riot
 
-datum/gang_item/equipment/gangsheild
+/datum/gang_item/equipment/gangsheild
 	name = "Tower Shield"
 	id = "metal"
 	cost = 45 //High block of melee and even higher for bullets

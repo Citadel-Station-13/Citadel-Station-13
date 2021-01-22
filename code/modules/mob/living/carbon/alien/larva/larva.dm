@@ -6,6 +6,7 @@
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE
 	hud_type = /datum/hud/larva
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	maxHealth = 25
 	health = 25
@@ -29,10 +30,9 @@
 	..()
 
 //This needs to be fixed
-/mob/living/carbon/alien/larva/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+/mob/living/carbon/alien/larva/get_status_tab_items()
+	. = ..()
+	. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/adjustPlasma(amount)
 	if(stat != DEAD && amount > 0)

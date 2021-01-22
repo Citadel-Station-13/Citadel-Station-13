@@ -1,16 +1,11 @@
-/// IN THE FUTURE, WE WILL PROBABLY REFACTOR TO LESSEN THE NEED FOR UPDATE_MOBILITY, BUT FOR NOW.. WE CAN START DOING THIS.
-/// FOR BLOCKING MOVEMENT, USE TRAIT_MOBILITY_NOMOVE AS MUCH AS POSSIBLE. IT WILL MAKE REFACTORS IN THE FUTURE EASIER.
-/mob/living/ComponentInitialize()
-	. = ..()
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOMOVE), .proc/update_mobility)
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOPICKUP), .proc/update_mobility)
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOUSE), .proc/update_mobility)
 
 //Stuff like mobility flag updates, resting updates, etc.
 
 //Force-set resting variable, without needing to resist/etc.
 /mob/living/proc/set_resting(new_resting, silent = FALSE, updating = TRUE)
 	if(new_resting != resting)
+		if(resting && HAS_TRAIT(src, TRAIT_MOBILITY_NOREST)) //forcibly block resting from all sources - BE CAREFUL WITH THIS TRAIT
+			return
 		resting = new_resting
 		if(!silent)
 			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
@@ -87,18 +82,26 @@
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 	var/canstand = canstand_involuntary && !resting
 
-	var/should_be_lying = !canstand
+	var/should_be_lying = !canstand && !HAS_TRAIT(src, TRAIT_MOBILITY_NOREST)
 	if(buckled)
 		if(buckled.buckle_lying != -1)
 			should_be_lying = buckled.buckle_lying
 
 	if(should_be_lying)
 		mobility_flags &= ~MOBILITY_STAND
+		setMovetype(movement_type | CRAWLING)
 		if(!lying) //force them on the ground
-			lying = pick(90, 270)
+			switch(dir)
+				if(NORTH, SOUTH)
+					lying = pick(90, 270)
+				if(EAST)
+					lying = 90
+				else //West
+					lying = 270
 			if(has_gravity() && !buckled)
 				playsound(src, "bodyfall", 20, 1)
 	else
+		setMovetype(movement_type & ~CRAWLING)
 		mobility_flags |= MOBILITY_STAND
 		lying = 0
 
@@ -137,7 +140,7 @@
 		L.update_pull_movespeed()
 
 	//Handle lying down, voluntary or involuntary
-	density = !lying
+	update_density()
 	if(lying)
 		set_resting(TRUE, TRUE, FALSE)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -161,8 +164,10 @@
 			if(!has_legs && has_arms < 2)
 				limbless_slowdown += 6 - (has_arms * 3)
 		if(limbless_slowdown)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, blacklisted_movetypes = FLYING|FLOATING)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
+			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+
+	update_movespeed()
 
 	return mobility_flags

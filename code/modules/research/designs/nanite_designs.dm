@@ -113,7 +113,7 @@
 /datum/design/nanites/spreading
 	name = "Infective Exo-Locomotion"
 	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
-			resulting in an extremely infective strain of nanites."
+			resulting in an extremely infective strain of nanites. Bypasses antiviral defense"
 	id = "spreading_nanites"
 	program_type = /datum/nanite_program/spreading
 	category = list("Utility Nanites")
@@ -131,6 +131,21 @@
 			but it causes occasional software errors due to faulty copies. Not compatible with cloud sync."
 	id = "mitosis_nanites"
 	program_type = /datum/nanite_program/mitosis
+	category = list("Utility Nanites")
+
+/datum/design/nanites/antiviral
+	name = "Enhanced Error Correction"
+	desc = "The nanites self-propagate and replicate their program storage memory, preventing viral takeovers."
+	id = "antiviral_nanites"
+	program_type = /datum/nanite_program/lockout/antiviral
+	category = list("Utility Nanites")
+
+/datum/design/nanites/hostile_lockdown
+	name = "Hostile Lockdown"
+	desc = "The nanites constantly encrypt and scramble their own control sectors, preventing consoles from controlling them. Furthermore, \
+	if the host happens to be a synthetic organism with innate control over nanite strains, this will prevent them from acting on the nanites as well."
+	id = "hostile_lockdown"
+	program_type = /datum/nanite_program/lockout/hostile_lockdown
 	category = list("Utility Nanites")
 
 ////////////////////MEDICAL NANITES//////////////////////////////////////
@@ -529,7 +544,6 @@
 ////////////////////NANITE PROTOCOLS//////////////////////////////////////
 //Note about the category name: The UI cuts the last 8 characters from the category name to remove the " Nanites" in the other categories
 //Because of this, Protocols was getting cut down to "P", so i had to add some padding
-/*
 /datum/design/nanites/kickstart
 	name = "Kickstart Protocol"
 	desc = "Replication Protocol: the nanites focus on early growth, heavily boosting replication rate for a few minutes after the initial implantation."
@@ -557,4 +571,10 @@
 	id = "offline_nanites"
 	program_type = /datum/nanite_program/protocol/offline
 	category = list("Protocols_Nanites")
-*/
+
+/datum/design/nanites/synergy
+	name = "Synergy Protocol"
+	desc = "Replication Protocol: the nanites syncronize their tasks and processes within a host, leading to an increase in replication speed proportional to the current nanite volume."
+	id = "synergy_nanites"
+	program_type = /datum/nanite_program/protocol/synergy
+	category = list("Protocols_Nanites")

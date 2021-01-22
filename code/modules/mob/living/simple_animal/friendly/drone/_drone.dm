@@ -105,7 +105,7 @@
 	. = ..()
 	if(can_be_held)
 		//icon/item state is defined in mob_holder/drone_worn_icon()
-		AddElement(/datum/element/mob_holder, null, 'icons/mob/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, /datum/element/mob_holder.proc/drone_worn_icon)
+		AddElement(/datum/element/mob_holder, null, 'icons/mob/clothing/head.dmi', 'icons/mob/inhands/clothing_righthand.dmi', 'icons/mob/inhands/clothing_lefthand.dmi', ITEM_SLOT_HEAD, /datum/element/mob_holder.proc/drone_worn_icon)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -220,10 +220,9 @@
 		return
 	Stun(100)
 	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
-	if(severity == 1)
+	if(severity >= 65)
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
-
 
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
@@ -239,7 +238,6 @@
 				return
 		L[A.name] = list(A, list(alarmsource))
 		to_chat(src, "--- [class] alarm detected in [A.name]!")
-
 
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)

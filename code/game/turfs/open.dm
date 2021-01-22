@@ -11,6 +11,15 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
+	/// Dirtyness system, cit specific.
+
+	/// Does dirt buildup happen on us?
+	var/dirt_buildup_allowed = FALSE
+	/// Dirt level.
+	var/dirtyness = 0
+	/// Dirt level to spawn dirt. Null to use config.
+	var/dirt_spawn_threshold
+
 /turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
@@ -18,11 +27,21 @@
 
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
-	return (direction == DOWN)
+	if(direction == DOWN)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	return FALSE
 
 //direction is direction of travel of A
 /turf/open/zPassOut(atom/movable/A, direction, turf/destination)
-	return (direction == UP)
+	if(direction == UP)
+		for(var/obj/O in contents)
+			if(O.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE
 
 //direction is direction of travel of air
 /turf/open/zAirIn(direction, turf/source)
@@ -110,6 +129,9 @@
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
+/turf/open/indestructible/necropolis/ice
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
 /turf/open/indestructible/necropolis/air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
@@ -196,7 +218,7 @@
 			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
 /turf/open/Initalize_Atmos(times_fired)
-	excited = 0
+	set_excited(FALSE)
 	update_visuals()
 
 	current_cycle = times_fired
@@ -204,19 +226,19 @@
 	for(var/i in atmos_adjacent_turfs)
 		var/turf/open/enemy_tile = i
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-		if(!excited && air.compare(enemy_air))
+		if(!get_excited() && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
-			excited = TRUE
-			SSair.active_turfs |= src
+			set_excited(TRUE)
+			SSair.add_to_active_extools(src)
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
 
 /turf/open/proc/GetTemperature()
-	. = air.temperature
+	. = air.return_temperature()
 
 /turf/open/proc/TakeTemperature(temp)
-	air.temperature += temp
+	air.set_temperature(air.return_temperature() + temp)
 	air_update_turf()
 
 /turf/open/proc/freon_gas_act()
@@ -301,9 +323,8 @@
 
 /turf/open/rad_act(pulse_strength)
 	. = ..()
-	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
-		pulse_strength = min(pulse_strength,air.gases[/datum/gas/carbon_dioxide]*1000,air.gases[/datum/gas/oxygen]*2000) //Ensures matter is conserved properly
-		air.gases[/datum/gas/carbon_dioxide]=max(air.gases[/datum/gas/carbon_dioxide]-(pulse_strength/1000),0)
-		air.gases[/datum/gas/oxygen]=max(air.gases[/datum/gas/oxygen]-(pulse_strength/2000),0)
-		air.gases[/datum/gas/pluoxium]+=(pulse_strength/4000)
-		GAS_GARBAGE_COLLECT(air.gases)
+	if (air.get_moles(/datum/gas/carbon_dioxide) && air.get_moles(/datum/gas/oxygen))
+		pulse_strength = min(pulse_strength,air.get_moles(/datum/gas/carbon_dioxide)*1000,air.get_moles(/datum/gas/oxygen)*2000) //Ensures matter is conserved properly
+		air.set_moles(/datum/gas/carbon_dioxide, max(air.get_moles(/datum/gas/carbon_dioxide)-(pulse_strength/1000),0))
+		air.set_moles(/datum/gas/oxygen, max(air.get_moles(/datum/gas/oxygen)-(pulse_strength/2000),0))
+		air.adjust_moles(/datum/gas/pluoxium, pulse_strength/4000)

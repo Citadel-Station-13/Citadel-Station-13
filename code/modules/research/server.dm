@@ -40,12 +40,12 @@
 	else
 		working = TRUE
 
-/obj/machinery/rnd/server/emp_act()
+/obj/machinery/rnd/server/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	stat |= EMPED
-	addtimer(CALLBACK(src, .proc/unemp), 600)
+	addtimer(CALLBACK(src, .proc/unemp), severity*9)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
@@ -59,14 +59,14 @@
 
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/datum/gas_mixture/environment = loc.return_air()
-	return environment.temperature
+	return environment.return_temperature()
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 		var/turf/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
-			if(env.temperature < (heat_amt+T0C))
+			if(env.return_temperature() < (heat_amt+T0C))
 
 				var/transfer_moles = 0.25 * env.total_moles()
 
@@ -77,7 +77,7 @@
 					var/heat_capacity = removed.heat_capacity()
 					if(heat_capacity == 0 || heat_capacity == null)
 						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+					removed.set_temperature(min((removed.return_temperature()*heat_capacity + heating_power)/heat_capacity, 1000))
 
 				env.merge(removed)
 				air_update_turf()

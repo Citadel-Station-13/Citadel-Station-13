@@ -10,6 +10,8 @@
 	layer = BELOW_OBJ_LAYER
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	max_integrity = 50
+	attack_hand_is_action = TRUE
+	attack_hand_speed = 8
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
@@ -84,6 +86,10 @@
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	user.DelayNextAction(flush = TRUE)
+	user.do_attack_animation(src)
 	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille)
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
@@ -99,11 +105,10 @@
 			..(user, 1)
 		return TRUE
 
-/obj/structure/grille/attack_hand(mob/living/user)
+/obj/structure/grille/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "hit")
@@ -111,12 +116,13 @@
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_alien(mob/living/user)
+	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
+		return
+	user.DelayNextAction(flush = TRUE)
 	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, "melee", 1)
-
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
@@ -129,12 +135,12 @@
 
 /obj/structure/grille/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.DelayNextAction(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/wirecutters))
 		if(!shock(user, 100))
@@ -267,7 +273,7 @@
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-					tesla_zap(src, 3, C.newavail() * 0.01, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN | TESLA_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+					tesla_zap(src, 3, C.newavail() * 0.01, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 

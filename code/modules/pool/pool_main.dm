@@ -150,7 +150,8 @@
 					H.DefaultCombatKnockdown(40)
 					playsound(src, 'sound/effects/woodhit.ogg', 60, TRUE, 1)
 		else if(filled)
-			victim.adjustStaminaLoss(1)
+			if(iscarbon(victim))
+				victim.adjustStaminaLoss(1)
 			playsound(src, "water_wade", 20, TRUE)
 	return ..()
 
@@ -177,7 +178,7 @@
 	else
 		return ..()
 
-/turf/open/pool/attack_hand(mob/living/user)
+/turf/open/pool/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return

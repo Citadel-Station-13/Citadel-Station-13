@@ -10,6 +10,15 @@
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+
+	attack_hand_is_action = TRUE
+	attack_hand_unwieldlyness = CLICK_CD_MELEE
+	attack_hand_speed = 0
+
+	/// What receives our keyboard input. src by default.
+	var/datum/focus
+
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -30,9 +39,10 @@
 	var/list/logging = list()
 	var/atom/machine = null
 
-	var/next_move = null
 	var/create_area_cooldown
-	var/notransform = null	//Carbon
+	/// Whether or not the mob is currently being transformed into another mob or into another state of being. This will prevent it from moving or doing realistically anything.
+	/// Don't you DARE use this for a cheap way to ensure someone is stunned in your code.
+	var/mob_transforming = FALSE
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
 	var/real_name = null
@@ -42,9 +52,19 @@
 	var/lying_prev = 0
 	var/is_shifted = FALSE
 
-	//MOVEMENT SPEED
+	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
+	/// List of action speed modifiers applying to this mob
+	var/list/actionspeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of action speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/actionspeed_mod_immunities			//Lazy list, see mob_movespeed.dm
+	/// The calculated mob action speed slowdown based on the modifiers list
+	var/cached_multiplicative_actions_slowdown
+
 	/////////////////
 
 	var/name_archive //For admin things like possession
@@ -113,11 +133,21 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 
+	///For storing what do_after's someone has, in case we want to restrict them to only one of a certain do_after at a time
+	var/list/do_afters
+
 	var/list/mousemove_intercept_objects
 
 	var/datum/click_intercept
 
 	var/registered_z
+
+	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
+
+	var/datum/hSB/sandbox = null
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 
@@ -125,3 +155,28 @@
 	var/siliconaccesstoggle = FALSE
 
 	var/voluntary_ghosted = FALSE		//whether or not they voluntarily ghosted.
+
+	var/has_field_of_vision = FALSE
+	var/field_of_vision_type = FOV_90_DEGREES
+
+
+	///////TYPING INDICATORS///////
+	/// Set to true if we want to show typing indicators.
+	var/typing_indicator_enabled = FALSE
+	/// Default icon_state of our typing indicator. Currently only supports paths (because anything else is, as of time of typing this, unnecesary.
+	var/typing_indicator_state = /obj/effect/overlay/typing_indicator
+	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
+	var/typing_indicator_timerid
+	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
+	var/mutable_appearance/typing_indicator_current
+
+	/// Ability system based on action buttons. Can be ported to base /mob or /mob/living later if needed, easily - the procs are currently on living/carbon/human/innate_abilities.dm
+	/// datum traits-style lazylist of abilities
+	var/list/innate_abilities
+	/// ability = action button instance.
+	var/list/ability_actions
+	/// ability = list(data). see __DEFINES/mobs/innate_abilities.dm
+	var/list/ability_properties
+
+	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
+	var/sound_environment_override = SOUND_ENVIRONMENT_NONE

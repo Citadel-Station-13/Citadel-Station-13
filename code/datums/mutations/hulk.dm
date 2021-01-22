@@ -19,9 +19,31 @@
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/datum/mutation/human/hulk/on_attack_hand(atom/target, proximity)
-	if(proximity) //no telekinetic hulk attack
-		return target.attack_hulk(owner)
+/datum/mutation/human/hulk/on_attack_hand(atom/target, proximity, act_intent, unarmed_attack_flags)
+	if(proximity && (act_intent == INTENT_HARM)) //no telekinetic hulk attack
+		if(!owner.CheckActionCooldown(CLICK_CD_MELEE))
+			return INTERRUPT_UNARMED_ATTACK | NO_AUTO_CLICKDELAY_HANDLING
+		owner.DelayNextAction()
+		target.attack_hulk(owner)
+		return INTERRUPT_UNARMED_ATTACK | NO_AUTO_CLICKDELAY_HANDLING
+
+/**
+  *Checks damage of a hulk's arm and applies bone wounds as necessary.
+  *
+  *Called by specific atoms being attacked, such as walls. If an atom
+  *does not call this proc, than punching that atom will not cause
+  *arm breaking (even if the atom deals recoil damage to hulks).
+  *Arguments:
+  *arg1 is the arm to evaluate damage of and possibly break.
+  */
+/datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
+	switch(arm.brute_dam)
+		if(45 to 50)
+			arm.force_wound_upwards(/datum/wound/blunt/critical)
+		if(41 to 45)
+			arm.force_wound_upwards(/datum/wound/blunt/severe)
+		if(35 to 41)
+			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)

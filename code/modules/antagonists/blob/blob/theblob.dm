@@ -77,7 +77,7 @@
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 
@@ -204,11 +204,11 @@
 	if(severity > 0)
 		if(overmind)
 			overmind.blobstrain.emp_reaction(src, severity)
-		if(prob(100 - severity * 30))
+		if(prob(severity/1.5))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/tesla_act(power)
-	..()
+/obj/structure/blob/zap_act(power)
+	. = ..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
 			take_damage(power/400, BURN, "energy")
@@ -225,7 +225,7 @@
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/analyzer))
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)

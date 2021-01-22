@@ -31,6 +31,7 @@
 	icon_state = "[magboot_state][magpulse]"
 	to_chat(user, "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>")
 	if(user)
+		user.update_equipment_speed_mods()
 		user.update_inv_shoes()	//so our mob-overlays update
 		user.update_gravity(user.has_gravity())
 	for(var/X in actions)

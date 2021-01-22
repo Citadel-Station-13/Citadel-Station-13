@@ -24,6 +24,7 @@
 
 /obj/structure/musician/ui_interact(mob/user)
 	. = ..()
+	user.set_machine(src)
 	song.ui_interact(user)
 
 /obj/structure/musician/wrench_act(mob/living/user, obj/item/I)

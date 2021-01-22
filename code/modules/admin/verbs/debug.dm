@@ -27,7 +27,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Robot"
 
 	if(!SSticker.HasRoundStarted())
@@ -43,7 +43,7 @@
 		alert("Invalid mob")
 
 /client/proc/cmd_admin_blobize(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Blob"
 
 	if(!SSticker.HasRoundStarted())
@@ -58,7 +58,7 @@
 
 
 /client/proc/cmd_admin_animalize(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Simple Animal"
 
 	if(!SSticker.HasRoundStarted())
@@ -79,7 +79,7 @@
 
 
 /client/proc/makepAI(turf/T in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
 
@@ -106,7 +106,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make pAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Alien"
 
 	if(!SSticker.HasRoundStarted())
@@ -121,7 +121,7 @@
 		alert("Invalid mob")
 
 /client/proc/cmd_admin_slimeize(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make slime"
 
 	if(!SSticker.HasRoundStarted())
@@ -211,7 +211,7 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has granted [M.key] full access.</span>")
 
 /client/proc/cmd_assume_direct_control(mob/M in GLOB.mob_list)
-	set category = "Admin"
+	set category = "Admin.Game"
 	set name = "Assume direct control"
 	set desc = "Direct intervention"
 
@@ -228,6 +228,33 @@
 	if( isobserver(adminmob) )
 		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
+	set category = "Admin.Game"
+	set name = "Give direct control"
+
+	if(!M)
+		return
+	if(M.ckey)
+		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
+			return
+	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sortList(GLOB.clients)
+	var/mob/oldmob = newkey.mob
+	var/delmob = FALSE
+	if((isobserver(oldmob) || alert("Do you want to delete [newkey]'s old mob?","Delete?","Yes","No") != "No"))
+		delmob = TRUE
+	if(!M || QDELETED(M))
+		to_chat(usr, "<span class='warning'>The target mob no longer exists, aborting.</span>")
+		return
+	if(M.ckey)
+		M.ghostize(FALSE)
+	M.ckey = newkey.key
+	M.client?.init_verbs()
+	if(delmob)
+		qdel(oldmob)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave away direct control of [M] to [newkey].</span>")
+	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_test_atmos_controllers()
 	set category = "Mapping"
@@ -455,7 +482,7 @@
 	cmd_admin_areatest(FALSE)
 
 /client/proc/cmd_admin_dress(mob/M in GLOB.mob_list)
-	set category = "Fun"
+	set category = "Admin.Events"
 	set name = "Select equipment"
 	if(!(ishuman(M) || isobserver(M)))
 		alert("Invalid mob")
@@ -573,7 +600,7 @@
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				Plasma.air_contents.gases[/datum/gas/plasma] = 70
+				Plasma.air_contents.set_moles(/datum/gas/plasma,70)
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
 				Plasma.forceMove(Rad)
@@ -705,10 +732,17 @@
 	var/list/names = list()
 	names += "---- Space Ruins ----"
 	for(var/name in SSmapping.space_ruins_templates)
-		names[name] = list(SSmapping.space_ruins_templates[name], ZTRAIT_SPACE_RUINS, /area/space)
+		names[name] = list(SSmapping.space_ruins_templates[name], ZTRAIT_SPACE_RUINS, list(/area/space))
 	names += "---- Lava Ruins ----"
 	for(var/name in SSmapping.lava_ruins_templates)
 		names[name] = list(SSmapping.lava_ruins_templates[name], ZTRAIT_LAVA_RUINS, /area/lavaland/surface/outdoors/unexplored)
+		names[name] = list(SSmapping.lava_ruins_templates[name], ZTRAIT_LAVA_RUINS, list(/area/lavaland/surface/outdoors/unexplored))
+	names += "---- Ice Ruins ----"
+	for(var/name in SSmapping.ice_ruins_templates)
+		names[name] = list(SSmapping.ice_ruins_templates[name], ZTRAIT_ICE_RUINS, list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored))
+	names += "---- Ice Underground Ruins ----"
+	for(var/name in SSmapping.ice_ruins_underground_templates)
+		names[name] = list(SSmapping.ice_ruins_underground_templates[name], ZTRAIT_ICE_RUINS_UNDERGROUND, list(/area/icemoon/underground/unexplored))
 
 	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]

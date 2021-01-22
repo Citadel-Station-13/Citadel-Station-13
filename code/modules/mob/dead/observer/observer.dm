@@ -1,6 +1,9 @@
 GLOBAL_LIST_EMPTY(ghost_images_default) //this is a list of the default (non-accessorized, non-dir) images of the ghosts themselves
 GLOBAL_LIST_EMPTY(ghost_images_simple) //this is a list of all ghost images as the simple white ghost
-
+GLOBAL_LIST_INIT(ghost_verbs, list(
+		/mob/dead/observer/proc/dead_tele,
+		/mob/dead/observer/proc/open_spawners_menu,
+		/mob/dead/observer/proc/view_gas))
 GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer
@@ -54,15 +57,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
 
 /mob/dead/observer/Initialize(mapload, mob/body)
 	set_invisibility(GLOB.observer_default_invisibility)
 
-	verbs += list(
-		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/view_gas)
+	add_verb(src, GLOB.ghost_verbs)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -117,8 +118,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	real_name = name
 
 	if(!fun_verbs)
-		verbs -= /mob/dead/observer/verb/boo
-		verbs -= /mob/dead/observer/verb/possess
+		remove_verb(src, /mob/dead/observer/verb/boo)
+		remove_verb(src, /mob/dead/observer/verb/possess)
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
@@ -161,6 +162,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	updateallghostimages()
 
+	QDEL_NULL(orbit_menu)
 	QDEL_NULL(spawners_menu)
 	return ..()
 
@@ -262,7 +264,7 @@ Transfer_mind is there to check if mob is being deleted/not going to have a body
 Works together with spawning an observer, noted above.
 */
 
-/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
+/mob/proc/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE, cryo = FALSE)
 	var/sig_flags = SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, special, penalize)
 	penalize = !(sig_flags & COMPONENT_DO_NOT_PENALIZE_GHOSTING) && (suiciding || penalize) // suicide squad.
 	voluntary_ghosted = voluntary
@@ -275,7 +277,14 @@ Works together with spawning an observer, noted above.
 	if (client && client.prefs && client.prefs.auto_ooc)
 		if (!(client.prefs.chat_toggles & CHAT_OOC))
 			client.prefs.chat_toggles ^= CHAT_OOC
+	if(ckey && penalize)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey]
+		if(P)
+			P.respawn_restrictions_active = TRUE
+			P.respawn_time_of_death = world.time
+			P.respawn_did_cryo = cryo
 	transfer_ckey(ghost, FALSE)
+	ghost.client.init_verbs()
 	if(penalize)
 		var/penalty = CONFIG_GET(number/suicide_reenter_round_timer) MINUTES
 		var/roundstart_quit_limit = CONFIG_GET(number/roundstart_suicide_time_limit) MINUTES
@@ -287,12 +296,12 @@ Works together with spawning an observer, noted above.
 				var/maximumRoundEnd = SSautotransfer.starttime + SSautotransfer.voteinterval * SSautotransfer.maxvotes
 				if(penalty - SSshuttle.realtimeofstart > maximumRoundEnd + SSshuttle.emergencyCallTime + SSshuttle.emergencyDockTime + SSshuttle.emergencyEscapeTime)
 					penalty = CANT_REENTER_ROUND
-			if(!(ckey in GLOB.client_ghost_timeouts))
-				GLOB.client_ghost_timeouts += ckey
-				GLOB.client_ghost_timeouts[ckey] = 0
-			else if(GLOB.client_ghost_timeouts[ckey] == CANT_REENTER_ROUND)
+			if(!(ghost.ckey in GLOB.client_ghost_timeouts))
+				GLOB.client_ghost_timeouts += ghost.ckey
+				GLOB.client_ghost_timeouts[ghost.ckey] = 0
+			else if(GLOB.client_ghost_timeouts[ghost.ckey] == CANT_REENTER_ROUND)
 				return
-			GLOB.client_ghost_timeouts[ckey] = max(GLOB.client_ghost_timeouts[ckey],penalty)
+			GLOB.client_ghost_timeouts[ghost.ckey] = max(GLOB.client_ghost_timeouts[ghost.ckey],penalty)
 	// needs to be done AFTER the ckey transfer, too
 	return ghost
 
@@ -371,6 +380,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 /mob/dead/observer/Move(NewLoc, direct)
+	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+		return
 	if(updatedir)
 		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	var/oldloc = loc
@@ -405,10 +416,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body...It is resisting you.</span>")
 		return
-	client.change_view(CONFIG_GET(string/default_view))
-	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
+	client.view_size.setDefault(getScreenSize(client.prefs.widescreenpref))//Let's reset so people can't become allseeing gods
 	transfer_ckey(mind.current, FALSE)
-	return 1
+	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
+	mind.current.client.init_verbs()
+	return TRUE
 
 /mob/dead/observer/verb/stay_dead()
 	set category = "Ghost"
@@ -419,12 +431,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
 		return FALSE
 
-	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. ","Are you sure you want to stay dead?","Yes","No")
+	var/response = alert(src, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone. THIS WILL ALSO STOP YOU FROM RESPAWNING!!!","Are you sure you want to stay dead and never respawn?","Yes","No")
+
 	if(response != "Yes")
 		return
 
 	can_reenter_corpse = FALSE
-	to_chat(src, "You can no longer be brought back into your body.")
+	client.prefs?.dnr_triggered = TRUE
+	to_chat(src, "You can no longer be brought back into your body or respawn.")
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
@@ -490,10 +504,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Orbit" // "Haunt"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
-	ManualFollow(target)
+	if(!orbit_menu)
+		orbit_menu = new(src)
+
+	orbit_menu.ui_interact(src)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -564,15 +578,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc = "Change your view range."
 
 	var/max_view = client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT
-	if(client.view == CONFIG_GET(string/default_view))
+	if(client.view_size.getView() == client.view_size.default)
 		var/list/views = list()
 		for(var/i in 7 to max_view)
 			views |= i
-		var/new_view = input("Choose your new view", "Modify view range", 7) as null|anything in views
+		var/new_view = input("Choose your new view", "Modify view range", 0) as null|anything in views
 		if(new_view)
-			client.change_view(CLAMP(new_view, 7, max_view))
+			client.view_size.setTo(clamp(new_view, 7, max_view) - 7)
 	else
-		client.change_view(CONFIG_GET(string/default_view))
+		client.view_size.resetToDefault()
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
@@ -707,7 +721,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
-/mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in fov_view())
 	if(!..())
 		return 0
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
@@ -716,6 +730,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
+
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
 
 	var/dat
 	dat += "<h4>Crew Manifest</h4>"
@@ -831,19 +851,19 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
 	switch(var_name)
-		if("icon")
+		if(NAMEOF(src, icon))
 			ghostimage_default.icon = icon
 			ghostimage_simple.icon = icon
-		if("icon_state")
+		if(NAMEOF(src, icon_state))
 			ghostimage_default.icon_state = icon_state
 			ghostimage_simple.icon_state = icon_state
-		if("fun_verbs")
+		if(NAMEOF(src, fun_verbs))
 			if(fun_verbs)
-				verbs += /mob/dead/observer/verb/boo
-				verbs += /mob/dead/observer/verb/possess
+				add_verb(src, /mob/dead/observer/verb/boo)
+				add_verb(src, /mob/dead/observer/verb/possess)
 			else
-				verbs -= /mob/dead/observer/verb/boo
-				verbs -= /mob/dead/observer/verb/possess
+				remove_verb(src, /mob/dead/observer/verb/boo)
+				remove_verb(src, /mob/dead/observer/verb/possess)
 
 /mob/dead/observer/reset_perspective(atom/A)
 	if(client)
@@ -897,6 +917,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(usr, "Can't become a pAI candidate while not dead!")
 
+/mob/dead/observer/verb/mafia_game_signup()
+	set category = "Ghost"
+	set name = "Signup for Mafia"
+	set desc = "Sign up for a game of Mafia to pass the time while dead."
+	mafia_signup()
+/mob/dead/observer/proc/mafia_signup()
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
+		return
+	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game("mafia")
+	game.ui_interact(usr)
+
 /mob/dead/observer/CtrlShiftClick(mob/user)
 	if(isobserver(user) && check_rights(R_SPAWN))
 		change_mob_type( /mob/living/carbon/human , null, null, TRUE) //always delmob, ghosts shouldn't be left lingering
@@ -919,7 +955,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "invisibility")
+	if(var_name == NAMEOF(src, invisibility))
 		set_invisibility(invisibility) // updates light
 
 /proc/set_observer_default_invisibility(amount, message=null)
@@ -937,3 +973,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
+
+/mob/dead/observer/verb/game_info()
+	set name = "Game info"
+	set desc = "Shows various info relating to the game mode, antagonists etc."
+	set category = "Ghost"
+	if(!started_as_observer && can_reenter_corpse)
+		to_chat(src, "You cannot see this info unless you are an observer or you've chosen Do Not Resuscitate!")
+		return
+	var/list/stuff = list("[SSticker.mode.name]")
+	stuff += "Antagonists:\n"
+	for(var/datum/antagonist/A in GLOB.antagonists)
+		if(A.owner)
+			stuff += "[A.owner] the [A.name]"
+	var/ghost_info = SSticker.mode.ghost_info()
+	if(ghost_info)
+		stuff += ghost_info
+	to_chat(src,stuff.Join("\n"))

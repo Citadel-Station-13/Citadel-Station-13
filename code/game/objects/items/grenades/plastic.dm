@@ -19,6 +19,7 @@
 	var/boom_sizes = list(0, 0, 3)
 	var/can_attach_mob = FALSE
 	var/full_damage_on_mobs = FALSE
+	var/can_gib_mobs = FALSE
 
 /obj/item/grenade/plastic/Initialize()
 	. = ..()
@@ -26,7 +27,7 @@
 
 /obj/item/grenade/plastic/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/plastic/Destroy()
 	qdel(nadeassembly)
@@ -60,7 +61,8 @@
 	if(target)
 		if(!QDELETED(target))
 			location = get_turf(target)
-			target.cut_overlay(plastic_overlay, TRUE)
+			target.cut_overlay(plastic_overlay)
+			UnregisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/add_plastic_overlay)
 			if(!ismob(target) || full_damage_on_mobs)
 				target.ex_act(EXPLODE_HEAVY, target)
 	else
@@ -71,7 +73,7 @@
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
-	if(ismob(target))
+	if(ismob(target) && can_gib_mobs)
 		var/mob/M = target
 		M.gib()
 	qdel(src)
@@ -83,6 +85,7 @@
 /obj/item/grenade/plastic/Crossed(atom/movable/AM)
 	if(nadeassembly)
 		nadeassembly.Crossed(AM)
+	. = ..()
 
 /obj/item/grenade/plastic/on_found(mob/finder)
 	if(nadeassembly)
@@ -94,7 +97,7 @@
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = CLAMP(newtime, 10, 60000)
+		newtime = clamp(newtime, 10, 60000)
 		det_time = newtime
 		to_chat(user, "Timer set for [det_time] seconds.")
 
@@ -122,14 +125,20 @@
 			var/obj/item/I = AM
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
-			I.embedding = I.embedding.setRating(embed_chance = 0)
+			if(I.embedding)
+				I.embedding["embed_chance"] = 0
+				I.updateEmbedding()
 
-		target.add_overlay(plastic_overlay, TRUE)
+		RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/add_plastic_overlay)
+		target.update_icon()
 		if(!nadeassembly)
 			to_chat(user, "<span class='notice'>You plant the bomb. Timer counting down from [det_time].</span>")
 			addtimer(CALLBACK(src, .proc/prime), det_time*10)
 		else
 			qdel(src)	//How?
+
+/obj/item/grenade/plastic/proc/add_plastic_overlay(atom/source, list/overlay_list)
+	overlay_list += plastic_overlay
 
 /obj/item/grenade/plastic/proc/shout_syndicate_crap(mob/M)
 	if(!M)
@@ -205,9 +214,10 @@
 	else
 		return ..()
 
-/obj/item/grenade/plastic/c4/prime()
+/obj/item/grenade/plastic/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
+	. = ..()
 	var/turf/location
 	if(target)
 		if(!QDELETED(target))

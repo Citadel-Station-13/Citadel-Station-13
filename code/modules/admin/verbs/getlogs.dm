@@ -14,6 +14,8 @@
 	browseserverlogs("[GLOB.log_directory]/")
 
 /client/proc/browseserverlogs(path = "data/logs/")
+	if(!check_rights(R_SENSITIVE))
+		return
 	path = browse_files(path)
 	if(!path)
 		return
@@ -31,5 +33,5 @@
 			src << ftp(file(path))
 		else
 			return
-	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.")
+	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.", confidential = TRUE)
 	return

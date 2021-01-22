@@ -326,10 +326,6 @@
 /mob/living/simple_animal/hostile/gorilla,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
-"bn" = (
-/obj/structure/reagent_dispensers/keg/semen,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "bo" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /turf/open/floor/plasteel/shuttle,
@@ -539,7 +535,7 @@ aD
 fV
 Pi
 bm
-bn
+ax
 bs
 bu
 "}
@@ -610,7 +606,7 @@ aX
 aD
 fV
 bi
-bn
+ax
 bl
 fV
 ab

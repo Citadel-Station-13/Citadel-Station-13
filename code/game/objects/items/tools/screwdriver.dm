@@ -8,6 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -31,6 +32,9 @@
 		"yellow" = rgb(255, 165, 0)
 	)
 
+	wound_bonus = -10
+	bare_wound_bonus = 5
+
 /obj/item/screwdriver/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
@@ -53,8 +57,8 @@
 	base_overlay.appearance_flags = RESET_COLOR
 	. += base_overlay
 
-/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/screwdriver/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(isinhands && random_color)
 		var/mutable_appearance/M = mutable_appearance(icon_file, "screwdriver_head")
 		M.appearance_flags = RESET_COLOR
@@ -85,6 +89,9 @@
 	item_state = "screwdriver_brass"
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/brass/family
+	toolspeed = 1
 
 /obj/item/screwdriver/bronze
 	name = "bronze screwdriver"

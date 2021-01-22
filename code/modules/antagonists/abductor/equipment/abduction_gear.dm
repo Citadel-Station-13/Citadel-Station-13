@@ -22,6 +22,7 @@
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
 		)
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 	var/mode = VEST_STEALTH
 	var/stealth_active = 0
 	var/combat_cooldown = 10
@@ -491,7 +492,7 @@
 
 	user.do_attack_animation(L)
 
-	if(L.run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected)) & BLOCK_SUCCESS)
+	if(L.mob_run_block(src, 0, "[user]'s [src]", ATTACK_TYPE_MELEE, 0, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS)
 		playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return FALSE
 

@@ -16,6 +16,9 @@
 	//Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
 
+	//is there a result we want to read from the age gate
+	var/age_gate_result
+
 /mob/dead/new_player/Initialize()
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
@@ -78,12 +81,115 @@
 	popup.set_content(output)
 	popup.open(FALSE)
 
+/mob/dead/new_player/proc/age_gate()
+	var/list/dat = list("<center>")
+	dat += "Enter your date of birth here, to confirm that you are over 18.<BR>"
+	dat += "<b>Your date of birth is not saved, only the fact that you are over/under 18 is.</b><BR>"
+	dat += "</center>"
+
+	dat += "<form action='?src=[REF(src)]'>"
+	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
+	dat += HrefTokenFormField()
+	dat += "<select name = 'Month'>"
+	var/monthList = list("January" = 1, "February" = 2, "March" = 3, "April" = 4, "May" = 5, "June" = 6, "July" = 7, "August" = 8, "September" = 9, "October" = 10, "November" = 11, "December" = 12)
+	for(var/month in monthList)
+		dat += "<option value = [monthList[month]]>[month]</option>"
+	dat += "</select>"
+	dat += "<select name = 'Year' style = 'float:right'>"
+	var/current_year = text2num(time2text(world.realtime, "YYYY"))
+	var/start_year = 1920
+	for(var/year in start_year to current_year)
+		var/reverse_year = 1920 + (current_year - year)
+		dat += "<option value = [reverse_year]>[reverse_year]</option>"
+	dat += "</select>"
+	dat += "<center><input type='submit' value='Submit information'></center>"
+	dat += "</form>"
+
+	winshow(src, "age_gate", TRUE)
+	var/datum/browser/popup = new(src, "age_gate", "<div align='center'>Age Gate</div>", 400, 250)
+	popup.set_content(dat.Join())
+	popup.open(FALSE)
+	onclose(src, "age_gate")
+
+	while(age_gate_result == null)
+		stoplag(1)
+
+	popup.close()
+
+	return age_gate_result
+
+/mob/dead/new_player/proc/age_verify()
+	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
+		if(!client.set_db_player_flags())
+			message_admins("Blocked [src] from new player panel because age gate could not access player database flags.")
+			return FALSE
+		else
+			var/dbflags = client.prefs.db_flags
+			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
+				var/age_verification = age_gate()
+				if(age_verification != 1)
+					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
+					//ban them and kick them
+					AddBan(client.ckey, client.computer_id, "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification.", "SYSTEM", FALSE, null, client.address)
+					qdel(client)
+					return FALSE
+				else
+					//they claim to be of age, so allow them to continue and update their flags
+					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
+					//log this
+					message_admins("[ckey] has joined through the automated age gate process.")
+					return TRUE
+	return TRUE
+
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
 		return 0
 
 	if(!client)
 		return 0
+
+	//don't let people get to this unless they are specifically not verified
+	if(href_list["Month"] && (CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)))
+		var/player_month = text2num(href_list["Month"])
+		var/player_year = text2num(href_list["Year"])
+
+		var/current_time = world.realtime
+		var/current_month = text2num(time2text(current_time, "MM"))
+		var/current_year = text2num(time2text(current_time, "YYYY"))
+
+		var/player_total_months = (player_year * 12) + player_month
+
+		var/current_total_months = (current_year * 12) + current_month
+
+		var/months_in_eighteen_years = 18 * 12
+
+		var/month_difference = current_total_months - player_total_months
+		if(month_difference > months_in_eighteen_years)
+			age_gate_result = TRUE // they're fine
+		else
+			if(month_difference < months_in_eighteen_years)
+				age_gate_result = FALSE
+			else
+				//they could be 17 or 18 depending on the /day/ they were born in
+				var/current_day = text2num(time2text(current_time, "DD"))
+				var/days_in_months = list(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+				if((player_year % 4) == 0) // leap year so february actually has 29 days
+					days_in_months[2] = 29
+				var/total_days_in_player_month = days_in_months[player_month]
+				var/list/days = list()
+				for(var/number in 1 to total_days_in_player_month)
+					days += number
+				var/player_day = input(src, "What day of the month were you born in.") as anything in days
+				if(player_day <= current_day)
+					//their birthday has passed
+					age_gate_result = TRUE
+				else
+					//it has NOT been their 18th birthday yet
+					age_gate_result = FALSE
+
+	if(!age_verify())
+		return
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -176,9 +282,6 @@
 			SSticker.queue_delay = 4
 			qdel(src)
 
-	if(!ready && href_list["preference"])
-		if(client)
-			client.prefs.process_link(src, href_list)
 	else if(!href_list["late_join"])
 		new_player_panel()
 
@@ -272,7 +375,9 @@
 		ready = PLAYER_NOT_READY
 		return FALSE
 
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
+	var/mintime = max(CONFIG_GET(number/respawn_delay), (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time, 0)
+
+	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to respawn for [round(mintime / 600, 0.1)] minutes!!","Player Setup","Yes","No")
 
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
@@ -294,10 +399,12 @@
 		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
 	transfer_ckey(observer, FALSE)
 	observer.client = client
+	observer.client.prefs?.respawn_time_of_death = world.time
 	observer.set_ghost_appearance()
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.real_name
 		observer.name = observer.real_name
+		observer.client.init_verbs()
 	observer.update_icon()
 	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	QDEL_NULL(mind)
@@ -359,6 +466,9 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	if(!respawn_latejoin_check(notify = TRUE))
+		return FALSE
+
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
@@ -392,14 +502,16 @@
 
 		character.update_parallax_teleport()
 
-	SSticker.minds += character.mind
+	job.standard_assign_skills(character.mind)
 
+	SSticker.minds += character.mind
+	character.client.init_verbs() // init verbs for the late join
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,
 
 	if(humanc)	//These procs all expect humans
-		GLOB.data_core.manifest_inject(humanc)
+		GLOB.data_core.manifest_inject(humanc, humanc.client, humanc.client.prefs)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
@@ -413,9 +525,15 @@
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
 			give_magic(humanc)
+		if(GLOB.curse_of_madness_triggered)
+			give_madness(humanc, GLOB.curse_of_madness_triggered)
+		if(humanc.client)
+			humanc.client.prefs.post_copy_to(humanc)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
+	LAZYOR(character.client.prefs.slots_joined_as, character.client.prefs.default_slot)
+	LAZYOR(character.client.prefs.characters_joined_as, character.real_name)
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
@@ -556,16 +674,27 @@
 	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(H)
+	var/cur_scar_index = client.prefs.scars_index
+	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
+		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
+		var/valid_scars = ""
+		for(var/scar_line in splittext(scar_string, ";"))
+			if(H.load_scar(scar_line))
+				valid_scars += "[scar_line];"
+
+		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
+		client.prefs.save_character()
+	client.prefs.copy_to(H, initial_spawn = TRUE)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
 			mind.late_joiner = TRUE
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.original_character = H
 
 	H.name = real_name
-
+	client.init_verbs()
 	. = H
 	new_character = .
 	if(transfer_after)
@@ -580,6 +709,12 @@
 		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
+	if(!client)
+		return
+	if(world.time < client.crew_manifest_delay)
+		return
+	client.crew_manifest_delay = world.time + (1 SECONDS)
+
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
 	dat += "<h4>Crew Manifest</h4>"
 	dat += GLOB.data_core.get_manifest(OOC = 1)

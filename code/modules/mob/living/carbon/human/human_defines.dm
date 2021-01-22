@@ -7,11 +7,16 @@
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	/// Enable stamina combat
-	combat_flags = COMBAT_FLAGS_DEFAULT
+	combat_flags = COMBAT_FLAGS_STAMINA_COMBAT | COMBAT_FLAG_UNARMED_PARRY
 	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
+	has_field_of_vision = FALSE //Handled by species.
 
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	
+
+	block_parry_data = /datum/block_parry_data/unarmed/human
+	default_block_parry_data = /datum/block_parry_data/unarmed/human
+	causes_dirt_buildup_on_floor = TRUE
+
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -21,11 +26,8 @@
 	var/facial_hair_style = "Shaved"
 
 	//Eye colour
-	var/eye_color = "000"
-
-	var/horn_color = "85615a"	//specific horn colors, because why not?
-
-	var/wing_color = "fff"		//wings too
+	var/left_eye_color = "000"
+	var/right_eye_color = "000"
 
 	var/skin_tone = "caucasian1"	//Skin tone
 
@@ -52,7 +54,6 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
@@ -72,4 +73,81 @@
 	var/creamed = FALSE //to use with creampie overlays
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
+	var/account_id
 	var/last_fire_update
+
+/// Unarmed parry data for human
+/datum/block_parry_data/unarmed/human
+	parry_respect_clickdelay = TRUE
+	parry_stamina_cost = 4
+	parry_attack_types = ATTACK_TYPE_UNARMED
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+
+	parry_time_windup = 0
+	parry_time_spindown = 1
+	parry_time_active = 5
+
+	parry_time_perfect = 1
+	parry_time_perfect_leeway = 1
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_perfect = 100
+
+	parry_efficiency_considered_successful = 0.01
+	parry_efficiency_to_counterattack = 0.01
+	parry_max_attacks = 3
+	parry_cooldown = 30
+	parry_failed_stagger_duration = 0
+	parry_failed_clickcd_duration = 0.4
+
+	parry_data = list(			// yeah it's snowflake
+		"UNARMED_PARRY_STAGGER" = 3 SECONDS,
+		"UNARMED_PARRY_PUNCH" = TRUE,
+		"UNARMED_PARRY_MININUM_EFFICIENCY" = 90
+	)
+
+/mob/living/on_active_parry(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/block_return, parry_efficiency, parry_time)
+	var/datum/block_parry_data/D = return_block_parry_datum(block_parry_data)
+	. = ..()
+	if(!owner.Adjacent(attacker))
+		return
+	if(parry_efficiency < D.parry_data["UNARMED_PARRY_MINIMUM_EFFICIENCY"])
+		return
+	visible_message("<span class='warning'>[src] strikes back perfectly at [attacker], staggering them!</span>")
+	if(D.parry_data["UNARMED_PARRY_PUNCH"])
+		UnarmedAttack(attacker, TRUE, INTENT_HARM, ATTACK_IS_PARRY_COUNTERATTACK | ATTACK_IGNORE_ACTION | ATTACK_IGNORE_CLICKDELAY | NO_AUTO_CLICKDELAY_HANDLING)
+	var/mob/living/L = attacker
+	if(istype(L))
+		L.Stagger(D.parry_data["UNARMED_PARRY_STAGGER"])
+
+/// Unarmed parry data for pugilists
+/datum/block_parry_data/unarmed/pugilist
+	parry_respect_clickdelay = FALSE
+	parry_stamina_cost = 4
+	parry_attack_types = ATTACK_TYPE_UNARMED | ATTACK_TYPE_PROJECTILE | ATTACK_TYPE_TACKLE | ATTACK_TYPE_THROWN | ATTACK_TYPE_MELEE
+	parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
+
+	parry_time_windup = 0
+	parry_time_spindown = 0
+	parry_time_active = 5
+
+	parry_time_perfect = 1.5
+	parry_time_perfect_leeway = 1.5
+	parry_imperfect_falloff_percent = 20
+	parry_efficiency_perfect = 100
+	parry_efficiency_perfect_override = list(
+		ATTACK_TYPE_PROJECTILE_TEXT = 60,
+	)
+
+	parry_efficiency_considered_successful = 0.01
+	parry_efficiency_to_counterattack = 0.01
+	parry_max_attacks = INFINITY
+	parry_failed_cooldown_duration =  1.5 SECONDS
+	parry_failed_stagger_duration = 0
+	parry_cooldown = 0
+	parry_failed_clickcd_duration = 0.8
+
+	parry_data = list(			// yeah it's snowflake
+		"UNARMED_PARRY_STAGGER" = 3 SECONDS,
+		"UNARMED_PARRY_PUNCH" = TRUE,
+		"UNARMED_PARRY_MININUM_EFFICIENCY" = 90
+	)

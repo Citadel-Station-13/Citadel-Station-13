@@ -1,5 +1,6 @@
 /datum/export/gear
 	include_subtypes = FALSE
+	k_elasticity = 0 //We always want clothing/gear
 
 //blanket
 /datum/export/gear/hat
@@ -309,7 +310,7 @@
 /datum/export/gear/combatgloves
 	cost = 80
 	unit_name = "combat gloves"
-	export_types = list(/obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/fingerless/pugilist/rapid, /obj/item/clothing/gloves/krav_maga)
+	export_types = list(/obj/item/clothing/gloves/tackler/combat, /obj/item/clothing/gloves/tackler/dolphin, /obj/item/clothing/gloves/krav_maga)
 	include_subtypes = TRUE
 
 /datum/export/gear/bonegloves
@@ -472,7 +473,7 @@
 //Soft Suits
 
 //Blanket
-datum/export/gear/space/helmet
+/datum/export/gear/space/helmet
 	cost = 55
 	unit_name = "space helmet"
 	export_types = list(/obj/item/clothing/head/helmet/space)
@@ -484,7 +485,7 @@ datum/export/gear/space/helmet
 	export_types = list(/obj/item/clothing/suit/space)
 	include_subtypes = TRUE
 
-datum/export/gear/space/helmet/plasma
+/datum/export/gear/space/helmet/plasma
 	cost = 100
 	unit_name = "plasmaman space helmet"
 	export_types = list(/obj/item/clothing/suit/space/eva/plasmaman)
@@ -494,7 +495,7 @@ datum/export/gear/space/helmet/plasma
 	unit_name = "plasmaman space suit"
 	export_types = list(/obj/item/clothing/suit/space/eva/plasmaman)
 
-datum/export/gear/space/helmet/synda
+/datum/export/gear/space/helmet/synda
 	cost = 150 //Flash proof
 	unit_name = "syndicate space helmet"
 	export_types = list(/obj/item/clothing/head/helmet/space/syndicate)
@@ -509,7 +510,7 @@ datum/export/gear/space/helmet/synda
 //Glasses
 
 //Blanket
-datum/export/gear/glasses //glasses are not worth selling
+/datum/export/gear/glasses //glasses are not worth selling
 	cost = 3
 	unit_name = "glasses"
 	export_types = list(/obj/item/clothing/glasses)

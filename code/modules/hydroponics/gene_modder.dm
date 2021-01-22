@@ -3,9 +3,9 @@
 	desc = "An advanced device designed to manipulate plant genetic makeup."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "dnamod"
-	density = TRUE
 	circuit = /obj/item/circuitboard/machine/plantgenes
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | LETPASSTHROW
+	flags_1 = DEFAULT_RICOCHET_1
 
 	var/obj/item/seeds/seed
 	var/obj/item/disk/plantgene/disk

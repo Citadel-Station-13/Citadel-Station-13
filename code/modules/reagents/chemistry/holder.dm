@@ -326,19 +326,18 @@
 				var/datum/reagent/R = addiction
 				if(C && R)
 					R.addiction_stage++
-					switch(R.addiction_stage)
-						if(1 to R.addiction_stage1_end)
-							need_mob_update += R.addiction_act_stage1(C)
-						if(R.addiction_stage1_end to R.addiction_stage2_end)
-							need_mob_update += R.addiction_act_stage2(C)
-						if(R.addiction_stage2_end to R.addiction_stage3_end)
-							need_mob_update += R.addiction_act_stage3(C)
-						if(R.addiction_stage3_end to R.addiction_stage4_end)
-							need_mob_update += R.addiction_act_stage4(C)
-						if(R.addiction_stage4_end to INFINITY)
-							remove_addiction(R)
-						else
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+					if(1 <= R.addiction_stage && R.addiction_stage <= R.addiction_stage1_end)
+						need_mob_update += R.addiction_act_stage1(C)
+					else if(R.addiction_stage1_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage2_end)
+						need_mob_update += R.addiction_act_stage2(C)
+					else if(R.addiction_stage2_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage3_end)
+						need_mob_update += R.addiction_act_stage3(C)
+					else if(R.addiction_stage3_end < R.addiction_stage && R.addiction_stage <= R.addiction_stage4_end)
+						need_mob_update += R.addiction_act_stage4(C)
+					else if(R.addiction_stage4_end < R.addiction_stage)
+						remove_addiction(R)
+					else
+						SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
@@ -464,17 +463,10 @@
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement && can_special_react)
 					possible_reactions  += C
 
+		sortTim(possible_reactions, /proc/cmp_chemical_reactions_default, FALSE)
+
 		if(possible_reactions.len)
 			var/datum/chemical_reaction/selected_reaction = possible_reactions[1]
-			//select the reaction with the most extreme temperature requirements
-			for(var/V in possible_reactions)
-				var/datum/chemical_reaction/competitor = V
-				if(selected_reaction.is_cold_recipe)
-					if(competitor.required_temp <= selected_reaction.required_temp)
-						selected_reaction = competitor
-				else
-					if(competitor.required_temp >= selected_reaction.required_temp) //will return with the hotter reacting first.
-						selected_reaction = competitor
 			var/list/cached_required_reagents = selected_reaction.required_reagents//update reagents list
 			var/list/cached_results = selected_reaction.results//resultant chemical list
 			var/special_react_result = selected_reaction.check_special_react(src)
@@ -535,7 +527,7 @@
 					add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
 
-				var/list/seen = viewers(4, get_turf(my_atom))//Sound and sight checkers
+				var/list/seen = fov_viewers(4, get_turf(my_atom))//Sound and sight checkers
 				var/iconhtml = icon2html(cached_my_atom, seen)
 				if(cached_my_atom)
 					if(!ismob(cached_my_atom)) // No bubbling mobs
@@ -617,10 +609,7 @@
 	handle_reactions()
 	update_total()
 	//Reaction sounds and words
-	var/list/seen = viewers(5, get_turf(my_atom))
-	var/iconhtml = icon2html(my_atom, seen)
-	for(var/mob/M in seen)
-		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+	my_atom.visible_message("<span class='notice'>[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [C.mix_message]</span>")
 
 /datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/C = selected_reaction
@@ -728,7 +717,7 @@
 		return
 
 	//Make sure things are limited, but superacids/bases can push forward the reaction
-	pH = CLAMP(pH, 0, 14)
+	pH = clamp(pH, 0, 14)
 
 	//return said amount to compare for next step.
 	return (reactedVol)
@@ -849,7 +838,7 @@
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
 	var/S = specific_heat()
-	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
+	chem_temp = clamp(chem_temp + (J / (S * total_volume)), min_temp, max_temp)
 	if(istype(my_atom, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = my_atom
 		RC.temp_check()
@@ -877,7 +866,7 @@
 			for (var/datum/reagent/reagentgas in reagent_list)
 				R.add_reagent(reagentgas, amount/5)
 				remove_reagent(reagentgas, amount/5)
-			s.set_up(R, CLAMP(amount/10, 0, 2), T)
+			s.set_up(R, clamp(amount/10, 0, 2), T)
 			s.start()
 			return FALSE
 
@@ -972,7 +961,6 @@
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
-		return FALSE
 
 	if(!isnum(amount))
 		return FALSE
@@ -996,7 +984,7 @@
 				RC.pH_check()//checks beaker resilience)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = CLAMP(amount, 0, R.volume)
+			amount = clamp(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
@@ -1177,3 +1165,9 @@
 				random_reagents += R
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
+
+/proc/get_chem_id(chem_name)
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+		if(ckey(chem_name) == ckey(lowertext(R.name)))
+			return X

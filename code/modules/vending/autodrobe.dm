@@ -3,7 +3,6 @@
 	desc = "A vending machine for costumes."
 	icon_state = "theater"
 	icon_deny = "theater-deny"
-	req_access = list(ACCESS_THEATRE)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,
@@ -30,6 +29,16 @@
 						/obj/item/clothing/glasses/monocle =1,
 						/obj/item/clothing/head/bowler = 1,
 						/obj/item/cane = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_redsleeves = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_redvest = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_vest = 1,
+						/obj/item/clothing/under/rank/civilian/victorian_purple = 1,
+						/obj/item/clothing/suit/tailcoat = 1,
+						/obj/item/clothing/under/rank/civilian/victorianreddress = 1,
+						/obj/item/clothing/suit/vickyred = 1,
+						/obj/item/clothing/under/rank/civilian/victorianblackdress = 1,
+						/obj/item/clothing/suit/vickyblack =1,
+						/obj/item/clothing/under/rank/civilian/dutch = 2,
 						/obj/item/clothing/under/suit/sl = 1,
 						/obj/item/clothing/mask/fakemoustache = 1,
 						/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
@@ -65,9 +74,9 @@
 						/obj/item/staff = 3,
 						/obj/item/clothing/under/rank/civilian/mime/skirt = 1,
 						/obj/item/clothing/under/rank/captain/suit/skirt = 1,
-						/obj/item/clothing/mask/gas/sexyclown = 1,
+						/obj/item/clothing/mask/gas/clown_hat/sexy = 1,
 						/obj/item/clothing/under/rank/civilian/clown/sexy = 1,
-						/obj/item/clothing/mask/gas/sexymime = 1,
+						/obj/item/clothing/mask/gas/mime/sexy = 1,
 						/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
 						/obj/item/clothing/mask/rat/bat = 1,
 						/obj/item/clothing/mask/rat/bee = 1,
@@ -85,8 +94,10 @@
 						/obj/item/clothing/suit/poncho = 1,
 						/obj/item/clothing/suit/poncho/green = 1,
 						/obj/item/clothing/suit/poncho/red = 1,
+						/obj/item/clothing/head/maid = 1,
 						/obj/item/clothing/under/costume/maid = 1,
 						/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
+						/obj/item/clothing/gloves/evening = 1,
 						/obj/item/clothing/glasses/cold=1,
 						/obj/item/clothing/glasses/heat=1,
 						/obj/item/clothing/suit/whitedress = 1,
@@ -109,13 +120,21 @@
 						/obj/item/clothing/ears/headphones = 2,
 						/obj/item/clothing/head/wig/random = 3,
 						/obj/item/clothing/suit/ran = 2,
-						/obj/item/clothing/head/ran = 2)
+						/obj/item/clothing/head/ran = 2,
+						/obj/item/clothing/mask/gas/timidcostume = 3,
+						/obj/item/clothing/suit/hooded/wintercoat/timidcostume = 3,
+						/obj/item/clothing/shoes/timidcostume = 3,
+						/obj/item/clothing/mask/gas/timidcostume/man = 3,
+						/obj/item/clothing/suit/hooded/wintercoat/timidcostume/man = 3,
+						/obj/item/clothing/shoes/timidcostume/man = 3,
+						)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 						/obj/item/clothing/head/powdered_wig = 1,
 						/obj/item/gun/magic/wand = 2,
 						/obj/item/clothing/glasses/sunglasses/garb = 2,
 						/obj/item/clothing/glasses/sunglasses/blindfold = 1,
-						/obj/item/clothing/mask/muzzle = 2)
+						/obj/item/clothing/mask/muzzle = 2,
+						/obj/item/clothing/under/syndicate/camo/cosmetic = 3)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 					/obj/item/clothing/head/pirate/captain = 2,
 					/obj/item/clothing/head/helmet/roman/fake = 1,
@@ -124,7 +143,7 @@
 					/obj/item/clothing/shoes/roman = 1,
 					/obj/item/shield/riot/roman/fake = 1,
 					/obj/item/skub = 1,
-					/obj/item/clothing/under/costume/lobster = 1,	 // CIT CHANGES
+					/obj/item/clothing/under/costume/lobster = 1,
 					/obj/item/clothing/head/lobsterhat = 1,
 					/obj/item/clothing/head/drfreezehat = 1,
 					/obj/item/clothing/suit/dracula = 1,
@@ -137,12 +156,19 @@
 					/obj/item/clothing/under/costume/christmas/croptop/green = 3,
 					/obj/item/clothing/head/christmashat = 3,
 					/obj/item/clothing/head/christmashatg = 3,
-					/obj/item/clothing/under/costume/drfreeze = 1)    //End of Cit Changes
-	refill_canister = /obj/item/vending_refill/autodrobe
+					/obj/item/clothing/under/costume/drfreeze = 1)
 
-/obj/machinery/vending/autodrobe/all_access
-	desc = "A vending machine for costumes. This model appears to have no access restrictions."
-	req_access = null
+	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = PRICE_ALMOST_CHEAP
+	extra_price = PRICE_ALMOST_EXPENSIVE
+	payment_department = ACCOUNT_SRV
+
+/obj/machinery/vending/autodrobe/Initialize()
+	. = ..()
+	cost_multiplier_per_dept = list("[ACCESS_THEATRE]" = 0)
+
+/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
+	return (I.type in products)
 
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"

@@ -20,6 +20,9 @@
 	var/list/mode_false_report_weight
 
 	var/motd
+	// var/policy
+
+	// var/static/regex/ic_filter_regex
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -49,6 +52,11 @@
 				break
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
+	// LoadPolicy()
+	// LoadChatFilter()
+
+	if (Master)
+		Master.OnConfigLoad()
 
 /datum/controller/configuration/proc/full_wipe()
 	if(IsAdminAdvancedProcCall())
@@ -104,7 +112,9 @@
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	var/list/postload_required = list()
+	var/linenumber = 0
 	for(var/L in lines)
+		linenumber++
 		L = trim(L)
 		if(!L)
 			continue
@@ -132,7 +142,7 @@
 
 		if(entry == "$include")
 			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
+				log_config("LINE [linenumber]: Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
 				++.
@@ -140,7 +150,7 @@
 
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			log_config("Unknown setting in configuration: '[entry]'")
+			log_config("LINE [linenumber]: Unknown setting in configuration: '[entry]'")
 			continue
 
 		if(lockthis)
@@ -150,9 +160,9 @@
 			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
 			var/new_value = E.DeprecationUpdate(value)
 			var/good_update = istext(new_value)
-			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
+			log_config("LINE [linenumber]: Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			if(!warned_deprecated_configs)
-				addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, "This server is using deprecated configuration settings. Please check the logs and update accordingly."), 0)
+				DelayedMessageAdmins("This server is using deprecated configuration settings. Please check the logs and update accordingly.")
 				warned_deprecated_configs = TRUE
 			if(good_update)
 				value = new_value
@@ -160,12 +170,12 @@
 			else
 				warning("[new_ver.type] is deprecated but gave no proper return for DeprecationUpdate()")
 
-		var/validated = E.ValidateAndSet(value, TRUE)
+		var/validated = E.ValidateAndSet(value)
 		if(!validated)
-			log_config("Failed to validate setting \"[value]\" for [entry]")
+			log_config("LINE [linenumber]: Failed to validate setting \"[value]\" for [entry]")
 		else
 			if(E.modified && !E.dupes_allowed)
-				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+				log_config("LINE [linenumber]: Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 		if(E.postload_required)
 			postload_required[E] = TRUE
 
@@ -187,18 +197,11 @@
 	var/list/banned_edits = list(NAMEOF(src, entries_by_type), NAMEOF(src, entries), NAMEOF(src, directory))
 	return !(var_name in banned_edits) && ..()
 
-/datum/controller/configuration/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
-	stat("[name]:", statclick)
+/datum/controller/configuration/stat_entry(msg)
+	msg = "Edit"
+	return msg
 
-/datum/controller/configuration/proc/Get(entry_type)
-	var/datum/config_entry/E = GetEntryDatum(entry_type)
-	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
-		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
-		return
-	return E.config_entry_value
-
+/// Your typical GET but returns a config.
 /datum/controller/configuration/proc/GetEntryDatum(entry_type)
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
@@ -207,7 +210,23 @@
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
+	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
 	return E
+
+/datum/controller/configuration/proc/Get(entry_type)
+	var/datum/config_entry/E = entry_type
+	var/entry_is_abstract = initial(E.abstract_type) == entry_type
+	if(entry_is_abstract)
+		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+	E = entries_by_type[entry_type]
+	if(!E)
+		CRASH("Missing config entry for [entry_type]!")
+	if((E.protection & CONFIG_ENTRY_HIDDEN) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "Get" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+		log_admin_private("Config access of [entry_type] attempted by [key_name(usr)]")
+		return
+	return E.config_entry_value
 
 /datum/controller/configuration/proc/Set(entry_type, new_val)
 	var/datum/config_entry/E = entry_type
@@ -233,7 +252,6 @@
 	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
-		// for future reference: just use initial() lol
 		var/datum/game_mode/M = new T()
 
 		if(M.config_tag)
@@ -255,7 +273,37 @@
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+/*
+Policy file should be a json file with a single object.
+Value is raw html.
 
+Possible keywords :
+Job titles / Assigned roles (ghost spawners for example) : Assistant , Captain , Ash Walker
+Mob types : /mob/living/simple_animal/hostile/carp
+Antagonist types : /datum/antagonist/highlander
+Species types : /datum/species/lizard
+special keywords defined in _DEFINES/admin.dm
+
+Example config:
+{
+    "Assistant" : "Don't kill everyone",
+    "/datum/antagonist/highlander" : "<b>Kill everyone</b>",
+    "Ash Walker" : "Kill all spacemans"
+}
+
+*/
+/*
+/datum/controller/configuration/proc/LoadPolicy()
+	policy = list()
+	var/rawpolicy = file2text("[directory]/policy.json")
+	if(rawpolicy)
+		var/parsed = safe_json_decode(rawpolicy)
+		if(!parsed)
+			log_config("JSON parsing failure for policy.json")
+			DelayedMessageAdmins("JSON parsing failure for policy.json")
+		else
+			policy = parsed
+*/
 /datum/controller/configuration/proc/loadmaplist(filename)
 	log_config("Loading config file [filename]...")
 	filename = "[directory]/[filename]"
@@ -302,6 +350,8 @@
 				currentmap.voteweight = text2num(data)
 			if ("default","defaultmap")
 				defaultmap = currentmap
+			//if ("votable")
+			//	currentmap.votable = TRUE
 			if ("endmap")
 				LAZYINITLIST(maplist)
 				maplist[currentmap.map_name] = currentmap
@@ -323,6 +373,7 @@
 			return new T
 	return new /datum/game_mode/extended()
 
+/// For dynamic.
 /datum/controller/configuration/proc/pick_storyteller(storyteller_name)
 	for(var/T in storyteller_cache)
 		var/datum/dynamic_storyteller/S = T
@@ -330,6 +381,43 @@
 		if(name && name == storyteller_name)
 			return T
 	return /datum/dynamic_storyteller/classic
+
+/// Same with this
+/datum/controller/configuration/proc/get_runnable_storytellers()
+	var/list/datum/dynamic_storyteller/runnable_storytellers = new
+	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
+	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
+	var/list/storyteller_min_chaos = Get(/datum/config_entry/keyed_list/storyteller_min_chaos)
+	var/list/storyteller_max_chaos = Get(/datum/config_entry/keyed_list/storyteller_max_chaos)
+	for(var/T in storyteller_cache)
+		var/datum/dynamic_storyteller/S = T
+		var/config_tag = initial(S.config_tag)
+		if(!config_tag)
+			continue
+		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
+		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
+		if(probability <= 0)
+			continue
+		if(length(GLOB.player_list) < min_players)
+			continue
+		if(!Get(/datum/config_entry/flag/no_storyteller_threat_removal))
+			var/min_chaos = (probabilities in storyteller_min_chaos) ? storyteller_min_chaos[config_tag] : initial(S.min_chaos)
+			var/max_chaos = (probabilities in storyteller_max_chaos) ? storyteller_max_chaos[config_tag] : initial(S.max_chaos)
+			if(SSpersistence.average_dynamic_threat < min_chaos)
+				continue
+			if(SSpersistence.average_dynamic_threat > max_chaos)
+				continue
+		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
+			var/name = initial(S.name)
+			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
+			var/adjustment = 0
+			while(recent_round)
+				adjustment += repeated_mode_adjust[recent_round]
+				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
+			probability *= ((100-adjustment)/100)
+		runnable_storytellers[S] = probability
+	return runnable_storytellers
 
 /datum/controller/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
@@ -364,32 +452,6 @@
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
-/datum/controller/configuration/proc/get_runnable_storytellers()
-	var/list/datum/dynamic_storyteller/runnable_storytellers = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/storyteller_weight)
-	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
-	var/list/min_player_counts = Get(/datum/config_entry/keyed_list/storyteller_min_players)
-	for(var/T in storyteller_cache)
-		var/datum/dynamic_storyteller/S = T
-		var/config_tag = initial(S.config_tag)
-		var/probability = (config_tag in probabilities) ? probabilities[config_tag] : initial(S.weight)
-		var/min_players = (config_tag in min_player_counts) ? min_player_counts[config_tag] : initial(S.min_players)
-		if(probability <= 0)
-			continue
-		if(length(GLOB.player_list) < min_players)
-			continue
-		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
-			var/name = initial(S.name)
-			var/recent_round = min(SSpersistence.saved_storytellers.Find(name),3)
-			var/adjustment = 0
-			while(recent_round)
-				adjustment += repeated_mode_adjust[recent_round]
-				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
-			probability *= ((100-adjustment)/100)
-		runnable_storytellers[S] = probability
-	return runnable_storytellers
-
-
 /datum/controller/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
 	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
@@ -412,3 +474,20 @@
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
+/*
+/datum/controller/configuration/proc/LoadChatFilter()
+	var/list/in_character_filter = list()
+	if(!fexists("[directory]/in_character_filter.txt"))
+		return
+	log_config("Loading config file in_character_filter.txt...")
+	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if(!line)
+			continue
+		if(findtextEx(line,"#",1,2))
+			continue
+		in_character_filter += REGEX_QUOTE(line)
+	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+*/
+//Message admins when you can.
+/datum/controller/configuration/proc/DelayedMessageAdmins(text)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)

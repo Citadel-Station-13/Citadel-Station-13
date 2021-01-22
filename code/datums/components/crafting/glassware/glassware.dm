@@ -74,7 +74,7 @@
 
 //////////////////////Lens//////////////////////////
 //Six Steps                                       //
-//Sells for 1800 cr, takes 15 glass shets         //
+//Sells for 1600 cr, takes 15 glass shets         //
 //Usefull for selling and later crafting          //
 ////////////////////////////////////////////////////
 
@@ -146,14 +146,14 @@
 
 /obj/item/glasswork/glass_base/glass_lens_part5
 	name = "Unpolished glass lens"
-	desc = "A small unpolished glass lens. Could be polished with some silk."
+	desc = "A small unpolished glass lens. Could be polished with some cloth."
 	icon = 'icons/obj/glass_ware.dmi'
 	icon_state = "glass_optics"
 	next_step = /obj/item/glasswork/glass_base/glass_lens_part6
 
 /obj/item/glasswork/glass_base/glass_lens_part5/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/stack/sheet/silk))
+	if(istype(I, /obj/item/stack/sheet/cloth))
 		if(do_after(user,10, target = src))
 			new next_step(user.loc, 1)
 			qdel(src)
@@ -324,7 +324,7 @@
 
 //////////////////////Tea Plates////////////////////
 //Three Steps                                     //
-//Sells for 1200 cr, takes 5 glass shets          //
+//Sells for 1000 cr, takes 5 glass shets          //
 //Usefull for selling and chemical things         //
 ////////////////////////////////////////////////////
 
@@ -370,20 +370,20 @@
 
 /obj/item/glasswork/glass_base/tea_plate3
 	name = "Disk of glass"
-	desc = "A disk of glass that can be cant be used for much. Needs to be polished with some silk."
+	desc = "A disk of glass that can be cant be used for much. Needs to be polished with some cloth."
 	icon_state = "glass_base_half"
 	next_step = /obj/item/tea_plate
 
 /obj/item/glasswork/glass_base/tea_plate3/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/stack/sheet/silk))
+	if(istype(I, /obj/item/stack/sheet/cloth))
 		if(do_after(user,10, target = src))
 			new next_step(user.loc, 1)
 			qdel(src)
 
 //////////////////////Tea Cup///////////////////////
 //Four Steps                                      //
-//Sells for 1800 cr, takes 6 glass shets          //
+//Sells for 1600 cr, takes 6 glass shets          //
 //Usefull for selling and chemical things         //
 ////////////////////////////////////////////////////
 
@@ -429,13 +429,13 @@
 
 /obj/item/glasswork/glass_base/tea_cup3
 	name = "Disk of glass"
-	desc = "A bowl of glass that can be cant be used for much. Needs to be polished with some silk."
+	desc = "A bowl of glass that can be cant be used for much. Needs to be polished with some cloth."
 	icon_state = "glass_base_half"
 	next_step = /obj/item/glasswork/glass_base/tea_cup4
 
 /obj/item/glasswork/glass_base/cup3/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/stack/sheet/silk))
+	if(istype(I, /obj/item/stack/sheet/cloth))
 		if(do_after(user,10, target = src))
 			new next_step(user.loc, 1)
 			qdel(src)

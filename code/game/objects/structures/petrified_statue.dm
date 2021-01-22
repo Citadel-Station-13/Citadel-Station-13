@@ -4,11 +4,13 @@
 	icon_state = "human_male"
 	density = TRUE
 	anchored = TRUE
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	max_integrity = 200
-	var/timer = 240 //eventually the person will be freed
+	var/timer = 8 MINUTES //eventually the person will be freed
 	var/mob/living/petrified_mob
 
-/obj/structure/statue/petrified/New(loc, mob/living/L, statue_timer)
+/obj/structure/statue/petrified/Initialize(mapload, mob/living/L, statue_timer)
+	. = ..()
 	if(statue_timer)
 		timer = statue_timer
 	if(L)
@@ -17,25 +19,18 @@
 			L.buckled.unbuckle_mob(L,force=1)
 		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
 		L.forceMove(src)
-		ADD_TRAIT(L, TRAIT_MUTE, STATUE_MUTE)
+		ADD_TRAIT(L, TRAIT_MUTE, STATUE_TRAIT)
+		ADD_TRAIT(L, TRAIT_EMOTEMUTE, STATUE_TRAIT)
+		ADD_TRAIT(L, TRAIT_LOOC_MUTE, STATUE_TRAIT)
+		ADD_TRAIT(L, TRAIT_AOOC_MUTE, STATUE_TRAIT)
+		ADD_TRAIT(L, TRAIT_MOBILITY_NOMOVE, STATUE_TRAIT)
+		ADD_TRAIT(L, TRAIT_MOBILITY_NOPICKUP, STATUE_TRAIT)
+		ADD_TRAIT(L, TRAIT_MOBILITY_NOUSE, STATUE_TRAIT)
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
 		L.status_flags |= GODMODE
 		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		max_integrity = obj_integrity
-		START_PROCESSING(SSobj, src)
-	..()
-
-/obj/structure/statue/petrified/process()
-	if(!petrified_mob)
-		STOP_PROCESSING(SSobj, src)
-	timer--
-	petrified_mob.Stun(40) //So they can't do anything while petrified
-	if(timer <= 0)
-		STOP_PROCESSING(SSobj, src)
-		qdel(src)
-
-/obj/structure/statue/petrified/contents_explosion(severity, target)
-	return
+		QDEL_IN(src, timer)
 
 /obj/structure/statue/petrified/handle_atom_del(atom/A)
 	if(A == petrified_mob)
@@ -59,7 +54,13 @@
 	if(petrified_mob)
 		petrified_mob.status_flags &= ~GODMODE
 		petrified_mob.forceMove(loc)
-		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_MUTE)
+		REMOVE_TRAIT(petrified_mob, TRAIT_MUTE, STATUE_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_EMOTEMUTE, STATUE_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_LOOC_MUTE, STATUE_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_AOOC_MUTE, STATUE_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_MOBILITY_NOMOVE, STATUE_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_MOBILITY_NOPICKUP, STATUE_TRAIT)
+		REMOVE_TRAIT(petrified_mob, TRAIT_MOBILITY_NOUSE, STATUE_TRAIT)
 		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob
 		petrified_mob.faction -= "mimic"
 		petrified_mob = null

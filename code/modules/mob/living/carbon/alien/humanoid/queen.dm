@@ -11,6 +11,10 @@
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
+	meleeKnockdownPower = 125
+	meleeSlashHumanPower = 30
+	meleeSlashSAPower = 60
+
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
 /mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, error_msg, target_zone, penetrate_thick = FALSE, bypass_immunity = FALSE)
@@ -53,7 +57,7 @@
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
 	name = "Lay Egg"
-	desc = "Lay an egg to produce huggers to impregnate prey with."
+	desc = "Lay an egg to produce huggers to impregnate prey with. Costs 75 Plasma."
 	plasma_cost = 75
 	check_turf = TRUE
 	action_icon_state = "alien_egg"
@@ -73,7 +77,7 @@
 //Button to let queen choose her praetorian.
 /obj/effect/proc_holder/alien/royal/queen/promote
 	name = "Create Royal Parasite"
-	desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian."
+	desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian. Costs 500 Plasma."
 	plasma_cost = 500 //Plasma cost used on promotion, not spawning the parasite.
 
 	action_icon_state = "alien_queen_promote"

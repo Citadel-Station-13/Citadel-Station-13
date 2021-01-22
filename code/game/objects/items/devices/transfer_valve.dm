@@ -13,6 +13,8 @@
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = 1
+	var/ui_x = 310
+	var/ui_y = 320
 
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -77,7 +79,7 @@
 	if(attached_device)
 		attached_device.Crossed(AM)
 
-/obj/item/transfer_valve/attack_hand()//Triggers mousetraps
+/obj/item/transfer_valve/on_attack_hand()//Triggers mousetraps
 	. = ..()
 	if(.)
 		return
@@ -168,8 +170,8 @@
 		target_self = TRUE
 	if(change_volume)
 		if(!target_self)
-			target.volume += tank_two.volume
-		target.volume += tank_one.air_contents.volume
+			target.set_volume(target.return_volume() + tank_two.volume)
+		target.set_volume(target.return_volume() + tank_one.air_contents.return_volume())
 	var/datum/gas_mixture/temp
 	temp = tank_one.air_contents.remove_ratio(1)
 	target.merge(temp)
@@ -180,17 +182,16 @@
 /obj/item/transfer_valve/proc/split_gases()
 	if (!valve_open || !tank_one || !tank_two)
 		return
-	var/ratio1 = tank_one.air_contents.volume/tank_two.air_contents.volume
+	var/ratio1 = tank_one.air_contents.return_volume()/tank_two.air_contents.return_volume()
 	var/datum/gas_mixture/temp
 	temp = tank_two.air_contents.remove_ratio(ratio1)
 	tank_one.air_contents.merge(temp)
-	tank_two.air_contents.volume -=  tank_one.air_contents.volume
+	tank_two.air_contents.set_volume(tank_two.air_contents.return_volume() - tank_one.air_contents.return_volume())
 
-	/*
+/*
 	Exadv1: I know this isn't how it's going to work, but this was just to check
 	it explodes properly when it gets a signal (and it does).
-	*/
-
+*/
 /obj/item/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
 		valve_open = TRUE
@@ -231,7 +232,66 @@
 		valve_open = FALSE
 		update_icon()
 
-// this doesn't do anything but the timer etc. expects it to be here
-// eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
+/*
+	This doesn't do anything but the timer etc. expects it to be here
+	eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
+*/
 /obj/item/transfer_valve/proc/c_state()
 	return
+
+/obj/item/transfer_valve/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/transfer_valve/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TransferValve", name)
+		ui.open()
+
+/obj/item/transfer_valve/ui_data(mob/user)
+	var/list/data = list()
+	data["tank_one"] = tank_one
+	data["tank_two"] = tank_two
+	data["attached_device"] = attached_device
+	data["valve"] = valve_open
+	return data
+
+/obj/item/transfer_valve/ui_act(action, params)
+	if(..())
+		return
+
+	switch(action)
+		if("tankone")
+			if(tank_one)
+				split_gases()
+				valve_open = FALSE
+				tank_one.forceMove(drop_location())
+				tank_one = null
+				. = TRUE
+		if("tanktwo")
+			if(tank_two)
+				split_gases()
+				valve_open = FALSE
+				tank_two.forceMove(drop_location())
+				tank_two = null
+				. = TRUE
+		if("toggle")
+			toggle_valve()
+			. = TRUE
+		if("device")
+			if(attached_device)
+				attached_device.attack_self(usr)
+				. = TRUE
+		if("remove_device")
+			if(attached_device)
+				attached_device.on_detach()
+				attached_device = null
+				. = TRUE
+
+	update_icon()
+
+/**
+  * Returns if this is ready to be detonated. Checks if both tanks are in place.
+  */
+/obj/item/transfer_valve/proc/ready()
+	return tank_one && tank_two

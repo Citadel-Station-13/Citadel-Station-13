@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(deliverybeacontags)			    //list of all tags associated with d
 GLOBAL_LIST_EMPTY(nuke_list)
 GLOBAL_LIST_EMPTY(alarmdisplay)				        //list of all machines or programs that can display station alerts
 GLOBAL_LIST_EMPTY(singularities)				    //list of all singularities on the station (actually technically all engines)
+GLOBAL_LIST_EMPTY(grounding_rods)					//list of all grounding rods on the station
 
 GLOBAL_LIST(chemical_reactions_list)				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 GLOBAL_LIST(chemical_reagents_list)				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
@@ -41,3 +42,5 @@ GLOBAL_LIST_EMPTY(ai_status_displays)
 
 GLOBAL_LIST_EMPTY(mob_spawners) 		    // All mob_spawn objects
 GLOBAL_LIST_EMPTY(alert_consoles)			// Station alert consoles, /obj/machinery/computer/station_alert
+
+GLOBAL_LIST_EMPTY(rockpaperscissors_players) // List of everyone playing rock paper scissors

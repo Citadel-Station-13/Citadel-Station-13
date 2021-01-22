@@ -7,6 +7,7 @@
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
+
 	var/obj/item/reagent_containers/beaker = null
 	var/target_temperature = 300
 	var/heater_coefficient = 0.1
@@ -30,22 +31,20 @@
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	. = ..()
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
-	return TRUE
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(!user)
+		return FALSE
 	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && user.can_hold_items())
-			user.put_in_hands(beaker)
+		user.put_in_hands(beaker)
+		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	else
-		beaker = null
-		update_icon()
-		return TRUE
+	update_icon()
+	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
 	heater_coefficient = 0.1
@@ -63,6 +62,7 @@
 		return
 	if(on)
 		if(beaker && beaker.reagents.total_volume)
+			//keep constant with the chemical acclimator please
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
@@ -88,22 +88,21 @@
 		if(istype(I, /obj/item/reagent_containers/dropper))
 			var/obj/item/reagent_containers/dropper/D = I
 			D.afterattack(beaker, user, 1)
-
+			return
 		if(istype(I, /obj/item/reagent_containers/syringe))
 			var/obj/item/reagent_containers/syringe/S = I
 			S.afterattack(beaker, user, 1)
-
+			return
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
 	replace_beaker()
 	return ..()
 
-/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
+		ui = new(user, src, "ChemHeater", name)
 		ui.open()
 
 /obj/machinery/chem_heater/ui_data()
@@ -118,7 +117,7 @@
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	//purity and pH accuracy
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		data["partRating"]= 10**(M.rating-1)
+		data["partRating"]= M.rating
 		if(M.rating == 4)
 			data["showPurity"] = 1
 		else
@@ -140,18 +139,11 @@
 			. = TRUE
 		if("temperature")
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, target_temperature) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(adjust)
-				target = target_temperature + adjust
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, 0, 1000)
+				target_temperature = clamp(target, 0, 1000)
 		if("eject")
 			on = FALSE
 			replace_beaker(usr)

@@ -106,10 +106,10 @@
 /obj/item/storage/briefcase/medical
 	name = "medical briefcase"
 	icon_state = "medbriefcase"
-	desc = "A white with a blue cross brieface, this is ment to hold medical gear that would not be able to normally fit in a bag."
+	desc = "A white with a blue cross brieface, this is meant to hold medical gear that would not be able to normally fit in a bag."
 
 /obj/item/storage/briefcase/medical/PopulateContents()
 	new /obj/item/clothing/neck/stethoscope(src)
 	new /obj/item/healthanalyzer(src)
-	..() //In case of paperwork
+	..() //Incase of paperwork
 

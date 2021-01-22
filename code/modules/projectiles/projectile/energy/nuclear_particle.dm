@@ -5,7 +5,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	flag = "rad"
 	irradiate = 5000
-	speed = 0.4
+	pixels_per_second = TILES_TO_PIXELS(25)
 	hitsound = 'sound/weapons/emitter2.ogg'
 	impact_type = /obj/effect/projectile/impact/xray
 	var/static/list/particle_colors = list(

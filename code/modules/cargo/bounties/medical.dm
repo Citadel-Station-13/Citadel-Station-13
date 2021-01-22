@@ -121,7 +121,7 @@
 
 /datum/bounty/item/medical/defibrillator
 	name = "New defibillators"
-	description = "After years of storge our defib units have become liabilities. Please send us some new ones."
+	description = "After years of storage our defibrillation units have worn out. Please send us some new ones."
 	reward = 2250
 	required_count = 5
 	wanted_types = list(/obj/item/defibrillator)

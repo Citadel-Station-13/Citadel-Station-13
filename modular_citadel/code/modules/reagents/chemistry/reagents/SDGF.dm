@@ -36,6 +36,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 6. Giving this to someone without concent is against space law and gets you sent to gulag.
 */
 
+#define POLICYCONFIG_SDGF "SDGF"
+#define POLICYCONFIG_SDGF_GOOD "SDGF_ALIGNED"
+#define POLICYCONFIG_SDGF_BAD "SDGF_UNALIGNED"
+
+
 //Clone serum #chemClone
 /datum/reagent/fermi/SDGF //vars, mostly only care about keeping track if there's a player in the clone or not.
 	name = "synthetic-derived growth factor"
@@ -45,13 +50,14 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	var/unitCheck = FALSE
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "a weird chemical fleshy flavour"
-	var/list/candies = list()
+	var/list/ghosts = list()
 	var/pollStarted = FALSE
 	var/startHunger
 	impure_chem 			= /datum/reagent/impure/SDGFtox
 	inverse_chem_val 		= 0.5
 	inverse_chem		= /datum/reagent/impure/SDZF
 	can_synth = TRUE
+	value = REAGENT_VALUE_RARE
 
 
 //Main SDGF chemical
@@ -62,10 +68,11 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			startHunger = M.nutrition
 			if(pollStarted == FALSE)
 				pollStarted = TRUE
-				candies = pollGhostCandidates("Do you want and agree to play as a clone of [M], respect their character and not engage in ERP without permission from the original?", ignore_category = POLL_IGNORE_CLONE)
-				log_game("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
+				ghosts = pollGhostCandidates("Do you want to play as [M]'s SDGF clone? (Don't ERP without permission from the original, and respect their character.)", ignore_category = POLL_IGNORE_CLONE)
+				log_reagent("FERMICHEM: [M] ckey: [M.key] has taken SDGF, and ghosts have been polled.")
+			to_chat(M,"<span class='notice'>If a ghost takes your clone, they will be identical to you. You may wish to add note (IC tab) to help them play your character better, and keep them up on the situation.</span>")
 		if(20 to INFINITY)
-			if(LAZYLEN(candies) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
+			if(LAZYLEN(ghosts) && playerClone == FALSE) //If there's candidates, clone the person and put them in there!
 				to_chat(M, "<span class='warning'>The cells reach a critical micelle concentration, nucleating rapidly within your body!</span>")
 				var/typepath = M.type
 				var/mob/living/carbon/human/fermi_Gclone = new typepath(M.loc)
@@ -73,18 +80,22 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				if(istype(SM) && istype(M))
 					SM.real_name = M.real_name
 					M.dna.transfer_identity(SM)
+					SM.underwear = "nude"
+					SM.socks = "nude"
+					SM.undershirt = "nude"
+					M.transfer_trait_datums(SM)
 					SM.updateappearance(mutcolor_update=1)
 
 				//Process the willing ghosts, and make sure they're actually in the body when they're moved into it!
-				candies = shuffle(candies)//Shake those ghosts up!
-				for(var/mob/dead/observer/C2 in candies)
+				ghosts = shuffle(ghosts)//Shake those ghosts up!
+				for(var/mob/dead/observer/C2 in ghosts)
 					if(C2.key && C2)
 						C2.transfer_ckey(SM, FALSE)
 						message_admins("Ghost candidate found! [C2] key [C2.key] is becoming a clone of [M] key: [M.key] (They agreed to respect the character they're becoming, and agreed to not ERP without express permission from the original.)")
-						log_game("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
+						log_reagent("FERMICHEM: [M] ckey: [M.key] is creating a clone, controlled by [C2]")
 						break
 					else
-						candies -= C2
+						ghosts -= C2
 				if(!SM.mind) //Something went wrong, use alt mechanics
 					return ..()
 				SM.mind.enslave_mind_to_creator(M)
@@ -96,34 +107,46 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 					var/obj/item/organ/zombie_infection/ZI = M.getorganslot(ORGAN_SLOT_ZOMBIE)
 					ZI.Remove()
 					ZI.Insert(SM)
-					log_game("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
+					log_reagent("FERMICHEM: [M] ckey: [M.key]'s zombie_infection has been transferred to their clone")
 
-				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with your original, a perfect clone of your origin.</span>")
-
-				if(prob(50))
-					to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original.</span>")
-					log_game("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
+				var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+				var/policy = policies[POLICYCONFIG_SDGF]
+				if(policy)
+					to_chat(SM,policy)
+				if(prob((purity**3) * 80)) // 80% chance at 100% purity, 0% chance at 0 purity
+					policy = policies[POLICYCONFIG_SDGF_GOOD]
+					if(policy)
+						to_chat(SM,policy)
+					else
+						to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.</span>")
+					log_reagent("FERMICHEM: [SM] ckey: [SM.key]'s is bound by [M] ckey [M.key]'s objectives, and is encouraged to help them complete them.")
 				else
-					to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. Your mind has not deviated from the tasks you set out to do, and now that there's two of you the tasks should be much easier.</span>")
-					log_game("FERMICHEM: [SM] ckey: [SM.key]'s is bound by [M] ckey [M.key]'s objectives, and is encouraged to help them complete them.")
-
-				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you, before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with yourself.</span>")
+					policy = policies[POLICYCONFIG_SDGF_BAD]
+					if(policy)
+						to_chat(SM,policy)
+					else
+						to_chat(SM, "<span class='userdanger'>While you find your newfound existence strange, you share the same memories as [M.real_name]. However, You find yourself indifferent to the goals you previously had, and take more interest in your newfound independence, but still have an indescribable care for the safety of your original.</span>")
+					log_reagent("FERMICHEM: [SM] ckey: [SM.key]'s is not bound by [M] ckey [M.key]'s will, and is free to determine their own goals, while respecting and acting as their origin.")
+	
+				to_chat(SM, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you. Before you get a chance to think about it, you suddenly split from your old body, and find yourself face to face with your original, a perfect clone of your origin.</span>")
+				SM.client?.change_view(CONFIG_GET(string/default_view))
+				to_chat(M, "<span class='warning'>You feel a strange sensation building in your mind as you realise there's two of you. Before you get a chance to think about it, a mass splits from you, and find yourself face to face with yourself.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into two identical twins!")
-				SM.copy_known_languages_from(M, FALSE)
+				SM.copy_languages(M, LANGUAGE_MIND)
 				playerClone =  TRUE
-				M.next_move_modifier = 1
-				M.nutrition -= 500
+				M.action_cooldown_mod = 1
+				M.adjust_nutrition(-500)
 
 				//Damage the clone
 				SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/2
 				SM.adjustCloneLoss(60, 0)
 				SM.setOrganLoss(ORGAN_SLOT_BRAIN, 40)
-				SM.nutrition = startHunger/2
+				SM.set_nutrition(startHunger/2)
 
 				//Transfer remaining reagent to clone. I think around 30u will make a healthy clone, otherwise they'll have clone damage, blood loss, brain damage and hunger.
 				SM.reagents.add_reagent(/datum/reagent/fermi/SDGFheal, volume)
 				M.reagents.remove_reagent(type, volume)
-				log_game("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
+				log_reagent("FERMICHEM: [volume]u of SDGFheal has been transferred to the clone")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Sentient clones made")
 				return ..()
 
@@ -134,7 +157,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(21)
 							to_chat(M, "<span class='notice'>The cells fail to catalyse around a nucleation event, instead merging with your cells.</span>") //This stuff is hard enough to make to rob a user of some benefit. Shouldn't replace Rezadone as it requires the user to not only risk making a player controlled clone, but also requires them to have split in two (which also requires 30u of SGDF).
 							REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
-							log_game("FERMICHEM: [M] ckey: [M.key] is being healed by SDGF")
+							log_reagent("FERMICHEM: [M] ckey: [M.key] is being healed by SDGF")
 						if(22 to INFINITY)
 							M.adjustCloneLoss(-1, 0)
 							M.adjustBruteLoss(-1, 0)
@@ -146,42 +169,46 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 						if(21)
 							to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 						if(22 to 29)
-							M.nutrition = M.nutrition + (M.nutrition/10)
+							M.adjust_nutrition(M.nutrition/10)
 						if(30)
 							to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
 						if(31 to 49)
-							M.nutrition = M.nutrition + (M.nutrition/5)
+							M.adjust_nutrition(M.nutrition/5)
 						if(50)
 							to_chat(M, "<span class='notice'>The synthetic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-							M.next_move_modifier += 4//If this makes you fast then please fix it, it should make you slow!!
+							M.action_cooldown_mod += 4//If this makes you fast then please fix it, it should make you slow!!
 							//candidates = pollGhostCandidates("Do you want to play as a clone of [M.name] and do you agree to respect their character and act in a similar manner to them? I swear to god if you diddle them I will be very disapointed in you. ", "FermiClone", null, ROLE_SENTIENCE, 300) // see poll_ignore.dm, should allow admins to ban greifers or bullies
 						if(51 to 79)
-							M.nutrition = M.nutrition + (M.nutrition/2)
+							M.adjust_nutrition(M.nutrition/2)
 						if(80)
 							to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, you feel like you'll split soon...</span>")
 							if (M.nutrition < 20000)
-								M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
+								M.set_nutrition(20000) //https://www.youtube.com/watch?v=Bj_YLenOlZI
 						if(86)//Upon splitting, you get really hungry and are capable again. Deletes the chem after you're done.
-							M.nutrition = 15//YOU BEST BE EATTING AFTER THIS YOU CUTIE
-							M.next_move_modifier -= 4
+							M.set_nutrition(15)//YOU BEST BE EATTING AFTER THIS YOU CUTIE
+							M.action_cooldown_mod -= 4
 							to_chat(M, "<span class='notice'>Your body splits away from the cell clone of yourself, leaving you with a drained and hollow feeling inside.</span>")
 
 							//clone
 							var/typepath = M.type
 							var/mob/living/fermi_Clone = new typepath(M.loc)
-							var/mob/living/carbon/C = fermi_Clone
+							var/mob/living/carbon/human/SM = fermi_Clone
 
-							if(istype(C) && istype(M))
-								C.real_name = M.real_name
-								M.dna.transfer_identity(C, transfer_SE=1)
-								C.updateappearance(mutcolor_update=1)
-							C.apply_status_effect(/datum/status_effect/chem/SGDF)
-							var/datum/status_effect/chem/SGDF/S = C.has_status_effect(/datum/status_effect/chem/SGDF)
+							if(istype(SM) && istype(M))
+								SM.real_name = M.real_name
+								M.dna.transfer_identity(SM, transfer_SE=1)
+								SM.underwear = "nude"
+								SM.socks = "nude"
+								SM.undershirt = "nude"
+								SM.updateappearance(mutcolor_update=1)
+								M.transfer_trait_datums(SM)
+							SM.real_name = M.real_name
+							SM.apply_status_effect(/datum/status_effect/chem/SGDF)
+							var/datum/status_effect/chem/SGDF/S = SM.has_status_effect(/datum/status_effect/chem/SGDF)
 							S.original = M
 							S.originalmind = M.mind
 							S.status_set = TRUE
-
-							log_game("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
+							log_reagent("FERMICHEM: [M] ckey: [M.key] has created a mindless clone of themselves")
 							SSblackbox.record_feedback("tally", "fermi_chem", 1, "Braindead clones made")
 						if(87 to INFINITY)
 							M.reagents.remove_reagent(type, volume)//removes SGDF on completion. Has to do it this way because of how i've coded it. If some madlab gets over 1k of SDGF, they can have the clone healing.
@@ -194,25 +221,25 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	if (playerClone == TRUE)//If the player made a clone with it, then thats all they get.
 		playerClone = FALSE
 		return
-	if (M.next_move_modifier == 4 && !M.has_status_effect(/datum/status_effect/chem/SGDF))//checks if they're ingested over 20u of the stuff, but fell short of the required 30u to make a clone.
+	if (M.action_cooldown_mod == 4 && !M.has_status_effect(/datum/status_effect/chem/SGDF))//checks if they're ingested over 20u of the stuff, but fell short of the required 30u to make a clone.
 		to_chat(M, "<span class='notice'>You feel the cells begin to merge with your body, unable to reach nucleation, they instead merge with your body, healing any wounds.</span>")
 		M.adjustCloneLoss(-10, 0) //I don't want to make Rezadone obsolete.
 		M.adjustBruteLoss(-25, 0)// Note that this takes a long time to apply and makes you fat and useless when it's in you, I don't think this small burst of healing will be useful considering how long it takes to get there.
 		M.adjustFireLoss(-25, 0)
 		M.blood_volume += 250
 		M.heal_bodypart_damage(1,1)
-		M.next_move_modifier = 1
+		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
-			M.nutrition += 250
+			M.adjust_nutrition(250)
 	else if (unitCheck == TRUE && !M.has_status_effect(/datum/status_effect/chem/SGDF))// If they're ingested a little bit (10u minimum), then give them a little healing.
 		unitCheck = FALSE
 		to_chat(M, "<span class='notice'>the cells fail to hold enough mass to generate a clone, instead diffusing into your system.</span>")
 		M.adjustBruteLoss(-10, 0)
 		M.adjustFireLoss(-10, 0)
 		M.blood_volume += 100
-		M.next_move_modifier = 1
+		M.action_cooldown_mod = 1
 		if (M.nutrition < 1500)
-			M.nutrition += 500
+			M.adjust_nutrition(500)
 
 /datum/reagent/fermi/SDGF/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(volume<5)
@@ -235,6 +262,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.real_name = M.real_name
 			M.dna.transfer_identity(SM)
 			SM.updateappearance(mutcolor_update=1)
+			M.transfer_trait_datums(SM)
 		M.mind.transfer_to(SM)
 		M.visible_message("<span class='warning'>[M]'s body shudders, the growth factor rapidly splitting into a new clone of [M].</span>")
 
@@ -244,7 +272,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			SM.blood_volume = (BLOOD_VOLUME_NORMAL*SM.blood_ratio)/1.5
 			SM.adjustCloneLoss((bodydamage/10), 0)
 			SM.setOrganLoss(ORGAN_SLOT_BRAIN, (bodydamage/10))
-			SM.nutrition = 400
+			SM.adjust_nutrition(400)
 		if(bodydamage>200)
 			SM.gain_trauma_type(BRAIN_TRAUMA_MILD)
 		if(bodydamage>300)
@@ -284,7 +312,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 		M.blood_volume += 10
 	M.adjustCloneLoss(-2, 0)
 	M.setOrganLoss(ORGAN_SLOT_BRAIN, -1)
-	M.nutrition += 10
+	M.adjust_nutrition(10)
 	..()
 
 //Unobtainable, used if SDGF is impure but not too impure
@@ -309,6 +337,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 	can_synth = TRUE
 	taste_description = "a weird chemical fleshy flavour"
 	chemical_flags = REAGENT_SNEAKYNAME
+	value = REAGENT_VALUE_RARE
 
 /datum/reagent/impure/SDZF/on_mob_life(mob/living/carbon/M) //If you're bad at fermichem, turns your clone into a zombie instead.
 	switch(current_cycle)//Pretends to be normal
@@ -316,28 +345,28 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 			to_chat(M, "<span class='notice'>You feel the synethic cells rest uncomfortably within your body as they start to pulse and grow rapidly.</span>")
 			startHunger = M.nutrition
 		if(21 to 29)
-			M.nutrition = M.nutrition + (M.nutrition/10)
+			M.adjust_nutrition(M.nutrition/10)
 		if(30)
 			to_chat(M, "<span class='notice'>You feel the synethic cells grow and expand within yourself, bloating your body outwards.</span>")
 		if(31 to 49)
-			M.nutrition = M.nutrition + (M.nutrition/5)
+			M.adjust_nutrition(M.nutrition/5)
 		if(50)
 			to_chat(M, "<span class='notice'>The synethic cells begin to merge with your body, it feels like your body is made of a viscous water, making your movements difficult.</span>")
-			M.next_move_modifier = 4//If this makes you fast then please fix it, it should make you slow!!
+			M.action_cooldown_mod = 4//If this makes you fast then please fix it, it should make you slow!!
 		if(51 to 73)
-			M.nutrition = M.nutrition + (M.nutrition/2)
+			M.adjust_nutrition(M.nutrition/2)
 		if(74)
 			to_chat(M, "<span class='notice'>The cells begin to precipitate outwards of your body, but... something is wrong, the sythetic cells are beginnning to rot...</span>")
 			if (M.nutrition < 20000) //whoever knows the maxcap, please let me know, this seems a bit low.
-				M.nutrition = 20000 //https://www.youtube.com/watch?v=Bj_YLenOlZI
+				M.set_nutrition(20000) //https://www.youtube.com/watch?v=Bj_YLenOlZI
 		if(75 to 85)
 			M.adjustToxLoss(1, 0)// the warning!
 
 		if(86)//mean clone time!
 			if (!M.reagents.has_reagent(/datum/reagent/medicine/pen_acid))//Counterplay is pent.)
 				message_admins("(non-infectious) SDZF: Zombie spawned at [M] [COORD(M)]!")
-				M.nutrition = startHunger - 500//YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
-				M.next_move_modifier = 1
+				M.set_nutrition(startHunger - 500) //YOU BEST BE RUNNING AWAY AFTER THIS YOU BADDIE
+				M.action_cooldown_mod = 1
 				to_chat(M, "<span class='warning'>Your body splits away from the cell clone of yourself, your attempted clone birthing itself violently from you as it begins to shamble around, a terrifying abomination of science.</span>")
 				M.visible_message("[M] suddenly shudders, and splits into a funky smelling copy of themselves!")
 				M.emote("scream")
@@ -347,12 +376,12 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				ZI.real_name = M.real_name//Give your offspring a big old kiss.
 				ZI.name = M.real_name
 				ZI.desc = "[M]'s clone, gone horribly wrong."
-				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying zombie instead")
+				log_reagent("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying zombie instead")
 				M.reagents.remove_reagent(type, 20)
 
 			else//easier to deal with
 				to_chat(M, "<span class='notice'>The pentetic acid seems to have stopped the decay for now, clumping up the cells into a horrifying tumour!</span>")
-				M.nutrition = startHunger - 500
+				M.set_nutrition(startHunger - 500)
 				var/mob/living/simple_animal/slime/S = new(get_turf(M.loc),"grey") //TODO: replace slime as own simplemob/add tumour slime cores for science/chemistry interplay
 				S.damage_coeff = list(BRUTE = ((1 / volume)**0.1) , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 				S.name = "Living teratoma"
@@ -360,7 +389,7 @@ IMPORTANT FACTORS TO CONSIDER WHILE BALANCING
 				S.rabid = 1//Make them an angery boi
 				M.reagents.remove_reagent(type, volume)
 				to_chat(M, "<span class='warning'>A large glob of the tumour suddenly splits itself from your body. You feel grossed out and slimey...</span>")
-				log_game("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying teratoma instead")
+				log_reagent("FERMICHEM: [M] ckey: [M.key]'s clone has become a horrifying teratoma instead")
 				SSblackbox.record_feedback("tally", "fermi_chem", 1, "Zombie clones made!")
 
 		if(87 to INFINITY)

@@ -4,7 +4,9 @@
 	var/beamtype = /obj/item/projectile/beam/disabler //change for adminbus
 
 /obj/item/clothing/glasses/hud/security/sunglasses/disablers/ranged_attack(mob/living/carbon/human/user,atom/A, params)
-	user.changeNext_move(CLICK_CD_RANGE)
+	if(!user.CheckActionCooldown(CLICK_CD_RANGE))
+		return
+	user.last_action = world.time
 	var/obj/item/projectile/beam/disabler/LE = new beamtype( loc )
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 	LE.firer = src

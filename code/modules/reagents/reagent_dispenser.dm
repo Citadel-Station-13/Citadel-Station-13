@@ -24,7 +24,8 @@
 
 /obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
-	reagents.add_reagent(reagent_id, tank_volume)
+	if(reagent_id)
+		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
 
 /obj/structure/reagent_dispensers/proc/boom()
@@ -79,7 +80,7 @@
 	else
 		. += "There are no paper cups left."
 
-/obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+/obj/structure/reagent_dispensers/water_cooler/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -91,6 +92,38 @@
 	user.put_in_hands(S)
 	paper_cups--
 
+/obj/structure/reagent_dispensers/plumbed
+	name = "stationairy water tank"
+	anchored = TRUE
+	icon_state = "water_stationairy"
+	desc = "A stationairy, plumbed, water tank."
+
+/obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
+
+/obj/structure/reagent_dispensers/plumbed/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+	. = ..()
+	if(. == SUCCESSFUL_UNFASTEN)
+		user.visible_message("<span class='notice'>[user.name] [anchored ? "fasten" : "unfasten"] [src]</span>", \
+		"<span class='notice'>You [anchored ? "fasten" : "unfasten"] [src]</span>")
+		var/datum/component/plumbing/CP = GetComponent(/datum/component/plumbing)
+		if(anchored)
+			CP.enable()
+		else
+			CP.disable()
+
+/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/simple_supply)
+
+/obj/structure/reagent_dispensers/plumbed/storage
+	name = "stationairy storage tank"
+	icon_state = "tank_stationairy"
+	reagent_id = null //start empty
+
+/obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/tank)
+
 //////////////
 //Fuel Tanks//
 //////////////
@@ -101,14 +134,18 @@
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 
-/obj/structure/reagent_dispensers/fueltank/high //Unused - Good for ghost roles
+/obj/structure/reagent_dispensers/fueltank/high
 	name = "high-capacity fuel tank"
 	desc = "A now illegal tank, full of highly pressurized industrial welding fuel. Do not consume or have a open flame close to this tank."
 	icon_state = "fuel_high"
-	tank_volume = 3000
+	tank_volume = 5000
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
+	qdel(src)
+
+/obj/structure/reagent_dispensers/fueltank/high/boom()
+	explosion(get_turf(src), 0, 2, 5, flame_range = 12)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
@@ -120,9 +157,10 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/tesla_act()
+/obj/structure/reagent_dispensers/fueltank/zap_act(power, zap_flags, shocked_objects)
 	..() //extend the zap
-	boom()
+	if(ZAP_OBJ_DAMAGE & zap_flags)
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -144,7 +182,7 @@
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
-			reagents.trans_to(W, W.max_fuel)
+			reagents.trans_to(W, W.max_fuel, log = TRUE)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			W.update_icon()
@@ -169,6 +207,7 @@
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
@@ -182,6 +221,7 @@
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/virus_food
@@ -211,7 +251,6 @@
 /obj/structure/reagent_dispensers/keg
 	name = "keg"
 	desc = "A keg."
-	icon = 'modular_citadel/icons/obj/objects.dmi'
 	icon_state = "keg"
 
 /obj/structure/reagent_dispensers/keg/mead
@@ -220,30 +259,11 @@
 	icon_state = "orangekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/mead
 
-/obj/structure/reagent_dispensers/keg/aphro
-	name = "keg of aphrodisiac"
-	desc = "A keg of aphrodisiac."
-	icon_state = "pinkkeg"
-	reagent_id = /datum/reagent/drug/aphrodisiac
-	tank_volume = 150
-
-/obj/structure/reagent_dispensers/keg/aphro/strong
-	name = "keg of strong aphrodisiac"
-	desc = "A keg of strong and addictive aphrodisiac."
-	reagent_id = /datum/reagent/drug/aphrodisiacplus
-	tank_volume = 120
-
 /obj/structure/reagent_dispensers/keg/milk
 	name = "keg of milk"
 	desc = "A keg of pasteurised, homogenised, filtered and semi-skimmed space milk."
 	icon_state = "whitekeg"
 	reagent_id = /datum/reagent/consumable/milk
-
-/obj/structure/reagent_dispensers/keg/semen
-	name = "keg of semen"
-	desc = "Dear lord, where did this even come from?"
-	icon_state = "whitekeg"
-	reagent_id = /datum/reagent/consumable/semen
 
 /obj/structure/reagent_dispensers/keg/gargle
 	name = "keg of pan galactic gargleblaster"
@@ -251,3 +271,40 @@
 	icon_state = "bluekeg"
 	reagent_id = /datum/reagent/consumable/ethanol/gargle_blaster
 	tank_volume = 100
+
+//kegs given by the travelling trader's bartender subtype
+
+/obj/structure/reagent_dispensers/keg/quintuple_sec
+	name = "keg of quintuple sec"
+	desc = "A keg of pure justice."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/quintuple_sec
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/narsour
+	name = "keg of narsour"
+	desc = "A keg of eldritch terrors."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/narsour
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/red_queen
+	name = "keg of red queen"
+	desc = "A strange keg, filled with a kind of tea."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/red_queen
+	tank_volume = 250
+
+/obj/structure/reagent_dispensers/keg/hearty_punch
+	name = "keg of hearty punch"
+	desc = "A keg that will get you right back on your feet."
+	icon_state = "redkeg"
+	reagent_id = /datum/reagent/consumable/ethanol/hearty_punch
+	tank_volume = 100 //this usually has a 15:1 ratio when being made, so we provide less of it
+
+/obj/structure/reagent_dispensers/keg/neurotoxin
+	name = "keg of neurotoxin"
+	desc = "A keg of the sickly substance known as 'neurotoxin'."
+	icon_state = "bluekeg"
+	reagent_id = /datum/reagent/consumable/ethanol/neurotoxin
+	tank_volume = 100 //2.5x less than the other kegs because it's harder to get

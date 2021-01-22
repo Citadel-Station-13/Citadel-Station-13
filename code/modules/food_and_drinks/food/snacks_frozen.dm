@@ -91,7 +91,7 @@
 	icon = 'icons/obj/food/snowcones.dmi'
 	icon_state = "flavorless_sc"
 	trash = /obj/item/reagent_containers/food/drinks/sillycup //We dont eat paper cups
-	bonus_reagents = list(/datum/reagent/water = 10) //Base line will allways give water
+	bonus_reagents = list(/datum/reagent/water = 10) //Base line will always give water
 	list_reagents = list(/datum/reagent/water = 1) // We dont get food for water/juices
 	filling_color = "#FFFFFF" //Ice is white
 	tastes = list("ice" = 1, "water" = 1)
@@ -103,7 +103,7 @@
 	icon_state = "lime_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/limejuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "limes" = 5)
-	foodtype = FRUIT
+	foodtype = FRUIT | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/snowcones/lemon
 	name = "lemon snowcone"
@@ -191,7 +191,7 @@
 	icon_state = "fruitsalad_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/limejuice = 5, /datum/reagent/consumable/orangejuice = 5)
 	tastes = list("ice" = 1, "water" = 1, "oranges" = 5, "limes" = 5, "lemons" = 5, "citrus" = 5, "salad" = 5)
-	foodtype = FRUIT
+	foodtype = FRUIT | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/snowcones/pineapple
 	name = "pineapple snowcone"

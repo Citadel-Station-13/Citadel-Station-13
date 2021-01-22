@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
+
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
@@ -51,7 +52,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/inverse_chem					// What chem is metabolised when purity is below inverse_chem_val, this shouldn't be made, but if it does, well, I guess I'll know about it.
 	var/metabolizing = FALSE
 	var/chemical_flags // See fermi/readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_ONLYINVERSE, REAGENT_ONMOBMERGE, REAGENT_INVISIBLE, REAGENT_FORCEONNEW, REAGENT_SNEAKYNAME
-	var/value = 0 //How much does it sell for in cargo?
+	var/value = REAGENT_VALUE_NONE //How much does it sell for in cargo?
+	var/datum/material/material //are we made of material?
+
+/datum/reagent/New()
+	. = ..()
+
+	if(material)
+		material = SSmaterials.GetMaterialRef(material)
+
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -62,7 +71,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = CLAMP((1 - touch_protection), 0, 1)
+			var/modifier = clamp((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(type, amount)
@@ -204,6 +213,16 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 
+/**
+  * New, standardized method for chemicals to affect hydroponics trays.
+  * Defined on a per-chem level as opposed to by the tray.
+  * Can affect plant's health, stats, or cause the plant to react in certain ways.
+  */
+/datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!mytray || !chems)
+		return
+	return
+
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
 	var/list/rs = list()
@@ -214,10 +233,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 //For easy bloodsucker disgusting and blood removal
 /datum/reagent/proc/disgust_bloodsucker(mob/living/carbon/C, disgust, blood_change, blood_puke = TRUE, force)
-	if(isvamp(C))
+	if(AmBloodsucker(C))
 		var/datum/antagonist/bloodsucker/bloodsuckerdatum = C.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 		if(disgust)
 			bloodsuckerdatum.handle_eat_human_food(disgust, blood_puke, force)
 		if(blood_change)
 			bloodsuckerdatum.AddBloodVolume(blood_change)
-

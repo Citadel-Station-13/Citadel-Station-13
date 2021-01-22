@@ -17,7 +17,7 @@
 		qdel(X)
 	..()
 
-/datum/action/innate/cult/blood_magic/IsAvailable()
+/datum/action/innate/cult/blood_magic/IsAvailable(silent = FALSE)
 	if(!iscultist(owner))
 		return FALSE
 	return ..()
@@ -118,7 +118,7 @@
 		hand_magic = null
 	..()
 
-/datum/action/innate/cult/blood_spell/IsAvailable()
+/datum/action/innate/cult/blood_spell/IsAvailable(silent = FALSE)
 	if(!iscultist(owner) || owner.incapacitated()  || !charges)
 		return FALSE
 	return ..()
@@ -165,7 +165,7 @@
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-	empulse(owner, 2, 5)
+	empulse_using_range(owner, 8)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
@@ -343,7 +343,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NO_ATTACK_CHAIN_SOFT_STAMCRIT
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -439,33 +439,33 @@
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else // cult doesn't stun any longer when halos are out, instead it does burn damage + knockback!
 			var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(user_antag.cult_team.cult_ascendent)
+			if(user_antag.cult_team?.cult_ascendent)
 				if(!iscultist(L))
 					L.adjustFireLoss(20)
 					if(L.move_resist < MOVE_FORCE_STRONG)
 						var/atom/throw_target = get_edge_target_turf(L, user.dir)
 						L.throw_at(throw_target, 7, 1, user)
-			else if(!iscultist(L))
+			else if(!is_servant_of_ratvar(L))
 				L.DefaultCombatKnockdown(160)
 				L.adjustStaminaLoss(140) //Ensures hard stamcrit
 				L.flash_act(1,1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 				else if(iscarbon(target))
 					var/mob/living/carbon/C = L
-					C.silent += CLAMP(12 - C.silent, 0, 6)
-					C.stuttering += CLAMP(30 - C.stuttering, 0, 15)
-					C.cultslurring += CLAMP(30 - C.cultslurring, 0, 15)
+					C.silent += clamp(12 - C.silent, 0, 6)
+					C.stuttering += clamp(30 - C.stuttering, 0, 15)
+					C.cultslurring += clamp(30 - C.cultslurring, 0, 15)
 					C.Jitter(15)
 			else					// cultstun no longer hardstuns + damages hostile cultists, instead debuffs them hard + deals some damage; debuffs for a bit longer since they don't add the clockie belligerent debuff
 				if(iscarbon(target))
 					var/mob/living/carbon/C = L
 					C.stuttering = max(10, C.stuttering)
 					C.drowsyness = max(10, C.drowsyness)
-					C.confused += CLAMP(20 - C.confused, 0, 10)
+					C.confused += clamp(20 - C.confused, 0, 10)
 				L.adjustBruteLoss(15)
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [iscultist(L) ? "writhes in pain" : "falls to the ground!"]</span>")
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] [is_servant_of_ratvar(L) ? "writhes in pain!" : "falls to the ground!"]</span>")
 		uses--
 	..()
 
@@ -577,7 +577,9 @@
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(50))
+			if(!iscultist(user, TRUE))
+				to_chat(user, "<span class='warning'>You are not strongly connected enough to Nar'sie to use make constructs...</span>")
+			else if(candidate.use(50))
 				uses--
 				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
@@ -600,13 +602,15 @@
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
-			if(candidate.mmi)
+			if(!iscultist(user, TRUE))
+				to_chat(user, "<span class='warning'>You are not strongly connected enough to Nar'sie to use make constructs...</span>")
+			else if(candidate.mmi)
 				user.visible_message("<span class='danger'>A dark cloud emanates from [user]'s hand and swirls around [candidate]!</span>")
 				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, 1)
 				var/prev_color = candidate.color
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
-					candidate.emp_act(EMP_HEAVY)
+					candidate.emp_act(80)
 					var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 					user.visible_message("<span class='danger'>The dark cloud receedes from what was formerly [candidate], revealing a\n [construct_class]!</span>")
 					switch(construct_class)
@@ -713,9 +717,9 @@
 						uses = 0
 					ratio *= -1
 					H.adjustOxyLoss((overall_damage*ratio) * (H.getOxyLoss() / overall_damage), 0)
-					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0)
-					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0)
-					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0)
+					H.adjustToxLoss((overall_damage*ratio) * (H.getToxLoss() / overall_damage), 0, toxins_type = TOX_OMNI)
+					H.adjustFireLoss((overall_damage*ratio) * (H.getFireLoss() / overall_damage), 0, only_organic = FALSE)
+					H.adjustBruteLoss((overall_damage*ratio) * (H.getBruteLoss() / overall_damage), 0, only_organic = FALSE)
 					H.updatehealth()
 					playsound(get_turf(H), 'sound/magic/staff_healing.ogg', 25)
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
@@ -797,7 +801,7 @@
 					var/turf/T = get_turf(user)
 					qdel(src)
 					var/datum/action/innate/cult/spear/S = new(user)
-					var/obj/item/twohanded/cult_spear/rite = new(T)
+					var/obj/item/cult_spear/rite = new(T)
 					S.Grant(user, rite)
 					rite.spear_act = S
 					if(user.put_in_hands(rite))
@@ -820,6 +824,8 @@
 			if("Blood Beam (500)")
 				if(uses < 500)
 					to_chat(user, "<span class='cultitalic'>You need 500 charges to perform this rite.</span>")
+				else if(!iscultist(user, TRUE))
+					to_chat(user, "<span class='warning'>You are not strongly connected to Nar'sie enough to use something of this power.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
 					uses -= 500

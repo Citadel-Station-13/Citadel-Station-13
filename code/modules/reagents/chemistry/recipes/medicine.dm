@@ -50,6 +50,18 @@
 	results = list(/datum/reagent/medicine/salglu_solution = 3)
 	required_reagents = list(/datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
 
+/datum/chemical_reaction/baked_banana_peel
+	results = list(/datum/reagent/consumable/baked_banana_peel = 1)
+	required_temp = 413.15 // if it's good enough for caramel it's good enough for this
+	required_reagents = list(/datum/reagent/consumable/banana_peel = 1)
+	mix_message = "The pulp dries up and takes on a powdery state!"
+	mob_react = FALSE
+
+/datum/chemical_reaction/coagulant_weak
+	results = list(/datum/reagent/medicine/coagulant/weak = 3)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 2, /datum/reagent/consumable/baked_banana_peel = 1)
+	mob_react = FALSE
+
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = /datum/reagent/medicine/mine_salve
@@ -105,7 +117,7 @@
 	if(St.purity < 1)
 		St.volume *= St.purity
 		St.purity = 1
-	var/amount = CLAMP(0.002, 0, N.volume)
+	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
 	St.name = "[initial(St.name)] [round(St.data["grown_volume"], 0.1)]u colony"
@@ -143,7 +155,7 @@
 	required_reagents = list(/datum/reagent/medicine/pen_acid = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
@@ -206,6 +218,12 @@
 	id = /datum/reagent/medicine/strange_reagent
 	results = list(/datum/reagent/medicine/strange_reagent = 3)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
+
+/datum/chemical_reaction/strange_reagent/alt
+	name = "Strange Reagent"
+	id = /datum/reagent/medicine/strange_reagent
+	results = list(/datum/reagent/medicine/strange_reagent = 2)
+	required_reagents = list(/datum/reagent/medicine/omnizine/protozine = 1, /datum/reagent/water/holywater = 1, /datum/reagent/toxin/mutagen = 1)
 
 /datum/chemical_reaction/mannitol
 	name = "Mannitol"
@@ -287,12 +305,6 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/jelly_convert
-	name = "Blood Jelly Conversion"
-	id = /datum/reagent/toxin/slimejelly
-	results = list(/datum/reagent/toxin/slimejelly = 1)
-	required_reagents = list(/datum/reagent/toxin = 1, /datum/reagent/blood/jellyblood = 1)
-
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = /datum/reagent/medicine/corazone
@@ -318,3 +330,41 @@
 	id = /datum/reagent/medicine/psicodine
 	results = list(/datum/reagent/medicine/psicodine = 5)
 	required_reagents = list( /datum/reagent/medicine/mannitol = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)
+
+/datum/chemical_reaction/medsuture
+	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+
+/datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/suture/medicated(location)
+
+/datum/chemical_reaction/medmesh
+	required_reagents = list(/datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+
+/datum/chemical_reaction/medmesh/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/mesh/advanced(location)
+
+/datum/chemical_reaction/suture
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/medicine/styptic_powder = 2)
+
+/datum/chemical_reaction/suture/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/suture/(location)
+
+/datum/chemical_reaction/mesh
+	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/medicine/silver_sulfadiazine = 2)
+
+/datum/chemical_reaction/mesh/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/mesh/(location)
+
+/datum/chemical_reaction/system_cleaner
+	name = "System Cleaner"
+	id = /datum/reagent/medicine/system_cleaner
+	results = list(/datum/reagent/medicine/system_cleaner = 4)
+	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)

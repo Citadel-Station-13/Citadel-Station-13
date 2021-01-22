@@ -32,6 +32,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 	var/scribe_delay = 40 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
+	var/requires_full_power = FALSE		//requires full power to draw or invoke
 	var/invoke_damage = 0 //how much damage invokers take when invoking it
 	var/construct_invoke = TRUE //if constructs can invoke it
 
@@ -66,7 +67,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 
-/obj/effect/rune/attack_hand(mob/living/user)
+/obj/effect/rune/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(.)
 		return
@@ -81,7 +82,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
+	if(isshade(M) || istype(M, /mob/living/simple_animal/hostile/construct))
 		if(construct_invoke || !iscultist(M)) //if you're not a cult construct we want the normal fail message
 			attack_hand(M)
 		else
@@ -185,11 +186,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
 	rune_in_use = FALSE
+	requires_full_power = TRUE
 
 /obj/effect/rune/convert/do_invoke_glow()
 	return
 
-/obj/effect/rune/convert/invoke(var/list/invokers)
+/obj/effect/rune/convert/invoke(list/invokers)
 	if(rune_in_use)
 		return
 	var/list/myriad_targets = list()
@@ -201,11 +203,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Offer rune failed - no eligible targets")
 		return
+	var/mob/living/L = pick(myriad_targets)
+	if(HAS_TRAIT(L, TRAIT_SACRIFICED))
+		fail_invoke()
+		log_game("Offer rune failed - target has already been sacrificed")
+		to_chat(invokers, "<span class='warning'>[L] has already been sacrificed!</span>")
+		return
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	var/oldcolor = color
 	color = RUNE_COLOR_DARKRED
-	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 
 	var/mob/living/F = invokers[1]
@@ -262,7 +269,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.uncuff()
 		H.stuttering = 0
 		H.cultslurring = 0
-	return 1
+	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	var/mob/living/first_invoker = invokers[1]
@@ -306,12 +313,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		stone.invisibility = 0
 
 	if(sacrificial)
+		ADD_TRAIT(sacrificial, TRAIT_SACRIFICED, "sacrificed")
 		if(iscyborg(sacrificial))
-			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, 1)
-			sacrificial.dust() //To prevent the MMI from remaining
-		else
-			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
-			sacrificial.gib()
+			var/mob/living/silicon/robot/bot = sacrificial
+			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, TRUE)
+			bot.deconstruct()
+
+		else if(ishuman(sacrificial))
+			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
+			var/mob/living/carbon/human/H = sacrificial
+			H.spew_organ(2, 6)
 	return TRUE
 
 /obj/effect/rune/empower
@@ -458,6 +469,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	pixel_y = -32
 	scribe_delay = 500 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
+	requires_full_power = TRUE
 	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
@@ -482,6 +494,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!user_antag.cult_team)
+		to_chat(user, "<span class='cultlarge'>You can't seem to make the arcane links to your fellows that you'd need to use this.</span>")
+		return
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))
@@ -812,6 +827,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invoke_damage = 10
 	construct_invoke = FALSE
 	color = RUNE_COLOR_DARKRED
+	requires_full_power = TRUE
 	var/mob/living/affecting = null
 	var/ghost_limit = 3
 	var/ghosts = 0
@@ -942,6 +958,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100
+	requires_full_power = TRUE
 
 /obj/effect/rune/apocalypse/invoke(var/list/invokers)
 	if(rune_in_use)
@@ -950,6 +967,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/area/place = get_area(src)
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!user_antag.cult_team)
+		to_chat(user, "<span class='cultlarge'>You can't seem to make the arcane links to your fellows that you'd need to use this.</span>")
+		return
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	if(summon_objective.summon_spots.len <= 1)
 		to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
@@ -971,7 +991,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
 	for(var/mob/living/L in range(src, 3))
 		L.DefaultCombatKnockdown(30)
-	empulse(T, 0.42*(intensity), 1)
+	empulse_using_range(T, 0.65*(intensity))
 	var/list/images = list()
 	var/zmatch = T.z
 	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]

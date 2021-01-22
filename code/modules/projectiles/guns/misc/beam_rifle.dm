@@ -29,10 +29,13 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	can_turret = FALSE
+	can_circuit = FALSE
 	//Cit changes: beam rifle stats.
 	slowdown = 1
 	item_flags = NO_MAT_REDEMPTION | SLOWS_WHILE_IN_HAND | NEEDS_PERMIT
 	pin = null
+	automatic_charge_overlays = FALSE
 	var/aiming = FALSE
 	var/aiming_time = 14
 	var/aiming_time_fire_threshold = 5
@@ -66,7 +69,8 @@
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
-	var/zoom_target_view_increase = 10
+	///The radius you want to zoom by
+	var/zoom_target_view_increase = 9.5
 	var/zooming = FALSE
 	var/zoom_lock = ZOOM_LOCK_OFF
 	var/zooming_angle
@@ -77,7 +81,6 @@
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
-	var/mob/listeningTo
 
 /obj/item/gun/energy/beam_rifle/debug
 	delay = 0
@@ -131,7 +134,7 @@
 	if(zoom_lock == ZOOM_LOCK_OFF)
 		return
 	zooming = TRUE
-	current_user.client.change_view(world.view + zoom_target_view_increase)
+	current_user.client.view_size.setTo(zoom_target_view_increase)
 	zoom_current_view_increase = zoom_target_view_increase
 
 /obj/item/gun/energy/beam_rifle/proc/stop_zooming(mob/user)
@@ -144,20 +147,19 @@
 		user = current_user
 	if(!user || !user.client)
 		return FALSE
-	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+	user.client.view_size.zoomIn()
 	zoom_current_view_increase = 0
-	user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
 
-/obj/item/gun/energy/beam_rifle/update_icon()
-	cut_overlays()
+/obj/item/gun/energy/beam_rifle/update_overlays()
+	. = ..()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
 	if(!QDELETED(cell) && (cell.charge > primary_ammo.e_cost))
-		add_overlay(charged_overlay)
+		. += charged_overlay
 	else
-		add_overlay(drained_overlay)
+		. += drained_overlay
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	if(!structure_piercing)
@@ -178,7 +180,6 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
 	QDEL_LIST(current_tracers)
-	listeningTo = null
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
@@ -260,17 +261,12 @@
 	if(user == current_user)
 		return
 	stop_aiming(current_user)
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
-	if(istype(current_user))
-		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
+	if(current_user)
+		UnregisterSignal(current_user, COMSIG_MOVABLE_MOVED)
 		current_user = null
 	if(istype(user))
 		current_user = user
-		LAZYOR(current_user.mousemove_intercept_objects, src)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
-		listeningTo = user
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	if(aiming)
@@ -295,7 +291,7 @@
 	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
-	if(fire_check())
+	if(fire_check() && can_trigger_gun(M))
 		sync_ammo()
 		do_fire(M.client.mouseObject, M, FALSE, M.client.mouseParams, M.zone_selected)
 	stop_aiming()
@@ -318,7 +314,7 @@
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = clamp(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
@@ -369,11 +365,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -425,10 +421,10 @@
 	var/wall_devastate = 0
 	var/aoe_structure_range = 0
 	var/aoe_structure_damage = 0
-	var/aoe_fire_range = 0
-	var/aoe_fire_chance = 0
-	var/aoe_mob_range = 0
-	var/aoe_mob_damage = 0
+	var/aoe_fire_range = 2
+	var/aoe_fire_chance = 100
+	var/aoe_mob_range = 2
+	var/aoe_mob_damage = 30
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
 	var/turf/cached
@@ -465,7 +461,7 @@
 				else
 					target.ex_act(EXPLODE_HEAVY)
 			return TRUE
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/AM = target
 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
 			if(structure_pierce < structure_pierce_amount)

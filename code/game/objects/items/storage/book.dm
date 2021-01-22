@@ -47,46 +47,63 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	user.visible_message("<span class='suicide'>[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
-/obj/item/storage/book/bible/attack_self(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/storage/book/bible/attack_self(mob/living/carbon/human/user)
+	if(!istype(user))
 		return
-	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!GLOB.bible_icon_state && H.job == "Chaplain")
-		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
-		for(var/i in 1 to GLOB.biblestates.len)
-			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
-			var/nicename = GLOB.biblenames[i]
-			H << browse_rsc(bibleicon, nicename)
-			dat += {"<tr><td><img src="[nicename]"></td><td><a href="?src=[REF(src)];seticon=[i]">[nicename]</a></td></tr>"}
-		dat += "</table></body></html>"
-		H << browse(dat, "window=editicon;can_close=0;can_minimize=0;size=250x650")
+	if(GLOB.bible_icon_state) // if there is already a bible icon return FALSE
+		return FALSE
+	if(user.job != "Chaplain") // if the user is not the chaplain, return FALSE
+		return FALSE
 
-/obj/item/storage/book/bible/Topic(href, href_list)
-	if(!usr.canUseTopic(src))
-		return
-	if(href_list["seticon"] && GLOB && !GLOB.bible_icon_state)
-		var/iconi = text2num(href_list["seticon"])
-		var/biblename = GLOB.biblenames[iconi]
-		var/obj/item/storage/book/bible/B = locate(href_list["src"])
-		B.icon_state = GLOB.biblestates[iconi]
-		B.item_state = GLOB.bibleitemstates[iconi]
+	var/list/skins = list()
+	for(var/i in 1 to GLOB.biblestates.len)
+		var/image/bible_image = image(icon = 'icons/obj/storage.dmi', icon_state = GLOB.biblestates[i])
+		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
-		if(B.icon_state == "honk1" || B.icon_state == "honk2")
-			var/mob/living/carbon/human/H = usr
-			H.dna.add_mutation(CLOWNMUT)
-			H.dna.add_mutation(SMILE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
+	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	if(!choice)
+		return FALSE
+	var/bible_index = GLOB.biblenames.Find(choice)
+	if(!bible_index)
+		return FALSE
+	icon_state = GLOB.biblestates[bible_index]
+	item_state = GLOB.bibleitemstates[bible_index]
 
-		GLOB.bible_icon_state = B.icon_state
-		GLOB.bible_item_state = B.item_state
+	if(icon_state == "honk1" || icon_state == "honk2")
+		var/mob/living/carbon/human/H = usr
+		H.dna.add_mutation(CLOWNMUT)
+		H.dna.add_mutation(SMILE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
-		usr << browse(null, "window=editicon")
+	GLOB.bible_icon_state = icon_state
+	GLOB.bibleitemstates = item_state
+	SSblackbox.record_feedback("text", "religion_book", 1, "[choice]")
+
+/**
+  * Checks if we are allowed to interact with the radial
+  *
+  * Arguements: user The mob interacting with the menu
+  */
+
+/obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
+	if(GLOB.bible_icon_state)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(!user.is_holding(src))
+		return FALSE
+	if(!user.can_read(src))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(user.job != "Chaplain")
+		return FALSE
+	return TRUE
 
 /obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
+		if(BP.is_robotic_limb())
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
@@ -104,7 +121,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
-/obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
+/obj/item/storage/book/bible/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
 
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -173,15 +190,15 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 			A.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 			A.reagents.add_reagent(/datum/reagent/water/holywater,unholy2clean)
-	if(istype(A, /obj/item/twohanded/required/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
+	if(istype(A, /obj/item/cult_bastard) || istype(A, /obj/item/melee/cultblade) && !iscultist(user))
 		to_chat(user, "<span class='notice'>You begin to exorcise [A].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,1)
 		if(do_after(user, 40, target = A))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
-			if(istype(A, /obj/item/twohanded/required/cult_bastard))
+			if(istype(A, /obj/item/cult_bastard))
 				for(var/obj/item/soulstone/SS in A.contents)
 					SS.usability = TRUE
-					for(var/mob/living/simple_animal/shade/EX in SS)
+					for(var/mob/living/simple_animal/hostile/construct/shade/EX in SS)
 						SSticker.mode.remove_cultist(EX.mind, 1, 0)
 						EX.icon_state = "ghost1"
 						EX.name = "Purified [EX.name]"
@@ -200,7 +217,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
-			for(var/mob/living/simple_animal/shade/EX in SS)
+			for(var/mob/living/simple_animal/hostile/construct/shade/EX in SS)
 				SSticker.mode.remove_cultist(EX.mind, 1, 0)
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [EX.name]"
@@ -238,11 +255,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
 
-/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
-	if (user.a_intent == INTENT_HELP)
-		return ..()
-	else
-		return ..(M,user,heal_mode = FALSE)
+/obj/item/storage/book/bible/syndicate/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1, heal_mode = TRUE)
+	if(user.a_intent != INTENT_HELP)
+		heal_mode = FALSE		//args pass over
+	return ..()		// to ..()
 
 /obj/item/storage/book/bible/syndicate/add_blood_DNA(list/blood_dna)
 	return FALSE

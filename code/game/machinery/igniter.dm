@@ -26,10 +26,7 @@
 	on = TRUE
 	icon_state = "igniter1"
 
-/obj/machinery/igniter/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/igniter/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	add_fingerprint(user)
 
 	use_power(50)
@@ -52,6 +49,9 @@
 		icon_state = "igniter[src.on]"
 	else
 		icon_state = "igniter0"
+
+/obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
 
 // Wall mounted remote-control igniter.
 

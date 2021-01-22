@@ -17,7 +17,7 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 	if(!msg)
 		return
 
-	if(!(prefs.toggles & CHAT_OOC))
+	if(!(prefs.chat_toggles & CHAT_OOC))
 		to_chat(src, "<span class='danger'> You have OOC muted.</span>")
 		return
 	if(jobban_isbanned(mob, "OOC"))
@@ -38,15 +38,19 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 			log_admin("[key_name(src)] has attempted to advertise in LOOC: [msg]")
 			return
 		if(mob.stat)
-			to_chat(src, "<span class='danger'>You cannot salt in LOOC while unconscious or dead.</span>")
+			to_chat(src, "<span class='danger'>You cannot use LOOC while unconscious or dead.</span>")
 			return
-		if(istype(mob, /mob/dead))
+		if(isdead(mob))
 			to_chat(src, "<span class='danger'>You cannot use LOOC while ghosting.</span>")
 			return
+		if(HAS_TRAIT(mob, TRAIT_LOOC_MUTE))
+			to_chat(src, "<span class='danger'>You cannot use LOOC right now.</span>")
+			return
+
 
 	msg = emoji_parse(msg)
 
-	mob.log_talk(msg,LOG_OOC, tag="(LOOC)")
+	mob.log_talk(msg,LOG_OOC, tag="LOOC")
 
 	var/list/heard = get_hearers_in_view(7, get_top_level_mob(src.mob))
 	for(var/mob/M in heard)
@@ -59,14 +63,14 @@ GLOBAL_VAR_INIT(normal_looc_colour, "#6699CC")
 		if (isobserver(M))
 			continue //Also handled later.
 
-		if(C.prefs.toggles & CHAT_OOC)
+		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(GLOB.LOOC_COLOR)
 				to_chat(C, "<font color='[GLOB.LOOC_COLOR]'><b><span class='prefix'>LOOC:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]</span></b></font>")
 			else
 				to_chat(C, "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]</span></span>")
 
 	for(var/client/C in GLOB.admins)
-		if(C.prefs.toggles & CHAT_OOC)
+		if(C.prefs.chat_toggles & CHAT_OOC)
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"

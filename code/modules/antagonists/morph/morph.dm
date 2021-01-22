@@ -28,7 +28,8 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
-	attacktext = "glomps"
+	attack_verb_continuous = "glomps"
+	attack_verb_simple = "glomp"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 
@@ -41,7 +42,9 @@
 	/obj/screen,
 	/obj/singularity,
 	/mob/living/simple_animal/hostile/morph,
-	/obj/effect))
+	/obj/effect,
+	/mob/camera
+	))
 
 	var/playstyle_string = "<span class='big bold'>You are a morph,</span></b> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \

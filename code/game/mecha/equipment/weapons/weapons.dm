@@ -9,6 +9,7 @@
 	var/projectile_delay = 0
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
+	mech_flags = EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
@@ -484,7 +485,7 @@
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
-		if(ismovableatom(hit_atom))
+		if(ismovable(hit_atom))
 			var/atom/movable/AM = hit_atom
 			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)

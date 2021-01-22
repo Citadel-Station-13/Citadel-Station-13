@@ -2,12 +2,16 @@
 // Hair Definitions //
 //////////////////////
 /datum/sprite_accessory/hair
-	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
 
 	// please make sure they're sorted alphabetically and, where needed, categorized
 	// try to capitalize the names please~
 	// try to spell
 	// you do not need to define _s or _l sub-states, game automatically does this for you
+
+/datum/sprite_accessory/hair/bald //this is exempt from the alphabetical sort
+	name = "Bald"
+	icon_state = "bald"
 
 /datum/sprite_accessory/hair/afro
 	name = "Afro"
@@ -24,10 +28,6 @@
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
-
-/datum/sprite_accessory/hair/bald
-	name = "Bald"
-	icon_state = "bald"
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
@@ -189,6 +189,26 @@
 	name = "Coffee House"
 	icon_state = "hair_coffeehouse"
 
+/datum/sprite_accessory/hair/cornrows1
+	name = "Cornrows"
+	icon_state = "hair_cornrows"
+
+/datum/sprite_accessory/hair/cornrows2
+	name = "Cornrows 2"
+	icon_state = "hair_cornrows2"
+
+/datum/sprite_accessory/hair/cornrowbun
+	name = "Cornrow Bun"
+	icon_state = "hair_cornrowbun"
+
+/datum/sprite_accessory/hair/cornrowbraid
+	name = "Cornrow Braid"
+	icon_state = "hair_cornrowbraid"
+
+/datum/sprite_accessory/hair/cornrowdualtail
+	name = "Cornrow Tail"
+	icon_state = "hair_cornrowtail"
+
 /datum/sprite_accessory/hair/country
 	name = "Country"
 	icon_state = "hair_country"
@@ -285,7 +305,7 @@
 	name = "Flat Top (Big)"
 	icon_state = "hair_bigflattop"
 
-/datum/sprite_accessory/hair/fag	//grimacing emoji
+/datum/sprite_accessory/hair/flow
 	name = "Flow Hair"
 	icon_state = "hair_f"
 
@@ -770,6 +790,10 @@
 /datum/sprite_accessory/hair/volaju
 	name = "Volaju"
 	icon_state = "hair_volaju"
+
+/datum/sprite_accessory/hair/volajupompless
+	name = "Volaju (Alt)"
+	icon_state = "hair_volajupompless"
 
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp"

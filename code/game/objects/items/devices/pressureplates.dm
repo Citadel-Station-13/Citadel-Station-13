@@ -8,6 +8,7 @@
 	level = 1
 	var/trigger_mob = TRUE
 	var/trigger_item = FALSE
+	var/specific_item = null
 	var/trigger_silent = FALSE
 	var/sound/trigger_sound = 'sound/effects/pressureplate.ogg'
 	var/obj/item/assembly/signaler/sigdev = null
@@ -34,6 +35,8 @@
 /obj/item/pressure_plate/Crossed(atom/movable/AM)
 	. = ..()
 	if(!can_trigger || !active)
+		return
+	if(trigger_item && !istype(AM, specific_item))
 		return
 	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM

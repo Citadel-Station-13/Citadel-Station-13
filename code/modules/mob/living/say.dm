@@ -82,15 +82,27 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	set waitfor = FALSE
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
 
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
+	var/ic_blocked = FALSE
+	/*
+	if(client && !forced && config.ic_filter_regex && findtext(message, config.ic_filter_regex))
+		//The filter doesn't act on the sanitized message, but the raw message.
+		ic_blocked = TRUE
+	*/
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message || message == "")
+		return
+
+	if(ic_blocked)
+		//The filter warning message shows the sanitized message though.
+		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
 		return
 
 	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
@@ -133,7 +145,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/datum/language/message_language = get_message_language(message)
 	if(message_language)
 		// No, you cannot speak in xenocommon just because you know the key
-		if(can_speak_in_language(message_language))
+		if(can_speak_language(message_language))
 			language = message_language
 		message = copytext_char(message, 3)
 
@@ -141,7 +153,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		message = trim_left(message)
 
 	if(!language)
-		language = get_default_language()
+		language = get_selected_language()
 
 	// Detection of language needs to be before inherent channels, because
 	// AIs use inherent channels for the holopad. Most inherent channels
@@ -237,6 +249,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
+	// Create map text prior to modifying message for goonchat
+	if (client?.prefs.chat_on_map && stat != UNCONSCIOUS && (client.prefs.see_chat_non_mob || ismob(speaker)) && can_hear())
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
+
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode, FALSE, source)
 
@@ -289,7 +305,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-		if(M.client)
+		if(M.client && !M.client.prefs.chat_on_map)
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -354,7 +370,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	if(cultslurring)
 		message = cultslur(message)
-	
+
 	if(clockcultslurring)
 		message = CLOCK_CULT_SLUR(message)
 
@@ -411,11 +427,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced)
 
-/mob/living/get_language_holder(shadow=TRUE)
-	if(mind && shadow)
-		// Mind language holders shadow mob holders.
-		. = mind.get_language_holder()
-		if(.)
-			return .
-
+/mob/living/get_language_holder(get_minds = TRUE)
+	if(get_minds && mind)
+		return mind.get_language_holder()
 	. = ..()
