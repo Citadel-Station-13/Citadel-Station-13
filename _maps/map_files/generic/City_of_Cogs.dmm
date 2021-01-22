@@ -221,6 +221,10 @@
 /obj/item/clockwork/alloy_shards/small,
 /turf/open/indestructible/reebe_void/spawning/lattices,
 /area/reebe)
+"Ox" = (
+/obj/structure/destructible/clockwork/eminence_spire,
+/turf/open/floor/clockwork/reebe,
+/area/reebe/city_of_cogs)
 "OB" = (
 /obj/item/clockwork/component/geis_capacitor/fallen_armor,
 /turf/open/floor/clockwork/reebe,
@@ -33261,7 +33265,7 @@ ab
 ab
 ae
 ai
-aj
+Ox
 aj
 aj
 aj
