@@ -151,7 +151,7 @@
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
 		return TRUE
 
-	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/glass/rag))
+	if(istype(O, /obj/item/soap) || istype(O, /obj/item/reagent_containers/rag))
 		var/cleanspeed = 50
 		if(istype(O, /obj/item/soap))
 			var/obj/item/soap/used_soap = O
