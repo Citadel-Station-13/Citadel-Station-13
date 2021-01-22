@@ -45,7 +45,7 @@ Difficulty: Hard
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now, slayer... "
 	deathsound = 'sound/magic/enter_blood.ogg'
 
-obj/item/gps/internal/bubblegum/hard
+/obj/item/gps/internal/bubblegum/hard
 	icon_state = null
 	gpstag = "Enraged Bloody Signal"
 	desc = "You're not quite sure how a signal can be enraged, neither how it can be bloody."
