@@ -67,11 +67,18 @@
 			if(display_error)
 				to_chat(owner, "<span class='warning'>Your victim's blood is not suitable for you to take.</span>")
 			return FALSE
-		if(HAS_TRAIT(src, TRAIT_WAS_MONKEY))
+		if(InferiorBlood(target))
 			if(display_error)
 				to_chat(owner, "<span class='warning'>This being's blood is not of sufficent quality for one as old as you.</span>")
 			return FALSE
 	return TRUE
+
+/datum/action/bloodsucker/feed/proc/InferiorBlood(mob/living/target)
+	if(Ambloodsucker(owner) && HAS_TRAIT(target, TRAIT_WASMONKEY))
+		var/datum/antagonist/bloodsucker/B = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(B.bloodsucker_level =< 3 && isliving(owner) && owner.blood_volume >= 200)
+			return TRUE
+	return FALSE
 
 // If I'm not grabbing someone, find me someone nearby.
 /datum/action/bloodsucker/feed/proc/FindMyTarget(display_error)
