@@ -336,6 +336,18 @@
 	subcategory = CAT_TOOL
 	category = CAT_MISC
 
+/datum/crafting_recipe/blackmarket_uplink
+	name = "Black Market Uplink"
+	result = /obj/item/blackmarket_uplink
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stock_parts/subspace/amplifier = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/radio = 1,
+		/obj/item/analyzer = 1)
+	subcategory = CAT_MISCELLANEOUS
+	category = CAT_MISC
+
 /datum/crafting_recipe/heretic/codex
 	name = "Codex Cicatrix"
 	result = /obj/item/forbidden_book
