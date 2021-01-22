@@ -1088,6 +1088,36 @@
 	icon_state = "winterhood_poly"
 	item_state = "winterhood_poly"
 
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume
+	name = "timid woman hoodie"
+	desc = "A snug, tight yet warm outfit with belts wrapped around it. Looks to be made of polychromic materials."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/timidcostume
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#EB0C07", "#5E2400", "#CEA100"), 3)
+
+/obj/item/clothing/head/hooded/winterhood/timidcostume
+	name = "timid woman hood"
+	desc = "A hood attached to the hoodie."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume/man
+	name = "timid man hoodie"
+	desc = "A snug, tight yet warm outfit a belt wrapped around it. Looks to be made of polychromic materials."
+	icon_state = "timidman"
+	item_state = "timidman"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/timidcostume/man
+
+/obj/item/clothing/head/hooded/winterhood/timidcostume/man
+	name = "timid man hood"
+	icon_state = "timidman"
+	item_state = "timidman"
+
+
 /obj/item/clothing/suit/striped_sweater
 	name = "striped sweater"
 	desc = "Reminds you of someone, but you just can't put your finger on it..."

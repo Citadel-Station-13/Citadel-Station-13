@@ -1,6 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - tweak: "slime puddles are no longer layered down one layer"
-  - tweak: "you cannot tackle with two paralysed arms"
-  - tweak: "tackling with a single paralysed arm lowers your tackle roll by 2"

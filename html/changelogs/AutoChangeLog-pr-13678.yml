@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - code_imp: "Comments out spaceman dmm do not sleeps for mob/proc/CommonClickOn, atom/proc/attack_hand, datum/proc/keyLoop and mob/living/proc/Life"

@@ -216,7 +216,6 @@
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
-	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
@@ -230,7 +229,7 @@
 	N.adjust_nanites(-10*cached_purity)
 	..()
 
-datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
+/datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	for(var/active_obj in react_objs)
 		if(O == active_obj)
 			return

@@ -306,18 +306,6 @@ GENETICS SCANNER
 				if(T.name == "fluffy tongue")
 					temp_message += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
 
-			//HECK
-			else if(istype(O, /obj/item/organ/genital/penis))
-				var/obj/item/organ/genital/penis/P = O
-				if(P.length>20)
-					temp_message += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
-
-			else if(istype(O, /obj/item/organ/genital/breasts))
-				var/obj/item/organ/genital/breasts/Br = O
-				if(Br.cached_size>5)
-					temp_message += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
-
-
 
 			//GENERAL HANDLER
 			if(!damage_message)

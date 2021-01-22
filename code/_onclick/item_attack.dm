@@ -85,7 +85,7 @@
 	if(force && damtype != STAMINA && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
-	
+
 	if(!UseStaminaBufferStandard(user, STAM_COST_ATTACK_MOB_MULT, null, TRUE))
 		return DISCARD_LAST_ACTION
 

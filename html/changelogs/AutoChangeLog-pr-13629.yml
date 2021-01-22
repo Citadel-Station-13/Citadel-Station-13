@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscdel: "anomalies no longer spawn in walls"
