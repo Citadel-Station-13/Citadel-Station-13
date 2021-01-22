@@ -1,6 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - rscadd: ""
-  - tweak: "Added the ability for cargo to buy a large welding tank"
-  - imageadd: "Tweaked large tank reagent sprites to /tg/'s"

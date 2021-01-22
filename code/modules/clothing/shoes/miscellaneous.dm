@@ -413,6 +413,22 @@
 	var/wallcharges = 4
 	var/newlocobject = null
 
+/obj/item/clothing/shoes/timidcostume
+	name = "timid woman boots"
+	desc = "Ready to rock your hips back and forth? These boots have a polychromic finish."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+
+/obj/item/clothing/shoes/timidcostume/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#0094FF"), 1)
+
+/obj/item/clothing/shoes/timidcostume/man
+	name = "timid man shoes"
+	desc = "Ready to go kart racing? These shoes have a polychromic finish."
+	icon_state = "timidman"
+	item_state = "timidman"
+
 /obj/item/clothing/shoes/wallwalkers/equipped(mob/user,slot)
 	. = ..()
 	if(slot == SLOT_SHOES)

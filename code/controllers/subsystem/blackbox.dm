@@ -14,12 +14,14 @@ SUBSYSTEM_DEF(blackbox)
 							"explosion" = 2,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
-							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"round_end_stats" = 2,
+							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
 	record_feedback("amount", "random_seed", Master.random_seed)
 	record_feedback("amount", "dm_version", DM_VERSION)
+	record_feedback("amount", "dm_build", DM_BUILD)
 	record_feedback("amount", "byond_version", world.byond_version)
 	record_feedback("amount", "byond_build", world.byond_build)
 	. = ..()
@@ -39,10 +41,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	if(!SSdbcore.Connect())
 		return
-	var/playercount = 0
-	for(var/mob/M in GLOB.player_list)
-		if(M.client)
-			playercount += 1
+	var/playercount = LAZYLEN(GLOB.player_list)
 	var/admincount = GLOB.admins.len
 	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
@@ -88,18 +87,24 @@ SUBSYSTEM_DEF(blackbox)
 	if (!SSdbcore.Connect())
 		return
 
+	// var/list/special_columns = list(
+	// 	"datetime" = "NOW()"
+	// )
 	var/list/sqlrowlist = list()
-
 	for (var/datum/feedback_variable/FV in feedback)
-		var/sqlversion = 1
-		if(FV.key in versions)
-			sqlversion = versions[FV.key]
-		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "key_type" = "'[FV.key_type]'", "version" = "[sqlversion]", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
+		sqlrowlist += list(list(
+			"datetime" = "Now()", //legacy
+			"round_id" = GLOB.round_id,
+			"key_name" = sanitizeSQL(FV.key),
+			"key_type" = FV.key_type,
+			"version" = versions[FV.key] || 1,
+			"json" = sanitizeSQL(json_encode(FV.json))
+		))
 
 	if (!length(sqlrowlist))
 		return
 
-	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
+	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)//, special_columns = special_columns)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)
@@ -169,7 +174,7 @@ feedback data can be recorded in 5 formats:
 "tally"
 	used to track the number of occurances of multiple related values i.e. how many times each type of gun is fired
 	further calls to the same key will:
-	 	add or subtract from the saved value of the data key if it already exists
+		add or subtract from the saved value of the data key if it already exists
 		append the key and it's value if it doesn't exist
 	calls:	SSblackbox.record_feedback("tally", "example", 1, "sample data")
 			SSblackbox.record_feedback("tally", "example", 4, "sample data")
@@ -181,7 +186,7 @@ feedback data can be recorded in 5 formats:
 	the final element in the data list is used as the tracking key, all prior elements are used for nesting
 	all data list elements must be strings
 	further calls to the same key will:
-	 	add or subtract from the saved value of the data key if it already exists in the same multi-dimensional position
+		add or subtract from the saved value of the data key if it already exists in the same multi-dimensional position
 		append the key and it's value if it doesn't exist
 	calls: 	SSblackbox.record_feedback("nested tally", "example", 1, list("fruit", "orange", "apricot"))
 			SSblackbox.record_feedback("nested tally", "example", 2, list("fruit", "orange", "orange"))
@@ -270,6 +275,18 @@ Versioning
 /datum/feedback_variable/New(new_key, new_key_type)
 	key = new_key
 	key_type = new_key_type
+/*
+/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender)
+	if(!SSdbcore.Connect())
+		return
+
+	var/datum/db_query/query_log_ahelp = SSdbcore.NewQuery({"
+		INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp)
+		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, :time)
+	"}, list("ticket" = ticket, "action" = action, "message" = message, "recipient" = recipient, "sender" = sender, "server_ip" = world.internet_address || "0", "server_port" = world.port, "round_id" = GLOB.round_id, "time" = SQLtime()))
+	query_log_ahelp.Execute()
+	qdel(query_log_ahelp)
+*/
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
 	set waitfor = FALSE

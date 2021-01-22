@@ -1,5 +1,0 @@
-author: "Linzolle"
-delete-after: True
-changes: 
-  - bugfix: "entertainment monitors no longer invisible"
-  - rscadd: "entertainment monitors now light up and display text when motion is detected in thunderdome"

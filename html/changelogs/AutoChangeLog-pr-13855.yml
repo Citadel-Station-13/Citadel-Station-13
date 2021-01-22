@@ -1,8 +1,0 @@
-author: "Chiirno"
-delete-after: True
-changes: 
-  - rscadd: "Paramedics office and Surgery Storage Room"
-  - tweak: "Remodeled the surgery room, as well as shrunk Morgue and Starboard Emergency Storage.
-Fiddled with some areas for better map edit clarity and fixed one runtime in Vacant Office A."
-  - imageadd: "Added the paramedic closet sprite, a paramedic colored medical3 closet."
-  - code_imp: "Added a paramedic closet, which is the standard medical3 closet with their suit, a pinpointer, and a crew monitor added."

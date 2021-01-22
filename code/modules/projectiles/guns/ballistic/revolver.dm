@@ -373,7 +373,6 @@
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
 
-
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = 0
 

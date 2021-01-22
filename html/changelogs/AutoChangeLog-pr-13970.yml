@@ -1,8 +1,0 @@
-author: "TripleShades"
-delete-after: True
-changes: 
-  - rscadd: "Firelock to Surgery Bay drapes
-change: Swapped Nanomed and Fire Alarm button locations in both Surgery Bays
-change: Removes the double mirror in both Surgery Bays to be a singular mirror
-change: Moved an intercom to not be doorstuck below Paramedical Office
-remove: One Surgery Observation Fire Alarm button"

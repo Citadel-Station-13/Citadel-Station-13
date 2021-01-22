@@ -462,6 +462,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
 

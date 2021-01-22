@@ -245,7 +245,7 @@
 				last_hearcheck = world.time
 			for(var/mob/M in hearing_mobs) //so we don't fill the whole room with the sound effect
 				if(M && M.client && (isturf(M.loc) || (M.loc != src.contents))) //to avoid people on the inside getting the outside sounds and their direct sounds + built in sound pref check
-					M.playsound_local(owner.loc, play_sound, vol = 75, vary = 1, falloff = VORE_SOUND_FALLOFF)
+					M.playsound_local(owner.loc, play_sound, 75, TRUE)
 					//these are all external sound triggers now, so it's ok.
 	if(to_update)
 		for(var/mob/living/M in contents)
