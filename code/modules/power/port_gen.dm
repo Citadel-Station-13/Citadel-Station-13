@@ -286,18 +286,3 @@
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
 	explosion(src.loc, 4, 4, 4, -1)
-
-
-////////////////
-// CLOCKWORK //
-//////////////
-/obj/machinery/power/port_gen/pacman/clockwork
-	name = "clockwork generator"
-	base_icon = "clockgen"
-	icon_state = "clockgen_0"
-	circuit = /obj/item/circuitboard/machine/clockwork/generator
-	max_sheets = 100
-	power_gen = 2500
-	sheet_path = /obj/item/stack/tile/brass
-	time_per_sheet = 260
-	/datum/looping_sound/generator/clockwork/soundloop

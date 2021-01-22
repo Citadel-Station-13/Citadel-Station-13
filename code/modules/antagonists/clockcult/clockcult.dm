@@ -7,7 +7,6 @@
 	antag_moodlet = /datum/mood_event/cult
 	skill_modifiers = list(/datum/skill_modifier/job/level/wiring, /datum/skill_modifier/job/level/dwarfy/blacksmithing)
 	var/datum/action/innate/hierophant/hierophant_network = new
-	var/datum/action/innate/eminence_ascend = new
 	threat = 3
 	var/datum/team/clockcult/clock_team
 	var/make_team = TRUE //This should be only false for tutorial scarabs
@@ -33,7 +32,6 @@
 
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
-	qdel(eminence_ascend)
 	return ..()
 
 /datum/antagonist/clockcult/get_team()
@@ -138,7 +136,6 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	hierophant_network.Grant(current)
-	eminence_ascend.Grant(current)
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 	if(G && G.active && ishuman(current))

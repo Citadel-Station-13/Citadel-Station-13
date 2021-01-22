@@ -23,14 +23,6 @@
 	end_sound = 'sound/machines/generator/generator_end.ogg'
 	volume = 40
 
-datum/looping_sound/generator/clockwork
-	start_sound = 'sound/machines/generator/clockwork/clockwork_gen_start.ogg'
-	start_length = 10
-	mid_sounds = 'sound/machines/generator/clockwork/clockwork_gen_mid.ogg'
-	mid_length = 10
-	end_sound = 'sound/machines/generator/clockwork/clockwork_gen_end.ogg'
-	volume = 65
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

@@ -84,16 +84,6 @@
 	name = "clockwork board (Report This)"
 	icon_state = "clock_mod"
 
-/obj/item/circuitboard/machine/clockwork/generator
-	name = "clockwork generator (machine board)"
-	icon_state = "clock_mod"
-	build_path = /obj/machinery/power/port_gen/pacman/clockwork
-	req_components = list(
-		/obj/item/clockwork/component/replicant_alloy = 1,
-		/obj/item/clockwork/component/vanguard_cogwheel = 3,
-		/obj/item/clockwork/component/geis_capacitor = 2,
-		/obj/item/stack/tile/brass = 5)
-
 /obj/item/circuitboard/machine/clonescanner
 	name = "Cloning Scanner (Machine Board)"
 	build_path = /obj/machinery/dna_scannernew
