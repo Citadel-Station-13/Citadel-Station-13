@@ -30,7 +30,6 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [get_area_name(src)] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	SSpersistence.station_was_destroyed = TRUE
-	sleep(600)
 	INVOKE_ASYNC(src, .proc/purge_the_heresy)
 
 
@@ -157,16 +156,19 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/proc/purge_the_heresy()
 	sleep(50)
-	priority_announce("We just picked up a massive energy reding down there, [GLOB.station_name], it looks as if a neutron star has just formed on top of the station. we're treating this as an accausal event and will begin running predictions on this situation, please hold.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
-	sleep(500)
+	priority_announce("We picked up a massive energy reading in your sector, [GLOB.station_name], it looks as if a neutron star has just formed on top of the station. We're treating this as an accausal event and will begin running predictions on this situation, please hold.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
+	sleep(300)
 	priority_announce("A gravitational anomaly has been detected coming from the newly formed star in your sector. It ap*@^rs th#t ^&te-BZZZT","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce.ogg')
 	sleep(85)
-	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!</font></span>")
+	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!\"</font></span>")
 	sleep(50)
 	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
-	sleep(300)
+	sleep(250)
+	if(QDELETED(src))
+		priority_announce("Neutron star signal no longer detected in your sector. Acausal event still occuring. Reccomend all crew to remain calm.","Central Command Higher Dimensional Affairs")
+	return
 	sound_to_playing_players(volume = 70, sound('sound/magic/clockwork/ark_activation_sequence.ogg')) //if this isn't lessened in volume it peaks for some reason
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/clockcult_ending_helper), 300)
 

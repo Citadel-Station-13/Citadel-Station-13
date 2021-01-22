@@ -514,10 +514,19 @@
 /mob/living/ratvar_act()
 	if(status_flags & GODMODE)
 		return
-	if(stat != DEAD && !is_servant_of_ratvar(src))
+	if(is_servant_of_ratvar(src))
+		return
+	if (is_eligible_servant(src))
+		(add_servant_of_ratvar(src))
+		to_chat(, "<span class='heavy_brass'>Ratvar's influence invades your mind, praise the Justiciar!</span>")
+	else
 		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
 		adjust_fire_stacks(20)
+		adjustFireLoss(35)
 		IgniteMob()
+	if(iscultist(src))
+		to_chat(src, "<span class='ratvar'>\"[text2ratvar("DIE, BLOODSLAVE!")]\"</span>")
+		dust()
 		return FALSE
 
 
