@@ -1,4 +1,4 @@
-/area/shuttle/access_small
+/area/shuttle/access_smol
 	name = "AI Access Shuttle"
 
 /area/shuttle/axsbrig_smol
