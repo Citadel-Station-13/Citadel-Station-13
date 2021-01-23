@@ -1796,12 +1796,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='warning'>[M] attempted to touch you!</span>", target = M, \
 			target_message = "<span class='warning'>You attempted to touch [H]!</span>")
 		return TRUE
+	if(M == H)
+		althelp(M, H, attacker_style)
+		return TRUE
 	switch(M.a_intent)
-		if(INTENT_HELP)
-			if(M == H)
-				althelp(M, H, attacker_style)
-				return TRUE
-			return FALSE
 		if(INTENT_DISARM)
 			altdisarm(M, H, attacker_style)
 			return TRUE
