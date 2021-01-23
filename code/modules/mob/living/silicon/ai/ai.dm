@@ -1039,3 +1039,6 @@
 	if(current && eyeobj)
 		return eyeobj.emote(act, m_type, message, intentional, forced = TRUE)
 	return ..()
+
+/mob/living/silicon/ai/zMove(dir, feedback = FALSE)
+	. = eyeobj.zMove(dir, feedback)
