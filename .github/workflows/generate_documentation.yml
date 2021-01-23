@@ -20,7 +20,7 @@ jobs:
         run: |
           ~/dmdoc
           touch dmdoc/.nojekyll
-          echo codedocs.tgstation13.org > dmdoc/CNAME
+          echo https://sandstorm-station.github.io/Sandstorm-Station-13/ > dmdoc/CNAME
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
