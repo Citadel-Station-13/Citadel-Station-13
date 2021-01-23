@@ -1,29 +1,21 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "b" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "k" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "m" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "p" = (
 /obj/machinery/door/airlock/titanium/glass,
 /obj/docking_port/mobile{
@@ -36,17 +28,13 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "u" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "w" = (
 /obj/structure/closet/crate{
 	anchored = 1
@@ -54,15 +42,11 @@
 /obj/item/storage/firstaid/regular,
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "B" = (
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "C" = (
 /obj/machinery/computer/shuttle{
 	dir = 8;
@@ -71,19 +55,13 @@
 	shuttleId = "smol"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "D" = (
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "E" = (
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "F" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/structure/closet/emcloset/anchored,
@@ -91,15 +69,11 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "J" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "K" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -112,25 +86,19 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "R" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 "Y" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/custom{
-	name = "AI Access Shuttle"
-	})
+/area/shuttle/access_smol)
 
 (1,1,1) = {"
 a
