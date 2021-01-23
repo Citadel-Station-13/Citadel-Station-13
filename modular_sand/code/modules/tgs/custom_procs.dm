@@ -3,7 +3,7 @@
 	var/list/player_keys = list()
 	for(var/player in GLOB.clients)
 		var/client/C = player
-		player_keys += "[C.holder.fakekey ? "[C.holder.fakekey]" : "[C]"]"
+		player_keys += "[C?.holder.fakekey ? "[C.holder.fakekey]" : "[C]"]"
 
 	for(var/verified_player in player_keys)
 		message += "- [verified_player]\n"
@@ -26,7 +26,7 @@
 	for(var/adm in GLOB.admins)
 		var/client/C = adm
 		admin_keys += "[C.holder.fakekey ? "[C] disguised as [C.holder.fakekey]" : "[C]"]"
-	
+
 	for(var/verified_admin in admin_keys)
 		message_admin += "- [verified_admin]\n"
 
