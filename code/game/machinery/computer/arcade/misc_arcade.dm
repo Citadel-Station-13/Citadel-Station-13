@@ -17,14 +17,14 @@
 	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
-		playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
+		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		var/which_hand = BODY_ZONE_L_ARM
 		if(!(c_user.active_hand_index % 2))
 			which_hand = BODY_ZONE_R_ARM
 		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
 		chopchop.dismember()
 		qdel(chopchop)
-		playsound(loc, 'sound/arcade/win.ogg', 50, 1, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3)
 		for(var/i=1; i<=rand(3,5); i++)
 			prizevend(user)
 	else

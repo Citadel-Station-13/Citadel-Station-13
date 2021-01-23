@@ -1,5 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - tweak: "Replaced engineering fuel tank with a large fuel tank"
-  - tweak: "Changed access to sec suit storage from armory access in every map to other security access"

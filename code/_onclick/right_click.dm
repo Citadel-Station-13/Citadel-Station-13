@@ -51,7 +51,11 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			return W.rightclick_melee_attack_chain(src, A, params)
+			if(a_intent == INTENT_HELP && iscarbon(src))
+				var/mob/living/carbon/C = src
+				C.give()
+			else
+				return W.rightclick_melee_attack_chain(src, A, params)
 		else
 			if(!AltUnarmedAttack(A, TRUE))
 				. = UnarmedAttack(A, TRUE, a_intent)

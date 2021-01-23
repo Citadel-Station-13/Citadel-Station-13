@@ -3,7 +3,7 @@
 	name = "Initializing..."
 	var/target
 
-INITIALIZE_IMMEDIATE(/obj/effect/statclick) //it's new, but rebranded.
+INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 /obj/effect/statclick/Initialize(mapload, text, target) //Don't port this to Initialize it's too critical
 	. = ..()
@@ -33,14 +33,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick) //it's new, but rebranded.
 	usr.client.debug_variables(target)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
 
-/obj/effect/statclick/misc_subsystems/Click()
-	if(!usr.client.holder)
-		return
-	var/subsystem = input(usr, "Debug which subsystem?", "Debug nonprocessing subsystem") as null|anything in (Master.subsystems - Master.statworthy_subsystems)
-	if(!subsystem)
-		return
-	usr.client.debug_variables(subsystem)
-	message_admins("Admin [key_name_admin(usr)] is debugging the [subsystem] subsystem.")
 
 // Debug verbs.
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))
