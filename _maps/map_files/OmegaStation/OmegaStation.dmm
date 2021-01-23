@@ -4928,6 +4928,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/gun/energy/e_gun/hos,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
 "ahI" = (
