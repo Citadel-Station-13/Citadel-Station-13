@@ -30,9 +30,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "acG" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment,
@@ -52,9 +50,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "adG" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -191,9 +187,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ahq" = (
 /obj/structure/bed,
 /obj/effect/spawner/lootdrop/bedsheet,
@@ -215,9 +209,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aiz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -278,9 +270,7 @@
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "amq" = (
 /obj/machinery/computer/card{
 	dir = 1
@@ -512,9 +502,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "atl" = (
 /obj/item/target,
 /obj/effect/turf_decal/stripes/line{
@@ -672,9 +660,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ayb" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -781,9 +767,7 @@
 	},
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "aAy" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/server)
@@ -840,9 +824,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aCJ" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -925,18 +907,14 @@
 	location = "Public"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "aFw" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aFx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
@@ -1128,9 +1106,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aKn" = (
 /obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -1176,9 +1152,7 @@
 /obj/machinery/portable_atmospherics/canister/bz,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aMg" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -1236,9 +1210,7 @@
 "aNQ" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aNZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1297,9 +1269,7 @@
 "aOT" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "aPv" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/table,
@@ -1391,9 +1361,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "aSn" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_electronics/analyzer{
@@ -1407,9 +1375,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aSD" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/disposalpipe/segment{
@@ -1427,9 +1393,7 @@
 "aTm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "aTS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1458,9 +1422,7 @@
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aVe" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/brown,
@@ -1592,9 +1554,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "aZy" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -1655,9 +1615,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bda" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -1767,9 +1725,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "bhL" = (
 /obj/machinery/computer/cargo/request,
 /obj/machinery/status_display/ai{
@@ -1802,9 +1758,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "biK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -1842,17 +1796,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bjf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bjB" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -1897,9 +1847,7 @@
 	name = "Creature Cell #7"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bkr" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecomms Control Room";
@@ -1962,9 +1910,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bnw" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -2050,9 +1996,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bpV" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2108,9 +2052,7 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "brq" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -2325,9 +2267,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bzL" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/bot,
@@ -2469,9 +2409,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "bFw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -2515,9 +2453,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bGv" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -2567,9 +2503,7 @@
 "bHk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bIc" = (
 /obj/structure/chair/sofa/right{
 	dir = 1
@@ -2621,9 +2555,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "bJE" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/plasma{
 	dir = 1
@@ -2646,9 +2578,7 @@
 	},
 /obj/effect/landmark/start/librarian,
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "bJM" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/turf_decal/stripes/line{
@@ -2687,9 +2617,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bKJ" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -2725,9 +2653,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bME" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -2760,9 +2686,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "bNk" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable{
@@ -3162,9 +3086,7 @@
 "cbf" = (
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cbZ" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -3178,9 +3100,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ccu" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -3268,9 +3188,7 @@
 	name = "Creature Cell #4"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cfH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor{
@@ -3346,9 +3264,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "chx" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -3394,9 +3310,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "cit" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -3443,9 +3357,7 @@
 /area/space/nearstation)
 "cjJ" = (
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "cjM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3461,9 +3373,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ckf" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -3687,9 +3597,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ctB" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -3817,15 +3725,11 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cyw" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "czr" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "AI Satellite Access";
@@ -3888,9 +3792,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "cAJ" = (
 /obj/structure/grille,
 /obj/structure/lattice,
@@ -3987,9 +3889,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cFJ" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -4015,9 +3915,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cFV" = (
 /obj/machinery/conveyor/inverted{
 	dir = 5;
@@ -4065,9 +3963,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cHd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -4083,9 +3979,7 @@
 	location = "Pods"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "cHM" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -4250,9 +4144,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cPW" = (
 /obj/structure/closet/secure_closet/engineering_electrical{
 	anchored = 1
@@ -4267,9 +4159,7 @@
 	name = "Escape Pod Two"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "cRG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4281,9 +4171,7 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cSV" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -4327,9 +4215,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "cTS" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -4353,9 +4239,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cTW" = (
 /obj/item/radio/intercom{
 	pixel_x = -25
@@ -4367,9 +4251,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cUD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -4450,9 +4332,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cXh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
 	dir = 1
@@ -4469,9 +4349,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "cXz" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	dir = 1;
@@ -4534,9 +4412,7 @@
 "cZA" = (
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "cZT" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -4567,9 +4443,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "daA" = (
 /turf/closed/wall,
 /area/science/test_area)
@@ -4591,9 +4465,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "daZ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -4613,9 +4485,7 @@
 	name = "Escape Pod Four"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "dcj" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Escape Pods"
@@ -4623,9 +4493,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "ddN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/effect/turf_decal/tile/brown,
@@ -4666,9 +4534,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dfj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
@@ -4701,9 +4567,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "dfI" = (
 /obj/machinery/mineral/stacking_machine{
 	input_dir = 1;
@@ -4917,9 +4781,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "dnL" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/cheesynachos{
@@ -5000,9 +4862,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dqh" = (
 /obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
@@ -5114,9 +4974,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dsQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
@@ -5128,9 +4986,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dvJ" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 6
@@ -5206,9 +5062,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dxA" = (
 /obj/machinery/turretid{
 	icon_state = "control_stun";
@@ -5478,14 +5332,10 @@
 	pixel_x = -17
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dJU" = (
 /turf/closed/wall/r_wall,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "dJX" = (
 /obj/machinery/light{
 	dir = 4
@@ -5597,9 +5447,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dOb" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 4
@@ -5795,9 +5643,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "dUJ" = (
 /obj/machinery/atmospherics/miner/nitrogen,
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -5860,9 +5706,7 @@
 "dXo" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dXt" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -5891,9 +5735,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "dZH" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -6013,9 +5855,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "eey" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -6045,9 +5885,7 @@
 /area/science/lab)
 "efl" = (
 /turf/closed/wall/r_wall,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "efS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -6108,9 +5946,7 @@
 "egZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "ehh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -6158,16 +5994,12 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "eiY" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ejD" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -6191,9 +6023,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "ejL" = (
 /obj/structure/closet/l3closet/janitor,
 /turf/open/floor/plasteel,
@@ -6315,9 +6145,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "eqL" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Chamber";
@@ -6432,9 +6260,7 @@
 "ewv" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ewA" = (
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
@@ -6499,9 +6325,7 @@
 	req_access_txt = "55"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "exI" = (
 /obj/structure/table/glass,
 /obj/item/folder{
@@ -6566,9 +6390,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "eAd" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -6700,17 +6522,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "eHe" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "eIk" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -6951,9 +6769,7 @@
 	location = "Public-1"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "eQV" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -6989,9 +6805,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "eRx" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel,
@@ -7115,9 +6929,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "eZD" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -7221,9 +7033,7 @@
 	},
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ffr" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
@@ -7537,9 +7347,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ftV" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7550,9 +7358,7 @@
 	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fue" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -7582,9 +7388,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fuY" = (
 /obj/structure/table/glass,
 /obj/item/paper_bin{
@@ -7637,9 +7441,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fvL" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
@@ -7657,9 +7459,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fwB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
@@ -7730,9 +7530,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fyw" = (
 /obj/structure/sink{
 	dir = 8;
@@ -7789,9 +7587,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "fAN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -7807,9 +7603,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fBj" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
@@ -7877,9 +7671,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fDX" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -8060,9 +7852,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fLy" = (
 /obj/machinery/power/solar_control{
 	id = "sci_solars";
@@ -8072,9 +7862,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fLQ" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -8203,9 +7991,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "fRt" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -8248,9 +8034,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fTt" = (
 /obj/structure/table/wood,
 /obj/machinery/light_switch{
@@ -8299,9 +8083,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fUg" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -8349,9 +8131,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "fVt" = (
 /obj/machinery/telecomms/receiver/preset_left,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -8678,9 +8458,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ghe" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -8694,9 +8472,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "giR" = (
 /obj/machinery/camera{
 	c_tag = "Bathrooms";
@@ -8740,9 +8516,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "glE" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -8755,17 +8529,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gml" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/circuit/telecomms,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gmz" = (
 /obj/machinery/shower{
 	dir = 4
@@ -8814,9 +8584,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "goy" = (
 /obj/vehicle/ridden/janicart,
 /obj/structure/sign/poster/contraband/lizard{
@@ -8874,9 +8642,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "gqD" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -8919,9 +8685,7 @@
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gsU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable{
@@ -9102,9 +8866,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gyu" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -9128,9 +8890,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gyJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/light{
@@ -9170,9 +8930,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gzY" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -9189,17 +8947,13 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gAf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "gAg" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -9245,9 +8999,7 @@
 	dir = 5
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gDc" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -9265,9 +9017,7 @@
 "gDI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gEq" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -9565,9 +9315,7 @@
 	location = "Docks-1"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "gNH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -9612,9 +9360,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "gQI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 8
@@ -9848,9 +9594,7 @@
 	location = "Docks-3"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "gZD" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -9897,9 +9641,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hbd" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -9949,9 +9691,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hep" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -9993,9 +9733,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hgN" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/item/toy/poolnoodle/yellow,
@@ -10349,9 +10087,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "htt" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -10515,9 +10251,7 @@
 "hwK" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall/r_wall,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "hwN" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 8
@@ -10618,15 +10352,11 @@
 "hBd" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hBu" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "hBM" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/effect/turf_decal/tile/brown,
@@ -10945,9 +10675,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hSq" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -10965,9 +10693,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hSy" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -11078,9 +10804,7 @@
 	},
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "hVK" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/dark,
@@ -11162,9 +10886,7 @@
 /area/aisat)
 "hZu" = (
 /turf/open/floor/circuit/telecomms,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "hZB" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable{
@@ -11229,9 +10951,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "icp" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
@@ -11379,9 +11099,7 @@
 	},
 /obj/item/storage/bag/money,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ijK" = (
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -11417,9 +11135,7 @@
 	name = "Creature Cell #2"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ikP" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair{
@@ -11448,9 +11164,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ilE" = (
 /obj/structure/table/glass,
 /turf/open/floor/plasteel,
@@ -11533,9 +11247,7 @@
 /obj/machinery/meter,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "imE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
@@ -11688,9 +11400,7 @@
 	name = "Creature Cell #6"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "itV" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -11724,9 +11434,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iwl" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -11741,9 +11449,7 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iwz" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -11825,9 +11531,7 @@
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "izQ" = (
 /obj/machinery/chem_heater,
 /obj/effect/turf_decal/stripes/corner,
@@ -11867,9 +11571,7 @@
 	shuttleId = "sciout_access"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iDp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -11940,9 +11642,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iER" = (
 /obj/machinery/shower{
 	pixel_y = 20
@@ -11989,9 +11689,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iGa" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 26
@@ -12254,9 +11952,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iOq" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -12290,9 +11986,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/circuit/telecomms,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iPE" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -12572,9 +12266,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "iZF" = (
 /obj/structure/bed,
 /obj/effect/turf_decal/tile/red{
@@ -12620,9 +12312,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jaf" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Arrivals Port"
@@ -12687,9 +12377,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jcv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -12699,9 +12387,7 @@
 	location = "Docks-4"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "jcN" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
@@ -12817,9 +12503,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jfF" = (
 /obj/item/clothing/gloves/color/latex,
 /obj/item/healthanalyzer,
@@ -12938,9 +12622,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jiT" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -12991,9 +12673,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jli" = (
 /obj/machinery/door/window/westleft{
 	dir = 4;
@@ -13007,9 +12687,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "jmr" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
@@ -13063,9 +12741,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "joK" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -13125,9 +12801,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jpY" = (
 /obj/structure/rack,
 /obj/item/gun/energy/pumpaction/toy,
@@ -13152,9 +12826,7 @@
 /obj/item/storage/box/disks_nanite,
 /obj/item/storage/box/disks_nanite,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jqC" = (
 /obj/machinery/field/generator,
 /turf/open/floor/engine/airless,
@@ -13181,9 +12853,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jrl" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -13198,9 +12868,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "jsH" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -13221,9 +12889,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jvb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -13257,9 +12923,7 @@
 	location = "Docks-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "jwK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -13278,9 +12942,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jwV" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -13352,9 +13014,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jAL" = (
 /obj/structure/reagent_dispensers/keg/aphro/strong,
 /turf/open/floor/plating,
@@ -13543,9 +13203,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jGc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
@@ -13600,9 +13258,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jJk" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'BOMB RANGE";
@@ -13787,9 +13443,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "jTb" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -13954,9 +13608,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "jYz" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -14306,9 +13958,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "klL" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -14410,9 +14060,7 @@
 	dir = 2
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kqI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14427,9 +14075,7 @@
 /obj/structure/table/reinforced,
 /obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kra" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -14552,18 +14198,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kuH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kvB" = (
 /obj/machinery/doppler_array/research/science{
 	dir = 4
@@ -14580,9 +14222,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kvD" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -14619,9 +14259,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kwo" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -14640,9 +14278,7 @@
 "kwp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kwz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -14688,9 +14324,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kzi" = (
 /obj/machinery/rnd/bepis,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -14700,9 +14334,7 @@
 	dir = 6
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kAc" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -14790,9 +14422,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kCl" = (
 /obj/machinery/door/airlock{
 	desc = "A small bathroom with a sink, toilet and shower.";
@@ -14840,9 +14470,7 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kDW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
@@ -14997,9 +14625,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "kHN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -15047,18 +14673,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kKD" = (
 /turf/closed/wall,
 /area/storage/primary)
 "kLm" = (
 /obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kLZ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 1
@@ -15118,9 +14740,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kNX" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -15128,9 +14748,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/carpet,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "kOa" = (
 /obj/machinery/suit_storage_unit/engine,
 /obj/effect/turf_decal/stripes/line{
@@ -15265,17 +14883,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kRm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kRy" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -15293,9 +14907,7 @@
 "kSo" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kSs" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -15314,9 +14926,7 @@
 	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kSD" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -15360,9 +14970,7 @@
 "kVE" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "kWe" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "rdxeno";
@@ -15626,9 +15234,7 @@
 "lgL" = (
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lgT" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -15966,9 +15572,7 @@
 	pixel_y = 22
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "lrX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -16110,9 +15714,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "lxK" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -16271,9 +15873,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "lCB" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -16295,9 +15895,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lDQ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -16365,9 +15963,7 @@
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lFA" = (
 /obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/tile/neutral{
@@ -16431,9 +16027,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "lHR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
@@ -16519,9 +16113,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "lKX" = (
 /obj/structure/table,
 /obj/item/wrench,
@@ -16570,9 +16162,7 @@
 	},
 /obj/effect/landmark/start/lawyer,
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "lMJ" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -16633,9 +16223,7 @@
 	req_access_txt = "47"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lRy" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -16695,9 +16283,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lTB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -16718,9 +16304,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lUm" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/carpet,
@@ -16738,9 +16322,7 @@
 /area/ai_monitored/storage/eva)
 "lVE" = (
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "lVS" = (
 /obj/structure/chair,
 /obj/machinery/firealarm{
@@ -16940,9 +16522,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mbE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16959,18 +16539,14 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mcW" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "mdD" = (
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom{
@@ -17012,9 +16588,7 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "mge" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 4
@@ -17029,9 +16603,7 @@
 /area/bridge)
 "mgl" = (
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mgt" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -17046,18 +16618,14 @@
 /area/medical/virology)
 "mgE" = (
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mgQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mhD" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/plating,
@@ -17078,9 +16646,7 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/open/floor/carpet,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "miS" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -17129,17 +16695,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mmc" = (
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mmq" = (
 /turf/closed/wall,
 /area/crew_quarters/dorms)
@@ -17166,9 +16728,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mon" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -17185,9 +16745,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "moD" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -17279,9 +16837,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "mrm" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -17365,9 +16921,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mtG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
@@ -17438,9 +16992,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mvp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -17471,9 +17023,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mwv" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -17488,9 +17038,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mxo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -17557,9 +17105,7 @@
 	name = "toxins mixing output inlet"
 	},
 /turf/open/floor/engine/vacuum,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mxK" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "hos"
@@ -17608,9 +17154,7 @@
 "mys" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "myB" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -17705,9 +17249,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "mDv" = (
 /obj/item/book/manual/wiki/infections{
 	pixel_y = 7
@@ -17746,9 +17288,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mEt" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -17788,9 +17328,7 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mFG" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/wrench,
@@ -17824,9 +17362,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mGE" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -17915,9 +17451,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mNF" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -18035,9 +17569,7 @@
 	name = "Creature Cell #3"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mRS" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow,
@@ -18054,9 +17586,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mSl" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -18075,9 +17605,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mSE" = (
 /obj/machinery/door/window/brigdoor/southright{
 	name = "Creature Pen";
@@ -18089,9 +17617,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mSS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -18114,9 +17640,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "mUi" = (
 /obj/machinery/atmospherics/pipe/bluespace/layer1{
 	bluespace_network_name = "breathable";
@@ -18127,15 +17651,11 @@
 	on = 1
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mVf" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "mVi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -18248,9 +17768,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "naF" = (
 /obj/machinery/atmospherics/miner/oxygen,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -18368,9 +17886,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ney" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -18394,9 +17910,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nfN" = (
 /obj/machinery/seed_extractor,
 /obj/effect/turf_decal/tile/green{
@@ -18555,9 +18069,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "njG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -18628,9 +18140,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nle" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass,
@@ -18658,9 +18168,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nmB" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -18691,9 +18199,7 @@
 "npg" = (
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "nps" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -18708,9 +18214,7 @@
 	name = "Test Chamber blast door"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nqi" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -18757,9 +18261,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nsA" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -18829,9 +18331,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ntZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
@@ -18907,9 +18407,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nxa" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -18977,9 +18475,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "nAD" = (
 /obj/machinery/computer/message_monitor{
 	dir = 4
@@ -19071,9 +18567,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nDP" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -19092,9 +18586,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nEG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -19181,9 +18673,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nFQ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -19229,9 +18719,7 @@
 	pixel_x = -10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nGJ" = (
 /obj/machinery/camera{
 	c_tag = "AI Chamber - Aft";
@@ -19294,9 +18782,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "nIP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -19367,9 +18853,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nNa" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -19439,9 +18923,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "nPv" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1{
 	dir = 1
@@ -19553,9 +19035,7 @@
 "nUW" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "nWw" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -19741,9 +19221,7 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ocR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -19816,9 +19294,7 @@
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ogK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -19911,9 +19387,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ojZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -19937,9 +19411,7 @@
 /obj/structure/table/wood,
 /obj/item/paicard,
 /turf/open/floor/carpet,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "olG" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -19965,9 +19437,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "omc" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -20146,9 +19616,7 @@
 	pixel_x = -25
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "otl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 9
@@ -20178,9 +19646,7 @@
 	id = "toxinsdriver"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oua" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -20205,16 +19671,12 @@
 /area/tcommsat/server)
 "ouu" = (
 /turf/closed/wall,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "ouJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "ouR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -20304,9 +19766,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oyn" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/cable{
@@ -20345,9 +19805,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oyL" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
@@ -20483,9 +19941,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "oEI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
@@ -20509,9 +19965,7 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/carpet,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "oFR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
@@ -20600,9 +20054,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oHX" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -20629,9 +20081,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oIV" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -20725,9 +20175,7 @@
 	},
 /obj/effect/landmark/start/mime,
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "oLA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -20794,9 +20242,7 @@
 "oOn" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oOP" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -20861,17 +20307,13 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oTk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "oTQ" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
@@ -20909,9 +20351,7 @@
 "oUI" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oUU" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -20997,9 +20437,7 @@
 	volume_rate = 200
 	},
 /turf/open/floor/plating/airless,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "oZW" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/dropper,
@@ -21173,9 +20611,7 @@
 /area/quartermaster/storage)
 "pfQ" = (
 /turf/open/floor/engine/vacuum,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pgI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -21231,9 +20667,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pjd" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel/dark,
@@ -21243,9 +20677,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pkp" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair{
@@ -21278,9 +20710,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "plN" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -21409,9 +20839,7 @@
 "prm" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "prD" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -21432,9 +20860,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "prG" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
@@ -21443,9 +20869,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "psk" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -21540,9 +20964,7 @@
 	},
 /obj/machinery/vending/cola/red,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pvs" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -21560,9 +20982,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pvZ" = (
 /obj/item/radio/intercom{
 	freerange = 1;
@@ -21611,9 +21031,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pwH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 9
@@ -21700,9 +21118,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/telescience,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pAb" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -21760,9 +21176,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pAL" = (
 /obj/machinery/door/window/brigdoor/southright{
 	name = "Creature Pen";
@@ -21774,9 +21188,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pBr" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -21787,9 +21199,7 @@
 "pBI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pCL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
@@ -21908,9 +21318,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pHS" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -21933,9 +21341,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/meter,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pIH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22027,9 +21433,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "pMa" = (
 /obj/item/storage/secure/safe/HoS{
 	pixel_x = 35
@@ -22107,9 +21511,7 @@
 	name = "Escape Pod One"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "pQZ" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/donkpockets{
@@ -22384,9 +21786,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qdT" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/structure/cable{
@@ -22412,9 +21812,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "qeT" = (
 /obj/machinery/telecomms/broadcaster/preset_right,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -22493,9 +21891,7 @@
 	location = "Hallway-return"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "qhq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
@@ -22586,9 +21982,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qmr" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -22879,9 +22273,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qwV" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -22932,9 +22324,7 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "qyZ" = (
 /turf/closed/wall,
 /area/crew_quarters/heads/hop)
@@ -22967,9 +22357,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qAD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -23111,9 +22499,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qHE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -23242,17 +22628,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qLM" = (
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "qMi" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -23321,9 +22703,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qPM" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -23377,9 +22757,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qSA" = (
 /obj/machinery/power/apc{
 	areastring = "/area/aisat";
@@ -23393,9 +22771,7 @@
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qTz" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -23420,9 +22796,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qVl" = (
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -23452,9 +22826,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qVC" = (
 /obj/machinery/button/door{
 	id = "cargounload";
@@ -23531,9 +22903,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qXA" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -23562,9 +22932,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qXO" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
@@ -23609,9 +22977,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "qZg" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet,
@@ -23646,9 +23012,7 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "rba" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -23673,9 +23037,7 @@
 /obj/item/nanite_remote/comm,
 /obj/item/nanite_remote,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rbV" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -23696,17 +23058,13 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/machinery/meter,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rds" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "rdM" = (
 /obj/structure/pool/Lboard,
 /turf/open/pool,
@@ -23727,9 +23085,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rgl" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
@@ -23796,9 +23152,7 @@
 "rlW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rmi" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -23948,9 +23302,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ruh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -23962,9 +23314,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rum" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -24005,9 +23355,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "rwE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -24075,9 +23423,7 @@
 	name = "Creature Cell #5"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rCL" = (
 /obj/machinery/light{
 	dir = 8
@@ -24145,9 +23491,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rFH" = (
 /obj/machinery/vending/wardrobe/cap_wardrobe,
 /turf/open/floor/carpet,
@@ -24187,9 +23531,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rIF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -24215,9 +23557,7 @@
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rJA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -24248,17 +23588,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rJL" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/chips,
 /obj/item/reagent_containers/food/drinks/soda_cans/cola,
 /turf/open/floor/carpet,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "rJX" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -24284,9 +23620,7 @@
 	},
 /mob/living/simple_animal/slime,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rLl" = (
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall,
@@ -24309,9 +23643,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rMv" = (
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -24350,9 +23682,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rOK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -24364,9 +23694,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "rOS" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/item/radio/intercom{
@@ -24411,9 +23739,7 @@
 /obj/structure/chair/comfy/beige,
 /obj/effect/landmark/start/clown,
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "rQD" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -24458,9 +23784,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rTZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 8
@@ -24495,17 +23819,13 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "rVB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "rVC" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -24527,9 +23847,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rVK" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -24549,9 +23867,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rXa" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/bot,
@@ -24627,9 +23943,7 @@
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "rZz" = (
 /obj/item/seeds/apple,
 /obj/item/seeds/apple,
@@ -24723,9 +24037,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "scv" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
@@ -24753,9 +24065,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "seo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -24985,9 +24295,7 @@
 	dir = 6
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "snM" = (
 /obj/machinery/computer/communications,
 /obj/structure/cable{
@@ -25090,9 +24398,7 @@
 /area/aisat)
 "srN" = (
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "ssd" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -25105,9 +24411,7 @@
 	name = "Escape Pod Three"
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "ssS" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32;
@@ -25154,9 +24458,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "suQ" = (
 /turf/closed/wall,
 /area/medical/medbay/zone3)
@@ -25241,9 +24543,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "swJ" = (
 /obj/machinery/camera{
 	c_tag = "AI Access";
@@ -25305,9 +24605,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sAm" = (
 /obj/structure/table/reinforced,
 /obj/item/phone{
@@ -25477,9 +24775,7 @@
 /area/hallway/secondary/exit)
 "sEo" = (
 /turf/closed/wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sFv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
 	dir = 1
@@ -25557,9 +24853,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sIT" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -25578,9 +24872,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sIW" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -25629,9 +24921,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sMr" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -25674,9 +24964,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sME" = (
 /turf/open/space/basic,
 /area/space/station_ruins)
@@ -25732,15 +25020,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sOd" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sOm" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -25772,9 +25056,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sPQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -25831,9 +25113,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "sRl" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -25928,9 +25208,7 @@
 /area/crew_quarters/dorms)
 "sVI" = (
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "sWe" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -25977,9 +25255,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "sWD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -26055,9 +25331,7 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tau" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -26106,9 +25380,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tco" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -26128,9 +25400,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "tdD" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -26146,9 +25416,7 @@
 	volume_rate = 200
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tfa" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -26170,9 +25438,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "tgt" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -26218,9 +25484,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tiz" = (
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
@@ -26362,9 +25626,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tmq" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -26417,9 +25679,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tpP" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -26451,9 +25711,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tpY" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/bot,
@@ -26541,9 +25799,7 @@
 	c_tag = "Docking Bay - North West"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "ttv" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -26640,9 +25896,7 @@
 	},
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tvG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8;
@@ -26651,9 +25905,7 @@
 	pressure_checks = 0
 	},
 /turf/open/floor/circuit/telecomms,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tvW" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
@@ -26680,9 +25932,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tyk" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -26739,9 +25989,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "tAk" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -26762,9 +26010,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tBO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -26778,9 +26024,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tCI" = (
 /obj/machinery/light,
 /obj/structure/table/wood,
@@ -27014,9 +26258,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tJQ" = (
 /obj/structure/table,
 /obj/item/radio/off,
@@ -27054,9 +26296,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "tKs" = (
 /obj/structure/table,
 /obj/item/t_scanner,
@@ -27084,9 +26324,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tLQ" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -27121,9 +26359,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tNl" = (
 /obj/machinery/light{
 	dir = 1
@@ -27132,9 +26368,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tNG" = (
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
@@ -27223,9 +26457,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tPi" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -27288,9 +26520,7 @@
 	pixel_x = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tRI" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
@@ -27358,9 +26588,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tSZ" = (
 /turf/open/floor/circuit/green,
 /area/ai_monitored/nuke_storage)
@@ -27409,9 +26637,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tVf" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -27436,9 +26662,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "tWc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -27571,9 +26795,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "ucc" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -27621,9 +26843,7 @@
 /area/crew_quarters/bar)
 "udC" = (
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "udK" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -27737,18 +26957,14 @@
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "ujv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ujx" = (
 /obj/machinery/status_display/ai{
 	pixel_y = 32
@@ -27958,9 +27174,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uqn" = (
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
@@ -28074,9 +27288,7 @@
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "uyr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -28099,15 +27311,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uAp" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uAI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -28126,9 +27334,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uAS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -28215,9 +27421,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uEh" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -28233,9 +27437,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uED" = (
 /obj/machinery/doorButtons/airlock_controller{
 	idExterior = "virology_airlock_exterior";
@@ -28269,9 +27471,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uFg" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -28352,9 +27552,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uGW" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -28385,9 +27583,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uHZ" = (
 /obj/structure/chair/comfy/beige,
 /obj/machinery/light{
@@ -28395,9 +27591,7 @@
 	},
 /obj/effect/landmark/start/chaplain,
 /turf/open/floor/plasteel/grimy,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "uIo" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -28521,9 +27715,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uLM" = (
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plating,
@@ -28624,9 +27816,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uQm" = (
 /obj/item/transfer_valve{
 	pixel_x = -5
@@ -28661,9 +27851,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uQF" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -28774,9 +27962,7 @@
 	},
 /obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uUw" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -28900,9 +28086,7 @@
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "uYN" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
@@ -29070,9 +28254,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vht" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
@@ -29188,9 +28370,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vkl" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -29244,9 +28424,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "voG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -29315,9 +28493,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "vts" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -29374,9 +28550,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vvI" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -29447,9 +28621,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vxa" = (
 /turf/closed/wall/r_wall,
 /area/science/lab)
@@ -29504,9 +28676,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vyG" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
@@ -29691,9 +28861,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vGd" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
@@ -29750,9 +28918,7 @@
 /obj/machinery/vending/cola/random,
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "vLz" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{
@@ -29843,9 +29009,7 @@
 	},
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "vOP" = (
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -29858,9 +29022,7 @@
 	},
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vPs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -29957,9 +29119,7 @@
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vRy" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair{
@@ -29983,9 +29143,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "vSh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
@@ -30016,9 +29174,7 @@
 /obj/item/flashlight,
 /obj/item/flashlight,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "vTg" = (
 /obj/machinery/air_sensor/atmos/oxygen_tank,
 /turf/open/floor/engine/o2,
@@ -30542,9 +29698,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "wpZ" = (
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -30773,9 +29927,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "wyw" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
 	dir = 8
@@ -30836,9 +29988,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wzH" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -30858,9 +30008,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "wBh" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -31003,9 +30151,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wGd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -31217,9 +30363,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wMp" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -31242,9 +30386,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wNO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
@@ -31364,9 +30506,7 @@
 "wQk" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
 /turf/open/floor/engine/vacuum,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wQG" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -31390,9 +30530,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wRq" = (
 /obj/effect/landmark/loneopspawn,
 /turf/open/space/basic,
@@ -31457,9 +30595,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "wTe" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/landmark/start/chemist,
@@ -31470,9 +30606,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "wUm" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -31651,9 +30785,7 @@
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xbO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -31740,9 +30872,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xgC" = (
 /obj/structure/grille,
 /turf/open/space,
@@ -31790,9 +30920,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xhP" = (
 /obj/machinery/computer/camera_advanced/xenobio{
 	dir = 4
@@ -31811,9 +30939,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xim" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -31903,9 +31029,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xkQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
 	dir = 4
@@ -31952,9 +31076,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "xnd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -32036,9 +31158,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xpq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -32053,9 +31173,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xpD" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -32221,9 +31339,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xuj" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -32381,9 +31497,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xzc" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/reagent_containers/blood,
@@ -32553,9 +31667,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xCI" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -32571,9 +31683,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/aft{
-	name = "Docking Bay"
-	})
+/area/hallway/primary/aft)
 "xDR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 4
@@ -32620,9 +31730,7 @@
 "xGr" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xGK" = (
 /obj/machinery/door/window/southright{
 	dir = 4;
@@ -32718,9 +31826,7 @@
 	name = "Creature Cell #1"
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xKO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -32805,9 +31911,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xPo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 9
@@ -32827,9 +31931,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/port/aft{
-	name = "Escape Pods"
-	})
+/area/hallway/primary/port/aft)
 "xQE" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -32909,9 +32011,7 @@
 	name = "server vent"
 	},
 /turf/open/floor/circuit/telecomms,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xTU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 4
@@ -33068,9 +32168,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xYE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
@@ -33091,9 +32189,7 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "xYI" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -33334,9 +32430,7 @@
 	},
 /obj/machinery/light/small,
 /turf/open/floor/engine,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ygY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1{
 	dir = 6
@@ -33459,18 +32553,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ykQ" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/xenobiology{
-	name = "Science Outpost"
-	})
+/area/science/xenobiology)
 "ykU" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable{
