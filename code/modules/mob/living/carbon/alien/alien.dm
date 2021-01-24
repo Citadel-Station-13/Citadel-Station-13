@@ -19,7 +19,6 @@
 	/// How much brute damage they do to simple animals
 	var/meleeSlashSAPower = 35
 
-	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
