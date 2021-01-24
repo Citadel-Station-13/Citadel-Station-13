@@ -54,7 +54,7 @@
 				if(prob(25))
 					var/amt = min(co2, 9)
 					T.air.adjust_moles(/datum/gas/carbon_dioxide, -amt)
-					T.atmos_spawn_air("o2=[amt]")
+					T.atmos_spawn_air("o2=[amt];TEMP=293.15")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	. = ..()
