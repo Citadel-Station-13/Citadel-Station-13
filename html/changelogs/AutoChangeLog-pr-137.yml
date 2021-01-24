@@ -1,0 +1,4 @@
+author: Drulikar
+delete-after: true
+changes:
+  - bugfix: Fixed mouse icons Pull and Throw that had map merge comments in them
