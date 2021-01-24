@@ -1,0 +1,4 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - bugfix: "Makes a few slight improvements to drinking code"
