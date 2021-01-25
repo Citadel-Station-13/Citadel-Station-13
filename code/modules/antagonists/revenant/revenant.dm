@@ -445,10 +445,16 @@
 	var/mob/living/simple_animal/revenant/spooker = user
 	if(!istype(throwable))
 		return
-	if(!throwable.anchored && !spooker.telekinesis_cooldown && spooker.castcheck(-25))
+	if(!throwable.anchored && !spooker.telekinesis_cooldown && spooker.essence > 20)
+		if(7 < get_dist(throwable, spooker))
+			return
+		if(3 >=  get_dist(throwable, spooker))
+			spooker.stun(10)
+			spooker.reveal(25)
+		else
+			spooker.stun(20)
+			spooker.reveal(50)
 		spooker.change_essence_amount(-20, FALSE, "telekinesis")
-		spooker.stun(20)
-		spooker.reveal(50)
 		spooker.telekinesis_cooldown = TRUE
 		throwable.float(TRUE, TRUE)
 		sleep(20)
@@ -463,7 +469,7 @@
 		throwable.float(FALSE, TRUE)
 
 
-//Use this for effects you want to happen when a revenant throws itself, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
+//Use this for effects you want to happen when a revenant throws stuff, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
 /obj/item/proc/DoRevenantThrowEffects(atom/target)
 	return TRUE
 
