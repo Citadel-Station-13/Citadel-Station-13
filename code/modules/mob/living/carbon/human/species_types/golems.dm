@@ -805,7 +805,7 @@
 
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.RemoveElement(/datum/element/ventcrawling)
+	C.RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /datum/species/golem/bronze
 	name = "Bronze Golem"
