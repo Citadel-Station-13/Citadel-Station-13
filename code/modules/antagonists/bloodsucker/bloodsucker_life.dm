@@ -27,7 +27,6 @@
 	if(SSticker.mode.is_daylight() && !HAS_TRAIT_FROM(owner.current, TRAIT_FAKEDEATH, "bloodsucker"))
 		if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			Torpor_Begin()
-				// Wait before next pass
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -39,7 +38,7 @@
 	owner.current.blood_volume = clamp(owner.current.blood_volume + value, 0, max_blood_volume)
 	update_hud()
 
-/datum/antagonist/bloodsucker/proc/HandleFeeding(mob/living/carbon/target, mult=1)
+/datum/antagonist/bloodsucker/proc/HandleFeeding(mob/living/carbon/target, mult = 1)
 	// mult: SILENT feed is 1/3 the amount
 	var/blood_taken = min(feed_amount, target.blood_volume) * mult	// Starts at 15 (now 8 since we doubled the Feed time)
 	target.blood_volume -= blood_taken
@@ -58,9 +57,9 @@
 	// Reduce Value Quantity
 	if(target.stat == DEAD)	// Penalty for Dead Blood
 		blood_taken /= 3
-	if(!ishuman(target))		// Penalty for Non-Human Blood
+	if(!ishuman(target) || HAS_TRAIT(target, TRAIT_WASMONKEY))		// Penalty for Non-Human Blood
 		blood_taken /= 2
-	//if (!iscarbon(target))	// Penalty for Animals (they're junk food)
+	// Penalty for Animals (they're junk food)
 	// Apply to Volume
 	AddBloodVolume(blood_taken)
 	// Reagents (NOT Blood!)
@@ -68,7 +67,7 @@
 		target.reagents.reaction(owner.current, INGEST, 1) // Run Reaction: what happens when what they have mixes with what I have?
 		target.reagents.trans_to(owner.current, 1)	// Run transfer of 1 unit of reagent from them to me.
 	// Blood Gulp Sound
-	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+	owner.current.playsound_local(null, 'sound/effects/singlebeat.ogg', 40, TRUE) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -86,9 +85,8 @@
 		return FALSE
 	if(istype(owner.current.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 		return FALSE
+	var/stamina_regen = actual_regen
 	owner.current.adjustStaminaLoss(-1.5 + (actual_regen * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
-	owner.current.adjustCloneLoss(-0.1 * (actual_regen * 2) * mult, 0)
-	owner.current.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1 * (actual_regen * 4) * mult)
 	// No Bleeding
 	/*if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
 		var/mob/living/carbon/human/H = owner.current
@@ -105,8 +103,9 @@
 			C.ExtinguishMob()
 			CureDisabilities() 	// Extinguish Fire
 			C.remove_all_embedded_objects() // Remove Embedded!
-			owner.current.regenerate_organs() // Heal Organs (will respawn original eyes etc. but we replace right away, next)
+			adjustAllOrganLoss(100)
 			CheckVampOrgans() // Heart, Eyes
+			C.cloneloss = 0
 			if(check_limbs(costMult))
 				return TRUE
 		else if(owner.current.stat >= UNCONSCIOUS) //Faster regeneration and slight burn healing while unconcious
@@ -152,13 +151,13 @@
 
 /datum/antagonist/bloodsucker/proc/CureDisabilities()
 	var/mob/living/carbon/C = owner.current
-	C.cure_blind(list(EYE_DAMAGE))//()
+	C.cure_blind(list(EYE_DAMAGE))
 	C.cure_nearsighted(EYE_DAMAGE)
-	C.set_blindness(0) 	// Added 9/2/19
-	C.set_blurriness(0) // Added 9/2/19
-	C.update_tint() 	// Added 9/2/19
-	C.update_sight() 	// Added 9/2/19
-	for(var/O in C.internal_organs) //owner.current.adjust_eye_damage(-100)  // This was removed by TG
+	C.set_blindness(0)
+	C.set_blurriness(0)
+	C.update_tint()
+	C.update_sight()
+	for(var/O in C.internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
 	owner.current.cure_husk()
@@ -174,12 +173,8 @@
 	// EMPTY:	Frenzy!
 	// BLOOD_VOLUME_GOOD: [336]  Pale (handled in bloodsucker_integration.dm
 	// BLOOD_VOLUME_BAD: [224]  Jitter
-<<<<<<< Updated upstream
-	if(owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(0.5))
-=======
-	if((owner.current.stat == CONSCIOUS && owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(0.5 && HAS_TRAIT(owner, TRAIT_FAKEDEATH)) && !poweron_masquerade)
->>>>>>> Stashed changes
-		owner.current.Jitter(3)
+	if((owner.current.stat == CONSCIOUS && owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(0.5) && !poweron_masquerade && owner.current.jittery)
+		owner.current.jitteriness = 10
 	// BLOOD_VOLUME_SURVIVE: [122]  Blur Vision
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))

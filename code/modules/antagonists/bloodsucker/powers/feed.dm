@@ -82,7 +82,9 @@
 /datum/action/bloodsucker/feed/proc/InferiorBlood(mob/living/target)
 	if(Ambloodsucker(owner) && HAS_TRAIT(target, TRAIT_WASMONKEY))
 		var/datum/antagonist/bloodsucker/B = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if(B.bloodsucker_level =< 3 && isliving(owner) && owner.blood_volume >= 200)
+		if(B.bloodsucker_level >= 3 && owner.blood_volume =< 200)
+			return TRUE
+		else if(B.bloodsucker_level < 3)
 			return TRUE
 	return FALSE
 
@@ -202,9 +204,10 @@
 	ADD_TRAIT(user, TRAIT_MUTE, "bloodsucker_feed")
 
 	// Begin Feed Loop
-	var/warning_target_inhuman = FALSE
-	var/warning_target_dead = FALSE
-	var/warning_full = FALSE
+	var/warning_target_inhuman
+	var/warning_target_dead
+	var/warning_full
+	var/warning_bad_blood
 	var/warning_target_bloodvol = 99999
 	var/amount_taken = 0
 	var/blood_take_mult = amSilent ? 0.3 : 1 // Quantity to take per tick, based on Silent or not.
@@ -234,14 +237,14 @@
 				if(iscarbon(target))
 					var/mob/living/carbon/C = target
 					C.bleed(15)
-				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
+				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, true)
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
 					var/obj/item/bodypart/head_part = H.get_bodypart(BODY_ZONE_HEAD)
 					if(head_part)
 						head_part.generic_bleedstacks += 5
 				target.add_splatter_floor(get_turf(target))
-				user.add_mob_blood(target) // Put target's blood on us. The donor goes in the ( )
+				user.add_mob_blood(target) // Put target's blood on us
 				target.add_mob_blood(target)
 				target.take_overall_damage(10,0)
 				target.emote("scream")
@@ -254,6 +257,10 @@
 
 		///////////////////////////////////////////////////////////
 		// 		Handle Feeding! User & Victim Effects (per tick)
+		if(InferiorBlood)
+			blood_take_mult =* 0.2
+			if(!warning_bad_blood)
+				to_chat(user, "<span class='notice'>You can't bear drinking more inferior blood</span>")
 		bloodsuckerdatum.HandleFeeding(target, blood_take_mult)
 		amount_taken += amSilent ? 0.3 : 1
 		if(!amSilent)
@@ -263,7 +270,7 @@
 
 		///////////////////////////////////////////////////////////
 		// Not Human?
-		if(!ishuman(target))
+		if(!ishuman(target) || HAS_TRAIT(target, TRAIT_WASMONKEY))
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "drankblood", /datum/mood_event/drankblood_bad) // BAD // in bloodsucker_life.dm
 			if(!warning_target_inhuman)
 				to_chat(user, "<span class='notice'>You recoil at the taste of a lesser lifeform.</span>")

@@ -41,7 +41,7 @@
 	var/FinalDeath                  //Have we reached final death? Used to prevent spam.
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
 
 /datum/antagonist/bloodsucker/on_gain()
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
@@ -339,12 +339,10 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//This handles the application of antag huds/special abilities
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
 	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/LifeTick)
 	return
 
-//This handles the removal of antag huds/special abilities
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
 	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
