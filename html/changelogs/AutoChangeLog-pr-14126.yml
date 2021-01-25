@@ -1,4 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - bugfix: "Making a monkey into a human doesn't unanchor random things on the tile"
