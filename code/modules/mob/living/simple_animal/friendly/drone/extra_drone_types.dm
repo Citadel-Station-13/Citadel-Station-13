@@ -114,7 +114,6 @@
 	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
-	ventcrawler = VENTCRAWLER_NONE
 	faction = list("neutral", "ratvar")
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
