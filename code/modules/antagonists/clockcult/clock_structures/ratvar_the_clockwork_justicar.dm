@@ -182,4 +182,5 @@
 			L.fire_stacks = INFINITY
 			L.IgniteMob()
 		sleep(50)
+	send_to_playing_players("<span class='brass'>\"Ratvar has been freed Reebe, rejoice!\"</span>")
 	SSticker.force_ending = 1
