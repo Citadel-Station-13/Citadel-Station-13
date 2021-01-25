@@ -433,3 +433,4 @@
 			if(robot.mode == BOT_REPAIRING)
 				return TRUE
 	return FALSE
+	
