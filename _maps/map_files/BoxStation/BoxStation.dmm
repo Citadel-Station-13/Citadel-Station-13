@@ -49347,8 +49347,10 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "csT" = (
 /obj/structure/table/glass,
-/obj/item/storage/book/bible,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/storage/book/bible{
+	pixel_y = -1
+	},
 /turf/open/floor/wood/wood_large,
 /area/chapel/main)
 "csU" = (
@@ -53487,6 +53489,14 @@
 	icon_state = "carpetsymbol"
 	},
 /area/crew_quarters/theatre)
+"dsJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/table/glass,
+/obj/item/toy/figure/chaplain{
+	pixel_y = -9
+	},
+/turf/open/floor/wood/wood_large,
+/area/chapel/main)
 "dtx" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -59537,6 +59547,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"rxF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/table/glass,
+/obj/item/storage/book/bible{
+	pixel_y = 17
+	},
+/turf/open/floor/wood/wood_large,
+/area/chapel/main)
 "ryr" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -62353,6 +62371,10 @@
 /obj/structure/table/glass,
 /obj/item/storage/fancy/candle_box{
 	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 1;
 	pixel_y = 4
 	},
 /turf/open/floor/wood/wood_large,
@@ -109795,8 +109817,8 @@ asB
 aCQ
 aEk
 fsQ
-fsQ
-fsQ
+dsJ
+rxF
 fsQ
 qkn
 aLr
@@ -111079,7 +111101,7 @@ aaf
 gXs
 aHm
 aHn
-aCR
+dmX
 aNW
 aNW
 aNW
@@ -111336,7 +111358,7 @@ aaf
 gXs
 aHm
 aJV
-aCR
+dmX
 csT
 kOL
 mZx
