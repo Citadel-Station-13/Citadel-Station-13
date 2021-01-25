@@ -4,7 +4,6 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
-	ventcrawler = VENTCRAWLER_ALWAYS
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
@@ -38,6 +37,8 @@
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 	. = ..()
 
