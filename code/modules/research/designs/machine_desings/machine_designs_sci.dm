@@ -161,3 +161,11 @@
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/explosive_compressor
+	name = "Explosive Compressor (Machine Board)"
+	desc = "The circuit board for an explosive compressor, used to compress raw into finished anomaly cores."
+	id = "explosive_compressor"
+	build_path = /obj/item/circuitboard/machine/explosive_compressor
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "command headsets are 120% instead of 160%"
-  - bugfix: "no more emote italics"

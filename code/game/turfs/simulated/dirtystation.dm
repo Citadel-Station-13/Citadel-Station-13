@@ -8,6 +8,9 @@
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()
+	if(CONFIG_GET(flag/persistent_debris_only))
+		return
+
 	if(prob(66))	//fastest possible exit 2/3 of the time
 		return
 
@@ -38,7 +41,7 @@
 		return
 
 		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
-	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,			
+	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,
 														/area/crew_quarters/heads/chief,
 														/area/ruin/space/derelict/assembly_line,
 														/area/science/robotics,

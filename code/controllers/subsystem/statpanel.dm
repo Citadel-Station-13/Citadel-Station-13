@@ -203,3 +203,4 @@ SUBSYSTEM_DEF(statpanels)
 	set hidden = TRUE
 
 	statbrowser_ready = TRUE
+	init_verbs()

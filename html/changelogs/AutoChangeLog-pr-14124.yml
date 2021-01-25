@@ -1,0 +1,4 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - rscadd: "The AI has a verb to look up and down z-levels"

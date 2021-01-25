@@ -5,6 +5,7 @@
 #define SPECIES_ANDROID				"android"
 #define SPECIES_ANGEL				"angel"
 #define SPECIES_MAMMAL				"mammal"
+	#define SPECIES_MAMMAL_SYNTHETIC "mammal_synthetic"
 #define SPECIES_ARACHNID			"arachnid"
 #define SPECIES_INSECT				"insect"
 #define SPECIES_DULLAHAN			"dullahan"

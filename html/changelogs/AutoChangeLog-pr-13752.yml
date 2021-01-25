@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - balance: "stamina crit is only removed when at or under 100 stamina, rather than 140. stamina crit threshold is still at 140."

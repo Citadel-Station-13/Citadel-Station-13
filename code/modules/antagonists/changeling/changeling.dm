@@ -213,7 +213,7 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5, soundenvwet = 0)
+		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5)
 		canrespec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1

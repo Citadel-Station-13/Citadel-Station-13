@@ -272,10 +272,10 @@
 	overdose_threshold = 50
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/stack/medical/gauze))
+	if(istype(O, /obj/item/stack/medical/gauze/adv))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
-		new/obj/item/stack/medical/mesh(get_turf(G), reac_volume)
+		reac_volume = min((reac_volume / 5), G.amount)
+		new /obj/item/stack/medical/mesh/five(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
@@ -358,10 +358,10 @@
 	..()
 
 /datum/reagent/medicine/styptic_powder/reaction_obj(obj/O, reac_volume)
-	if(istype(O, /obj/item/stack/medical/gauze))
+	if(istype(O, /obj/item/stack/medical/gauze/adv))
 		var/obj/item/stack/medical/gauze/G = O
-		reac_volume = min((reac_volume / 10), G.amount)
-		new/obj/item/stack/medical/suture(get_turf(G), reac_volume)
+		reac_volume = min((reac_volume / 5), G.amount)
+		new /obj/item/stack/medical/suture/five(get_turf(G), reac_volume)
 		G.use(reac_volume)
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
@@ -633,7 +633,7 @@
 	value = REAGENT_VALUE_RARE
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"

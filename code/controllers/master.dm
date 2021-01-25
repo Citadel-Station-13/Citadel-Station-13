@@ -1,10 +1,10 @@
- /**
-  * StonedMC
-  *
-  * Designed to properly split up a given tick among subsystems
-  * Note: if you read parts of this code and think "why is it doing it that way"
-  * Odds are, there is a reason
-  *
+/**
+ * StonedMC
+ *
+ * Designed to properly split up a given tick among subsystems
+ * Note: if you read parts of this code and think "why is it doing it that way"
+ * Odds are, there is a reason
+ *
  **/
 
 //This is the ABSOLUTE ONLY THING that should init globally like this
@@ -28,8 +28,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	// List of subsystems to process().
 	var/list/subsystems
-	/// List of subsystems to include in the MC stat panel.
-	var/list/statworthy_subsystems
 
 	// Vars for keeping track of tick drift.
 	var/init_timeofday
@@ -41,7 +39,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	///Only run ticker subsystems for the next n ticks.
 	var/skip_ticks = 0
 
-	var/make_runtime = 0
+	var/make_runtime = FALSE
 
 	var/initializations_finished_with_no_players_logged_in	//I wonder what this could be?
 
@@ -66,9 +64,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
-
-	/// Statclick for misc subsystems
-	var/obj/effect/statclick/misc_subsystems/misc_statclick
 
 /datum/controller/master/New()
 	if(!config)
@@ -95,11 +90,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			for(var/I in subsytem_types)
 				_subsystems += new I
 		Master = src
-
-	// We want to see all subsystems during init.
-	statworthy_subsystems = subsystems.Copy()
-
-	misc_statclick = new(null, "Debug")
 
 	if(!GLOB)
 		new /datum/controller/global_vars
@@ -217,7 +207,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 	// Set world options.
-	world.fps = CONFIG_GET(number/fps)
+	world.change_fps(CONFIG_GET(number/fps))
 	var/initialized_tod = REALTIMEOFDAY
 
 	if(tgs_prime)
@@ -271,14 +261,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/list/tickersubsystems = list()
 	var/list/runlevel_sorted_subsystems = list(list())	//ensure we always have at least one runlevel
 	var/timer = world.time
-	statworthy_subsystems = list()
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
 		if (SS.flags & SS_NO_FIRE)
-			if(SS.flags & SS_ALWAYS_SHOW_STAT)
-				statworthy_subsystems += SS
 			continue
-		statworthy_subsystems += SS
 		SS.queued_time = 0
 		SS.queue_next = null
 		SS.queue_prev = null

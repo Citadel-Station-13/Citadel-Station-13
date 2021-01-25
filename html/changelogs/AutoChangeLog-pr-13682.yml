@@ -1,7 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - bugfix: "Changes the area designations to be not varedited since the code didn't like that anymore"
-  - bugfix: "The cargo bay conveyor belts not only work with the shuttle now but go in the right direction to boot"
-  - tweak: "Slight visual adjustments to cargo in light of this"
-  - rscadd: "The arcade's got RAD carpet now"

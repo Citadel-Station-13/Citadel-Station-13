@@ -3535,9 +3535,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ajL" = (
@@ -3822,6 +3820,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
@@ -32964,6 +32965,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/ore/silver{
+	amount = 2
+	},
+/obj/item/stack/ore/iron,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "biu" = (
@@ -79380,6 +79385,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
