@@ -5,7 +5,7 @@ Pieces of scripture require certain follower counts, contruction value, and acti
 Drivers: Unlocked by default
 Scripts: 35k power or one convert
 Applications: 50k or three converts
-Judgement 5 converts
+Judgement 80k power or nine converts
 */
 
 /datum/clockwork_scripture
@@ -16,6 +16,9 @@ Judgement 5 converts
 	var/chanting = FALSE //If the invocation's words are being spoken
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/power_cost = 5 //In watts, how much a scripture takes to invoke
+	var/vitality_cost = 0 //how much vitality a scripture requires to be used
+	var/special_vitality_text//if the scripture can use additional vitality to have a unique function, use this; put
+	var/special_vitality_cost
 	var/special_power_text //If the scripture can use additional power to have a unique function, use this; put POWERCOST here to display the special power cost.
 	var/special_power_cost //This should be a define in __DEFINES/clockcult.dm, such as ABSCOND_ABDUCTION_COST
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
