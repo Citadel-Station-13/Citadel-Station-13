@@ -133,7 +133,7 @@
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
 	power_cost = 8000
-	usage_tip = "guardians are useful as personal bodyguards and frontline warriors."
+	usage_tip = "Guardians are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 5
