@@ -5,7 +5,7 @@
   <link rel="stylesheet" type="text/css" href="changelog.css">
   <base target="_blank" />
   <script type='text/javascript'>
-
+  
 	function changeText(tagID, newText, linkTagID){
 		var tag = document.getElementById(tagID);
 		tag.innerHTML = newText;
@@ -13,8 +13,8 @@
 		linkTag.removeAttribute("href");
 		linkTag.removeAttribute("onclick");
 	}
-
-  </script>
+	
+  </script>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
@@ -24,7 +24,7 @@
 	<tr>
 		<td valign='top'>
 			<div align='center'><font size='3'><b>Traditional Games Space Station 13</b></font></div>
-
+			
 			<p><div align='center'><font size='3'><a href="https://citadel-station.net/forum/index.php">Forum</a> | <a href="https://citadel-station.net/wiki/index.php?title=Main_Page">Wiki</a> | <a href="https://github.com/Citadel-Station-13/Citadel-Station-13">Source</a></font></div></p>
 			</td>
 	</tr>
@@ -42,11 +42,11 @@
 </table>
 
 		<!--
-
-		TO ADD AN ENTRY, ADD AND MAINTAIN YOUR OWN changelog/USERNAME.yml FILE.
-
+		
+		TO ADD AN ENTRY, ADD AND MAINTAIN YOUR OWN changelog/USERNAME.yml FILE. 
+		
 		*** DO NOT FUCK WITH THIS FILE OR YOU WILL CAUSE MERGE CONFLICTS. ***
-
+		
 		-->
 		<div class="commit sansserif">
 
@@ -1147,136 +1147,6 @@
 				<li class="bugfix">Fixed "Show All" tab in player panel logs being broken.</li>
 				<li class="bugfix">Whispers, OOC, and various other things display differently in logs, visually distinguishing them from say logs.</li>
 				<li class="refactor">Player panel logs will now show all logs chronologically, so you'll see commingled say and attack logs if you're on the "Show All" tab, etc...</li>
-			</ul>
-
-			<h2 class="date">24 November 2020</h2>
-			<h3 class="author">Acer202, with minor help from The0bserver updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">After internal deliberation, CentCom has decided to run a limited reinstatement of public mining shuttles for use in more tried and true station classes. CentCom would like to remind you that this privilege is easily revoked, and that abuse may result in immediate detonation.</li>
-				<li class="rscadd">Restores the mining shuttle on Pubby, Box, Delta, Meta, and Lambda Station.</li>
-			</ul>
-			<h3 class="author">ArchieBeepBoop updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Outlet Injector Mapping Asset Layer Fix</li>
-				<li class="bugfix">Jacqueen and the Christmas tree should no longer spawn abstract things that can cause shittons of runtimes.</li>
-			</ul>
-			<h3 class="author">Arturlang updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Comments out spaceman dmm do not sleeps for mob/proc/CommonClickOn, atom/proc/attack_hand, datum/proc/keyLoop and mob/living/proc/Life</li>
-				<li class="bugfix">Makes construct mind returning more robust</li>
-				<li class="tweak">Being sacrificed by the cult no longer removes all hope of rescue.</li>
-			</ul>
-			<h3 class="author">DeltaFire15 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">zeolites are now actual fermichems instead of being incredibly easy to make.</li>
-				<li class="bugfix">Using syringes / droppers on chem heaters with beakers in them works again.</li>
-				<li class="bugfix">Fixes a minor incorrectness in ratvarian borg slabs (ratvar_act -> ui_act)</li>
-				<li class="code_imp">Clockwork rites now support hiding specific rites from neutered servants.</li>
-				<li class="balance">Biomechanical (hybrid) bodyparts now have access to wound-fixing surgeries.</li>
-				<li class="tweak">A wound being fixed no longer just qdel()s surgeries connected to it.</li>
-				<li class="tweak">Some robotic surgery steps are now a bit more clear.</li>
-				<li class="bugfix">Organs no longer get fed to people after successfully being inserted into them.</li>
-				<li class="tweak">Not completing the do_after of a surgery no longer causes you to attack the target with whatever you were holding.</li>
-				<li class="bugfix">The 'Your body is in a cloner' notification works again</li>
-				<li class="bugfix">Hijack implants should work properly again (or, at least better)</li>
-				<li class="bugfix">Liches are now good skeletons again instead of weak ones</li>
-				<li class="bugfix">The piratepad control cannot be destroyed again.</li>
-				<li class="bugfix">Pirates have received new supplies of jetpacks instead of useless oxygen tanks</li>
-				<li class="bugfix">Ratvarian AIs are once again able to show their linked borgs Ratvar's light</li>
-				<li class="bugfix">Hijackers are once again unable to detonate borgs without being adjacent to the console</li>
-				<li class="bugfix">Automated annoucement systems and gulag ore consoles no longer waste emag charges</li>
-				<li class="bugfix">Automated announcement systems once again can be remote controlled by non-AIs with silicon access</li>
-				<li class="bugfix">APCs being hijacked multiple times at once is no longer possible, preventing some issues</li>
-				<li class="bugfix">Repeatable surgery steps can no longer cause an infinite loop if not completing the do_after</li>
-				<li class="rscadd">Robots (anyone with the robotic_organism trait) have toxins damage replaced with system corruption. See the PR for details.</li>
-				<li class="bugfix">The borg VTEC ability now actually gets removed when the upgrade is removed.</li>
-				<li class="bugfix">Scripture no longer sometimes eats part of its invocation.</li>
-				<li class="balance">APCs and silicons are now more susceptible to powerdrains (by the power_drain() proc, which is rare)</li>
-				<li class="balance">Void Volt has been modified from a chant to a singular pulse.</li>
-				<li class="bugfix">Supplypods shouldn't cause runtimes anymore, and shrapnel (pelletclouds) should work for them.</li>
-				<li class="bugfix">Sleeper UI interactiveness now behaves correctly.</li>
-				<li class="bugfix">A runtime caused by hallucinations is gone.</li>
-				<li class="bugfix">The transmission sigil power drain works now</li>
-			</ul>
-			<h3 class="author">EmeraldSundisk updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Changes the area designations to be not varedited since the code didn't like that anymore</li>
-				<li class="bugfix">The cargo bay conveyor belts not only work with the shuttle now but go in the right direction to boot</li>
-				<li class="tweak">Slight visual adjustments to cargo in light of this</li>
-				<li class="rscadd">The arcade's got RAD carpet now</li>
-			</ul>
-			<h3 class="author">Hatterhat updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">The bone gauntlets should be slightly less murderously punchy on the fast punches mode.</li>
-			</ul>
-			<h3 class="author">MrJWhit updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Minor fixes to kilo</li>
-				<li class="admin">Canceling events gives more time to stop from 10 to 30</li>
-				<li class="balance">Nerf combat knife damage</li>
-			</ul>
-			<h3 class="author">Putnam3145 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A fallback for dynamic antag rolling that allows for it to just try between traitor, blood brothers, heretics, changeling, bloodsucker and devil until there are enough roundstart antags. This can also happen randomly anyway. Blood brothers and devil are disabled for now, but the code is there to enable them.</li>
-				<li class="rscadd">A new storyteller, "Grab Bag", that forces the above round type.</li>
-			</ul>
-			<h3 class="author">SandPoot updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The radial type selection for the decal painter now has a bigger radius, so that no sprites go over each other.</li>
-				<li class="bugfix">Decal painter previews now appear the right way.</li>
-				<li class="rscadd">Server will ping a role on roundstart (actual start) if set.</li>
-				<li class="config">Changed configs location.</li>
-				<li class="code_imp">Swaps the gift static blacklist with a global list one.</li>
-				<li class="rscadd">Added ClothesMate resupply canister to cargo for the same price of the AutoDrobe.</li>
-			</ul>
-			<h3 class="author">SiliconMain updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Engi department has gas masks in loadout</li>
-			</ul>
-			<h3 class="author">Trilbyspaceclone updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">ASP 9mm and M1911 can now have suppressers added</li>
-				<li class="balance">Brass welders are 50% faster at refueling</li>
-				<li class="code_imp">redoes self fueling welders in the code to be less speggie</li>
-			</ul>
-			<h3 class="author">Vynzill updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">new gateway mission mapadd: jungleresort map</li>
-			</ul>
-			<h3 class="author">ZombieTsar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added new tools, toolbox and a slime core for creation on the crafting menu.</li>
-				<li class="rscadd">Added rnd circuit boards to crafting menu, will need a nerf.</li>
-				<li class="tweak">Oxygen tank, plasma tank and emergency oxygen tanks can be made on the autolathe.</li>
-				<li class="tweak">Icons for makeshift tools are all proper.</li>
-			</ul>
-			<h3 class="author">shellspeed1 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Floor bots are now buildable with all toolboxes.</li>
-			</ul>
-			<h3 class="author">silicons updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">anomalies no longer spawn in walls</li>
-				<li class="rscadd">you can now be an angel using a magic mirror again</li>
-			</ul>
-			<h3 class="author">timothyteakettle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">changeling stings retract upon turning into a slime puddle</li>
-				<li class="tweak">you cannot transform into a slime puddle with a no drop item in your hands</li>
-				<li class="tweak">slime puddles are now transparent and their colour looks more natural in comparison to the user</li>
-				<li class="tweak">slime puddles are now even slower</li>
-				<li class="tweak">slime puddles now get no protection from worn clothing</li>
-				<li class="rscadd">you can now customize your size from 90% to 130%, going below 100% makes you have 10 less max health</li>
-				<li class="rscadd">added in-game age verification as an alternative to access requests</li>
-				<li class="bugfix">time for memory loss message to show up when being revived is now correctly 300 seconds, instead of 30</li>
-				<li class="bugfix">a tonne of fixes to colourisation of parts, too many to name, including some sprite fixes</li>
-				<li class="rscadd">things now have their own individual primary/(secondary)/(tertiary) colours as required, and these can be modified by you</li>
-				<li class="bugfix">the load away mission verb won't crash the server now</li>
-				<li class="bugfix">fixes held items proccing crossed when passing someone</li>
-			</ul>
-			<h3 class="author">zeroisthebiggay updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">jacqueline spawns on boxstation</li>
 			</ul>
 		</div>
 
