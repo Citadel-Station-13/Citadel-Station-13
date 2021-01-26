@@ -1,0 +1,6 @@
+author: "ArcaneMusic, ported by Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "Strike a hydroponics tray with a fully-charged floral somatoray to lock in a mutation."
+  - rscadd: "Floral somatorays now have the ability to force a mutation in a plant. This should drain the cell in a single shot, but we'll see."
+  - balance: "Somatorays now take uranium to craft instead of radium."
