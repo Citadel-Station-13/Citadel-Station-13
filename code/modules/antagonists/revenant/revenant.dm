@@ -72,6 +72,7 @@
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/generated_objectives_and_spells = FALSE
+	var/telekinesis_cooldown
 
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
@@ -93,13 +94,16 @@
 
 /mob/living/simple_animal/revenant/Login()
 	..()
-	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
-	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
-	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
-	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
-	to_chat(src, "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>")
-	to_chat(src, "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>")
-	to_chat(src, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>")
+	var/revenant_greet
+	revenant_greet += "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>"
+	revenant_greet += "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>"
+	revenant_greet += "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>"
+	revenant_greet += "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>"
+	revenant_greet += "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>"
+	revenant_greet += "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>"
+	revenant_greet += "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>"
+	revenant_greet += "<b>You are also able to telekinetically throw objects by clickdragging them.</b>"
+	to_chat(src, revenant_greet)
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
 		mind.assigned_role = ROLE_REVENANT
@@ -317,6 +321,12 @@
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
 	return 1
 
+/mob/living/simple_animal/revenant/proc/telekinesis_cooldown_end()
+	if(!telekinesis_cooldown)
+		CRASH("telekinesis_cooldown_end ran when telekinesis_cooldown on [src] was false")
+	else
+		telekinesis_cooldown = FALSE
+
 /mob/living/simple_animal/revenant/proc/death_reset()
 	revealed = FALSE
 	unreveal_time = 0
@@ -430,6 +440,38 @@
 	if(!QDELETED(revenant))
 		qdel(revenant)
 	..()
+
+/proc/RevenantThrow(over, mob/user, obj/item/throwable)
+	var/mob/living/simple_animal/revenant/spooker = user
+	if(!istype(throwable))
+		return
+	if(!throwable.anchored && !spooker.telekinesis_cooldown && spooker.essence > 20)
+		if(7 < get_dist(throwable, spooker))
+			return
+		if(3 >=  get_dist(throwable, spooker))
+			spooker.stun(10)
+			spooker.reveal(25)
+		else
+			spooker.stun(20)
+			spooker.reveal(50)
+		spooker.change_essence_amount(-20, FALSE, "telekinesis")
+		spooker.telekinesis_cooldown = TRUE
+		throwable.float(TRUE, TRUE)
+		sleep(20)
+		throwable.DoRevenantThrowEffects(over)
+		throwable.throw_at(over, 10, 2)
+		ADD_TRAIT(throwable, TRAIT_SPOOKY_THROW, "revenant")
+		log_combat(throwable, over, "spooky telekinesised at", throwable)
+		var/obj/effect/temp_visual/telekinesis/T = new(get_turf(throwable))
+		T.color = "#8715b4"
+		addtimer(CALLBACK(spooker, /mob/living/simple_animal/revenant.proc/telekinesis_cooldown_end), 50)
+		sleep(5)
+		throwable.float(FALSE, TRUE)
+
+
+//Use this for effects you want to happen when a revenant throws stuff, check the TRAIT_SPOOKY_THROW if you want to know if its still being thrown
+/obj/item/proc/DoRevenantThrowEffects(atom/target)
+	return TRUE
 
 //objectives
 /datum/objective/revenant

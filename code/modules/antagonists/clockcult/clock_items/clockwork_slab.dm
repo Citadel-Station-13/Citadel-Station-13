@@ -203,10 +203,10 @@
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 		return FALSE
 	var/initial_tier = initial(scripture.tier)
-	if(initial_tier == SCRIPTURE_PERIPHERAL)
+	if(initial_tier == SCRIPTURE_PERIPHERAL && !issilicon(user))	//Silicons use peripheral scripture & cannot open the slab.
 		to_chat(user, "<span class='warning'>Nice try using href exploits</span>")
 		return
-	if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
+	if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier] &&!issilicon(user))	//silicons can't choose their spells, so lets allow them to always cast their assigned ones.
 		to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 		return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture

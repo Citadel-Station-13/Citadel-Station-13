@@ -165,14 +165,16 @@
 /datum/clockwork_rite/treat_wounds/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
 	if(!target)
 		return FALSE
-	if(!target.all_wounds.len)
+	if(!target.all_wounds || !target.all_wounds.len)
 		to_chat(invoker, "<span class='inathneq_small'>This one does not require mending.</span>")
 		return FALSE
 	.= ..()
 	if(!.)
 		return FALSE
 	target.adjustToxLoss(10 * target.all_wounds.len)
-	QDEL_LIST(target.all_wounds)
+	for(var/i in target.all_wounds)
+		var/datum/wound/mended = i
+		mended.remove_wound()
 	to_chat(target, "<span class='warning'>You feel your wounds heal, but are overcome with deep nausea.</span>")
 	new /obj/effect/temp_visual/ratvar/sigil/vitality(T)
 
