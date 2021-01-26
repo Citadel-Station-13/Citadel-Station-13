@@ -1985,6 +1985,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+		if(/obj/item/projectile/energy/florarevolution)
+			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 
 /datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
