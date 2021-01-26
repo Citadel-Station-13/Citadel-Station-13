@@ -252,13 +252,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
-
-	//acounts for changes in temperature
-	var/turf/model_parent = model.parent_type
-	var/model_temp = model.return_temperature()
-	if(isfinite(model_temp) && (model_temp != initial(model.initial_temperature) || model_temp != initial(model_parent.initial_temperature)))
-		set_temperature(model_temp)
-
+	set_temperature(initial(model.initial_temperature))
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
