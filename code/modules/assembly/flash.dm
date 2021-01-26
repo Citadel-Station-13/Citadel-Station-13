@@ -30,6 +30,9 @@
 	attack(user,user)
 	return FIRELOSS
 
+/obj/item/assembly/flash/DoRevenantThrowEffects(atom/target)
+	AOE_flash()
+
 /obj/item/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()

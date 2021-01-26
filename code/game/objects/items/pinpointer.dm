@@ -30,9 +30,13 @@
 	target = null
 	return ..()
 
+/obj/item/pinpointer/DoRevenantThrowEffects(atom/target)
+	attack_self()
+
 /obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
-	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	if(user)
+		user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)

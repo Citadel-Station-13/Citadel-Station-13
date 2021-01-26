@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "The free golem ship's GPSes no longer start on. They were never meant to, but they did."
