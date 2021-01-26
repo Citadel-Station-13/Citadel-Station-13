@@ -45,6 +45,10 @@
 		return
 	set_snowflake_from_config(id)
 
+/obj/item/toy/plush/DoRevenantThrowEffects(atom/target)
+	var/datum/component/squeak/squeaker = GetComponent(/datum/component/squeak)
+	squeaker.do_play_squeak(TRUE)
+
 /obj/item/toy/plush/Initialize(mapload, set_snowflake_id)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
