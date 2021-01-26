@@ -110,7 +110,7 @@
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
-		RemoveElement(/datum/element/ventcrawling) // balance
+		RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS) // balance
 		speed = 1 //gotta go slow
 		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
