@@ -954,6 +954,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/get_part_rating()
 	return 0
 
+//Can this item be given to people?
+/obj/item/proc/can_give()
+	return TRUE
+
 /obj/item/doMove(atom/destination)
 	if (ismob(loc))
 		var/mob/M = loc

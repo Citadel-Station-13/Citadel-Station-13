@@ -236,6 +236,12 @@
 		if(!iscyborg(loc))
 			deductcharge(severity*10, TRUE, FALSE)
 
+/obj/item/melee/baton/can_give()
+	if(turned_on)
+		return FALSE
+	else
+		..()
+
 /obj/item/melee/baton/stunsword
 	name = "stunsword"
 	desc = "Not actually sharp, this sword is functionally identical to its baton counterpart."

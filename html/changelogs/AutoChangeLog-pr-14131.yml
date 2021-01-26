@@ -1,0 +1,4 @@
+author: "MrJWhit"
+delete-after: True
+changes: 
+  - tweak: "Remaps some air alarms for sanity."

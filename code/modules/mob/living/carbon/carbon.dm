@@ -1231,3 +1231,25 @@
   */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
+
+/mob/living/carbon/altattackby(obj/item/W, mob/living/carbon/user, params)
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	if(W && user.a_intent == INTENT_HELP && W.can_give())
+		user.give()
+		return TRUE
+
+/mob/living/carbon/verb/give_verb()
+	set src in oview(1)
+	set category = "IC"
+	set name = "Give"
+
+	if(usr.incapacitated() || !usr.Adjacent(src))
+		return
+
+	if(!usr.get_active_held_item()) // Let me know if this has any problems -Yota
+		return
+	var/obj/item/I = usr.get_active_held_item()
+	var/mob/living/carbon/C = usr
+	if(I.can_give())
+		C.give()

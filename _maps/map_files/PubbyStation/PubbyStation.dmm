@@ -16530,6 +16530,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aMr" = (
@@ -47631,6 +47634,9 @@
 	pixel_x = -25;
 	specialfunctions = 4
 	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "cgM" = (
@@ -47978,6 +47984,9 @@
 	normaldoorcontrol = 1;
 	pixel_x = -25;
 	specialfunctions = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 22
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
@@ -51465,6 +51474,10 @@
 	icon_state = "right";
 	name = "Coffin Storage";
 	req_one_access_txt = "22"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -59431,6 +59444,10 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 23
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)

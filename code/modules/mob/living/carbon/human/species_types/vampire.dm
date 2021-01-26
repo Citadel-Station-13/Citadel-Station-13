@@ -169,7 +169,7 @@
 	if(istype(H, /mob/living/simple_animal))
 		var/mob/living/simple_animal/SA = H
 		if((human_caster.blood_volume <= (BLOOD_VOLUME_BAD*human_caster.blood_ratio)) || (ventcrawl_nude_only && length(human_caster.get_equipped_items(include_pockets = TRUE))))
-			SA.RemoveElement(/datum/element/ventcrawling)
+			SA.RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 	if(transfer_name)
 		H.name = human_caster.name
 

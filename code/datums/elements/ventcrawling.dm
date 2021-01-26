@@ -6,6 +6,10 @@
 /datum/element/ventcrawling/Attach(datum/target, duration = 0, given_tier = VENTCRAWLER_NUDE)
 	. = ..()
 
+	var/mob/living/person = target
+	if(!istype(person))
+		return FALSE
+
 	src.tier = given_tier
 
 	RegisterSignal(target, COMSIG_HANDLE_VENTCRAWL, .proc/handle_ventcrawl)
@@ -16,9 +20,10 @@
 		addtimer(CALLBACK(src, .proc/Detach, target), duration)
 
 /datum/element/ventcrawling/Detach(datum/target)
-	. = ..()
-
 	UnregisterSignal(target, list(COMSIG_HANDLE_VENTCRAWL, COMSIG_CHECK_VENTCRAWL))
+	to_chat(target, "<span class='notice'>You can no longer ventcrawl.</span>")
+
+	return ..()
 
 /datum/element/ventcrawling/proc/handle_ventcrawl(datum/target,atom/A)
 	var/mob/living/person = target
