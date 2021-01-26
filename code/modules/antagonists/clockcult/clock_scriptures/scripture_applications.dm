@@ -23,30 +23,6 @@
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
 
-/datum/clockwork_scripture/create_object/cogscarab
-	name = "Summon Cogscarab"
-	desc = "Summon a Cogscarab shell, which will be possessed by fallen Ratvarian soldiers. Takes longer the more cogscarabs are alive. Requires 20 vitality."
-	usage_tip = "Use Cogscarabs to fortify bases while the human servants convert and sabotage the crew."
-	button_icon_state = "Cogscarab"
-	power_cost = 900
-	channel_time = 120
-	invocations = list("My fallen brothers,", "Now is the time we rise", "Protect our lord", "Achieve greatness!")
-	tier = SCRIPTURE_APPLICATION
-	invokers_required = 2
-	quickbind = TRUE
-	quickbind_desc = "Creates a cogscarab shell, which can be possessed by a ghost to assist in construction and base maintenance"
-
-/datum/clockcult/scripture/cogscarab/begin_invoke(mob/living/M, obj/item/clockwork/clockwork_slab/slab, bypass_unlock_checks)
-	invokation_time = 120 + (60 * GLOB.cogscarabs.len)
-	if(GLOB.cogscarabs.len > 8)
-		to_chat(M, "<span class='warning'>You can't summon anymore cogscarabs.</span>")
-		return
-	. = ..()
-
-/datum/clockcult/scripture/cogscarab/invoke_success()
-	new /obj/item/drone_shell/cogscarab(get_turf(invoker))
-
-
 //Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
 /datum/clockwork_scripture/create_object/prolonging_prism
 	descname = "Powered Structure, Delay Emergency Shuttles"
