@@ -85,13 +85,6 @@
 		return FALSE
 	if(istype(owner.current.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
 		return FALSE
-	var/stamina_regen = actual_regen
-	owner.current.adjustStaminaLoss(-1.5 + (actual_regen * -7) * mult, 0) // Humans lose stamina damage really quickly. Vamps should heal more.
-	// No Bleeding
-	/*if(ishuman(owner.current)) //NOTE Current bleeding is horrible, not to count the amount of blood ballistics delete.
-		var/mob/living/carbon/human/H = owner.current
-		if(H.bleed_rate > 0) //Only heal bleeding if we are actually bleeding
-			H.bleed_rate =- 0.5 + actual_regen * 0.2 */
 	if(iscarbon(owner.current)) // Damage Heal: Do I have damage to ANY bodypart?
 		var/mob/living/carbon/C = owner.current
 		var/costMult = 1 // Coffin makes it cheaper
@@ -103,14 +96,14 @@
 			C.ExtinguishMob()
 			CureDisabilities() 	// Extinguish Fire
 			C.remove_all_embedded_objects() // Remove Embedded!
-			adjustAllOrganLoss(100)
+			C.adjustAllOrganLoss(100)
 			CheckVampOrgans() // Heart, Eyes
 			C.cloneloss = 0
 			if(check_limbs(costMult))
 				return TRUE
 		else if(owner.current.stat >= UNCONSCIOUS) //Faster regeneration and slight burn healing while unconcious
 			mult *= 2
-			fireheal = min(C.getFireLoss(), regen_rate * 0.2)
+			fireheal = min(C.getFireLoss(), regen_rate * 0.5)
 
 		// BRUTE: Always Heal
 		var/bruteheal = min(C.getBruteLoss(), actual_regen)
@@ -165,7 +158,7 @@
 // I am thirsty for blud!
 /datum/antagonist/bloodsucker/proc/HandleStarving()
 	if(owner.current.stat != CONSCIOUS && owner.current.jitteriness) //Let's not jitter while unconcious, it's supposed to show our starvation, but not while we are not awake
-		jitteriness = 0
+		owner.current.jitteriness = 0
 	// High: 	Faster Healing
 	// Med: 	Pale
 	// Low: 	Twitch
@@ -173,8 +166,8 @@
 	// EMPTY:	Frenzy!
 	// BLOOD_VOLUME_GOOD: [336]  Pale (handled in bloodsucker_integration.dm
 	// BLOOD_VOLUME_BAD: [224]  Jitter
-	if((owner.current.stat == CONSCIOUS && owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(0.5) && !poweron_masquerade && owner.current.jittery)
-		owner.current.jitteriness = 10
+	if(owner.current.stat == CONSCIOUS && owner.current.blood_volume < BLOOD_VOLUME_BAD && !prob(0.5) && !poweron_masquerade && !owner.current.jitteriness)
+		owner.current.jitteriness = 5
 	// BLOOD_VOLUME_SURVIVE: [122]  Blur Vision
 	if(owner.current.blood_volume < BLOOD_VOLUME_BAD / 2)
 		owner.current.blur_eyes(8 - 8 * (owner.current.blood_volume / BLOOD_VOLUME_BAD))

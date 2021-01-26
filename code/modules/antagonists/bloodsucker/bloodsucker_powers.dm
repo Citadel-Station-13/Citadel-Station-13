@@ -86,7 +86,7 @@
 	if(!owner || !owner.mind)
 		return FALSE
 	// Torpor?
-	if(!can_use_in_torpor && HAS_TRAIT(owner, TRAIT_DEATHCOMA))
+	if(!can_use_in_torpor && HAS_TRAIT_FROM(owner, TRAIT_FAKEDEATH, "bloodsucker"))
 		if(display_error)
 			to_chat(owner, "<span class='warning'>Not while you're in Torpor.</span>")
 		return FALSE
@@ -155,12 +155,12 @@
 
 
 /datum/action/bloodsucker/proc/ActivatePower()
-	for(T in ability_traits)
+	for(var/T in ability_traits)
 		ADD_TRAIT(owner, T, name)
 
 /datum/action/bloodsucker/proc/DeactivatePower(mob/living/user = owner, mob/living/target)
 	active = FALSE
-	for(T in ability_traits)
+	for(var/T in ability_traits)
 		REMOVE_TRAIT(owner, T, name)
 	UpdateButtonIcon()
 	StartCooldown()

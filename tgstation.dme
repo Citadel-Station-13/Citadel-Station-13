@@ -1537,6 +1537,7 @@
 #include "code\modules\antagonists\bloodsucker\powers\mesmerize.dm"
 #include "code\modules\antagonists\bloodsucker\powers\recuperate.dm"
 #include "code\modules\antagonists\bloodsucker\powers\trespass.dm"
+#include "code\modules\antagonists\bloodsucker\powers\vassal_fortitude.dm"
 #include "code\modules\antagonists\bloodsucker\powers\veil.dm"
 #include "code\modules\antagonists\brainwashing\brainwashing.dm"
 #include "code\modules\antagonists\brother\brother.dm"

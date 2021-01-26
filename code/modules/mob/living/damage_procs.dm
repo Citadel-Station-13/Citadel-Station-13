@@ -256,6 +256,9 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
+/mob/living/proc/getStaminaLosstotal()
+	return getStaminaLoss() - extra_stamina
+
 /mob/living/proc/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 

@@ -1425,9 +1425,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 		var/punchwoundbonus = user.dna.species.punchwoundbonus
-		var/puncherstam = user.getStaminaLoss()
+		var/puncherstam = user.getStaminaLosstotal()
 		var/puncherbrute = user.getBruteLoss()
-		var/punchedstam = target.getStaminaLoss()
+		var/punchedstam = target.getStaminaLosstotal()
 		var/punchedbrute = target.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage

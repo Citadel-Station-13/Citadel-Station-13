@@ -1,22 +1,4 @@
 
-
-// TRAIT_DEATHCOMA -  Activate this when you're in your coffin to simulate sleep/death.
-
-
-// Coffins...
-//	-heal all wounds, and quickly.
-//	-restore limbs & organs
-//
-
-// Without Coffins...
-//	-
-//	-limbs stay lost
-
-
-
-// To put to sleep:  use 		owner.current.fakedeath("bloodsucker") but change name to "bloodsucker_coffin" so you continue to stay fakedeath despite healing in the main thread!
-
-
 /datum/antagonist/bloodsucker/proc/ClaimCoffin(obj/structure/closet/crate/claimed) // NOTE: This can be any "closet" that you are resting AND inside of.
 	// ALREADY CLAIMED
 	if(claimed.resident)

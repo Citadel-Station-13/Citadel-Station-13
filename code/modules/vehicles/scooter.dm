@@ -98,7 +98,7 @@
 		var/mob/living/H = buckled_mobs[1]
 		H.adjustStaminaLoss(instability*6)
 		playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-		if(!iscarbon(H) || H.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
+		if(!iscarbon(H) || H.getStaminaLosstotal() >= 100 || grinding || world.time < next_crash)
 			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 			unbuckle_mob(H)
 			H.throw_at(throw_target, 3, 2)
@@ -120,7 +120,7 @@
 	if(has_buckled_mobs() && locate(/obj/structure/table) in loc.contents)
 		var/mob/living/L = buckled_mobs[1]
 		L.adjustStaminaLoss(instability*0.5)
-		if (L.getStaminaLoss() >= 100)
+		if (L.getStaminaLosstotal() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			unbuckle_mob(L)
 			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))

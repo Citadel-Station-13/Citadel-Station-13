@@ -48,9 +48,9 @@
 		var/mob/living/carbon/C = L
 		var/blood_id = C.get_blood_id()
 		if((HAS_TRAIT(C, TRAIT_NOMARROW) || blood_id == /datum/reagent/blood || blood_id == /datum/reagent/blood/jellyblood) && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
-			if(Ambloodsucker(L))
-				var/datum/antagonist/bloodsucker/B = L.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-				if(B.bloodsucker_level =< 3) //Raw blood not in people is untasty for older bloodsuckers
+			if(AmBloodsucker(L) && L.mind)
+				var/datum/antagonist/bloodsucker/B = L.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+				if(3 >= B.bloodsucker_level) //Raw blood not in people is untasty for older bloodsuckers
 					disgust_bloodsucker(L, 3, FALSE, FALSE, FALSE)
 					return
 			C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM * C.blood_ratio)

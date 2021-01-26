@@ -181,7 +181,7 @@
 		var/mob/living/L = owner
 		var/turf/landing_turf = get_step(V.loc, V.dir)
 		L.adjustStaminaLoss(V.instability*2)
-		if (L.getStaminaLoss() >= 100)
+		if (L.getStaminaLosstotal() >= 100)
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			V.unbuckle_mob(L)
 			L.throw_at(landing_turf, 2, 2)

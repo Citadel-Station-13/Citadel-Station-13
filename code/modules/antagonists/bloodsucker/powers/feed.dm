@@ -80,9 +80,12 @@
 	return TRUE
 
 /datum/action/bloodsucker/feed/proc/InferiorBlood(mob/living/target)
-	if(Ambloodsucker(owner) && HAS_TRAIT(target, TRAIT_WASMONKEY))
-		var/datum/antagonist/bloodsucker/B = owner.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
-		if(B.bloodsucker_level >= 3 && owner.blood_volume =< 200)
+	if(isliving(owner))
+		return
+	var/mob/living/L = owner
+	if(AmBloodsucker(owner) && HAS_TRAIT(target, TRAIT_WASMONKEY))
+		var/datum/antagonist/bloodsucker/B = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+		if(B.bloodsucker_level >= 3 && 300 >= L.blood_volume)
 			return TRUE
 		else if(B.bloodsucker_level < 3)
 			return TRUE
@@ -237,7 +240,7 @@
 				if(iscarbon(target))
 					var/mob/living/carbon/C = target
 					C.bleed(15)
-				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, true)
+				playsound(get_turf(target), 'sound/effects/splat.ogg', 40, TRUE)
 				if(ishuman(target))
 					var/mob/living/carbon/human/H = target
 					var/obj/item/bodypart/head_part = H.get_bodypart(BODY_ZONE_HEAD)
@@ -257,8 +260,8 @@
 
 		///////////////////////////////////////////////////////////
 		// 		Handle Feeding! User & Victim Effects (per tick)
-		if(InferiorBlood)
-			blood_take_mult =* 0.2
+		if(InferiorBlood())
+			blood_take_mult *= 0.2
 			if(!warning_bad_blood)
 				to_chat(user, "<span class='notice'>You can't bear drinking more inferior blood</span>")
 		bloodsuckerdatum.HandleFeeding(target, blood_take_mult)

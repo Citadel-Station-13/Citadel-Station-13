@@ -314,16 +314,8 @@
 		return
 	B.AddBloodVolume(-CONVERT_COST)
 	target.add_mob_blood(user, "<span class='danger'>Youve used [CONVERT_COST] amount of blood to gain a new vassal!</span>")
-	to_chat(user, )
-	user.visible_message("<span class='notice'>[user] marks a bloody smear on [target]'s forehead and puts a wrist up to [target.p_their()] mouth!</span>", \
-				  	  "<span class='notice'>You paint a bloody marking across [target]'s forehead, place your wrist to [target.p_their()] mouth, and subject [target.p_them()] to the Dark Communion.</span>")
-=======
-	B.AddBloodVolume(-CONVERT_COST)
-	target.add_mob_blood(user, "<span class='danger'>Youve used [CONVERT_COST] amount of blood to gain a new vassal!</span>")
-	to_chat(user, )
 	user.visible_message("<span class='notice'>[user] paints a bloody rune on [target]'s forehead, marking them as a vassal!</span>", \
 				  	  "<span class='notice'>You paint a bloody rune across [target]'s forehead. They are now under your command.</span>")
->>>>>>> Stashed changes
 	if(!do_mob(user, src, 50))
 		to_chat(user, "<span class='danger'><i>The ritual has been interrupted!</i></span>")
 		useLock = FALSE

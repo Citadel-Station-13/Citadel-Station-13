@@ -46,7 +46,7 @@
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.blur_eyes(6)
-		if(L.getStaminaLoss() >= 60)
+		if(L.getStaminaLosstotal() >= 60)
 			L.Sleeping(300)
 		else
 			L.adjustStaminaLoss(25)

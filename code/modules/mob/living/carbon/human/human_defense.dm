@@ -679,8 +679,8 @@
 						bleed_text += " and [bleeding_limbs[num_bleeds].name]"
 				bleed_text += "!</span>"
 				to_chat(src, bleed_text)
-			if(getStaminaLoss())
-				if(getStaminaLoss() > 30)
+			if(getStaminaLosstotal())
+				if(getStaminaLosstotal() > 30)
 					to_send += "<span class='info'>You're completely exhausted.</span>\n"
 				else
 					to_send += "<span class='info'>You feel fatigued.</span>\n"

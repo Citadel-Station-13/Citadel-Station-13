@@ -595,7 +595,7 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 
 /mob/living/carbon/update_stamina()
-	var/total_health = getStaminaLoss()
+	var/total_health = getStaminaLosstotal()
 	if(total_health)
 		if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health >= STAMINA_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")

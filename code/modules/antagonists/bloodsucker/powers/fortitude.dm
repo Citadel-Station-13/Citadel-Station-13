@@ -18,7 +18,7 @@
 
 /datum/action/bloodsucker/fortitude/ActivatePower()
 	..()
-	var/datum/antagonist/bloodsucker/bloodsuckerdatum = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/datum/antagonist/bloodsucker/B = owner.mind.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
 	var/mob/living/user = owner
 	to_chat(user, "<span class='notice'>Your flesh, skin, and muscles become as steel.</span>")
 	// Traits & Effects
@@ -45,7 +45,7 @@
 			B.AddBloodVolume(-0.5)
 		sleep(20) // Check every few ticks that we haven't disabled this power
 	// Return to Running (if you were before)
-	
+
 /datum/action/bloodsucker/fortitude/DeactivatePower(mob/living/user = owner, mob/living/target)
 	..()
 	// Restore Traits & Effects

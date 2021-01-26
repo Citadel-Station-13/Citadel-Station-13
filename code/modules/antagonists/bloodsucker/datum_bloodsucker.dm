@@ -180,6 +180,7 @@
 	BuyPower(new /datum/action/bloodsucker/feed)
 	BuyPower(new /datum/action/bloodsucker/masquerade)
 	BuyPower(new /datum/action/bloodsucker/veil)
+	BuyPower(new /datum/action/bloodsucker/recuperate)
 	// Traits
 	for(var/T in defaultTraits)
 		ADD_TRAIT(owner.current, T, BLOODSUCKER_TRAIT)
@@ -198,6 +199,7 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
+		owner.current.extra_stamina += 200
 		H.physiology.brute_mod *= 0.8
 		H.physiology.cold_mod = 0
 		H.physiology.stun_mod *= 0.5
@@ -319,6 +321,7 @@
 		var/datum/species/S = H.dna.species
 		S.punchdamagelow += 0.5
 		S.punchdamagehigh += 0.5    // NOTE: This affects the hitting power of Brawn.
+		H.extra_stamina += 50
 	// More Health
 	owner.current.setMaxHealth(owner.current.maxHealth + 10)
 	// Vamp Stats
