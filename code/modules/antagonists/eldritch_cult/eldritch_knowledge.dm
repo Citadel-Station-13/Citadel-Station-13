@@ -1,6 +1,6 @@
 
 /**
-  * #Eldritch Knwoledge
+  * #Eldritch Knowledge
   *
   * Datum that makes eldritch cultist interesting.
   *
@@ -252,6 +252,10 @@
 			LH.target = null
 			var/datum/antagonist/heretic/EC = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
+			EC.actually_sacced.Add(H.real_name)
+			if(LH.sac_targetter)
+				LH.sac_targetter.sac_targetted.Remove(H.real_name)
+			LH.sac_targetter = null
 			EC.total_sacrifices++
 			for(var/X in carbon_user.get_all_gear())
 				if(!istype(X,/obj/item/forbidden_book))
@@ -265,8 +269,14 @@
 			var/datum/objective/A = new
 			A.owner = user.mind
 			var/list/targets = list()
+			var/list/target_blacklist = list()
+			for(var/obj/item/living_heart/CLH in GLOB.living_heart_cache)
+				if(!CLH || !CLH.target || !CLH.target.mind)
+					continue
+				target_blacklist.Add(CLH.target.mind)
+
 			for(var/i in 0 to 3)
-				var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/datum/mind/targeted =  A.find_target(blacklist = target_blacklist)//easy way, i dont feel like copy pasting that entire block of code
 				if(!targeted)
 					break
 				targets[targeted.current.real_name] = targeted.current
@@ -274,9 +284,24 @@
 
 			if(!LH.target && targets.len)
 				LH.target = pick(targets)	//Tsk tsk, you can and will get another target if you want it or not.
+
+			if(LH.target)
+				target_blacklist = list()
+				for(var/obj/item/living_heart/CLH in (GLOB.living_heart_cache - LH))	//Recreate blacklist, excluding ourselves.
+					if(!CLH || !CLH.target || !CLH.target.mind)
+						continue
+					target_blacklist.Add(CLH.target.mind)
+				if(LH.target.mind in target_blacklist)	//Someone was faster, or you tried to cheese the system.
+					to_chat(user, "<span class='warning'>It seems you were too slow, and your target of choice has already been selected by another living heart!</span>")
+					LH.target = null
+
 			qdel(A)
 			if(LH.target)
 				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.real_name]!</span>")
+				var/datum/antagonist/heretic/EC = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+				LH.sac_targetter = EC
+				EC.sac_targetted.Add(LH.target.real_name)
+
 			else
 				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 

@@ -176,6 +176,7 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
+
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 
 	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
@@ -203,6 +204,8 @@
 
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
+		if(C.anchored)
+			continue
 		O.equip_to_appropriate_slot(C)
 
 	dna.transfer_identity(O)

@@ -84,6 +84,8 @@ SUBSYSTEM_DEF(throwing)
 
 
 /datum/thrownthing/Destroy()
+	if(HAS_TRAIT_FROM(thrownthing, TRAIT_SPOOKY_THROW, "revenant"))
+		REMOVE_TRAIT(thrownthing, TRAIT_SPOOKY_THROW, "revenant")
 	SSthrowing.processing -= thrownthing
 	thrownthing.throwing = null
 	thrownthing = null

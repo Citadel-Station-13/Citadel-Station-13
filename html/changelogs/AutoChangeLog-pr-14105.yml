@@ -1,0 +1,6 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - admin: "The heretic antag panel now shows their sacrifices & current sacrifice targets."
+  - tweak: "The heretic roundend report now shows their sacrifices and nonsacrificed targets."
+  - bugfix: "Living hearts can no longer select the same target as another living heart, removing a certain problem."
