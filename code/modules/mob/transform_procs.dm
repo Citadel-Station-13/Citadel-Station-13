@@ -145,7 +145,8 @@
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
-
+	if(HAS_TRAIT(src, TRAIT_WASMONKEY))
+		ADD_TRAIT(O, TRAIT_WASMONKEY, "transformed")
 	transfer_observers_to(O)
 
 	. = O
@@ -301,7 +302,8 @@
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
-
+	if(HAS_TRAIT(src, TRAIT_WASMONKEY))
+		ADD_TRAIT(O, TRAIT_WASMONKEY, "transformed")
 	transfer_observers_to(O)
 
 	. = O

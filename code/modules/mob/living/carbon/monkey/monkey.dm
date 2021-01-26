@@ -37,8 +37,10 @@
 			if (spawner)
 				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [cap] monkeys on the station at one time!</span>")
 			return INITIALIZE_HINT_QDEL
+		ADD_TRAIT(src, TRAIT_WASMONKEY, "monkeycube")
 		SSmobs.cubemonkeys += src
-
+	if(mapload)
+		ADD_TRAIT(src, TRAIT_WASMONKEY, "mapload")
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
