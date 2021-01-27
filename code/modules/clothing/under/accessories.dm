@@ -127,8 +127,8 @@
 /obj/item/clothing/accessory/sweater
 	name = "grey sweater"
 	desc = "Nicely comfy and warm!"
-	icon_state = "sweater_grey"
-	item_state = "sweater_grey"
+	icon_state = "sweater"
+	item_state = "sweater"
 	minimize_when_attached = FALSE
 
 /obj/item/clothing/accessory/sweater/pink

@@ -343,6 +343,20 @@
 	icon_state = "fishnet_body"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/top/shibari
+	name = "Shibari Ropes"
+	icon_state = "shibari"
+	gender = FEMALE
+	has_color = TRUE
+	covers_chest = FALSE
+
+/datum/sprite_accessory/underwear/top/shibari_sleeved
+	name = "Shibari Ropes - sleeves"
+	icon_state = "shibari_sleeves"
+	gender = FEMALE
+	has_color = TRUE
+	covers_chest = FALSE
+
 /datum/sprite_accessory/underwear/top/swimsuit
 	name = "Swimsuit Top"
 	icon_state = "bra_swimming"
