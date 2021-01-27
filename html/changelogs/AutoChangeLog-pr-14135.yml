@@ -1,4 +1,0 @@
-author: "raspy-on-osu"
-delete-after: True
-changes: 
-  - bugfix: "bespoke ventcrawling element not detaching due to malformed call"

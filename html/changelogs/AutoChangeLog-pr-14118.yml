@@ -1,6 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "The woundmending rite no longer causes runtimes."
-  - bugfix: "Ratvarian borgs can now use their tier-0 spells."
-  - balance: "Ratvarian borgs can always use their assigned spells, if there is enough power."

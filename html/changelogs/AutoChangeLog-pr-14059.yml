@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscdel: "Headsets can't be found on most legion corpses now."
-  - rscdel: "The flash on the assistant corpse is gone, too."
