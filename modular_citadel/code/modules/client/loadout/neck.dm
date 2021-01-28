@@ -30,6 +30,10 @@
 	name = "Choker"
 	path = /obj/item/clothing/neck/petcollar/choker
 
+/datum/gear/neck/cowbell
+	name = "Cowbell collar"
+	path = /obj/item/clothing/neck/necklace/cowbell
+
 /datum/gear/neck/scarf
 	name = "White scarf"
 	subcategory = LOADOUT_SUBCATEGORY_NECK_SCARVES

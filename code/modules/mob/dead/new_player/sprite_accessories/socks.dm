@@ -88,6 +88,10 @@
 	name = "Pantyhose"
 	icon_state = "pantyhose"
 
+/datum/sprite_accessory/underwear/socks/pantyhose_ripped
+	name = "Pantyhose - Ripped"
+	icon_state = "pantyhose_ripped"
+
 /datum/sprite_accessory/underwear/socks/socks_short
 	name = "Short"
 	icon_state = "socks_short"
