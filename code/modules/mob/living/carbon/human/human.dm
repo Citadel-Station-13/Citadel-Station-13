@@ -945,7 +945,7 @@
 			piggyback(target)
 			return
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
-		else if(user != target)
+		else if(user == src)
 			if(user.a_intent == INTENT_GRAB)
 				fireman_carry(target)
 				return
