@@ -82,7 +82,7 @@ export const Orbit = (props, context) => {
   const {
     alive,
     antagonists,
-	auto_observe,
+    auto_observe,
     dead,
     ghosts,
     misc,
@@ -141,7 +141,7 @@ export const Orbit = (props, context) => {
                 onInput={(_, value) => setSearchText(value)}
                 onEnter={(_, value) => orbitMostRelevant(value)} />
             </Flex.Item>
-			<Flex.Item>
+            <Flex.Item>
               <Divider vertical />
             </Flex.Item>
             <Flex.Item>
@@ -196,7 +196,7 @@ export const Orbit = (props, context) => {
         </Section>
 
         <BasicSection
-          <Section title={`Ghosts - (${ghosts.length})`}>
+          title={`Ghosts - (${ghosts.length})`}
           source={ghosts}
           searchText={searchText}
         />
