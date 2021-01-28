@@ -73,6 +73,14 @@
 	name = "Beehive 2"
 	icon_state = "hair_beehive2"
 
+/datum/sprite_accessory/hair/belenko
+	name = "Beleneko"
+	icon_state = "hair_belenko"
+
+/datum/sprite_accessory/hair/belenkotied
+	name = "Belenko (Tied)"
+	icon_state = "hair_belenkotied"
+
 /datum/sprite_accessory/hair/belle
 	name = "Belle"
 	icon_state = "hair_belle"
@@ -324,6 +332,10 @@
 /datum/sprite_accessory/hair/flow
 	name = "Flow Hair"
 	icon_state = "hair_f"
+
+/datum/sprite_accessory/hair/fluffy
+	name = "Fluffy"
+	icon_state = "hair_fluffy"
 
 /datum/sprite_accessory/hair/fringetail
 	name = "Fringe Tail"
@@ -607,6 +619,10 @@
 	name = "Ponytail (Side) 4"
 	icon_state = "hair_sidetail4"
 
+/datum/sprite_accessory/hair/sharptail
+	name = "Ponytail (Sharp)"
+	icon_state = "hair_sharptail"
+
 /datum/sprite_accessory/hair/spikytail
 	name = "Ponytail (Spiky)"
 	icon_state = "hair_spikyponytail"
@@ -710,6 +726,26 @@
 /datum/sprite_accessory/hair/skinhead
 	name = "Skinhead"
 	icon_state = "hair_skinhead"
+
+/datum/sprite_accessory/hair/simple
+	name = "Simple"
+	icon_state = "hair_simple"
+
+/datum/sprite_accessory/hair/skrellvshort
+	name = "Skrell Replicant (Very Short)"
+	icon_state = "hair_skrellvshort"
+
+/datum/sprite_accessory/hair/skrellshort
+	name = "Skrell Replicant (Short)"
+	icon_state = "hair_skrellshort"
+
+/datum/sprite_accessory/hair/skrell
+	name = "Skrell Replicant (Average)"
+	icon_state = "hair_skrell"
+
+/datum/sprite_accessory/hair/skrelllong
+	name = "Skrell Replicant (Long)"
+	icon_state = "hair_skrelllong"
 
 /datum/sprite_accessory/hair/sleaze
 	name = "Sleaze"
