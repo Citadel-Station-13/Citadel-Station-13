@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "1 dev explosions shouldn't delete brains anymore"
