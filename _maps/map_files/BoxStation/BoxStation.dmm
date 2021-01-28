@@ -22024,13 +22024,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
-"bag" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/bar)
 "bah" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -53430,10 +53423,6 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/atmos,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -99294,7 +99283,7 @@ aSZ
 aQc
 qaY
 acN
-bag
+aKR
 aJC
 aYV
 aYV
@@ -110841,7 +110830,7 @@ atS
 aaf
 aaf
 aaf
-atS
+asB
 aCR
 aEn
 aCR
