@@ -38,7 +38,10 @@
 
 	create_internal_organs()
 
-	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	if(name == "alien queen")
+		RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	else
+		AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 	. = ..()
 
