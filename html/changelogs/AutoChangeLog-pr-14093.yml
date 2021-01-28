@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "you can add custom names and descriptions to item's on the loadout now"
