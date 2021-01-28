@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "The borg VTEC ability now actually gets removed when the upgrade is removed."

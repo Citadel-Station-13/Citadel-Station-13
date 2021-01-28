@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "things in DEATHCOMA do not deathgasp on death"

@@ -1,6 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "Construction bags have been added, use them to carry all sorts of construction bits."
-  - rscadd: "A recipe has been added to cloth stacks to make material and construction bags."
-  - balance: "Material bags and construction bags are now available in engineering lockers."

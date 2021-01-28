@@ -9,11 +9,6 @@
 		return
 	return considering
 
-/mob/living/carbon/human/movement_delay()
-	. = ..()
-	if (m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_SPEEDY_STEP))
-		. -= 1.5
-
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return 0
@@ -99,4 +94,9 @@
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
 		return TRUE
+	return ..()
+
+/mob/living/carbon/human/dirt_buildup(strength)
+	if(!shoes || !(shoes.body_parts_covered & FEET))
+		return	// barefoot advantage
 	return ..()

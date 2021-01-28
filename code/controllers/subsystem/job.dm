@@ -698,6 +698,8 @@ SUBSYSTEM_DEF(job)
 					if(polychromic && istype(polychromic))
 						var/list/polychromic_entry = polychromic.colors_by_atom[I]
 						if(polychromic_entry)
+							if(polychromic.suits_with_helmet_typecache[I.type]) //is this one of those toggleable hood/helmet things?
+								polychromic.connect_helmet(I,i[LOADOUT_COLOR])
 							polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
 							I.update_icon()
 				else

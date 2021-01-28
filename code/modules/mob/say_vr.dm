@@ -3,14 +3,14 @@
 //////////////////////////////////////////////////////
 
 /mob/proc/get_top_level_mob()
-	if(istype(src.loc,/mob)&&src.loc!=src)
-		var/mob/M=src.loc
+	if(ismob(src.loc) && src.loc != src)
+		var/mob/M = src.loc
 		return M.get_top_level_mob()
 	return src
 
-proc/get_top_level_mob(var/mob/S)
-	if(istype(S.loc,/mob)&&S.loc!=S)
-		var/mob/M=S.loc
+/proc/get_top_level_mob(mob/S)
+	if(ismob(S.loc) && S.loc != S)
+		var/mob/M = S.loc
 		return M.get_top_level_mob()
 	return S
 
@@ -148,8 +148,8 @@ proc/get_top_level_mob(var/mob/S)
 	var/safety = 25
 	for(var/obj/structure/table/T in range(user, 1))
 		processing |= T
-	for(var/i in processing)
-		var/obj/structure/table/T = i
+	for(var/i = 1; i <= processing.len; ++i)
+		var/obj/structure/table/T = processing[i]
 		if(safety-- <= 0)
 			to_chat(user, "Table scan aborted early, some people might have not received the message (max 25)")
 			break

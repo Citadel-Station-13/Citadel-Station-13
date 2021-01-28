@@ -541,6 +541,21 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
+/obj/item/clothing/suit/caution
+	name = "wet floor sign"
+	desc = "Caution! Wet Floor!"
+	icon_state = "caution"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 1
+	throwforce = 3
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN
+	attack_verb = list("warned", "cautioned", "smashed")
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 // WINTER COATS
 
 /obj/item/clothing/suit/hooded/wintercoat
@@ -1072,6 +1087,36 @@
 /obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
 	item_state = "winterhood_poly"
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume
+	name = "timid woman hoodie"
+	desc = "A snug, tight yet warm outfit with belts wrapped around it. Looks to be made of polychromic materials."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/timidcostume
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#EB0C07", "#5E2400", "#CEA100"), 3)
+
+/obj/item/clothing/head/hooded/winterhood/timidcostume
+	name = "timid woman hood"
+	desc = "A hood attached to the hoodie."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume/man
+	name = "timid man hoodie"
+	desc = "A snug, tight yet warm outfit a belt wrapped around it. Looks to be made of polychromic materials."
+	icon_state = "timidman"
+	item_state = "timidman"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/timidcostume/man
+
+/obj/item/clothing/head/hooded/winterhood/timidcostume/man
+	name = "timid man hood"
+	icon_state = "timidman"
+	item_state = "timidman"
+
 
 /obj/item/clothing/suit/striped_sweater
 	name = "striped sweater"

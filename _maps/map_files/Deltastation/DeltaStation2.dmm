@@ -3535,9 +3535,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ajL" = (
@@ -3822,6 +3820,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
@@ -49529,7 +49530,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
-	dir = 10
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -79384,6 +79385,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -113321,10 +113323,6 @@
 /obj/item/clothing/gloves/color/black,
 /obj/item/storage/box/evidence,
 /obj/item/taperecorder,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

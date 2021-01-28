@@ -45,9 +45,14 @@
 		return
 	set_snowflake_from_config(id)
 
+/obj/item/toy/plush/DoRevenantThrowEffects(atom/target)
+	var/datum/component/squeak/squeaker = GetComponent(/datum/component/squeak)
+	squeaker.do_play_squeak(TRUE)
+
 /obj/item/toy/plush/Initialize(mapload, set_snowflake_id)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -461,6 +466,7 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	can_random_spawn = FALSE
 
 /obj/item/toy/plush/random/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
 

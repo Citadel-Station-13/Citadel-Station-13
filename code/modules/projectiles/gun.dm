@@ -18,6 +18,8 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 	attack_speed = CLICK_CD_RANGE
+	var/ranged_attack_speed = CLICK_CD_RANGE
+	var/melee_attack_speed = CLICK_CD_MELEE
 
 	var/fire_sound = "gunshot"
 	var/suppressed = null					//whether or not a message is displayed when fired
@@ -158,7 +160,7 @@
 		user.UseStaminaBuffer(safe_cost)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, 1)
+		playsound(user, fire_sound, 10, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	else
 		playsound(user, fire_sound, 50, 1)
 		if(message)
@@ -173,11 +175,24 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+/obj/item/gun/attack(mob/living/M, mob/user)
+	. = ..()
+	if(!(. & DISCARD_LAST_ACTION))
+		user.DelayNextAction(melee_attack_speed)
+
+/obj/item/gun/attack_obj(obj/O, mob/user)
+	. = ..()
+	if(!(. & DISCARD_LAST_ACTION))
+		user.DelayNextAction(melee_attack_speed)
+
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
-	if(!CheckAttackCooldown(user, target))
+	if(!CheckAttackCooldown(user, target, TRUE))
 		return
 	process_afterattack(target, user, flag, params)
+
+/obj/item/gun/CheckAttackCooldown(mob/user, atom/target, shooting = FALSE)
+	return user.CheckActionCooldown(shooting? ranged_attack_speed : attack_speed, clickdelay_from_next_action, clickdelay_mod_bypass, clickdelay_ignores_next_action)
 
 /obj/item/gun/proc/process_afterattack(atom/target, mob/living/user, flag, params)
 	if(!target)
