@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - rscadd: "Adds a way to give items to people, you can combat mode rightclick to offer it to one person, right click on people without mode and click the give verb, or use the hotkey CTRL G to offer it to everyone around you"
