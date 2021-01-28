@@ -90,7 +90,7 @@
 /datum/gear/neck/polycloak
 	name = "Polychromatic Cloak"
 	path = /obj/item/clothing/neck/cloak/polychromic
-	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#FFFFFF", "#FFFFFF", "#808080")
 
 /datum/gear/neck/altpolycloak
