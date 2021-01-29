@@ -26,7 +26,7 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 0
-	ext_cooldown = 1
+	ext_cooldown = 0.4
 	var/mode = FALSE
 
 	var/stun_projectile = null		//stun mode projectile type
