@@ -20,7 +20,7 @@
 	path = /obj/item/clothing/head/beret
 
 /datum/gear/head/purpleberet
-	name = "{Purple beret"
+	name = "Purple beret"
 	path = /obj/item/clothing/head/beret/purple
 
 /datum/gear/head/blueberet
