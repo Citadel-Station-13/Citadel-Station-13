@@ -93,7 +93,7 @@
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 					busy = TRUE
-					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1, penetrate_thick = proj_piercing)))
+					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject, user, null, proj_piercing)))
 						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
