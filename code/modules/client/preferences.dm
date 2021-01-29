@@ -936,19 +936,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							continue
 						var/class_link = ""
 						var/list/loadout_item = has_loadout_gear(loadout_slot, "[gear.type]")
-						var/extra_color_data = ""
+						var/extra_loadout_data = ""
 						if(loadout_item)
 							class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=0'"
 							if(gear.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC)
-								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_polychromic=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
+								extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color_polychromic=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
 								for(var/loadout_color in loadout_item[LOADOUT_COLOR])
-									extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color];'>&nbsp;&nbsp;&nbsp;</span>"
+									extra_loadout_data += "<span style='border: 1px solid #161616; background-color: [loadout_color];'>&nbsp;&nbsp;&nbsp;</span>"
 							else
 								var/loadout_color_non_poly = "#FFFFFF"
 								if(length(loadout_item[LOADOUT_COLOR]))
 									loadout_color_non_poly = loadout_item[LOADOUT_COLOR][1]
-								extra_color_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
-								extra_color_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'>&nbsp;&nbsp;&nbsp;</span>"
+								extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_color=1;loadout_gear_name=[html_encode(gear.name)];'>Color</a>"
+								extra_loadout_data += "<span style='border: 1px solid #161616; background-color: [loadout_color_non_poly];'>&nbsp;&nbsp;&nbsp;</span>"
+							if(gear.loadout_flags & LOADOUT_CAN_NAME)
+								extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_rename=1;loadout_gear_name=[html_encode(gear.name)];'>Name</a> [loadout_item[LOADOUT_CUSTOM_NAME] ? loadout_item[LOADOUT_CUSTOM_NAME] : "N/A"]"
+							if(gear.loadout_flags & LOADOUT_CAN_DESCRIPTION)
+								extra_loadout_data += "<BR><a href='?_src_=prefs;preference=gear;loadout_redescribe=1;loadout_gear_name=[html_encode(gear.name)];'>Description</a>"
 						else if((gear_points - gear.cost) < 0)
 							class_link = "style='white-space:normal;' class='linkOff'"
 						else if(donoritem)
@@ -957,7 +961,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(name)];toggle_gear=1'"
 						else
 							class_link = "style='white-space:normal;background:#eb2e2e;' class='linkOff'"
-						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a>[extra_color_data]</td>"
+						dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[name]</a>[extra_loadout_data]</td>"
 						dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 						if(islist(gear.restricted_roles))
 							if(gear.restricted_roles.len)
@@ -970,14 +974,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									dat += gear.restricted_roles.Join(";")
 									dat += "</font>"
 						if(!istype(gear, /datum/gear/unlockable))
-							dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+							// the below line essentially means "if the loadout item is picked by the user and has a custom description, give it the custom description, otherwise give it the default description"
+							dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description]</i></font></td></tr>"
 						else
 							//we add the user's progress to the description assuming they have progress
 							var/datum/gear/unlockable/unlockable = gear
 							var/progress_made = unlockable_loadout_data[unlockable.progress_key]
 							if(!progress_made)
 								progress_made = 0
-							dat += "</td><td><font size=2><i>[gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
+							dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
 
 					dat += "</table>"
 		if(4) // Content preferences
@@ -2892,7 +2897,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						loadout_data["SAVE_[loadout_slot]"] += list(new_loadout_data) //double packed because it does the union of the CONTENTS of the lists
 					else
 						loadout_data["SAVE_[loadout_slot]"] = list(new_loadout_data) //double packed because you somehow had no save slot in your loadout?
-		if(href_list["loadout_color"])
+
+		if(href_list["loadout_color"] || href_list["loadout_color_polychromic"] || href_list["loadout_rename"] || href_list["loadout_redescribe"])
+			//if the gear doesn't exist, or they don't have it, ignore the request
 			var/name = html_decode(href_list["loadout_gear_name"])
 			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
 			if(!G)
@@ -2900,29 +2907,44 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/user_gear = has_loadout_gear(loadout_slot, "[G.type]")
 			if(!user_gear)
 				return
-			if(!length(user_gear[LOADOUT_COLOR]))
-				user_gear[LOADOUT_COLOR] = list("#FFFFFF")
-			var/current_color = user_gear[LOADOUT_COLOR][1]
-			var/new_color = input(user, "Polychromic options", "Choose Color", current_color) as color|null
-			user_gear[LOADOUT_COLOR][1] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
-		if(href_list["loadout_color_polychromic"])
-			var/name = html_decode(href_list["loadout_gear_name"])
-			var/datum/gear/G = GLOB.loadout_items[gear_category][gear_subcategory][name]
-			if(!G)
-				return
-			var/user_gear = has_loadout_gear(loadout_slot, "[G.type]")
-			if(!user_gear)
-				return
-			var/list/color_options = list()
-			for(var/i=1, i<=length(G.loadout_initial_colors), i++)
-				color_options += "Color [i]"
-			var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
-			if(color_to_change)
-				var/color_index = text2num(copytext(color_to_change, 7))
-				var/current_color = user_gear[LOADOUT_COLOR][color_index]
-				var/new_color = input(user, "Polychromic options", "Choose [color_to_change] Color", current_color) as color|null
-				if(new_color)
-					user_gear[LOADOUT_COLOR][color_index] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
+
+			//possible requests: recolor, recolor (polychromic), rename, redescribe
+			//always make sure the gear allows said request before proceeding
+
+			//non-poly coloring can only be done by non-poly items
+			if(href_list["loadout_color"] && !(G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC))
+				if(!length(user_gear[LOADOUT_COLOR]))
+					user_gear[LOADOUT_COLOR] = list("#FFFFFF")
+				var/current_color = user_gear[LOADOUT_COLOR][1]
+				var/new_color = input(user, "Polychromic options", "Choose Color", current_color) as color|null
+				user_gear[LOADOUT_COLOR][1] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
+
+			//poly coloring can only be done by poly items
+			if(href_list["loadout_color_polychromic"] && (G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC))
+				var/list/color_options = list()
+				for(var/i=1, i<=length(G.loadout_initial_colors), i++)
+					color_options += "Color [i]"
+				var/color_to_change = input(user, "Polychromic options", "Recolor [name]") as null|anything in color_options
+				if(color_to_change)
+					var/color_index = text2num(copytext(color_to_change, 7))
+					var/current_color = user_gear[LOADOUT_COLOR][color_index]
+					var/new_color = input(user, "Polychromic options", "Choose [color_to_change] Color", current_color) as color|null
+					if(new_color)
+						user_gear[LOADOUT_COLOR][color_index] = sanitize_hexcolor(new_color, 6, TRUE, current_color)
+
+			//both renaming and redescribing strip the input to stop html injection
+
+			//renaming is only allowed if it has the flag for it
+			if(href_list["loadout_rename"] && (G.loadout_flags & LOADOUT_CAN_NAME))
+				var/new_name = stripped_input(user, "Enter new name for item. Maximum [MAX_NAME_LEN] characters.", "Loadout Item Naming", null,  MAX_NAME_LEN)
+				if(new_name)
+					user_gear[LOADOUT_CUSTOM_NAME] = new_name
+
+			//redescribing is only allowed if it has the flag for it
+			if(href_list["loadout_redescribe"] && (G.loadout_flags & LOADOUT_CAN_DESCRIPTION)) //redescribe isnt a real word but i can't think of the right term to use
+				var/new_description = stripped_input(user, "Enter new description for item. Maximum 500 characters.", "Loadout Item Redescribing", null, 500)
+				if(new_description)
+					user_gear[LOADOUT_CUSTOM_DESCRIPTION] = new_description
 
 	ShowChoices(user)
 	return 1

@@ -554,7 +554,7 @@
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
 
-/atom/proc/ex_act(severity, target)
+/atom/proc/ex_act(severity, target, datum/explosion/E)
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)

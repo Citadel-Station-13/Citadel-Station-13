@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(loadout_whitelist_ids)
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/geargroupID //defines the ID that the gear inherits from the config
-	var/loadout_flags = 0
+	var/loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION
 	var/list/loadout_initial_colors = list()
 
 	//NEW DONATOR SYTSEM STUFF

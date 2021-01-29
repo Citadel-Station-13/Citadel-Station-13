@@ -331,3 +331,15 @@
 /obj/item/clothing/underwear/shirt/cowboy/short/red
 	name = "short sleeved red cowboy shirt"
 	icon_state = "undershirt_cowboy_short_red"
+
+/obj/item/clothing/underwear/shirt/top/shibari
+	name = "Shibari Ropes"
+	body_parts_covered = null
+	icon = 'icons/mob/clothing/underwear.dmi'
+	icon_state = "shibari"
+
+/obj/item/clothing/underwear/shirt/top/shibari_sleeved
+	name = "Shibari Ropes - sleeves"
+	body_parts_covered = ARMS
+	icon = 'icons/mob/clothing/underwear.dmi'
+	icon_state = "shibari_sleeves"

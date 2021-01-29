@@ -175,3 +175,9 @@
 	body_parts_covered = FEET | LEGS | GROIN
 	icon_state = "socks_pantyhose"
 	mutantrace_variation = STYLE_DIGITIGRADE
+
+/obj/item/clothing/underwear/socks/pantyhose_ripped
+	name = "Pantyhose - Ripped"
+	body_parts_covered = FEET
+	icon = 'icons/mob/clothing/underwear.dmi'
+	icon_state = "pantyhose_ripped"
