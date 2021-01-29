@@ -6,9 +6,9 @@
 	item_state = "motivation"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	fire_sound = 'sound/magic/fireball.ogg'
+	fire_sound = 'sound/weapons/judgementhit.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/judgement_cut
-	force = 40
+	force = 10
 	armour_penetration = 50
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
@@ -31,19 +31,19 @@
 
 /datum/action/judgement_cut
 	name = "Judgement Cut - Allows Motivation to slash at a longer distance."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "neckchop"
+	icon_icon = 'icons/obj/projectiles.dmi'
+	button_icon_state = "judgement_fire"
 	var/judgement_toggled = TRUE
 
 /datum/action/judgement_cut/Trigger()
 	judgement_toggled = !judgement_toggled
-	to_chat(owner, "<span class='notice'>You [judgement_toggled ? "enable" : "disable"] Judgement Cuts with [src].</span>")
+	to_chat(owner, "<span class='notice'>You [judgement_toggled ? "enable" : "disable"] Judgement Cuts with Motivation.</span>")
 
 /obj/item/gun/magic/staff/motivation/can_trigger_gun(mob/living/user)
 	. = ..()
 	if(!judgementcut.judgement_toggled)
 		to_chat(user, "<span class='notice'> Judgment Cut is disabled.</span>")
-		return
+		return FALSE
 
 /obj/item/gun/magic/staff/motivation/pickup(mob/living/user)
 	. = ..()
