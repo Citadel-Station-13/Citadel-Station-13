@@ -9,9 +9,7 @@
 	sharpness = SHARP_EDGED
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/judgement_cut
 
-
 /obj/item/projectile/judgement_cut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
 		new /obj/effect/temp_visual/impact_effect/judgement_cut(src)
