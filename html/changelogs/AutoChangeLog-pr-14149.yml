@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - rscadd: "adds 'clucks', 'caws' and 'gekkers' to the speech verb list"
