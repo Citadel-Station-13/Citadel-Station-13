@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "species with NOTRANSSTING cannot have envy's knife used on them"

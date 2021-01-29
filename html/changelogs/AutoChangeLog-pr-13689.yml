@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Recharging APCs no longer use 0.2% of the power they should be using."
-  - bugfix: "APCs no longer always use as much power as they can for their cell, even if it is full."

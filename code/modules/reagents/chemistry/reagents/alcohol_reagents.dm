@@ -2288,6 +2288,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 //Race-Base-Drinks//
 ////////////////////
 /datum/reagent/consumable/ethanol/species_drink
+	name = "Species Drink"
 	var/species_required
 	var/disgust = 26
 	boozepwr = 50

@@ -32,7 +32,7 @@
 #define testing(msg)
 #endif
 
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 /proc/log_test(text)
 	WRITE_LOG(GLOB.test_log, text)
 	SEND_TEXT(world.log, text)
@@ -190,6 +190,10 @@
 
 /proc/log_mapping(text)
 	WRITE_LOG(GLOB.world_map_error_log, text)
+
+/proc/log_perf(list/perf_info)
+	. = "[perf_info.Join(",")]\n"
+	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
 
 /proc/log_reagent(text)
 	WRITE_LOG(GLOB.reagent_log, text)

@@ -121,7 +121,7 @@
 		add_monkey(affected_mob.mind)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-		M.ventcrawler = VENTCRAWLER_ALWAYS
+		M.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 
 /datum/disease/transformation/jungle_fever/stage_act()

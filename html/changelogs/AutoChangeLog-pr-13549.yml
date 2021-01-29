@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Fixes cloning computer UI not updating when pressing certain buttons - also adds extra check for names to update a message"

@@ -1,4 +1,0 @@
-author: "SiliconMain"
-delete-after: True
-changes: 
-  - tweak: "hololocks (which haven't worked for god knows how long) commented out until auxmos is merged"

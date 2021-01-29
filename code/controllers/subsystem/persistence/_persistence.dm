@@ -58,6 +58,7 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
+	LoadPaintings()
 
 /**
  * Saves persistent data relevant to the server: Configurations, past gamemodes, votes, antag rep, etc
