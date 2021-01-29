@@ -1011,7 +1011,7 @@
 	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
 	if(istype(target, /mob/living/silicon/pai))
-		hands_needed = 0
+		hands_needed = 1
 		target_hands_needed = 0
 	var/equipped_hands_self
 	var/equipped_hands_target
