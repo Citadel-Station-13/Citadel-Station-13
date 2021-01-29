@@ -2,7 +2,7 @@
 	name = "judgement cut"
 	icon_state = "judgement_fire"
 	hitsound = 'sound/weapons/judgementfire.ogg'
-	damage = 5
+	damage = 10
 	damage_type = BRUTE
 	range = 30
 	is_reflectable = FALSE
