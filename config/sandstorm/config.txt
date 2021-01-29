@@ -1,5 +1,9 @@
 #Special Sandstorm configs!
 
+## The string to use at the hub between parenthesis (obviously coders can use this for other things in the future, have fun)
+## example: [Space Station 13 — Space Station 13 (STRING GOES HERE)]
+#SERVER_DISPLAY_NAME
+
 ## Lone op inactive disk messaging
 ## Comment this out to disable that spam that annoys me.
 #ADMIN_DISK_INACTIVE_MSG
@@ -7,6 +11,10 @@
 ## Roundstart ping
 ## Won't do anything if unset
 #NEW_ROUND_PING
+
+## Panic bunker warning message
+## Message for trying to failing to join during panic bunker
+#PANIC_BUNKER_WARN
 
 ## Dogborg Sleeper Mechanics ###
 ## Uncomment to enable regular dogborg sleepers (otherwise will use recreational)

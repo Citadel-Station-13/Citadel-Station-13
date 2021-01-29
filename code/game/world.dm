@@ -329,8 +329,8 @@ GLOBAL_LIST(topic_status_cache)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"https://citadel-station.net/home\">" //Change this to wherever you want the hub to link to.
-	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "<a href=\"[CONFIG_GET(string/discordurl)]\">" //Go to the config file, no longer changed here!
+	s += "[(CONFIG_GET(string/server_display_name) ? CONFIG_GET(string/server_display_name) : "Sandstorm")]"  //Default to us if unchanged ¯\_(ツ)_/¯
 	s += "</a>"
 	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
 	s += "<br>[CONFIG_GET(string/servertagline)]<br>" //CIT CHANGE - adds a tagline!
