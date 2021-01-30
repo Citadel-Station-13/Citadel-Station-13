@@ -577,3 +577,12 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = STYLE_DIGITIGRADE
 
+/obj/item/clothing/mask/smask
+	name = "Strange Metal Mask"
+	desc = "An odd looking metallic mask."
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	icon_state = "smask"
+	item_state = "smask"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+

@@ -529,3 +529,9 @@
 	path = /obj/item/clothing/under/custom/vest
 	ckeywhitelist = list("maylowfox")
 
+/datum/gear/donator/smask
+	name = "Strange Metal Mask"
+	slot = SLOT_WEAR_MASK
+	path = /obj/item/clothing/mask/smask
+	ckeywhitelist = list("sneka")
+
