@@ -212,7 +212,7 @@
 		message = copytext(message, length(found_string) + 1)
 
 	//var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
+	//var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	//var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	//var/static/regex/vomit_words = regex("vomit|throw up|sick")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
@@ -268,7 +268,6 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Stun(60 * power_multiplier)
-	*/
 
 	//KNOCKDOWN
 	if(findtext(message, knockdown_words))
@@ -277,7 +276,6 @@
 			var/mob/living/L = V
 			L.DefaultCombatKnockdown(60 * power_multiplier)
 
-	/*
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
@@ -292,7 +290,7 @@
 	*/
 
 	//SILENCE
-	else if((findtext(message, silence_words)))
+	if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
 			if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
@@ -317,7 +315,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
+			L.heal_overall_damage(15 * power_multiplier, 15 * power_multiplier, 0, FALSE, FALSE)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))
