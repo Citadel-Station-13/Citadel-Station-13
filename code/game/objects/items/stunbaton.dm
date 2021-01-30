@@ -47,6 +47,9 @@
 			cell = new preload_cell_type(src)
 	update_icon()
 
+/obj/item/melee/baton/DoRevenantThrowEffects(atom/target)
+	switch_status()
+
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
@@ -236,6 +239,12 @@
 		if(!iscyborg(loc))
 			deductcharge(severity*10, TRUE, FALSE)
 
+/obj/item/melee/baton/can_give()
+	if(turned_on)
+		return FALSE
+	else
+		..()
+
 /obj/item/melee/baton/stunsword
 	name = "stunsword"
 	desc = "Not actually sharp, this sword is functionally identical to its baton counterpart."
@@ -269,21 +278,22 @@
 	icon_state = "refill_donksoft"
 	var/product = /obj/item/melee/baton/stunsword //what it makes
 	var/list/fromitem = list(/obj/item/melee/baton, /obj/item/melee/baton/loaded) //what it needs
-	afterattack(obj/O, mob/user as mob)
-		if(istype(O, product))
-			to_chat(user,"<span class='warning'>[O] is already modified!")
-		else if(O.type in fromitem) //makes sure O is the right thing
-			var/obj/item/melee/baton/B = O
-			if(!B.cell) //checks for a powercell in the baton. If there isn't one, continue. If there is, warn the user to take it out
-				new product(usr.loc) //spawns the product
-				user.visible_message("<span class='warning'>[user] modifies [O]!","<span class='warning'>You modify the [O]!")
-				qdel(O) //Gets rid of the baton
-				qdel(src) //gets rid of the kit
 
-			else
-				to_chat(user,"<span class='warning'>Remove the powercell first!</span>") //We make this check because the stunsword starts without a battery.
+/obj/item/ssword_kit/afterattack(obj/O, mob/user as mob)
+	if(istype(O, product))
+		to_chat(user,"<span class='warning'>[O] is already modified!")
+		return
+	if(O.type in fromitem) //makes sure O is the right thing
+		var/obj/item/melee/baton/B = O
+		if(!B.cell) //checks for a powercell in the baton. If there isn't one, continue. If there is, warn the user to take it out
+			new product(usr.loc) //spawns the product
+			user.visible_message("<span class='warning'>[user] modifies [O]!","<span class='warning'>You modify the [O]!")
+			qdel(O) //Gets rid of the baton
+			qdel(src) //gets rid of the kit
 		else
-			to_chat(user, "<span class='warning'> You can't modify [O] with this kit!</span>")
+			to_chat(user,"<span class='warning'>Remove the powercell first!</span>") //We make this check because the stunsword starts without a battery.
+	else
+		to_chat(user, "<span class='warning'> You can't modify [O] with this kit!</span>")
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod

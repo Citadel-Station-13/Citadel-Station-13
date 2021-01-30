@@ -1,7 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - rscadd: "A new surgery, allowing revival of synths without a defib at hand."
-  - balance: "Semi-permanent damage of Synth limbs caused by passing the damage threshold: 10 <- 15."
-  - tweak: "The embed removal surgery now has a version for Synths."
-  - balance: "EMPs no longer hardstun Synths."

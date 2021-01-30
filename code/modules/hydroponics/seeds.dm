@@ -24,7 +24,7 @@
 	var/yield = 3					// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
-	var/instability = 5             //Chance that a plant will mutate in each stage of it's life. 
+	var/instability = 5             //Chance that a plant will mutate in each stage of it's life.
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
 	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
@@ -105,7 +105,7 @@
 	S.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	return S
 
-obj/item/seeds/proc/is_gene_forbidden(typepath)
+/obj/item/seeds/proc/is_gene_forbidden(typepath)
 	return (typepath in forbiddengenes)
 
 
