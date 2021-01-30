@@ -136,6 +136,5 @@
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
-			update_icon()
 
 	update_icon()
