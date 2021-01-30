@@ -12,6 +12,7 @@
 				/obj/item/clothing/neck/petcollar = 5,
 				/obj/item/clothing/neck/petcollar/choker = 5,
 				/obj/item/clothing/neck/petcollar/leather = 5,
+				/obj/item/clothing/neck/necklace/cowbell = 5,
 				/obj/item/restraints/handcuffs/fake/kinky = 5,
 				/obj/item/clothing/glasses/sunglasses/blindfold = 4,
 				/obj/item/clothing/mask/muzzle = 4,

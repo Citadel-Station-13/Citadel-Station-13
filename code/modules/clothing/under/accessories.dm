@@ -79,12 +79,174 @@
 	if(initial(above_suit))
 		. += "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>"
 
+//////////////
+//Waistcoats//
+//////////////
+
 /obj/item/clothing/accessory/waistcoat
-	name = "waistcoat"
+	name = "black waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
 	item_state = "waistcoat"
 	minimize_when_attached = FALSE
+
+/obj/item/clothing/accessory/waistcoat/red
+	name = "red waistcoat"
+	icon_state = "waistcoat_red"
+	item_state = "waistcoat_red"
+
+/obj/item/clothing/accessory/waistcoat/grey
+	name = "grey waistcoat"
+	icon_state = "waistcoat_grey"
+	item_state = "waistcoat_grey"
+
+/obj/item/clothing/accessory/waistcoat/brown
+	name = "red waistcoat"
+	icon_state = "waistcoat_brown"
+	item_state = "waistcoat_brown"
+
+/obj/item/clothing/accessory/waistcoat/sweatervest
+	name = "black sweatervest"
+	icon_state = "sweatervest"
+	item_state = "sweatervest"
+
+/obj/item/clothing/accessory/waistcoat/sweatervest/blue
+	name = "blue sweatervest"
+	icon_state = "sweatervest_blue"
+	item_state = "sweatervest_blue"
+
+/obj/item/clothing/accessory/waistcoat/sweatervest/red
+	name = "red sweatervest"
+	icon_state = "sweatervest_red"
+	item_state = "sweatervest_red"
+
+////////////
+//Sweaters//
+////////////
+
+/obj/item/clothing/accessory/sweater
+	name = "grey sweater"
+	desc = "Nicely comfy and warm!"
+	icon_state = "sweater"
+	item_state = "sweater"
+	minimize_when_attached = FALSE
+
+/obj/item/clothing/accessory/sweater/pink
+	name = "pink sweater"
+	icon_state = "sweater_pink"
+	item_state = "sweater_pink"
+
+/obj/item/clothing/accessory/sweater/heart
+	name = "heart sweater"
+	icon_state = "sweater_heart"
+	item_state = "sweater_heart"
+
+/obj/item/clothing/accessory/sweater/blue
+	name = "blue sweater"
+	icon_state = "sweater_blue"
+	item_state = "sweater_blue"
+
+/obj/item/clothing/accessory/sweater/nt
+	name = "nanotrasen sweater"
+	icon_state = "sweater_nt"
+	item_state = "sweater_nt"
+
+/obj/item/clothing/accessory/sweater/mint
+	name = "mint sweater"
+	icon_state = "sweater_mint"
+	item_state = "sweater_mint"
+
+/obj/item/clothing/accessory/sweater/shoulderless
+	name = "shoulderless sweater"
+	icon_state = "sweater_shoulderless"
+	item_state = "sweater_shoulderless"
+
+/obj/item/clothing/accessory/sweater/uglyxmas
+	name = "ugly xmas sweater"
+	icon_state = "sweater_uglyxmas"
+	item_state = "sweater_uglyxmas"
+
+/obj/item/clothing/accessory/sweater/flower
+	name = "flower sweater"
+	icon_state = "sweater_flower"
+	item_state = "sweater_flower"
+
+////////////////
+//Suit Jackets//
+////////////////
+
+/obj/item/clothing/accessory/suitjacket
+	name = "tan suit jacket"
+	desc = "For those times when you have to attend a fancy business meeting without wearing your pants."
+	icon_state = "jacket_tan"
+	item_state = "jacket_tan"
+	minimize_when_attached = FALSE
+
+/obj/item/clothing/accessory/suitjacket/charcoal
+	name = "charcoal suit jacket"
+	icon_state = "jacket_charcoal"
+	item_state = "jacket_charcoal"
+
+/obj/item/clothing/accessory/suitjacket/navy
+	name = "navy suit jacket"
+	icon_state = "jacket_navy"
+	item_state = "jacket_navy"
+
+/obj/item/clothing/accessory/suitjacket/burgundy
+	name = "burgundy suit jacket"
+	icon_state = "jacket_burgundy"
+	item_state = "jacket_burgundy"
+
+/obj/item/clothing/accessory/suitjacket/checkered
+	name = "checkered suit jacket"
+	icon_state = "jacket_checkered"
+	item_state = "jacket_checkered"
+
+///////////////////////
+//Tactical Turtlnecks//
+///////////////////////
+
+/obj/item/clothing/accessory/turtleneck
+	name = "black turtleneck"
+	desc = "Extra cool. Extra fool."
+	icon_state = "turtleneck"
+	item_state = "turtleneck"
+	minimize_when_attached = FALSE
+
+/obj/item/clothing/accessory/turtleneck/red
+	name = "red turtleneck"
+	icon_state = "turtleneck_red"
+	item_state = "turtleneck_red"
+
+/obj/item/clothing/accessory/turtleneck/comfy
+	name = "comfy turtleneck"
+	icon_state = "turtleneck_comfy"
+	item_state = "turtleneck_comfy"
+
+/obj/item/clothing/accessory/turtleneck/tactifool
+	name = "black sweaterneck"
+	desc = "Extra fool. Extra cool."
+	icon_state = "tactifool"
+	item_state = "tactifool"
+
+/obj/item/clothing/accessory/turtleneck/tactifool/green
+	name = "green sweaterneck"
+	icon_state = "tactifool_green"
+	item_state = "tactifool_green"
+
+/obj/item/clothing/accessory/turtleneck/tactifool/blue
+	name = "blue sweaterneck"
+	icon_state = "tactifool_blue"
+	item_state = "tactifool_blue"
+
+/obj/item/clothing/accessory/turtleneck/tactifool/syndicate
+	name = "tactifool sweaterneck"
+	icon_state = "tactifool_syndicate"
+	item_state = "tactifool_syndicate"
+
+/////////////////
+//Miscellaneous//
+/////////////////
 
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"

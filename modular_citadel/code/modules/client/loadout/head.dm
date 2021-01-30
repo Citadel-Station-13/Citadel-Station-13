@@ -15,6 +15,18 @@
 	name = "Black beret"
 	path = /obj/item/clothing/head/beret/black
 
+/datum/gear/head/redberet
+	name = "Red beret"
+	path = /obj/item/clothing/head/beret
+
+/datum/gear/head/purpleberet
+	name = "Purple beret"
+	path = /obj/item/clothing/head/beret/purple
+
+/datum/gear/head/blueberet
+	name = "Blue beret"
+	path = /obj/item/clothing/head/beret/blue
+
 /datum/gear/head/flatcap
 	name = "Flat cap"
 	path = /obj/item/clothing/head/flatcap
