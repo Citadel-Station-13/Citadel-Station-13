@@ -11,6 +11,8 @@ $include dynamic_config.txt
 $include plushies/defines.txt
 $include job_threats.txt
 $include policy.txt
+$include persistence.txt
+$include respawns.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -206,9 +208,6 @@ VOTE_AUTOTRANSFER_MAXIMUM 4
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## disable abandon mob
-NORESPAWN
-
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB
 
@@ -374,6 +373,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ##Name of the place to send people rejected by the bunker
 #PANIC_SERVER_NAME [Put the name here]
+
+##Automated age verification, comment this out to not ask new users if they are 18+
+AGE_VERIFICATION
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG

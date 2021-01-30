@@ -14492,7 +14492,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aym" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14503,6 +14502,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "ayn" = (
@@ -30529,9 +30529,6 @@
 	dir = 8
 	},
 /obj/structure/closet/bombcloset,
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "aXC" = (
@@ -43701,10 +43698,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /mob/living/simple_animal/chicken{
 	desc = "The arch-nemesis of Kentucky.";
 	name = "Popeye";
@@ -46363,9 +46356,6 @@
 "bwK" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/airalarm{
-	pixel_y = 22
-	},
 /turf/open/floor/grass,
 /area/chapel/main)
 "bwL" = (
@@ -48007,8 +47997,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/closet/wardrobe/mixed,
 /obj/machinery/light/small,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "bzo" = (
@@ -48131,16 +48122,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/brig)
-"bzx" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/crew_quarters/locker)
 "bzy" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -48767,7 +48748,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "bAA" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -48777,11 +48757,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/backpack{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/backpack,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 26
@@ -49398,6 +49373,7 @@
 	dir = 1;
 	name = "recreation camera"
 	},
+/obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bBy" = (
@@ -54797,11 +54773,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "bKn" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -54810,6 +54781,11 @@
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/obj/item/storage/backpack{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/backpack,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "bKo" = (
@@ -55425,6 +55401,12 @@
 	pixel_x = 28;
 	pixel_y = 22
 	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bLd" = (
@@ -58154,10 +58136,6 @@
 	icon_state = "plant-02";
 	pixel_y = 3
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/camera{
 	c_tag = "Prison Wing Cells";
 	dir = 4;
@@ -60844,6 +60822,11 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/table,
+/obj/item/toy/figure/assistant{
+	pixel_x = 8;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bTD" = (
@@ -61021,6 +61004,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 10
 	},
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/pen,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bTO" = (
@@ -61259,19 +61248,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
-/obj/item/toy/figure/assistant{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "bUi" = (
@@ -61356,7 +61334,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/security/warden)
 "bUs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -67208,10 +67186,6 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "cdU" = (
@@ -71333,7 +71307,8 @@
 	min_oxy = 5;
 	name = "Lia";
 	real_name = "Lia";
-	response_help = "pets";
+	response_help_continuous = "pets";
+	response_help_simple = "pet";
 	turns_per_move = 10
 	},
 /turf/open/floor/plasteel/dark,
@@ -83278,10 +83253,6 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 5
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics Port Tanks";
 	dir = 4;
@@ -85507,8 +85478,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Space Loop Out";
-	dir = 8
+	dir = 8;
+	name = "Space Loop Out"
 	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -108989,7 +108960,7 @@ bss
 btV
 aEu
 bxW
-bzx
+bIV
 bKq
 bKq
 bKq

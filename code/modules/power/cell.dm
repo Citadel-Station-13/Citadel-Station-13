@@ -86,6 +86,8 @@
 
 // recharge the cell
 /obj/item/stock_parts/cell/proc/give(amount)
+	if(amount < 0)
+		return
 	if(rigged && amount > 0)
 		explode()
 		return 0

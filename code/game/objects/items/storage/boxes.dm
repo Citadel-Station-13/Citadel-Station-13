@@ -275,7 +275,7 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
-obj/item/storage/box/stingbangs
+/obj/item/storage/box/stingbangs
 	name = "box of stingbangs (WARNING)"
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
 	icon_state = "secbox"

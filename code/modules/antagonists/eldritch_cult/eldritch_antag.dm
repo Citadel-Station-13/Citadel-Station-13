@@ -10,6 +10,8 @@
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
+	var/list/sac_targetted = list()		//Which targets did living hearts give them, but they did not sac?
+	var/list/actually_sacced = list()	//Which targets did they actually sac?
 	var/ascended = FALSE
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
@@ -31,6 +33,7 @@
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
 	owner.teach_crafting_recipe(/datum/crafting_recipe/heretic/codex)
+	owner.special_role = ROLE_HERETIC
 	if(ishuman(current))
 		forge_primary_objectives()
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
@@ -49,7 +52,7 @@
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_lose(owner.current)
-
+	owner.special_role = null
 	if(!silent)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
@@ -98,7 +101,7 @@
 		var/pck = pick("assasinate","protect")
 		switch(pck)
 			if("assasinate")
-				var/datum/objective/assassinate/A = new
+				var/datum/objective/assassinate/once/A = new
 				A.owner = owner
 				var/list/owners = A.get_owners()
 				A.find_target(owners,protection)
@@ -174,6 +177,17 @@
 		knowledge_message += "[EK.name]"
 	parts += knowledge_message.Join(", ")
 
+	parts += "<b>Targets assigned by living hearts, but not sacrificed:</b>"
+	if(!sac_targetted.len)
+		parts += "None."
+	else
+		parts += sac_targetted.Join(",")
+	parts += "<b>Sacrifices performed:</b>"
+	if(!actually_sacced.len)
+		parts += "<span class='redtext'>None!</span>"
+	else
+		parts += actually_sacced.Join(",")
+
 	return parts.Join("<br>")
 ////////////////
 // Knowledge //
@@ -211,6 +225,23 @@
 		. += EK.cost
 	if(ascended)
 		. += 20
+
+/datum/antagonist/heretic/antag_panel()
+	var/list/parts = list()
+	parts += ..()
+	parts += "<b>Targets currently assigned by living hearts (Can give a false negative if they stole someone elses living heart):</b>"
+	if(!sac_targetted.len)
+		parts += "None."
+	else
+		parts += sac_targetted.Join(",")
+	parts += "<b>Targets actually sacrificed:</b>"
+	if(!actually_sacced.len)
+		parts += "None."
+	else
+		parts += actually_sacced.Join(",")
+
+	return (parts.Join("<br>") + "<br>")
+
 
 ////////////////
 // Objectives //

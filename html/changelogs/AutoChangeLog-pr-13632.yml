@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "time for memory loss message to show up when being revived is now correctly 300 seconds, instead of 30"

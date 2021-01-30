@@ -46,6 +46,9 @@
 	if(.)
 		new /obj/item/toy/eightball/haunted(loc)
 
+/obj/item/toy/eightball/DoRevenantThrowEffects(atom/target)
+	MakeHaunted()
+
 /obj/item/toy/eightball/attack_self(mob/user)
 	if(shaking)
 		return

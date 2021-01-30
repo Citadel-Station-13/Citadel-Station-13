@@ -11,6 +11,15 @@
 	var/clawfootstep = null
 	var/heavyfootstep = null
 
+	/// Dirtyness system, cit specific.
+
+	/// Does dirt buildup happen on us?
+	var/dirt_buildup_allowed = FALSE
+	/// Dirt level.
+	var/dirtyness = 0
+	/// Dirt level to spawn dirt. Null to use config.
+	var/dirt_spawn_threshold
+
 /turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)

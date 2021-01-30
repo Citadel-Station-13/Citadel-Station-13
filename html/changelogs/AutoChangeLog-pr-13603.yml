@@ -1,5 +1,0 @@
-author: "kappa-sama"
-delete-after: True
-changes: 
-  - tweak: "ishotgun crafting recipe no longer requires plasteel and is slightly more convenient"
-  - balance: "ishotgun does 45 damage now instead of 40.5"

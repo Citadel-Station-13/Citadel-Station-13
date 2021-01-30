@@ -109,7 +109,7 @@
 	name = "Alcohol Intolerance"
 	desc = "You take toxin damage from alcohol rather than getting drunk."
 	value = 0
-	mob_trait = TRAIT_NO_ALCOHOL
+	mob_trait = TRAIT_TOXIC_ALCOHOL
 	medical_record_text = "Patient's body does not react properly to ethyl alcohol."
 
 /datum/quirk/alcohol_intolerance/add()

@@ -155,7 +155,7 @@ GENETICS SCANNER
 	if(oxy_loss > 10)
 		msg += "\n\t<span class='info'><span class='alert'>[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.</span>"
 	if(tox_loss > 10)
-		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of toxin damage detected.</span>"
+		msg += "\n\t<span class='alert'>[tox_loss > 50 ? "Severe" : "Minor"] amount of [HAS_TRAIT(M, TRAIT_ROBOTIC_ORGANISM) ? "system corruption" : "toxin damage"] detected.</span>"
 	if(M.getStaminaLoss())
 		msg += "\n\t<span class='alert'>Subject appears to be suffering from fatigue.</span>"
 		if(advanced)
@@ -182,7 +182,7 @@ GENETICS SCANNER
 							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
 							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
 							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
-							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
+							<td style='width: 45px;'><font color='green'><b>[HAS_TRAIT(C, TRAIT_ROBOTIC_ORGANISM) ? "Corruption" :"Toxin"]</b></font></td>\
 							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 							<tr><td><font color='#0000CC'>Overall:</font></td>\
 							<td><font color='red'>[brute_loss]</font></td>\
@@ -305,18 +305,6 @@ GENETICS SCANNER
 				var/obj/item/organ/tongue/T = O
 				if(T.name == "fluffy tongue")
 					temp_message += " <span class='danger'>Subject is suffering from a fluffified tongue. Suggested cure: Yamerol or a tongue transplant.</span>"
-
-			//HECK
-			else if(istype(O, /obj/item/organ/genital/penis))
-				var/obj/item/organ/genital/penis/P = O
-				if(P.length>20)
-					temp_message += " <span class='info'>Subject has a sizeable gentleman's organ at [P.length] inches.</span>"
-
-			else if(istype(O, /obj/item/organ/genital/breasts))
-				var/obj/item/organ/genital/breasts/Br = O
-				if(Br.cached_size>5)
-					temp_message += " <span class='info'>Subject has a sizeable bosom with a [Br.size] cup.</span>"
-
 
 
 			//GENERAL HANDLER
@@ -628,9 +616,9 @@ GENETICS SCANNER
 	var/turf/location = get_turf(user)
 	if(!istype(location))
 		return
-	
+
 	scan_turf(user, location)
-	
+
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 

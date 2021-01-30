@@ -16,6 +16,7 @@
 	display_order = JOB_DISPLAY_ORDER_AI
 	var/do_special_check = TRUE
 	threat = 5
+	considered_combat_role = TRUE
 
 	starting_modifiers = list(/datum/skill_modifier/job/level/wiring/basic)
 

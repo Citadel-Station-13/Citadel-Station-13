@@ -212,6 +212,11 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		//EMPs fuck robots over. Up to ~11.5 corruption per EMP if hit by the full power. They also get up to 15 burn damage per EMP (up to 2.5 per limb), plus short hardstun
+		//Though, note that the burn damage is linear, while corruption is logarythmical, which means at lower severities you still get corruption, but far less burn / stun
+		//Note than as compensation, they only take half the limb burn damage someone fully augmented would take, which would be up to 30 burn.
+		adjustToxLoss(round(log(severity)*2.5, 0.1), toxins_type = TOX_SYSCORRUPT)
 	for(var/X in internal_organs)
 		var/obj/item/organ/O = X
 		O.emp_act(severity)
@@ -299,10 +304,16 @@
 							emote("wag")
 
 		else if(check_zone(M.zone_selected) == BODY_ZONE_R_ARM || check_zone(M.zone_selected) == BODY_ZONE_L_ARM)
-			M.visible_message( \
-				"<span class='notice'>[M] shakes [src]'s hand.</span>", \
-				"<span class='notice'>You shake [src]'s hand.</span>", target = src,
-				target_message = "<span class='notice'>[M] shakes your hand.</span>")
+			if((pulling == M) && (grab_state == GRAB_PASSIVE))
+				M.visible_message( \
+					"<span class='notice'>[M] squeezes [src]'s hand.</span>", \
+					"<span class='notice'>You squeeze [src]'s hand.</span>", target = src,
+					target_message = "<span class='notice'>[M] squeezes your hand.</span>")
+			else
+				M.visible_message( \
+					"<span class='notice'>[M] shakes [src]'s hand.</span>", \
+					"<span class='notice'>You shake [src]'s hand.</span>", target = src,
+					target_message = "<span class='notice'>[M] shakes your hand.</span>")
 
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
@@ -350,10 +361,10 @@
 
 	return embeds
 
-/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+/mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash, override_protection = 0)
 	. = ..()
 
-	var/damage = intensity - get_eye_protection()
+	var/damage = override_protection ? intensity : intensity - get_eye_protection()
 	if(.) // we've been flashed
 		var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 		if (!eyes)

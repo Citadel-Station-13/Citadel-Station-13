@@ -783,6 +783,8 @@
 	value = REAGENT_VALUE_VERY_RARE
 
 /datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
+	return ..()		// until fixed - the rotations never stop
+/*
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"],
@@ -800,6 +802,7 @@
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
+*/
 
 /datum/reagent/toxin/skewium
 	name = "Skewium"

@@ -64,6 +64,8 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/threat_average_weight = 0
 	/// Last time a threat average sample was taken. Used for weighting the rolling average.
 	var/last_threat_sample_time = 0
+	/// Maximum threat recorded so far, for cross-round chaos adjustment.
+	var/max_threat = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
@@ -145,6 +147,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 		third_rule_req = list(101, 101, 101, 101, 101, 100, 90, 80, 70, 60)
 	high_pop_second_rule_req = CONFIG_GET(number/dynamic_second_rule_high_pop_requirement)
 	high_pop_third_rule_req = CONFIG_GET(number/dynamic_third_rule_high_pop_requirement)
+	added_threat = CONFIG_GET(number/dynamic_threat_baseline)
 	GLOB.dynamic_high_pop_limit = CONFIG_GET(number/dynamic_high_pop_limit)
 	GLOB.dynamic_latejoin_delay_min = CONFIG_GET(number/dynamic_latejoin_delay_min)*600
 	GLOB.dynamic_latejoin_delay_max = CONFIG_GET(number/dynamic_latejoin_delay_max)*600
@@ -415,7 +418,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 /datum/game_mode/dynamic/post_setup(report)
 	update_playercounts()
 	if(minor_ruleset_start)
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/minor_roundstart),rand(1 MINUTES,5 MINUTES))
+		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/minor_roundstart),rand(1 MINUTES,3 MINUTES))
 	else
 		for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
@@ -439,7 +442,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			potential_minor_rulesets -= rule
 		update_playercounts()
 		iterations++
-	message_admins("Minor antag roundstart rolls completed, with [num_rulesets_executed] antags or antag teams made.")
+	message_admins("Minor antag roundstart rolls completed, with [iterations] rolls done and [num_rulesets_executed] antags or antag teams made.")
 	log_game("DYNAMIC: Minor antag roundstart made [num_rulesets_executed] antags or antag teams.")
 
 
@@ -612,6 +615,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
 		else if(rule.ruletype == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
+	message_admins("DYNAMIC: Picked [rule]; executing soon...")
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
 	return TRUE
 
@@ -663,6 +667,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
+		message_admins("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		log_threat("[rule.ruletype] [rule.name] added [rule.cost]", verbose = TRUE)
 		if(rule.flags & HIGHLANDER_RULESET)
@@ -741,6 +746,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 			if(!M.voluntary_ghosted)
 				current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 	threat = storyteller.calculate_threat() + added_threat
+	max_threat = max(max_threat,threat)
 	if(threat_average_weight)
 		var/cur_sample_weight = world.time - last_threat_sample_time
 		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)

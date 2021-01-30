@@ -261,7 +261,7 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
