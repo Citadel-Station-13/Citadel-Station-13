@@ -211,10 +211,10 @@
 		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
 		message = copytext(message, length(found_string) + 1)
 
-	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
+	//var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
-	var/static/regex/vomit_words = regex("vomit|throw up|sick")
+	//var/static/regex/sleep_words = regex("sleep|slumber|rest")
+	//var/static/regex/vomit_words = regex("vomit|throw up|sick")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
 	var/static/regex/wakeup_words = regex("wake up|awaken")
@@ -257,22 +257,28 @@
 	var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
 	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
+	var/static/regex/weh_words = regex("weh") //CITADEL CHANGE
+	var/static/regex/surrender_words = regex("surrender|yield|submit") //CITADEL CHANGE
 
 	var/i = 0
+
+	/*
 	//STUN
 	if(findtext(message, stun_words))
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Stun(60 * power_multiplier)
+	*/
 
 	//KNOCKDOWN
-	else if(findtext(message, knockdown_words))
+	if(findtext(message, knockdown_words))
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.DefaultCombatKnockdown(60 * power_multiplier)
 
+	/*
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
@@ -284,6 +290,7 @@
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
 			C.vomit(10 * power_multiplier, distance = power_multiplier)
+	*/
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
@@ -590,6 +597,22 @@
 	else if((findtext(message, bwoink_words)))
 		cooldown = COOLDOWN_MEME
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/effects/adminhelp.ogg', 300, 1), 25)
+
+	//WEH
+	else if((findtext(message, weh_words)))
+		cooldown = COOLDOWN_MEME
+		for(var/V in listeners)
+			var/mob/living/L = V
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "weh"), 5 * i)
+			i++
+	
+	//SURRENDER
+	else if((findtext(message, surrender_words)))
+		cooldown = COOLDOWN_STUN
+		for(var/V in listeners)
+			var/mob/living/L = V
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "surrender"), 5 * i)
+			i++
 	//END CITADEL CHANGES
 
 	else
