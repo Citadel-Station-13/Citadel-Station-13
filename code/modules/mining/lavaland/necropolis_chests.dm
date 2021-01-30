@@ -522,7 +522,7 @@
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	w_class = WEIGHT_CLASS_BULKY
-	force = 15W
+	force = 15
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -538,6 +538,7 @@
 	pass_flags = PASSTABLE
 	damage = 15
 	armour_penetration = 10
+	knockdown = 5
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain
