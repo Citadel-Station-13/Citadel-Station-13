@@ -1,5 +1,0 @@
-author: SandPoot
-delete-after: true
-changes:
-  - config: Made a couple hardcoded stuff customizable.
-  - server: Don't forget to change them at `config/sandstorm/config.txt`.
