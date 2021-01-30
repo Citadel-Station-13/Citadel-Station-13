@@ -23,7 +23,7 @@
 		return
 	var/swoop_chance = clamp(((maxHealth - health)/25), 0, 20)
 
-	if(prob(swoop_chance) && target in range(4, src))
+	if(prob(swoop_chance) && (target in range(4, src)))
 		density = FALSE
 		icon_state = "ash_whelp_shadow"
 		visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
