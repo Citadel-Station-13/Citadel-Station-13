@@ -258,7 +258,6 @@
 	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
 	var/static/regex/weh_words = regex("weh") //CITADEL CHANGE
-	var/static/regex/surrender_words = regex("surrender|yield|submit") //CITADEL CHANGE
 
 	var/i = 0
 
@@ -605,14 +604,7 @@
 			var/mob/living/L = V
 			addtimer(CALLBACK(L, /mob/living/.proc/emote, "weh"), 5 * i)
 			i++
-	
-	//SURRENDER
-	else if((findtext(message, surrender_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/V in listeners)
-			var/mob/living/L = V
-			addtimer(CALLBACK(L, /mob/living/.proc/emote, "surrender"), 5 * i)
-			i++
+
 	//END CITADEL CHANGES
 
 	else
