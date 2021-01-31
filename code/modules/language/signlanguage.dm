@@ -8,4 +8,5 @@
   
   syllables = list(".")
   
+  icon_state = "ssl"
   default_priority = 90
