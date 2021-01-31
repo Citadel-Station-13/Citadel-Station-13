@@ -22,15 +22,15 @@ if grep -P 'pixel_[^xy]' _maps/**/*.dmm;	then
     echo "ERROR: incorrect pixel offset variables detected in maps, please remove them."
     st=1
 fi;
-# echo "Checking for cable varedits"
-# if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
-#     echo "ERROR: vareditted cables detected, please remove them."
-#     st=1
-# fi;
-# if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
-#     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
-#     st=1
-# fi;
+echo "Checking for cable varedits"
+if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
+    echo "ERROR: vareditted cables detected, please remove them."
+    st=1
+fi;
+if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
+    echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
+    st=1
+fi;
 echo "Checking for stacked cables"
 if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
     echo "found multiple cables on the same tile, please remove them."
@@ -48,16 +48,16 @@ if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
-# echo "Checking for space indentation"
-# if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
-#     echo "space indentation detected"
-#     st=1
-# fi;
-# echo "Checking for mixed indentation"
-# if grep -P '^\t+ [^ *]' code/**/*.dm; then
-#     echo "mixed <tab><space> indentation detected"
-#     st=1
-# fi;
+echo "Checking for space indentation"
+if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
+    echo "space indentation detected"
+    st=1
+fi;
+echo "Checking for mixed indentation"
+if grep -P '^\t+ [^ *]' code/**/*.dm; then
+    echo "mixed <tab><space> indentation detected"
+    st=1
+fi;
 nl='
 '
 nl=$'\n'
@@ -68,10 +68,10 @@ while read f; do
         st=1
     fi;
 done < <(find . -type f -name '*.dm')
-# if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
-#     echo "changed files contains proc argument starting with 'var'"
-#     st=1 # annoy the coders instead of causing it to fail
-# fi;
+if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
+    echo "changed files contains proc argument starting with 'var'"
+    st=1
+fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
     st=1
