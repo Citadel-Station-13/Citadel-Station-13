@@ -311,7 +311,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
-			dat += "<b>Phobia:</b> <a href='?_src_=prefs;preference=phobia;task=input'>[chosephobia]</a><BR>"
+			dat += "<b>Phobia:</b> <a href='?_src_=prefs;preference=phobia;task=input'>[phobia]</a><BR>"
 			dat += "<b>Language:</b> <a href='?_src_=prefs;preference=language;task=input'>[choselanguage]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
