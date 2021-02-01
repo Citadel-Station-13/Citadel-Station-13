@@ -10,7 +10,7 @@
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
 		return 0
-	if(get_message_language(message) == /datum/language/signlanguage && handcuffed != null)
+	if(get_message_language(message) == /datum/language/signlanguage && (handcuffed || (!user.get_bodypart(BODY_ZONE_L_ARM) && !user.get_bodypart(BODY_ZONE_R_ARM)) || get_num_held_items() == held_items.len)
 		return 0
 	return ..()
 
