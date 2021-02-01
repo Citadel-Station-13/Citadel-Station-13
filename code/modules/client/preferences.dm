@@ -2330,8 +2330,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					phobia = chosephobia
 
 				if("language")
-					choselanguage = input(user, "Select a language.", "Language", language) as null|anything in list("Beachtongue","Codespeak","Draconic","Dwarven",
-				 																									"Chimpanzee", "Nar'Sian","Ratvarian","Space Sign Language","Blah-Sucker","Random")
+					choselanguage = input(user, "Select a language.", "Language", language) as null|anything in list("Beachtongue","Draconic","Dwarven",
+				 																									"Chimpanzee","Space Sign Language","Random")
 					if(!choselanguage)
 						return
 					switch(choselanguage)
@@ -2339,25 +2339,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							language = /datum/language/arachnid
 						if("Beachtongue")
 							language = /datum/language/beachbum
-						if("Codespeak")
-							language = /datum/language/codespeak
 						if("Draconic")
 							language = /datum/language/draconic
 						if("Dwarven")
 							language = /datum/language/dwarf
 						if("Chimpanzee")
 							language = /datum/language/monkey
-						if("Nar'sian")
-							language = /datum/language/narsie
-						if("Ratvarian")
-							language = /datum/language/ratvar
 						if("Space Sign Language")
 							language = /datum/language/signlanguage
-						if("Blah-Sucker")
-							language = /datum/language/vampiric
 						if("Random")
-							language = pick(list("Rachidian", "Beachtongue","Codespeak","Draconic","Dwarven",
-												 "Chimpanzee", "Nar'Sian","Ratvarian","Space Sign Language","Blah-Sucker"))
+							language = pick(list("Rachidian", "Beachtongue","Draconic","Dwarven",
+												 "Chimpanzee", Space Sign Language","))
 
 				if("body_size")
 					var/new_body_size = input(user, "Choose your desired sprite size: (90-125%)\nWarning: This may make your character look distorted. Additionally, any size under 100% takes a 10% maximum health penalty", "Character Preference", features["body_size"]*100) as num|null
