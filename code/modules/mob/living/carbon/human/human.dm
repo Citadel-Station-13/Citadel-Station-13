@@ -985,43 +985,43 @@
 			admin_ticket_log(src, msg)
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	if(pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+	var/GS_needed = istype(target, /mob/living/silicon/pai)? GRAB_PASSIVE : GRAB_AGGRESSIVE
+	if(pulling == target && grab_state >= GS_needed && stat == CONSCIOUS)
 		//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
 		if(user == target && can_piggyback(target))
 			piggyback(target)
 			return
 		//If you dragged them to you and you're aggressively grabbing try to fireman carry them
-		else if(user != target)
+		else if(user == src)
 			if(user.a_intent == INTENT_GRAB)
 				fireman_carry(target)
 				return
 	. = ..()
 
 //src is the user that will be carrying, target is the mob to be carried
-/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
-	return (istype(target) && target.stat == CONSCIOUS)
+/mob/living/carbon/human/proc/can_piggyback(mob/living/target)
+	return (iscarbon(target) || ispAI(target)) && target.stat == CONSCIOUS
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
-	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND))
+	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND)) || ispAI(target)
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing
 	var/skills_space = "" //cobby told me to do this
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay = 30
-		skills_space = "expertly"
+		skills_space = "expertly "
 	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
 		carrydelay = 40
-		skills_space = "quickly"
+		skills_space = "quickly "
 	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
-		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
+		visible_message("<span class='notice'>[src] starts [skills_space]lifting [target] onto their back..</span>",
 		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
-		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space]start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
 		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
 		if(do_after(src, carrydelay, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
-				target.set_resting(FALSE, TRUE)
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0, TRUE)
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
@@ -1039,13 +1039,13 @@
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
-				buckle_mob(target, TRUE, TRUE, FALSE, 1, 2, FALSE)
+				buckle_mob(target, TRUE, TRUE, 0, 1, 2, FALSE)
 		else
 			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
 	else
 		to_chat(target, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
 
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0, fireman = FALSE)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = 0, hands_needed = 0, target_hands_needed = 0, fireman = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(target, can_ride_typecache))
@@ -1057,6 +1057,9 @@
 		riding_datum.ride_check_rider_restrained = TRUE
 	if(buckled_mobs && ((target in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
+	if(istype(target, /mob/living/silicon/pai))
+		hands_needed = 1
+		target_hands_needed = 0
 	var/equipped_hands_self
 	var/equipped_hands_target
 	if(hands_needed)
