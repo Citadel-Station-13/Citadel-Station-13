@@ -393,6 +393,27 @@
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
 
+//turret healing
+/obj/machinery/porta_turret/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		. += "<span class='notice'>[src] is damaged, use a lit welder to fix it.</span>"
+
+/obj/machinery/porta_turret/welder_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(cover && obj_integrity < max_integrity)
+		if(!I.tool_start_check(user, amount=0))
+			return
+		user.visible_message("[user] is welding the turret.", \
+						"<span class='notice'>You begin repairing the turret...</span>", \
+						"<span class='italics'>You hear welding.</span>")
+		if(I.use_tool(src, user, 40, volume=50))
+			obj_integrity = max_integrity
+			user.visible_message("[user.name] has repaired [src].", \
+								"<span class='notice'>You finish repairing the turret.</span>")
+	else
+		to_chat(user, "<span class='notice'>The turret doesn't need repairing.</span>")
+
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 	if(cover == null && anchored)	//if it has no cover and is anchored
