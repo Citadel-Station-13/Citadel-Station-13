@@ -99,6 +99,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/phobia = "Random"				//phobia
+	var/language = "Random"				//bonus language
+	var/choselanguage = "Random"		//language appearance
 	var/underwear = "Nude"				//underwear type
 	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude"				//undershirt type
@@ -308,6 +311,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
+			dat += "<b>Phobia:</b> <a href='?_src_=prefs;preference=phobia;task=input'>[chosephobia]</a><BR>"
+			dat += "<b>Language:</b> <a href='?_src_=prefs;preference=language;task=input'>[choselanguage]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
 			var/old_group
@@ -2314,6 +2319,45 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["body_model"] = chosengender
 					gender = chosengender
+
+				if("phobia")
+					var/chosephobia = input(user, "Select a phobia.", "Phobia", phobia) as null|anything in list("spiders", "space", "security", "clowns", "greytide", "lizards",
+																												"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
+																												"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate",
+																												"eye","Random")
+					if(!chosephobia)
+						return
+					phobia = chosephobia
+
+				if("language")
+					choselanguage = input(user, "Select a language.", "Language", language) as null|anything in list("Beachtongue","Codespeak","Draconic","Dwarven",
+				 																									"Chimpanzee", "Nar'Sian","Ratvarian","Space Sign Language","Blah-Sucker","Random")
+					if(!choselanguage)
+						return
+					switch(choselanguage)
+						if("Rachidian")
+							language = /datum/language/arachnid
+						if("Beachtongue")
+							language = /datum/language/beachbum
+						if("Codespeak")
+							language = /datum/language/codespeak
+						if("Draconic")
+							language = /datum/language/draconic
+						if("Dwarven")
+							language = /datum/language/dwarf
+						if("Chimpanzee")
+							language = /datum/language/monkey
+						if("Nar'sian")
+							language = /datum/language/narsie
+						if("Ratvarian")
+							language = /datum/language/ratvar
+						if("Space Sign Language")
+							language = /datum/language/signlanguage
+						if("Blah-Sucker")
+							language = /datum/language/vampiric
+						if("Random")
+							language = pick(list("Rachidian", "Beachtongue","Codespeak","Draconic","Dwarven",
+												 "Chimpanzee", "Nar'Sian","Ratvarian","Space Sign Language","Blah-Sucker"))
 
 				if("body_size")
 					var/new_body_size = input(user, "Choose your desired sprite size: (90-125%)\nWarning: This may make your character look distorted. Additionally, any size under 100% takes a 10% maximum health penalty", "Character Preference", features["body_size"]*100) as num|null
