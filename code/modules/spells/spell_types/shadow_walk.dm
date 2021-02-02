@@ -2,7 +2,7 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = NONE
 	phase_allowed = 1
 	selection_type = "range"
 	range = -1
@@ -12,6 +12,7 @@
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc

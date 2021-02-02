@@ -12,9 +12,27 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	animate_movement = SLIDE_STEPS
+	speech_span = SPAN_ROBOT
+	vis_flags = VIS_INHERIT_PLANE
 	appearance_flags = APPEARANCE_UI
-	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
-	var/datum/hud/hud = null // A reference to the owner HUD, if any.
+	/// A reference to the object in the slot. Grabs or items, generally.
+	var/obj/master = null
+	/// A reference to the owner HUD, if any.
+	var/datum/hud/hud = null
+	/**
+	 * Map name assigned to this object.
+	 * Automatically set by /client/proc/add_obj_to_map.
+	 */
+	var/assigned_map
+	/**
+	 * Mark this object as garbage-collectible after you clean the map
+	 * it was registered on.
+	 *
+	 * This could probably be changed to be a proc, for conditional removal.
+	 * But for now, this works.
+	 */
+	var/del_on_map_removal = TRUE
 
 /obj/screen/take_damage()
 	return
@@ -49,8 +67,8 @@
 /obj/screen/swap_hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
+	// if(world.time <= usr.next_move)
+	// 	return 1
 
 	if(usr.incapacitated())
 		return 1
@@ -93,9 +111,13 @@
 	H.open_language_menu(usr)
 
 /obj/screen/inventory
-	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
-	var/icon_empty // Icon when empty. For now used only by humans.
-	var/icon_full  // Icon when contains an item. For now used only by humans.
+	/// The identifier for the slot. It has nothing to do with ID cards.
+	var/slot_id
+	/// Icon when empty. For now used only by humans.
+	var/icon_empty
+	/// Icon when contains an item. For now used only by humans.
+	var/icon_full
+	/// The overlay when hovering over with an item in your hand
 	var/list/object_overlays = list()
 	layer = HUD_LAYER
 	plane = HUD_PLANE
@@ -103,10 +125,10 @@
 /obj/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return TRUE
+	// if(world.time <= usr.next_move)
+	// 	return TRUE
 
-	if(usr.incapacitated())
+	if(usr.incapacitated()) // ignore_stasis = TRUE
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -158,7 +180,8 @@
 	else
 		item_overlay.color = "#00ff00"
 
-	object_overlays += item_overlay
+	cut_overlay(object_overlays)
+	// object_overlay = item_overlay
 	add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
@@ -195,8 +218,8 @@
 	var/mob/user = hud?.mymob
 	if(usr != user)
 		return TRUE
-	if(world.time <= user.next_move)
-		return TRUE
+	// if(world.time <= user.next_move)
+	// 	return TRUE
 	if(user.incapacitated())
 		return TRUE
 	if (ismecha(user.loc)) // stops inventory actions in a mech
@@ -210,20 +233,6 @@
 		user.swap_hand(held_index)
 	return TRUE
 
-/obj/screen/close
-	name = "close"
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
-	icon_state = "backpack_close"
-
-/obj/screen/close/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/close/Click()
-	var/datum/component/storage/S = master
-	S.hide_from(usr)
-	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -405,30 +414,6 @@
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"
-
-/obj/screen/storage
-	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/storage/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(null, I, usr, params)
-	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"

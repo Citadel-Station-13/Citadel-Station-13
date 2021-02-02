@@ -1,32 +1,33 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!forced && hit_percent <= 0)
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(isbodypart(def_zone)) //we specified a bodypart object
-		BP = def_zone
-	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
-		BP = get_bodypart(check_zone(def_zone))
-		if(!BP)
-			BP = bodyparts[1]
+	if(!spread_damage)
+		if(isbodypart(def_zone)) //we specified a bodypart object
+			BP = def_zone
+		else
+			if(!def_zone)
+				def_zone = ran_zone(def_zone)
+			BP = get_bodypart(check_zone(def_zone))
+			if(!BP)
+				BP = bodyparts[1]
 
 	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(damage_amount) : BP.heal_damage(abs(damage_amount), 0))
+				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, damage_amount) : BP.heal_damage(0, abs(damage_amount)))
+				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					update_damage_overlays()
 			else
 				adjustFireLoss(damage_amount, forced = forced)
@@ -38,7 +39,7 @@
 			adjustCloneLoss(damage_amount, forced = forced)
 		if(STAMINA)
 			if(BP)
-				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount)))
+				if(damage > 0 ? BP.receive_damage(0, 0, damage_amount) : BP.heal_damage(0, 0, abs(damage_amount), FALSE, FALSE))
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
@@ -61,31 +62,33 @@
 		amount += BP.burn_dam
 	return amount
 
-
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
+//In both these procs, only_organic / only_robotic are only used for healing, not for damaging. For now at least.
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health)
 	else
-		heal_overall_damage(abs(amount), 0, 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(abs(amount), 0, 0, only_robotic, only_organic, updating_health)
 	return amount
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if (!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
+	if(!forced && amount < 0 && HAS_TRAIT(src,TRAIT_NONATURALHEAL))	//Vamps don't heal naturally.
 		return FALSE
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health)
 	else
-		heal_overall_damage(0, abs(amount), 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(0, abs(amount), 0, only_robotic, only_organic, updating_health)
 	return amount
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
+
+//God save me from spaghettifying this - Syscorrupt damage is not affected by toxlovers.
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
+	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER) && toxins_type != TOX_SYSCORRUPT) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 3 * amount		//5x was too much, this is punishing enough.
@@ -168,11 +171,11 @@
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts
-/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, status)
+/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, list/status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(status && BP.status != status)
+		if(status && !status.Find(BP.status))
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
@@ -201,12 +204,12 @@
 //Damages ONE bodypart randomly selected from damagable ones.
 //It automatically updates damage overlays if necessary
 //It automatically updates health status
-/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, stamina = 0)
+/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, stamina))
+	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "melee" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 
 //Heal MANY bodyparts, in random order
@@ -234,12 +237,12 @@
 		update_damage_overlays()
 	update_stamina() //CIT CHANGE - makes sure update_stamina() always gets called after a health update
 
-// damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/// damage MANY bodyparts, in random order
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	if(status_flags & GODMODE)
 		return	//godmode
 
-	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
+	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
 	var/update = 0
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)
@@ -252,7 +255,7 @@
 		var/stamina_was = picked.stamina_dam
 
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE)
+		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
 
 		brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)
@@ -265,45 +268,11 @@
 		update_damage_overlays()
 	update_stamina()
 
-/* TO_REMOVE
-/mob/living/carbon/getOrganLoss(ORGAN_SLOT_BRAIN)
-	. = 0
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		. = B.get_brain_damage()
-
-//Some sources of brain damage shouldn't be deadly
-/mob/living/carbon/adjustOrganLoss(ORGAN_SLOT_BRAIN, amount, maximum = BRAIN_DAMAGE_DEATH)
-	if(status_flags & GODMODE)
-		return FALSE
-	var/prev_brainloss = getOrganLoss(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
-		return
-	B.adjust_brain_damage(amount, maximum)
-	if(amount <= 0) //cut this early
-		return
-	var/brainloss = getOrganLoss(ORGAN_SLOT_BRAIN)
-	if(brainloss > BRAIN_DAMAGE_MILD)
-		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_MILD)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
-			gain_trauma_type(BRAIN_TRAUMA_MILD)
-	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_SEVERE)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
-			if(prob(20))
-				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
-			else
-				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
-
-	if(prev_brainloss < BRAIN_DAMAGE_MILD && brainloss >= BRAIN_DAMAGE_MILD)
-		to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
-	else if(prev_brainloss < BRAIN_DAMAGE_SEVERE && brainloss >= BRAIN_DAMAGE_SEVERE)
-		to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-	else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && brainloss >= (BRAIN_DAMAGE_DEATH - 20))
-		to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
-
-/mob/living/carbon/setBrainLoss(amount)
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		var/adjusted_amount = amount - B.get_brain_damage()
-		B.adjust_brain_damage(adjusted_amount, null)
-*/
+///Returns a list of bodyparts with wounds (in case someone has a wound on an otherwise fully healed limb)
+/mob/living/carbon/proc/get_wounded_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, status)
+	var/list/obj/item/bodypart/parts = list()
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(LAZYLEN(BP.wounds))
+			parts += BP
+	return parts

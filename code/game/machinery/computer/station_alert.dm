@@ -16,11 +16,10 @@
 	GLOB.alert_consoles -= src
 	return ..()
 
-/obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/station_alert/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "station_alert", name, 325, 500, master_ui, state)
+		ui = new(user, src, "StationAlertConsole", name)
 		ui.open()
 
 /obj/machinery/computer/station_alert/ui_data(mob/user)
@@ -31,6 +30,7 @@
 		data["alarms"][class] = list()
 		for(var/area in alarms[class])
 			data["alarms"][class] += area
+
 	return data
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
@@ -94,4 +94,4 @@
 		overlay_state = "alert:0"
 	. |= overlay_state
 	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, layer, plane, dir)
-	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir, alpha=128)
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha=128)

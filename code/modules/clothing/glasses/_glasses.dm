@@ -96,7 +96,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/meson/eyepatch
 	name = "eyepatch mesons"
@@ -132,7 +132,7 @@
 	name = "prescription night vision goggles"
 	desc = "NVGs but for those with nearsightedness."
 	vision_correction = 1
-	
+
 /obj/item/clothing/glasses/night/syndicate
 	name = "combat night vision goggles"
 	desc = "See everything, without fear."
@@ -148,6 +148,30 @@
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+
+/obj/item/clothing/glasses/eyepatch/syndicate
+	name = "cybernetic eyepatch"
+	desc = "An eyepatch used to enhance one's aim with guns."
+	icon_state = "syndicatepatch"
+	item_state = "syndicatepatch"
+	resistance_flags = ACID_PROOF
+
+/obj/item/clothing/glasses/eyepatch/syndicate/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		user.visible_message("<span class='warning'>Circuitry from the eyepatch links itself to your brain as you put on the eyepatch.")
+		if(HAS_TRAIT(user, TRAIT_POOR_AIM))
+			user.visible_message("<span class='warning'>You hear a fizzing noise from the circuit. That can't be good.")
+		ADD_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+		ADD_TRAIT(src, TRAIT_NODROP, "SYNDICATE_EYEPATCH_NODROP")
+
+/obj/item/clothing/glasses/eyepatch/syndicate/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_INSANE_AIM, "SYNDICATE_EYEPATCH_AIM")
+	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	if(eyes)
+		eyes.applyOrganDamage(30)
+		user.visible_message("<span class='warning'>Your eye stings as the circuitry is removed from your eye!")
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -180,7 +204,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	vision_correction = 1
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
@@ -202,6 +226,12 @@
 	desc = "Made by Uncool. Co."
 	icon_state = "hipster_glasses"
 	item_state = "hipster_glasses"
+
+/obj/item/clothing/glasses/regular/circle
+	name = "circle glasses"
+	desc = "Why would you wear something so controversial yet so brave?"
+	icon_state = "circle_glasses"
+	item_state = "circle_glasses"
 
 //Here lies green glasses, so ugly they died. RIP
 
@@ -231,7 +261,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	name = "black giga gar glasses"
@@ -251,7 +281,7 @@
 	throw_speed = 4
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
 /obj/item/clothing/glasses/sunglasses/gar/supergar
@@ -343,16 +373,16 @@
 
 /obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
 	if(ishuman(user) && !colored_before)
-		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		add_atom_colour("#[user.left_eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc
-		var/mutable_appearance/M = mutable_appearance('icons/mob/eyes.dmi', "blindfoldwhite")
+		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 		M.appearance_flags |= RESET_COLOR
-		M.color = "#[H.eye_color]"
+		M.color = "#[H.left_eye_color]"
 		. += M
 
 /obj/item/clothing/glasses/sunglasses/big

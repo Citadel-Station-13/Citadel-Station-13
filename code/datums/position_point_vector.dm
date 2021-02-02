@@ -20,7 +20,7 @@
 	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
 
 /proc/angle_between_points(datum/point/a, datum/point/b)
-	return ATAN2((b.y - a.y), (b.x - a.x))
+	return arctan((b.y - a.y), (b.x - a.x))
 
 /datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 	var/x = 0
@@ -189,6 +189,12 @@
 	x += mpx * (multiplier)
 	y += mpy * (multiplier)
 
+/datum/point/vector/proc/pixel_increment(pixels = 32, update_iteration = TRUE, realistic_iteration = FALSE)
+	if(update_iteration)
+		iteration += realistic_iteration? round(pixels / speed) : 1
+	x += sin(angle) * pixels
+	y += cos(angle) * pixels
+
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()
 	if(force_simulate)
@@ -208,6 +214,7 @@
 
 /datum/point/vector/processed/Destroy()
 	STOP_PROCESSING(SSprojectiles, src)
+	return ..()
 
 /datum/point/vector/processed/proc/start()
 	last_process = world.time

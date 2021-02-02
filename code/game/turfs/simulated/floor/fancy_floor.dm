@@ -11,6 +11,7 @@
 	desc = "Stylish dark wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.25)
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
@@ -25,7 +26,8 @@
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	return pry_tile(I, user)
+	. = STOP_ATTACK_PROC_CHAIN
+	pry_tile(I, user)
 
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -61,11 +63,34 @@
 				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
 
+/turf/open/floor/wood/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
+
 /turf/open/floor/wood/cold
 	temperature = 255.37
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/wood/wood_large
+	desc = "Stylish dark wood."
+	icon_state = "large_wood"
+	floor_tile = /obj/item/stack/tile/wood/wood_large
+	broken_states = list("large_wood-broken", "large_wood-broken2", "large_wood-broken3")
+
+/turf/open/floor/wood/wood_tiled
+	desc = "Stylish dark wood."
+	icon_state = "wood_tile"
+	floor_tile = /obj/item/stack/tile/wood/wood_tiled
+	broken_states = list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
+
+/turf/open/floor/wood/wood_diagonal
+	desc = "Stylish dark wood."
+	icon_state = "diagonal_wood"
+	floor_tile = /obj/item/stack/tile/wood/wood_diagonal
+	broken_states = list("diagonal_wood-broken", "diagonal_wood-broken2", "diagonal_wood-broken3")
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -156,7 +181,7 @@
 	planetary_atmos = TRUE
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
-	slowdown = 2
+	slowdown = 1.5 //So digging it out paths are useful.
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
@@ -247,6 +272,13 @@
 	floor_tile = /obj/item/stack/tile/carpet/black
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/floor/carpet/black, /turf/open/floor/carpet/blackred, /turf/open/floor/carpet/monochrome)
+
+/turf/open/floor/carpet/arcade
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "arcade"
+	floor_tile = /obj/item/stack/tile/carpet/arcade
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
 
 /turf/open/floor/carpet/blackred
 	icon = 'icons/turf/floors/carpet_blackred.dmi'

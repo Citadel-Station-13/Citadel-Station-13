@@ -8,10 +8,10 @@
 /obj/item/clothing/suit/armor/hos/trenchcoat/cloak
 	name = "armored trenchcloak"
 	desc = "A trenchcoat enchanced with a special lightweight kevlar. This one appears to be designed to be draped over one's shoulders rather than worn normally.."
-	alternate_worn_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/citadel/suit.dmi'
 	icon_state = "hostrench"
 	item_state = "hostrench"
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE
 	body_parts_covered = CHEST|ARMS|LEGS
 
 /obj/item/clothing/suit/hooded/cloak/david
@@ -20,7 +20,7 @@
 	desc = "Ever wanted to look like a badass without ANY effort? Try this nanotrasen brand red cloak, perfect for kids"
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/david
 	body_parts_covered = CHEST|GROIN|ARMS
-	mutantrace_variation = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE
 
 /obj/item/clothing/head/hooded/cloakhood/david
 	name = "red cloak hood"

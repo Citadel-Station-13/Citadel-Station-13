@@ -1,6 +1,0 @@
-author: "raspyosu"
-delete-after: True
-changes: 
-  - bugfix: "cloak sometimes not restoring initial move intent"
-  - tweak: "mesmerize (line of sight checking system and remove progress bar)"
-  - balance: "nerf: lunge, mesmerize"

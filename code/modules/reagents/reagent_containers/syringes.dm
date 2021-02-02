@@ -15,6 +15,8 @@
 	var/show_filling = TRUE
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
+	custom_price = PRICE_CHEAP_AS_FREE
+	sharpness = SHARP_POINTY
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
@@ -41,8 +43,7 @@
 	mode = !mode
 	update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/reagent_containers/syringe/attack_hand()
+/obj/item/reagent_containers/syringe/on_attack_hand()
 	. = ..()
 	update_icon()
 
@@ -52,8 +53,14 @@
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
 	return
 
-/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user , proximity)
+/obj/item/reagent_containers/syringe/attack()
+	return			// no bludgeoning.
+
+/obj/item/reagent_containers/syringe/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/attempt_inject, target, user, proximity)
+
+/obj/item/reagent_containers/syringe/proc/attempt_inject(atom/target, mob/user, proximity)
 	if(busy)
 		return
 	if(!proximity)
@@ -106,7 +113,7 @@
 					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 					return
 
-				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
+				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log = TRUE) // transfer from, transfer to - who cares?
 
 				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
 			if (round(reagents.total_volume, 0.1) >= reagents.maximum_volume)
@@ -151,7 +158,7 @@
 					L.log_message("injected themselves ([contained]) with [src.name]", LOG_ATTACK, color="orange")
 			var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 			reagents.reaction(L, INJECT, fraction)
-			reagents.trans_to(target, amount_per_transfer_from_this)
+			reagents.trans_to(target, amount_per_transfer_from_this, log = TRUE)
 			to_chat(user, "<span class='notice'>You inject [amount_per_transfer_from_this] units of the solution. The syringe now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
@@ -180,7 +187,7 @@
 ///Used by update_icon() and update_overlays()
 /obj/item/reagent_containers/syringe/proc/get_rounded_vol()
 	if(reagents && reagents.total_volume)
-		return CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
 	else
 		return 0
 

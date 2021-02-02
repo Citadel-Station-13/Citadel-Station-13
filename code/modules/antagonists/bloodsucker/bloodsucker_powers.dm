@@ -30,6 +30,7 @@
 	var/can_be_staked = FALSE			// Only Feed can happen with a stake in you.
 	var/cooldown_static = FALSE			// Feed, Masquerade, and One-Shot powers don't improve their cooldown.
 	//var/not_bloodsucker = FALSE		// This goes to Vassals or Hunters, but NOT bloodsuckers.
+	var/must_be_concious = TRUE			//Can't use this ability while unconcious.
 
 /datum/action/bloodsucker/New()
 	if(bloodcost > 0)
@@ -93,6 +94,19 @@
 		if(display_error)
 			to_chat(owner, "<span class='warning'>You have a stake in your chest! Your powers are useless.</span>")
 		return FALSE
+	if(istype(owner.get_item_by_slot(SLOT_NECK), /obj/item/clothing/neck/garlic_necklace))
+		if(display_error)
+			to_chat(owner, "<span class='warning'The necklace on your neck is interfering with your powers!</span>")
+		return FALSE
+	if(owner.reagents?.has_reagent(/datum/reagent/consumable/garlic))
+		if(display_error)
+			to_chat(owner, "<span class='warning'>Garlic in your blood is interfering with your powers!</span>")
+		return FALSE
+	if(must_be_concious)
+		if(owner.stat != CONSCIOUS)
+			if(display_error)
+				to_chat(owner, "<span class='warning'>You can't do this while you are unconcious!</span>")
+			return FALSE
 	// Incap?
 	if(must_be_capacitated)
 		var/mob/living/L = owner
@@ -172,10 +186,12 @@
 	button.screen_loc = DEFAULT_BLOODSPELLS
 	button.moved = DEFAULT_BLOODSPELLS
 	button.ordered = FALSE
+
 /datum/action/bloodsucker/passive/Destroy()
 	if(owner)
 		Remove(owner)
 	target = null
+	return ..()
 
 ///////////////////////////////////  TARGETTED POWERS	///////////////////////////////////
 

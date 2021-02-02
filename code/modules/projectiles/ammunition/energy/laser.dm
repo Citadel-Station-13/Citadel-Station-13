@@ -37,6 +37,11 @@
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
+/obj/item/ammo_casing/energy/laser/hellfire
+	projectile_type = /obj/item/projectile/beam/laser/hellfire
+	e_cost = 130
+	select_name = "maim"
+
 /obj/item/ammo_casing/energy/laser/pulse
 	projectile_type = /obj/item/projectile/beam/pulse
 	e_cost = 200
@@ -72,7 +77,7 @@
 
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
-	e_cost = 50
+	e_cost = 100
 	fire_sound = 'sound/weapons/laser3.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer

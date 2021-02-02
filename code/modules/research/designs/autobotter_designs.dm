@@ -14,7 +14,7 @@
 /datum/design/bottle
 	materials = list(/datum/material/glass = 1200)
 	build_type = AUTOBOTTLER
-	category = list("Storge")
+	category = list("Storage")
 
 /datum/design/bottle/wine
 	name = "Bottle Design (Wine)"
@@ -165,6 +165,7 @@
 	name = "Export Design (Gin)"
 	desc = "Allows for the blowing, and bottling of Gin bottles."
 	id = "gin_export"
+	reagents_list = list(/datum/reagent/consumable/ethanol/gin = 50)
 	build_path = /obj/item/export/bottle/gin
 
 /datum/design/bottle/export/whiskey

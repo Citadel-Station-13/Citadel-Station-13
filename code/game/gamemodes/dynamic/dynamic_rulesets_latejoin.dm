@@ -70,9 +70,8 @@
 	requirements = list(40,30,20,15,15,15,15,15,15,15)
 	high_population_requirement = 15
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
+	flags = TRAITOR_RULESET | MINOR_RULESET | ALWAYS_MAX_WEIGHT_RULESET
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
-	always_max_weight = TRUE
 
 //////////////////////////////////////////////
 //                                          //
@@ -193,6 +192,27 @@
 
 //////////////////////////////////////////////
 //                                          //
+//           HERETIC SMUGGLER          		//
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/heretic_smuggler
+	name = "Heretic Smuggler"
+	antag_datum = /datum/antagonist/heretic
+	antag_flag = "latejoin_heretic"
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	restricted_roles = list("AI","Cyborg")
+	required_candidates = 1
+	weight = 4
+	cost = 25
+	requirements = list(60,60,60,55,50,50,50,50,50,50)
+	flags = MINOR_RULESET
+	high_population_requirement = 50
+	property_weights = list("story_potential" = 1, "trust" = -1, "chaos" = 2, "extended" = -1, "valid" = 2)
+	repeatable = TRUE
+
+//////////////////////////////////////////////
+//                                          //
 //               BLOODSUCKERS               //
 //                                          //
 //////////////////////////////////////////////
@@ -209,6 +229,7 @@
 	cost = 10
 	property_weights = list("story_potential" = 2, "extended" = 2, "trust" = -2, "valid" = 1)
 	requirements = list(70,65,60,55,50,45,40,35,30,30)
+	flags = MINOR_RULESET
 	high_population_requirement = 30
 	repeatable = TRUE
 
@@ -221,6 +242,27 @@
 		log_admin("[M.name] was made into a bloodsucker by dynamic.")
 		message_admins("[M.name] was made into a bloodsucker by dynamic.")
 	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//               CHANGELINGS                //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/latejoin/changeling
+	name = "Changeling Infiltrator"
+	config_tag = "latejoin_changeling"
+	antag_flag = ROLE_CHANGELING
+	antag_datum = /datum/antagonist/changeling
+	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
+	required_candidates = 1
+	weight = 3
+	cost = 15
+	flags = MINOR_RULESET
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	property_weights = list("trust" = -2, "valid" = 2)
+	high_population_requirement = 101
 
 //////////////////////////////////////////////
 //                                          //
@@ -241,5 +283,5 @@
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
-	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 2)
+	flags = TRAITOR_RULESET | MINOR_RULESET | FAKE_ANTAG_RULESET
+	property_weights = list("story_potential" = 1, "trust" = -1, "extended" = 2)

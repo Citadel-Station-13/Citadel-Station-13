@@ -70,7 +70,7 @@
 /datum/game_mode/revolution/post_setup()
 	var/list/heads = SSjob.get_living_heads()
 	var/list/sec = SSjob.get_living_sec()
-	var/weighted_score = CLAMP(round(heads.len - ((3 - sec.len) / 3)), 1, max_headrevs)
+	var/weighted_score = clamp(round(heads.len - ((3 - sec.len) / 3)), 1, max_headrevs)
 
 	for(var/datum/mind/rev_mind in headrev_candidates)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
 		if(isnewplayer(rev_mind.current))

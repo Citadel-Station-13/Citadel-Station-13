@@ -22,6 +22,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin/carpotoxin = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/fish
 	tastes = list("fish" = 1)
 	foodtype = MEAT
 
@@ -54,10 +55,18 @@
 	tastes = list("fish" = 1, "chips" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
 
+/obj/item/reagent_containers/food/snacks/fishfry
+	name = "fish fry"
+	desc = "All that and no bag of chips..."
+	icon_state = "fish_fry"
+	list_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
+	filling_color = "#ee7676"
+	tastes = list("fish" = 1, "pan seared vegtables" = 1)
+	foodtype = MEAT | VEGETABLES | FRIED
+	
 /obj/item/reagent_containers/food/snacks/sushi_basic
 	name = "funa hosomaki"
 	desc = "A small cylindrical kudzu skin, filled with rice and fish."
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_basic"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4)
@@ -69,7 +78,6 @@
 /obj/item/reagent_containers/food/snacks/sushi_adv
 	name = "funa nigiri"
 	desc = "A peace  of carp lightly placed on some rice."
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_adv"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
@@ -81,7 +89,6 @@
 /obj/item/reagent_containers/food/snacks/sushi_pro
 	name = "funa nigiri"
 	desc = "A well prepared peace  of the best of the carp fillet placed on rice. Looks fancy and fresh!"
-	icon = 'modular_citadel/icons/obj/food/food.dmi'
 	icon_state = "sushie_pro"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
@@ -132,11 +139,22 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtype = MEAT | ALCOHOL
 
-/obj/item/reagent_containers/food/snacks/faggot
-	name = "faggot"
-	desc = "A great meal all round. Not a cord of wood."
-	icon_state = "faggot"
+/obj/item/reagent_containers/food/snacks/rawmeatball
+	name = "raw meatball"
+	desc = "Raw mushy meat. Better cook this!"
+	icon_state = "rawmeatball"
+	cooked_type = /obj/item/reagent_containers/food/snacks/meatball
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	filling_color = "#bd2020"
+	tastes = list("meat" = 1, "slime" = 1)
+	foodtype = MEAT | RAW
+
+/obj/item/reagent_containers/food/snacks/meatball
+	name = "meatball"
+	desc = "MAMA MIA DAS A SPICY"
+	icon_state = "meatball"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#800000"
 	tastes = list("meat" = 1)
 	foodtype = MEAT
@@ -165,6 +183,27 @@
 	icon_state = "salami"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	tastes = list("meat" = 1, "smoke" = 1)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatloaf
+	name = "meatloaf"
+	desc = "Meat! In a loaf!"
+	icon_state = "meatloaf"
+	filling_color = "#8f0f0f"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/ketchup = 5)
+	tastes = list("meat" = 1, "ketchup" = 1)
+	slices_num = 5
+	slice_path = /obj/item/reagent_containers/food/snacks/meatloaf_slice
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatloaf_slice
+	name = "meatloaf slice"
+	filling_color = "#8f0f0f"
+	desc = "Meat! In chunky slices!"
+	icon_state = "meatloaf_slice"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ketchup = 1)
+	tastes = list("meat" = 1, "ketchup" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/kebab
@@ -207,7 +246,7 @@
 	name = "raw khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
 	icon_state = "khinkali"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/garlic = 1)
 	cooked_type = /obj/item/reagent_containers/food/snacks/khinkali
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtype = MEAT
@@ -216,41 +255,11 @@
 	name = "khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
 	icon_state = "khinkali"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/garlic = 1)
 	bitesize = 3
 	filling_color = "#F0F0F0"
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtype = MEAT
-
-/obj/item/reagent_containers/food/snacks/monkeycube
-	name = "monkey cube"
-	desc = "Just add water!"
-	icon_state = "monkeycube"
-	bitesize = 12
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	filling_color = "#CD853F"
-	tastes = list("the jungle" = 1, "bananas" = 1)
-	foodtype = MEAT | SUGAR
-
-/obj/item/reagent_containers/food/snacks/monkeycube/On_Consume(mob/living/carbon/M)
-	if(iscarbon(M))
-		M.visible_message("[src] bursts out of [M]!</span>")
-		M.emote("scream")
-		M.DefaultCombatKnockdown(40)
-		M.adjustBruteLoss(60)
-		Expand()
-		return TRUE
-	return ..()
-
-/obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/carbon/monkey/bananas = new(drop_location(), TRUE, spammer)
-	if (!QDELETED(bananas))
-		visible_message("<span class='notice'>[src] expands!</span>")
-		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
-	else if (!spammer) // Visible message in case there are no fingerprints
-		visible_message("<span class='notice'>[src] fails to expand!</span>")
-	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"
@@ -325,6 +334,16 @@
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
 
+/obj/item/reagent_containers/food/snacks/sweet_and_sour
+	name = "sweet and sour chicken"
+	desc = "More sweet than sour, but delicious nonetheless."
+	icon_state = "sweet_and_sour"
+	filling_color = "#B22222"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/soysauce = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/soysauce = 2)
+	tastes = list("\"chicken\"" = 1)
+	foodtype = MEAT | PINEAPPLE
+
 /obj/item/reagent_containers/food/snacks/pigblanket
 	name = "pig in a blanket"
 	desc = "A tiny sausage wrapped in a flakey, buttery roll. Free this pig from its blanket prison by eating it."
@@ -372,3 +391,76 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtype = MEAT
+
+////////////// Cubes //////////
+
+/obj/item/reagent_containers/food/snacks/cube
+	name = "debug cube"
+	desc = "Just add water!"
+	icon_state = "monkeycube"
+	bitesize = 12
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	filling_color = "#CD853F"
+	tastes = list("broken" = 1, "code" = 1)
+	foodtype = MEAT | SUGAR
+	var/dried_being = /mob/living/carbon/monkey //What the cube will spawn mob wise
+
+/obj/item/reagent_containers/food/snacks/cube/On_Consume(mob/living/carbon/M)
+	if(iscarbon(M))
+		M.visible_message("[src] bursts out of [M]!</span>")
+		M.emote("scream")
+		M.DefaultCombatKnockdown(40)
+		M.adjustBruteLoss(60)
+		Expand()
+		return TRUE
+	return ..()
+
+/obj/item/reagent_containers/food/snacks/cube/proc/Expand()
+	var/mob/spammer = get_mob_by_key(fingerprintslast)
+	var/mob/living/water = new dried_being(drop_location(), TRUE, spammer)
+	if (!QDELETED(water))
+		visible_message("<span class='notice'>[src] expands!</span>")
+		water.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
+	else if (!spammer) // Visible message in case there are no fingerprints
+		visible_message("<span class='notice'>[src] fails to expand!</span>")
+	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/cube/monkey
+	name = "monkey cube"
+	desc = "Just add water!"
+	tastes = list("the jungle" = 1, "bananas" = 1)
+	dried_being = /mob/living/carbon/monkey
+
+/obj/item/reagent_containers/food/snacks/cube/beno
+	name = "alien drone cube"
+	desc = "Just add water and run!"
+	tastes = list("the jungle" = 1, "acid" = 1)
+	dried_being = /mob/living/carbon/alien/humanoid/drone
+
+/obj/item/reagent_containers/food/snacks/cube/goat
+	name = "goat cube"
+	tastes = list("grass" = 1)
+	dried_being = /mob/living/simple_animal/hostile/retaliate/goat
+
+/obj/item/reagent_containers/food/snacks/cube/cow
+	name = "cow cube"
+	tastes = list("milk" = 1, "beef" = 1)
+	dried_being = /mob/living/simple_animal/cow
+
+/obj/item/reagent_containers/food/snacks/cube/ape
+	name = "ape cube"
+	desc = "Don't add water."
+	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
+	dried_being = /mob/living/simple_animal/hostile/gorilla
+
+/obj/item/reagent_containers/food/snacks/cube/egg
+//Well eggs normally are able to hatch into small birds, this one does not.
+//Also in order to have a normal egg hatch you need a hen to lay the egg that is able to hatch, meaning this one is for on-demand hen needs.
+	name = "egg cube thing"
+	desc = "Just add water, hey wait a second..."
+	icon_state = "egg"
+	filling_color = "#F0E68C"
+	cooked_type = /obj/item/reagent_containers/food/snacks/boiledegg
+	list_reagents = list(/datum/reagent/consumable/eggyolk = 5)
+	tastes = list("dried eggs" = 1, "confusion" = 1)
+	dried_being = /mob/living/simple_animal/chicken

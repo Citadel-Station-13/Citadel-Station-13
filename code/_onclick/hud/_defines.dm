@@ -162,12 +162,14 @@
 #define ui_ghost_orbit "SOUTH:6,CENTER-1:24"
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24"
 #define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
-#define ui_ghost_pai "SOUTH: 6, CENTER+2:24"
+#define ui_ghost_spawners "SOUTH: 6, CENTER+2:24"
 
 
 //UI position overrides for 1:1 screen layout. (default is 7:5)
 #define ui_stamina "EAST-1:28,CENTER:17" // replacing internals button
 #define ui_overridden_resist "EAST-3:24,SOUTH+1:7"
+#define ui_clickdelay "CENTER,SOUTH+1:-31"
+#define ui_resistdelay "EAST-3:24,SOUTH+1:4"
 #define ui_combat_toggle "EAST-4:22,SOUTH:5"
 
 #define ui_boxcraft "EAST-4:22,SOUTH+1:6"

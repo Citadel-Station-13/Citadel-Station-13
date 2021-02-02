@@ -2,6 +2,7 @@
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
+	custom_price = PRICE_CHEAP
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
@@ -16,6 +17,7 @@
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	plane = ABOVE_WALL_PLANE
 	max_integrity = 250
 	integrity_failure = 0.4
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
@@ -77,23 +79,23 @@
 
 	if(is_station_level(z))
 		. += "fire_[GLOB.security_level]"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else
 		. += "fire_[SEC_LEVEL_GREEN]"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 
 	var/area/A = src.loc
 	A = A.loc
 
 	if(!detecting || !A.fire)
 		. += "fire_off"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 	else
 		. += "fire_on"
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", EMISSIVE_LAYER, EMISSIVE_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -101,7 +103,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	if(prob(50 / severity))
+	if(prob(severity/1.8))
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)
@@ -139,7 +141,7 @@
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/attack_hand(mob/user)
+/obj/machinery/firealarm/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(buildstage != 2)
 		return ..()
 	add_fingerprint(user)
@@ -205,11 +207,9 @@
 					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/coil = W
-					if(coil.get_amount() < 5)
+					if(!W.use_tool(src, user, 0, 5))
 						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
 					else
-						coil.use(5)
 						buildstage = 2
 						to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 						update_icon()

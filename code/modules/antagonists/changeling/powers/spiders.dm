@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/spiders
 	name = "Spread Infestation"
 	desc = "Our form divides, creating arachnids which will grow into deadly beasts."
-	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 3 DNA gained through Absorb, and not through DNA sting. This ability is very loud, and will guarantee that our blood will react violently to heat."
+	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 3 DNA gained through Absorb (regardless of current amount), and not through DNA sting. This ability is very loud, and will guarantee that our blood will react violently to heat."
 	chemical_cost = 45
 	dna_cost = 1
 	loudness = 4

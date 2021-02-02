@@ -1,8 +1,11 @@
 //Charger
 /mob/living/simple_animal/hostile/guardian/charger
+	melee_damage_lower = 15
+	melee_damage_upper = 15
 	ranged = 1 //technically
 	ranged_message = "charges"
 	ranged_cooldown_time = 20
+	speed = -1
 	damage_coeff = list(BRUTE = 0.2, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5)
 	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, take half damage, have near immunity to brute damage, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
@@ -11,8 +14,9 @@
 	var/charging = 0
 	var/obj/screen/alert/chargealert
 
-/mob/living/simple_animal/hostile/guardian/charger/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/guardian/charger/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(ranged_cooldown <= world.time)
 		if(!chargealert)
 			chargealert = throw_alert("charge", /obj/screen/alert/cancharge)
@@ -54,7 +58,7 @@
 			var/blocked = FALSE
 			if(hasmatchingsummoner(hit_atom)) //if the summoner matches don't hurt them
 				blocked = TRUE
-			if(L.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
+			if(L.mob_run_block(src, 90, "[name]", ATTACK_TYPE_TACKLE, 0, src, null, null) & BLOCK_SUCCESS)
 				blocked = TRUE
 			if(!blocked)
 				L.drop_all_held_items()

@@ -1,10 +1,24 @@
 /mob/living/Moved()
 	. = ..()
 	update_turf_movespeed(loc)
-	if(is_shifted)
-		is_shifted = FALSE
-		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+	update_pixel_shifting(TRUE)
+
+/mob/living/setDir(newdir, ismousemovement)
+	. = ..()
+	if(ismousemovement)
+		update_pixel_shifting()
+
+/mob/living/proc/update_pixel_shifting(moved = FALSE)
+	if(combat_flags & COMBAT_FLAG_ACTIVE_BLOCKING)
+		animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, flags = ANIMATION_END_NOW)
+	else if(moved)
+		if(is_shifted)
+			is_shifted = FALSE
+			pixel_x = get_standard_pixel_x_offset(lying)
+			pixel_y = get_standard_pixel_y_offset(lying)
+
+/mob/living/proc/update_density()
+	density = !lying && !HAS_TRAIT(src, TRAIT_LIVING_NO_DENSITY)
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))
@@ -36,38 +50,26 @@
 	sprint_stamina_cost = CONFIG_GET(number/movedelay/sprint_stamina_cost)
 	return ..()
 
-/mob/living/movement_delay(ignorewalk = 0)
-	. = ..()
-	if(!CHECK_MOBILITY(src, MOBILITY_STAND))
-		. += 6
-
 /// whether or not we can slide under another living mob. defaults to if we're not dense. CanPass should check "overriding circumstances" like buckled mobs/having PASSMOB flag, etc.
 /mob/living/proc/can_move_under_living(mob/living/other)
 	return !density
 
 /mob/living/proc/update_move_intent_slowdown()
-	var/mod = 0
-	if(m_intent == MOVE_INTENT_WALK)
-		mod = CONFIG_GET(number/movedelay/walk_delay)
-	else
-		mod = CONFIG_GET(number/movedelay/run_delay)
-	if(!isnum(mod))
-		mod = 1
-	add_movespeed_modifier(MOVESPEED_ID_MOB_WALK_RUN_CONFIG_SPEED, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
+	add_movespeed_modifier((m_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
 
 /mob/living/proc/update_turf_movespeed(turf/open/T)
-	if(isopenturf(T) && !is_flying())
-		add_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = T.slowdown)
+	if(isopenturf(T))
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown, multiplicative_slowdown = T.slowdown)
 	else
-		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
+		remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
 
 /mob/living/proc/update_pull_movespeed()
 	if(pulling && isliving(pulling))
 		var/mob/living/L = pulling
 		if(drag_slowdown && L.lying && !L.buckled && grab_state < GRAB_AGGRESSIVE)
-			add_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bulky_drag, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
 			return
-	remove_movespeed_modifier(MOVESPEED_ID_PRONE_DRAGGING)
+	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
 /mob/living/canZMove(dir, turf/target)
 	return can_zTravel(target, dir) && (movement_type & FLYING)
@@ -87,14 +89,50 @@
 
 	. = ..()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
+	else
+		if(isliving(pulledby))
+			var/mob/living/L = pulledby
+			L.set_pull_offsets(src, pulledby.grab_state)
 
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
+
+	if(causes_dirt_buildup_on_floor && (movement_type & GROUND))
+		dirt_buildup()
+
+/**
+ * Attempts to make the floor dirty.
+ */
+/mob/living/proc/dirt_buildup(strength = 1)
+	var/turf/open/T = loc
+	if(!istype(T) || !T.dirt_buildup_allowed)
+		return
+	var/area/A = T.loc
+	if(!A.dirt_buildup_allowed)
+		return
+	var/multiplier = CONFIG_GET(number/turf_dirty_multiplier)
+	strength *= multiplier
+	var/obj/effect/decal/cleanable/dirt/D = locate() in T
+	if(D)
+		D.dirty(strength)
+	else
+		T.dirtyness += strength
+		if(T.dirtyness >= (isnull(T.dirt_spawn_threshold)? CONFIG_GET(number/turf_dirt_threshold) : T.dirt_spawn_threshold))
+			D = new /obj/effect/decal/cleanable/dirt(T)
+			D.dirty(T.dirt_spawn_threshold - T.dirtyness)
+			T.dirtyness = 0		// reset.
+
+/mob/living/Move_Pulled(atom/A)
+	. = ..()
+	if(!. || !isliving(A))
+		return
+	var/mob/living/L = A
+	set_pull_offsets(L, grab_state)
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()

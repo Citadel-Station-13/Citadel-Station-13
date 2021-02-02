@@ -18,6 +18,7 @@
 /obj/item/paicard/Initialize()
 	SSpai.pai_card_list += src
 	add_overlay("pai-off")
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 	return ..()
 
 /obj/item/paicard/Destroy()
@@ -99,7 +100,7 @@
 		if(href_list["reset_radio_short"])
 			pai.unshort_radio()
 		if(href_list["setlaws"])
-			var/newlaws = stripped_multiline_input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", MAX_MESSAGE_LEN)
+			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", "", MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
 		if(href_list["toggle_holo"])

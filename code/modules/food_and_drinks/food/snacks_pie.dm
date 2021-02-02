@@ -54,7 +54,7 @@
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
 		if(!H.is_mouth_covered())
-			reagents.trans_to(H,15) //Cream pie combat
+			reagents.trans_to(H, 15, log = TRUE) //Cream pie combat
 		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE
@@ -113,6 +113,27 @@
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
 
+/obj/item/reagent_containers/food/snacks/pie/burek
+	name = "Burek"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "burek"
+	desc = "If you know, you know."
+	slice_path = /obj/item/reagent_containers/food/snacks/pie/burekslice
+	slices_num = 4
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment= 20, /datum/reagent/consumable/nutriment/vitamin = 6)
+	bitesize = 12
+	tastes = list("meat" = 1, "oil" = 1)
+	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/pie/burekslice
+	name = "Burek Slice"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "burekslice"
+	desc = "A slice of Burek, watch out for oil stains!"
+	tastes = list("meat" = 1, "oil" = 1)
+	foodtype = GRAIN | MEAT
+
 
 /obj/item/reagent_containers/food/snacks/pie/tofupie
 	name = "tofu-pie"
@@ -150,8 +171,10 @@
 		name = "exceptional plump pie"
 		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 		bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
+		foodtype += ANTITOXIC
 	if(fey)
 		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
+		foodtype += ANTITOXIC
 
 
 /obj/item/reagent_containers/food/snacks/pie/xemeatpie

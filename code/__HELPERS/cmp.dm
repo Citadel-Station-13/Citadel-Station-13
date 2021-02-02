@@ -85,9 +85,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
 
-/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
-	return A.display_order - B.display_order
-
 /proc/cmp_uplink_items_dsc(datum/uplink_item/A, datum/uplink_item/B)
 	return sorttext(initial(B.name), initial(A.name))
 
@@ -97,14 +94,11 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_numbered_displays_name_dsc(datum/numbered_display/A, datum/numbered_display/B)
 	return sorttext(B.sample_object.name, A.sample_object.name)
 
-/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
-	return sorttext(initial(b.name),initial(a.name))
-
 /proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
 	var/a_sign = num2sign(initial(A.value) * -1)
 	var/b_sign = num2sign(initial(B.value) * -1)
 
-	// Neutral traits go last.
+	// Neutral traits go last
 	if(a_sign == 0)
 		a_sign = 2
 	if(b_sign == 0)
@@ -117,3 +111,32 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 		return a_sign - b_sign
 	else
 		return sorttext(b_name, a_name)
+
+/proc/cmp_item_block_priority_asc(obj/item/A, obj/item/B)
+	return A.block_priority - B.block_priority
+
+/proc/cmp_skill_categories(datum/skill/A, datum/skill/B)
+	if(A.ui_category == B.ui_category)
+		return sorttext(A.name, B.name)
+	return sorttext(A.ui_category, B.ui_category)
+
+/proc/cmp_chemical_reactions_default(datum/chemical_reaction/A, datum/chemical_reaction/B)
+	if(A.priority != B.priority)
+		return B.priority - A.priority
+	else if(A.is_cold_recipe)
+		return A.required_temp - B.required_temp		//return coldest
+	else
+		return B.required_temp - A.required_temp		//return hottest
+
+
+/proc/cmp_mob_realname_dsc(mob/A,mob/B)
+	return sorttext(A.real_name,B.real_name)
+
+/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
+	return A.display_order - B.display_order
+
+/proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
+	return sorttext(initial(b.name),initial(a.name))
+
+/proc/cmp_typepaths_asc(A, B)
+	return sorttext("[B]","[A]")

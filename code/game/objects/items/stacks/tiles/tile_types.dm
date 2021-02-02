@@ -9,15 +9,34 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
+	var/human_maxHealth = 100
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+
+/obj/item/stack/tile/examine(mob/user)
+	. = ..()
+	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
+		var/verb
+		switch(CEILING(human_maxHealth / throwforce, 1)) //throws to crit a human
+			if(1 to 3)
+				verb = "superb"
+			if(4 to 6)
+				verb = "great"
+			if(7 to 9)
+				verb = "good"
+			if(10 to 12)
+				verb = "fairly decent"
+			if(13 to 15)
+				verb = "mediocre"
+		if(!verb)
+			return
+		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -135,12 +154,38 @@
 
 //Wood
 /obj/item/stack/tile/wood
-	name = "wood floor tile"
+	name = "wooden plank floor tile"
 	singular_name = "wood floor tile"
 	desc = "An easy to fit wood floor tile."
 	icon_state = "tile-wood"
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
+
+/obj/item/stack/tile/wood/wood_large
+	name = "large wooden plank floor tile"
+	singular_name = "large wooden plank floor tile"
+	icon_state = "tile-wood_large"
+	turf_type = /turf/open/floor/wood/wood_large
+
+/obj/item/stack/tile/wood/wood_tiled
+	name = "tiled wooden plank floor tile"
+	singular_name = "tiled wooden plank floor tile"
+	icon_state = "tile-wood_tile"
+	turf_type = /turf/open/floor/wood/wood_tiled
+
+/obj/item/stack/tile/wood/wood_diagonal
+	name = "diagonal wooden plank floor tile"
+	singular_name = "diagonal wooden plank floor tile"
+	icon_state = "tile-wood_diagonal"
+	turf_type = /turf/open/floor/wood/wood_diagonal
+
+//Cloth Floors
+
+/obj/item/stack/tile/padded
+	name = "padded floor tile"
+	desc = "These are soft and cushy, they'd make good pillows. They look very comfortable, although what they're used for is discomforting."
+	icon_state = "tile_padded"
+	turf_type = /turf/open/floor/padded
 
 //Basalt
 /obj/item/stack/tile/basalt
@@ -165,6 +210,12 @@
 	icon_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
 	tableVariant = /obj/structure/table/wood/fancy/black
+
+/obj/item/stack/tile/carpet/arcade
+	name = "arcade carpet"
+	icon_state = "tile-carpet-arcade"
+	turf_type = /turf/open/floor/carpet/arcade
+	tableVariant = null
 
 /obj/item/stack/tile/carpet/blackred
 	name = "red carpet"
@@ -252,11 +303,23 @@
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
 
+/obj/item/stack/tile/carpet/arcade/ten
+	amount = 10
+
+/obj/item/stack/tile/carpet/arcade/twenty
+	amount = 20
+
+/obj/item/stack/tile/carpet/arcade/fifty
+	amount = 50
+
 /obj/item/stack/tile/carpet/blackred/ten
 	amount = 10
 
 /obj/item/stack/tile/carpet/blackred/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/blackred/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/blackred/fifty
 	amount = 50
@@ -267,6 +330,9 @@
 /obj/item/stack/tile/carpet/monochrome/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/monochrome/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/monochrome/fifty
 	amount = 50
 
@@ -275,6 +341,9 @@
 
 /obj/item/stack/tile/carpet/blue/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/blue/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/blue/fifty
 	amount = 50
@@ -285,6 +354,9 @@
 /obj/item/stack/tile/carpet/cyan/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/cyan/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/cyan/fifty
 	amount = 50
 
@@ -293,6 +365,9 @@
 
 /obj/item/stack/tile/carpet/green/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/green/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/green/fifty
 	amount = 50
@@ -303,6 +378,9 @@
 /obj/item/stack/tile/carpet/orange/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/orange/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/orange/fifty
 	amount = 50
 
@@ -311,6 +389,9 @@
 
 /obj/item/stack/tile/carpet/purple/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/purple/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/purple/fifty
 	amount = 50
@@ -321,6 +402,9 @@
 /obj/item/stack/tile/carpet/red/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/red/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
 
@@ -330,6 +414,9 @@
 /obj/item/stack/tile/carpet/royalblack/twenty
 	amount = 20
 
+/obj/item/stack/tile/carpet/royalblack/thirty
+	amount = 30
+
 /obj/item/stack/tile/carpet/royalblack/fifty
 	amount = 50
 
@@ -338,6 +425,9 @@
 
 /obj/item/stack/tile/carpet/royalblue/twenty
 	amount = 20
+
+/obj/item/stack/tile/carpet/royalblue/thirty
+	amount = 30
 
 /obj/item/stack/tile/carpet/royalblue/fifty
 	amount = 50
@@ -432,7 +522,7 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "Those could work as a pretty decent throwing weapon."
+	desc = "The ground you walk on."
 	icon_state = "tile"
 	force = 6
 	custom_materials = list(/datum/material/iron=500)
@@ -444,7 +534,24 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
-	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
+
+/obj/item/stack/tile/material
+	name = "floor tile"
+	singular_name = "floor tile"
+	desc = "The ground you walk on."
+	throwforce = 10
+	icon_state = "material_tile"
+	turf_type = /turf/open/floor/material
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/item/stack/tile/bronze
+	name = "bronze tile"
+	singular_name = "bronze floor tile"
+	desc = "A tile made out of bronze. Looks like clockwork."
+	icon_state = "material_tile"
+	color = "#92661A"
+	turf_type = /turf/open/floor/bronze
+	custom_materials = list(/datum/material/bronze = 250)

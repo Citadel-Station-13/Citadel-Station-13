@@ -1,3 +1,6 @@
+/// Checks if something is a BYOND object datatype rather than a primitive, or whatever's closest to one.
+#define is_object_datatype(object)		(object && !ispath(object) && !istext(object) && !isnum(object))
+
 // simple is_type and similar inline helpers
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
@@ -14,7 +17,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/openspace
+	/turf/open/transparent/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -41,6 +44,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
+#define istransparentturf(A) (istype(A, /turf/open/transparent)||istype(A, /turf/open/space/transparent))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -62,20 +67,26 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
-#define ismoth(A) (is_species(A, /datum/species/insect))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
-#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid) )
+#define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
 #define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define isangel(A) (is_species(A, /datum/species/angel))
+#define isvampire(A) (is_species(A, /datum/species/vampire))
+#define ismush(A) (is_species(A, /datum/species/mush))
+#define isshadow(A) (is_species(A, /datum/species/shadow))
+#define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
+#define isethereal(A) (is_species(A, /datum/species/ethereal))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
+#define issynthliz(A) (is_species(A, /datum/species/synthliz))
 #define ismammal(A) (is_species(A, /datum/species/mammal))
-#define isavian(A) (is_species(A, /datum/species/avian))
-#define isaquatic(A) (is_species(A, /datum/species/aquatic))
 #define isinsect(A) (is_species(A, /datum/species/insect))
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
 #define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
+#define isarachnid(A) (is_species(A, /datum/species/arachnid))
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -114,7 +125,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
-#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+#define isshade(A) (istype(A, /mob/living/simple_animal/hostile/construct/shade))
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
@@ -125,6 +136,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+
+#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
@@ -141,47 +154,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
-
-GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
-	/mob/living/carbon/human/,
-	/mob/living/simple_animal/cow,
-	/mob/living/simple_animal/hostile/cat_butcherer,
-	/mob/living/simple_animal/hostile/faithless,
-	/mob/living/simple_animal/hostile/nanotrasen,
-	/mob/living/simple_animal/hostile/pirate,
-	/mob/living/simple_animal/hostile/russian,
-	/mob/living/simple_animal/hostile/syndicate,
-	/mob/living/simple_animal/hostile/wizard,
-	/mob/living/simple_animal/hostile/zombie,
-	/mob/living/simple_animal/hostile/retaliate/clown,
-	/mob/living/simple_animal/hostile/retaliate/spaceman,
-	/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
-	/mob/living/simple_animal/hostile/retaliate/goat,
-	/mob/living/carbon/true_devil,
-	)))
-
-GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
-	/mob/living/carbon/alien/humanoid,
-	/mob/living/simple_animal/hostile/alien,
-	/mob/living/simple_animal/pet/cat,
-	/mob/living/simple_animal/pet/dog,
-	/mob/living/simple_animal/pet/fox,
-	/mob/living/simple_animal/chicken,
-	/mob/living/simple_animal/hostile/bear,
-	/mob/living/simple_animal/hostile/jungle/mega_arachnid
-	)))
-
-GLOBAL_LIST_INIT(barefootmob, typecacheof(list(
-	/mob/living/carbon/monkey,
-	/mob/living/simple_animal/pet/penguin,
-	/mob/living/simple_animal/hostile/gorilla,
-	/mob/living/simple_animal/hostile/jungle/mook
-	)))
-
-GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
-	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/jungle/leaper
-	)))
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -212,6 +184,14 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isgrenade(A) (istype(A, /obj/item/grenade))
+
+#define islandmine(A) (istype(A, /obj/effect/mine))
+
+#define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
+
+#define isammocasing(A) (istype(A, /obj/item/ammo_casing))
+
 #define isidcard(I) (istype(I, /obj/item/card/id))
 
 #define isstructure(A) (istype(A, /obj/structure))
@@ -226,19 +206,13 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
-GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
-	/obj/item/pen,
-	/obj/item/screwdriver,
-	/obj/item/reagent_containers/syringe,
-	/obj/item/kitchen/fork)))
-
-#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
-
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 #define isprojectile(A) (istype(A, /obj/item/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
@@ -264,3 +238,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+#define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)

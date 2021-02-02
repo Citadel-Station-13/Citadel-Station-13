@@ -733,7 +733,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bH" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -943,6 +943,9 @@
 /obj/item/grenade/smokebomb{
 	pixel_x = 5
 	},
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
+/obj/item/pickaxe/drill/diamonddrill,
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (

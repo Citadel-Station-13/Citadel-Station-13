@@ -1,49 +1,43 @@
-/datum/gear/blindfold
+/datum/gear/glasses
+	category = LOADOUT_CATEGORY_GLASSES
+	slot = SLOT_GLASSES
+
+/datum/gear/glasses/blindfold
 	name = "Blindfold"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/sunglasses/blindfold
 
-/datum/gear/cold
+/datum/gear/glasses/cold
 	name = "Cold goggles"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/cold
 
-/datum/gear/eyepatch
+/datum/gear/glasses/eyepatch
 	name = "Eyepatch"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/eyepatch
 
-/datum/gear/heat
+/datum/gear/glasses/heat
 	name = "Heat goggles"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/heat
 
-/datum/gear/hipster
+/datum/gear/glasses/hipster
 	name = "Hipster glasses"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/regular/hipster
 
-/datum/gear/jamjar
+/datum/gear/glasses/jamjar
 	name = "Jamjar glasses"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/regular/jamjar
 
-/datum/gear/monocle
+/datum/gear/glasses/monocle
 	name = "Monocle"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/monocle
 
-/datum/gear/orange
+/datum/gear/glasses/orange
 	name = "Orange glasses"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/orange
 
-/datum/gear/red
+/datum/gear/glasses/red
 	name = "Red Glasses"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/red
 
-/datum/gear/prescription
+/datum/gear/glasses/prescription
 	name = "Prescription glasses"
-	category = SLOT_GLASSES
 	path = /obj/item/clothing/glasses/regular

@@ -26,3 +26,7 @@
 /datum/generecipe/tonguechem
 	required = "/datum/mutation/human/tongue_spike; /datum/mutation/human/stimmed"
 	result = TONGUESPIKECHEM
+
+/datum/generecipe/hulk
+	required = "/datum/mutation/human/strong; /datum/mutation/human/radioactive"
+	result = HULK

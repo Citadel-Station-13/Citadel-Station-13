@@ -16,15 +16,14 @@ The proc you're attemping should return nonzero values on success.
 	try
 		if(!callon || !procname)
 			CRASH("attempt_vr: Invalid obj/proc: [callon]/[procname]")
-			return 0
 
 		var/result = call(callon,procname)(arglist(args))
 
 		return result
 
 	catch(var/exception/e)
-		CRASH("attempt_vr runtimed when calling [procname] on [callon].")
-		CRASH("attempt_vr catch: [e] on [e.file]:[e.line]")
+		stack_trace("attempt_vr runtimed when calling [procname] on [callon].")
+		stack_trace("attempt_vr catch: [e] on [e.file]:[e.line]")
 		return 0
 
 /*
@@ -46,17 +45,16 @@ The hooks you're calling should return nonzero values on success.
 		var/hook_path = text2path("/hook/[hook]")
 		if(!hook_path)
 			CRASH("hook_vr: Invalid hook '/hook/[hook]' called.")
-			return 0
 
 		var/caller = new hook_path
 		var/status = 1
 		for(var/P in typesof("[hook_path]/proc"))
 			if(!call(caller, P)(arglist(args)))
-				CRASH("hook_vr: Hook '[P]' failed or runtimed.")
+				stack_trace("hook_vr: Hook '[P]' failed or runtimed.")
 				status = 0
 
 		return status
 
 	catch(var/exception/e)
-		CRASH("hook_vr itself failed or runtimed. Exception below.")
-		CRASH("hook_vr catch: [e] on [e.file]:[e.line]")
+		stack_trace("hook_vr itself failed or runtimed. Exception below.")
+		stack_trace("hook_vr catch: [e] on [e.file]:[e.line]")

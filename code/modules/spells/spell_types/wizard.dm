@@ -4,7 +4,6 @@
 
 	school = "evocation"
 	charge_max = 200
-	clothes_req = 1
 	invocation = "FORTI GY AMA"
 	invocation_type = "shout"
 	range = 7
@@ -38,7 +37,6 @@
 
 	school = "transmutation"
 	charge_max = 400
-	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
 	range = -1
@@ -58,7 +56,7 @@
 
 	school = "conjuration"
 	charge_max = 120
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -77,7 +75,7 @@
 
 	school = "conjuration"
 	charge_max = 360
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -92,15 +90,13 @@
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
-	clothes_req = 1
 	invocation = "NEC CANTIO"
 	invocation_type = "shout"
 	range = -1
 	include_user = 1
 	cooldown_min = 200 //50 deciseconds reduction per rank
 
-	emp_heavy = 6
-	emp_light = 10
+	range = 14
 	sound = 'sound/magic/disable_tech.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
@@ -109,7 +105,6 @@
 
 	school = "abjuration"
 	charge_max = 20
-	clothes_req = 1
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
@@ -131,8 +126,7 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = 0
-	cult_req = 1
+	clothes_req = SPELL_CULT_GARB
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
@@ -140,7 +134,6 @@
 
 	school = "abjuration"
 	charge_max = 600
-	clothes_req = 1
 	invocation = "SCYAR NILA"
 	invocation_type = "shout"
 	range = -1
@@ -156,7 +149,6 @@
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
-	clothes_req = 1
 	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
@@ -174,7 +166,6 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 1
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
@@ -189,7 +180,7 @@
 
 	school = "conjuration"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -206,7 +197,7 @@
 
 	school = "conjuration"
 	charge_max = 1200
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "IA IA"
 	invocation_type = "shout"
 	summon_amt = 10
@@ -215,45 +206,16 @@
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
-/obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = 0
-	invocation = "STI KALY"
-	invocation_type = "whisper"
-	message = "<span class='notice'>Your eyes cry out in pain!</span>"
-	cooldown_min = 50 //12 deciseconds reduction per rank
-
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
-
-	action_icon_state = "blind"
-
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
-	cult_req = 1
+	clothes_req = SPELL_CULT_GARB
 	charge_max = 5000
 	summon_amt = 2
-
-
-
-/obj/effect/proc_holder/spell/targeted/inflict_handler/blind
-	amt_eye_blind = 10
-	amt_eye_blurry = 20
-	sound = 'sound/magic/blind.ogg'
-
-/obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(BLINDMUT)
-	duration = 300
-	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	charge_max = 400
-	clothes_req = 1
 	invocation = "GITTAH WEIGH"
 	invocation_type = "shout"
 	range = 5
@@ -306,7 +268,7 @@
 				var/mob/living/M = AM
 				M.DefaultCombatKnockdown(stun_amt, override_hardstun = stun_amt * 0.2)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 			safety--
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
@@ -314,7 +276,8 @@
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
-	clothes_req = 0
+	clothes_req = NONE
+	antimagic_allowed = TRUE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
@@ -335,7 +298,7 @@
 	name = "Sacred Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
 	charge_max = 60
-	clothes_req = 0
+	clothes_req = NONE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = "shout"
 	max_targets = 0
@@ -358,7 +321,7 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
 	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
-	clothes_req = 1
+	clothes_req = SPELL_WIZARD_GARB
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
 
@@ -379,7 +342,7 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, SHOCK_ILLUSION)
+				M.electrocute_act(80, src, null, SHOCK_ILLUSION)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)

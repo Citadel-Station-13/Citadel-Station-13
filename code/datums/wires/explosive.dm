@@ -15,6 +15,7 @@
 /datum/wires/explosive/c4
 	holder_type = /obj/item/grenade/plastic/c4
 	randomize = TRUE	//Same behaviour since no wire actually disarms it
+	req_skill = JOB_SKILL_UNTRAINED
 
 /datum/wires/explosive/c4/interactable(mob/user)
 	var/obj/item/grenade/plastic/c4/P = holder
@@ -29,6 +30,7 @@
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox
 	randomize = TRUE
+	req_skill = JOB_SKILL_MASTER
 
 /datum/wires/explosive/pizza/New(atom/holder)
 	wires = list(
@@ -73,8 +75,8 @@
 
 
 /datum/wires/explosive/gibtonite
-	holder_type = /obj/item/twohanded/required/gibtonite
+	holder_type = /obj/item/gibtonite
 
 /datum/wires/explosive/gibtonite/explode()
-	var/obj/item/twohanded/required/gibtonite/P = holder
+	var/obj/item/gibtonite/P = holder
 	P.GibtoniteReaction(null, 2)

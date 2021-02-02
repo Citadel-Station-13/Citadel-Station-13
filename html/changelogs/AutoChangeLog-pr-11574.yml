@@ -1,7 +1,0 @@
-author: "dapnee"
-delete-after: True
-changes: 
-  - rscadd: "Robotic's APC, a few missing buttons (bridge shutters and crematorium), paramedic has spawn locations now, two rapid cable deployers to engineering"
-  - tweak: "Renamed some doors and edited engineering to be a bit more open in one spot"
-  - bugfix: "a few APCs with bad area tags, access on maintenance doors fixed, engine APC is now connected to the grid instead of power created by the engine"
-  - rscdel: "the two syringe guns in medical were removed"

@@ -42,14 +42,11 @@
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
-	take_damage(100, BURN, "energy", 0)
+	take_damage(75+severity/4, BURN, "energy", 0)
 	..()
 
 /obj/machinery/dominator/hulk_damage()
 	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
-
-/obj/machinery/dominator/tesla_act()
-	qdel(src)
 
 /obj/machinery/dominator/update_icon()
 	cut_overlays()
@@ -148,11 +145,11 @@
 		new /obj/item/stack/sheet/plasteel(src.loc)
 	qdel(src)
 
-/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
+/obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	add_fingerprint(user)
-	..()
+	return ..()
 
-/obj/machinery/dominator/attack_hand(mob/user)
+/obj/machinery/dominator/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(operating || (stat & BROKEN))
 		examine(user)
 		return
@@ -229,7 +226,7 @@
 			if(!was_stranded)
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
-			if(get_security_level() == "delta")
+			if(NUM2SECLEVEL(GLOB.security_level) == "delta")
 				set_security_level("red")
 
 		SSshuttle.clearHostileEnvironment(src)

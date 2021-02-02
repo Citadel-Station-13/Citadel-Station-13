@@ -1,4 +1,4 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/gib(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
@@ -6,24 +6,22 @@
 	if(!prev_lying)
 		gib_animation()
 
-	spill_organs(no_brain, no_organs, no_bodyparts)
-
-	release_vore_contents(silent = TRUE) // return of the bomb safe internals.
+	spill_organs(no_brain, no_organs, no_bodyparts, was_explosion)
 
 	if(!no_bodyparts)
-		spread_bodyparts(no_brain, no_organs)
+		spread_bodyparts(no_brain, no_organs, was_explosion)
 
 	for(var/X in implants)
 		var/obj/item/implant/I = X
 		qdel(I)
 
-	spawn_gibs(no_bodyparts)
+	spawn_gibs(no_bodyparts, null, was_explosion)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
 	return
 
-/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override)
+/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override, datum/explosion/was_explosion)
 	var/location = loc_override ? loc_override.drop_location() : drop_location()
 	if(mob_biotypes & MOB_ROBOTIC)
 		new /obj/effect/gibspawner/robot(location, src, get_static_viruses())
@@ -33,7 +31,7 @@
 /mob/living/proc/spill_organs()
 	return
 
-/mob/living/proc/spread_bodyparts()
+/mob/living/proc/spread_bodyparts(no_brain, no_organs, datum/explosion/was_explosion)
 	return
 
 /mob/living/dust(just_ash, drop_items, force)
@@ -46,7 +44,6 @@
 		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
-	release_vore_contents(silent = TRUE) //technically grief protection, I guess? if they're SM'd it doesn't matter seconds after anyway.
 	spawn_dust(just_ash)
 	QDEL_IN(src,5) // since this is sometimes called in the middle of movement, allow half a second for movement to finish, ghosting to happen and animation to play. Looks much nicer and doesn't cause multiple runtimes.
 
@@ -69,6 +66,10 @@
 	GLOB.alive_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
+	if(ckey)
+		var/datum/preferences/P = GLOB.preferences_datums[ckey]
+		if(P)
+			P.respawn_time_of_death = world.time
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
@@ -81,6 +82,7 @@
 	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
+	clear_typing_indicator()
 	if(!gibbed && !QDELETED(src))
 		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
@@ -103,5 +105,5 @@
 	for(var/s in sharedSoullinks)
 		var/datum/soullink/S = s
 		S.sharerDies(gibbed)
-
+	release_vore_contents(silent = TRUE)
 	return TRUE

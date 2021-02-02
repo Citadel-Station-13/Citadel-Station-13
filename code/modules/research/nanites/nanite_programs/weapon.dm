@@ -84,14 +84,14 @@
 /datum/nanite_program/explosive/on_trigger(comm_message)
 	host_mob.visible_message("<span class='warning'>[host_mob] starts emitting a high-pitched buzzing, and [host_mob.p_their()] skin begins to glow...</span>",\
 							"<span class='userdanger'>You start emitting a high-pitched buzzing, and your skin begins to glow...</span>")
-	addtimer(CALLBACK(src, .proc/boom), CLAMP((nanites.nanite_volume * 0.35), 25, 150))
+	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
 /datum/nanite_program/explosive/proc/boom()
 	var/nanite_amount = nanites.nanite_volume
 	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
 	var/light_range = FLOOR(nanite_amount/50, 1) - 1
 	explosion(host_mob, 0, heavy_range, light_range)
-	qdel(nanites)
+	nanites.delete_nanites()
 
 //TODO make it defuse if triggered again
 
@@ -123,7 +123,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/emp/on_trigger(comm_message)
-	empulse(host_mob, 1, 2)
+	empulse_using_range(host_mob, 3)
 
 /datum/nanite_program/pyro/active_effect()
 	host_mob.fire_stacks += 1

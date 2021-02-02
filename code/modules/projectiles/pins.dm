@@ -13,10 +13,15 @@
 	var/pin_removeable = 0 // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
-/obj/item/firing_pin/New(newloc)
-	..()
+/obj/item/firing_pin/Initialize(newloc)
+	. = ..()
 	if(istype(newloc, /obj/item/gun))
 		gun = newloc
+
+/obj/item/firing_pin/Destroy()
+	if(gun)
+		gun.pin = null
+	return ..()
 
 /obj/item/firing_pin/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -224,20 +229,101 @@
 	suit_requirement = /obj/item/clothing/suit/bluetag
 	tagcolor = "blue"
 
-/obj/item/firing_pin/Destroy()
-	if(gun)
-		gun.pin = null
-	return ..()
+/obj/item/firing_pin/security_level
+	name = "security level firing pin"
+	desc = "A sophisticated firing pin that authorizes operation based on its settings and current security level."
+	icon_state = "firing_pin_sec_level"
+	var/min_sec_level = SEC_LEVEL_GREEN
+	var/max_sec_level = SEC_LEVEL_DELTA
+	var/only_lethals = FALSE
+	var/can_toggle = TRUE
 
-//Station Locked
+/obj/item/firing_pin/security_level/Initialize()
+	. = ..()
+	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVEL(GLOB.security_level))]. \
+					MIN: [uppertext(NUM2SECLEVEL(min_sec_level))]. MAX: [uppertext(NUM2SECLEVEL(max_sec_level))]. \
+					ONLY LETHALS: [only_lethals ? "YES" : "NO"].</span>"
+	update_icon()
 
-/obj/item/firing_pin/away
-	name = "station locked pin"
-	desc = "A firing pin that only will fire when off the station."
+/obj/item/firing_pin/security_level/examine(mob/user)
+	. = ..()
+	var/lethal = only_lethals ? "only lethal " : ""
+	if(min_sec_level != max_sec_level)
+		. += "<span class='notice'>It's currently set to disallow [lethal]operation when the security level isn't between <b>[NUM2SECLEVEL(min_sec_level)]</b> and <b>[NUM2SECLEVEL(max_sec_level)]</b>.</span>"
+	else
+		. += "<span class='notice'>It's currently set to disallow [lethal]operation when the security level isn't <b>[NUM2SECLEVEL(min_sec_level)]</b>.</span>"
+	if(can_toggle)
+		. += "<span class='notice'>You can use a <b>multitool</b> to modify its settings.</span>"
 
-/obj/item/firing_pin/away/pin_auth(mob/living/user)
-	var/area/station_area = get_area(src)
-	if(!station_area || is_station_level(station_area.z))
-		to_chat(user, "<span class='warning'>The pin beeps, refusing to fire.</span>")
+/obj/item/firing_pin/security_level/multitool_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(!can_toggle || !user.canUseTopic(src, BE_CLOSE))
+		return
+	var/selection = alert(user, "Which setting would you want to modify?", "Firing Pin Settings", "Minimum Level Setting", "Maximum Level Setting", "Lethals Only Toggle")
+	if(QDELETED(src) || QDELETED(user) || !user.canUseTopic(src, BE_CLOSE))
+		return
+	var/static/list/till_designs_pr_isnt_merged = list("green", "blue", "amber", "red", "delta")
+	switch(selection)
+		if("Minimum Level Setting")
+			var/input = input(user, "Input the new minimum level setting.", "Firing Pin Settings", NUM2SECLEVEL(min_sec_level)) as null|anything in till_designs_pr_isnt_merged
+			if(!input)
+				return
+			min_sec_level = till_designs_pr_isnt_merged.Find(input) - 1
+			if(min_sec_level > max_sec_level)
+				max_sec_level = SEC_LEVEL_DELTA
+		if("Maximum Level Setting")
+			var/input = input(user, "Input the new maximum level setting.", "Firing Pin Settings", NUM2SECLEVEL(max_sec_level)) as null|anything in till_designs_pr_isnt_merged
+			if(!input)
+				return
+			max_sec_level = till_designs_pr_isnt_merged.Find(input) - 1
+			if(max_sec_level < max_sec_level)
+				min_sec_level = SEC_LEVEL_GREEN
+		if("Lethals Only Toggle")
+			only_lethals = !only_lethals
+
+	fail_message = "<span class='warning'>INVALID SECURITY LEVEL. CURRENT: [uppertext(NUM2SECLEVEL(GLOB.security_level))]. \
+					MIN: [uppertext(NUM2SECLEVEL(min_sec_level))]. MAX: [uppertext(NUM2SECLEVEL(max_sec_level))]. \
+					ONLY LETHALS: [only_lethals ? "YES" : "NO"].</span>"
+	update_icon()
+
+/obj/item/firing_pin/security_level/update_overlays()
+	. = ..()
+	var/offset = 0
+	for(var/level in list(min_sec_level, max_sec_level))
+		var/mutable_appearance/overlay = mutable_appearance(icon, "pin_sec_level_overlay")
+		overlay.pixel_x += offset
+		offset += 4
+		switch(level)
+			if(SEC_LEVEL_GREEN)
+				overlay.color = "#b2ff59" //light green
+			if(SEC_LEVEL_BLUE)
+				overlay.color = "#99ccff" //light blue
+			if(SEC_LEVEL_AMBER)
+				overlay.color = "#ffae42" //light yellow/orange
+			if(SEC_LEVEL_RED)
+				overlay.color = "#ff3f34" //light red
+			else
+				overlay.color = "#fe59c2" //neon fuchsia
+		. += overlay
+	var/mutable_appearance/overlay = mutable_appearance(icon, "pin_sec_level_overlay")
+	overlay.pixel_x += offset
+	overlay.color = only_lethals ? "#b2ff59" : "#ff3f34"
+	. += overlay
+
+/obj/item/firing_pin/security_level/pin_auth(mob/living/user)
+	return (only_lethals && !(gun.chambered?.harmful)) || ISINRANGE(GLOB.security_level, min_sec_level, max_sec_level)
+
+// Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
+/obj/item/firing_pin/explorer
+	name = "outback firing pin"
+	desc = "A firing pin used by the austrailian defense force, retrofit to prevent weapon discharge on the station."
+	icon_state = "firing_pin_explorer"
+	fail_message = "<span class='warning'>CANNOT FIRE WHILE ON STATION, MATE!</span>"
+
+// This checks that the user isn't on the station Z-level.
+/obj/item/firing_pin/explorer/pin_auth(mob/living/user)
+	var/turf/station_check = get_turf(user)
+	if(!station_check||is_station_level(station_check.z))
+		to_chat(user, "<span class='warning'>You cannot use your weapon while on the station!</span>")
 		return FALSE
 	return TRUE

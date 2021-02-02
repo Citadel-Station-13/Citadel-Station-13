@@ -58,6 +58,7 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/x4
 	cost = 4 //
 	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/explosives/clown_bomb_clownops
 	name = "Clown Bomb"
@@ -79,6 +80,7 @@
 	item = /obj/item/cartridge/virus/syndicate
 	cost = 5
 	restricted = TRUE
+	limited_stock = 1
 
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
@@ -123,6 +125,7 @@
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/sbeacondrop/bomb
 	cost = 11
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/explosives/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -140,7 +143,7 @@
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/grenade/syndieminibomb
 	cost = 6
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/explosives/tearstache
 	name = "Teachstache Grenade"

@@ -34,8 +34,7 @@
 	living_players = trim_list(mode.current_players[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(mode.current_players[CURRENT_LIVING_ANTAGS])
 	list_observers = trim_list(mode.current_players[CURRENT_OBSERVERS])
-	var/datum/element/ghost_role_eligibility/eligibility = SSdcs.GetElement(list(/datum/element/ghost_role_eligibility))
-	ghost_eligible = trim_list(eligibility.get_all_ghost_role_eligible())
+	ghost_eligible = trim_list(get_all_ghost_role_eligible())
 
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list())
 	var/list/trimmed_list = L.Copy()
@@ -47,6 +46,9 @@
 			trimmed_list.Remove(M)
 			continue
 		if (!M.client) // Are they connected?
+			trimmed_list.Remove(M)
+			continue
+		if(M.client.prefs && M.client.prefs.toggles & MIDROUND_ANTAG)
 			trimmed_list.Remove(M)
 			continue
 		if(!mode.check_age(M.client, minimum_required_age))
@@ -106,7 +108,7 @@
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
-		var/threat = CLAMP(round(mode.threat_level/10),1,10)
+		var/threat = clamp(round(mode.threat_level/10),1,10)
 		if (job_check < required_enemies[threat])
 			SSblackbox.record_feedback("tally","dynamic",1,"Times rulesets rejected due to not enough enemy roles")
 			return FALSE
@@ -208,9 +210,8 @@
 	requirements = list(30,25,20,15,15,15,15,15,15,15)
 	repeatable = TRUE
 	high_population_requirement = 15
-	flags = TRAITOR_RULESET
+	flags = TRAITOR_RULESET | MINOR_RULESET | ALWAYS_MAX_WEIGHT_RULESET
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1)
-	always_max_weight = TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.current_players[CURRENT_LIVING_PLAYERS].len
@@ -415,7 +416,7 @@
 	required_candidates = 1
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/clockcult)
 	weight = 4
-	cost = 10
+	cost = 20
 	requirements = list(101,101,101,80,60,50,50,50,50,50)
 	high_population_requirement = 50
 	repeatable = TRUE
@@ -495,6 +496,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 10
+	flags = MINOR_RULESET
 	requirements = list(101,101,101,70,50,40,20,15,15,15)
 	high_population_requirement = 50
 	repeatable_weight_decrease = 2
@@ -539,7 +541,7 @@
 	name = "Slaughter Demon"
 	config_tag = "slaughter_demon"
 	antag_flag = ROLE_ALIEN
-	enemy_roles = list("Security Officer","Shaft Miner","Head of Security","Captain","Janitor","AI","Cyborg")
+	enemy_roles = list("Security Officer","Shaft Miner","Head of Security","Captain","Janitor","AI","Cyborg","Bartender")
 	required_enemies = list(3,2,2,2,2,1,1,1,1,0)
 	required_candidates = 1
 	weight = 4
@@ -631,6 +633,7 @@
 	required_candidates = 1
 	weight = 4
 	cost = 15
+	flags = MINOR_RULESET
 	requirements = list(101,101,101,90,80,70,60,50,40,30)
 	high_population_requirement = 30
 	property_weights = list("story_potential" = 1, "extended" = -2, "valid" = 2)
@@ -641,6 +644,9 @@
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
 		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+			if(isturf(L.loc))
+				spawn_locs += L.loc
+		for(var/obj/effect/landmark/loneopspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
 				spawn_locs += L.loc
 		if(!spawn_locs.len)
@@ -672,7 +678,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by dynamic.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by dynamic.")
 	return Ninja
-	
+
 /datum/dynamic_ruleset/midround/from_ghosts/ninja/finish_setup(mob/new_character, index)
 	return
 

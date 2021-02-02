@@ -13,14 +13,15 @@
 	maxbodytemp = INFINITY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	response_help  = "pokes"
-	response_disarm = "shoos"
-	response_harm   = "splats"
+	response_help_continuous  = "pokes"
+	response_help_simple = "poke"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "splats"
+	response_harm_simple = "plat"
 	speak_emote = list("chitters")
 	mouse_opacity = 2
 	density = TRUE
-	ventcrawler = VENTCRAWLER_ALWAYS
-	gold_core_spawnable = FRIENDLY_SPAWN
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
 	verb_exclaim = "chitters loudly"
@@ -34,6 +35,8 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/banana_spider/attack_ghost(mob/user)
 	if(key)			//please stop using src. without a good reason.

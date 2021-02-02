@@ -7,7 +7,7 @@
 /obj/structure/door_assembly
 	var/datum/airlock_maker/maker = null
 
-/obj/structure/door_assembly/attack_hand()
+/obj/structure/door_assembly/on_attack_hand()
 	. = ..()
 	if(.)
 		return

@@ -17,33 +17,24 @@
 	low_threshold_cleared = "<span class='info'>The last bouts of pain in your stomach have died out.</span>"
 
 /obj/item/organ/stomach/on_life()
-	..()
-	var/datum/reagent/consumable/nutriment/Nutri
+	. = ..()
+	if(!owner)
+		return
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(!(organ_flags & ORGAN_FAILING))
+		if(.)
 			H.dna.species.handle_digestion(H)
 		handle_disgust(H)
-		Nutri = locate(/datum/reagent/consumable/nutriment) in H.reagents.reagent_list
 
-		if(Nutri)
-			if(prob((damage/40) * Nutri.volume * Nutri.volume))
-				H.vomit(damage)
-				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-		else if(Nutri && damage > high_threshold)
-			if(prob((damage/10) * Nutri.volume * Nutri.volume))
-				H.vomit(damage)
-				to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
-
-
-	else if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		Nutri = locate(/datum/reagent/consumable/nutriment) in C.reagents.reagent_list
-
-	if(damage < low_threshold)
+	if(!damage)
 		return
-
+	var/datum/reagent/consumable/nutriment/Nutri = locate(/datum/reagent/consumable/nutriment) in owner.reagents.reagent_list
+	if(!Nutri)
+		return
+	var/prob_divisor = damage > high_threshold ? 10 : 40
+	if(prob((damage/prob_divisor) * (Nutri.volume**2)))
+		owner.vomit(damage)
+		to_chat(owner, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -98,5 +89,49 @@
 	desc = "A strange crystal that is responsible for metabolizing the unseen energy force that feeds plasmamen."
 
 /obj/item/organ/stomach/ipc
-	name = "ipc stomach"
+	name = "ipc cell"
 	icon_state = "stomach-ipc"
+
+/obj/item/organ/stomach/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	switch(severity)
+		if(1)
+			owner.nutrition = min(owner.nutrition - 50, 0)
+			to_chat(owner, "<span class='warning'>Alert: Detected severe battery discharge!</span>")
+		if(2)
+			owner.nutrition = min(owner.nutrition - 100, 0)
+			to_chat(owner, "<span class='warning'>Alert: Minor battery discharge!</span>")
+
+/obj/item/organ/stomach/ethereal
+	name = "biological battery"
+	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
+	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	var/crystal_charge = ETHEREAL_CHARGE_FULL
+
+/obj/item/organ/stomach/ethereal/on_life()
+	..()
+	adjust_charge(-ETHEREAL_CHARGE_FACTOR)
+
+/obj/item/organ/stomach/ethereal/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	..()
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+
+/obj/item/organ/stomach/ethereal/Remove(mob/living/carbon/M, special = 0)
+	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	..()
+
+/obj/item/organ/stomach/ethereal/proc/charge(datum/source, amount, repairs)
+	adjust_charge(amount / 70)
+
+/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
+	if(flags & SHOCK_ILLUSION)
+		return
+	adjust_charge(shock_damage * siemens_coeff * 2)
+	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
+
+/obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
+	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)

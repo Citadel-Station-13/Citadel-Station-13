@@ -89,6 +89,12 @@
 /datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
 	S.potency = value
 
+/datum/plant_gene/core/instability
+	name = "Stability"
+	value = 10
+
+/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/S)
+	S.instability = value
 
 /datum/plant_gene/core/weed_rate
 	name = "Weed Growth Rate"
@@ -157,12 +163,12 @@
 
 /datum/plant_gene/reagent/polypyr
 	name = "Polypyrylium Oligomers"
-	reagent_id = "polypyr"
+	reagent_id = /datum/reagent/medicine/polypyr
 	rate = 0.15
 
 /datum/plant_gene/reagent/liquidelectricity
 	name = "Liquid Electricity"
-	reagent_id = "liquidelectricity"
+	reagent_id = /datum/reagent/consumable/liquidelectricity
 	rate = 0.1
 
 // Various traits affecting the product. Each must be somehow useful.
@@ -215,6 +221,10 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+
+/datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
+	// Squash the plant on slip.
+	G.squash(C)
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -301,6 +311,9 @@
 	rate = 0.04
 	glow_color = "#AAD84B"
 
+/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
+	return -max(S.potency*(rate*0.2), 0.2)
+
 /datum/plant_gene/trait/glow/white
 	name = "White Bioluminescence"
 	glow_color = "#FFFFFF"
@@ -361,20 +374,6 @@
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
 
-
-/datum/plant_gene/trait/noreact
-	// Makes plant reagents not react until squashed.
-	name = "Separated Chemicals"
-
-/datum/plant_gene/trait/noreact/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
-	..()
-	ENABLE_BITFIELD(G.reagents.reagents_holder_flags, NO_REACT)
-
-/datum/plant_gene/trait/noreact/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	DISABLE_BITFIELD(G.reagents.reagents_holder_flags, NO_REACT)
-	G.reagents.handle_reactions()
-
-
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
@@ -399,8 +398,7 @@
 
 /datum/plant_gene/trait/battery/on_attackby(obj/item/reagent_containers/food/snacks/grown/G, obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		if(C.use(5))
+		if(I.use_tool(src, user, 0, 5, skill_gain_mult = TRIVIAL_USE_TOOL_MULT))
 			to_chat(user, "<span class='notice'>You add some cable to [G] and slide it inside the battery encasing.</span>")
 			var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
 			pocell.icon_state = G.icon_state

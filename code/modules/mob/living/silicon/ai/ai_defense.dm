@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/silicon/ai/attacked_by(obj/item/I, mob/living/user, def_zone, attackchain_flags = NONE, damage_multiplier = 1)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -19,13 +19,14 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	disconnect_shell()
-	if (prob(30))
-		switch(pick(1,2))
-			if(1)
-				view_core()
-			if(2)
-				SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
+	if(severity >= 60)
+		disconnect_shell()
+		if(prob(30))
+			switch(pick(1,2))
+				if(1)
+					view_core()
+				if(2)
+					SSshuttle.requestEvac(src,"ALERT: Energy surge detected in AI core! Station integrity may be compromised! Initiati--%m091#ar-BZZT")
 
 /mob/living/silicon/ai/ex_act(severity, target)
 	switch(severity)

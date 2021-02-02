@@ -3,6 +3,10 @@
 	select_name = "ion"
 	fire_sound = 'sound/weapons/ionrifle.ogg'
 
+/obj/item/ammo_casing/energy/ion/hos
+	projectile_type = /obj/item/projectile/ion
+	e_cost = 200
+
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone
 	select_name = "declone"
@@ -19,6 +23,11 @@
 /obj/item/ammo_casing/energy/flora/mut
 	projectile_type = /obj/item/projectile/energy/floramut
 	select_name = "mutation"
+
+/obj/item/ammo_casing/energy/flora/revolution
+	projectile_type = /obj/item/projectile/energy/florarevolution
+	select_name = "revolution"
+	e_cost = 250
 
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/item/projectile/temp
@@ -72,3 +81,8 @@
 	projectile_type = /obj/item/projectile/beam/shrink
 	select_name = "shrink ray"
 	e_cost = 200
+
+/obj/item/ammo_casing/energy/pickle //ammo for an adminspawn gun
+	projectile_type = /obj/item/projectile/energy/pickle
+	select_name = "pickle ray"
+	e_cost = 0

@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "unnecessary blindness post-unconsciouss has been fixed with a hack that's almost as garbage as the code that caused it in the first place."

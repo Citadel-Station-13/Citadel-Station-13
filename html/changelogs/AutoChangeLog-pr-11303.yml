@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - tweak: "music max characters per line is now 150 instead of 50."

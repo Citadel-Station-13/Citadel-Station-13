@@ -34,7 +34,7 @@
 		if(is_dynamic)
 			var/threat_spent = CONFIG_GET(number/dynamic_assassinate_cost)
 			mode.spend_threat(threat_spent)
-			mode.log_threat("[T.owner.name] spent [threat_spent] on an assassination target.")
+			mode.log_threat("[T.owner.name] added [threat_spent] on an assassination target.")
 		var/list/active_ais = active_ais()
 		if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 			var/datum/objective/destroy/destroy_objective = new

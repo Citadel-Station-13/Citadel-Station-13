@@ -253,7 +253,7 @@
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
 	while(!lawtype && law_weights.len)
-		var/possible_id = pickweightAllowZero(law_weights)
+		var/possible_id = pickweight(law_weights, 0)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id
@@ -431,25 +431,31 @@
 	if(!owner)
 		owner = M
 
-/datum/ai_laws/proc/get_law_list(include_zeroth = 0, show_numbers = 1)
+/**
+  * Generates a list of all laws on this datum, including rendered HTML tags if required
+  *
+  * Arguments:
+  * * include_zeroth - Operator that controls if law 0 or law 666 is returned in the set
+  * * show_numbers - Operator that controls if law numbers are prepended to the returned laws
+  * * render_html - Operator controlling if HTML tags are rendered on the returned laws
+  */
+/datum/ai_laws/proc/get_law_list(include_zeroth = FALSE, show_numbers = TRUE, render_html = TRUE)
 	var/list/data = list()
 
-	if (include_zeroth && devillaws && devillaws.len)
-		for(var/i in devillaws)
-			data += "[show_numbers ? "666:" : ""] <font color='#cc5500'>[i]</font>"
+	if (include_zeroth && devillaws)
+		for(var/law in devillaws)
+			data += "[show_numbers ? "666:" : ""] [render_html ? "<font color='#cc5500'>[law]</font>" : law]"
 
 	if (include_zeroth && zeroth)
-		data += "[show_numbers ? "0:" : ""] <font color='#ff0000'><b>[zeroth]</b></font>"
+		data += "[show_numbers ? "0:" : ""] [render_html ? "<font color='#ff0000'><b>[zeroth]</b></font>" : zeroth]"
 
 	for(var/law in hacked)
 		if (length(law) > 0)
-			var/num = ionnum()
-			data += "[show_numbers ? "[num]:" : ""] <font color='#660000'>[law]</font>"
+			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#660000'>[law]</font>" : law]"
 
 	for(var/law in ion)
 		if (length(law) > 0)
-			var/num = ionnum()
-			data += "[show_numbers ? "[num]:" : ""] <font color='#547DFE'>[law]</font>"
+			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
 
 	var/number = 1
 	for(var/law in inherent)
@@ -459,6 +465,7 @@
 
 	for(var/law in supplied)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] <font color='#990099'>[law]</font>"
+			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
 			number++
 	return data
+

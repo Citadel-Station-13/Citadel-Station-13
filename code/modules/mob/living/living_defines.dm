@@ -4,6 +4,11 @@
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD,RAD_HUD)
 	pressure_resistance = 10
+	has_field_of_vision = TRUE
+
+	typing_indicator_enabled = TRUE
+
+	var/last_click_move = 0 // Stores the previous next_move value.
 
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
@@ -24,6 +29,30 @@
 
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
+	// Combat - Blocking/Parrying system
+	/// Our block_parry_data for unarmed blocks/parries. Currently only used for parrying, as unarmed block isn't implemented yet. YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
+	var/datum/block_parry_data/block_parry_data = /datum/block_parry_data		// defaults to *something* because [combat_flags] dictates whether or not we can unarmed block/parry.
+	/// Default
+	var/datum/block_parry_data/default_block_parry_data = /datum/block_parry_data
+	/// If we're a pugilist
+	var/datum/block_parry_data/pugilist_block_parry_data = /datum/block_parry_data/unarmed/pugilist
+	// Blocking
+	/// The item the user is actively blocking with if any.
+	var/obj/item/active_block_item
+	// Parrying
+	/// Whether or not the user is in the middle of an active parry. Set to [UNARMED_PARRY], [ITEM_PARRY], [MARTIAL_PARRY] if parrying.
+	var/parrying = FALSE
+	/// The itme the user is currently parrying with, if any.
+	var/obj/item/active_parry_item
+	/// world.time of parry action start
+	var/parry_start_time = 0
+	/// Current parry effect.
+	var/obj/effect/abstract/parry/parry_visual_effect
+	/// world.time of last parry end
+	var/parry_end_time_last = 0
+	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
+	var/list/successful_parries
+
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
@@ -34,6 +63,8 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+	/// Do we make floors dirty as we move?
+	var/causes_dirt_buildup_on_floor = FALSE
 
 	var/list/roundstart_quirks = list()
 
@@ -50,7 +81,6 @@
 
 	var/bloodcrawl = 0 //0 No blood crawling, BLOODCRAWL for bloodcrawling, BLOODCRAWL_EAT for crawling+mob devour
 	var/holder = null //The holder for blood crawling
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
@@ -98,8 +128,6 @@
 
 	var/datum/riding/riding_datum
 
-	var/datum/language/selected_default_language
-
 	var/last_words	//used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
@@ -121,14 +149,11 @@
 
 	//// CITADEL STATION COMBAT ////
 	/// See __DEFINES/combat.dm
-	var/combat_flags = COMBAT_FLAGS_STAMSYSTEM_EXEMPT
+	var/combat_flags = COMBAT_FLAGS_SPRINT_EXEMPT
 	/// Next world.time when we will show a visible message on entering combat mode voluntarily again.
 	var/combatmessagecooldown = 0
 
 	var/incomingstammult = 1
-	var/bufferedstam = 0
-	var/stambuffer = 20
-	var/stambufferregentime
 
 	//Sprint buffer---
 	var/sprint_buffer = 42					//Tiles
@@ -137,3 +162,13 @@
 	var/sprint_buffer_regen_last = 0		//last world.time this was regen'd for math.
 	var/sprint_stamina_cost = 0.70			//stamina loss per tile while insufficient sprint buffer.
 	//---End
+
+	// Stamina Buffer---
+	/// Our stamina buffer
+	var/stamina_buffer
+	/// Stamina buffer regen modifier
+	var/stamina_buffer_regen_mod = 1
+	/// Last time stamina buffer regen was done
+	var/stamina_buffer_regen_last = 0
+	/// Last time we used stamina buffer
+	var/stamina_buffer_last_use = 0

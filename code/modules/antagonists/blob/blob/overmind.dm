@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				B.hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_core.obj_integrity)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
-	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
+	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
 /mob/camera/blob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -277,3 +277,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(!B)
 		mind.add_antag_datum(/datum/antagonist/blob)
+
+//the same but it's forced to be allowed by default as cameras usually don't allow emoting
+/mob/camera/blob/emote(act, m_type=1, message = null, intentional = FALSE, forced = TRUE)
+	. = ..()

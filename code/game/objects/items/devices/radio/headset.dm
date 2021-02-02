@@ -258,6 +258,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "\proper mini Integrated Subspace Transceiver "
 	subspace_transmission = FALSE
 
+/obj/item/radio/headset/silicon/pai/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/headset/silicon/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -280,14 +283,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
-			var/turf/T = user.drop_location()
-			if(T)
-				if(keyslot)
-					keyslot.forceMove(T)
-					keyslot = null
-				if(keyslot2)
-					keyslot2.forceMove(T)
-					keyslot2 = null
+			if(keyslot)
+				user.put_in_hands(keyslot)
+				keyslot = null
+			if(keyslot2)
+				user.put_in_hands(keyslot2)
+				keyslot2 = null
 
 			recalculateChannels()
 			to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset.</span>")

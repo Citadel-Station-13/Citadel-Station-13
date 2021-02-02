@@ -11,8 +11,8 @@
 	var/recentpump = 0 // to prevent spammage
 
 /obj/item/gun/energy/pumpaction/emp_act(severity)	//makes it not rack itself when emp'd
-	cell.use(round(cell.charge / severity))
-	chambered = 0 //we empty the chamber
+	cell.use(round(cell.charge * severity/100))
+	chambered = null //we empty the chamber
 	update_icon()
 
 /obj/item/gun/energy/pumpaction/process()	//makes it not rack itself when self-charging
@@ -20,7 +20,7 @@
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
-		charge_tick = 0
+		charge_tick = null
 		if(selfcharge == EGUN_SELFCHARGE_BORG)
 			var/atom/owner = loc
 			if(istype(owner, /obj/item/robot_module))
@@ -44,7 +44,7 @@
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		cell.use(shot.e_cost)//... drain the cell cell
-	chambered = 0 //either way, released the prepared shot
+	chambered = null //either way, released the prepared shot
 
 /obj/item/gun/energy/pumpaction/post_set_firemode()
 	var/has_shot = chambered
@@ -52,13 +52,13 @@
 	if(has_shot)
 		recharge_newshot(TRUE)
 
-/obj/item/gun/energy/pumpaction/update_icon()	//adds racked indicators
+/obj/item/gun/energy/pumpaction/update_overlays()	//adds racked indicators
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
 	if(chambered)
-		add_overlay("[icon_state]_rack_[shot.select_name]")
+		. += "[icon_state]_rack_[shot.select_name]"
 	else
-		add_overlay("[icon_state]_rack_empty")
+		. += "[icon_state]_rack_empty"
 
 /obj/item/gun/energy/pumpaction/proc/pump(mob/M)	//pumping proc. Checks if the gun is empty and plays a different sound if it is.
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
@@ -87,7 +87,7 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click to change firing modes.</span>"
 
-/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, style_flags = NONE)	//ammo counter for inhands
+/obj/item/gun/energy/pumpaction/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)	//ammo counter for inhands
 	. = ..()
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[current_firemode_index]
@@ -131,7 +131,7 @@
 	item_state = "particleblaster"
 	lefthand_file = 'modular_citadel/icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/guns_righthand.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/pump, /obj/item/ammo_casing/energy/laser/pump)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/pump, /obj/item/ammo_casing/energy/laser/pump)
 	ammo_x_offset = 2
 	modifystate = 1
 
@@ -152,19 +152,19 @@
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
 
 /obj/item/ammo_casing/energy/laser/pump
-	projectile_type = /obj/item/projectile/beam/weak
-	e_cost = 200
+	projectile_type = /obj/item/projectile/beam/pump
+	e_cost = 350
 	select_name = "kill"
-	pellets = 3
+	pellets = 6
 	variance = 15
 	fire_sound = 'sound/weapons/ParticleBlaster.ogg'
 
-/obj/item/ammo_casing/energy/electrode/pump
-	projectile_type = /obj/item/projectile/energy/electrode/pump
-	select_name = "stun"
+/obj/item/ammo_casing/energy/disabler/pump
+	projectile_type = /obj/item/projectile/energy/disabler/pump
+	select_name = "disable"
 	fire_sound = 'sound/weapons/LaserSlugv3.ogg'
-	e_cost = 300
-	pellets = 3
+	e_cost = 150
+	pellets = 6
 	variance = 20
 
 //PROJECTILES
@@ -178,22 +178,16 @@
 	name = "positron blast"
 	damage = 80
 	range = 14
-	speed = 0.6
+	pixels_per_second = TILES_TO_PIXELS(16.667)
 	icon_state = "disablerslug"
 
-/obj/item/projectile/energy/electrode/pump
-	name = "electron blast"
-	icon_state = "stunjectile"
+/obj/item/projectile/beam/pump
+	damage = 9
+	range = 6
+
+/obj/item/projectile/energy/disabler/pump
+	name = "disabling blast"
+	icon_state = "disablerslug"
 	color = null
-	nodamage = TRUE
-	knockdown = 100
-	knockdown_stamoverride = 0
-	knockdown_stam_max = 0
-	stamina = 18
-	stutter = 5
-	jitter = 20
-	strong_tase = FALSE
-	tase_duration = 0
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 3
-	strong_tase = FALSE
+	stamina = 13
+	range = 6

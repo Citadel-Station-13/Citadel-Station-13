@@ -1,5 +1,5 @@
 /obj/item/melee/transforming
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -53,6 +53,8 @@
 		throw_speed = 4
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
+		if(embedding)
+			updateEmbedding()
 		icon_state = icon_state_on
 		w_class = w_class_on
 	else
@@ -62,6 +64,8 @@
 		throw_speed = initial(throw_speed)
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
+		if(embedding)
+			updateEmbedding()
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
 		total_mass = initial(total_mass)

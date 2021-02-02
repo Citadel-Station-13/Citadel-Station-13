@@ -9,9 +9,9 @@
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+	desc = "A sleek box containing a small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines. The handgun is compatible \
 			with suppressors."
-	item = /obj/item/gun/ballistic/automatic/pistol
+	item = /obj/item/storage/box/syndie_kit/pistol
 	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
@@ -20,8 +20,9 @@
 	desc = "A sleek box containing a brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers, and an extra speedloader."
 	item = /obj/item/storage/box/syndie_kit/revolver
 	cost = 13
+	player_minimum = 15
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
@@ -109,24 +110,13 @@
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
-	item = /obj/item/twohanded/dualsaber
+	item = /obj/item/dualsaber
 	player_minimum = 25
 	cost = 16
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
-
-/datum/uplink_item/dangerous/cxneb
-	name = "Dragon's Tooth Non-Eutactic Blade"
-	desc = "An illegal modification of a weapon that is functionally identical to the energy sword, \
-			the Non-Eutactic Blade (NEB) forges a hardlight blade on-demand, \
-	 		generating an extremely sharp, unbreakable edge that is guaranteed to satisfy your every need. \
-	 		This particular model has a polychromic hardlight generator, allowing you to murder in style! \
-	 		The illegal modifications bring this weapon up to par with the classic energy sword, and also gives it the energy sword's distinctive sounds."
-	item = /obj/item/melee/transforming/energy/sword/cx/traitor
-	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
@@ -134,7 +124,7 @@
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/shield
 	name = "Energy Shield"
@@ -152,7 +142,7 @@
 			However, due to the size of the blade and obvious nature of the sheath, the weapon stands out as being obviously nefarious."
 	item = /obj/item/storage/belt/sabre/rapier
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -174,10 +164,13 @@
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/rapid
-	name = "Gloves of the North Star"
-	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
-	item = /obj/item/clothing/gloves/rapid
-	cost = 8
+	name = "Bands of the North Star"
+	desc = "These armbands let the user punch people very fast and with the lethality of a legendary martial artist. \
+			Does not improve weapon attack speed or the meaty fists of a hulk, but you will be unmatched in martial power. \
+			Combines with all martial arts, but the user will be unable to bring themselves to use guns, nor remove the armbands."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/rapid
+	cost = 30
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
@@ -185,13 +178,25 @@
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 15
+	limited_stock = 1 // you can only have one holopara apparently?
 	refundable = TRUE
 	cant_discount = TRUE
 	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 	player_minimum = 25
 	restricted = TRUE
 	refund_path = /obj/item/guardiancreator/tech/choose/traitor
+
+/datum/uplink_item/dangerous/nukieguardian // just like the normal holoparasites but without the support or deffensive stands because nukies shouldnt turtle
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
+			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
+	item = /obj/item/storage/box/syndie_kit/nukieguardian
+	cost = 15
+	refundable = TRUE
+	surplus = 50
+	refund_path = /obj/item/guardiancreator/tech/choose/nukie
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
@@ -219,6 +224,7 @@
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
 	cost = 8
+	exclude_modes = list(/datum/game_mode/traitor/internal_affairs)
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"

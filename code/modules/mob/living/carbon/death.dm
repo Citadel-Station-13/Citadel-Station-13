@@ -5,10 +5,8 @@
 	silent = FALSE
 	losebreath = 0
 
-	if(!gibbed)
+	if(!gibbed && !HAS_TRAIT(src, TRAIT_DEATHCOMA))
 		emote("deathgasp")
-
-	disable_intentional_combat_mode(TRUE, FALSE)
 
 	. = ..()
 
@@ -19,16 +17,17 @@
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
-/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)
 		M.forceMove(Tsec)
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+		M.visible_message("<span class='danger'>[M] bursts out of [src]!</span>",
+			"<span class='danger'>You burst out of [src]!</span>")
 	..()
 
-/mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
@@ -41,31 +40,28 @@
 				if(no_brain && istype(O, /obj/item/organ/brain))
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
-				var/org_zone = check_zone(O.zone) //both groin and chest organs.
-				if(org_zone == BODY_ZONE_CHEST)
+				if(!(O.organ_flags & ORGAN_NO_DISMEMBERMENT) && check_zone(O.zone) == BODY_ZONE_CHEST)
+					if(was_explosion)
+						LAZYADD(O.acted_explosions, was_explosion.explosion_id)
 					O.Remove()
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
-			if(no_brain && istype(I, /obj/item/organ/brain))
+			if(I.organ_flags & ORGAN_NO_DISMEMBERMENT || (no_brain && istype(I, /obj/item/organ/brain)) || (no_organs && !istype(I, /obj/item/organ/brain)))
 				qdel(I)
 				continue
-			if(no_organs && !istype(I, /obj/item/organ/brain))
-				qdel(I)
-				continue
+			if(was_explosion)
+				LAZYADD(I.acted_explosions, was_explosion.explosion_id)
 			I.Remove()
 			I.forceMove(Tsec)
 			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
-
-/mob/living/carbon/spread_bodyparts()
+/mob/living/carbon/spread_bodyparts(no_brain, no_organs, datum/explosion/was_explosion)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(was_explosion)
+			LAZYADD(BP.acted_explosions, was_explosion.explosion_id)
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
-
-/mob/living/carbon/ghostize(can_reenter_corpse = TRUE, special = FALSE, penalize = FALSE, voluntary = FALSE)
-	disable_intentional_combat_mode(TRUE, FALSE)
-	return ..()

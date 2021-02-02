@@ -8,9 +8,9 @@
 	job_rank = ROLE_BLOODSUCKER
 	threat = 5
 	// NAME
-	var/vampname						// My Dracula name
-	var/vamptitle						// My Dracula title
-	var/vampreputation					// My "Surname" or description of my deeds
+	var/bloodsucker_name						// My Dracula style name
+	var/bloodsucker_title						// My Dracula style title
+	var/bloodsucker_reputation					// My "Surname" or description of my deeds
 	// CLAN
 	var/datum/team/vampireclan/clan
 	var/list/datum/antagonist/vassal/vassals = list()// Vassals under my control. Periodically remove the dead ones.
@@ -20,39 +20,38 @@
 	var/poweron_feed = FALSE			// Am I feeding?
 	var/poweron_masquerade = FALSE
 	// STATS
-	var/vamplevel = 0
-	var/vamplevel_unspent = 1
-	var/regenRate = 0.4					// How many points of Brute do I heal per tick?
-	var/feedAmount = 15					// Amount of blood drawn from a target per tick.
-	var/maxBloodVolume = 600			// Maximum blood a Vamp can hold via feeding. // BLOOD_VOLUME_NORMAL  550 // BLOOD_VOLUME_SAFE 475 //BLOOD_VOLUME_OKAY 336 //BLOOD_VOLUME_BAD 224 // BLOOD_VOLUME_SURVIVE 122
+	var/bloodsucker_level
+	var/bloodsucker_level_unspent = 1
+	var/regen_rate = 0.3				// How fast do I regenerate?
+	var/additional_regen                // How much additional blood regen we gain from bonuses such as high blood.
+	var/feed_amount = 15				// Amount of blood drawn from a target per tick.
+	var/max_blood_volume = 600			// Maximum blood a Vamp can hold via feeding.
 	// OBJECTIVES
 	var/list/datum/objective/objectives_given = list()	// For removal if needed.
 	var/area/lair
 	var/obj/structure/closet/crate/coffin
 	// TRACKING
-	var/foodInGut = 0					// How much food to throw up later. You shouldn't have eaten that.
-	var/warn_sun_locker = FALSE			// So we only get the locker burn message once per day.
-	var/warn_sun_burn = FALSE			// So we only get the sun burn message once per day.
-	var/had_toxlover = FALSE
+	var/foodInGut 					// How much food to throw up later. You shouldn't have eaten that.
+	var/warn_sun_locker				// So we only get the locker burn message once per day.
+	var/warn_sun_burn 				// So we only get the sun burn message once per day.
+	var/had_toxlover
 	var/level_bloodcost
+	var/passive_blood_drain = -0.1        //The amount of blood we loose each bloodsucker life() tick
+	var/notice_healing                    //Var to see if you are healing for preventing spam of the chat message inform the user of such
+	var/FinalDeath                  //Have we reached final death? Used to prevent spam.
 	// LISTS
 	var/static/list/defaultTraits = list (TRAIT_STABLEHEART, TRAIT_NOBREATH, TRAIT_SLEEPIMMUNE, TRAIT_NOCRITDAMAGE, TRAIT_RESISTCOLD, TRAIT_RADIMMUNE, TRAIT_NIGHT_VISION, \
-										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE)
-	// NOTES: TRAIT_AGEUSIA <-- Doesn't like flavors.
-	// REMOVED: TRAIT_NODEATH
-	// TO ADD:
-	//var/static/list/defaultOrgans = list (/obj/item/organ/heart/vampheart,/obj/item/organ/heart/vampeyes)
+										  TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_AGEUSIA, TRAIT_COLDBLOODED, TRAIT_NONATURALHEAL, TRAIT_NOMARROW, TRAIT_NOPULSE, TRAIT_VIRUSIMMUNE, TRAIT_NODECAP, TRAIT_NOGUT)
 
 /datum/antagonist/bloodsucker/on_gain()
 	SSticker.mode.bloodsuckers |= owner // Add if not already in here (and you might be, if you were picked at round start)
 	SSticker.mode.check_start_sunlight()// Start Sunlight? (if first Vamp)
 	SelectFirstName()// Name & Title
-	SelectTitle(am_fledgling=TRUE) 	// If I have a creator, then set as Fledgling.
-	SelectReputation(am_fledgling=TRUE)
+	SelectTitle(am_fledgling = TRUE) 	// If I have a creator, then set as Fledgling.
+	SelectReputation(am_fledgling = TRUE)
 	AssignStarterPowersAndStats()// Give Powers & Stats
 	forge_bloodsucker_objectives()// Objectives & Team
 	update_bloodsucker_icons_added(owner.current, "bloodsucker")	// Add Antag HUD
-	LifeTick()	// Run Life Function
 	. = ..()
 
 
@@ -68,18 +67,18 @@
 
 /datum/antagonist/bloodsucker/greet()
 	var/fullname = ReturnFullName(TRUE)
-	to_chat(owner, "<span class='userdanger'>You are [fullname], a bloodsucking vampire!</span><br>")
+	to_chat(owner, "<span class='userdanger'>You are [fullname], a strain of vampire dubbed bloodsucker!</span><br>")
 	owner.announce_objectives()
 	to_chat(owner, "<span class='boldannounce'>* You regenerate your health slowly, you're weak to fire, and you depend on blood to survive. Allow your stolen blood to run too low, and you will find yourself at \
 	risk of being discovered!</span><br>")
 	//to_chat(owner, "<span class='boldannounce'>As an immortal, your power is linked to your age. The older you grow, the more abilities you will have access to.<span>")
-	var/vamp_greet
-	vamp_greet +=  "<span class='boldannounce'>* Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.</span><br>"
-	vamp_greet += "<span class='boldannounce'><i>* Use \",b\" to speak your ancient Bloodsucker language.</span><br>"
-	vamp_greet += "<span class='announce'>Bloodsucker Tip: Rest in a <i>Coffin</i> to claim it, and that area, as your lair.</span><br>"
-	vamp_greet += "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br>"
-	vamp_greet += "<span class='announce'>Bloodsucker Tip: You wont loose blood if you are unconcious or sleeping. Use this to your advantage to conserve blood.</span><br>"
-	to_chat(owner, vamp_greet)
+	var/bloodsucker_greet
+	bloodsucker_greet +=  "<span class='boldannounce'>* Other Bloodsuckers are not necessarily your friends, but your survival may depend on cooperation. Betray them at your own discretion and peril.</span><br>"
+	bloodsucker_greet += "<span class='boldannounce'><i>* Use \",b\" to speak your ancient Bloodsucker language.</span><br>"
+	bloodsucker_greet += "<span class='announce'>Bloodsucker Tip: Rest in a <i>Coffin</i> to claim it, and that area, as your lair.</span><br>"
+	bloodsucker_greet += "<span class='announce'>Bloodsucker Tip: Fear the daylight! Solar flares will bombard the station periodically, and only your coffin can guarantee your safety.</span><br>"
+	bloodsucker_greet += "<span class='announce'>Bloodsucker Tip: You wont loose blood if you are unconcious or sleeping. Use this to your advantage to conserve blood.</span><br>"
+	to_chat(owner, bloodsucker_greet)
 
 	owner.current.playsound_local(null, 'sound/bloodsucker/BloodsuckerAlert.ogg', 100, FALSE, pressure_affected = FALSE)
 	antag_memory += "Although you were born a mortal, in un-death you earned the name <b>[fullname]</b>.<br>"
@@ -92,13 +91,13 @@
 	owner.current.blood_volume = max(owner.current.blood_volume,BLOOD_VOLUME_SAFE)
 
 /datum/antagonist/bloodsucker/threat()
-	return ..()+3*vamplevel
+	return ..() + 3 * bloodsucker_level
 
 
 /datum/antagonist/bloodsucker/proc/SelectFirstName()
 	// Names (EVERYONE gets one))
 	if(owner.current.gender == MALE)
-		vampname = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
+		bloodsucker_name = pick("Desmond","Rudolph","Dracul","Vlad","Pyotr","Gregor","Cristian","Christoff","Marcu","Andrei","Constantin","Gheorghe","Grigore","Ilie","Iacob","Luca","Mihail","Pavel","Vasile","Octavian","Sorin", \
 						"Sveyn","Aurel","Alexe","Iustin","Theodor","Dimitrie","Octav","Damien","Magnus","Caine","Abel", // Romanian/Ancient
 						"Lucius","Gaius","Otho","Balbinus","Arcadius","Romanos","Alexios","Vitellius",  // Latin
 						"Melanthus","Teuthras","Orchamus","Amyntor","Axion",  // Greek
@@ -106,7 +105,7 @@
 						"Dio")
 
 	else
-		vampname = pick("Islana","Tyrra","Greganna","Pytra","Hilda","Andra","Crina","Viorela","Viorica","Anemona","Camelia","Narcisa","Sorina","Alessia","Sophia","Gladda","Arcana","Morgan","Lasarra","Ioana","Elena", \
+		bloodsucker_name = pick("Islana","Tyrra","Greganna","Pytra","Hilda","Andra","Crina","Viorela","Viorica","Anemona","Camelia","Narcisa","Sorina","Alessia","Sophia","Gladda","Arcana","Morgan","Lasarra","Ioana","Elena", \
 						"Alina","Rodica","Teodora","Denisa","Mihaela","Svetla","Stefania","Diyana","Kelssa","Lilith", // Romanian/Ancient
 						"Alexia","Athanasia","Callista","Karena","Nephele","Scylla","Ursa",  // Latin
 						"Alcestis","Damaris","Elisavet","Khthonia","Teodora",  // Greek
@@ -114,57 +113,57 @@
 
 /datum/antagonist/bloodsucker/proc/SelectTitle(am_fledgling = 0, forced = FALSE)
 	// Already have Title
-	if (!forced && vamptitle != null)
+	if(!forced && bloodsucker_title != null)
 		return
 	// Titles [Master]
-	if (!am_fledgling)
+	if(!am_fledgling)
 		if(owner.current.gender == MALE)
-			vamptitle = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
+			bloodsucker_title = pick ("Count","Baron","Viscount","Prince","Duke","Tzar","Dreadlord","Lord","Master")
 		else
-			vamptitle = pick ("Countess","Baroness","Viscountess","Princess","Duchess","Tzarina","Dreadlady","Lady","Mistress")
+			bloodsucker_title = pick ("Countess","Baroness","Viscountess","Princess","Duchess","Tzarina","Dreadlady","Lady","Mistress")
 		to_chat(owner, "<span class='announce'>You have earned a title! You are now known as <i>[ReturnFullName(TRUE)]</i>!</span>")
 	// Titles [Fledgling]
 	else
-		vamptitle = null
+		bloodsucker_title = null
 
 /datum/antagonist/bloodsucker/proc/SelectReputation(am_fledgling = 0, forced=FALSE)
 	// Already have Reputation
-	if(!forced && vampreputation != null)
+	if(!forced && bloodsucker_reputation != null)
 		return
 	// Reputations [Master]
 	if(!am_fledgling)
-		vampreputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
+		bloodsucker_reputation = pick("Butcher","Blood Fiend","Crimson","Red","Black","Terror","Nightman","Feared","Ravenous","Fiend","Malevolent","Wicked","Ancient","Plaguebringer","Sinister","Forgotten","Wretched","Baleful", \
 							"Inqisitor","Harvester","Reviled","Robust","Betrayer","Destructor","Damned","Accursed","Terrible","Vicious","Profane","Vile","Depraved","Foul","Slayer","Manslayer","Sovereign","Slaughterer", \
 							"Forsaken","Mad","Dragon","Savage","Villainous","Nefarious","Inquisitor","Marauder","Horrible","Immortal","Undying","Overlord","Corrupt","Hellspawn","Tyrant","Sanguineous")
 		if(owner.current.gender == MALE)
 			if(prob(10)) // Gender override
-				vampreputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
-		else
+				bloodsucker_reputation = pick("King of the Damned", "Blood King", "Emperor of Blades", "Sinlord", "God-King")
+		else if(owner.current.gender == FEMALE)
 			if(prob(10)) // Gender override
-				vampreputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
+				bloodsucker_reputation = pick("Queen of the Damned", "Blood Queen", "Empress of Blades", "Sinlady", "God-Queen")
 
 		to_chat(owner, "<span class='announce'>You have earned a reputation! You are now known as <i>[ReturnFullName(TRUE)]</i>!</span>")
 
 	// Reputations [Fledgling]
 	else
-		vampreputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Unknown","Newly Risen","Born","Scavenger","Unknowing",\
+		bloodsucker_reputation = pick ("Crude","Callow","Unlearned","Neophyte","Novice","Unseasoned","Fledgling","Young","Neonate","Scrapling","Untested","Unproven","Unknown","Newly Risen","Born","Scavenger","Unknowing",\
 							   "Unspoiled","Disgraced","Defrocked","Shamed","Meek","Timid","Broken")//,"Fresh")
 
 
 /datum/antagonist/bloodsucker/proc/AmFledgling()
-	return !vamptitle
+	return !bloodsucker_title
 
 /datum/antagonist/bloodsucker/proc/ReturnFullName(var/include_rep=0)
 
 	var/fullname
 	// Name First
-	fullname = (vampname ? vampname : owner.current.name)
+	fullname = (bloodsucker_name ? bloodsucker_name : owner.current.name)
 	// Title
-	if(vamptitle)
-		fullname = vamptitle + " " + fullname
+	if(bloodsucker_title)
+		fullname = bloodsucker_title + " " + fullname
 	// Rep
-	if(include_rep && vampreputation)
-		fullname = fullname + " the " + vampreputation
+	if(include_rep && bloodsucker_reputation)
+		fullname = fullname + " the " + bloodsucker_reputation
 
 	return fullname
 
@@ -199,24 +198,19 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/datum/species/S = H.dna.species
 		// Make Changes
-		H.physiology.brute_mod *= 0.8										//  <--------------------  Start small, but burn mod increases based on rank!
+		H.physiology.brute_mod *= 0.8
 		H.physiology.cold_mod = 0
 		H.physiology.stun_mod *= 0.5
 		H.physiology.siemens_coeff *= 0.75 	//base electrocution coefficient  1
-		//S.heatmod += 0.5 			// Heat shouldn't affect. Only Fire.
-		//S.punchstunthreshold = 8	//damage at which punches from this race will stun  9
 		S.punchdamagelow += 1       //lowest possible punch damage   0
 		S.punchdamagehigh += 1      //highest possible punch damage	 9
-		// Clown
 		if(istype(H) && owner.assigned_role == "Clown")
 			H.dna.remove_mutation(CLOWNMUT)
 			to_chat(H, "As a vampiric clown, you are no longer a danger to yourself. Your nature is subdued.")
 	// Physiology
 	CheckVampOrgans() // Heart, Eyes
 	// Language
-	owner.current.grant_language(/datum/language/vampiric)
-	// Soul
-	//owner.current.hellbound = TRUE Causes wierd stuff
+	owner.current.grant_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	owner.hasSoul = FALSE 		// If false, renders the character unable to sell their soul.
 	owner.isholy = FALSE 		// is this person a chaplain or admin role allowed to use bibles
 	// Disabilities
@@ -234,7 +228,7 @@
 	// Traits
 	for(var/T in defaultTraits)
 		REMOVE_TRAIT(owner.current, T, BLOODSUCKER_TRAIT)
-	if(had_toxlover == TRUE)
+	if(had_toxlover)
 		ADD_TRAIT(owner.current, TRAIT_TOXINLOVER, SPECIES_TRAIT)
 
 	// Traits: Species
@@ -248,13 +242,12 @@
 		// Clown
 		if(istype(H) && owner.assigned_role == "Clown")
 			H.dna.add_mutation(CLOWNMUT)
-	// NOTE: Use initial() to return things to default!
 	// Physiology
 	owner.current.regenerate_organs()
 	// Update Health
 	owner.current.setMaxHealth(100)
 	// Language
-	owner.current.remove_language(/datum/language/vampiric)
+	owner.current.remove_language(/datum/language/vampiric, TRUE, TRUE, LANGUAGE_BLOODSUCKER)
 	// Soul
 	if (owner.soulOwner == owner) // Return soul, if *I* own it.
 		owner.hasSoul = TRUE
@@ -264,13 +257,13 @@
 	set waitfor = FALSE
 	if(!owner || !owner.current)
 		return
-	vamplevel_unspent ++
+	bloodsucker_level_unspent ++
 	// Spend Rank Immediately?
 	if(istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 		SpendRank()
 	else
 		to_chat(owner, "<EM><span class='notice'>You have grown more ancient! Sleep in a coffin that you have claimed to thicken your blood and become more powerful.</span></EM>")
-		if(vamplevel_unspent >= 2)
+		if(bloodsucker_level_unspent >= 2)
 			to_chat(owner, "<span class='announce'>Bloodsucker Tip: If you cannot find or steal a coffin to use, you can build one from wooden planks.</span><br>")
 
 /datum/antagonist/bloodsucker/proc/LevelUpPowers()
@@ -279,10 +272,10 @@
 
 /datum/antagonist/bloodsucker/proc/SpendRank()
 	set waitfor = FALSE
-	if(vamplevel_unspent <= 0 || !owner || !owner.current || !owner.current.client || !isliving(owner.current))
+	if(bloodsucker_level_unspent <= 0 || !owner || !owner.current || !owner.current.client || !isliving(owner.current))
 		return
 	var/mob/living/L = owner.current
-	level_bloodcost = maxBloodVolume * 0.2
+	level_bloodcost = max_blood_volume * 0.2
 	//If the blood volume of the bloodsucker is lower than the cost to level up, return and inform the bloodsucker
 
 	//TODO: Make this into a radial, or perhaps a tgui next UI
@@ -298,7 +291,7 @@
 	if(options.len > 1)
 		var/choice = input(owner.current, "You have the opportunity to grow more ancient at the cost of [level_bloodcost] units of blood. Select a power to advance your Rank.", "Your Blood Thickens...") in options
 		// Cheat-Safety: Can't keep opening/closing coffin to spam levels
-		if(vamplevel_unspent <= 0) // Already spent all your points, and tried opening/closing your coffin, pal.
+		if(bloodsucker_level_unspent <= 0) // Already spent all your points, and tried opening/closing your coffin, pal.
 			return
 		if(!istype(owner.current.loc, /obj/structure/closet/crate/coffin))
 			to_chat(owner.current, "<span class='warning'>Return to your coffin to advance your Rank.</span>")
@@ -329,29 +322,31 @@
 	// More Health
 	owner.current.setMaxHealth(owner.current.maxHealth + 10)
 	// Vamp Stats
-	regenRate += 0.05			// Points of brute healed (starts at 0.3)
-	feedAmount += 2				// Increase how quickly I munch down vics (15)
-	maxBloodVolume += 100		// Increase my max blood (600)
+	regen_rate += 0.05			// Points of brute healed (starts at 0.3)
+	feed_amount += 2				// Increase how quickly I munch down vics (15)
+	max_blood_volume += 100		// Increase my max blood (600)
 	/////////
-	vamplevel ++
-	vamplevel_unspent --
+	bloodsucker_level ++
+	bloodsucker_level_unspent --
 
 	// Assign True Reputation
-	if(vamplevel == 4)
+	if(bloodsucker_level == 4)
 		SelectReputation(am_fledgling = FALSE, forced = TRUE)
-	to_chat(owner.current, "<span class='notice'>You are now a rank [vamplevel] Bloodsucker. Your strength, health, feed rate, regen rate, and maximum blood have all increased!</span>")
+	to_chat(owner.current, "<span class='notice'>You are now a rank [bloodsucker_level] Bloodsucker. Your strength, health, feed rate, regen rate, can have up to [bloodsucker_level - count_vassals(owner.current.mind)] vassals, and maximum blood have all increased!</span>")
 	to_chat(owner.current, "<span class='notice'>Your existing powers have all ranked up as well!</span>")
 	update_hud(TRUE)
-	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, 1) // Play THIS sound for user only. The "null" is where turf would go if a location was needed. Null puts it right in their head.
+	owner.current.playsound_local(null, 'sound/effects/pope_entry.ogg', 25, TRUE, pressure_affected = FALSE)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/bloodsucker/apply_innate_effects(mob/living/mob_override)
+	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/LifeTick)
 	return
 
 //This handles the removal of antag huds/special abilities
 /datum/antagonist/bloodsucker/remove_innate_effects(mob/living/mob_override)
+	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	return
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -654,13 +649,13 @@
 	var/datum/antagonist/vassal/mob_V = M.mind.has_antag_datum(ANTAG_DATUM_VASSAL)
 	// Check 2) If they are a BLOODSUCKER, then are they my Master?
 	if (mob_V && atom_B == mob_V.master)
-		return TRUE // SUCCESS!
+		return TRUE
 	// Check 3) If I am a BLOODSUCKER, then are they my Vassal?
 	if (mob_B && atom_V && (atom_V in mob_B.vassals))
-		return TRUE // SUCCESS!
+		return TRUE
 	// Check 4) If we are both VASSAL, then do we have the same master?
 	if (atom_V && mob_V && atom_V.master == mob_V.master)
-		return TRUE // SUCCESS!
+		return TRUE
 	return FALSE
 
 
@@ -691,6 +686,8 @@
 	owner.current.hud_used.sunlight_display.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/bloodsucker/proc/update_hud(updateRank=FALSE)
+	if(FinalDeath)
+		return
 	// No Hud? Get out.
 	if(!owner.current.hud_used)
 		return
@@ -705,10 +702,10 @@
 
 	// Update Rank Counter
 	if(owner.current.hud_used.vamprank_display)
-		var/valuecolor = vamplevel_unspent ? "#FFFF00" : "#FF0000"
-		owner.current.hud_used.vamprank_display.update_counter(vamplevel, valuecolor)
+		var/valuecolor = bloodsucker_level_unspent ? "#FFFF00" : "#FF0000"
+		owner.current.hud_used.vamprank_display.update_counter(bloodsucker_level, valuecolor)
 		if(updateRank) // Only change icon on special request.
-			owner.current.hud_used.vamprank_display.icon_state = (vamplevel_unspent > 0) ? "rank_up" : "rank"
+			owner.current.hud_used.vamprank_display.icon_state = (bloodsucker_level_unspent > 0) ? "rank_up" : "rank"
 
 
 /obj/screen/bloodsucker
@@ -718,12 +715,12 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/bloodsucker/proc/update_counter(value, valuecolor)
-	invisibility = 0 // Make Visible
+	invisibility = 0
 
-/obj/screen/bloodsucker/blood_counter		// NOTE: Look up /obj/screen/devil/soul_counter  in _onclick / hud / human.dm
-	icon = 'icons/mob/actions/bloodsucker.dmi'//'icons/mob/screen_gen.dmi'
+/obj/screen/bloodsucker/blood_counter
+	icon = 'icons/mob/actions/bloodsucker.dmi'
 	name = "Blood Consumed"
-	icon_state = "blood_display"//"power_display"
+	icon_state = "blood_display"
 	screen_loc = ui_blood_display
 
 /obj/screen/bloodsucker/blood_counter/update_counter(value, valuecolor)
@@ -748,18 +745,18 @@
 
 /datum/antagonist/bloodsucker/proc/update_sunlight(value, amDay = FALSE)
 	// No Hud? Get out.
-	if (!owner.current.hud_used)
+	if(!owner.current.hud_used)
 		return
 	// Update Sun Time
-	if (owner.current.hud_used.sunlight_display)
+	if(owner.current.hud_used.sunlight_display)
 		var/valuecolor = "#BBBBFF"
-		if (amDay)
+		if(amDay)
 			valuecolor =  "#FF5555"
 		else if(value <= 25)
 			valuecolor =  "#FFCCCC"
 		else if(value < 10)
 			valuecolor =  "#FF5555"
-		var/value_string = (value >= 60) ? "[round(value / 60, 1)] m" : "[round(value,1)] s"
+		var/value_string = (value >= 60) ? "[round(value / 60, 1)] m" : "[round(value, 1)] s"
 		owner.current.hud_used.sunlight_display.update_counter( value_string, valuecolor )
 		owner.current.hud_used.sunlight_display.icon_state = "sunlight_" + (amDay ? "day":"night")
 
@@ -767,3 +764,8 @@
 /obj/screen/bloodsucker/sunlight_counter/update_counter(value, valuecolor)
 	..()
 	maptext = "<div align='center' valign='bottom' style='position:relative; top:0px; left:6px'><font color='[valuecolor]'>[value]</font></div>"
+
+/datum/antagonist/bloodsucker/proc/count_vassals(datum/mind/master)
+	var/datum/antagonist/bloodsucker/B = master.has_antag_datum(ANTAG_DATUM_BLOODSUCKER)
+	var/vassal_amount = B.vassals.len
+	return vassal_amount

@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Adds CogStation's shuttles to-be."
-  - rscadd: "Adds the \"NES Classic\" escape shuttle."
-  - refactor: "Accounts for the new shuttles."

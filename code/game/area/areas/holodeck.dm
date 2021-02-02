@@ -4,6 +4,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	flags_1 = 0
 	hidden = TRUE
+	sound_environment = SOUND_ENVIRONMENT_PADDED_CELL
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = 0 // if true, program goes on emag list
@@ -12,6 +13,16 @@
 	Power tracking: Use the holodeck computer's power grid
 	Asserts are to avoid the inevitable infinite loops
 */
+
+/area/holodeck/Initialize()
+	. = ..()
+	var/list/update_holodeck_cache = SSholodeck?.rejected_areas[type]
+	if(update_holodeck_cache)
+		var/list/info_this = list("name" = name, "type" = type)
+		var/list/target = restricted ? SSholodeck.emag_program_cache : SSholodeck.program_cache
+		for(var/A in update_holodeck_cache)
+			LAZYADD(target[A], info_this)
+		SSholodeck.rejected_areas -= type
 
 /area/holodeck/powered(var/chan)
 	if(!requires_power)
@@ -98,6 +109,9 @@
 
 /area/holodeck/rec_center/winterwonderland
 	name = "Holodeck - Winter Wonderland"
+
+/area/holodeck/rec_center/wrestlingarena
+	name = "Holodeck - Wrestling Arena"
 
 // Bad programs
 

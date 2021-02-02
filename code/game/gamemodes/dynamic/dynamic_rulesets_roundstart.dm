@@ -8,13 +8,13 @@
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
 	config_tag = "traitor"
-	persistent = TRUE
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
 	minimum_required_age = 0
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster", "Cyborg")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
+	flags = TRAITOR_RULESET | MINOR_RULESET | ALWAYS_MAX_WEIGHT_RULESET
 	weight = 5
 	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 10
@@ -22,7 +22,6 @@
 	high_population_requirement = 40
 	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 	property_weights = list("story_potential" = 2, "trust" = -1, "extended" = 1, "valid" = 1)
-	always_max_weight = TRUE
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
@@ -33,15 +32,6 @@
 		M.mind.special_role = ROLE_TRAITOR
 		M.mind.restricted_roles = restricted_roles
 	return TRUE
-
-/datum/dynamic_ruleset/roundstart/traitor/rule_process()
-	if (autotraitor_cooldown > 0)
-		autotraitor_cooldown--
-	else
-		autotraitor_cooldown = 450 // 15 minutes
-		message_admins("Checking if we can turn someone into a traitor.")
-		log_game("DYNAMIC: Checking if we can turn someone into a traitor.")
-		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
 
 //////////////////////////////////////////
 //                                      //
@@ -57,6 +47,7 @@
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 2
+	flags = MINOR_RULESET
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -106,6 +97,7 @@
 	restricted_roles = list("AI", "Cyborg")
 	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 3
 	cost = 15
 	scaling_cost = 15
@@ -141,6 +133,49 @@
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
 		new_antag.team_mode = team_mode
 		changeling.add_antag_datum(new_antag)
+	return TRUE
+
+//////////////////////////////////////////////
+//                                          //
+//              ELDRITCH CULT               //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/heretics
+	name = "Heretics"
+	antag_flag = "heretic"
+	antag_datum = /datum/antagonist/heretic
+	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("AI", "Cyborg")
+	required_candidates = 1
+	flags = MINOR_RULESET
+	weight = 3
+	cost = 25
+	scaling_cost = 15
+	requirements = list(60,60,60,55,50,50,50,50,50,50)
+	property_weights = list("story_potential" = 1, "trust" = -1, "chaos" = 2, "extended" = -1, "valid" = 2)
+	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
+	high_population_requirement = 50
+
+
+/datum/dynamic_ruleset/roundstart/heretics/pre_execute()
+	. = ..()
+	var/num_ecult = antag_cap[indice_pop] * (scaled_times + 1)
+
+	for (var/i = 1 to num_ecult)
+		var/mob/picked_candidate = pick_n_take(candidates)
+		assigned += picked_candidate.mind
+		picked_candidate.mind.restricted_roles = restricted_roles
+		picked_candidate.mind.special_role = ROLE_HERETIC
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/heretics/execute()
+
+	for(var/c in assigned)
+		var/datum/mind/cultie = c
+		var/datum/antagonist/heretic/new_antag = new antag_datum()
+		cultie.add_antag_datum(new_antag)
+
 	return TRUE
 
 //////////////////////////////////////////////
@@ -652,6 +687,7 @@
 	antag_datum = /datum/antagonist/devil
 	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 3
 	cost = 0
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
@@ -789,7 +825,7 @@
 	if (prob(meteorminutes/2))
 		wavetype = GLOB.meteors_catastrophic
 
-	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
+	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
 
@@ -808,6 +844,7 @@
 	protected_roles = list("Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 1
+	flags = MINOR_RULESET
 	weight = 2
 	cost = 15
 	scaling_cost = 10

@@ -2,6 +2,7 @@
 	name = "Sentient Disease"
 	roundend_category = "diseases"
 	antagpanel_category = "Disease"
+	show_to_ghosts = TRUE
 	var/disease_name = ""
 
 /datum/antagonist/disease/on_gain()
@@ -55,7 +56,7 @@
 		if(objective.completable)
 			var/completion = objective.check_completion()
 			if(completion >= 1)
-				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</span>"
+				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'><B>Success!</B></span>"
 			else if(completion <= 0)
 				result += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 				win = FALSE

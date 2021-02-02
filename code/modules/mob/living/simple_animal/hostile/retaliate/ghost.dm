@@ -7,9 +7,12 @@
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "passes through"
-	response_disarm = "shoves"
-	response_harm = "hits"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "shoves"
+	response_disarm_simple = "shove"
+	response_harm_continuous = "hits"
+	response_harm_simple = "hit"
 	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0
@@ -20,7 +23,8 @@
 	melee_damage_upper = 15
 	del_on_death = 1
 	emote_see = list("weeps silently", "groans", "mumbles")
-	attacktext = "grips"
+	attack_verb_continuous = "grips"
+	attack_verb_simple = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("weeps")
 	deathmessage = "wails, disintegrating into a pile of ectoplasm!"
@@ -32,6 +36,7 @@
 	pressure_resistance = 300
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	blood_volume = 0
+	has_field_of_vision = FALSE
 	var/ghost_hair_style
 	var/ghost_hair_color
 	var/mutable_appearance/ghost_hair
@@ -54,12 +59,12 @@
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
 	if(ghost_hair_style != null)
-		ghost_hair = mutable_appearance('icons/mob/human_face.dmi', "hair_[ghost_hair_style]", -HAIR_LAYER)
+		ghost_hair = mutable_appearance('icons/mob/hair.dmi', "hair_[ghost_hair_style]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		add_overlay(ghost_hair)
 	if(ghost_facial_hair_style != null)
-		ghost_facial_hair = mutable_appearance('icons/mob/human_face.dmi', "facial_[ghost_facial_hair_style]", -HAIR_LAYER)
+		ghost_facial_hair = mutable_appearance('icons/mob/hair.dmi', "facial_[ghost_facial_hair_style]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)

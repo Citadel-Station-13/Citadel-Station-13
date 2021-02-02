@@ -27,8 +27,9 @@
 		C.blood_volume -= 0.2
 		C.adjustStaminaLoss(-15)
 		// Stop Bleeding
-		if(istype(H) && H.bleed_rate > 0 && rand(20) == 0)
-			H.bleed_rate --
+		if(istype(H) && H.is_bleeding() && rand(20) == 0)
+			for(var/obj/item/bodypart/part in H.bodyparts)
+				part.generic_bleedstacks --
 		C.Jitter(5)
 		sleep(10)
 	// DONE!

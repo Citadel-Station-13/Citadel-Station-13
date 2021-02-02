@@ -9,9 +9,12 @@
 	name = "gondola"
 	real_name = "gondola"
 	desc = "Gondola is the silent walker. Having no hands he embodies the Taoist principle of wu-wei (non-action) while his smiling facial expression shows his utter and complete acceptance of the world as it is. Its hide is extremely valuable."
-	response_help = "pets"
-	response_disarm = "bops"
-	response_harm = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	faction = list("gondola")
 	turns_per_move = 10
 	icon = 'icons/mob/gondolas.dmi'
@@ -33,6 +36,10 @@
 	if (!(istype(src, /mob/living/simple_animal/pet/gondola/gondolapod)))
 		CreateGondola()
 
+/mob/living/simple_animal/pet/gondola/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_SKIP_VOCAL) // so they can cast spells despite being silent.
+
 /mob/living/simple_animal/pet/gondola/proc/CreateGondola()
 	icon_state = null
 	icon_living = null
@@ -51,7 +58,7 @@
 			eyes_overlay.pixel_y = -8
 			moustache_overlay.pixel_y = -8
 
-	cut_overlays(TRUE)
+	cut_overlays()
 	add_overlay(body_overlay)
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)

@@ -1,8 +1,0 @@
-author: "Bhijn (original PR by Azarak, sprites by Discord user Smug Asshole Muhreen#5522)"
-delete-after: True
-changes: 
-  - rscadd: "Synths, the open source and free-as-in-freedom species by FA user vader-san, have been ported from Skyrat."
-  - rscadd: "Ported VOREStation's synthetic taursprites"
-  - rscadd: "Markings that don't match very well with your selected species are now hidden from the markings list by default. You can still use these mismatched markings to create horrendous sparkledog abominations by using the \"Show mismatched markings\" button ingame."
-  - bugfix: "Body markings who's iconstates don't match their name will now actually render properly."
-  - code_imp: "Limb base icons are no longer hardcoded, should_draw_citadel and should_draw_grayscale have been removed in favor of the species-level `icon_limbs` var and the bodypart-level `base_bp_icon` and `color_src` vars. Downstreams should no longer have to touch bodypart rendering code a whole lot if they want to add custom species. Downstreams that have already added species with digitigrade leg support will have to append species IDs to the digitigrade leg sprites, but aside from that, the migration process to this more modularity-friendly system should be fairly smooth."

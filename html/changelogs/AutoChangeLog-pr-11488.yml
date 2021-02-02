@@ -1,4 +1,0 @@
-author: "bunny232"
-delete-after: True
-changes: 
-  - bugfix: "Box bridge now actually has the air distro connected"

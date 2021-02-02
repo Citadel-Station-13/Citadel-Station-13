@@ -76,19 +76,11 @@
 				return FALSE
 		if(M.is_flying())
 			return FALSE
-		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(istype(H.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/J = H.belt
-				//To freak out any bystanders
-				H.visible_message("<span class='boldwarning'>[H] falls into [parent]!</span>")
-				J.chasm_react(H)
-				return FALSE
 	return TRUE
 
 /datum/component/chasm/proc/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
-	if(!AM || QDELETED(AM))
+	if(!AM || QDELETED(AM) || SEND_SIGNAL(AM, COMSIG_MOVABLE_CHASM_DROP, src))
 		return
 	falling_atoms[AM] = (falling_atoms[AM] || 0) + 1
 	var/turf/T = target_turf
@@ -109,7 +101,7 @@
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [parent]!</span>", "<span class='userdanger'>[oblivion_message]</span>")
 		if (isliving(AM))
 			var/mob/living/L = AM
-			L.notransform = TRUE
+			L.mob_transforming = TRUE
 			L.Paralyze(200)
 
 		var/oldtransform = AM.transform

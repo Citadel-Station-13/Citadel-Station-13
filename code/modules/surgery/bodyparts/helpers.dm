@@ -10,6 +10,16 @@
 		if(L.body_zone == zone)
 			return L
 
+///Get the bodypart for whatever hand we have active, Only relevant for carbons
+/mob/proc/get_active_hand()
+	return FALSE
+
+/mob/living/carbon/get_active_hand()
+	var/which_hand = BODY_ZONE_PRECISE_L_HAND
+	if(!(active_hand_index % 2))
+		which_hand = BODY_ZONE_PRECISE_R_HAND
+	return get_bodypart(check_zone(which_hand))
+
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(i)
 		var/obj/item/bodypart/L = hand_bodyparts[i]
@@ -152,26 +162,24 @@
 			disabled += zone
 	return disabled
 
-//Remove all embedded objects from all limbs on the carbon mob
+///Remove a specific embedded item from the carbon mob
+/mob/living/carbon/proc/remove_embedded_object(obj/item/I)
+	SEND_SIGNAL(src, COMSIG_CARBON_EMBED_REMOVAL, I)
+
+///Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
-	var/turf/T = get_turf(src)
-
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
-			L.embedded_objects -= I
-			I.forceMove(T)
-			I.unembedded()
+			remove_embedded_object(I)
 
-	clear_alert("embeddedobject")
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-
-/mob/living/carbon/proc/has_embedded_objects()
-	. = 0
+/mob/living/carbon/proc/has_embedded_objects(include_harmless=FALSE)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		for(var/obj/item/I in L.embedded_objects)
-			return 1
+			if(!include_harmless && I.isEmbedHarmless())
+				continue
+			return TRUE
 
 
 //Helper for quickly creating a new limb - used by augment code in species.dm spec_attacked_by
@@ -251,37 +259,6 @@
 		if(robotic)
 			L.change_bodypart_status(BODYPART_ROBOTIC)
 	. = L
-
-
-/proc/skintone2hex(skin_tone)
-	. = 0
-	switch(skin_tone)
-		if("caucasian1")
-			. = "ffe0d1"
-		if("caucasian2")
-			. = "fcccb3"
-		if("caucasian3")
-			. = "e8b59b"
-		if("latino")
-			. = "d9ae96"
-		if("mediterranean")
-			. = "c79b8b"
-		if("asian1")
-			. = "ffdeb3"
-		if("asian2")
-			. = "e3ba84"
-		if("arab")
-			. = "c4915e"
-		if("indian")
-			. = "b87840"
-		if("african1")
-			. = "754523"
-		if("african2")
-			. = "471c18"
-		if("albino")
-			. = "fff4e6"
-		if("orange")
-			. = "ffc905"
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	for(var/X in bodyparts)

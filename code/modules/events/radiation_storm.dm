@@ -2,7 +2,6 @@
 	name = "Radiation Storm"
 	typepath = /datum/round_event/radiation_storm
 	max_occurrences = 1
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/radiation_storm
 

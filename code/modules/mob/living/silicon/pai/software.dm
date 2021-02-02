@@ -267,9 +267,8 @@
 			if(href_list["toggle"])
 				encryptmod = TRUE
 		if("translator")
-			if(href_list["toggle"])
-				grant_all_languages(TRUE)
-					// this is PERMAMENT.
+			if(href_list["toggle"])	//This is permanent.
+				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 		if("doorjack")
 			if(href_list["jack"])
 				if(cable && cable.machine)
@@ -283,9 +282,7 @@
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 		if("loudness")
 			if(subscreen == 1) // Open Instrument
-				internal_instrument.interact(src)
-			if(subscreen == 2) // Change Instrument type
-				internal_instrument.selectInstrument()
+				internal_instrument.ui_interact(src)
 
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -568,7 +565,6 @@
 		dat += "Unable to obtain a reading.<br>"
 	else
 		var/datum/gas_mixture/environment = T.return_air()
-		var/list/env_gases = environment.gases
 
 		var/pressure = environment.return_pressure()
 		var/total_moles = environment.total_moles()
@@ -576,11 +572,11 @@
 		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 		if (total_moles)
-			for(var/id in env_gases)
-				var/gas_level = env_gases[id]/total_moles
+			for(var/id in environment.get_gases())
+				var/gas_level = environment.get_moles(id)/total_moles
 				if(gas_level > 0.01)
 					dat += "[GLOB.meta_gas_names[id]]: [round(gas_level*100)]%<br>"
-		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
+		dat += "Temperature: [round(environment.return_temperature()-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=[REF(src)];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
 	return dat

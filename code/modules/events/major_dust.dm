@@ -2,7 +2,6 @@
 	name = "Major Space Dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
 	weight = 8
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/meteor_wave/major_dust
 	wave_name = "space dust"

@@ -56,7 +56,7 @@
 	<li>There are many other ways; be creative!</li>\
 	</ul>"
 
-/datum/sabotage_objective/processing/supermatter
+/*/datum/sabotage_objective/processing/supermatter
 	name = "Sabotage the supermatter so that it goes under 50% integrity. If it is delaminated, you will fail."
 	sabotage_type = "supermatter"
 	special_equipment = list(/obj/item/paper/guides/antag/supermatter_sabotage)
@@ -84,19 +84,25 @@
 
 /datum/sabotage_objective/station_integrity/check_conditions()
 	return 5-(max(SSticker.station_integrity*4,320)/80)
-
+*/
 /datum/sabotage_objective/cloner
 	name = "Destroy all Nanotrasen cloning machines."
 	sabotage_type = "cloner"
 
 /datum/sabotage_objective/cloner/check_conditions()
-	return !(locate(/obj/machinery/clonepod) in GLOB.machines)
+	for(var/obj/machinery/clonepod/cloner in GLOB.machines)
+		if(is_station_level(cloner.z))
+			return FALSE
+	return TRUE
 
 /datum/sabotage_objective/ai_law
 	name = "Upload a hacked law to the AI."
 	sabotage_type = "ailaw"
 	special_equipment = list(/obj/item/aiModule/syndicate)
 	excludefromjob = list("Chief Engineer","Research Director","Head of Personnel","Captain","Chief Medical Officer","Head Of Security")
+
+/datum/sabotage_objective/ai_law/can_run()
+	return length(active_ais())
 
 /datum/sabotage_objective/ai_law/check_conditions()
 	for (var/i in GLOB.ai_list)

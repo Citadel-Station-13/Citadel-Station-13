@@ -438,9 +438,20 @@
 		return
 	else
 		linked_alert.icon_state = "fleshmend"
-	owner.adjustBruteLoss(-10, FALSE)
-	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
+	if(!iscarbon(owner))
+		owner.adjustBruteLoss(-10, FALSE)
+		owner.adjustFireLoss(-5, FALSE)
+		return
+	var/mob/living/carbon/C = owner
+	var/list/damaged_parts = C.get_damaged_bodyparts(TRUE,TRUE, status = list(BODYPART_ORGANIC, BODYPART_HYBRID, BODYPART_NANITES))
+	if(damaged_parts.len)
+		for(var/obj/item/bodypart/part in damaged_parts)
+			part.heal_damage(10/damaged_parts.len, 5/damaged_parts.len, only_organic = FALSE, updating_health = FALSE)
+		C.updatehealth()
+		C.update_damage_overlays()
+
+	QDEL_LIST(C.all_scars)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
@@ -550,3 +561,210 @@
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
+
+/obj/screen/alert/status_effect/regenerative_core
+	name = "Reinforcing Tendrils"
+	desc = "You can move faster than your broken body could normally handle!"
+	icon_state = "regenerative_core"
+	name = "Regenerative Core Tendrils"
+
+/datum/status_effect/regenerative_core
+	id = "Regenerative Core"
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/regenerative_core
+	var/heal_amount = 25
+
+/datum/status_effect/regenerative_core/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, but only get 1/5th of the healing. They can use this to get past the damage threshhold however, and then regularely heal from there.
+		heal_amount *= 0.2
+	owner.adjustBruteLoss(-heal_amount, only_organic = FALSE)
+	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
+		owner.adjustFireLoss(-heal_amount, only_organic = FALSE)
+	owner.remove_CC()
+	owner.bodytemperature = BODYTEMP_NORMAL
+	return TRUE
+
+/datum/status_effect/regenerative_core/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+	owner.updatehealth()
+
+/datum/status_effect/panacea
+	id = "Anatomic Panacea"
+	duration = 100
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/panacea
+
+/obj/screen/alert/status_effect/panacea
+	name = "Panacea"
+	desc = "We purge the impurities from our body."
+	icon_state = "panacea"
+
+// Changeling's anatomic panacea now in buff form. Directly fixes issues instead of injecting chems
+/datum/status_effect/panacea/tick()
+	var/mob/living/carbon/M = owner
+
+	//Heal brain damage and toxyloss, alongside trauma
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -8)
+	owner.adjustToxLoss(-6, forced = TRUE, toxins_type = TOX_OMNI)
+	M.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	//Purges 50 rads per tick
+	if(owner.radiation > 0)
+		owner.radiation -= min(owner.radiation, 50)
+	//Mutadone effects
+	owner.jitteriness = 0
+	if(owner.has_dna())
+		M.dna.remove_all_mutations(mutadone = TRUE)
+	if(!QDELETED(owner)) //We were a monkey, now a human
+		..()
+	// Purges toxins
+	for(var/datum/reagent/toxin/R in owner.reagents.reagent_list)
+		owner.reagents.remove_reagent(R.type, 5)
+	//Antihol effects
+	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 10, 0, 1)
+	M.drunkenness = max(M.drunkenness - 10, 0)
+	owner.dizziness = 0
+	owner.drowsyness = 0
+	owner.slurring = 0
+	owner.confused = 0
+	//Organ and disease cure moved from panacea.dm to buff proc
+	var/list/bad_organs = list(
+		owner.getorgan(/obj/item/organ/body_egg),
+		owner.getorgan(/obj/item/organ/zombie_infection))
+	for(var/o in bad_organs)
+		var/obj/item/organ/O = o
+		if(!istype(O))
+			continue
+		O.Remove()
+		if(iscarbon(owner))
+			var/mob/living/carbon/C = owner
+			C.vomit(0, toxic = TRUE)
+		O.forceMove(get_turf(owner))
+	if(isliving(owner))
+		var/mob/living/L = owner
+		for(var/thing in L.diseases)
+			var/datum/disease/D = thing
+			if(D.severity == DISEASE_SEVERITY_POSITIVE)
+				continue
+			D.cure()
+
+/datum/status_effect/mantra // available to wizards and admins alone, currently
+	id = "Mantra"
+	examine_text = "<span class='notice'>Their aura is filled with yellow energy!</span>"
+	alert_type = null
+	var/damageboost = 10
+	var/woundboost = 5
+	var/prev_hair_color
+	var/powerup
+	var/powerdown
+
+/datum/status_effect/mantra/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/H = owner
+		playsound(H, 'sound/magic/powerup.ogg', 50, 1)
+		H.add_filter("mantra_glow", 2, list("type" = "outline", "color" = "#edfa347a", "size" = 2))
+		prev_hair_color = H.hair_color
+		H.hair_color = "ffe11e"
+		H.update_hair()
+		ADD_TRAIT(H, TRAIT_PUGILIST, "Mantra")
+		ADD_TRAIT(H, TRAIT_NOSOFTCRIT, "Mantra")
+		ADD_TRAIT(H, TRAIT_STUNIMMUNE, "Mantra")
+		ADD_TRAIT(H, TRAIT_PUSHIMMUNE, "Mantra")
+		ADD_TRAIT(H, TRAIT_NOGUNS, "Mantra")
+		H.dna.species.punchdamagehigh += damageboost
+		H.dna.species.punchdamagelow += damageboost
+		H.dna.species.punchwoundbonus += woundboost
+		H.physiology.brute_mod *= 0.9 // slightly resilient against lethal damage, but...
+		H.physiology.burn_mod *= 0.9
+		H.physiology.stamina_mod *= 0.5 // very resistant to non-lethal damage, because they're already draining stamina every second
+		to_chat(H, "<span class='notice'>Your inner mantra coalesces around you, granting you incredible strength and durability - but at what cost?</span>")
+
+/datum/status_effect/mantra/tick()
+	. = ..()
+	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
+		owner.remove_status_effect(STATUS_EFFECT_MANTRA)
+		return
+	if(owner.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+		owner.remove_status_effect(STATUS_EFFECT_MANTRA)
+		return
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/C = owner
+		C.adjustBruteLoss(-1) // slightly resilient against lethal damage
+		C.adjustFireLoss(-1)
+		C.adjustStaminaLoss(3) // in testing i personally found that 2/sec was too minimal and 4/sec was too much
+	/*if(SEND_SIGNAL(owner, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) // turning on combat mode flares up your aura
+
+	else*/
+
+/datum/status_effect/mantra/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/M = owner
+		playsound(M, 'sound/magic/powerdown.ogg', 50, 1)
+		M.remove_filter("mantra_glow")
+		M.hair_color = prev_hair_color
+		M.update_hair()
+		REMOVE_TRAIT(M, TRAIT_PUGILIST, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_STUNIMMUNE, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_PUSHIMMUNE, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_NOGUNS, "Mantra")
+		M.dna.species.punchdamagehigh -= damageboost
+		M.dna.species.punchdamagelow -= damageboost
+		M.dna.species.punchwoundbonus -= woundboost
+		M.physiology.brute_mod /= 0.9
+		M.physiology.burn_mod /= 0.9
+		M.physiology.stamina_mod /= 0.5
+		to_chat(M, "<span class='notice'>Your inner mantra collapses, for now.</span>")
+
+/datum/status_effect/asura // mfw miner gear
+	id = "Asura"
+	examine_text = "<span class='notice'>Their aura is filled with red-hot rage!</span>"
+	alert_type = null
+	var/damageboost = 10
+	var/woundboost = 5
+
+/datum/status_effect/asura/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/H = owner
+		playsound(H, 'sound/magic/powerup.ogg', 50, 1)
+		H.add_filter("asura_glow", 2, list("type" = "outline", "color" = "#fc21217a", "size" = 2))
+		ADD_TRAIT(H, TRAIT_PUGILIST, "Asura")
+		H.dna.species.punchdamagehigh += damageboost
+		H.dna.species.punchdamagelow += damageboost
+		H.dna.species.punchwoundbonus += woundboost
+		to_chat(H, "<span class='notice'>Your anger unleashes in a crimson blaze around you and corrosive power fills your muscles.</span>")
+
+/datum/status_effect/asura/tick()
+	. = ..()
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
+		owner.remove_status_effect(STATUS_EFFECT_ASURA)
+		return
+	if(owner.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+		owner.remove_status_effect(STATUS_EFFECT_ASURA)
+		return
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/C = owner
+		C.adjustBruteLoss(1) // drains 1 hp per second. You're gonna need some Senzu Cores.
+		C.adjustStaminaLoss(-2) // angry man punch a lot
+	/*if(SEND_SIGNAL(owner, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) // turning on combat mode flares up your aura
+
+	else*/
+
+/datum/status_effect/asura/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/M = owner
+		playsound(M, 'sound/magic/powerdown.ogg', 50, 1)
+		M.remove_filter("asura_glow")
+		REMOVE_TRAIT(M, TRAIT_PUGILIST, "Asura")
+		M.dna.species.punchdamagehigh -= damageboost
+		M.dna.species.punchdamagelow -= damageboost
+		M.dna.species.punchwoundbonus -= woundboost
+		to_chat(M, "<span class='notice'>You calm yourself, and your unnatural strength dissipates.</span>")

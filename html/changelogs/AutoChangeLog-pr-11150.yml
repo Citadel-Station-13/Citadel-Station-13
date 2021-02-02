@@ -1,8 +1,0 @@
-author: "raspyosu"
-delete-after: True
-changes: 
-  - rscadd: "some flavor text for lunge, cloak"
-  - tweak: "mesmerize, cloak functionality/requirements"
-  - balance: "mesmerize, lunge, cloak"
-  - soundadd: "lunge telegraph sound"
-  - spellcheck: "mesmerized status icon flavor text"

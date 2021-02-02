@@ -102,6 +102,7 @@
 	export_types = list(/obj/item/stock_parts/cell/high/slime/hypercharged)
 
 //Glass working stuff
+// i'd just like to say how i despise the previous coder's fetish for their funny glasswork
 
 /datum/export/glasswork_dish
 	cost = 300
@@ -110,9 +111,9 @@
 	include_subtypes = FALSE
 
 /datum/export/glasswork_lens
-	cost = 1800
+	cost = 1600
 	unit_name = "small glass lens"
-	export_types = list(/obj/item/lens)
+	export_types = list(/obj/item/glasswork/glass_base/lens)
 
 /datum/export/glasswork_spouty
 	cost = 1200
@@ -130,4 +131,28 @@
 	cost = 1000
 	unit_name = "large flask"
 	export_types = list(/obj/item/reagent_containers/glass/beaker/flask/large)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_teaplate
+	cost = 1000
+	unit_name = "tea gear"
+	export_types = list(/obj/item/tea_plate)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_teacup
+	cost = 1600
+	unit_name = "tea gear"
+	export_types = list(/obj/item/tea_cup)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_laserpointer
+	cost = 2600
+	unit_name = "hand made laserpointer"
+	export_types = list(/obj/item/laser_pointer/blue/handmade)
+	include_subtypes = FALSE
+
+/datum/export/glasswork_glasses
+	cost = 5000
+	unit_name = "hand made glasses"
+	export_types = list(/obj/item/glasswork/glasses)
 	include_subtypes = FALSE

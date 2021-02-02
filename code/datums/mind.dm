@@ -41,6 +41,8 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
+	var/hide_ckey = FALSE //hide ckey from round-end report
+
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/linglink
@@ -63,7 +65,15 @@
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 	var/list/learned_recipes //List of learned recipe TYPES.
 
+	/// Our skill holder.
+	var/datum/skill_holder/skill_holder
+
+	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	var/mob/original_character
+
+
 /datum/mind/New(var/key)
+	skill_holder = new(src)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
@@ -76,12 +86,12 @@
 			if(antag_datum.delete_on_mind_deletion)
 				qdel(i)
 		antag_datums = null
+	QDEL_NULL(skill_holder)
 	return ..()
 
 /datum/mind/proc/get_language_holder()
 	if(!language_holder)
-		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
-		language_holder = L.copy(src)
+		language_holder = new (src)
 
 	return language_holder
 
@@ -93,12 +103,6 @@
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
-		if(iscarbon(current))
-			var/mob/living/carbon/C = current
-			C.disable_intentional_combat_mode(TRUE)
-	if(!language_holder)
-		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
-		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
@@ -126,12 +130,18 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	if(new_character.client)
+		LAZYCLEARLIST(new_character.client.recent_examines)
+		new_character.client.init_verbs() // re-initialize character specific verbs
+	current.update_atom_languages()
 
 //CIT CHANGE - makes arousal update when transfering bodies
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
 		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
 			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
+
+	hide_ckey = current.client?.prefs?.hide_ckey
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
@@ -332,14 +342,20 @@
 
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
 	if(iscultist(creator))
-		SSticker.mode.add_cultist(src)
+		if(iscultist(creator, TRUE))
+			SSticker.mode.add_cultist(src)
+		else
+			src.add_antag_datum(/datum/antagonist/cult/neutered/traitor)
 
 	else if(is_revolutionary(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src,FALSE)
 
 	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(current)
+		if(is_servant_of_ratvar(creator, TRUE))
+			add_servant_of_ratvar(current)
+		else
+			add_servant_of_ratvar(current, FALSE, FALSE, /datum/antagonist/clockcult/neutered/traitor)
 
 	else if(is_nuclear_operative(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -470,7 +486,6 @@
 				/datum/objective/steal,
 				/datum/objective/download,
 				/datum/objective/nuclear,
-				/datum/objective/capture,
 				/datum/objective/absorb,
 				/datum/objective/custom
 			)
@@ -511,6 +526,19 @@
 				target_antag.objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
+
+	else if(href_list["traitor_class"])
+		var/static/list/choices
+		if(!choices)
+			choices = list()
+			for(var/C in GLOB.traitor_classes)
+				var/datum/traitor_class/t = C
+				choices[initial(t.employer)] = C
+		var/datum/antagonist/traitor/T = locate(href_list["target_antag"]) in antag_datums
+		if(T)
+			var/selected_type = input("Select traitor class:", "Traitor class", T.traitor_kind.employer) as null|anything in choices
+			selected_type = choices[selected_type]
+			T.set_traitor_kind(selected_type)
 
 	else if (href_list["obj_delete"])
 		var/datum/objective/objective
@@ -666,6 +694,7 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+	current?.client << output(null, "statbrowser:check_spells")
 
 /datum/mind/proc/RemoveAllSpells()
 	for(var/obj/effect/proc_holder/S in spell_list)
@@ -758,6 +787,7 @@
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
+	mind.hide_ckey = client?.prefs?.hide_ckey
 
 /mob/living/carbon/mind_initialize()
 	..()

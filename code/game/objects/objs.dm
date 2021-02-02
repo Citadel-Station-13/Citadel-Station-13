@@ -3,11 +3,17 @@
 	var/crit_fail = FALSE
 	animate_movement = 2
 	speech_span = SPAN_ROBOT
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
 	var/obj_flags = CAN_BE_HIT
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
 	var/force = 0
+
+	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
+	var/wound_bonus = 0
+	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
+	var/bare_wound_bonus = 0
 
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity
@@ -36,12 +42,8 @@
 		if("anchored")
 			setAnchored(vval)
 			return TRUE
-		if("obj_flags")
+		if(NAMEOF(src, obj_flags))
 			if ((obj_flags & DANGEROUS_POSSESSION) && !(vval & DANGEROUS_POSSESSION))
-				return FALSE
-		if("control_object")
-			var/obj/O = vval
-			if(istype(O) && (O.obj_flags & DANGEROUS_POSSESSION))
 				return FALSE
 	return ..()
 
@@ -122,7 +124,7 @@
 /obj/proc/updateUsrDialog()
 	if((obj_flags & IN_USE) && !(obj_flags & USES_TGUI))
 		var/is_in_use = FALSE
-		var/list/nearby = viewers(1, src)
+		var/list/nearby = fov_viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = TRUE
@@ -151,7 +153,7 @@
 	if(obj_flags & IN_USE)
 		var/is_in_use = FALSE
 		if(update_viewers)
-			for(var/mob/M in viewers(1, src))
+			for(var/mob/M in fov_viewers(1, src))
 				if ((M.client && M.machine == src))
 					is_in_use = TRUE
 					src.interact(M)
@@ -213,9 +215,78 @@
 
 /obj/vv_get_dropdown()
 	. = ..()
-	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
-	.["Osay"] = "?_src_=vars;[HrefToken()];osay[REF(src)]"
-	.["Modify armor values"] = "?_src_=vars;[HrefToken()];modarmor=[REF(src)]"
+	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION(VV_HK_MASS_DEL_TYPE, "Delete all of type")
+	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
+	VV_DROPDOWN_OPTION(VV_HK_ARMOR_MOD, "Modify armor values")
+
+/obj/vv_do_topic(list/href_list)
+	if(!(. = ..()))
+		return
+	if(href_list[VV_HK_OSAY])
+		if(check_rights(R_FUN, FALSE))
+			usr.client.object_say(src)
+	if(href_list[VV_HK_ARMOR_MOD])
+		var/list/pickerlist = list()
+		var/list/armorlist = armor.getList()
+
+		for (var/i in armorlist)
+			pickerlist += list(list("value" = armorlist[i], "name" = i))
+
+		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
+
+		if (islist(result))
+			if (result["button"] != 2) // If the user pressed the cancel button
+				// text2num conveniently returns a null on invalid values
+				armor = armor.setRating(melee = text2num(result["values"]["melee"]),\
+			                  bullet = text2num(result["values"]["bullet"]),\
+			                  laser = text2num(result["values"]["laser"]),\
+			                  energy = text2num(result["values"]["energy"]),\
+			                  bomb = text2num(result["values"]["bomb"]),\
+			                  bio = text2num(result["values"]["bio"]),\
+			                  rad = text2num(result["values"]["rad"]),\
+			                  fire = text2num(result["values"]["fire"]),\
+			                  acid = text2num(result["values"]["acid"]))
+				log_admin("[key_name(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]")
+				message_admins("<span class='notice'>[key_name_admin(usr)] modified the armor on [src] ([type]) to melee: [armor.melee], bullet: [armor.bullet], laser: [armor.laser], energy: [armor.energy], bomb: [armor.bomb], bio: [armor.bio], rad: [armor.rad], fire: [armor.fire], acid: [armor.acid]</span>")
+	if(href_list[VV_HK_MASS_DEL_TYPE])
+		if(check_rights(R_DEBUG|R_SERVER))
+			var/action_type = alert("Strict type ([type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+			if(action_type == "Cancel" || !action_type)
+				return
+
+			if(alert("Are you really sure you want to delete all objects of type [type]?",,"Yes","No") != "Yes")
+				return
+
+			if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+				return
+
+			var/O_type = type
+			switch(action_type)
+				if("Strict type")
+					var/i = 0
+					for(var/obj/Obj in world)
+						if(Obj.type == O_type)
+							i++
+							qdel(Obj)
+						CHECK_TICK
+					if(!i)
+						to_chat(usr, "No objects of this type exist")
+						return
+					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) </span>")
+				if("Type and subtypes")
+					var/i = 0
+					for(var/obj/Obj in world)
+						if(istype(Obj,O_type))
+							i++
+							qdel(Obj)
+						CHECK_TICK
+					if(!i)
+						to_chat(usr, "No objects of this type exist")
+						return
+					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
 
 /obj/examine(mob/user)
 	. = ..()
@@ -233,15 +304,58 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	var/dat = "<b>Reskin options for [name]:</b>\n"
-	for(var/V in unique_reskin)
-		var/output = icon2html(src, M, unique_reskin[V])
-		dat += "[V]: <span class='reallybig'>[output]</span>\n"
-	to_chat(M, dat)
 
-	var/choice = input(M, always_reskinnable ? "Choose the a reskin for [src]" : "Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(QDELETED(src) || !choice || (current_skin && !always_reskinnable) || M.incapacitated() || !in_range(M,src) || !unique_reskin[choice] || unique_reskin[choice] == current_skin)
+	var/list/items = list()
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		items += list("[reskin_option]" = item_image)
+	sortList(items)
+
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
+	if(!pick)
 		return
-	current_skin = choice
-	icon_state = unique_reskin[choice]
-	to_chat(M, "[src] is now skinned as '[choice]'.")
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+	icon_state = unique_reskin[pick]
+	to_chat(M, "[src] is now skinned as '[pick].'")
+
+/**
+  * Checks if we are allowed to interact with a radial menu for reskins
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/obj/proc/check_reskin_menu(mob/user)
+	if(QDELETED(src))
+		return FALSE
+	if(current_skin)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
+/obj/update_overlays()
+	. = ..()
+	if(acid_level)
+		. += GLOB.acid_overlay
+	if(resistance_flags & ON_FIRE)
+		. += GLOB.fire_overlay
+
+//Called when the object is constructed by an autolathe
+//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
+/obj/proc/autolathe_crafted(obj/machinery/autolathe/A)
+	return
+
+/obj/proc/rnd_crafted(obj/machinery/rnd/production/P)
+	return
+
+/obj/handle_ricochet(obj/item/projectile/P)
+	. = ..()
+	if(. && ricochet_damage_mod)
+		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet
+
+/obj/proc/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	return

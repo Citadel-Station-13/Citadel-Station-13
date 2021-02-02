@@ -12,10 +12,13 @@
 
 
 	outfit = /datum/outfit/job/miner
+	plasma_outfit = /datum/outfit/plasmaman/mining
 
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_MAILSORTING, ACCESS_CARGO, ACCESS_CARGO_BOT, ACCESS_MINING,
 				ACCESS_MINING_STATION, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
+	paycheck = PAYCHECK_EASY ///Not necessarily easy itself, but it can be trivial to make lot of cash on this job.
+	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 

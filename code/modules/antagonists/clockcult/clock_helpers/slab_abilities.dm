@@ -113,10 +113,9 @@
 		for(var/i in 1 to healseverity)
 			new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
 		if(totaldamage)
-			L.adjustBruteLoss(-brutedamage)
-			L.adjustFireLoss(-burndamage)
+			L.heal_overall_damage(brutedamage, burndamage, only_organic = FALSE) //Maybe a machine god shouldn't murder augmented followers instead of healing them
 			L.adjustOxyLoss(-oxydamage)
-			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE, toxins_type = TOX_OMNI)
 			clockwork_say(ranged_ability_user, text2ratvar("[has_holy_water ? "Heal tainted" : "Mend wounded"] flesh!"))
 			log_combat(ranged_ability_user, L, "healed with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], [has_holy_water ? "causing [L.p_them()] to briefly glow as it mends" : " mending"] [L.p_their()] bruises and burns!</span>", \
@@ -131,6 +130,29 @@
 		if(has_holy_water)
 			L.reagents.del_reagent(/datum/reagent/water/holywater)
 
+		remove_ranged_ability()
+
+	return TRUE
+
+//For the Volt Void scripture, fires a ray of energy at a target location
+/obj/effect/proc_holder/slab/volt
+	ranged_mousepointer = 'icons/effects/volt_target.dmi'
+
+/obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(target == slab || ..()) //we can't cancel
+		return TRUE
+
+	var/turf/T = ranged_ability_user.loc
+	if(!isturf(T))
+		return TRUE
+
+	if(target in view(7, get_turf(ranged_ability_user)))
+		successful = TRUE
+		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
+		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
+		T = get_turf(target)
+		new/obj/effect/temp_visual/ratvar/volt_hit(T, ranged_ability_user)
+		log_combat(ranged_ability_user, T, "fired a volt ray")
 		remove_ranged_ability()
 
 	return TRUE
@@ -201,7 +223,7 @@
 				L.flash_act(1, 1)
 				if(issilicon(target))
 					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
+					S.emp_act(80)
 			else //for Nar'sian weaklings
 				to_chat(L, "<span class='heavy_brass'>\"How does it feel to see the light, dog?\"</span>")
 				L.visible_message("<span class='warning'>[L]'s eyes flare with burning light!</span>", \
@@ -211,7 +233,7 @@
 					var/mob/living/carbon/C = L
 					C.stuttering = max(8, C.stuttering)
 					C.drowsyness = max(8, C.drowsyness)
-					C.confused += CLAMP(16 - C.confused, 0, 8)
+					C.confused += clamp(16 - C.confused, 0, 8)
 					C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 				L.adjustFireLoss(15)
 	..()

@@ -33,6 +33,8 @@
 	var/oldloc = null
 	var/toolbox = /obj/item/storage/toolbox/mechanical
 
+	var/upgrades = 0
+
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
 	#define FIX_TILE		3
@@ -120,6 +122,36 @@
 			to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. It now contains [specialtiles] tiles.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need at least one floor tile to put into [src]!</span>")
+
+	else if(istype(W, /obj/item/storage/toolbox/artistic))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_FLOOR_ARTBOX))
+			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
+			upgrades |= UPGRADE_FLOOR_ARTBOX
+			maxtiles += 100 //Double the storage!
+			qdel(W)
+		if(!open)
+			to_chat(user, "<span class='notice'>The [src] access pannle is not open!</span>")
+			return
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a upgraded case!</span>")
+
+	else if(istype(W, /obj/item/storage/toolbox/syndicate))
+		if(bot_core.allowed(user) && open && !CHECK_BITFIELD(upgrades,UPGRADE_FLOOR_SYNDIBOX))
+			to_chat(user, "<span class='notice'>You upgrade \the [src] case to hold more!</span>")
+			upgrades |= UPGRADE_FLOOR_SYNDIBOX
+			maxtiles += 200 //Double bse storage
+			base_speed = 1 //2x faster!
+			qdel(W)
+		if(!bot_core.allowed(user))
+			to_chat(user, "<span class='notice'>The [src] access pannel locked off to you!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The [src] already has a upgraded case!</span>")
+
+
 	else
 		..()
 
@@ -303,6 +335,11 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
+	if(check_bot_working(target_turf))
+		add_to_ignore(target_turf)
+		target = null
+		playsound(src, 'sound/effects/whistlereset.ogg', 50, TRUE)
+		return
 	if(isspaceturf(target_turf))
 		 //Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
@@ -381,8 +418,19 @@
 /obj/machinery/bot_core/floorbot
 	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
-/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A)
+/mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity, intent = a_intent, flags = NONE)
 	if(isturf(A))
 		repair(A)
 	else
 		..()
+
+/**
+  * Checks a given turf to see if another floorbot is there, working as well.
+  */
+/mob/living/simple_animal/bot/floorbot/proc/check_bot_working(turf/active_turf)
+	if(isturf(active_turf))
+		for(var/mob/living/simple_animal/bot/floorbot/robot in active_turf)
+			if(robot.mode == BOT_REPAIRING)
+				return TRUE
+	return FALSE
+	

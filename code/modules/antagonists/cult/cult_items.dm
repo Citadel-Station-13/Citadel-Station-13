@@ -6,6 +6,21 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/tome/traitor
+	var/spent = FALSE
+
+/obj/item/tome/traitor/check_uplink_validity()
+	return !spent
+
+/obj/item/tome/traitor/attack_self(mob/living/user)
+	if(!iscultist(user) && !spent)
+		to_chat(user, "<span class='userdanger'>You press your hand onto [src], sinister tendrils of corrupted magic swirling around you. Was this the best of ideas?</span>")
+		if(user.mind.add_antag_datum(/datum/antagonist/cult/neutered/traitor))
+			spent = TRUE
+		else
+			to_chat(user, "<span class='userdanger'>[src] falls dark. It appears you weren't worthy.</span>")
+	return ..()
+
 /obj/item/melee/cultblade/dagger
 	name = "ritual dagger"
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
@@ -19,6 +34,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
+	wound_bonus = -30
+	bare_wound_bonus = 30
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 
@@ -36,10 +53,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
-	force = 30
+	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
+	wound_bonus = -80
+	bare_wound_bonus = 30
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
@@ -85,7 +104,7 @@
 			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src)
 
-/obj/item/twohanded/required/cult_bastard
+/obj/item/cult_bastard
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
@@ -95,7 +114,7 @@
 	armour_penetration = 45
 	throw_speed = 1
 	throw_range = 3
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	light_color = "#ff0000"
 	attack_verb = list("cleaved", "slashed", "torn", "hacked", "ripped", "diced", "carved")
 	icon_state = "cultbastard"
@@ -112,31 +131,35 @@
 	var/spin_cooldown = 250
 	var/dash_toggled = TRUE
 
-/obj/item/twohanded/required/cult_bastard/Initialize()
+/obj/item/cult_bastard/Initialize()
 	. = ..()
 	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
-	AddComponent(/datum/component/butchering, 50, 80)
 
-/obj/item/twohanded/required/cult_bastard/examine(mob/user)
+/obj/item/cult_bastard/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 50, 80)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
+/obj/item/cult_bastard/examine(mob/user)
 	. = ..()
 	if(contents.len)
 		. += "<br><b>There are [contents.len] souls trapped within the sword's core.</b>"
 	else
 		. += "<br>The sword appears to be quite lifeless."
 
-/obj/item/twohanded/required/cult_bastard/can_be_pulled(user)
+/obj/item/cult_bastard/can_be_pulled(user)
 	return FALSE
 
-/obj/item/twohanded/required/cult_bastard/attack_self(mob/user)
+/obj/item/cult_bastard/attack_self(mob/user)
 	dash_toggled = !dash_toggled
 	if(dash_toggled)
 		to_chat(loc, "<span class='notice'>You raise [src] and prepare to jaunt with it.</span>")
 	else
 		to_chat(loc, "<span class='notice'>You lower [src] and prepare to swing it normally.</span>")
 
-/obj/item/twohanded/required/cult_bastard/pickup(mob/living/user)
+/obj/item/cult_bastard/pickup(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
@@ -156,32 +179,28 @@
 	linked_action.Grant(user, src)
 	user.update_icons()
 
-/obj/item/twohanded/required/cult_bastard/dropped(mob/user)
+/obj/item/cult_bastard/dropped(mob/user)
 	. = ..()
 	linked_action.Remove(user)
 	jaunt.Remove(user)
 	user.update_icons()
 
-/obj/item/twohanded/required/cult_bastard/IsReflect()
-	if(spinning)
+/obj/item/cult_bastard/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(spinning && is_energy_reflectable_projectile(object) && (attack_type & ATTACK_TYPE_PROJECTILE))
 		playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-		return TRUE
-	else
-		..()
-
-/obj/item/twohanded/required/cult_bastard/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 	if(prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
+		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-			return TRUE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED | BLOCK_SHOULD_REDIRECT
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-			return TRUE
-	return FALSE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
-/obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
+/obj/item/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
 	if(dash_toggled && !proximity)
 		jaunt.Teleport(user, target)
@@ -211,7 +230,7 @@
 	phasein = /obj/effect/temp_visual/dir_setting/cult/phase
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
-/datum/action/innate/dash/cult/IsAvailable()
+/datum/action/innate/dash/cult/IsAvailable(silent = FALSE)
 	if(iscultist(holder) && current_charges)
 		return TRUE
 	else
@@ -224,14 +243,14 @@
 	button_icon_state = "sintouch"
 	var/cooldown = 0
 	var/mob/living/carbon/human/holder
-	var/obj/item/twohanded/required/cult_bastard/sword
+	var/obj/item/cult_bastard/sword
 
 /datum/action/innate/cult/spin2win/Grant(mob/user, obj/bastard)
 	. = ..()
 	sword = bastard
 	holder = user
 
-/datum/action/innate/cult/spin2win/IsAvailable()
+/datum/action/innate/cult/spin2win/IsAvailable(silent = FALSE)
 	if(iscultist(holder) && cooldown <= world.time)
 		return TRUE
 	else
@@ -239,7 +258,7 @@
 
 /datum/action/innate/cult/spin2win/Activate()
 	cooldown = world.time + sword.spin_cooldown
-	holder.changeNext_move(50)
+	holder.DelayNextAction(50)
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
 	sword.block_chance = 100
@@ -262,6 +281,7 @@
 	knockdown = 20
 
 /obj/item/restraints/legcuffs/bola/cult/pickup(mob/living/user)
+	. = ..()
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
 		ensnare(user)
@@ -353,6 +373,11 @@
 	brightness_on = 0
 	actions_types = list()
 
+
+/obj/item/clothing/head/helmet/space/hardsuit/cult/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_CULT_HELMET, ITEM_SLOT_HEAD)
+
 /obj/item/clothing/suit/space/hardsuit/cult
 	name = "\improper Nar'Sien hardened armor"
 	icon_state = "cult_armor"
@@ -362,6 +387,10 @@
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
+
+/obj/item/clothing/suit/space/hardsuit/cult/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/spellcasting, SPELL_CULT_ARMOR, ITEM_SLOT_OCLOTHING)
 
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
@@ -414,7 +443,13 @@
 			user.adjustBruteLoss(25)
 			user.dropItemToGround(src, TRUE)
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(current_charges)
+		block_return[BLOCK_RETURN_NORMAL_BLOCK_CHANCE] = 100
+		block_return[BLOCK_RETURN_BLOCK_CAPACITY] = (block_return[BLOCK_RETURN_BLOCK_CAPACITY] || 0) + current_charges
+	return ..()
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
@@ -422,11 +457,11 @@
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
-		return 1
-	return 0
+		return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, style_flags = NONE)
-	. = list()
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands, icon_file, used_state, style_flags = NONE)
+	. = ..()
 	if(!isinhands && current_charges)
 		. += mutable_appearance('icons/effects/cult_effects.dmi', "shield-cult", MOB_LAYER + 0.01)
 
@@ -498,7 +533,7 @@
 	var/static/curselimit = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
-	if(!iscultist(user))
+	if(!iscultist(user, TRUE))
 		user.dropItemToGround(src, TRUE)
 		user.DefaultCombatKnockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
@@ -513,7 +548,7 @@
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
-		var/security_num = seclevel2num(get_security_level())
+		var/security_num = SECLEVEL2NUM(NUM2SECLEVEL(GLOB.security_level))
 		var/set_coefficient = 1
 		switch(security_num)
 			if(SEC_LEVEL_GREEN)
@@ -660,7 +695,7 @@
 		to_chat(user, "<span class='warning'>\The [src] can only transport items!</span>")
 
 
-/obj/item/twohanded/cult_spear
+/obj/item/cult_spear
 	name = "blood halberd"
 	desc = "A sickening spear composed entirely of crystallized blood."
 	icon_state = "bloodspear0"
@@ -668,30 +703,44 @@
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	slot_flags = 0
 	force = 17
-	force_unwielded = 17
-	force_wielded = 24
 	throwforce = 40
 	throw_speed = 2
 	armour_penetration = 30
 	block_chance = 30
 	attack_verb = list("attacked", "impaled", "stabbed", "torn", "gored")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
+	var/wielded = FALSE // track wielded status on item
 
-/obj/item/twohanded/cult_spear/Initialize()
+
+/obj/item/cult_spear/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/cult_spear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, icon_wielded="bloodspear1")
 
-/obj/item/twohanded/cult_spear/Destroy()
+/// triggered on wield of two handed item
+/obj/item/cult_spear/proc/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/cult_spear/proc/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+
+/obj/item/cult_spear/update_icon_state()
+	icon_state = "bloodspear0"
+
+/obj/item/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
 	..()
 
-/obj/item/twohanded/cult_spear/update_icon_state()
-	icon_state = "bloodspear[wielded]"
-
-/obj/item/twohanded/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
@@ -705,7 +754,7 @@
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					to_chat(L, "<span class='cultlarge'>\"Kneel for me, scum\"</span>")
-					L.confused += CLAMP(10 - L.confused, 0, 5) //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
+					L.confused += clamp(10 - L.confused, 0, 5) //confuses and lightly knockdowns + damages hostile cultists instead of hardstunning like before
 					L.DefaultCombatKnockdown(15)
 					L.adjustBruteLoss(10)
 				else
@@ -714,7 +763,7 @@
 	else
 		..()
 
-/obj/item/twohanded/cult_spear/proc/break_spear(turf/T)
+/obj/item/cult_spear/proc/break_spear(turf/T)
 	if(src)
 		if(!T)
 			T = get_turf(src)
@@ -725,26 +774,26 @@
 			playsound(T, 'sound/effects/glassbr3.ogg', 100)
 	qdel(src)
 
-/obj/item/twohanded/cult_spear/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/cult_spear/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(wielded)
 		final_block_chance *= 2
 	if(prob(final_block_chance))
-		if(attack_type == PROJECTILE_ATTACK)
+		if(attack_type & ATTACK_TYPE_PROJECTILE)
 			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
 			playsound(src, pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg', 'sound/weapons/effects/ric3.ogg', 'sound/weapons/effects/ric4.ogg', 'sound/weapons/effects/ric5.ogg'), 100, 1)
-			return TRUE
+			return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_REDIRECTED | BLOCK_PHYSICAL_EXTERNAL
 		else
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
-			return TRUE
-	return FALSE
+			return BLOCK_SUCCESS | BLOCK_PHYSICAL_EXTERNAL
+	return BLOCK_NONE
 
 /datum/action/innate/cult/spear
 	name = "Bloody Bond"
 	desc = "Call the blood spear back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
-	var/obj/item/twohanded/cult_spear/spear
+	var/obj/item/cult_spear/spear
 	var/cooldown = 0
 
 /datum/action/innate/cult/spear/Grant(mob/user, obj/blood_spear)
@@ -936,10 +985,18 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	var/illusions = 2
 
-/obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/shield/mirror/check_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	block_return[BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE] = max(block_return[BLOCK_RETURN_REFLECT_PROJECTILE_CHANCE] || null, final_block_chance)
+	return ..()
+
+/obj/item/shield/mirror/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
 	if(iscultist(owner))
-		if(istype(hitby, /obj/item/projectile))
-			var/obj/item/projectile/P = hitby
+		if(istype(object, /obj/item/projectile) && (attack_type == ATTACK_TYPE_PROJECTILE))
+			if(is_energy_reflectable_projectile(object))
+				if(prob(final_block_chance))
+					return BLOCK_SUCCESS | BLOCK_SHOULD_REDIRECT | BLOCK_PHYSICAL_EXTERNAL | BLOCK_REDIRECTED
+				return BLOCK_NONE	//To avoid reflection chance double-dipping with block chance
+			var/obj/item/projectile/P = object
 			if(P.damage >= 30)
 				var/turf/T = get_turf(owner)
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
@@ -947,11 +1004,9 @@
 				playsound(T, 'sound/effects/glassbr3.ogg', 100)
 				owner.DefaultCombatKnockdown(25)
 				qdel(src)
-				return FALSE
-			if(P.is_reflectable)
-				return FALSE //To avoid reflection chance double-dipping with block chance
+				return BLOCK_NONE
 		. = ..()
-		if(.)
+		if(. & BLOCK_SUCCESS)
 			playsound(src, 'sound/weapons/parry.ogg', 100, 1)
 			if(illusions > 0)
 				illusions--
@@ -966,7 +1021,7 @@
 					E.Copy_Parent(owner, 70, 10)
 					E.GiveTarget(owner)
 					E.Goto(owner, owner.movement_delay(), E.minimum_distance)
-			return TRUE
+			return
 	else
 		if(prob(50))
 			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
@@ -975,18 +1030,13 @@
 			H.GiveTarget(owner)
 			H.move_to_delay = owner.movement_delay()
 			to_chat(owner, "<span class='danger'><b>[src] betrays you!</b></span>")
-		return FALSE
+		return BLOCK_NONE
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
 		to_chat(holder, "<span class='cult italic'>The shield's illusions are back at full strength!</span>")
-
-/obj/item/shield/mirror/IsReflect()
-	if(prob(block_chance))
-		return TRUE
-	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)

@@ -1,6 +1,8 @@
 /datum/wires/particle_accelerator/control_box
 	holder_type = /obj/machinery/particle_accelerator/control_box
 	proper_name = "Particle Accelerator"
+	req_knowledge = JOB_SKILL_EXPERT
+	req_skill = JOB_SKILL_TRAINED
 
 /datum/wires/particle_accelerator/control_box/New(atom/holder)
 	wires = list(

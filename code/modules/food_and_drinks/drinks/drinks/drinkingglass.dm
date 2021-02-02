@@ -11,6 +11,7 @@
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
+	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -46,14 +47,12 @@
 	possible_transfer_amounts = list()
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
 
-	if (gulp_size < 15)
-		gulp_size = 15
-	else
-		gulp_size = max(round(reagents.total_volume / 15), 15)
+	gulp_size = max(round(reagents.total_volume / 15), 15)
 
 	if (reagents.reagent_list.len > 0)
 		var/datum/reagent/largest_reagent = reagents.get_master_reagent()
@@ -92,7 +91,7 @@
 	list_reagents = list(/datum/reagent/consumable/nuka_cola = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/syndicatebomb
-	name = "Syndicat Bomb"
+	name = "Syndicate Bomb"
 	list_reagents = list(/datum/reagent/consumable/ethanol/syndicatebomb = 50)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)

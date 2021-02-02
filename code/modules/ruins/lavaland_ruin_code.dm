@@ -93,7 +93,7 @@
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
 		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
-		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
+		/obj/item/stack/sheet/bronze					= /datum/species/golem/bronze,
 		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
 		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
 		/obj/item/stack/sheet/bone					= /datum/species/golem/bone,
@@ -133,7 +133,7 @@
 	assignedrole = "Lavaland Syndicate"
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/new_spawn)
-	new_spawn.grant_language(/datum/language/codespeak)
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
 /datum/outfit/lavaland_syndicate
 	name = "Lavaland Syndicate Agent"
@@ -142,7 +142,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol

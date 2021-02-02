@@ -4,13 +4,14 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	amount = 1
-	max_amount = 20
+	max_amount = INFINITY
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 2
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	grind_results = list(/datum/reagent/cellulose = 10)
 	var/value = 0
 
 /obj/item/stack/spacecash/Initialize()
@@ -18,9 +19,11 @@
 	update_desc()
 
 /obj/item/stack/spacecash/proc/update_desc()
-	var/total_worth = amount*value
+	var/total_worth = get_item_credit_value()
 	desc = "It's worth [total_worth] credit[( total_worth > 1 ) ? "s" : ""]"
 
+/obj/item/stack/spacecash/get_item_credit_value()
+	return (amount*value)
 
 /obj/item/stack/spacecash/merge(obj/item/stack/S)
 	. = ..()
@@ -29,6 +32,20 @@
 /obj/item/stack/spacecash/use(used, transfer = FALSE)
 	. = ..()
 	update_desc()
+
+/obj/item/stack/spacecash/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/card/id))
+		var/obj/item/card/id/ID = W
+		if(!ID.registered_account)
+			to_chat(user, "<span class='warning'>[ID] doesn't have a linked account to deposit into!</span>")
+			return
+		for(var/obj/item/holochip/money in src.loc.contents)
+			ID.attackby(money, user)
+		for(var/obj/item/stack/spacecash/money in src.loc.contents)
+			ID.attackby(money, user)
+		for(var/obj/item/coin/money in src.loc.contents)
+			ID.attackby(money, user)
 
 /obj/item/stack/spacecash/c1
 	icon_state = "spacecash"
@@ -69,3 +86,9 @@
 	icon_state = "spacecash1000"
 	singular_name = "one thousand credit bill"
 	value = 1000
+
+/obj/item/stack/spacecash/c10000
+	icon_state = "spacecash10000"
+	singular_name = "ten thousand credit bill"
+	value = 10000
+

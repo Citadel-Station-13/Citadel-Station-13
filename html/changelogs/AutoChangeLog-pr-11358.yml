@@ -1,5 +1,0 @@
-author: "bunny232"
-delete-after: True
-changes: 
-  - rscadd: "Box bar now has a lightswitch."
-  - bugfix: "fixes several piping issues around box station"

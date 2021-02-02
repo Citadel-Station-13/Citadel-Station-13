@@ -49,15 +49,15 @@
 	mob_exit(M, silent)
 	return TRUE
 
-/obj/vehicle/sealed/car/attacked_by(obj/item/I, mob/living/user)
+/obj/vehicle/sealed/car/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(!I.force)
-		return
+		return FALSE
 	if(occupants[user])
 		to_chat(user, "<span class='notice'>Your attack bounces off of the car's padded interior.</span>")
-		return
+		return FALSE
 	return ..()
 
-/obj/vehicle/sealed/car/attack_hand(mob/living/user)
+/obj/vehicle/sealed/car/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return

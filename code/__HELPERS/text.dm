@@ -113,6 +113,22 @@
 	else
 		return trim(html_encode(name), max_length)
 
+/**
+  * stripped_multiline_input but reflects to the user instead if it's too big and returns null.
+  */
+/proc/stripped_multiline_input_or_reflect(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
+	var/name = input(user, message, title, default) as message|null
+	if(isnull(name)) // Return null if canceled.
+		return null
+	if(length(name) > max_length)
+		to_chat(user, name)
+		to_chat(user, "<span class='danger'>^^^----- The preceeding message has been DISCARDED for being over the maximum length of [max_length]. It has NOT been sent! -----^^^</span>")
+		return null
+	if(no_trim)
+		return copytext(html_encode(name), 1, max_length)
+	else
+		return trim(html_encode(name), max_length)
+
 #define NO_CHARS_DETECTED 0
 #define SPACES_DETECTED 1
 #define SYMBOLS_DETECTED 2
@@ -759,6 +775,10 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			return "twelfth"
 		else
 			return "[number]\th"
+
+
+/proc/random_capital_letter()
+	return uppertext(pick(GLOB.alphabet))
 
 /proc/unintelligize(message)
 	var/regex/word_boundaries = regex(@"\b[\S]+\b", "g")

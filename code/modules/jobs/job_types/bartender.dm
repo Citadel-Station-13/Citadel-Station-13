@@ -11,9 +11,12 @@
 	exp_type_department = EXP_TYPE_SERVICE // This is so the jobs menu can work properly
 
 	outfit = /datum/outfit/job/bartender
+	plasma_outfit = /datum/outfit/plasmaman/bar
 
 	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_SRV
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	threat = 0.5
 

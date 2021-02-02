@@ -17,9 +17,6 @@
 
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	name = "donut box"
-	desc = "Mmm. Donuts."
 	resistance_flags = FLAMMABLE
 	var/icon_type = "donut"
 	var/spawn_type = null
@@ -59,23 +56,58 @@
 	fancy_open = TRUE
 	update_icon()
 
+#define DONUT_INBOX_SPRITE_WIDTH 3
+
 /*
  * Donut Box
  */
 
 /obj/item/storage/fancy/donut_box
-	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "donutbox6"
-	icon_type = "donut"
 	name = "donut box"
+	desc = "Mmm. Donuts."
+	icon = 'icons/obj/food/donut.dmi'
+	icon_state = "donutbox_inner"
+	icon_type = "donut"
 	spawn_type = /obj/item/reagent_containers/food/snacks/donut
 	fancy_open = TRUE
+	custom_price = PRICE_NORMAL
+	appearance_flags = KEEP_TOGETHER
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donut))
+
+/obj/item/storage/fancy/donut_box/PopulateContents()
+	. = ..()
+	update_icon()
+
+/obj/item/storage/fancy/donut_box/update_icon_state()
+	if(fancy_open)
+		icon_state = "donutbox_inner"
+	else
+		icon_state = "donutbox"
+
+/obj/item/storage/fancy/donut_box/update_overlays()
+	. = ..()
+
+	if (!fancy_open)
+		return
+
+	var/donuts = 0
+
+	for (var/_donut in contents)
+		var/obj/item/reagent_containers/food/snacks/donut/donut = _donut
+		if (!istype(donut))
+			continue
+
+		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		donuts += 1
+
+	. += image(icon = initial(icon), icon_state = "donutbox_top")
+
+#undef DONUT_INBOX_SPRITE_WIDTH
 
 /*
  * Egg Box
@@ -136,6 +168,23 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	custom_price = PRICE_ALMOST_CHEAP
+	var/spawn_coupon = TRUE
+
+/obj/item/storage/fancy/cigarettes/attack_self(mob/user)
+	if(contents.len == 0 && spawn_coupon)
+		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+		var/obj/item/coupon/attached_coupon = new
+		user.put_in_hands(attached_coupon)
+		attached_coupon.generate()
+		attached_coupon = null
+		spawn_coupon = FALSE
+		name = "discarded cigarette packet"
+		desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		STR.max_items = 0
+		return
+	return ..()
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -146,15 +195,23 @@
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	if(spawn_coupon)
+		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
+	. = ..()
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	var/obj/item/clothing/mask/cigarette/W = locate(/obj/item/clothing/mask/cigarette) in contents
+	var/obj/item/lighter/L = locate() in contents
+	if(L)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, L, user)
+		user.put_in_hands(L)
+		to_chat(user, "<span class='notice'>You take \a [L] out of the pack.</span>")
+		return TRUE
+	var/obj/item/clothing/mask/cigarette/W = locate() in contents
 	if(W && contents.len > 0)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
-		contents -= W
 		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
@@ -187,18 +244,18 @@
 		cig_position++
 
 /obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!ismob(M))
-		return
+	if(M != user || !istype(M))
+		return ..()
 	var/obj/item/clothing/mask/cigarette/cig = locate(/obj/item/clothing/mask/cigarette) in contents
 	if(cig)
-		if(M == user && contents.len > 0 && !user.wear_mask)
+		if(!user.wear_mask && !(SLOT_WEAR_MASK in M.check_obscured_slots()))
 			var/obj/item/clothing/mask/cigarette/W = cig
 			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
 			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 		else
-			..()
+			return ..()
 	else
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
@@ -274,14 +331,20 @@
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
+///The value in here has NOTHING to do with icons. It needs to be this for the proper examine.
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
+	custom_price = PRICE_REALLY_CHEAP
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
 	STR.can_hold = typecacheof(list(/obj/item/rollingpaper))
+
+///Overrides to do nothing because fancy boxes are fucking insane.
+/obj/item/storage/fancy/rollingpapers/update_icon_state()
+	return
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -300,6 +363,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
@@ -370,6 +434,20 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
+
+/obj/item/storage/fancy/cracker_pack
+	name = "cracker pack"
+	desc = "A pack of delicious crackers. Keep away from parrots!"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "crackerbox"
+	icon_type = "cracker"
+	spawn_type = /obj/item/reagent_containers/food/snacks/cracker
+
+/obj/item/storage/fancy/cracker_pack/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/cracker))
 
 /*
  * Ring Box

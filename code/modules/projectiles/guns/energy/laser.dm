@@ -24,6 +24,7 @@
 	icon_state = "toyburst"
 	obj_flags = NONE
 	fire_delay = 40
+	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
 	selfcharge = EGUN_SELFCHARGE
 	charge_delay = 2
@@ -43,6 +44,12 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/laser/hellgun
+	name ="hellfire laser gun"
+	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
+	icon_state = "hellgun"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
+
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
@@ -56,12 +63,14 @@
 /obj/item/gun/energy/laser/carbine
 	name = "laser carbine"
 	desc = "A ruggedized laser carbine featuring much higher capacity and improved handling when compared to a normal laser gun."
-	icon = 'icons/obj/guns/energy.dmi'
 	icon_state = "lasernew"
-	item_state = "laser"
+	item_state = "lasernew"
+	slot_flags = ITEM_SLOT_BACK
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	inaccuracy_modifier = 0.7
 	force = 10
 	throwforce = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	cell_type = /obj/item/stock_parts/cell/lascarbine
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 

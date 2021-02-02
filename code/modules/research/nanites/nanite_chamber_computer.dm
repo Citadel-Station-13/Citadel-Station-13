@@ -3,10 +3,8 @@
 	desc = "Controls a connected nanite chamber. Can inoculate nanites, load programs, and analyze existing nanite swarms."
 	var/obj/machinery/nanite_chamber/chamber
 	var/obj/item/disk/nanite_program/disk
-	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
 	icon_screen = "nanite_chamber_control"
-	ui_x = 380
-	ui_y = 570
+	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
 
 /obj/machinery/computer/nanite_chamber_control/Initialize()
 	. = ..()
@@ -25,10 +23,10 @@
 		find_chamber()
 	..()
 
-/obj/machinery/computer/nanite_chamber_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/nanite_chamber_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_chamber_control", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "NaniteChamberControl", name)
 		ui.open()
 
 /obj/machinery/computer/nanite_chamber_control/ui_data()
@@ -52,6 +50,10 @@
 		data["status_msg"] = chamber.busy_message
 		return data
 
+	if(SEND_SIGNAL(L, COMSIG_NANITE_CHECK_CONSOLE_LOCK))
+		data["status_msg"] = "Error: Nanite keycodes scrambled. Unable to operate."
+		return data
+
 	data["status_msg"] = null
 	data["scan_level"] = chamber.scan_level
 	data["locked"] = chamber.locked
@@ -72,14 +74,14 @@
 		if("set_safety")
 			var/threshold = text2num(params["value"])
 			if(!isnull(threshold))
-				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
+				chamber.set_safety(clamp(round(threshold, 1),0,500))
 				playsound(src, "terminal_type", 25, FALSE)
 				chamber.occupant.investigate_log("'s nanites' safety threshold was set to [threshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_cloud")
 			var/cloud_id = text2num(params["value"])
 			if(!isnull(cloud_id))
-				chamber.set_cloud(CLAMP(round(cloud_id, 1),0,100))
+				chamber.set_cloud(clamp(round(cloud_id, 1),0,100))
 				playsound(src, "terminal_type", 25, FALSE)
 				chamber.occupant.investigate_log("'s nanites' cloud id was set to [cloud_id] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE

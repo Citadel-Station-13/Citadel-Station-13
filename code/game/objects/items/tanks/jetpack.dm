@@ -14,13 +14,15 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/tank/jetpack/New()
+/obj/item/tank/jetpack/Initialize()
 	..()
-	if(gas_type)
-		air_contents.gases[gas_type] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
-
 	ion_trail = new
 	ion_trail.set_up(src)
+
+/obj/item/tank/jetpack/populate_gas()
+	if(gas_type)
+		air_contents.set_moles(gas_type, ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)))
+
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
@@ -52,7 +54,9 @@
 	ion_trail.start()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
 	if(full_speed)
-		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-2, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	else
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack)
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
@@ -60,7 +64,8 @@
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	user.remove_movespeed_modifier(MOVESPEED_ID_JETPACK)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
 	allow_thrust(0.01, user)
@@ -188,8 +193,8 @@
 	var/obj/item/tank/internals/tank = null
 	var/mob/living/carbon/human/cur_user
 
-/obj/item/tank/jetpack/suit/New()
-	..()
+/obj/item/tank/jetpack/suit/Initialize()
+	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	temp_air_contents = air_contents
 

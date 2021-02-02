@@ -49,7 +49,9 @@
 	var/original_name
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
+	plane = ABOVE_WALL_PLANE
 	anchored = TRUE
+	buildable_sign = FALSE //Cannot be unwrenched from a wall.
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
@@ -67,6 +69,8 @@
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
+
+	addtimer(CALLBACK(src, /datum.proc/_AddElement, list(/datum/element/beauty, 300)), 0)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -97,10 +101,7 @@
 			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc)
 
-/obj/structure/sign/poster/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/sign/poster/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(ruined)
 		return
 	visible_message("[user] rips [src] in a single, decisive motion!" )
@@ -207,6 +208,11 @@
 	name = "Lusty Xenomorph"
 	desc = "A heretical poster depicting the titular star of an equally heretical book."
 	icon_state = "poster4"
+
+/obj/structure/sign/poster/contraband/post_ratvar
+	name = "Post This Ratvar"
+	desc = "Oh what in the hell? Those cultists have animated paper technology and they use it for a meme?"
+	icon_state = "postvar"
 
 /obj/structure/sign/poster/contraband/syndicate_recruitment
 	name = "Syndicate Recruitment"
@@ -384,8 +390,8 @@
 	desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
 	icon_state = "poster39"
 
-/obj/structure/sign/poster/contraband/sun_kist
-	name = "Sun-kist"
+/obj/structure/sign/poster/contraband/starkist
+	name = "Star-kist"
 	desc = "Drink the stars!"
 	icon_state = "poster40"
 
@@ -423,6 +429,11 @@
 	name = "Syndicate"
 	desc = "A poster decipting a snake shaped into an ominous 'S'!"
 	icon_state = "poster47"
+
+/obj/structure/sign/poster/contraband/bountyhunters
+	name = "Bounty Hunters"
+	desc = "A poster advertising bounty hunting services. \"I hear you got a problem.\""
+	icon_state = "poster48"
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"

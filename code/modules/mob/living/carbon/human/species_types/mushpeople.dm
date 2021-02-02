@@ -1,6 +1,6 @@
 /datum/species/mush //mush mush codecuck
 	name = "Anthromorphic Mushroom"
-	id = "mush"
+	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 
 	fixed_mut_color = "DBBF92"
@@ -8,25 +8,24 @@
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
-	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR,NOGENITALS,NOAROUSAL)
+	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR,NOGENITALS,NOAROUSAL,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_NOBREATH)
 	speedmod = 1.5 //faster than golems but not by much
 
-	punchdamagelow = 6
-	punchdamagehigh = 14
-	punchstunthreshold = 14 //about 44% chance to stun
+	punchdamagelow = 2
+	punchdamagehigh = 12 //still better than humans
+	punchstunthreshold = 10
 
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM)
 
 	burnmod = 1.25
 	heatmod = 1.5
 
-	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
-	use_skintones = FALSE
-	var/datum/martial_art/mushpunch/mush
+	species_category = SPECIES_CATEGORY_PLANT
 
-/datum/species/mush/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/mushroom) //pomf pomf
+	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
+	var/datum/martial_art/mushpunch/mush
+	species_language_holder = /datum/language_holder/mushroom
 
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

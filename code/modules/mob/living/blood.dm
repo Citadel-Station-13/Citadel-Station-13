@@ -5,44 +5,43 @@
 #define EXOTIC_BLEED_MULTIPLIER 4 //Multiplies the actually bled amount by this number for the purposes of turf reaction calculations.
 
 
-/mob/living/carbon/human/proc/suppress_bloodloss(amount)
-	if(bleedsuppress)
+/mob/living/carbon/monkey/handle_blood()
+	if(bodytemperature <= TCRYO || (HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 		return
-	else
-		bleedsuppress = TRUE
-		addtimer(CALLBACK(src, .proc/resume_bleeding), amount)
+
+	var/temp_bleed = 0
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		temp_bleed += BP.get_bleed_rate()
+		BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
+	if(temp_bleed)
+		bleed(temp_bleed)
+
+	//Blood regeneration if there is some space
+	if(blood_volume < BLOOD_VOLUME_NORMAL)
+		blood_volume += 0.1 // regenerate blood VERY slowly
+		if(blood_volume < BLOOD_VOLUME_OKAY)
+			adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 
 /mob/living/carbon/human/proc/resume_bleeding()
 	bleedsuppress = 0
-	if(stat != DEAD && bleed_rate)
+	if(stat != DEAD && is_bleeding())
 		to_chat(src, "<span class='warning'>The blood soaks through your bandage.</span>")
 
-
-/mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
-		//Blood regeneration if there is some space
-		if(blood_volume < (BLOOD_VOLUME_NORMAL * blood_ratio))
-			blood_volume += 0.1 // regenerate blood VERY slowly
-			if(blood_volume < (BLOOD_VOLUME_OKAY * blood_ratio))
-				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.02, 1))
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if(NOBLOOD in dna.species.species_traits)
-		bleed_rate = 0
+	if(NOBLOOD in dna.species.species_traits || bleedsuppress || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
-
-	if(bleed_rate < 0)
-		bleed_rate = 0
 
 	if(HAS_TRAIT(src, TRAIT_NOMARROW)) //Bloodsuckers don't need to be here.
 		return
 
-	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
-		if(blood_volume < (BLOOD_VOLUME_NORMAL * blood_ratio) && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
@@ -55,22 +54,23 @@
 					nutrition_ratio = 0.8
 				else
 					nutrition_ratio = 1
-			if(HAS_TRAIT(src, TRAIT_HIGH_BLOOD))
-				nutrition_ratio *= 1.2
 			if(satiety > 80)
 				nutrition_ratio *= 1.25
-			nutrition = max(0, nutrition - nutrition_ratio * HUNGER_FACTOR)
-			blood_volume = min((BLOOD_VOLUME_NORMAL * blood_ratio), blood_volume + 0.5 * nutrition_ratio)
+			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
+			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		switch(blood_volume * INVERSE(blood_ratio))
+		switch(blood_volume)
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(prob(10))
+					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
 					to_chat(src, "<span class='warning'>You feel [word].</span>")
-				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.01, 1))
+				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round(((BLOOD_VOLUME_NORMAL * blood_ratio) - blood_volume) * 0.02, 1))
+				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 				if(prob(5))
 					blur_eyes(6)
 					to_chat(src, "<span class='warning'>You feel very [word].</span>")
@@ -87,22 +87,11 @@
 		//Bleeding out
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			var/brutedamage = BP.brute_dam
+			temp_bleed += BP.get_bleed_rate()
+			BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
 
-			if(BP.status == BODYPART_ROBOTIC) //for the moment, synth limbs won't bleed, but soon, my pretty.
-				continue
-
-			//We want an accurate reading of .len
-			listclearnulls(BP.embedded_objects)
-			temp_bleed += 0.5 * BP.embedded_objects.len
-
-			if(brutedamage >= 20)
-				temp_bleed += (brutedamage * 0.013)
-
-		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
-
-		if(bleed_rate && !bleedsuppress && !(HAS_TRAIT(src, TRAIT_FAKEDEATH)))
-			bleed(bleed_rate)
+		if(temp_bleed)
+			bleed(temp_bleed)
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
@@ -126,9 +115,11 @@
 /mob/living/proc/restore_blood()
 	blood_volume = initial(blood_volume)
 
-/mob/living/carbon/human/restore_blood()
+/mob/living/carbon/restore_blood()
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
-	bleed_rate = 0
+	for(var/i in bodyparts)
+		var/obj/item/bodypart/BP = i
+		BP.generic_bleedstacks = 0
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -186,7 +177,7 @@
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = dna.unique_enzymes
-		blood_data["bloodcolor"] = bloodtype_to_color(dna.blood_type)
+		blood_data["bloodcolor"] = dna.species.exotic_blood_color
 		if(disease_resistances && disease_resistances.len)
 			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()

@@ -153,16 +153,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
-"cX" = (
-/obj/structure/statue{
-	desc = "A lifelike statue of a horrifying monster.";
-	dir = 8;
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
-	icon_state = "goliath";
-	name = "goliath"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "dk" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
@@ -267,9 +257,13 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "eS" = (
-/obj/structure/table,
-/obj/item/gps/mining,
-/obj/item/gps/mining,
+/obj/structure/statue{
+	desc = "A lifelike statue of a horrifying monster.";
+	dir = 8;
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
+	icon_state = "goliath";
+	name = "goliath"
+	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fm" = (
@@ -400,8 +394,15 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"he" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "hf" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "hm" = (
@@ -419,17 +420,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"hH" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/structure/displaycase,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "hP" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
@@ -506,6 +496,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"ja" = (
+/obj/item/bikehorn{
+	color = "#000";
+	desc = "A horn off of a bicycle. This one has been charred to hell and back, yet somehow it still honks.";
+	name = "charred bike horn"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "jf" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
@@ -772,10 +770,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"nH" = (
-/obj/structure/displaycase,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "nI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -843,6 +837,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/mine/production)
+"nS" = (
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "nX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -1086,6 +1086,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "re" = (
@@ -1180,9 +1181,6 @@
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = 28
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 8
@@ -1447,6 +1445,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"wQ" = (
+/obj/structure/table,
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/tank/internals/emergency_oxygen,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "wV" = (
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/explored)
@@ -1544,6 +1551,18 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"yZ" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	dir = 8;
+	dwidth = 3;
+	height = 7;
+	id = "lavaland_common_away";
+	name = "Lavaland Mining Public Wing";
+	width = 7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "zh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -1573,7 +1592,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "zy" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -1652,6 +1671,13 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/production)
+"AC" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "AH" = (
 /obj/machinery/cryopod{
 	dir = 4
@@ -1727,6 +1753,12 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
+"By" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "BD" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Station Maintenance";
@@ -1758,15 +1790,6 @@
 "Cd" = (
 /turf/closed/wall,
 /area/mine/production)
-"Cg" = (
-/obj/structure/table,
-/obj/item/tank/internals/emergency_oxygen{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/tank/internals/emergency_oxygen,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "Cj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -1860,6 +1883,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Dr" = (
+/obj/structure/chair,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
@@ -1867,10 +1891,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/chair,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Dv" = (
@@ -1880,12 +1900,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
-"DN" = (
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "Ed" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2028,27 +2042,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"Hk" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 3;
-	height = 7;
-	id = "lavaland_common_away";
-	name = "Mining base public dock";
-	width = 7
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Hm" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock"
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
 "Ho" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -2120,12 +2113,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/mine/living_quarters)
-"If" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Ii" = (
 /obj/structure/table,
@@ -2746,19 +2733,11 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Pp" = (
-/obj/machinery/camera{
-	c_tag = "Public Shuttle Lobby";
-	network = list("mine")
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
 /obj/structure/table,
-/obj/item/gps/mining,
+/obj/item/gps/mining{
+	pixel_x = 3;
+	pixel_y = 5
+	},
 /obj/item/gps/mining,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -2804,6 +2783,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
+"Qd" = (
+/obj/structure/displaycase,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "Qi" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -2879,10 +2862,13 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "Ru" = (
+/obj/structure/chair,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Rv" = (
@@ -3074,12 +3060,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
@@ -3184,7 +3170,9 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "VY" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset{
+	anchored = 1
+	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3296,10 +3284,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
-"XX" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/mine/living_quarters)
 "Ya" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp)
@@ -3397,15 +3381,6 @@
 	network = list("mine")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Zw" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock"
-	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ZF" = (
@@ -4275,9 +4250,9 @@ VT
 VT
 VT
 VT
-VT
-VT
-VT
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4334,8 +4309,8 @@ Lm
 Lm
 Lm
 Lm
-VT
-VT
+Lm
+Lm
 VT
 VT
 VT
@@ -4394,7 +4369,7 @@ Lm
 Lm
 Lm
 Lm
-VT
+Lm
 VT
 VT
 VT
@@ -4442,17 +4417,17 @@ wz
 VT
 VT
 VT
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
 VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4555,19 +4530,19 @@ Lm
 wz
 wz
 Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
-Lm
 VT
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
+Lm
 VT
 VT
 VT
@@ -4612,7 +4587,7 @@ VT
 VT
 wz
 Lm
-Lm
+VT
 Lm
 Lm
 Lm
@@ -4669,7 +4644,7 @@ VT
 VT
 Lm
 Lm
-Lm
+VT
 Lm
 Lm
 Lm
@@ -4725,7 +4700,7 @@ my
 VT
 VT
 VT
-Lm
+VT
 Lm
 Lm
 Lm
@@ -4789,7 +4764,7 @@ Lm
 Lm
 Lm
 Lm
-Hk
+yZ
 Lm
 Lm
 Lm
@@ -4836,17 +4811,17 @@ Gt
 Dv
 my
 VT
+ja
 VT
 VT
-VT
+wz
 wz
 Lm
 Lm
 Lm
 Lm
-Lm
 KV
-Zw
+he
 KV
 Lm
 Lm
@@ -4897,8 +4872,8 @@ VT
 VT
 Lm
 Lm
-Lm
-Lm
+wz
+wz
 Lm
 Lm
 Lm
@@ -4957,10 +4932,10 @@ Lm
 VN
 VN
 VN
-XX
+KV
 VN
 KV
-Hm
+AC
 KV
 VT
 VT
@@ -5013,10 +4988,10 @@ pu
 bn
 VN
 zy
-If
-DN
-If
-FE
+By
+nS
+By
+Ag
 qZ
 KV
 VT
@@ -5131,7 +5106,7 @@ Ag
 uG
 uG
 Ag
-cX
+eS
 KV
 VT
 VT
@@ -5299,10 +5274,10 @@ oy
 VN
 Pp
 sx
-eS
-Cg
-nH
-hH
+Pp
+wQ
+Qd
+Qd
 VN
 wz
 Lm

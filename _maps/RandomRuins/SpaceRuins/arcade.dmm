@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/powered)
 "c" = (
 /turf/closed/mineral/random/high_chance,
@@ -135,7 +135,7 @@
 /area/ruin/powered)
 "F" = (
 /obj/structure/closet/crate/trashcart,
-/turf/open/floor/plating/asteroid,
+/turf/open/floor/plating/asteroid/airless,
 /area/ruin/powered)
 "G" = (
 /obj/structure/chair/sofa/right,
@@ -151,7 +151,7 @@
 /turf/open/floor/engine,
 /area/ruin/powered)
 "J" = (
-/obj/item/twohanded/dualsaber/toy,
+/obj/item/dualsaber/toy,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/ruin/powered)
 "K" = (

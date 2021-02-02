@@ -12,6 +12,7 @@
 	icon_state = "shuttle"
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	unique = FALSE
+	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)
@@ -93,6 +94,13 @@
 /area/shuttle/abandoned/pod
 	name = "Abandoned Ship Pod"
 
+////////////////////////////Bounty Hunter Shuttles////////////////////////////
+/area/shuttle/hunter
+	name = "Hunter Shuttle"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	blob_allowed = FALSE
+	canSmoothWithAreas = /area/shuttle/hunter
+
 ////////////////////////////Single-area shuttles////////////////////////////
 
 /area/shuttle/transit
@@ -102,6 +110,10 @@
 
 /area/shuttle/custom
 	name = "Custom player shuttle"
+
+/area/shuttle/custom/powered
+	name = "Custom Powered player shuttle"
+	requires_power = FALSE
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -139,7 +151,6 @@
 
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
-	noteleport = TRUE
 
 /area/shuttle/escape/arena
 	name = "The Arena"
@@ -201,3 +212,6 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+/area/shuttle/snowtaxi
+	name = "Snow Taxi"

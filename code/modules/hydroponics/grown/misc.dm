@@ -11,6 +11,7 @@
 	production = 1
 	yield = 6
 	potency = 10
+	instability = 35
 	growthstages = 3
 	grind_results = list(/datum/reagent/mustardgrind = 1)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -57,8 +58,8 @@
 		return
 
 	var/datum/gas_mixture/stank = new
-	stank.gases[/datum/gas/miasma] = (yield + 6)*7*0.02 // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
-	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
+	stank.adjust_moles(/datum/gas/miasma,(yield + 6)*7*0.02) // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
+	stank.set_temperature(T20C) // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(stank)
 	T.air_update_turf()
 
@@ -111,6 +112,7 @@
 	maturation = 3
 	production = 5
 	yield = 4
+	instability = 10
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -140,6 +142,7 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
+	instability = 15
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
@@ -223,7 +226,7 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
 	addtimer(CALLBACK(src, /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/detonate), rand(50, 100))
@@ -492,9 +495,6 @@
 		return
 	var/turf/T = get_turf(src)
 	reagents.chem_temp = 1000
-	//Disable seperated contents when the grenade primes
-	if (seed.get_gene(/datum/plant_gene/trait/noreact))
-		DISABLE_BITFIELD(reagents.reagents_holder_flags, NO_REACT)
 	reagents.handle_reactions()
 	log_game("Coconut bomb detonation at [AREACOORD(T)], location [loc]")
 	qdel(src)
@@ -507,3 +507,34 @@
 		prime()
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/item/seeds/aloe
+	name = "pack of aloe seeds"
+	desc = "These seeds grow into aloe."
+	icon_state = "seed-aloe"
+	species = "aloe"
+	plantname = "Aloe"
+	product = /obj/item/reagent_containers/food/snacks/grown/aloe
+	lifespan = 60
+	endurance = 25
+	maturation = 4
+	production = 4
+	yield = 6
+	growthstages = 5
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
+
+/obj/item/reagent_containers/food/snacks/grown/aloe
+	seed = /obj/item/seeds/aloe
+	name = "aloe"
+	desc = "Cut leaves from the aloe plant."
+	icon_state = "aloe"
+	filling_color = "#90EE90"
+	bitesize_mod = 5
+	foodtype = VEGETABLES
+	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
+	distill_reagent = /datum/reagent/consumable/ethanol/tequila
+
+/obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
+	new /obj/item/stack/medical/aloe(drop_location(), 2)
+	qdel(src)

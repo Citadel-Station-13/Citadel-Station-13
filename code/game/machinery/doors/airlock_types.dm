@@ -310,6 +310,17 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/bronze
+	name = "bronze airlock"
+	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_bronze
+
+/obj/machinery/door/airlock/bronze/seethru
+	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
+	opacity = 0
+	glass = TRUE
+
 //////////////////////////////////
 /*
 	Station2 Airlocks
@@ -497,7 +508,7 @@
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return 1
-	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
+	if(friendly || iscultist(L) || isshade(L) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
 		return 1
@@ -601,7 +612,7 @@
 			. += "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
 
 /obj/machinery/door/airlock/clockwork/emp_act(severity)
-	if(prob(80/severity))
+	if(prob(severity/1.25))
 		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)

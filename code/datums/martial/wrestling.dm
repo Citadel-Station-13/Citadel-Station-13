@@ -18,28 +18,30 @@
 	var/datum/action/drop/drop = new/datum/action/drop()
 
 /datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(!can_use(A, D))
+		return FALSE
 	switch(streak)
 		if("drop")
 			streak = ""
 			drop(A,D)
-			return 1
+			return TRUE
 		if("strike")
 			streak = ""
 			strike(A,D)
-			return 1
+			return TRUE
 		if("kick")
 			streak = ""
 			kick(A,D)
-			return 1
+			return TRUE
 		if("throw")
 			streak = ""
 			throw_wrassle(A,D)
-			return 1
+			return TRUE
 		if("slam")
 			streak = ""
 			slam(A,D)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
@@ -136,7 +138,7 @@
 
 /datum/martial_art/wrestling/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	log_combat(A, D, "punched with wrestling")
 	..()
 
@@ -171,11 +173,11 @@
 
 			if (get_dist(A, D) > 1)
 				to_chat(A, "[D] is too far away!")
-				return 0
+				return FALSE
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "You can't throw [D] from here!")
-				return 0
+				return FALSE
 
 			A.setDir(turn(A.dir, 90))
 			var/turf/T = get_step(A, A.dir)
@@ -184,7 +186,7 @@
 				D.forceMove(T)
 				D.setDir(get_dir(D, A))
 		else
-			return 0
+			return FALSE
 
 		sleep(delay)
 
@@ -193,11 +195,11 @@
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "[D] is too far away!")
-			return 0
+			return FALSE
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			to_chat(A, "You can't throw [D] from here!")
-			return 0
+			return FALSE
 
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
@@ -209,15 +211,21 @@
 				D.emote("scream")
 			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human.proc/DefaultCombatKnockdown, 20))
 	log_combat(A, D, "has thrown with wrestling")
-	return 0
+	return FALSE
 
 /datum/martial_art/wrestling/proc/FlipAnimation(mob/living/carbon/human/D)
 	set waitfor = FALSE
+	var/transform_before
+	var/laying_before
 	if (D)
+		transform_before = D.transform
+		laying_before = D.lying
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 	sleep(15)
 	if (D)
-		animate(D, transform = null, time = 1, loop = 0)
+		if(transform_before && laying_before == D.lying) //animate calls sleep so this should be fine and stop a bug with transforms
+			D.transform = transform_before
+			animate(D, transform = null, time = 1, loop = 0)
 
 /datum/martial_art/wrestling/proc/slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
@@ -225,6 +233,7 @@
 	if(!A.pulling || A.pulling != D)
 		to_chat(A, "You need to have [D] in a cinch!")
 		return
+	var/damage = damage_roll(A,D)
 	D.forceMove(A.loc)
 	A.setDir(get_dir(A, D))
 	D.setDir(get_dir(D, A))
@@ -256,7 +265,7 @@
 				A.pixel_y = 0
 				D.pixel_x = 0
 				D.pixel_y = 0
-				return 0
+				return FALSE
 
 			if (!isturf(A.loc) || !isturf(D.loc))
 				to_chat(A, "You can't slam [D] here!")
@@ -264,7 +273,7 @@
 				A.pixel_y = 0
 				D.pixel_x = 0
 				D.pixel_y = 0
-				return 0
+				return FALSE
 		else
 			if (A)
 				A.pixel_x = 0
@@ -272,7 +281,7 @@
 			if (D)
 				D.pixel_x = 0
 				D.pixel_y = 0
-			return 0
+			return FALSE
 
 		sleep(1)
 
@@ -284,11 +293,11 @@
 
 		if (get_dist(A, D) > 1)
 			to_chat(A, "[D] is too far away!")
-			return 0
+			return FALSE
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			to_chat(A, "You can't slam [D] here!")
-			return 0
+			return FALSE
 
 		D.forceMove(A.loc)
 
@@ -307,11 +316,11 @@
 
 			switch(rand(1,3))
 				if (2)
-					D.adjustBruteLoss(rand(20,30))
+					D.apply_damage(damage + 25, BRUTE)
 				if (3)
 					D.ex_act(EXPLODE_LIGHT)
 				else
-					D.adjustBruteLoss(rand(10,20))
+					D.apply_damage(damage + 15, BRUTE)
 		else
 			D.ex_act(EXPLODE_LIGHT)
 
@@ -325,7 +334,7 @@
 
 
 	log_combat(A, D, "body-slammed")
-	return 0
+	return FALSE
 
 /datum/martial_art/wrestling/proc/CheckStrikeTurf(mob/living/carbon/human/A, turf/T)
 	if (A && (T && isturf(T) && get_dist(A, T) <= 1))
@@ -335,6 +344,7 @@
 	if(!D)
 		return
 	var/turf/T = get_turf(A)
+	var/damage = damage_roll(A,D)
 	if (T && isturf(T) && D && isturf(D.loc))
 		for (var/i = 0, i < 4, i++)
 			A.setDir(turn(A.dir, 90))
@@ -343,7 +353,7 @@
 		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
 		A.visible_message("<span class = 'danger'><b>[A] headbutts [D]!</b></span>")
-		D.adjustBruteLoss(rand(10,20))
+		D.apply_damage(damage + 15, BRUTE)
 		playsound(A.loc, "swing_hit", 50, 1)
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
@@ -351,13 +361,14 @@
 /datum/martial_art/wrestling/proc/kick(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D)
 		return
+	var/damage = damage_roll(A,D)
 	A.emote("scream")
 	A.emote("flip")
 	A.setDir(turn(A.dir, 90))
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
 	playsound(A.loc, "swing_hit", 50, 1)
-	D.adjustBruteLoss(rand(10,20))
+	D.apply_damage(damage + 15, STAMINA)
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
@@ -371,6 +382,7 @@
 	var/obj/surface = null
 	var/turf/ST = null
 	var/falling = 0
+	var/damage = damage_roll(A,D)
 
 	for (var/obj/O in oview(1, A))
 		if (O.density == 1)
@@ -399,21 +411,27 @@
 			A.pixel_y = 0
 			if (falling == 1)
 				A.visible_message("<span class = 'danger'><B>...and dives head-first into the ground, ouch!</b></span>")
-				A.adjustBruteLoss(rand(10,20))
+				A.apply_damage(damage + 15, BRUTE)
 				A.DefaultCombatKnockdown(60)
 			to_chat(A, "[D] is too far away!")
-			return 0
+			return FALSE
 
 		if (!isturf(A.loc) || !isturf(D.loc))
 			A.pixel_y = 0
 			to_chat(A, "You can't drop onto [D] from here!")
-			return 0
+			return FALSE
 
+		var/transform_before
+		var/laying_before
 		if(A)
+			transform_before = A.transform
+			laying_before = A.lying
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
 		sleep(10)
 		if(A)
-			animate(A, transform = null, time = 1, loop = 0)
+			if(transform_before && laying_before == A.lying) //if they suddenly dropped to the floor between this period, don't revert their animation
+				animate(A, transform = null, time = 1, loop = 0)
+				A.transform = transform_before
 
 		A.forceMove(D.loc)
 
@@ -425,9 +443,9 @@
 			if (prob(33) || D.stat)
 				D.ex_act(EXPLODE_LIGHT)
 			else
-				D.adjustBruteLoss(rand(20,30))
+				D.apply_damage(damage + 25, BRUTE)
 		else
-			D.adjustBruteLoss(rand(20,30))
+			D.apply_damage(damage + 25, BRUTE)
 
 		D.DefaultCombatKnockdown(40)
 
@@ -440,14 +458,18 @@
 	return
 
 /datum/martial_art/wrestling/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
 	log_combat(A, D, "wrestling-disarmed")
 	..()
 
 /datum/martial_art/wrestling/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	damage_roll(A,D)
 	if(check_streak(A,D))
-		return 1
+		return TRUE
+	if(!can_use(A,D))
+		return ..()
 	if(A.pulling == D || A == D) // don't stun grab yoursel
 		return FALSE
 	A.start_pulling(D)
@@ -455,24 +477,38 @@
 								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
 	D.Stun(rand(60,100))
 	log_combat(A, D, "cinched")
-	return 1
+	return TRUE
 
 /obj/item/storage/belt/champion/wrestling
 	name = "Wrestling Belt"
 	var/datum/martial_art/wrestling/style = new
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
-	if(!ishuman(user))
-		return
-	if(slot == SLOT_BELT)
+	. = ..()
+	if(ishuman(user) && slot == SLOT_BELT)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-	return
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(SLOT_BELT) == src)
 		style.remove(H)
-	return
+
+//Subtype of wrestling, reserved for the wrestling belts found in the holodeck
+/datum/martial_art/wrestling/holodeck
+	name = "Holodeck Wrestling"
+
+/obj/item/storage/belt/champion/wrestling/holodeck
+	name = "Holodeck Wrestling Belt"
+	style = new /datum/martial_art/wrestling/holodeck
+
+//Make sure that moves can only be used on people wearing the holodeck belt
+/datum/martial_art/wrestling/holodeck/can_use(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	if(!(istype(D.mind?.martial_art, /datum/martial_art/wrestling/holodeck)))
+		return FALSE
+	else
+		return ..()
+

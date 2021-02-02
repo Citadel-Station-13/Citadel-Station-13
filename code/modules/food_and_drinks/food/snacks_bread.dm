@@ -7,6 +7,12 @@
 	foodtype = GRAIN
 	dunkable = TRUE
 
+/obj/item/reagent_containers/food/snacks/store/bread/proc/bread_teleport()
+	// you did WHAT?
+	new /mob/living/simple_animal/hostile/bread(get_turf(src))
+	visible_message("<span class='warning'>[src] begins to deform and grow grotesque tumors!</span>")
+	qdel(src)
+
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
 	bitesize = 2
@@ -179,88 +185,17 @@
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 
-/obj/item/reagent_containers/food/snacks/deepfryholder
-	name = "Deep Fried Foods Holder Obj"
-	desc = "If you can see this description the code for the deep fryer fucked up."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = ""
-	bitesize = 2
-
-GLOBAL_VAR_INIT(frying_hardmode, TRUE)
-GLOBAL_VAR_INIT(frying_bad_chem_add_volume, TRUE)
-GLOBAL_LIST_INIT(frying_bad_chems, list(
-/datum/reagent/toxin/bad_food = 3,
-/datum/reagent/drug/aranesp = 2,
-/datum/reagent/toxin = 2,
-/datum/reagent/lithium = 2,
-/datum/reagent/mercury = 2,
-))
-
-/obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
-	. = ..()
-	name = fried.name //We'll determine the other stuff when it's actually removed
-	appearance = fried.appearance
-	layer = initial(layer)
-	plane = initial(plane)
-	lefthand_file = fried.lefthand_file
-	righthand_file = fried.righthand_file
-	item_state = fried.item_state
-	desc = fried.desc
-	w_class = fried.w_class
-	slowdown = fried.slowdown
-	equip_delay_self = fried.equip_delay_self
-	equip_delay_other = fried.equip_delay_other
-	strip_delay = fried.strip_delay
-	species_exception = fried.species_exception
-	item_flags = fried.item_flags
-	obj_flags = fried.obj_flags
-
-	if(istype(fried, /obj/item/reagent_containers/food/snacks))
-		fried.reagents.trans_to(src, fried.reagents.total_volume)
-		qdel(fried)
-	else
-		fried.forceMove(src)
-		trash = fried
-		if(!istype(fried, /obj/item/reagent_containers/food) && GLOB.frying_hardmode && GLOB.frying_bad_chems.len)
-			var/R = rand(1, GLOB.frying_bad_chems.len)
-			var/bad_chem = GLOB.frying_bad_chems[R]
-			var/bad_chem_amount = GLOB.frying_bad_chems[bad_chem]
-			if(GLOB.frying_bad_chem_add_volume)
-				reagents.maximum_volume += bad_chem_amount + 2 //Added room for condensed cooking oil
-			reagents.add_reagent(bad_chem, bad_chem_amount)
-			//All fried inedible items also get condensed cooking oil added, which induces minor vomiting and heart damage
-			reagents.add_reagent(/datum/reagent/toxin/condensed_cooking_oil, 2)
-
-/obj/item/reagent_containers/food/snacks/deepfryholder/Destroy()
-	if(trash)
-		QDEL_NULL(trash)
-	. = ..()
-
-/obj/item/reagent_containers/food/snacks/deepfryholder/On_Consume(mob/living/eater)
-	if(trash)
-		QDEL_NULL(trash)
-	..()
-
-/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
-	switch(cook_time)
-		if(0 to 15)
-			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
-			name = "lightly-fried [name]"
-			desc = "[desc] It's been lightly fried in a deep fryer."
-		if(16 to 49)
-			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
-			name = "fried [name]"
-			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
-		if(50 to 59)
-			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
-			name = "deep-fried [name]"
-			desc = "[desc] Deep-fried to perfection."
-		if(60 to INFINITY)
-			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
-			name = "the physical manifestation of the very concept of fried foods"
-			desc = "A heavily-fried...something.  Who can tell anymore?"
-	filling_color = color
-	foodtype |= FRIED
+/obj/item/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Alas, it is limited."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "garlicbread"
+	item_state = "garlicbread"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin= 4, /datum/reagent/consumable/garlic = 2)
+	bitesize = 3
+	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
+	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
@@ -299,3 +234,25 @@ GLOBAL_LIST_INIT(frying_bad_chems, list(
 /obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
+
+/obj/item/reagent_containers/food/snacks/store/bread/tumor_bread
+	name = "dead tumor bread"
+	desc = "It's still within its expiration date, right?"
+	icon_state = "tumorbread"
+	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/tumor_bread
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/toxin = 10)
+	foodtype = GROSS | GRAIN
+	tastes = list("wheat and tumors" = 10)
+
+//teleporting tumor bread kills it
+/obj/item/reagent_containers/food/snacks/store/bread/tumor_bread/bread_teleport()
+	visible_message(src, "<span class='warning'>[src] explodes in a horrible mess of tumor and flour!</span>")
+	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/breadslice/tumor_bread
+	name = "tumor bread slice"
+	desc = "A slice of bread filled with tumors!"
+	icon_state = "tumorbreadslice"
+	filling_color = "#B2D72C"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin = 2)
+	foodtype = GROSS | GRAIN

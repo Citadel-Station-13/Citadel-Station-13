@@ -33,6 +33,47 @@
 				/obj/item/organ/ears/cat = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/papermask
+	name = "Paper Mask"
+	result = /obj/item/clothing/mask/paper
+	time = 10
+	reqs = list(/obj/item/paper = 20)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/balaclavabreath
+	name = "Breathaclava"
+	result = /obj/item/clothing/mask/balaclava/breath
+	time = 10
+	reqs = list(/obj/item/clothing/mask/balaclava = 1,
+				/obj/item/clothing/mask/breath = 1)
+	category = CAT_CLOTHING
+
+
+
+/datum/crafting_recipe/armwraps
+	name = "Armwraps"
+	result = /obj/item/clothing/gloves/fingerless/pugilist
+	time = 60
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stack/sheet/cloth = 4,
+				/obj/item/stack/sticky_tape = 2,
+				/obj/item/stack/sheet/leather = 2)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/armwrapsplusone
+	name = "Armwraps of Mighty Fists"
+	result = /obj/item/clothing/gloves/fingerless/pugilist/magic
+	time = 300
+	tools = list(TOOL_WIRECUTTER, /obj/item/book/codex_gigas, /obj/item/clothing/head/wizard, /obj/item/clothing/suit/wizrobe)
+	reqs = list(/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 2,
+				/obj/item/stack/sheet/durathread = 2,
+				/datum/reagent/consumable/ethanol/sake = 100,
+				/datum/reagent/consumable/ethanol/wizz_fizz = 100,
+				/obj/item/stack/sheet/sinew = 1,
+				/obj/item/stack/sheet/mineral/gold = 50)
+	category = CAT_CLOTHING
+
 ////////
 //Huds//
 ////////
@@ -232,6 +273,24 @@
 	time = 30
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/twinsheath
+	name = "Twin Sword Sheath"
+	result = /obj/item/storage/belt/sabre/twin
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
+				/obj/item/stack/sheet/leather = 8)
+	tools = list(TOOL_WIRECUTTER)
+	time = 70
+	category = CAT_CLOTHING
+
+
+/datum/crafting_recipe/durathread_reinforcement_kit
+	name = "Durathread Reinforcement Kit"
+	result = /obj/item/armorkit
+	reqs = list(/obj/item/stack/sheet/durathread = 4)
+	tools = list(/obj/item/stack/sheet/mineral/titanium, TOOL_WIRECUTTER) // tough needle for a tough fabric
+	time = 40
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/durathread_duffelbag
 	name = "Durathread Dufflebag"
 	result = /obj/item/storage/backpack/duffelbag/durathread
@@ -287,3 +346,25 @@
 				/obj/item/bedsheet/cosmos = 1)
 	time = 60
 	category = CAT_CLOTHING
+
+
+/datum/crafting_recipe/garlic_necklace
+	name = "Garlic Necklace"
+	result = /obj/item/clothing/neck/garlic_necklace
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/garlic = 15,
+				/obj/item/stack/cable_coil = 10)
+	time = 100 //Takes awhile to put all the garlics on the coil and knot it.
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/gripperoffbrand
+	name = "Improvised Gripper Gloves"
+	reqs = list(
+            /obj/item/clothing/gloves/fingerless = 1,
+         //   /obj/item/stack/sticky_tape = 1
+		 	/obj/item/stack/cable_coil = 5,
+			/obj/item/stack/sheet/cloth = 2,
+	)
+	result = /obj/item/clothing/gloves/tackler/offbrand
+	category = CAT_CLOTHING
+	tools = list(TOOL_WIRECUTTER)
+	time = 20

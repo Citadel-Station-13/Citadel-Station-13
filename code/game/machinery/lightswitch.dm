@@ -5,6 +5,7 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
+	plane = ABOVE_WALL_PLANE
 	desc = "Make dark."
 	var/on = TRUE
 	var/area/area = null

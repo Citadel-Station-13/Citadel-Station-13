@@ -6,13 +6,13 @@
 	icon_state = "headcrab"
 	icon_living = "headcrab"
 	icon_dead = "headcrab_dead"
-	threat = 1
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("creature")
 	robust_searching = 1
@@ -20,10 +20,13 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
-	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
 	gold_core_spawnable = NO_SPAWN //are you sure about this?? // CITADEL CHANGE, Yes.
+
+/mob/living/simple_animal/hostile/headcrab/Initialize()
+	. = ..()
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -80,7 +83,9 @@
 		if(C.can_absorb_dna(owner))
 			C.add_new_profile(owner)
 
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/obj/effect/proc_holder/changeling/humanform/hf = new
+		C.purchasedpowers += hf
+		hf.on_purchase(origin.current, TRUE)
 		M.key = origin.key
 	owner.gib()
 

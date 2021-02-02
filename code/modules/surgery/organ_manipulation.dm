@@ -2,6 +2,7 @@
 	name = "organ manipulation"
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
+	requires_bodypart_type = BODYPART_ORGANIC
 	requires_real_bodypart = 1
 	steps = list(
 		/datum/surgery_step/incise,
@@ -61,7 +62,7 @@
 	time = 64
 	name = "manipulate organs"
 	repeatable = 1
-	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
+	implements = list(/obj/item/organ = 100, /obj/item/organ_storage = 100)
 	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
@@ -84,6 +85,10 @@
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+			return -1
+		var/obj/item/organ/meatslab = tool
+		if(!meatslab.useable)
+			to_chat(user, "<span class='warning'>[I] seems to have been chewed on, you can't use this!</span>")
 			return -1
 		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>",
 			"[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
@@ -111,9 +116,6 @@
 			else
 				return -1
 
-	else if(istype(tool, /obj/item/reagent_containers/food/snacks/organ))
-		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
-		return -1
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
@@ -142,4 +144,4 @@
 			display_results(user, target, "<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!")
-	return 0
+	return 1

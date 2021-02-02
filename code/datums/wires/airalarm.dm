@@ -1,6 +1,7 @@
 /datum/wires/airalarm
 	holder_type = /obj/machinery/airalarm
 	proper_name = "Air Alarm"
+	req_knowledge = JOB_SKILL_MASTER
 
 /datum/wires/airalarm/New(atom/holder)
 	wires = list(

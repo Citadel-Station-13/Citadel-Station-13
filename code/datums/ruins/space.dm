@@ -18,7 +18,6 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
-
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -187,6 +186,7 @@
 	name = "Abandoned Teleporter"
 	description = "In space construction the teleporter is often the first system brought online. \
 	This lonely half built teleporter is a sign of a proposed structure that for one reason or another just never got built."
+	always_place = TRUE
 
 /datum/map_template/ruin/space/crashedclownship
 	id = "crashedclownship"
@@ -268,6 +268,7 @@
 	suffix = "whiteshipdock.dmm"
 	name = "Whiteship Dock"
 	description = "An abandoned but functional vessel parked in deep space, ripe for the taking."
+	always_place = TRUE
 
 /datum/map_template/ruin/space/cat_experiments
 	id = "meow"
@@ -287,6 +288,7 @@
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+
 /datum/map_template/ruin/space/augmentation
 	id = "augmentationfacility"
 	suffix = "augmentationfacility.dmm"
@@ -322,6 +324,12 @@
 	suffix = "advancedlab.dmm"
 	name = "Abductor Replication Lab"
 	description = "Some scientists tried and almost succeeded to recreate abductor tools. Somewhat slower and a bit less modern than their originals, these tools are the best you can get if you aren't an alien."
+
+/datum/map_template/ruin/space/spacediner
+	id = "spacediner"
+	suffix = "spacediner.dmm"
+	name = "Space Diner"
+	description = "Come, traveler of the bluespace planes. Sit, enjoy a drink and take one of the fair maidens for a night. The exit is the way you came in, via that teleporter thingy, but do remember to stay safe."
 
 //Space ruins for the station z
 /datum/map_template/ruin/spacenearstation
@@ -376,13 +384,13 @@
 	id = "roid8"
 	suffix = "roid8.dmm"
 	name = "Dead wizard Roid"
-	description = "Mineral asteroid. Ft. Dead wizard and toilet paradox bag."
+	description = "Mineral asteroid. Ft. Dead wizard and toilet wand."
 
 /datum/map_template/ruin/spacenearstation/roid9
 	id = "roid9"
 	suffix = "roid9.dmm"
 	name = "Monitoring Roid"
-	description = "Mineral asteroid. Ft. Station monitoring, syndie toolbox and erp."
+	description = "Mineral asteroid. Ft. Station monitoring, toolbox and erp."
 
 /datum/map_template/ruin/spacenearstation/roid10
 	id = "roid10"

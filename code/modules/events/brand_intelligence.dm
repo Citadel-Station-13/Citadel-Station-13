@@ -5,7 +5,6 @@
 
 	min_players = 15
 	max_occurrences = 1
-	gamemode_blacklist = list("dynamic")
 
 /datum/round_event/brand_intelligence
 	announceWhen	= 21
@@ -27,7 +26,6 @@
 									 "How do I vore people?",
 									 "ERP?",
 									 "Not epic bros...")
-	threat = 5
 
 
 /datum/round_event/brand_intelligence/announce(fake)
@@ -54,6 +52,7 @@
 	vendingMachines.Remove(originMachine)
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
+	announce_to_ghosts(originMachine)
 
 
 /datum/round_event/brand_intelligence/tick()
@@ -65,7 +64,7 @@
 			originMachine.visible_message("[originMachine] beeps and seems lifeless.")
 		kill()
 		return
-	vendingMachines = removeNullsFromList(vendingMachines)
+	vendingMachines = listclearnulls(vendingMachines)
 	if(!vendingMachines.len)	//if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(prob(70) && !QDELETED(upriser))

@@ -1,14 +1,20 @@
 
-/*
-	apply_damage(a,b,c)
-	args
-	a:damage - How much damage to take
-	b:damage_type - What type of damage to take, brute, burn
-	c:def_zone - Where to take the damage if its brute or burn
-	Returns
-	standard 0 if fail
-*/
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE)
+/**
+  * Applies damage to this mob
+  *
+  * Sends [COMSIG_MOB_APPLY_DAMGE]
+  *
+  * Arguuments:
+  * * damage - amount of damage
+  * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
+  * * def_zone - zone that is being hit if any
+  * * blocked - armor value applied
+  * * forced - bypass hit percentage
+  * * spread_damage - used in overrides
+  *
+  * Returns TRUE if damage applied
+  */
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
 		return 0
@@ -78,8 +84,6 @@
 		apply_damage(brain, BRAIN, def_zone, blocked)
 	return 1
 
-
-
 /mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE, knockdown_stamoverride, knockdown_stammax)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
@@ -88,7 +92,7 @@
 		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
 		if(EFFECT_KNOCKDOWN)
-			DefaultCombatKnockdown(effect * hit_percent, override_stamdmg = knockdown_stammax ? CLAMP(knockdown_stamoverride, 0, knockdown_stammax-getStaminaLoss()) : knockdown_stamoverride)
+			DefaultCombatKnockdown(effect * hit_percent, override_stamdmg = knockdown_stammax ? clamp(knockdown_stamoverride, 0, knockdown_stammax-getStaminaLoss()) : knockdown_stamoverride)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
 		if(EFFECT_IRRADIATE)
@@ -108,7 +112,7 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, kd_stamoverride, kd_stammax)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, kd_stamoverride, kd_stammax)
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
 	if(stun)
@@ -137,10 +141,11 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+//only_robotic and only_organic arg only relevant for carbons
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	bruteloss = clamp((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -151,7 +156,7 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	oxyloss = CLAMP((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -164,20 +169,45 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/getToxLoss()
-	return toxloss
+//By default, returns toxins damage no matter what kind of tox damage the target is using.
+/mob/living/proc/getToxLoss(toxins_type = TOX_OMNI)
+	if(toxins_type == TOX_OMNI)
+		return toxloss
 
-/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+
+	if(toxins_type != affected_by)
+		return 0
+	else
+		return toxloss
+
+/mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_DEFAULT)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	toxloss = CLAMP((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		return FALSE
+
+	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
+//Defaults to omni here because setToxLoss is used by very few things that usually want to set all types
+/mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE, toxins_type = TOX_OMNI)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+
+	var/affected_by = TOX_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		affected_by = TOX_SYSCORRUPT
+	if(toxins_type != TOX_OMNI && toxins_type != affected_by)
+		return FALSE
+
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
@@ -186,10 +216,11 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+//only_robotic and only_organic arg only relevant for carbons
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -200,7 +231,7 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	cloneloss = clamp((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -241,7 +272,7 @@
 	update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)

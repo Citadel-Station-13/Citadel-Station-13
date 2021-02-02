@@ -2,6 +2,7 @@
 	name = "dental implant"
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
 	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
+	requires_bodypart_type = BODYPART_ORGANIC
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
@@ -35,6 +36,6 @@
 	log_combat(owner, null, "swallowed an implanted pill", target)
 	if(target.reagents.total_volume)
 		target.reagents.reaction(owner, INGEST)
-		target.reagents.trans_to(owner, target.reagents.total_volume)
+		target.reagents.trans_to(owner, target.reagents.total_volume, log = TRUE)
 	qdel(target)
 	return 1

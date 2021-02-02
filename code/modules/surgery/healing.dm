@@ -8,7 +8,7 @@
 
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = FALSE
+	requires_bodypart_type = BODYPART_ORGANIC
 	replaced_by = /datum/surgery
 	ignore_clothes = TRUE
 	var/healing_step_type
@@ -87,7 +87,7 @@
 		urdamageamt_brute += round((target.getBruteLoss()/ (missinghpbonus*2)),0.1)
 		urdamageamt_burn += round((target.getFireLoss()/ (missinghpbonus*2)),0.1)
 
-	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn)
+	target.take_bodypart_damage(urdamageamt_brute, urdamageamt_burn, wound_bonus=CANT_WOUND)
 	return FALSE
 
 /***************************BRUTE***************************/

@@ -4,12 +4,34 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
+GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
+GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+
+	attack_hand_speed = 0
+	attack_hand_is_action = FALSE
+	attack_hand_unwieldlyness = 0
+
+	///icon state name for inhand overlays
 	var/item_state = null
+	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	///Icon file for right inhand overlays
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+	///Icon file for mob worn overlays.
+	///no var for state because it should *always* be the same as icon_state
+	var/icon/mob_overlay_icon
+	//Forced mob worn layer instead of the standard preferred size.
+	var/alternate_worn_layer
+
+	var/icon/anthro_mob_worn_overlay //Version of the above dedicated to muzzles/digitigrade
+	var/icon/taur_mob_worn_overlay // Idem but for taurs. Currently only used by suits.
+
 	var/list/alternate_screams = list() //REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
@@ -21,10 +43,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/inhand_x_dimension = 32
 	var/inhand_y_dimension = 32
 
-	//Not on /clothing because for some reason any /obj/item can technically be "worn" with enough fuckery.
-	var/icon/alternate_worn_icon = null//If this is set, update_icons() will find on mob (WORN, NOT INHANDS) states in this file instead, primary use: badminnery/events
-	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
-
 	max_integrity = 200
 
 	obj_flags = NONE
@@ -33,7 +51,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
+
+	/// Weight class for how much storage capacity it uses and how big it physically is meaning storages can't hold it if their maximum weight class isn't as high as it.
 	var/w_class = WEIGHT_CLASS_NORMAL
+	/// Volume override for the item, otherwise automatically calculated from w_class.
+	var/w_volume
 
 	/// The amount of stamina it takes to swing an item in a normal melee attack do not lie to me and say it's for realism because it ain't. If null it will autocalculate from w_class.
 	var/total_mass //Total mass in arbitrary pound-like values. If there's no balance reasons for an item to have otherwise, this var should be the item's weight in pounds.
@@ -41,6 +63,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/stagger_force
 
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
+	var/current_equipped_slot
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	var/obj/item/master = null
@@ -59,8 +82,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 	//Citadel Edit for digitigrade stuff
 	var/mutantrace_variation = NONE //Are there special sprites for specific situations? Don't use this unless you need to.
-
-	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
@@ -82,18 +103,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
-	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
-	var/sharpness = IS_BLUNT
+	///All items with sharpness of SHARP_EDGED or higher will automatically get the butchering component.
+	var/sharpness = SHARP_NONE
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
 
-	var/block_chance = 0
-	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
@@ -110,22 +129,42 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
+	///Used as the dye color source in the washing machine only (at the moment). Can be a hex color or a key corresponding to a registry entry, see washing_machine.dm
+	var/dye_color
+	///Whether the item is unaffected by standard dying.
+	var/undyeable = FALSE
+	///What dye registry should be looked at when dying this item; see washing_machine.dm
+	var/dying_key
+
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+	/* Our block parry data. Should be set in init, or something if you are using it.
+	 * This won't be accessed without ITEM_CAN_BLOCK or ITEM_CAN_PARRY so do not set it unless you have to to save memory.
+	 * If you decide it's a good idea to leave this unset while turning the flags on, you will runtime. Enjoy.
+	 * If this is set to a path, it'll run get_block_parry_data(path). YOU MUST RUN [get_block_parry_data(this)] INSTEAD OF DIRECTLY ACCESSING!
+	 */
+	var/datum/block_parry_data/block_parry_data
+
+	///Skills vars
+	//list of skill PATHS exercised when using this item. An associated bitfield can be set to indicate additional ways the skill is used by this specific item.
+	var/list/datum/skill/used_skills
+	var/skill_difficulty = THRESHOLD_UNTRAINED //how difficult it's to use this item in general.
+	var/skill_gain = DEF_SKILL_GAIN //base skill value gain from using this item.
+
+	var/canMouseDown = FALSE
+
+
 /obj/item/Initialize()
 
-	if (attack_verb)
+	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -136,15 +175,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
+	if(used_skills)
+		for(var/path in used_skills)
+			var/datum/skill/S = GLOB.skill_datums[path]
+			LAZYADD(used_skills[path], S.skill_traits)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -154,6 +188,26 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(!LAZYLEN(embedding))
+		if(GLOB.embedpocalypse)
+			embedding = EMBED_POINTY
+			name = "pointy [name]"
+		else if(GLOB.stickpocalypse)
+			embedding = EMBED_HARMLESS
+			name = "sticky [name]"
+
+	updateEmbedding()
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -205,8 +259,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
 
-
-
+	if(item_flags & (ITEM_CAN_BLOCK | ITEM_CAN_PARRY))
+		var/datum/block_parry_data/data = return_block_parry_datum(block_parry_data)
+		. += "[src] has the capacity to be used to block and/or parry. <a href='?src=[REF(data)];name=[name];block=[item_flags & ITEM_CAN_BLOCK];parry=[item_flags & ITEM_CAN_PARRY];render=1'>\[Show Stats\]</a>"
 
 	if(!user.research_scanner)
 		return
@@ -253,14 +308,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	add_fingerprint(usr)
 	return ..()
 
-/obj/item/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!user)
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -282,7 +338,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				C.update_damage_overlays()
 			return
 
-	if(acid_level > 20 && !ismob(loc))// so we can still remove the clothes on us that have acid.
+	if(acid_level > 20 && ismob(loc))// so we can still remove the clothes on us that have acid.
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
@@ -325,6 +381,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
+
 
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
@@ -364,17 +425,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	SEND_SIGNAL(src, COMSIG_ITEM_HIT_REACT, args)
-	if(prob(final_block_chance))
-		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
-		return 1
-	return 0
-
 /obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
 
-/obj/item/proc/dropped(mob/user)
+/// Called when a mob drops an item.
+/obj/item/proc/dropped(mob/user, silent = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -382,10 +438,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
-	user.update_equipment_speed_mods()
+	// if(!silent)
+	// 	playsound(src, drop_sound, DROP_SOUND_VOLUME, ignore_walls = FALSE)
+	user?.update_equipment_speed_mods()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
@@ -402,33 +461,56 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return usr.client.Click(src, src_location, src_control, params)
 	var/list/directaccess = usr.DirectAccess()	//This, specifically, is what requires the copypaste. If this were after the adjacency check, then it'd be impossible to use items in your inventory, among other things.
 												//If this were before the above checks, then trying to click on items would act a little funky and signal overrides wouldn't work.
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if((C.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && ((C.CanReach(src) || (src in directaccess)) && (C.CanReach(over) || (over in directaccess))))
-			if(!C.get_active_held_item())
-				C.UnarmedAttack(src, TRUE)
-				if(C.get_active_held_item() == src)
-					melee_attack_chain(C, over)
-				return TRUE //returning TRUE as a "is this overridden?" flag
+	if(SEND_SIGNAL(usr, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) && ((usr.CanReach(src) || (src in directaccess)) && (usr.CanReach(over) || (over in directaccess))))
+		if(!usr.get_active_held_item())
+			usr.UnarmedAttack(src, TRUE)
+			if(usr.get_active_held_item() == src)
+				melee_attack_chain(usr, over)
+			usr.FlushCurrentAction()
+			return TRUE //returning TRUE as a "is this overridden?" flag
+	if(isrevenant(usr))
+		if(RevenantThrow(over, usr, src))
+			return
+
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
 	over.MouseDrop_T(src,usr)
 	return
 
-// called after an item is placed in an equipment slot
-// user is mob that equipped it
-// slot uses the slot_X defines found in setup.dm
-// for items that can be placed in multiple slots
-// note this isn't called during the initial dressing of a player
-/obj/item/proc/equipped(mob/user, slot)
+/**
+ * Called after an item is placed in an equipment slot.
+ *
+ * Note that hands count as slots.
+ *
+ * Arguments:
+ * * user is mob that equipped it
+ * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+ * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+ */
+/obj/item/proc/equipped(mob/user, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	current_equipped_slot = slot
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user, A)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 	item_flags |= IN_INVENTORY
+	// if(!initial)
+	// 	if(equip_sound && (slot_flags & slot))
+	// 		playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
+	// 	else if(slot == ITEM_SLOT_HANDS)
+	// 		playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
+
+
+//Overlays for the worn overlay so you can overlay while you overlay
+//eg: ammo counters, primed grenade flashing, etc.
+//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file, used_state, style_flags = NONE)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_WORN_OVERLAYS, isinhands, icon_file, used_state, style_flags, .)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/A)
@@ -440,11 +522,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to TRUE if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, clothing_check = FALSE, list/return_warning)
 	if(!M)
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, clothing_check, return_warning)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -462,9 +544,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
-
-/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
-	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -501,7 +580,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(IS_STAMCRIT(user))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(IS_STAMCRIT(user) || !user.UseStaminaBuffer(STAMINA_COST_ITEM_EYESTAB, warn = TRUE))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
@@ -510,8 +589,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	playsound(loc, src.hitsound, 30, 1, -1)
 
 	user.do_attack_animation(M)
-
-	user.adjustStaminaLossBuffered(10)//CIT CHANGE - makes eyestabbing cost stamina
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
@@ -582,6 +659,20 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
+		if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
+			var/volume = get_volume_by_throwforce_and_or_w_class()
+			if (throwforce > 0)
+				if (throwhitsound)
+					playsound(hit_atom, throwhitsound, volume, TRUE, -1)
+				else if(hitsound)
+					playsound(hit_atom, hitsound, volume, TRUE, -1)
+				else
+					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
+			else
+				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
+
+		// else
+		// 	playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, messy_throw = TRUE)
@@ -713,6 +804,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		..()
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
+	SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, M)
 	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
@@ -759,14 +851,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/user = usr
 		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 
-/obj/item/MouseExited()
+/obj/item/MouseExited(location,control,params)
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_EXIT, location, control, params)
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
 
+/obj/item/MouseEntered(location,control,params)
+	SEND_SIGNAL(src, COMSIG_ITEM_MOUSE_ENTER, location, control, params)
 
 // Called when a mob tries to use the item as a tool.
 // Handles most checks.
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks, skill_gain_mult = STD_USE_TOOL_MULT)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(!delay && !tool_start_check(user, amount))
@@ -778,6 +873,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	play_tool_sound(target, volume)
 
 	if(delay)
+		if(user.mind && used_skills)
+			delay = user.mind.item_action_skills_mod(src, delay, skill_difficulty, SKILL_USE_TOOL, null, FALSE)
+
 		// Create a callback with checks that would be called every tick by do_after.
 		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
 
@@ -801,6 +899,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	// but only if the delay between the beginning and the end is not too small
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
+
+
+	if(user.mind && used_skills && skill_gain_mult)
+		var/gain = skill_gain + delay/SKILL_GAIN_DELAY_DIVISOR
+		for(var/skill in used_skills)
+			if(!(SKILL_TRAINING_TOOL in used_skills[skill]))
+				continue
+			var/datum/skill/S = GLOB.skill_datums[skill]
+			user.mind.auto_gain_experience(skill, gain*skill_gain_mult*S.item_skill_gain_multi)
 
 	return TRUE
 
@@ -836,6 +943,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/get_part_rating()
 	return 0
 
+//Can this item be given to people?
+/obj/item/proc/can_give()
+	return TRUE
+
 /obj/item/doMove(atom/destination)
 	if (ismob(loc))
 		var/mob/M = loc
@@ -856,11 +967,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	return ..()
 
-/obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
+/// Get an item's volume that it uses when being stored.
+/obj/item/proc/get_w_volume()
+	// if w_volume is 0 you fucked up anyways lol
+	return w_volume || AUTO_SCALE_VOLUME(w_class)
+
+/obj/item/proc/embedded(atom/embedded_target)
 	return
 
 /obj/item/proc/unembedded()
-	return
+	if(item_flags & DROPDEL)
+		QDEL_NULL(src)
+		return TRUE
 
 /**
   * Sets our slowdown and updates equipment slowdown of any mob we're equipped on.
@@ -876,3 +994,135 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 	if(var_name == NAMEOF(src, slowdown))
 		set_slowdown(var_value)			//don't care if it's a duplicate edit as slowdown'll be set, do it anyways to force normal behavior.
+/**
+ * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
+ *
+ */
+/obj/item/proc/isEmbedHarmless()
+	if(embedding)
+		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
+
+///In case we want to do something special (like self delete) upon failing to embed in something, return true
+/obj/item/proc/failedEmbed()
+	if(item_flags & DROPDEL)
+		QDEL_NULL(src)
+		return TRUE
+
+/**
+
+
+
+  * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
+
+
+
+  *
+
+
+
+  * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
+
+
+
+  *
+
+
+
+  * Arguments:
+
+
+
+  * * target- Either a body part, a carbon, or a closed turf. What are we hitting?
+
+
+
+  * * forced- Do we want this to go through 100%?
+
+
+
+  */
+
+
+
+/obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
+
+
+
+	if(!isbodypart(target) && !iscarbon(target) && !isclosedturf(target))
+
+
+
+		return
+
+
+
+	if(!forced && !LAZYLEN(embedding))
+
+
+
+		return
+
+
+
+
+
+
+
+	if(SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, forced, silent))
+
+
+
+		return TRUE
+
+
+
+	failedEmbed()
+
+
+
+
+
+
+
+///For when you want to disable an item's embedding capabilities (like transforming weapons and such), this proc will detach any active embed elements from it.
+
+
+
+/obj/item/proc/disableEmbedding()
+
+
+
+	SEND_SIGNAL(src, COMSIG_ITEM_DISABLE_EMBED)
+
+
+
+	return
+
+
+
+
+
+
+
+///For when you want to add/update the embedding on an item. Uses the vars in [/obj/item/embedding], and defaults to config values for values that aren't set. Will automatically detach previous embed elements on this item.
+
+
+
+/obj/item/proc/updateEmbedding()
+	if(!LAZYLEN(embedding))
+		return
+
+	AddElement(/datum/element/embed,\
+		embed_chance = (!isnull(embedding["embed_chance"]) ? embedding["embed_chance"] : EMBED_CHANCE),\
+		fall_chance = (!isnull(embedding["fall_chance"]) ? embedding["fall_chance"] : EMBEDDED_ITEM_FALLOUT),\
+		pain_chance = (!isnull(embedding["pain_chance"]) ? embedding["pain_chance"] : EMBEDDED_PAIN_CHANCE),\
+		pain_mult = (!isnull(embedding["pain_mult"]) ? embedding["pain_mult"] : EMBEDDED_PAIN_MULTIPLIER),\
+		remove_pain_mult = (!isnull(embedding["remove_pain_mult"]) ? embedding["remove_pain_mult"] : EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER),\
+		rip_time = (!isnull(embedding["rip_time"]) ? embedding["rip_time"] : EMBEDDED_UNSAFE_REMOVAL_TIME),\
+		ignore_throwspeed_threshold = (!isnull(embedding["ignore_throwspeed_threshold"]) ? embedding["ignore_throwspeed_threshold"] : FALSE),\
+		impact_pain_mult = (!isnull(embedding["impact_pain_mult"]) ? embedding["impact_pain_mult"] : EMBEDDED_IMPACT_PAIN_MULTIPLIER),\
+		jostle_chance = (!isnull(embedding["jostle_chance"]) ? embedding["jostle_chance"] : EMBEDDED_JOSTLE_CHANCE),\
+		jostle_pain_mult = (!isnull(embedding["jostle_pain_mult"]) ? embedding["jostle_pain_mult"] : EMBEDDED_JOSTLE_PAIN_MULTIPLIER),\
+		pain_stam_pct = (!isnull(embedding["pain_stam_pct"]) ? embedding["pain_stam_pct"] : EMBEDDED_PAIN_STAM_PCT),\
+		embed_chance_turf_mod = (!isnull(embedding["embed_chance_turf_mod"]) ? embedding["embed_chance_turf_mod"] : EMBED_CHANCE_TURF_MOD))
+	return TRUE

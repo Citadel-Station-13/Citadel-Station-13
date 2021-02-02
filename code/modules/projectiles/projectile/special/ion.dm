@@ -3,14 +3,14 @@
 	icon_state = "ion"
 	damage = 0
 	damage_type = BURN
-	nodamage = 1
+	nodamage = TRUE
 	flag = "energy"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 	var/emp_radius = 1
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
-	empulse(target, emp_radius, emp_radius)
+	empulse_using_range(target, emp_radius)
 	return BULLET_ACT_HIT
 
 /obj/item/projectile/ion/weak

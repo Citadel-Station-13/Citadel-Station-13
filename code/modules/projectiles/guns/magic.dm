@@ -9,7 +9,7 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
-	var/checks_antimagic = FALSE
+	var/checks_antimagic = TRUE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
@@ -83,6 +83,6 @@
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()
-	switch (var_name)
-		if ("charges")
+	switch(var_name)
+		if(NAMEOF(src, charges))
 			recharge_newshot()

@@ -92,6 +92,9 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
+	flags_1 = DEFAULT_RICOCHET_1
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.3
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -110,16 +113,22 @@ Class Procs:
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
-	var/atom/movable/occupant = null
+	var/atom/movable/occupant
+	var/new_occupant_dir = SOUTH //The direction the occupant will be set to look at when entering the machine.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/wire_compatible = FALSE
 		// For storing and overriding ui id and dimensions
 	var/tgui_id // ID of TGUI interface
 	var/ui_style // ID of custom TGUI style (optional)
 	var/ui_x
 	var/ui_y
-
+	var/init_process = TRUE //Stop processing from starting on init
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+
+	var/fair_market_price = 69
+	var/market_verb = "Customer"
+	var/payment_department = ACCOUNT_ENG
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -131,7 +140,7 @@ Class Procs:
 		circuit = new circuit
 		circuit.apply_default_parts(src)
 
-	if(!speed_process)
+	if(!speed_process && init_process)
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
@@ -166,7 +175,7 @@ Class Procs:
 /obj/machinery/emp_act(severity)
 	. = ..()
 	if(use_power && !stat && !(. & EMP_PROTECT_SELF))
-		use_power(7500/severity)
+		use_power(1000 + severity*65)
 		new /obj/effect/temp_visual/emp(loc)
 
 /obj/machinery/proc/open_machine(drop = TRUE)
@@ -213,6 +222,7 @@ Class Procs:
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		occupant = target
 		target.forceMove(src)
+		target.setDir(new_occupant_dir)
 	updateUsrDialog()
 	update_icon()
 
@@ -248,6 +258,36 @@ Class Procs:
 				return FALSE
 	return TRUE
 
+/obj/machinery/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+	if(occupant && !state_open)
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			var/obj/item/card/id/I = H.get_idcard()
+			if(I)
+				var/datum/bank_account/insurance = I.registered_account
+				if(!insurance)
+					say("[market_verb] NAP Violation: No bank account found.")
+					nap_violation()
+					return FALSE
+				else
+					if(!insurance.adjust_money(-fair_market_price))
+						say("[market_verb] NAP Violation: Unable to pay.")
+						nap_violation()
+						return FALSE
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+					if(D)
+						D.adjust_money(fair_market_price)
+			else
+				say("[market_verb] NAP Violation: No ID card found.")
+				nap_violation()
+				return FALSE
+	return TRUE
+
+/obj/machinery/proc/nap_violation(mob/violator)
+	return
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 //Return a non FALSE value to interrupt attack_hand propagation to subtypes.
@@ -275,7 +315,7 @@ Class Procs:
 	if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)
@@ -341,6 +381,7 @@ Class Procs:
 /obj/machinery/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -394,6 +435,7 @@ Class Procs:
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			setAnchored(!anchored)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
 	return CANT_UNFASTEN
@@ -486,14 +528,14 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
-	..()
-	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+/obj/machinery/zap_act(power, zap_flags, shocked_objects)
+	. = ..()
+	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	if(tesla_flags & TESLA_OBJ_DAMAGE)
+	else if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
-			emp_act(EMP_LIGHT)
+			emp_act(50)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
@@ -508,3 +550,6 @@ Class Procs:
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)
+
+/obj/machinery/rust_heretic_act()
+	take_damage(500, BRUTE, "melee", 1)

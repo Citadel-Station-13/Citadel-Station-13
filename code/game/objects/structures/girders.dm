@@ -6,6 +6,7 @@
 	density = TRUE
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
+	var/next_beep = 0 //Prevents spamming of the construction sound
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -27,11 +28,17 @@
 			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
+	var/platingmodifier = 1
+	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
+		platingmodifier = 0.7
+		if(next_beep <= world.time)
+			next_beep = world.time + 10
+			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
 		to_chat(user, "<span class='notice'>You start slicing apart the girder...</span>")
-		if(W.use_tool(src, user, 40, volume=100))
+		if(W.use_tool(src, user, 40*platingmodifier, volume=100))
 			to_chat(user, "<span class='notice'>You slice apart the girder.</span>")
 			var/obj/item/stack/sheet/metal/M = new (loc, 2)
 			M.add_fingerprint(user)
@@ -62,7 +69,7 @@
 					to_chat(user, "<span class='warning'>You need at least two rods to create a false wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a reinforced false wall...</span>")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -75,7 +82,7 @@
 					to_chat(user, "<span class='warning'>You need at least five rods to add plating!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
-				if(do_after(user, 40, target = src))
+				if(do_after(user, 40*platingmodifier, target = src))
 					if(S.get_amount() < 5)
 						return
 					S.use(5)
@@ -96,7 +103,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to create a false wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a false wall...</span>")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -109,7 +116,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 40*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -126,7 +133,7 @@
 					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a reinforced false wall...</span>")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -139,7 +146,7 @@
 					if(S.get_amount() < 1)
 						return
 					to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
-					if(do_after(user, 50, target = src))
+					if(do_after(user, 50*platingmodifier, target = src))
 						if(S.get_amount() < 1)
 							return
 						S.use(1)
@@ -153,7 +160,7 @@
 					if(S.get_amount() < 1)
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
-					if(do_after(user, 60, target = src))
+					if(do_after(user, 60*platingmodifier, target = src))
 						if(S.get_amount() < 1)
 							return
 						S.use(1)
@@ -163,7 +170,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype && S.sheettype != "runed")
+		if(S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				var/F = text2path("/obj/structure/falsewall/[M]")
@@ -172,7 +179,7 @@
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need at least two sheets to create a false wall!</span>")
 					return
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -181,20 +188,26 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 			else
-				var/F = text2path("/turf/closed/wall/mineral/[M]")
+				var/list/material_list
+				var/F = S.walltype
 				if(!F)
-					return
+					F = /turf/closed/wall/material
+					if(S.material_type)
+						material_list = list()
+						material_list[SSmaterials.GetMaterialRef(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 				if(S.get_amount() < 2)
 					to_chat(user, "<span class='warning'>You need at least two sheets to add plating!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 40*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
 					to_chat(user, "<span class='notice'>You add the plating.</span>")
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(F)
+					var/turf/newturf = T.PlaceOnTop(F)
+					if(material_list)
+						newturf.set_custom_materials(material_list)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -294,7 +307,7 @@
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSGRILLE)
 
@@ -429,19 +442,19 @@
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
 		if(W.use_tool(src, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You slice apart [src].</span>")
-			var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+			var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
 			transfer_fingerprints_to(B)
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
 		to_chat(user, "<span class='notice'>Your jackhammer smashes through the girder!</span>")
-		var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+		var/obj/item/stack/sheet/bronze/B = new(drop_location(), 2)
 		transfer_fingerprints_to(B)
 		W.play_tool_sound(src)
 		qdel(src)
 
-	else if(istype(W, /obj/item/stack/tile/bronze))
-		var/obj/item/stack/tile/bronze/B = W
+	else if(istype(W, /obj/item/stack/sheet/bronze))
+		var/obj/item/stack/sheet/bronze/B = W
 		if(B.get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
 			return 0

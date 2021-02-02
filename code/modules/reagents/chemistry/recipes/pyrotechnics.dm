@@ -114,11 +114,8 @@
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, multiplier)
 	var/location = get_turf(holder.my_atom)
-	// 100 multiplier = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
-	// 200 multiplier = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(multiplier / 12), round(multiplier / 7), 1)
+	empulse(location, multiplier)
 	holder.clear_reagents()
-
 
 /datum/chemical_reaction/beesplosion
 	name = "Bee Explosion"
@@ -195,7 +192,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/sorium, multiplier*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier*4), 1, 6)
+	var/range = clamp(sqrt(multiplier*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -206,7 +203,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier), 1, 6)
+	var/range = clamp(sqrt(multiplier), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -220,7 +217,7 @@
 		return
 	holder.remove_reagent(/datum/reagent/liquid_dark_matter, multiplier*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier*3), 1, 6)
+	var/range = clamp(sqrt(multiplier*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -231,7 +228,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, multiplier)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = CLAMP(sqrt(multiplier/2), 1, 6)
+	var/range = clamp(sqrt(multiplier/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
@@ -280,6 +277,7 @@
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
 	id = /datum/reagent/smoke_powder
+	priority = CHEMICAL_REACTION_PRIORITY_SMOKE
 	results = list(/datum/reagent/smoke_powder = 3)
 	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/phosphorus = 1)
 
@@ -429,7 +427,7 @@
 	noexplosion = TRUE
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, multiplier)
 	var/T1 = multiplier * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -437,15 +435,15 @@
 	var/T3 = multiplier * 120
 	sleep(5)
 	if(multiplier >= 75)
-		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T1, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(multiplier >= 40)
-		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T2, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(multiplier >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
+		tesla_zap(holder.my_atom, 7, T3, zap_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
 
@@ -486,12 +484,12 @@
 		return FALSE
 	var/list/D = holder.get_data("blood")
 	if(D && D["changeling_loudness"])
-		return (D["changeling_loudness"] >= 4 ? D["changeling_loudness"] : FALSE)
+		return (D["changeling_loudness"] >= LINGBLOOD_DETECTION_THRESHOLD ? D["changeling_loudness"] : FALSE)
 	else
 		return FALSE
 
 /datum/chemical_reaction/reagent_explosion/lingblood/on_reaction(datum/reagents/holder, multiplier, specialreact)
-	if(specialreact >= 10)
+	if(specialreact > LINGBLOOD_EXPLOSION_THRESHOLD)
 		return ..()
 	else
 		return FALSE

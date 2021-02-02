@@ -42,7 +42,7 @@
 
 /datum/chemical_reaction/slime/slimemonkey/on_reaction(datum/reagents/holder)
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(get_turf(holder.my_atom))
+		new /obj/item/reagent_containers/food/snacks/cube/monkey(get_turf(holder.my_atom))
 	..()
 
 //Green
@@ -165,10 +165,7 @@
 		var/chosen = getbork()
 		var/obj/B = new chosen(T)
 		if(prob(5))//Fry it!
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/fried
-			fried = new(T, B)
-			fried.fry() // actually set the name and colour it
-			B = fried
+			B.fry() // actually set the name and colour it
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -299,7 +296,7 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimeoverload/on_reaction(datum/reagents/holder, multiplier)
-	empulse(get_turf(holder.my_atom), 3, 7)
+	empulse_using_range(get_turf(holder.my_atom), 10)
 	..()
 
 /datum/chemical_reaction/slime/slimecell

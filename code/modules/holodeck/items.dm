@@ -24,33 +24,31 @@
 	hitsound = "swing_hit"
 	armour_penetration = 50
 	var/active = 0
+	var/saber_color
 
 /obj/item/holo/esword/green/Initialize()
 	. = ..()
-	item_color = "green"
+	saber_color = "green"
 
 
 /obj/item/holo/esword/red/Initialize()
 	. = ..()
-	item_color = "red"
+	saber_color = "red"
 
-/obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(active)
+/obj/item/holo/esword/run_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	if(!active)
 		return ..()
-	return 0
-
-/obj/item/holo/esword/attack(target as mob, mob/user as mob)
-	..()
+	return ..()
 
 /obj/item/holo/esword/Initialize()
 	. = ..()
-	item_color = pick("red","blue","green","purple")
+	saber_color = pick("red","blue","green","purple")
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[item_color]"
+		icon_state = "sword[saber_color]"
 		w_class = WEIGHT_CLASS_BULKY
 		hitsound = 'sound/weapons/blade1.ogg'
 		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
@@ -107,10 +105,7 @@
 		if(user.transferItemToLoc(W, drop_location()))
 			visible_message("<span class='warning'> [user] dunks [W] into \the [src]!</span>")
 
-/obj/structure/holohoop/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/holohoop/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(user.grab_state < GRAB_AGGRESSIVE)
@@ -166,7 +161,7 @@
 /obj/machinery/readybutton/attackby(obj/item/W as obj, mob/user as mob, params)
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
-/obj/machinery/readybutton/attack_hand(mob/user as mob)
+/obj/machinery/readybutton/on_attack_hand(mob/user as mob)
 	. = ..()
 	if(.)
 		return
@@ -221,7 +216,7 @@
 
 /obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"
-	info = {"<h2>Starfleet Academy</h2></br><p>Official Diploma</p></br>"}
+	info = {"__Starfleet Academy__\nOfficial Diploma"}
 
 /obj/item/paper/fluff/holodeck/disclaimer
 	name = "Holodeck Disclaimer"

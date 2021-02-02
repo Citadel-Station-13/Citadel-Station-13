@@ -90,6 +90,8 @@
 				to_chat(user, "<span class='boldnotice'>You catch some drifting memories of their past conversations...</span>")
 				for(var/spoken_memory in recent_speech)
 					to_chat(user, "<span class='notice'>[recent_speech[spoken_memory]]</span>")
+			if(usr in GLOB.rockpaperscissors_players)
+				to_chat(user, "<span class='notice'>They're planning on playing [GLOB.rockpaperscissors_players[usr][1]]</span>")
 			if(iscarbon(M))
 				var/mob/living/carbon/human/H = M
 				to_chat(user, "<span class='boldnotice'>You find that their intent is to [H.a_intent]...</span>")

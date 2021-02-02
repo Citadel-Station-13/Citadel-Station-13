@@ -8,6 +8,7 @@ GLOBAL_LIST(labor_sheet_values)
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = FALSE
+
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/machinery/door/airlock/release_door
@@ -32,11 +33,10 @@ GLOBAL_LIST(labor_sheet_values)
 /proc/cmp_sheet_list(list/a, list/b)
 	return a["value"] - b["value"]
 
-/obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "labor_claim_console", name, 315, 430, master_ui, state)
+		ui = new(user, src, "LaborClaimConsole", name)
 		ui.open()
 
 /obj/machinery/mineral/labor_claim_console/ui_data(mob/user)
@@ -100,7 +100,6 @@ GLOBAL_LIST(labor_sheet_values)
 							Radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
 						to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 						. = TRUE
-						
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
@@ -111,7 +110,7 @@ GLOBAL_LIST(labor_sheet_values)
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	. = ..()
-	if(obj_flags & EMAGGED)
+	if((obj_flags & EMAGGED))
 		return
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
@@ -122,7 +121,7 @@ GLOBAL_LIST(labor_sheet_values)
 /obj/machinery/mineral/stacking_machine/laborstacker
 	force_connect = TRUE
 	var/points = 0 //The unclaimed value of ore stacked.
-
+	//damage_deflection = 21
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	points += inp.point_value * inp.amount
 	..()
@@ -142,10 +141,7 @@ GLOBAL_LIST(labor_sheet_values)
 	icon_state = "console"
 	density = FALSE
 
-/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/mineral/labor_points_checker/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.examinate(src)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)

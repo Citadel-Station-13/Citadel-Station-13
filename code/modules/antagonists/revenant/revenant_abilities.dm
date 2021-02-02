@@ -5,7 +5,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		altclick_listed_turf(A)
+		AltClickNoInteract(src, A)
 		return
 
 	if(ishuman(A))
@@ -17,6 +17,7 @@
 
 //Harvest; activated ly clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+	set waitfor = FALSE
 	if(!castcheck(0))
 		return
 	if(draining)
@@ -117,7 +118,7 @@
 	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = NONE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -135,7 +136,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr, skipcharge = FALSE, silent = FALSE)
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.
@@ -299,7 +300,7 @@
 			continue
 		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
 		new /obj/effect/temp_visual/revenant(human.loc)
-		human.emp_act(EMP_HEAVY)
+		human.emp_act(80)
 	for(var/obj/thing in T)
 		if(istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on SMES and APCs, to prevent kekkery
 			continue
@@ -309,12 +310,12 @@
 			thing.emag_act(null)
 		else
 			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
-				thing.emp_act(EMP_HEAVY)
+				thing.emp_act(80)
 	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
 		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
 		new /obj/effect/temp_visual/revenant(S.loc)
 		S.spark_system.start()
-		S.emp_act(EMP_HEAVY)
+		S.emp_act(80)
 
 //Blight: Infects nearby humans and in general messes living stuff up.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight

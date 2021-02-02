@@ -22,6 +22,11 @@
 	sparks.set_up(2,0)
 	sparks.attach(src)
 	update_icon()
+	new_occupant_dir = dir
+
+/obj/machinery/vr_sleeper/setDir(newdir)
+	. = ..()
+	new_occupant_dir = dir
 
 /obj/machinery/vr_sleeper/attackby(obj/item/I, mob/user, params)
 	if(!state_open && !occupant)
@@ -66,22 +71,22 @@
 /obj/machinery/vr_sleeper/update_icon_state()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
 
-/obj/machinery/vr_sleeper/open_machine()
-	if(state_open)
-		return
-	if(occupant)
-		SStgui.close_user_uis(occupant, src)
-	return ..()
 
 /obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.lying || !iscarbon(target) || !Adjacent(target) || !user.canUseTopic(src, BE_CLOSE, TRUE, NO_TK))
 		return
 	close_machine(target)
+	ui_interact(user)
 
-/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/vr_sleeper/ui_state(mob/user)
+	if(user == occupant)
+		return GLOB.contained_state
+	return GLOB.default_state
+
+/obj/machinery/vr_sleeper/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "vr_sleeper", "VR Sleeper", 475, 340, master_ui, state)
+		ui = new(user, src, "VrSleeper", "VR Sleeper")
 		ui.open()
 
 /obj/machinery/vr_sleeper/ui_act(action, params)
@@ -125,11 +130,13 @@
 
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()
+	var/is_living
 	if(vr_mob && !QDELETED(vr_mob))
+		is_living = isliving(vr_mob)
 		data["can_delete_avatar"] = TRUE
 		data["vr_avatar"] = list("name" = vr_mob.name)
-		data["isliving"] = istype(vr_mob)
-		if(data["isliving"])
+		data["isliving"] = is_living
+		if(is_living)
 			var/status
 			switch(vr_mob.stat)
 				if(CONSCIOUS)
@@ -141,6 +148,11 @@
 				if(SOFT_CRIT)
 					status = "Barely Conscious"
 			data["vr_avatar"] += list("status" = status, "health" = vr_mob.health, "maxhealth" = vr_mob.maxHealth)
+	else 
+		data["can_delete_avatar"] = FALSE
+		data["vr_avatar"] = FALSE
+		data["isliving"] = FALSE
+
 	data["toggle_open"] = state_open
 	data["emagged"] = you_die_in_the_game_you_die_for_real
 	data["isoccupant"] = (user == occupant)

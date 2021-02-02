@@ -29,22 +29,17 @@
 	var/damage_multiplier = 1
 
 /obj/item/organ/ears/on_life()
-	if(!iscarbon(owner))
-		return
-	..()
-	var/mob/living/carbon/C = owner
-	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
-		organ_flags &= ~ORGAN_FAILING
+	. = ..()
 	// genetic deafness prevents the body from using the ears, even if healthy
-	if(HAS_TRAIT(C, TRAIT_DEAF))
+	if(owner && HAS_TRAIT(owner, TRAIT_DEAF))
 		deaf = max(deaf, 1)
-	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
+	else if(.) // if this organ is failing, do not clear deaf stacks.
 		deaf = max(deaf - 1, 0)
 		if(prob(damage / 20) && (damage > low_threshold))
 			adjustEarDamage(0, 4)
-			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
-			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
-	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
+			SEND_SOUND(owner, sound('sound/weapons/flash_ring.ogg'))
+			to_chat(owner, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
+	else if(!. && !deaf)
 		deaf = 1	//stop being not deaf you deaf idiot
 
 /obj/item/organ/ears/proc/restoreEars()
@@ -136,4 +131,31 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	damage += 40/severity
+	damage += 0.15 * severity
+
+/obj/item/organ/ears/ipc
+	name = "auditory sensors"
+	icon_state = "ears-c"
+	desc = "A pair of microphones intended to be installed in an IPC head, that grant the ability to hear."
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_EARS
+	gender = PLURAL
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/ears/ipc/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, "<span class='warning'>Alert: Auditory systems corrupted!.</span>")
+	switch(severity)
+		if(1)
+			owner.Jitter(30)
+			owner.Dizzy(30)
+			owner.DefaultCombatKnockdown(80)
+			deaf = 30
+
+		if(2)
+			owner.Jitter(15)
+			owner.Dizzy(15)
+			owner.DefaultCombatKnockdown(40)
+	damage += 0.15 * severity

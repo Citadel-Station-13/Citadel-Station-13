@@ -110,7 +110,7 @@
 			if (bloodsuckerdatum && bloodsuckerdatum.coffin == src)
 				bloodsuckerdatum.coffin = null
 				bloodsuckerdatum.lair = null
-			to_chat(resident, "<span class='danger'><span class='italics'>You sense that the link with your coffin, your sacred place of rest, has been brokem! You will need to seek another.</span></span>")
+			to_chat(resident, "<span class='danger'><span class='italics'>You sense that the link with your coffin, your sacred place of rest, has been broken! You will need to seek another.</span></span>")
 		resident = null // Remove resident. Because this object isnt removed from the game immediately (GC?) we need to give them a way to see they don't have a home anymore.
 
 /obj/structure/closet/crate/coffin/can_open(mob/living/user)
@@ -200,39 +200,3 @@
 					to_chat(resident, "<span class='notice'>You fix the mechanism and lock it.</span>")
 					broken = FALSE
 					locked = TRUE
-
-// Look up recipes.dm OR pneumaticCannon.dm
-/datum/crafting_recipe/bloodsucker/blackcoffin
-	name = "Black Coffin"
-	result = /obj/structure/closet/crate/coffin/blackcoffin
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/screwdriver)
-	reqs = list(/obj/item/stack/sheet/cloth = 1,
-				/obj/item/stack/sheet/mineral/wood = 5,
-				/obj/item/stack/sheet/metal = 1)
-				///obj/item/stack/packageWrap = 8,
-				///obj/item/pipe = 2)
-	time = 150
-	category = CAT_MISC
-	always_availible = TRUE
-
-/datum/crafting_recipe/bloodsucker/meatcoffin
-	name = "Meat Coffin"
-	result =/obj/structure/closet/crate/coffin/meatcoffin
-	tools = list(/obj/item/kitchen/knife,
-				 /obj/item/kitchen/rollingpin)
-	reqs = list(/obj/item/reagent_containers/food/snacks/meat/slab = 5,
-				/obj/item/restraints/handcuffs/cable = 1)
-	time = 150
-	category = CAT_MISC
-	always_availible = TRUE
-
-/datum/crafting_recipe/bloodsucker/metalcoffin
-	name = "Metal Coffin"
-	result =/obj/structure/closet/crate/coffin/metalcoffin
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/screwdriver)
-	reqs = list(/obj/item/stack/sheet/metal = 5)
-	time = 100
-	category = CAT_MISC
-	always_availible = TRUE

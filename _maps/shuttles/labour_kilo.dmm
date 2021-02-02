@@ -29,10 +29,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "f" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -47,10 +43,6 @@
 	req_access_txt = "1"
 	},
 /obj/machinery/light,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -62,10 +54,6 @@
 	machinedir = 2;
 	pixel_x = 30;
 	pixel_y = 30
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -111,10 +99,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "l" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -127,10 +111,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -141,17 +121,12 @@
 	machinedir = 1;
 	pixel_x = 30
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "o" = (
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -164,10 +139,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "p" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
@@ -177,9 +148,6 @@
 	pixel_x = 25
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
@@ -189,31 +157,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "r" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/labor)
-"s" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/labor)
 "t" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/labor)
@@ -284,7 +233,7 @@ g
 a
 m
 p
-s
+t
 w
 y
 "}

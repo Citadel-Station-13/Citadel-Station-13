@@ -7,14 +7,14 @@
 	icon_living = "carp"
 	icon_dead = "carp_dead"
 	icon_gib = "carp_gib"
-	threat = 0.2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/carpmeat = 2)
-	response_help = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm = "hits"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
 	emote_taunt = list("gnashes")
 	taunt_chance = 30
 	speed = 0
@@ -25,7 +25,8 @@
 	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("gnashes")
 	//Space carp aren't affected by cold.
@@ -45,8 +46,9 @@
 	if(regen_amount)
 		regen_cooldown = world.time + REGENERATION_DELAY
 
-/mob/living/simple_animal/hostile/carp/Life()
-	. = ..()
+/mob/living/simple_animal/hostile/carp/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(regen_amount && regen_cooldown < world.time)
 		heal_overall_damage(regen_amount)
 
@@ -71,7 +73,6 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
-	threat = 3
 	regen_amount = 6
 
 	maxHealth = 30
@@ -95,7 +96,6 @@
 	name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
 	gender = FEMALE
-	threat = 5
 	regen_amount = 8
 
 	speak_emote = list("squeaks")

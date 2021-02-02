@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
+	plane = ABOVE_WALL_PLANE
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
@@ -93,6 +94,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	update_icon()
+
+/obj/machinery/newscaster/attack_ghost(mob/dead/observer/user)
+	if(istype(user))
+		user.read_news()
 
 /obj/machinery/newscaster/ui_interact(mob/user)
 	. = ..()
@@ -335,7 +340,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 				dat+="<A href='?src=[REF(src)];setScreen=[0]'>Return</A>"
 		var/datum/browser/popup = new(human_or_robot_user, "newscaster_main", "Newscaster Unit #[unit_no]", 400, 600)
 		popup.set_content(dat)
-		popup.set_title_image(human_or_robot_user.browse_rsc_icon(icon, icon_state))
 		popup.open()
 
 /obj/machinery/newscaster/Topic(href, href_list)

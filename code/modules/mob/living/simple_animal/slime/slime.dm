@@ -3,7 +3,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
-	ventcrawler = VENTCRAWLER_ALWAYS
+	mob_size = MOB_SIZE_SMALL
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
@@ -12,9 +12,12 @@
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
 	icon_dead = "grey baby slime dead"
-	response_help  = "pets"
-	response_disarm = "shoos"
-	response_harm   = "stomps on"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "stomps on"
+	response_harm_simple = "stomp on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	bubble_icon = "slime"
@@ -27,6 +30,7 @@
 	healable = 0
 	gender = NEUTER
 	blood_volume = 0 //Until someome reworks for them to have slime jelly
+	nutrition = 700
 
 	see_in_dark = 8
 
@@ -62,8 +66,6 @@
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
-
-	do_footstep = TRUE
 
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
@@ -102,7 +104,10 @@
 	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
-	nutrition = 700
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	set_nutrition(rand(650, 800))
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -147,25 +152,26 @@
 
 /mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
 	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, FALSE)
-	var/health_deficiency = (100 - health)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod)
 	var/mod = 0
-	if(health_deficiency >= 45)
-		mod += (health_deficiency / 25)
-	if(health <= 0)
-		mod += 2
-	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod)
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			mod += (health_deficiency / 25)
+		if(health <= 0)
+			mod += 2
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()
@@ -173,9 +179,8 @@
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		mod = -1	// slimes become supercharged at high temperatures
 	else if(bodytemperature < 183.222)
-		mod = (283.222 - bodytemperature) / 10 * 1.75
-	if(mod)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
+		mod = min(15, (283.222 - bodytemperature) / 10 * 1.75)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -205,24 +210,23 @@
 /mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
-/mob/living/simple_animal/slime/Stat()
-	if(..())
-
-		if(!docile)
-			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(is_adult)
-				stat(null, "You can reproduce!")
-			else
-				stat(null, "You can evolve!")
+/mob/living/simple_animal/slime/get_status_tab_items()
+	. = ..()
+	if(!docile)
+		. += "Nutrition: [nutrition]/[get_max_nutrition()]"
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(is_adult)
+			. += "You can reproduce!"
+		else
+			. += "You can evolve!"
 
 		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of BZ!")
+			. += "You are knocked out by high levels of BZ!"
 		else
-			stat(null,"Power Level: [powerlevel]")
+			. += "Power Level: [powerlevel]"
 
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, only_robotic = FALSE, only_organic = TRUE)
 	if(!forced)
 		amount = -abs(amount)
 	return ..() //Heals them
@@ -267,8 +271,8 @@
 		return
 	attacked += 5
 	if(nutrition >= 100) //steal some nutrition. negval handled in life()
-		nutrition -= (50 + (40 * M.is_adult))
-		M.add_nutrition(50 + (40 * M.is_adult))
+		adjust_nutrition(-50 - (40 * M.is_adult))
+		M.adjust_nutrition(50 + (40 * M.is_adult), get_max_nutrition(), TRUE)
 	if(health > 0)
 		M.adjustBruteLoss(-10 + (-10 * M.is_adult))
 		M.updatehealth()
@@ -293,7 +297,7 @@
 		discipline_slime(user)
 		return ..()
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/slime/on_attack_hand(mob/living/carbon/human/M)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
@@ -353,7 +357,7 @@
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
-			user.changeNext_move(CLICK_CD_MELEE)
+			W.ApplyAttackCooldown(user, src)
 			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??

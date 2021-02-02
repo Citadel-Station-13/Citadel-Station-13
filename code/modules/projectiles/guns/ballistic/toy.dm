@@ -27,9 +27,9 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
+	automatic_burst_overlay = FALSE
 
-/obj/item/gun/ballistic/automatic/toy/pistol/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/toy/pistol/update_icon_state()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/toy/pistol/riot
@@ -56,8 +56,9 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
+	weapon_weight = WEAPON_MEDIUM
 
-/obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
+/obj/item/gun/ballistic/shotgun/toy/process_chamber(mob/living/user, empty_chamber = 0)
 	..()
 	if(chambered && !chambered.BB)
 		qdel(chambered)

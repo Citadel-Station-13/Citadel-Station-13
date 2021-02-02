@@ -28,10 +28,8 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	panel = new()
-#if DM_VERSION >= 513
 	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
 	vis_contents += panel
-#endif
 	panel.icon = icon
 	panel.icon_state = "solar_panel"
 	panel.layer = FLY_LAYER
@@ -117,9 +115,6 @@
 		panel.icon_state = "solar_panel-b"
 	else
 		panel.icon_state = "solar_panel"
-#if DM_VERSION <= 512
-	. += new /mutable_appearance(panel)
-#endif
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -170,7 +165,7 @@
 	else
 		//dot product of sun and panel -- Lambert's Cosine Law
 		. = cos(azimuth_current - sun_azimuth)
-		. = CLAMP(round(., 0.01), 0, 1)
+		. = clamp(round(., 0.01), 0, 1)
 	sunfrac = .
 
 /obj/machinery/power/solar/process()
@@ -185,7 +180,7 @@
 	if(sunfrac <= 0)
 		return
 
-	var/sgen = SOLAR_GEN_RATE * sunfrac
+	var/sgen = SOLAR_GEN_RATE * sunfrac * efficiency
 	add_avail(sgen)
 	if(control)
 		control.gen += sgen
@@ -253,6 +248,7 @@
 		var/obj/item/stack/sheet/G = S.change_stack(null, 2)
 		if(G)
 			glass_type = G
+			G.moveToNullspace()
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
@@ -347,11 +343,10 @@
 	else
 		. += mutable_appearance(icon, icon_screen)
 
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/power/solar_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 380, 230, master_ui, state)
+		ui = new(user, src, "SolarControl", name)
 		ui.open()
 
 /obj/machinery/power/solar_control/ui_data()
@@ -384,7 +379,7 @@
 		if(adjust)
 			value = azimuth_rate + adjust
 		if(value != null)
-			azimuth_rate = round(CLAMP(value, -2 * SSsun.base_rotation, 2 * SSsun.base_rotation), 0.01)
+			azimuth_rate = round(clamp(value, -2 * SSsun.base_rotation, 2 * SSsun.base_rotation), 0.01)
 			return TRUE
 		return FALSE
 	if(action == "tracking")
@@ -463,7 +458,7 @@
 
 ///Rotates the panel to the passed angles
 /obj/machinery/power/solar_control/proc/set_panels(azimuth)
-	azimuth = CLAMP(round(azimuth, 0.01), -360, 719.99)
+	azimuth = clamp(round(azimuth, 0.01), -360, 719.99)
 	if(azimuth >= 360)
 		azimuth -= 360
 	if(azimuth < 0)
@@ -482,8 +477,12 @@
 //
 
 /obj/item/paper/guides/jobs/engi/solars
-	name = "paper- 'Going green! Setup your own solar array instructions.'"
-	info = "<h1>Welcome</h1><p>At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.</p><p>You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.</p><p>Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!</p>"
+	info = {"
+# Welcome!
+At greencorps we love the environment, and space. With this package you are able to help mother nature and produce energy without any usage of fossil fuel or plasma! Singularity energy is dangerous while solar energy is safe, which is why it's better. Now here is how you setup your own solar array.
+You can make a solar panel by wrenching the solar assembly onto a cable node. Adding a glass panel, reinforced or regular glass will do, will finish the construction of your solar panel. It is that easy!</p><p>Now after setting up 19 more of these solar panels you will want to create a solar tracker to keep track of our mother nature's gift, the sun. These are the same steps as before except you insert the tracker equipment circuit into the assembly before performing the final step of adding the glass. You now have a tracker! Now the last step is to add a computer to calculate the sun's movements and to send commands to the solar panels to change direction with the sun. Setting up the solar computer is the same as setting up any computer, so you should have no trouble in doing that. You do need to put a wire node under the computer, and the wire needs to be connected to the tracker.
+Congratulations, you should have a working solar array. If you are having trouble, here are some tips. Make sure all solar equipment are on a cable node, even the computer. You can always deconstruct your creations if you make a mistake.</p><p>That's all to it, be safe, be green!
+"}
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE

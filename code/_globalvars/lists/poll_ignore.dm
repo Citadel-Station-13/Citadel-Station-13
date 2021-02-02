@@ -19,6 +19,7 @@
 #define POLL_IGNORE_WIZARD "wizard"
 #define POLL_IGNORE_CLONE "clone"
 #define POLL_IGNORE_CONTRACTOR_SUPPORT "contractor_support"
+#define POLL_IGNORE_FUGITIVE "fugitive"
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SENTIENCE_POTION = "Sentience potion",
@@ -39,7 +40,8 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_DEMON = "Demons",
 	POLL_IGNORE_WIZARD = "Wizards",
 	POLL_IGNORE_CLONE = "Defective/SDGF clones",
-	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit"
+	POLL_IGNORE_CONTRACTOR_SUPPORT = "Contractor Support Unit",
+	POLL_IGNORE_FUGITIVE = "Fugitive Hunter"
 ))
 GLOBAL_LIST_INIT(poll_ignore, init_poll_ignore())
 

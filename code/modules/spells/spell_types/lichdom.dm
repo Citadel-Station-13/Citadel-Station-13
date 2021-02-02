@@ -8,7 +8,7 @@
 	becoming a lich destroys all internal organs except the brain."
 	school = "necromancy"
 	charge_max = 10
-	clothes_req = 0
+	clothes_req = NONE
 	centcom_cancast = 0
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = "shout"
@@ -132,7 +132,7 @@
 	lich.real_name = mind.name
 	mind.transfer_to(lich)
 	mind.grab_ghost(force=TRUE)
-	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton/space)
+	lich.hardset_dna(null,null,null,lich.real_name,null, new /datum/species/skeleton/space)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
 	lich.DefaultCombatKnockdown(200 + 200*resurrections)

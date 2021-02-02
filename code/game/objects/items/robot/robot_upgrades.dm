@@ -6,23 +6,33 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
+	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
 	var/installed = 0
 	var/require_module = 0
 	var/list/module_type
+	///	Bitflags listing module compatibility. Used in the exosuit fabricator for creating sub-categories.
+	var/module_flags = NONE
 	// if true, is not stored in the robot to be ejected
 	// if module is reset
 	var/one_use = FALSE
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R, user = usr)
 	if(R.stat == DEAD)
-		to_chat(user, "<span class='notice'>[src] will not function on a deceased cyborg.</span>")
+		to_chat(user, "<span class='warning'>[src] will not function on a deceased cyborg.</span>")
 		return FALSE
 	if(module_type && !is_type_in_list(R.module, module_type))
-		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
-		to_chat(user, "There's no mounting point for the module!")
+		to_chat(R, "<span class='alert'>Upgrade mounting error! No suitable hardpoint detected.</span>")
+		to_chat(user, "<span class='warning'>There's no mounting point for the module!</span>")
 		return FALSE
 	return TRUE
+
+/*
+This proc gets called by upgrades after installing them. Use this for things that for example need to be moved into a specific borg item,
+as performing this in action() will cause the upgrade to end up in the borg instead of its intended location due to forceMove() being called afterwards..
+*/
+/obj/item/borg/upgrade/proc/afterInstall(mob/living/silicon/robot/R, user = usr)
+	return
 
 /obj/item/borg/upgrade/proc/deactivate(mob/living/silicon/robot/R, user = usr)
 	if (!(src in R.upgrades))
@@ -37,7 +47,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
+	heldname = sanitize_name(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN))
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -70,6 +80,7 @@
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
+	var/obj/effect/proc_holder/silicon/cyborg/vtecControl/VC
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -81,12 +92,14 @@
 
 		//R.speed = -2 // Gotta go fast.
         //Citadel change - makes vtecs give an ability rather than reducing the borg's speed instantly
-		R.AddAbility(new/obj/effect/proc_holder/silicon/cyborg/vtecControl)
+		VC = new /obj/effect/proc_holder/silicon/cyborg/vtecControl
+		R.AddAbility(VC)
 		R.cansprint = 0
 
 /obj/item/borg/upgrade/vtec/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
+		R.RemoveAbility(VC)
 		R.speed = initial(R.speed)
 		R.cansprint = 1
 
@@ -95,6 +108,7 @@
 	desc = "Used to cool a mounted energy-based firearm, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
+	module_flags = BORG_MODULE_SECURITY
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -147,6 +161,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -207,6 +222,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/butler)
+	module_flags = BORG_MODULE_JANITOR
 
 /obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -234,6 +250,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/butler)
+	module_flags = BORG_MODULE_JANITOR
 
 /obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -241,9 +258,9 @@
 		for(var/obj/item/mop/cyborg/M in R.module.modules)
 			R.module.remove_module(M, TRUE)
 
-	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
-	R.module.basic_modules += A
-	R.module.add_module(A, FALSE, TRUE)
+		var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
+		R.module.basic_modules += A
+		R.module.add_module(A, FALSE, TRUE)
 
 /obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -283,6 +300,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
 	module_type = list(/obj/item/robot_module/miner)
+	module_flags = BORG_MODULE_MINER
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -402,6 +420,7 @@
 	module_type = list(/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical)
 	var/list/additional_reagents = list()
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -459,7 +478,7 @@
 /obj/item/borg/upgrade/defib/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
+		var/obj/item/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
 
 /obj/item/borg/upgrade/processor
@@ -471,6 +490,7 @@
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical,
 		/obj/item/robot_module/syndicate_medical)
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -545,7 +565,7 @@
 			to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
 			return FALSE
 
-		R.notransform = TRUE
+		R.mob_transforming = TRUE
 		var/prev_locked_down = R.locked_down
 		R.SetLockdown(1)
 		R.anchored = TRUE
@@ -559,14 +579,14 @@
 		if(!prev_locked_down)
 			R.SetLockdown(0)
 		R.anchored = FALSE
-		R.notransform = FALSE
+		R.mob_transforming = FALSE
 		R.resize = 2
 		R.hasExpanded = TRUE
 		R.update_transform()
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	if (.)
+	if (. && R.hasExpanded)
 		R.resize = 0.5
 		R.hasExpanded = FALSE
 		R.update_transform()
@@ -578,6 +598,7 @@
 	icon_state = "borg_BS_RPED"
 	require_module = TRUE
 	module_type = list(/obj/item/robot_module/engineering, /obj/item/robot_module/saboteur)
+	module_flags = BORG_MODULE_ENGINEERING
 
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -612,8 +633,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinpointer_crew"
 	require_module = TRUE
-	module_type = list(/obj/item/robot_module/medical,
-		/obj/item/robot_module/syndicate_medical)
+	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical)
+	module_flags = BORG_MODULE_MEDICAL
 
 /obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -663,21 +684,19 @@
 	var/maxReduction = 1
 
 
-/obj/effect/proc_holder/silicon/cyborg/vtecControl/Click(mob/living/silicon/robot/user)
-	var/mob/living/silicon/robot/self = usr
-
+/obj/effect/proc_holder/silicon/cyborg/vtecControl/Trigger(mob/living/silicon/robot/user)
 	currentState = (currentState + 1) % 3
 
-	if(istype(self))
+	if(istype(user))
 		switch(currentState)
 			if (0)
-				self.speed = initial(self.speed)
+				user.speed = initial(user.speed)
 			if (1)
-				self.speed = initial(self.speed) - maxReduction * 0.5
+				user.speed = initial(user.speed) - maxReduction * 0.5
 			if (2)
-				self.speed = initial(self.speed) - maxReduction * 1
+				user.speed = initial(user.speed) - maxReduction * 1
 
 	action.button_icon_state = "Chevron_State_[currentState]"
 	action.UpdateButtonIcon()
 
-	return
+	return TRUE

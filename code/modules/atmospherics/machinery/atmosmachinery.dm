@@ -17,6 +17,7 @@
 	active_power_usage = 0
 	power_channel = ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
+	plane = ABOVE_WALL_PLANE
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
@@ -43,7 +44,7 @@
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
 		var/mob/living/L = user
-		if(L.ventcrawler)
+		if(SEND_SIGNAL(L, COMSIG_CHECK_VENTCRAWL))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
@@ -64,6 +65,7 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
+	SSair.pipenets_needing_rebuilt -= src
 
 	dropContents()
 	if(pipe_vision_img)
@@ -316,7 +318,7 @@
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))
-		return L.handle_ventcrawl(src)
+		return SEND_SIGNAL(L, COMSIG_HANDLE_VENTCRAWL, src)
 	return ..()
 
 

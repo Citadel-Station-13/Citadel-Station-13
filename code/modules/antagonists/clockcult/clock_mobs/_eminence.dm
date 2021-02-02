@@ -114,23 +114,26 @@
 		superheat_wall(A)
 		return
 	if(modifiers["middle"] || modifiers["ctrl"])
-		issue_command(A)
+		INVOKE_ASYNC(src, .proc/issue_command, A)
 		return
 	if(GLOB.ark_of_the_clockwork_justiciar == A)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		if(G.recalling)
-			return
-		if(!G.recalls_remaining)
-			to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
-			return
-		if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
-			return
-		G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
+		INVOKE_ASYNC(src, .proc/attempt_recall, G)
 	else if(istype(A, /obj/structure/destructible/clockwork/trap/trigger))
 		var/obj/structure/destructible/clockwork/trap/trigger/T = A
 		T.visible_message("<span class='danger'>[T] clunks as it's activated remotely.</span>")
 		to_chat(src, "<span class='brass'>You activate [T].</span>")
 		T.activate()
+
+/mob/camera/eminence/proc/attempt_recall(obj/structure/destructible/clockwork/massive/celestial_gateway/G)
+	if(G.recalling)
+		return
+	if(!G.recalls_remaining)
+		to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
+		return
+	if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
+		return
+	G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
 
 /mob/camera/eminence/ratvar_act()
 	name = "\improper Radiance"
@@ -232,7 +235,7 @@
 	background_icon_state = "bg_clock"
 	buttontooltipstyle = "clockcult"
 
-/datum/action/innate/eminence/IsAvailable()
+/datum/action/innate/eminence/IsAvailable(silent = FALSE)
 	if(!iseminence(owner))
 		qdel(src)
 		return
@@ -248,7 +251,8 @@
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
 
-//Returns to the Ark
+/*
+//Returns to the Ark - Commented out and replaced with obelisk_jump
 /datum/action/innate/eminence/ark_jump
 	name = "Return to Ark"
 	desc = "Warps you to the Ark."
@@ -262,6 +266,40 @@
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
 		to_chat(owner, "<span class='warning'>There is no Ark!</span>")
+*/
+
+//Warps to a chosen Obelisk
+/datum/action/innate/eminence/obelisk_jump
+	name = "Warp to Obelisk"
+	desc = "Warps to a chosen clockwork obelisk."
+	button_icon_state = "Abscond"
+
+/datum/action/innate/eminence/obelisk_jump/Activate()
+	var/list/possible_targets = list()
+	var/list/warpnames = list()
+
+	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
+		if(!O.Adjacent(owner) && O.anchored)
+			var/area/A = get_area(O)
+			var/locname = initial(A.name)
+			possible_targets[avoid_assoc_duplicate_keys("[locname] [O.name]", warpnames)] = O
+
+	if(!possible_targets.len)
+		to_chat(owner, "<span class='warning'>There are no Obelisks to warp to!</span>")
+		return
+
+	var/target_key = input(owner, "Choose an Obelisk to warp to.", "Obelisk Warp") as null|anything in possible_targets
+	var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/target = possible_targets[target_key]
+
+	if(!target_key || !owner)
+		return
+
+	if(!target)
+		to_chat(owner, "<span class='warning'>That Obelisk does no longer exist!</span>")
+		return
+	owner.forceMove(get_turf(target))
+	owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+	flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 
 //Warps to the Station
 /datum/action/innate/eminence/station_jump
@@ -283,7 +321,7 @@
 	desc = "Initiates a mass recall, warping all servants to the Ark after a short delay. This can only be used once."
 	button_icon_state = "Spatial Gateway"
 
-/datum/action/innate/eminence/mass_recall/IsAvailable()
+/datum/action/innate/eminence/mass_recall/IsAvailable(silent = FALSE)
 	. = ..()
 	if(.)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar

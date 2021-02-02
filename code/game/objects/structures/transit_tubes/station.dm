@@ -58,10 +58,7 @@
 	qdel(R)
 
 
-/obj/structure/transit_tube/station/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/transit_tube/station/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(!pod_moving)
 		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
@@ -152,8 +149,8 @@
 		pod_moving = 0
 		if(!QDELETED(pod))
 			var/datum/gas_mixture/floor_mixture = loc.return_air()
-			ARCHIVE_TEMPERATURE(floor_mixture)
-			ARCHIVE_TEMPERATURE(pod.air_contents)
+			floor_mixture.archive()
+			pod.air_contents.archive()
 			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
 			air_update_turf()
 

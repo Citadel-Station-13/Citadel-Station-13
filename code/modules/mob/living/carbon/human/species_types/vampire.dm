@@ -1,21 +1,27 @@
 /datum/species/vampire
 	name = "Vampire"
-	id = "vampire"
+	id = SPECIES_VAMPIRE
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutant_bodyparts = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "deco_wings" = "None")
+	mutant_bodyparts = list("mcolor" = "FFFFFF", "tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	exotic_bloodtype = "U"
-	use_skintones = TRUE
+	use_skintones = USE_SKINTONES_GRAYSCALE_CUSTOM
 	mutant_heart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
 	blacklisted = TRUE
-	limbs_id = "human"
+	limbs_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
+	species_category = SPECIES_CATEGORY_UNDEAD
+	var/batform_enabled = TRUE
 
-/datum/species/vampire/check_roundstart_eligible()
+/datum/species/vampire/roundstart
+	id = SPECIES_VAMPIRE_WEAK
+	batform_enabled = FALSE
+
+/datum/species/vampire/roundstart/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return FALSE
@@ -23,10 +29,12 @@
 /datum/species/vampire/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
 	to_chat(C, "[info_text]")
-	C.skin_tone = "albino"
+	if(!C.dna.skin_tone_override)
+		C.skin_tone = "albino"
 	C.update_body(0)
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
-	C.AddSpell(B)
+	if(batform_enabled)
+		var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
+		C.AddSpell(B)
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -81,6 +89,9 @@
 			if(H.blood_volume >= BLOOD_VOLUME_MAXIMUM)
 				to_chat(H, "<span class='notice'>You're already full!</span>")
 				return
+			//This checks whether or not they are wearing a garlic clove on their neck
+			if(!blood_sucking_checks(victim, TRUE, FALSE))
+				return
 			if(victim.stat == DEAD)
 				to_chat(H, "<span class='notice'>You need a living victim!</span>")
 				return
@@ -92,6 +103,9 @@
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return
+			//Here we check now for both the garlic cloves on the neck and for blood in the victims bloodstream.
+			if(!blood_sucking_checks(victim, TRUE, TRUE))
+				return
 			if(!do_after(H, 30, target = victim))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
@@ -99,12 +113,20 @@
 			to_chat(victim, "<span class='danger'>[H] is draining your blood!</span>")
 			to_chat(H, "<span class='notice'>You drain some blood!</span>")
 			playsound(H, 'sound/items/drink.ogg', 30, 1, -2)
-			victim.blood_volume = CLAMP(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
-			H.blood_volume = CLAMP(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
+			H.blood_volume = clamp(H.blood_volume + drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
 			if(!victim.blood_volume)
 				to_chat(H, "<span class='warning'>You finish off [victim]'s blood supply!</span>")
 
 #undef VAMP_DRAIN_AMOUNT
+
+
+/mob/living/carbon/get_status_tab_items()
+	. = ..()
+	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+	if(darkheart)
+		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
+
 
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
@@ -137,14 +159,33 @@
 		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
 		return
 
+	if(!ishuman(caster))
+		to_chat(caster, "<span class='warning'>You need to be humanoid to be able to do this!</span>")
+		return
+
+	var/mob/living/carbon/human/human_caster = caster
 	var/mob/living/shape = new shapeshift_type(caster.loc)
-	H = new(shape,src,caster)
+	H = new(shape,src,human_caster)
 	if(istype(H, /mob/living/simple_animal))
 		var/mob/living/simple_animal/SA = H
-		if((caster.blood_volume >= (BLOOD_VOLUME_BAD*caster.blood_ratio)) || (ventcrawl_nude_only && length(caster.get_equipped_items(include_pockets = TRUE))))
-			SA.ventcrawler = FALSE
+		if((human_caster.blood_volume <= (BLOOD_VOLUME_BAD*human_caster.blood_ratio)) || (ventcrawl_nude_only && length(human_caster.get_equipped_items(include_pockets = TRUE))))
+			SA.RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 	if(transfer_name)
-		H.name = caster.name
+		H.name = human_caster.name
 
-	clothes_req = 0
-	human_req = 0
+
+	clothes_req = NONE
+	mobs_whitelist = null
+	mobs_blacklist = null
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/bat/cast(list/targets, mob/user = usr)
+	if(!(locate(/obj/shapeshift_holder) in targets[1]))
+		if(!ishuman(user))
+			to_chat(user, "<span class='warning'>You need to be humanoid to be able to do this!</span>")
+			return
+
+		var/mob/living/carbon/human/human_user = user
+		if(!(human_user.dna?.species?.id == SPECIES_VAMPIRE))
+			to_chat(user, "<span class='warning'>You don't seem to be able to shapeshift..</span>")
+			return
+	return ..()

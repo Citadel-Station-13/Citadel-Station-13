@@ -36,7 +36,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/examine(mob/user)
 	interact(user)
 	. = ..()
-	. += external_examine(user)
+	var/text = external_examine(user)
+	if(text)
+		. += text
 
 // Can be called via electronic_assembly/attackby()
 /obj/item/integrated_circuit/proc/additem(var/obj/item/I, var/mob/living/user)
@@ -57,7 +59,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		var/datum/integrated_io/activate/A = activators[k]
 		if(A.linked.len)
 			to_chat(user, "The '[A]' is connected to [A.get_linked_to_desc()].")
-	any_examine(user)
+	to_chat(user, any_examine(user))
 	interact(user)
 
 // This should be used when someone is examining from an 'outside' perspective, e.g. reading a screen or LED.
@@ -376,7 +378,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 
 // Checks if the target object is reachable. Useful for various manipulators and manipulator-like objects.
-/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE)
+/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE, exclude_outside = FALSE)
 	if(!target)
 		return FALSE
 
@@ -392,7 +394,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		if(target == assembly.battery)
 			return FALSE
 
-	if(target.Adjacent(acting_object) && isturf(target.loc))
+	if(!exclude_outside && target.Adjacent(acting_object) && isturf(target.loc))
 		return TRUE
 
 	if(!exclude_contents && (target in acting_object.GetAllContents()))

@@ -10,10 +10,10 @@
 	gender = NEUTER
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_HUMANOID
-	threat = 3
-	response_help = "touches"
-	response_disarm = "pushes"
-
+	response_help_continuous = "touches"
+	response_help_simple = "touch"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
 	speed = -1
 	maxHealth = 50000
 	health = 50000
@@ -24,7 +24,8 @@
 	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
-	attacktext = "claws"
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -80,8 +81,9 @@
 		return 0
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life()
-	..()
+/mob/living/simple_animal/hostile/statue/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
+		return
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
 		// If they're not our target
@@ -125,14 +127,10 @@
 
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
-		for(var/mob/living/M in viewers(world.view + 1, check) - src)
+		for(var/mob/living/M in fov_viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !M.silicon_privileges)
 				if(!M.eye_blind)
 					return M
-		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			if(M.occupant && M.occupant.client)
-				if(!M.occupant.eye_blind)
-					return M.occupant
 	return null
 
 // Cannot talk
@@ -169,7 +167,7 @@
 	desc = "You will trigger a large amount of lights around you to flicker."
 
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = NONE
 	range = 14
 
 /obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets,mob/user = usr)
@@ -185,7 +183,7 @@
 
 	message = "<span class='notice'>You glare your eyes.</span>"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = NONE
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
@@ -201,7 +199,7 @@
 	desc = "Toggle your nightvision mode."
 
 	charge_max = 10
-	clothes_req = 0
+	clothes_req = NONE
 
 	message = "<span class='notice'>You toggle your night vision!</span>"
 	range = -1

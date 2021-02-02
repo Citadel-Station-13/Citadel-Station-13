@@ -8,6 +8,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/corn
 	maturation = 8
 	potency = 20
+	instability = 50 // Corn used to be wheatgrass, but through generations of selective cultivation...
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
@@ -38,6 +39,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
 	if(W.get_sharpness())

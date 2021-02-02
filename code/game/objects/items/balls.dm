@@ -15,7 +15,7 @@
 	lefthand_file = 'modular_citadel/icons/mob/inhands/balls_left.dmi'
 	righthand_file = 'modular_citadel/icons/mob/inhands/balls_right.dmi'
 	item_state = "tennis_classic"
-	alternate_worn_icon = 'modular_citadel/icons/mob/mouthball.dmi'
+	mob_overlay_icon = 'modular_citadel/icons/mob/mouthball.dmi'
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_NECK | ITEM_SLOT_EARS	//Fluff item, put it wherever you want!
 	throw_range = 14
 	w_class = WEIGHT_CLASS_SMALL

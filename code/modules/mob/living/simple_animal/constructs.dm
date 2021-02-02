@@ -5,10 +5,12 @@
 	gender = NEUTER
 	mob_biotypes = NONE
 	speak_emote = list("hisses")
-	response_help  = "thinks better of touching"
-	response_disarm = "flails at"
-	response_harm   = "punches"
-	threat = 1
+	response_help_continuous = "thinks better of touching"
+	response_help_simple = "think better of touching"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
@@ -42,6 +44,7 @@
 	var/can_repair_constructs = FALSE
 	var/can_repair_self = FALSE
 	var/runetype
+	var/datum/mind/original_mind
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
@@ -63,6 +66,15 @@
 		var/pos = 2+spellnum*31
 		CR.button.screen_loc = "6:[pos],4:-2"
 		CR.button.moved = "6:[pos],4:-2"
+
+/mob/living/simple_animal/hostile/construct/Destroy()
+	original_mind = null
+	. = ..()
+
+/mob/living/simple_animal/hostile/construct/death()
+	if(original_mind && !(QDELETED(original_mind)))
+		transfer_ckey(original_mind.current)
+	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -105,7 +117,7 @@
 	return
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -119,15 +131,16 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
-	threat = 3
 	maxHealth = 150
 	health = 150
-	response_harm = "harmlessly punches"
+	response_harm_continuous = "harmlessly punches"
+	response_harm_simple = "harmlessly punch"
 	harm_intent_damage = 0
 	obj_damage = 90
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attacktext = "smashes their armored gauntlet into"
+	attack_verb_continuous = "smashes their armored gauntlet into"
+	attack_verb_simple = "smash your armored gauntlet into"
 	speed = 2.5
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
@@ -182,13 +195,13 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	threat = 3
 	maxHealth = 65
 	health = 65
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	retreat_distance = 2 //AI wraiths will move in and out of combat
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	runetype = /datum/action/innate/cult/create_rune/tele
@@ -232,14 +245,16 @@
 	icon_living = "artificer"
 	maxHealth = 50
 	health = 50
-	response_harm = "viciously beats"
+	response_harm_continuous = "viciously beats"
+	response_harm_simple = "viciously beat"
 	harm_intent_damage = 5
 	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
-	attacktext = "rams"
+	attack_verb_continuous = "rams"
+	attack_verb_simple = "ram"
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -319,7 +334,8 @@
 	sight = SEE_MOBS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	attacktext = "butchers"
+	attack_verb_continuous = "butchers"
+	attack_verb_simple = "butcher"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
 							/obj/effect/proc_holder/spell/targeted/forcewall/cult)
@@ -391,6 +407,9 @@
 /datum/action/innate/seek_master/Activate()
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult)
 	if(!C)
+		return
+	if(!C.cult_team)
+		to_chat(the_construct, "<span class='cult italic'>You are alone, and have no team.</span>")
 		return
 	var/datum/objective/eldergod/summon_objective = locate() in C.cult_team.objectives
 

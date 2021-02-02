@@ -7,6 +7,8 @@
 /mob/living/proc/DefaultCombatKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE, override_hardstun, override_stamdmg)
 	if(!iscarbon(src))
 		return Paralyze(amount, updating, ignore_canknockdown)
+	if(!ignore_canknockdown && !(status_flags & CANKNOCKDOWN))
+		return FALSE
 	if(istype(buckled, /obj/vehicle/ridden))
 		buckled.unbuckle_mob(src)
 	var/drop_items = amount > 80		//80 is cutoff for old item dropping behavior
@@ -498,6 +500,15 @@
 			S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 		return S
 
+///////////////////////////////// OFF BALANCE/SHOVIES ////////////////////////
+/mob/living/proc/ShoveOffBalance(amount)
+	var/datum/status_effect/off_balance/B = has_status_effect(STATUS_EFFECT_OFF_BALANCE)
+	if(B)
+		B.duration = max(world.time + amount, B.duration)
+	else if(amount > 0)
+		B = apply_status_effect(STATUS_EFFECT_OFF_BALANCE, amount)
+	return B
+
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
 /mob/living/proc/IsFrozen()
@@ -569,12 +580,13 @@
 /mob/living/proc/cure_blind(source)
 	REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		update_blindness()
+		if(eye_blind <= 1) //little hack now that we don't actively check for trait and unconsciousness on update_blindness.
+			adjust_blindness(-1)
 
 /mob/living/proc/become_blind(source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
 		ADD_TRAIT(src, TRAIT_BLIND, source)
-		update_blindness()
+		blind_eyes(1)
 	else
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 
@@ -620,10 +632,40 @@
 	tod = STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)
 	update_stat()
 
+///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
 	REMOVE_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
-	update_movespeed(FALSE)
+	update_movespeed()
 
+///Ignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/ignore_slowdown(source)
 	ADD_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
-	update_movespeed(FALSE)
+	update_movespeed()
+
+///Ignores specific slowdowns. Accepts a list of slowdowns.
+/mob/living/proc/add_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
+	if(islist(slowdown_type))
+		for(var/listed_type in slowdown_type)
+			if(ispath(listed_type))
+				listed_type = "[listed_type]" //Path2String
+			LAZYADDASSOC(movespeed_mod_immunities, listed_type, source)
+	else
+		if(ispath(slowdown_type))
+			slowdown_type = "[slowdown_type]" //Path2String
+		LAZYADDASSOC(movespeed_mod_immunities, slowdown_type, source)
+	if(update)
+		update_movespeed()
+
+///Unignores specific slowdowns. Accepts a list of slowdowns.
+/mob/living/proc/remove_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
+	if(islist(slowdown_type))
+		for(var/listed_type in slowdown_type)
+			if(ispath(listed_type))
+				listed_type = "[listed_type]" //Path2String
+			LAZYREMOVEASSOC(movespeed_mod_immunities, listed_type, source)
+	else
+		if(ispath(slowdown_type))
+			slowdown_type = "[slowdown_type]" //Path2String
+		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
+	if(update)
+		update_movespeed()

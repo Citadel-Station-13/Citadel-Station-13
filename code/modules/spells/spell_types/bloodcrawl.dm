@@ -2,7 +2,7 @@
 	name = "Blood Crawl"
 	desc = "Use pools of blood to phase out of existence."
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = NONE
 	//If you couldn't cast this while phased, you'd have a problem
 	phase_allowed = 1
 	selection_type = "range"
@@ -25,6 +25,11 @@
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
+		if(istype(user, /mob/living/simple_animal/slaughter))
+			var/mob/living/simple_animal/slaughter/slaught = user
+			slaught.current_hitstreak = 0
+			slaught.wound_bonus = initial(slaught.wound_bonus)
+			slaught.bare_wound_bonus = initial(slaught.bare_wound_bonus)
 		if(phased)
 			if(user.phasein(target))
 				phased = 0

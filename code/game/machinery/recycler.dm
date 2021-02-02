@@ -100,43 +100,63 @@
 	eat(AM)
 	. = ..()
 
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	if(stat & (BROKEN|NOPOWER) || safety_mode)
+/obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
+	if(stat & (BROKEN|NOPOWER))
 		return
+	if(safety_mode)
+		return
+	if(!isturf(AM0.loc))
+		return //I don't know how you called Crossed() but stop it.
 
-	var/list/to_eat
+	var/list/to_eat = AM0.GetAllContents()
 
-	to_eat = AM0.GetAllContentsIgnoring(GLOB.typecache_mob)
+	var/living_detected = FALSE //technically includes silicons as well but eh
+	var/list/nom = list()
+	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
-	var/items_recycled = 0
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		var/obj/item/bodypart/head/as_head = AM
-		var/obj/item/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay)
-		if(brain_holder)
-			emergency_stop(AM)
+		if(istype(AM, /obj/item))
+			var/obj/item/bodypart/head/as_head = AM
+			var/obj/item/mmi/as_mmi = AM
+			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+				living_detected = TRUE
+			nom += AM
 		else if(isliving(AM))
-			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
-				crush_living(AM)
-			else
-				emergency_stop(AM)
-		else if(isitem(AM))
-			var/obj/O = AM
-			if(O.resistance_flags & INDESTRUCTIBLE)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-				O.forceMove(loc)
-			else
-				recycle_item(AM)
-				items_recycled++
-		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-			AM.forceMove(loc)
-
-	if(items_recycled && sound)
-		playsound(src, item_recycle_sound, 50, 1)
+			living_detected = TRUE
+			crunchy_nom += AM
+	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
+	if(living_detected) // First, check if we have any living beings detected.
+		if(obj_flags & EMAGGED)
+			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
+				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					crush_living(CRUNCH)
+		else // Stop processing right now without eating anything.
+			emergency_stop()
+			return
+	for(var/nommed in nom)
+		recycle_item(nommed)
+	if(nom.len && sound)
+		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+	if(not_eaten)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+	if(!ismob(AM0))
+		AM0.moveToNullspace()
+		qdel(AM0)
+	else // Lets not move a mob to nullspace and qdel it, yes?
+		for(var/i in AM0.contents)
+			var/atom/movable/content = i
+			content.moveToNullspace()
+			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
+
+	. = list()
+	for(var/A in I)
+		var/atom/movable/AM = A
+		AM.forceMove(loc)
+		if(AM.loc == loc)
+			. += AM
 
 	I.forceMove(loc)
 	var/obj/item/grown/log/L = I
@@ -172,6 +192,7 @@
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
+	. = list()
 	L.forceMove(loc)
 
 	if(issilicon(L))
@@ -193,7 +214,7 @@
 	if(eat_victim_items)
 		for(var/obj/item/I in L.get_equipped_items(TRUE))
 			if(L.dropItemToGround(I))
-				eat(I, sound=FALSE)
+				. += I
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
@@ -207,6 +228,6 @@
 
 /obj/item/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"
-	info = "<h2>New Assignment</h2> You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
+	info = "_New Assignment_\n\n You have been assigned to collect garbage from trash bins, located around the station. The crewmembers will put their trash into it and you will collect the said trash.<br><br>There is a recycling machine near your closet, inside maintenance; use it to recycle the trash for a small chance to get useful minerals. Then deliver these minerals to cargo or engineering. You are our last hope for a clean station, do not screw this up!"
 
 #undef SAFETY_COOLDOWN

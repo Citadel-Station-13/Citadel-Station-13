@@ -1,6 +1,6 @@
-//Gun crafting parts til they can be moved elsewhere
-
 // PARTS //
+/obj/item/weaponcrafting
+	icon = 'icons/obj/improvised.dmi'
 
 /obj/item/weaponcrafting/receiver
 	name = "modular receiver"
@@ -11,11 +11,10 @@
 /obj/item/weaponcrafting/stock
 	name = "rifle stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
-	icon = 'icons/obj/improvised.dmi'
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 6)
 	icon_state = "riflestock"
 
-/obj/item/weaponcrafting/silkstring
-	name = "silkstring"
-	desc = "A long piece of silk with some resemblance to cable coil."
-	icon = 'icons/obj/improvised.dmi'
-	icon_state = "silkstring"
+/obj/item/weaponcrafting/string
+	name = "wound thread"
+	desc = "A long piece of thread with some resemblance to cable coil."
+	icon_state = "durastring"

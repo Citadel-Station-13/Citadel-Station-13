@@ -15,6 +15,12 @@
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistol/box
+	name = "Ammo Box - 10mm"
+	desc = "An additional box of 10mm ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/pistolap
 	name = "10mm Armour Piercing Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
@@ -22,6 +28,12 @@
 	item = /obj/item/ammo_box/magazine/m10mm/ap
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/ammo/pistolap/box
+	name = "Ammo Box - 10mm Armour Piercing"
+	desc = "An additional box of 10mm Armour Piercing ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm/ap
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/pistolhp
 	name = "10mm Hollow Point Magazine"
@@ -31,6 +43,12 @@
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistolhp/box
+	name = "Ammo Box - 10mm Hollow Point"
+	desc = "An additional box of 10mm Hollow Point ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm/hp
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/pistolfire
 	name = "10mm Incendiary Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
@@ -39,12 +57,24 @@
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistolfire/box
+	name = "Ammo Box - 10mm Incendiary"
+	desc = "An additional box of 10mm Incendiary ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/magazine/m10mm/fire
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/pistolzzz
 	name = "10mm Soporific Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with soporific rounds that put the target to sleep. \
 			NOTE: Soporific is not instant acting due to the constraints of the round's scale. Will usually require three shots to take effect."
 	item = /obj/item/ammo_box/magazine/m10mm/soporific
 	cost = 2
+
+/datum/uplink_item/ammo/pistolzzz/box
+	name = "Ammo Box - 10mm Soporific"
+	desc = "An additional box of 10mm Soporific ammo. The box has 20 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c10mm/soporific
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -56,6 +86,13 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
 	cost = 12
 
+/datum/uplink_item/ammo/shotgun/bioterror
+	name = "12g Bioterror Dart Drum"
+	desc = "An additional 8-round bioterror dart magazine for use with the Bulldog shotgun. \
+			Pierces armor and injects are horrid cocktail of death into your target. Be careful about friendly fire."
+	cost = 6 //legacy price
+	item = /obj/item/ammo_box/magazine/m12g/bioterror
+
 /datum/uplink_item/ammo/shotgun/buck
 	name = "12g Buckshot Drum"
 	desc = "An additional 8-round buckshot magazine for use with the Bulldog shotgun. Front towards enemy."
@@ -66,20 +103,12 @@
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
 			'I'm a fire starter, twisted fire starter!'"
 	item = /obj/item/ammo_box/magazine/m12g/dragon
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
 			Great for blasting airlocks off their frames and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/ammo/shotgun/scatter
-	name = "12g Scatter Laser shot Slugs"
-	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
-	item = /obj/item/ammo_box/magazine/m12g/scatter
-	cost = 4 // most armor has less laser protection then bullet
 
 /datum/uplink_item/ammo/shotgun/slug
 	name = "12g Slug Drum"
@@ -93,7 +122,6 @@
 	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g/stun
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
@@ -161,6 +189,13 @@
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/machinegun/match
+	name = "7.12x82mm (Match) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; you didn't know there was a demand for match grade \
+			precision bullet hose ammo, but these rounds are finely tuned and perfect for ricocheting off walls all fancy-like."
+	item = /obj/item/ammo_box/magazine/mm712x82/match
+	cost = 10
+
 /datum/uplink_item/ammo/machinegun
 	cost = 6
 	surplus = 0
@@ -214,6 +249,12 @@
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/pistolaps
+	name = "Ammo Box - 9mm"
+	desc = "An additional box of 9mm ammo. The box has 30 cases inside, does not come with a magazine."
+	item = /obj/item/ammo_box/c9mm
+	illegal_tech = FALSE
+
 /datum/uplink_item/ammo/flechetteap
 	name = "Armor Piercing Flechette Magazine"
 	desc = "An additional 40-round flechette magazine; compatible with the Flechette Launcer. \
@@ -250,8 +291,15 @@
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
-	item = 	/obj/item/ammo_box/a762
+	item = /obj/item/ammo_box/a762
 	cost = 1
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/bolt_action_bulk
+	name = "Surplus Rifle Clip Box"
+	desc = "An ammo box we found in a warehouse, holding 7 clips of 5 rounds for bolt-action rifles. Yes, the cheap ones."
+	item = /obj/item/storage/toolbox/ammo
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/dark_gygax/bag

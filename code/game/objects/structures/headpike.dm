@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	var/bonespear = FALSE
-	var/obj/item/twohanded/spear/spear
+	var/obj/item/spear/spear
 	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears
@@ -20,9 +20,9 @@
 	name = "[victim.name] on a spear"
 	update_icon()
 	if(bonespear)
-		spear = locate(/obj/item/twohanded/bonespear) in parts_list
+		spear = locate(/obj/item/spear/bonespear) in parts_list
 	else
-		spear = locate(/obj/item/twohanded/spear) in parts_list
+		spear = locate(/obj/item/spear) in parts_list
 
 /obj/structure/headpike/Initialize()
 	. = ..()
@@ -37,10 +37,7 @@
 		MA.pixel_y = 12
 		. += H
 
-/obj/structure/headpike/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/structure/headpike/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	to_chat(user, "<span class='notice'>You take down [src].</span>")
 	if(victim)
 		victim.forceMove(drop_location())

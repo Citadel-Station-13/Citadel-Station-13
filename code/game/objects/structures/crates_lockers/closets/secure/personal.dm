@@ -4,25 +4,6 @@
 	req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/examine(mob/user)
-	. = ..()
-	if(registered_name)
-		. += "<span class='notice'>The display reads, \"Owned by [registered_name]\".</span>"
-
-/obj/structure/closet/secure_closet/personal/check_access(obj/item/I)
-	. = ..()
-	if(!I || !istype(I))
-		return
-	if(istype(I,/obj/item/modular_computer/tablet))
-		var/obj/item/modular_computer/tablet/ourTablet = I
-		var/obj/item/computer_hardware/card_slot/card_slot = ourTablet.all_components[MC_CARD]
-		if(card_slot)
-			return registered_name == card_slot.stored_card.registered_name || registered_name == card_slot.stored_card2.registered_name
-	var/obj/item/card/id/ID = I.GetID()
-	if(ID && registered_name == ID.registered_name)
-		return TRUE
-	return FALSE
-
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
 	if(prob(50))
@@ -51,19 +32,27 @@
 	new /obj/item/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/instrument/piano_synth(src)
 	new /obj/item/radio/headset( src )
-	new /obj/item/clothing/head/colour(src)
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
 	var/obj/item/card/id/I = W.GetID()
-	if(!I || !istype(I))
-		return ..()
-	if(!can_lock(user, FALSE)) //Can't do anything if there isn't a lock!
-		return
-	if(I.registered_name && !registered_name)
-		to_chat(user, "<span class='notice'>You claim [src].</span>")
-		registered_name = I.registered_name
+	if(istype(I))
+		if(broken)
+			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
+			return
+		if(!I || !I.registered_name)
+			return
+		if(allowed(user) || !registered_name || (istype(I) && (registered_name == I.registered_name)))
+			//they can open all lockers, or nobody owns this, or they own this locker
+			locked = !locked
+			update_icon()
+
+			if(!registered_name)
+				registered_name = I.registered_name
+				desc = "Owned by [I.registered_name]."
+		else
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
 	else
-		..()
+		return ..()
 
 /obj/structure/closet/secure_closet/personal/handle_lock_addition() //If lock construction is successful we don't care what access the electronics had, so we override it
 	if(..())

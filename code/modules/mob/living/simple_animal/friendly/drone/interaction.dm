@@ -92,8 +92,8 @@
 		return
 	if(hack)
 		if(hacked)
-			return
 			Stun(40)
+			return
 		if(clockwork)
 			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
@@ -110,7 +110,7 @@
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
-		ventcrawler = VENTCRAWLER_NONE //Again, balance
+		RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS) // balance
 		speed = 1 //gotta go slow
 		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
@@ -125,7 +125,7 @@
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
 		mind.special_role = null
-		ventcrawler = initial(ventcrawler)
+		AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)

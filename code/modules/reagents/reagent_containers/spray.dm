@@ -19,6 +19,10 @@
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	var/spray_delay = 3 //The amount of sleep() delay between each chempuff step.
+	/// Last world.time of spray
+	var/last_spray = 0
+	/// Spray cooldown
+	var/spray_cooldown = CLICK_CD_MELEE
 	var/can_fill_from_container = TRUE
 	amount_per_transfer_from_this = 5
 	volume = 250
@@ -47,10 +51,11 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 
-	spray(A)
+	if(!spray(A))
+		return
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
-	user.changeNext_move(CLICK_CD_RANGE*2)
+	user.last_action = world.time
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
 	if(reagents.has_reagent(/datum/reagent/toxin/acid))
@@ -62,11 +67,11 @@
 	if(reagents.has_reagent(/datum/reagent/lube))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [ADMIN_VERBOSEJMP(T)].")
 		log_game("[key_name(user)] fired Space lube from \a [src] at [AREACOORD(T)].")
-	return
-
 
 /obj/item/reagent_containers/spray/proc/spray(atom/A)
-	var/range = CLAMP(get_dist(src, A), 1, current_range)
+	if((last_spray + spray_cooldown) > world.time)
+		return
+	var/range = clamp(get_dist(src, A), 1, current_range)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this, NONE, NO_REAGENTS_VALUE)
 	var/puff_reagent_left = range //how many turf, mob or dense objet we can react with before we consider the chem puff consumed
@@ -76,11 +81,16 @@
 	else
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	log_reagent("SPRAY: [key_name(usr)] fired [src] ([REF(src)]) [COORD(T)] at [A] ([REF(A)]) [COORD(A)] (chempuff: [D.reagents.log_list()])")
 	var/wait_step = max(round(2+ spray_delay * INVERSE(range)), 2)
-	do_spray(A, wait_step, D, range, puff_reagent_left)
+	last_spray = world.time
+	INVOKE_ASYNC(src, .proc/do_spray, A, wait_step, D, range, puff_reagent_left)
+	return TRUE
 
 /obj/item/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left)
-	set waitfor = FALSE
 	var/range_left = range
 	for(var/i=0, i<range, i++)
 		range_left--

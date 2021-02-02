@@ -9,6 +9,8 @@
 	role_name = "random animal"
 	var/animals = 1
 	var/one = "one"
+	/// Blacklisted mob_biotypes - Hey can we like, not have player controlled megafauna?
+	var/blacklisted_biotypes = MOB_EPIC
 	fakeable = TRUE
 
 /datum/round_event/ghost_role/sentience/announce(fake)
@@ -33,6 +35,8 @@
 		var/turf/T = get_turf(L)
 		if(!T || !is_station_level(T.z))
 			continue
+		if(L.mob_biotypes & blacklisted_biotypes)		//hey can you don't
+			continue
 		if(!(L in GLOB.player_list) && !L.mind)
 			potential += L
 
@@ -50,7 +54,7 @@
 
 		SG.transfer_ckey(SA, FALSE)
 
-		SA.grant_all_languages(TRUE)
+		SA.grant_all_languages(TRUE, FALSE, FALSE)
 
 		SA.sentience_act()
 
@@ -59,7 +63,7 @@
 		SA.del_on_death = FALSE
 
 		spawned_mobs += SA
-		SA.AddElement(/datum/element/ghost_role_eligibility)
+		SA.AddElement(/datum/element/ghost_role_eligibility, penalize_on_ghost = TRUE)
 		to_chat(SA, "<span class='userdanger'>Hello world!</span>")
 		to_chat(SA, "<span class='warning'>Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \

@@ -125,6 +125,24 @@
 	name = "\improper Dark Gygax wreckage"
 	icon_state = "darkgygax-broken"
 
+/obj/structure/mecha_wreckage/medigax
+	name = "\improper Medical Gygax wreckage"
+	icon_state = "medigax-broken"
+
+/obj/structure/mecha_wreckage/medigax/Initialize()
+	. = ..()
+	var/list/parts = list(/obj/item/mecha_parts/part/medigax_torso,
+								/obj/item/mecha_parts/part/medigax_head,
+								/obj/item/mecha_parts/part/medigax_left_arm,
+								/obj/item/mecha_parts/part/medigax_right_arm,
+								/obj/item/mecha_parts/part/medigax_left_leg,
+								/obj/item/mecha_parts/part/medigax_right_leg)
+	for(var/i = 0; i < 2; i++)
+		if(parts.len && prob(40))
+			var/part = pick(parts)
+			welder_salvage += part
+			parts -= part
+
 /obj/structure/mecha_wreckage/marauder
 	name = "\improper Marauder wreckage"
 	icon_state = "marauder-broken"

@@ -74,7 +74,7 @@
 	..()
 	cords = target
 
-/datum/action/item_action/organ_action/colossus/IsAvailable()
+/datum/action/item_action/organ_action/colossus/IsAvailable(silent = FALSE)
 	if(world.time < cords.next_command)
 		return FALSE
 	if(!owner)
@@ -254,7 +254,6 @@
 	var/static/regex/clap_words = regex("clap|applaud")
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
-	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //CITADEL CHANGE
 	var/static/regex/dab_words = regex("dab|mood") //CITADEL CHANGE
 	var/static/regex/snap_words = regex("snap") //CITADEL CHANGE
 	var/static/regex/bwoink_words = regex("what the fuck are you doing|bwoink|hey you got a moment?") //CITADEL CHANGE
@@ -319,13 +318,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
+			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST, wound_bonus=CANT_WOUND)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/mob/living/carbon/human/H in listeners)
-			H.bleed_rate += (5 * power_multiplier)
+			var/obj/item/bodypart/BP = pick(H.bodyparts)
+			BP.generic_bleedstacks += 5
 
 	//FIRE
 	else if((findtext(message, burn_words)))
@@ -572,16 +572,6 @@
 			var/mob/living/L = V
 			L.SpinAnimation(speed = 10, loops = 5)
 
-	//CITADEL CHANGES
-	//ORGASM
-	else if((findtext(message, orgasm_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/carbon/human/H = V
-
-			if(H.client && H.client.prefs && H.client.prefs.cit_toggles & HYPNO) // probably a redundant check but for good measure
-				H.mob_climax(forced_climax=TRUE)
-
 	//DAB
 	else if((findtext(message, dab_words)))
 		cooldown = COOLDOWN_DAMAGE
@@ -632,7 +622,7 @@
 	..()
 	cords = target
 
-/datum/action/item_action/organ_action/velvet/IsAvailable()
+/datum/action/item_action/organ_action/velvet/IsAvailable(silent = FALSE)
 	return TRUE
 
 /datum/action/item_action/organ_action/velvet/Trigger()
@@ -765,7 +755,6 @@
 	var/static/regex/forget_words = regex("forget|muddled|awake and forget")
 	var/static/regex/attract_words = regex("come here|come to me|get over here|attract")
 	//phase 2
-	var/static/regex/orgasm_words = regex("cum|orgasm|climax|squirt|heyo") //wah, lewd
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
@@ -1092,28 +1081,6 @@
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, L, "<span class='notice'>You are drawn towards [user]!</b></span>"), 5)
 			to_chat(user, "<span class='notice'><i>You draw [L] towards you!</i></span>")
 
-
-	//teir 2
-
-	/* removed for now
-	//ORGASM
-	else if((findtext(message, orgasm_words)))
-		for(var/V in listeners)
-			var/mob/living/carbon/human/H = V
-			var/datum/status_effect/chem/enthrall/E = H.has_status_effect(/datum/status_effect/chem/enthrall)
-			if(E.phase > 1)
-				if(E.lewd) // probably a redundant check but for good measure
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='love'>Your [E.enthrallGender] pushes you over the limit, overwhelming your body with pleasure.</b></span>"), 5)
-					H.mob_climax(forced_climax=TRUE)
-					H.SetStun(20)
-					E.resistanceTally = 0 //makes resistance 0, but resets arousal, resistance buildup is faster unaroused (massively so).
-					E.enthrallTally += power_multiplier
-					E.cooldown += 6
-				else
-					H.throw_at(get_step_towards(user,H), 3 * power_multiplier, 1 * power_multiplier)
-	*/
-
-
 	//awoo
 	else if((findtext(message, awoo_words)))
 		for(var/V in listeners)
@@ -1254,12 +1221,12 @@
 							if (trigger2 == "speak" || trigger2 == "echo")
 								var/trigger3 = html_decode(stripped_input(user, "Enter the phrase spoken. Abusing this to self antag is bannable.", MAX_MESSAGE_LEN))
 								E.customTriggers[trigger] = list(trigger2, trigger3)
-								log_game("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2], to send [trigger3].")
+								log_reagent("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2], to send [trigger3].")
 								if(findtext(trigger3, "admin"))
 									message_admins("FERMICHEM: [user] maybe be trying to abuse MKUltra by implanting by [H] with [trigger], triggering [trigger2], to send [trigger3].")
 							else
 								E.customTriggers[trigger] = trigger2
-								log_game("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2].")
+								log_reagent("FERMICHEM: [H] has been implanted by [user] with [trigger], triggering [trigger2].")
 							E.mental_capacity -= 5
 							addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(E.lewd?"your [E.enthrallGender]":"[E.master]")] whispers you a new trigger.</span>"), 5)
 							to_chat(user, "<span class='notice'><i>You sucessfully set the trigger word [trigger] in [H]</i></span>")
@@ -1322,7 +1289,7 @@
 						objective = replacetext(lowertext(objective), "strangle", "meow at")
 						objective = replacetext(lowertext(objective), "suicide", "self-love")
 						message_admins("[H] has been implanted by [user] with the objective [objective].")
-						log_game("FERMICHEM: [H] has been implanted by [user] with the objective [objective] via MKUltra.")
+						log_reagent("FERMICHEM: [H] has been implanted by [user] with the objective [objective] via MKUltra.")
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='notice'>[(E.lewd?"Your [E.enthrallGender]":"[E.master]")] whispers you a new objective.</span>"), 5)
 						brainwash(H, objective)
 						E.mental_capacity -= 200
@@ -1341,7 +1308,7 @@
 				var/instill = stripped_input(user, "Instill an emotion in [H].", MAX_MESSAGE_LEN)
 				to_chat(H, "<i>[instill]</i>")
 				to_chat(user, "<span class='notice'><i>You sucessfully instill a feeling in [H]</i></span>")
-				log_game("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")
+				log_reagent("FERMICHEM: [H] has been instilled by [user] with [instill] via MKUltra.")
 				E.cooldown += 1
 
 	//RECOGNISE
@@ -1352,7 +1319,7 @@
 			if(E.phase > 1)
 				if(user.ckey == E.enthrallID && user.real_name == E.master.real_name)
 					E.master = user
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='nicegreen'>[(E.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>"), 5)
+					to_chat(H, "<span class='nicegreen'>[(E.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>")
 					to_chat(user, "<span class='notice'><i>[H] looks at you with sparkling eyes, recognising you!</i></span>")
 
 	//I dunno how to do state objectives without them revealing they're an antag
@@ -1455,7 +1422,7 @@
 
 	if(message_admins || debug)//Do you want this in?
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("FERMICHEM: [key_name(user)] ckey: [user.key] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	log_reagent("FERMICHEM: [key_name(user)] ckey: [user.key] has said '[log_message]' with a Velvet Voice, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	SSblackbox.record_feedback("tally", "fermi_chem", 1, "Times people have spoken with a velvet voice")
 	//SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message) If this is on, it fills the thing up and OOFs the server
 

@@ -75,20 +75,22 @@
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
+	conflicts = list(GIGANTISM)
 	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.transform = owner.transform.Scale(1, 0.8)
-	owner.pass_flags |= PASSTABLE
+	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	owner.AddElement(/datum/element/dwarfism, COMSIG_HUMAN_MUTATION_LOSS, src)
+	passtable_on(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
 
 /datum/mutation/human/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.transform = owner.transform.Scale(1, 1.25)
-	owner.pass_flags &= ~PASSTABLE
+	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
+	passtable_off(owner, GENETIC_MUTATION)
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
 
 
@@ -333,10 +335,12 @@
 	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
+	conflicts = list(DWARFISM)
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.resize = 1.25
 	owner.update_transform()
 	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
@@ -344,6 +348,7 @@
 /datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
+	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.resize = 0.8
 	owner.update_transform()
 	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")

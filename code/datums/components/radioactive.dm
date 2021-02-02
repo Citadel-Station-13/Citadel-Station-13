@@ -25,15 +25,22 @@
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/rad_attack)
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
-		return
 
 	if(strength > RAD_MINIMUM_CONTAMINATION)
 		SSradiation.warn(src)
+
+	//Let's make er glow
+	//This relies on parent not being a turf or something. IF YOU CHANGE THAT, CHANGE THIS
+	var/atom/movable/master = parent
+	master.add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
+	addtimer(CALLBACK(src, .proc/glow_loop, master), rand(1,19))//Things should look uneven
 
 	START_PROCESSING(SSradiation, src)
 
 /datum/component/radioactive/Destroy()
 	STOP_PROCESSING(SSradiation, src)
+	var/atom/movable/master = parent
+	master.remove_filter("rad_glow")
 	return ..()
 
 /datum/component/radioactive/process()
@@ -46,6 +53,13 @@
 	strength -= strength / hl3_release_date
 	if(strength <= RAD_BACKGROUND_RADIATION)
 		return PROCESS_KILL
+
+
+/datum/component/radioactive/proc/glow_loop(atom/movable/master)
+	var/filter = master.get_filter("rad_glow")
+	if(filter)
+		animate(filter, alpha = 110, time = 15, loop = -1)
+		animate(alpha = 40, time = 25)
 
 /datum/component/radioactive/InheritComponent(datum/component/C, i_am_original, _strength, _source, _half_life, _can_contaminate)
 	if(!i_am_original)
@@ -70,8 +84,9 @@
 			out += "[out ? " and it " : "[master] "]seems to be glowing a bit."
 		if(RAD_AMOUNT_HIGH to INFINITY) //At this level the object can contaminate other objects
 			out += "[out ? " and it " : "[master] "]hurts to look at."
-		else
-			out += "."
+	if(!LAZYLEN(out))
+		return
+	out += "."
 	examine_list += out.Join()
 
 /datum/component/radioactive/proc/rad_attack(datum/source, atom/movable/target, mob/living/user)

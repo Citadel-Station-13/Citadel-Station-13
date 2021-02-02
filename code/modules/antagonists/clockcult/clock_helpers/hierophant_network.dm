@@ -35,7 +35,7 @@
 	var/span_for_name = "heavy_brass"
 	var/span_for_message = "brass"
 
-/datum/action/innate/hierophant/IsAvailable()
+/datum/action/innate/hierophant/IsAvailable(silent = FALSE)
 	if(!is_servant_of_ratvar(owner))
 		return FALSE
 	return ..()

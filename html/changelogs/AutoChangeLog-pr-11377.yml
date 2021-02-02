@@ -1,8 +1,0 @@
-author: "Kraseo"
-delete-after: True
-changes: 
-  - balance: "Contractor kit pop cap reduced from 20 to 15."
-  - balance: "You can no longer get haunted 8balls from contractor kits."
-  - bugfix: "Pods and shuttles should no longer be valid dropoff locations."
-  - bugfix: "Contract tablets will no longer break when one of your contracts is deleted from the world."
-  - bugfix: "Baton inhands for the right hand now shows the right direction."
