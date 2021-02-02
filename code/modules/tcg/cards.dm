@@ -263,7 +263,9 @@
 	for(var/card in cards)
 		var/datum/tcg_card/new_card = new card()
 		possible_cards[card] = rarity_table[new_card.rarity]
-		rarity_cards[new_card.rarity].Add(card)
+		var/list/rarity_card_type = rarity_cards[new_card.rarity]
+		rarity_card_type.Add(card)
+		rarity_cards[new_card.rarity] = rarity_card_type //FUCK CI
 		qdel(new_card)
 
 	for(var/card_counter = 1 to card_count)
