@@ -928,7 +928,7 @@
 	attack = 1
 	health = 1
 
-	faction = "Centcomm"
+	faction = "Centcom"
 	rarity = "Common"
 	card_type = "Unit"
 
@@ -942,7 +942,7 @@
 	attack = 2
 	health = 2
 
-	faction = "Centcomm"
+	faction = "Centcom"
 	rarity = "Epic"
 	card_type = "Equipment"
 
@@ -956,7 +956,7 @@
 	attack = 2
 	health = 1
 
-	faction = "Centcomm"
+	faction = "Centcom"
 	rarity = "Rare"
 	card_type = "Equipment"
 
@@ -970,7 +970,7 @@
 	attack = 1
 	health = 2
 
-	faction = "Centcomm"
+	faction = "Centcom"
 	rarity = "Common"
 	card_type = "Equipment"
 
@@ -984,7 +984,7 @@
 	attack = 1
 	health = 2
 
-	faction = "Centcomm"
+	faction = "Centcom"
 	rarity = "Common"
 	card_type = "Equipment"
 
@@ -998,7 +998,7 @@
 	attack = 8
 	health = 6
 
-	faction = "Centcomm"
+	faction = "Centcom"
 	rarity = "Epic"
 	card_type = "Unit"
 
