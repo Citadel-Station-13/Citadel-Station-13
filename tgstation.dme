@@ -3492,7 +3492,6 @@
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\surgery\organs\vocal_cords.dm"
 #include "code\modules\tcg\cards.dm"
-#include "code\modules\tcg\misc.dm"
 #include "code\modules\tcg\pack_1.dm"
 #include "code\modules\tgchat\message.dm"
 #include "code\modules\tgchat\to_chat.dm"
