@@ -916,7 +916,7 @@
 
 //CARGO END
 
-//CENTCOMM
+//CENTCOM
 
 /datum/tcg_card/pack_1/intern
 	name = "Intern"
@@ -1002,7 +1002,7 @@
 	rarity = "Epic"
 	card_type = "Unit"
 
-//CENTCOMM END
+//CENTCOM END
 
 //ANTAGONISTS
 
