@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - bugfix: "The green energy sabre's sprite now respects proper handedness."
