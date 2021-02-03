@@ -264,7 +264,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/gunshotshotgunshot.ogg'
 	automatic_burst_overlay = FALSE
 	can_suppress = FALSE
 	burst_size = 1
@@ -403,7 +403,7 @@
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	item_state = "moistnugget"
-	firing_sound = 'sound/weapons/rifleshot.ogg'
+	fire_sound = 'sound/weapons/rifleshot.ogg'
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30
