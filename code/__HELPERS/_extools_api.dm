@@ -10,8 +10,13 @@
 GLOBAL_LIST_EMPTY(auxtools_initialized)
 
 #define AUXTOOLS_CHECK(LIB)\
-	if (!GLOB.auxtools_initialized[LIB] && fexists(LIB) && findtext(call(LIB,"auxtools_init")(),"SUCCESS"))\
-		GLOB.auxtools_initialized[LIB] = TRUE;\
+	if (!GLOB.auxtools_initialized[LIB] && fexists(LIB)) {\
+		var/status = call(LIB,"auxtools_init")();\
+		if(findtext(status,"SUCCESS")) {\
+			GLOB.auxtools_initialized[LIB] = TRUE;}\
+		else {\
+			auxtools_stack_trace("Auxtools failed with status [status]");};\
+};
 
 #define AUXTOOLS_SHUTDOWN(LIB)\
 	if (GLOB.auxtools_initialized[LIB] && fexists(LIB))\
