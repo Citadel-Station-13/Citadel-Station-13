@@ -227,6 +227,8 @@
 		"Epic" = 9,
 		"Rare" = 30)
 
+	custom_price = PRICE_EXPENSIVE
+
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: 2560 Core Set"
 	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
@@ -454,5 +456,35 @@
 			user.put_in_hands(choice)
 			cards.Remove(choice)
 			update_icon()
+			if(length(cards) == 0)
+				qdel(src)
 			return
+	. = ..()
+
+/obj/item/tcgcard_binder
+	name = "Trading Card Binder"
+	desc = "A TCG-branded card binder, specifically for your infinite collection of TCG cards!"
+	icon = 'icons/obj/tcg/misc.dmi'
+	icon_state = "binder"
+
+	var/list/cards = list()
+
+/obj/item/tcgcard_binder/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/tcg_card))
+		var/obj/item/tcg_card/card = I
+		card.forceMove(src)
+		cards.Add(card)
+	. = ..()
+
+/obj/item/tcgcard_binder/attack_hand(mob/living/carbon/user)
+	if(loc == user)
+		var/list/choices = list()
+		for(var/obj/item/tcg_card/card in cards)
+			choices[card] = image(icon = card.icon, icon_state = card.icon_state)
+		var/obj/item/tcg_card/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
+		if(choice)
+			choice.forceMove(get_turf(src))
+			user.put_in_hands(choice)
+			cards.Remove(choice)
+		return
 	. = ..()
