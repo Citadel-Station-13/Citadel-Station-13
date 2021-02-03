@@ -8,7 +8,8 @@
 					/obj/item/toy/cards/deck/cas = 3,
 					/obj/item/toy/cards/deck/cas/black = 3,
 					/obj/item/toy/cards/deck/unum = 3,
-					/obj/item/cardpack/series_one = 10)
+					/obj/item/cardpack/series_one = 10,
+					/obj/item/tcgcard_binder = 5)
 	contraband = list(/obj/item/dice/fudge = 9)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/melee/skateboard/hoverboard = 1)
