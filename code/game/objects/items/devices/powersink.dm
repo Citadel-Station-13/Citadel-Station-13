@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(power_sinks)
 	throw_speed = 1
 	throw_range = 2
 	custom_materials = list(/datum/material/iron=750)
-	var/drain_rate = 2000000	// amount of power to drain per tick. Currently 2MJ.
+	var/drain_rate = 2500000	// amount of power to drain per tick. Currently 2.5MJ.
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 2000000000		// maximum power that can be drained before exploding. Currently 2GJ. About 17 minutes to explode at the max rate.
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(power_sinks)
 
 	var/datum/powernet/PN = attached.powernet
 	if(PN)
-		set_light(5)
+		set_light(8)
 
 		// found a powernet, so drain up to max power from it
 
@@ -136,6 +136,7 @@ GLOBAL_LIST_EMPTY(power_sinks)
 		// if tried to drain more than available on powernet
 		// now look for APCs and drain their cells
 		if(drained < drain_rate)
+			playsound(loc, 'sound/items/timer.ogg', 75, 0)
 			for(var/obj/machinery/power/terminal/T in PN.nodes)
 				if(istype(T.master, /obj/machinery/power/apc))
 					var/obj/machinery/power/apc/A = T.master
