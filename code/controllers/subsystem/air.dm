@@ -153,6 +153,15 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
+		currentpart = SSAIR_EXCITEDGROUPS
+	// Making small pressure deltas equalize immediately so they don't process anymore
+	if(currentpart == SSAIR_EXCITEDGROUPS)
+		timer = TICK_USAGE_REAL
+		process_excited_groups(resumed)
+		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
 		currentpart = SSAIR_TURF_POST_PROCESS
 	// Quick multithreaded "should we display/react?" checks followed by finishing those up before the next step
 	if(currentpart == SSAIR_TURF_POST_PROCESS)
@@ -306,6 +315,10 @@ SUBSYSTEM_DEF(air)
 			return
 	*/
 
+/datum/controller/subsystem/air/proc/process_excited_groups(resumed = 0)
+	if(process_excited_groups_auxtools(resumed,MC_TICK_REMAINING_MS))
+		pause()
+
 /datum/controller/subsystem/air/proc/finish_turf_processing(resumed = 0)
 	if(finish_turf_processing_auxtools(MC_TICK_REMAINING_MS))
 		pause()
@@ -318,6 +331,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/process_turfs_auxtools()
 /datum/controller/subsystem/air/proc/post_process_turfs_auxtools()
 /datum/controller/subsystem/air/proc/process_turf_equalize_auxtools()
+/datum/controller/subsystem/air/proc/process_excited_groups_auxtools()
 /datum/controller/subsystem/air/proc/get_amt_gas_mixes()
 /datum/controller/subsystem/air/proc/get_max_gas_mixes()
 /datum/controller/subsystem/air/proc/turf_process_time()

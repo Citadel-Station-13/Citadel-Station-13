@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(adjacent_air)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 10
 	priority = FIRE_PRIORITY_ATMOS_ADJACENCY
-	init_order = INIT_ORDER_AIR_TURFS
 	var/list/queue = list()
 
 /datum/controller/subsystem/adjacent_air/stat_entry(msg)
@@ -18,10 +17,7 @@ SUBSYSTEM_DEF(adjacent_air)
 /datum/controller/subsystem/adjacent_air/Initialize()
 	while(length(queue))
 		fire(mc_check = FALSE)
-	build_zones()
 	return ..()
-
-/datum/controller/subsystem/adjacent_air/proc/build_zones()
 
 /datum/controller/subsystem/adjacent_air/fire(resumed = FALSE, mc_check = TRUE)
 
