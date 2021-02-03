@@ -12,6 +12,7 @@
 	name = "\improper Nanotrasen Saber SMG"
 	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
+	fire_sound = "sound/weapons/gunshot_smg_alt.ogg"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	pin = null
 
@@ -125,6 +126,7 @@
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Semi-Automatic SMG."
 	icon_state = "wt550"
 	item_state = "arg"
+	fire_sound = "sound/weapons/gunshot_smg_alt.ogg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	can_suppress = FALSE
 	burst_size = 2
@@ -137,6 +139,10 @@
 /obj/item/gun/ballistic/automatic/wt550/enable_burst()
 	. = ..()
 	spread = 15
+
+/obj/item/gun/ballistic/automatic/wt550/afterattack()
+	. = ..()
+	empty_alarm()
 
 /obj/item/gun/ballistic/automatic/wt550/disable_burst()
 	. = ..()
