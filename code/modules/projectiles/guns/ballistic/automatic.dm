@@ -164,7 +164,7 @@
 	icon_state = "m90"
 	item_state = "m90"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/rifleshot.ogg'
 	can_suppress = FALSE
 	automatic_burst_overlay = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
@@ -249,7 +249,7 @@
 	item_state = "arg"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/rifleshot.ogg'
 	can_suppress = FALSE
 	burst_size = 3
 	burst_shot_delay = 1
@@ -403,6 +403,7 @@
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
 	item_state = "moistnugget"
+	firing_sound = 'sound/weapons/rifleshot.ogg'
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30
