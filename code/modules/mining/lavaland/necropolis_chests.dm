@@ -522,7 +522,7 @@
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	w_class = WEIGHT_CLASS_BULKY
-	force = 18
+	force = 15
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -536,11 +536,11 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 15
+	armour_penetration = 10
+	knockdown = 5
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	knockdown = 30
 	var/chain
 
 /obj/item/projectile/hook/fire(setAngle)
