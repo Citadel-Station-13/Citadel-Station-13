@@ -531,7 +531,8 @@
 
 			for(var/card_type in subtypesof(/datum/tcg_card))
 				if(card_type in card_types)
-					choices[card_types[card_type]] = image(icon = card_types[card_type].icon, icon_state = card_types[card_type].icon_state)
+					var/obj/item/tcg_card/card = card_types[card_type]
+					choices[card] = image(icon = card.icon, icon_state = card.icon_state)
 					continue
 
 				var/datum/tcg_card/card_dat = new card_type
@@ -545,7 +546,7 @@
 			for(var/obj/item/tcg_card/card in cards)
 				choices[card] = image(icon = card.icon, icon_state = card.icon_state)
 		var/obj/item/tcg_card/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
-		if(choice && choice in cards)
+		if(choice && (choice in cards))
 			choice.forceMove(get_turf(src))
 			user.put_in_hands(choice)
 			cards.Remove(choice)
