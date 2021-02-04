@@ -797,11 +797,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/mode_path = GLOB.special_roles[i]
 						var/datum/game_mode/temp_mode = new mode_path
 						days_remaining = temp_mode.get_remaining_days(user.client)
-
+					if(pref_species && pref_species.incompatible_antag)
+						pref_species.incompatible_antag
+						var/antagonist_path = GLOB.special_roles[i]
+						var/datum/antagonist = new antagonist_path
+						if(pref_species.incompatible_antag in antagonist)
 					if(days_remaining)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
-					else
+					else if(I.species_allowed)
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
+					else
+						dat += "Your species is invalid for this antagonist"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Enabled" : "Disabled"]</a><br>"
 
 			dat += "<br>"

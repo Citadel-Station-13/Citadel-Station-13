@@ -28,6 +28,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 
 	var/list/skill_modifiers
+	var/list/incompatible_species = list()
 
 /datum/antagonist/New()
 	GLOB.antagonists += src

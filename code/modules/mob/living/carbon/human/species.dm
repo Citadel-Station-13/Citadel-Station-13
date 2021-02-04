@@ -186,6 +186,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	//	return 0 //It returns false when it runs the proc so they don't get jobs from the global list.
 	return 1 //It returns 1 to say they are a-okay to continue.
 
+//The same as the first but for antagonists
+/datum/species/proc/qualifies_for_antagonist(/datum/antagonist/A)
+	if(id in A.incompatible_species)
+		return FALSE
+	return TRUE
+
 //Will regenerate missing organs
 /datum/species/proc/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
 	var/obj/item/organ/brain/brain = C.getorganslot(ORGAN_SLOT_BRAIN)

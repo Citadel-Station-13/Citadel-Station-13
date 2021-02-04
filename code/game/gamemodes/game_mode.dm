@@ -423,6 +423,7 @@
 			for(var/species_id in restricted_species)
 				var/mob/living/carbon/player_mob = player.current
 				if(player_mob.dna.species == restricted_species)
+					message_admins("[player.ckey] as [player] failed to qualify for antag due to being a restricted species")
 					candidates -= player
 
 	if(candidates.len < recommended_enemies && CONFIG_GET(keyed_list/force_antag_count)[config_tag])
