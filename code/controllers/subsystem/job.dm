@@ -500,6 +500,7 @@ SUBSYSTEM_DEF(job)
 					var/obj/item/tcg_card/card = new(get_turf(H), card_type)
 					card.forceMove(binder)
 					binder.cards.Add(card)
+				binder.check_for_exodia()
 	else
 		if(H && N.client.prefs && length(N.client.prefs.tcg_cards))
 			var/obj/item/tcgcard_binder/binder = new(get_turf(H))

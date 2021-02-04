@@ -72,8 +72,12 @@
 
 	w_class = WEIGHT_CLASS_TINY
 
-	var/flipped = TRUE
+	var/flipped = FALSE
 	var/tapped = FALSE
+	var/special = FALSE
+
+/obj/item/tcg_card/special
+	special = TRUE
 
 /obj/item/tcg_card/examine(mob/user)
 	. = ..()
@@ -101,9 +105,11 @@
 
 /obj/item/tcg_card/New(loc, new_datum)
 	. = ..()
-	datum_type = new_datum
+	if(!special)
+		datum_type = new_datum
 	card_datum = new datum_type
 	icon = card_datum.pack
+	icon_state = card_datum.icon_state
 
 /obj/item/tcg_card/attack_hand(mob/user)
 	var/list/possible_actions = list(
@@ -468,6 +474,7 @@
 	icon_state = "binder"
 
 	var/list/cards = list()
+	var/mode = 0 //If 1, will show all the cards even if you don't have em
 
 /obj/item/tcgcard_binder/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/tcg_card))
@@ -476,15 +483,57 @@
 		cards.Add(card)
 	. = ..()
 
+/obj/item/tcgcard_binder/attack_self(mob/living/carbon/user)
+	mode = !mode
+	to_chat(user, "<span class='notice'>[src] now shows you [mode ? "all the different cards" : "the cards you already have"].")
+
 /obj/item/tcgcard_binder/attack_hand(mob/living/carbon/user)
 	if(loc == user)
 		var/list/choices = list()
-		for(var/obj/item/tcg_card/card in cards)
-			choices[card] = image(icon = card.icon, icon_state = card.icon_state)
+		if(mode)
+			var/card_types = list()
+
+			for(var/obj/item/tcg_card/card in cards)
+				card_types[card.datum_type] = card
+
+			for(var/card_type in subtypesof(/datum/tcg_card))
+				if(card_type in card_types)
+					choices[card_types[card_type]] = image(icon = card_types[card_type].icon, icon_state = card_types[card_type].icon_state)
+					continue
+
+				var/datum/tcg_card/card_dat = new card_type
+				if(card_dat.name == "Stupid Coder")
+					continue
+				var/image/I = image(icon = card_dat.pack, icon_state = card_dat.icon_state)
+				I.color = "#999999"
+				choices[card_dat.name] = I
+				qdel(card_dat)
+		else
+			for(var/obj/item/tcg_card/card in cards)
+				choices[card] = image(icon = card.icon, icon_state = card.icon_state)
 		var/obj/item/tcg_card/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
-		if(choice)
+		if(choice && choice in cards)
 			choice.forceMove(get_turf(src))
 			user.put_in_hands(choice)
 			cards.Remove(choice)
-		return
+
+		if(choice)
+			return
 	. = ..()
+
+/obj/item/tcgcard_binder/proc/check_for_exodia()
+	var/list/card_types = list()
+	for(var/obj/item/tcg_card/card in cards)
+		card_types.Add(card.datum_type)
+
+	for(var/card_type in subtypesof(/datum/tcg_card))
+		var/datum/tcg_card/card_dat = new card_type
+		if(card_dat.name == "Stupid Coder" || card_dat.name == "Eldritch Horror") //It would be stupid if we require exodia or system cards to get exodia
+			continue
+		qdel(card_dat)
+		if(!(card_type in card_types))
+			return
+
+	var/obj/item/tcg_card/card = new(get_turf(src), /datum/tcg_card/pack_star/exodia)
+	card.forceMove(src)
+	cards.Add(card)

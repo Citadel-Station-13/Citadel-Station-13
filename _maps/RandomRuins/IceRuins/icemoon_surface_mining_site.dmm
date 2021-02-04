@@ -49,6 +49,7 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/closet/crate/freezer,
+/obj/item/tcg_card/special/demonic_miner,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "l" = (
