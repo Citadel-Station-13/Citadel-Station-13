@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "the miner bedsheet will now increment its progress when you redeem points from the ORM"

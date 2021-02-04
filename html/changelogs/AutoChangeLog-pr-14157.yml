@@ -1,4 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - rscdel: "Removes excess air alarms from boxstation"

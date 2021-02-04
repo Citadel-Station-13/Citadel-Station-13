@@ -175,7 +175,7 @@
 		if("PRG_edit")
 			if(!computer || !authenticated || !target_id_card)
 				return
-			var/new_name = params["name"]
+			var/new_name = reject_bad_name(params["name"])
 			if(!new_name)
 				return
 			target_id_card.registered_name = new_name
@@ -190,7 +190,7 @@
 				return
 
 			if(target == "Custom")
-				var/custom_name = params["custom_name"]
+				var/custom_name = reject_bad_name(params["custom_name"])
 				if(custom_name)
 					target_id_card.assignment = custom_name
 					target_id_card.update_label()

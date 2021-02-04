@@ -166,15 +166,10 @@
 	icon_state = "sweater_uglyxmas"
 	item_state = "sweater_uglyxmas"
 
-/obj/item/clothing/accessory/sweater/uglyxmas
-	name = "ugly xmas sweater"
-	icon_state = "sweater_uglyxmas"
-	item_state = "sweater_uglyxmas"
-
 /obj/item/clothing/accessory/sweater/flower
 	name = "flower sweater"
-	icon_state = "sweater_uglyxmas"
-	item_state = "sweater_uglyxmas"
+	icon_state = "sweater_flower"
+	item_state = "sweater_flower"
 
 ////////////////
 //Suit Jackets//
@@ -222,6 +217,11 @@
 	name = "red turtleneck"
 	icon_state = "turtleneck_red"
 	item_state = "turtleneck_red"
+
+/obj/item/clothing/accessory/turtleneck/comfy
+	name = "comfy turtleneck"
+	icon_state = "turtleneck_comfy"
+	item_state = "turtleneck_comfy"
 
 /obj/item/clothing/accessory/turtleneck/tactifool
 	name = "black sweaterneck"
