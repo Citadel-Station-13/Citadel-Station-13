@@ -1,8 +1,6 @@
 #define TAPPED_ANGLE 90
 #define UNTAPPED_ANGLE 0
 
-GLOBAL_VAR_INIT(packs_opened, 0) //A global amount of packs opened this round. Important for chances. This system was made to prevent mass-opening of packs to get all the good stuff in one round.
-
 /datum/tcg_card
 	var/name = "Stupid Coder"
 	var/desc = "A coder that fucked up this card. Report if you see this."
@@ -232,11 +230,6 @@ GLOBAL_VAR_INIT(packs_opened, 0) //A global amount of packs opened this round. I
 		"Legendary" = 1,
 		"Epic" = 9,
 		"Rare" = 30)
-	///How quickly chances of getting this card degrade
-	var/list/rarity_cap = list(
-		"Legendary" = 25, //Only in first 25 packs
-		"Epic" = 50, //Only in first 50 packs
-		"Rare" = 100) //Only in first 100 packs
 
 	custom_price = PRICE_EXPENSIVE
 
@@ -265,7 +258,6 @@ GLOBAL_VAR_INIT(packs_opened, 0) //A global amount of packs opened this round. I
 	if(prob(contains_coin))
 		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
 		new /obj/item/coin/thunderdome(get_turf(user))
-	GLOB.packs_opened += 1
 	qdel(src)
 
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
