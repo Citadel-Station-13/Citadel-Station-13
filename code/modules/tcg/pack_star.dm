@@ -58,7 +58,7 @@
 	rules = "Each turn: Deal 1 damage to all the creatures on the field."
 	icon_state = "demonic_miner"
 
-	mana_cost = 4
+	mana_cost = 7
 	attack = 4
 	health = 5
 
@@ -75,8 +75,8 @@
 	rules = ""
 	icon_state = "wendigo"
 
-	mana_cost = 5
-	attack = 6
+	mana_cost = 6
+	attack = 5
 	health = 3
 
 	faction = "Unique"
@@ -123,10 +123,10 @@
 /datum/tcg_card/pack_star/hierophant
 	name = "Hierophant Club"
 	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
-	rules = "Lower all damage equipped unit recieves by 1. Give equipped unit First Strike."
+	rules = "Give equipped unit First Strike."
 	icon_state = "hierophant"
 
-	mana_cost = 5
+	mana_cost = 4
 	attack = 2
 	health = 0
 
@@ -140,7 +140,7 @@
 /datum/tcg_card/pack_star/abductor
 	name = "Alien Gland"
 	desc = "A nausea-inducing hunk of twisting flesh and metal. These things are often found after people were abducted by grey-skinned aliens."
-	rules = "Each turn: Flip a coin. If heads, unit gain +1/+2. If tails, unit gains -2/-1."
+	rules = "Each turn: Flip a coin. If heads, unit gain +1/+1. If tails, unit gains -2/-1."
 	icon_state = "abductor"
 
 	mana_cost = 2
@@ -162,7 +162,7 @@
 
 	mana_cost = 1
 	attack = 2
-	health = 2
+	health = 1
 
 	faction = "Unique"
 	rarity = "Common"
@@ -196,7 +196,7 @@
 
 	mana_cost = 6
 	attack = 0
-	health = 9
+	health = 6
 
 	faction = "Unique"
 	rarity = "Epic"
