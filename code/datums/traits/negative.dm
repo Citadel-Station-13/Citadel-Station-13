@@ -333,7 +333,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 
 /datum/quirk/phobia/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
-	phobia = new(H.client.prefs.phobia)
+	phobia = new()
 	H.gain_trauma(phobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/phobia/remove()
