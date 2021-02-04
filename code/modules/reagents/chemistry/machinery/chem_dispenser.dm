@@ -60,9 +60,7 @@
 		/datum/reagent/silver,
 		/datum/reagent/iodine,
 		/datum/reagent/bromine,
-		/datum/reagent/stable_plasma,
-		/datum/reagent/fermi/acidic_buffer/weak,
-		/datum/reagent/fermi/basic_buffer/weak
+		/datum/reagent/stable_plasma
 	)
 	//These become available once upgraded.
 	var/list/upgrade_reagents = list(
@@ -367,13 +365,13 @@
 			if(!is_operational() || QDELETED(cell))
 				return
 			if(!beaker)
-				return 
+				return
 			if(recording_recipe)
 				say("Cannot store while recording!")
-				return 
+				return
 			if(beaker.reagents.fermiIsReacting)
 				say("Cannot store ongoing reactions!")
-				return 
+				return
 			var/reagent = text2path(params["id"])
 			var/datum/reagent/R = beaker.reagents.has_reagent(reagent)
 			var/potentialAmount = min(amount, R.volume)
@@ -381,21 +379,21 @@
 				say("Not enough storage space left!")
 				return
 			beaker.reagents.trans_id_to(src, R.type, potentialAmount)
-			work_animation()				
+			work_animation()
 			. = TRUE
-		
+
 		if("unstore")
 			if(!is_operational() || QDELETED(cell))
 				return
 			if(!beaker)
-				return 
+				return
 			if(recording_recipe)
-				say("Cannot distribute while recording!") 
-				return 
+				say("Cannot distribute while recording!")
+				return
 			var/reagent = text2path(params["id"])
 			var/datum/reagent/R = reagents.has_reagent(reagent)
 			reagents.trans_id_to(beaker, R.type, amount)
-			work_animation()				
+			work_animation()
 			. = TRUE
 
 /obj/machinery/chem_dispenser/proc/SetAmount(inputAmount)
@@ -407,7 +405,7 @@
 		amount = dispenceUnit
 		return
 	amount = inputAmount
-	
+
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
@@ -519,7 +517,7 @@
 		if(2 to 3)
 			return "average"
 		if(3 to 4)
-			return "yellow" 
+			return "yellow"
 		if(4 to 5)
 			return "olive"
 		if(5 to 6)
@@ -562,7 +560,7 @@
 			b_o.pixel_y = -7
 			b_o.pixel_x = rand(-9, 9)
 	return b_o
-	
+
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
