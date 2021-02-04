@@ -530,3 +530,4 @@
 /obj/item/storage/box/syndie_kit/sleepytime/cardpack/PopulateContents()
 	. = ..()
 	new /obj/item/cardpack/syndicate(src)
+	new /obj/item/cardpack/syndicate(src)
