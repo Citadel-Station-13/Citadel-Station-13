@@ -80,6 +80,8 @@
 /obj/item/tcg_card/examine(mob/user)
 	. = ..()
 	sleep(2) //So it prints this shit after the examine
+	if(flipped)
+		return
 	to_chat(user, "<span class='notice'>This card has following stats:</span>")
 	to_chat(user, "<span class='notice'>Mana cost: [card_datum.mana_cost]</span>")
 	to_chat(user, "<span class='notice'>Health: [card_datum.health]</span>")
@@ -90,6 +92,8 @@
 	to_chat(user, "<span class='notice'>It's effect is: [card_datum.rules]</span>")
 
 /obj/item/tcg_card/openTip(location, control, params, user) //Overriding for nice UI
+	if(flipped)
+		return ..()
 	var/desc_content = "[desc] <br> \
 					    <span class='notice'>This card has following stats:</span> <br> \
 					    <span class='notice'>Mana cost: [card_datum.mana_cost]</span> <br> \
@@ -108,6 +112,8 @@
 	card_datum = new datum_type
 	icon = card_datum.pack
 	icon_state = card_datum.icon_state
+	name = card_datum.name
+	desc = card_datum.desc
 
 /obj/item/tcg_card/attack_hand(mob/user)
 	var/list/possible_actions = list(
@@ -212,7 +218,7 @@
 	icon_state = "cardpack"
 	w_class = WEIGHT_CLASS_TINY
 	///The card series to look in
-	var/series = /datum/tcg_card/pack_1
+	var/list/series = list(/datum/tcg_card/pack_1, /datum/tcg_card/exodia)
 	///Chance of the pack having a coin in it out of 10
 	var/contains_coin = -1
 	///The amount of cards to draw from the rarity table
@@ -222,7 +228,8 @@
 		"Common" = 900,
 		"Rare" = 300,
 		"Epic" = 50,
-		"Legendary" = 3)
+		"Legendary" = 3,
+		"Exodia" = 1) //Basically 0.1%, it doesn't have guar. rarity
 	///The amount of cards to draw from the guarenteed rarity table
 	var/guaranteed_count = 1
 	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
@@ -231,14 +238,36 @@
 		"Epic" = 9,
 		"Rare" = 30)
 
+	var/illegal = FALSE //Can cargo get it?
+
 	custom_price = PRICE_EXPENSIVE
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: 2560 Core Set"
 	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
 	icon_state = "cardpack"
-	series = /datum/tcg_card/pack_1
+	series = list(/datum/tcg_card/pack_1, /datum/tcg_card/exodia)
 	contains_coin = 10
+
+/obj/item/cardpack/syndicate //Higher chances more cards no exodia
+	name = "Trading Card Pack: Nuclear Cards"
+	desc = "Contains twelve cards of varying rarity from the 2560 Core Set. This pack was stamped by Waffle Co."
+	icon_state = "cardpack_syndicate"
+	series = list(/datum/tcg_card/pack_1) //, /datum/tcg_card/nuclear)
+	contains_coin = 100
+
+	card_count = 10
+	rarity_table = list(
+		"Common" = 400,
+		"Rare" = 160,
+		"Epic" = 40,
+		"Legendary" = 10)
+
+	guaranteed_count = 2
+	guar_rarity = list(
+		"Legendary" = 5,
+		"Epic" = 10,
+		"Rare" = 20)
 
 /obj/item/cardpack/equipped(mob/user, slot, initial)
 	. = ..()
@@ -263,9 +292,11 @@
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
 	var/list/return_cards = list()
 
-	var/list/cards = subtypesof(series)
+	var/list/cards = list()
+	for(var/card_type in series)
+		cards.Add(subtypesof(card_type))
 	var/list/possible_cards = list()
-	var/list/rarity_cards = list("Legendary" = list(), "Epic" = list(), "Rare" = list(), "Common" = list())
+	var/list/rarity_cards = list("Exodia" = list(), "Legendary" = list(), "Epic" = list(), "Rare" = list(), "Common" = list())
 	for(var/card in cards)
 		var/datum/tcg_card/new_card = new card()
 		possible_cards[card] = rarity_table[new_card.rarity]

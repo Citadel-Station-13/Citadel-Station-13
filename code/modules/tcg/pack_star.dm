@@ -224,7 +224,10 @@
 
 //Ultimate Exodia cards. I really, really doubt that someone will ever find them.
 
-/datum/tcg_card/pack_star/exodia_singulo
+/datum/tcg_card/exodia
+	pack = 'icons/obj/tcg/pack_star.dmi'
+
+/datum/tcg_card/exodia/exodia_singulo
 	name = "Singularity"
 	desc = "A monstrous gravitational singularity, pitch black(but not quiet) and very menacings."
 	rules = "This card doesn't leave field. At the end of each turn: Remove all the cards from the field."
@@ -236,7 +239,7 @@
 	rarity = "Legendary"
 	card_type = "Spell"
 
-/datum/tcg_card/pack_star/exodia_tesla
+/datum/tcg_card/exodia/exodia_tesla
 	name = "Energy Orb"
 	desc = "An orb made out of hypercharged plasma. An ultimate bug zapper."
 	rules = "This card doesn't leave field. Every turn all units take 2 damage."
@@ -245,10 +248,10 @@
 	mana_cost = 8
 
 	faction = "Exodia"
-	rarity = "Legendary"
+	rarity = "Exodia"
 	card_type = "Spell"
 
-/datum/tcg_card/pack_star/exodia_narie
+/datum/tcg_card/exodia/exodia_narie
 	name = "Nar-Sie"
 	desc = "An avatar of the Nar-Sie, one of the Eldritch Gods."
 	rules = "This card doesn't leave field. Every turn all friendly units take 1 damage and you restore 1 lifeshard	."
@@ -257,10 +260,10 @@
 	mana_cost = 8
 
 	faction = "Exodia"
-	rarity = "Legendary"
+	rarity = "Exodia"
 	card_type = "Spell"
 
-/datum/tcg_card/pack_star/exodia_ratvar
+/datum/tcg_card/exodia/exodia_ratvar
 	name = "Ratvar"
 	desc = "Ratvar, the god of cogs and clockwork mechanisms, was trapped by Nar-Sie a long ago."
 	rules = "This card doesn't leave field. Every turn enemy hero recieves 1 lifeshard damage."
@@ -269,7 +272,7 @@
 	mana_cost = 8
 
 	faction = "Exodia"
-	rarity = "Legendary"
+	rarity = "Exodia"
 	card_type = "Spell"
 
 /datum/tcg_card/pack_star/exodia
@@ -281,20 +284,20 @@
 	mana_cost = 8
 
 	faction = "Exodia"
-	rarity = "Legendary"
+	rarity = "Exodia"
 	card_type = "Spell"
 
 /obj/item/tcg_card/special/exodia_singulo
-	datum_type = /datum/tcg_card/pack_star/exodia_singulo
+	datum_type = /datum/tcg_card/exodia/exodia_singulo
 
 /obj/item/tcg_card/special/exodia_tesla
-	datum_type = /datum/tcg_card/pack_star/exodia_tesla
+	datum_type = /datum/tcg_card/exodia/exodia_tesla
 
 /obj/item/tcg_card/special/exodia_narie
-	datum_type = /datum/tcg_card/pack_star/exodia_narie
+	datum_type = /datum/tcg_card/exodia/exodia_narie
 
 /obj/item/tcg_card/special/exodia_ratvar
-	datum_type = /datum/tcg_card/pack_star/exodia_ratvar
+	datum_type = /datum/tcg_card/exodia/exodia_ratvar
 
 /obj/item/tcg_card/special/exodia
 	datum_type = /datum/tcg_card/pack_star/exodia
