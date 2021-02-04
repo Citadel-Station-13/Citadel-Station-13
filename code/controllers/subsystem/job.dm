@@ -691,21 +691,29 @@ SUBSYSTEM_DEF(job)
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
-			if(I && length(i[LOADOUT_COLOR])) //handle loadout colors
-			 	//handle polychromic items
-				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
-					var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
-					if(polychromic && istype(polychromic))
-						var/list/polychromic_entry = polychromic.colors_by_atom[I]
-						if(polychromic_entry)
-							if(polychromic.suits_with_helmet_typecache[I.type]) //is this one of those toggleable hood/helmet things?
-								polychromic.connect_helmet(I,i[LOADOUT_COLOR])
-							polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
-							I.update_icon()
-				else
-					//handle non-polychromic items (they only have one color)
-					I.add_atom_colour(i[LOADOUT_COLOR][1], FIXED_COLOUR_PRIORITY)
-					I.update_icon()
+			if(I)
+				if(length(i[LOADOUT_COLOR])) //handle loadout colors
+				 	//handle polychromic items
+					if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
+						var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
+						if(polychromic && istype(polychromic))
+							var/list/polychromic_entry = polychromic.colors_by_atom[I]
+							if(polychromic_entry)
+								if(polychromic.suits_with_helmet_typecache[I.type]) //is this one of those toggleable hood/helmet things?
+									polychromic.connect_helmet(I,i[LOADOUT_COLOR])
+								polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
+								I.update_icon()
+					else
+						//handle non-polychromic items (they only have one color)
+						I.add_atom_colour(i[LOADOUT_COLOR][1], FIXED_COLOUR_PRIORITY)
+						I.update_icon()
+				//when inputting the data it's already sanitized
+				if(i[LOADOUT_CUSTOM_NAME])
+					var/custom_name = i[LOADOUT_CUSTOM_NAME]
+					I.name = custom_name
+				if(i[LOADOUT_CUSTOM_DESCRIPTION])
+					var/custom_description = i[LOADOUT_CUSTOM_DESCRIPTION]
+					I.desc = custom_description
 			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M

@@ -143,6 +143,10 @@
 	custom_holoform.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
 
+/mob/living/silicon/pai/deployed/Initialize()
+	. = ..()
+	fold_out(TRUE)
+
 /mob/living/silicon/pai/ComponentInitialize()
 	. = ..()
 	if(possible_chassis[chassis])

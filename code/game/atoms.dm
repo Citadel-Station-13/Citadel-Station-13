@@ -99,6 +99,9 @@
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
 
+	///Reference to atom being orbited
+	var/atom/orbit_target
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -548,7 +551,7 @@
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
 
-/atom/proc/ex_act(severity, target)
+/atom/proc/ex_act(severity, target, datum/explosion/E)
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)

@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - rscadd: "Revenants can now clickdrag to throw stuff at people, with some items doing various things at the same time."
