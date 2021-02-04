@@ -5,7 +5,7 @@
 	name = "Adamantine Golem"
 	desc = "An adamantine golem, immune to magic and being able to coordinate other golems, has a great power in combat."
 	rules = "Holy. Taunt."
-	icon_state = "captain"
+	icon_state = "golem"
 
 	mana_cost = 4
 	attack = 4
