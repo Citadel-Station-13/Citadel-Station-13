@@ -73,6 +73,7 @@
 	var/flipped = FALSE
 	var/tapped = FALSE
 	var/special = FALSE
+	var/illegal = FALSE
 
 /obj/item/tcg_card/special
 	special = TRUE
@@ -90,6 +91,8 @@
 	to_chat(user, "<span class='notice'>Rarity: [card_datum.rarity]</span>")
 	to_chat(user, "<span class='notice'>Card Type: [card_datum.card_type]</span>")
 	to_chat(user, "<span class='notice'>It's effect is: [card_datum.rules]</span>")
+	if(illegal)
+		to_chat(user, "<span class='notice'>It's a low-quality copy of a real card. TCG Gaming Community won't probably accept it.</span>") //Always examine your cards baby! It might be a cheap syndicate knockoff and it won't save!
 
 /obj/item/tcg_card/openTip(location, control, params, user) //Overriding for nice UI
 	if(flipped)
@@ -105,7 +108,7 @@
 					    <span class='notice'>It's effect is: [card_datum.rules]</span>"
 	openToolTip(user,src,params,title = name,content = desc_content,theme = "")
 
-/obj/item/tcg_card/New(loc, new_datum)
+/obj/item/tcg_card/New(loc, new_datum, illegal_card = FALSE)
 	. = ..()
 	if(!special)
 		datum_type = new_datum
@@ -114,6 +117,7 @@
 	icon_state = card_datum.icon_state
 	name = card_datum.name
 	desc = card_datum.desc
+	illegal = illegal_card
 
 /obj/item/tcg_card/attack_hand(mob/user)
 	var/list/possible_actions = list(
@@ -281,7 +285,7 @@
 	. = ..()
 	var/list/cards = buildCardListWithRarity(card_count, guaranteed_count)
 	for(var/template in cards)
-		new /obj/item/tcg_card(get_turf(user), template)
+		new /obj/item/tcg_card(get_turf(user), template, illegal)
 	to_chat(user, "<span_class='notice'>Wow! Check out these cards!</span>")
 	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))

@@ -90,5 +90,5 @@
 	name = "TCG Nuclear Cardpack"
 	desc = "A cardpack filled with top-tier TCG cards."
 	item = /obj/item/cardpack/syndicate
-	cost = 8 //Why so pricey? Cuz it's free 24 cards for a traitor!
+	cost = 4
 

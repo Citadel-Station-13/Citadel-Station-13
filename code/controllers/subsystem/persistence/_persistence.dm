@@ -367,7 +367,8 @@ SUBSYSTEM_DEF(persistence)
 
 		var/list/card_types = list()
 		for(var/obj/item/tcg_card/card in binder.cards)
-			card_types.Add(card.datum_type)
+			if(!card.illegal) //Nope, don't want free cards as traitor/ops!
+				card_types.Add(card.datum_type)
 
 		ending_human.client.prefs.tcg_cards = card_types
 		ending_human.client.prefs.save_character()
