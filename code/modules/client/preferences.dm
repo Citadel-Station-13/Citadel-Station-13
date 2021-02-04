@@ -99,7 +99,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/phobia = "Random"				//phobia
 	var/language = "Random"				//bonus language
 	var/choselanguage = "Random"		//language appearance
 	var/underwear = "Nude"				//underwear type
@@ -2319,15 +2318,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["body_model"] = chosengender
 					gender = chosengender
-
-				if("phobia")
-					var/chosephobia = input(user, "Select a phobia.", "Phobia", phobia) as null|anything in list("spiders", "space", "security", "clowns", "greytide", "lizards",
-																												"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-																												"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate",
-																												"eye","Random")
-					if(!chosephobia)
-						return
-					phobia = chosephobia
 
 				if("language")
 					choselanguage = input(user, "Select a language.", "Language", language) as null|anything in list("Beachtongue","Draconic","Dwarven",
