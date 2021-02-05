@@ -889,7 +889,7 @@
 	if(owner.stat == DEAD)
 		explosion(get_turf(owner),1,2,4,flame_range = 5)
 		qdel(linked_extract)
-		qdel(src)
+		return
 	return ..()
 
 /datum/status_effect/stabilized/black
