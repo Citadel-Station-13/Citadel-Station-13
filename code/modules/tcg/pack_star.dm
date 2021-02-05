@@ -255,7 +255,7 @@
 	name = "Nar-Sie"
 	desc = "An avatar of the Nar-Sie, one of the Eldritch Gods."
 	rules = "This card doesn't leave field. Every turn all friendly units take 1 damage and you restore 1 lifeshard	."
-	icon_state = "exodia_narie"
+	icon_state = "exodia_narsie"
 
 	mana_cost = 8
 

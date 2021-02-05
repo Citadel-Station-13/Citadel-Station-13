@@ -92,7 +92,7 @@
 	to_chat(user, "<span class='notice'>Card Type: [card_datum.card_type]</span>")
 	to_chat(user, "<span class='notice'>It's effect is: [card_datum.rules]</span>")
 	if(illegal)
-		to_chat(user, "<span class='notice'>It's a low-quality copy of a real card. TCG Gaming Community won't probably accept it.</span>") //Always examine your cards baby! It might be a cheap syndicate knockoff and it won't save!
+		to_chat(user, "<span class='warning'>It's a low-quality copy of a real card. TCG Gaming Community won't probably accept it.</span>") //Doesn't do crap, just for lulz
 
 /obj/item/tcg_card/openTip(location, control, params, user) //Overriding for nice UI
 	if(flipped)
@@ -253,25 +253,15 @@
 	series = list(/datum/tcg_card/pack_1, /datum/tcg_card/exodia)
 	contains_coin = 10
 
-/obj/item/cardpack/syndicate //Higher chances more cards no exodia
-	name = "Trading Card Pack: Nuclear Cards"
-	desc = "Contains twelve cards of varying rarity from the 2560 Core Set. This pack was stamped by Waffle Co."
+/obj/item/cardpack/syndicate //More cards. Perfect stuff for gaming gang
+	name = "Trading Card Pack: Nuclear Danger"
+	desc = "Contains twelve cards of varying rarity from 2560 Core Set and 2560 Nuclear Danger. This pack was stamped by Waffle Co."
 	icon_state = "cardpack_syndicate"
-	series = list(/datum/tcg_card/pack_1) //, /datum/tcg_card/nuclear)
+	series = list(/datum/tcg_card/pack_1, /datum/tcg_card/pack_nuclear)
 	contains_coin = 100
 
 	card_count = 10
-	rarity_table = list(
-		"Common" = 400,
-		"Rare" = 160,
-		"Epic" = 40,
-		"Legendary" = 10)
-
 	guaranteed_count = 2
-	guar_rarity = list(
-		"Legendary" = 5,
-		"Epic" = 10,
-		"Rare" = 20)
 
 /obj/item/cardpack/equipped(mob/user, slot, initial)
 	. = ..()
@@ -562,6 +552,11 @@
 
 	for(var/card_type in subtypesof(/datum/tcg_card))
 		var/datum/tcg_card/card_dat = new card_type
+
+		if(card_dat.name == "Eldritch Horror" && (card_type in card_types)) //We already have Exodia saved
+			qdel(card_dat)
+			return
+
 		if(card_dat.name == "Stupid Coder" || card_dat.name == "Eldritch Horror") //It would be stupid if we require exodia or system cards to get exodia
 			continue
 		qdel(card_dat)
@@ -571,3 +566,13 @@
 	var/obj/item/tcg_card/card = new(get_turf(src), /datum/tcg_card/pack_star/exodia)
 	card.forceMove(src)
 	cards.Add(card)
+
+/obj/item/tcgcard_binder/full/Initialize() //For admemes.
+	. = ..()
+	for(var/cardtype in subtypesof(/datum/tcg_card))
+		var/obj/item/tcg_card/card = new(get_turf(src), cardtype)
+		if(card.card_datum.name == "Stupid Coder")
+			qdel(card)
+			continue
+		card.forceMove(src)
+		cards.Add(card)

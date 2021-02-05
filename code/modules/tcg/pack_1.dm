@@ -800,9 +800,9 @@
 
 /datum/tcg_card/pack_1/engineer_plasmaman
 	name = "Station Engineer (Plasmaman)"
-	desc = "Station Engineers maintain the intricate and delicate web of machinery that keeps you and everyone else aboard your station alive. No pressure there then."
+	desc = "The ever industrious plasmamen are well suited to engineering work due to their natural radiation resistance."
 	rules = "Immune to all spells except Security and Syndicate ones."
-	icon_state = "The ever industrious plasmamen are well suited to engineering work due to their natural radiation resistance."
+	icon_state = "engineer_plasmeme"
 
 	mana_cost = 5
 	attack = 2
