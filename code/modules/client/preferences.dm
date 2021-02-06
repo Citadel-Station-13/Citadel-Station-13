@@ -111,7 +111,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/see_chat_emotes = TRUE
 	var/enable_personal_chat_color = FALSE
 	var/personal_chat_color = "#ffffff"
-	var/list/color_gear = list()
 	//SKYRAT CHANGES END
 	var/underwear = "Nude"				//underwear type
 	var/undie_color = "FFFFFF"

@@ -349,6 +349,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!IsVocal())
 		return 0
 
+	if(get_message_language(message) != /datum/language/signlanguage)
+		return 0
+
 	return 1
 
 /mob/living/proc/get_key(message)

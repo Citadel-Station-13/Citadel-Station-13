@@ -11,5 +11,5 @@
 
 	icon_state = "animal"
 	//SKYRAT CHANGE - language restriction
-	restricted = TRUE
+	restricted = FALSE
 	//

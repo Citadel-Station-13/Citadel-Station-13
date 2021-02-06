@@ -219,3 +219,20 @@
 /datum/quirk/night_vision/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_sight()
+
+/* /datum/quirk/multilingual
+	name = "Multi-Lingual"
+	desc = "You spent a portion of your life learning to understand an additional language. You may or may not be able to speak it based on your anatomy."
+	value = 1
+	mob_trait = TRAIT_MULTILINGUAL
+	gain_text = "You've learned an extra language!"
+	lose_text = "You've forgotten your extra language."
+
+/datum/quirk/multilingual/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.grant_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MIND)
+
+/datum/quirk/multilingual/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.remove_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MIND)
+*/ //kills this awful excuse of a thing, quirk point requirement is a no-no

@@ -670,9 +670,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chosen_limb_id"]					>> chosen_limb_id
 	S["hide_ckey"]						>> hide_ckey //saved per-character
 
-	//SKYRAT CHANGES
-	S["color_gear"]			>> color_gear
-	//
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -1105,9 +1102,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		WRITE_FILE(S["modified_limbs"]				, safe_json_encode(modified_limbs))
 	WRITE_FILE(S["chosen_limb_id"],   chosen_limb_id)
 
-	//SKYRAT CHANGES
-	WRITE_FILE(S["color_gear"]						, color_gear)
-	//
 
 	//gear loadout
 	if(length(loadout_data))
