@@ -104,31 +104,44 @@
 		return ..()
 
 /obj/item/reagent_containers/blood/attack(mob/living/carbon/C, mob/user, def_zone)
-	if(user.a_intent == INTENT_HELP && reagents.total_volume > 0 && iscarbon(C) && user.a_intent == INTENT_HELP)
-		if(C.is_mouth_covered())
-			to_chat(user, "<span class='notice'>You cant drink from the [src] while your mouth is covered.</span>")
-			return
-		if(user != C)
-			user.visible_message("<span class='danger'>[user] forces [C] to drink from the [src].</span>", \
-			"<span class='notice'>You force [C] to drink from the [src]</span>")
-			if(!do_mob(user, C, 50))
-				return
-		else
-			if(!do_mob(user, C, 10))
-				return
+	if(!iscarbon(C) || user.a_intent != INTENT_HELP || reagents.total_volume <= 0)
+		..()
 
-			to_chat(user, "<span class='notice'>You take a sip from the [src].</span>")
-			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>")
-		if(reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
+	if(C.is_mouth_covered())
+		if(user != C)
+			to_chat(user, "<span class='notice'>You can't force [C] to drink from [src] while their mouth is covered.</span>")
 			return
-		var/gulp_size = 3
-		var/fraction = min(gulp_size / reagents.total_volume, 1)
-		reagents.reaction(C, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
-		reagents.trans_to(C, gulp_size)
-		reagents.remove_reagent(src, 2) //Inneficency, so hey, IVs are usefull.
-		playsound(C.loc,'sound/items/drink.ogg', rand(10, 50), TRUE)
+		to_chat(user, "<span class='notice'>You can't drink from [src] while your mouth is covered.</span>")
 		return
-	..()
+
+	if(!user.CheckActionCooldown())
+		return
+	if(user != C)
+		user.visible_message("<span class='danger'>[user] forces [C] to drink from [src].</span>", \
+		"<span class='notice'>You force [C] to drink from [src]</span>")
+		user.DelayNextAction(50)
+		if(do_mob(user, C, 50))
+			do_drink(C, user)
+
+	else
+		user.DelayNextAction(10)
+		if(do_mob(user, C, 10))
+			user.visible_message("<span class='notice'>[user] puts [src] up to their mouth.</span>", \
+			"<span class='notice'>You take a sip from [src].</span>")
+			do_drink(C, user)
+
+
+/obj/item/reagent_containers/blood/proc/do_drink(mob/living/carbon/C, mob/user)
+	if(reagents.total_volume <= 0) // Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
+		to_chat(user, "<span class='notice'>...and notice [src] is empty.</span>")
+		return
+	var/gulp_size = 3
+	var/fraction = min(gulp_size / reagents.total_volume, 1)
+	reagents.reaction(C, INGEST, fraction) 	//checkLiked(fraction, M) // Blood isn't food, sorry.
+	reagents.remove_any(5) //Inneficency, so hey, IVs are usefull.
+	reagents.trans_to(C, gulp_size)
+	playsound(C.loc,'sound/items/drink.ogg', rand(10, 50), TRUE)
+
 
 /obj/item/reagent_containers/blood/bluespace
 	name = "bluespace blood pack"

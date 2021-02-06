@@ -1,7 +1,0 @@
-author: "Xantholne"
-delete-after: True
-changes: 
-  - rscadd: "You can now tuck disky into bed"
-  - rscadd: "You can now make beds by applying a bed sheet to them"
-  - rscadd: "You can now tuck in pai cards into bed"
-  - rscadd: "Added bed tucking element, can be added to any held object to allow tucking into beds"

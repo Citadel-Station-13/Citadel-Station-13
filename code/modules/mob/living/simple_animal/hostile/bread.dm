@@ -26,7 +26,6 @@
 	speak_emote = list("growls")
 	mouse_opacity = 2
 	density = TRUE
-	ventcrawler = VENTCRAWLER_ALWAYS
 	verb_say = "growls"
 	verb_ask = "growls inquisitively"
 	verb_exclaim = "growls loudly"
@@ -38,6 +37,7 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A tumor bread has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_dnr_observers = TRUE)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/bread/attack_ghost(mob/user)
 	if(key)			//please stop using src. without a good reason.

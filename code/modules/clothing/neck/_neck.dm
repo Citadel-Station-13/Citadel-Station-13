@@ -237,6 +237,12 @@
 	icon_state = "choker"
 	poly_colors = list("#222222")
 
+/obj/item/clothing/neck/necklace/cowbell
+	name = "cowbell collar"
+	desc = "Who would wear this? Take this off, you aren't a cow, you're just an awful degenerate."
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "cowbell"
+
 /obj/item/key/collar
 	name = "Collar Key"
 	desc = "A key for a tiny lock on a collar or bag."
@@ -289,7 +295,7 @@
 //VERY SUPER BADASS NECKERCHIEFS//
 //////////////////////////////////
 
-obj/item/clothing/neck/neckerchief
+/obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
 	w_class = WEIGHT_CLASS_TINY
 	var/sourceBandanaType

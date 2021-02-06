@@ -30529,9 +30529,6 @@
 	dir = 8
 	},
 /obj/structure/closet/bombcloset,
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "aXC" = (
@@ -43701,10 +43698,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /mob/living/simple_animal/chicken{
 	desc = "The arch-nemesis of Kentucky.";
 	name = "Popeye";
@@ -46363,9 +46356,6 @@
 "bwK" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/airalarm{
-	pixel_y = 22
-	},
 /turf/open/floor/grass,
 /area/chapel/main)
 "bwL" = (
@@ -48132,16 +48122,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/brig)
-"bzx" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/crew_quarters/locker)
 "bzy" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -58156,10 +58136,6 @@
 	icon_state = "plant-02";
 	pixel_y = 3
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/machinery/camera{
 	c_tag = "Prison Wing Cells";
 	dir = 4;
@@ -61358,7 +61334,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/security/warden)
 "bUs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -67210,10 +67186,6 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "cdU" = (
@@ -71327,9 +71299,9 @@
 	icon_gib = "magicarp_gib";
 	icon_living = "magicarp";
 	icon_state = "magicarp";
+	maxHealth = 200;
 	max_co2 = 5;
 	max_tox = 2;
-	maxHealth = 200;
 	melee_damage_lower = 15;
 	melee_damage_upper = 20;
 	min_oxy = 5;
@@ -83280,10 +83252,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 5
-	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics Port Tanks";
@@ -108992,7 +108960,7 @@ bss
 btV
 aEu
 bxW
-bzx
+bIV
 bKq
 bKq
 bKq

@@ -2,7 +2,6 @@
 	name = "KinkMate"
 	desc = "A vending machine for all your unmentionable desires."
 	icon_state = "kink"
-	circuit = /obj/item/circuitboard/machine/kinkmate
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_reply = "Have fun, you shameless pervert!"
 	products = list(
@@ -13,6 +12,7 @@
 				/obj/item/clothing/neck/petcollar = 5,
 				/obj/item/clothing/neck/petcollar/choker = 5,
 				/obj/item/clothing/neck/petcollar/leather = 5,
+				/obj/item/clothing/neck/necklace/cowbell = 5,
 				/obj/item/restraints/handcuffs/fake/kinky = 5,
 				/obj/item/clothing/glasses/sunglasses/blindfold = 4,
 				/obj/item/clothing/mask/muzzle = 4,

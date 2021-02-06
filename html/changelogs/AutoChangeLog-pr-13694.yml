@@ -1,5 +1,0 @@
-author: "Acer202, with minor help from The0bserver"
-delete-after: True
-changes: 
-  - rscadd: "After internal deliberation, CentCom has decided to run a limited reinstatement of public mining shuttles for use in more tried and true station classes. CentCom would like to remind you that this privilege is easily revoked, and that abuse may result in immediate detonation."
-  - rscadd: "Restores the mining shuttle on Pubby, Box, Delta, Meta, and Lambda Station."

@@ -253,6 +253,7 @@
 
 // item traits
 #define TRAIT_NODROP            "nodrop"
+#define TRAIT_SPOOKY_THROW      "spooky_throw"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

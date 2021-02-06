@@ -93,9 +93,8 @@
 		e.set_up(round((volume/28)*(pH-9)), T, 0, 0)
 		e.start()
 
-	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
-		ImpureTot *= volume
-		empulse(T, volume, 1)
+	if(ImpureTot) //If impure, v.small emp (0.6 or less)
+		empulse(T, ImpureTot, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
 	return

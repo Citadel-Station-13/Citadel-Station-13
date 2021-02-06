@@ -1,6 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - tweak: "Zeolites now use gold rather then uranium for catalyst"
-  - tweak: "Zeolites are not as hard to make ph wise"
-  - tweak: "Making Zeolites heats up the beaker less allowing for better control"

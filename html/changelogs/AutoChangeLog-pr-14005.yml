@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Loot items mobs drop are no longer always failing to initialize."
