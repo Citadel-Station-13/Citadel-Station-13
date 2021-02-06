@@ -294,7 +294,7 @@ Versioning
 		return
 	if(!L || !L.key || !L.mind)
 		return
-	if(!L.suiciding && !first_death.len && (!istype(L.loc, /obj/belly))
+	if(!L.suiciding && !first_death.len && (!istype(L.loc, /obj/belly)))
 		first_death["name"] = "[(L.real_name == L.name) ? L.real_name : "[L.real_name] as [L.name]"]"
 		first_death["role"] = null
 		if(L.mind.assigned_role)
