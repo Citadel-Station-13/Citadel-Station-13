@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes: 
-  - bugfix: "Bloodsuckers tresspass ability can no longer work while they are not awake."

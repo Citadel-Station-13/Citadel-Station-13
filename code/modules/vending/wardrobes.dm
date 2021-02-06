@@ -212,7 +212,7 @@
 					/obj/item/clothing/under/rank/rnd/roboticist/sleek = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist/skirt = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/robotics = 3,
-					/obj/item/clothing/suit/toggle/labcoat = 3,
+					/obj/item/clothing/suit/toggle/labcoat/roboticist = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3,
 					/obj/item/clothing/gloves/fingerless = 3,
 					/obj/item/clothing/head/soft/black = 3,

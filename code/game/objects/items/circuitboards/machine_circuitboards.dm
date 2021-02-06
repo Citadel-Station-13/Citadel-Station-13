@@ -263,6 +263,7 @@
 		/obj/machinery/vending/cola = "Robust Softdrinks",
 		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 		/obj/machinery/vending/games = "\improper Good Clean Fun",
+		/obj/machinery/vending/kink = "KinkMate",
 		/obj/machinery/vending/autodrobe = "AutoDrobe",
 		/obj/machinery/vending/assist = "\improper Vendomat",
 		/obj/machinery/vending/engivend = "\improper Engi-Vend",

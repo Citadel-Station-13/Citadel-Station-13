@@ -92,6 +92,11 @@
 		return BULLET_ACT_HIT
 	else if(istype(Proj , /obj/item/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
+	else if(istype(Proj , /obj/item/projectile/energy/florarevolution))
+		if(myseed)
+			if(myseed.mutatelist.len > 0)
+				myseed.instability = (myseed.instability/2)
+		mutatespecie()
 	else
 		return ..()
 
@@ -384,7 +389,6 @@
 /obj/machinery/hydroponics/proc/hardmutate()
 	mutate(4, 10, 2, 4, 50, 4, 10, 3)
 
-
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	if(!myseed || dead)
 		return
@@ -600,7 +604,34 @@
 				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
-
+	else if(istype(O, /obj/item/gun/energy/floragun))
+		var/obj/item/gun/energy/floragun/flowergun = O
+		if(flowergun.cell.charge < flowergun.cell.maxcharge)
+			to_chat(user, "<span class='notice'>[flowergun] must be fully charged to lock in a mutation!</span>")
+			return
+		if(!myseed)
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			return
+		if(myseed.endurance <= 20)
+			to_chat(user, "<span class='warning'>[myseed.plantname] isn't hardy enough to sequence its mutation!</span>")
+			return
+		if(!myseed.mutatelist)
+			to_chat(user, "<span class='warning'>[myseed.plantname] has nothing else to mutate into!</span>")
+			return
+		else
+			var/list/fresh_mut_list = list()
+			for(var/muties in myseed.mutatelist)
+				var/obj/item/seeds/another_mut = new muties
+				fresh_mut_list[another_mut.plantname] =  muties
+			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sortList(fresh_mut_list))
+			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
+				return
+			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
+			myseed.endurance = (myseed.endurance/2)
+			flowergun.cell.use(flowergun.cell.charge)
+			flowergun.update_icon()
+			to_chat(user, "<span class='notice'>[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!</span>")
+			return
 	else
 		return ..()
 

@@ -47,8 +47,9 @@
 		"smmon_3.gif" = 'icons/program_icons/smmon_3.gif',
 		"smmon_4.gif" = 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" = 'icons/program_icons/smmon_5.gif',
-		"smmon_6.gif" = 'icons/program_icons/smmon_6.gif',
-		"borg_mon.gif" = 'icons/program_icons/borg_mon.gif'
+		"smmon_6.gif" = 'icons/program_icons/smmon_6.gif'
+		// "borg_mon.gif" = 'icons/program_icons/borg_mon.gif',
+		// "robotact.gif" = 'icons/program_icons/robotact.gif'
 	)
 
 /datum/asset/simple/radar_assets
@@ -156,7 +157,6 @@
 	)
 
 /datum/asset/simple/namespaced/fontawesome
-	legacy = TRUE
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
@@ -248,6 +248,10 @@
 		"rule8" = 'icons/UI_Icons/Achievements/Misc/rule8.png',
 		"snail" = 'icons/UI_Icons/Achievements/Misc/snail.png',
 		"ascension" = 'icons/UI_Icons/Achievements/Misc/ascension.png',
+		"ashascend" = 'icons/UI_Icons/Achievements/Misc/ashascend.png',
+		"fleshascend" = 'icons/UI_Icons/Achievements/Misc/fleshascend.png',
+		"rustascend" = 'icons/UI_Icons/Achievements/Misc/rustascend.png',
+		"voidascend" = 'icons/UI_Icons/Achievements/Misc/voidascend.png',
 		"mining" = 'icons/UI_Icons/Achievements/Skills/mining.png',
 		"assistant" = 'icons/UI_Icons/Achievements/Mafia/assistant.png',
 		"changeling" = 'icons/UI_Icons/Achievements/Mafia/changeling.png',
@@ -288,7 +292,7 @@
 	)
 
 /datum/asset/spritesheet/simple/pills
-	name ="pills"
+	name = "pills"
 	assets = list(
 		"pill1" = 'icons/UI_Icons/Pills/pill1.png',
 		"pill2" = 'icons/UI_Icons/Pills/pill2.png',
@@ -313,7 +317,28 @@
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
-
+/*
+/datum/asset/spritesheet/simple/condiments
+	name = "condiments"
+	assets = list(
+		CONDIMASTER_STYLE_FALLBACK = 'icons/UI_Icons/Condiments/emptycondiment.png',
+		"enzyme" = 'icons/UI_Icons/Condiments/enzyme.png',
+		"flour" = 'icons/UI_Icons/Condiments/flour.png',
+		"mayonnaise" = 'icons/UI_Icons/Condiments/mayonnaise.png',
+		"milk" = 'icons/UI_Icons/Condiments/milk.png',
+		"blackpepper" = 'icons/UI_Icons/Condiments/peppermillsmall.png',
+		"rice" = 'icons/UI_Icons/Condiments/rice.png',
+		"sodiumchloride" = 'icons/UI_Icons/Condiments/saltshakersmall.png',
+		"soymilk" = 'icons/UI_Icons/Condiments/soymilk.png',
+		"soysauce" = 'icons/UI_Icons/Condiments/soysauce.png',
+		"sugar" = 'icons/UI_Icons/Condiments/sugar.png',
+		"ketchup" = 'icons/UI_Icons/Condiments/ketchup.png',
+		"capsaicin" = 'icons/UI_Icons/Condiments/hotsauce.png',
+		"frostoil" = 'icons/UI_Icons/Condiments/coldsauce.png',
+		"bbqsauce" = 'icons/UI_Icons/Condiments/bbqsauce.png',
+		"cornoil" = 'icons/UI_Icons/Condiments/oliveoil.png',
+	)
+*/
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
@@ -484,3 +509,31 @@
 /datum/asset/spritesheet/mafia/register()
 	InsertAll("", 'icons/obj/mafia.dmi')
 	..()
+
+/datum/asset/simple/portraits
+	var/tab = "use subtypes of this please"
+	assets = list()
+
+/datum/asset/simple/portraits/New()
+	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
+		return
+	for(var/p in SSpersistence.paintings[tab])
+		var/list/portrait = p
+		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
+		if(fexists(png))
+			assets[portrait["title"]] = png
+	..() //this is where it registers all these assets we added to the list
+
+/datum/asset/simple/portraits/library
+	tab = "library"
+
+/datum/asset/simple/portraits/library_secure
+	tab = "library_secure"
+
+/datum/asset/simple/portraits/library_private
+	tab = "library_private"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)

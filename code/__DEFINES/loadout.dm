@@ -72,9 +72,11 @@
 #define LOADOUT_LIMBS		 		list(LOADOUT_LIMB_NORMAL,LOADOUT_LIMB_PROSTHETIC,LOADOUT_LIMB_AMPUTATED) //you can amputate your legs/arms though
 
 //loadout saving/loading specific defines
-#define MAXIMUM_LOADOUT_SAVES	5
-#define LOADOUT_ITEM			"loadout_item"
-#define LOADOUT_COLOR			"loadout_color"
+#define MAXIMUM_LOADOUT_SAVES		5
+#define LOADOUT_ITEM				"loadout_item"
+#define LOADOUT_COLOR				"loadout_color"
+#define LOADOUT_CUSTOM_NAME			"loadout_custom_name"
+#define LOADOUT_CUSTOM_DESCRIPTION	"loadout_custom_description"
 
 //loadout item flags
 #define LOADOUT_CAN_NAME					(1<<0) //renaming items

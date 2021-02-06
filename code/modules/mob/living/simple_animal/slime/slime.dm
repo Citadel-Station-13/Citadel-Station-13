@@ -4,7 +4,6 @@
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
-	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
@@ -107,6 +106,8 @@
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
 	set_nutrition(rand(650, 800))
+
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
