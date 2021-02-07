@@ -1,7 +1,0 @@
-author: "dzahlus"
-delete-after: True
-changes: 
-  - tweak: "tweaked a few sounds"
-  - soundadd: "added a new weapon sounds"
-  - sounddel: "removed old weapon sounds"
-  - code_imp: "changed some sound related code"
