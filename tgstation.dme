@@ -2336,6 +2336,7 @@
 #include "code\modules\language\mushroom.dm"
 #include "code\modules\language\narsian.dm"
 #include "code\modules\language\ratvarian.dm"
+#include "code\modules\language\signlanguage.dm"
 #include "code\modules\language\slime.dm"
 #include "code\modules\language\swarmer.dm"
 #include "code\modules\language\sylvan.dm"

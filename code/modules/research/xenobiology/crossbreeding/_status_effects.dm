@@ -469,6 +469,10 @@
 		qdel(src)
 	return ..()
 
+/datum/status_effect/stabilized/Destroy()
+	linked_extract = null
+	return ..()
+
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
 
@@ -884,7 +888,8 @@
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(get_turf(owner),1,2,4,flame_range = 5)
-		owner.remove_status_effect(/datum/status_effect/stabilized/oil)
+		qdel(linked_extract)
+		return
 	return ..()
 
 /datum/status_effect/stabilized/black
