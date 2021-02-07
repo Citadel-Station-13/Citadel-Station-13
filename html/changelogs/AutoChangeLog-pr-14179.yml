@@ -1,6 +1,0 @@
-author: "TyrianTyrell"
-delete-after: True
-changes: 
-  - rscadd: "added a signed language, that can't be used over the radio but can be used if you're mute. also added the multilingual trait."
-  - imageadd: "hopefully added an icon for the signed language."
-  - code_imp: "changed how some traits function slightly."
