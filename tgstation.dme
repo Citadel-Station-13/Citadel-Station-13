@@ -3828,6 +3828,7 @@
 #include "modular_sand\code\modules\mob\living\silicon\robot\robot_modules.dm"
 #include "modular_sand\code\modules\mob\living\simple_animal\bot\hugbot.dm"
 #include "modular_sand\code\modules\mob\living\simple_animal\friendly\doges.dm"
+#include "modular_sand\code\modules\mob\living\simple_animal\friendly\farm_animals.dm"
 #include "modular_sand\code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "modular_sand\code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
 #include "modular_sand\code\modules\mob\living\simple_animal\hostile\megafauna\bubblegumhard.dm"

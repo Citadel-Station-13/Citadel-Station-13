@@ -58,6 +58,7 @@
 			enemies = list()
 			LoseTarget()
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
+			set_combat_indicator(FALSE)
 		udder.generateMilk(milk_reagent)
 		eat_plants()
 		if(!pulledby)
