@@ -98,13 +98,7 @@
 	wound_bonus = 15
 	sharpness = SHARP_EDGED
 	wound_falloff_tile = 0
-
-/obj/item/projectile/bullet/cflechettes/on_hit(atom/target, blocked = FALSE)
-	if((blocked != 100) && iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.bleed(10)
-	return ..()
-
+	
 ///ammo casings (CASELESS AMMO CASINGS WOOOOOOOO)///
 
 /obj/item/ammo_casing/caseless/flechetteap
