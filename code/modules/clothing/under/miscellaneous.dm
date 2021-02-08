@@ -180,10 +180,8 @@
 		body_parts_covered = NONE
 	return TRUE
 
-	/obj/item/clothing/under/misc/adminsuitfetish //copypasta from adminsuit
+/obj/item/clothing/under/misc/gear_harness/admin //im not a fetish coder
 	name = "administrative gear harness"
-	icon_state = "gear_harness"
-	item_state = "gear_harness"
 	desc = "A prototype forcefield enhanced gear harness, definitely not a fetish item!"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
