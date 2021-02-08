@@ -193,7 +193,7 @@
 	var/list/trait_list = list(TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE)
 
 /datum/eldritch_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
 	var/mob/living/carbon/human/H = user
@@ -201,6 +201,7 @@
 	H.physiology.burn_mod *= 0.5
 	var/datum/antagonist/heretic/ascension = H.mind.has_antag_datum(/datum/antagonist/heretic)
 	ascension.ascended = TRUE
+	H.client?.give_award(/datum/award/achievement/misc/ash_ascension, H)
 	for(var/X in trait_list)
 		ADD_TRAIT(user,X,MAGIC_TRAIT)
 	return ..()

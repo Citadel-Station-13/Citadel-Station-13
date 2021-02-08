@@ -268,7 +268,7 @@
 				visible_message("<span class='notice'>[src] dispenses [itemname]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 				DISABLE_BITFIELD(obj_flags, EMAGGED)
 			else
-				var/dope_prizes = (area >= 480) ? list(ARCADE_WEIGHT_RARE) : (area >= 256) ? list(ARCADE_WEIGHT_RARE, ARCADE_WEIGHT_TRICK) : null
+				var/dope_prizes = (area >= 480) ? 6 : (area >= 256) ? 4 : 2
 				prizevend(user, dope_prizes)
 
 	if(game_status == MINESWEEPER_GAME_WON)

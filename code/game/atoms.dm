@@ -882,6 +882,9 @@
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
+	// VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	// VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -925,6 +928,9 @@
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		if(newname)
 			vv_auto_rename(newname)
+	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_filter_editor(src)
 
 /atom/vv_get_header()
 	. = ..()
@@ -1145,7 +1151,6 @@
 
 	victim.log_message(message, LOG_ATTACK, color="blue")
 
-// Filter stuff
 /atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
@@ -1161,16 +1166,50 @@
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
+	UNSETEMPTY(filter_data)
+
+/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+
+	var/list/old_filter_data = filter_data[name]
+
+	var/list/params = old_filter_data.Copy()
+	for(var/thing in new_params)
+		params[thing] = new_params[thing]
+
+	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	for(var/param in params)
+		filter_data[name][param] = params[param]
+
+/atom/proc/change_filter_priority(name, new_priority)
+	if(!filter_data || !filter_data[name])
+		return
+
+	filter_data[name]["priority"] = new_priority
+	update_filters()
+
+/obj/item/update_filters()
+	. = ..()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/proc/remove_filter(name)
-	if(filter_data && filter_data[name])
-		filter_data -= name
-		update_filters()
-		return TRUE
+/atom/proc/remove_filter(name_or_names)
+	if(!filter_data)
+		return
+
+	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
+
+	for(var/name in names)
+		if(filter_data[name])
+			filter_data -= name
+	update_filters()
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)

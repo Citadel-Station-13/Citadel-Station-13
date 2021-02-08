@@ -1,5 +1,3 @@
-
-
 // *** THE ORION TRAIL ** //
 
 #define ORION_TRAIL_WINTURN		9
@@ -15,6 +13,8 @@
 #define ORION_TRAIL_COLLISION	"Collision"
 #define ORION_TRAIL_SPACEPORT	"Spaceport"
 #define ORION_TRAIL_BLACKHOLE	"BlackHole"
+#define ORION_TRAIL_OLDSHIP		"Old Ship"
+#define ORION_TRAIL_SEARCH		"Old Ship Search"
 
 #define ORION_STATUS_START		1
 #define ORION_STATUS_NORMAL		2
@@ -44,7 +44,8 @@
 						   ORION_TRAIL_LING			= 3,
 						   ORION_TRAIL_MALFUNCTION	= 2,
 						   ORION_TRAIL_COLLISION	= 1,
-						   ORION_TRAIL_SPACEPORT	= 2
+						   ORION_TRAIL_SPACEPORT	= 2,
+						   ORION_TRAIL_OLDSHIP		= 2
 						   )
 	var/list/stops = list()
 	var/list/stopblurbs = list()
@@ -55,13 +56,27 @@
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
+	var/obj/item/radio/Radio
+	var/list/gamers = list()
+	var/killed_crew = 0
+
+
+/obj/machinery/computer/arcade/orion_trail/Initialize()
+	. = ..()
+	Radio = new /obj/item/radio(src)
+	Radio.listening = 0
+
+/obj/machinery/computer/arcade/orion_trail/Destroy()
+	QDEL_NULL(Radio)
+	return ..()
+
 /obj/machinery/computer/arcade/orion_trail/kobayashi
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets"
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
-	prizes = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
+	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
 	settlers = list("Kirk","Worf","Gene")
 
 /obj/machinery/computer/arcade/orion_trail/Reset()
@@ -96,14 +111,52 @@
 	event = null
 	gameStatus = ORION_STATUS_NORMAL
 	lings_aboard = 0
+	killed_crew = 0
 
 	//spaceport junk
 	spaceport_raided = 0
 	spaceport_freebie = 0
 	last_spaceport_action = ""
 
-/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
+/obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
+	if(gamers[gamer] == -2)
+		return // enough harassing them
+
+	if(gamers[gamer] == -1)
+		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
+		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
+		gamers[gamer]--
+		return
+
+	if(!(gamer in gamers))
+		gamers[gamer] = 0
+
+	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
+
+	if(gamers[gamer] > 2 && prob(20 * gamers[gamer]))
+
+		Radio.set_frequency(FREQ_SECURITY)
+		Radio.talk_into(src, "SECURITY ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
+
+		Radio.set_frequency(FREQ_MEDICAL)
+		Radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+
+		gamers[gamer] = -1
+
+		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+		// gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
+
+		if(!isnull(GLOB.data_core.general))
+			for(var/datum/data/record/R in GLOB.data_core.general)
+				if(R.fields["name"] == gamer.name)
+					R.fields["m_stat"] = "*Unstable*"
+					return
+
+/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/_user)
 	. = ..()
+	if (!isliving(_user))
+		return
+	var/mob/living/user = _user
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
@@ -136,6 +189,8 @@
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];menu=1'>May They Rest In Peace</a></P>"
+		// user?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
+
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
@@ -174,20 +229,32 @@
 		return
 	busy = TRUE
 
+	var/gamerSkillLevel = 0
+	var/gamerSkill = 0
+	var/gamerSkillRands = 0
+
+	// if(usr?.mind)
+	// 	gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
+	// 	gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+	// 	gamerSkillRands = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+
+
+	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(usr)
+				xp_gained += 34
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
-				if(turns == 2 && prob(30))
+				if(turns == 2 && prob(30-gamerSkill))
 					event = ORION_TRAIL_COLLISION
 					event()
-				else if(prob(75))
+				else if(prob(75-gamerSkill))
 					event = pickweight(events)
 					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55))
+						if(event == ORION_TRAIL_LING || prob(55-gamerSkill))
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
@@ -195,15 +262,18 @@
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
-						if(prob(50))
+						if(prob(50-gamerSkill))
 							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 							M.hallucination += 30
 						else
 							to_chat(usr, "<span class='userdanger'>Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there...</span>")
 							M.take_bodypart_damage(30)
-							playsound(loc, 'sound/weapons/genhit2.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
 					if(ORION_TRAIL_ILLNESS)
-						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+						var/maxSeverity = 3
+						// if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
+						// 	maxSeverity = 2 //part of gitting gud is rng mitigation
+						var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
@@ -215,16 +285,16 @@
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
-						if(prob(75))
+						if(prob(75-gamerSkill))
 							M.DefaultCombatKnockdown(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
-							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90))
-							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
+						if(prob(90-gamerSkill))
+							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
 								F.ScrapeAway()
@@ -232,15 +302,15 @@
 							if(hull)
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
-								playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
+								playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
 								var/turf/open/space/T
 								for(T in orange(1, src))
 									T.PlaceOnTop(/turf/open/floor/plating)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
-							playsound(loc, 'sound/effects/bang.ogg', 50, 1)
+							playsound(loc, 'sound/effects/bang.ogg', 50, TRUE)
 					if(ORION_TRAIL_MALFUNCTION)
-						playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
+						playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 						var/oldfood = food
 						var/oldfuel = fuel
@@ -254,7 +324,7 @@
 								audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
 							food = oldfood
 							fuel = oldfuel
-							playsound(loc, 'sound/machines/chime.ogg', 50, 1)
+							playsound(loc, 'sound/machines/chime.ogg', 50, TRUE)
 
 	else if(href_list["newgame"]) //Reset everything
 		if(gameStatus == ORION_STATUS_START)
@@ -266,6 +336,10 @@
 			food = 80
 			fuel = 60
 			settlers = list("Harry","Larry","Bob")
+	else if(href_list["search"]) //search old ship
+		if(event == ORION_TRAIL_OLDSHIP)
+			event = ORION_TRAIL_SEARCH
+			event()
 	else if(href_list["slow"]) //slow down
 		if(event == ORION_TRAIL_FLUX)
 			food -= (alive+lings_aboard)*2
@@ -302,11 +376,11 @@
 				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75))
+			if(prob(75-gamerSkill))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(obj_flags & EMAGGED)
-					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
+					playsound(loc, 'sound/effects/supermatter.ogg', 100, TRUE)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					if(isliving(usr))
 						var/mob/living/L = usr
@@ -328,22 +402,29 @@
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/gunshot.ogg', 100, 1)
+			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+			killed_crew++
+
+			var/mob/living/user = usr
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
 				if(obj_flags & EMAGGED)
-					usr.death(0)
-					obj_flags &= EMAGGED
+					user.death(FALSE)
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
+
+				if(killed_crew >= 4)
+					xp_gained -= 15//no cheating by spamming game overs
+					report_player(usr)
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
 					say("The crew of the ship chose to kill [usr.name]!")
-					usr.death(0)
+					user.death(FALSE)
 
 			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
 				event = null
+				killed_crew-- // the kill was valid
 
 	//Spaceport specific interactions
 	//they get a header because most of them don't reset event (because it's a shop, you leave when you want to)
@@ -356,6 +437,7 @@
 				fuel -= 10
 				food -= 10
 				event()
+				killed_crew-- // I mean not really but you know
 
 	else if(href_list["sellcrew"]) //sell a crewmember
 		if(gameStatus == ORION_STATUS_MARKET)
@@ -377,15 +459,16 @@
 	else if(href_list["raid_spaceport"])
 		if(gameStatus == ORION_STATUS_MARKET)
 			if(!spaceport_raided)
-				var/success = min(15 * alive,100) //default crew (4) have a 60% chance
+				var/success = min(15 * alive + gamerSkill,100) //default crew (4) have a 60% chance
 				spaceport_raided = 1
 
 				var/FU = 0
 				var/FO = 0
 				if(prob(success))
-					FU = rand(5,15)
-					FO = rand(5,15)
+					FU = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+					FO = rand(5 + gamerSkillRands,15 + gamerSkillRands)
 					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+					xp_gained += 10
 				else
 					FU = rand(-5,-15)
 					FO = rand(-5,-15)
@@ -444,7 +527,7 @@
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
-	return
+	// usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
@@ -686,8 +769,279 @@
 				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
 
 
+/obj/machinery/computer/arcade/orion_trail/proc/event()
+	eventdat = "<center><h1>[event]</h1></center>"
+	canContinueEvent = 0
+	switch(event)
+		if(ORION_TRAIL_RAIDERS)
+			eventdat += "Raiders have come aboard your ship!"
+			if(prob(50))
+				var/sfood = rand(1,10)
+				var/sfuel = rand(1,10)
+				food -= sfood
+				fuel -= sfuel
+				eventdat += "<br>They have stolen [sfood] <b>Food</b> and [sfuel] <b>Fuel</b>."
+			else if(prob(10))
+				var/deadname = remove_crewmember()
+				eventdat += "<br>[deadname] tried to fight back, but was killed."
+			else
+				eventdat += "<br>Fortunately, you fended them off without any trouble."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
+
+		if(ORION_TRAIL_FLUX)
+			eventdat += "This region of space is highly turbulent. <br>If we go slowly we may avoid more damage, but if we keep our speed we won't waste supplies."
+			eventdat += "<br>What will you do?"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];slow=1'>Slow Down</a> <a href='byond://?src=[REF(src)];keepspeed=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		if(ORION_TRAIL_OLDSHIP)
+			eventdat += "<br>Your crew spots an old ship floating through space. It might have some supplies, but then again it looks rather unsafe."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];search=1'>Search it</a><a href='byond://?src=[REF(src)];eventclose=1'>Leave it</a></P><P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
+
+		if(ORION_TRAIL_SEARCH)
+			switch(rand(100))
+				if(0 to 15)
+					var/rescued = add_crewmember()
+					var/oldfood = rand(1,7)
+					var/oldfuel = rand(4,10)
+					food += oldfood
+					fuel += oldfuel
+					eventdat += "<br>As you look through it you find some supplies and a living person!"
+					eventdat += "<br>[rescued] was rescued from the abandoned ship!"
+					eventdat += "<br>You found [oldfood] <b>Food</b> and [oldfuel] <b>Fuel</b>."
+				if(15 to 35)
+					var/lfuel = rand(4,7)
+					var/deadname = remove_crewmember()
+					fuel -= lfuel
+					eventdat += "<br>[deadname] was lost deep in the wreckage, and your own vessel lost [lfuel] <b>Fuel</b> maneuvering to the the abandoned ship."
+				if(35 to 65)
+					var/oldfood = rand(5,11)
+					food += oldfood
+					engine++
+					eventdat += "<br>You found [oldfood] <b>Food</b> and some parts amongst the wreck."
+				else
+					eventdat += "<br>As you look through the wreck you cannot find much of use."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
+
+		if(ORION_TRAIL_ILLNESS)
+			eventdat += "A deadly illness has been contracted!"
+			var/deadname = remove_crewmember()
+			eventdat += "<br>[deadname] was killed by the disease."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
+
+		if(ORION_TRAIL_BREAKDOWN)
+			eventdat += "Oh no! The engine has broken down!"
+			eventdat += "<br>You can repair it with an engine part, or you can make repairs for 3 days."
+			if(engine >= 1)
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];useengine=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
+			else
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		if(ORION_TRAIL_MALFUNCTION)
+			eventdat += "The ship's systems are malfunctioning!"
+			eventdat += "<br>You can replace the broken electronics with spares, or you can spend 3 days troubleshooting the AI."
+			if(electronics >= 1)
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];useelec=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
+			else
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		if(ORION_TRAIL_COLLISION)
+			eventdat += "Something hit us! Looks like there's some hull damage."
+			if(prob(25))
+				var/sfood = rand(5,15)
+				var/sfuel = rand(5,15)
+				food -= sfood
+				fuel -= sfuel
+				eventdat += "<br>[sfood] <b>Food</b> and [sfuel] <b>Fuel</b> was vented out into space."
+			if(prob(10))
+				var/deadname = remove_crewmember()
+				eventdat += "<br>[deadname] was killed by rapid depressurization."
+			eventdat += "<br>You can repair the damage with hull plates, or you can spend the next 3 days welding scrap together."
+			if(hull >= 1)
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];usehull=1'>Use Part</a><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
+			else
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];wait=1'>Wait</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+
+		if(ORION_TRAIL_BLACKHOLE)
+			eventdat += "You were swept away into the black hole."
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];holedeath=1'>Oh...</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			settlers = list()
+
+		if(ORION_TRAIL_LING)
+			eventdat += "Strange reports warn of changelings infiltrating crews on trips to Orion..."
+			if(settlers.len <= 2)
+				eventdat += "<br>Your crew's chance of reaching Orion is so slim the changelings likely avoided your ship..."
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+				if(prob(10)) // "likely", I didn't say it was guaranteed!
+					lings_aboard = min(++lings_aboard,2)
+			else
+				if(lings_aboard) //less likely to stack lings
+					if(prob(20))
+						lings_aboard = min(++lings_aboard,2)
+				else if(prob(70))
+					lings_aboard = min(++lings_aboard,2)
+
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];killcrew=1'>Kill a Crewmember</a></P>"
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Risk it</a></P>"
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
+
+		if(ORION_TRAIL_LING_ATTACK)
+			if(lings_aboard <= 0) //shouldn't trigger, but hey.
+				eventdat += "Haha, fooled you, there are no changelings on board!"
+				eventdat += "<br>(You should report this to a coder :S)"
+			else
+				var/ling1 = remove_crewmember()
+				var/ling2 = ""
+				if(lings_aboard >= 2)
+					ling2 = remove_crewmember()
+
+				eventdat += "Changelings among your crew suddenly burst from hiding and attack!"
+				if(ling2)
+					eventdat += "<br>[ling1] and [ling2]'s arms twist and contort into grotesque blades!"
+				else
+					eventdat += "<br>[ling1]'s arm twists and contorts into a grotesque blade!"
+
+				var/chance2attack = alive*20
+				if(prob(chance2attack))
+					var/chancetokill = 30*lings_aboard-(5*alive) //eg: 30*2-(10) = 50%, 2 lings, 2 crew is 50% chance
+					if(prob(chancetokill))
+						var/deadguy = remove_crewmember()
+						var/murder_text = pick("The changeling[ling2 ? "s" : ""] bring[ling2 ? "" : "s"] down [deadguy] and disembowel[ling2 ? "" : "s"] them in a spray of gore!", \
+						"[ling2 ? pick(ling1, ling2) : ling1] corners [deadguy] and impales them through the stomach!", \
+						"[ling2 ? pick(ling1, ling2) : ling1] decapitates [deadguy] in a single cleaving arc!")
+						eventdat += "<br>[murder_text]"
+					else
+						eventdat += "<br><br><b>You valiantly fight off the changeling[ling2 ? "s":""]!</b>"
+						if(ling2)
+							food += 30
+							lings_aboard = max(0,lings_aboard-2)
+						else
+							food += 15
+							lings_aboard = max(0,--lings_aboard)
+						eventdat += "<br><i>Well, it's perfectly good food...</i>\
+						<br>You cut the changeling[ling2 ? "s" : ""] into meat, gaining <b>[ling2 ? "30" : "15"]</b> Food!"
+				else
+					eventdat += "<br><br>[pick("Sensing unfavorable odds", "After a failed attack", "Suddenly breaking nerve")], \
+					the changeling[ling2 ? "s":""] vanish[ling2 ? "" : "es"] into space through the airlocks! You're safe... for now."
+					if(ling2)
+						lings_aboard = max(0,lings_aboard-2)
+					else
+						lings_aboard = max(0,--lings_aboard)
+
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];eventclose=1'>Continue</a></P>"
+			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
+
+
+		if(ORION_TRAIL_SPACEPORT)
+			gameStatus = ORION_STATUS_MARKET
+			if(spaceport_raided)
+				eventdat += "The spaceport is on high alert! You've been barred from docking by the local authorities after your failed raid."
+				if(last_spaceport_action)
+					eventdat += "<br><b>Last Spaceport Action:</b> [last_spaceport_action]"
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			else
+				eventdat += "Your jump into the sector yields a spaceport - a lucky find!"
+				eventdat += "<br>This spaceport is home to travellers who failed to reach Orion, but managed to find a different home..."
+				eventdat += "<br>Trading terms: FU = Fuel, FO = Food"
+				if(last_spaceport_action)
+					eventdat += "<br><b>Last action:</b> [last_spaceport_action]"
+				eventdat += "<h3><b>Crew:</b></h3>"
+				eventdat += english_list(settlers)
+				eventdat += "<br><b>Food: </b>[food] | <b>Fuel: </b>[fuel]"
+				eventdat += "<br><b>Engine Parts: </b>[engine] | <b>Hull Panels: </b>[hull] | <b>Electronics: </b>[electronics]"
+
+
+				//If your crew is pathetic you can get freebies (provided you haven't already gotten one from this port)
+				if(!spaceport_freebie && (fuel < 20 || food < 20))
+					spaceport_freebie++
+					var/FU = 10
+					var/FO = 10
+					var/freecrew = 0
+					if(prob(30))
+						FU = 25
+						FO = 25
+
+					if(prob(10))
+						add_crewmember()
+						freecrew++
+
+					eventdat += "<br>The traders of the spaceport take pity on you, and generously give you some free supplies! (+[FU]FU, +[FO]FO)"
+					if(freecrew)
+						eventdat += "<br>You also gain a new crewmember!"
+
+					fuel += FU
+					food += FO
+
+				//CREW INTERACTIONS
+				eventdat += "<P ALIGN=Right>Crew Management:</P>"
+
+				//Buy crew
+				if(food >= 10 && fuel >= 10)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buycrew=1'>Hire a New Crewmember (-10FU, -10FO)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You cannot afford a new crewmember.</P>"
+
+				//Sell crew
+				if(settlers.len > 1)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];sellcrew=1'>Sell Crew for Fuel and Food (+7FU, +7FO)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You have no other crew to sell.</P>"
+
+				//BUY/SELL STUFF
+				eventdat += "<P ALIGN=Right>Spare Parts:</P>"
+
+				//Engine parts
+				if(fuel > 5)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buyparts=1'>Buy Engine Parts (-5FU)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You cannot afford engine parts.</a>"
+
+				//Hull plates
+				if(fuel > 5)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buyparts=2'>Buy Hull Plates (-5FU)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You cannot afford hull plates.</a>"
+
+				//Electronics
+				if(fuel > 5)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];buyparts=3'>Buy Spare Electronics (-5FU)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You cannot afford spare electronics.</a>"
+
+				//Trade
+				if(fuel > 5)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];trade=1'>Trade Fuel for Food (-5FU,+5FO)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You don't have 5FU to trade.</P"
+
+				if(food > 5)
+					eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];trade=2'>Trade Food for Fuel (+5FU,-5FO)</a></P>"
+				else
+					eventdat += "<P ALIGN=Right>You don't have 5FO to trade.</P"
+
+				//Raid the spaceport
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];raid_spaceport=1'>!! Raid Spaceport !!</a></P>"
+
+				eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];leave_spaceport=1'>Depart Spaceport</a></P>"
+
+
 //Add Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(var/specific = "")
+/obj/machinery/computer/arcade/orion_trail/proc/add_crewmember(specific = "")
 	var/newcrew = ""
 	if(specific)
 		newcrew = specific
@@ -703,7 +1057,7 @@
 
 
 //Remove Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(var/specific = "", var/dont_remove = "")
+/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "")
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)
@@ -779,14 +1133,14 @@
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1
 	visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
-	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
+	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, TRUE)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
 	sleep(20)
 	visible_message("<span class='warning'>[src] begins to vibrate...</span>")
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
 	sleep(30)
 	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
-	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
+	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	sleep(3.6)
 	visible_message("<span class='userdanger'>[src] explodes!</span>")
 	explosion(loc, 2,4,8, flame_range = 16)

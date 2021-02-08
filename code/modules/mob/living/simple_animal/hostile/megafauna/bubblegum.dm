@@ -51,8 +51,11 @@ Difficulty: Hard
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
-	medal_type = BOSS_MEDAL_BUBBLEGUM
-	score_type = BUBBLEGUM_SCORE
+
+	achievement_type = /datum/award/achievement/boss/bubblegum_kill
+	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
+	score_achievement_type = /datum/award/score/bubblegum_score
+
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
@@ -153,6 +156,20 @@ Difficulty: Hard
 	charging = 0
 	Goto(target, move_to_delay, minimum_distance)
 
+/**
+ * Attack by override for bubblegum
+ *
+ * This is used to award the frenching achievement for hitting bubblegum with a tongue
+ *
+ * Arguments:
+ * * obj/item/W the item hitting bubblegum
+ * * mob/user The user of the item
+ * * params, extra parameters
+ */
+/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	if(istype(W, /obj/item/organ/tongue))
+		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)

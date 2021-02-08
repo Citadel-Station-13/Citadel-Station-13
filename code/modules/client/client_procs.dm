@@ -1009,6 +1009,25 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/can_have_part(part_name)
 	return prefs.pref_species.mutant_bodyparts[part_name] || (part_name in GLOB.unlocked_mutant_parts)
 
+///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
+/client/proc/give_award(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.unlock(achievement_type, user, value)
+
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/get_award_status(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.get_achievement_status(achievement_type)
+
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/award_heart(heart_reason)
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
+	if(!src)
+		return
+	prefs.hearted_until = world.realtime + (24 HOURS)
+	prefs.hearted = TRUE
+	if(!src)
+		return
+	prefs.save_preferences()
+
 /// compiles a full list of verbs and sends it to the browser
 /client/proc/init_verbs()
 	if(IsAdminAdvancedProcCall())
@@ -1048,3 +1067,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return TRUE
 	return FALSE
 
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.ui_interact(mob)
