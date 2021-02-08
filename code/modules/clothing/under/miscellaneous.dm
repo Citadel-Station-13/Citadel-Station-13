@@ -180,6 +180,22 @@
 		body_parts_covered = NONE
 	return TRUE
 
+	/obj/item/clothing/under/misc/adminsuitfetish //copypasta from adminsuit
+	name = "administrative gear harness"
+	icon_state = "gear_harness"
+	item_state = "gear_harness"
+	desc = "A prototype forcefield enhanced gear harness, definitely not a fetish item!"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100, "wound" = 1000) //wound defense at 100 wont stop wounds
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	can_adjust = FALSE
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"
 	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
