@@ -13608,13 +13608,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 2;
-	sortType = 18
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aEB" = (
@@ -57033,6 +57030,17 @@
 	icon_state = "wood-broken6"
 	},
 /area/maintenance/bar)
+"lqO" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1;
+	sortType = 18
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "lre" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood/poker,
@@ -57154,6 +57162,12 @@
 	},
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
+"lLf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/fore)
 "lMg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -58880,6 +58894,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"pMQ" = (
+/obj/structure/window/reinforced,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 "pPi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -60927,11 +60949,13 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/structure/disposalpipe/junction,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/disposalpipe/sorting/mail{
+	sortType = 26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "uys" = (
@@ -84697,7 +84721,7 @@ ayD
 nez
 ngV
 xPY
-aOH
+pMQ
 hcb
 hcb
 syJ
@@ -84954,7 +84978,7 @@ ayE
 ayE
 ayE
 ayE
-ayE
+lLf
 ayE
 ayE
 ayE
@@ -85211,7 +85235,7 @@ ayH
 ayH
 ayH
 ayH
-ayH
+lqO
 ayH
 aFV
 ayH

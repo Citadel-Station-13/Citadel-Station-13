@@ -25,6 +25,7 @@
 		/datum/language/slime,
 		/datum/language/vampiric,
 		/datum/language/dwarf,
+		/datum/language/signlanguage,
 		/datum/language/machine, //Skyrat change - adds machine language
 		/datum/language/modular_sand/calcic, //Skyrat change - plasmaman language
 		/datum/language/modular_sand/dunmeri, //Skyrat change - dunmer language
@@ -33,7 +34,7 @@
 		/datum/language/modular_sand/shadowtongue, //Skyrat change - shadowpeople language
 		/datum/language/modular_sand/solcommon, //Skyrat change - sol common blah blah
 		/datum/language/modular_sand/technorussian, //Skyrat change - russian stereotype language
-		/datum/language/modular_sand/sergal,
+		/datum/language/modular_sand/sergal, //Sandstorm change
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
