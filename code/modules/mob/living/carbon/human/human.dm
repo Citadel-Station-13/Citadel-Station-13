@@ -287,7 +287,7 @@
 						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
 							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
 							equip_to_slot(place_item, pocket_id, TRUE)
-							log_combat(usr, src, "placed item [pocket_item] onto")
+							log_combat(usr, src, "placed item [place_item] onto")
 						//do nothing otherwise
 
 				// Update strip window
@@ -297,7 +297,7 @@
 				// Display a warning if the user mocks up
 				if(!strip_silence)
 					to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
-				log_combat(usr, src, "failed to [pocket_item ? "pickpocket item [pocket_item] from" : "place item [pocket_item] onto "]")
+				log_combat(usr, src, "failed to [pocket_item ? "pickpocket item [pocket_item] from" : "place item [place_item] onto "]")
 
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY, null, FALSE))
 		// separate from first canusetopic
