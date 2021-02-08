@@ -169,12 +169,12 @@
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	can_adjust = TRUE
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/under/misc/gear_harness/toggle_jumpsuit_adjust()
 	if(!body_parts_covered)
 		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
-		body_parts_covered = CHEST|GROIN
+		body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	else
 		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
 		body_parts_covered = NONE
