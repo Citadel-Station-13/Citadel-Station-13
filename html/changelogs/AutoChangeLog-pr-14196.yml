@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - balance: "sentient viruses can now infect synths and ipcs"

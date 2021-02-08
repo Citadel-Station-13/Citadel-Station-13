@@ -1,0 +1,5 @@
+author: "Chiirno"
+delete-after: True
+changes: 
+  - rscadd: "Adds clown waddle to clown shoes.
+Enhanced Clown Waddle Dampeners can be engaged in-hand with ctrl+click, _but why would you?_"
