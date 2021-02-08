@@ -504,6 +504,14 @@
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 	value = REAGENT_VALUE_COMMON
 
+/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	return ..()
+
+/datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	return ..()
+
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
 	M.set_drugginess(30)
