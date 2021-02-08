@@ -214,7 +214,6 @@
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up|sick")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
