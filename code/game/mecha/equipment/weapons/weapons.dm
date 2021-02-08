@@ -195,7 +195,7 @@
 //Base ballistic weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "general ballistic weapon"
-	fire_sound = 'sound/weaponslmgshot.ogg'
+	fire_sound = 'sound/weapons/lmgshot.ogg'
 	var/projectiles
 	var/projectiles_cache //ammo to be loaded in, if possible.
 	var/projectiles_cache_max
