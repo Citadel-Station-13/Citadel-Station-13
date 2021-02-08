@@ -1,4 +1,5 @@
 #define COOLDOWN_STUN 1200
+#define COOLDOWN_KNOCKDOWN 600
 #define COOLDOWN_DAMAGE 600
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
@@ -264,26 +265,20 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(60 * power_multiplier)
+			L.Stagger(60 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
-		cooldown = COOLDOWN_STUN
+		cooldown = COOLDOWN_KNOCKDOWN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.DefaultCombatKnockdown(60 * power_multiplier)
-
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(40 * power_multiplier)
+			L.DefaultCombatKnockdown()
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
-		cooldown = COOLDOWN_STUN
+		cooldown = COOLDOWN_DAMAGE
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier, distance = power_multiplier)
+			C.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
