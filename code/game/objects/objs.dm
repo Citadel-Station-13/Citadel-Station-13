@@ -344,11 +344,6 @@
 	if(resistance_flags & ON_FIRE)
 		. += GLOB.fire_overlay
 
-//Called when the object is constructed by an autolathe
-//Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
-/obj/proc/autolathe_crafted(obj/machinery/autolathe/A)
-	return
-
 /obj/proc/rnd_crafted(obj/machinery/rnd/production/P)
 	return
 

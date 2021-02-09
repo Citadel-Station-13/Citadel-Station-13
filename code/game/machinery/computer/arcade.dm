@@ -91,9 +91,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/obj/machinery/computer/arcade/A = new CB.build_path(loc, CB)
 		A.setDir(dir)
 		return INITIALIZE_HINT_QDEL
-	//The below object acts as a spawner with a wide array of possible picks, most being uninspired references to past/current player characters.
-	//Nevertheless, this keeps its ratio constant with the sum of all the others prizes.
-	prizes[/obj/item/toy/plush/random] = counterlist_sum(prizes) * ARCADE_RATIO_PLUSH
+
 	Reset()
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)

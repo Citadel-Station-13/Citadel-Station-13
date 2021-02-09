@@ -334,12 +334,12 @@ const FunTab = (props, context) => {
         align="stretch"
         justify="space-between">
         <Flex.Item grow={1}>
-          <Button
+          {/* <Button
             icon="user-ninja"
             lineHeight={lineHeightNormal}
             fluid
             content="Anonymous Names"
-            onClick={() => act("anon_name")} />
+            onClick={() => act("anon_name")} /> */}
         </Flex.Item>
         <Flex.Item grow={1} mx={0.5}>
           <Button
@@ -476,6 +476,16 @@ const FunForYouTab = (props, context) => {
         <NoticeBox danger>
           <Button
             color="red"
+            icon="user-secret"
+            fluid
+            content="AK-47s For Everyone!"
+            onClick={() => act("ak47s")} />
+        </NoticeBox>
+      </Flex.Item>
+      <Flex.Item>
+        <NoticeBox danger>
+          <Button
+            color="red"
             icon="brain"
             fluid
             content="Make all players brain damaged"
@@ -526,7 +536,7 @@ const FunForYouTab = (props, context) => {
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item>
+      {/* <Flex.Item>
         <Flex justify="space-between">
           <Flex.Item width="240px" mr={0.25}>
             <NoticeBox danger>
@@ -549,7 +559,7 @@ const FunForYouTab = (props, context) => {
             </NoticeBox>
           </Flex.Item>
         </Flex>
-      </Flex.Item>
+      </Flex.Item> */}
     </Flex>
   );
 };
@@ -587,6 +597,11 @@ export const Secrets = (props, context) => {
                     icon="eye"
                     content="Show Admins"
                     onClick={() => act("show_admins")} />
+                  <Button
+                    color="blue"
+                    icon="address-card"
+                    content="Mentor Log"
+                    onClick={() => act("mentor_log")} />
                 </Fragment>)}>
               <Flex
                 mx={-0.5}

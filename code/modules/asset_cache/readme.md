@@ -26,9 +26,7 @@ See the documentation for `/datum/asset_transport` for the backend api the asset
 
 The global variable `SSassets.transport` contains the currently configured transport.
 
-
-
-### Notes:
+### Notes
 
 Because byond browse() calls use non-blocking queues, if your code uses output() (which bypasses all of these queues) to invoke javascript functions you will need to first have the javascript announce to the server it has loaded before trying to invoke js functions.
 

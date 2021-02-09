@@ -82,7 +82,7 @@
 			if(surgery.status > surgery.steps.len)
 				surgery.complete()
 
-	if(target.stat == DEAD && was_sleeping && user.client)
+	if(target.stat == DEAD && user.client)
 		user.client.give_award(/datum/award/achievement/misc/sandman, user)
 
 	surgery.step_in_progress = FALSE

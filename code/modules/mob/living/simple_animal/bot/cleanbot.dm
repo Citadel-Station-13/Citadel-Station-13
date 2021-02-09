@@ -362,8 +362,8 @@
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		return
+	// if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	// 	return
 	if(istype(A, /obj/effect/decal/cleanable))
 		anchored = TRUE
 		icon_state = "cleanbot-c"

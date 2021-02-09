@@ -247,10 +247,10 @@
 				return
 			var/mob/living/carbon/human/H = user
 			H.client?.give_award(/datum/award/achievement/misc/flesh_ascension, H)
-			var/datum/antagonist/heretic/ascension = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+			var/datum/antagonist/heretic/ascension = user.mind.has_antag_datum(/datum/antagonist/heretic)
 			ascension.ascended = TRUE
-			carbon_user.mind.transfer_to(summoned, TRUE)
-			carbon_user.gib()
+			user.mind.transfer_to(summoned, TRUE)
+			user.gib()
 
 	return ..()
 
