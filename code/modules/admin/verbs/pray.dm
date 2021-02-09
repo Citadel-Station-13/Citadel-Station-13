@@ -48,6 +48,8 @@
 			if(C.prefs.toggles & SOUND_PRAYERS)
 				if(usr.job == "Chaplain")
 					SEND_SOUND(C, sound('sound/effects/pray.ogg'))
+				else
+					SEND_SOUND(C, sound('sound/effects/ding.ogg'))
 	to_chat(usr, "<span class='info'>You pray to the gods: \"[msg_tmp]\"</span>")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

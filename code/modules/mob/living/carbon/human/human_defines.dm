@@ -15,6 +15,7 @@
 
 	block_parry_data = /datum/block_parry_data/unarmed/human
 	default_block_parry_data = /datum/block_parry_data/unarmed/human
+	causes_dirt_buildup_on_floor = TRUE
 
 	//Hair colour and style
 	var/hair_color = "000"
@@ -70,7 +71,7 @@
 	var/list/datum/bioware = list()
 
 	var/creamed = FALSE //to use with creampie overlays
-	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
+	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot, /mob/living/silicon/pai))
 	var/lastpuke = 0
 	var/account_id
 	var/last_fire_update

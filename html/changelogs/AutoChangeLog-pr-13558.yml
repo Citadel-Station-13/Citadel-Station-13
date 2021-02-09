@@ -1,5 +1,0 @@
-author: "Zandario"
-delete-after: True
-changes: 
-  - bugfix: "lum slime sprites work again"
-  - code_imp: "Slapped the Species Defines where relevant"

@@ -11,6 +11,11 @@
 
 // please make sure they're sorted alphabetically and categorized
 
+/datum/sprite_accessory/underwear/socks/garter
+	name = "Garter"
+	icon_state = "garter"
+	has_color = TRUE
+
 /datum/sprite_accessory/underwear/socks/socks_knee
 	name = "Knee-high"
 	icon_state = "socks_knee"
@@ -82,6 +87,10 @@
 /datum/sprite_accessory/underwear/socks/pantyhose
 	name = "Pantyhose"
 	icon_state = "pantyhose"
+
+/datum/sprite_accessory/underwear/socks/pantyhose_ripped
+	name = "Pantyhose - Ripped"
+	icon_state = "pantyhose_ripped"
 
 /datum/sprite_accessory/underwear/socks/socks_short
 	name = "Short"

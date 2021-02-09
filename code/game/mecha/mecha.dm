@@ -578,6 +578,7 @@
 
 /obj/mecha/proc/mechstep(direction)
 	var/current_dir = dir
+	set_glide_size(DELAY_TO_GLIDE_SIZE(step_in))
 	var/result = step(src,direction)
 	if(strafe)
 		setDir(current_dir)

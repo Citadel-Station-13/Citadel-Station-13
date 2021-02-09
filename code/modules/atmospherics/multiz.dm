@@ -1,4 +1,5 @@
-obj/machinery/atmospherics/pipe/simple/multiz ///This is an atmospherics pipe which can relay air up a deck (Z+1). It currently only supports being on pipe layer 1
+/// This is an atmospherics pipe which can relay air up/down a deck.
+/obj/machinery/atmospherics/pipe/simple/multiz
 	name = "multi deck pipe adapter"
 	desc = "An adapter which allows pipes to connect to other pipenets on different decks."
 	icon_state = "multiz_pipe"
@@ -24,6 +25,4 @@ obj/machinery/atmospherics/pipe/simple/multiz ///This is an atmospherics pipe wh
 	if(above)
 		nodes += above
 		above.nodes += src //Two way travel :)
-		return ..()
-	else
-		return ..()
+	return ..()

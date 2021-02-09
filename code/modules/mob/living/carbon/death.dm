@@ -17,7 +17,7 @@
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
-/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)
 		if(M in stomach_contents)
@@ -27,7 +27,7 @@
 			"<span class='danger'>You burst out of [src]!</span>")
 	..()
 
-/mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	var/atom/Tsec = drop_location()
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
@@ -41,6 +41,8 @@
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
 				if(!(O.organ_flags & ORGAN_NO_DISMEMBERMENT) && check_zone(O.zone) == BODY_ZONE_CHEST)
+					if(was_explosion)
+						LAZYADD(O.acted_explosions, was_explosion.explosion_id)
 					O.Remove()
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
@@ -50,13 +52,16 @@
 			if(I.organ_flags & ORGAN_NO_DISMEMBERMENT || (no_brain && istype(I, /obj/item/organ/brain)) || (no_organs && !istype(I, /obj/item/organ/brain)))
 				qdel(I)
 				continue
+			if(was_explosion)
+				LAZYADD(I.acted_explosions, was_explosion.explosion_id)
 			I.Remove()
 			I.forceMove(Tsec)
 			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 
-
-/mob/living/carbon/spread_bodyparts()
+/mob/living/carbon/spread_bodyparts(no_brain, no_organs, datum/explosion/was_explosion)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(was_explosion)
+			LAZYADD(BP.acted_explosions, was_explosion.explosion_id)
 		BP.drop_limb()
 		BP.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
