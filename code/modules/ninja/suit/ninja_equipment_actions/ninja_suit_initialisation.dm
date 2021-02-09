@@ -68,9 +68,6 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 			if(!lock_suit(ninja))//To lock the suit onto wearer.
 				s_busy = FALSE
 				return
-		if (NINJA_ICON_GENERATE_PHASE)
-			lockIcons(ninja)//Check for icons.
-			ninja.regenerate_icons()
 		if (NINJA_COMPLETE_PHASE - 1)
 			message += "<B>[DisplayEnergy(cell.charge)]</B>."
 		if (NINJA_COMPLETE_PHASE)

@@ -612,7 +612,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 20, "jostle_pain_mult" = 3)
+	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
 
 /obj/item/throwing_star/toy
 	name = "toy throwing star"

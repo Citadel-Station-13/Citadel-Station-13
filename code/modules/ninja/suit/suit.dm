@@ -174,10 +174,10 @@
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	slowdown = 1
-	icon_state = "s-ninja"
+	icon_state = "ninja_new"
 	if(n_hood)//Should be attached, might not be attached.
 		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_hood.icon_state = "s-ninja"
+		n_hood.icon_state = "ninja_newcowl"
 	if(n_shoes)
 		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_shoes.slowdown++
@@ -189,7 +189,7 @@
 
 		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
 	if(n_mask)
-		n_mask.icon_state = "s-ninja"
+		n_mask.icon_state = "ninja_new"
 
 /**
   * Proc used to delete all the attachments and itself.

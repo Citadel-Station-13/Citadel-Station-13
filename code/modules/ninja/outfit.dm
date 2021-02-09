@@ -9,8 +9,9 @@
 	shoes = /obj/item/clothing/shoes/space_ninja
 	gloves = /obj/item/clothing/gloves/space_ninja
 	l_pocket = /obj/item/grenade/plastic/c4/ninja
+	r_pocket = /obj/item/hypospray/mkii/CMO/combat
 	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = ITEM_SLOT_SUITSTORE
+	internals_slot = SLOT_S_STORE
 	belt = /obj/item/energy_katana
 	implants = list(/obj/item/implant/explosive)
 
