@@ -32,6 +32,10 @@
 	name = "Tan suit"
 	path = /obj/item/clothing/under/suit/tan
 
+/datum/gear/uniform/suit/charismatic_suit
+	name = "Charismatic suit"
+	path = /obj/item/clothing/under/suit/charismatic_suit
+
 /datum/gear/uniform/suit/white
 	name = "White suit"
 	path = /obj/item/clothing/under/suit/white
