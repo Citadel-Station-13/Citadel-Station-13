@@ -5,8 +5,8 @@
 	check_flags = NONE
 	name = "Adrenaline Boost"
 	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
-	button_icon_state = "repulse"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "adrenal"
+	icon_icon = 'icons/obj/implants.dmi'
 
 /**
  * Proc called to activate space ninja's adrenaline.
@@ -41,5 +41,5 @@
  */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost_after()
 	var/mob/living/carbon/human/ninja = affecting
-	ninja.reagents.add_reagent(/datum/reagent/uranium/radium, a_transfer * 0.25)
+	ninja.reagents.add_reagent(/datum/reagent/radium, a_transfer * 0.25)
 	to_chat(ninja, "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>")

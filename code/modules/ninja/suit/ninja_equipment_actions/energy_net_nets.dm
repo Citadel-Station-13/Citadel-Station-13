@@ -13,6 +13,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
 
+
 	density = TRUE//Can't pass through.
 	opacity = FALSE //Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.

@@ -23,7 +23,7 @@
 
 	//selecting a candidate player
 	var/list/candidates = get_candidates(ROLE_NINJA, null, ROLE_NINJA)
-		if(!candidates.len)
+	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
 	var/mob/dead/selected_candidate = pick(candidates)

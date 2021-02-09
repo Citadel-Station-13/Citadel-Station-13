@@ -4,6 +4,7 @@
 	desc = "Gives a detailed readout about your current status."
 	button_icon_state = "health"
 	icon_icon = 'icons/obj/device.dmi'
+	var/action_background_icon_state = "bg_default_on"
 
 /**
  * Proc called to put a status readout to the ninja in chat.
@@ -17,7 +18,6 @@
 	var/mob/living/carbon/human/ninja = affecting
 	var/list/info_list = list()
 	info_list += "<span class='info'>SpiderOS Status: [s_initialized ? "Initialized" : "Disabled"]</span>\n"
-	info_list += "<span class='info'>Current Time: [station_time_timestamp()]</span>\n"
 	//Ninja status
 	info_list += "<span class='info'>Fingerprints: [md5(ninja.dna.uni_identity)]</span>\n"
 	info_list += "<span class='info'>Unique Identity: [ninja.dna.unique_enzymes]</span>\n"

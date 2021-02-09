@@ -11,8 +11,8 @@
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
 	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
-	icon_state = "s-ninja"
-	item_state = "s-ninja_suit"
+	icon_state = "ninja_new"
+	item_state = "ninja_new"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
@@ -81,11 +81,6 @@
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
 
-//Simply deletes all the attachments and self, killing all related procs.
-/obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	qdel(n_hood)
-	qdel(n_gloves)
-	qdel(n_shoes)
 /obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
 	if(IS_NINJA_SUIT_INITIALIZATION(action))
 		toggle_on_off()
@@ -93,7 +88,7 @@
 	if(!s_initialized)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline. Please activate suit.</span>")
 		return FALSE
-	if(s_coold != 0)
+	if(s_coold > 0)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit is on cooldown.</span>")
 		return FALSE
 	if(IS_NINJA_SUIT_STATUS(action))
@@ -119,35 +114,11 @@
 		return TRUE
 	return FALSE
 
-/obj/item/clothing/suit/space/space_ninja/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/space/space_ninja/run_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = ATTACK_TYPE_MELEE)
 	. = ..()
 	if(stealth)
 		cancel_stealth()
 		s_coold = 5
-
-/**
-  * Proc for changing the suit's appearance upon locking.
-  *
-  * Proc for when space ninja's suit locks.  If the user selects Original, gives it glowing lights, along with having an alternate sprite for female body types.
-  * Yes, we do have nipLEDs, how could you tell?
-  * If the user selects New Age, it applies new sprites to all the gear.
-  * Arguments:
-  * * ninja - The person wearing the suit.
-  */
-/obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/ninja)
-	var/design_choice = alert(ninja, "Please choose your desired suit design.",,"Original","New Age")
-	switch(design_choice)
-		if("Original")
-			icon_state = ninja.body_type == "female" ? "s-ninjanf" : "s-ninjan"
-			ninja.gloves.icon_state = "s-ninjan"
-			ninja.gloves.inhand_icon_state = "s-ninjan"
-		if("New Age")
-			icon_state ="ninja_new"
-			n_hood.icon_state = "ninja_newcowl"
-			n_gloves.icon_state = "ninja_new"
-			if(n_mask)
-				n_mask.icon_state = "ninja_new"
-
 
 /**
   * Proc called to lock the important gear pieces onto space ninja's body.
@@ -226,7 +197,7 @@
   * Can be called to entire rid of the suit pieces and the suit itself.
   */
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	QDEL_NULL(n_hood)
-	QDEL_NULL(n_gloves)
-	QDEL_NULL(n_shoes)
-	QDEL_NULL(src)
+	qdel(n_hood)
+	qdel(n_gloves)
+	qdel(n_shoes)
+	qdel(src)

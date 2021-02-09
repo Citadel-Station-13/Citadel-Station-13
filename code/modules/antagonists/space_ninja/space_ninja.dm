@@ -12,6 +12,9 @@
 	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
 
+/proc/is_ninja(mob/living/M)
+	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/ninja)
+
 /datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/ninja = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, ninja)
@@ -82,7 +85,7 @@
 	var/datum/objective/plant_explosive/bombobjective = new /datum/objective/plant_explosive()
 	for(var/sanity in 1 to 100) // 100 checks at most.
 		var/area/selected_area = pick(GLOB.sortedAreas)
-		if(!is_station_level(selected_area.z) || !(selected_area.area_flags & VALID_TERRITORY))
+		if(!is_station_level(selected_area.z) || !selected_area.valid_territory)
 			continue
 		bombobjective.detonation_location = selected_area
 		break

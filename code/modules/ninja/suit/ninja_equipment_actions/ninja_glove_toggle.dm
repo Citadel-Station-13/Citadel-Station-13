@@ -1,7 +1,7 @@
 /datum/action/item_action/toggle_glove
 	name = "Toggle interaction"
 	desc = "Switch between normal interaction and drain mode."
-	button_icon_state = "s-ninjan"
+	button_icon_state = "ninja_new"
 	icon_icon = 'icons/obj/clothing/gloves.dmi'
 
 /**

@@ -417,7 +417,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A misnomer of sorts, this is effectively a blunt katana made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
 	icon_state = "bokken_steel"
 	item_state = "bokken_steel"
-	force = 12 
+	force = 12
 	stamina_damage_increment = 3
 
 /obj/item/melee/bokken/waki
@@ -427,7 +427,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "wakibokken"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 6 
+	force = 6
 	stamina_damage_increment = 4
 	block_parry_data = /datum/block_parry_data/bokken/waki
 	default_parry_data = /datum/block_parry_data/bokken/waki
@@ -442,7 +442,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
 	parry_efficiency_to_counterattack = 120
-	parry_efficiency_considered_successful = 65	
+	parry_efficiency_considered_successful = 65
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
@@ -455,10 +455,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /datum/block_parry_data/bokken/waki/quick_parry //For the parry spammer in you
 	parry_stamina_cost = 2 // Slam that parry button
 	parry_time_active = 2.5
-	parry_time_perfect = 1 
+	parry_time_perfect = 1
 	parry_time_perfect_leeway = 1
 	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS 
+	parry_failed_clickcd_duration = 1 SECONDS
 
 /datum/block_parry_data/bokken/waki/quick_parry/proj
 	parry_efficiency_perfect_override = list()
@@ -468,7 +468,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A misnomer of sorts, this is effectively a blunt wakizashi made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
 	icon_state = "wakibokken_steel"
 	item_state = "wakibokken_steel"
-	force = 8 
+	force = 8
 	stamina_damage_increment = 2
 
 /obj/item/melee/bokken/debug
@@ -612,7 +612,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "shock throwing star"
 	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
 	throwforce = 5
-	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 20, "jostle_pain_mult" = 3)
 
 /obj/item/throwing_star/toy
 	name = "toy throwing star"

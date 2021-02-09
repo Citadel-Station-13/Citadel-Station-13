@@ -1,18 +1,20 @@
 /**
-  * # Spider Charge
-  *
-  * A unique version of c4 possessed only by the space ninja.  Has a stronger blast radius.
-  * Can only be detonated by space ninjas with the bombing objective.  Can only be set up where the objective says it can.
-  * When it primes, the space ninja responsible will have their objective set to complete.
-  *
-  */
-/obj/item/grenade/plastic/ninja
+ * # Spider Charge
+ *
+ * A unique version of c4 possessed only by the space ninja.  Has a stronger blast radius.
+ * Can only be detonated by space ninjas with the bombing objective.  Can only be set up where the objective says it can.
+ * When it primes, the space ninja responsible will have their objective set to complete.
+ *
+ */
+/obj/item/grenade/plastic/c4/ninja
 	name = "spider charge"
 	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."
-	boom_sizes = list(4, 8, 12)
+	icon_state = "plasticspider0"
+	item_state = "plasticspider"
+	boom_sizes = list(2, 4, 6)
 	var/mob/detonator = null
 
-/obj/item/grenade/c4/ninja/afterattack(atom/movable/AM, mob/user, flag)
+/obj/item/grenade/plastic/c4/ninja/afterattack(atom/movable/AM, mob/user, flag)
 	var/datum/antagonist/ninja/ninja_antag = user.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		to_chat(user, "<span class='notice'>While it appears normal, you can't seem to detonate the charge.</span>")
@@ -27,7 +29,7 @@
 	detonator = user
 	return ..()
 
-/obj/item/grenade/c4/ninja/prime(mob/living/lanced_by)
+/obj/item/grenade/plastic/c4/ninja/prime(mob/living/lanced_by)
 	. = ..()
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
