@@ -9,8 +9,8 @@
 /obj/item/clothing/head/helmet/space/space_ninja
 	desc = "What may appear to be a simple black garment is in fact a highly sophisticated nano-weave helmet. Standard issue ninja gear."
 	name = "ninja hood"
-	icon_state = "ninja_newcowl"
-	item_state = "ninja_newcowl"
+	icon_state = "s-ninja"
+	item_state = "s-ninja_mask"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 20,ENERGY = 15, BOMB = 30, BIO = 30, RAD = 25, FIRE = 100, ACID = 100)
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	blockTracking = TRUE//Roughly the only unique thing about this helmet.

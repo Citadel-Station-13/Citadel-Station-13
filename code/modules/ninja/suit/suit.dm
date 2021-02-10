@@ -11,8 +11,8 @@
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
 	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
-	icon_state = "ninja_new"
-	item_state = "ninja_new"
+	icon_state = "s-ninja"
+	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
@@ -149,6 +149,7 @@
 	affecting = ninja
 	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT) //colons make me go all |=
 	slowdown = 0
+	icon_state = "s-ninjan"
 	n_hood = ninja.head
 	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = ninja.shoes
@@ -156,11 +157,14 @@
 	n_shoes.slowdown--
 	n_gloves = ninja.gloves
 	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
+	n_gloves.icon_state = "s-ninjan"
+	n_gloves.item_state = "s-ninjan"
 	n_mask = ninja.wear_mask
+	n_mask.icon_state = "s-ninjan"
+	n_mask.item_state = "s-ninjan"
 
 	ADD_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
 	return TRUE
-
 
 /**
   * Proc called to unlock all the gear off space ninja's body.
@@ -174,22 +178,24 @@
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	slowdown = 1
-	icon_state = "ninja_new"
+	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_hood.icon_state = "ninja_newcowl"
+		n_hood.icon_state = "s-ninja"
 	if(n_shoes)
 		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_shoes.slowdown++
 	if(n_gloves)
-		n_gloves.icon_state = "black"
+		n_gloves.icon_state = "s-ninja"
+		n_gloves.item_state = "s-ninja"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_gloves.candrain = FALSE
 		n_gloves.draining = FALSE
+	if(n_mask)
+		n_mask.icon_state = "s-ninja"
+		n_mask.item_state = "s-ninja"
 
 		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
-	if(n_mask)
-		n_mask.icon_state = "ninja_new"
 
 /**
   * Proc used to delete all the attachments and itself.

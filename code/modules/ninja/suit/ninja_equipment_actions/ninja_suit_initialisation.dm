@@ -72,6 +72,7 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 			message += "<B>[DisplayEnergy(cell.charge)]</B>."
 		if (NINJA_COMPLETE_PHASE)
 			message += "[ninja.real_name]."
+			ninja.regenerate_icons()
 			s_initialized = TRUE
 			s_busy = FALSE
 

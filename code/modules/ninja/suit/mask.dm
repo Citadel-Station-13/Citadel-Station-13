@@ -9,8 +9,8 @@
 /obj/item/clothing/mask/gas/space_ninja
 	name = "ninja mask"
 	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
-	icon_state = "ninja_new"
-	item_state = "ninja_new"
+	icon_state = "s-ninja"
+	item_state = "s-ninja_mask"
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	modifies_speech = TRUE
