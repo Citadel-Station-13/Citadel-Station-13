@@ -41,3 +41,4 @@
 /obj/item/throwing_star/stamina/ninja
 	name = "ninja throwing star"
 	throwforce = 10
+	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 10, "jostle_chance" = 10, "pain_stam_pct" = 2.5, "jostle_pain_mult" = 3)

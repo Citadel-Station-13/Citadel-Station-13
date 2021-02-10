@@ -118,7 +118,7 @@
 	. = ..()
 	if(stealth)
 		cancel_stealth()
-		s_coold = 5
+		//s_coold = 5 commented out until someone figures out why the fuck cooldowns don't work after porting from tg
 
 /**
   * Proc called to lock the important gear pieces onto space ninja's body.
