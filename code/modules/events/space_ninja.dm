@@ -4,7 +4,7 @@
 	max_occurrences = 1
 	weight = 10
 	earliest_start = 20 MINUTES
-	min_players = 20
+	min_players = 15
 
 /datum/round_event/ghost_role/space_ninja
 	minimum_required = 1
