@@ -26,7 +26,7 @@ Based and maintained from Citadel Station 13, which is based and maintained from
 
 **Sandstorm Station Information**
 * **Code:** <https://github.com/SandPoot/Sandstorm-Station-13>
-* **Discord:**  <https://discord.gg/Jx7A7dW>
+* **Discord:**  <https://discord.gg/Nd4fnhZ>
 
 ## DOWNLOADING
 
