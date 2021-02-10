@@ -1,0 +1,4 @@
+author: "dzahlus"
+delete-after: True
+changes: 
+  - bugfix: "fixes grenadelaunch.ogg being used where it shouldn't and makes mech weapons use correct sound"

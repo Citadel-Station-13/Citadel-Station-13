@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - admin: "pickpocketing is now logged using log_combat"
