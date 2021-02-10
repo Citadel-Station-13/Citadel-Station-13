@@ -51,7 +51,7 @@
 			change_phase(closest_phase)
 
 // change the phase to a given one, this is not a safe proc, it should only ever be called by phase_check
-/mob/living/simple_animal/hostile/advanced/proc/change_phase(var/phase)
+/mob/living/simple_animal/hostile/advanced/proc/change_phase(phase)
 	current_phase = phase
 	var/list/corresponding_phase_list = phases[phase]
 	var/datum/datum_self = src
@@ -61,6 +61,40 @@
 			if(datum_self.vars[phase_var])
 				datum_self.vars[phase_var] = phase_vars[phase_var]
 
+// when the health changes, we check if we should change phase
 /mob/living/simple_animal/hostile/advanced/updatehealth()
 	. = ..()
 	phase_check()
+
+// given a list of paths for items and a species, provide an icon of a dummy of that species wearing the items
+/proc/return_complex_dummy_icon(list/items_to_wear, species_path)
+	// if species_path is text, make it a path because we can't trust mappers
+	if(istext(species_path))
+		species_path = text2path(species_path)
+
+	// generate the dummy
+	var/mob/living/carbon/human/dummy = new /mob/living/carbon/human/dummy
+
+	// set the species of the dummy
+	dummy.set_species(species_path)
+
+	// create and place the items on the dummy, if you fail to place them, delete them
+	for(var/clothing_path in items_to_wear)
+		// if its not a path, make it a path
+		if(istext(clothing_path))
+			clothing_path = text2path(clothing_path)
+		var/clothing_object = new clothing_path
+		if(!dummy.equip_to_appropriate_slot(clothing_object))
+			qdel(clothing_object)
+
+	// generate the icon from the dummy
+	dummy.regenerate_icons()
+	var/icon/flat_icon = getFlatIcon(dummy)
+
+	// remove the dummy and return the flat icon
+	qdel(dummy)
+	return flat_icon
+
+// calls return_complex_dummy_icon and assigns the result to the icon of the advanced mob
+/mob/living/simple_animal/hostile/advanced/proc/assign_complex_dummy_icon(list/items_to_wear, species_path)
+	icon = return_complex_dummy_icon(items_to_wear, species_path)
