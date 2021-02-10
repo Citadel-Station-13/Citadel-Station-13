@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "persistent blood should stop being invisible and alt clicking it shouldn't return the entire spritesheet"
