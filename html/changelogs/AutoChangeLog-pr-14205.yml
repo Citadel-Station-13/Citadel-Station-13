@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "10 > 30 second for Warp Implant cooldown"

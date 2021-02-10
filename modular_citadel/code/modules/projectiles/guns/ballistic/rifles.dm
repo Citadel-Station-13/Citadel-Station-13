@@ -85,23 +85,20 @@
 
 ///projectiles///
 
-/obj/item/projectile/bullet/cflechetteap	//shreds armor
+/obj/item/projectile/bullet/cflechetteap	//shreds armor but no wounds
 	name = "flechette (armor piercing)"
-	damage = 8
-	armour_penetration = 80
+	damage = 15
+	armour_penetration = 100
+	wound_bonus = -100
 
-/obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
+/obj/item/projectile/bullet/cflechettes		//causes wounds fast but is heavily countered by armor
 	name = "flechette (serrated)"
 	damage = 15
 	dismemberment = 10
-	armour_penetration = -80
-
-/obj/item/projectile/bullet/cflechettes/on_hit(atom/target, blocked = FALSE)
-	if((blocked != 100) && iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.bleed(10)
-	return ..()
-
+	wound_bonus = 15
+	sharpness = SHARP_EDGED
+	wound_falloff_tile = 0
+	
 ///ammo casings (CASELESS AMMO CASINGS WOOOOOOOO)///
 
 /obj/item/ammo_casing/caseless/flechetteap
@@ -168,15 +165,19 @@
 
 ///unique variant///
 
-/obj/item/projectile/bullet/cflechetteshredder
+/obj/item/projectile/bullet/cflechetteshredder	//you only get this with a 30TC bundle,5 magazines, as such this should be the superior ammotype
 	name = "flechette (shredder)"
-	damage = 5
-	dismemberment = 40
+	damage = 10
+	dismemberment = 50
+	wound_bonus = 50
+	armour_penetration = 100
+	sharpness = SHARP_EDGED
+	wound_falloff_tile = 0
 
 /obj/item/ammo_casing/caseless/flechetteshredder
 	name = "flechette (shredder)"
 	desc = "A serrated flechette made of a special alloy that forms a monofilament edge."
-	projectile_type = /obj/item/projectile/bullet/cflechettes
+	projectile_type = /obj/item/projectile/bullet/cflechetteshredder
 
 /obj/item/ammo_box/magazine/flechette/shredder
 	name = "flechette magazine (shredder)"
@@ -185,7 +186,7 @@
 
 /obj/item/gun/ballistic/automatic/flechette/shredder
 	name = "\improper CX Shredder"
-	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofillament flechettes."
+	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofilament flechettes."
 	w_class = WEIGHT_CLASS_SMALL
 	spread = 15
 	recoil = 0.1

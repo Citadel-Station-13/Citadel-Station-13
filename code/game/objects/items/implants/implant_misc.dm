@@ -44,7 +44,7 @@
 	icon_state = "warp"
 	uses = -1
 	var/total_delay = 10 SECONDS
-	var/cooldown = 10 SECONDS
+	var/cooldown = 30 SECONDS
 	var/last_use = 0
 	var/list/positions = list()
 	var/next_prune = 0

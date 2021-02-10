@@ -1,0 +1,5 @@
+author: "Adelphon"
+delete-after: True
+changes: 
+  - rscadd: "Charismatic Suit"
+  - rscadd: "Urban Jacket"
