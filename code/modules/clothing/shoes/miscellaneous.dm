@@ -104,7 +104,7 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	lace_time = 20 SECONDS // how the hell do these laces even work??
 	var/datum/component/waddle
-	var/enabled_waddle = TRUE
+	var/enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -132,9 +132,11 @@
 		return
 	if (!enabled_waddle)
 		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
+		slowdown = SHOES_SLOWDOWN
 		enabled_waddle = TRUE
 	else
 		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
+		slowdown = SHOES_SLOWDOWN + 1
 		enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/jester
