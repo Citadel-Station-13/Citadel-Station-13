@@ -31,6 +31,7 @@
 
 /obj/item/grenade/plastic/c4/ninja/prime(mob/living/lanced_by)
 	. = ..()
+	anchored = TRUE
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
 		return

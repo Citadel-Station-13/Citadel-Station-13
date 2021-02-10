@@ -29,10 +29,14 @@
 	var/mindrain = 200
 	///Maximum amount of power we can drain in a single drain action
 	var/maxdrain = 400
+	///Whether or not the security console hack was used to set everyone to arrest
+	var/security_console_hack_success = FALSE
 	///Whether or not the communication console hack was used to summon another antagonist
 	var/communication_console_hack_success = FALSE
 	///How many times the gloves have been used to force open doors.
 	var/door_hack_counter = 0
+	///Whether or not the cyborg hack was used to syndify a cyborg
+	var/borg_hack_success = FALSE
 	var/stunforce = 100
 
 /obj/item/clothing/gloves/space_ninja/Touch(atom/A,proximity)

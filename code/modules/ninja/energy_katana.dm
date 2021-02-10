@@ -114,10 +114,8 @@
 	if(msg)
 		to_chat(user, "<span class='notice'>[msg]</span>")
 
-
-
 /datum/action/innate/dash/ninja
 	current_charges = 3
 	max_charges = 3
-	charge_rate = 100
+	charge_rate = 200
 	recharge_sound = null

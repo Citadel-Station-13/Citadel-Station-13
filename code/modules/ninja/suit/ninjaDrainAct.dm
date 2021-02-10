@@ -143,6 +143,8 @@
 /obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
+	if(ninja_gloves.security_console_hack_success)
+		return
 	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
 	AI_notify_hack()
 	if(do_after(ninja, 200))
@@ -152,6 +154,7 @@
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return
+		ninja_gloves.security_console_hack_success = TRUE
 		var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
 		if(objective)
 			objective.completed = TRUE
@@ -169,11 +172,11 @@
 		var/announcement_pick = rand(0, 1)
 		switch(announcement_pick)
 			if(0)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/spawn_swarmer/swarmer_event = new/datum/round_event_control/spawn_swarmer
-				swarmer_event.runEvent()
+				priority_announce("Attention crew, it appears that something on your station has caused an unexpected disruption with the station's airlock network.", "[command_name()] High-Priority Update")
+				var/datum/round_event_control/grey_tide/greytide_event = new/datum/round_event_control/grey_tide
+				greytide_event.runEvent()
 			if(1)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
+				priority_announce("Attention crew, it appears that something on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
 				var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
 				pirate_event.runEvent()
 		ninja_gloves.communication_console_hack_success = TRUE
@@ -272,7 +275,8 @@
 /mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves || (ROLE_NINJA in faction))
 		return INVALID_DRAIN
-
+	if(ninja_gloves.borg_hack_success)
+		return
 	to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
 	if (do_after(ninja, 60, target = src))
 		spark_system.start()
@@ -283,11 +287,12 @@
 		UnlinkSelf()
 		ionpulse = TRUE
 		laws = new /datum/ai_laws/ninja_override()
-		module.transform_to(pick(/obj/item/robot_module/syndicate, /obj/item/robot_module/syndicate_medical, /obj/item/robot_module/saboteur))
+		module.transform_to(pick(/obj/item/robot_module/syndicate/spider, /obj/item/robot_module/syndicate_medical/spider, /obj/item/robot_module/saboteur/spider))
 
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return
+		ninja_gloves.borg_hack_success = TRUE
 		var/datum/objective/cyborg_hijack/objective = locate() in ninja_antag.objectives
 		if(objective)
 			objective.completed = TRUE
