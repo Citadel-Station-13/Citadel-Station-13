@@ -9,6 +9,7 @@
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	can_ventcrawl = FALSE
 
 	meleeKnockdownPower = 125
 	meleeSlashHumanPower = 30

@@ -302,7 +302,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	damtype = STAMINA
 	attack_verb = list("whacked", "smacked", "struck")
 	total_mass = TOTAL_MASS_MEDIEVAL_WEAPON
-	hitsound = 'sound/weapons/grenadelaunch.ogg' // no good wood thunk sounds
+	hitsound = 'sound/weapons/woodbonk.ogg'
 	var/harm = FALSE // TRUE = brute, FALSE = stam
 	var/reinforced = FALSE
 	var/burnt = FALSE

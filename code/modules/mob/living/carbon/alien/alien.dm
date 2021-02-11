@@ -11,6 +11,10 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
+	/// Whether they can ventcrawl; this is set individually for 'humanoid' and 'royal' types
+	/// 'royal' types (Praetorian, Queen) cannot ventcrawl
+	var/can_ventcrawl
+
 	/// How much brute damage without armor piercing they do against mobs in melee
 	var/meleeSlashHumanPower = 20
 	/// How much power they have for DefaultCombatKnockdown when attacking humans
@@ -38,7 +42,8 @@
 
 	create_internal_organs()
 
-	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	if(can_ventcrawl)
+		AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 	. = ..()
 
