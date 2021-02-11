@@ -537,4 +537,9 @@
 	path = /obj/item/clothing/suit/custom/exo
 	ckeywhitelist = list("jesterz7")
 
+/datum/gear/donator/choker
+	name = "NT Choker"
+	slot = SLOT_NECK
+	path = /obj/item/clothing/neck/petcollar/choker
+	ckeywhitelist = list("trigillass")
 
