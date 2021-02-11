@@ -45,3 +45,4 @@
 
 		else //Else just TP it to us.
 			energyKatana.returnToOwner(ninja, 1)
+		s_coold = 4

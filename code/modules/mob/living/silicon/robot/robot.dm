@@ -769,6 +769,15 @@
 						<i>Help the operatives secure the disk at all costs!</i></b>"
 	set_module = /obj/item/robot_module/saboteur
 
+/mob/living/silicon/robot/modules/syndicate/spider// used for space ninja and their cyborg hacking special objective
+	set_module = /obj/item/robot_module/syndicate/spider
+
+/mob/living/silicon/robot/modules/syndicate_medica/spider// ditto
+	set_module = /obj/item/robot_module/syndicate_medical/spider
+
+/mob/living/silicon/robot/modules/saboteur/spider// ditto
+	set_module = /obj/item/robot_module/saboteur/spider
+
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
 		return

@@ -81,6 +81,34 @@
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
 
+/obj/item/clothing/suit/space/space_ninja/Initialize(mapload)
+    START_PROCESSING(SSobj, src)
+    return ..()
+
+/obj/item/clothing/suit/space/space_ninja/Destroy()
+    STOP_PROCESSING(SSobj, src)
+    return ..()
+
+// Power usage
+/obj/item/clothing/suit/space/space_ninja/process(delta_time)
+	var/mob/living/carbon/human/user = src.loc
+	if(!user || !ishuman(user) || !(user.wear_suit == src))
+		return
+
+	// Check for energy usage
+	if(s_initialized)
+		if(!affecting)
+			terminate() // Kills the suit and attached objects.
+		else if(cell.charge > 0)
+			if(s_coold > 0)
+				s_coold = max(s_coold - delta_time, 0) // Checks for ability s_cooldown first.
+			cell.charge -= s_cost * delta_time // s_cost is the default energy cost each ntick, usually 5.
+			if(stealth) // If stealth is active.
+				cell.charge -= s_acost * delta_time
+		else
+			cell.charge = 0
+			cancel_stealth()
+
 /obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
 	if(IS_NINJA_SUIT_INITIALIZATION(action))
 		toggle_on_off()
@@ -118,7 +146,7 @@
 	. = ..()
 	if(stealth)
 		cancel_stealth()
-		//s_coold = 5 commented out until someone figures out why the fuck cooldowns don't work after porting from tg
+		s_coold = 5
 
 /**
   * Proc called to lock the important gear pieces onto space ninja's body.

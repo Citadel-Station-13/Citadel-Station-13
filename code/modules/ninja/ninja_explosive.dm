@@ -17,7 +17,7 @@
 /obj/item/grenade/plastic/c4/ninja/afterattack(atom/movable/AM, mob/user, flag)
 	var/datum/antagonist/ninja/ninja_antag = user.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
-		to_chat(user, "<span class='notice'>While it appears normal, you can't seem to detonate the charge.</span>")
+		to_chat(user, "<span class='notice'>You fiddle with the charge, but nothing happens.</span>")
 		return
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	if(!objective)
@@ -38,3 +38,8 @@
 	var/datum/antagonist/ninja/ninja_antag = detonator.mind.has_antag_datum(/datum/antagonist/ninja)
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	objective.completed = TRUE
+
+/obj/item/grenade/plastic/c4/ninja/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='notice'>The wire panel is locked in place, clearly you aren't supposed to be opening it!</span>")
+		return
