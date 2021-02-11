@@ -47152,12 +47152,8 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bEx" = (
-/obj/structure/closet/radiation,
 /obj/machinery/light/small{
 	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -48397,7 +48393,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 26
+	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bGg" = (
@@ -49555,6 +49554,9 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,

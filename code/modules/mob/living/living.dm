@@ -874,7 +874,7 @@
 		if(istype(G))
 			strip_mod = G.strip_mod
 			strip_silence = G.strip_silence
-	if (!strip_silence)
+	if(!strip_silence)
 		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", target = src,
 					target_message = "<span class='danger'>You try to remove [who]'s [what.name].</span>")

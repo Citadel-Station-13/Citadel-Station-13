@@ -58727,8 +58727,11 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/vault,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/vault{
+	name = "Vault Door";
+	req_access_txt = "53"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "puh" = (
@@ -61142,7 +61145,6 @@
 /area/science/circuit)
 "uOJ" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/vault,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -61155,6 +61157,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/door/airlock/vault{
+	name = "Vault Door";
+	req_access_txt = "53"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)

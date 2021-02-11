@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - balance: "Voice of God - sleep removed, stun staggers instead, knockdown is faster but does not do stamina damage, vomit is faster but doesn't stun"
