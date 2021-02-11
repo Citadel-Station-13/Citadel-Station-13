@@ -321,4 +321,3 @@
 	else
 		sound = pick('modular_citadel/sound/voice/human_female_pain_1.ogg', 'modular_citadel/sound/voice/human_female_pain_2.ogg', 'modular_citadel/sound/voice/human_female_pain_3.ogg')
 	playsound(user, sound, 50, 0, 0)
-	
