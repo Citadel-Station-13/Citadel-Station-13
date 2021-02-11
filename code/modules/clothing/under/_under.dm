@@ -32,6 +32,9 @@
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+		if(damaged_clothes)
+			to_chat(user,"<span class='warning'>You should repair the damage done to [src] first.</span>")
+			return 0
 		var/obj/item/stack/cable_coil/C = I
 		I.use_tool(src, user, 0, 1)
 		has_sensor = HAS_SENSORS
