@@ -354,9 +354,14 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/obj/effect/countdown/doomsday/countdown
 	var/detonation_timer
 	var/next_announce
+	var/mob/living/silicon/ai/owner
 
 /obj/machinery/doomsday_device/Initialize()
 	. = ..()
+	owner = loc
+	if(!istype(owner))
+		stack_trace("Doomsday created outside an AI somehow, shit's fucking broke. Anyway, we're just gonna qdel now. Go make a github issue report.")
+		qdel(src)
 	countdown = new(src)
 
 /obj/machinery/doomsday_device/Destroy()
@@ -364,6 +369,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	STOP_PROCESSING(SSfastprocess, src)
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
+	for(var/mob/living/silicon/robot/borg in owner.connected_robots)
+		borg.lamp_doom = FALSE
+		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
 	for(var/A in GLOB.ai_list)
 		var/mob/living/silicon/ai/AI = A
 		if(AI.doomsday_device == src)
@@ -378,6 +386,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	START_PROCESSING(SSfastprocess, src)
 	SSshuttle.registerHostileEnvironment(src)
 	SSmapping.add_nuke_threat(src) //This causes all blue "circuit" tiles on the map to change to animated red icon state.
+	for(var/mob/living/silicon/robot/borg in owner.connected_robots)
+		borg.lamp_doom = TRUE
+		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
 
 /obj/machinery/doomsday_device/proc/seconds_remaining()
 	. = max(0, (round((detonation_timer - world.time) / 10)))
