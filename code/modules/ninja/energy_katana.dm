@@ -5,7 +5,7 @@
   *
   * The katana that only space ninja spawns with.  Comes with 30 force and throwforce, along with a signature special jaunting system.
   * Upon clicking on a tile with the dash on, the user will teleport to that tile, assuming their target was not dense.
-  * The katana has 3 dashes stored at maximum, and upon using the dash, it will return 10 seconds after it was used.
+  * The katana has 3 dashes stored at maximum, and upon using the dash, it will return 20 seconds after it was used.
   * It also has a special feature where if it is tossed at a space ninja who owns it (determined by the ninja suit), the ninja will catch the katana instead of being hit by it.
   *
   */
