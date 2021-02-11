@@ -772,7 +772,7 @@
 /mob/living/silicon/robot/modules/syndicate/spider// used for space ninja and their cyborg hacking special objective
 	set_module = /obj/item/robot_module/syndicate/spider
 
-/mob/living/silicon/robot/modules/syndicate_medica/spider// ditto
+/mob/living/silicon/robot/modules/syndicate_medical/spider// ditto
 	set_module = /obj/item/robot_module/syndicate_medical/spider
 
 /mob/living/silicon/robot/modules/saboteur/spider// ditto
