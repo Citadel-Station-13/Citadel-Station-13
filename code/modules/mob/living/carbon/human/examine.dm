@@ -34,9 +34,10 @@
 
 	//Underwear
 	var/undies_hidden = underwear_hidden()
+	var/socks_hidden = socks_hidden()
 	if(w_underwear && !undies_hidden)
 		. += "[t_He] [t_is] wearing [w_underwear.get_examine_string(user)]."
-	if(w_socks && !undies_hidden)
+	if(w_socks && !socks_hidden)
 		. += "[t_He] [t_is] wearing [w_socks.get_examine_string(user)]."
 	if(w_shirt && !undies_hidden)
 		. += "[t_He] [t_is] wearing [w_shirt.get_examine_string(user)]."
@@ -486,7 +487,7 @@
 		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .) //This also handles flavor texts now
-	
+
 	var/invisible_man = skipface || get_visible_name() == "Unknown" // SKYRAT EDIT -- BEGIN
 	if(!invisible_man)
 		if(client)

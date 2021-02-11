@@ -155,9 +155,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/canMouseDown = FALSE
 
-	//SKYRAT CHANGE
-	var/hide_underwear_examine = FALSE
-	//and no, i'm not taking self-equip delays, period.
 
 /obj/item/Initialize()
 
