@@ -435,6 +435,9 @@
 			legcuffed.forceMove(drop_location())
 			legcuffed = null
 			I.dropped(src)
+			if(istype(I, /obj/item/restraints/legcuffs))
+				var/obj/item/restraints/legcuffs/lgcf = I
+				lgcf.on_removed()
 			update_inv_legcuffed()
 			return
 		else

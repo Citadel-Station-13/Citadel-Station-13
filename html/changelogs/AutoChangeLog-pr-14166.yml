@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "Energy bolas now take 2.5 seconds to remove and dissipate on removal."
