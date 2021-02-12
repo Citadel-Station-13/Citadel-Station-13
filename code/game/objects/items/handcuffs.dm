@@ -379,20 +379,8 @@
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 20
+	breakouttime = 25
 
 /obj/item/restraints/legcuffs/bola/energy/on_removed()
-	new /obj/item/restraints/legcuffs/bola/energy/used(src)
+	do_sparks(1, TRUE, src)
 	qdel(src)
-
-/obj/item/restraints/legcuffs/bola/energy/used
-	name = "energy bola fragments"
-	icon_state = "ebola_used"
-	desc = "The shattered fragments of a specialized hard-light bola. Probably won't ensnare fleeing criminals, nor will it aid in arrests - or exist, actually."
-
-/obj/item/restraints/legcuffs/bola/energy/used/Initialize()
-	. = ..()
-	QDEL_IN(src, 10)
-
-/obj/item/restraints/legcuffs/bola/energy/used/ensnare(mob/living/carbon/C)
-	return
