@@ -20,11 +20,6 @@
 		destroy_objective.owner = T.owner
 		destroy_objective.find_target()
 		T.add_objective(destroy_objective)
-	else if(prob(30) || (is_dynamic && (mode.storyteller.flags & NO_ASSASSIN)))
-		var/datum/objective/maroon/maroon_objective = new
-		maroon_objective.owner = T.owner
-		maroon_objective.find_target()
-		T.add_objective(maroon_objective)
 	else if(prob(permakill_prob))
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = T.owner
