@@ -256,6 +256,7 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 	else
 		explanation_text = "Free Objective"
 
+/*
 /datum/objective/maroon
 	name = "maroon"
 	var/target_role_type=0
@@ -281,6 +282,7 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 
 /datum/objective/maroon/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
+*/
 
 /datum/objective/debrain
 	name = "debrain"
