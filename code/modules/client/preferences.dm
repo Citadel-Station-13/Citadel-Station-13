@@ -105,6 +105,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/language = "Random"				//bonus language
+	var/choselanguage = "Random"		//language appearance
 	var/underwear = "Nude"				//underwear type
 	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude"				//undershirt type
@@ -323,6 +325,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
+			dat += "<b>Language:</b> <a href='?_src_=prefs;preference=language;task=input'>[choselanguage]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
 			var/old_group
@@ -2329,6 +2332,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["body_model"] = chosengender
 					gender = chosengender
+
+				if("language")
+					choselanguage = input(user, "Select a language.", "Language", language) as null|anything in list("Beachtongue","Draconic","Dwarven",
+				 																									"Chimpanzee","Space Sign Language","Random")
+					if(!choselanguage)
+						return
+					switch(choselanguage)
+						if("Rachidian")
+							language = /datum/language/arachnid
+						if("Beachtongue")
+							language = /datum/language/beachbum
+						if("Draconic")
+							language = /datum/language/draconic
+						if("Dwarven")
+							language = /datum/language/dwarf
+						if("Chimpanzee")
+							language = /datum/language/monkey
+						if("Space Sign Language")
+							language = /datum/language/signlanguage
+						if("Random")
+							language = pick(list("Rachidian", "Beachtongue","Draconic","Dwarven",
+												 "Chimpanzee","Space Sign Language"))
 
 				if("body_size")
 					var/new_body_size = input(user, "Choose your desired sprite size: (90-125%)\nWarning: This may make your character look distorted. Additionally, any size under 100% takes a 10% maximum health penalty", "Character Preference", features["body_size"]*100) as num|null

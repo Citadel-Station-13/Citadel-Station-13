@@ -102,6 +102,7 @@
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
+	player_minimum = 25
 	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear)
 
