@@ -228,11 +228,7 @@
 	gain_text = "You've learned an extra language!"
 	lose_text = "You've forgotten your extra language."
 	
-/datum/quirk/multilingual/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.grant_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MULTILINGUAL)
-	
-/datum/quirk/multilingual/add()
+/datum/quirk/multilingual/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.grant_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MULTILINGUAL)
 	
