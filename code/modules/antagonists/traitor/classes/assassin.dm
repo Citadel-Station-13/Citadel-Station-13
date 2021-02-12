@@ -8,7 +8,6 @@
 /datum/traitor_class/human/assassin/forge_single_objective(datum/antagonist/traitor/T)
 	.=1
 	var/permakill_prob = 20
-	var/is_dynamic = FALSE
 	var/datum/game_mode/dynamic/mode
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
