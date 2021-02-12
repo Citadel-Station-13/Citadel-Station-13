@@ -345,7 +345,7 @@
 	name = initial(I.name)
 	icon = initial(I.icon)
 	icon_state = initial(I.icon_state)
-/* Selling people in jars is currently disabled.
+
 /obj/structure/displaycase/forsale
 	name = "vend-a-tray"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -354,9 +354,9 @@
 	density = FALSE
 	max_integrity = 100
 	req_access = null
-	showpiece_type = /obj/item/reagent_containers/food
+	start_showpiece_type = /obj/item/reagent_containers/food
 	alert = FALSE //No, we're not calling the fire department because someone stole your cookie.
-	glass_fix = FALSE //Fixable with tools instead.
+	// glass_fix = FALSE //Fixable with tools instead.
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
@@ -437,7 +437,7 @@
 					payments_acc.adjust_money(sale_price)
 				usr.put_in_hands(showpiece)
 				to_chat(usr, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
-				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
+				// playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				icon = 'icons/obj/stationobjs.dmi'
 				flick("laserbox_vend", src)
 				showpiece = null
@@ -553,4 +553,3 @@
 /obj/structure/displaycase/forsale/kitchen
 	desc = "A display case with an ID-card swiper. Use your ID to purchase the contents. Meant for the bartender and chef."
 	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR)
-*/
