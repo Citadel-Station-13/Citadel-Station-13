@@ -15,13 +15,16 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/clockcult/silent
+	name = "Silent Clock Cultist"
 	silent = TRUE
 	show_in_antagpanel = FALSE //internal
 
 /datum/antagonist/clockcult/neutered
+	name = "Neutered Clock Cultist"
 	neutered = TRUE
 
 /datum/antagonist/clockcult/neutered/traitor
+	name = "Traitor Clock Cultist"
 	ignore_eligibility_check = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE
