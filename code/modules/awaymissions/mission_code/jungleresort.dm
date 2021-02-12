@@ -25,9 +25,9 @@
 	name = "cursed rice hat"
 	desc = "Welcome to the rice fields, motherfucker. This particular one seems to give you second thoughts about wearing it."
 
-/obj/item/clothing/mask/equipped(mob/M, slot)
+/obj/item/clothing/head/rice_hat/cursed/equipped(mob/M, slot)
     . = ..()
-    if (slot == SLOT_WEAR_MASK && modifies_speech)
+    if (slot == SLOT_HEAD)
         RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
     else
         UnregisterSignal(M, COMSIG_MOB_SAY)
