@@ -158,8 +158,9 @@
 	sleep(50)
 	priority_announce("We picked up a massive energy reading in your sector, [GLOB.station_name], it looks as if a neutron star has just formed on top of the station. We're treating this as an accausal event and will begin running predictions on this situation, please hold.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 	sleep(300)
-	priority_announce("A gravitational anomaly has been detected coming from the newly formed star in your sector. It ap*@^rs th#t ^&te-BZZZT","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce.ogg')
-	sleep(85)
+	priority_announce("A gravitational anomaly has been detected coming from the newly formed star in your sector. It ap*@^rs th#t ^&te-BZZZT","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce1.ogg')
+	sleep(80)
+	sound_to_playing_players(sound('sound/magic/clockwork/ratvar_announce2.ogg'))
 	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!\"</font></span>")
 	sleep(50)
 	set_security_level("delta")
@@ -167,7 +168,7 @@
 	SSshuttle.lockdown = TRUE
 	sleep(250)
 	if(QDELETED(src))
-		priority_announce("Neutron star signal no longer detected in your sector. Acausal event still occuring. Reccomend all crew to remain calm.","Central Command Higher Dimensional Affairs")
+		priority_announce("Neutron star signal no longer detected in your sector. Bluespace distortions fading from sensors.","Central Command Higher Dimensional Affairs")
 	return
 	sound_to_playing_players(volume = 70, sound('sound/magic/clockwork/ark_activation_sequence.ogg')) //if this isn't lessened in volume it peaks for some reason
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/clockcult_ending_helper), 300)
@@ -182,5 +183,4 @@
 			L.fire_stacks = INFINITY
 			L.IgniteMob()
 		sleep(50)
-	send_to_playing_players("<span class='brass'>\"Ratvar has been freed Reebe, rejoice!\"</span>")
 	SSticker.force_ending = 1
