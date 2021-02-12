@@ -507,7 +507,7 @@
 	to_chat(body,"<span class='warning'>You will attempt to kill [target.body.real_name] tonight.</span>")
 
 /datum/mafia_role/traitor/proc/try_to_kill(datum/mafia_controller/source)
-	SIGNAL_HANDLER
+	// SIGNAL_HANDLER
 
 	var/datum/mafia_role/target = current_victim
 	current_victim = null
@@ -571,7 +571,7 @@
 		to_chat(body,"<span class='danger'>You will hunt everyone in a flickering room down tonight.</span>")
 
 /datum/mafia_role/nightmare/proc/flicker_or_hunt(datum/mafia_controller/source)
-	SIGNAL_HANDLER
+	// SIGNAL_HANDLER
 
 	if(game_status != MAFIA_ALIVE || !flicker_target)
 		return
@@ -736,7 +736,7 @@
 	RegisterSignal(src,COMSIG_MAFIA_ON_KILL,.proc/prank)
 
 /datum/mafia_role/clown/proc/prank(datum/source,datum/mafia_controller/game,lynch)
-	SIGNAL_HANDLER
+	// SIGNAL_HANDLER
 
 	if(lynch)
 		var/datum/mafia_role/victim = pick(game.judgement_guilty_votes + game.judgement_abstain_votes)

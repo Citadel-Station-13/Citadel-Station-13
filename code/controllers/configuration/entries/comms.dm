@@ -41,3 +41,6 @@
 
 /datum/config_entry/keyed_list/cross_server_bunker_override/ValidateListEntry(key_name, key_value)
 	return key_value != "byond:\\address:port" && ..()
+
+/datum/config_entry/flag/allow_cross_server_bunker_override
+	protection = CONFIG_ENTRY_LOCKED
