@@ -12,7 +12,6 @@
 	var/datum/game_mode/dynamic/mode
 	if(istype(SSticker.mode,/datum/game_mode/dynamic))
 		mode = SSticker.mode
-		is_dynamic = TRUE
 		permakill_prob = max(0,mode.threat_level-50)
 	var/list/active_ais = active_ais()
 	if(active_ais.len && prob(100/GLOB.joined_player_list.len))

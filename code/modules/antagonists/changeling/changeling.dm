@@ -441,6 +441,15 @@
 			else
 				kill_objective.find_target()
 			objectives += kill_objective
+			
+		else
+			var/datum/objective/maroon/maroon_objective = new
+			maroon_objective.owner = owner
+			if(team_mode)
+				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+			else
+				maroon_objective.find_target()
+			objectives += maroon_objective
 
 			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 				var/datum/objective/escape/escape_with_identity/identity_theft = new
