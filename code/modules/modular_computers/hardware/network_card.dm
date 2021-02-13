@@ -90,7 +90,7 @@
 	if(!modularInterface.borgo)
 		return FALSE //No borg found
 
-	if(modularInterface.borgo.lockcharge)
+	if(modularInterface.borgo.locked_down)
 		return FALSE //lockdown restricts borg networking
 
 	if(!modularInterface.borgo.cell || modularInterface.borgo.cell.charge == 0)

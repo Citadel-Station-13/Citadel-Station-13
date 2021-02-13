@@ -444,14 +444,14 @@
 	. = ..()
 	if(isturf(loc)) // to prevent people that are alt clicking a tile to see its content from getting undesidered pop ups
 		return
-	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE) || zero_amount()) //, !iscyborg(user)
+	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE) || zero_amount()) //, !iscyborg(user)
 		return
 	//get amount from user
 	var/max = get_amount()
 	var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as null|num)
 	max = get_amount()
 	stackmaterial = min(max, stackmaterial)
-	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE)) //, !iscyborg(user)
+	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE)) //, !iscyborg(user)
 		return
 	split_stack(user, stackmaterial)
 	to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
@@ -485,10 +485,13 @@
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
-	add_blood_DNA(from.return_blood_DNA())
-	add_fingerprint_list(from.return_fingerprints())
-	add_hiddenprint_list(from.return_hiddenprints())
-	fingerprintslast  = from.fingerprintslast
+	if(from.blood_DNA)
+		blood_DNA = from.blood_DNA.Copy()
+	if(from.fingerprints)
+		fingerprints = from.fingerprints.Copy()
+	if(from.fingerprintshidden)
+		fingerprintshidden = from.fingerprintshidden.Copy()
+	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)

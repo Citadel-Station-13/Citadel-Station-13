@@ -112,7 +112,7 @@
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	.["light_on"] = borgo?.lamp_enabled
+	.["light_on"] = borgo?.lamp_intensity
 	.["comp_light_color"] = borgo?.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet

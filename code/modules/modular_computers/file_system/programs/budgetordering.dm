@@ -35,7 +35,7 @@
 		return FALSE
 	if(!paccess_to_check) // No required_access, allow it.
 		return TRUE
-	if(isAdminGhostAI(user))
+	if(IsAdminGhost(user))
 		return TRUE
 
 	//Aquire access from the inserted ID card.
@@ -79,7 +79,8 @@
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(!is_visible_pack(usr, P.access_view , null, P.contraband) || P.hidden)
+		// todo: replace to P.access_view
+		if(!is_visible_pack(usr, P.access , null, P.contraband) || P.hidden)
 			continue
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
