@@ -19,9 +19,11 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/cult/neutered
+	name = "Neutered Cultist"
 	neutered = TRUE
 
 /datum/antagonist/cult/neutered/traitor
+	name = "Traitor Cultist"
 	ignore_eligibility_checks = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE

@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - tweak: "Repairing sensors on jumpsuits now requires a fully-intact jumpsuit. Find some cloth."
+  - tweak: "Durathread armor kits now require you to have a fully-repaired jumpsuit, first, with no attachments."
+  - bugfix: "Durathread armor kits now no longer weave the entirety of the jumpsuit armor universe into having armor."
