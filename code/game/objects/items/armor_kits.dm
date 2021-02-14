@@ -17,8 +17,8 @@
 		if(C.damaged_clothes)
 			to_chat(user,"<span class='warning'>You should repair the damage done to [C] first.</span>")
 			return
-		if(C.attached_accessory)
-			to_chat(user,"<span class='warning'>Kind of hard to sew around [C.attached_accessory].</span>")
+		if(C.attached_accessories.len)
+			to_chat(user,"<span class='warning'>Kind of hard to sew around [C.attached_accessories.Join(", ")].</span>")
 			return
 		if(C.armor.getRating("melee") < 10)
 			C.armor = C.armor.setRating("melee" = 10)
