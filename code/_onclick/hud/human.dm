@@ -118,7 +118,7 @@
 	action_intent.hud = src
 	static_inventory += action_intent
 
-	assert_move_intent_ui(owner)
+	assert_move_intent_ui(owner, TRUE)
 
 	// clickdelay
 	clickdelay = new
@@ -373,7 +373,7 @@
 
 	update_locked_slots()
 
-/datum/hud/human/proc/assert_move_intent_ui(mob/living/carbon/human/owner = mymob)
+/datum/hud/human/proc/assert_move_intent_ui(mob/living/carbon/human/owner = mymob, on_new = FALSE)
 	var/obj/screen/using
 	// delete old ones
 	var/list/obj/screen/victims = list()
@@ -387,30 +387,36 @@
 		QDEL_LIST(victims)
 
 	// make new ones
+	// walk/run
 	using = new /obj/screen/mov_intent
 	using.icon = tg_ui_icon_to_cit_ui(ui_style) // CIT CHANGE - overrides mov intent icon
 	using.screen_loc = ui_movi
 	using.hud = src
 	using.update_icon()
 	static_inventory += using
+	if(!on_new)
+		owner?.client?.screen += using
 
 	if(!CONFIG_GET(flag/sprint_enabled))
 		return
 
-	//CITADEL CHANGES - sprint button
+	// sprint button
 	using = new /obj/screen/sprintbutton
 	using.icon = tg_ui_icon_to_cit_ui(ui_style)
 	using.icon_state = ((owner.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) ? "act_sprint_on" : "act_sprint")
 	using.screen_loc = ui_movi
 	using.hud = src
 	static_inventory += using
-	//END OF CITADEL CHANGES
+	if(!on_new)
+		owner?.client?.screen += using
 
-	//same as above but buffer.
+	// same as above but buffer.
 	sprint_buffer = new /obj/screen/sprint_buffer
 	sprint_buffer.screen_loc = ui_sprintbufferloc
 	sprint_buffer.hud = src
 	static_inventory += sprint_buffer
+	if(!on_new)
+		owner?.client?.screen += using
 
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
