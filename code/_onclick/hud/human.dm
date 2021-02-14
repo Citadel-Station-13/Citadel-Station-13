@@ -374,8 +374,9 @@
 	update_locked_slots()
 
 /datum/hud/human/assert_move_intent_ui()
+	var/obj/screen/using
 	// delete old ones
-	var/list/obj/screen/victim += list()
+	var/list/obj/screen/victims += list()
 	victims += locate(/obj/screen/mov_intent) in static_inventory
 	victims += locate(/obj/screen/sprintbutton) in static_inventory
 	victims += locate(/obj/screen/sprint_buffer) in sttatic_inventory
