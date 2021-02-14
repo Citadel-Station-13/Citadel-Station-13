@@ -1,4 +1,0 @@
-author: "TyrianTyrell"
-delete-after: True
-changes: 
-  - code_imp: "added a define for multilingual granted languages, and changed the multilingual trait to use it."
