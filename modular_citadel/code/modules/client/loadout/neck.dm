@@ -98,3 +98,9 @@
 	path = /obj/item/clothing/neck/cloak/alt/polychromic
 	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#FFFFFF", "#676767", "#4C4C4C")
+
+/datum/gear/neck/cancloak
+	name = "Canvas Cloak"
+	path = /obj/item/clothing/neck/cancloak/polychromic
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#585858", "#373737", "#BEBEBE")

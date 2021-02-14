@@ -15,13 +15,16 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/clockcult/silent
+	name = "Silent Clock Cultist"
 	silent = TRUE
 	show_in_antagpanel = FALSE //internal
 
 /datum/antagonist/clockcult/neutered
+	name = "Neutered Clock Cultist"
 	neutered = TRUE
 
 /datum/antagonist/clockcult/neutered/traitor
+	name = "Traitor Clock Cultist"
 	ignore_eligibility_check = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE
@@ -185,7 +188,7 @@
 
 
 /datum/antagonist/clockcult/admin_add(datum/mind/new_owner,mob/admin)
-	add_servant_of_ratvar(new_owner.current, TRUE)
+	add_servant_of_ratvar(new_owner.current, TRUE, override_type = type)
 	message_admins("[key_name_admin(admin)] has made [new_owner.current] into a servant of Ratvar.")
 	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
 

@@ -50,6 +50,49 @@
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">14 February 2021</h2>
+			<h3 class="author">DeltaFire15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">The antag panel now correctly shows the names of cultist / clockcult datum subtypes.</li>
+				<li class="bugfix">Adding clock cultists via the admin panel now works correctly.</li>
+				<li class="bugfix">Xeno larvae should now be able to ventcrawl again.</li>
+			</ul>
+			<h3 class="author">Hatterhat updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Repairing sensors on jumpsuits now requires a fully-intact jumpsuit. Find some cloth.</li>
+				<li class="tweak">Durathread armor kits now require you to have a fully-repaired jumpsuit, first, with no attachments.</li>
+				<li class="bugfix">Durathread armor kits now no longer weave the entirety of the jumpsuit armor universe into having armor.</li>
+			</ul>
+			<h3 class="author">TyrianTyrell updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">added a define for multilingual granted languages, and changed the multilingual trait to use it.</li>
+			</ul>
+
+			<h2 class="date">13 February 2021</h2>
+			<h3 class="author">Hatterhat updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Energy bolas now take 2.5 seconds to remove and dissipate on removal.</li>
+			</ul>
+			<h3 class="author">timothyteakettle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">migration error to version 39+ of savefiles is now logged instead of messaging all online admins in the chat</li>
+			</ul>
+
+			<h2 class="date">12 February 2021</h2>
+			<h3 class="author">Hatterhat updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">The ATVs on SnowCabin.dmm have been replaced with snowmobiles.</li>
+			</ul>
+			<h3 class="author">MrJWhit updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Random deltastation fixes.</li>
+				<li class="tweak">Gives boxstation vault door actual vault door access</li>
+			</ul>
+			<h3 class="author">silicons updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Voice of God - sleep removed, stun staggers instead, knockdown is faster but does not do stamina damage, vomit is faster but doesn't stun</li>
+			</ul>
+
 			<h2 class="date">11 February 2021</h2>
 			<h3 class="author">Adelphon updated:</h3>
 			<ul class="changes bgimages16">
@@ -86,6 +129,39 @@
 			<h2 class="date">09 February 2021</h2>
 			<h3 class="author">Chiirno updated:</h3>
 			<ul class="changes bgimages16">
+				<li class="rscadd">Charismatic Suit</li>
+				<li class="rscadd">Urban Jacket</li>
+			</ul>
+			<h3 class="author">DeltaFire15 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Added nanogel to the robodrobe.</li>
+			</ul>
+			<h3 class="author">Putnam3145 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Config to keep unreadied players from mode voting</li>
+			</ul>
+			<h3 class="author">dzahlus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixes grenadelaunch.ogg being used where it shouldn't and makes mech weapons use correct sound</li>
+			</ul>
+			<h3 class="author">keronshb updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">10 > 30 second for Warp Implant cooldown</li>
+				<li class="rscdel">Comments out power sink objective.</li>
+			</ul>
+			<h3 class="author">timothyteakettle updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">pickpocketing is now logged using log_combat</li>
+				<li class="bugfix">persistent blood should stop being invisible and alt clicking it shouldn't return the entire spritesheet</li>
+			</ul>
+			<h3 class="author">zeroisthebiggay updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">the aesthetic sterile mask no longer hides faces so you can cosplay egirls and keep flavortexts</li>
+			</ul>
+
+			<h2 class="date">09 February 2021</h2>
+			<h3 class="author">Chiirno updated:</h3>
+			<ul class="changes bgimages16">
 				<li class="rscadd">Adds clown waddle to clown shoes. Enhanced Clown Waddle Dampeners can be engaged in-hand with ctrl+click, _but why would you?_</li>
 			</ul>
 			<h3 class="author">MrJWhit updated:</h3>
@@ -99,64 +175,6 @@
 			<h3 class="author">timothyteakettle updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="balance">sentient viruses can now infect synths and ipcs</li>
-			</ul>
-
-			<h2 class="date">07 February 2021</h2>
-			<h3 class="author">Thalpy updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Dispenser: Adds the ability to store a small amount of reagents in the machine itself for dispensing. Reacting recipies cannot be stored. Size of storage increases with bin size.</li>
-				<li class="refactor">Dispenser: Allows reagents to be color coded by pH</li>
-				<li class="refactor">Dispenser: Each reagent displays it's pH on hover</li>
-				<li class="refactor">Dispenser: Allows the user to toggle between buttons and a radial dial</li>
-				<li class="refactor">Dispenser: When the dispencer is upgraded it can dispense 5/3/2/1 volumes based on rating refactor: Dispenser: as it was before. This does not break recorded recipes.</li>
-				<li class="tweak">Adds a round function to some numbers so they're not huge</li>
-				<li class="tweak">The Chem master can now get purity for all reagents when analysed</li>
-				<li class="bugfix">Synthissue fixes</li>
-				<li class="tweak">buffers now have a strong and weak variant. Weak can be dispensed, and strong can be created. Strong buffers are 6x more effective.</li>
-				<li class="bugfix">Some buffer pH edge calculation fixes</li>
-			</ul>
-			<h3 class="author">TyrianTyrell updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">added a signed language, that can't be used over the radio but can be used if you're mute. also added the multilingual trait.</li>
-				<li class="imageadd">hopefully added an icon for the signed language.</li>
-				<li class="code_imp">changed how some traits function slightly.</li>
-			</ul>
-			<h3 class="author">dzahlus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">tweaked a few sounds</li>
-				<li class="soundadd">added a new weapon sounds</li>
-				<li class="sounddel">removed old weapon sounds</li>
-				<li class="code_imp">changed some sound related code</li>
-			</ul>
-			<h3 class="author">silicons updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">syndicate ablative armwraps have been added.</li>
-			</ul>
-
-			<h2 class="date">05 February 2021</h2>
-			<h3 class="author">SmArtKar updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The orbit menu now has an Auto-Observe button! No more sifting through the lame observe menu to snoop in people's backpacks! Also, orbit menu now refreshes.</li>
-				<li class="bugfix">KAs are no longer getting broken when fired by a circuit</li>
-			</ul>
-			<h3 class="author">keronshb updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Force and damage > 15 from 18/25</li>
-				<li class="balance">Knockdown put down to 5 from 30</li>
-				<li class="balance">Armor pen down to 10 from 100.</li>
-				<li class="balance">Makes cell chargers, charge faster.</li>
-			</ul>
-			<h3 class="author">raspy-on-osu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">alien royals can no longer ventcrawl</li>
-			</ul>
-			<h3 class="author">shellspeed1 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">There actually needs to be people for zombies to happen now.</li>
-			</ul>
-			<h3 class="author">timothyteakettle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">dwarf facial hair is no longer randomised</li>
 			</ul>
 
 			<h2 class="date">03 February 2021</h2>
