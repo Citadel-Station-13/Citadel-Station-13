@@ -63,6 +63,8 @@
 	update_sprint_icon()
 
 /mob/living/proc/user_toggle_intentional_sprint_mode()
+	if(!CONFIG_GET(flag/sprint_enabled))
+		return
 	var/old = (combat_flags & COMBAT_FLAG_SPRINT_TOGGLED)
 	if(old)
 		if(combat_flags & COMBAT_FLAG_SPRINT_FORCED)

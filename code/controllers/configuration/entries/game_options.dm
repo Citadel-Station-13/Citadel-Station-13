@@ -297,6 +297,9 @@
 	. = ..()
 	for(var/datum/hud/human/H)
 		H.assert_move_intent_ui()
+	if(!config_entry_value)		// disabled
+		for(var/mob/living/L in world)
+			L.disable_intentional_sprint_mode()
 
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
