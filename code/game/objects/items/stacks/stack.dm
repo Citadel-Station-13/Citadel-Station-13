@@ -439,6 +439,8 @@
 		if(zero_amount())
 			return
 		return split_stack(user, 1)
+	else
+		. = ..()
 
 /obj/item/stack/AltClick(mob/living/user)
 	. = ..()

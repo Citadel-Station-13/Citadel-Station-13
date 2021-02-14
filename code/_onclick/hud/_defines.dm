@@ -117,8 +117,8 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:21,SOUTH+1:5"
-#define ui_borg_sensor "CENTER-3:15, SOUTH:5"		//LEGACY
-#define ui_borg_thrusters "CENTER-5:15, SOUTH:5"	//LEGACY
+#define ui_borg_sensor "CENTER-6:16, SOUTH:5"		//LEGACY
+#define ui_borg_thrusters "CENTER-5:16, SOUTH:5"	//LEGACY
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"

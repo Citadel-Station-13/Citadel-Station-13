@@ -676,7 +676,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!preview_shuttle)
 		load_template(loading_template)
-		preview_shuttle.linkup(loading_template, destination_port)
+		// preview_shuttle.linkup(loading_template, destination_port)
 		preview_template = loading_template
 
 	// get the existing shuttle information, if any

@@ -454,12 +454,12 @@
 	return SSshuttle.shuttle_purchase_requirements_met["emagged"]
 
 
-/datum/map_template/shuttle/emergency/cruise
-	suffix = "cruise"
-	name = "The NTSS Independence"
-	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
-	admin_notes = "This motherfucker is BIG. You might need to force dock it."
-	credit_cost = 8000
+// /datum/map_template/shuttle/emergency/cruise
+// 	suffix = "cruise"
+// 	name = "The NTSS Independence"
+// 	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
+// 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
+// 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"
