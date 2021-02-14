@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - admin: "The antag panel now correctly shows the names of cultist / clockcult datum subtypes."
-  - bugfix: "Adding clock cultists via the admin panel now works correctly."

@@ -64,3 +64,7 @@
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
+
+/// forces log_href for tgui
+/datum/config_entry/flag/emergency_tgui_logging
+	config_entry_value = FALSE
