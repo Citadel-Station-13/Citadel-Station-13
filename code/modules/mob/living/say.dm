@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(HAS_TRAIT(src, TRAIT_MUTE) && get_selected_language() != /datum/language/signlanguage)
 		return 0
 			
-	if (get_bodypart(BODY_ZONE_R_ARM).is_disabled() && get_bodypart(BODY_ZONE_L_ARM).is_disabled() && get_selected_language() == /datum/language/signlanguage)
+	if (src.get_bodypart(BODY_ZONE_R_ARM).is_disabled() && src.get_bodypart(BODY_ZONE_L_ARM).is_disabled() && get_selected_language() == /datum/language/signlanguage)
 		return 0
 
 	if(is_muzzled())
