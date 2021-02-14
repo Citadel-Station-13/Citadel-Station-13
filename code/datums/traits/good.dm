@@ -228,11 +228,11 @@
 	gain_text = "You've learned an extra language!"
 	lose_text = "You've forgotten your extra language."
 
-/datum/quirk/multilingual/add()
+/datum/quirk/multilingual/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.grant_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MIND)
+	H.grant_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MULTILINGUAL)
 
 /datum/quirk/multilingual/remove()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.remove_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MIND)
+	H.remove_language(H.client.prefs.language, TRUE, TRUE, LANGUAGE_MULTILINGUAL)
 */ //kills this awful excuse of a thing, quirk point requirement is a no-no

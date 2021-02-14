@@ -104,6 +104,13 @@
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#6A6964", "#C4B8A6", "#0000FF")
 
+/datum/gear/suit/coat/wbreakpoly
+	name = "Polychromic windbreaker"
+	path = /obj/item/clothing/suit/toggle/wbreakpoly/polychromic
+	cost = 4
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#464F65", "#916035", "#474747")
+
 /datum/gear/suit/coat/med
 	name = "Medical winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/medical

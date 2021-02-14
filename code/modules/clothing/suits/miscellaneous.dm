@@ -1030,6 +1030,16 @@
 	alternate_worn_layer = UNDER_HEAD_LAYER
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/suit/toggle/wbreakpoly
+	name = "polychromic windbreaker"
+	desc = "Perfect for windy days."
+	icon_state = "wbreakpoly"
+	item_state = "wbreakpoly"
+
+/obj/item/clothing/suit/toggle/wbreakpoly/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#464F65", "#916035", "#474747"), 3)
+
 /obj/item/clothing/suit/flakjack
 	name = "flak jacket"
 	desc = "A dilapidated jacket made of a supposedly bullet-proof material (Hint: It isn't.). Smells faintly of napalm."
