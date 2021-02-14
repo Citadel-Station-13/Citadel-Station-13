@@ -26,6 +26,8 @@
 	update_sprint_icon()
 
 /mob/living/proc/enable_sprint_mode(update_icon = TRUE)
+	if(!CONFIG_GET(flag/sprint_enabled))
+		return
 	if(combat_flags & COMBAT_FLAG_SPRINT_ACTIVE)
 		return
 	ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_SPRINT_ACTIVE)

@@ -290,6 +290,9 @@
 	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
 	M.sync()
 
+/datum/config_entry/flag/sprint_enabled
+	config_entry_value = TRUE
+
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
 

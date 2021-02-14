@@ -118,27 +118,7 @@
 	action_intent.hud = src
 	static_inventory += action_intent
 
-	using = new /obj/screen/mov_intent
-	using.icon = tg_ui_icon_to_cit_ui(ui_style) // CIT CHANGE - overrides mov intent icon
-	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.hud = src
-	static_inventory += using
-
-	//CITADEL CHANGES - sprint button
-	using = new /obj/screen/sprintbutton
-	using.icon = tg_ui_icon_to_cit_ui(ui_style)
-	using.icon_state = ((owner.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) ? "act_sprint_on" : "act_sprint")
-	using.screen_loc = ui_movi
-	using.hud = src
-	static_inventory += using
-	//END OF CITADEL CHANGES
-
-	//same as above but buffer.
-	sprint_buffer = new /obj/screen/sprint_buffer
-	sprint_buffer.screen_loc = ui_sprintbufferloc
-	sprint_buffer.hud = src
-	static_inventory += sprint_buffer
+	assert_move_intent_ui()
 
 	// clickdelay
 	clickdelay = new
@@ -392,6 +372,42 @@
 			inv.update_icon()
 
 	update_locked_slots()
+
+/datum/hud/human/assert_move_intent_ui()
+	// delete old ones
+	var/list/obj/screen/victim += list()
+	victims += locate(/obj/screen/mov_intent) in static_inventory
+	victims += locate(/obj/screen/sprintbutton) in static_inventory
+	victims += locate(/obj/screen/sprint_buffer) in sttatic_inventory
+	if(victims)
+		QDEL_LIST(victims)
+		static_inventory -= victims
+
+	// make new ones
+	using = new /obj/screen/mov_intent
+	using.icon = tg_ui_icon_to_cit_ui(ui_style) // CIT CHANGE - overrides mov intent icon
+	using.screen_loc = ui_movi
+	using.hud = src
+	using.update_icon()
+	static_inventory += using
+
+	if(!CONFIG_GET(flag/sprint_enabled))
+		return
+
+	//CITADEL CHANGES - sprint button
+	using = new /obj/screen/sprintbutton
+	using.icon = tg_ui_icon_to_cit_ui(ui_style)
+	using.icon_state = ((owner.combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) ? "act_sprint_on" : "act_sprint")
+	using.screen_loc = ui_movi
+	using.hud = src
+	static_inventory += using
+	//END OF CITADEL CHANGES
+
+	//same as above but buffer.
+	sprint_buffer = new /obj/screen/sprint_buffer
+	sprint_buffer.screen_loc = ui_sprintbufferloc
+	sprint_buffer.hud = src
+	static_inventory += sprint_buffer
 
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
