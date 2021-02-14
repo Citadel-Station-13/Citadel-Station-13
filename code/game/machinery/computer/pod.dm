@@ -26,7 +26,8 @@
 	if(COOLDOWN_FINISHED(src, massdriver_countdown))
 		timing = FALSE
 		// alarm() sleeps, so we want to end processing first and can't rely on return PROCESS_KILL
-		end_processing()
+		// end_processing()
+		STOP_PROCESSING(SSmachines, src)
 		alarm()
 
 /**
@@ -102,11 +103,13 @@
 			timing = !timing
 			if(timing)
 				COOLDOWN_START(src, massdriver_countdown, time SECONDS)
-				begin_processing()
+				// begin_processing()
+				START_PROCESSING(SSmachines, src)
 			else
 				time = COOLDOWN_TIMELEFT(src, massdriver_countdown) * 0.1
 				COOLDOWN_RESET(src, massdriver_countdown)
-				end_processing()
+				// end_processing()
+				STOP_PROCESSING(SSmachines, src)
 			return TRUE
 		if("input")
 			var/value = text2num(params["adjust"])
