@@ -90,7 +90,7 @@
 /**
  * English_list but associative supporting. Higher overhead.
  */
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "")
+/proc/english_list_assoc(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "")
 	var/total = length(input)
 	switch(total)
 		if (0)
