@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	//Logs all hrefs, except chat pings
-	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
+	if(!(href_list.len == 4 && href_list["tgui"] == 1 && href_list["window_id"] == browseroutput && href_list["type"] == "ping" && href_list["payload"] == "%7B%22index%22%3A2%7D"))
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	//byond bug ID:2256651
