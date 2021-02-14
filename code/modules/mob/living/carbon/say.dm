@@ -10,8 +10,9 @@
 /mob/living/carbon/can_speak_vocal(message)
 	if(silent)
 		return 0
-	if(get_message_language(message) == /datum/language/signlanguage && (handcuffed || (!src.get_bodypart(BODY_ZONE_L_ARM) && !src.get_bodypart(BODY_ZONE_R_ARM)) || held_items.len == 2 || (held_items.len == 1 && (!src.get_bodypart(BODY_ZONE_L_ARM) || !src.get_bodypart(BODY_ZONE_R_ARM)))))
-		return 0
+	if(get_selected_language() == /datum/language/signlanguage)
+		if(handcuffed)
+			return 0
 	return ..()
 
 /mob/living/carbon/could_speak_language(datum/language/language)
