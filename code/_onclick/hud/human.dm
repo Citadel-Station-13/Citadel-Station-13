@@ -380,8 +380,10 @@
 	victims += locate(/obj/screen/sprintbutton) in static_inventory
 	victims += locate(/obj/screen/sprint_buffer) in sttatic_inventory
 	if(victims)
-		QDEL_LIST(victims)
 		static_inventory -= victims
+		if(mymob?.client)
+			mymob.client.screen_objects -= victims
+		QDEL_LIST(victims)
 
 	// make new ones
 	using = new /obj/screen/mov_intent
