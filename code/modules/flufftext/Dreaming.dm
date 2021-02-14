@@ -9,6 +9,24 @@
 
 	dream_fragments += "you see"
 
+	//NIGHTMARE
+	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+	if(prob(mood.sanity-100)&&(mood.sanity < 60)||prob(5))
+		var/safefeel
+		for(var/obj/item/bedsheet/sheet in loc)
+			safefeel++
+		if(safefeel && mood.sanity > (40 / safefeel))
+			return
+		fragment += pick(GLOB.dream_strings)
+		if(findtext(fragment, "%A% "))
+			fragment = replacetext(fragment, "%ADJECTIVE% ", "")
+			fragment = "\a [replacetext(fragment, "%A% ", "")]"
+			to_chat(src, "<span class='warning'><b>You have a terrifying nightmare about [fragment]...</b></span>")
+			src.visible_message("<span class='notice'>[src] shakes in their sleep.</span>")
+			src.do_jitter_animation() //shake in their sleep.
+			fragment = ""
+			return
+
 	//Subject
 	if(custom_dream_nouns.len && prob(90))
 		fragment += pick(custom_dream_nouns)
