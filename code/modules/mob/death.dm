@@ -1,6 +1,6 @@
 //This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
-/mob/proc/gib()
+/mob/proc/gib(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	return
 
 //This is the proc for turning a mob into ash. Mostly a copy of gib code (above).

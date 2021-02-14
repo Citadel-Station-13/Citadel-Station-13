@@ -1,5 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "The exofab can now print prosthetic limbs"
-  - bugfix: "The exofab was missing access to multiple cybernetic organs. This has now been rectified."

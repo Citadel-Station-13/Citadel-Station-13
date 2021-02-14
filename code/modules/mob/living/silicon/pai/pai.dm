@@ -143,6 +143,10 @@
 	custom_holoform.Grant(src)
 	emitter_next_use = world.time + 10 SECONDS
 
+/mob/living/silicon/pai/deployed/Initialize()
+	. = ..()
+	fold_out(TRUE)
+
 /mob/living/silicon/pai/ComponentInitialize()
 	. = ..()
 	if(possible_chassis[chassis])
@@ -425,6 +429,10 @@
 	.["Cyborg - Science (dog - valesci)"] = curr
 	//Misc
 	.["Cyborg - Misc (dog - blade)"] = process_holoform_icon_filter(icon('modular_citadel/icons/mob/widerobot.dmi', "blade"), HOLOFORM_FILTER_PAI, FALSE)
+
+	// Gorillas
+	.["Gorilla (standing)"] = process_holoform_icon_filter(icon('icons/mob/gorilla.dmi', "standing"), HOLOFORM_FILTER_PAI, FALSE)
+	.["Gorilla (crawling)"] = process_holoform_icon_filter(icon('icons/mob/gorilla.dmi', "crawling"), HOLOFORM_FILTER_PAI, FALSE)
 
 /mob/living/silicon/pai/proc/default_chassis_pixel_offsets_x()
 	. = list()

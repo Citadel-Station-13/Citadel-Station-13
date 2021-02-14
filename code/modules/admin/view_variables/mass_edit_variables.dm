@@ -104,7 +104,7 @@
 				if (!thing)
 					continue
 				var/datum/D = thing
-				if (D.vv_edit_var(variable, initial(D.vars[variable])) != FALSE)
+				if (D.vv_edit_var(variable, initial(D.vars[variable]), TRUE) != FALSE)
 					accepted++
 				else
 					rejected++
@@ -135,7 +135,7 @@
 					for(var/V in varsvars)
 						new_value = replacetext(new_value,"\[[V]]","[D.vars[V]]")
 
-				if (D.vv_edit_var(variable, new_value) != FALSE)
+				if (D.vv_edit_var(variable, new_value, TRUE) != FALSE)
 					accepted++
 				else
 					rejected++
@@ -161,7 +161,7 @@
 				if(many && !new_value)
 					new_value = new type()
 
-				if (D.vv_edit_var(variable, new_value) != FALSE)
+				if (D.vv_edit_var(variable, new_value, TRUE) != FALSE)
 					accepted++
 				else
 					rejected++
@@ -176,7 +176,7 @@
 				if (!thing)
 					continue
 				var/datum/D = thing
-				if (D.vv_edit_var(variable, new_value) != FALSE)
+				if (D.vv_edit_var(variable, new_value, TRUE) != FALSE)
 					accepted++
 				else
 					rejected++

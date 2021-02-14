@@ -1,13 +1,20 @@
 import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section, Table, NumberInput } from '../components';
 import { Window } from '../layouts';
 
 export const ChemDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   const recording = !!data.recordingRecipe;
+  const [hasCol, setHasCol] = useLocalState(
+    context, 'fs_title', false);
+  const [modeToggle, setModeToggle] = useLocalState(
+    context, 'mode_toggle', true);
+  const {
+    storedContents = [],
+  } = data;
   // TODO: Change how this piece of shit is built on server side
   // It has to be a list, not a fucking OBJECT!
   const recipes = Object.keys(data.recipes)
@@ -28,17 +35,27 @@ export const ChemDispenser = (props, context) => {
   return (
     <Window
       width={565}
-      height={620}
+      height={data.canStore ? 720 : 620}
       resizable>
       <Window.Content scrollable>
         <Section
           title="Status"
-          buttons={recording && (
-            <Box inline mx={1} color="red">
-              <Icon name="circle" mr={1} />
-              Recording
-            </Box>
-          )}>
+          buttons={
+            [(recording && (
+              <Box inline mx={1} color="red">
+                <Icon name="circle" mr={1} />
+                Recording
+              </Box>
+            )),
+            <Button     // eslint-disable-line
+              key="colorButton"
+              icon="cog"
+              disabled={!data.isBeakerLoaded}
+              tooltip="Alternate between buttons and radial input"
+              tooltipPosition="bottom-left"
+              selected={modeToggle}
+              onClick={() => setModeToggle(!modeToggle)} />]
+          }>
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar
@@ -103,18 +120,40 @@ export const ChemDispenser = (props, context) => {
           </Box>
         </Section>
         <Section
+          key="dispense"
           title="Dispense"
           buttons={(
-            beakerTransferAmounts.map(amount => (
-              <Button
-                key={amount}
-                icon="plus"
-                selected={amount === data.amount}
-                content={amount}
-                onClick={() => act('amount', {
-                  target: amount,
-                })} />
-            ))
+            [modeToggle ? (
+              beakerTransferAmounts.map(amount => (
+                <Button
+                  key={amount}
+                  icon="plus"
+                  selected={amount === data.amount}
+                  content={amount}
+                  onClick={() => act('amount', {
+                    target: amount,
+                  })} />
+              ))) : (!!data.isBeakerLoaded
+                && <NumberInput
+                  key="dispenseInput"
+                  width="65px"
+                  unit="u"
+                  step={data.stepAmount}
+                  stepPixelSize={data.stepAmount}
+                  disabled={!data.isBeakerLoaded}
+                  value={data.amount}
+                  minValue={1}
+                  maxValue={data.beakerMaxVolume}
+                  onDrag={(e, amount) => act('amount', {
+                    target: amount,
+                  })} />),
+            <Button       // eslint-disable-line
+              key="colorButton"
+              icon="cog"
+              tooltip="Color code the reagents by pH"
+              tooltipPosition="bottom-left"
+              selected={hasCol}
+              onClick={() => setHasCol(!hasCol)} />]
           )}>
           <Box mr={-1}>
             {data.chemicals.map(chemical => (
@@ -124,12 +163,40 @@ export const ChemDispenser = (props, context) => {
                 width="129.5px"
                 lineHeight={1.75}
                 content={chemical.title}
+                tooltip={"pH: " + chemical.pH}
+                backgroundColor={hasCol ? chemical.pHCol : "primary"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />
             ))}
           </Box>
         </Section>
+        {!!data.canStore && (
+          <Section
+            title="Storage"
+            buttons={
+              <Box>
+                Transfer amount:
+                <AnimatedNumber
+                  initial={5}
+                  value={data.amount} />
+                u
+              </Box>
+            }>
+            <ProgressBar
+              value={data.storedVol / data.maxVol}>
+              {toFixed(data.storedVol) + ' units / ' + data.maxVol + ' units'}
+            </ProgressBar>
+            <ChemicalBuffer>
+              {storedContents.map(chemical => (
+                <ChemicalBufferEntry
+                  key={chemical.id}
+                  chemical={chemical}
+                  transferTo="beaker" />
+              ))}
+            </ChemicalBuffer>
+          </Section>
+        )}
         <Section
           title="Beaker"
           buttons={(
@@ -155,14 +222,14 @@ export const ChemDispenser = (props, context) => {
               {recording
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
-                  && (
-                    <Fragment>
-                      <AnimatedNumber
-                        initial={0}
-                        value={data.beakerCurrentVolume} />
-                      /{data.beakerMaxVolume} units
-                    </Fragment>
-                  )
+                && (
+                  <Fragment>
+                    <AnimatedNumber
+                      initial={0}
+                      value={data.beakerCurrentVolume} />
+                    /{data.beakerMaxVolume} units
+                  </Fragment>
+                )
                 || 'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item
@@ -171,17 +238,14 @@ export const ChemDispenser = (props, context) => {
                 {(!data.isBeakerLoaded && !recording) && 'N/A'
                   || beakerContents.length === 0 && 'Nothing'}
               </Box>
-              {beakerContents.map(chemical => (
-                <Box
-                  key={chemical.name}
-                  color="label">
-                  <AnimatedNumber
-                    initial={0}
-                    value={chemical.volume} />
-                  {' '}
-                  units of {chemical.name}
-                </Box>
-              ))}
+              <ChemicalBeaker>
+                {beakerContents.map(chemical => (
+                  <ChemicalBeakerEntry
+                    key={chemical.id}
+                    chemical={chemical}
+                    transferTo="beaker" />
+                ))}
+              </ChemicalBeaker>
               <Box
                 key={"pH"}>
                 pH:
@@ -194,5 +258,62 @@ export const ChemDispenser = (props, context) => {
         </Section>
       </Window.Content>
     </Window>
+  );
+};
+
+
+const ChemicalBuffer = Table;
+
+const ChemicalBufferEntry = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { chemical, transferTo } = props;
+  return (
+    <Table.Row key={chemical.id}>
+      <Table.Cell color="label">
+        <AnimatedNumber
+          value={chemical.volume}
+          initial={0} />
+        {` units of ${chemical.name}`}
+      </Table.Cell>
+      <Table.Cell collapsing>
+        <Button
+          content="Dispense"
+          icon="download"
+          disabled={!!data.recordingRecipe || !data.isBeakerLoaded}
+          mt={0.5}
+          onClick={() => act('unstore', {
+            id: chemical.id,
+          })} />
+      </Table.Cell>
+    </Table.Row>
+  );
+};
+
+const ChemicalBeaker = Table;
+
+const ChemicalBeakerEntry = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { chemical, transferTo } = props;
+  return (
+    <Table.Row key={chemical.id}>
+      <Table.Cell color="label">
+        <AnimatedNumber
+          value={chemical.volume}
+          initial={0} />
+        {` units of ${chemical.name}`}
+      </Table.Cell>
+      {!!data.canStore && (
+        <Table.Cell collapsing>
+          <Button
+            content="Store"
+            icon="upload"
+            disabled={!!data.recordingRecipe}
+            mt={0.5}
+            onClick={() => act('store', {
+              id: chemical.id,
+            })} />
+        </Table.Cell>
+      )}
+    </Table.Row>
   );
 };

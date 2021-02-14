@@ -216,7 +216,6 @@
 	..()
 
 /datum/reagent/fermi/nanite_b_gone/overdose_process(mob/living/carbon/C)
-	//var/component/nanites/N = M.GetComponent(/datum/component/nanites)
 	var/datum/component/nanites/N = C.GetComponent(/datum/component/nanites)
 	if(prob(5))
 		to_chat(C, "<span class='warning'>The residual voltage from the nanites causes you to seize up!</b></span>")
@@ -230,7 +229,7 @@
 	N.adjust_nanites(-10*cached_purity)
 	..()
 
-datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
+/datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	for(var/active_obj in react_objs)
 		if(O == active_obj)
 			return
@@ -335,39 +334,75 @@ datum/reagent/fermi/nanite_b_gone/reaction_obj(obj/O, reac_volume)
 	holder.clear_reagents()
 
 /datum/reagent/fermi/acidic_buffer
-	name = "Acidic buffer"
+	name = "Strong acidic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
 	color = "#fbc314"
 	pH = 0
+	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = TRUE
+	var/strength = 1.5
 
 //Consumes self on addition and shifts pH
 /datum/reagent/fermi/acidic_buffer/on_new(datapH)
+	if(!holder)
+		return ..()
+	if(holder.reagents_holder_flags & NO_REACT)
+		return..()
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return ..()
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
+	if(holder.pH < pH)
+		holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the buffer is added, to no effect.</b></span>")
+		playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
+		return ..()
+	holder.pH = clamp((((holder.pH * (holder.total_volume-(volume*strength)))+(pH * (volume*strength)) )/holder.total_volume), 0, 14) //This is BEFORE removal
 	holder.my_atom.visible_message("<span class='warning'>The beaker fizzes as the pH changes!</b></span>")
 	playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)
 	..()
 
+/datum/reagent/fermi/acidic_buffer/weak
+	name = "Acidic buffer"
+	description = "This reagent will consume itself and move the pH of a beaker towards acidity when added to another."
+	color = "#fbf344"
+	pH = 4
+	can_synth = TRUE
+	strength = 0.25
+
 /datum/reagent/fermi/basic_buffer
-	name = "Basic buffer"
+	name = "Strong basic buffer"
 	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
 	color = "#3853a4"
 	pH = 14
+	chemical_flags = REAGENT_FORCEONNEW
 	can_synth = TRUE
+	var/strength = 1.5
+
+/datum/reagent/fermi/basic_buffer/weak
+	name = "Basic buffer"
+	description = "This reagent will consume itself and move the pH of a beaker towards alkalinity when added to another."
+	color = "#5873c4"
+	pH = 10
+	can_synth = TRUE
+	strength = 0.25
 
 /datum/reagent/fermi/basic_buffer/on_new(datapH)
+	if(!holder)
+		return ..()
+	if(holder.reagents_holder_flags & NO_REACT)
+		return..()
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return ..()
 	data = datapH
 	if(LAZYLEN(holder.reagent_list) == 1)
 		return ..()
-	holder.pH = ((holder.pH * holder.total_volume)+(pH * (volume)))/(holder.total_volume + (volume))
+	if(holder.pH > pH)
+		holder.my_atom.visible_message("<span class='warning'>The beaker froths as the buffer is added, to no effect.</b></span>")
+		playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
+		return ..()
+	holder.pH = clamp((((holder.pH * (holder.total_volume-(volume*strength)))+(pH * (volume*strength)) )/holder.total_volume), 0, 14) //This is BEFORE removal
 	holder.my_atom.visible_message("<span class='warning'>The beaker froths as the pH changes!</b></span>")
 	playsound(holder.my_atom, 'sound/FermiChem/bufferadd.ogg', 50, 1)
 	holder.remove_reagent(type, volume, ignore_pH = TRUE)

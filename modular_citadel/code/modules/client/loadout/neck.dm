@@ -30,6 +30,10 @@
 	name = "Choker"
 	path = /obj/item/clothing/neck/petcollar/choker
 
+/datum/gear/neck/cowbell
+	name = "Cowbell collar"
+	path = /obj/item/clothing/neck/necklace/cowbell
+
 /datum/gear/neck/scarf
 	name = "White scarf"
 	subcategory = LOADOUT_SUBCATEGORY_NECK_SCARVES
@@ -86,7 +90,7 @@
 /datum/gear/neck/polycloak
 	name = "Polychromatic Cloak"
 	path = /obj/item/clothing/neck/cloak/polychromic
-	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#FFFFFF", "#FFFFFF", "#808080")
 
 /datum/gear/neck/altpolycloak
@@ -94,3 +98,9 @@
 	path = /obj/item/clothing/neck/cloak/alt/polychromic
 	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#FFFFFF", "#676767", "#4C4C4C")
+
+/datum/gear/neck/cancloak
+	name = "Canvas Cloak"
+	path = /obj/item/clothing/neck/cancloak/polychromic
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#585858", "#373737", "#BEBEBE")

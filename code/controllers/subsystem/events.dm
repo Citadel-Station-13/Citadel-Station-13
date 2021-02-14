@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(events)
 	return ..()
 
 
-/datum/controller/subsystem/events/fire(resumed = 0)
+/datum/controller/subsystem/events/fire(resumed = FALSE)
 	if(!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(events)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			running.Remove(thing)
 		if (MC_TICK_CHECK)
@@ -91,13 +91,13 @@ SUBSYSTEM_DEF(events)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
 	else if(. == EVENT_READY)
-		E.random = TRUE
-		E.runEvent(TRUE)
+		E.runEvent(random = TRUE)
 
 //allows a client to trigger an event
 //aka Badmin Central
 // > Not in modules/admin
 // REEEEEEEEE
+// Why the heck is this here! Took me so damn long to find!
 /client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Admin.Events"

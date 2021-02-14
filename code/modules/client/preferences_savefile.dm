@@ -271,7 +271,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			loadout_data["SAVE_[i]"] = list()
 		for(var/some_gear_item in saved_loadout_paths)
 			if(!ispath(text2path(some_gear_item)))
-				message_admins("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
+				log_game("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
 				continue
 			var/datum/gear/gear_item = text2path(some_gear_item)
 			if(!(initial(gear_item.loadout_flags) & LOADOUT_CAN_COLOR_POLYCHROMIC))
@@ -604,6 +604,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_model"]				>> features["body_model"]
 	S["body_size"]				>> features["body_size"]
 	S["age"]					>> age
+	S["language"]				>> language
+	S["choselanguage"]			>> choselanguage
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
 	S["eye_type"]				>> eye_type
@@ -947,6 +949,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["body_model"]				, features["body_model"])
 	WRITE_FILE(S["body_size"]				, features["body_size"])
 	WRITE_FILE(S["age"]						, age)
+	WRITE_FILE(S["language"]				, language)
+	WRITE_FILE(S["choselanguage"]			, choselanguage)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
 	WRITE_FILE(S["eye_type"]				, eye_type)

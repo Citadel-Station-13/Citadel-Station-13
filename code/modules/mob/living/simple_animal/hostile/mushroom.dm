@@ -28,7 +28,6 @@
 	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speed = 1
-	ventcrawler = VENTCRAWLER_ALWAYS
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
@@ -40,6 +39,10 @@
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
 	var/static/mutable_appearance/cap_living //Where we store our cap icons so we dont generate them constantly to update our icon
 	var/static/mutable_appearance/cap_dead
+
+/mob/living/simple_animal/hostile/mushroom/Initialize()
+	. = ..()
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	. = ..()

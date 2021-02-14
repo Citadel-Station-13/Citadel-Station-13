@@ -66,7 +66,12 @@
 
 /turf/open/transparent/glass/Initialize()
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
-	return ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/floor/glass/LateInitialize()
+	. = ..()
+	// AddElement(/datum/element/turf_z_transparency, TRUE)
 
 /turf/open/transparent/glass/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin removing glass...</span>")

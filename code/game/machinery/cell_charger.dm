@@ -10,7 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/charge_rate = 500
+	var/recharge_coeff = 1
 
 /obj/machinery/cell_charger/update_overlays()
 	. += ..()
@@ -28,9 +28,10 @@
 	. = ..()
 	. += "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
-		. += "Current charge: [round(charging.percent(), 1)]%."
+		var/obj/item/stock_parts/cell/C = charging.get_cell()
+		. += "Current charge: [C.percent()]%."
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.</span>"
+		. += "<span class='notice'>The status display reads: Charge rate at <b>[recharge_coeff*10]J</b> per cycle.</span>"
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -122,17 +123,18 @@
 		charging.emp_act(severity)
 
 /obj/machinery/cell_charger/RefreshParts()
-	charge_rate = 500
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		charge_rate *= C.rating
+		recharge_coeff = C.rating
 
 /obj/machinery/cell_charger/process()
 	if(!charging || !anchored || (stat & (BROKEN|NOPOWER)))
 		return
 
-	if(charging.percent() >= 100)
-		return
-	use_power(charge_rate)
-	charging.give(charge_rate)	//this is 2558, efficient batteries exist
+	if(charging)
+		var/obj/item/stock_parts/cell/C = charging.get_cell()
+		if(C)
+			if(C.charge < C.maxcharge)
+				C.give(C.chargerate * recharge_coeff)
+				use_power(250 * recharge_coeff)
 
 	update_icon()

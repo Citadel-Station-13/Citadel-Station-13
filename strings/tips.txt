@@ -295,7 +295,7 @@ In a pinch, stripping yourself naked will give you a sizeable resistance to bein
 Wearing riot armor makes you significantly more effective at performing tackle takedowns, but will use extra stamina with each leap! It will also significantly protect you from other tackles!
 Epipens contain a powerful coagulant that drastically reduces bleeding on all bleeding wounds. If you don't have time to properly treat someone with lots of slashes or piercings, stick them with a pen to buy some time!
 Anything you can light a cigarette with, you can use to cauterize a bleeding wound. Technically, that includes the supermatter.
-Suit storage units entirely purge radiation from any carbon mob put inside of them when cycling, at the cost of some horrific burns, this is a very effective strategy to clean someone up after they bathed in the engine.
+Suit storage units, when hacked, entirely purge radiation from any carbon mob put inside of them when cycling, at the cost of some horrific burns, this is a very effective strategy to clean someone up after they bathed in the engine.
 Laser pointers can be upgraded by replacing its micro laser with a better one from RnD! Use a screwdriver on it to remove the old laser. Upgrading the laser pointer gives you better odds of stunning a cyborg, and even blinding people with sunglasses.
 Being out of combat mode makes makes you deal less damage to people and objects when attacking. This stacks with the penalty incurred by resting.
 Resting makes you deal less damage to people and objects when attacking. This stacks with the penalty incurred by being out of combat mode.

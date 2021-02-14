@@ -13,8 +13,9 @@
 	var/nightime_duration = 900 //15 Minutes
 
 /obj/effect/sunlight/Initialize()
-	countdown()
-	hud_tick()
+	. = ..()
+	INVOKE_ASYNC(src, .proc/countdown)
+	INVOKE_ASYNC(src, .proc/hud_tick)
 
 /obj/effect/sunlight/proc/countdown()
 	set waitfor = FALSE

@@ -33,6 +33,16 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	mutantrace_variation = STYLE_MUZZLE
 
+/obj/item/clothing/mask/surgical/aesthetic
+	name = "aesthetic sterile mask"
+	desc = "A sterile mask designed to help prevent the spread of diseases. This one doesn't seem like it does a whole lot, somehow."
+	flags_inv = null
+	flags_cover = null
+	visor_flags_inv = null
+	visor_flags_cover = null
+	permeability_coefficient = 1
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
 

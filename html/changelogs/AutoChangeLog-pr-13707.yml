@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "Robotpeople are now fully immune to the effects of alcohol (drunkness etc.)"
-  - tweak: "Renames the alcohol intolerance trait in the code to make what it does more clear."

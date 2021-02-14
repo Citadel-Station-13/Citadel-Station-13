@@ -116,7 +116,10 @@
 		holder.remove_reagent(id, added_volume*temp_ratio)
 	if(St.purity < 1)
 		St.volume *= St.purity
+		added_volume *= St.purity
 		St.purity = 1
+	if(!N)
+		return
 	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
