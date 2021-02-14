@@ -383,7 +383,7 @@
 	if(victims)
 		static_inventory -= victims
 		if(mymob?.client)
-			mymob.client.screen_objects -= victims
+			mymob.client.screen -= victims
 		QDEL_LIST(victims)
 
 	// make new ones
