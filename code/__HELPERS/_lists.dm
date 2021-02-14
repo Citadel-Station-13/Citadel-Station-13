@@ -101,7 +101,7 @@
 		if (2)
 			var/assoc = input[input[1]] == null? "" : " = [input[input[1]]]"
 			var/assoc2 = input[input[2]] == null? "" : " = [input[input[2]]]"
-			return "[input[1]][and_text][input[2]]"
+			return "[input[1]][assoc][and_text][input[2]][assoc2]"
 		else
 			var/output = ""
 			var/index = 1
