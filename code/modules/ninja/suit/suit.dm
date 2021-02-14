@@ -43,7 +43,7 @@
 	///How much energy the suit expends in a single process
 	var/s_cost = 1
 	///Additional energy cost for cloaking per process
-	var/s_acost = 4
+	var/s_acost = 20
 	///How fast the suit is at certain actions, like draining power from things
 	var/s_delay = 40
 	///Units of radium required to refill the adrenaline boost
