@@ -518,6 +518,6 @@
 	icon_state = initial(icon_state)
 
 /obj/item/clothing/shoes/swagshoes
-	name = "swag shoes"
+	name = "badass-looking shoes"
 	desc = "They got me for my foams!"
 	icon_state = "swagshoes"
