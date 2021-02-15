@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - config: "sprint removal entry added, UI will revert to old UI while this is active."
