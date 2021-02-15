@@ -333,8 +333,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/obj/item/bodypart/rightarm = get_bodypart(BODY_ZONE_R_ARM)
 	if(HAS_TRAIT(src, TRAIT_MUTE) && get_selected_language() != /datum/language/signlanguage)
 		return 0
-			
-	if (rightarm.is_disabled() && leftarm.is_disabled() && get_selected_language() == /datum/language/signlanguage)
+	
+	if ((rightarm == null || rightarm.is_disabled()) && (leftarm == null ||leftarm.is_disabled()) && get_selected_language() == /datum/language/signlanguage)
 		return 0
 
 	if(is_muzzled())
