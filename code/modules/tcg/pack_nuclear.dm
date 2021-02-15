@@ -180,7 +180,7 @@
 	health = 4
 
 	faction = "Syndicate"
-	rarity = "Rare"
+	rarity = "Epic"
 	card_type = "Unit"
 
 /datum/tcg_card/pack_nuclear/emag
@@ -207,6 +207,18 @@
 	rarity = "Rare"
 	card_type = "Spell"
 
+/datum/tcg_card/pack_nuclear/honkbomb
+	name = "H.O.N.K. Bomb"
+	desc = "A bomb filled to the brim with bananium and dehydrated clowns!"
+	rules = "Search your deck for up to 3 Clowns. Play them for free. Shuffle the deck afterwards."
+	icon_state = "honkbomb"
+
+	mana_cost = 8
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Spell"
+
 /datum/tcg_card/pack_nuclear/assault_pod
 	name = "Assault Pod"
 	desc = "Raining Steel. Nothing personnel, just disky."
@@ -230,3 +242,66 @@
 	faction = "Syndicate"
 	rarity = "Common"
 	card_type = "Spell"
+
+/datum/tcg_card/pack_nuclear/emp
+	name = "EMP Grenade"
+	desc = "A modern-looking grenade which creates a powerful EMP upon activation. Do not eat."
+	rules = "Deal 2 damage to an enemy silicon unit."
+	icon_state = "emp"
+
+	mana_cost = 0
+
+	faction = "Syndicate"
+	rarity = "Common"
+	card_type = "Spell"
+
+/datum/tcg_card/pack_nuclear/zombie
+	name = "Romerol Zombie"
+	desc = "A horrible abomination, resembling a dead human. Has green skin and red claws. Wait, is it blood dripping from them?"
+	rules = "After killing an enemy unit, search your deck for a Zombie and summon it for free."
+	icon_state = "zombie"
+
+	mana_cost = 8
+	attack = 4
+	health = 3
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Unit"
+
+/datum/tcg_card/pack_nuclear/north_star
+	name = "North Star Armbands"
+	desc = "The armbands of a deadly martial artist. Makes you pretty keen to put an end to evil in an extremely violent manner."
+	rules = "Equipped unit can attack twice per turn."
+	icon_state = "north_star"
+
+	mana_cost = 4
+
+	faction = "Syndicate"
+	rarity = "Rare"
+	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/fastdetonation
+	name = "Big-Ass Red Button"
+	desc = "A menacing red button. What could it do?"
+	rules = "Activate all spells that require several turns to occur."
+	icon_state = "fastdetonation"
+
+	mana_cost = 2
+
+	faction = "Syndicate"
+	rarity = "Common"
+	card_type = "Spell"
+
+/datum/tcg_card/pack_nuclear/rpg
+	name = "PML-9 Rocket Launcher"
+	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
+	rules = "When equipped unit attacks enemy units, flip a coin. If heads, destroy the unit. If tails, deal 1/2 damage instead of the full blow."
+	icon_state = "rpg"
+
+	mana_cost = 8
+	attack = 6
+
+	faction = "Syndicate"
+	rarity = "Legendary"
+	card_type = "Equipment"
