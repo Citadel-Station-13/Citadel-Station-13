@@ -1,8 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "Kneecapped pugilist parries somewhat."
-  - balance: "Slightly nerfed default unarmed parries."
-  - balance: "Slightly nerfed traitor armwrap parries."
-  - bugfix: "Pugilist parries now cannot perfectly defend against projectiles, as they were supposed to."
-  - bugfix: "Some parrying numbers that one would think were in seconds didn't have the SECONDS. I added those."
