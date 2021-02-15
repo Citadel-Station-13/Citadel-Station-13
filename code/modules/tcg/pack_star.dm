@@ -236,7 +236,7 @@
 	mana_cost = 8
 
 	faction = "Exodia"
-	rarity = "Legendary"
+	rarity = "Exodia"
 	card_type = "Spell"
 
 /datum/tcg_card/exodia/exodia_tesla

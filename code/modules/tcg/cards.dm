@@ -288,10 +288,12 @@
 
 	var/list/cards = list()
 	for(var/card_type in series)
-		var/datum/tcg_card/new_card = new card_type()
-		if(new_card.name == "Stupid Coder")
-			continue
-		cards.Add(subtypesof(card_type))
+		for(var/card in subtypesof(card_type))
+			var/datum/tcg_card/new_card = new card()
+			if(new_card.name == "Stupid Coder")
+				continue
+			cards.Add(subtypesof(card))
+			qdel(new_card)
 	var/list/possible_cards = list()
 	var/list/rarity_cards = list("Exodia" = list(), "Legendary" = list(), "Epic" = list(), "Rare" = list(), "Common" = list())
 	for(var/card in cards)
@@ -465,7 +467,7 @@
 		var/image/I = image(icon = card.icon, icon_state = card.icon_state)
 		var/matrix/ntransform = matrix(I.transform)
 		ntransform.TurnTo(angular, 0)
-		ntransform.Translate(sin(angular) * 15, cos(angular) * 15)
+		ntransform.Translate(sin(angular) * -15, cos(angular) * 15)
 		I.transform = ntransform
 		angular += 30
 		overlays += I
