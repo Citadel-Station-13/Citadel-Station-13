@@ -460,7 +460,7 @@
 		var/image/I = image(icon = card.icon, icon_state = card.icon_state)
 		var/matrix/ntransform = matrix(I.transform)
 		ntransform.TurnTo(angular, 0)
-		ntransform.Translate(sin(angular) * -15, cos(angular) * -15)
+		ntransform.Translate(cos(angular) * -15, sin(angular) * 15)
 		I.transform = ntransform
 		angular += 30
 		overlays += I
