@@ -161,6 +161,7 @@
 			second_card.forceMove(hand)
 			hand.cards.Add(src)
 			hand.cards.Add(second_card)
+			user.put_in_hands(hand)
 			hand.update_icon()
 			return ..()
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
@@ -292,7 +293,7 @@
 			var/datum/tcg_card/new_card = new card()
 			if(new_card.name == "Stupid Coder")
 				continue
-			cards.Add(subtypesof(card))
+			cards.Add(card)
 			qdel(new_card)
 	var/list/possible_cards = list()
 	var/list/rarity_cards = list("Exodia" = list(), "Legendary" = list(), "Epic" = list(), "Rare" = list(), "Common" = list())
@@ -302,6 +303,8 @@
 			continue
 		possible_cards[card] = rarity_table[new_card.rarity]
 		var/list/rarity_card_type = rarity_cards[new_card.rarity]
+		if(!rarity_card_type)
+			rarity_card_type = list()
 		rarity_card_type.Add(card)
 		rarity_cards[new_card.rarity] = rarity_card_type //FUCK CI
 		qdel(new_card)
@@ -462,7 +465,7 @@
 /obj/item/tcgcard_hand/update_icon()
 	. = ..()
 	cut_overlays()
-	var/angular = length(cards) / 2 * -30
+	var/angular = length(cards) / 2 * -30 + 15
 	for(var/obj/item/tcg_card/card in cards)
 		var/image/I = image(icon = card.icon, icon_state = card.icon_state)
 		var/matrix/ntransform = matrix(I.transform)
