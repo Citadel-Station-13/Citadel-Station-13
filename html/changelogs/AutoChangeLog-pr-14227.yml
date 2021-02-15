@@ -1,7 +1,0 @@
-author: "Adelphon"
-delete-after: True
-changes: 
-  - rscadd: "polychromatic shoes"
-  - rscadd: "polychromatic windbreaker"
-  - rscadd: "polychromatic canvas cloak"
-  - bugfix: "digitigrade charismatic suit texture"
