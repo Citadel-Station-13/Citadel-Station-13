@@ -357,7 +357,7 @@
 	item_state = "sakura_kimono"
 
 /obj/item/clothing/under/costume/swagoutfit
-	name = "swag outfit"
+	name = "badass-looking outfit"
 	desc = "Why don't you go secure some bitches?"
 	icon_state = "swagsuit"
 	can_adjust = FALSE
