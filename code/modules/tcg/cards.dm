@@ -674,3 +674,5 @@
 
 		  A direct attack healths as follows: The attacking unit declares an attack against the opponent's lifeshards. Your opponent may then declare a defender if one is available, who will then turn the combat into an attack against a unit for the purposes of combat that turn. If the attack is not blocked, and the direct attack connects, then your opponent loses a number of lifeshards equal to the attacking units power. </span>"
 
+#undef TAPPED_ANGLE
+#undef UNTAPPED_ANGLE
