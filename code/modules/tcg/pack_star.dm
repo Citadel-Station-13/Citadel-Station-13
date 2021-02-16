@@ -230,7 +230,7 @@
 /datum/tcg_card/exodia/exodia_singulo
 	name = "Singularity"
 	desc = "A monstrous gravitational singularity, pitch black(but not quiet) and very menacings."
-	rules = "This card doesn't leave field. At the end of each turn: Remove all the cards from the field."
+	rules = "This card doesn't leave field. At the end of each turn: Remove all the cards(except other Exodia cards) from the field."
 	icon_state = "exodia_singularity"
 
 	mana_cost = 8
@@ -242,7 +242,7 @@
 /datum/tcg_card/exodia/exodia_tesla
 	name = "Energy Orb"
 	desc = "An orb made out of hypercharged plasma. An ultimate bug zapper."
-	rules = "This card doesn't leave field. Every turn all units take 2 damage."
+	rules = "This card doesn't leave field. Every turn all units take 4 damage."
 	icon_state = "exodia_tesla"
 
 	mana_cost = 8
@@ -254,7 +254,7 @@
 /datum/tcg_card/exodia/exodia_narie
 	name = "Nar-Sie"
 	desc = "An avatar of the Nar-Sie, one of the Eldritch Gods."
-	rules = "This card doesn't leave field. Every turn all friendly units take 1 damage and you restore 1 lifeshard	."
+	rules = "This card doesn't leave field. Every turn all units take 1 damage and you restore 1 lifeshard."
 	icon_state = "exodia_narsie"
 
 	mana_cost = 8
@@ -266,7 +266,7 @@
 /datum/tcg_card/exodia/exodia_ratvar
 	name = "Ratvar"
 	desc = "Ratvar, the god of cogs and clockwork mechanisms, was trapped by Nar-Sie a long ago."
-	rules = "This card doesn't leave field. Every turn enemy hero recieves 1 lifeshard damage."
+	rules = "This card doesn't leave field. Every turn enemy hero recieves 2 lifeshard damage."
 	icon_state = "exodia_ratvar"
 
 	mana_cost = 8
@@ -275,7 +275,7 @@
 	rarity = "Exodia"
 	card_type = "Spell"
 
-/datum/tcg_card/pack_star/exodia
+/datum/tcg_card/exodia/exodia
 	name = "Eldritch Horror"
 	desc = "The Eldritch Horror is a long forgotten demon that was the beginning of everything. Afterwards, his creations revolted and left him abadoned in endless void."
 	rules = "This card doesn't leave field. If all other 4 Exodia cards are on the field(Singularity, Energy Orb, Nar-Sie and Ratvar), the game is won."
@@ -284,7 +284,7 @@
 	mana_cost = 8
 
 	faction = "Exodia"
-	rarity = "Exodia"
+	rarity = "Unique" //No drop lads
 	card_type = "Spell"
 
 /obj/item/tcg_card/special/exodia_singulo

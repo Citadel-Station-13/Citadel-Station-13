@@ -261,8 +261,13 @@
 	series = list(/datum/tcg_card/pack_1, /datum/tcg_card/pack_nuclear)
 	contains_coin = 100
 
-	card_count = 10
-	guaranteed_count = 2
+	card_count = 9
+	guaranteed_count = 3
+
+	guar_rarity = list( //Better chances
+		"Legendary" = 5,
+		"Epic" = 10,
+		"Rare" = 30)
 
 /obj/item/cardpack/equipped(mob/user, slot, initial)
 	. = ..()

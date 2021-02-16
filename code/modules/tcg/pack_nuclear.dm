@@ -305,3 +305,31 @@
 	faction = "Syndicate"
 	rarity = "Legendary"
 	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/darkhonk
+	name = "Dark H.O.N.K. Mech"
+	desc = "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. This one was painted black for maximum HONKing!"
+	rules = "Taunt. Squad Tactics. Blocker."
+	icon_state = "darkhonk"
+
+	mana_cost = 8
+	attack = 6
+	health = 8
+
+	faction = "Unique"
+	rarity = "Epic"
+	card_type = "Unit"
+
+/datum/tcg_card/pack_nuclear/shielded_hardsuit
+	name = "Shielded Blood-red Hardsuit"
+	desc = "An advanced version of Gorlex Maradeurs' hardsuit with built-in energy shielding."
+	rules = "Give equipped unit First Strike."
+	icon_state = "shielded_hardsuit"
+
+	mana_cost = 4
+	attack = 0
+	health = 4
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Equipment"
