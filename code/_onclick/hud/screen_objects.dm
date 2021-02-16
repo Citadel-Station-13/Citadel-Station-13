@@ -351,6 +351,10 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "running"
 
+/obj/screen/mov_intent/Initialize(mapload)
+	. = ..()
+	update_icon()
+
 /obj/screen/mov_intent/Click()
 	toggle(usr)
 
@@ -359,7 +363,7 @@
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
-			icon_state = "running"
+			icon_state = CONFIG_GET(flag/sprint_enabled)? "running" : "running_nosprint"
 
 /obj/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
