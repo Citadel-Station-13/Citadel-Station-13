@@ -155,6 +155,12 @@
 	pH = 11
 	value = REAGENT_VALUE_COMMON
 
+// Healing
+/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.adjustHealth(round(chems.get_reagent_amount(type) * 3))
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 3))
+
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
 	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
 	if(M.bodytemperature < T0C)
@@ -934,6 +940,12 @@
 	taste_description = "magnets"
 	pH = 0
 	value = REAGENT_VALUE_RARE
+
+// FEED ME SEYMOUR
+/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.spawnplant()
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
