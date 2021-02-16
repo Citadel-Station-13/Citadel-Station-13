@@ -368,7 +368,7 @@ SUBSYSTEM_DEF(persistence)
 		var/list/card_types = list()
 		for(var/obj/item/tcg_card/card in binder.cards)
 			//if(!card.illegal) //Uncomment if you want to block syndie cards from saving
-			card_types.Add(card.datum_type)
+			card_types[card.datum_type] = card.illegal
 
 		ending_human.client.prefs.tcg_cards = card_types
 		ending_human.client.prefs.save_character(TRUE)
