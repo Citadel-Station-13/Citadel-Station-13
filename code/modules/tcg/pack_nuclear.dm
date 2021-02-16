@@ -316,7 +316,7 @@
 	attack = 6
 	health = 8
 
-	faction = "Unique"
+	faction = "Syndicate"
 	rarity = "Epic"
 	card_type = "Unit"
 
@@ -332,4 +332,100 @@
 
 	faction = "Syndicate"
 	rarity = "Epic"
+	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/nuclear_disk
+	name = "Nuclear Authentication Disk"
+	desc = "Better keep this safe."
+	rules = "Give equipped unit Taunt. After the equipped unit dies, re-equip this card to the killer."
+	icon_state = "nuclear_disk"
+
+	mana_cost = 0
+	attack = 1
+	health = 1
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/buzzkill
+	name = "Buzzkill grenade"
+	desc = "A whole swarm of angry bees filled with deadly toxins. Nasty!"
+	rules = "Hivemind."
+	icon_state = "buzzkill"
+
+	mana_cost = 4
+	attack = 1
+	health = 5
+
+	faction = "Syndicate"
+	rarity = "Rare"
+	card_type = "Unit"
+
+/datum/tcg_card/pack_nuclear/syndicate_minibomb
+	name = "Syndicate Minibomb"
+	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
+	rules = "Deal 3 damage to an enemy unit and units adjacent to it."
+	icon_state = "syndicate_minibomb"
+
+	mana_cost = 3
+
+	faction = "Syndicate"
+	rarity = "Common"
+	card_type = "Spell"
+
+/datum/tcg_card/pack_nuclear/viscerator
+	name = "Viscerator"
+	desc = "A small yet deadly machine, designed to rip it's targets apart."
+	rules = "Gain +1/+1 for every other viscerator on field."
+	icon_state = "viscerator"
+
+	mana_cost = 2
+	attack = 3
+	health = 1
+
+	faction = "Syndicate"
+	rarity = "Common"
+	card_type = "Unit"
+
+/datum/tcg_card/pack_nuclear/cqc
+	name = "CQC Manual"
+	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	rules = "Give equipped unit Deadeye and First Strike."
+	icon_state = "cqc"
+
+	mana_cost = 4
+	attack = 4
+	health = 3
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/holoparasite
+	name = "Holoparasite"
+	desc = "A mysterious being that stands by its charge, ever vigilant."
+	rules = "On summon: \"Link\" this unit to another unit. Whenever this unit takes damage, instead, transfer all damage to the linked unit."
+	icon_state = "holoparasite"
+
+	mana_cost = 6
+	attack = 8
+	health = 0
+
+	faction = "Syndicate"
+	rarity = "Legendary"
+	card_type = "Unit"
+
+/datum/tcg_card/pack_nuclear/rapier
+	name = "Rapier"
+	desc = "An elegant plastitanium rapier with a diamond tip and coated in a specialized knockout poison."
+	rules = ""
+	icon_state = "rapier"
+
+	mana_cost = 2
+	attack = 3
+	health = 0
+
+	faction = "Syndicate"
+	rarity = "Rare"
 	card_type = "Equipment"
