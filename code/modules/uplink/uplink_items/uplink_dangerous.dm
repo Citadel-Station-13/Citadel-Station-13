@@ -118,11 +118,32 @@
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
 
+/datum/uplink_item/dangerous/hyperblade
+	name = "Hypereutactic Blade"
+	desc = "The result of two Dragon Tooth swords combining, you wouldn't want to see this coming at you down the hall! \
+			Requires two hands to wield and it slows you down.  You can also recolor it!"
+	item = /obj/item/dualsaber/hypereutactic
+	player_minimum = 25
+	cost = 16
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+
+/datum/uplink_item/dangerous/hyperblade/get_discount()
+	return pick(4;0.8,2;0.65,1;0.5)
+
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
+	cost = 8
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
+
+/datum/uplink_item/dangerous/dtooth
+	name = "Dragon's Tooth Sword"
+	desc = "The Dragon's Tooth sword is a blackmarket modification of a Non-Eutactic Blade, \
+			which utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. \
+			It appears to have a wooden grip and a shaved down guard."
+	item = /obj/item/melee/transforming/energy/sword/cx/traitor
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
