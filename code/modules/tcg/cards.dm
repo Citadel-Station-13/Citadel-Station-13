@@ -696,7 +696,6 @@
 
 /datum/reagent/card_powder/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/item/cardboard_card))
-		qdel(O)
 		var/list/possible_cards = list()
 		for(var/card_series in COMMON_SERIES)
 			for(var/card_type in subtypesof(card_series))
@@ -706,6 +705,7 @@
 				qdel(card)
 		if(length(possible_cards))
 			new /obj/item/tcg_card(get_turf(O), pick(possible_cards), TRUE)
+			qdel(O)
 
 	. = ..()
 
