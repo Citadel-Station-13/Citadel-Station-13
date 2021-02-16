@@ -300,5 +300,5 @@
 	datum_type = /datum/tcg_card/exodia/exodia_ratvar
 
 /obj/item/tcg_card/special/exodia
-	datum_type = /datum/tcg_card/pack_star/exodia
+	datum_type = /datum/tcg_card/exodia/exodia
 

@@ -584,7 +584,7 @@
 		if(!(card_type in card_types))
 			return
 
-	var/obj/item/tcg_card/card = new(get_turf(src), /datum/tcg_card/pack_star/exodia)
+	var/obj/item/tcg_card/card = new(get_turf(src), /datum/tcg_card/exodia/exodia)
 	card.forceMove(src)
 	cards.Add(card)
 
