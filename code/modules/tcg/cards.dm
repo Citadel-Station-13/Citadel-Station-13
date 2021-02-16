@@ -1,6 +1,8 @@
 #define TAPPED_ANGLE 90
 #define UNTAPPED_ANGLE 0
 
+#define COMMON_SERIES list(/datum/tcg_card/pack_1, /datum/tcg_card/exodia) //So star cards don't drop
+
 /datum/tcg_card
 	var/name = "Stupid Coder"
 	var/desc = "A coder that fucked up this card. Report if you see this."
@@ -118,6 +120,18 @@
 	name = card_datum.name
 	desc = card_datum.desc
 	illegal = illegal_card
+
+	switch(card_datum.rarity)
+		if("Common")
+			grind_results = list(/datum/reagent/card_powder/green = 1)
+		if("Rare")
+			grind_results = list(/datum/reagent/card_powder/blue = 1)
+		if("Epic")
+			grind_results = list(/datum/reagent/card_powder/purple = 1)
+		if("Legendary")
+			grind_results = list(/datum/reagent/card_powder/yellow = 1)
+		if("Exodia")
+			grind_results = list(/datum/reagent/card_powder/black = 1)
 
 /obj/item/tcg_card/attack_hand(mob/user)
 	var/list/possible_actions = list(
@@ -674,5 +688,27 @@
 
 		  A direct attack healths as follows: The attacking unit declares an attack against the opponent's lifeshards. Your opponent may then declare a defender if one is available, who will then turn the combat into an attack against a unit for the purposes of combat that turn. If the attack is not blocked, and the direct attack connects, then your opponent loses a number of lifeshards equal to the attacking units power. </span>"
 
+/obj/item/cardboard_card
+	name = "cardboard card cutout"
+	desc = "A small piece of cardboard shaped as a TCG card."
+	icon = 'icons/obj/tcg/misc.dmi'
+	icon_state = "template"
+
+/datum/reagent/card_powder/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/cardboard_card))
+		qdel(O)
+		var/list/possible_cards = list()
+		for(var/card_series in COMMON_SERIES)
+			for(var/card_type in subtypesof(card_series))
+				var/datum/tcg_card/card = new card_type
+				if(card.rarity == rarity)
+					possible_cards.Add(card_type)
+				qdel(card)
+		if(length(possible_cards))
+			new /obj/item/tcg_card(get_turf(O), pick(possible_cards), TRUE)
+
+	. = ..()
+
+#undef COMMON_SERIES
 #undef TAPPED_ANGLE
 #undef UNTAPPED_ANGLE
