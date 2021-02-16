@@ -68,8 +68,8 @@
 	health = 0
 
 	faction = "Syndicate"
-	rarity = "Equipment"
-	card_type = "Unit"
+	rarity = "Epic"
+	card_type = "Equipment"
 
 /datum/tcg_card/pack_nuclear/bulldog
 	name = "Bulldog Shotgun"
@@ -429,3 +429,55 @@
 	faction = "Syndicate"
 	rarity = "Rare"
 	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/sniper
+	name = "Sniper Rifle"
+	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
+	rules = "Give equipped unit Deadeye."
+	icon_state = "sniper"
+
+	mana_cost = 6
+	attack = 5
+	health = 0
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/honksword
+	name = "Bananium Sword"
+	desc = "An elegant weapon, for a more \"civilized\" age."
+	rules = "Equipped unit does not deal damage. Instead, it taps the attacked card without activating it's effects."
+	icon_state = "honksword"
+
+	mana_cost = 3
+	attack = 0
+	health = 0
+
+	faction = "Syndicate"
+	rarity = "Common"
+	card_type = "Equipment"
+
+/datum/tcg_card/pack_nuclear/mustache
+	name = "Mustache Grenade"
+	desc = "A handsomely-attired teargas grenade."
+	rules = "Unequip all enemy units. Unequipped equipment cards must be discarded."
+	icon_state = "mustache"
+
+	mana_cost = 5
+
+	faction = "Syndicate"
+	rarity = "Common"
+	card_type = "Spell"
+
+/datum/tcg_card/pack_nuclear/taeclowndo
+	name = "Tae-Clown-Do"
+	desc = "A pair of clown shoes, infused with bananium. Rumors say that these can teach their wearer the art of Tae-Clown-Do."
+	rules = "Flip a coin. If heads, your enemy skips a turn. If tails, you skip a turn instead."
+	icon_state = "taeclowndo"
+
+	mana_cost = 3
+
+	faction = "Syndicate"
+	rarity = "Epic"
+	card_type = "Spell"
