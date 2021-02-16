@@ -371,4 +371,4 @@ SUBSYSTEM_DEF(persistence)
 			card_types.Add(card.datum_type)
 
 		ending_human.client.prefs.tcg_cards = card_types
-		ending_human.client.prefs.save_character()
+		ending_human.client.prefs.save_character(TRUE)

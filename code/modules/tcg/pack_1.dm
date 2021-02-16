@@ -992,7 +992,7 @@
 	name = "Deathsquad Officer"
 	desc = "There were rumors about 'Deathsquads' killing station where something horrible happened, but we remind you that's it's just a lie."
 	rules = "Taunt. First Strike."
-	icon_state = "ert_engi"
+	icon_state = "deathsquad"
 
 	mana_cost = 8
 	attack = 8

@@ -286,6 +286,7 @@
 	if(prob(contains_coin))
 		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
 		new /obj/item/coin/thunderdome(get_turf(user))
+	new /obj/item/tcg_rules(get_turf(user))
 	qdel(src)
 
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
@@ -464,6 +465,7 @@
 	desc = "A hand full of TCG cards."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
+	w_class = WEIGHT_CLASS_TINY
 	var/list/cards = list()
 
 /obj/item/tcgcard_hand/update_icon()
@@ -590,3 +592,80 @@
 			continue
 		card.forceMove(src)
 		cards.Add(card)
+
+/obj/item/tcg_rules
+	name = "TCG Rulebook"
+	desc = "A small rulebook containing a starter guide for TCG."
+	icon = 'icons/obj/tcg/misc.dmi'
+	icon_state = "deck_low"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/tcg_rules/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>*---------* \n\
+	      <span class='boldnotice'>Welcome to the Exciting world of Tactical Card Game!</span> <span clas='smallnotice'>Sponsored by Nanotrasen Edu-tainment Devision.</span> \n \
+		  <span class='boldnotice'>Core Rules:</span> \n \
+		  Tactical Card Game (Also known as TCG) is a traditional trading card game. It's played between two players, each with a deck or collection of cards. \n \
+
+		  Each player's deck contains up to 30 cards. Each player's hand can hold a maximum of 7 cards. At the end of your turn, if you have more than 7 cards, you must choose cards to discard to your discard pile until you have 7 cards.  \n \
+		  To begin a match, both players must flip a coin to decide who goes first. The winner of the coin toss then decides if they go first or second. Before the match begins each player draws 5 cards each with the ability to mulligan cards from their hand facedown once (Basically, you get a first pass where you can replace cards in your hands back into your deck, shuffle your deck, then draw until you're back to 5).  \n \
+		  Each player begins with 1 Max Mana to start with, which serves as the cost to playing cards. \n \
+
+		  In order to play the TCG, a deck is required. As stated above, decks must contain up to 30 cards.  \n \
+		  Additionally, to save cards you need to have a card binder on yourself to store the cards. When the shift ends, your cards will be automatically saved by integrated scanners in your card binder.  \n \
+		  Finally, a stock of Thunderdome Flippers to use for coin tosses and counter effects is recommended- these can be obtained occasionally from cardpacks, but any coin will do.  \n \
+
+		  Win condition is simple - kill your opponent's hero by depleting all of their 20 lifeshards.  \n \
+
+		  <span class='boldnotice'>Gameplay Phases:</span>  \n \
+
+		  A single turn of the game goes as follows, and the order of card effects is very similar to other card games. Within a single turn, the following phases are gone through, in order, unless otherwise altered by a card effect. Turn Phases are the Draw Phase, Effect Phase 1, Play Phase, Combat Phase, Effect Phase 2, and the End Phase.  \n \
+
+		  During the draw phase, the player whose turn it is untaps all their cards, then draws a single card. They gain 1 Max Mana, and their Mana is refilled. Cards with missing health due to defending, attacking, or damage effects return to max health at the end of the draw phase.  \n \
+		  During the First Effect Phase, this is when effects that take place at the start of your turn would occur. If an opponent's effect takes place at the start of your turn, their effects will always take place first, then yours, unless otherwise stated by a card effect. If an opponent's effect would cause you to lose the game, and your effects would prevent that condition from happening afterwards, you would lose the game. As a general roll, when it's your turn, your opponent's effects take place FIRST, then yours.  \n \
+
+		  During the Play Phase, this is when you can play, summon, or activate your own cards. Card Effects that don't state when they're activated MUST be activated during the Play Phase. Your opponent can also activate their own card effects in response to one of your actions during your play phase, if able. Any card played during the play phase can activate its effect as soon as it's played. More details within the Card Breakdown section.  \n \
+
+		  During the Battle Phase, a Unit Card is able to battle other Unit Cards, or attack their opponent once per turn. Neither player can attack on their first turn, and all cards that enter the field can attack as soon as they can, unless it is that player's first turn, or they are prevented by a card effect. More details within the Card Combat section.  \n \
+
+		  During the End Phase, end of turn effects will occur. If the active player has more than 7 cards in their hand by this point, this is when they must discard cards. All of the player's cards who used an effect at any point in the turn are refreshed, and able to use their effect again going into the opponent's turn. By the end of their turn, if the player has more than 7 cards, they must discard cards from their hand until 7 remain.  \n \
+		  After all 5 phases have passed, the players turn officially ends, and the opponent begins their turn, starting anew from the draw phase.  \n \
+
+		  Card effects are typically limited to the turn that that card is played. For example, a card effect that provides a card +1/+1 attack/health would only last until the end of the turn, unless otherwise stated, OR if the card is an Equipment Card. More on those below.  \n \
+
+		  <span class='boldnotice'>Card Breakdown:</span>  \n \
+
+		  Within the game, there are 3 kinds of cards (So far), Unit, Equipment and Spell cards.  \n \
+
+		  Unit Cards. All Unit Cards have 4 core values to keep in mind, Attack, Health, Faction, and Summoning Cost. Attack serves as a card's offensive value in combat. Health serves as a card's defensive value in combat, and doubles as a card's health. Factions are groupings of cards that can often share effects and traits together. Summoning Cost is how much mana a card needs in order to be summoned.  \n \
+
+		  Equipment Cards. All Equipment Cards similarly to Unit Cards have Attack, Health, and Summon Cost values, but for equipment, these values are added to the attached card's values. Equipment can only be attached (Equip) to units, and they last until the unit dies, or otherwise leaves the field, following it's equipt card. If returned to the hand, send to the discard pile, or otherwise leaves the field, it is detatched from the equipt card. When a Equipment Card increases a card's attack or health, those effects stay on the equip card until the equipment is unequip or removed from the parent card.  \n \
+		  If a card would have it's health decreased by having it's equip card removed, it's handled by having it's maximum health decreased, not it's current health. For example, lets say you had a card with 1/1 attack/health, and give it an equipment giving it +1/+2, then that card enters combat, dropping it down to 2/1. If by an opponent's card effect it lost that +1/+2 equipment now, it's stats would be 1/1 once again. If an equip card explicitly lowers a card's stats, it is possible for a card to be killed as a result, but drops in attack will always bottom out at 0 attack at any given time.  \n \
+
+		  Spell Cards. Spell Cards don't have attack or health values, instead, they activate their effects as soon as they are summoned and leave the field afterwards(if not stated otherwise).  \n \
+
+		  <span class='boldnotice'>Card Subtypes:</span>  \n \
+
+		  Card effects:  \n \
+		  Asimov - Unit cannot attack units with Human subtype  \n \
+		  Changeling - Unit posesses all the subtypes at the same time  \n \
+		  Greytide - On summon, unit gains amount of power equal to amount of other units with Greytide for 1 turn  \n \
+		  Holy - Unit can't be targeted by spells  \n \
+		  Taunt - All opposing unit attacks must be directed towards the unit with Taunt.  \n \
+		  First Strike - This unit attacks first. If attacked unit is dead, unit doesn't recieve damage from it.  \n \
+		  Deadeye - This unit can always hit opponents, regardless of effects or immunities.  \n \
+		  Squad Tactics - When this unit attacks an opponent's unit and defeats it in combat, the owner of the defeated card takes 1 lifeshard of damage from combat.  \n \
+		  Immunity - The unit cannot be affected by card effects or combat of its immunity type. This includes both friendly and opposing effects.  \n \
+		  Fury - The unit must attack at every possibility.  \n \
+		  Blocker - The unit cannot declare attacks, but can defend.  \n \
+		  Hivemind - The unit enters combat with a hivemind token on it. The first time this card would take damage, remove that token instead. This does not apply to instant removal effects, only points of damage.  \n \
+		  Clockwork - The unit can copy a single keyword on another unit on the field, until they lose the clockwork keyword or leave the field.  \n \
+
+		  <span class='boldnotice'>Card Combat:</span>  \n \
+
+		  Card combat is determined as follows. On your turn, any non-tapped unit card with a positive attack power is capable of declaring an attack. Upon declaring an attack, you must state if you're attacking your opponent directly, or if you're going to attack a specific opponent's unit. Unless otherwise stated, cards can only attack or defend one time per turn.  \n \
+
+		  An attack against a unit healths as follows: Both units will do their power as damage to the opponent's unit's health. Damage is typically dealt at the same time, and if both units would kill each other through combat, both are destroyed at the same time. If One or both units would not be destroyed by combat, they would have their health reduced by the difference of their health minus their opponent's power, until the start of your next turn. If the attacker or defender has a keyword or effect that prevents them from attacking their opponent (Like silicon, immunity), then they are not able to attack, but may still defend against the opponent's attack. Once combat has healthd, all remaining participants become tapped.  \n \
+
+		  A direct attack healths as follows: The attacking unit declares an attack against the opponent's lifeshards. Your opponent may then declare a defender if one is available, who will then turn the combat into an attack against a unit for the purposes of combat that turn. If the attack is not blocked, and the direct attack connects, then your opponent loses a number of lifeshards equal to the attacking units power. </span>"
+
