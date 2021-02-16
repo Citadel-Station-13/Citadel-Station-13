@@ -334,8 +334,21 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(HAS_TRAIT(src, TRAIT_MUTE) && get_selected_language() != /datum/language/signlanguage)
 		return 0
 	
-	if ((rightarm == null || rightarm.is_disabled()) && (leftarm == null ||leftarm.is_disabled()) && get_selected_language() == /datum/language/signlanguage)
-		return 0
+	if (get_selected_language() == /datum/language/signlanguage)
+		var/left_disabled = FALSE
+		var/right_disabled = FALSE
+		if (istype(leftarm)) // Need to check if the arms exist first before checking if they are disabled or else it will runtime
+			if (leftarm.is_disabled())
+				left_disabled = TRUE
+		else
+			left_disabled = TRUE
+		if (istype(rightarm))
+			if (rightarm.is_disabled())
+				right_disabled = TRUE
+		else
+			right_disabled = TRUE
+		if (left_disabled && right_disabled) // We want this to only return false if both arms are either missing or disabled since you could technically sign one-handed.
+			return 0
 
 	if(is_muzzled())
 		return 0
