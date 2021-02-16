@@ -79,7 +79,7 @@ God bless America.
 			to_chat(user, "<span class='warning'>There's nothing to dissolve [I] in!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
-		I.reagents.trans_to(src, I.reagents.total_volume)
+		I.reagents.trans_to(src, I.reagents.total_volume, log = "pill into deep fryer")
 		qdel(I)
 		return
 	if(istype(I,/obj/item/clothing/head/mob_holder))
