@@ -594,10 +594,18 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
+			if(prob(25))
+				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
+			// throw_alert("drunk", /atom/movable/screen/alert/drunk)
 			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
 				adjustBruteLoss(-0.12, FALSE)
 				adjustFireLoss(-0.06, FALSE)
+			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
+		else
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
+			clear_alert("drunk")
+			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
 			if(SSresearch.science_tech)

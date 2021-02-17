@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - spellcheck: "Utility uniforms now comply with the \"nonproper equipment names\" thing."
-  - bugfix: "The CapDrobe now allows the captain to get his own clothes for free. Probably."
-  - tweak: "All captains' clothes now offer 15 woundarmor, up from the 5. Because apparently only the suit and tie and its suitskirt subtype have this wound armor, which is dumb."

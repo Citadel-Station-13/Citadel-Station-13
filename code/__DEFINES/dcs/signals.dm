@@ -290,7 +290,7 @@
 
 #define COMSIG_LIVING_ACTIVE_BLOCK_START "active_block_start"			//from base of mob/living/keybind_start_active_blocking(): (obj/item/blocking_item, list/backup_items)
 	#define COMPONENT_PREVENT_BLOCK_START 1
-#define COMSIG_LIVING_ACTIVE_PARRY_START "active_parry_start"			//from base of mob/living/initiate_parry_sequence(): (parrying_method, datum/parrying_item_mob_or_art, list/backup_items)
+#define COMSIG_LIVING_ACTIVE_PARRY_START "active_parry_start"			//from base of mob/living/initiate_parry_sequence(): (parrying_method, datum/parrying_item_mob_or_art, list/backup_items, list/override)
 	#define COMPONENT_PREVENT_PARRY_START 1
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
@@ -541,6 +541,9 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
+// /datum/element/ventcrawling signals
+#define COMSIG_HANDLE_VENTCRAWL "handle_ventcrawl"							//when atom with ventcrawling element attempts to ventcrawl
+#define COMSIG_CHECK_VENTCRAWL "check_ventcrawl"							//to check an atom's ventcrawling element tier (if applicable)
 // twitch plays
 /// Returns direction: (wipe_votes)
 #define COMSIG_TWITCH_PLAYS_MOVEMENT_DATA "twitch_plays_movement_data"

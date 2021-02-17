@@ -10,6 +10,8 @@
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
+	var/list/sac_targetted = list()		//Which targets did living hearts give them, but they did not sac?
+	var/list/actually_sacced = list()	//Which targets did they actually sac?
 	var/ascended = FALSE
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
@@ -175,6 +177,17 @@
 		knowledge_message += "[EK.name]"
 	parts += knowledge_message.Join(", ")
 
+	parts += "<b>Targets assigned by living hearts, but not sacrificed:</b>"
+	if(!sac_targetted.len)
+		parts += "None."
+	else
+		parts += sac_targetted.Join(",")
+	parts += "<b>Sacrifices performed:</b>"
+	if(!actually_sacced.len)
+		parts += "<span class='redtext'>None!</span>"
+	else
+		parts += actually_sacced.Join(",")
+
 	return parts.Join("<br>")
 ////////////////
 // Knowledge //
@@ -212,6 +225,23 @@
 		. += EK.cost
 	if(ascended)
 		. += 20
+
+/datum/antagonist/heretic/antag_panel()
+	var/list/parts = list()
+	parts += ..()
+	parts += "<b>Targets currently assigned by living hearts (Can give a false negative if they stole someone elses living heart):</b>"
+	if(!sac_targetted.len)
+		parts += "None."
+	else
+		parts += sac_targetted.Join(",")
+	parts += "<b>Targets actually sacrificed:</b>"
+	if(!actually_sacced.len)
+		parts += "None."
+	else
+		parts += actually_sacced.Join(",")
+
+	return (parts.Join("<br>") + "<br>")
+
 
 ////////////////
 // Objectives //

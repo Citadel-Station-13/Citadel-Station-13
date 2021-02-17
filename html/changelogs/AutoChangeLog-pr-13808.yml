@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - tweak: "You can now exit polycircuit input"
-  - bugfix: "Polycircuits now check for range"

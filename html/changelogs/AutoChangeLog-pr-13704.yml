@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Emotes can properly be filtered for in TGUI."

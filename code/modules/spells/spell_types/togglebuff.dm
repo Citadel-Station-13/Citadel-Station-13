@@ -9,6 +9,8 @@
 	invocation_type = "shout"
 	level_max = 0
 	cooldown_min = 100
+	action_icon = 'icons/obj/magic.dmi'
+	action_icon_state = "iconmantra"
 
 /obj/effect/proc_holder/spell/self/mantra/cast(mob/living/carbon/human/user)
 	if(user.has_status_effect(STATUS_EFFECT_MANTRA))
@@ -27,6 +29,8 @@
 	invocation_type = "shout"
 	level_max = 0
 	cooldown_min = 100
+	action_icon = 'icons/obj/magic.dmi'
+	action_icon_state = "iconasura"
 
 /obj/effect/proc_holder/spell/self/asura/cast(mob/living/carbon/human/user)
 	if(user.has_status_effect(STATUS_EFFECT_ASURA))

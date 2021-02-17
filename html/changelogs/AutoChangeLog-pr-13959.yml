@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "You can now make all the variants of the bokken."
-  - bugfix: "Removes a duplicate sprite."
-  - tweak: "Renames all instances of 'ironwood' to 'steelwood'."

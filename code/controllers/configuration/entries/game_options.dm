@@ -290,6 +290,17 @@
 	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
 	M.sync()
 
+/datum/config_entry/flag/sprint_enabled
+	config_entry_value = TRUE
+
+/datum/config_entry/flag/sprint_enabled/ValidateAndSet(str_val)
+	. = ..()
+	for(var/datum/hud/human/H)
+		H.assert_move_intent_ui()
+	if(!config_entry_value)		// disabled
+		for(var/mob/living/L in world)
+			L.disable_intentional_sprint_mode()
+
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
 
@@ -483,6 +494,8 @@
 	config_entry_value = TRUE
 
 /datum/config_entry/flag/modetier_voting
+
+/datum/config_entry/flag/must_be_readied_to_vote_gamemode
 
 /datum/config_entry/number/dropped_modes
 	config_entry_value = 3

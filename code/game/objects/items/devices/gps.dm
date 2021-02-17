@@ -8,10 +8,11 @@
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
+	var/starton = TRUE
 
 /obj/item/gps/Initialize()
 	. = ..()
-	AddComponent(/datum/component/gps/item, gpstag)
+	AddComponent(/datum/component/gps/item, gpstag, starton)
 
 /obj/item/gps/science
 	icon_state = "gps-s"
@@ -25,6 +26,9 @@
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/gps/mining/off
+	starton = FALSE
 
 /obj/item/gps/cyborg
 	icon_state = "gps-b"

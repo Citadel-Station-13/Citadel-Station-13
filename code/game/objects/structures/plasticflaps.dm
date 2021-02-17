@@ -62,7 +62,7 @@
 			return 1
 
 		var/mob/living/M = caller
-		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
+		if(!(SEND_SIGNAL(M, COMSIG_CHECK_VENTCRAWL)) && M.mob_size != MOB_SIZE_TINY)
 			return 0
 	var/atom/movable/M = caller
 	if(M && M.pulling)
@@ -91,7 +91,7 @@
 			return 1
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
-		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
+		if(!M.lying && !(SEND_SIGNAL(M, COMSIG_CHECK_VENTCRAWL)) && M.mob_size != MOB_SIZE_TINY) //If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
 

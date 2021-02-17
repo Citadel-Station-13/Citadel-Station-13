@@ -102,6 +102,7 @@
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
+	player_minimum = 25
 	cant_discount = TRUE
 	exclude_modes = list(/datum/game_mode/nuclear)
 
@@ -115,7 +116,7 @@
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-datum/uplink_item/stealthy_weapons/taeclowndo_shoes
+/datum/uplink_item/stealthy_weapons/taeclowndo_shoes
 	name = "Tae-clown-do Shoes"
 	desc = "A pair of shoes for the most elite agents of the honkmotherland. They grant the mastery of taeclowndo with some honk-fu moves as long as they're worn."
 	cost = 12

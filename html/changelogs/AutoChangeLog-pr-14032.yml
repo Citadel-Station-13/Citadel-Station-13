@@ -1,8 +1,0 @@
-author: "kappa-sama"
-delete-after: True
-changes: 
-  - rscadd: "A new spell for the wizard and his martial apprentices, the Inner Mantra technique. It makes you punch people really good and makes you durable, but drains your energy while it's active."
-  - rscadd: "A self-buffing spell for valiant bubblegum slayers that is ultimately useless on lavaland and probably overpowered for miner antagonists. Go figure. At least all it does is let you punch hard while draining your health every second."
-  - balance: "bubblegum now drops a book that makes you into an abusive father instead of a shotgun that plays like pre-nerf shotguns"
-  - soundadd: "a powerup and powerdown sound effect"
-  - imageadd: "two icons for two buff spells"

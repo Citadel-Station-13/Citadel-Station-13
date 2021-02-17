@@ -1,5 +1,0 @@
-author: "Chiirno"
-delete-after: True
-changes: 
-  - tweak: "Nightmare now deals additional damage to most light sources."
-  - bugfix: "Nightmare now one-shots miners beacons and glowshrooms"
