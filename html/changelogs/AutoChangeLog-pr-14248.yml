@@ -1,0 +1,5 @@
+author: "shellspeed1"
+delete-after: True
+changes: 
+  - bugfix: "floor bots place plating before tiles now."
+  - bugfix: "gets rid of another tile duplication issue."
