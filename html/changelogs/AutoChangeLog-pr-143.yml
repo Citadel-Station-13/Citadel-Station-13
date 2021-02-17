@@ -1,0 +1,6 @@
+author: SandPoot
+delete-after: true
+changes:
+  - refactor: refactored additional languages to accept more than one language or
+      be disabled.
+  - config: MAX_LANGUAGES setting has been added, read the comment for more info.
