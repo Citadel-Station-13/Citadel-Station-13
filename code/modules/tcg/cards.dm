@@ -440,6 +440,15 @@
 		new_card.flipped = flipped
 		new_card.forceMove(src)
 
+	if(istype(I, /obj/item/tcgcard_hand))
+		var/obj/item/tcgcard_hand/hand = I
+		for(var/obj/item/tcg_card/card in I.cards)
+			if(contents.len > 30)
+				return FALSE
+			card.flipped = flipped
+			card.forceMove(src)
+			I.cards.Remove(card)
+
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)
 	return ..()
@@ -525,6 +534,14 @@
 			return
 	. = ..()
 
+/obj/item/tcgcard_hand/equipped(mob/user, slot, initial)
+	. = ..()
+	transform = matrix()
+
+/obj/item/tcgcard_hand/dropped(mob/user, silent)
+	. = ..()
+	transform = matrix(0.5,0,0,0,0.5,0)
+
 /obj/item/tcgcard_binder
 	name = "Trading Card Binder"
 	desc = "A TCG-branded card binder, specifically for your infinite collection of TCG cards!"
@@ -539,6 +556,12 @@
 		var/obj/item/tcg_card/card = I
 		card.forceMove(src)
 		cards.Add(card)
+	if(istype(I, /obj/item/tcgcard_hand))
+		var/obj/item/tcgcard_hand/hand = I
+		for(var/obj/item/tcg_card/card in I.cards)
+			card.forceMove(src)
+			cards.Add(card)
+		qdel(I)
 	. = ..()
 
 /obj/item/tcgcard_binder/attack_self(mob/living/carbon/user)
