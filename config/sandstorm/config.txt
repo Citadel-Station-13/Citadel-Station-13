@@ -26,3 +26,8 @@
 LIMIT_STUPOR_TRANCES
 MIN_STUPOR_HYPNO_DURATION 6000
 MAX_STUPOR_HYPNO_DURATION 12000
+
+## Maximum languages ##
+## Maxmimum amount of languages someone can pick
+## -1 means infinite and 0 disables it
+#MAX_LANGUAGES
