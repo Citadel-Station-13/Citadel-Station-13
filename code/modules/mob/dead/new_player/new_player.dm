@@ -128,10 +128,58 @@
 			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
 				var/age_verification = age_gate()
 				if(age_verification != 1)
-					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process")
+					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process.")
 					//ban them and kick them
-					AddBan(client.ckey, client.computer_id, "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification.", "SYSTEM", FALSE, null, client.address)
+
+					//parameters used by sql line, easier to read:
+					var/bantype_str = "ADMIN_PERMABAN"
+					var/reason = "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification."
+					var/duration = -1
+					var/sql_ckey = sanitizeSQL(client.ckey)
+					var/computerid = client.computer_id
+					if(!computerid)
+						computerid = "0"
+					var/sql_computerid = sanitizeSQL(computerid)
+					var/ip = client.address
+					if(!ip)
+						ip = "0.0.0.0"
+					var/sql_ip = sanitizeSQL(ip)
+
+					//parameter not used as there's no job but i want to fill out all parameters for the insert line
+					var/sql_job
+
+					// these are typically the banning admin's, but it's the system so we leave them null, but they're still here for the sake of a full set of values
+					var/sql_a_ckey
+					var/sql_a_computerid
+					var/sql_a_ip
+
+					// record all admins and non-admins online at the time
+					var/who
+					for(var/client/C in GLOB.clients)
+						if(!who)
+							who = "[C]"
+						else
+							who += ", [C]"
+
+					var/adminwho
+					for(var/client/C in GLOB.admins)
+						if(!adminwho)
+							adminwho = "[C]"
+						else
+							adminwho += ", [C]"
+
+					var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]', '[bantype_str]', '[reason]', '[sql_job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[sql_ckey]', '[sql_computerid]', INET_ATON('[sql_ip]'), '[sql_a_ckey]', '[sql_a_computerid]', INET_ATON('[sql_a_ip]'), '[who]', '[adminwho]')"
+					var/datum/DBQuery/query_add_ban = SSdbcore.NewQuery(sql)
+					qdel(query_add_ban)
+
+					// announce this
+					message_admins("[html_encode(client.ckey)] has been banned for failing the automatic age gate.")
+					send2irc("[html_encode(client.ckey)] has been banned for failing the automatic age gate.")
+
+					// removing the client disconnects them
 					qdel(client)
+
+
 					return FALSE
 				else
 					//they claim to be of age, so allow them to continue and update their flags
