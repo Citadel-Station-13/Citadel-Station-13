@@ -442,7 +442,7 @@
 
 	if(istype(I, /obj/item/tcgcard_hand))
 		var/obj/item/tcgcard_hand/hand = I
-		for(var/obj/item/tcg_card/card in I.cards)
+		for(var/obj/item/tcg_card/card in hand.cards)
 			if(contents.len > 30)
 				return FALSE
 			card.flipped = flipped
@@ -558,7 +558,13 @@
 		cards.Add(card)
 	if(istype(I, /obj/item/tcgcard_hand))
 		var/obj/item/tcgcard_hand/hand = I
-		for(var/obj/item/tcg_card/card in I.cards)
+		for(var/obj/item/tcg_card/card in hand.cards)
+			card.forceMove(src)
+			cards.Add(card)
+		qdel(I)
+	if(istype(I, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/deck = I
+		for(var/obj/item/tcg_card/card in deck.contents)
 			card.forceMove(src)
 			cards.Add(card)
 		qdel(I)
