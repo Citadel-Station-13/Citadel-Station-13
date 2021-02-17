@@ -26,6 +26,10 @@
 	},
 /turf/open/indestructible/hierophant/two,
 /area/ruin/unpowered/hierophant)
+"s" = (
+/obj/item/tcg_card/special/hierophant,
+/turf/open/indestructible/hierophant,
+/area/ruin/unpowered/hierophant)
 
 (1,1,1) = {"
 a
@@ -494,7 +498,7 @@ b
 b
 b
 c
-b
+s
 a
 a
 b

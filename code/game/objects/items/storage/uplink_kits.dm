@@ -526,3 +526,8 @@
 	new /obj/item/book/granter/martial/carp(src)
 	new /obj/item/clothing/suit/hooded/carp_costume(src)
 	new /obj/item/staff/bostaff(src)
+
+/obj/item/storage/box/syndie_kit/sleepytime/cardpack/PopulateContents()
+	. = ..()
+	new /obj/item/cardpack/syndicate(src)
+	new /obj/item/cardpack/syndicate(src)

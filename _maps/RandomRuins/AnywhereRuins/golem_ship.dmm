@@ -139,6 +139,7 @@
 	dir = 4;
 	name = "shrine of the liberator"
 	},
+/obj/item/tcg_card/special/golem,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "v" = (
