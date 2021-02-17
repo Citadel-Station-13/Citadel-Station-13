@@ -11,6 +11,13 @@
 "d" = (
 /turf/closed/wall/mineral/abductor,
 /area/ruin/unpowered)
+"h" = (
+/obj/structure/closet/abductor,
+/obj/item/tcg_card/special/abductor,
+/turf/open/floor/plating/abductor{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered)
 "j" = (
 /obj/machinery/abductor/experiment{
 	team_number = 100
@@ -188,7 +195,7 @@ a
 a
 c
 d
-q
+h
 t
 q
 d
