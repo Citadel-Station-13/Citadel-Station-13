@@ -278,6 +278,8 @@
 	card_count = 9
 	guaranteed_count = 3
 
+	illegal = TRUE
+
 	guar_rarity = list( //Better chances
 		"Legendary" = 5,
 		"Epic" = 10,
@@ -391,7 +393,7 @@
 			if(21 to INFINITY)
 				icon_state = "deck_tcg_full"
 	else
-		icon_state = "deck_up"
+		icon_state = "deck_tcg_full"
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()
@@ -549,7 +551,8 @@
 	icon_state = "binder"
 
 	var/list/cards = list()
-	var/mode = 0 //If 1, will show all the cards even if you don't have em
+	var/list/decks = list()
+	var/mode = 0 //If 1, will show all the cards even if you don't have em.
 
 /obj/item/tcgcard_binder/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/tcg_card))
@@ -564,10 +567,8 @@
 		qdel(I)
 	if(istype(I, /obj/item/tcgcard_deck))
 		var/obj/item/tcgcard_deck/deck = I
-		for(var/obj/item/tcg_card/card in deck.contents)
-			card.forceMove(src)
-			cards.Add(card)
-		qdel(I)
+		deck.forceMove(src)
+		decks.Add(deck)
 	. = ..()
 
 /obj/item/tcgcard_binder/attack_self(mob/living/carbon/user)
@@ -608,6 +609,19 @@
 		if(choice)
 			return
 	. = ..()
+
+/obj/item/tcgcard_binder/AltClick(mob/user)
+	var/list/choices = list()
+
+	for(var/obj/item/tcgcard_deck/deck in decks)
+		var/obj/item/tcgcard_deck/first_card = locate() in deck
+		choices[deck] = image(icon = first_card.icon, icon_state = first_card.icon_state)
+
+	var/obj/item/tcgcard_deck/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
+	if(choice && (choice in decks))
+		choice.forceMove(get_turf(src))
+		user.put_in_hands(choice)
+		decks.Remove(choice)
 
 /obj/item/tcgcard_binder/proc/check_for_exodia()
 	var/list/card_types = list()
@@ -737,6 +751,30 @@
 			qdel(O)
 
 	. = ..()
+
+/mob/living/carbon/human/proc/SaveTCGCards()
+	if(!client)
+		return
+
+	var/obj/item/tcgcard_binder/binder = locate() in src
+	if(!binder || !length(binder.cards))
+		return
+
+	var/list/card_types = list()
+	for(var/obj/item/tcg_card/card in binder.cards)
+		//if(!card.illegal) //Uncomment if you want to block syndie cards from saving
+		card_types[card.datum_type] = card.illegal
+
+	card_types["decks"] = list()
+
+	for(var/obj/item/tcgcard_deck/deck in binder.decks)
+		var/list/cardlist = list()
+		for(var/obj/item/tcg_card/card in deck.contents)
+			cardlist[card.datum_type] = card.illegal
+		card_types["decks"].Add(cardlist)
+
+	client.prefs.tcg_cards = card_types
+	client.prefs.save_character(TRUE)
 
 #undef COMMON_SERIES
 #undef TAPPED_ANGLE

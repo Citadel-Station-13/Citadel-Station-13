@@ -361,14 +361,4 @@ SUBSYSTEM_DEF(persistence)
 		if(!original_human || original_human.stat == DEAD || !(original_human == ending_human))
 			continue
 
-		var/obj/item/tcgcard_binder/binder = locate() in ending_human
-		if(!binder || !length(binder.cards))
-			continue
-
-		var/list/card_types = list()
-		for(var/obj/item/tcg_card/card in binder.cards)
-			//if(!card.illegal) //Uncomment if you want to block syndie cards from saving
-			card_types[card.datum_type] = card.illegal
-
-		ending_human.client.prefs.tcg_cards = card_types
-		ending_human.client.prefs.save_character(TRUE)
+		ending_human.SaveTCGCards()
