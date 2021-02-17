@@ -447,7 +447,7 @@
 				return FALSE
 			card.flipped = flipped
 			card.forceMove(src)
-			I.cards.Remove(card)
+			hand.cards.Remove(card)
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)
