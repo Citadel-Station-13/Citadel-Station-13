@@ -149,7 +149,7 @@
 	transform = matrix() * 2
 	animate(src, transform = matrix() * 0.5, time = 30, flags = ANIMATION_END_NOW)
 
-obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)

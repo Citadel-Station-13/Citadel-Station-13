@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "players can now respawn/return to lobby as a ghost after a 15 minute (default) delay and rejoin on another character with some/many restrictions"
-  - rscadd: "cryo now preserves everything"

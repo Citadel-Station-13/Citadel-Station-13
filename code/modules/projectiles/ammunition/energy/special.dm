@@ -24,6 +24,11 @@
 	projectile_type = /obj/item/projectile/energy/floramut
 	select_name = "mutation"
 
+/obj/item/ammo_casing/energy/flora/revolution
+	projectile_type = /obj/item/projectile/energy/florarevolution
+	select_name = "revolution"
+	e_cost = 250
+
 /obj/item/ammo_casing/energy/temp
 	projectile_type = /obj/item/projectile/temp
 	select_name = "freeze"

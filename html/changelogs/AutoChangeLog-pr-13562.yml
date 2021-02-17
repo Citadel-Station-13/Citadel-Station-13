@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Vampire shapeshifting should now behave as intended"

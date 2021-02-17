@@ -1,6 +1,0 @@
-author: "Sonic121x"
-delete-after: True
-changes: 
-  - rscadd: "alarm ert hardsuit sprite for naga and canine"
-  - tweak: "adjust the naga ert hardsuit to cover the hand"
-  - bugfix: "cydonia hardsuit helmet"

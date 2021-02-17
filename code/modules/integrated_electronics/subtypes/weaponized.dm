@@ -137,6 +137,10 @@
 	//Shooting Code:
 	A.preparePixelProjectile(target, src)
 	A.fire()
+	if(ismob(loc.loc))
+		installed_gun.shoot_live_shot(loc.loc)
+	else
+		installed_gun.shoot_live_shot() //Shitcode, but we don't have much of a choice
 	log_attack("[assembly] [REF(assembly)] has fired [installed_gun].")
 	return A
 

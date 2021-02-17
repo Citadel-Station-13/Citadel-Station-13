@@ -158,3 +158,19 @@
 		else
 			to_chat(src, "Failed to move mob to a valid location.", confidential = TRUE)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/// Proc to hook user-enacted teleporting behavior and keep logging of the event.
+/atom/movable/proc/admin_teleport(atom/new_location, message = TRUE)
+	if(isnull(new_location))
+		log_admin("[key_name(usr)] teleported [key_name(src)] to nullspace")
+		moveToNullspace()
+	else
+		log_admin("[key_name(usr)] teleported [key_name(src)] to [AREACOORD(loc)]")
+		forceMove(new_location)
+
+/mob/admin_teleport(atom/new_location, message = TRUE)
+	var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(src)] to [isnull(new_location) ? "nullspace" : ADMIN_VERBOSEJMP(loc)]"
+	if(message)
+		message_admins(msg)
+	admin_ticket_log(src, msg)
+	return ..()

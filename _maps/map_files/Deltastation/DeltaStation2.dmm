@@ -47138,12 +47138,8 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bEx" = (
-/obj/structure/closet/radiation,
 /obj/machinery/light/small{
 	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -48383,7 +48379,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 26
+	},
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bGg" = (
@@ -49530,7 +49529,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
-	dir = 10
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -49541,6 +49540,9 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -113323,10 +113325,6 @@
 /obj/item/clothing/gloves/color/black,
 /obj/item/storage/box/evidence,
 /obj/item/taperecorder,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

@@ -1111,10 +1111,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acx" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/cryopod{
 	dir = 8
 	},
@@ -40497,10 +40493,9 @@
 /area/maintenance/port)
 "bBr" = (
 /obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
+	dir = 1;
+	pixel_y = -22
 	},
-/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bBs" = (
@@ -45866,10 +45861,6 @@
 /area/library)
 "bML" = (
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/open/floor/wood,
 /area/library)
 "bMM" = (
@@ -59581,6 +59572,10 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "coz" = (
@@ -60135,15 +60130,15 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -60947,9 +60942,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -60957,6 +60949,10 @@
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -61465,7 +61461,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/research{
@@ -61477,6 +61472,7 @@
 	name = "biohazard containment shutters"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "crU" = (
@@ -61595,10 +61591,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "csl" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -62156,11 +62148,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "cth" = (
@@ -62531,23 +62523,20 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/science/storage)
 "ctY" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
 	},
 /obj/structure/chair/stool,
 /obj/structure/disposalpipe/segment{
@@ -62568,10 +62557,6 @@
 /area/science/storage)
 "cua" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -63127,7 +63112,6 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "cuU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -63668,12 +63652,12 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "cvW" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel,
 /area/science/storage)
 "cvX" = (
@@ -68931,12 +68915,12 @@
 	pixel_x = -25;
 	pixel_y = -5
 	},
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
+	},
+/obj/machinery/airalarm/unlocked{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -102705,7 +102689,7 @@ bue
 bwa
 bxU
 bzD
-bBr
+dmD
 bSx
 bEw
 bzE
@@ -103740,7 +103724,7 @@ bGs
 bHS
 bzE
 bLk
-bzE
+bBr
 bue
 bPS
 bPR
@@ -117641,7 +117625,7 @@ cmQ
 cok
 cpy
 cqQ
-cgq
+crR
 cti
 ctZ
 cuV

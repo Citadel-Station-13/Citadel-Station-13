@@ -19,6 +19,8 @@
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
+	/// resets target on toggle
+	var/resets_target = TRUE
 
 /obj/item/pinpointer/Initialize()
 	. = ..()
@@ -27,17 +29,22 @@
 /obj/item/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	GLOB.pinpointer_list -= src
-	target = null
+	unset_target()
 	return ..()
+
+/obj/item/pinpointer/DoRevenantThrowEffects(atom/target)
+	attack_self()
 
 /obj/item/pinpointer/attack_self(mob/living/user)
 	active = !active
-	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	if(user)
+		user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
 	else
-		target = null
+		if(resets_target)
+			unset_target()
 		STOP_PROCESSING(SSfastprocess, src)
 	update_icon()
 
@@ -49,6 +56,18 @@
 
 /obj/item/pinpointer/proc/scan_for_target()
 	return
+
+/obj/item/pinpointer/proc/set_target(atom/movable/newtarget)
+	if(target)
+		unset_target()
+	target = newtarget
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/unset_target)
+
+/obj/item/pinpointer/proc/unset_target()
+	if(!target)
+		return
+	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	target = null
 
 /obj/item/pinpointer/update_overlays()
 	. = ..()
@@ -101,7 +120,8 @@
 		active = FALSE
 		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
 		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-		target = null //Restarting the pinpointer forces a target reset
+		if(resets_target)
+			unset_target() //Restarting the pinpointer forces a target reset
 		STOP_PROCESSING(SSfastprocess, src)
 		update_icon()
 		return
@@ -137,7 +157,7 @@
 	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
 		return
 
-	target = names[A]
+	set_target(names[A])
 	active = TRUE
 	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
@@ -149,7 +169,7 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!trackable(H))
-				target = null
+				unset_target()
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
 
@@ -163,7 +183,7 @@
 	. = ..()
 
 /obj/item/pinpointer/pair/scan_for_target()
-	target = other_pair
+	set_target(other_pair)
 
 /obj/item/pinpointer/pair/examine(mob/user)
 	. = ..()
@@ -195,7 +215,7 @@
 	shuttleport = SSshuttle.getShuttle("huntership")
 
 /obj/item/pinpointer/shuttle/scan_for_target()
-	target = shuttleport
+	set_target(shuttleport)
 
 /obj/item/pinpointer/shuttle/Destroy()
 	shuttleport = null
@@ -207,4 +227,8 @@
 	icon_state = "pinpointer_ian"
 
 /obj/item/pinpointer/ian/scan_for_target()
-	target = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
+	set_target(locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list)
+
+/obj/item/pinpointer/custom
+	resets_target = FALSE
+	

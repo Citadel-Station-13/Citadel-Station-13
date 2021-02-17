@@ -30,7 +30,6 @@
 	inverse_chem		= /datum/reagent/fermi/BEsmaller //At really impure vols, it just becomes 100% inverse
 	can_synth = FALSE
 	value = REAGENT_VALUE_VERY_RARE
-	var/message_spam = FALSE
 
 /datum/reagent/fermi/breast_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
@@ -81,16 +80,7 @@
 		H.reagents.remove_reagent(type, 5)
 		B.Insert(H)
 
-	//If they have them, increase size. If size is comically big, limit movement and rip clothes.
 	B.modify_size(0.05)
-
-	if (ISINRANGE_EX(B.cached_size, 8.5, 9) && (H.w_uniform || H.wear_suit))
-		var/target = H.get_bodypart(BODY_ZONE_CHEST)
-		if(!message_spam)
-			to_chat(H, "<span class='danger'>Your breasts begin to strain against your clothes tightly!</b></span>")
-			message_spam = TRUE
-		H.adjustOxyLoss(5, 0)
-		H.apply_damage(1, BRUTE, target)
 	return ..()
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
@@ -189,7 +179,6 @@
 	inverse_chem		= /datum/reagent/fermi/PEsmaller //At really impure vols, it just becomes 100% inverse and shrinks instead.
 	can_synth = FALSE
 	value = REAGENT_VALUE_VERY_RARE
-	var/message_spam = FALSE
 
 /datum/reagent/fermi/penis_enlarger/on_mob_metabolize(mob/living/M)
 	. = ..()
@@ -232,14 +221,6 @@
 		P.Insert(H)
 
 	P.modify_size(0.1)
-	var/max_D = CONFIG_GET(number/penis_max_inches_prefs)
-	if (ISINRANGE_EX(P.length, max_D + 0.5, max_D + 1) && (H.w_uniform || H.wear_suit))
-		var/target = H.get_bodypart(BODY_ZONE_CHEST)
-		if(!message_spam)
-			to_chat(H, "<span class='danger'>Your cock begin to strain against your clothes tightly!</b></span>")
-			message_spam = TRUE
-		H.apply_damage(2.5, BRUTE, target)
-
 	return ..()
 
 /datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/human/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.

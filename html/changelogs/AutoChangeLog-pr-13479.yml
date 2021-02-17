@@ -1,5 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - bugfix: "minimap text"
-  - code_imp: "ports cinematic upgrades"

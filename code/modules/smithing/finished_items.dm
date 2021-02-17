@@ -231,7 +231,7 @@
 
 /obj/item/melee/smith/twohand/katana
 	name = "katana"
-	icon_state = "katana"
+	icon_state = "katana-s"
 	overlay_state = "katanahilt"
 	force = 7
 	wielded_mult = 2

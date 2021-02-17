@@ -174,11 +174,13 @@
 	ADD_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
 	L.update_movespeed()
 	ADD_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
 
 /datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_IGNOREDAMAGESLOWDOWN, type)
 	L.update_movespeed()
 	REMOVE_TRAIT(L, TRAIT_TASED_RESISTANCE, type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)

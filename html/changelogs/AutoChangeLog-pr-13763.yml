@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - tweak: "RPEDs now drop their lowest part tier first when quick-emptied (used inhand)."

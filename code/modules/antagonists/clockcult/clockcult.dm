@@ -188,7 +188,7 @@
 
 
 /datum/antagonist/clockcult/admin_add(datum/mind/new_owner,mob/admin)
-	add_servant_of_ratvar(new_owner.current, TRUE)
+	add_servant_of_ratvar(new_owner.current, TRUE, override_type = type)
 	message_admins("[key_name_admin(admin)] has made [new_owner.current] into a servant of Ratvar.")
 	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
 

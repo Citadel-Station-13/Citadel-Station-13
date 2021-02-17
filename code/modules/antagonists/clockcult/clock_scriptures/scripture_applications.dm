@@ -8,7 +8,7 @@
 	descname = "Powers Nearby Structures"
 	name = "Sigil of Transmission"
 	desc = "Places a sigil that can drain and will store energy to power clockwork structures."
-	invocations = list("Divinity...", "...power our creations!")
+	invocations = list("Divinity...", "...power our creations.")
 	channel_time = 70
 	power_cost = 200
 	whispered = TRUE
@@ -28,7 +28,7 @@
 	descname = "Powered Structure, Delay Emergency Shuttles"
 	name = "Prolonging Prism"
 	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
-	invocations = list("May this prism...", "...grant us time to enact his will!")
+	invocations = list("May this prism...", "...grant us time to enact his will.")
 	channel_time = 80
 	power_cost = 300
 	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
@@ -60,7 +60,7 @@
 	descname = "Powered Structure, Area Denial"
 	name = "Mania Motor"
 	desc = "Creates a mania motor which causes minor damage and a variety of negative mental effects in nearby non-Servant humans, potentially up to and including conversion."
-	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
+	invocations = list("May this transmitter...", "...break the will of all who oppose us.")
 	channel_time = 80
 	power_cost = 750
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
@@ -83,7 +83,7 @@
 	descname = "Powered Structure, Teleportation Hub"
 	name = "Clockwork Obelisk"
 	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living Servant or clockwork obelisk."
-	invocations = list("May this obelisk...", "...take us to all places!")
+	invocations = list("May this obelisk...", "...take us to all places.")
 	channel_time = 80
 	power_cost = 300
 	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
@@ -163,7 +163,7 @@
 	descname = "Well-Rounded Combat Construct"
 	name = "Clockwork Marauder"
 	desc = "Creates a shell for a clockwork marauder, a balanced frontline construct that can deflect projectiles with its shield."
-	invocations = list("Arise, avatar of Arbiter!", "Defend the Ark with vengeful zeal.")
+	invocations = list("Arise, avatar of Arbiter!", "Defend the Ark with vengeful zeal!")
 	channel_time = 80
 	power_cost = 8000
 	creator_message = "<span class='brass'>Your slab disgorges several chunks of replicant alloy that form into a suit of thrumming armor.</span>"
