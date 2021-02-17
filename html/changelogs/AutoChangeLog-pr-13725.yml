@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - bugfix: "keybinds generate anti-collision bindings where necessary automatically now"

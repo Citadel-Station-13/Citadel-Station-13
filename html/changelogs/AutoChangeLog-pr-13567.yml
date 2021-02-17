@@ -1,8 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - tweak: "changeling stings retract upon turning into a slime puddle"
-  - tweak: "you cannot transform into a slime puddle with a no drop item in your hands"
-  - tweak: "slime puddles are now transparent and their colour looks more natural in comparison to the user"
-  - tweak: "slime puddles are now even slower"
-  - tweak: "slime puddles now get no protection from worn clothing"

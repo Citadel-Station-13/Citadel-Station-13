@@ -567,6 +567,7 @@
 "bm" = (
 /obj/structure/closet/wardrobe/science_white,
 /obj/structure/disposalpipe/segment,
+/obj/item/tcg_card/special/space_carp,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},

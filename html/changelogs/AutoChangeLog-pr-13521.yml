@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - balance: "zeolites are now actual fermichems instead of being incredibly easy to make."
-  - bugfix: "Using syringes / droppers on chem heaters with beakers in them works again."

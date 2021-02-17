@@ -93,7 +93,6 @@
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_TINY
-	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = 1
 	projectiletype = /obj/item/projectile/beam/disabler
 	ranged_cooldown_time = 20
@@ -112,6 +111,7 @@
 	remove_verb(src, /mob/living/verb/pulled)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]

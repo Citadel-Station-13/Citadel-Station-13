@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new \"Computer Core\" area designation for CogStation"
-  - bugfix: "Fixes some missing area strings"
-  - tweak: "Replaces some firelocks with directional ones as to ensure desks/counters can still be accessed"

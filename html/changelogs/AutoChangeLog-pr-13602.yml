@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "A fallback for dynamic antag rolling that allows for it to just try between traitor, blood brothers, heretics, changeling, bloodsucker and devil until there are enough roundstart antags. This can also happen randomly anyway. Blood brothers and devil are disabled for now, but the code is there to enable them."
-  - rscadd: "A new storyteller, \"Grab Bag\", that forces the above round type."

@@ -30,7 +30,6 @@
 	response_harm_continuous = "steps on"
 	response_harm_simple = "step on"
 	faction = list("hostile")
-	ventcrawler = VENTCRAWLER_ALWAYS
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
@@ -39,6 +38,9 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
+/mob/living/simple_animal/hostile/retaliate/poison/snake/Initialize()
+	. = ..()
+	AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/ListTargets(atom/the_target)
 	. = oview(vision_range, targets_from) //get list of things in vision range

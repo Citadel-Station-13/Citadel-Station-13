@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - admin: "Admins now receive messages regarding certain holodeck actions."

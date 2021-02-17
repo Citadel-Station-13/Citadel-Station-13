@@ -1,21 +1,46 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
 GLOBAL_VAR(restart_counter)
+
 GLOBAL_VAR_INIT(tgs_initialized, FALSE)
 
 GLOBAL_VAR(topic_status_lastcache)
 GLOBAL_LIST(topic_status_cache)
 
-//This happens after the Master subsystem new(s) (it's a global datum)
-//So subsystems globals exist, but are not initialised
+/**
+ * World creation
+ *
+ * Here is where a round itself is actually begun and setup.
+ * * db connection setup
+ * * config loaded from files
+ * * loads admins
+ * * Sets up the dynamic menu system
+ * * and most importantly, calls initialize on the master subsystem, starting the game loop that causes the rest of the game to begin processing and setting up
+ *
+ *
+ * Nothing happens until something moves. ~Albert Einstein
+ *
+ * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
+ *
+ * Initialization Pipeline:
+ *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+ *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+ *		world/New() (You are here)
+ *		Once world/New() returns, client's can connect.
+ *		1 second sleep
+ *		Master Controller initialization.
+ *		Subsystem initialization.
+ *			Non-compiled-in maps are maploaded, all atoms are new()ed
+ *			All atoms in both compiled and uncompiled maps are initialized()
+ */
 /world/New()
 	if (fexists(EXTOOLS))
 		call(EXTOOLS, "maptick_initialize")()
-	#ifdef EXTOOLS_LOGGING
+#ifdef EXTOOLS_LOGGING
 		call(EXTOOLS, "init_logging")()
 	else
 		CRASH("[EXTOOLS] does not exist!")
-	#endif
+#endif
 	enable_debugger()
 #ifdef REFERENCE_TRACKING
 	enable_reference_tracking()
@@ -23,18 +48,20 @@ GLOBAL_LIST(topic_status_cache)
 
 	world.Profile(PROFILE_START)
 
-	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
-
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	GLOB.revdata = new
 
 	InitTgs()
 
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
+
+	load_admins()
+	load_mentors()
 
 	//SetupLogs depends on the RoundID, so lets check
 	//DB schema and set RoundID if we can
@@ -49,14 +76,9 @@ GLOBAL_LIST(topic_status_cache)
 		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
 #endif
 
-	load_admins()
-	load_mentors()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
-	LoadBans()
-	initialize_global_loadout_items()
-	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
@@ -67,10 +89,15 @@ GLOBAL_LIST(topic_status_cache)
 	if(NO_INIT_PARAMETER in params)
 		return
 
+	LoadBans()
+	initialize_global_loadout_items()
+	reload_custom_roundstart_items_list()//Cit change - loads donator items. Remind me to remove when I port over bay's loadout system
+
 	Master.Initialize(10, FALSE, TRUE)
 
-	if(TEST_RUN_PARAMETER in params)
-		HandleTestRun()
+	#ifdef UNIT_TESTS
+	HandleTestRun()
+	#endif
 
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
@@ -88,7 +115,7 @@ GLOBAL_LIST(topic_status_cache)
 #else
 	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/_addtimer, cb, 10 SECONDS))
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -136,7 +163,7 @@ GLOBAL_LIST(topic_status_cache)
 
 
 #ifdef UNIT_TESTS
-	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
+	GLOB.test_log = "[GLOB.log_directory]/tests.log"
 	start_log(GLOB.test_log)
 #endif
 	start_log(GLOB.world_game_log)
@@ -172,7 +199,7 @@ GLOBAL_LIST(topic_status_cache)
 
 	if(!SSfail2topic)
 		return "Server not initialized."
-	else if(SSfail2topic.IsRateLimited(addr))
+	if(SSfail2topic.IsRateLimited(addr))
 		return "Rate limited."
 
 	if(length(T) > CONFIG_GET(number/topic_max_size))
@@ -243,9 +270,10 @@ GLOBAL_LIST(topic_status_cache)
 
 	TgsReboot()
 
-	if(TEST_RUN_PARAMETER in params)
-		FinishTestRun()
-		return
+	#ifdef UNIT_TESTS
+	FinishTestRun()
+	return
+	#endif
 
 	if(TgsAvailable())
 		var/do_hard_reboot
@@ -280,11 +308,11 @@ GLOBAL_LIST(topic_status_cache)
 
 	var/list/features = list()
 
-	/*if(GLOB.master_mode) CIT CHANGE - hides the gamemode from the hub entry, removes some useless info from the hub entry
-		features += GLOB.master_mode
+	// if(GLOB.master_mode)
+	// 	features += GLOB.master_mode
 
-	if (!GLOB.enter_allowed)
-		features += "closed"*/
+	// if (!GLOB.enter_allowed)
+	// 	features += "closed"
 
 	var/s = ""
 	var/hostedby
@@ -292,25 +320,22 @@ GLOBAL_LIST(topic_status_cache)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			s += "<b>[server_name]</b> &#8212; "
-		/*features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn" CIT CHANGE - removes some useless info from the hub entry
-		if(CONFIG_GET(flag/allow_vote_mode))
-			features += "vote"
-		if(CONFIG_GET(flag/allow_ai))
-			features += "AI allowed"*/
+		// features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
+		// if(CONFIG_GET(flag/allow_vote_mode))
+		// 	features += "vote"
+		// if(CONFIG_GET(flag/allow_ai))
+		// 	features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"https://citadel-station.net/home/\">" //Change this to wherever you want the hub to link to. CIT CHANGE - links to cit's website on the hub
-	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version. CIT CHANGE - modifies the hub entry link
+	s += "<a href=\"https://citadel-station.net/home\">" //Change this to wherever you want the hub to link to.
+	s += "Citadel"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")\]" //CIT CHANGE - encloses the server title in brackets to make the hub entry fancier
 	s += "<br>[CONFIG_GET(string/servertagline)]<br>" //CIT CHANGE - adds a tagline!
 
-	var/n = 0
-	for (var/mob/M in GLOB.player_list)
-		if (M.client)
-			n++
+	var/players = GLOB.clients.len
 
 	if(SSmapping.config) // this just stops the runtime, honk.
 		features += "[SSmapping.config.map_name]"	//CIT CHANGE - makes the hub entry display the current map
@@ -318,16 +343,23 @@ GLOBAL_LIST(topic_status_cache)
 	if(NUM2SECLEVEL(GLOB.security_level))//CIT CHANGE - makes the hub entry show the security level
 		features += "[NUM2SECLEVEL(GLOB.security_level)] alert"
 
-	if (n > 1)
-		features += "~[n] players"
-	else if (n > 0)
-		features += "~[n] player"
+	var/popcaptext = ""
+	var/popcap = max(CONFIG_GET(number/extreme_popcap), CONFIG_GET(number/hard_popcap), CONFIG_GET(number/soft_popcap))
+	if (popcap)
+		popcaptext = "/[popcap]"
+
+	if (players > 1)
+		features += "[players][popcaptext] players"
+	else if (players > 0)
+		features += "[players][popcaptext] player"
+
+	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if (features)
-		s += "\[[jointext(features, ", ")]" //CIT CHANGE - replaces the colon here with a left bracket
+		s += "\[[jointext(features, ", ")]"
 
 	status = s
 
@@ -346,4 +378,28 @@ GLOBAL_LIST(topic_status_cache)
 	SSidlenpcpool.MaxZChanged()
 	world.refresh_atmos_grid()
 
+/// Extools atmos
 /world/proc/refresh_atmos_grid()
+
+/world/proc/change_fps(new_value = 20)
+	if(new_value <= 0)
+		CRASH("change_fps() called with [new_value] new_value.")
+	if(fps == new_value)
+		return //No change required.
+
+	fps = new_value
+	on_tickrate_change()
+
+
+/world/proc/change_tick_lag(new_value = 0.5)
+	if(new_value <= 0)
+		CRASH("change_tick_lag() called with [new_value] new_value.")
+	if(tick_lag == new_value)
+		return //No change required.
+
+	tick_lag = new_value
+	on_tickrate_change()
+
+
+/world/proc/on_tickrate_change()
+	SStimer?.reset_buckets()

@@ -675,3 +675,6 @@ TURF_DIRT_THRESHOLD 100
 
 ## Default alpha of dirt on spawn
 DIRT_ALPHA_STARTING 127
+
+## Allows pAI custom holoforms
+PAI_CUSTOM_HOLOFORMS
