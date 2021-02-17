@@ -524,7 +524,7 @@ SUBSYSTEM_DEF(job)
 							card.forceMove(new_deck)
 							new_deck.contents.Add(card)
 					continue
-				var/obj/item/tcg_card/card = new(get_turf(H), card_type, H.client.prefs.tcg_cards[card_type])
+				var/obj/item/tcg_card/card = new(get_turf(H), card_type, N.client.prefs.tcg_cards[card_type])
 				card.forceMove(binder)
 				binder.cards.Add(card)
 			binder.check_for_exodia()

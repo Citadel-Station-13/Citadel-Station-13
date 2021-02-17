@@ -387,13 +387,13 @@
 	if(flipped)
 		switch(contents.len)
 			if(1 to 10)
-				icon_state = "deck_tcg_low"
+				icon_state = "deck_low"
 			if(11 to 20)
-				icon_state = "deck_tcg_half"
+				icon_state = "deck_half"
 			if(21 to INFINITY)
-				icon_state = "deck_tcg_full"
+				icon_state = "deck_full"
 	else
-		icon_state = "deck_tcg_full"
+		icon_state = "deck_up"
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()
