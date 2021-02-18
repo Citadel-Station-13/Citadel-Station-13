@@ -259,7 +259,9 @@
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 /obj/machinery/smartfridge/drying_rack/spawn_frame()
 
-/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
+/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/C, ignore_panel = 1)
+	if(!C.tool_behaviour == TOOL_CROWBAR)
+		return
 	..()
 
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)

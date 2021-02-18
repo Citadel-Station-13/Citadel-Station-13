@@ -311,7 +311,7 @@
 		to_chat(user, "<span class = 'danger'>Install a new flash in [src]!</span>")
 
 /obj/item/clothing/glasses/sunglasses/stunglasses/attackby(obj/item/W,mob/user)
-	if (istype(W,/obj/item/screwdriver))
+	if (W.tool_behaviour == TOOL_SCREWDRIVER)
 		if (installed)
 			installed.forceMove(get_turf(src))
 			to_chat(user, "<span class = 'notice'>You remove [installed] from [src].</span>")

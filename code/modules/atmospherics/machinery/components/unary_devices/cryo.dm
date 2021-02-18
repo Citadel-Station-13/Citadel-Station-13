@@ -326,7 +326,7 @@
 		|| default_deconstruction_crowbar(I))
 		update_icon()
 		return
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
 		return
@@ -454,8 +454,10 @@
 		return G.return_temperature()
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)
+/obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/W)
 	. = ..()
+	if(!W.tool_behaviour == TOOL_WRENCH)
+		return
 	if(.)
 		SetInitDirections()
 		var/obj/machinery/atmospherics/node = nodes[1]

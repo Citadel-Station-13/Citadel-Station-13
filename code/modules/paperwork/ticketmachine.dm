@@ -22,10 +22,11 @@
 	var/list/obj/item/ticket_machine_ticket/tickets = list()
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
+	if(!I.tool_behaviour == TOOL_MULTITOOL)
+		return
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
 		return
-	var/obj/item/multitool/M = I
-	M.buffer = src
+	I.buffer = src
 	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 	return TRUE
 
@@ -77,11 +78,10 @@
 /obj/machinery/button/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(I.tool_behaviour == TOOL_MULTITOOL)
-		var/obj/item/multitool/M = I
-		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
+		if(I.buffer && !istype(I.buffer, /obj/machinery/ticket_machine))
 			return
 		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.linked = M.buffer
+		controller.linked = I.buffer
 		id = null
 		controller.id = null
 		to_chat(user, "<span class='warning'>You've linked [src] to [controller.linked].</span>")
