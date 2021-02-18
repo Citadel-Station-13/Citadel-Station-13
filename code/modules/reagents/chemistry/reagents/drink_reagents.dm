@@ -616,7 +616,7 @@
 	name = "Buzz Fuzz"
 	description = "~A Hive of Flavour!~ NOTICE: Addicting."
 	nutriment_factor = 0
-	addiction_threshold = 26 //A can and a sip
+	addiction_threshold = 31 //A can and a sip
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "carbonated honey and pollen"
 	glass_icon_state = "buzz_fuzz"
