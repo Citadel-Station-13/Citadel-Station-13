@@ -85,7 +85,7 @@ handles linking back and forth.
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!(I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
+		if((I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
 			if(silo == I.buffer)
 				to_chat(user, "<span class='notice'>[parent] is already connected to [silo].</span>")
 				return COMPONENT_NO_AFTERATTACK
