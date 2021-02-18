@@ -893,7 +893,7 @@ GENETICS SCANNER
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
 	var/list/discovered = list() //hit a dna console to update the scanners database
-	buffer = list()
+	var/list/buffer
 	var/ready = TRUE
 	var/cooldown = 200
 

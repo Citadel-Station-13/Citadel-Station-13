@@ -762,14 +762,14 @@
 /obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
 	switch(buildstage)
 		if(2)
-			if(W.tool_behaviour == TOOL_WIRECUTTER && panel_open && wires.is_all_cut())
+			if(istype(W, /obj/item/wirecutters) && panel_open && wires.is_all_cut())
 				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
-			else if(W.tool_behaviour == TOOL_SCREWDRIVER)  // Opening that Air Alarm up.
+			else if(istype(W, /obj/item/screwdriver))  // Opening that Air Alarm up.
 				W.play_tool_sound(src)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -781,7 +781,7 @@
 				wires.interact(user)
 				return
 		if(1)
-			if(W.tool_behaviour == TOOL_CROWBAR)
+			if(istype(W, /obj/item/crowbar))
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
 				W.play_tool_sound(src)
@@ -832,7 +832,7 @@
 				update_icon()
 				return
 
-			if(W.tool_behaviour == TOOL_WRENCH)
+			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
 				W.play_tool_sound(src)
 				new /obj/item/wallframe/airalarm( user.loc )

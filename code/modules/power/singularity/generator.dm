@@ -18,7 +18,7 @@
 	var/creation_type = /obj/singularity
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH)
+	if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 	else
 		return ..()

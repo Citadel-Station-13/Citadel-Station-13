@@ -62,7 +62,7 @@
 	pick_sign(user)
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(istype(I, /obj/item/screwdriver))
 		if(!allowed(user))
 			to_chat(user, "<span class='info'>Access denied.</span>")
 			return

@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	return
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
+	if(istype(I, /obj/item/wrench))
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()

@@ -41,7 +41,6 @@
 	comp_light_luminosity = 6.3
 	has_variants = FALSE
 	device_theme = "syndicate"
-	light_color = COLOR_RED
 
 /obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
 	if(!enabled)

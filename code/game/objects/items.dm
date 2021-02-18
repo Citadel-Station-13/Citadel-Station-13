@@ -112,10 +112,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
-	//Special multitools
-	var/buffer = null
-	var/show_wires = FALSE
-	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 

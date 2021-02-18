@@ -164,15 +164,16 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/M = W
 		if(panel_open)
-			W.buffer = src
+			M.buffer = src
 			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
 		else
-			if(W.buffer && istype(W.buffer, /obj/machinery/teleport/station) && W.buffer != src)
+			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
-					linked_stations.Add(W.buffer)
-					W.buffer = null
+					linked_stations.Add(M.buffer)
+					M.buffer = null
 					to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 				else
 					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
@@ -184,7 +185,7 @@
 	else if(default_deconstruction_crowbar(W))
 		return
 
-	else if(W.tool_behaviour == TOOL_WIRECUTTER)
+	else if(istype(W, /obj/item/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
 			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")

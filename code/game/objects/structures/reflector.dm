@@ -78,13 +78,13 @@
 	if(admin)
 		return
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+	if(istype(W, /obj/item/screwdriver))
 		can_rotate = !can_rotate
 		to_chat(user, "<span class='notice'>You [can_rotate ? "unlock" : "lock"] [src]'s rotation.</span>")
 		W.play_tool_sound(src)
 		return
 
-	if(W.tool_behaviour == TOOL_WRENCH)
+	if(istype(W, /obj/item/wrench))
 		if(anchored)
 			to_chat(user, "<span class='warning'>Unweld [src] from the floor first!</span>")
 			return
@@ -95,7 +95,7 @@
 			if(buildstackamount)
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
-	else if(W.tool_behaviour == TOOL_WELDER)
+	else if(istype(W, /obj/item/weldingtool))
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return

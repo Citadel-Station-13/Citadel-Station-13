@@ -160,7 +160,7 @@
 	..()
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat == DEAD)
+	if(istype(I, /obj/item/screwdriver) && stat == DEAD)
 		try_reactivate(user)
 	else
 		..()

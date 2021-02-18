@@ -61,7 +61,7 @@
 		setCharging()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
-	if(G.tool_behaviour == TOOL_WRENCH)
+	if(istype(G, /obj/item/wrench))
 		if(charging)
 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return
@@ -102,7 +102,7 @@
 		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
 			return
 
-		if(panel_open && G.tool_behaviour == TOOL_CROWBAR)
+		if(panel_open && istype(G, /obj/item/crowbar))
 			default_deconstruction_crowbar(G)
 			return
 

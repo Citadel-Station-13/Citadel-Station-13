@@ -279,7 +279,7 @@
 		to_chat(user, "<span class='notice'>[src] is now [choice].</span>")
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(W, /obj/item/multitool))
 		if(user.a_intent == INTENT_DISARM)
 			if(!active)
 				to_chat(user, "<span class='warning'>COLOR_SET</span>")

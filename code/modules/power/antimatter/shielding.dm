@@ -247,7 +247,7 @@
 	custom_materials = list(/datum/material/iron=100)
 
 /obj/item/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL && istype(src.loc, /turf))
+	if(istype(I, /obj/item/multitool) && istype(src.loc, /turf))
 		new/obj/machinery/am_shielding(src.loc)
 		qdel(src)
 	else

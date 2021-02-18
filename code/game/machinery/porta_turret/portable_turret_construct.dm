@@ -23,14 +23,14 @@
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(PTURRET_UNSECURED)	//first step
-			if(I.tool_behaviour == TOOL_WRENCH && !anchored)
+			if(istype(I, /obj/item/wrench) && !anchored)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
 				setAnchored(TRUE)
 				build_step = PTURRET_BOLTED
 				return
 
-			else if(I.tool_behaviour == TOOL_CROWBAR && !anchored)
+			else if(istype(I, /obj/item/crowbar) && !anchored)
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You dismantle the turret construction.</span>")
 				new /obj/item/stack/sheet/metal( loc, 5)
@@ -48,7 +48,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
 				return
 
-			else if(I.tool_behaviour == TOOL_WRENCH)
+			else if(istype(I, /obj/item/wrench))
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
 				setAnchored(FALSE)
@@ -57,13 +57,13 @@
 
 
 		if(PTURRET_START_INTERNAL_ARMOUR)
-			if(I.tool_behaviour == TOOL_WRENCH)
+			if(istype(I, /obj/item/wrench))
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
 				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
 
-			else if(I.tool_behaviour == TOOL_WELDER)
+			else if(istype(I, /obj/item/weldingtool))
 				if(!I.tool_start_check(user, amount=5)) //uses up 5 fuel
 					return
 
@@ -89,7 +89,7 @@
 				build_step = PTURRET_GUN_EQUIPPED
 				return
 
-			else if(I.tool_behaviour == TOOL_WRENCH)
+			else if(istype(I, /obj/item/wrench))
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
 				build_step = PTURRET_START_INTERNAL_ARMOUR
@@ -106,7 +106,7 @@
 
 
 		if(PTURRET_SENSORS_ON)
-			if(I.tool_behaviour == TOOL_SCREWDRIVER)
+			if(istype(I, /obj/item/screwdriver))
 				I.play_tool_sound(src, 100)
 				build_step = PTURRET_CLOSED
 				to_chat(user, "<span class='notice'>You close the internal access hatch.</span>")
@@ -123,14 +123,14 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
 				return
 
-			else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+			else if(istype(I, /obj/item/screwdriver))
 				I.play_tool_sound(src, 100)
 				build_step = PTURRET_SENSORS_ON
 				to_chat(user, "<span class='notice'>You open the internal access hatch.</span>")
 				return
 
 		if(PTURRET_START_EXTERNAL_ARMOUR)
-			if(I.tool_behaviour == TOOL_WELDER)
+			if(istype(I, /obj/item/weldingtool))
 				if(!I.tool_start_check(user, amount=5))
 					return
 
@@ -153,7 +153,7 @@
 					qdel(src)
 					return
 
-			else if(I.tool_behaviour == TOOL_CROWBAR)
+			else if(istype(I, /obj/item/crowbar))
 				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
 				new /obj/item/stack/sheet/metal(loc, 2)

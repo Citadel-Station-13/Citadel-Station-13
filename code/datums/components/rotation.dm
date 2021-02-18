@@ -125,7 +125,7 @@
 	else
 		if(!default_can_user_rotate(user, default_rotation_direction))
 			return
-	if(I.tool_behaviour == TOOL_WRENCH)
+	if(istype(I,/obj/item/wrench))
 		BaseRot(user,default_rotation_direction)
 		return COMPONENT_NO_AFTERATTACK
 

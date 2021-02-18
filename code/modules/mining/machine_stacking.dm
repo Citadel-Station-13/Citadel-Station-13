@@ -38,8 +38,9 @@
 	user << browse(dat, "window=console_stacking_machine")
 
 /obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		I.buffer = src
+	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
+		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 		return TRUE
 
@@ -96,8 +97,8 @@
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
-/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/M)
-	if(M.tool_behaviour == TOOL_MULTITOOL)
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
+	if(istype(M))
 		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
 			CONSOLE = M.buffer
 			CONSOLE.machine = src

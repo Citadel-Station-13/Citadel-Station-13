@@ -26,6 +26,8 @@
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
+	var/obj/screen/lamp_button = null
+	var/obj/screen/thruster_button = null
 	var/obj/screen/hands = null
 
 	var/shown_robot_modules = 0	//Used to determine whether they have the module menu shown or not
@@ -68,24 +70,11 @@
 	var/toner = 0
 	var/tonermax = 40
 
-	///If the lamp isn't broken.
-	var/lamp_functional = TRUE
-	///If the lamp is turned on
-	var/lamp_enabled = FALSE
-	///Set lamp color
-	var/lamp_color = "#FFFFFF"
-	///Lamp brightness. Starts at 3, but can be 1 - 5.
-	var/lamp_intensity = 3
-	///Lamp button reference
-	var/obj/screen/robot/lamp/lampButton
-	///Set to true if a doomsday event is locking our lamp to on and RED
-	var/lamp_doom = FALSE
-	//Maximum brightness of a borg lamp. Set as a var for easy adjusting.
-	var/lamp_max = 10
-
-	///The reference to the built-in tablet that borgs carry.
-	var/obj/item/modular_computer/tablet/integrated/modularInterface
-	var/obj/screen/robot/modPC/interfaceButton
+	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
+	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
+	light_color = "#FFCC66"
+	light_power = 0.8
+	var/lamp_cooldown = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)

@@ -155,7 +155,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
-	cutting_tool = TOOL_SCREWDRIVER
+	cutting_tool = /obj/item/screwdriver
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()

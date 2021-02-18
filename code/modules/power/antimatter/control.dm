@@ -146,7 +146,7 @@
 	//No other icons for it atm
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH)
+	if(istype(W, /obj/item/wrench))
 		if(!anchored)
 			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \

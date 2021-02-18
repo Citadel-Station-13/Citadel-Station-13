@@ -253,7 +253,7 @@
 	possible_colors = list("purple")
 
 /obj/item/dualsaber/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
