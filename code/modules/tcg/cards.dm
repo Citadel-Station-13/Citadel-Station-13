@@ -573,7 +573,7 @@
 			card.forceMove(src)
 			cards.Add(card)
 			if(named)
-				decks[named].Add(card.name)
+				decks[named] += card.name
 		qdel(I)
 	. = ..()
 
