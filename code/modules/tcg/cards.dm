@@ -787,6 +787,10 @@
 
 	var/obj/item/tcgcard_binder/binder = locate() in src
 	if(!binder)
+		var/obj/item/storage/backpack/back = locate() in src
+		binder = locate() in back
+
+	if(!binder)
 		return
 
 	var/list/card_types = list()
