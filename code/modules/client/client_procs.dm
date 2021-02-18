@@ -76,9 +76,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	//Logs all hrefs, except chat pings
-	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
+		if(CONFIG_GET(flag/emergency_tgui_logging))
+			log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+		return
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	//byond bug ID:2256651
 	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
@@ -103,10 +109,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(href_list["statpanel_item_target"])
 		handle_statpanel_click(href_list)
-		return
-
-	// Tgui Topic middleware
-	if(tgui_Topic(href_list))
 		return
 
 	// Admin PM
