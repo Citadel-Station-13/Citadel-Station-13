@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Free Golem Ship GPSes now start as disabled. Like they were supposed to."
