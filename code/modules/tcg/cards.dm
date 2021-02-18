@@ -624,7 +624,7 @@
 			user.put_in_hands(choice)
 			cards.Remove(choice)
 
-		if(choice && choice in decks)
+		if(choice && (choice in decks))
 			var/obj/item/tcgcard_deck/new_deck = new(get_turf(user))
 			var/list/required_cards = decks[choice]
 			for(var/obj/item/tcg_card/card in cards)
