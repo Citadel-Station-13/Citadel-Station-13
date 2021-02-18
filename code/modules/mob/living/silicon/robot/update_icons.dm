@@ -1,6 +1,7 @@
 /// this is bad code
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = module.cyborg_base_icon
 	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
 	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
@@ -26,10 +27,14 @@
 	if(stat != DEAD && !(IsUnconscious() ||IsStun() || IsKnockdown() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
-		if(lamp_intensity > 2)
+		if(lamp_enabled)
 			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_l"
+			eye_lights.color = lamp_doom? COLOR_RED : lamp_color
+			eye_lights.plane = 19 //glowy eyes
 		else
 			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e[is_servant_of_ratvar(src) ? "_r" : ""]"
+			eye_lights.color = "#FFFFFF"
+			eye_lights.plane = -1
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 

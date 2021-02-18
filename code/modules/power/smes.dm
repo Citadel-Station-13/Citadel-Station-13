@@ -162,8 +162,8 @@
 		return TRUE
 
 
-/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/crowbar/C)
-	if(istype(C) && terminal)
+/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/C)
+	if(C.tool_behaviour == TOOL_CROWBAR && terminal)
 		to_chat(usr, "<span class='warning'>You must first remove the power terminal!</span>")
 		return FALSE
 

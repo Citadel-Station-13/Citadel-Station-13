@@ -25,7 +25,7 @@
 	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
-	var/cutting_tool = /obj/item/weldingtool
+	var/cutting_tool = TOOL_WELDER
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
@@ -302,7 +302,9 @@
 	update_icon()
 	return TRUE
 
-/obj/structure/closet/proc/handle_lock_removal(mob/user, obj/item/screwdriver/S)
+/obj/structure/closet/proc/handle_lock_removal(mob/user, obj/item/S)
+	if(!S.tool_behaviour == TOOL_SCREWDRIVER)
+		return
 	if(lock_in_use)
 		to_chat(user, "<span class='notice'>Wait for work on [src] to be done first!</span>")
 		return
@@ -357,7 +359,7 @@
 	if(opened)
 		if(istype(W, cutting_tool))
 			var/welder = FALSE
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
 				to_chat(user, "<span class='notice'>You begin [welder ? "slicing" : "deconstructing"] \the [src] apart...</span>")
@@ -377,9 +379,9 @@
 			return TRUE
 	else if(istype(W, /obj/item/electronics/airlock))
 		handle_lock_addition(user, W)
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		handle_lock_removal(user, W)
-	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
+	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -396,7 +398,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/wrench) && anchorable)
+	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)
 			return
 		setAnchored(!anchored)

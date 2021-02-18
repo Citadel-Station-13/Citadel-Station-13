@@ -99,19 +99,21 @@
 		return
 	..()
 
-/obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
+/obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/W)
+	if(!W.tool_behaviour == TOOL_MULTITOOL)
+		return
 	if(!defib)
 		to_chat(user, "<span class='warning'>There isn't any defibrillator to clamp in!</span>")
 		return TRUE
 	if(!clamps_locked)
 		to_chat(user, "<span class='warning'>[src]'s clamps are disengaged!</span>")
 		return TRUE
-	user.visible_message("<span class='notice'>[user] presses [multitool] into [src]'s ID slot...</span>", \
+	user.visible_message("<span class='notice'>[user] presses [W] into [src]'s ID slot...</span>", \
 	"<span class='notice'>You begin overriding the clamps on [src]...</span>")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, 100, target = src) || !clamps_locked)
 		return
-	user.visible_message("<span class='notice'>[user] pulses [multitool], and [src]'s clamps slide up.</span>", \
+	user.visible_message("<span class='notice'>[user] pulses [W], and [src]'s clamps slide up.</span>", \
 	"<span class='notice'>You override the locking clamps on [src]!</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	clamps_locked = FALSE

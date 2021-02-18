@@ -146,3 +146,7 @@
 /obj/machinery/modular_computer/bullet_act(obj/item/projectile/Proj)
 	if(cpu)
 		cpu.bullet_act(Proj)
+
+/obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	if(cpu)
+		return cpu.screwdriver_act(user, tool)
