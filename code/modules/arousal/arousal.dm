@@ -9,6 +9,7 @@
 	var/hidden_underwear = FALSE
 	var/hidden_undershirt = FALSE
 	var/hidden_socks = FALSE
+	var/arousal_rate = 1
 
 //Mob procs
 /mob/living/carbon/human/verb/underwear_toggle()
@@ -36,13 +37,14 @@
 	update_body(TRUE)
 
 
-/mob/living/carbon/human/proc/adjust_arousal(strength,aphro = FALSE,maso = FALSE) // returns all genitals that were adjust
+/mob/living/carbon/human/proc/adjust_arousal(strength, cause = "manual toggle", aphro = FALSE,maso = FALSE) // returns all genitals that were adjust
 	var/list/obj/item/organ/genital/genit_list = list()
 	if(!client?.prefs.arousable || (aphro && (client?.prefs.cit_toggles & NO_APHRO)) || (maso && !HAS_TRAIT(src, TRAIT_MASO)))
 		return // no adjusting made here
+	var/enabling = strength > 0
 	for(var/obj/item/organ/genital/G in internal_organs)
-		if(G.genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(strength*G.sensitivity))
-			G.set_aroused_state(strength > 0)
+		if(G.genital_flags & GENITAL_CAN_AROUSE && !G.aroused_state && prob(abs(strength)*G.sensitivity * arousal_rate))
+			G.set_aroused_state(enabling,cause)
 			G.update_appearance()
 			if(G.aroused_state)
 				genit_list += G
@@ -189,7 +191,7 @@
 	return TRUE
 
 //Here's the main proc itself
-/mob/living/carbon/human/proc/mob_climax(forced_climax=FALSE) //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
+/mob/living/carbon/human/proc/mob_climax(forced_climax=FALSE,cause = "") //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
 	if(mb_cd_timer > world.time)
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
 			to_chat(src, "<span class='warning'>You need to wait [DisplayTimeText((mb_cd_timer - world.time), TRUE)] before you can do that again!</span>")
@@ -202,6 +204,7 @@
 			to_chat(src, "<span class='warning'>You can't do that while dead!</span>")
 		return
 	if(forced_climax) //Something forced us to cum, this is not a masturbation thing and does not progress to the other checks
+		log_message("was forced to climax by [cause]",LOG_EMOTE)
 		for(var/obj/item/organ/genital/G in internal_organs)
 			if(!CHECK_BITFIELD(G.genital_flags, CAN_CLIMAX_WITH)) //Skip things like wombs and testicles
 				continue
