@@ -24,6 +24,7 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
+	gold_core_spawnable = HOSTILE_SPAWN
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
 	a_intent = INTENT_HARM
