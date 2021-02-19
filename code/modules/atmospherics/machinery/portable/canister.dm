@@ -323,7 +323,7 @@
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
 
-		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
+		if(release_gas_to(air_contents, target_air, release_pressure) && !holding)
 			air_update_turf()
 
 	// var/our_pressure = air_contents.return_pressure()
