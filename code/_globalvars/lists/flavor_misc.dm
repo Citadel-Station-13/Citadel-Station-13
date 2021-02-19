@@ -126,6 +126,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Not Malf",
 	"Patriot",
 	"Pirate",
+	"Portrait",
 	"President",
 	"Rainbow",
 	"Clown",

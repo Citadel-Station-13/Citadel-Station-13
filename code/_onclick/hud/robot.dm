@@ -285,7 +285,7 @@
 
 /obj/screen/robot/lamp
 	name = "headlamp"
-	icon_state = "lamp0"
+	icon_state = "lamp_off"
 	var/mob/living/silicon/robot/robot
 
 /obj/screen/robot/lamp/Click()

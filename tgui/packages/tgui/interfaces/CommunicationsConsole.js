@@ -15,7 +15,7 @@ const SWIPE_NEEDED = "SWIPE_NEEDED";
 
 const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
 
-const AlertButton = (props, context) => {
+export const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
   const { alertLevelTick, canSetAlertLevel } = data;
   const { alertLevel, setShowAlertLevelConfirm } = props;
@@ -44,7 +44,7 @@ const AlertButton = (props, context) => {
   );
 };
 
-const MessageModal = (props, context) => {
+export const MessageModal = (props, context) => {
   const { data } = useBackend(context);
   const { maxMessageLength } = data;
 
@@ -106,7 +106,7 @@ const MessageModal = (props, context) => {
   );
 };
 
-const NoConnectionModal = () => {
+export const NoConnectionModal = () => {
   return (
     <Dimmer>
       <Flex direction="column" textAlign="center" width="300px">
@@ -140,7 +140,7 @@ const NoConnectionModal = () => {
   );
 };
 
-const PageBuyingShuttle = (props, context) => {
+export const PageBuyingShuttle = (props, context) => {
   const { act, data } = useBackend(context);
 
   return (
@@ -196,7 +196,7 @@ const PageBuyingShuttle = (props, context) => {
   );
 };
 
-const PageChangingStatus = (props, context) => {
+export const PageChangingStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const { maxStatusLineLength } = data;
 
@@ -294,7 +294,7 @@ const PageChangingStatus = (props, context) => {
   );
 };
 
-const PageMain = (props, context) => {
+export const PageMain = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     alertLevel,
@@ -336,9 +336,9 @@ const PageMain = (props, context) => {
   return (
     <Box>
       <Section title="Emergency Shuttle">
-        {
-          shuttleCalled
-            ? <Button.Confirm
+        {shuttleCalled
+          ? (
+            <Button.Confirm
               icon="space-shuttle"
               content="Recall Emergency Shuttle"
               color="bad"
@@ -353,7 +353,8 @@ const PageMain = (props, context) => {
               tooltipPosition="bottom-right"
               onClick={() => act("recallShuttle")}
             />
-            : <Button
+          ) : (
+            <Button
               icon="space-shuttle"
               content="Call Emergency Shuttle"
               disabled={shuttleCanEvacOrFailReason !== 1}
@@ -364,8 +365,7 @@ const PageMain = (props, context) => {
               }
               tooltipPosition="bottom-right"
               onClick={() => setCallingShuttle(true)}
-            />
-        }
+            />)}
 
         {!!shuttleCalledPreviously && (
           shuttleLastCalled && (
@@ -605,7 +605,7 @@ const PageMain = (props, context) => {
   );
 };
 
-const PageMessages = (props, context) => {
+export const PageMessages = (props, context) => {
   const { act, data } = useBackend(context);
   const messages = data.messages || [];
 
