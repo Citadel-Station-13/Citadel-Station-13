@@ -493,24 +493,27 @@ SUBSYSTEM_DEF(job)
 	if(ishuman(H) && H.client && N)
 		if(H.client && H.client.prefs && length(H.client.prefs.tcg_cards))
 			var/obj/item/tcgcard_binder/binder = new(get_turf(H))
-			if(!H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
-				qdel(binder)
-			else
-				for(var/card_type in H.client.prefs.tcg_cards)
+			H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+			for(var/card_type in H.client.prefs.tcg_cards)
+				if(card_type)
 					var/obj/item/tcg_card/card = new(get_turf(H), card_type, H.client.prefs.tcg_cards[card_type])
 					card.forceMove(binder)
 					binder.cards.Add(card)
-				binder.check_for_exodia()
+			binder.check_for_exodia()
+			if(length(H.client.prefs.tcg_decks))
+				binder.decks = H.client.prefs.tcg_decks
 	else
 		if(H && N.client.prefs && length(N.client.prefs.tcg_cards))
 			var/obj/item/tcgcard_binder/binder = new(get_turf(H))
-			if(!H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
-				qdel(binder)
-			else
-				for(var/card_type in N.client.prefs.tcg_cards)
-					var/obj/item/tcg_card/card = new(get_turf(H), card_type, H.client.prefs.tcg_cards[card_type])
+			H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+			for(var/card_type in N.client.prefs.tcg_cards)
+				if(card_type)
+					var/obj/item/tcg_card/card = new(get_turf(H), card_type, N.client.prefs.tcg_cards[card_type])
 					card.forceMove(binder)
 					binder.cards.Add(card)
+			binder.check_for_exodia()
+			if(length(N.client.prefs.tcg_decks))
+				binder.decks = N.client.prefs.tcg_decks
 
 	return H
 /*
