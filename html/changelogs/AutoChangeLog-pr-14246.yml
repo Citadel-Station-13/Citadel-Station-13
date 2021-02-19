@@ -1,0 +1,4 @@
+author: "TyrianTyrell"
+delete-after: True
+changes: 
+  - bugfix: "fixed the signed language so that you can actually use it, and that it's unusable when it's meant to be."

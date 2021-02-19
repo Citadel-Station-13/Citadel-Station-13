@@ -1,0 +1,4 @@
+author: "Chiirno"
+delete-after: True
+changes: 
+  - tweak: "Synthflesh now unhusks with 100u instead of requiring 101u."

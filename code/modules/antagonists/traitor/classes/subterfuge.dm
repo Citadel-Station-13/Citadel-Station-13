@@ -17,11 +17,6 @@
 			kill_objective.owner = T.owner
 			kill_objective.find_target()
 			T.add_objective(kill_objective)
-		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = T.owner
-			maroon_objective.find_target()
-			T.add_objective(maroon_objective)
 	else
 		var/list/weights = list()
 		weights["sabo"] = length(subtypesof(/datum/sabotage_objective))
