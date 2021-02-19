@@ -432,7 +432,7 @@
 	dried_being = /mob/living/carbon/monkey
 
 /obj/item/reagent_containers/food/snacks/cube/beno
-	name = "alien drone cube"
+	name = "alien sentinel cube"
 	desc = "Just add water and run!"
 	tastes = list("the jungle" = 1, "acid" = 1)
 	dried_being = /mob/living/simple_animal/hostile/alien/sentinel
