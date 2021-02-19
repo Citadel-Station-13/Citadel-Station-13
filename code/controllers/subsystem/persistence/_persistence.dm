@@ -88,6 +88,7 @@ SUBSYSTEM_DEF(persistence)
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	SavePaintings()
 	SaveScars()
+	SaveTCGCards()
 
 /**
  * Loads persistent data relevant to the current map: Objects, etc.
@@ -349,3 +350,25 @@ SUBSYSTEM_DEF(persistence)
 		if(!ending_human.client)
 			return
 		ending_human.client.prefs.save_character()
+
+/datum/controller/subsystem/persistence/proc/SaveTCGCards()
+	for(var/i in GLOB.joined_player_list)
+		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
+		if(!istype(ending_human) || !ending_human.mind || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.tcg_cards)
+			continue
+
+		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
+		if(!original_human || original_human.stat == DEAD || !(original_human == ending_human))
+			continue
+
+		var/obj/item/tcgcard_binder/binder = locate() in ending_human
+		if(!binder || !length(binder.cards))
+			continue
+
+		var/list/card_types = list()
+		for(var/obj/item/tcg_card/card in binder.cards)
+			//if(!card.illegal) //Uncomment if you want to block syndie cards from saving
+			card_types[card.datum_type] = card.illegal
+
+		ending_human.client.prefs.tcg_cards = card_types
+		ending_human.client.prefs.save_character(TRUE)

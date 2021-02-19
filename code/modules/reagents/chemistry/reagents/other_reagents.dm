@@ -2663,3 +2663,32 @@
 	M.SetSleeping(0, 0)
 	..()
 
+//Nerdy card reagents
+
+/datum/reagent/card_powder
+	var/rarity = "Stoopid"
+
+/datum/reagent/card_powder/blue
+	name = "Blue Card Powder"
+	rarity = "Rare"
+	color = "#00B7EF" // blue
+
+/datum/reagent/card_powder/purple
+	name = "Purple Card Powder"
+	rarity = "Epic"
+	color = "#DA00FF" // purple
+
+/datum/reagent/card_powder/yellow
+	name = "Yellow Crayon Powder"
+	rarity = "Legendary"
+	color = "#FFF200" // yellow
+
+/datum/reagent/card_powder/green
+	name = "Green Crayon Powder"
+	rarity = "Common"
+	color = "#A8E61D" // green
+
+/datum/reagent/card_powder/black
+	name = "Black Crayon Powder"
+	rarity = "Exodia"
+	color = "#1C1C1C" // not quite black

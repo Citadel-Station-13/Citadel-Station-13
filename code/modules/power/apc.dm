@@ -903,7 +903,7 @@
 	if(H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE),
+		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEGES_SILICON|PRIVILEGES_DRONE),
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
@@ -994,7 +994,7 @@
 		return TRUE
 	if (user == hijacker || (area.hasSiliconAccessInArea(user) && !aidisabled))
 		return TRUE
-	if(user.silicon_privileges & PRIVILEDGES_SILICON)
+	if(user.silicon_privileges & PRIVILEGES_SILICON)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if (src.aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
@@ -1023,7 +1023,7 @@
 	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
 		hijack(usr)
 		return
-	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
+	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEGES_SILICON|PRIVILEGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")
@@ -1064,7 +1064,7 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE)) //usr.has_unlimited_silicon_privilege)
+			if(area.hasSiliconAccessInArea(usr, PRIVILEGES_SILICON|PRIVILEGES_DRONE)) //usr.has_unlimited_silicon_privilege)
 				overload_lighting()
 				. = TRUE
 		if("hack")

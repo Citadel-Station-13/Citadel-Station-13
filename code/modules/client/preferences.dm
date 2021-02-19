@@ -235,6 +235,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/hide_ckey = FALSE //pref for hiding if your ckey shows round-end or not
 
+	var/list/tcg_cards = list()
+
 /datum/preferences/New(client/C)
 	parent = C
 
