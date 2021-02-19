@@ -5,6 +5,24 @@
 	name = "alien drone"
 	mob_name = "alien drone"
 
+/obj/effect/mob_spawn/alien/corpse/humanoid/hunter
+	mob_type = /mob/living/carbon/alien/humanoid/hunter
+	death = TRUE
+	name = "alien hunter"
+	mob_name = "alien hunter"
+
+/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel
+	mob_type = /mob/living/carbon/alien/humanoid/sentinel
+	death = TRUE
+	name = "alien sentinel"
+	mob_name = "alien sentinel"
+
+/obj/effect/mob_spawn/alien/corpse/humanoid/praetorian
+	mob_type = /mob/living/carbon/alien/humanoid/royal/praetorian
+	death = TRUE
+	name = "alien praetorian"
+	mob_name = "alien praetorian"
+
 /obj/effect/mob_spawn/alien/corpse/humanoid/queen
 	mob_type = /mob/living/carbon/alien/humanoid/royal/queen
 	death = TRUE

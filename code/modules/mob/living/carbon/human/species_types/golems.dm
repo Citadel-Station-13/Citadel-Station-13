@@ -801,11 +801,11 @@
 
 /datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.ventcrawler = VENTCRAWLER_NUDE
+	C.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.ventcrawler = initial(C.ventcrawler)
+	C.RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
 /datum/species/golem/bronze
 	name = "Bronze Golem"

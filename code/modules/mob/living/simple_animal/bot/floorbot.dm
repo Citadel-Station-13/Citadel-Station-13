@@ -335,6 +335,12 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
+	if(check_bot_working(target_turf))
+		add_to_ignore(target_turf)
+		target = null
+		playsound(src, 'sound/effects/whistlereset.ogg', 50, TRUE)
+		return
+
 	if(isspaceturf(target_turf))
 		 //Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
@@ -350,9 +356,9 @@
 		sleep(50)
 		if(mode == BOT_REPAIRING && src.loc == target_turf)
 			if(autotile) //Build the floor and include a tile.
-				target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
-			else //Build a hull plating without a floor tile.
 				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+		else //Build a hull plating without a floor tile.
+			target_turf.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
 
 	else
 		var/turf/open/floor/F = target_turf
@@ -366,7 +372,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.PlaceOnTop(/turf/open/floor/plasteel, flags = CHANGETURF_INHERIT_AIR)
+				F.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
@@ -418,3 +424,14 @@
 		repair(A)
 	else
 		..()
+
+/**
+  * Checks a given turf to see if another floorbot is there, working as well.
+  */
+/mob/living/simple_animal/bot/floorbot/proc/check_bot_working(turf/active_turf)
+	if(isturf(active_turf))
+		for(var/mob/living/simple_animal/bot/floorbot/robot in active_turf)
+			if(robot.mode == BOT_REPAIRING)
+				return TRUE
+	return FALSE
+

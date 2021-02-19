@@ -54,13 +54,8 @@
 		return..()
 
 	var/mob/living/carbon/human/H = M
-	//If they've opted out, then route processing though liver.
+	//If they've opted out, ignore and return early.
 	if(!(H.client?.prefs.cit_toggles & BREAST_ENLARGEMENT))
-		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
-		else
-			H.adjustToxLoss(1)
 		return..()
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	//otherwise proceed as normal
@@ -85,9 +80,6 @@
 
 /datum/reagent/fermi/breast_enlarger/overdose_process(mob/living/carbon/M) //Turns you into a female if male and ODing, doesn't touch nonbinary and object genders.
 	if(!(M.client?.prefs.cit_toggles & FORCED_FEM))
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
 		return ..()
 
 	var/obj/item/organ/genital/penis/P = M.getorganslot(ORGAN_SLOT_PENIS)
@@ -122,9 +114,6 @@
 /datum/reagent/fermi/BEsmaller/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
 	if(!(M.client?.prefs.cit_toggles & BREAST_ENLARGEMENT) || !B)
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(-0.25)
 		return ..()
 	B.modify_size(-0.05)
 	return ..()
@@ -203,11 +192,6 @@
 		return ..()
 	var/mob/living/carbon/human/H = M
 	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT))
-		var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
-		else
-			H.adjustToxLoss(1)
 		return ..()
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	//otherwise proceed as normal
@@ -226,10 +210,8 @@
 /datum/reagent/fermi/penis_enlarger/overdose_process(mob/living/carbon/human/M) //Turns you into a male if female and ODing, doesn't touch nonbinary and object genders.
 	if(!istype(M))
 		return ..()
+	// let's not kill them if they didn't consent.
 	if(!(M.client?.prefs.cit_toggles & FORCED_MASC))
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(0.25)
 		return..()
 
 	var/obj/item/organ/genital/breasts/B = M.getorganslot(ORGAN_SLOT_BREASTS)
@@ -266,9 +248,6 @@
 	var/mob/living/carbon/human/H = M
 	var/obj/item/organ/genital/penis/P = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!(H.client?.prefs.cit_toggles & PENIS_ENLARGEMENT) || !P)
-		var/obj/item/organ/liver/L = M.getorganslot(ORGAN_SLOT_LIVER)
-		if(L)
-			L.applyOrganDamage(-0.25)
 		return..()
 
 	P.modify_size(-0.1)

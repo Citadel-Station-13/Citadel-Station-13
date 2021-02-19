@@ -10,35 +10,41 @@
 /obj/item/armorkit/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	// yeah have fun making subtypes and modifying the afterattack if you want to make variants
 	// idiot
-	// - hatter
 	var/used = FALSE
 
 	if(isobj(target) && istype(target, /obj/item/clothing/under))
 		var/obj/item/clothing/under/C = target
-		if(C.armor.melee < 10)
-			C.armor.melee = 10
+		if(C.damaged_clothes)
+			to_chat(user,"<span class='warning'>You should repair the damage done to [C] first.</span>")
+			return
+		if(C.attached_accessory)
+			to_chat(user,"<span class='warning'>Kind of hard to sew around [C.attached_accessory].</span>")
+			return
+		if(C.armor.getRating("melee") < 10)
+			C.armor = C.armor.setRating("melee" = 10)
 			used = TRUE
-		if(C.armor.laser < 10)
-			C.armor.laser = 10
+		if(C.armor.getRating("laser") < 10)
+			C.armor = C.armor.setRating("laser" = 10)
 			used = TRUE
-		if(C.armor.fire < 40)
-			C.armor.fire = 40
+		if(C.armor.getRating("fire") < 40)
+			C.armor = C.armor.setRating("fire" = 40)
 			used = TRUE
-		if(C.armor.acid < 10)
-			C.armor.acid = 10
+		if(C.armor.getRating("acid") < 10)
+			C.armor = C.armor.setRating("acid" = 10)
 			used = TRUE
-		if(C.armor.bomb < 5)
-			C.armor.bomb = 5
+		if(C.armor.getRating("bomb") < 5)
+			C.armor = C.armor.setRating("bomb" = 5)
 			used = TRUE
 
 		if(used)
-			user.visible_message("<span class = 'notice'>[user] uses [src] on [C], reinforcing it and tossing the empty case away afterwards.</span>", \
-			"<span class = 'notice'>You reinforce [C] with [src], making it a little more protective! You toss the empty casing away afterwards.</span>")
-			C.name = "durathread [C.name]" // this disappears if it gets repaired, which is annoying
+			user.visible_message("<span class = 'notice'>[user] reinforces [C] with [src].</span>", \
+			"<span class = 'notice'>You reinforce [C] with [src], making it as protective as a durathread jumpsuit.</span>")
+			C.name = "durathread [C.name]"
+			C.upgrade_prefix = "durathread" // god i hope this works
 			qdel(src)
 			return
 		else
-			to_chat(user, "<span class = 'notice'>You stare at [src] and [C], coming to the conclusion that you probably don't need to reinforce it any further.")
+			to_chat(user, "<span class = 'notice'>You don't need to reinforce [C] any further.")
 			return
 	else
 		return

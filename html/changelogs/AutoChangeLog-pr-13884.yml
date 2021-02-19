@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "The dock-silver standard set by Box and Meta has been enforced across maps in rotation (Delta, Pubby, Lambda)."
-  - bugfix: "The Box whiteship now has its missing tiny fan back."

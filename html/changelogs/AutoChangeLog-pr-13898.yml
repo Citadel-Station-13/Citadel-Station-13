@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - balance: "Regen coma now puts into a coma even from crit or while unconscious."
-  - bugfix: "Regen coma now properly weakens while asleep."

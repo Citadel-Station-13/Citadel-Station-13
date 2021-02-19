@@ -304,7 +304,7 @@
 								"danger_level" = cur_tlv.get_danger_level(environment.get_moles(gas_id) * partial_pressure)
 		))
 
-	if(!locked || hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE))
+	if(!locked || hasSiliconAccessInArea(user, PRIVILEGES_SILICON|PRIVILEGES_DRONE))
 		data["vents"] = list()
 		for(var/id_tag in A.air_vent_names)
 			var/long_name = A.air_vent_names[id_tag]
@@ -385,13 +385,13 @@
 	if(..() || buildstage != 2)
 		return
 	var/silicon_access = hasSiliconAccessInArea(usr)
-	var/bot_priviledges = silicon_access || (usr.silicon_privileges & PRIVILEDGES_DRONE)
-	if((locked && !bot_priviledges) || (silicon_access && aidisabled))
+	var/bot_privileges = silicon_access || (usr.silicon_privileges & PRIVILEGES_DRONE)
+	if((locked && !bot_privileges) || (silicon_access && aidisabled))
 		return
 	var/device_id = params["id_tag"]
 	switch(action)
 		if("lock")
-			if(bot_priviledges && !wires.is_cut(WIRE_IDSCAN))
+			if(bot_privileges && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
 		if("power", "toggle_filter", "widenet", "scrubbing")

@@ -31,7 +31,14 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+
+	/**
+	  * In case you have multiple types, you automatically use the most useful one.
+	  * IE: Skating on ice, flippers on water, flying over chasm/space, etc.
+	  * I reccomend you use the movetype_handler system and not modify this directly, especially for living mobs.
+	  */
+	var/movement_type = GROUND
+
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
@@ -567,8 +574,8 @@
 	return TRUE
 
 //TODO: Better floating
-/atom/movable/proc/float(on)
-	if(throwing)
+/atom/movable/proc/float(on, throw_override)
+	if(throwing || !throw_override)
 		return
 	if(on && !(movement_type & FLOATING))
 		animate(src, pixel_y = 2, time = 10, loop = -1, flags = ANIMATION_RELATIVE)

@@ -1,6 +1,0 @@
-author: "EmeraldSundisk"
-delete-after: True
-changes: 
-  - rscadd: "Adds a few new area designations primarily for CogStation, incorporates them into said map"
-  - tweak: "Reorganizes some area designations for ease of use, along with renaming the central \"Router\" to \"Routing Depot\""
-  - bugfix: "Fixes an incorrectly designated area in CogStation"

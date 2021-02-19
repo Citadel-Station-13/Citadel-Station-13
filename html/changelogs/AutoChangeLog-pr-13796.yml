@@ -1,9 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - rscadd: "Adds a reduced stamina buffer for SCarp users"
-  - rscadd: "Gives SCarp users a better parry"
-  - rscadd: "Adds the SCarp bundle which includes a bo staff"
-  - rscadd: "Lets Carp costumes carry Bo Staffs"
-  - balance: "reduces the stamina damage of scarp slightly"
-  - balance: "reduced the blockchance of the bo staff"

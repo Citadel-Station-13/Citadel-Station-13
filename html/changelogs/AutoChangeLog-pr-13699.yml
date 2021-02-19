@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "nanite resistances tweaked"
-  - rscadd: "new nanite programs added for locking the user out from being modified by consoles or antivirals."
