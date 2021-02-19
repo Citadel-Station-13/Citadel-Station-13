@@ -72,10 +72,10 @@
 #define BORG_SEC_AVAILABLE (!CONFIG_GET(flag/disable_secborg) && GLOB.security_level >= CONFIG_GET(number/minimum_secborg_alert))
 
 //silicon_priviledges flags
-#define PRIVILEDGES_SILICON	(1<<0)
-#define PRIVILEDGES_PAI		(1<<1)
-#define PRIVILEDGES_BOT		(1<<2)
-#define PRIVILEDGES_DRONE	(1<<3)
+#define PRIVILEGES_SILICON	(1<<0)
+#define PRIVILEGES_PAI		(1<<1)
+#define PRIVILEGES_BOT		(1<<2)
+#define PRIVILEGES_DRONE	(1<<3)
 
 #define BORG_LAMP_CD_RESET -1 //special value to reset cyborg's lamp_cooldown
 
