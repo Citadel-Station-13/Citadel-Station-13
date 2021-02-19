@@ -510,7 +510,7 @@
 			else if (lewd && lowertext(customTriggers[trigger]) == "cum")//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
-					H.mob_climax(forced_climax=TRUE, "MKUltra")
+					H.mob_climax(forced_climax=TRUE, cause = "MKUltra")
 				C.SetStun(10)//We got your stun effects in somewhere, Kev.
 
 			//kneel (knockdown)
