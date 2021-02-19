@@ -693,7 +693,7 @@
 						for(var/some_search_item in list_to_search)
 							var/mob/some_search_atom = some_search_item
 							if(findtext(initial(some_search_atom.name), search_term))
-								filtered_results[some_search_item] += some_search_atom.name
+								filtered_results[some_search_item] = some_search_atom.name
 							if(x < 10)
 								message_admins("initial name is [initial(some_search_atom.name)]")
 
@@ -702,7 +702,6 @@
 					to_chat(H, "Nothing matched your search query!")
 					message_admins("for reference the length of list to search was [length(list_to_search)]")
 				else
-					message_admins("it s
 					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
 
 
