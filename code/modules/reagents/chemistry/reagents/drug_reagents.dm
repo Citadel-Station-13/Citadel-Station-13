@@ -641,6 +641,7 @@
 		if(prob(5) && ishuman(M) && M.has_dna() && (M.client?.prefs.cit_toggles & BIMBOFICATION))
 			if(!HAS_TRAIT(M,TRAIT_PERMABONER))
 				to_chat(M, "<span class='userlove'>Your libido is going haywire!</span>")
+				M.log_message("Made perma-horny by hexacrocin.",LOG_EMOTE)
 				ADD_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 	..()
 
