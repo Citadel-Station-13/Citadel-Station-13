@@ -63,7 +63,7 @@
 	filling_color = "#ee7676"
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtype = MEAT | VEGETABLES | FRIED
-	
+
 /obj/item/reagent_containers/food/snacks/sushi_basic
 	name = "funa hosomaki"
 	desc = "A small cylindrical kudzu skin, filled with rice and fish."
@@ -435,7 +435,7 @@
 	name = "alien drone cube"
 	desc = "Just add water and run!"
 	tastes = list("the jungle" = 1, "acid" = 1)
-	dried_being = /mob/living/carbon/alien/humanoid/drone
+	dried_being = /mob/living/simple_animal/hostile/alien/sentinel
 
 /obj/item/reagent_containers/food/snacks/cube/goat
 	name = "goat cube"
