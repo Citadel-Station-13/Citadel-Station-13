@@ -141,71 +141,76 @@
 		if(!client.set_db_player_flags())
 			message_admins("Blocked [src] from new player panel because age gate could not access player database flags.")
 			return FALSE
-		else
-			var/dbflags = client.prefs.db_flags
-			if(dbflags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE) //they have not completed age gate
-				var/age_verification = age_gate()
-				if(age_verification != 1)
-					client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process.")
-					//ban them and kick them
 
-					//parameters used by sql line, easier to read:
-					var/bantype_str = "ADMIN_PERMABAN"
-					var/reason = "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification."
-					var/duration = -1
-					var/sql_ckey = sanitizeSQL(client.ckey)
-					var/computerid = client.computer_id
-					if(!computerid)
-						computerid = "0"
-					var/sql_computerid = sanitizeSQL(computerid)
-					var/ip = client.address
-					if(!ip)
-						ip = "0.0.0.0"
-					var/sql_ip = sanitizeSQL(ip)
+		if(!(client.prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE)) //completed? Skip
+			return TRUE
 
-					//parameter not used as there's no job but i want to fill out all parameters for the insert line
-					var/sql_job
+		var/age_verification = age_gate()
+		//ban them and kick them
+		if(age_verification != 1)
+			// this isn't code, this is paragraphs.
+			var/player_ckey = ckey(client.ckey)
+			// record all admins and non-admins online at the time
+			var/list/clients_online = GLOB.clients.Copy()
+			var/list/admins_online = GLOB.admins.Copy() //list() // remove the GLOB.admins.Copy() and the comments if you want the pure admins_online check
+			// for(var/client/C in clients_online)
+			// 	if(C.holder) //deadmins aren't included since they wouldn't show up on adminwho
+			// 		admins_online += C
+			var/who = clients_online.Join(", ")
+			var/adminwho = admins_online.Join(", ")
 
-					// these are typically the banning admin's, but it's the system so we leave them null, but they're still here for the sake of a full set of values
-					var/sql_a_ckey
-					var/sql_a_computerid
-					var/sql_a_ip
+			var/datum/db_query/query_add_ban = SSdbcore.NewQuery({"
+				INSERT INTO [format_table_name("ban")]
+				(bantime, server_ip, server_port , round_id, bantype, reason, job, duration, expiration_time, ckey, computerid, ip, a_ckey, a_computerid, a_ip, who, adminwho)
+				VALUES (Now(), INET_ATON(:server_ip), :server_port, :round_id, :bantype_str, :reason, :role, :duration, Now() + INTERVAL :duration MINUTE, :ckey, :computerid, INET_ATON(:ip), :a_ckey, :a_computerid, INET_ATON(:a_ip), :who, :adminwho)"},
+				list(
+					// Server info
+					"server_ip" = world.internet_address || 0,
+					"server_port" = world.port,
+					"round_id" = GLOB.round_id,
+					// Client ban info
+					"bantype_str" = "ADMIN_PERMABAN",
+					"reason" = "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification.",
+					"role" = null,
+					"duration" = -1,
+					"ckey" = player_ckey,
+					"ip" = client.address || null,
+					"computerid" = client.computer_id || null,
+					// Admin banning info
+					"a_ckey" = "SYSTEM (Automated-Age-Gate)", // the server
+					"a_ip" = null, //key_name
+					"a_computerid" = "0",
+					"who" = who,
+					"adminwho" = adminwho
+				))
 
-					// record all admins and non-admins online at the time
-					var/who
-					for(var/client/C in GLOB.clients)
-						if(!who)
-							who = "[C]"
-						else
-							who += ", [C]"
+			client.add_system_note("Automated-Age-Gate", "Failed automatic age gate process.")
+			if(!query_add_ban.Execute())
+				// this is the part where you should panic.
+				qdel(query_add_ban)
+				message_admins("WARNING! Failed to ban [ckey] for failing the automatic age gate.")
+				send2tgs_adminless_only("WARNING! Failed to ban [ckey] for failing the automatic age gate.")
+				qdel(client)
+				return FALSE
+			qdel(query_add_ban)
 
-					var/adminwho
-					for(var/client/C in GLOB.admins)
-						if(!adminwho)
-							adminwho = "[C]"
-						else
-							adminwho += ", [C]"
+			create_message("note", player_ckey, "SYSTEM (Automated-Age-Gate)", "SYSTEM BAN - Inputted date during join verification was under 18 years of age. Contact administration on discord for verification.", null, null, 0, 0, null, 0, "high")
 
-					var/sql = "INSERT INTO [format_table_name("ban")] (`bantime`,`server_ip`,`server_port`,`round_id`,`bantype`,`reason`,`job`,`duration`,`expiration_time`,`ckey`,`computerid`,`ip`,`a_ckey`,`a_computerid`,`a_ip`,`who`,`adminwho`) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]', '[bantype_str]', '[reason]', '[sql_job]', [(duration)?"[duration]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[sql_ckey]', '[sql_computerid]', INET_ATON('[sql_ip]'), '[sql_a_ckey]', '[sql_a_computerid]', INET_ATON('[sql_a_ip]'), '[who]', '[adminwho]')"
-					var/datum/DBQuery/query_add_ban = SSdbcore.NewQuery(sql)
-					qdel(query_add_ban)
+			// announce this
+			message_admins("[ckey] has been banned for failing the automatic age gate.")
+			send2tgs_adminless_only("[ckey] has been banned for failing the automatic age gate.")
 
-					// announce this
-					message_admins("[html_encode(client.ckey)] has been banned for failing the automatic age gate.")
-					send2irc("[html_encode(client.ckey)] has been banned for failing the automatic age gate.")
+			// removing the client disconnects them
+			qdel(client)
 
-					// removing the client disconnects them
-					qdel(client)
+			return FALSE
 
+		//they claim to be of age, so allow them to continue and update their flags
+		client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
+		client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
+		//log this
+		message_admins("[ckey] has joined through the automated age gate process.")
 
-					return FALSE
-				else
-					//they claim to be of age, so allow them to continue and update their flags
-					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
-					client.update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, FALSE)
-					//log this
-					message_admins("[ckey] has joined through the automated age gate process.")
-					return TRUE
 	return TRUE
 
 /mob/dead/new_player/Topic(href, href_list[])
