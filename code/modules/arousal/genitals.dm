@@ -76,12 +76,17 @@
 	switch(visibility)
 		if(GEN_VISIBLE_ALWAYS)
 			genital_flags |= GENITAL_THROUGH_CLOTHES
+			owner.log_message("Exposed their [src]",LOG_EMOTE)
 			if(owner)
 				owner.exposed_genitals += src
+		if(GEN_VISIBLE_NO_CLOTHES)
+			owner.log_message("Hid their [src] under clothes only",LOG_EMOTE)
 		if(GEN_VISIBLE_NO_UNDIES)
 			genital_flags |= GENITAL_UNDIES_HIDDEN
+			owner.log_message("Hid their [src] under underwear",LOG_EMOTE)
 		if(GEN_VISIBLE_NEVER)
 			genital_flags |= GENITAL_HIDDEN
+			owner.log_message("Hid their [src] completely",LOG_EMOTE)
 
 	if(update && owner && ishuman(owner)) //recast to use update genitals proc
 		var/mob/living/carbon/human/H = owner
