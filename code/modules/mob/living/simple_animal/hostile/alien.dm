@@ -36,7 +36,6 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
-	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
@@ -97,6 +96,7 @@
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
+	gold_core_spawnable = NO_SPAWN
 	status_flags = 0
 	unique_name = 0
 	var/sterile = 1
