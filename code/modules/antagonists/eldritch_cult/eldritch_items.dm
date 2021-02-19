@@ -50,7 +50,8 @@
 	background_icon_state = "bg_ecult"
 	button_icon_state = "shatter"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	check_flags = MOBILITY_HOLD|MOBILITY_MOVE|MOBILITY_USE
+	check_flags = NONE	// required_mobility_flags handles this
+	required_mobility_flags = MOBILITY_HOLD|MOBILITY_MOVE|MOBILITY_USE
 	var/mob/living/carbon/human/holder
 	var/obj/item/melee/sickly_blade/sword
 
