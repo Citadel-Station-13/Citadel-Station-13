@@ -66,6 +66,7 @@
 		return
 	var/turfing = isturf(target)
 	G.generate_fluid(R)
+	log_message("Climaxed using [G] with [target]", LOG_EMOTE)
 	if(spill && R.total_volume >= 5)
 		R.reaction(turfing ? target : target.loc, TOUCH, 1, 0)
 	if(!turfing)
@@ -275,7 +276,6 @@
 				var/obj/item/reagent_containers/fluid_container = pick_climax_container()
 				if(fluid_container && available_rosie_palms(TRUE, /obj/item/reagent_containers))
 					mob_fill_container(picked_organ, fluid_container)
-
 	mb_cd_timer = world.time + mb_cd_length
 
 /mob/living/carbon/human/verb/climax_verb()
