@@ -329,8 +329,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	if(HAS_TRAIT(src, TRAIT_MUTE) && get_message_language(message) != /datum/language/signlanguage)
+	var/obj/item/bodypart/leftarm = get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/rightarm = get_bodypart(BODY_ZONE_R_ARM)
+	if(HAS_TRAIT(src, TRAIT_MUTE) && get_selected_language() != /datum/language/signlanguage)
 		return 0
+	
+	if (get_selected_language() == /datum/language/signlanguage)
+		var/left_disabled = FALSE
+		var/right_disabled = FALSE
+		if (istype(leftarm)) // Need to check if the arms exist first before checking if they are disabled or else it will runtime
+			if (leftarm.is_disabled())
+				left_disabled = TRUE
+		else
+			left_disabled = TRUE
+		if (istype(rightarm))
+			if (rightarm.is_disabled())
+				right_disabled = TRUE
+		else
+			right_disabled = TRUE
+		if (left_disabled && right_disabled) // We want this to only return false if both arms are either missing or disabled since you could technically sign one-handed.
+			return 0
 
 	if(is_muzzled())
 		return 0
