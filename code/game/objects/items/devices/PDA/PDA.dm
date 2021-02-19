@@ -665,7 +665,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				create_message(U, locate(href_list["target"]))
 
 			if("MessageAll")
-				if(cartridge && cartridge.spam_enabled)
+				if(cartridge?.spam_enabled)
 					send_to_all(U)
 
 			if("toggle_block")
