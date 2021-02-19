@@ -26,6 +26,11 @@
 		return TRUE
 	return FALSE
 
+/datum/species/vampire/qualifies_for_rank(rank, list/features)
+	if(rank == "Chaplain")
+		return FALSE
+	return ..()
+
 /datum/species/vampire/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
 	to_chat(C, "[info_text]")
