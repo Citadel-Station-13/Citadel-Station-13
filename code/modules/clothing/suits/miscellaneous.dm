@@ -487,12 +487,15 @@
 	item_state = "militaryjacket"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
-/obj/item/clothing/suit/jacket/urbanjacket/polychromic
+/obj/item/clothing/suit/jacket/urbanjacket
 	name = "urban jacket"
 	desc = "A canvas jacket styled with a fur neck piece, stylish."
 	icon_state = "urbanjacket"
 	item_state = "urbanjacket"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
+
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic
+	name = "urban jacket (polychromic)"
 
 /obj/item/clothing/suit/jacket/urbanjacket/polychromic/ComponentInitialize()
 	. = ..()

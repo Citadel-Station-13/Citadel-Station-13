@@ -166,10 +166,14 @@
 	path = /obj/item/clothing/suit/jacket/miljacket
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/suit/urbanjacket
+/datum/gear/suit/urbanjacket/polychromic
 	name = "Urban Jacket"
-	path = /obj/item/clothing/suit/jacket/urbanjacket/polychromic
+	path = /obj/item/clothing/suit/jacket/urbanjacket
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/urbanjacket/polychromic
+	name = "Urban Jacket (polychromic)"
+	path = /obj/item/clothing/suit/jacket/urbanjacket/polychromic
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#26321D", "#CBBDAF", "#292929")
 
