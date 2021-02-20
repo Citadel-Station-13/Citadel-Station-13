@@ -166,7 +166,7 @@
 	path = /obj/item/clothing/suit/jacket/miljacket
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
 
-/datum/gear/suit/urbanjacket/polychromic
+/datum/gear/suit/urbanjacket
 	name = "Urban Jacket"
 	path = /obj/item/clothing/suit/jacket/urbanjacket
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
