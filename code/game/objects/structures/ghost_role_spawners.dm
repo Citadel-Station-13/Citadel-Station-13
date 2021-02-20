@@ -667,11 +667,11 @@
 	button_icon_state = "ling_transform"
 	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
 	background_icon_state = "bg_mime"
+	var/currently_disguised = FALSE
 
 /datum/action/disguise/Trigger()
 	var/mob/living/carbon/human/H = owner
-	var/user_search_type = input(H, "Search by PATH or NAME") as null|anything in list("PATH","NAME")
-	if(user_search_type)
+	if(!currently_disguised)
 		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
 		if(user_object_type)
 			var/search_term = stripped_input(H, "Enter the search term")
@@ -682,28 +682,23 @@
 				else
 					list_to_search = subtypesof(/obj)
 				var/list/filtered_results = list()
-				// it's better to have two loops here rather than make the conditional check for path or name in every cycle of a single loop
-				var/x = 0
-				switch(user_search_type)
-					if("PATH")
-						for(var/some_search_item in list_to_search)
-							if(findtext("[some_search_item]", search_term))
-								filtered_results += some_search_item
-					if("NAME")
-						for(var/some_search_item in list_to_search)
-							var/mob/some_search_atom = some_search_item
-							if(findtext(initial(some_search_atom.name), search_term))
-								filtered_results[some_search_item] = some_search_atom.name
-							if(x < 10)
-								message_admins("initial name is [initial(some_search_atom.name)]")
-
-								x += 1
+				for(var/some_search_item in list_to_search)
+					if(findtext("[some_search_item]", search_term))
+						filtered_results += some_search_item
 				if(!length(filtered_results))
 					to_chat(H, "Nothing matched your search query!")
-					message_admins("for reference the length of list to search was [length(list_to_search)]")
 				else
 					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
-
+					if(disguise_selection)
+						var/atom/disguise_item = disguise_selection
+						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
+						I.override = TRUE
+						I.layer = ABOVE_MOB_LAYER
+						H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "ghost_cafe_disguise", I)
+						currently_disguised = TRUE
+	else
+		H.remove_alt_appearance("ghost_cafe_disguise")
+		currently_disguised = FALSE
 
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
@@ -723,9 +718,6 @@
 		to_chat(new_spawn,"<span class='boldwarning'>Ghosting is free!</span>")
 		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
 		D.Grant(new_spawn)
-
-
-		// debug if you see this delete it
 		var/datum/action/disguise/disguise_action = new(new_spawn)
 		disguise_action.Grant(new_spawn)
 
