@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "Anomaly announcements and brand intelligence now always announce instead of having some ham-fisted chance of being a command report."
