@@ -175,6 +175,7 @@
 		var/rounded_vol = get_rounded_vol()
 		if(reagents && reagents.total_volume)
 			. += mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]", color = mix_color_from_reagents(reagents.reagent_list))
+			. += mutable_appearance('icons/obj/reagentfillings.dmi', "syringeoverlay")
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
