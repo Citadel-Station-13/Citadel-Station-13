@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - tweak: "Added some QoL changes to TCG"
-  - bugfix: "Fixed TCG cards not saving"
