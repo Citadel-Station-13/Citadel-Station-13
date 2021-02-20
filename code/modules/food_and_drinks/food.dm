@@ -50,3 +50,8 @@
 			if((foodtype & BREAKFAST) && world.time - SSticker.round_start_time < STOP_SERVING_BREAKFAST)
 				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "breakfast", /datum/mood_event/breakfast)
 			last_check_time = world.time
+
+/obj/item/reagent_containers/food/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_FOOD_CRITIC))
+		. += list("The quality of the food is [food_quality].")

@@ -138,3 +138,10 @@
 /datum/quirk/longtimer/on_spawn()
 	var/mob/living/carbon/C = quirk_holder
 	C.generate_fake_scars(rand(min_scars, max_scars))
+
+/datum/quirk/food_critic
+	name = "Food Critic"
+	desc = "You have spent such a long time around food that you are able to judge it with just a single glance."
+	value = 0
+	mob_trait = TRAIT_FOOD_CRITIC
+	medical_record_text = "Patient has refined senses, allowing them to know the quality of food with just a glance.."
