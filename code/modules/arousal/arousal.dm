@@ -21,18 +21,22 @@
 		return
 	if(confirm == "Top")
 		hidden_undershirt = !hidden_undershirt
+		log_message("[hidden_undershirt ? "removed" : "put on" ] [p_their()] undershirt.")
 
 	if(confirm == "Bottom")
 		hidden_underwear = !hidden_underwear
+		log_message("[hidden_underwear ? "removed" : "put on"] [p_their()] underwear.")
 
 	if(confirm == "Socks")
 		hidden_socks = !hidden_socks
+		log_message("[hidden_socks ? "removed" : "put on"] [p_their()] socks.")
 
 	if(confirm == "All")
 		var/on_off = (hidden_undershirt || hidden_underwear || hidden_socks) ? FALSE : TRUE
 		hidden_undershirt = on_off
 		hidden_underwear = on_off
 		hidden_socks = on_off
+		log_message("[on_off ? "removed" : "put on"] all [p_their()] undergarments.")
 
 	update_body(TRUE)
 
