@@ -308,6 +308,12 @@
 					AM.forceMove(src)
 			R.module.remove_module(I, TRUE)
 	else
+
+		if(ishuman(mob_occupant))
+			var/mob/living/carbon/human/H = mob_occupant
+			if(H.mind && H.client && H.client.prefs && H == H.mind.original_character)
+				H.SaveTCGCards()
+
 		var/list/gear = list()
 		if(iscarbon(mob_occupant))		// sorry simp-le-mobs deserve no mercy
 			var/mob/living/carbon/C = mob_occupant

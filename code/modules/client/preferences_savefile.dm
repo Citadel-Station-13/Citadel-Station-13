@@ -675,6 +675,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		tcg_cards = list()
 
+	var/tcgdeckstr
+	S["tcg_decks"] >> tcgdeckstr
+	if(length(tcgdeckstr))
+		tcg_decks = safe_json_decode(tcgdeckstr)
+	else
+		tcg_decks = list()
+
 	S["chosen_limb_id"]					>> chosen_limb_id
 	S["hide_ckey"]						>> hide_ckey //saved per-character
 
@@ -1121,6 +1128,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["tcg_cards"] << safe_json_encode(tcg_cards)
 	else
 		S["tcg_cards"] << safe_json_encode(list())
+
+	if(length(tcg_decks))
+		S["tcg_decks"] << safe_json_encode(tcg_decks)
+	else
+		S["tcg_decks"] << safe_json_encode(list())
 
 	cit_character_pref_save(S)
 

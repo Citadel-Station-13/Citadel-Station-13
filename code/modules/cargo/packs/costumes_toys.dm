@@ -343,7 +343,6 @@
 
 /datum/supply_pack/costumes_toys/randomised/tcg/generate()
 	. = ..()
-	var/cardpacktype
 	var/list/cardtypes = subtypesof(/obj/item/cardpack)
 	for(var/cardtype in cardtypes)
 		var/obj/item/cardpack/pack = new cardtype(.)
@@ -351,5 +350,5 @@
 			cardtypes.Remove(cardtype)
 		qdel(pack)
 	for(var/i in 1 to 10)
-		cardpacktype = pick(cardtypes)
+		var/cardpacktype = pick(cardtypes)
 		new cardpacktype(.)
