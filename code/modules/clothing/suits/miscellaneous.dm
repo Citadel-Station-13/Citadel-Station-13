@@ -496,7 +496,7 @@
 
 /obj/item/clothing/suit/jacket/urbanjacket/polychromic/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/polychromic, list("#26321D", "#CBBDAF", "#292929"), 3)
+	AddElement(/datum/element/polychromic, list("#3D4C31", "#CBBDAF", "#3B3B3B"), 3)
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
