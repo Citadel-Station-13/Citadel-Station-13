@@ -1,0 +1,5 @@
+author: "dzahlus"
+delete-after: True
+changes: 
+  - rscadd: "Added pain emote to getting wounded"
+  - soundadd: "added a new pain emote sounds"
