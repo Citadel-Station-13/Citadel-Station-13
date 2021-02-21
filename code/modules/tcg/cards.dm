@@ -66,6 +66,7 @@
 	desc = "A flipped TCG-branded card."
 	icon_state = "cardback"
 	icon = 'icons/obj/tcg/pack_1.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/datum_type = /datum/tcg_card
 	var/datum/tcg_card/card_datum
@@ -548,6 +549,7 @@
 	desc = "A TCG-branded card binder, specifically for your infinite collection of TCG cards!"
 	icon = 'icons/obj/tcg/misc.dmi'
 	icon_state = "binder"
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/list/cards = list()
 	var/list/decks = list()
