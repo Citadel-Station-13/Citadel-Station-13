@@ -9,7 +9,8 @@
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "autolathe_secure", "high_micro_laser", "nano_mani", "mesons", "thermomachine", "rad_collector", "tesla_coil", "grounding_rod",
 	"apc_control", "power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics", "cell_charger", "stack_console", "stack_machine", "rcd_ammo","oxygen_tank",
 	 "plasma_tank", "emergency_oxygen", "emergency_oxygen_engi", "plasmaman_tank_belt", "colormate")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
+	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
@@ -19,7 +20,8 @@
 	design_ids = list("engine_goggles", "magboots", "forcefield_projector", "weldingmask" , "rcd_loaded", "rpd",
 	"tray_goggles_prescription", "engine_goggles_prescription", "mesons_prescription", "rcd_upgrade_frames",
 	"rcd_upgrade_simple_circuits", "rcd_ammo_large", "sheetifier")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/material/medium/one = 4000)
 
 /datum/techweb_node/anomaly
 	id = "anomaly_research"

@@ -38,8 +38,11 @@
 
 /obj/item/modular_computer/tablet/preset/advanced/command/Initialize()
 	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
 	install_component(new /obj/item/computer_hardware/sensorpackage)
 	install_component(new /obj/item/computer_hardware/card_slot/secondary)
+	install_component(hard_drive)
+	hard_drive.store_file(new /datum/computer_file/program/science)
 
 /// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
 /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()

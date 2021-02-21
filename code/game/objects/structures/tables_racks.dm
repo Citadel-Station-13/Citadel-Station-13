@@ -289,6 +289,7 @@
 	canSmoothWith = null
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
+	custom_materials = list(/datum/material/glass = 2000)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
 
@@ -617,6 +618,7 @@
 	smooth = SMOOTH_FALSE
 	can_buckle = 1
 	buckle_lying = 1
+	custom_materials = list(/datum/material/silver = 2000)
 	buckle_requires_restraints = 1
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null

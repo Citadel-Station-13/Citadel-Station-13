@@ -74,3 +74,6 @@
 	)
 
 #define TECHWEB_BOMB_POINTCAP		50000 //Adjust as needed; Stops toxins from nullifying RND progression mechanics. Current Value Cap Radius: 100
+
+/// Amount of cash you can get from a maxcap
+#define TECHWEB_BOMB_CASHCAP 50000

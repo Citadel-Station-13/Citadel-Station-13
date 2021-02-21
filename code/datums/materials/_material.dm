@@ -9,7 +9,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	var/color
 	///Base alpha of the material, is used for greyscale icons.
-	var/alpha
+	var/alpha = 255
 	///Materials "Traits". its a map of key = category | Value = Bool. Used to define what it can be used for
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
@@ -130,5 +130,5 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.force = initial(o.force)
 		o.throwforce = initial(o.throwforce)
 
-/datum/material/proc/on_removed_turf(turf/T, material_flags)
+/datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
 	return

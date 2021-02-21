@@ -1,6 +1,13 @@
 
-//Techweb nodes are GLOBAL, there should only be one instance of them in the game. Persistant changes should never be made to them in-game.
-//USE SSRESEARCH PROCS TO OBTAIN REFERENCES. DO NOT REFERENCE OUTSIDE OF SSRESEARCH OR YOU WILL FUCK UP GC.
+/**
+ * # Techweb Node
+ *
+ * A datum representing a researchable node in the techweb.
+ *
+ * Techweb nodes are GLOBAL, there should only be one instance of them in the game. Persistant
+ * changes should never be made to them in-game. USE SSRESEARCH PROCS TO OBTAIN REFERENCES.
+ * DO NOT REFERENCE OUTSIDE OF SSRESEARCH OR YOU WILL FUCK UP GC.
+ */
 
 /datum/techweb_node
 	var/id
@@ -11,11 +18,20 @@
 	var/starting_node = FALSE	//Whether it's available without any research.
 	var/list/prereq_ids = list()
 	var/list/design_ids = list()
-	var/list/unlock_ids = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = TRUE.
-	var/list/boost_item_paths = list()		//Associative list, path = list(point type = point_value).
-	var/autounlock_by_boost = TRUE			//boosting this will autounlock this node.
-	var/list/research_costs = list()		//Point cost to research. type = amount
-	var/category = "Misc"				//Category
+	/// CALCULATED FROM OTHER NODE'S PREREQUISITIES. Associated list id = TRUE
+	var/list/unlock_ids = list()
+	/// Associative list, path = list(point type = point_value)
+	var/list/boost_item_paths = list()
+	/// Boosting this will autounlock this node
+	var/autounlock_by_boost = TRUE
+	/// The points cost to research the node, type = amount
+	var/list/research_costs = list()
+	/// The category of the node
+	var/category = "Misc"
+	/// The list of experiments required to research the node
+	var/list/required_experiments = list()
+	/// If completed, these experiments give a specific point amount discount to the node.area
+	var/list/discount_experiments = list()
 
 /datum/techweb_node/error_node
 	id = "ERROR"
@@ -48,6 +64,7 @@
 	VARSET_TO_LIST(., autounlock_by_boost)
 	VARSET_TO_LIST(., research_costs)
 	VARSET_TO_LIST(., category)
+	VARSET_TO_LIST(., required_experiments)
 
 /datum/techweb_node/deserialize_list(list/input, list/options)
 	if(!input["id"])
@@ -63,6 +80,7 @@
 	VARSET_FROM_LIST(input, autounlock_by_boost)
 	VARSET_FROM_LIST(input, research_costs)
 	VARSET_FROM_LIST(input, category)
+	VARSET_FROM_LIST(input, required_experiments)
 	Initialize()
 	return src
 
@@ -90,6 +108,10 @@
 			for(var/i in L)
 				if(actual_costs[i])
 					actual_costs[i] -= L[i]
+		for(var/i in actual_costs)
+			for(var/experi_type in discount_experiments)
+				if(host.completed_experiments[experi_type]) //do we have this discount_experiment unlocked?
+					actual_costs[i] -= discount_experiments[experi_type]
 		return actual_costs
 	else
 		return research_costs
@@ -103,6 +125,6 @@
 	description = "NT default research technologies."
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "handlabel", "packagewrap",
-	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab", "paystand",
+	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab", "paystand", "experi_scanner", "destructive_scanner", "doppler_array",
 	"space_heater", "beaker", "large_beaker", "bucket", "xlarge_beaker", "sec_shellclip", "sec_beanbag", "sec_rshot", "sec_bshot", "sec_slug", "sec_islug", "sec_dart", "sec_38", "sec_38lethal",
 	"rglass","plasteel","plastitanium","plasmaglass","plasmareinforcedglass","titaniumglass","plastitaniumglass")

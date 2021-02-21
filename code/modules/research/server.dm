@@ -52,11 +52,6 @@
 	stat &= ~EMPED
 	refresh_working()
 
-/obj/machinery/rnd/server/proc/mine()
-	. = base_mining_income
-	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
-	. = max(. - penalty, 0)
-
 /obj/machinery/rnd/server/proc/get_env_temp()
 	var/datum/gas_mixture/environment = loc.return_air()
 	return environment.return_temperature()

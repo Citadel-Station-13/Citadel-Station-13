@@ -18,6 +18,7 @@
 							/obj/item/stock_parts/cell/infinite/abductor, /obj/item/weldingtool/abductor,
 							/obj/item/wirecutters/abductor, /obj/item/circuitboard/machine/abductor,
 							/obj/item/abductor, /obj/item/stack/sheet/mineral/abductor)
+	required_experiments = list(/datum/experiment/scanning/points/slime/hard)
 
 /datum/techweb_node/alien_bio
 	id = "alien_bio"

@@ -22,7 +22,8 @@
 	description = "Efficiency Level 127"	//dumb mc references
 	prereq_ids = list("basic_mining", "adv_engi", "adv_power", "adv_plasma")
 	design_ids = list("drill_diamond", "jackhammer", "hypermod", "plasmacutter_adv", "ore_silo", "plasteel_pick", "titanium_pick")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
 
 /datum/techweb_node/janitor
 	id = "janitor"
@@ -30,7 +31,8 @@
 	description = "Clean things better, faster, stronger, and harder!"
 	prereq_ids = list("adv_engi")
 	design_ids = list("advmop", "buffer", "light_replacer", "spraybottle", "beartrap", "ci-janitor", "paint_remover")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1750) // No longer has its bag
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/random/janitor_trash = 3000) //75% discount for scanning some trash, seems fair right?
 
 /datum/techweb_node/botany
 	id = "botany"
@@ -46,7 +48,8 @@
 	description = "Highly advanced construction tools."
 	design_ids = list("exwelder", "jawsoflife", "handdrill", "holosigncombifan", "ranged_analyzer")
 	prereq_ids = list("adv_engi")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
 
 /datum/techweb_node/sec_basic
 	id = "sec_basic"

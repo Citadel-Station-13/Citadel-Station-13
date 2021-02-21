@@ -36,6 +36,7 @@
 	name = "plasma floor"
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
+	custom_materials = list(/datum/material/plasma = 500)
 	icons = list("plasma","plasma_dam")
 
 /turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -72,6 +73,7 @@
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
 	icons = list("gold","gold_dam")
+	custom_materials = list(/datum/material/gold = 500)
 
 //SILVER
 
@@ -80,6 +82,7 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+	custom_materials = list(/datum/material/silver = 500)
 
 //TITANIUM (shuttle)
 
@@ -88,6 +91,7 @@
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 	broken_states = list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
+	custom_materials = list(/datum/material/titanium = 500)
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -142,6 +146,7 @@
 	icon_state = "bananium"
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
+	custom_materials = list(/datum/material/bananium = 500)
 	var/spam_flag = 0
 
 /turf/open/floor/mineral/bananium/Entered(var/mob/living/L)
@@ -185,6 +190,7 @@
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
 	icons = list("diamond","diamond_dam")
+	custom_materials = list(/datum/material/diamond = 500)
 
 //URANIUM
 
@@ -193,6 +199,7 @@
 	name = "uranium floor"
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
+	custom_materials = list(/datum/material/uranium = 500)
 	icons = list("uranium","uranium_dam")
 	var/last_event = 0
 	var/active = null

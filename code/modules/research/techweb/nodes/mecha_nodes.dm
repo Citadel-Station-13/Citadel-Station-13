@@ -22,7 +22,8 @@
 	description = "For when you just aren't Gundam enough."
 	prereq_ids = list("adv_robotics")
 	design_ids = list("mech_repair_droid")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	discount_experiments = list(/datum/experiment/scanning/random/material/medium/three = 5000)
 
 /datum/techweb_node/odysseus
 	id = "mecha_odysseus"

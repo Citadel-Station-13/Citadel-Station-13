@@ -7,6 +7,7 @@
 	prereq_ids = list("engineering")
 	design_ids = list("pin_testing", "tele_shield", "lasercarbine")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	required_experiments = list(/datum/experiment/explosion/calibration)
 
 /datum/techweb_node/adv_weaponry
 	id = "adv_weaponry"
@@ -15,6 +16,7 @@
 	prereq_ids = list("adv_engi", "weaponry")
 	design_ids = list("pin_loyalty", "laser_shield", "bullet_shield")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	required_experiments = list(/datum/experiment/explosion/medium)
 
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
@@ -71,6 +73,7 @@
 	prereq_ids = list("adv_weaponry")
 	design_ids = list("large_Grenade", "pyro_Grenade", "adv_Grenade")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
+	required_experiments = list(/datum/experiment/explosion/maxcap)
 
 /datum/techweb_node/ballistic_weapons
 	id = "ballistic_weapons"

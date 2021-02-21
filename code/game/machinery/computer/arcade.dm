@@ -98,6 +98,7 @@
 
 /obj/machinery/computer/arcade/proc/prizevend(mob/user, list/rarity_classes)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+	SEND_SIGNAL(user, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 
 	if(prob(1) && prob(1) && prob(1)) //Proper 1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)

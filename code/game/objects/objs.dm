@@ -170,6 +170,7 @@
 	. = ..()
 	if(.)
 		return
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
 /obj/proc/container_resist(mob/living/user)

@@ -83,12 +83,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return FALSE
 	next_announce = world.time + cooldown
 
-	var/distance = get_dist(epicenter, zone)
-	var/direct = get_dir(zone, epicenter)
-
-	if(distance > max_dist)
-		return FALSE
-	if(!(direct & dir) && !integrated)
+	if((get_dist(epicenter, zone) > max_dist) || !(get_dir(zone, epicenter) & dir))
 		return FALSE
 
 
@@ -112,7 +107,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			say("Storage buffer is full! Clearing buffers...")
 			LAZYCLEARLIST(message_log)
 		LAZYADD(message_log, messages.Join(" "))
+
+	SEND_SIGNAL(src, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+
 	return TRUE
+
+/obj/machinery/doppler_array/powered()
+	return anchored ? ..() : FALSE
 
 /obj/machinery/doppler_array/examine(mob/user)
 	. = ..()
@@ -141,8 +142,29 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array/research
 	name = "tachyon-doppler research array"
-	desc = "A specialized tachyon-doppler bomb detection array that uses the results of the highest yield of explosions for research."
+	desc = "A specialized tachyon-doppler bomb detection array that uses complex on-board software to record data for experiments."
+	circuit = /obj/item/circuitboard/machine/doppler_array
 	var/datum/techweb/linked_techweb
+
+/obj/machinery/doppler_array/research/Initialize()
+	..()
+	linked_techweb = SSresearch.science_tech
+	return INITIALIZE_HINT_LATELOAD
+
+// Late initialize to allow the server machinery to initialize first
+/obj/machinery/doppler_array/research/LateInitialize()
+	. = ..()
+	AddComponent(/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/explosion), \
+		config_mode = EXPERIMENT_CONFIG_UI, \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+
+/obj/machinery/doppler_array/research/attackby(obj/item/I, mob/user, params)
+	if (default_deconstruction_screwdriver(user, "tdoppler", "tdoppler", I) \
+		|| default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	return ..()
 
 /obj/machinery/doppler_array/research/sense_explosion(turf/epicenter, dev, heavy, light, time, orig_dev, orig_heavy, orig_light)	//probably needs a way to ignore admin explosives later on
 	. = ..()
@@ -152,33 +174,32 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		say("Warning: No linked research system!")
 		return
 
-	var/point_gain = 0
+	var/cash_gain = 0
 
 	/*****The Point Calculator*****/
 
 	if(orig_light < 10)
-		say("Explosion not large enough for research calculations.")
+		say("Explosion not large enough for profitability.")
 		return
 	else if(orig_light < 4500)
-		point_gain = (83300 * orig_light) / (orig_light + 3000)
+		cash_gain = (83300 * orig_light) / (orig_light + 3000)
 	else
-		point_gain = TECHWEB_BOMB_POINTCAP
+		cash_gain  = TECHWEB_BOMB_POINTCAP
 
 	/*****The Point Capper*****/
-	if(point_gain > linked_techweb.largest_bomb_value)
-		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+	if(cash_gain > linked_techweb.largest_bomb_value)
+		if(cash_gain <= TECHWEB_BOMB_CASHCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_CASHCAP)
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
-			linked_techweb.largest_bomb_value = point_gain
-			point_gain -= old_tech_largest_bomb_value
-			point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+			linked_techweb.largest_bomb_value = cash_gain
+			cash_gain -= old_tech_largest_bomb_value
+			cash_gain = min(cash_gain,TECHWEB_BOMB_CASHCAP)
 		else
-			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
-			point_gain = 1000
+			linked_techweb.largest_bomb_value = TECHWEB_BOMB_CASHCAP
+			cash_gain = 1000
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
-			D.adjust_money(point_gain)
-		linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-		say("Explosion details and mixture analyzed and sold to the highest bidder for [point_gain] cr, with a reward of [point_gain] points.")
+			D.adjust_money(cash_gain)
+			say("Explosion details and mixture analyzed and sold to the highest bidder for [cash_gain] cr.")
 
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
@@ -188,3 +209,12 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
+
+/obj/machinery/doppler_array/research/ui_data(mob/user)
+	. = ..()
+	.["is_research"] = TRUE
+
+/obj/machinery/doppler_array/research/ui_act(action, list/params)
+	. = ..()
+	if (.)
+		return
