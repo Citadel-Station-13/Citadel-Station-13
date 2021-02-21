@@ -97,7 +97,7 @@
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
 		D.apply_damage(damage, STAMINA)
-		D.Stun(100)
+		D.Stun(10)
 		restraining = TRUE
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
 	return TRUE
@@ -175,7 +175,7 @@
 		return TRUE
 	if(CHECK_MOBILITY(D, MOBILITY_MOVE) || !restraining)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-		if(damage >= stunthreshold)	
+		if(damage >= stunthreshold)
 			I = D.get_active_held_item()
 			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \
 							"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
