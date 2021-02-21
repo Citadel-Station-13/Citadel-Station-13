@@ -668,6 +668,34 @@
 	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
 	background_icon_state = "bg_mime"
 	var/currently_disguised = FALSE
+	var/static/list/mob_blacklist = typecacheof(list(
+		/mob/living/simple_animal/pet,
+		/mob/living/simple_animal/hostile/retaliate/goose,
+		/mob/living/simple_animal/hostile/poison,
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/mob/living/simple_animal/cow,
+		/mob/living/simple_animal/chick,
+		/mob/living/simple_animal/chicken,
+		/mob/living/simple_animal/kiwi,
+		/mob/living/simple_animal/babyKiwi,
+		/mob/living/simple_animal/deer,
+		/mob/living/simple_animal/parrot,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/cockroach,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/mouse,
+		/mob/living/simple_animal/sloth,
+		/mob/living/simple_animal/opossum,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/simple_animal/hostile/asteroid/wolf,
+		/mob/living/carbon/monkey,
+		/mob/living/simple_animal/hostile/gorilla,
+		/mob/living/carbon/alien/larva,
+		/mob/living/simple_animal/hostile/retaliate/frog
+	))
+
 
 /datum/action/disguise/Trigger()
 	var/mob/living/carbon/human/H = owner
@@ -678,7 +706,7 @@
 			if(search_term)
 				var/list_to_search
 				if(user_object_type == "MOB")
-					list_to_search = subtypesof(/mob)
+					list_to_search = subtypesof(/mob) - mob_blacklist
 				else
 					list_to_search = subtypesof(/obj)
 				var/list/filtered_results = list()
