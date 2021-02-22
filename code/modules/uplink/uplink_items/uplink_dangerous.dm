@@ -138,15 +138,6 @@
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
 
-/datum/uplink_item/dangerous/dtooth
-	name = "Dragon's Tooth Sword"
-	desc = "The Dragon's Tooth sword is a blackmarket modification of a Non-Eutactic Blade, \
-			which utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. \
-			It appears to have a wooden grip and a shaved down guard."
-	item = /obj/item/melee/transforming/energy/sword/cx/traitor
-	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops, /datum/game_mode/traitor/internal_affairs)
-
 /datum/uplink_item/dangerous/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
