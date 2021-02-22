@@ -43,7 +43,8 @@
 		return
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in L)
-		AM.forceMove(src)
+		if(!AM.anchored)
+			AM.forceMove(src)
 	flick("tube_down", src)
 	scanning = TRUE
 	update_icon()
