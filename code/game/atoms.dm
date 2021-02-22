@@ -1265,3 +1265,17 @@
   */
 /atom/proc/setClosed()
 		return
+
+/atom/proc/has_material_type(datum/material/mat_type, exact=FALSE, mat_amount=0)
+	var/list/cached_materials = custom_materials
+	if(!length(cached_materials))
+		return null
+
+	. = list()
+	for(var/m in cached_materials)
+		if(cached_materials[m] < mat_amount)
+			continue
+		var/datum/material/material = SSmaterials.GetMaterialRef(m)
+		if(exact ? material.type != m : !istype(material, mat_type))
+			continue
+		.[material] = cached_materials[m]

@@ -14,18 +14,11 @@
 	for(var/i in required_atoms)
 		var/chosen_material = pick(possible_material_types)
 		required_materials[i] = chosen_material
-		for(var/subtype in subtypesof(i))
-			required_materials[subtype] = chosen_material
 
 /datum/experiment/scanning/random/material/final_contributing_index_checks(atom/target, typepath)
-	if(target.custom_materials)
-		return (required_materials[target.type] in target.custom_materials)
-
-	return FALSE
+	return ..() && target.custom_materials && target.has_material_type(required_materials[typepath])
 
 /datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)
-	if(target.custom_materials)
-		var/datum/material/required_material = new required_materials[target.type]
-		return EXP_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
-			traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
-	return FALSE
+	var/datum/material/required_material = SSmaterials.GetMaterialRef(required_materials[target])
+	return EXP_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
+		traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
