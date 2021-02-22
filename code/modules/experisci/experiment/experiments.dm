@@ -138,3 +138,41 @@
 
 /datum/experiment/scanning/random/material/hard/three
 	name = "High Grade Material Scanning Experiment Three"
+
+/datum/experiment/scanning/points/teleport_bread
+	name = "Biological Teleportation Scanning Experiment"
+	description = "In order to prove that experimental teleportation technology is completely safe, we need you to teleport some bread. It surely will be fine!"
+	required_points = 1
+	required_atoms = list(/mob/living/simple_animal/hostile/bread = 1,
+						  /obj/item/reagent_containers/food/snacks/store/bread/tumor_bread = 1,
+						  /obj/item/reagent_containers/food/snacks/breadslice/tumor_bread = 1) //This is going to be hard
+
+/datum/experiment/scanning/random/darkness
+	name = "Photon Sensetivity Calibration Experiment"
+	description = "To aquire night-vision technology, you'll need something to compare everything with. Make sure that it's something dark."
+	total_requirement = 4
+	max_requirement_per_type = 2
+
+/datum/experiment/scanning/random/darkness/final_contributing_index_checks(atom/target, typepath)
+	var/turf/T = get_turf(target)
+	return T.get_lumcount() <= 0.05
+
+/datum/experiment/scanning/points/anomalies
+	name = "Anomaly Research Experiment"
+	description = "To understand how anomalies work, you need to find some. Good luck with scanning them."
+	required_points = 2
+	required_atoms = list(/obj/effect/anomaly/flux = 1,
+						  /obj/effect/anomaly/grav = 1,
+						  /obj/effect/anomaly/pyro = 1,
+						  /obj/effect/anomaly/bluespace = 2,
+						  /obj/effect/anomaly/bhole = 2)
+
+/datum/experiment/scanning/points/botany
+	name = "Anomaly Research Experiment"
+	description = "If life gives you lemons, make lemonade! Although it's not really clear what to do if life gives you hot peppers."
+	required_points = 6
+	required_atoms = list(/obj/item/reagent_containers/food/snacks/grown = 1)
+
+/datum/experiment/scanning/points/botany/serialize_progress_stage(atom/target, list/seen_instances)
+	var/scanned_total = traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len
+	return EXP_PROG_INT("Scan samples of grown plants", scanned_total, required_atoms[target])

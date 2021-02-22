@@ -41,6 +41,7 @@
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2750)
+	required_experiments = list(/datum/experiment/scanning/points/botany)
 
 /datum/techweb_node/exp_tools
 	id = "exp_tools"

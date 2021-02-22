@@ -15,6 +15,7 @@
 	prereq_ids = list("bluespace_basic", "engineering")
 	design_ids = list("bs_rped","biobag_holding","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "phasic_scanning", "bluespacesmartdart", "xenobio_slimebasic", "bluespace_tray", "bluespace_carrier")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/physical/bluespace_stuffing = 4000) //If you complete this experiment, you also get a prototype bag of holding!
 
 /datum/techweb_node/adv_bluespace
 	id = "adv_bluespace"
@@ -55,6 +56,7 @@
 	prereq_ids = list("adv_power", "adv_bluespace")
 	design_ids = list("tele_station", "tele_hub", "quantumpad", "quantum_keycard", "launchpad", "launchpad_console", "teleconsole", "roastingstick")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	required_experiments = list(/datum/experiment/scanning/points/teleport_bread)
 
 /datum/techweb_node/unregulated_bluespace
 	id = "unregulated_bluespace"
