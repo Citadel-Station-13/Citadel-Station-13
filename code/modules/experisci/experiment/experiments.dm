@@ -103,6 +103,7 @@
 	name = "Biological Material Scanning Experiment"
 	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."
 	possible_material_types = list(/datum/material/meat)
+	possible_types = list(/obj/structure/chair)
 
 /datum/experiment/scanning/random/material/easy
 	name = "Low Grade Material Scanning Experiment"

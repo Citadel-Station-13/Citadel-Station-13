@@ -14,6 +14,8 @@
 	for(var/i in required_atoms)
 		var/chosen_material = pick(possible_material_types)
 		required_materials[i] = chosen_material
+		for(var/subtype in subtypesof(i))
+			required_materials[subtype] = chosen_material
 
 /datum/experiment/scanning/random/material/final_contributing_index_checks(atom/target, typepath)
 	if(target.custom_materials)
