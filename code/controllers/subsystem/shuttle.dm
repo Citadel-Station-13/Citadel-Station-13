@@ -181,30 +181,37 @@ SUBSYSTEM_DEF(shuttle)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
-/datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
+/datum/controller/subsystem/shuttle/proc/canEvac(mob/user, silent=FALSE)
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
-		to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
+		if(!silent)
+			to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
 		return FALSE
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
+			if(!silent)
+				to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
 			return FALSE
 		if(SHUTTLE_CALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
+			if(!silent)
+				to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
 			return FALSE
 		if(SHUTTLE_DOCKED)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
+			if(!silent)
+				to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
 			return FALSE
 		if(SHUTTLE_IGNITING)
-			to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
+			if(!silent)
+				to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
 			return FALSE
 		if(SHUTTLE_ESCAPE)
-			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
+			if(!silent)
+				to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
 			return FALSE
 		if(SHUTTLE_STRANDED)
-			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
+			if(!silent)
+				to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
 			return FALSE
 
 	return TRUE

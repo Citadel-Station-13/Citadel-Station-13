@@ -168,7 +168,7 @@ export const CSScripture = (props, context) => {
             onClick={() => act('bind', {
               'script': script.type,
             })}>
-            content={script.bound ? (
+            {script.bound ? (
               `Unbind ${script.bound}`
             ) : (
               'Quickbind'

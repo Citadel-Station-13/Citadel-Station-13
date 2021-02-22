@@ -13,7 +13,7 @@
 
 	var/volume = 10000 //in liters
 	/// The typepath of the gas this tank should be filled with.
-	var/gas_type = null
+	var/gas_type = 0
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()

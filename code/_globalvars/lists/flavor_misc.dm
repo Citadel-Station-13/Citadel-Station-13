@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 		if(input == "Random")
 			input = pick(GLOB.ai_core_display_screens - "Random")
 		if(input == "Portrait")
-			var/datum/portrait_picker/tgui  = new(usr)//create the datum
+			var/datum/portrait_picker/tgui = new(usr)//create the datum
 			tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 			return "ai-portrait" //just take this until they decide
 		return "ai-[lowertext(input)]"
