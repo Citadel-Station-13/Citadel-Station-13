@@ -42,7 +42,7 @@
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction.Copy()
-		if(!A.istype(/mob/living/simple_animal/hostile/poison/bees/toxin))
+		if(!A == /mob/living/simple_animal/hostile/poison/bees/toxin)
 			A.my_creator = type
 		ranged_cooldown = world.time + ranged_cooldown_time
 
