@@ -2896,6 +2896,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "aAx" = (
@@ -16745,6 +16748,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "gWZ" = (
@@ -20537,6 +20541,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "jcT" = (
@@ -21952,6 +21957,10 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"jZI" = (
+/obj/machinery/destructive_scanner,
+/turf/open/floor/circuit,
+/area/science/lab)
 "jZW" = (
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
@@ -31964,6 +31973,13 @@
 	},
 /turf/open/floor/plating,
 /area/lawoffice)
+"pVO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6;
+	layer = 2.03
+	},
+/turf/open/floor/plasteel/white,
+/area/science/lab)
 "pVW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/public/glass{
@@ -35144,8 +35160,8 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "rRQ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -59770,7 +59786,7 @@ aFI
 uJF
 lam
 jcS
-hBM
+pVO
 aDc
 aEH
 bxM
@@ -60027,7 +60043,7 @@ nEi
 jRU
 uzT
 gWn
-hBM
+jZI
 jPf
 aEK
 bxM

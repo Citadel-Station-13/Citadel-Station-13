@@ -56045,19 +56045,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "chi" = (
-/obj/structure/table,
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/item/clothing/mask/gas,
-/obj/item/multitool{
-	pixel_x = 3
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/noticeboard{
 	pixel_y = 31
 	},
+/obj/machinery/destructive_scanner,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "chj" = (
@@ -56720,8 +56714,8 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -58611,6 +58605,12 @@
 	pixel_y = 6
 	},
 /obj/structure/table,
+/obj/item/multitool{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/gas,
+/obj/item/wrench,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "cmH" = (

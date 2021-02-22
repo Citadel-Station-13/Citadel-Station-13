@@ -26069,7 +26069,11 @@
 	pixel_x = -30;
 	receive_ore_updates = 1
 	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/science/research)
 "bkt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -26671,9 +26675,6 @@
 /area/science)
 "blI" = (
 /obj/machinery/rnd/destructive_analyzer,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/science/research)
 "blJ" = (
@@ -59616,6 +59617,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"rFN" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "rGo" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -109858,7 +109865,7 @@ aYV
 bfX
 bhD
 biV
-biW
+rFN
 blK
 bnp
 bng

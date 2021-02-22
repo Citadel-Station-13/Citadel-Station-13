@@ -96595,6 +96595,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/destructive_scanner,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dgP" = (

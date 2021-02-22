@@ -65951,6 +65951,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/destructive_scanner,
 /turf/open/floor/engine,
 /area/science/explab)
 "cHK" = (
