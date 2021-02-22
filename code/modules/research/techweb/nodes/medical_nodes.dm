@@ -98,6 +98,7 @@
 	prereq_ids = list("neural_programming", "cyber_implants","integrated_HUDs")
 	design_ids = list("ci-toolset", "ci-surgery", "ci-reviver", "ci-nutrimentplus", "ci-robot-radshielding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	required_experiments = list(/datum/experiment/scanning/cybernetics)
 
 /datum/techweb_node/combat_cyber_implants
 	id = "combat_cyber_implants"

@@ -176,3 +176,21 @@
 /datum/experiment/scanning/points/botany/serialize_progress_stage(atom/target, list/seen_instances)
 	var/scanned_total = traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len
 	return EXP_PROG_INT("Scan samples of grown plants", scanned_total, required_atoms[target])
+
+/datum/experiment/scanning/cybernetics
+	name = "Cybernetics Research Experiment"
+	description = "To make cybernetic eyes we need to research cybernetic eyes. Just scan some augmented humans for us and we will write the results down."
+	required_atoms = list(/mob/living/carbon/human = 1)
+
+/datum/experiment/scanning/cybernetics/serialize_progress_stage(atom/target, list/seen_instances)
+	var/scanned_total = traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len
+	return EXP_PROG_INT("Scan fully augmented humans", scanned_total, required_atoms[target])
+
+/datum/experiment/scanning/cybernetics/final_contributing_index_checks(atom/target, typepath)
+	if(!ishuman(target))
+		return FALSE
+	var/mob/living/carbon/human/H = target
+	for(var/obj/item/bodypart/L in H.bodyparts)
+		if(!L.is_robotic_limb())
+			return FALSE
+	return TRUE
