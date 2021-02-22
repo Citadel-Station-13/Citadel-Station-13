@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - rscadd: "Hyperblade to uplink with poplock"
+  - balance: "Removes combination of two Dragon Tooth Swords while keeping it for regular eutactics."
