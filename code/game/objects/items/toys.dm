@@ -277,7 +277,7 @@
 				newSaber.hacked = TRUE
 			qdel(W)
 			qdel(src)
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")

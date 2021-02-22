@@ -176,7 +176,7 @@
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/screwdriver) && buildstage == 2)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
 		W.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -189,7 +189,7 @@
 			wires.interact(user)
 			return
 
-		if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+		if((W.tool_behaviour == TOOL_WELDER) && user.a_intent == INTENT_HELP)
 			if(obj_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=0))
 					return
@@ -204,7 +204,7 @@
 
 		switch(buildstage)
 			if(2)
-				if(istype(W, /obj/item/wirecutters) && !(user.a_intent == INTENT_HELP))
+				if(W.tool_behaviour == TOOL_WIRECUTTER && !(user.a_intent == INTENT_HELP))
 					buildstage = 1
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
@@ -237,7 +237,7 @@
 						update_icon()
 					return
 
-				else if(istype(W, /obj/item/crowbar))
+				else if(W.tool_behaviour == TOOL_CROWBAR)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(W.use_tool(src, user, 20, volume=50))
@@ -269,7 +269,7 @@
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/wrench))
+				else if(W.tool_behaviour == TOOL_WRENCH)
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()

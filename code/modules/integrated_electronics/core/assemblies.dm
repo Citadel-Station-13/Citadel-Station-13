@@ -381,7 +381,7 @@
 			component.rename_component(usr)
 			if(component.assembly)
 				component.assembly.add_allowed_scanner(usr.ckey)
-		
+
 		if(href_list["interact"])
 			var/obj/item/I = usr.get_active_held_item()
 			if(istype(I))
@@ -651,8 +651,7 @@
 			for(var/obj/item/integrated_circuit/input/S in assembly_components)
 				S.attackby_react(I,user,user.a_intent)
 			return ..()
-			
-	else if(istype(I, /obj/item/multitool) || istype(I, /obj/item/integrated_electronics/wirer) || istype(I, /obj/item/integrated_electronics/debugger))
+	else if(I.tool_behaviour == TOOL_MULTITOOL || istype(I, /obj/item/integrated_electronics/wirer) || istype(I, /obj/item/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
 			return TRUE
