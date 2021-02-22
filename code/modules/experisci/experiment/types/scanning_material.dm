@@ -16,16 +16,14 @@
 		required_materials[i] = chosen_material
 
 /datum/experiment/scanning/random/material/final_contributing_index_checks(atom/target, typepath)
-	var/overlapping_types = FALSE
 	if(target.custom_materials)
-		for(var/material in required_materials)
-			if(material in target.custom_materials)
-				overlapping_types = TRUE
-	return ..() && target.custom_materials && overlapping_types
+		return (required_materials[target.type] in target.custom_materials)
+
+	return FALSE
 
 /datum/experiment/scanning/random/material/serialize_progress_stage(atom/target, list/seen_instances)
 	if(target.custom_materials)
-		var/datum/material/required_material = new target.custom_materials[1]
+		var/datum/material/required_material = new required_materials[target.type]
 		return EXP_PROG_INT("Scan samples of \a [required_material.name] [initial(target.name)]", \
 			traits & EXP_TRAIT_DESTRUCTIVE ? scanned[target] : seen_instances.len, required_atoms[target])
 	return FALSE
