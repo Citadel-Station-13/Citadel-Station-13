@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - refactor: "Tools no longer use istype checks and actually check for their behavior."

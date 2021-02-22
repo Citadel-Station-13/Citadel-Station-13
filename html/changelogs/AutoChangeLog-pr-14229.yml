@@ -1,7 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - rscadd: "Cyborg tablets and it's special app for self-management."
-  - bugfix: "In the case of a doomsday device being created outside of an AI it will delete itself."
-  - imageadd: "Some sprites for it have been added and the borg's hud light toggles been changed to only on-off (made by yours truly)"
-  - refactor: "A lot of borg code was changed"
