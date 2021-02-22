@@ -216,7 +216,7 @@
 	H.forceMove(L)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/check_infest_type(mob/living/carbon/human)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/check_infest_type(mob/living/carbon/human/human)
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
 	var/list/blacklisted_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf)
 	if(HAS_TRAIT(human, TRAIT_DWARF)) //dwarf legions aren't just fluff!
