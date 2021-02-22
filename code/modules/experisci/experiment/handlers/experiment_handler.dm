@@ -98,7 +98,7 @@
 	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
 		return
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-	to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
+	to_chat(user, "<span>\The [target.name] is not related to your currently selected experiment.</span>")
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -132,7 +132,7 @@
 		to_chat(user, "<span>You scan \the [target.name].</span>")
 	else
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(user, "<span>\the [target.name] is not related to your currently selected experiment.</span>")
+		to_chat(user, "<span>\The [target.name] is not related to your currently selected experiment.</span>")
 
 
 /**
