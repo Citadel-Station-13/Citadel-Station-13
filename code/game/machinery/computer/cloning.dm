@@ -133,22 +133,20 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
-	else if(istype(W, /obj/item/multitool))
-		var/obj/item/multitool/P = W
-
-		if(istype(P.buffer, clonepod_type))
-			if(get_area(P.buffer) != get_area(src))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(istype(W.buffer, clonepod_type))
+			if(get_area(W.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				W.buffer = null
 				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/pod = P.buffer
+			to_chat(user, "<font color = #666633>-% Successfully linked [W.buffer] with [src] %-</font color>")
+			var/obj/machinery/clonepod/pod = W.buffer
 			if(pod.connected)
 				pod.connected.DetachCloner(pod)
 			AttachCloner(pod)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			W.buffer = src
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(W.buffer)] [W.buffer] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -473,7 +471,7 @@
 	scanner.locked = prev_locked
 	src.updateUsrDialog()
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-	
+
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)

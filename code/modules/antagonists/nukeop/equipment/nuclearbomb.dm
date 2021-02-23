@@ -104,7 +104,7 @@
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/screwdriver/nuke))
+			if(istype(I, /obj/item/screwdriver/nuke))	//Special case, cannot replace with tool_behavior
 				to_chat(user, "<span class='notice'>You start removing [src]'s front panel's screws...</span>")
 				if(I.use_tool(src, user, 60, volume=100))
 					deconstruction_state = NUKESTATE_UNSCREWED
