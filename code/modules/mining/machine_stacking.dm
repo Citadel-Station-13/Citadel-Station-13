@@ -102,8 +102,8 @@
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
-/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
-	if(istype(M))
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/M)
+	if(M.tool_behaviour == TOOL_MULTITOOL)
 		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
 			CONSOLE = M.buffer
 			CONSOLE.machine = src

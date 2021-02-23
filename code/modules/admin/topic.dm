@@ -257,9 +257,8 @@
 
 		for(var/mob/M in GLOB.player_list)
 			if(M.ckey == banckey)
-				playermob = M
-				break
-
+				if(!playermob || M.client) // prioritise mobs with a client to stop the 'oops the dead body with no client got forwarded'
+					playermob = M
 
 		banreason = "(MANUAL BAN) "+banreason
 
