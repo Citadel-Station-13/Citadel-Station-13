@@ -116,6 +116,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/buffer = null
 	var/show_wires = FALSE
 	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
+	//Special crowbar
+	var/can_force_powered = FALSE
 
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 

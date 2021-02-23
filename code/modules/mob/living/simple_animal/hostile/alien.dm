@@ -78,6 +78,15 @@
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 
+/mob/living/simple_animal/hostile/alien/sentinel/cube
+	gold_core_spawnable = NO_SPAWN
+	health = 220
+	maxHealth = 220
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	del_on_death = TRUE
+	loot = list(/obj/effect/mob_spawn/alien/corpse/humanoid/sentinel)
+	
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"

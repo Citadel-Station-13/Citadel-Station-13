@@ -72,16 +72,14 @@
 		if((last_poof+3 MINUTES) < world.realtime)
 			poof()
 
-/mob/living/simple_animal/jacq/Destroy() //I.e invincible
+/mob/living/simple_animal/jacq/death() //What is alive may never die
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
-	var/mob/living/simple_animal/jacq/Jacq = new src.type(loc)
-	Jacq.progression = progression
-	if(ckey) //transfer over any ghost posessions
-		Jacq.key = key
-	..()
+	fully_heal(FALSE)
+	health = 25
+	poof()
 
-/mob/living/simple_animal/jacq/death() //What is alive may never die
+/mob/living/simple_animal/jacq/gib()
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
 	fully_heal(FALSE)

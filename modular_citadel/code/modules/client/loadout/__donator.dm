@@ -543,3 +543,9 @@
 	path = /obj/item/clothing/neck/petcollar/choker
 	ckeywhitelist = list("trigillass")
 
+/datum/gear/donator/strangemask
+	name = "Strange Metal Mask"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/mask/breath/mmask
+	ckeywhitelist = list("sneka")
+

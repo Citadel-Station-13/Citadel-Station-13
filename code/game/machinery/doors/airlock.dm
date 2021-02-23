@@ -1062,7 +1062,7 @@
 		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
 	else if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
-	else if( !welded && !operating)
+	else if(!welded && !operating)
 		if(!beingcrowbarred) //being fireaxe'd
 			var/obj/item/fireaxe/axe = I
 			if(!axe.wielded)
@@ -1073,6 +1073,8 @@
 			INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 	if(I.tool_behaviour == TOOL_CROWBAR)
+		if(!I.can_force_powered)
+			return
 		if(hasPower() && isElectrified())
 			shock(user,100)//it's like sticking a forck in a power socket
 			return
