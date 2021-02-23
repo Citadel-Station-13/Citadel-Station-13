@@ -1,4 +1,3 @@
-
 /obj/item/airlock_painter/decal/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE

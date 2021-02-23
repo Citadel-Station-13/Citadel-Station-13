@@ -35,9 +35,9 @@
 	var/mob/living/silicon/robot/user // needed for process()
 	var/animation_playing = FALSE
 	var/list/borgmodels = list(
-							"(Standard) Default", 
+							"(Standard) Default",
 							"(Standard) Heavy",
-							"(Standard) Sleek", 
+							"(Standard) Sleek",
 							"(Standard) Marina",
 							"(Standard) Robot",
 							"(Standard) Eyebot",
@@ -107,8 +107,8 @@
 	return TRUE
 
 /obj/item/borg_shapeshifter/attack_self(mob/living/silicon/robot/user)
-	if (user && user.cell && user.cell.charge >  activationCost)
-		if (isturf(user.loc))
+	if(user && user.cell && user.cell.charge > activationCost)
+		if(isturf(user.loc))
 			toggle(user)
 		else
 			to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")

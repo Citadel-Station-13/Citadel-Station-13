@@ -17,8 +17,8 @@
 	materials = null
 	return ..()
 
-/obj/machinery/mineral/bluespace_miner/multitool_act(mob/living/user, obj/item/multitool/M)
-	if(istype(M))
+/obj/machinery/mineral/bluespace_miner/multitool_act(mob/living/user, obj/item/M)
+	if(M.tool_behaviour == TOOL_MULTITOOL)
 		if(!M.buffer || !istype(M.buffer, /obj/machinery/ore_silo))
 			to_chat(user, "<span class='warning'>You need to multitool the ore silo first.</span>")
 			return FALSE
@@ -71,10 +71,12 @@
 	. = ..()
 	if(default_deconstruction_crowbar(I, FALSE))
 		return TRUE
-	
-/obj/machinery/mineral/bluespace_miner/screwdriver_act(mob/living/user, obj/item/screwdriver/I)
+
+/obj/machinery/mineral/bluespace_miner/screwdriver_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(..())
+		return
+	if(!I.tool_behaviour == TOOL_SCREWDRIVER)
 		return
 	if(!state_open)
 		if(powered())
