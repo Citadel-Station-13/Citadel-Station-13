@@ -1,0 +1,4 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "Regular crowbars no longer open powered airlocks."
