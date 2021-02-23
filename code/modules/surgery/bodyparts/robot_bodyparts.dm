@@ -209,7 +209,7 @@
 			else
 				src.flash1 = F
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
-	else if(istype(W, /obj/item/crowbar))
+	else if(W.tool_behaviour == TOOL_CROWBAR)
 		if(flash1 || flash2)
 			W.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
