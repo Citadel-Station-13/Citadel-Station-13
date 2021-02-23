@@ -256,6 +256,8 @@
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/turf/open/location
+	if (isopenturf(holder))
+		return
 	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/fusion_pipenet = holder
 		location = get_turf(pick(fusion_pipenet.members))
