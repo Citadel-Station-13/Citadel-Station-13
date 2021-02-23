@@ -25,8 +25,9 @@
 	addtimer(CALLBACK(src, .proc/gc, TRUE), 1)
 	last_process = world.time
 
-/datum/component/wet_floor/Destroy()
+/datum/component/wetness/Destroy()
 	STOP_PROCESSING(SSwet_floors, src)
+	..()
 
 /datum/component/wetness/InheritComponent(datum/newcomp, amt, new_temp)
 	if(!newcomp)
