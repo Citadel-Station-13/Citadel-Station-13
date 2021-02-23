@@ -65,10 +65,14 @@
 		ice -= amount_melted
 	if(istype(air))
 		var/T = water_temp - T0C
+		// https://en.wikipedia.org/wiki/Arden_Buck_equation
 		var/saturation_pressure = 0.61121 * NUM_E ** ((18.678 - T / 234.5) * (T / (257.14 + T)))
+		// the pressure of water vapor in the air; not relative humidity, but relative humidity makes less sense in space
 		var/vapor_pp = air.return_pressure() * (air.get_moles(/datum/gas/water_vapor) / air.total_moles())
+		// divided arbitrarily by 64 so it looks nice, clamped by the amount of vapor in the air and water in the hole
 		var/evaporated_amt = clamp((saturation_pressure - vapor_pp) * 0.015625 * diff, \
 									-air.get_moles(/datum/gas/water_vapor), water)
+		// evaporation/condensation absorb/release heat respectively, so this does that
 		var/heat_removed = evaporated_amt * WATER_ENTHALPY_OF_VAPORIZATION
 		air.set_temperature(air.return_temperature() - (heat_removed / air.heat_capacity()))
 		air.set_moles(air.get_moles(/datum/gas/water_vapor) + evaporated_amt)
