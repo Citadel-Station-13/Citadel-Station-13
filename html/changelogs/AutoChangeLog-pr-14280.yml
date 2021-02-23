@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "banning panel prioritises mobs with clients now when trying to find them if they're in the game"
