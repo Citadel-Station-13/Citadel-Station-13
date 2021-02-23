@@ -88,7 +88,6 @@ SUBSYSTEM_DEF(persistence)
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	SavePaintings()
 	SaveScars()
-	SaveTCGCards()
 
 /**
  * Loads persistent data relevant to the current map: Objects, etc.
