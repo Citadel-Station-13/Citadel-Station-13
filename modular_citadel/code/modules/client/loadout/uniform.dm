@@ -170,6 +170,13 @@
 	name = "Tan Pants"
 	path = /obj/item/clothing/under/pants/tan
 
+/datum/gear/uniform/pants/polypants
+	name = "Polychromic Pants"
+	path = /obj/item/clothing/under/pants/polypants/polychromic
+	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#75634F", "#3D3D3D", "#575757")
+
 /datum/gear/uniform/pants/track
 	name = "Track Pants"
 	path = /obj/item/clothing/under/pants/track
