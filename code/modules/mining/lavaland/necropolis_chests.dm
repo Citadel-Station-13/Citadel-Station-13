@@ -991,14 +991,9 @@
 			H.right_eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
 		if(2)
-			to_chat(user, "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>")
-			H.set_species(/datum/species/skeleton)
+			to_chat(user, "<span class='danger'>You feel strange! Your form starts distorting into that of a drake!</span>")
+			H.ForceContractDisease(new /datum/disease/transformation/dragon(), FALSE, TRUE)
 		if(3)
-			to_chat(user, "<span class='danger'>Power courses through you! You can now shift your form at will.</span>")
-			if(user.mind)
-				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
-				user.mind.AddSpell(D)
-		if(4)
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
 			H.weather_immunities |= "lava"
 
@@ -1007,19 +1002,22 @@
 
 /datum/disease/transformation/dragon
 	name = "dragon transformation"
-	cure_text = "nothing"
-	cures = list("adminordrazine")
+	disease_flags = CURABLE
+	bypasses_immunity = TRUE
+	cure_text = "Cryoxadone might regenerate and cool your cellular structure."
+	cures = list(/datum/reagent/medicine/cryoxadone)
+	cure_chance = 100
 	agent = "dragon's blood"
-	desc = "What do dragons have to do with Space Station 13?"
-	stage_prob = 20
+	desc = "Becoming a dragon is cool right?"
+	stage_prob = 5
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your bones ache.")
 	stage2	= list("Your skin feels scaly.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
-	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+	stage5	= list("<span class='danger'>You're a dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your friends for no reason.</span>")
+	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser/transformed
 
 
 //Lava Staff
@@ -1282,8 +1280,8 @@
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
 				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
-				C.damage = 30
-				C.monster_damage_boost = FALSE
+				C.damage = 15
+				C.monster_damage_boost = TRUE
 				log_combat(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -1399,10 +1397,10 @@
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
 			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
-			B.damage = 30
+			B.damage = 15
 		for(var/t in RANGE_TURFS(1, source))
 			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
-			B.damage = 30
+			B.damage = 15
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
@@ -1463,8 +1461,8 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = 30
-		B.monster_damage_boost = FALSE
+		B.damage = 15
+		B.monster_damage_boost = TRUE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1476,7 +1474,7 @@
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
-		B.damage = 15 //keeps monster damage boost due to lower damage
+		B.damage = 15 //keeps monster damage boost due to lower damage (now applied to all damage since it got lowered to 15 because 30 damage 50AP isnt cool)
 
 
 //Just some minor stuff
