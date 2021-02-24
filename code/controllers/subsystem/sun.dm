@@ -4,6 +4,12 @@
 	var/azimuth = 0 // clockwise, top-down rotation from 0 (north) to 359
 	var/power_mod = 1 // how much power this sun is outputting relative to standard
 
+
+/datum/sun/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, azimuth))
+		SSsun.complete_movement()
+
 /atom/proc/check_obscured(datum/sun/sun, distance = OCCLUSION_DISTANCE)
 	var/target_x = round(sin(sun.azimuth), 0.01)
 	var/target_y = round(cos(sun.azimuth), 0.01)
@@ -28,7 +34,6 @@ SUBSYSTEM_DEF(sun)
 
 	var/list/datum/sun/suns = list()
 	var/datum/sun/primary_sun
-	var/azimuth = 0 ///clockwise, top-down rotation from 0 (north) to 359
 	var/azimuth_mod = 1 ///multiplier against base_rotation
 	var/base_rotation = 6 ///base rotation in degrees per fire
 
@@ -45,7 +50,7 @@ SUBSYSTEM_DEF(sun)
 	for(var/S in suns)
 		var/datum/sun/sun = S
 		sun.azimuth += azimuth_mod * base_rotation
-		sun.azimuth = round(azimuth, 0.01)
+		sun.azimuth = round(sun.azimuth, 0.01)
 		if(sun.azimuth >= 360)
 			sun.azimuth -= 360
 		if(sun.azimuth < 0)
@@ -54,10 +59,5 @@ SUBSYSTEM_DEF(sun)
 
 /datum/controller/subsystem/sun/proc/complete_movement()
 	SEND_SIGNAL(src, COMSIG_SUN_MOVED, primary_sun, suns)
-
-/datum/controller/subsystem/sun/vv_edit_var(var_name, var_value)
-	. = ..()
-	if(var_name == NAMEOF(src, azimuth))
-		complete_movement()
 
 #undef OCCLUSION_DISTANCE
