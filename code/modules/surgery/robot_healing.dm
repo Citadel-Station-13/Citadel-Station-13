@@ -1,7 +1,7 @@
 //Almost copypaste of tend wounds, with some changes
 
 /datum/surgery/robot_healing
-	name = "Repair robotic limbs (basic)"
+	name = "Repair Robotic Limbs"
 	desc = "A surgical procedure that provides repairs and maintenance to robotic limbs. Is slightly more efficient when the patient is severely damaged."
 
 	steps = list(/datum/surgery_step/mechanic_open,
@@ -16,6 +16,26 @@
 	ignore_clothes = TRUE
 	var/antispam = FALSE
 	var/healing_step_type = /datum/surgery_step/robot_heal/basic
+
+/datum/surgery/robot_healing/basic
+	name = "Repair Robotic Limbs (Basic)"
+	replaced_by = /datum/surgery/robot_healing/upgraded
+	healing_step_type = /datum/surgery_step/robot_heal/basic
+	desc = "A surgical procedure that provides basic repairs and maintenance to a patient's robotic limbs. Heals slightly more when the patient is severely injured."
+
+/datum/surgery/robot_healing/upgraded
+	name = "Repair Robotic Limbs (Adv.)"
+	replaced_by = /datum/surgery/robot_healing/upgraded/femto
+	requires_tech = TRUE
+	healing_step_type = /datum/surgery_step/robot_heal/upgraded
+	desc = "A surgical procedure that provides advanced repairs and maintenance to a patient's robotic limbs. Heals more when the patient is severely injured."
+
+/datum/surgery/robot_healing/upgraded/femto
+	name = "Repair Robotic Limbs (Exp.)"
+	replaced_by = /datum/surgery/robot_healing/upgraded/femto
+	requires_tech = TRUE
+	healing_step_type = /datum/surgery_step/robot_heal/upgraded/femto
+	desc = "A surgical procedure that provides experimental repairs and maintenance to a patient's robotic limbs. Heals considerably more when the patient is severely injured."
 
 /datum/surgery/robot_healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -54,7 +74,7 @@
 
 /datum/surgery_step/robot_heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/woundtype
-	if(implement_type  == TOOL_WELDER)
+	if(implement_type == TOOL_WELDER)
 		healsbrute = TRUE
 		healsburn = FALSE
 		woundtype = "dents"
@@ -133,3 +153,13 @@
 	brutehealing = 10
 	burnhealing = 10
 	missinghpbonus = 15
+
+/datum/surgery_step/robot_heal/upgraded
+	brutehealing = 10
+	burnhealing = 10
+	missinghpbonus = 10
+
+/datum/surgery_step/robot_heal/upgraded/femto
+	brutehealing = 10
+	burnhealing = 10
+	missinghpbonus = 5
