@@ -55,19 +55,17 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/multitool))
-			var/obj/item/multitool/M = I
-			M.buffer = src
+		if(I.tool_behaviour == TOOL_MULTITOOL)
+			I.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer. It can now be saved to pads with closed panels.</span>")
 			return TRUE
-	else if(istype(I, /obj/item/multitool))
-		var/obj/item/multitool/M = I
-		if(istype(M.buffer, /obj/machinery/quantumpad))
-			if(M.buffer == src)
+	else if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(istype(I.buffer, /obj/machinery/quantumpad))
+			if(I.buffer == src)
 				to_chat(user, "<span class='warning'>You cannot link a pad to itself!</span>")
 				return TRUE
 			else
-				linked_pad = M.buffer
+				linked_pad = I.buffer
 				to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
 				return TRUE
 		else
@@ -130,7 +128,7 @@
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(target_pad)
-		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 		teleporting = TRUE
 
 		spawn(teleport_speed)
@@ -155,9 +153,9 @@
 			target_pad.sparks()
 
 			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
 			flick("qpad-beam", target_pad)
-			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
 			for(var/atom/movable/ROI in get_turf(src))
 				if(QDELETED(ROI))
 					continue //sleeps in CHECK_TICK

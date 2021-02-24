@@ -289,11 +289,13 @@
 		return FALSE
 	return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
 
-/mob/living/silicon/robot/proc/attempt_welder_repair(obj/item/weldingtool/W, mob/user)
-	if (!getBruteLoss())
+/mob/living/silicon/robot/proc/attempt_welder_repair(obj/item/W, mob/user)
+	if(!W.tool_behaviour == TOOL_WELDER)
+		return
+	if(!getBruteLoss())
 		to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
-	if (!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
+	if(!W.tool_start_check(user, amount=0)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 		return
 	user.DelayNextAction(CLICK_CD_MELEE)
 	if(src == user)
@@ -333,7 +335,7 @@
 		to_chat(user, "The wires seem fine, there's no need to fix them.")
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
+	if(W.tool_behaviour == TOOL_WELDER && (user.a_intent != INTENT_HARM || user == src))
 		INVOKE_ASYNC(src, .proc/attempt_welder_repair, W, user)
 		return
 
@@ -341,7 +343,7 @@
 		INVOKE_ASYNC(src, .proc/attempt_cable_repair, W, user)
 		return
 
-	else if(istype(W, /obj/item/crowbar))	// crowbar means open or close the cover
+	else if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = 0
@@ -373,12 +375,12 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 
-	else if(istype(W, /obj/item/screwdriver) && opened && !cell)	// haxing
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		update_icons()
 
-	else if(istype(W, /obj/item/screwdriver) && opened && cell)	// radio
+	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && opened && cell)	// radio
 		if(shell)
 			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
 		else if(radio)
@@ -387,7 +389,7 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		update_icons()
 
-	else if(istype(W, /obj/item/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+	else if(W.tool_behaviour == TOOL_WRENCH && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!locked_down)
 			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
 			spark_system.start()
@@ -1022,6 +1024,32 @@
 	R.undeploy()
 	return TRUE
 
+/datum/action/innate/custom_holoform
+	name = "Select Custom Holoform"
+	desc = "Select one of your existing avatars to use as a holoform."
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "custom_holoform"
+	required_mobility_flags = NONE
+
+/datum/action/innate/custom_holoform/Trigger()
+	if(!..())
+		return FALSE
+	var/mob/living/silicon/S = owner
+
+	//if setting the holoform succeeds, attempt to set it as the current holoform for the pAI or AI
+	if(S.attempt_set_custom_holoform())
+		if(istype(S, /mob/living/silicon/pai))
+			var/mob/living/silicon/pai/P = S
+			P.chassis = "custom"
+		else if(istype(S, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/A = S
+			if(A.client?.prefs?.custom_holoform_icon)
+				A.holo_icon = A.client.prefs.get_filtered_holoform(HOLOFORM_FILTER_AI)
+			else
+				A.holo_icon = getHologramIcon(icon('icons/mob/ai.dmi', "female"))
+
+	return TRUE
+
 
 /mob/living/silicon/robot/proc/undeploy()
 
@@ -1042,6 +1070,8 @@
 	if(mainframe.laws)
 		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	mainframe = null
+
+
 
 /mob/living/silicon/robot/attack_ai(mob/user)
 	if(shell && (!connected_ai || connected_ai == user))

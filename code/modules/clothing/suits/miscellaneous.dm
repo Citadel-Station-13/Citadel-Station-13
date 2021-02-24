@@ -99,18 +99,21 @@
 	desc = "A rather impractical, long coat."
 	icon_state = "tailcoat"
 	item_state = "tailcoat"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/vickyblack
 	name = "black victorian coat"
 	desc = "An overbearing black coat, it looks far older than you are."
 	icon_state = "vickyblack"
 	item_state = "vickyblack"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/vickyred
 	name = "red victorian coat"
 	desc = "An overbearing red coat, it looks far older than you are."
 	icon_state = "vickyred"
 	item_state = "vickyred"
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
@@ -277,7 +280,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT	//Space carp like space, so you should too
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun)
+	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/gun/ballistic/automatic/speargun, /obj/item/staff/bostaff)
 	hoodtype = /obj/item/clothing/head/hooded/carp_hood
 
 /obj/item/clothing/head/hooded/carp_hood
@@ -484,6 +487,17 @@
 	item_state = "militaryjacket"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic
+	name = "urban jacket"
+	desc = "A canvas jacket styled with a fur neck piece, stylish."
+	icon_state = "urbanjacket"
+	item_state = "urbanjacket"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
+
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#3D4C31", "#CBBDAF", "#3B3B3B"), 3)
+
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
 	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
@@ -537,6 +551,21 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
+
+/obj/item/clothing/suit/caution
+	name = "wet floor sign"
+	desc = "Caution! Wet Floor!"
+	icon_state = "caution"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	force = 1
+	throwforce = 3
+	throw_speed = 2
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN
+	attack_verb = list("warned", "cautioned", "smashed")
+	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 // WINTER COATS
 
@@ -1005,6 +1034,16 @@
 	alternate_worn_layer = UNDER_HEAD_LAYER
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/suit/toggle/wbreakpoly
+	name = "polychromic windbreaker"
+	desc = "Perfect for windy days."
+	icon_state = "wbreakpoly"
+	item_state = "wbreakpoly"
+
+/obj/item/clothing/suit/toggle/wbreakpoly/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#464F65", "#916035", "#474747"), 3)
+
 /obj/item/clothing/suit/flakjack
 	name = "flak jacket"
 	desc = "A dilapidated jacket made of a supposedly bullet-proof material (Hint: It isn't.). Smells faintly of napalm."
@@ -1069,6 +1108,36 @@
 /obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
 	item_state = "winterhood_poly"
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume
+	name = "timid woman hoodie"
+	desc = "A snug, tight yet warm outfit with belts wrapped around it. Looks to be made of polychromic materials."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/timidcostume
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#EB0C07", "#5E2400", "#CEA100"), 3)
+
+/obj/item/clothing/head/hooded/winterhood/timidcostume
+	name = "timid woman hood"
+	desc = "A hood attached to the hoodie."
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+
+/obj/item/clothing/suit/hooded/wintercoat/timidcostume/man
+	name = "timid man hoodie"
+	desc = "A snug, tight yet warm outfit a belt wrapped around it. Looks to be made of polychromic materials."
+	icon_state = "timidman"
+	item_state = "timidman"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/timidcostume/man
+
+/obj/item/clothing/head/hooded/winterhood/timidcostume/man
+	name = "timid man hood"
+	icon_state = "timidman"
+	item_state = "timidman"
+
 
 /obj/item/clothing/suit/striped_sweater
 	name = "striped sweater"

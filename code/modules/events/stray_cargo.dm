@@ -59,7 +59,8 @@
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
-	var/obj/structure/closet/supplypod/S = new
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/S = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 	return S
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
@@ -94,6 +95,7 @@
 
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()
-	var/obj/structure/closet/supplypod/S = new
+	var/area/pod_storage_area = locate(/area/centcom/supplypod/podStorage) in GLOB.sortedAreas
+	var/obj/structure/closet/supplypod/S = new(pick(get_area_turfs(pod_storage_area))) //Lets not runtime
 	S.setStyle(STYLE_SYNDICATE)
 	return S

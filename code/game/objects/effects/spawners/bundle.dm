@@ -170,6 +170,7 @@
 		/obj/item/clothing/under/rank/civilian/mime/sexy)
 
 /obj/effect/spawner/bundle/crate/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
 	if(items && items.len)
 		var/turf/T = get_turf(src)
 		var/obj/structure/closet/LC = locate(/obj/structure/closet) in T

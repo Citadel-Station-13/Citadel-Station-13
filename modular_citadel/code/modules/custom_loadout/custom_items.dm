@@ -585,3 +585,19 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/clothing/neck/petcollar/choker
+	name = "NT Choker"
+	desc = "NT property since January 21st,  2562."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "choker"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	item_state = "choker"
+
+/obj/item/clothing/mask/breath/mmask
+	name = "Strange Metal Mask"
+	desc = "An odd metal mask."
+	icon = 'icons/obj/custom.dmi'
+	item_state = "mmask"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	icon_state = "mmask"

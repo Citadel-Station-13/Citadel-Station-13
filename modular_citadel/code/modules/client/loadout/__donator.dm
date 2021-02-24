@@ -287,6 +287,8 @@
 	slot = SLOT_IN_BACKPACK
 	path = /obj/item/clothing/neck/cloak/polychromic/polyce
 	ckeywhitelist = list("worksbythesea", "blakeryan")
+	loadout_flags = LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#808080", "#8CC6FF", "#FF3535")
 
 /datum/gear/donator/ssk
 	name = "Stun Sword Kit"
@@ -535,4 +537,15 @@
 	path = /obj/item/clothing/suit/custom/exo
 	ckeywhitelist = list("jesterz7")
 
+/datum/gear/donator/choker
+	name = "NT Choker"
+	slot = SLOT_NECK
+	path = /obj/item/clothing/neck/petcollar/choker
+	ckeywhitelist = list("trigillass")
+
+/datum/gear/donator/strangemask
+	name = "Strange Metal Mask"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/mask/breath/mmask
+	ckeywhitelist = list("sneka")
 

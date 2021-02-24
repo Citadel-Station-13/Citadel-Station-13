@@ -11,12 +11,25 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	resistance_flags = NONE
 	mutantrace_variation = STYLE_MUZZLE
+	visor_flags_inv = HIDEFACE
+	var/flavor_adjust = TRUE //can it do the heehoo alt click to hide/show identity
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	if(flavor_adjust)
+		. += "<span class='info'>Alt-click to toggle identity concealment. It's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
+
+/obj/item/clothing/mask/gas/AltClick(mob/user)
+	. = ..()
+	if(flavor_adjust && adjustmask(user, TRUE))
+		return TRUE
 
 /obj/item/clothing/mask/gas/glass
 	name = "glass gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. This one doesn't obscure your face however." //More accurate
 	icon_state = "gas_clear"
 	flags_inv = HIDEEYES
+	flavor_adjust = FALSE
 
 
 // **** Welding gas mask ****
@@ -35,6 +48,7 @@
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+	flavor_adjust = FALSE
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -72,7 +86,6 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
-	visor_flags_inv = HIDEFACE
 	dog_fashion = /datum/dog_fashion/head/clown
 	var/static/list/clownmask_designs
 
@@ -86,15 +99,6 @@
 			"The Madman" = image(icon = src.icon, icon_state = "joker"),
 			"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
 			)
-
-/obj/item/clothing/mask/gas/clown_hat/examine(mob/user)
-	. = ..()
-	. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
-
-/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/user)
-	. = ..()
-	if(adjustmask(user, TRUE))
-		return TRUE
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
@@ -130,17 +134,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
-	visor_flags_inv = HIDEFACE
 	var/static/list/mimemask_designs
-
-/obj/item/clothing/mask/gas/mime/examine(mob/user)
-	. = ..()
-	. += "<span class='info'>Alt-click to toggle identity concealment. it's currently <b>[flags_inv & HIDEFACE ? "on" : "off"]</b>.</span>"
-
-/obj/item/clothing/mask/gas/mime/AltClick(mob/user)
-	. = ..()
-	if(adjustmask(user, TRUE))
-		return TRUE
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()
@@ -149,14 +143,17 @@
 			"Blanc" = image(icon = src.icon, icon_state = "mime"),
 			"Excité" = image(icon = src.icon, icon_state = "sexymime"),
 			"Triste" = image(icon = src.icon, icon_state = "sadmime"),
-			"Effrayé" = image(icon = src.icon, icon_state = "scaredmime")
+			"Effrayé" = image(icon = src.icon, icon_state = "scaredmime"),
+			"Timid Woman" = image(icon = src.icon, icon_state = "timidwoman"),
+			"Timid Man" = image(icon = src.icon, icon_state = "timidman")
 			)
 
 /obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
-	var/static/list/options = list("Blanc" = "mime", "Triste" = "sadmime", "Effrayé" = "scaredmime", "Excité" ="sexymime")
+	var/static/list/options = list("Blanc" = "mime", "Triste" = "sadmime", "Effrayé" = "scaredmime", "Excité" ="sexymime",
+	"Timid Woman" = "timidwoman", "Timid Man" = "timidman")
 
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 
@@ -175,6 +172,20 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	actions_types = list()
+
+/obj/item/clothing/mask/gas/timidcostume
+	name = "timid woman mask"
+	desc = "Most people who wear these are not really that timid."
+	clothing_flags = ALLOWINTERNALS
+	icon_state = "timidwoman"
+	item_state = "timidwoman"
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/mask/gas/timidcostume/man
+	name = "timid man mask"
+	icon_state = "timidman"
+	item_state = "timidman"
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"

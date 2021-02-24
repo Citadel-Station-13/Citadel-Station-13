@@ -32,6 +32,9 @@
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+		if(damaged_clothes)
+			to_chat(user,"<span class='warning'>You should repair the damage done to [src] first.</span>")
+			return 0
 		var/obj/item/stack/cable_coil/C = I
 		I.use_tool(src, user, 0, 1)
 		has_sensor = HAS_SENSORS
@@ -244,35 +247,33 @@
 /obj/item/clothing/under/proc/rolldown()
 	if(!can_use(usr))
 		return
-	if(!can_adjust)
-		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
-		return
-	if(toggle_jumpsuit_adjust())
-		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
-	if(ishuman(usr))
+	if(toggle_jumpsuit_adjust() && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.update_inv_w_uniform()
 		H.update_body()
 
 /obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
+	if(!can_adjust)
+		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
+		return FALSE
 	adjusted = !adjusted
 
 	if(adjusted)
+		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
 		if(fitted != FEMALE_UNIFORM_TOP)
 			fitted = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted
 			body_parts_covered &= ~CHEST
 			mutantrace_variation &= ~USE_TAUR_CLIP_MASK //How are we supposed to see the uniform otherwise?
 	else
+		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
 		fitted = initial(fitted)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 			if(initial(mutantrace_variation) & USE_TAUR_CLIP_MASK)
 				mutantrace_variation |= USE_TAUR_CLIP_MASK
 
-	return adjusted
+	return TRUE
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

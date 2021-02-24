@@ -12,6 +12,7 @@
 	icon_state = "shuttle"
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	unique = FALSE
+	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)
@@ -150,7 +151,6 @@
 
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
-	noteleport = TRUE
 
 /area/shuttle/escape/arena
 	name = "The Arena"

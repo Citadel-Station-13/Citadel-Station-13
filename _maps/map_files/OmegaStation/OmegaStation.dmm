@@ -4924,11 +4924,11 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/obj/item/gun/energy/e_gun/hos,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/gun/energy/e_gun/hos,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain/private)
 "ahI" = (
@@ -15268,6 +15268,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "axG" = (
@@ -19618,9 +19621,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "aEL" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
@@ -19635,6 +19635,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "aEM" = (
@@ -24502,10 +24503,6 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -25146,13 +25143,13 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNg" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/structure/reagent_dispensers/fueltank/high,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aNh" = (
@@ -40546,6 +40543,9 @@
 	areastring = "/area/maintenance/starboard/aft";
 	name = "Starboard Quater Maintenance APC";
 	pixel_y = -26
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
 	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"

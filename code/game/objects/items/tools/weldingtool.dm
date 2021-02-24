@@ -9,6 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = SURGICAL_TOOL
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
@@ -22,14 +23,15 @@
 	resistance_flags = FIRE_PROOF
 
 	var/self_fueling = FALSE //Do we refill ourselves or not
-	var/nextrefueltick = 0 // How long it takes before we get a new fuel unit
+	var/nextrefueltick = 0 //When is the next tick we refuel?
+	var/refueling_interval = 10	//Every how many processing ticks does this refuel? (1 = every processing tick)
 
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 	var/change_icons = 1
-	var/can_off_process = 0
+	var/can_off_process = FALSE
 	var/light_intensity = 2 //how powerful the emitted light is when used.
 	var/progress_flash_divisor = 10
 	var/burned_fuel_for = 0	//when fuel was last removed
@@ -55,6 +57,9 @@
 	else
 		item_state = "[initial(item_state)]"
 
+/obj/item/weldingtool/DoRevenantThrowEffects(atom/target)
+	attack_self()
+
 /obj/item/weldingtool/update_overlays()
 	. = ..()
 	if(change_icons)
@@ -65,6 +70,14 @@
 		. += "[initial(icon_state)]-on"
 
 /obj/item/weldingtool/process()
+	//This handles refueling. Its looking at how much fuel the tool has and comparing that to how much it holds
+	//This then looks if the refuel tick has come based on world time.
+	//Then looks if we refuel ourselves or not.
+
+	if(self_fueling && get_fuel() < max_fuel && nextrefueltick <= world.time)
+		nextrefueltick = world.time + refueling_interval
+		reagents.add_reagent(/datum/reagent/fuel, 1)
+
 	switch(welding)
 		if(0)
 			force = 3
@@ -85,20 +98,12 @@
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
 
-	//This handles refueling. Its looking at how much fuel the tool has and comparing that to how much it holds
-	//This then looks if the refuel tick has come based on world time.
-	//Then looks if we refuel ourselves or not.
-
-	if(get_fuel() < max_fuel && nextrefueltick < world.time && self_fueling)
-		nextrefueltick = world.time + 10
-		reagents.add_reagent(/datum/reagent/fuel, 1)
-
 /obj/item/weldingtool/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
@@ -206,12 +211,14 @@
 //Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)
 	if(!status)
-		to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
 		return
 	welding = !welding
 	if(welding)
 		if(get_fuel() >= 1)
-			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
+			if(user)
+				to_chat(user, "<span class='notice'>You switch [src] on.</span>")
 			playsound(loc, acti_sound, 50, 1)
 			force = 15
 			damtype = "fire"
@@ -366,7 +373,7 @@
 	custom_materials = list(/datum/material/iron=70, /datum/material/glass=120)
 	change_icons = 0
 	self_fueling = TRUE
-	can_off_process = 1
+	can_off_process = TRUE
 	light_intensity = 1
 	toolspeed = 0.5
 
@@ -374,6 +381,7 @@
 	name = "brass welding tool"
 	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	refueling_interval = 5
 	icon_state = "clockwelder"
 	item_state = "brasswelder"
 
@@ -383,16 +391,20 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "welder"
 	self_fueling = TRUE
+	can_off_process = TRUE
+	refueling_interval = 1
 	toolspeed = 0.1
 	light_intensity = 0
 	change_icons = 0
 
 /obj/item/weldingtool/advanced
 	name = "advanced welding tool"
-	desc = "A modern welding tool combined with an alien welding tool, it never runs out of fuel and works almost as fast."
+	desc = "A modern welding tool combined with an alien welding tool, it almost never runs out of fuel and works nearly as fast."
 	icon = 'icons/obj/advancedtools.dmi'
 	icon_state = "welder"
 	self_fueling = TRUE
+	can_off_process = TRUE
+	refueling_interval = 2
 	toolspeed = 0.2
 	light_intensity = 0
 	change_icons = 0

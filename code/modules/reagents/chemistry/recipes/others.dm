@@ -718,7 +718,7 @@
 	name = "felinid mutation toxin"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/mutationtoxin = 1)
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 450
 
 /datum/chemical_reaction/moff
@@ -881,3 +881,29 @@
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/cellulose = 1)
 	required_temp = 512
+
+//Nerdy card shit
+
+/datum/chemical_reaction/card_powder/blue
+	name = "Blue Card Powder"
+	id = /datum/reagent/card_powder/blue
+	results = list(/datum/reagent/card_powder/blue = 1)
+	required_reagents = list(/datum/reagent/card_powder/green = 12)
+
+/datum/chemical_reaction/card_powder/purple
+	name = "Purple Card Powder"
+	id = /datum/reagent/card_powder/purple
+	results = list(/datum/reagent/card_powder/purple = 1)
+	required_reagents = list(/datum/reagent/card_powder/blue = 12)
+
+/datum/chemical_reaction/card_powder/yellow
+	name = "Yellow Card Powder"
+	id = /datum/reagent/card_powder/yellow
+	results = list(/datum/reagent/card_powder/yellow = 1)
+	required_reagents = list(/datum/reagent/card_powder/purple = 12)
+
+/datum/chemical_reaction/card_powder/black
+	name = "Black Card Powder"
+	id = /datum/reagent/card_powder/black
+	results = list(/datum/reagent/card_powder/black = 1)
+	required_reagents = list(/datum/reagent/card_powder/yellow = 12)

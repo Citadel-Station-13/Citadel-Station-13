@@ -903,7 +903,7 @@
 	if(H && !H.stealthmode && H.toggled)
 		abilitiesavail = TRUE
 	var/list/data = list(
-		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE),
+		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)) && !area.hasSiliconAccessInArea(user, PRIVILEGES_SILICON|PRIVILEGES_DRONE),
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
@@ -994,7 +994,7 @@
 		return TRUE
 	if (user == hijacker || (area.hasSiliconAccessInArea(user) && !aidisabled))
 		return TRUE
-	if(user.silicon_privileges & PRIVILEDGES_SILICON)
+	if(user.silicon_privileges & PRIVILEGES_SILICON)
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
 		if (src.aidisabled || malfhack && istype(malfai) && ((istype(AI) && (malfai!=AI && malfai != AI.parent)) || (istype(robot) && (robot in malfai.connected_robots))))
@@ -1023,7 +1023,7 @@
 	if(action == "hijack" && can_use(usr, 1)) //don't need auth for hijack button
 		hijack(usr)
 		return
-	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
+	if(locked && !area.hasSiliconAccessInArea(usr, PRIVILEGES_SILICON|PRIVILEGES_DRONE) && !failure_timer && action != "toggle_nightshift" && (!integration_cog || !(is_servant_of_ratvar(usr))))
 		return
 	switch(action)
 		if("lock")
@@ -1064,7 +1064,7 @@
 				update()
 			. = TRUE
 		if("overload")
-			if(area.hasSiliconAccessInArea(usr, PRIVILEDGES_SILICON|PRIVILEDGES_DRONE)) //usr.has_unlimited_silicon_privilege)
+			if(area.hasSiliconAccessInArea(usr, PRIVILEGES_SILICON|PRIVILEGES_DRONE)) //usr.has_unlimited_silicon_privilege)
 				overload_lighting()
 				. = TRUE
 		if("hack")
@@ -1082,11 +1082,12 @@
 		if("lockdown")
 			var/celluse = rand(20,35)
 			celluse = celluse /100
+			if(!cell.use(cell.maxcharge*celluse))
+				return
 			for (var/obj/machinery/door/D in GLOB.airlocks)
 				if (get_area(D) == area)
 					INVOKE_ASYNC(D,/obj/machinery/door.proc/hostile_lockdown,usr, FALSE)
 					addtimer(CALLBACK(D,/obj/machinery/door.proc/disable_lockdown, FALSE), 30 SECONDS)
-			cell.charge -= cell.maxcharge*celluse
 			var/obj/item/implant/hijack/H = usr.getImplant(/obj/item/implant/hijack)
 			H.stealthcooldown = world.time + 3 MINUTES
 		if("occupy")
@@ -1373,9 +1374,9 @@
 	// next: take from or charge to the cell, depending on how much is left
 	if(cell && !shorted)
 		if(cur_excess > 0)
-			var/charging_cell = min(cur_excess, cell.maxcharge * GLOB.CHARGELEVEL)
+			var/charging_cell = min(min(cur_excess*GLOB.CELLRATE, cell.maxcharge * GLOB.CHARGELEVEL), cell.maxcharge - cell.charge)
 			cell.give(charging_cell)
-			add_load(charging_cell)
+			add_load(charging_cell/GLOB.CELLRATE)
 			lastused_total += charging_cell
 			longtermpower = min(10,longtermpower + 1)
 			if(chargemode && !charging)

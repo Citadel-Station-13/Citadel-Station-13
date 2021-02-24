@@ -36,6 +36,6 @@
 	log_combat(owner, null, "swallowed an implanted pill", target)
 	if(target.reagents.total_volume)
 		target.reagents.reaction(owner, INGEST)
-		target.reagents.trans_to(owner, target.reagents.total_volume)
+		target.reagents.trans_to(owner, target.reagents.total_volume, log = "dental pill swallow")
 	qdel(target)
 	return 1

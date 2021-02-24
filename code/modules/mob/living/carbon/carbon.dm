@@ -434,6 +434,9 @@
 			legcuffed.forceMove(drop_location())
 			legcuffed = null
 			I.dropped(src)
+			if(istype(I, /obj/item/restraints/legcuffs))
+				var/obj/item/restraints/legcuffs/lgcf = I
+				lgcf.on_removed()
 			update_inv_legcuffed()
 			return
 		else
@@ -604,7 +607,7 @@
 			ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 			filters += CIT_FILTER_STAMINACRIT
 			update_mobility()
-	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT)
+	if((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && total_health <= STAMINA_CRIT_REMOVAL_THRESHOLD)
 		to_chat(src, "<span class='notice'>You don't feel nearly as exhausted anymore.</span>")
 		DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_HARD_STAMCRIT)
 		filters -= CIT_FILTER_STAMINACRIT
@@ -839,6 +842,8 @@
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
+	if(stat != CONSCIOUS)
+		clear_typing_indicator()
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
@@ -1227,3 +1232,25 @@
   */
 /mob/living/carbon/proc/get_biological_state()
 	return BIO_FLESH_BONE
+
+/mob/living/carbon/altattackby(obj/item/W, mob/living/carbon/user, params)
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	if(W && user.a_intent == INTENT_HELP && W.can_give())
+		user.give()
+		return TRUE
+
+/mob/living/carbon/verb/give_verb()
+	set src in oview(1)
+	set category = "IC"
+	set name = "Give"
+
+	if(usr.incapacitated() || !usr.Adjacent(src))
+		return
+
+	if(!usr.get_active_held_item()) // Let me know if this has any problems -Yota
+		return
+	var/obj/item/I = usr.get_active_held_item()
+	var/mob/living/carbon/C = usr
+	if(I.can_give())
+		C.give()

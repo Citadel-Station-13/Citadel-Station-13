@@ -252,7 +252,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/update = TRUE
 	var/update_to_assembly = FALSE
 
-	var/obj/held_item = usr.get_active_held_item()
+	var/obj/item/held_item = usr.get_active_held_item()
 
 	if(href_list["rename"])
 		rename_component(usr)
@@ -267,7 +267,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 			if(href_list["link"])
 				linked = locate(href_list["link"]) in pin.linked
 
-			if(istype(held_item, /obj/item/integrated_electronics) || istype(held_item, /obj/item/multitool))
+			if(istype(held_item, /obj/item/integrated_electronics) || held_item.tool_behaviour == TOOL_MULTITOOL)
 				pin.handle_wire(linked, held_item, href_list["act"], usr)
 			else
 				to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")
@@ -378,7 +378,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 
 // Checks if the target object is reachable. Useful for various manipulators and manipulator-like objects.
-/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE)
+/obj/item/integrated_circuit/proc/check_target(atom/target, exclude_contents = FALSE, exclude_components = FALSE, exclude_self = FALSE, exclude_outside = FALSE)
 	if(!target)
 		return FALSE
 
@@ -394,7 +394,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		if(target == assembly.battery)
 			return FALSE
 
-	if(target.Adjacent(acting_object) && isturf(target.loc))
+	if(!exclude_outside && target.Adjacent(acting_object) && isturf(target.loc))
 		return TRUE
 
 	if(!exclude_contents && (target in acting_object.GetAllContents()))

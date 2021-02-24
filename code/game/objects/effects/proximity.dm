@@ -5,6 +5,7 @@
 	var/list/checkers //list of /obj/effect/abstract/proximity_checkers
 	var/current_range
 	var/ignore_if_not_on_turf	//don't check turfs in range if the host's loc isn't a turf
+	var/wire = FALSE
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	checkers = list()
@@ -35,6 +36,8 @@
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
+	SIGNAL_HANDLER
+
 	var/atom/_host = host
 	var/atom/new_host_loc = _host.loc
 	if(last_host_loc != new_host_loc)
@@ -58,6 +61,8 @@
 	var/atom/_host = host
 
 	var/atom/loc_to_use = ignore_if_not_on_turf ? _host.loc : get_turf(_host)
+	if(wire && !isturf(loc_to_use)) //it makes assemblies attached on wires work
+		loc_to_use = get_turf(loc_to_use)
 	if(!isturf(loc_to_use))	//only check the host's loc
 		if(range)
 			var/obj/effect/abstract/proximity_checker/pc
@@ -109,4 +114,5 @@
 
 /obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
 	set waitfor = FALSE
-	monitor?.hasprox_receiver.HasProximity(AM)
+	. = ..()
+	monitor?.hasprox_receiver?.HasProximity(AM)
