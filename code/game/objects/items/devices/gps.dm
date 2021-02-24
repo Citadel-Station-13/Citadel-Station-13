@@ -58,6 +58,9 @@
 	else
 		return ..()
 
+/obj/item/gps/internal/indestructible
+	gpstag = "Unnerving Signal"
+
 /obj/item/gps/internal/mining
 	icon_state = "gps-m"
 	gpstag = "MINER"

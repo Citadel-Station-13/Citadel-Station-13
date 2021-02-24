@@ -11,9 +11,9 @@ SUBSYSTEM_DEF(min_spawns)
 	var/list/valid_mining_turfs_2 = list() // snaxi underground turfs
 
 GLOBAL_LIST_INIT(minimum_lavaland_spawns, list(
-	/obj/structure/spawner/lavaland,
-	/obj/structure/spawner/lavaland/goliath,
-	/obj/structure/spawner/lavaland/legion,
+	/obj/structure/spawner/lavaland/indestructible,
+	/obj/structure/spawner/lavaland/indestructible/goliath,
+	/obj/structure/spawner/lavaland/indestructible/legion,
 	/mob/living/simple_animal/hostile/megafauna/dragon,
 	/mob/living/simple_animal/hostile/megafauna/colossus,
 	/mob/living/simple_animal/hostile/megafauna/bubblegum

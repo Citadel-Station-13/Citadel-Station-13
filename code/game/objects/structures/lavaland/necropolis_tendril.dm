@@ -12,13 +12,13 @@
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
 	var/loot_type = /obj/structure/closet/crate/necropolis/tendril/all
 
-	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
+	move_resist = INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 	var/gps = null
+	var/gps_type = /obj/item/gps/internal
 	var/obj/effect/light_emitter/tendril/emitted_light
-
 
 /obj/structure/spawner/lavaland/goliath
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
@@ -29,6 +29,23 @@
 /obj/structure/spawner/lavaland/icewatcher
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing)
 
+/obj/structure/spawner/lavaland/indestructible
+	name = "towering necropolis tendril"
+	desc = "A towering, vile tendril of corruption unyielding, its depth almost unfathomable. Terrible monsters are pouring out of it, and it seems far too hardy to be natural."
+	gps_type = /obj/item/gps/internal/indestructible
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | INDESTRUCTIBLE
+	max_integrity = INFINITY
+	spawn_time = 20 SECONDS
+
+/obj/structure/spawner/lavaland/indestructible/goliath
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
+
+/obj/structure/spawner/lavaland/indestructible/legion
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
+
+/obj/structure/spawner/lavaland/indestructible/icewatcher
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing)
+
 GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize()
 	. = ..()
@@ -37,7 +54,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
-	gps = new /obj/item/gps/internal(src)
+	gps = new gps_type(src)
 	GLOB.tendrils += src
 
 /obj/structure/spawner/lavaland/deconstruct(disassembled)
