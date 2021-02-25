@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(air)
 	var/cost_turfs = 0
 	var/cost_groups = 0
 	var/cost_highpressure = 0
+	var/cost_deferred_airs
 	var/cost_hotspots = 0
 	var/cost_post_process = 0
 	var/cost_superconductivity = 0
@@ -20,6 +21,7 @@ SUBSYSTEM_DEF(air)
 	var/list/hotspots = list()
 	var/list/networks = list()
 	var/list/pipenets_needing_rebuilt = list()
+	var/list/deferred_airs = list()
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/obj/machinery/atmos_air_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
@@ -83,6 +85,9 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/extools_update_ssair()
 //datum/controller/subsystem/air/proc/extools_update_reactions()
 
+/datum/controller/subsystem/air/proc/thread_running()
+	return FALSE
+
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
 
@@ -135,8 +140,15 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
+		currentpart = SSAIR_DEFERRED_AIRS
+	if(currentpart == SSAIR_DEFERRED_AIRS)
+		timer = TICK_USAGE_REAL
+		process_deferred_airs(resumed)
+		cost_deferred_airs = MC_AVERAGE(cost_deferred_airs, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY_AIR
-
 	if(currentpart == SSAIR_ATMOSMACHINERY_AIR)
 		timer = TICK_USAGE_REAL
 		process_atmos_air_machinery(resumed)
@@ -219,6 +231,19 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/add_to_rebuild_queue(atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics))
 		pipenets_needing_rebuilt += atmos_machine
+
+/datum/controller/subsystem/air/proc/process_deferred_airs(resumed = 0)
+	while(deferred_airs.len)
+		var/list/cur_op = deferred_airs[deferred_airs.len]
+		deferred_airs.len--
+		var/turf/open/T = cur_op[1]
+		if(istype(cur_op[2],/datum/gas_mixture))
+			T.air.merge(cur_op[2])
+		else if(istype(cur_op[2], /datum/callback))
+			var/datum/callback/cb = cur_op[2]
+			cb.Invoke(T)
+		if(MC_TICK_CHECK)
+			return
 
 /datum/controller/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1

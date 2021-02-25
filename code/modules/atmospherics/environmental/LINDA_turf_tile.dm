@@ -48,8 +48,11 @@
 /turf/open/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	if(!giver)
 		return FALSE
-	air.merge(giver)
-	update_visuals()
+	if(SSair.thread_running())
+		SSair.deferred_airs += list(list(src, giver))
+	else
+		air.merge(giver)
+		update_visuals()
 	return TRUE
 
 /turf/open/remove_air(amount)
