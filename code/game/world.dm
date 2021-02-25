@@ -10,9 +10,6 @@ GLOBAL_LIST(topic_status_cache)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 
-/proc/initialize_maptick()
-	CRASH("Auxtools is not loaded!")
-
 /world/New()
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
@@ -23,8 +20,6 @@ GLOBAL_LIST(topic_status_cache)
 	enable_reference_tracking()
 #endif
 	world.Profile(PROFILE_START)
-	AUXTOOLS_CHECK(AUXMAPTICK)
-	initialize_maptick()
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
@@ -282,7 +277,6 @@ GLOBAL_LIST(topic_status_cache)
 /world/Del()
 	shutdown_logging() // makes sure the thread is closed before end, else we terminate
 	AUXTOOLS_SHUTDOWN(AUXMOS)
-	AUXTOOLS_SHUTDOWN(AUXMAPTICK)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
 		call(debug_server, "auxtools_shutdown")()
