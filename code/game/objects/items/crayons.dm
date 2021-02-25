@@ -397,7 +397,9 @@
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
-					create_normal_drawing(user, clickx, clicky, target, paint_color, drawing, temp, graf_rot)
+					var/result = create_normal_drawing(user, clickx, clicky, target, paint_color, drawing, temp, graf_rot)
+					if(!result)
+						return // something went wrong
 					affected_turfs += target
 				if(PAINT_LARGE_HORIZONTAL)
 					var/turf/left = locate(target.x-1,target.y,target.z)
@@ -439,6 +441,7 @@
 	C.add_hiddenprint(user)
 	C.pixel_x = clickx
 	C.pixel_y = clicky
+	return TRUE
 
 //////////////Gang mode stuff/////////////////
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
