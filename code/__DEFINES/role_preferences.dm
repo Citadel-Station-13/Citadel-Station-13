@@ -38,6 +38,7 @@
 #define ROLE_GANG					"gangster"
 #define ROLE_BLOODSUCKER			"bloodsucker"
 //#define ROLE_MONSTERHUNTER			"monster hunter" Disabled for now
+#define ROLE_GRAFFITI_ARTIST		"graffiti artist"
 #define ROLE_GHOSTCAFE				"ghostcafe"
 #define ROLE_MINOR_ANTAG			"minorantag"
 #define ROLE_RESPAWN				"respawnsystem"

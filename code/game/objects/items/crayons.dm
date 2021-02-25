@@ -215,7 +215,7 @@
 
 	var/static/list/crayon_drawables
 
-	if (!crayon_drawables)
+	if(!crayon_drawables)
 		crayon_drawables = staticDrawables()
 
 	. = list()
@@ -285,7 +285,7 @@
 		cost = 0
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if (HAS_TRAIT(H, TRAIT_TAGGER))
+		if(HAS_TRAIT(H, TRAIT_TAGGER))
 			cost *= 0.5
 	var/charges_used = use_charges(user, cost)
 	if(!charges_used)
@@ -387,7 +387,6 @@
 
 	var/list/turf/affected_turfs = list()
 
-
 	if(actually_paints)
 		if(gang_mode)
 			// Double check it wasn't tagged in the meanwhile.
@@ -398,10 +397,7 @@
 		else
 			switch(paint_mode)
 				if(PAINT_NORMAL)
-					var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
-					C.add_hiddenprint(user)
-					C.pixel_x = clickx
-					C.pixel_y = clicky
+					create_normal_drawing(user, clickx, clicky, target, paint_color, drawing, temp, graf_rot)
 					affected_turfs += target
 				if(PAINT_LARGE_HORIZONTAL)
 					var/turf/left = locate(target.x-1,target.y,target.z)
@@ -437,6 +433,12 @@
 		reagents.trans_to(t, ., volume_multiplier)
 	check_empty(user)
 
+// this is overridden in the graffiti artist antag's spraycan for it's weird graffiti that acts like real objects
+/obj/item/toy/crayon/proc/create_normal_drawing(mob/user, clickx, clicky, atom/target, paint_color, drawing, temp, graf_rot)
+	var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
+	C.add_hiddenprint(user)
+	C.pixel_x = clickx
+	C.pixel_y = clicky
 
 //////////////Gang mode stuff/////////////////
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
