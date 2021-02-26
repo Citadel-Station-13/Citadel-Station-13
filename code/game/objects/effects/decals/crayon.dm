@@ -82,4 +82,4 @@
 		if(WEST)
 			throw_dir = SOUTH
 	var/atom/throw_target = get_edge_target_turf(AM, throw_dir)
-	AM.throw_at(throw_target, 10 , 1)
+	AM.throw_at(throw_target, 5 , 1)
