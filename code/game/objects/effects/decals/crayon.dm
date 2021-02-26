@@ -71,5 +71,15 @@
 // the arrow throws things in the direction it's facing when stepped on
 /obj/effect/decal/cleanable/crayon/special/arrow/Crossed(atom/movable/AM)
 	. = ..()
-	var/atom/throw_target = get_edge_target_turf(AM, dir)
-	AM.safe_throw_at(throw_target, 5, 1)
+	var/throw_dir
+	switch(dir)
+		if(NORTH)
+			throw_dir = WEST
+		if(EAST)
+			throw_dir = NORTH
+		if(SOUTH)
+			throw_dir = EAST
+		if(WEST)
+			throw_dir = SOUTH
+	var/atom/throw_target = get_edge_target_turf(AM, throw_dir)
+	AM.throw_at(throw_target, 10 , 1)
