@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - balance: "Lingfists (trait_mauler) now deal no stam damage and lost their 15(!!!) armor penetration."
