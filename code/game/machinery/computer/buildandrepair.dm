@@ -117,12 +117,6 @@
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
-//callback proc used on stacks use_tool to stop unnecessary amounts being wasted from spam clicking.
-/obj/structure/frame/computer/proc/check_state(target_state)
-	if(state == target_state)
-		return TRUE
-	return FALSE
-
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state == 4)
