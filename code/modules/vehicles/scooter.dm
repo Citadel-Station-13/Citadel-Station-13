@@ -252,11 +252,12 @@
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
 	icon = null
 	density = FALSE
+	var/move_delay = 0
 
 /obj/vehicle/ridden/scooter/wheelys/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = move_delay
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -287,3 +288,7 @@
 			H.updatehealth()
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+
+// slightly weaker wheelys
+/obj/vehicle/ridden/scooter/wheelys/weak
+	move_delay = 1.4

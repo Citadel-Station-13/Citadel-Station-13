@@ -326,10 +326,11 @@
 	actions_types = list(/datum/action/item_action/wheelys)
 	var/wheelToggle = FALSE //False means wheels are not popped out
 	var/obj/vehicle/ridden/scooter/wheelys/W
+	var/wheely_type = /obj/vehicle/ridden/scooter/wheelys
 
 /obj/item/clothing/shoes/wheelys/Initialize()
 	. = ..()
-	W = new /obj/vehicle/ridden/scooter/wheelys(null)
+	W = new wheely_type(null)
 
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
@@ -356,6 +357,11 @@
 /obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(W)
 	. = ..()
+
+/obj/item/clothing/shoes/wheelys/weak
+	name = "vintage wheely-heelys"
+	desc = "Covered in dust, these speedy shoes might not be as fast as they once were, but they're still fun!"
+	wheely_type = /obj/vehicle/ridden/scooter/wheelys/weak
 
 /obj/item/clothing/shoes/kindleKicks
 	name = "Kindle Kicks"

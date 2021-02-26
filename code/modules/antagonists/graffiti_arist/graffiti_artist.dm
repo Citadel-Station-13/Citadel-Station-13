@@ -9,7 +9,7 @@
 	var/obj/item/toy/crayon/spraycan/antag/special_spraycan
 	var/paint_amount = 100
 	var/maximum_paint = 100
-	var/paint_recharge_rate = 1
+	var/paint_recharge_rate = 3
 
 /datum/antagonist/graffiti_artist/on_gain()
 	var/mob/living/carbon/human/H = owner.current
@@ -32,7 +32,7 @@
 	vandalize_objective.owner = owner
 	objectives += vandalize_objective
 
-	var/datum/objective/art_objective = new("You need some crew left alive to appreciate your art, such that the Wizard Federation's art department can gain relevance and not have its budget cut.")
+	var/datum/objective/art_objective = new("Leave some crew alive to appreciate your art so that the Wizard Federation's art department can return to its former glory.")
 	art_objective.owner = owner
 	objectives += art_objective
 
@@ -48,11 +48,18 @@
 // actual effects
 /datum/antagonist/graffiti_artist/apply_innate_effects()
 	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/on_antag_process)
+	owner.current.hud_used?.lingchemdisplay?.icon_state = "paint_display"
 	. = ..()
 
 /datum/antagonist/graffiti_artist/remove_innate_effects()
 	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
+	owner.current.hud_used?.lingchemdisplay?.icon_state = "power_display"
 	. = ..()
 
 /datum/antagonist/graffiti_artist/proc/on_antag_process()
 	paint_amount = min(paint_amount + paint_recharge_rate, maximum_paint)
+	update_hud()
+
+/datum/antagonist/graffiti_artist/proc/update_hud()
+	owner.current.hud_used?.lingchemdisplay?.invisibility = 0
+	owner.current.hud_used?.lingchemdisplay?.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#ffffff'>[round(paint_amount)]</font></div>"
