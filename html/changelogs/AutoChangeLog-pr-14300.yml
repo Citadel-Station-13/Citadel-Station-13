@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "16 > 10 unlock cost for stronger abilities"
+  - balance: "Made nearly all other abilities for free."

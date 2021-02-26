@@ -220,8 +220,8 @@
 	parry_max_attacks = INFINITY
 	parry_failed_cooldown_duration = 2.25 SECONDS
 	parry_failed_stagger_duration = 2.25 SECONDS
-	parry_cooldown = 3 SECONDS
-	parry_failed_clickcd_duration = 0.5 SECONDS
+	parry_cooldown = 0
+	parry_failed_clickcd_duration = 0
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
