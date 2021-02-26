@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - bugfix: "chaplain arrythmic knives can no longer be abused for infinite speed."
