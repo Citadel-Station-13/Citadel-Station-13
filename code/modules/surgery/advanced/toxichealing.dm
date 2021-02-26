@@ -27,7 +27,8 @@
 /datum/surgery_step/toxichealing/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(..())
 		while((target.getToxLoss() >= 1) || (target.getOxyLoss() >= 1))
-			if(!..())
+			. = ..()
+			if(!.)
 				break
 
 /datum/surgery_step/toxichealing/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
