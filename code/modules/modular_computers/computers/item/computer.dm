@@ -9,6 +9,7 @@
 	var/light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
+	rad_flags = RAD_PROTECT_CONTENTS
 	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
 	var/enabled = 0											// Whether the computer is turned on.
