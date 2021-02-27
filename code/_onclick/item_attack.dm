@@ -82,7 +82,7 @@
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
-	if(force && damtype != STAMINA && HAS_TRAIT(user, TRAIT_PACIFISM) && !is_species(user, /datum/species/zombie/infectious))
+	if(force && damtype != STAMINA && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 

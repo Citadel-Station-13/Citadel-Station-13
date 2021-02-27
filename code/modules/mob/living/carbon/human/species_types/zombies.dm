@@ -37,6 +37,8 @@
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6 // they're very slow
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	// same as in species.dm
+	//blacklisted_traits = list(TRAIT_PACIFISM)
 	var/heal_rate = 1
 	var/regen_cooldown = 0
 
@@ -95,6 +97,10 @@
 	for(var/obj/item/bodypart/part in C.bodyparts)
 		part.incoming_stam_mult = incoming_stam_mult
 		//todo: add negative wound resistance to all parts when wounds is merged (zombies are physically weak in terms of limbs)
+
+	// this removes pacifism quirk so our zombie can attack normally. but how to add back when cured?
+	REMOVE_TRAIT(C, TRAIT_PACIFISM, ROUNDSTART_TRAIT)	// and why "cannot be removed without admin intervention"? what does that mean?
+
 
 // Your skin falls off
 /datum/species/krokodil_addict
