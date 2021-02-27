@@ -446,7 +446,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				removed_quirks += Q.type
 
 // restore any quirks that we removed
-datum/species/proc/restore_quirks(mob/living/carbon/C)
+/datum/species/proc/restore_quirks(mob/living/carbon/C)
 	var/mob/living/L = C.mind?.current
 	if(istype(L))
 		for(var/q in removed_quirks)
