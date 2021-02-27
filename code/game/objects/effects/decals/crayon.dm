@@ -82,4 +82,18 @@
 		if(WEST)
 			throw_dir = SOUTH
 	var/atom/throw_target = get_edge_target_turf(AM, throw_dir)
-	AM.throw_at(throw_target, 5 , 1)
+	AM.throw_at(throw_target, 1 , 1)
+
+// the splatter slips you, it's as strong as regular soap
+/obj/effect/decal/cleanable/crayon/special/splatter/Initialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
+
+// the firedanger decal sets people on fire when they step on it
+// can't adjust your firestacks past 5 though
+/obj/effect/decal/cleanable/crayon/special/firedanger/Crossed(atom/movable/AM)
+	if(iscarbon(AM))
+		var/mob/living/carbon/C = AM
+		C.IgniteMob()
+		if(C.fire_stacks < 5)
+			C.adjust_fire_stacks(5 - C.fire_stacks)

@@ -7,10 +7,11 @@
 	post_noise = TRUE // so we still hear the spraying sound effect
 
 	//lists of drawings that can be made, keys are item name, values are paint cost
-	var/static/list/creatures = list("stickman" = 10, "carp" = 25)
-	var/static/list/creature_to_path = list("stickman" = /mob/living/simple_animal/hostile/stickman, "carp" = /mob/living/simple_animal/hostile/carp)
-	var/static/list/traps = list("arrow" = 5)
-	var/static/list/equipment = list("toolbox" = 20, "taser" = 40, "shotgun" = 60)
+	var/static/list/creatures = list("stickman" = 10, "carp" = 25, "slime" = 25)
+	var/static/list/creature_to_path = list("stickman" = /mob/living/simple_animal/hostile/crayon/stickman, "carp" = /mob/living/simple_animal/hostile/crayon/carp, "slime" = /mob/living/simple_animal/hostile/crayon/slime)
+	var/static/list/traps = list("arrow" = 5, "splatter" = 10, "firedanger" = 30)
+	var/static/list/equipment = list("claymore" = 80, "throwing star" = 25, "toolbox" = 25)
+	var/static/list/equipment_to_path = list("claymore" = /obj/item/crayon_equipment/claymore, "throwing star" = /obj/item/crayon_equipment/throwing_star)
 	var/static/list/structures = list("table" = 20, "barricade" = 25)
 	var/static/list/structure_to_path = list("table" = /obj/structure/table/crayon, "barricade" = /obj/structure/barricade/crayon)
 
@@ -57,33 +58,33 @@
 	// category 1: mobs
 	if(drawing in creatures)
 		var/mob_path = creature_to_path[drawing]
-		var/mob/living/simple_animal/drawn_creature = new mob_path(target)
-		drawn_creature.icon = 'icons/effects/crayondecal.dmi'
-		drawn_creature.icon_state = "[drawing]_mob"
-		drawn_creature.icon_dead = "[drawing]_mob_dead"
-		drawn_creature.icon_gib = null
-		drawn_creature.name = "graffiti [lowertext(drawn_creature.name)]"
-		drawn_creature.desc = "A creature made from paint. How is this even possible?!"
+		var/mob/living/simple_animal/drawn_creature = new mob_path(get_turf(target))
 		drawn_creature.faction += "\[[user.tag]\]" // so they don't attack the user
 		drawn_creature.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		return TRUE
 
 	// category 2: traps, placed like decals but they have effects when stood on
 	if(drawing in traps)
 		var/decal_path = text2path("/obj/effect/decal/cleanable/crayon/special/[drawing]")
-		new decal_path(target, paint_color, drawing, temp, graf_rot)
+		new decal_path(get_turf(target), paint_color, drawing, temp, graf_rot)
+		return TRUE
 
 	// category 3: structures, act like real structures, can be washed away like normal decals
 	if(drawing in structures)
 		var/structure_path = structure_to_path[drawing]
-		var/atom/structure = new structure_path(target)
+		var/atom/structure = new structure_path(get_turf(target))
 		structure.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		return TRUE
 
-	// category 3: equipment
+	// category 4: equipment
+	if(drawing in equipment)
+		var/equipment_path = equipment_to_path[drawing]
+		new equipment_path(get_turf(target))
+		return TRUE
 
 // generate the different ui by returning different drawables
 /obj/item/toy/crayon/spraycan/antag/staticDrawables()
 	. = list()
-
 
 	var/list/creature_items = list()
 	. += list(list("name" = "Creatures", "items" = creature_items))
