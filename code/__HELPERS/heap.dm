@@ -1,13 +1,12 @@
-
 //////////////////////
-//datum/Heap object
+//datum/heap object
 //////////////////////
 
-/datum/Heap
+/datum/heap
 	var/list/L
 	var/cmp
 
-/datum/Heap/New(compare)
+/datum/heap/New(compare)
 	L = new()
 	cmp = compare
 
@@ -39,7 +38,7 @@
 		sink(1)
 
 //Get a node up to its right position in the heap
-/datum/Heap/proc/swim(var/index)
+/datum/heap/proc/swim(index)
 	var/parent = round(index * 0.5)
 
 	while(parent > 0 && (call(cmp)(L[index],L[parent]) > 0))
@@ -77,6 +76,5 @@
 	swim(index)
 	sink(index)
 
-/datum/Heap/proc/List()
+/datum/heap/proc/List()
 	. = L.Copy()
-

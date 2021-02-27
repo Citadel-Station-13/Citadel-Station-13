@@ -62,10 +62,10 @@
 			return 1
 
 		var/mob/living/living_caller = caller
-		var/ventcrawler = HAS_TRAIT(living_caller, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_caller, TRAIT_VENTCRAWLER_NUDE)
-		if(!ventcrawler && living_caller.mob_size != MOB_SIZE_TINY)
+		if(!(SEND_SIGNAL(living_caller, COMSIG_CHECK_VENTCRAWL)) && living_caller.mob_size != MOB_SIZE_TINY)
 			return 0
-	if(caller?.pulling)
+
+	if(caller && caller.pulling)
 		return CanAStarPass(ID, to_dir, caller.pulling)
 	return 1 //diseases, stings, etc can pass
 
