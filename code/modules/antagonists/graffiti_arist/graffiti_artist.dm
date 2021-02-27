@@ -6,19 +6,12 @@
 	show_to_ghosts = TRUE
 	threat = 8
 
-	var/obj/item/toy/crayon/spraycan/antag/special_spraycan
 	var/paint_amount = 100
 	var/maximum_paint = 100
 	var/paint_recharge_rate = 3
+	var/obj/effect/proc_holder/spell/targeted/conjure_item/spraycan/conjure_spraycan
 
 /datum/antagonist/graffiti_artist/on_gain()
-	var/mob/living/carbon/human/H = owner.current
-	if(H)
-		special_spraycan = new
-		var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
-		H.equip_in_one_of_slots(special_spraycan, slots, critical = TRUE)
-	else
-		message_admins("The graffiti artist antagonist was somehow given to the mind: [owner] without the mind having a mob. If this wasn't intended, you should report this!")
 	forge_objectives()
 	. = ..()
 
@@ -49,11 +42,14 @@
 /datum/antagonist/graffiti_artist/apply_innate_effects()
 	RegisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE,.proc/on_antag_process)
 	owner.current.hud_used?.lingchemdisplay?.icon_state = "paint_display"
+	conjure_spraycan = new
+	owner.current.AddSpell(conjure_spraycan)
 	. = ..()
 
 /datum/antagonist/graffiti_artist/remove_innate_effects()
 	UnregisterSignal(owner.current,COMSIG_LIVING_BIOLOGICAL_LIFE)
 	owner.current.hud_used?.lingchemdisplay?.icon_state = "power_display"
+	owner.current.RemoveSpell(conjure_spraycan)
 	. = ..()
 
 /datum/antagonist/graffiti_artist/proc/on_antag_process()

@@ -1674,6 +1674,7 @@
 #include "code\modules\antagonists\fugitive\hunter.dm"
 #include "code\modules\antagonists\graffiti_arist\graffiti_artist.dm"
 #include "code\modules\antagonists\graffiti_arist\outfit.dm"
+#include "code\modules\antagonists\graffiti_arist\spells.dm"
 #include "code\modules\antagonists\graffiti_arist\spraycan.dm"
 #include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\greybois\greybois.dm"
