@@ -125,7 +125,7 @@
 							exhib_happened = TRUE
 						for(var/g in genits) // don't think this is O(n^2) and n is never more than... 4? anyway
 							var/obj/item/organ/genital/G = g
-							to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
+							to_chat(src, "<span class='userlove'>[G.arousal_verb]!</span>")
 				. += "[dicc.desc]"
 	if(CHECK_BITFIELD(user.client?.prefs.cit_toggles, VORE_EXAMINE))
 		var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
