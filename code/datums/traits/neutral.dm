@@ -121,6 +121,14 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	H.arousal_rate = initial(H.arousal_rate)
 
+/datum/quirk/exhibitionism
+	name = "Exhibitionist"
+	desc = "You are aroused by certain kinds of attention."
+	value = 0
+	mob_trait = TRAIT_EXHIB
+	gain_text = "<span class='notice'>Prying eyes excite you.</span>"
+	lose_text = "<span class='notice'>You're not as excited by being watched anymore.</span>"
+
 /datum/quirk/alcohol_intolerance
 	name = "Alcohol Intolerance"
 	desc = "You take toxin damage from alcohol rather than getting drunk."

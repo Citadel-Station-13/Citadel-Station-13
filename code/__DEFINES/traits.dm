@@ -192,6 +192,7 @@
 #define TRAIT_PERMABONER		"permanent_arousal"
 #define TRAIT_NEVERBONER		"never_aroused"
 #define TRAIT_NYMPHO			"nymphomaniac"
+#define TRAIT_EXHIB				"exhibitionist"
 #define TRAIT_MASO              "masochism"
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PARA              "paraplegic"

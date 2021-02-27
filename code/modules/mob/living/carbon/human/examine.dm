@@ -114,8 +114,18 @@
 
 	//CIT CHANGES START HERE - adds genital details to examine text
 	if(LAZYLEN(internal_organs) && CHECK_BITFIELD(user.client?.prefs.cit_toggles, GENITAL_EXAMINE))
+		var/exhib_happened = FALSE
 		for(var/obj/item/organ/genital/dicc in internal_organs)
 			if(istype(dicc) && dicc.is_exposed())
+				if(HAS_TRAIT(src, TRAIT_EXHIB))
+					var/list/genits = src.adjust_arousal(5, "exhibitionism")
+					if(length(genits))
+						if(!exhib_happened)
+							to_chat(src,"<span class='love'>You're getting some attention...</span>")
+							exhib_happened = TRUE
+						for(var/g in genits) // don't think this is O(n^2) and n is never more than... 4? anyway
+							var/obj/item/organ/genital/G = g
+							to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 				. += "[dicc.desc]"
 	if(CHECK_BITFIELD(user.client?.prefs.cit_toggles, VORE_EXAMINE))
 		var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
