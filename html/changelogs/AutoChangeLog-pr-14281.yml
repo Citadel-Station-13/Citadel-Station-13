@@ -1,5 +1,0 @@
-author: "kiwedespars"
-delete-after: True
-changes: 
-  - balance: "reverted the pr that absolutely gutted pugilism and made it worse than base unarmed, also gives it a second long stagger"
-  - balance: "removed the ability to parry while horizontal, because that's dumb and makes it easy to just time the parries right."
