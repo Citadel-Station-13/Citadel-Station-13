@@ -183,7 +183,7 @@
 	var/mob/living/carbon/human/human_user = user
 	human_user.adjustBruteLoss(-6, FALSE)
 	human_user.adjustFireLoss(-6, FALSE)
-	human_user.adjustToxLoss(-6, FALSE)
+	human_user.adjustToxLoss(-6, FALSE, TRUE)
 	human_user.adjustOxyLoss(-6, FALSE)
 	human_user.adjustStaminaLoss(-20)
 
