@@ -15,11 +15,6 @@
 	forge_objectives()
 	. = ..()
 
-/datum/antagonist/graffiti_artist/on_removal()
-	if(special_spraycan)
-		qdel(special_spraycan)
-	. = ..()
-
 /datum/antagonist/graffiti_artist/proc/forge_objectives()
 	var/datum/objective/vandalize_objective = new("Vandalize the station with your art.")
 	vandalize_objective.owner = owner
