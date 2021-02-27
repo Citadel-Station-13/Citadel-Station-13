@@ -16,11 +16,6 @@
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
 	include_subtypes = FALSE
 
-/datum/export/swarmer
-	cost = 500
-	unit_name = "deactivated alien deconstruction drone"
-	export_types = list(/obj/item/deactivated_swarmer)
-
 //Board
 
 /datum/export/board

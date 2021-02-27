@@ -100,8 +100,8 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
 												 /obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
 												 /obj/machinery/door/airlock/centcom)),
-					"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/machinery/recharge_station,
-						/obj/item/aicard, /obj/item/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
+					"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule, /obj/machinery/recharge_station,
+						/obj/item/aicard, /obj/structure/swarmer_beacon)),
 
 					"doctors"   = typecacheof(list(/obj/item/clothing/under/rank/medical/doctor, /obj/item/clothing/under/rank/medical/chemist,
 						/obj/item/clothing/under/rank/medical/doctor/nurse, /obj/item/clothing/under/rank/medical/chief_medical_officer,
