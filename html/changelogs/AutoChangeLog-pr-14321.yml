@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "Polychromic windbreaker's alt-click message is now coherent"
+  - code_imp: "Toggleable suits now have an on_toggle proc to be overridden."
