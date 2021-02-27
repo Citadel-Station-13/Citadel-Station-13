@@ -236,6 +236,22 @@
 	name = "Grey Turtleneck"
 	path = /obj/item/clothing/under/suit/turtle/grey
 
+/datum/gear/uniform/sciturtle
+	name = "Science Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/science
+
+/datum/gear/uniform/engturtle
+	name = "Engineering Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/engineering
+
+/datum/gear/uniform/medturtle
+	name = "Medical Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/medical
+
+/datum/gear/uniform/secturtle
+	name = "Security Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/security
+
 /datum/gear/uniform/polyjump
 	name = "Polychromic Jumpsuit"
 	path = /obj/item/clothing/under/misc/polyjumpsuit
