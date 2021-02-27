@@ -178,7 +178,7 @@
 
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 
-	sleep(TRANSFORMATION_DURATION)
+	sleep(TRANSFORMATION_DURATION)	//This entire proc CANNOT be split into two
 
 	var/list/stored_implants = list()
 	var/list/int_organs = list()
