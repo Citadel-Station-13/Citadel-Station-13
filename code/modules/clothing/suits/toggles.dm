@@ -110,6 +110,9 @@
 	suit_toggle(user)
 	return TRUE
 
+/obj/item/clothing/suit/toggle/proc/on_toggle(mob/user) // override this, not suit_toggle, which does checks
+	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()
 
@@ -119,7 +122,7 @@
 	if(!can_use(usr))
 		return 0
 
-	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+	on_toggle(usr)
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = FALSE
