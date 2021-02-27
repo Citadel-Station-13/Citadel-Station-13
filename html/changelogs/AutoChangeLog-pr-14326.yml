@@ -1,0 +1,4 @@
+author: "R3dtail"
+delete-after: True
+changes: 
+  - tweak: "doubled max belly name length and quadrupled belly description length"
