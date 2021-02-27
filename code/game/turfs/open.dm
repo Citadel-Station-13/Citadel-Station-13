@@ -254,7 +254,7 @@
 	return 1
 
 /turf/open/proc/water_vapor_gas_act(gas_temp)
-	var/already_wet = MakeWet(MOLES_GAS_VISIBLE, gas_temp)
+	var/already_wet = MakeWet(MOLES_GAS_VISIBLE, gas_temp, forced = FALSE)
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
@@ -312,9 +312,10 @@
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
 	AddComponent(/datum/component/wet_floor, wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 
-/turf/open/proc/MakeWet(amt = 0.0, new_temp = 293.15)
+/turf/open/proc/MakeWet(amt = 0.0, new_temp = T20C, forced = TRUE)
 	. = GetComponent(/datum/component/wetness)
-	AddComponent(/datum/component/wetness, amt, new_temp)
+	if(forced || !.)
+		AddComponent(/datum/component/wetness, amt, new_temp)
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER, immediate = FALSE, amount = INFINITY)
 	SEND_SIGNAL(src, COMSIG_TURF_MAKE_DRY, wet_setting, immediate, amount)
