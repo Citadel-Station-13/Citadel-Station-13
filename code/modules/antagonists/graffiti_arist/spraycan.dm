@@ -17,7 +17,7 @@
 
 	var/static/list/traps = list("arrow" = 5, "splatter" = 10, "firedanger" = 30, "bigheart" = 100)
 
-	var/static/list/equipment = list("claymore" = 80, "throwing star" = 25, "toolbox" = 25)
+	var/static/list/equipment = list("claymore" = 100, "throwing star" = 25, "toolbox" = 25)
 	var/static/list/equipment_to_path = list(
 		"claymore" = /obj/item/crayon_equipment/claymore,
 		"throwing star" = /obj/item/crayon_equipment/throwing_star,
