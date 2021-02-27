@@ -1,4 +1,6 @@
-// structures made of crayon
+// structures made of crayon, i.e. things they can place that aren't traps, weapons or mobs
+
+// crayon table
 /obj/structure/table/crayon
 	name = "drawn table"
 	desc = "A table drawn onto the floor. It looks strangely lifelike."
@@ -8,6 +10,7 @@
 	buildstack = null
 	framestack = null
 
+// crayon barricade
 /obj/structure/barricade/crayon
 	name = "drawn barricade"
 	desc = "A barricade drawn onto the floor. It feels strangely lifelike."

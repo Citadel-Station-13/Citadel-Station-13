@@ -40,7 +40,7 @@
 
 // low health and low damage but cheap
 /mob/living/simple_animal/hostile/crayon/stickman
-	name = "painted stickman"
+	name = "paint stickman"
 	icon_state = "stickman_mob"
 	icon_dead = "stickman_mob_dead"
 	mob_biotypes = MOB_HUMANOID
@@ -66,7 +66,7 @@
 
 // low damage but tanky
 /mob/living/simple_animal/hostile/crayon/slime
-	name = "painted slime"
+	name = "paint slime"
 	icon_state = "slime_mob"
 	health = 80
 	maxHealth = 80
@@ -90,3 +90,18 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "glomps"
 	attack_verb_simple = "glomp"
+
+// even tankier with high damage, but costs more
+/mob/living/simple_animal/hostile/crayon/monster
+	name = "paint monster"
+	desc = "This looks human enough, but its flesh is made of paint. It almost seems like this was once human."
+	icon_state = "monster"
+	icon_living = "monster"
+	icon_dead = "monster"
+	health = 100
+	maxHealth = 100
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
+	deathmessage = "falls apart into a fine dust."

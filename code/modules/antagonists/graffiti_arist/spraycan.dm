@@ -7,13 +7,26 @@
 	post_noise = TRUE // so we still hear the spraying sound effect
 
 	//lists of drawings that can be made, keys are item name, values are paint cost
-	var/static/list/creatures = list("stickman" = 10, "carp" = 25, "slime" = 25)
-	var/static/list/creature_to_path = list("stickman" = /mob/living/simple_animal/hostile/crayon/stickman, "carp" = /mob/living/simple_animal/hostile/crayon/carp, "slime" = /mob/living/simple_animal/hostile/crayon/slime)
-	var/static/list/traps = list("arrow" = 5, "splatter" = 10, "firedanger" = 30)
+
+	var/static/list/creatures = list("stickman" = 20, "carp" = 35, "slime" = 35, "monster" = 50)
+	var/static/list/creature_to_path = list(
+		"stickman" = /mob/living/simple_animal/hostile/crayon/stickman,
+		"carp" = /mob/living/simple_animal/hostile/crayon/carp,
+		"slime" = /mob/living/simple_animal/hostile/crayon/slime,
+		"monster" = /mob/living/simple_animal/hostile/crayon/monster)
+
+	var/static/list/traps = list("arrow" = 5, "splatter" = 10, "firedanger" = 30, "bigheart" = 100)
+
 	var/static/list/equipment = list("claymore" = 80, "throwing star" = 25, "toolbox" = 25)
-	var/static/list/equipment_to_path = list("claymore" = /obj/item/crayon_equipment/claymore, "throwing star" = /obj/item/crayon_equipment/throwing_star)
+	var/static/list/equipment_to_path = list(
+		"claymore" = /obj/item/crayon_equipment/claymore,
+		"throwing star" = /obj/item/crayon_equipment/throwing_star,
+		"toolbox" = /obj/item/storage/toolbox/crayon)
+
 	var/static/list/structures = list("table" = 20, "barricade" = 25)
-	var/static/list/structure_to_path = list("table" = /obj/structure/table/crayon, "barricade" = /obj/structure/barricade/crayon)
+	var/static/list/structure_to_path = list(
+		"table" = /obj/structure/table/crayon,
+		"barricade" = /obj/structure/barricade/crayon)
 
 	var/static/list/all_special_drawings = creatures + traps + equipment + structures
 

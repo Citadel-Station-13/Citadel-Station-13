@@ -97,3 +97,19 @@
 		C.IgniteMob()
 		if(C.fire_stacks < 5)
 			C.adjust_fire_stacks(5 - C.fire_stacks)
+
+// bigheart heals the graffiti artist by .2 in burn/brute/tox per 0.2 seconds, and harms .2 brute if they aren't the graffiti artist
+// this has the highest paint cost of all special decals
+/obj/effect/decal/cleanable/crayon/special/bigheart/Crossed(atom/movable/AM)
+	if(iscarbon(AM))
+		var/mob/living/carbon/C = AM
+		if(C.mind?.has_antag_datum(/datum/antagonist/graffiti_artist))
+			while(get_turf(C) == get_turf(src))
+				C.adjustBruteLoss(-0.2)
+				C.adjustFireLoss(-0.2)
+				C.adjustToxLoss(-0.2, TRUE, TRUE)
+				sleep(2)
+		else
+			while(get_turf(C) == get_turf(src))
+				C.adjustBruteLoss(0.2)
+				sleep(2)
