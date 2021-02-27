@@ -34,12 +34,18 @@
 	var/turf/current_turf = get_turf(target)
 	var/turf/closed/obstructing_wall = locate() in current_turf
 	var/obj/structure/obstructing_structure = locate() in current_turf
+	var/obj/effect/decal/cleanable/crayon/special/trap = locate() in current_turf
+
 	if(obstructing_wall || obstructing_structure)
 		to_chat(user, "<span class='warning'>There's something in the way!</span>")
 		return FALSE
 
 	// put the 'drawing' value into a format we understand by removing the cost tag from it
 	drawing = copytext(drawing, 1, findtext(drawing, "-") - 1)
+
+	if(trap && drawing in traps)
+		to_chat(user, "<span class='warning'>You can't place two traps ontop of eachother!</span>")
+		return
 
 	if(!(drawing in all_special_drawings))
 		return FALSE
