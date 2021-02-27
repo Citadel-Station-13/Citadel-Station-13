@@ -6,6 +6,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	///Target
 	var/mob/living/carbon/human/target
+	var/datum/antagonist/heretic/sac_targetter	//The heretic who used this to acquire the current target - gets cleared when target gets sacrificed.
+
+/obj/item/living_heart/Initialize()
+	. = ..()
+	GLOB.living_heart_cache.Add(src)	//Add is better than +=.
+
+/obj/item/living_heart/Destroy()
+	GLOB.living_heart_cache.Remove(src)
+	if(sac_targetter && target)
+		sac_targetter.sac_targetted.Remove(target.real_name)
+	return ..()
 
 /obj/item/living_heart/attack_self(mob/user)
 	. = ..()
@@ -39,7 +50,8 @@
 	background_icon_state = "bg_ecult"
 	button_icon_state = "shatter"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	check_flags = MOBILITY_HOLD|MOBILITY_MOVE|MOBILITY_USE
+	check_flags = NONE	// required_mobility_flags handles this
+	required_mobility_flags = MOBILITY_HOLD|MOBILITY_MOVE|MOBILITY_USE
 	var/mob/living/carbon/human/holder
 	var/obj/item/melee/sickly_blade/sword
 
@@ -51,11 +63,12 @@
 
 /datum/action/innate/heretic_shatter/IsAvailable()
 	if(IS_HERETIC(holder) || IS_HERETIC_MONSTER(holder))
-		return TRUE
+		return ..()
 	else
 		return FALSE
 
 /datum/action/innate/heretic_shatter/Activate()
+	. = ..()
 	var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
 	do_teleport(holder,safe_turf,forceMove = TRUE)
 	to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")

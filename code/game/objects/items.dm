@@ -112,6 +112,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
+	//Special multitools
+	var/buffer = null
+	var/show_wires = FALSE
+	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
+	//Special crowbar
+	var/can_force_powered = FALSE
 
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
@@ -468,6 +474,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 				melee_attack_chain(usr, over)
 			usr.FlushCurrentAction()
 			return TRUE //returning TRUE as a "is this overridden?" flag
+	if(isrevenant(usr))
+		if(RevenantThrow(over, usr, src))
+			return
+
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
@@ -938,6 +948,10 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
 	return 0
+
+//Can this item be given to people?
+/obj/item/proc/can_give()
+	return TRUE
 
 /obj/item/doMove(atom/destination)
 	if (ismob(loc))

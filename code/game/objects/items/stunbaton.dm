@@ -47,6 +47,9 @@
 			cell = new preload_cell_type(src)
 	update_icon()
 
+/obj/item/melee/baton/DoRevenantThrowEffects(atom/target)
+	switch_status()
+
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
@@ -116,7 +119,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -235,6 +238,12 @@
 		switch_status(FALSE)
 		if(!iscyborg(loc))
 			deductcharge(severity*10, TRUE, FALSE)
+
+/obj/item/melee/baton/can_give()
+	if(turned_on)
+		return FALSE
+	else
+		..()
 
 /obj/item/melee/baton/stunsword
 	name = "stunsword"

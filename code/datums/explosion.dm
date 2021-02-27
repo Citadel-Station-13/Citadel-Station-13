@@ -239,8 +239,13 @@ GLOBAL_LIST_EMPTY(explosions)
 				atoms += A
 			for(var/i in atoms)
 				var/atom/A = i
-				if(!QDELETED(A))
-					A.ex_act(dist)
+				if(QDELETED(A))
+					continue
+				A.ex_act(dist, null, src)
+				if(QDELETED(A) || !ismovable(A))
+					continue
+				var/atom/movable/AM = A
+				LAZYADD(AM.acted_explosions, explosion_id)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!

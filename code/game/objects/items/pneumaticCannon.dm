@@ -43,6 +43,13 @@
 /obj/item/pneumatic_cannon/proc/init_charge()	//wrapper so it can be vv'd easier
 	START_PROCESSING(SSobj, src)
 
+/obj/item/pneumatic_cannon/DoRevenantThrowEffects(atom/target)
+	var/picked_target
+	var/list/possible_targets = range(3,src)
+	picked_target = pick(possible_targets)
+	if(target)
+		Fire(null, picked_target)
+
 /obj/item/pneumatic_cannon/process()
 	if(++charge_tick >= charge_ticks && charge_type)
 		fill_with_type(charge_type, charge_amount)
@@ -77,7 +84,7 @@
 			updateTank(W, 0, user)
 	else if(W.type == type)
 		to_chat(user, "<span class='warning'>You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption.</span>")
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		switch(pressureSetting)
 			if(1)
 				pressureSetting = 2
@@ -86,7 +93,7 @@
 			if(3)
 				pressureSetting = 1
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(tank)
 			updateTank(tank, 1, user)
 	else if(loadedWeightClass >= maxWeightClass)
@@ -134,21 +141,29 @@
 	Fire(user, target)
 
 /obj/item/pneumatic_cannon/proc/Fire(mob/living/user, var/atom/target)
-	if(!istype(user) && !target)
+	if(!target)
 		return
+	if(user)
+		if(!isliving(user))
+			return
 	var/discharge = 0
-	if(!can_trigger_gun(user))
+	if(user && !can_trigger_gun(user))
 		return
 	if(!loadedItems || !loadedWeightClass)
-		to_chat(user, "<span class='warning'>\The [src] has nothing loaded.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] has nothing loaded.</span>")
 		return
 	if(!tank && checktank)
-		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
 		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
-		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
+		else
+			visible_message(src, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+	if(user && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] loses [C.p_their()] grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		C.dropItemToGround(src, TRUE)
@@ -157,15 +172,18 @@
 		else
 			var/list/possible_targets = range(3,src)
 			target = pick(possible_targets)
-		discharge = 1
-	if(!discharge)
+		discharge = TRUE
+	if(!discharge && user)
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
-	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
-	fire_items(T, user)
-	if(pressureSetting >= 3 && iscarbon(user))
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, TRUE)
+	if(user)
+		log_combat(user, target, "fired at", src)
+		fire_items(T, user)
+	else
+		fire_items(T)
+	if(user && pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		C.DefaultCombatKnockdown(60)

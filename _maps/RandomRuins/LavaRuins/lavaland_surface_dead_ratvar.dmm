@@ -155,6 +155,12 @@
 /obj/item/stack/tile/brass/fifty,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
+"Y" = (
+/obj/item/tcg_card/special/ratvar,
+/turf/open/floor/clockwork{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors/unexplored)
 
 (1,1,1) = {"
 a
@@ -484,7 +490,7 @@ h
 h
 h
 h
-h
+Y
 h
 l
 l
@@ -709,7 +715,7 @@ b
 l
 l
 b
-h
+Y
 h
 t
 b

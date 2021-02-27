@@ -1111,10 +1111,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acx" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/machinery/cryopod{
 	dir = 8
 	},
@@ -40497,10 +40493,9 @@
 /area/maintenance/port)
 "bBr" = (
 /obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
+	dir = 1;
+	pixel_y = -22
 	},
-/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bBs" = (
@@ -45866,10 +45861,6 @@
 /area/library)
 "bML" = (
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/open/floor/wood,
 /area/library)
 "bMM" = (
@@ -59581,6 +59572,10 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/surgery)
 "coz" = (
@@ -61596,10 +61591,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "csl" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -102698,7 +102689,7 @@ bue
 bwa
 bxU
 bzD
-bBr
+dmD
 bSx
 bEw
 bzE
@@ -103733,7 +103724,7 @@ bGs
 bHS
 bzE
 bLk
-bzE
+bBr
 bue
 bPS
 bPR

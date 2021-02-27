@@ -7,14 +7,14 @@
 	add_fingerprint(user)
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/wrench))
+			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start wrenching the frame into place...</span>")
 				if(P.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					setAnchored(TRUE)
 					state = 1
 				return
-			if(istype(P, /obj/item/weldingtool))
+			if(P.tool_behaviour == TOOL_WELDER)
 				if(!P.tool_start_check(user, amount=0))
 					return
 
@@ -26,7 +26,7 @@
 					qdel(src)
 				return
 		if(1)
-			if(istype(P, /obj/item/wrench))
+			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start to unfasten the frame...</span>")
 				if(P.use_tool(src, user, 20, volume=50) && state == 1)
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
@@ -46,13 +46,13 @@
 			else if(istype(P, /obj/item/circuitboard) && !circuit)
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
-			if(istype(P, /obj/item/screwdriver) && circuit)
+			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You screw [circuit] into place.</span>")
 				state = 2
 				icon_state = "2"
 				return
-			if(istype(P, /obj/item/crowbar) && circuit)
+			if(P.tool_behaviour == TOOL_CROWBAR && circuit)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove [circuit].</span>")
 				state = 1
@@ -62,7 +62,7 @@
 				circuit = null
 				return
 		if(2)
-			if(istype(P, /obj/item/screwdriver) && circuit)
+			if(P.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
@@ -78,7 +78,7 @@
 					icon_state = "3"
 				return
 		if(3)
-			if(istype(P, /obj/item/wirecutters))
+			if(P.tool_behaviour == TOOL_WIRECUTTER)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 2
@@ -98,7 +98,7 @@
 					src.icon_state = "4"
 				return
 		if(4)
-			if(istype(P, /obj/item/crowbar))
+			if(P.tool_behaviour == TOOL_CROWBAR)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
@@ -106,7 +106,7 @@
 				var/obj/item/stack/sheet/glass/G = new(drop_location(), 2)
 				G.add_fingerprint(user)
 				return
-			if(istype(P, /obj/item/screwdriver))
+			if(P.tool_behaviour == TOOL_SCREWDRIVER)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/B = new circuit.build_path (loc, circuit)
@@ -116,12 +116,6 @@
 				return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-
-//callback proc used on stacks use_tool to stop unnecessary amounts being wasted from spam clicking.
-/obj/structure/frame/computer/proc/check_state(target_state)
-	if(state == target_state)
-		return TRUE
-	return FALSE
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
