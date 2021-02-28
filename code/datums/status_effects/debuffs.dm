@@ -95,21 +95,31 @@
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	if(!CONFIG_GET(flag/sprint_enabled))
+		new_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/stagger, TRUE, CONFIG_GET(number/sprintless_stagger_slowdown))
+	return ..()
+
+/datum/status_effect/staggered/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/stagger)
 	return ..()
 
 /datum/status_effect/off_balance
 	id = "offbalance"
+	blocks_sprint = TRUE
 	alert_type = null
 
 /datum/status_effect/off_balance/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	if(!CONFIG_GET(flag/sprint_enabled))
+		new_owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance, TRUE, CONFIG_GET(number/sprintless_off_balance_slowdown))
 	return ..()
 
 /datum/status_effect/off_balance/on_remove()
 	var/active_item = owner.get_active_held_item()
 	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
 		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/off_balance)
 	return ..()
 
 /obj/screen/alert/status_effect/asleep
@@ -162,7 +172,7 @@
 	id = "tased"
 	alert_type = null
 	var/movespeed_mod = /datum/movespeed_modifier/status_effect/tased
-	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
+	var/stamdmg_per_ds = 1		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
 /datum/status_effect/electrode/on_creation(mob/living/new_owner, set_duration)

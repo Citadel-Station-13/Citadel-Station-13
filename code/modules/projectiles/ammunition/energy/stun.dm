@@ -9,6 +9,10 @@
 	projectile_type = /obj/item/projectile/energy/electrode/security
 	e_cost = 100
 
+/obj/item/ammo_casing/energy/electrode/hos
+	projectile_type = /obj/item/projectile/energy/electrode/hos
+	e_cost = 100
+
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = 100
 

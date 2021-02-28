@@ -1834,6 +1834,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 		if(CHECK_MOBILITY(target, MOBILITY_STAND))
 			target.adjustStaminaLoss(5)
+		else
+			target.adjustStaminaLoss(target.getStaminaLoss() > 75? 5 : 75)
 
 		if(target.is_shove_knockdown_blocked())
 			return
@@ -1876,7 +1878,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>[user.name] shoves you!</span>", null, COMBAT_MESSAGE_RANGE, null,
 				user, "<span class='danger'>You shove [target.name]!</span>")
-		target.Stagger(SHOVE_STAGGER_DURATION)
 		var/obj/item/target_held_item = target.get_active_held_item()
 		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
 			target_held_item = null
