@@ -32,7 +32,7 @@
 	. = ..()
 	stream = stream_mode
 	src.speed = speed
-	src.range = scc.range_left = range
+	src.range = src.range_left = range
 	src.hits_left = hits_left
 
 /obj/effect/decal/chempuff/proc/hit_thing(atom/A)

@@ -51,6 +51,7 @@
 	var/dy = initial_dy
 	// DO OUR STARTING CHECKS
 	var/cb_return
+	var/list/passed_in = list(1)
 	INVOKE_CALLBACK
 	if(cb_return == DO_AFTER_STOP)
 		return FALSE
@@ -71,7 +72,6 @@
 	var/ctu
 	var/ctt
 	var/tick_time = world.time
-	var/list/passed_in = list(1)
 	while(timeleft > 0)
 		stoplag(1)
 		var/timepassed = world.time - tick_time
