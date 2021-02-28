@@ -19,6 +19,8 @@
 	var/stamforce = 35
 	var/turned_on = FALSE
 	var/knockdown = TRUE
+	/// block percent needed to prevent knockdown/disarm
+	var/block_percent_to_counter = 60
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 750
 	var/throw_hit_chance = 35
@@ -180,6 +182,7 @@
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
 	var/stunpwr = stamforce
+	var/countered = return_list[BLOCK_RETURN_MITIGATION_PERCENT] > block_percent_to_counter
 	stunpwr = block_calculate_resultant_damage(stunpwr, return_list)
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
 	if(!our_cell)
@@ -200,10 +203,10 @@
 		return FALSE
 
 	if(!disarming)
-		if(knockdown)
+		if(knockdown && !countered)
 			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
-	else
+	else if(!countered)
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
 
 	L.apply_effect(EFFECT_STUTTER, stamforce)
@@ -211,9 +214,13 @@
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has [disarming? "disarmed" : "stunned"] [L] with [src]!</span>", \
+		if(!countered)
+			L.visible_message("<span class='danger'>[user] has [disarming? "disarmed" : "stunned"] [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has [disarming? "disarmed" : "stunned"] you with [src]!</span>")
-		log_combat(user, L, disarming? "disarmed" : "stunned")
+		else
+			L.visible_message("<span class='danger'>[user] tries to [disarming? "disarm" : "stun"] [L] with [src], but is deflected!</span>", \
+								"<span class='userdanger'>[user] tries to [disarming? "disarm" : "stun"] you with [src], but is deflected!</span>")
+		log_combat(user, L, disarming? "disarmed" : "stunned" + countered? " (countered)" : "")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
@@ -306,7 +313,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stamforce = 25
+	stamforce = 35
+	block_percent_to_counter = 45
 	hitcost = 1000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
