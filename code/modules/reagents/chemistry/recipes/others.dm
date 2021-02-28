@@ -718,7 +718,7 @@
 	name = "felinid mutation toxin"
 	id = /datum/reagent/mutationtoxin/felinid
 	results = list(/datum/reagent/mutationtoxin/felinid = 1)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/mutationtoxin = 1)
+	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/ammonia = 1, /datum/reagent/water = 1, /datum/reagent/drug/aphrodisiac = 10, /datum/reagent/mutationtoxin = 1)
 	required_temp = 450
 
 /datum/chemical_reaction/moff

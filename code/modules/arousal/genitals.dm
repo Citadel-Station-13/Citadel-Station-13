@@ -27,11 +27,12 @@
 	if(do_update)
 		update()
 
-/obj/item/organ/genital/proc/set_aroused_state(new_state)
+/obj/item/organ/genital/proc/set_aroused_state(new_state,cause = "manual toggle")
 	if(!(genital_flags & GENITAL_CAN_AROUSE))
 		return FALSE
 	if(!((HAS_TRAIT(owner,TRAIT_PERMABONER) && !new_state) || HAS_TRAIT(owner,TRAIT_NEVERBONER) && new_state))
 		aroused_state = new_state
+	owner.log_message("[src]'s arousal was [new_state ? "enabled" : "disabled"] due to [cause]", LOG_EMOTE)
 	return aroused_state
 
 /obj/item/organ/genital/proc/update()
@@ -76,11 +77,19 @@
 		if(GEN_VISIBLE_ALWAYS)
 			genital_flags |= GENITAL_THROUGH_CLOTHES
 			if(owner)
+				owner.log_message("Exposed their [src]",LOG_EMOTE)
 				owner.exposed_genitals += src
+		if(GEN_VISIBLE_NO_CLOTHES)
+			if(owner)
+				owner.log_message("Hid their [src] under clothes only",LOG_EMOTE)
 		if(GEN_VISIBLE_NO_UNDIES)
 			genital_flags |= GENITAL_UNDIES_HIDDEN
+			if(owner)
+				owner.log_message("Hid their [src] under underwear",LOG_EMOTE)
 		if(GEN_VISIBLE_NEVER)
 			genital_flags |= GENITAL_HIDDEN
+			if(owner)
+				owner.log_message("Hid their [src] completely",LOG_EMOTE)
 
 	if(update && owner && ishuman(owner)) //recast to use update genitals proc
 		var/mob/living/carbon/human/H = owner
