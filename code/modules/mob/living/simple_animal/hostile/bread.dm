@@ -95,7 +95,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = TRUE
-	loot = list(/obj/item/reagent_containers/food/snacks/store/bread/tumor_bread)
+	loot = list(/obj/item/reagent_containers/food/snacks/baguette/tumor_baguette)
 
 /mob/living/simple_animal/hostile/baguette/Initialize()
 	. = ..()
@@ -123,6 +123,7 @@
 		adjustBruteLoss(-2)
 	else
 		return ..()
+		
 /mob/living/simple_animal/hostile/baguette/Initialize()
 	. = ..()
 	var/area/A = get_area(src)
