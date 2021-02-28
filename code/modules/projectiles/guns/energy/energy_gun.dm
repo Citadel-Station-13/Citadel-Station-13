@@ -54,6 +54,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos, /obj/item/ammo_casing/energy/electrode/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	var/last_altfire = 0
+	var/altfire_delay = 0
 
 /obj/item/gun/energy/e_gun/hos/altafterattack(atom/target, mob/user, proximity_flag, params)
 	. = TRUE

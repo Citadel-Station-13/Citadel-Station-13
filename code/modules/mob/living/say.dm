@@ -308,7 +308,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
-/atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, list/spans, message_mode, obj/source)
+/atom/movable/proc/process_yelling(list/already_heard, rendered, atom/movable/speaker, datum/language/message_language, message, list/spans, message_mode, obj/source)
 	var/list/overhearing = list()
 #warn todo: yelling
 	overhearing -= already_heard
