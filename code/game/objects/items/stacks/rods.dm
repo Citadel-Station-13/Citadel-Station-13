@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return

@@ -170,8 +170,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 
-/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (istype(I))
+/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/I)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
 		return TRUE
