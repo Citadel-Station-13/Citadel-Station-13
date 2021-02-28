@@ -548,6 +548,7 @@
 	desc = "A TCG-branded card binder, specifically for your infinite collection of TCG cards!"
 	icon = 'icons/obj/tcg/misc.dmi'
 	icon_state = "binder"
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/list/cards = list()
 	var/list/decks = list()
