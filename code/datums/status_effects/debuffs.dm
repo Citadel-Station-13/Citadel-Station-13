@@ -956,7 +956,7 @@
 	if(hearing_args[HEARING_SPEAKER] == owner)
 		return
 	var/mob/living/carbon/C = owner
-	var/hypnomsg = uncostumize_say(hearing_args[HEARING_RAW_MESSAGE], hearing_args[HEARING_MESSAGE_MODE])
+	var/hypnomsg = uncustomize_say(hearing_args[HEARING_RAW_MESSAGE], hearing_args[HEARING_MESSAGE_MODE])
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hypnomsg), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it

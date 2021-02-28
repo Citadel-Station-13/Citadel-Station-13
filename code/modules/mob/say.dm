@@ -60,13 +60,9 @@
 	if((input[1] == "!") && (length_char(input) > 1))
 		message_mode = MODE_CUSTOM_SAY
 		return copytext_char(input, 2)
-	var/customsayverb = findtext(input, "*")
-	if(customsayverb)
-		message_mode = MODE_CUSTOM_SAY
-		return lowertext(copytext_char(input, 1, customsayverb))
 	return ..()
 
-/proc/uncostumize_say(input, message_mode)
+/proc/uncustomize_say(input, message_mode)
 	. = input
 	if(message_mode == MODE_CUSTOM_SAY)
 		var/customsayverb = findtext(input, "*")
