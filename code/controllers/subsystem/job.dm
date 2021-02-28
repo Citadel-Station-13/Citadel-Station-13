@@ -490,7 +490,7 @@ SUBSYSTEM_DEF(job)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
-	if(ishuman(H) && H.client && N)
+	if(ishuman(H) && (H.client || N.client))
 		if(H.client && H.client.prefs && length(H.client.prefs.tcg_cards))
 			var/obj/item/tcgcard_binder/binder = new(get_turf(H))
 			H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
@@ -503,7 +503,7 @@ SUBSYSTEM_DEF(job)
 			if(length(H.client.prefs.tcg_decks))
 				binder.decks = H.client.prefs.tcg_decks
 	else
-		if(H && N.client.prefs && length(N.client.prefs.tcg_cards))
+		if(N && N.client.prefs && length(N.client.prefs.tcg_cards))
 			var/obj/item/tcgcard_binder/binder = new(get_turf(H))
 			H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
 			for(var/card_type in N.client.prefs.tcg_cards)
