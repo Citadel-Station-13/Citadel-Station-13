@@ -20,7 +20,7 @@
 	var/turned_on = FALSE
 	var/knockdown = TRUE
 	/// block percent needed to prevent knockdown/disarm
-	var/block_percent_to_counter = 60
+	var/block_percent_to_counter = 50
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 750
 	var/throw_hit_chance = 35
@@ -204,7 +204,7 @@
 
 	if(!disarming)
 		if(knockdown && !countered)
-			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
+			L.DefaultCombatKnockdown(50, override_stamdmg = 0, knocktofloor = !countered)		//knockdown
 		L.adjustStaminaLoss(stunpwr)
 	else if(!countered)
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
@@ -314,7 +314,7 @@
 	force = 3
 	throwforce = 5
 	stamforce = 35
-	block_percent_to_counter = 45
+	block_percent_to_counter = 30
 	hitcost = 1000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK

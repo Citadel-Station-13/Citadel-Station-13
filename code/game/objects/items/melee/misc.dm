@@ -260,6 +260,8 @@
 	var/stam_dmg = 30
 	var/cooldown_check = 0 // Used internally, you don't want to modify
 	var/cooldown = 13 // Default wait time until can stun again.
+	/// block mitigation needed to prevent knockdown/disarms
+	var/block_percent_to_counter = 50
 	var/stun_time_silicon = 60 // How long it stuns silicons for - 6 seconds.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
@@ -354,7 +356,8 @@
 		if(cooldown_check < world.time)
 			if(!UseStaminaBufferStandard(user, STAM_COST_BATON_MOB_MULT, warn = TRUE))
 				return DISCARD_LAST_ACTION
-			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
+			var/list/block_return = list()
+			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, block_return) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
 			if(ishuman(target))
@@ -365,7 +368,8 @@
 			if(stun_animation)
 				user.do_attack_animation(target)
 			playsound(get_turf(src), on_stun_sound, 75, 1, -1)
-			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, hardstun_ds, stam_dmg)
+			var/countered = block_return[BLOCK_RETURN_MITIGATION_PERCENT] > block_percent_to_counter
+			target.DefaultCombatKnockdown(softstun_ds, TRUE, FALSE, countered? 0 : hardstun_ds, stam_dmg, !countered)
 			additional_effects_carbon(target, user)
 			log_combat(user, target, "stunned", src)
 			add_fingerprint(user)
