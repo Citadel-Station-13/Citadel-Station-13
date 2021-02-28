@@ -54,17 +54,17 @@
 	. = ..()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		if(dir & EAST)
-			. += 8
+			. += 4
 		if(dir & WEST)
-			. -= 8
+			. -= 4
 
 /mob/living/get_standard_pixel_y_offset()
 	. = ..()
 	if(combat_flags & (COMBAT_FLAG_ACTIVE_BLOCK_STARTING | COMBAT_FLAG_ACTIVE_BLOCKING))
 		if(dir & NORTH)
-			. += 8
+			. += 4
 		if(dir & SOUTH)
-			. -= 8
+			. -= 4
 
 /**
   * Proc called by keybindings to toggle active blocking.
