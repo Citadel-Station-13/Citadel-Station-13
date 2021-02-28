@@ -168,8 +168,8 @@
 /obj/item/projectile/bullet/cflechetteshredder	//you only get this with a 30TC bundle,5 magazines, as such this should be the superior ammotype
 	name = "flechette (shredder)"
 	damage = 10
-	dismemberment = 50
-	wound_bonus = 50
+	dismemberment = 15
+	wound_bonus = 20
 	armour_penetration = 100
 	sharpness = SHARP_EDGED
 	wound_falloff_tile = 0
