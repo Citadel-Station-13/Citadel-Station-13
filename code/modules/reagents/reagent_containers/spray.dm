@@ -86,7 +86,7 @@
 	if(!T)
 		return
 	last_spray = world.time
-	D.run((A)
+	D.run(A)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode
