@@ -128,11 +128,6 @@
 	if((mode_flags & COMBAT_MODE_ACTIVE) && L.client)
 		L.setDir(lastmousedir, ismousemovement = TRUE)
 
-/// Added movement delay if moving backward.
-/datum/component/combat_mode/proc/on_client_move(mob/source, client/client, direction, n, oldloc, added_delay)
-	if(oldloc != n && direction == REVERSE_DIR(source.dir))
-		client.move_delay += added_delay*0.5
-
 ///Changes the user direction to (try) match the pointer.
 /datum/component/combat_mode/proc/onMouseMove(mob/source, object, location, control, params)
 	if(source.client.show_popup_menus)

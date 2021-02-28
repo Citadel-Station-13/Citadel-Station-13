@@ -1429,12 +1429,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/punchedbrute = target.getBruteLoss()
 
 		//CITADEL CHANGES - makes resting and disabled combat mode reduce punch damage, makes being out of combat mode result in you taking more damage
-		if(!SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			damage *= 1.2
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND))
 			damage *= 0.65
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			damage *= 0.8
 		//END OF CITADEL CHANGES
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
@@ -1578,12 +1574,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			log_combat(user, target, "disarmed out of grab from")
 			return
 		var/randn = rand(1, 100)
-		if(SEND_SIGNAL(target, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) // CITADEL CHANGE
-			randn += -10 //CITADEL CHANGE - being out of combat mode makes it easier for you to get disarmed
 		if(!CHECK_MOBILITY(user, MOBILITY_STAND)) //CITADEL CHANGE
 			randn += 100 //CITADEL CHANGE - No kosher disarming if you're resting
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE)) //CITADEL CHANGE
-			randn += 25 //CITADEL CHANGE - Makes it harder to disarm outside of combat mode
 		if(user.pulling == target)
 			randn -= 20 //If you have the time to get someone in a grab, you should have a greater chance at snatching the thing in their hand. Will be made completely obsolete by the grab rework but i've got a poor track record for releasing big projects on time so w/e i guess
 		if(HAS_TRAIT(user, TRAIT_PUGILIST))
@@ -1787,9 +1779,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	if(user == target && istype(user))
 		if(IS_STAMCRIT(user))
 			to_chat(user, "<span class='warning'>You're too exhausted for that.</span>")
-			return
-		if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			to_chat(user, "<span class='warning'>You need combat mode to be active to that!</span>")
 			return
 		if(user.IsKnockdown() || user.IsParalyzed() || user.IsStun())
 			to_chat(user, "<span class='warning'>You can't seem to force yourself up right now!</span>")

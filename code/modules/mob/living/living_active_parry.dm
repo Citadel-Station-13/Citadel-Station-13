@@ -74,11 +74,6 @@
 	if(!method)
 		to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
 		return FALSE
-	//QOL: Try to enable combat mode if it isn't already
-	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		to_chat(src, "<span class='warning'>You must be in combat mode to parry!</span>")
-		return FALSE
 	data = return_block_parry_datum(data)
 	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
 	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.

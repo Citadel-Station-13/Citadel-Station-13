@@ -48,8 +48,6 @@
 	animate(src, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset(), time = 2.5, FALSE, SINE_EASING | EASE_IN)
 
 /mob/living/proc/continue_starting_active_block()
-	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		return DO_AFTER_STOP
 	return (combat_flags & COMBAT_FLAG_ACTIVE_BLOCK_STARTING)? DO_AFTER_CONTINUE : DO_AFTER_STOP
 
 /mob/living/get_standard_pixel_x_offset()
@@ -100,11 +98,6 @@
 	if(!I.can_active_block())
 		to_chat(src, "<span class='warning'>[I] is either not capable of being used to actively block, or is not currently in a state that can! (Try wielding it if it's twohanded, for example.)</span>")
 		return
-	// QOL: Attempt to toggle on combat mode if it isn't already
-	SEND_SIGNAL(src, COMSIG_ENABLE_COMBAT_MODE)
-	if(SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-		to_chat(src, "<span class='warning'>You must be in combat mode to actively block!</span>")
-		return FALSE
 	var/datum/block_parry_data/data = I.get_block_parry_data()
 	var/delay = data.block_start_delay
 	combat_flags |= COMBAT_FLAG_ACTIVE_BLOCK_STARTING
