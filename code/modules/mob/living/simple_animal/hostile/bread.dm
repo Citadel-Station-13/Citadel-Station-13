@@ -71,9 +71,9 @@
 /mob/living/simple_animal/hostile/baguette
 	name = "baguette snake"
 	desc = "I have done nothing but teleport baguettes for three days."
-	icon_state = "baguettesnake"
-	icon_living = "baguettesnake"
-	icon_dead = "baguettesnake_dead"
+	icon_state = "tumorbaguette"
+	icon_living = "tumorbaguette"
+	icon_dead = "tumorbaguette_dead"
 	speak_emote = list("hisses")
 	health = 20
 	maxHealth = 20
@@ -94,6 +94,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
+	del_on_death = TRUE
+	loot = list(/obj/item/reagent_containers/food/snacks/store/bread/tumor_bread)
 
 /mob/living/simple_animal/hostile/baguette/Initialize()
 	. = ..()
