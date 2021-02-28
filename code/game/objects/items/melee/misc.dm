@@ -81,7 +81,7 @@
 	parry_imperfect_falloff_percent = 30
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 3 SECONDS
-	parry_failed_clickcd_duration = 2 SECONDS
+	parry_failed_clickcd_duration = 1 SECONDS
 
 /obj/item/melee/sabre/Initialize()
 	. = ..()
@@ -192,7 +192,7 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 50				// useless after 3rd decisecond
 	)
 	parry_imperfect_falloff_percent = 30
-	parry_efficiency_to_counterattack = 100
+	parry_efficiency_to_counterattack = INFINITY
 	parry_efficiency_considered_successful = 1
 	parry_efficiency_perfect = 100
 	parry_data = list(

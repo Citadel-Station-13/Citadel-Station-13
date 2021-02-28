@@ -281,7 +281,7 @@
 				pacifist_counter_check = (!active_parry_item.force || active_parry_item.damtype == STAMINA)
 			else
 				pacifist_counter_check = FALSE //Both martial and unarmed counter attacks generally are harmful, so no need to have the same line twice.
-	if(efficiency >= data.parry_efficiency_to_counterattack && pacifist_counter_check)
+	if(efficiency >= data.parry_efficiency_to_counterattack && pacifist_counter_check && !return_list[BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK])
 		effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
 	if(data.parry_flags & PARRY_DEFAULT_HANDLE_FEEDBACK)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)

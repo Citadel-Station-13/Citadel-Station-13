@@ -1559,12 +1559,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
-		if(HAS_TRAIT(user, TRAIT_PUGILIST))//CITADEL CHANGE - makes disarmspam cause staminaloss, pugilists can do it almost effortlessly
-			if(!user.UseStaminaBuffer(1, warn = TRUE))
-				return
-		else
-			if(!user.UseStaminaBuffer(1, warn = TRUE))
-				return
+		if(!user.UseStaminaBuffer(1, warn = TRUE))
+			return
 
 		if(attacker_style && attacker_style.disarm_act(user,target))
 			return TRUE

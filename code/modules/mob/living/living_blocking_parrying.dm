@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Efficiency must be at least this to be considered successful
 	var/parry_efficiency_considered_successful = 0.1
 	/// Efficiency must be at least this to run automatic counterattack
-	var/parry_efficiency_to_counterattack = 0.1
+	var/parry_efficiency_to_counterattack = INFINITY
 	/// Maximum attacks to parry successfully or unsuccessfully (but not efficiency < 0) during active period, hitting this immediately ends the sequence.
 	var/parry_max_attacks = INFINITY
 	/// Visual icon state override for parrying
