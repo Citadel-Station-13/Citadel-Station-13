@@ -266,11 +266,8 @@
 /obj/item/reagent_containers/food/snacks/baguette/tumor_baguette
 	name = "dead baguette snake"
 	desc = "No appetit!"
-	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tumorbaguette_dead"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/toxin = 10)
-	bitesize = 3
-	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("wheat and tumors" = 10)
 	foodtype = GROSS | GRAIN
 
