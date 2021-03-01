@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Fixes decks breaking your screen"
-  - bugfix: "Fixes binders not saving cards"
-  - bugfix: "Fixes binders not saving multiple cards of the same type"
