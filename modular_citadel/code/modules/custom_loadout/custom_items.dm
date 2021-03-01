@@ -586,7 +586,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
-/obj/item/clothing/neck/petcollar/choker
+/obj/item/clothing/neck/petcollar/donorchoker
 	name = "NT Choker"
 	desc = "NT property since January 21st,  2562."
 	icon = 'icons/obj/custom.dmi'
