@@ -65,7 +65,7 @@
 	popup.open(FALSE)
 
 /mob/dead/new_player/proc/playerpolls()
-	var/list/output = list()
+	var/output = "" //hey tg why is this a list?
 	if (SSdbcore.Connect())
 		var/isadmin = FALSE
 		if(client?.holder)

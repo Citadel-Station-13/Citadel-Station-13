@@ -47,11 +47,6 @@
 			else
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
-				var/SQLsearch = "isnull(deleted) AND "
-				if(category == "Any")
-					SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
-				else
-					SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 				var/bookcount = 0
 				var/booksperpage = 20
 				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery({"
