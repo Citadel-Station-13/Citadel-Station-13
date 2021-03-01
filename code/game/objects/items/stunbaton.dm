@@ -47,6 +47,9 @@
 			cell = new preload_cell_type(src)
 	update_icon()
 
+/obj/item/melee/baton/DoRevenantThrowEffects(atom/target)
+	switch_status()
+
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
@@ -116,7 +119,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -166,13 +169,12 @@
 	if(turned_on)
 		if(baton_stun(M, user, disarming))
 			user.do_attack_animation(M)
-			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
 		M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	return disarming || (user.a_intent != INTENT_HARM)
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user, disarming = FALSE)
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/living/user, disarming = FALSE)
 	var/list/return_list = list()
 	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
@@ -193,6 +195,9 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
 		stunpwr *= round(stuncharge/hitcost, 0.1)
+
+	if(user && !user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
+		return FALSE
 
 	if(!disarming)
 		if(knockdown)
@@ -234,9 +239,15 @@
 		if(!iscyborg(loc))
 			deductcharge(severity*10, TRUE, FALSE)
 
+/obj/item/melee/baton/can_give()
+	if(turned_on)
+		return FALSE
+	else
+		..()
+
 /obj/item/melee/baton/stunsword
 	name = "stunsword"
-	desc = "not actually sharp, this sword is functionally identical to a stunbaton"
+	desc = "Not actually sharp, this sword is functionally identical to its baton counterpart."
 	icon_state = "stunsword"
 	item_state = "sword"
 
@@ -248,6 +259,18 @@
 /obj/item/melee/baton/stunsword/get_worn_belt_overlay(icon_file)
 	return mutable_appearance(icon_file, "-stunsword")
 
+/obj/item/melee/baton/stunsword/on_exit_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/unsheath.ogg', 25, 1)
+	..()
+
+/obj/item/melee/baton/stunsword/on_enter_storage(datum/component/storage/S)
+	var/obj/item/storage/belt/sabre/secbelt/B = S.parent
+	if(istype(B))
+		playsound(B, 'sound/items/sheath.ogg', 25, 1)
+	..()
+
 /obj/item/ssword_kit
 	name = "stunsword kit"
 	desc = "a modkit for making a stunbaton into a stunsword"
@@ -255,21 +278,22 @@
 	icon_state = "refill_donksoft"
 	var/product = /obj/item/melee/baton/stunsword //what it makes
 	var/list/fromitem = list(/obj/item/melee/baton, /obj/item/melee/baton/loaded) //what it needs
-	afterattack(obj/O, mob/user as mob)
-		if(istype(O, product))
-			to_chat(user,"<span class='warning'>[O] is already modified!")
-		else if(O.type in fromitem) //makes sure O is the right thing
-			var/obj/item/melee/baton/B = O
-			if(!B.cell) //checks for a powercell in the baton. If there isn't one, continue. If there is, warn the user to take it out
-				new product(usr.loc) //spawns the product
-				user.visible_message("<span class='warning'>[user] modifies [O]!","<span class='warning'>You modify the [O]!")
-				qdel(O) //Gets rid of the baton
-				qdel(src) //gets rid of the kit
 
-			else
-				to_chat(user,"<span class='warning'>Remove the powercell first!</span>") //We make this check because the stunsword starts without a battery.
+/obj/item/ssword_kit/afterattack(obj/O, mob/user as mob)
+	if(istype(O, product))
+		to_chat(user,"<span class='warning'>[O] is already modified!")
+		return
+	if(O.type in fromitem) //makes sure O is the right thing
+		var/obj/item/melee/baton/B = O
+		if(!B.cell) //checks for a powercell in the baton. If there isn't one, continue. If there is, warn the user to take it out
+			new product(usr.loc) //spawns the product
+			user.visible_message("<span class='warning'>[user] modifies [O]!","<span class='warning'>You modify the [O]!")
+			qdel(O) //Gets rid of the baton
+			qdel(src) //gets rid of the kit
 		else
-			to_chat(user, "<span class='warning'> You can't modify [O] with this kit!</span>")
+			to_chat(user,"<span class='warning'>Remove the powercell first!</span>") //We make this check because the stunsword starts without a battery.
+	else
+		to_chat(user, "<span class='warning'> You can't modify [O] with this kit!</span>")
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
@@ -300,12 +324,12 @@
 /obj/item/melee/baton/boomerang
 	name = "\improper OZtek Boomerang"
 	desc = "A device invented in 2486 for the great Space Emu War by the confederacy of Australicus, these high-tech boomerangs also work exceptionally well at stunning crewmembers. Just be careful to catch it when thrown!"
-	throw_speed = 1
+	throw_speed = 1.5
 	icon_state = "boomerang"
 	item_state = "boomerang"
 	force = 5
 	throwforce = 5
-	throw_range = 5
+	throw_range = 10
 	hitcost = 2000
 	throw_hit_chance = 99  //Have you prayed today?
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
@@ -314,7 +338,7 @@
 	if(turned_on)
 		if(ishuman(thrower))
 			var/mob/living/carbon/human/H = thrower
-			H.throw_mode_off() //so they can catch it on the return.
+			H.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

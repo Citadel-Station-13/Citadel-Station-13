@@ -5,6 +5,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	baseturfs = /turf/open/floor/plating
+	dirt_buildup_allowed = TRUE
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -137,6 +138,9 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
+	for(var/obj/effect/decal/cleanable/C in src)
+		if(C.wiped_by_floor_change)
+			qdel(C)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
@@ -167,7 +171,7 @@
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
 		return
-	var/obj/item/crowbar/CB = user.is_holding_item_of_type(/obj/item/crowbar)
+	var/obj/item/CB = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!CB)
 		return
 	var/turf/open/floor/plating/P = pry_tile(CB, user, TRUE)

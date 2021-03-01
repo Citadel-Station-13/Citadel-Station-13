@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
-#define istransparentturf(A) (istype(A, /turf/open/transparent))
+#define istransparentturf(A) (istype(A, /turf/open/transparent)||istype(A, /turf/open/space/transparent))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isinsect(A) (is_species(A, /datum/species/insect))
 #define isxenoperson(A) (is_species(A, /datum/species/xeno))
 #define isstartjelly(A) (is_species(A, /datum/species/jelly/roundstartslime))
+#define isarachnid(A) (is_species(A, /datum/species/arachnid))
 
 //more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
@@ -124,7 +125,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
-#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+#define isshade(A) (istype(A, /mob/living/simple_animal/hostile/construct/shade))
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
@@ -187,6 +188,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
 
+#define issupplypod(A) (istype(A, /obj/structure/closet/supplypod))
+
 #define isammocasing(A) (istype(A, /obj/item/ammo_casing))
 
 #define isidcard(I) (istype(I, /obj/item/card/id))
@@ -235,3 +238,5 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 #define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
+
+#define isProbablyWallMounted(O) (O.pixel_x > 20 || O.pixel_x < -20 || O.pixel_y > 20 || O.pixel_y < -20)

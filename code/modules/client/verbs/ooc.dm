@@ -111,16 +111,16 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
-	set category = "Fun"
+	set category = "Admin.Fun"
 	GLOB.OOC_COLOR = sanitize_ooccolor(newColor)
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
-	set category = "Fun"
+	set category = "Admin.Fun"
 	GLOB.OOC_COLOR = null
 
-/client/verb/colorooc()
+/client/verb/colorooc() //this is admin and people who bought byond.
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
@@ -179,7 +179,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 
-	browse_messages(null, usr.ckey, null, TRUE)
+	browse_messages(null, usr.ckey, null, TRUE, override = TRUE)
 
 /client/proc/self_playtime()
 	set name = "View tracked playtime"

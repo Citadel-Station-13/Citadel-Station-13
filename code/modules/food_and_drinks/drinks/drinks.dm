@@ -17,10 +17,7 @@
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	if (gulp_size < 5)
-		gulp_size = 5
-	else
-		gulp_size = max(round(reagents.total_volume / 5), 5)
+	gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
@@ -48,7 +45,7 @@
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, gulp_size)
+	reagents.trans_to(M, gulp_size, log = TRUE)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
@@ -71,7 +68,7 @@
 			return
 
 		var/refill = reagents.get_master_reagent_id()
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, log = TRUE)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -92,7 +89,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log = TRUE)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
@@ -596,7 +593,7 @@
 	name = "Buzz Fuzz"
 	desc = "The sister drink of Shambler's Juice! Uses real honey, making it a sweet tooth's dream drink. The slogan reads ''A Hive of Flavour'', there's also a label about how it is adddicting."
 	icon_state = "honeysoda_can"
-	list_reagents = list(/datum/reagent/consumable/buzz_fuzz = 25, /datum/reagent/consumable/honey = 5)
+	list_reagents = list(/datum/reagent/consumable/buzz_fuzz = 30)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
@@ -618,3 +615,9 @@
 	icon_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/dwarf_mug //dwarf family heirloom (just a cup that always has the manly dorf icon!)
+	name = "ale mug"
+	desc = "An old stained mug used for filling with dwarven ale."
+	icon_state = "manlydorfglass"
+	isGlass = FALSE //it's a wooden mug!

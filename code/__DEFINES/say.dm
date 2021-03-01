@@ -76,8 +76,14 @@
 #define LINGHIVE_LINK 3
 
 //whether the emote is visible or audible.
+// Requires sight
 #define EMOTE_VISIBLE 1
+// Requires hearing
 #define EMOTE_AUDIBLE 2
+// Requires sight or hearing
+#define EMOTE_BOTH 3
+// Always able to be seen
+#define EMOTE_OMNI 4
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			2048		//Citadel edit: What's the WORST that could happen?

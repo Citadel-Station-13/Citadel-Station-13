@@ -11,7 +11,6 @@
 	gender = NEUTER
 	health = 350
 	maxHealth = 350
-	ventcrawler = VENTCRAWLER_NONE
 	density = TRUE
 	pass_flags =  0
 	sight = (SEE_TURFS | SEE_OBJS)
@@ -105,7 +104,7 @@
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
 
-/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+/mob/living/carbon/true_devil/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash, override_protection = 0)
 	if(mind && has_bane(BANE_LIGHT))
 		mind.disrupt_spells(-500)
 		return ..() //flashes don't stop devils UNLESS it's their bane.

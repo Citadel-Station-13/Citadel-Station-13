@@ -40,7 +40,7 @@
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
-	if (istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 4)
 			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
 			return
@@ -214,7 +214,7 @@
 /obj/item/stack/tile/carpet/arcade
 	name = "arcade carpet"
 	icon_state = "tile-carpet-arcade"
-	turf_type = /turf/open/floor
+	turf_type = /turf/open/floor/carpet/arcade
 	tableVariant = null
 
 /obj/item/stack/tile/carpet/blackred

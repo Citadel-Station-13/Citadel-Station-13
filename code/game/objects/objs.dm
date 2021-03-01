@@ -304,18 +304,36 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
-	var/list/skins = list()
-	for(var/S in unique_reskin)
-		skins[S] = image(icon = icon, icon_state = unique_reskin[S])
-	var/choice = show_radial_menu(M, src, skins, custom_check = CALLBACK(src, .proc/check_skinnable, M), radius = 40, require_near = TRUE)
-	if(!choice)
-		return FALSE
-	icon_state = unique_reskin[choice]
-	current_skin = choice
-	return
 
-/obj/proc/check_skinnable(/mob/M)
-	if(current_skin || !always_reskinnable)
+	var/list/items = list()
+	for(var/reskin_option in unique_reskin)
+		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
+		items += list("[reskin_option]" = item_image)
+	sortList(items)
+
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
+	if(!pick)
+		return
+	if(!unique_reskin[pick])
+		return
+	current_skin = pick
+	icon_state = unique_reskin[pick]
+	to_chat(M, "[src] is now skinned as '[pick].'")
+
+/**
+  * Checks if we are allowed to interact with a radial menu for reskins
+  *
+  * Arguments:
+  * * user The mob interacting with the menu
+  */
+/obj/proc/check_reskin_menu(mob/user)
+	if(QDELETED(src))
+		return FALSE
+	if(current_skin)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
 		return FALSE
 	return TRUE
 

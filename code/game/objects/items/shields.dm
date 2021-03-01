@@ -136,15 +136,17 @@
 		if(!(shield_flags & SHIELD_BASH_GROUND_SLAM))
 			to_chat(user, "<span class='warning'>You can't ground slam with [src]!</span>")
 			return FALSE
+		if(!user.UseStaminaBuffer(shieldbash_stamcost, warn = TRUE))
+			return FALSE
 		bash_target(user, target, NONE, harmful)
 		user.do_attack_animation(target, used_item = src)
 		playsound(src, harmful? "swing_hit" : 'sound/weapons/thudswoosh.ogg', 75, 1)
 		last_shieldbash = world.time
-		user.adjustStaminaLossBuffered(shieldbash_stamcost)
 		return TRUE
 	// Directional sweep!
 	last_shieldbash = world.time
-	user.adjustStaminaLossBuffered(shieldbash_stamcost)
+	if(!user.UseStaminaBuffer(shieldbash_stamcost, warn = TRUE))
+		return FALSE
 	// Since we are in combat mode, we can probably safely use the user's dir instead of getting their mouse pointing cardinal dir.
 	var/bashdir = user.dir
 	do_shieldbash_effect(user, bashdir, harmful)
@@ -256,7 +258,7 @@
 	shield_flags = SHIELD_FLAGS_DEFAULT
 	max_integrity = 300
 
-obj/item/shield/riot/bullet_proof
+/obj/item/shield/riot/bullet_proof
 	name = "bullet resistant shield"
 	desc = "A far more frail shield made of resistant plastics and kevlar meant to block ballistics."
 	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)

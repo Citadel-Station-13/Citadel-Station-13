@@ -12,6 +12,7 @@
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
 	var/scantemp_ckey
+	var/scantemp_name
 	var/scantemp = "Ready to Scan"
 	var/menu = 1 //Which menu screen to display
 	var/datum/data/record/active_record = null
@@ -132,22 +133,20 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
-	else if(istype(W, /obj/item/multitool))
-		var/obj/item/multitool/P = W
-
-		if(istype(P.buffer, clonepod_type))
-			if(get_area(P.buffer) != get_area(src))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(istype(W.buffer, clonepod_type))
+			if(get_area(W.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				W.buffer = null
 				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/clonepod/pod = P.buffer
+			to_chat(user, "<font color = #666633>-% Successfully linked [W.buffer] with [src] %-</font color>")
+			var/obj/machinery/clonepod/pod = W.buffer
 			if(pod.connected)
 				pod.connected.DetachCloner(pod)
 			AttachCloner(pod)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			W.buffer = src
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(W.buffer)] [W.buffer] in buffer %-</font color>")
 		return
 	else
 		return ..()
@@ -195,9 +194,10 @@
 					dat += "[scanner_occupant] => Scanning..."
 				else
 					if(use_records)
-						if(scanner_occupant.ckey != scantemp_ckey)
+						if(scanner_occupant.ckey != scantemp_ckey || scanner_occupant.name != scantemp_name)
 							scantemp = "Ready to Scan"
 							scantemp_ckey = scanner_occupant.ckey
+							scantemp_name = scanner_occupant.name
 					else
 						scantemp = "Ready to Clone"
 					dat += "[scanner_occupant] => [scantemp]"
@@ -296,17 +296,18 @@
 				autoprocess = FALSE
 				STOP_PROCESSING(SSmachines, src)
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		src.updateUsrDialog()
 		. = TRUE
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
 
 		loading = TRUE
-		src.updateUsrDialog()
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		say("Initiating scan...")
 		var/prev_locked = scanner.locked
 		scanner.locked = TRUE
+		src.updateUsrDialog()
 		addtimer(CALLBACK(src, .proc/finish_scan, scanner.occupant, prev_locked), 2 SECONDS)
 		. = TRUE
 
@@ -318,6 +319,7 @@
 		else
 			scanner.locked = FALSE
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+		src.updateUsrDialog()
 		. = TRUE
 
 
@@ -340,6 +342,7 @@
 				src.menu = 3
 		else
 			src.temp = "Record missing."
+		src.updateUsrDialog()
 		. = TRUE
 
 	else if (href_list["del_rec"])
@@ -348,6 +351,7 @@
 		if (src.menu == 3) //If we are viewing a record, confirm deletion
 			src.temp = "Delete record?"
 			src.menu = 4
+			src.updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 
 		else if (src.menu == 4)
@@ -357,12 +361,14 @@
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
 					src.records.Remove(active_record)
 					active_record = null
+					src.updateUsrDialog()
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					src.menu = 2
 					var/obj/item/circuitboard/computer/cloning/board = circuit
 					board.records = records
 				else
 					src.temp = "<font class='bad'>Access Denied.</font>"
+					src.updateUsrDialog()
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		. = TRUE
 
@@ -384,6 +390,7 @@
 				for(var/key in diskette.fields)
 					src.active_record.fields[key] = diskette.fields[key]
 				src.temp = "Load successful."
+				src.updateUsrDialog()
 				var/obj/item/circuitboard/computer/cloning/board = circuit
 				board.records = records
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -403,6 +410,7 @@
 				diskette.fields = active_record.fields.Copy()
 				diskette.name = "data disk - '[src.diskette.fields["name"]]'"
 				src.temp = "Save successful."
+				src.updateUsrDialog()
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		. = TRUE
 
@@ -431,17 +439,21 @@
 				if(active_record == C)
 					active_record = null
 				menu = 1
+				src.updateUsrDialog()
 			else
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
+				src.updateUsrDialog()
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		else
 			temp = "<font class='bad'>Data corruption.</font>"
+			src.updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		. = TRUE
 
 	else if (href_list["menu"] && use_records)
 		menu = text2num(href_list["menu"])
+		src.updateUsrDialog()
 		playsound(src, "terminal_type", 25, 0)
 		. = TRUE
 
@@ -449,7 +461,6 @@
 	if(!scanner || !L)
 		return
 	src.add_fingerprint(usr)
-	src.updateUsrDialog()
 
 	if(use_records)
 		scan_occupant(L)
@@ -457,9 +468,10 @@
 		clone_occupant(L)
 
 	loading = FALSE
+	scanner.locked = prev_locked
 	src.updateUsrDialog()
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-	scanner.locked = prev_locked
+
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)

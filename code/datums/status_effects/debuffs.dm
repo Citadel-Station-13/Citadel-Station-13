@@ -586,7 +586,7 @@
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
-		if(IS_HERETIC(potential_target) || potential_target.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+		if(IS_HERETIC(potential_target) || IS_HERETIC_MONSTER(potential_target))
 			continue
 		targets += potential_target
 	if(LAZYLEN(targets))
@@ -887,7 +887,7 @@
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 
-datum/status_effect/pacify
+/datum/status_effect/pacify
 	id = "pacify"
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 1
@@ -1046,7 +1046,7 @@ datum/status_effect/pacify
 	id = "fake_virus"
 	duration = 1800//3 minutes
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 1
+	tick_interval = 20
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 

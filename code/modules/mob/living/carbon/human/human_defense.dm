@@ -1,4 +1,6 @@
 /mob/living/carbon/human/getarmor(def_zone, type)
+	if(HAS_TRAIT(src, TRAIT_ARMOR_BROKEN)) //trait that makes it act as if you have no armor at all, you take natural damage from all sources
+		return 0
 	var/armorval = 0
 	var/organnum = 0
 
@@ -17,7 +19,6 @@
 		armorval += checkarmor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
-
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
 	if(!d_type || !def_zone)
@@ -410,13 +411,18 @@
 	if(isrobotic(src))
 		apply_status_effect(/datum/status_effect/no_combat_mode/robotic_emp, severity / 20)
 	severity *= 0.5
+	var/do_not_stun = FALSE
+	if(HAS_TRAIT(src, TRAIT_ROBOTIC_ORGANISM))
+		severity *= 0.5 //Robotpeople take less limb damage, but instead suffer system corruption (see carbon emp_act)
+		do_not_stun = TRUE
 	for(var/obj/item/bodypart/L in src.bodyparts)
-		if(L.status == BODYPART_ROBOTIC)
+		if(L.is_robotic_limb())
 			if(!informed)
 				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
 				informed = TRUE
 			L.receive_damage(0,severity/10)
-			Stun(severity*2)
+			if(!do_not_stun)	//Tiny bit better than checking for the trait another six times in succession
+				Stun(severity*2)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()

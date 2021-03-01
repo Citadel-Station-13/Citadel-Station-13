@@ -27,28 +27,6 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
-/* Please fix
-		if(SSvote.mode)
-			var/static/list/supported = list(PLURALITY_VOTING, APPROVAL_VOTING)
-			global_data += "Vote active!, There is currently a vote running. Question: [SSvote.question]"
-			if(!(SSvote.vote_system in supported))
-				global_data += "<STATPANEL VOTING DISABLED>, The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link."
-				return
-			global_data += "Time Left:, [round(SSvote.end_time - world.time)] seconds"
-		
-			global_data += "Choices:"
-			for(var/i in 1 to SSvote.choice_statclicks.len)
-				var/choice = SSvote.choice_statclicks[i]
-				var/ivotedforthis = FALSE
-				if(usr.ckey)
-					switch(SSvote.vote_system)
-						if(APPROVAL_VOTING)
-							ivotedforthis = SSvote.voted[usr.ckey] && (i in SSvote.voted[usr.ckey])
-						if(PLURALITY_VOTING)
-							ivotedforthis = SSvote.voted[usr.ckey] == i
-					
-					global_data += (ivotedforthis? "\[X\]" : "\[ \]", SSvote.choice_statclicks[choice])
-*/
 
 		encoded_global_data = url_encode(json_encode(global_data))
 		src.currentrun = GLOB.clients.Copy()
@@ -63,6 +41,38 @@ SUBSYSTEM_DEF(statpanels)
 			var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
 			var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
 			target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
+			if(SSvote.mode)
+				var/list/vote_arry = list(
+					list("Vote active!", "There is currently a vote running. Question: [SSvote.question]")
+					) //see the MC on how this works.
+				if(!(SSvote.vote_system in list(PLURALITY_VOTING, APPROVAL_VOTING, SCHULZE_VOTING, INSTANT_RUNOFF_VOTING)))
+					vote_arry[++vote_arry.len] += list("STATPANEL VOTING DISABLED!", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.", "disabled")
+					//does not return.
+				else
+					vote_arry[++vote_arry.len] += list("Time Left:", " [DisplayTimeText(SSvote.end_time - world.time)] seconds")
+					vote_arry[++vote_arry.len] += list("Choices:", "")
+					for(var/choice in SSvote.choice_statclicks)
+						var/choice_id = SSvote.choice_statclicks[choice]
+						if(target.ckey)
+							switch(SSvote.vote_system)
+								if(PLURALITY_VOTING, APPROVAL_VOTING)
+									var/ivotedforthis = FALSE
+									if(SSvote.vote_system == APPROVAL_VOTING)
+										ivotedforthis = SSvote.voted[target.ckey] && (text2num(choice_id) in SSvote.voted[target.ckey])
+									else
+										ivotedforthis = (SSvote.voted[target.ckey] == text2num(choice_id))
+									vote_arry[++vote_arry.len] += list(ivotedforthis ? "\[X\]" : "\[ \]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
+								if(SCHULZE_VOTING, INSTANT_RUNOFF_VOTING)
+									var/list/vote = SSvote.voted[target.ckey]
+									var/vote_position = " "
+									if(vote)
+										vote_position = vote.Find(text2num(choice_id))
+									vote_arry[++vote_arry.len] += list("\[[vote_position]\]", choice, "[REF(SSvote)];vote=[choice_id];statpannel=1")
+				var/vote_str = url_encode(json_encode(vote_arry))
+				target << output("[vote_str]", "statbrowser:update_voting")
+			else
+				var/null_bullet = url_encode(json_encode(list(list(null))))
+				target << output("[null_bullet]", "statbrowser:update_voting")
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
@@ -193,3 +203,4 @@ SUBSYSTEM_DEF(statpanels)
 	set hidden = TRUE
 
 	statbrowser_ready = TRUE
+	init_verbs()

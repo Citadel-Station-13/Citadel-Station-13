@@ -25,6 +25,7 @@
 		/datum/language/slime,
 		/datum/language/vampiric,
 		/datum/language/dwarf,
+		/datum/language/signlanguage,
 	))
 	healing_factor = STANDARD_ORGAN_HEALING*5 //Fast!!
 	decay_factor = STANDARD_ORGAN_DECAY/2
@@ -258,3 +259,22 @@
 /obj/item/organ/tongue/ethereal/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_ethereal
+
+/obj/item/organ/tongue/arachnid
+	name = "inner mandible"
+	desc = "A set of soft, spoon-esque mandibles closer to the mouth opening, that allow for basic speech, and the ability to speak Rachnidian."
+	say_mod = "chitters"
+	var/static/list/languages_possible_arachnid = typecacheof(list(
+		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/arachnid,
+	))
+
+/obj/item/organ/tongue/arachnid/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_arachnid

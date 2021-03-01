@@ -4,7 +4,7 @@
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
-	id = "shadow"
+	id = SPECIES_SHADOW
 	sexes = 0
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
@@ -15,7 +15,7 @@
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
-	species_type = "shadow"
+	species_category = SPECIES_CATEGORY_SHADOW
 
 /datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -32,8 +32,8 @@
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
-	id = "nightmare"
-	limbs_id = "shadow"
+	id = SPECIES_NIGHTMARE
+	limbs_id = SPECIES_SHADOW
 	burnmod = 1.5
 	blacklisted = TRUE
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
@@ -141,7 +141,7 @@
 			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
-		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
+		if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 			var/mob/living/carbon/old_owner = owner
 			Remove(HEART_SPECIAL_SHADOWIFY)
 			old_owner.set_species(/datum/species/shadow)
@@ -203,6 +203,15 @@
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
 			disintegrate(I)
+	else if (isstructure(AM))
+		var/obj/structure/S = AM
+		if(istype(S, /obj/structure/glowshroom) || istype(S, /obj/structure/marker_beacon))
+			qdel(S)
+			visible_message("<span class='danger'>[S] is disintegrated by [src]!</span>")
+	else if(AM.light_range && AM.light_power  && !(istype(AM, /obj/machinery/power/apc) || istype(AM, /obj/machinery/airalarm)))
+		var/obj/target_object = AM
+		target_object.take_damage(force * 5, BRUTE, "melee", 0)
+
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
 	if(istype(O, /obj/item/pda))

@@ -1,4 +1,5 @@
 #define COOLDOWN_STUN 1200
+#define COOLDOWN_KNOCKDOWN 600
 #define COOLDOWN_DAMAGE 600
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
@@ -213,7 +214,6 @@
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up|sick")
 	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
@@ -264,26 +264,20 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(60 * power_multiplier)
+			L.Stagger(60 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
-		cooldown = COOLDOWN_STUN
+		cooldown = COOLDOWN_KNOCKDOWN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.DefaultCombatKnockdown(60 * power_multiplier)
-
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		cooldown = COOLDOWN_STUN
-		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(40 * power_multiplier)
+			L.DefaultCombatKnockdown()
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
-		cooldown = COOLDOWN_STUN
+		cooldown = COOLDOWN_DAMAGE
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier, distance = power_multiplier)
+			C.vomit(10 * power_multiplier, distance = power_multiplier, stun = FALSE)
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
@@ -835,7 +829,7 @@
 				if(HAS_TRAIT(L, TRAIT_MASO))
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
-						H.adjust_arousal(3*power_multiplier,maso = TRUE)
+						H.adjust_arousal(3*power_multiplier,"velvet speech", maso = TRUE)
 					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier
@@ -1319,7 +1313,7 @@
 			if(E.phase > 1)
 				if(user.ckey == E.enthrallID && user.real_name == E.master.real_name)
 					E.master = user
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, H, "<span class='nicegreen'>[(E.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>"), 5)
+					to_chat(H, "<span class='nicegreen'>[(E.lewd?"You hear the words of your [E.enthrallGender] again!! They're back!!":"You recognise the voice of [E.master].")]</b></span>")
 					to_chat(user, "<span class='notice'><i>[H] looks at you with sparkling eyes, recognising you!</i></span>")
 
 	//I dunno how to do state objectives without them revealing they're an antag

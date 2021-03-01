@@ -452,7 +452,7 @@
 			for(var/obj/item/integrated_circuit/input/S in assembly_components)
 				S.attackby_react(I,user,user.a_intent)
 			return ..()
-	else if(istype(I, /obj/item/multitool) || istype(I, /obj/item/integrated_electronics/wirer) || istype(I, /obj/item/integrated_electronics/debugger))
+	else if(I.tool_behaviour == TOOL_MULTITOOL || istype(I, /obj/item/integrated_electronics/wirer) || istype(I, /obj/item/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
 			return TRUE
@@ -578,6 +578,7 @@
 	return FALSE
 
 /obj/item/electronic_assembly/Moved(oldLoc, dir)
+	. = ..()
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
@@ -651,6 +652,11 @@
 	icon_state = "setup_small_pda"
 	desc = "It's a case, for building small electronics with. This one resembles a PDA."
 
+/obj/item/electronic_assembly/dildo
+	name = "type-g electronic assembly"
+	icon_state = "setup_dildo_medium"
+	desc = "It's a case, for building small electronics with. This one has a phallic design."
+
 /obj/item/electronic_assembly/small
 	name = "electronic device"
 	icon_state = "setup_device"
@@ -681,6 +687,11 @@
 	name = "type-e electronic device"
 	icon_state = "setup_device_box"
 	desc = "It's a case, for building tiny-sized electronics with. This one has a boxy design."
+
+/obj/item/electronic_assembly/small/dildo
+	name = "type-f electronic device"
+	icon_state = "setup_dildo_small"
+	desc = "It's a case, for building tiny-sized electronics with. This one has a phallic design."
 
 /obj/item/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -721,6 +732,12 @@
 	name = "type-f electronic mechanism"
 	icon_state = "setup_medium_radio"
 	desc = "It's a case, for building medium-sized electronics with. This one resembles an old radio."
+
+/obj/item/electronic_assembly/medium/dildo
+	name = "type-g electronic mechanism"
+	icon_state = "setup_dildo_large"
+	desc = "It's a case, for building medium-sized electronics with. This one has a phallic design."
+
 
 /obj/item/electronic_assembly/large
 	name = "electronic machine"

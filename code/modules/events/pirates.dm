@@ -219,7 +219,7 @@
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/tank/internals/oxygen
+	storage_type = /obj/item/tank/jetpack/void
 
 
 /obj/machinery/loot_locator
@@ -267,14 +267,15 @@
 	var/sending_state = "lpad-beam"
 	var/cargo_hold_id
 
-/obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (istype(I))
+/obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/I)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
 		to_chat(user, "<span class='notice'>You register [src] in [I]s buffer.</span>")
 		I.buffer = src
 		return TRUE
 
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	resistance_flags = INDESTRUCTIBLE
 	ui_x = 600
 	ui_y = 230
 	var/status_report = "Ready for delivery."
@@ -290,8 +291,8 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
+/obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/I)
+	if(I.tool_behaviour == TOOL_MULTITOOL && istype(I.buffer,/obj/machinery/piratepad))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		pad = I.buffer
 		return TRUE

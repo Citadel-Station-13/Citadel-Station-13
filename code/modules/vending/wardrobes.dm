@@ -17,8 +17,8 @@
 	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 2,
-					/obj/item/storage/backpack/security = 2,
-					/obj/item/storage/backpack/satchel/sec = 2,
+					/obj/item/storage/backpack/security = 3,
+					/obj/item/storage/backpack/satchel/sec = 3,
 					/obj/item/storage/backpack/duffelbag/sec = 3,
 					/obj/item/clothing/under/rank/security/officer = 5,
 					/obj/item/clothing/shoes/jackboots = 5,
@@ -88,9 +88,9 @@
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
 					/obj/item/clothing/head/beret/med = 5,
-					/obj/item/storage/backpack/duffelbag/med = 5,
 					/obj/item/storage/backpack/medic = 5,
 					/obj/item/storage/backpack/satchel/med = 5,
+					/obj/item/storage/backpack/duffelbag/med = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/paramedic = 2,
 					/obj/item/clothing/under/rank/medical/doctor/nurse = 5,
@@ -131,9 +131,9 @@
 	vend_reply = "Thank you for using the EngiDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
 					/obj/item/clothing/head/beret/eng = 3,
-					/obj/item/storage/backpack/duffelbag/engineering = 3,
 					/obj/item/storage/backpack/industrial = 3,
 					/obj/item/storage/backpack/satchel/eng = 3,
+					/obj/item/storage/backpack/duffelbag/engineering = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/engineering = 3,
 					/obj/item/clothing/under/rank/engineering/engineer = 5,
 					/obj/item/clothing/under/rank/engineering/engineer/skirt = 5,
@@ -162,9 +162,9 @@
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
 					/obj/item/clothing/head/beret/atmos = 3,
-					/obj/item/storage/backpack/duffelbag/engineering = 3,
-					/obj/item/storage/backpack/satchel/eng = 3,
 					/obj/item/storage/backpack/industrial = 3,
+					/obj/item/storage/backpack/satchel/eng = 3,
+					/obj/item/storage/backpack/duffelbag/engineering = 3,
 					/obj/item/clothing/head/hardhat/weldhat/dblue = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
 					/obj/item/clothing/under/rank/engineering/atmospheric_technician = 5,
@@ -207,12 +207,13 @@
 	product_ads = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 3,
+					/obj/item/stack/medical/nanogel = 5,
 					/obj/item/clothing/head/beret/robo = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist/sleek = 3,
 					/obj/item/clothing/under/rank/rnd/roboticist/skirt = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/robotics = 3,
-					/obj/item/clothing/suit/toggle/labcoat = 3,
+					/obj/item/clothing/suit/toggle/labcoat/roboticist = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3,
 					/obj/item/clothing/gloves/fingerless = 3,
 					/obj/item/clothing/head/soft/black = 3,
@@ -238,6 +239,7 @@
 					/obj/item/clothing/head/beret/sci = 3,
 					/obj/item/storage/backpack/science = 3,
 					/obj/item/storage/backpack/satchel/tox = 3,
+					/obj/item/storage/backpack/duffelbag = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/rnd/scientist = 4,
 					/obj/item/clothing/under/rank/rnd/scientist/util = 4,
@@ -261,7 +263,9 @@
 	product_ads = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 3,
+					/obj/item/storage/backpack = 3,
 					/obj/item/storage/backpack/satchel/hyd = 3,
+					/obj/item/storage/backpack/duffelbag = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/hydro = 2,
 					/obj/item/clothing/suit/apron = 3,
 					/obj/item/clothing/suit/apron/overalls = 5,
@@ -375,7 +379,7 @@
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
-					/obj/item/caution = 8,
+					/obj/item/clothing/suit/caution = 8,
 					/obj/item/holosign_creator = 2,
 					/obj/item/lightreplacer = 2,
 					/obj/item/soap = 2,
@@ -468,7 +472,7 @@
 					/obj/item/storage/backpack/chemistry = 3,
 					/obj/item/storage/backpack/satchel/chem = 3,
 					/obj/item/storage/bag/chemistry = 3,
-					/obj/item/fermichem/pHbooklet = 3)//pH indicator)
+					/obj/item/fermichem/pHbooklet = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
 	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
@@ -544,7 +548,7 @@
 					/obj/item/clothing/glasses/sunglasses/gar/supergar = 1,
 					/obj/item/clothing/gloves/color/captain = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe
-	payment_department = ACCOUNT_CIV
+	payment_department = ACCOUNT_SEC
 	default_price = PRICE_ALMOST_EXPENSIVE
 	extra_price = PRICE_ABOVE_EXPENSIVE
 

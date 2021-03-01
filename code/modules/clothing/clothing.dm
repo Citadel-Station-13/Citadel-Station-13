@@ -31,6 +31,9 @@
 	// What items can be consumed to repair this clothing (must by an /obj/item/stack)
 	var/repairable_by = /obj/item/stack/sheet/cloth
 
+	// has this item been upgraded by an upgrade kit (see: durathread armor kits)
+	var/upgrade_prefix
+
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered //Auto built by the above + dropped() + equipped()
@@ -45,11 +48,10 @@
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
 	//basically a restriction list.
-	var/list/species_restricted = null
+	var/list/species_restricted
 	//Basically syntax is species_restricted = list("Species Name","Species Name")
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
 	//You append this to clothing objects
-
 
 
 	// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
@@ -121,6 +123,8 @@
 	update_clothes_damaged_state(CLOTHING_PRISTINE)
 	obj_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
+	if(upgrade_prefix)
+		name = upgrade_prefix + " " + initial(name)
 	body_parts_covered = initial(body_parts_covered)
 	slot_flags = initial(slot_flags)
 	damage_by_parts = null
@@ -475,7 +479,6 @@ BLIND     // can't see anything
 				return FALSE
 
 	return TRUE
-
 
 
 /// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged

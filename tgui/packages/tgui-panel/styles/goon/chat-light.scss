@@ -273,8 +273,7 @@ a.popt {
 
 
 .italic,
-.italics,
-.emote {
+.italics {
   font-style: italic;
 }
 
@@ -441,10 +440,6 @@ em {
 
 h1.alert, h2.alert {
   color: #000000;
-}
-
-.emote {
-  font-style: italic;
 }
 
 .userdanger {
@@ -886,7 +881,7 @@ h1.alert, h2.alert {
 
 .command_headset {
   font-weight: bold;
-  font-size: 160%;
+  font-size: 125%;
 }
 
 .small {
@@ -922,7 +917,7 @@ h1.alert, h2.alert {
 
 .clown {
   color: #FF69Bf;
-  font-size: 160%;
+  font-size: 125%;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
 }
@@ -936,6 +931,10 @@ h1.alert, h2.alert {
   color: #15D512;
   font-family: "Courier New", cursive, sans-serif;
   font-style: italic;
+}
+
+.spooky {
+  color: #FF9100;
 }
 
 .hypnophrase {

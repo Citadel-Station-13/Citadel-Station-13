@@ -71,7 +71,12 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "peeling away"
 
-	var/render_like_organic = FALSE // forces limb to render as if it were an organic limb
+
+	//Some special vars for robotic bodyparts, in the base type to prevent needing typecasting / fancy checks.
+	var/easy_heal_threshhold = -1 //If greater or equal to zero, if limb damage of a type passes this threshhold, it cannot be healed beyond threshhold_passed_mindamage. Only needed for robotic limbs, but is in the basetype to prevent needing spaghetti-checks.
+	var/threshhold_passed_mindamage = 0 //If the threshhold got passed, what is the minimum damage this limb can be healed to? Loses the threshhold-passed state healing is started while below mindamage.
+	var/threshhold_brute_passed = FALSE
+	var/threshhold_burn_passed = FALSE //Ugly but neccessary vars that might get replaced with a flag lateron maybe sometime.
 
 	/// The wounds currently afflicting this body part
 	var/list/wounds
@@ -143,7 +148,7 @@
 
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
-	if(status != BODYPART_ROBOTIC)
+	if(!is_robotic_limb())
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
@@ -151,7 +156,7 @@
 //empties the bodypart from its organs and other things inside it
 /obj/item/bodypart/proc/drop_organs(mob/user)
 	var/turf/T = get_turf(src)
-	if(status != BODYPART_ROBOTIC)
+	if(!is_robotic_limb())
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	if(current_gauze)
 		QDEL_NULL(current_gauze)
@@ -292,6 +297,7 @@
 			owner.update_stamina()
 	consider_processing()
 	update_disabled()
+	update_threshhold_state()
 	return update_bodypart_damage_state()
 
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
@@ -389,11 +395,10 @@
 			var/datum/wound/new_wound
 			if(replaced_wound)
 				new_wound = replaced_wound.replace_wound(possible_wound)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			else
 				new_wound = new possible_wound
 				new_wound.apply_wound(src)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
+			log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
@@ -458,10 +463,10 @@
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, stamina, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
 
-	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
+	if(only_robotic && !is_robotic_limb()) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
 
-	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
+	if(only_organic && !is_organic_limb(FALSE)) //This makes robolimbs and hybridlimbs not healable by chems.
 		return
 
 	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
@@ -471,6 +476,7 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
+	update_threshhold_state()
 	return update_bodypart_damage_state()
 
 //Returns total damage.
@@ -483,12 +489,12 @@
 //Checks disabled status thresholds
 
 //Checks disabled status thresholds
-/obj/item/bodypart/proc/update_disabled()
+/obj/item/bodypart/proc/update_disabled(silent = FALSE)
 	if(!owner)
 		return
-	set_disabled(is_disabled())
+	set_disabled(is_disabled(silent), silent)
 
-/obj/item/bodypart/proc/is_disabled()
+/obj/item/bodypart/proc/is_disabled(silent = FALSE)
 	if(!owner)
 		return
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS))
@@ -500,10 +506,10 @@
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 		if(get_damage(TRUE) >= max_damage * (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) ? 0.6 : 1)) //Easy limb disable disables the limb at 40% health instead of 0%
-			if(!last_maxed)
+			if(!last_maxed && !silent)
 				owner.emote("scream")
 				last_maxed = TRUE
-			if(!is_organic_limb() || stamina_dam >= max_damage)
+			if(!is_organic_limb(FALSE) || stamina_dam >= max_damage)
 				return BODYPART_DISABLED_DAMAGE
 		else if(disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
 			last_maxed = FALSE
@@ -545,7 +551,8 @@
 	return FALSE
 
 //Change organ status
-/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb, change_icon_to_default)
+/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb, change_icon_to_default, no_update = FALSE)
+	var/old_status = status
 	status = new_limb_status
 	if(heal_limb)
 		burn_dam = 0
@@ -553,20 +560,48 @@
 		brutestate = 0
 		burnstate = 0
 
+	if(status == BODYPART_HYBRID)
+		easy_heal_threshhold = HYBRID_BODYPART_DAMAGE_THRESHHOLD
+		threshhold_passed_mindamage = HYBRID_BODYPART_THESHHOLD_MINDAMAGE
+	else if(old_status == BODYPART_HYBRID)
+		easy_heal_threshhold = initial(easy_heal_threshhold)
+		threshhold_passed_mindamage = initial(threshhold_passed_mindamage)
+
+	update_threshhold_state()
+
 	if(change_icon_to_default)
-		if(status == BODYPART_ORGANIC)
+		if(is_organic_limb(FALSE))
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ORGANIC
-		else if(status == BODYPART_ROBOTIC)
+		else if(is_robotic_limb())
 			icon = base_bp_icon || DEFAULT_BODYPART_ICON_ROBOTIC
 
-	if(owner)
+	if(owner && !no_update) //Only use no_update if you are sure the bodypart will get updated from other sources anyways, to prevent unneccessary processing use.
 		owner.updatehealth()
 		owner.update_body() //if our head becomes robotic, we remove the lizard horns and human hair.
 		owner.update_hair()
 		owner.update_damage_overlays()
 
-/obj/item/bodypart/proc/is_organic_limb()
-	return (status == BODYPART_ORGANIC)
+/obj/item/bodypart/proc/is_organic_limb(hybrid_allowed = TRUE)
+	if(!hybrid_allowed)
+		return (status == BODYPART_ORGANIC)
+	return ((status == BODYPART_ORGANIC) || (status == BODYPART_HYBRID)) //Goodbye if(B.status == BODYPART_ORGANIC || B.status == BODYPART_HYBRID)
+
+/obj/item/bodypart/proc/is_robotic_limb(hybrid_allowed = TRUE)
+	if(!hybrid_allowed)
+		return (status == BODYPART_ROBOTIC)
+	return ((status == BODYPART_ROBOTIC) || (status == BODYPART_HYBRID))
+
+/obj/item/bodypart/proc/update_threshhold_state(brute = TRUE, burn = TRUE)
+	if(brute)
+		if(brute_dam < threshhold_passed_mindamage || easy_heal_threshhold < 0)
+			threshhold_brute_passed = FALSE
+		else if(brute_dam >= easy_heal_threshhold)
+			threshhold_brute_passed = TRUE
+	if(burn)
+		if(burn_dam < threshhold_passed_mindamage || easy_heal_threshhold < 0)
+			threshhold_burn_passed = FALSE
+		else if(burn_dam >= easy_heal_threshhold)
+			threshhold_burn_passed = TRUE
 
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/source)
@@ -581,7 +616,7 @@
 		C = owner
 		no_update = FALSE
 
-	if(HAS_TRAIT(C, TRAIT_HUSK) && (is_organic_limb() || render_like_organic))
+	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -605,7 +640,11 @@
 
 		//body marking memes
 		var/list/colorlist = list()
+		//var/advanced_color_system = (H.dna.features["color_scheme"] == ADVANCED_CHARACTER_COLORING)
 		colorlist.Cut()
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_primary"]]00") : ReadRGB("[H.dna.features["mcolor"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_secondary"]]00") : ReadRGB("[H.dna.features["mcolor2"]]00")
+		//colorlist += advanced_color_system ? ReadRGB("[H.dna.features["mam_body_markings_tertiary"]]00") : ReadRGB("[H.dna.features["mcolor3"]]00")
 		colorlist += ReadRGB("[H.dna.features["mcolor"]]00")
 		colorlist += ReadRGB("[H.dna.features["mcolor2"]]00")
 		colorlist += ReadRGB("[H.dna.features["mcolor3"]]00")
@@ -656,8 +695,13 @@
 			body_markings = null
 			aux_marking = null
 
-		if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
-			base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+		if(S.override_bp_icon)
+			base_bp_icon = S.override_bp_icon
+		else
+			if(species_id in GLOB.greyscale_limb_types) //should they have greyscales?
+				base_bp_icon = DEFAULT_BODYPART_ICON_ORGANIC
+			else
+				base_bp_icon = DEFAULT_BODYPART_ICON
 
 		if(base_bp_icon != DEFAULT_BODYPART_ICON)
 			color_src = mut_colors ? MUTCOLORS : ((H.dna.skin_tone_override && S.use_skintones == USE_SKINTONES_GRAYSCALE_CUSTOM) ? CUSTOM_SKINTONE : SKINTONE)
@@ -672,9 +716,9 @@
 	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.
 		dmg_overlay_type = animal_origin
 
-	if(status == BODYPART_ROBOTIC)
+	if(is_robotic_limb())
 		dmg_overlay_type = "robotic"
-		if(!render_like_organic)
+		if(is_robotic_limb(FALSE))
 			body_markings = null
 			aux_marking = null
 
@@ -711,7 +755,7 @@
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
-		if(!isnull(body_markings) && status == BODYPART_ORGANIC)
+		if(!isnull(body_markings) && is_organic_limb(FALSE))
 			if(!use_digitigrade)
 				if(body_zone == BODY_ZONE_CHEST)
 					. += image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
@@ -728,7 +772,7 @@
 	. += limb
 
 	if(animal_origin)
-		if(is_organic_limb())
+		if(is_organic_limb(FALSE))
 			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
@@ -742,7 +786,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(is_organic_limb() || render_like_organic)
+	if(is_organic_limb())
 		limb.icon = base_bp_icon || 'icons/mob/human_parts.dmi'
 		if(should_draw_gender)
 			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
@@ -888,7 +932,7 @@
 	update_disabled()
 
 /obj/item/bodypart/proc/get_bleed_rate()
-	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
+	if(!is_organic_limb()) // maybe in the future we can bleed oil from aug parts, but not now
 		return
 	var/bleed_rate = 0
 	if(generic_bleedstacks > 0)

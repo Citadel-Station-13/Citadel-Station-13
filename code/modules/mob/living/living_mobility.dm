@@ -1,16 +1,11 @@
-/// IN THE FUTURE, WE WILL PROBABLY REFACTOR TO LESSEN THE NEED FOR UPDATE_MOBILITY, BUT FOR NOW.. WE CAN START DOING THIS.
-/// FOR BLOCKING MOVEMENT, USE TRAIT_MOBILITY_NOMOVE AS MUCH AS POSSIBLE. IT WILL MAKE REFACTORS IN THE FUTURE EASIER.
-/mob/living/ComponentInitialize()
-	. = ..()
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOMOVE), .proc/update_mobility)
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOPICKUP), .proc/update_mobility)
-	RegisterSignal(src, SIGNAL_TRAIT(TRAIT_MOBILITY_NOUSE), .proc/update_mobility)
 
 //Stuff like mobility flag updates, resting updates, etc.
 
 //Force-set resting variable, without needing to resist/etc.
 /mob/living/proc/set_resting(new_resting, silent = FALSE, updating = TRUE)
 	if(new_resting != resting)
+		if(resting && HAS_TRAIT(src, TRAIT_MOBILITY_NOREST)) //forcibly block resting from all sources - BE CAREFUL WITH THIS TRAIT
+			return
 		resting = new_resting
 		if(!silent)
 			to_chat(src, "<span class='notice'>You are now [resting? "resting" : "getting up"].</span>")
@@ -87,7 +82,7 @@
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyze && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying) && !(combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 	var/canstand = canstand_involuntary && !resting
 
-	var/should_be_lying = !canstand
+	var/should_be_lying = !canstand && !HAS_TRAIT(src, TRAIT_MOBILITY_NOREST)
 	if(buckled)
 		if(buckled.buckle_lying != -1)
 			should_be_lying = buckled.buckle_lying
@@ -145,7 +140,7 @@
 		L.update_pull_movespeed()
 
 	//Handle lying down, voluntary or involuntary
-	density = !lying
+	update_density()
 	if(lying)
 		set_resting(TRUE, TRUE, FALSE)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -172,5 +167,7 @@
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+
+	update_movespeed()
 
 	return mobility_flags

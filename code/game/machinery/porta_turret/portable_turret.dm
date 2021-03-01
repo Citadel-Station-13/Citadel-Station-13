@@ -283,9 +283,9 @@
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
-		if(istype(I, /obj/item/crowbar))
-			//If the turret is destroyed, you can remove it with a crowbar to
-			//try and salvage its components
+		if(I.tool_behaviour == TOOL_CROWBAR)
+			//If the turret is destroyed, you can remove it with something
+			//that acts like a crowbar to try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
 			if(I.use_tool(src, user, 20))
 				if(prob(70))
@@ -302,7 +302,7 @@
 				qdel(src)
 				return
 
-	else if((istype(I, /obj/item/wrench)) && (!on))
+	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
 		if(raised)
 			return
 
@@ -329,12 +329,11 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='alert'>Access denied.</span>")
-	else if(istype(I, /obj/item/multitool) && !locked)
+	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
 		if(!multitool_check_buffer(user, I))
 			return
-		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
+		I.buffer = src
+		to_chat(user, "<span class='notice'>You add [src] to [I]'s buffer.</span>")
 	else
 		return ..()
 
@@ -392,6 +391,27 @@
 		invisibility = 0
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
+
+//turret healing
+/obj/machinery/porta_turret/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		. += "<span class='notice'>[src] is damaged, use a lit welder to fix it.</span>"
+
+/obj/machinery/porta_turret/welder_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(cover && obj_integrity < max_integrity)
+		if(!I.tool_start_check(user, amount=0))
+			return
+		user.visible_message("[user] is welding the turret.", \
+						"<span class='notice'>You begin repairing the turret...</span>", \
+						"<span class='italics'>You hear welding.</span>")
+		if(I.use_tool(src, user, 40, volume=50))
+			obj_integrity = max_integrity
+			user.visible_message("[user.name] has repaired [src].", \
+								"<span class='notice'>You finish repairing the turret.</span>")
+	else
+		to_chat(user, "<span class='notice'>The turret doesn't need repairing.</span>")
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
@@ -774,6 +794,9 @@
 	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
+/obj/machinery/porta_turret/syndicate/pod/toolbox
+	max_integrity = 100
+
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
@@ -924,20 +947,19 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/multitool))
+	if(I.tool_behaviour == TOOL_MULTITOOL)
 		if(!multitool_check_buffer(user, I))
 			return
-		var/obj/item/multitool/M = I
-		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-			turrets |= M.buffer
-			to_chat(user, "<span class='notice'>You link \the [M.buffer] with \the [src].</span>")
+		if(I.buffer && istype(I.buffer, /obj/machinery/porta_turret))
+			turrets |= I.buffer
+			to_chat(user, "<span class='notice'>You link \the [I.buffer] with \the [src].</span>")
 			return
 
-	if (issilicon(user))
+	if(issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
-		if (allowed(usr))
+	if(get_dist(src, user) == 0 )		// trying to unlock the interface
+		if(allowed(usr))
 			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
 				return

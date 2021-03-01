@@ -31,6 +31,7 @@
 	var/datum/preferences/prefs = null
 	var/last_turn = 0
 	var/move_delay = 0
+	var/last_move = 0
 	var/area			= null
 
 	/// Last time we Click()ed. No clicking twice in one tick!
@@ -89,6 +90,8 @@
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
 
+	/// Last time they used fix macros
+	var/last_macro_fix = 0
 	/// Keys currently held
 	var/list/keys_held = list()
 	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
@@ -126,9 +129,8 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
-
-	/// datum wrapper for client view
-	var/datum/view_data/view_size
+	/// viewsize datum for holding our view size
+	var/datum/viewData/view_size
 
 	/// our current tab
 	var/stat_tab
@@ -161,6 +163,14 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+
+	/**
+	 * Assoc list with all the active maps - when a screen obj is added to
+	 * a map, it's put in here as well.
+	 *
+	 * Format: list(<mapname> = list(/obj/screen))
+	 */
+	var/list/screen_maps = list()
 
 	// List of all asset filenames sent to this client by the asset cache, along with their assoicated md5s
 	var/list/sent_assets = list()

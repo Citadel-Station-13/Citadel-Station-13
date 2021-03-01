@@ -522,7 +522,7 @@
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	w_class = WEIGHT_CLASS_BULKY
-	force = 18
+	force = 15
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -536,11 +536,11 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 15
+	armour_penetration = 10
+	knockdown = 5
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	knockdown = 30
 	var/chain
 
 /obj/item/projectile/hook/fire(setAngle)
@@ -760,6 +760,7 @@
 /obj/item/melee/transforming/cleaving_saw
 	name = "cleaving saw"
 	desc = "This saw, effective at drawing the blood of beasts, transforms into a long cleaver that makes use of centrifugal force."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	force = 12
 	force_on = 20 //force when active
 	throwforce = 20
@@ -1103,7 +1104,7 @@
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/gun/ballistic/revolver/doublebarrel/super(src)
+			new /obj/item/book/granter/spell/asura(src)
 		if(3)
 			new /obj/item/guardiancreator(src)
 
@@ -1177,6 +1178,7 @@
 /obj/item/gun/ballistic/revolver/doublebarrel/super
 	name = "super combat shotgun"
 	desc = "From the belly of the beast - or rather, demon. Twice as lethal as a less-than-super shotgun, but a tad bulkier."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	icon_state = "heckgun"
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/heck
@@ -1184,6 +1186,13 @@
 	burst_shot_delay = 0
 	unique_reskin = null
 	sawn_off = TRUE
+
+/obj/item/book/granter/spell/asura
+	spell = /obj/effect/proc_holder/spell/self/asura
+	spellname = "asuras wrath"
+	icon_state = "bookasura"
+	desc = "This crimson novel emanates rage incarnate."
+	remarks = list("Kaio-What?", "It can only be sustained for a short time...", "It's like a massive upsurge of energy...", "Takes a heavy toll on the user's body...?", "Extra arms not included...", "There's stronger levels? Why aren't they in the book...")
 
 //Colossus
 /obj/structure/closet/crate/necropolis/colossus
@@ -1207,6 +1216,7 @@
 /obj/item/hierophant_club
 	name = "hierophant club"
 	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	icon_state = "hierophant_club_ready_beacon"
 	item_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'

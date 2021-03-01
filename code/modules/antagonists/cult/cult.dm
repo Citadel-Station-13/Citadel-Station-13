@@ -19,9 +19,11 @@
 	var/ignore_holy_water = FALSE
 
 /datum/antagonist/cult/neutered
+	name = "Neutered Cultist"
 	neutered = TRUE
 
 /datum/antagonist/cult/neutered/traitor
+	name = "Traitor Cultist"
 	ignore_eligibility_checks = TRUE
 	ignore_holy_water = TRUE
 	show_in_roundend = FALSE
@@ -100,7 +102,7 @@
 
 	var/T = new item_path(mob)
 	var/item_name = initial(item_path.name)
-	var/where = mob.equip_in_one_of_slots(T, slots)
+	var/where = mob.equip_in_one_of_slots(T, slots, critical = TRUE)
 	if(!where)
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
 		return 0
@@ -295,6 +297,8 @@
 				++cultplayers
 			else
 				++alive
+	if(!alive)
+		return
 	var/ratio = cultplayers/alive
 	if(ratio > CULT_RISEN && !cult_risen)
 		for(var/datum/mind/B in members)

@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 /obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
+		if(BP.is_robotic_limb())
 			to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
 			return 0
 
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			if(istype(A, /obj/item/cult_bastard))
 				for(var/obj/item/soulstone/SS in A.contents)
 					SS.usability = TRUE
-					for(var/mob/living/simple_animal/shade/EX in SS)
+					for(var/mob/living/simple_animal/hostile/construct/shade/EX in SS)
 						SSticker.mode.remove_cultist(EX.mind, 1, 0)
 						EX.icon_state = "ghost1"
 						EX.name = "Purified [EX.name]"
@@ -217,7 +217,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		if(do_after(user, 40, target = SS))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,1)
 			SS.usability = TRUE
-			for(var/mob/living/simple_animal/shade/EX in SS)
+			for(var/mob/living/simple_animal/hostile/construct/shade/EX in SS)
 				SSticker.mode.remove_cultist(EX.mind, 1, 0)
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [EX.name]"

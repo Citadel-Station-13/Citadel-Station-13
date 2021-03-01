@@ -135,7 +135,12 @@
 		//That's done remove from priority even if it failed
 		if(forced)
 			//TODO : handle forced ruins with multiple variants
+			// this might work?
 			forced_ruins -= current_pick
+			if(!current_pick.allow_duplicates)
+				for(var/datum/map_template/ruin/R in forced_ruins)
+					if(R.id == current_pick.id)
+						forced_ruins -= R
 			forced = FALSE
 
 		if(failed_to_place)

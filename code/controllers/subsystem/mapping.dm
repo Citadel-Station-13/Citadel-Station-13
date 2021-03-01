@@ -41,6 +41,8 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
+	/// Lookup for zlevel to station z. text = num.
+	var/list/z_to_station_z_index
 
 	var/stat_map_name = "Loading..."
 
@@ -259,6 +261,16 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	return parsed_maps
 
+/datum/controller/subsystem/mapping/proc/setup_station_z_index()
+	z_to_station_z_index = list()
+	var/sz = 1
+	var/cz = station_start
+	if(islist(config.map_file))
+		for(var/map in config.map_file)
+			z_to_station_z_index["[cz++]"] = sz++
+	else
+		z_to_station_z_index["[station_start]"] = 1
+
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
@@ -270,6 +282,8 @@ SUBSYSTEM_DEF(mapping)
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION, FALSE, config.orientation)
+
+	setup_station_z_index()
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
@@ -447,7 +461,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission / Virtual Reality"
-	set category = "Fun"
+	set category = "Admin.Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return

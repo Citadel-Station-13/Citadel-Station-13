@@ -567,4 +567,37 @@
 	icon = 'icons/mob/clothing/custom_w.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	dynamic_hair_suffix = ""
-	
+
+/obj/item/clothing/under/custom/vest
+	name = "vest"
+	desc = "A vest with a shirt underlining it."
+	icon_state = "vest"
+	item_state = "vest"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = STYLE_DIGITIGRADE
+
+/obj/item/clothing/suit/custom/exo
+	name = "Full ExoFrame"
+	desc = "A suit specially designed for those who live and breath hardware with custom tooled robotic manipulators for working with precision even on the most hazardous of jobs."
+	icon_state = "frame"
+	item_state = "frame"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE
+
+/obj/item/clothing/neck/petcollar/choker
+	name = "NT Choker"
+	desc = "NT property since January 21st,  2562."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "choker"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	item_state = "choker"
+
+/obj/item/clothing/mask/breath/mmask
+	name = "Strange Metal Mask"
+	desc = "An odd metal mask."
+	icon = 'icons/obj/custom.dmi'
+	item_state = "mmask"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	icon_state = "mmask"

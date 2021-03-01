@@ -85,7 +85,7 @@
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
-///from base of atom/bullet_act(): (/obj/projectile, def_zone)
+///from base of atom/bullet_act(): (/obj/item/projectile, def_zone)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
@@ -136,11 +136,15 @@
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"				//from base of atom/attack_hand(): (mob/user)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"				//from base of atom/attack_paw(): (mob/user)
 	#define COMPONENT_NO_ATTACK_HAND 1							//works on all 3.
+/////////////////
+
 //This signal return value bitflags can be found in __DEFINES/misc.dm
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"	//called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
 
-
-/////////////////
+/// Called from orbit component: (atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+#define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
+/// Called from orbit component: (atom/movable/orbiter, refreshing)
+#define COMSIG_ATOM_ORBIT_END "atom_orbit_end"
 
 #define COMSIG_ENTER_AREA "enter_area" 						//from base of area/Entered(): (/area)
 #define COMSIG_EXIT_AREA "exit_area" 							//from base of area/Exited(): (/area)
@@ -286,7 +290,7 @@
 
 #define COMSIG_LIVING_ACTIVE_BLOCK_START "active_block_start"			//from base of mob/living/keybind_start_active_blocking(): (obj/item/blocking_item, list/backup_items)
 	#define COMPONENT_PREVENT_BLOCK_START 1
-#define COMSIG_LIVING_ACTIVE_PARRY_START "active_parry_start"			//from base of mob/living/initiate_parry_sequence(): (parrying_method, datum/parrying_item_mob_or_art, list/backup_items)
+#define COMSIG_LIVING_ACTIVE_PARRY_START "active_parry_start"			//from base of mob/living/initiate_parry_sequence(): (parrying_method, datum/parrying_item_mob_or_art, list/backup_items, list/override)
 	#define COMPONENT_PREVENT_PARRY_START 1
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
@@ -381,6 +385,8 @@
 #define COMSIG_MINE_TRIGGERED "minegoboom"						///from [/obj/effect/mine/proc/triggermine]:
 	// Uncovered information
 	#define COMPONENT_DEEPSCAN_UNCOVERED_INFORMATION		1
+///from [/obj/structure/closet/supplypod/proc/endlaunch]:
+#define COMSIG_SUPPLYPOD_LANDED "supplypodgoboom"
 
 // /obj/item/grenade signals
 #define COMSIG_GRENADE_PRIME "grenade_prime"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -488,6 +494,17 @@
 #define COMPONENT_PROGRAM_INSTALLED		1					//Installation successful
 #define COMPONENT_PROGRAM_NOT_INSTALLED		2				//Installation failed, but there are still nanites
 #define COMSIG_NANITE_SYNC "nanite_sync"						//(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component
+/// Checks if a nanite component is able to be controlled by console
+#define COMSIG_NANITE_CHECK_CONSOLE_LOCK "is_console_locked"
+/// Checks if a nanite component is able to be interfaced with by a host with innate nanite control
+#define COMSIG_NANITE_CHECK_HOST_LOCK "is_host_locked"
+/// Checks if a nanite component is able to be overwritten by viral replica
+#define COMSIG_NANITE_CHECK_VIRAL_PREVENTION "is_virus_locked"
+	#define NANITE_CHANGES_LOCKED 1
+// Internal signals that programs register to and respond with to not require for loops
+#define COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK "naniteiconsolelocked"
+#define COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK "naniteihostlocked"
+#define COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK "naniteiviruslocked"
 
 // /datum/component/storage signals
 #define COMSIG_CONTAINS_STORAGE "is_storage"						//() - returns bool.
@@ -523,3 +540,10 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+// /datum/element/ventcrawling signals
+#define COMSIG_HANDLE_VENTCRAWL "handle_ventcrawl"							//when atom with ventcrawling element attempts to ventcrawl
+#define COMSIG_CHECK_VENTCRAWL "check_ventcrawl"							//to check an atom's ventcrawling element tier (if applicable)
+// twitch plays
+/// Returns direction: (wipe_votes)
+#define COMSIG_TWITCH_PLAYS_MOVEMENT_DATA "twitch_plays_movement_data"

@@ -73,7 +73,7 @@
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
-				if(user.grab_state >= GRAB_NECK)
+				if(user.grab_state >= GRAB_NECK || HAS_TRAIT(user, TRAIT_MAULER))
 					tablelimbsmash(user, pushed_mob)
 				else
 					tablepush(user, pushed_mob)
@@ -147,7 +147,7 @@
 	pushed_mob.Knockdown(30)
 	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
 	var/extra_wound = 0
-	if(HAS_TRAIT(user, TRAIT_HULK))
+	if(HAS_TRAIT(user, TRAIT_HULK) || HAS_TRAIT(user, TRAIT_MAULER))
 		extra_wound = 20
 	banged_limb.receive_damage(30, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
@@ -170,13 +170,13 @@
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver) && deconstruction_ready)
+		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(I.use_tool(src, user, 20, volume=50))
 				deconstruct(TRUE)
 			return
 
-		if(istype(I, /obj/item/wrench) && deconstruction_ready)
+		if(I.tool_behaviour == TOOL_WRENCH && deconstruction_ready)
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=50))
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -269,13 +269,13 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
+	. = ..()
 	for(var/mob/M in OldLoc.contents)//Kidnap everyone on top
 		M.forceMove(loc)
 	for(var/x in attached_items)
 		var/atom/movable/AM = x
 		if(!AM.Move(loc))
 			RemoveItemFromTable(AM, AM.loc)
-	return TRUE
 
 /*
  * Glass tables
@@ -538,7 +538,7 @@
 	return "<span class='notice'>The top cover is firmly <b>welded</b> on.</span>"
 
 /obj/structure/table/reinforced/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -689,7 +689,7 @@
 		step(O, get_dir(O, src))
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1 & NODECONSTRUCT_1))
 		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
@@ -747,7 +747,7 @@
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		new /obj/item/stack/sheet/metal(user.loc)
 		qdel(src)
 	else

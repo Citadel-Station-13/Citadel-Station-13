@@ -66,7 +66,7 @@
 	var/list/dept_list = list("Civilian","Security","Medical","Science","Engineering","Cargo")
 
 /obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		target_dept = (target_dept == dept_list.len) ? 1 : (target_dept + 1)
 		to_chat(user, "<span class='notice'>You set the board to \"[dept_list[target_dept]]\".</span>")
 	else
@@ -181,7 +181,7 @@
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
@@ -297,6 +297,10 @@
 	name = "Mining Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/mining
 
+/obj/item/circuitboard/computer/mining_shuttle/common
+	name = "Lavaland Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/mining/common
+
 /obj/item/circuitboard/computer/snow_taxi
 	name = "Snow Taxi (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/snow_taxi
@@ -334,7 +338,7 @@
 	build_path = /obj/machinery/computer/libraryconsole
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole

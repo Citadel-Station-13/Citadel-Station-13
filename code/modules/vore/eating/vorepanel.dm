@@ -661,7 +661,7 @@
 	if(href_list["saveprefs"])
 		if(!(user.client?.prefs))
 			return FALSE
-		if(!user.client.prefs.save_character())
+		if(!user.copy_to_prefs_vr() || !user.client.prefs.save_character())
 			to_chat(user, "<span class='warning'>Belly Preferences not saved!</span>")
 			log_admin("Could not save vore prefs on USER: [user].")
 		else

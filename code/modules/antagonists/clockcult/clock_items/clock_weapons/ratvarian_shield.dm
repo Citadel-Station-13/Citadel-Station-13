@@ -22,7 +22,7 @@
 	. = ..()
 	desc = initial(desc)
 
-obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
+/obj/item/shield/riot/ratvarian/proc/calc_bash_mult()
 	var/bash_mult = 0
 	if(!dam_absorbed)
 		return 1

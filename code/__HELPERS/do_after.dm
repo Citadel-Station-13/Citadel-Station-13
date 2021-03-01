@@ -38,11 +38,11 @@
 		return FALSE
 	if((do_after_flags & DO_AFTER_REQUIRES_USER_ON_TURF) && !isturf(user.loc))
 		return FALSE
+	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
+		delay *= living_user.cached_multiplicative_actions_slowdown
 	var/starttime = world.time
 	var/endtime = world.time + delay
 	var/obj/item/initially_held_item = mob_redirect?.get_active_held_item()
-	if(!(do_after_flags & DO_AFTER_NO_COEFFICIENT) && living_user)
-		delay *= living_user.do_after_coefficent()
 	var/atom/movable/AM_user = ismovable(user) && user
 	var/drifting = AM_user?.Process_Spacemove(NONE) && AM_user.inertia_dir
 	var/initial_dx = targetturf.x - userturf.x
@@ -245,7 +245,7 @@
 	if(holding)
 		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
 
-	delay *= user.do_after_coefficent()
+	delay *= user.cached_multiplicative_actions_slowdown
 
 	var/datum/progressbar/progbar
 	if (progress)
@@ -300,10 +300,6 @@
 		LAZYREMOVE(user.do_afters, target)
 		LAZYREMOVE(target.targeted_by, user)
 
-/mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
-	. = 1
-	return
-
 /proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
 	if(!user || !targets)
 		return 0
@@ -325,6 +321,8 @@
 	var/datum/progressbar/progbar
 	if(progress)
 		progbar = new(user, time, targets[1])
+
+	time *= user.cached_multiplicative_actions_slowdown
 
 	var/endtime = world.time + time
 	var/starttime = world.time

@@ -352,6 +352,8 @@
 			return
 	else
 		if(cooldown_check < world.time)
+			if(!UseStaminaBufferStandard(user, STAM_COST_BATON_MOB_MULT, warn = TRUE))
+				return DISCARD_LAST_ACTION
 			if(target.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, null) & BLOCK_SUCCESS)
 				playsound(target, 'sound/weapons/genhit.ogg', 50, 1)
 				return
@@ -373,7 +375,6 @@
 			else
 				target.LAssailant = WEAKREF(user)
 			cooldown_check = world.time + cooldown
-			user.adjustStaminaLossBuffered(getweight(user, STAM_COST_BATON_MOB_MULT))
 		else
 			var/wait_desc = get_wait_description()
 			if(wait_desc)

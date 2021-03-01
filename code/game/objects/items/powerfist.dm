@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
-	item_flags = NEEDS_PERMIT | NO_COMBAT_MODE_FORCE_MODIFIER //To avoid ambushing and oneshotting healthy crewmembers on force setting 3.
+	item_flags = NEEDS_PERMIT
 	attack_verb = list("whacked", "fisted", "power-punched")
 	force = 20
 	throwforce = 10
@@ -36,7 +36,7 @@
 				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
 			updateTank(W, 0, user)
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -46,7 +46,7 @@
 				fisto_setting = 1
 		W.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(tank)
 			updateTank(tank, 1, user)
 
@@ -75,6 +75,9 @@
 		return FALSE
 	if(!tank)
 		to_chat(user, "<span class='warning'>\The [src] can't operate without a source of gas!</span>")
+		return FALSE
+	var/weight = getweight(user, STAM_COST_ATTACK_MOB_MULT)
+	if(!user.UseStaminaBuffer(weight, warn = TRUE))
 		return FALSE
 	var/datum/gas_mixture/gasused = tank.air_contents.remove(gasperfist * fisto_setting)
 	var/turf/T = get_turf(src)
@@ -108,8 +111,4 @@
 	target.throw_at(throw_target, 5 * fisto_setting, 0.5 + (fisto_setting / 2))
 
 	log_combat(user, target, "power fisted", src)
-
-	var/weight = getweight(user, STAM_COST_ATTACK_MOB_MULT)
-	if(weight)
-		user.adjustStaminaLossBuffered(weight)
 	return TRUE

@@ -44,7 +44,7 @@
 	. = ..()
 	if(is_type_in_list(src, GLOB.ventcrawl_machinery) && isliving(user))
 		var/mob/living/L = user
-		if(L.ventcrawler)
+		if(SEND_SIGNAL(L, COMSIG_CHECK_VENTCRAWL))
 			. += "<span class='notice'>Alt-click to crawl through it.</span>"
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir)
@@ -318,7 +318,7 @@
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(is_type_in_typecache(src, GLOB.ventcrawl_machinery))
-		return L.handle_ventcrawl(src)
+		return SEND_SIGNAL(L, COMSIG_HANDLE_VENTCRAWL, src)
 	return ..()
 
 

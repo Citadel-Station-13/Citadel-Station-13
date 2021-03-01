@@ -1529,6 +1529,7 @@
 	icon_state = "warningline";
 	dir = 1
 	},
+/obj/item/paper/fluff/ruins/skelter/cloner,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/med)
 "dJ" = (
@@ -2485,10 +2486,13 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "fR" = (
-/obj/structure/cable{
-	icon_state = "2-8"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/obj/item/ammo_casing/c45,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/item/kitchen/knife/combat,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
 "fS" = (
@@ -2725,9 +2729,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
 "gx" = (
-/obj/machinery/door/firedoor{
-	pixel_x = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -2738,9 +2740,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/shields)
 "gy" = (
-/obj/machinery/door/firedoor{
-	pixel_x = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
 	name = "Shields"
@@ -2826,10 +2826,12 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
 "gI" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/automatic/pistol/m1911,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/skelter/sec)
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/item/ammo_casing/c10mm,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/skelter/engine/powerstorage)
 "gJ" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -3285,17 +3287,10 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
 "hJ" = (
-/obj/effect/turf_decal/trimline/blue/line,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/item/ammo_casing/c45,
-/turf/open/floor/plasteel/showroomfloor,
-/area/ruin/space/has_grav/skelter/comms)
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/m10mm,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
 "hK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	icon_state = "trimline_fill";
@@ -3843,19 +3838,10 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
 "iP" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
-/turf/open/floor/plasteel/showroomfloor,
-/area/ruin/space/has_grav/skelter/comms)
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/plasteel/dark,
+/area/ruin/space/has_grav/skelter/sec)
 "iQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/mineral/titanium,
@@ -3934,17 +3920,15 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
 "iX" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c10mm,
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)
 "iY" = (
@@ -4149,16 +4133,39 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
 "jv" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/m45,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/has_grav/skelter/sec)
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/gun/ballistic/automatic/pistol/no_mag,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
 "jw" = (
 /turf/open/space/basic,
 /area/space/nearstation)
 "jx" = (
 /turf/open/space/basic,
 /area/template_noop)
+"jy" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/item/ammo_casing/c10mm,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ruin/space/has_grav/skelter/comms)
 
 (1,1,1) = {"
 ah
@@ -4479,7 +4486,7 @@ eW
 cF
 fN
 gj
-jv
+hJ
 gl
 hw
 hU
@@ -4539,7 +4546,7 @@ eX
 fx
 fN
 gj
-gI
+iP
 gl
 hx
 hx
@@ -4657,7 +4664,7 @@ dI
 bI
 fc
 fA
-fR
+gI
 go
 gL
 iC
@@ -4715,7 +4722,7 @@ bI
 bI
 bI
 eA
-fd
+fR
 fA
 fA
 fA
@@ -4991,10 +4998,10 @@ ju
 gw
 dO
 hk
-hJ
+iX
 ij
 iF
-iP
+jv
 iW
 jh
 jl
@@ -5025,7 +5032,7 @@ hK
 ii
 jm
 jn
-iX
+jy
 ii
 jl
 ah

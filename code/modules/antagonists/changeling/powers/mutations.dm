@@ -6,6 +6,10 @@
 		Shield
 		Armor
 		Tentacles
+	Hatterhat Additions:
+		claws! (glove slot)
+		jagged (thieves') claws
+		bone gauntlets for punching dudes
 */
 
 
@@ -17,6 +21,7 @@
 	chemical_cost = 1000
 	dna_cost = -1
 
+	var/recharge_slowdown = 0
 	var/silent = FALSE
 	var/weapon_type
 	var/weapon_name_simple
@@ -33,6 +38,8 @@
 		if(!silent)
 			playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 			user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms [user.p_their()] [weapon_name_simple] into an arm!</span>", "<span class='notice'>We assimilate the [weapon_name_simple] back into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.chem_recharge_slowdown -= recharge_slowdown
 		user.update_inv_hands()
 		return 1
 
@@ -53,6 +60,8 @@
 	user.put_in_hands(W)
 	if(!silent)
 		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.chem_recharge_slowdown += recharge_slowdown
 	return W
 
 /obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
@@ -89,7 +98,7 @@
 		return 1
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message("<span class='warning'>[H] casts off [H.p_their()] [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
+		H.visible_message("<span class='warning'>[H] casts off [H.p_their()] [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
@@ -137,10 +146,11 @@
 	name = "Arm Blade"
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form. This ability is loud, and might cause our blood to react violently to heat."
-	chemical_cost = 10
+	chemical_cost = 5
 	dna_cost = 2
 	loudness = 2
 	req_human = 1
+	recharge_slowdown = 0.6
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
@@ -461,7 +471,7 @@
 	if(--remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
-			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
+			H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms [H.p_their()] shield into an arm!</span>", "<span class='notice'>We assimilate our shield into our body.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
 		qdel(src)
 
 /***************************************\
@@ -483,7 +493,7 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
 	suit_name_simple = "flesh shell"
 	helmet_name_simple = "space helmet"
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	blood_on_castoff = 1
 
 /obj/item/clothing/suit/space/changeling
@@ -528,11 +538,11 @@
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a constant expenditure of chemicals, resulting in a reduced chemical generation. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form. This ability is loud, and might cause our blood to react violently to heat."
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = 1
 	loudness = 2
 	req_human = 1
-	recharge_slowdown = 0.5
+	recharge_slowdown = 0.6
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "ling_armor"
 	action_background_icon_state = "bg_ling"
@@ -570,3 +580,167 @@
 /obj/item/clothing/head/helmet/changeling/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+
+
+/***************************************\
+|*****************CLAWS*****************|
+\***************************************/
+
+/obj/effect/proc_holder/changeling/gloves
+	name = "Mangled Claws"
+	desc = "Go tell a coder if you see this"
+	helptext = "Yell at Hatterhat, for fucking up Miauw and/or Perakp's work"
+	chemical_cost = 1000
+	dna_cost = -1
+
+	var/glove_type = /obj/item
+	var/glove_name_simple = "     " // keep these plural bro
+	var/recharge_slowdown = 0
+	var/blood_on_castoff = 0
+
+/obj/effect/proc_holder/changeling/gloves/try_to_sting(mob/user, mob/target)
+	if(check_gloves(user))
+		return
+	var/mob/living/carbon/human/H = user
+	..(H, target)
+
+//checks if we already have claws and casts it off
+/obj/effect/proc_holder/changeling/gloves/proc/check_gloves(mob/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!ishuman(user) || !changeling)
+		return 1
+	var/mob/living/carbon/human/H = user
+	if(istype(H.gloves, glove_type))
+		H.visible_message("<span class='warning'>With a sickening crunch, [H] reforms [H.p_their()] [glove_name_simple] into hands!</span>", "<span class='warning'>We assimilate our [glove_name_simple].</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		H.temporarilyRemoveItemFromInventory(H.gloves, TRUE) //The qdel on dropped() takes care of it
+		H.update_inv_gloves()
+		playsound(H.loc, 'sound/effects/blobattack.ogg', 30, 1)
+		if(blood_on_castoff)
+			H.add_splatter_floor()
+			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+
+		changeling.chem_recharge_slowdown -= recharge_slowdown
+		return 1
+
+/obj/effect/proc_holder/changeling/gloves/on_refund(mob/user)
+	if(!ishuman(user))
+		return
+	action.Remove(user)
+	var/mob/living/carbon/human/H = user
+	check_gloves(H)
+
+/obj/effect/proc_holder/changeling/gloves/sting_action(mob/living/carbon/human/user)
+	if(!user.canUnEquip(user.gloves))
+		to_chat(user, "\the [user.gloves] is stuck to your body, you cannot grow [glove_name_simple] over it!")
+		return
+
+	user.dropItemToGround(user.gloves)
+
+	user.equip_to_slot_if_possible(new glove_type(user), SLOT_GLOVES, 1, 1, 1)
+	playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	changeling.chem_recharge_slowdown += recharge_slowdown
+	return TRUE
+
+/obj/item/clothing/gloves/claws
+	name = "claws of doing nothing"
+	desc = "These shouldn't be here."
+	icon_state = "bracers"
+	item_state = "bracers"
+	transfer_prints = TRUE
+	body_parts_covered = HANDS
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/gloves/claws/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/gloves/claws/vulture // prying shit off dead/soon to be dead dudes!
+	name = "jagged claws"
+	desc = "Good for prying things off of people and looking incredibly creepy."
+	strip_mod = 2
+
+/obj/effect/proc_holder/changeling/gloves/gauntlets
+	name = "Bone Gauntlets"
+	desc = "We turn our hands into solid bone and chitin, sacrificing dexterity for raw strength."
+	helptext = "These grotesque, bone-and-chitin gauntlets are remarkably good at beating victims senseless, and cannot be used in lesser form. This ability is loud, and might cause our blood to react violently to heat."
+	chemical_cost = 5 // same cost as armblade because its a sidegrade (sacrifice utility for punching people violently)
+	dna_cost = 2
+	loudness = 2
+	req_human = 1
+	recharge_slowdown = 0.6
+	action_icon = 'icons/mob/actions/actions_changeling.dmi'
+	action_icon_state = "ling_gauntlets"
+	action_background_icon_state = "bg_ling"
+
+	glove_type = /obj/item/clothing/gloves/fingerless/pugilist/cling // just punch his head off dude
+	glove_name_simple = "bone gauntlets"
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling // switches between lesser GotNS and Big Punchy Rib Breaky Hands
+	name = "hewn bone gauntlets"
+	icon_state = "ling_gauntlets"
+	item_state = "ling_gauntlets"
+	desc = "Rough bone and chitin, pulsing with an abomination barely called \"life\". Good for punching people, not so much for firearms."
+	transfer_prints = TRUE
+	item_flags = DROPDEL // whoops
+	body_parts_covered = ARMS|HANDS
+	cold_protection = ARMS|HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+	enhancement = 6 // first, do harm. all of it. all of the harm. just fuck em up.
+	wound_enhancement = 6
+	var/fast_enhancement = 6
+	var/fast_wound_enhancement = 6
+	var/slow_enhancement = 12
+	var/slow_wound_enhancement = 15
+	silent = TRUE
+	inherited_trait = TRAIT_CHUNKYFINGERS // how do you expect to shoot anyone with bone covered hands
+	secondary_trait = TRAIT_MAULER // just punch them idiot
+	var/fasthands = TRUE
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling/examine(mob/user)
+	. = ..()
+	. += "[src] are shaped for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"]."
+	. += "Alt-click them to change between rapid strikes and strong blows."
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling/AltClick(mob/user)
+	. = ..()
+	use_buffs(user, FALSE) // reset
+	fasthands = !fasthands
+	if(fasthands)
+		enhancement = fast_enhancement
+		wound_enhancement = fast_wound_enhancement
+	else
+		enhancement = slow_enhancement // fuck em up kiddo
+		wound_enhancement = slow_wound_enhancement // really. fuck em up.
+	to_chat(user, "<span class='notice'>[src] are now formed to allow for [fasthands ? "fast, precise strikes" : "crippling, damaging blows"].</span>")
+	addtimer(CALLBACK(src, .proc/use_buffs, user, TRUE), 0.1) // go fuckin get em
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling/equipped(mob/user, slot)
+	. = ..()
+	if(current_equipped_slot == SLOT_GLOVES)
+		to_chat(user, "<span class='notice'>With [src] formed around our arms, we are ready to fight.</span>")
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling/dropped(mob/user)
+	. = ..()
+	if(wornonce)
+		to_chat(user, "<span class='warning'>With [src] assimilated, we feel less ready to punch things.</span>")
+
+/obj/item/clothing/gloves/fingerless/pugilist/cling/Touch(atom/target, proximity = TRUE)
+	if(!isliving(target))
+		return
+	var/mob/living/M = loc
+	if(fasthands)
+		M.SetNextAction(CLICK_CD_RANGE) // fast punches
+	else
+		M.SetNextAction(CLICK_CD_GRABBING) // strong punches
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION

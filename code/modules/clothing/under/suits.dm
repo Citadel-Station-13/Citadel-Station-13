@@ -91,6 +91,12 @@
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
 
+/obj/item/clothing/under/suit/charismatic_suit
+	name = "charismatic suit"
+	desc = "Luck is for losers, baby."
+	icon_state = "charismatic_suit"
+	item_state = "charismatic_suit"
+
 /obj/item/clothing/under/suit/white
 	name = "white suit"
 	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"

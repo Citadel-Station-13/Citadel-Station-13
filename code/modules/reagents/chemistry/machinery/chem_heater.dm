@@ -83,6 +83,16 @@
 		updateUsrDialog()
 		update_icon()
 		return
+
+	if(beaker)
+		if(istype(I, /obj/item/reagent_containers/dropper))
+			var/obj/item/reagent_containers/dropper/D = I
+			D.afterattack(beaker, user, 1)
+			return
+		if(istype(I, /obj/item/reagent_containers/syringe))
+			var/obj/item/reagent_containers/syringe/S = I
+			S.afterattack(beaker, user, 1)
+			return
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
@@ -107,7 +117,7 @@
 	data["beakerMaxVolume"] = beaker ? beaker.volume : null
 	//purity and pH accuracy
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
-		data["partRating"]= 10**(M.rating-1)
+		data["partRating"]= M.rating
 		if(M.rating == 4)
 			data["showPurity"] = 1
 		else
@@ -116,7 +126,7 @@
 	var beakerContents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume, "purity" = R.purity))) // list in a list because Byond merges the first list...
+			beakerContents.Add(list(list("name" = R.name, "volume" = round(R.volume, 0.01), "purity" = round(R.purity, 0.01)))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
 

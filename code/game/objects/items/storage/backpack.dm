@@ -639,7 +639,7 @@
 	new /obj/item/bikehorn(src)
 	new /obj/item/implanter/sad_trombone(src)
 
-obj/item/storage/backpack/duffelbag/syndie/shredderbundle
+/obj/item/storage/backpack/duffelbag/syndie/shredderbundle
 	desc = "A large duffel bag containing two CX Shredders, some magazines, an elite hardsuit, and a chest rig."
 
 /obj/item/storage/backpack/duffelbag/syndie/shredderbundle/PopulateContents()

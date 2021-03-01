@@ -83,6 +83,8 @@
 
 	//Headset for Poly to yell at engineers :)
 	var/obj/item/radio/headset/ears = null
+	/// spawns with headset
+	var/spawns_with_headset = FALSE
 
 	//The thing the parrot is currently interested in. This gets used for items the parrot wants to pick up, mobs it wants to steal from,
 	//mobs it wants to attack or mobs that have attacked it
@@ -105,13 +107,14 @@
 
 /mob/living/simple_animal/parrot/Initialize()
 	. = ..()
-	if(!ears)
-		var/headset = pick(/obj/item/radio/headset/headset_sec, \
-						/obj/item/radio/headset/headset_eng, \
-						/obj/item/radio/headset/headset_med, \
-						/obj/item/radio/headset/headset_sci, \
-						/obj/item/radio/headset/headset_cargo)
-		ears = new headset(src)
+	if(spawns_with_headset)
+		if(!ears)
+			var/headset = pick(/obj/item/radio/headset/headset_sec, \
+							/obj/item/radio/headset/headset_eng, \
+							/obj/item/radio/headset/headset_med, \
+							/obj/item/radio/headset/headset_sci, \
+							/obj/item/radio/headset/headset_cargo)
+			ears = new headset(src)
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
@@ -436,12 +439,7 @@
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
-			//Search for item to steal
-			parrot_interest = search_for_item()
-			if(parrot_interest)
-				emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
-				parrot_state = PARROT_SWOOP | PARROT_STEAL
-				icon_state = icon_living
+			INVOKE_ASYNC(src, .proc/attempt_item_theft)
 			return
 
 //-----WANDERING - This is basically a 'I dont know what to do yet' state
@@ -619,6 +617,14 @@
 	else
 		parrot_lastmove = src.loc
 	return 0
+
+/mob/living/simple_animal/parrot/proc/attempt_item_theft()
+	//Search for item to steal
+	search_for_item()
+	if(parrot_interest)
+		emote("me", EMOTE_VISIBLE, "looks in [parrot_interest]'s direction and takes flight.")
+		parrot_state = PARROT_SWOOP | PARROT_STEAL
+		icon_state = icon_living
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
@@ -878,6 +884,7 @@
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
+	spawns_with_headset = TRUE
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
 	var/longest_survival = 0
@@ -1031,3 +1038,159 @@
 
 /mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
 	return
+
+// Different Parrot Breeds
+
+/mob/living/simple_animal/parrot/kea
+	name = "Kea"
+	icon_state = "kea-flap"
+	icon_living = "kea-flap"
+	icon_dead = "kea-dead"
+	icon_sit = "kea_sit"
+
+/mob/living/simple_animal/parrot/eclectusr
+	name = "Eclectus"
+	icon_state = "eclectusr-flap"
+	icon_living = "eclectusr-flap"
+	icon_dead = "eclectusr-dead"
+	icon_sit = "electusr_sit"
+
+/mob/living/simple_animal/parrot/eclectus
+	name = "Eclectus"
+	icon_state = "eclectus-flap"
+	icon_living = "eclectus-flap"
+	icon_dead = "eclectus-dead"
+	icon_sit = "electus_sit"
+
+/mob/living/simple_animal/parrot/eclectusf
+	name = "Eclectus"
+	icon_state = "eclectusf-flap"
+	icon_living = "eclectusf-flap"
+	icon_dead = "eclectusf-dead"
+	icon_sit = "electusf_sit"
+
+/mob/living/simple_animal/parrot/greybird
+	name = "Grey Bird"
+	icon_state = "agrey-flap"
+	icon_living = "agrey-flap"
+	icon_dead = "agrey-dead"
+	icon_sit = "agrey_sit"
+
+/mob/living/simple_animal/parrot/blue_caique
+	name = "Blue Caique "
+	icon_state = "bcaique-flap"
+	icon_living = "bcaique-flap"
+	icon_dead = "bcaique-dead"
+	icon_sit = "bcaique_sit"
+
+/mob/living/simple_animal/parrot/white_caique
+	name = "White caique"
+	icon_state = "wcaique-flap"
+	icon_living = "wcaique-flap"
+	icon_dead = "wcaique-dead"
+	icon_sit = "wcaique_sit"
+
+/mob/living/simple_animal/parrot/green_budgerigar
+	name = "Green Budgerigar"
+	icon_state = "gbudge-flap"
+	icon_living = "gbudge-flap"
+	icon_dead = "gbudge-dead"
+	icon_sit = "gbudge_sit"
+
+/mob/living/simple_animal/parrot/blue_Budgerigar
+	name = "Blue Budgerigar"
+	icon_state = "bbudge-flap"
+	icon_living = "bbudge-flap"
+	icon_dead = "bbudge-dead"
+	icon_sit = "bbudge_sit"
+
+/mob/living/simple_animal/parrot/bluegreen_Budgerigar
+	name = "Bluegreen Budgerigar"
+	icon_state = "bgbudge-flap"
+	icon_living = "bgbudge-flap"
+	icon_dead = "bgbudge-dead"
+	icon_sit = "bgbudge_sit"
+
+/mob/living/simple_animal/parrot/commonblackbird
+	name = "Black Bird"
+	icon_state = "commonblackbird"
+	icon_living = "commonblackbird"
+	icon_dead = "commonblackbird-dead"
+	icon_sit = "commonblackbird_sit"
+
+/mob/living/simple_animal/parrot/azuretit
+	name = "Azure Tit"
+	icon_state = "azuretit"
+	icon_living = "azuretit"
+	icon_dead = "azuretit-dead"
+	icon_sit = "azuretit_sit"
+
+/mob/living/simple_animal/parrot/europeanrobin
+	name = "European Robin"
+	icon_state = "europeanrobin"
+	icon_living = "europeanrobin"
+	icon_dead = "europeanrobin-dead"
+	icon_sit = "europeanrobin_sit"
+
+/mob/living/simple_animal/parrot/goldcrest
+	name = "Goldcrest"
+	icon_state = "goldcrest"
+	icon_living = "goldcrest"
+	icon_dead = "goldcrest-dead"
+	icon_sit = "goldencrest_sit"
+
+/mob/living/simple_animal/parrot/ringneckdove
+	name = "Ringneck Dove"
+	icon_state = "ringneckdove"
+	icon_living = "ringneckdove"
+	icon_dead = "ringneckdove-dead"
+	icon_sit = "ringneckdove_sit"
+
+/mob/living/simple_animal/parrot/cockatiel
+	name = "Cockatiel"
+	icon_state = "tiel-flap"
+	icon_living = "tiel-flap"
+	icon_dead = "tiel-dead"
+	icon_sit = "tiel_sit"
+
+/mob/living/simple_animal/parrot/white_cockatiel
+	name = "White Cockatiel"
+	icon_state = "wtiel-flap"
+	icon_living = "wtiel-flap"
+	icon_dead = "wtiel-dead"
+	icon_sit = "wtiel_sit"
+
+/mob/living/simple_animal/parrot/yellowish_cockatiel
+	name = "Yellowish Cockatiel"
+	icon_state = "luttiel-flap"
+	icon_living = "luttiel-flap"
+	icon_dead = "luttiel-dead"
+	icon_sit = "luttiel_sit"
+
+/mob/living/simple_animal/parrot/grey_cockatiel
+	name = "Grey Cockatiel"
+	icon_state = "blutiel-flap"
+	icon_living = "blutiel-flap"
+	icon_dead = "blutiel-dead"
+	icon_sit = "blutiel_sit"
+
+/mob/living/simple_animal/parrot/too
+	name = "Too"
+	icon_state = "too-flap"
+	icon_living = "too-flap"
+	icon_dead = "too-dead"
+	icon_sit = "too_sit"
+
+/mob/living/simple_animal/parrot/hooded_too
+	name = "Utoo"
+	icon_state = "utoo-flap"
+	icon_living = "utoo-flap"
+	icon_dead = "utoo-dead"
+	icon_sit = "utoo_sit"
+
+/mob/living/simple_animal/parrot/pink_too
+	name = "Mtoo"
+	icon_state = "mtoo-flap"
+	icon_living = "mtoo-flap"
+	icon_dead = "mtoo-dead"
+	icon_sit = "mtoo_sit"

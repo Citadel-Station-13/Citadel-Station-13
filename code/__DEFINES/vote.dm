@@ -1,9 +1,9 @@
-#define PLURALITY_VOTING 0
-#define APPROVAL_VOTING 1
-#define SCHULZE_VOTING 2
-#define SCORE_VOTING 3
-#define MAJORITY_JUDGEMENT_VOTING 4
-#define INSTANT_RUNOFF_VOTING 5
+#define PLURALITY_VOTING "PLURALITY"
+#define APPROVAL_VOTING "APPROVAL"
+#define SCHULZE_VOTING "SCHULZE"
+#define SCORE_VOTING "SCORE"
+#define HIGHEST_MEDIAN_VOTING "HIGHEST_MEDIAN"
+#define INSTANT_RUNOFF_VOTING "IRV"
 
 #define SHOW_RESULTS (1<<0)
 #define SHOW_VOTES (1<<1)
@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(vote_type_names,list(\
 "IRV (single winner ranked choice)" = INSTANT_RUNOFF_VOTING,\
 "Schulze (ranked choice, higher result=better)" = SCHULZE_VOTING,\
 "Raw Score (returns results from 0 to 1, winner is 1)" = SCORE_VOTING,\
-"Majority Judgement (single-winner score voting)" = MAJORITY_JUDGEMENT_VOTING,\
+"Highest Median (single-winner score voting)" = HIGHEST_MEDIAN_VOTING,\
 ))
 
 GLOBAL_LIST_INIT(display_vote_settings, list(\

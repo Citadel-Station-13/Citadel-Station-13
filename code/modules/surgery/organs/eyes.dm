@@ -404,6 +404,7 @@
 		on_mob.set_light(1, 1, current_color_string)
 
 /obj/effect/abstract/eye_lighting
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/obj/item/organ/eyes/robotic/glow/parent
 
 /obj/effect/abstract/eye_lighting/Initialize()
@@ -429,6 +430,12 @@
 	owner.flash_act(visual = 1)
 	if(severity >= 70)
 		owner.adjustOrganLoss(ORGAN_SLOT_EYES, 20)
+
+/obj/item/organ/eyes/night_vision/arachnid
+	name = "arachnid eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, offset by basic night vision."
+	see_in_dark = 4
+	flash_protect = -1
 
 #undef BLURRY_VISION_ONE
 #undef BLURRY_VISION_TWO

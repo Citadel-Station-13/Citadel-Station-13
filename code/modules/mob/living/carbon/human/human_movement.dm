@@ -9,16 +9,6 @@
 		return
 	return considering
 
-/mob/living/carbon/human/movement_delay()
-	. = ..()
-	if(CHECK_MOBILITY(src, MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE))
-		var/static/datum/config_entry/number/movedelay/sprint_speed_increase/SSI
-		if(!SSI)
-			SSI = CONFIG_GET_ENTRY(number/movedelay/sprint_speed_increase)
-		. -= SSI.config_entry_value
-	if (m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_SPEEDY_STEP))
-		. -= 1.5
-
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return 0
@@ -61,7 +51,11 @@
 		HM.on_move(NewLoc)
 	if(. && (combat_flags & COMBAT_FLAG_SPRINT_ACTIVE) && !(movement_type & FLYING) && CHECK_ALL_MOBILITY(src, MOBILITY_MOVE|MOBILITY_STAND) && m_intent == MOVE_INTENT_RUN && has_gravity(loc) && (!pulledby || (pulledby.pulledby == src)))
 		if(!HAS_TRAIT(src, TRAIT_FREESPRINT))
-			doSprintLossTiles(1)
+			var/datum/movespeed_modifier/equipment_speedmod/MM = get_movespeed_modifier_datum(/datum/movespeed_modifier/equipment_speedmod)
+			var/amount = 1
+			if(MM?.multiplicative_slowdown >= 1)
+				amount *= (1 + (6 - (3 / MM.multiplicative_slowdown)))
+			doSprintLossTiles(amount)
 		if((oldpseudoheight - pseudo_z_axis) >= 8)
 			to_chat(src, "<span class='warning'>You trip off of the elevated surface!</span>")
 			for(var/obj/item/I in held_items)
@@ -100,4 +94,9 @@
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(dna.species.space_move(src))
 		return TRUE
+	return ..()
+
+/mob/living/carbon/human/dirt_buildup(strength)
+	if(!shoes || !(shoes.body_parts_covered & FEET))
+		return	// barefoot advantage
 	return ..()

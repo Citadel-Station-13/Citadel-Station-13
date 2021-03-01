@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(vote)
 	var/question = null
 	var/list/choices = list()
 	/// List of choice = object for statclick objects for statpanel voting
+	/// statclick rework? 2: list("name"="id")
 	var/list/choice_statclicks = list()
 	var/list/scores = list()
 	var/list/choice_descs = list() // optional descriptions
@@ -49,34 +50,6 @@ SUBSYSTEM_DEF(vote)
 				client_popup.open(0)
 			next_pop = world.time+VOTE_COOLDOWN
 
-/**
-  * Renders a statpanel. Directly uses statpanel/stat calls since this is called from base of mob/Stat().
-  */
-/datum/controller/subsystem/vote/proc/render_statpanel(mob/M)
-	if(!mode)		// check if vote is running
-		return
-	if(!statpanel("Status"))		// don't bother if they're not focused on this panel
-		return
-	var/static/list/supported = list(PLURALITY_VOTING, APPROVAL_VOTING)
-	stat("Vote active!", "There is currently a vote running. Question: [question]")
-	if(!(vote_system in supported))
-		stat("<STATPANEL VOTING DISABLED>", "The current vote system is not supported by statpanel rendering. Please vote manually by opening the vote popup using the action button or chat link.")
-		return
-	stat("Time Left:", "[round(end_time - world.time)] seconds")
-	stat(null, null)
-	stat("Choices:", null)
-	stat(null, null)
-	for(var/i in 1 to choice_statclicks.len)
-		var/choice = choice_statclicks[i]
-		var/ivotedforthis = FALSE
-		switch(vote_system)
-			if(APPROVAL_VOTING)
-				ivotedforthis = voted[usr.ckey] && (i in voted[usr.ckey])
-			if(PLURALITY_VOTING)
-				ivotedforthis = voted[usr.ckey] == i
-		stat(ivotedforthis? "\[X\]" : "\[ \]", choice_statclicks[choice])
-	stat(null, null)
-
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	end_time = 0
@@ -87,30 +60,18 @@ SUBSYSTEM_DEF(vote)
 	voted.Cut()
 	voting.Cut()
 	scores.Cut()
-	cleanup_statclicks()
+	choice_statclicks = list()
 	display_votes = initial(display_votes) //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
-
-/datum/controller/subsystem/vote/proc/cleanup_statclicks()
-	for(var/choice in choice_statclicks)
-		qdel(choice_statclicks[choice])
-	choice_statclicks = list()
-
-/obj/effect/statclick/vote
-	name = "ERROR"
-	var/choice
-
-/obj/effect/statclick/vote/Click()
-	SSvote.submit_vote(choice)
-
-/obj/effect/statclick/vote/New(loc, choice, name)
-	src.choice = choice
-	src.name = name
 
 /datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
+	if(mode == "gamemode" && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
+				choices[choices[voted[P.ckey]]]--
 	for(var/option in choices)
 		var/votes = choices[option]
 		total_votes += votes
@@ -144,6 +105,10 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/calculate_condorcet_votes(var/blackbox_text)
 	// https://en.wikipedia.org/wiki/Schulze_method#Implementation
+	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
+				voted -= P.ckey
 	var/list/d[][] = new/list(choices.len,choices.len) // the basic vote matrix, how many times a beats b
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
@@ -184,12 +149,16 @@ SUBSYSTEM_DEF(vote)
 					choices[choices[i]]++ // higher shortest path = better candidate, so we add to choices here
 					// choices[choices[i]] is the schulze ranking, here, rather than raw vote numbers
 
-/datum/controller/subsystem/vote/proc/calculate_majority_judgement_vote(var/blackbox_text)
-	// https://en.wikipedia.org/wiki/Majority_judgment
+/datum/controller/subsystem/vote/proc/calculate_highest_median(var/blackbox_text)
+	// https://en.wikipedia.org/wiki/Highest_median_voting_rules
 	var/list/scores_by_choice = list()
 	for(var/choice in choices)
 		scores_by_choice += "[choice]"
 		scores_by_choice["[choice]"] = list()
+	if((mode == "gamemode" || mode == "dynamic") && CONFIG_GET(flag/must_be_readied_to_vote_gamemode))
+		for(var/mob/dead/new_player/P in GLOB.player_list)
+			if(P.ready != PLAYER_READY_TO_PLAY && voted[P.ckey])
+				voted -= P.ckey
 	for(var/ckey in voted)
 		var/list/this_vote = voted[ckey]
 		var/list/pretty_vote = list()
@@ -204,33 +173,24 @@ SUBSYSTEM_DEF(vote)
 		// END BALLOT GATHERING
 	for(var/score_name in scores_by_choice)
 		var/list/score = scores_by_choice[score_name]
-		for(var/indiv_score in score)
-			SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score]))
-		if(score.len == 0)
-			scores_by_choice -= score_name
-	while(scores_by_choice.len > 1)
-		var/highest_median = 0
-		for(var/score_name in scores_by_choice) // first get highest median
-			var/list/score = scores_by_choice[score_name]
-			if(!score.len)
-				scores_by_choice -= score_name
-				continue
+		if(!score.len)
+			choices[score_name] = 0
+		else
 			var/median = score[max(1,round(score.len/2))]
-			if(median >= highest_median)
-				highest_median = median
-		for(var/score_name in scores_by_choice) // then, remove
-			var/list/score = scores_by_choice[score_name]
-			var/median = score[max(1,round(score.len/2))]
-			if(median < highest_median)
-				scores_by_choice -= score_name
-		for(var/score_name in scores_by_choice) // after removals
-			var/list/score = scores_by_choice[score_name]
-			if(score.len == 0)
-				choices[score_name] += 100 // we're in a tie situation--just go with the first one
-				return
-			var/median_pos = max(1,round(score.len/2))
-			score.Cut(median_pos,median_pos+1)
-			choices[score_name]++
+			var/p = 0 // proponents (those with higher than median)
+			var/q = 0 // opponents (lower than median)
+			var/list/this_score_list = scores_by_choice[score_name]
+			for(var/indiv_score in score)
+				SSblackbox.record_feedback("nested tally","voting",1,list(blackbox_text,"Scores",score_name,GLOB.vote_score_options[indiv_score]))
+				if(indiv_score < median) // this is possible to do in O(logn) but n is never more than 200 so this is fine
+					q += 1
+				else if(indiv_score > median)
+					p += 1
+			p /= this_score_list.len
+			q /= this_score_list.len
+			choices[score_name] = median + (((p - q) / (1 - p - q)) * 0.5) // usual judgement
+			// choices[score_name] = median + p - q // typical judgement
+			// choices[score_name] = median + (((p - q) / (p + q)) * 0.5) // central judgement
 
 /datum/controller/subsystem/vote/proc/calculate_scores(var/blackbox_text)
 	for(var/choice in choices)
@@ -288,8 +248,8 @@ SUBSYSTEM_DEF(vote)
 		calculate_condorcet_votes(vote_title_text)
 	if(vote_system == SCORE_VOTING)
 		calculate_scores(vote_title_text)
-	if(vote_system == MAJORITY_JUDGEMENT_VOTING)
-		calculate_majority_judgement_vote(vote_title_text) // nothing uses this at the moment
+	if(vote_system == HIGHEST_MEDIAN_VOTING)
+		calculate_highest_median(vote_title_text) // nothing uses this at the moment
 	var/list/winners = vote_system == INSTANT_RUNOFF_VOTING ? get_runoff_results() : get_result()
 	var/was_roundtype_vote = mode == "roundtype" || mode == "dynamic"
 	if(winners.len > 0)
@@ -298,8 +258,8 @@ SUBSYSTEM_DEF(vote)
 		if(display_votes & SHOW_RESULTS)
 			if(vote_system == SCHULZE_VOTING)
 				text += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
-			if(vote_system == MAJORITY_JUDGEMENT_VOTING)
-				text += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
+			if(vote_system == HIGHEST_MEDIAN_VOTING)
+				text += "\nThis is the highest median score plus the tiebreaker!"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
@@ -345,7 +305,7 @@ SUBSYSTEM_DEF(vote)
 		if(vote_system != SCORE_VOTING)
 			if(vote_system == SCHULZE_VOTING)
 				admintext += "\nIt should be noted that this is not a raw tally of votes (impossible in ranked choice) but the score determined by the schulze method of voting, so the numbers will look weird!"
-			else if(vote_system == MAJORITY_JUDGEMENT_VOTING)
+			else if(vote_system == HIGHEST_MEDIAN_VOTING)
 				admintext += "\nIt should be noted that this is not a raw tally of votes but the number of runoffs done by majority judgement!"
 			for(var/i=1,i<=choices.len,i++)
 				var/votes = choices[choices[i]]
@@ -472,7 +432,7 @@ SUBSYSTEM_DEF(vote)
 						voted[usr.ckey] = list()
 					voted[usr.ckey] += vote
 					saved -= usr.ckey
-				if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
+				if(SCORE_VOTING,HIGHEST_MEDIAN_VOTING)
 					if(!(usr.ckey in voted))
 						voted += usr.ckey
 						voted[usr.ckey] = list()
@@ -535,7 +495,7 @@ SUBSYSTEM_DEF(vote)
 			if("dynamic")
 				GLOB.master_mode = "dynamic"
 				var/list/probabilities = CONFIG_GET(keyed_list/storyteller_weight)
-				for(var/T in config.storyteller_cache)
+				for(var/T in config.get_runnable_storytellers())
 					var/datum/dynamic_storyteller/S = T
 					var/probability = ((initial(S.config_tag) in probabilities) ? probabilities[initial(S.config_tag)] : initial(S.weight))
 					if(probability > 0)
@@ -582,10 +542,10 @@ SUBSYSTEM_DEF(vote)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		end_time = started_time+vp
 		// generate statclick list
-		cleanup_statclicks()
+		choice_statclicks = list()
 		for(var/i in 1 to choices.len)
 			var/choice = choices[i]
-			choice_statclicks[choice] = new /obj/effect/statclick/vote(null, i, choice)
+			choice_statclicks[choice] = "[i]"
 		//
 		for(var/c in GLOB.clients)
 			SEND_SOUND(c, sound('sound/misc/server-ready.ogg'))
@@ -627,7 +587,7 @@ SUBSYSTEM_DEF(vote)
 				. += "<h3>Vote any number of choices.</h3>"
 			if(SCHULZE_VOTING,INSTANT_RUNOFF_VOTING)
 				. += "<h3>Vote by order of preference. Revoting will demote to the bottom. 1 is your favorite, and higher numbers are worse.</h3>"
-			if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
+			if(SCORE_VOTING,HIGHEST_MEDIAN_VOTING)
 				. += "<h3>Grade the candidates by how much you like them.</h3>"
 				. += "<h3>No-votes have no power--your opinion is only heard if you vote!</h3>"
 		. += "Time Left: [DisplayTimeText(end_time-world.time)]<hr><ul>"
@@ -664,7 +624,7 @@ SUBSYSTEM_DEF(vote)
 					. += "(Saved!)"
 				. += "(<a href='?src=[REF(src)];vote=load'>Load vote from save</a>)"
 				. += "(<a href='?src=[REF(src)];vote=reset'>Reset votes</a>)"
-			if(SCORE_VOTING,MAJORITY_JUDGEMENT_VOTING)
+			if(SCORE_VOTING,HIGHEST_MEDIAN_VOTING)
 				var/list/myvote = voted[C.ckey]
 				for(var/i=1,i<=choices.len,i++)
 					. += "<li><b>[choices[i]]</b>"
@@ -767,7 +727,7 @@ SUBSYSTEM_DEF(vote)
 			voted[usr.ckey] = SSpersistence.saved_votes[usr.ckey][mode]
 			if(islist(voted[usr.ckey]))
 				var/malformed = FALSE
-				if(vote_system == SCORE_VOTING || vote_system == MAJORITY_JUDGEMENT_VOTING)
+				if(vote_system == SCORE_VOTING || vote_system == HIGHEST_MEDIAN_VOTING)
 					for(var/thing in voted[usr.ckey])
 						if(!(thing in choices))
 							malformed = TRUE
@@ -781,11 +741,12 @@ SUBSYSTEM_DEF(vote)
 				to_chat(usr,"Your saved vote was malformed! Start over!")
 				voted -= usr.ckey
 		else
-			if(vote_system == SCORE_VOTING || vote_system == MAJORITY_JUDGEMENT_VOTING)
+			if(vote_system == SCORE_VOTING || vote_system == HIGHEST_MEDIAN_VOTING)
 				submit_vote(round(text2num(href_list["vote"])),round(text2num(href_list["score"])))
 			else
 				submit_vote(round(text2num(href_list["vote"])))
-	usr.vote()
+	if(!href_list["statpannel"])
+		usr.vote()
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
 	for(var/v in generated_actions)

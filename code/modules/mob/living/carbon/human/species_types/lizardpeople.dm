@@ -1,10 +1,10 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Anthromorphic Lizard"
-	id = "lizard"
+	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS,HORNCOLOR,WINGCOLOR,CAN_SCAR,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
@@ -28,7 +28,7 @@
 
 	tail_type = "tail_lizard"
 	wagging_type = "waggingtail_lizard"
-	species_type = "lizard"
+	species_category = SPECIES_CATEGORY_LIZARD
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -46,9 +46,9 @@
 */
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "ashlizard"
-	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	id = SPECIES_ASHWALKER
+	limbs_id = SPECIES_LIZARD
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,CAN_SCAR,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_CHUNKYFINGERS)
 	mutantlungs = /obj/item/organ/lungs/ashwalker
 	mutanteyes = /obj/item/organ/eyes/night_vision

@@ -84,7 +84,7 @@
 						if(is_station_level(T.z))
 							destinations += B
 					var/chosen_beacon = pick(destinations)
-					var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
+					var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), 100, null, FALSE, get_turf(chosen_beacon))
 					try_move_adjacent(J)
 					playsound(src,'sound/effects/sparks4.ogg',50,1)
 					charges--

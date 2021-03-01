@@ -11,6 +11,8 @@ $include dynamic_config.txt
 $include plushies/defines.txt
 $include job_threats.txt
 $include policy.txt
+$include persistence.txt
+$include respawns.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -206,9 +208,6 @@ VOTE_AUTOTRANSFER_MAXIMUM 4
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## disable abandon mob
-NORESPAWN
-
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB
 
@@ -375,6 +374,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##Name of the place to send people rejected by the bunker
 #PANIC_SERVER_NAME [Put the name here]
 
+##Automated age verification, comment this out to not ask new users if they are 18+
+AGE_VERIFICATION
+
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
 
@@ -408,7 +410,7 @@ ALLOW_MAP_VOTING 1
 ##   APPROVAL (can vote for as many as you want), I
 ##   IRV (vote by ranked choice, winner determined by instant runoff algorithm)
 ##   SCORE (give individual rankings of each choice, winner determined by majority judgement algorithm)
-MAP_VOTE_TYPE SCORE
+MAP_VOTE_TYPE APPROVAL
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
@@ -519,7 +521,7 @@ DEFAULT_VIEW 21x15
 ### NOTE FOR LINUX HOSTS: This requires manual setup of iptables. Beware that improper configuration of this can and will irreversibly fuck up a server, so please don't tinker with it if you don't know what you're doing.
 ## Enabled
 #FAIL2TOPIC_ENABLED
-## Minimum wait time in deciseconds between valid requests 
+## Minimum wait time in deciseconds between valid requests
 FAIL2TOPIC_RATE_LIMIT 10
 ## Number of requests after breaching rate limit that triggers a ban
 FAIL2TOPIC_MAX_FAILS 5

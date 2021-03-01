@@ -12,15 +12,17 @@
 		))
 	var/list/processing_list = list(location)
 	. = list()
-	while(processing_list.len)
-		var/atom/thing = processing_list[1]
-		processing_list -= thing
+	var/i = 0
+	var/lim = 1
+	while(i < lim)
+		var/atom/thing = processing_list[++i]
 		if(ignored_things[thing.type])
 			continue
 		. += thing
 		if((thing.rad_flags & RAD_PROTECT_CONTENTS) || (SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION))
 			continue
 		processing_list += thing.contents
+		lim = processing_list.len
 
 /proc/radiation_pulse(atom/source, intensity, range_modifier, log=FALSE, can_contaminate=TRUE)
 	if(!SSradiation.can_fire)

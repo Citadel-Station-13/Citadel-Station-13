@@ -16,7 +16,7 @@
 	var/datum/nanite_extra_setting/program = extra_settings[NES_PROGRAM_OVERWRITE]
 	var/datum/nanite_extra_setting/cloud = extra_settings[NES_CLOUD_OVERWRITE]
 	for(var/mob/M in orange(host_mob, 5))
-		if(SEND_SIGNAL(M, COMSIG_NANITE_IS_STEALTHY))
+		if(SEND_SIGNAL(M, COMSIG_NANITE_CHECK_VIRAL_PREVENTION))
 			continue
 		switch(program.get_value())
 			if("Overwrite")
@@ -350,3 +350,66 @@
 
 /datum/action/innate/nanite_button/Activate()
 	program.press()
+
+/datum/nanite_program/lockout
+	unique = TRUE
+	var/emp_disable_time = 0
+	var/shock_disable_time = 0
+	var/minor_shock_disable_time = 0
+	var/disable_time = 0
+	var/lock_console = FALSE
+	var/lock_virus = FALSE
+	var/lock_host = FALSE
+
+/datum/nanite_program/lockout/enable_passive_effect()
+	. = ..()
+	if(lock_console)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK, .proc/check_antivirus)
+	if(lock_host)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK, .proc/check_antivirus)
+	if(lock_virus)
+		RegisterSignal(src, COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK, .proc/check_antivirus)
+
+/datum/nanite_program/lockout/disable_passive_effect()
+	. = ..()
+	UnregisterSignal(src, list(
+		COMSIG_NANITE_INTERNAL_HOST_LOCK_CHECK,
+		COMSIG_NANITE_INTERNAL_CONSOLE_LOCK_CHECK,
+		COMSIG_NANITE_INTERNAL_VIRAL_PREVENTION_CHECK
+	))
+
+/datum/nanite_program/lockout/on_emp(severity)
+	// no parent call on purpose
+	disable_time = max(disable_time, world.time + emp_disable_time)
+
+/datum/nanite_program/lockout/on_shock(shock_damage)
+	// no parent call on purpose
+	disable_time = max(disable_time, world.time + shock_disable_time)
+
+/datum/nanite_program/lockout/on_minor_shock()
+	// no parent call on purpose
+	disable_time = max(disable_time, world.time + minor_shock_disable_time)
+
+/datum/nanite_program/lockout/proc/check_antivirus()
+	return (world.time <= disable_time)? NANITE_CHANGES_LOCKED : NONE
+
+/datum/nanite_program/lockout/antiviral
+	name = "Enhanced Error Correction"
+	desc = "Through expensive CRC checking and replication, prevents viral takeover of the nanite strain's control sectors. \
+	Temporarily disabled by EMPs and shocks."
+	use_rate = 0.5
+	emp_disable_time = 3 MINUTES
+	shock_disable_time = 45 SECONDS
+	minor_shock_disable_time = 10 SECONDS
+	lock_virus = TRUE
+
+/datum/nanite_program/lockout/hostile_lockdown
+	name = "Hostile Lockdown"
+	desc = "Constantly encrypts and scrambles the nanites' control memory, preventing consoles from modifying them and also locking out conscious host control of the nanite strain, if the host happens to be capable of that. \
+	Temporarily disabled by EMPs and shocks."
+	use_rate = 0.5
+	emp_disable_time = 3 MINUTES
+	shock_disable_time = 1 MINUTES
+	minor_shock_disable_time = 15 SECONDS
+	lock_host = TRUE
+	lock_console = TRUE

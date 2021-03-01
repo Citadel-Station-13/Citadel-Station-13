@@ -245,6 +245,9 @@
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
+/obj/item/restraints/legcuffs/proc/on_removed()
+	return
+
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
 	throw_speed = 1
@@ -376,11 +379,8 @@
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 60
+	breakouttime = 25
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(iscarbon(hit_atom))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
-		B.Crossed(hit_atom)
-		qdel(src)
-	..()
+/obj/item/restraints/legcuffs/bola/energy/on_removed()
+	do_sparks(1, TRUE, src)
+	qdel(src)

@@ -3,6 +3,7 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
+	fire_sound = "sound/weapons/gunshotshotgunshot.ogg"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
@@ -44,10 +45,9 @@
 	if(HAS_TRAIT(user, TRAIT_FAST_PUMP))
 		recentpump = world.time + 2
 	else
+		if(!user.UseStaminaBuffer(2, warn = TRUE))
+			return
 		recentpump = world.time + 10
-		if(istype(user))//CIT CHANGE - makes pumping shotguns cost a lil bit of stamina.
-			user.adjustStaminaLossBuffered(2) //CIT CHANGE - DITTO. make this scale inversely to the strength stat when stats/skills are added
-	return
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
@@ -319,7 +319,7 @@
 	pump()
 	return TRUE
 
-// DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
+//due to code weirdness, and the fact that a refactor is coming soon anyway, the barman's shotgun and maint shotgun are in revolver.dm
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/hook
 	name = "hook modified sawn-off shotgun"

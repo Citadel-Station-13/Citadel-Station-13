@@ -150,8 +150,8 @@
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
-	force = 20
-	throwforce = 20
+	force = 16
+	throwforce = 16
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
@@ -164,6 +164,35 @@
 	force = 15
 	throwforce = 15
 	bayonet = TRUE
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger
+	name = "survival dagger"
+	icon_state = "glaive-dagger"
+	desc = "An enhanced hunting grade survival dagger, with a bright light and a handguard that makes it better for efficient butchery."
+	actions_types = list(/datum/action/item_action/toggle_light)
+	var/light_on = FALSE
+	var/brightness_on = 7
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 130, 20) // it's good for butchering stuff
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/ui_action_click(mob/user, actiontype)
+	light_on = !light_on
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_brightness(user)
+	update_icon()
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/proc/update_brightness(mob/user = null)
+	if(light_on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+
+/obj/item/kitchen/knife/combat/survival/knuckledagger/update_overlays()
+	. = ..()
+	if(light_on)
+		. += "[icon_state]_lit"
 
 /obj/item/kitchen/knife/combat/bone
 	name = "bone dagger"
@@ -222,10 +251,10 @@
 /* Trays  moved to /obj/item/storage/bag */
 
 /obj/item/kitchen/knife/scimitar
-	name = "Scimitar knife"
+	name = "scimitar knife"
 	desc = "A knife used to cleanly butcher. Its razor-sharp edge has been honed for butchering, but has been poorly maintained over the years."
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/kitchen/knife/scimiar/Initialize()
+/obj/item/kitchen/knife/scimitar/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 90 - force, 100, force - 60) //bonus chance increases depending on force
