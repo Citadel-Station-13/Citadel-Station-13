@@ -232,7 +232,7 @@
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 
 /obj/item/clothing/mask/void_mask
-	name = "Abyssal Mask"
+	name = "abyssal mask"
 	desc = "Mask created from the suffering of existance, you can look down it's eyes, and notice something gazing back at you."
 	icon_state = "mad_mask"
 	item_state = "mad_mask"
