@@ -496,7 +496,7 @@
 
 /obj/item/clothing/suit/jacket/urbanjacket/polychromic/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/polychromic, list("#26321D", "#CBBDAF", "#292929"), 3)
+	AddElement(/datum/element/polychromic, list("#3D4C31", "#CBBDAF", "#3B3B3B"), 3)
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
@@ -1039,6 +1039,12 @@
 	desc = "Perfect for windy days."
 	icon_state = "wbreakpoly"
 	item_state = "wbreakpoly"
+
+/obj/item/clothing/suit/toggle/wbreakpoly/on_toggle(mob/user)
+	if(suittoggled)
+		to_chat(usr, "<span class='notice'>You zip up [src].</span>")
+	else
+		to_chat(usr, "<span class='notice'>You unzip [src].</span>")
 
 /obj/item/clothing/suit/toggle/wbreakpoly/polychromic/ComponentInitialize()
 	. = ..()

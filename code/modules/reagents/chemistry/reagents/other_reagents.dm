@@ -2362,6 +2362,12 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/list/adjusted = H.adjust_arousal(2,"catnip", aphro = TRUE)
+		for(var/g in adjusted)
+			var/obj/item/organ/genital/G = g
+			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
 	..()
 
 /datum/reagent/preservahyde
@@ -2539,7 +2545,7 @@
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-15, FALSE)
-		M.adjustToxLoss(-3, FALSE)
+		M.adjustToxLoss(-3, FALSE, TRUE)
 		M.adjustOxyLoss(-3, FALSE)
 		M.adjustBruteLoss(-3, FALSE)
 		M.adjustFireLoss(-3, FALSE)

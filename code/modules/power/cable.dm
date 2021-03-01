@@ -155,7 +155,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T = get_turf(src)
 	if(T.intact)
 		return
-	if(istype(W, /obj/item/wirecutters))
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
@@ -177,7 +177,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
 
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='danger'>[DisplayPower(powernet.avail)] in power network.</span>")
 		else

@@ -183,7 +183,6 @@
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
 		user.transferItemToLoc(src, new_deck)
 		new_deck.update_icon_state()
-		user.put_in_hands(new_deck)
 		new_deck.update_icon()
 	if(istype(I, /obj/item/tcgcard_deck))
 		var/obj/item/tcgcard_deck/old_deck = I
@@ -278,6 +277,8 @@
 	card_count = 9
 	guaranteed_count = 3
 
+	illegal = TRUE
+
 	guar_rarity = list( //Better chances
 		"Legendary" = 5,
 		"Epic" = 10,
@@ -305,7 +306,7 @@
 	if(prob(contains_coin))
 		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
 		new /obj/item/coin/thunderdome(get_turf(user))
-	new /obj/item/tcg_rules(get_turf(user))
+	new /obj/item/paper/tcg_rules(get_turf(user))
 	qdel(src)
 
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
@@ -380,16 +381,24 @@
 	. = ..()
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
+/obj/item/tcgcard_deck/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/tcg)
+	STR.storage_flags = STORAGE_FLAGS_LEGACY_DEFAULT
+	STR.max_volume = DEFAULT_VOLUME_TINY * 30
+	STR.max_w_class = DEFAULT_VOLUME_TINY
+	STR.max_items = 30
+
 /obj/item/tcgcard_deck/update_icon_state()
 	. = ..()
 	if(flipped)
 		switch(contents.len)
 			if(1 to 10)
-				icon_state = "deck_tcg_low"
+				icon_state = "deck_low"
 			if(11 to 20)
-				icon_state = "deck_tcg_half"
+				icon_state = "deck_half"
 			if(21 to INFINITY)
-				icon_state = "deck_tcg_full"
+				icon_state = "deck_full"
 	else
 		icon_state = "deck_up"
 
@@ -439,6 +448,15 @@
 		var/obj/item/tcg_card/new_card = I
 		new_card.flipped = flipped
 		new_card.forceMove(src)
+
+	if(istype(I, /obj/item/tcgcard_hand))
+		var/obj/item/tcgcard_hand/hand = I
+		for(var/obj/item/tcg_card/card in hand.cards)
+			if(contents.len > 30)
+				return FALSE
+			card.flipped = flipped
+			card.forceMove(src)
+			hand.cards.Remove(card)
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)
@@ -525,56 +543,105 @@
 			return
 	. = ..()
 
+/obj/item/tcgcard_hand/equipped(mob/user, slot, initial)
+	. = ..()
+	transform = matrix()
+
+/obj/item/tcgcard_hand/dropped(mob/user, silent)
+	. = ..()
+	transform = matrix(0.5,0,0,0,0.5,0)
+
 /obj/item/tcgcard_binder
 	name = "Trading Card Binder"
 	desc = "A TCG-branded card binder, specifically for your infinite collection of TCG cards!"
 	icon = 'icons/obj/tcg/misc.dmi'
 	icon_state = "binder"
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/list/cards = list()
-	var/mode = 0 //If 1, will show all the cards even if you don't have em
+	var/list/decks = list()
+	var/mode = 0 //If 1, will show all the cards even if you don't have em. If 2, will show your decks
 
 /obj/item/tcgcard_binder/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/tcg_card))
 		var/obj/item/tcg_card/card = I
 		card.forceMove(src)
 		cards.Add(card)
+	if(istype(I, /obj/item/tcgcard_hand))
+		var/obj/item/tcgcard_hand/hand = I
+		for(var/obj/item/tcg_card/card in hand.cards)
+			card.forceMove(src)
+			cards.Add(card)
+		qdel(I)
+	if(istype(I, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/deck = I
+		var/named = input(user, "How will this deck be named? Leave this field empty if you don't want to save this deck.")
+		if(named)
+			decks[named] = list()
+		for(var/obj/item/tcg_card/card in deck.contents)
+			card.forceMove(src)
+			cards.Add(card)
+			if(named)
+				decks[named] += card.name
+		qdel(I)
 	. = ..()
 
 /obj/item/tcgcard_binder/attack_self(mob/living/carbon/user)
-	mode = !mode
-	to_chat(user, "<span class='notice'>[src] now shows you [mode ? "all the different cards" : "the cards you already have"].")
+	mode = (mode + 1) % 3
+	switch(mode)
+		if(0)
+			to_chat(user, "<span class='notice'>[src] now shows you the cards you already have.")
+		if(1)
+			to_chat(user, "<span class='notice'>[src] now shows you all the different cards.")
+		if(2)
+			to_chat(user, "<span class='notice'>[src] now shows you your deck menu.")
 
 /obj/item/tcgcard_binder/attack_hand(mob/living/carbon/user)
 	if(loc == user)
 		var/list/choices = list()
-		if(mode)
-			var/card_types = list()
+		switch(mode)
+			if(1)
+				var/card_types = list()
 
-			for(var/obj/item/tcg_card/card in cards)
-				card_types[card.datum_type] = card
+				for(var/obj/item/tcg_card/card in cards)
+					card_types[card.datum_type] = card
 
-			for(var/card_type in subtypesof(/datum/tcg_card))
-				if(card_type in card_types)
-					var/obj/item/tcg_card/card = card_types[card_type]
+				for(var/card_type in subtypesof(/datum/tcg_card))
+					if(card_type in card_types)
+						var/obj/item/tcg_card/card = card_types[card_type]
+						choices[card] = image(icon = card.icon, icon_state = card.icon_state)
+						continue
+
+					var/datum/tcg_card/card_dat = new card_type
+					if(card_dat.name == "Stupid Coder")
+						continue
+					var/image/I = image(icon = card_dat.pack, icon_state = card_dat.icon_state)
+					I.color = "#999999"
+					choices[card_dat.name] = I
+					qdel(card_dat)
+			if(0)
+				for(var/obj/item/tcg_card/card in cards)
 					choices[card] = image(icon = card.icon, icon_state = card.icon_state)
-					continue
 
-				var/datum/tcg_card/card_dat = new card_type
-				if(card_dat.name == "Stupid Coder")
-					continue
-				var/image/I = image(icon = card_dat.pack, icon_state = card_dat.icon_state)
-				I.color = "#999999"
-				choices[card_dat.name] = I
-				qdel(card_dat)
-		else
-			for(var/obj/item/tcg_card/card in cards)
-				choices[card] = image(icon = card.icon, icon_state = card.icon_state)
+			if(2)
+				for(var/deck in decks)
+					choices[deck] = image(icon = 'icons/obj/tcg/misc.dmi', icon_state = "deck_up")
+
 		var/obj/item/tcg_card/choice = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
 		if(choice && (choice in cards))
 			choice.forceMove(get_turf(src))
 			user.put_in_hands(choice)
 			cards.Remove(choice)
+
+		if(choice && (choice in decks))
+			var/obj/item/tcgcard_deck/new_deck = new(get_turf(user))
+			var/list/required_cards = decks[choice]
+			for(var/obj/item/tcg_card/card in cards)
+				if(card.name in required_cards)
+					required_cards.Remove(card.name)
+					cards.Remove(card)
+					card.forceMove(new_deck)
+			user.put_in_hands(new_deck)
 
 		if(choice)
 			return
@@ -612,59 +679,73 @@
 		card.forceMove(src)
 		cards.Add(card)
 
-/obj/item/tcg_rules
+/obj/item/paper/tcg_rules
 	name = "TCG Rulebook"
 	desc = "A small rulebook containing a starter guide for TCG."
 	icon = 'icons/obj/tcg/misc.dmi'
 	icon_state = "deck_low"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/tcg_rules/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>*---------* \n\
+	info = "<span class='notice'>*---------* \n\
 	      <span class='boldnotice'>Welcome to the Exciting world of Tactical Card Game!</span> <span clas='smallnotice'>Sponsored by Nanotrasen Edu-tainment Devision.</span> \n \
 		  <span class='boldnotice'>Core Rules:</span> \n \
+		  <br> \n \
 		  Tactical Card Game (Also known as TCG) is a traditional trading card game. It's played between two players, each with a deck or collection of cards. \n \
 
+		  <br> \n \
 		  Each player's deck contains up to 30 cards. Each player's hand can hold a maximum of 7 cards. At the end of your turn, if you have more than 7 cards, you must choose cards to discard to your discard pile until you have 7 cards.  \n \
 		  To begin a match, both players must flip a coin to decide who goes first. The winner of the coin toss then decides if they go first or second. Before the match begins each player draws 5 cards each with the ability to mulligan cards from their hand facedown once (Basically, you get a first pass where you can replace cards in your hands back into your deck, shuffle your deck, then draw until you're back to 5).  \n \
 		  Each player begins with 1 Max Mana to start with, which serves as the cost to playing cards. \n \
 
+		  <br> \n \
 		  In order to play the TCG, a deck is required. As stated above, decks must contain up to 30 cards.  \n \
 		  Additionally, to save cards you need to have a card binder on yourself to store the cards. When the shift ends, your cards will be automatically saved by integrated scanners in your card binder.  \n \
 		  Finally, a stock of Thunderdome Flippers to use for coin tosses and counter effects is recommended- these can be obtained occasionally from cardpacks, but any coin will do.  \n \
 
+		  <br> \n \
 		  Win condition is simple - kill your opponent's hero by depleting all of their 20 lifeshards.  \n \
 
+		  <br> \n \
 		  <span class='boldnotice'>Gameplay Phases:</span>  \n \
 
+		  <br> \n \
 		  A single turn of the game goes as follows, and the order of card effects is very similar to other card games. Within a single turn, the following phases are gone through, in order, unless otherwise altered by a card effect. Turn Phases are the Draw Phase, Effect Phase 1, Play Phase, Combat Phase, Effect Phase 2, and the End Phase.  \n \
 
+		  <br> \n \
 		  During the draw phase, the player whose turn it is untaps all their cards, then draws a single card. They gain 1 Max Mana, and their Mana is refilled. Cards with missing health due to defending, attacking, or damage effects return to max health at the end of the draw phase.  \n \
 		  During the First Effect Phase, this is when effects that take place at the start of your turn would occur. If an opponent's effect takes place at the start of your turn, their effects will always take place first, then yours, unless otherwise stated by a card effect. If an opponent's effect would cause you to lose the game, and your effects would prevent that condition from happening afterwards, you would lose the game. As a general roll, when it's your turn, your opponent's effects take place FIRST, then yours.  \n \
 
+		  <br> \n \
 		  During the Play Phase, this is when you can play, summon, or activate your own cards. Card Effects that don't state when they're activated MUST be activated during the Play Phase. Your opponent can also activate their own card effects in response to one of your actions during your play phase, if able. Any card played during the play phase can activate its effect as soon as it's played. More details within the Card Breakdown section.  \n \
 
+		  <br> \n \
 		  During the Battle Phase, a Unit Card is able to battle other Unit Cards, or attack their opponent once per turn. Neither player can attack on their first turn, and all cards that enter the field can attack as soon as they can, unless it is that player's first turn, or they are prevented by a card effect. More details within the Card Combat section.  \n \
 
+		  <br> \n \
 		  During the End Phase, end of turn effects will occur. If the active player has more than 7 cards in their hand by this point, this is when they must discard cards. All of the player's cards who used an effect at any point in the turn are refreshed, and able to use their effect again going into the opponent's turn. By the end of their turn, if the player has more than 7 cards, they must discard cards from their hand until 7 remain.  \n \
 		  After all 5 phases have passed, the players turn officially ends, and the opponent begins their turn, starting anew from the draw phase.  \n \
 
+		  <br> \n \
 		  Card effects are typically limited to the turn that that card is played. For example, a card effect that provides a card +1/+1 attack/health would only last until the end of the turn, unless otherwise stated, OR if the card is an Equipment Card. More on those below.  \n \
 
+		  <br> \n \
 		  <span class='boldnotice'>Card Breakdown:</span>  \n \
 
+		  <br> \n \
 		  Within the game, there are 3 kinds of cards (So far), Unit, Equipment and Spell cards.  \n \
 
+		  <br> \n \
 		  Unit Cards. All Unit Cards have 4 core values to keep in mind, Attack, Health, Faction, and Summoning Cost. Attack serves as a card's offensive value in combat. Health serves as a card's defensive value in combat, and doubles as a card's health. Factions are groupings of cards that can often share effects and traits together. Summoning Cost is how much mana a card needs in order to be summoned.  \n \
 
+		  <br> \n \
 		  Equipment Cards. All Equipment Cards similarly to Unit Cards have Attack, Health, and Summon Cost values, but for equipment, these values are added to the attached card's values. Equipment can only be attached (Equip) to units, and they last until the unit dies, or otherwise leaves the field, following it's equipt card. If returned to the hand, send to the discard pile, or otherwise leaves the field, it is detatched from the equipt card. When a Equipment Card increases a card's attack or health, those effects stay on the equip card until the equipment is unequip or removed from the parent card.  \n \
 		  If a card would have it's health decreased by having it's equip card removed, it's handled by having it's maximum health decreased, not it's current health. For example, lets say you had a card with 1/1 attack/health, and give it an equipment giving it +1/+2, then that card enters combat, dropping it down to 2/1. If by an opponent's card effect it lost that +1/+2 equipment now, it's stats would be 1/1 once again. If an equip card explicitly lowers a card's stats, it is possible for a card to be killed as a result, but drops in attack will always bottom out at 0 attack at any given time.  \n \
 
+		  <br> \n \
 		  Spell Cards. Spell Cards don't have attack or health values, instead, they activate their effects as soon as they are summoned and leave the field afterwards(if not stated otherwise).  \n \
-
+		  <br> \n \
 		  <span class='boldnotice'>Card Subtypes:</span>  \n \
-
+		  <br> \n \
 		  Card effects:  \n \
 		  Asimov - Unit cannot attack units with Human subtype  \n \
 		  Changeling - Unit posesses all the subtypes at the same time  \n \
@@ -679,13 +760,13 @@
 		  Blocker - The unit cannot declare attacks, but can defend.  \n \
 		  Hivemind - The unit enters combat with a hivemind token on it. The first time this card would take damage, remove that token instead. This does not apply to instant removal effects, only points of damage.  \n \
 		  Clockwork - The unit can copy a single keyword on another unit on the field, until they lose the clockwork keyword or leave the field.  \n \
-
+		  <br> \n \
 		  <span class='boldnotice'>Card Combat:</span>  \n \
-
+		  <br> \n \
 		  Card combat is determined as follows. On your turn, any non-tapped unit card with a positive attack power is capable of declaring an attack. Upon declaring an attack, you must state if you're attacking your opponent directly, or if you're going to attack a specific opponent's unit. Unless otherwise stated, cards can only attack or defend one time per turn.  \n \
-
+		  <br> \n \
 		  An attack against a unit healths as follows: Both units will do their power as damage to the opponent's unit's health. Damage is typically dealt at the same time, and if both units would kill each other through combat, both are destroyed at the same time. If One or both units would not be destroyed by combat, they would have their health reduced by the difference of their health minus their opponent's power, until the start of your next turn. If the attacker or defender has a keyword or effect that prevents them from attacking their opponent (Like silicon, immunity), then they are not able to attack, but may still defend against the opponent's attack. Once combat has healthd, all remaining participants become tapped.  \n \
-
+		  <br> \n \
 		  A direct attack healths as follows: The attacking unit declares an attack against the opponent's lifeshards. Your opponent may then declare a defender if one is available, who will then turn the combat into an attack against a unit for the purposes of combat that turn. If the attack is not blocked, and the direct attack connects, then your opponent loses a number of lifeshards equal to the attacking units power. </span>"
 
 /obj/item/cardboard_card
@@ -708,6 +789,33 @@
 			qdel(O)
 
 	. = ..()
+
+/mob/living/carbon/human/proc/SaveTCGCards()
+	if(!client)
+		return
+
+	var/obj/item/tcgcard_binder/binder = locate() in src
+	if(!binder)
+		var/obj/item/storage/backpack/back = locate() in src
+		binder = locate() in back
+
+	if(!binder)
+		return
+
+	var/list/card_types = list()
+	for(var/obj/item/tcg_card/card in binder.cards)
+		//if(!card.illegal) //Uncomment if you want to block syndie cards from saving
+		if(!(card.datum_type in card_types))
+			card_types[card.datum_type] = card.illegal
+		else
+			if(islist(card_types[card.datum_type]))
+				card_types[card.datum_type] += card.illegal
+			else
+				card_types[card.datum_type] = list(card_types[card.datum_type], card.illegal)
+
+	client.prefs.tcg_decks = binder.decks
+	client.prefs.tcg_cards = card_types
+	client.prefs.save_character(TRUE)
 
 #undef COMMON_SERIES
 #undef TAPPED_ANGLE

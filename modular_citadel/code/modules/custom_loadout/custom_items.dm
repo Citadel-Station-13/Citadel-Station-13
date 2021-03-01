@@ -593,4 +593,11 @@
 	icon_state = "choker"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	item_state = "choker"
-	tagname = null
+
+/obj/item/clothing/mask/breath/mmask
+	name = "Strange Metal Mask"
+	desc = "An odd metal mask."
+	icon = 'icons/obj/custom.dmi'
+	item_state = "mmask"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	icon_state = "mmask"

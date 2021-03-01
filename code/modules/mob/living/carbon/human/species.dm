@@ -1454,9 +1454,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
-		if(HAS_TRAIT(user, TRAIT_MAULER)) // maulers get 15 armorpierce because if you're going to punch someone you might as well do a good job of it
-			armor_block = target.run_armor_check(affecting, "melee", armour_penetration = 15) // lot of good that sec jumpsuit did you
-
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
@@ -1473,9 +1470,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.apply_damage(damage*1.5, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			target.apply_damage(damage*0.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "kicked")
-		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.1x raw damage + 1.3x stam damage, and have some armor pierce
-			target.apply_damage(damage*1.1, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
-			target.apply_damage(damage*1.3, STAMINA, affecting, armor_block)
+		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.2x raw damage but nstam
+			target.apply_damage(damage*1.2, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			log_combat(user, target, "punched (mauler)")
 		else //other attacks deal full raw damage + 2x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
@@ -1547,9 +1543,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		if(!user.UseStaminaBuffer(3, warn = TRUE))
 			return FALSE
 		user.do_attack_animation(target, ATTACK_EFFECT_ASS_SLAP)
-		target.adjust_arousal(20,maso = TRUE)
+		target.adjust_arousal(20,"masochism", maso = TRUE)
 		if (ishuman(target) && HAS_TRAIT(target, TRAIT_MASO) && target.has_dna() && prob(10))
-			target.mob_climax(forced_climax=TRUE)
+			target.mob_climax(forced_climax=TRUE, cause = "masochism")
 		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
 			stop_wagging_tail(target)
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
@@ -1931,7 +1927,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
 					if(HAS_TRAIT(H, TRAIT_MASO) && prob(damage_amount))
-						H.mob_climax(forced_climax=TRUE)
+						H.mob_climax(forced_climax=TRUE, cause = "masochism")
 
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
