@@ -77,8 +77,8 @@
 	name = "Dragon Form"
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
-	cooldown_min = 450
-	charge_max = 1800
+	cooldown_min = 150
+	charge_max = 600
 
 	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser/transformed
 
