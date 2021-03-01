@@ -390,16 +390,12 @@
 // ---------- Code originally from VoreStation ----------
 /obj/item/gun/ballistic/revolver/mws
 	name = "MWS-01 'Big Iron'"
-	desc = "Modular Weapons System"
-
+	desc = "Modular Weapon System-01, does fit on your hip."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "mws"
-
-	fire_sound = 'sound/weapons/Taser.ogg'
-
+	fire_sound = 'sound/weapons/pulse2.ogg' //if you hear this sound something went wrong!
 	mag_type = /obj/item/ammo_box/magazine/mws_mag
 	spawnwithmagazine = FALSE
-
 	recoil = 0
 
 	var/charge_sections = 6
