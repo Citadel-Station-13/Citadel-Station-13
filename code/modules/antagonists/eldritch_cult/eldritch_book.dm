@@ -74,8 +74,8 @@
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		icon_state = "book_open"
-		flick("book_opening", src)
+		icon_state = "codex_open"
+		flick("codex_opening", src)
 		ui = new(user, src, "ForbiddenLore", name)
 		ui.open()
 
@@ -139,7 +139,7 @@
 	update_icon() // Not applicable to all objects.
 
 /obj/item/forbidden_book/ui_close(mob/user)
-	flick("book_closing",src)
+	flick("codex_closing",src)
 	icon_state = initial(icon_state)
 	return ..()
 

@@ -201,6 +201,7 @@
 	flags_inv = NONE
 	flags_cover = NONE
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you lose comprehension of what you are seeing."
+	item_flags = EXAMINE_SKIP
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/void
@@ -211,6 +212,7 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
+	item_flags = EXAMINE_SKIP
 	// slightly worse than normal cult robes
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
@@ -225,6 +227,7 @@
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
 		else
 			to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
+		item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
 	else
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 
@@ -242,9 +245,7 @@
 
 /obj/item/clothing/mask/void_mask/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_MASK)
-		return
-	if(ishuman(user) && user.mind && slot == ITEM_SLOT_MASK)
+	if(ishuman(user) && user.mind && slot == SLOT_WEAR_MASK)
 		local_user = user
 		START_PROCESSING(SSobj, src)
 
@@ -279,7 +280,7 @@
 
 		if(DT_PROB(30,delta_time))
 			human_in_range.emote(pick("giggle","laugh"))
-			human_in_range.adjustStaminaLoss(10)
+			human_in_range.adjustStaminaLoss(2)
 
 		if(DT_PROB(25,delta_time))
 			human_in_range.Dizzy(5)
