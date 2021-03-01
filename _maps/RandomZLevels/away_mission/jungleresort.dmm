@@ -413,10 +413,6 @@
 /obj/item/toy/figure/chef,
 /turf/open/floor/wood,
 /area/awaymission/jungleresort)
-"gC" = (
-/obj/item/clothing/head/rice_hat/cursed,
-/turf/open/floor/plating/dirt/jungle,
-/area/awaymission/jungleresort)
 "gK" = (
 /obj/structure/table/wood,
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted,
@@ -13828,7 +13824,7 @@ io
 du
 YF
 io
-gC
+io
 io
 io
 ia
@@ -26666,4 +26662,3 @@ bG
 bG
 bG
 "}
-
