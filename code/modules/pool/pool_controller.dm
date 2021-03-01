@@ -146,7 +146,7 @@
 						return
 				reagents.clear_reagents()
 				// This also reacts them. No nitroglycerin deathpools, sorry gamers :(
-				W.reagents.trans_to(reagents, max_beaker_transfer)
+				W.reagents.trans_to(reagents, max_beaker_transfer, log = "pool fill from reagent container")
 				user.visible_message("<span class='notice'>[src] makes a slurping noise.</span>", "<span class='notice'>All of the contents of [W] are quickly suctioned out by the machine!</span")
 				updateUsrDialog()
 				var/list/reagent_names = list()

@@ -297,6 +297,7 @@
 			owner.update_stamina()
 	consider_processing()
 	update_disabled()
+	update_threshhold_state()
 	return update_bodypart_damage_state()
 
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
@@ -475,6 +476,7 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
+	update_threshhold_state()
 	return update_bodypart_damage_state()
 
 //Returns total damage.

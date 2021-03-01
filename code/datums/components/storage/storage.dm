@@ -449,6 +449,10 @@
 		// this must come before the screen objects only block, dunno why it wasn't before
 		if(over_object == M)
 			user_show_to_mob(M)
+			return
+		if(isrevenant(M))
+			RevenantThrow(over_object, M, source)
+			return
 		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				dump_content_at(over_object, M)

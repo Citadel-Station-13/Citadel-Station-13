@@ -131,8 +131,10 @@
 	else
 		. = ..()
 
-/obj/machinery/power/tesla_coil/research/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/power/tesla_coil/research/default_unfasten_wrench(mob/user, obj/item/W, time = 20)
 	. = ..()
+	if(!W.tool_behaviour == TOOL_WRENCH)
+		return
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(panel_open)
 			icon_state = "rpcoil_open[anchored]"

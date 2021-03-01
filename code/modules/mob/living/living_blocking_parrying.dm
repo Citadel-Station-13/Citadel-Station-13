@@ -157,6 +157,16 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Parry cooldown post-parry if failed. This is ADDED to parry_cooldown!!!
 	var/parry_failed_cooldown_duration = 0 SECONDS
 
+	// Advanced
+	/// Flags added to return value
+	var/perfect_parry_block_return_flags = NONE
+	var/imperfect_parry_block_return_flags = NONE
+	var/failed_parry_block_return_flags = NONE
+	/// List appended to block return
+	var/perfect_parry_block_return_list
+	var/imperfect_parry_block_return_list
+	var/failed_parry_block_return_list
+
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
   */

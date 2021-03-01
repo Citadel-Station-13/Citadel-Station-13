@@ -138,7 +138,7 @@
 	can_suppress = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list()
-	fire_sound = 'sound/weapons/blastcannon.ogg'
+	fire_sound = 'sound/weapons/noscope.ogg'
 	spread = 20		//damn thing has no rifling.
 	automatic_burst_overlay = FALSE
 

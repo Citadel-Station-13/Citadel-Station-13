@@ -522,7 +522,7 @@
 	max_charges = 1
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	w_class = WEIGHT_CLASS_BULKY
-	force = 18
+	force = 15
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
@@ -536,11 +536,11 @@
 	icon_state = "hook"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	pass_flags = PASSTABLE
-	damage = 25
-	armour_penetration = 100
+	damage = 15
+	armour_penetration = 10
+	knockdown = 5
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
-	knockdown = 30
 	var/chain
 
 /obj/item/projectile/hook/fire(setAngle)
@@ -1104,7 +1104,7 @@
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
-			new /obj/item/gun/ballistic/revolver/doublebarrel/super(src)
+			new /obj/item/book/granter/spell/asura(src)
 		if(3)
 			new /obj/item/guardiancreator(src)
 
@@ -1186,6 +1186,13 @@
 	burst_shot_delay = 0
 	unique_reskin = null
 	sawn_off = TRUE
+
+/obj/item/book/granter/spell/asura
+	spell = /obj/effect/proc_holder/spell/self/asura
+	spellname = "asuras wrath"
+	icon_state = "bookasura"
+	desc = "This crimson novel emanates rage incarnate."
+	remarks = list("Kaio-What?", "It can only be sustained for a short time...", "It's like a massive upsurge of energy...", "Takes a heavy toll on the user's body...?", "Extra arms not included...", "There's stronger levels? Why aren't they in the book...")
 
 //Colossus
 /obj/structure/closet/crate/necropolis/colossus

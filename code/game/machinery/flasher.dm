@@ -57,8 +57,8 @@
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/wirecutters))
-		if (bulb)
+	if(W.tool_behaviour == TOOL_WIRECUTTER)
+		if(bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
@@ -66,7 +66,7 @@
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/assembly/flash/handheld))
+	else if(istype(W, /obj/item/assembly/flash/handheld))
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return
@@ -76,7 +76,7 @@
 		else
 			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
-	else if (istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
@@ -173,10 +173,10 @@
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		W.play_tool_sound(src, 100)
 
-		if (!anchored && !isinspace())
+		if(!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
 			setAnchored(TRUE)

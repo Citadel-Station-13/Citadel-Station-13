@@ -69,8 +69,8 @@
 //Checks to determine borg availability depending on the server's config. These are defines in the interest of reducing copypasta
 #define BORG_SEC_AVAILABLE (!CONFIG_GET(flag/disable_secborg) && GLOB.security_level >= CONFIG_GET(number/minimum_secborg_alert))
 
-//silicon_priviledges flags
-#define PRIVILEDGES_SILICON	(1<<0)
-#define PRIVILEDGES_PAI		(1<<1)
-#define PRIVILEDGES_BOT		(1<<2)
-#define PRIVILEDGES_DRONE	(1<<3)
+//silicon_privileges flags
+#define PRIVILEGES_SILICON	(1<<0)
+#define PRIVILEGES_PAI		(1<<1)
+#define PRIVILEGES_BOT		(1<<2)
+#define PRIVILEGES_DRONE	(1<<3)

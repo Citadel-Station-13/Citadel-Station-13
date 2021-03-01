@@ -50,16 +50,18 @@
 	var/cached_z
 	/// I'm busy, don't move.
 	var/busy = FALSE
+
 	var/static/blacklisted_items = typecacheof(list(
-	/obj/effect,
-	/obj/belly,
-	/obj/mafia_game_board,
-	/obj/docking_port,
-	/obj/shapeshift_holder,
-	/obj/screen))
+		/obj/effect,
+		/obj/belly,
+		/obj/mafia_game_board,
+		/obj/docking_port,
+		/obj/shapeshift_holder,
+		/obj/screen
+	))
 
 /mob/living/simple_animal/jacq/Initialize()
-	..()
+	. = ..() //fuck you jacq, return a hint you shit
 	cached_z = z
 	poof()
 
@@ -70,16 +72,14 @@
 		if((last_poof+3 MINUTES) < world.realtime)
 			poof()
 
-/mob/living/simple_animal/jacq/Destroy() //I.e invincible
+/mob/living/simple_animal/jacq/death() //What is alive may never die
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
-	var/mob/living/simple_animal/jacq/Jacq = new src.type(loc)
-	Jacq.progression = progression
-	if(ckey) //transfer over any ghost posessions
-		Jacq.key = key
-	..()
+	fully_heal(FALSE)
+	health = 25
+	poof()
 
-/mob/living/simple_animal/jacq/death() //What is alive may never die
+/mob/living/simple_animal/jacq/gib()
 	visible_message("<b>[src]</b> cackles, <span class='spooky'>\"You'll nae get rid a me that easily!\"</span>")
 	playsound(loc, 'sound/spookoween/ahaha.ogg', 100, 0.25)
 	fully_heal(FALSE)
@@ -158,23 +158,18 @@
 	return FALSE
 
 /mob/living/simple_animal/jacq/proc/gender_check(mob/living/carbon/C)
-	var/gender = "lamb"
-	if(C)
-		if(C.gender == MALE)
-			gender = "laddie"
-		if(C.gender == FEMALE)
-			gender = "lassie"
-	return gender
+	. = "lamb"
+	switch(C)
+		if(MALE)
+			. = "laddie"
+		if(FEMALE)
+			. = "lassie"
 
 //Ye wee bugger, gerrout of it. Ye've nae tae enjoy reading the code fer mae secrets like.
 /mob/living/simple_animal/jacq/proc/chit_chat(mob/living/carbon/C)
 	//Very important
 	var/gender = gender_check(C)
-	if(C)
-		if(C.gender == MALE)
-			gender = "laddie"
-		if(C.gender == FEMALE)
-			gender = "lassie"
+	// it physicaly cannot fail*. Why is there a fucking dupe
 
 	if(!progression["[C.real_name]"] ||  !(progression["[C.real_name]"] & JACQ_HELLO))
 		visible_message("<b>[src]</b> smiles ominously at [C], <span class='spooky'>\"Well halo there [gender]! Ah'm Jacqueline, tae great Pumpqueen, great tae meet ye.\"</span>")

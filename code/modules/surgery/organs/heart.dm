@@ -97,7 +97,7 @@
 		owner.set_heartattack(TRUE)
 		failed = TRUE
 
-obj/item/organ/heart/slime
+/obj/item/organ/heart/slime
 	name = "slime heart"
 	desc = "It seems we've gotten to the slimy core of the matter."
 	icon_state = "heart-s-on"
@@ -221,7 +221,7 @@ obj/item/organ/heart/slime
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
 
-obj/item/organ/heart/cybernetic/upgraded/on_life()
+/obj/item/organ/heart/cybernetic/upgraded/on_life()
 	. = ..()
 	if(!.)
 		return
