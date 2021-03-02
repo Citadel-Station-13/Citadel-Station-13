@@ -27,6 +27,8 @@
 		if(!L.temporarilyRemoveItemFromInventory(card))
 			to_chat(src, "<span class='warning'>Error: Unable to expand to mobile form. Chassis is restrained by some device or person.</span>")
 			return FALSE
+
+			/* Commented out until pathfinder circuits work with JPS
 	if(istype(card.loc, /obj/item/integrated_circuit/input/pAI_connector))
 		var/obj/item/integrated_circuit/input/pAI_connector/C = card.loc
 		C.RemovepAI()
@@ -34,6 +36,7 @@
 		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 		C.installed_pai = null
 		C.push_data()
+		*/
 	forceMove(get_turf(card))
 	card.forceMove(src)
 	update_mobility()
