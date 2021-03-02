@@ -1,4 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Changelings will actually become the person they want to be when using \"human form\" ability(after having used last resort)."

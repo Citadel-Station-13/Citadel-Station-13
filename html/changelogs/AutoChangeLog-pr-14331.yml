@@ -1,4 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - bugfix: "colorpainter: let's not dispense null"
