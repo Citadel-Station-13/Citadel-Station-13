@@ -138,3 +138,27 @@
 	icon_state = "greyturtle"
 	item_state = "greyturtle"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/purple
+	name = "purple turtleneck"
+	icon_state = "turtle_sci"
+	item_state = "turtle_sci"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/orange
+	name = "orange turtleneck"
+	icon_state = "turtle_eng"
+	item_state = "turtle_eng"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/red
+	name = "red turtleneck"
+	icon_state = "turtle_sec"
+	item_state = "turtle_sec"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/suit/turtle/blue
+	name = "blue turtleneck"
+	icon_state = "turtle_med"
+	item_state = "turtle_med"
+	can_adjust = FALSE
