@@ -394,7 +394,7 @@
 	name = "smithed katana blade"
 	finishingitem = /obj/item/swordhandle
 	finalitem = /obj/item/melee/smith/twohand/katana
-	icon_state = "katana"
+	icon_state = "katana-s"
 
 
 /obj/item/smithing/katanablade/startfinish()

@@ -846,8 +846,14 @@
 	id = "surgery_heal_combo_upgrade_femto"
 
 /datum/design/surgery/healing/robot_upgrade
+	name = "Repair Robotic Limbs Upgrade"
+	surgery = /datum/surgery/robot_healing/upgraded
+	id = "surgery_heal_robo_upgrade"
 
 /datum/design/surgery/healing/robot_upgrade_2
+	name = "Repair Robotic Limbs Upgrade II"
+	surgery = /datum/surgery/robot_healing/upgraded/femto
+	id = "surgery_heal_robo_upgrade_femto"
 
 /datum/design/surgery/surgery_toxinhealing
 	name = "Body Rejuvenation"

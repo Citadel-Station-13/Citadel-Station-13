@@ -3,7 +3,7 @@
 /datum/surgery/robot_healing
 	name = "Repair Robotic Limbs"
 	desc = "A surgical procedure that provides repairs and maintenance to robotic limbs. Is slightly more efficient when the patient is severely damaged."
-
+	replaced_by = /datum/surgery
 	steps = list(/datum/surgery_step/mechanic_open,
 				/datum/surgery_step/pry_off_plating,
 				/datum/surgery_step/cut_wires,
@@ -15,7 +15,7 @@
 	requires_bodypart_type = 0 //You can do this on anyone, but it won't really be useful on people without augments.
 	ignore_clothes = TRUE
 	var/antispam = FALSE
-	var/healing_step_type = /datum/surgery_step/robot_heal/basic
+	var/healing_step_type
 
 /datum/surgery/robot_healing/basic
 	name = "Repair Robotic Limbs (Basic)"
@@ -25,15 +25,15 @@
 
 /datum/surgery/robot_healing/upgraded
 	name = "Repair Robotic Limbs (Adv.)"
-	replaced_by = /datum/surgery/robot_healing/upgraded/femto
 	requires_tech = TRUE
+	replaced_by = /datum/surgery/robot_healing/upgraded/femto
 	healing_step_type = /datum/surgery_step/robot_heal/upgraded
 	desc = "A surgical procedure that provides advanced repairs and maintenance to a patient's robotic limbs. Heals more when the patient is severely injured."
 
 /datum/surgery/robot_healing/upgraded/femto
 	name = "Repair Robotic Limbs (Exp.)"
-	replaced_by = /datum/surgery/robot_healing/upgraded/femto
 	requires_tech = TRUE
+	replaced_by = /datum/surgery/robot_healing/upgraded/femto
 	healing_step_type = /datum/surgery_step/robot_heal/upgraded/femto
 	desc = "A surgical procedure that provides experimental repairs and maintenance to a patient's robotic limbs. Heals considerably more when the patient is severely injured."
 
