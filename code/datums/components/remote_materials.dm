@@ -84,38 +84,37 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
-	if (istype(I, /obj/item/multitool))
-		var/obj/item/multitool/M = I
-		if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
-			if (silo == M.buffer)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		if((I.buffer) && istype(I.buffer, /obj/machinery/ore_silo))
+			if(silo == I.buffer)
 				to_chat(user, "<span class='notice'>[parent] is already connected to [silo].</span>")
 				return COMPONENT_NO_AFTERATTACK
-			if (silo)
+			if(silo)
 				silo.connected -= src
 				silo.updateUsrDialog()
-			else if (mat_container)
+			else if(mat_container)
 				mat_container.retrieve_all()
 				qdel(mat_container)
-			silo = M.buffer
+			silo = I.buffer
 			silo.connected += src
 			silo.updateUsrDialog()
 			mat_container = silo.GetComponent(/datum/component/material_container)
 			to_chat(user, "<span class='notice'>You connect [parent] to [silo] from the multitool's buffer.</span>")
 			return COMPONENT_NO_AFTERATTACK
 
-	else if (silo && istype(I, /obj/item/stack))
-		if (silo.remote_attackby(parent, user, I))
+	else if(silo && istype(I, /obj/item/stack))
+		if(silo.remote_attackby(parent, user, I))
 			return COMPONENT_NO_AFTERATTACK
 
 /datum/component/remote_materials/proc/on_hold()
 	return silo && silo.holds["[get_area(parent)]/[category]"]
 
 /datum/component/remote_materials/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats)
-	if (silo)
+	if(silo)
 		silo.silo_log(M || parent, action, amount, noun, mats)
 
 /datum/component/remote_materials/proc/format_amount()
-	if (mat_container)
+	if(mat_container)
 		return "[mat_container.total_amount] / [mat_container.max_amount == INFINITY ? "Unlimited" : mat_container.max_amount] ([silo ? "remote" : "local"])"
 	else
 		return "0 / 0"

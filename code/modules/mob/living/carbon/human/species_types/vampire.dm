@@ -58,7 +58,7 @@
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		C.dust()
 	var/area/A = get_area(C)
-	if(istype(A, /area/chapel))
+	if(istype(A, /area/chapel) && C.mind?.assigned_role != "Chaplain")
 		to_chat(C, "<span class='danger'>You don't belong here!</span>")
 		C.adjustFireLoss(5)
 		C.adjust_fire_stacks(6)

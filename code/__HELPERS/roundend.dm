@@ -242,6 +242,8 @@
 		SSpersistence.station_was_destroyed = TRUE
 	if(!mode.allow_persistence_save)
 		SSpersistence.station_persistence_save_disabled = TRUE
+	else
+		SSpersistence.SaveTCGCards()
 	SSpersistence.CollectData()
 
 	//stop collecting feedback during grifftime

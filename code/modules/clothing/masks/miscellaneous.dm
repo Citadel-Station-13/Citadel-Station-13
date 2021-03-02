@@ -36,7 +36,7 @@
 /obj/item/clothing/mask/surgical/aesthetic
 	name = "aesthetic sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases. This one doesn't seem like it does a whole lot, somehow."
-	flags_inv = HIDEFACE
+	flags_inv = null
 	flags_cover = null
 	visor_flags_inv = null
 	visor_flags_cover = null

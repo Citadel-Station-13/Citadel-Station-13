@@ -487,6 +487,17 @@
 	item_state = "militaryjacket"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic
+	name = "urban jacket"
+	desc = "A canvas jacket styled with a fur neck piece, stylish."
+	icon_state = "urbanjacket"
+	item_state = "urbanjacket"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
+
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#3D4C31", "#CBBDAF", "#3B3B3B"), 3)
+
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
 	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
@@ -1022,6 +1033,22 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS|HEAD
 	alternate_worn_layer = UNDER_HEAD_LAYER
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
+/obj/item/clothing/suit/toggle/wbreakpoly
+	name = "polychromic windbreaker"
+	desc = "Perfect for windy days."
+	icon_state = "wbreakpoly"
+	item_state = "wbreakpoly"
+
+/obj/item/clothing/suit/toggle/wbreakpoly/on_toggle(mob/user)
+	if(suittoggled)
+		to_chat(usr, "<span class='notice'>You zip up [src].</span>")
+	else
+		to_chat(usr, "<span class='notice'>You unzip [src].</span>")
+
+/obj/item/clothing/suit/toggle/wbreakpoly/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#464F65", "#916035", "#474747"), 3)
 
 /obj/item/clothing/suit/flakjack
 	name = "flak jacket"

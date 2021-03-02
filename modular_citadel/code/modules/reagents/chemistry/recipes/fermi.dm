@@ -93,9 +93,8 @@
 		e.set_up(round((volume/28)*(pH-9)), T, 0, 0)
 		e.start()
 
-	if(!ImpureTot == 0) //If impure, v.small emp (0.6 or less)
-		ImpureTot *= volume
-		empulse(T, volume, 1)
+	if(ImpureTot) //If impure, v.small emp (0.6 or less)
+		empulse(T, ImpureTot, 1)
 
 	my_atom.reagents.clear_reagents() //just in case
 	return
@@ -177,7 +176,7 @@
 	name = "Sucubus milk"
 	id = /datum/reagent/fermi/breast_enlarger
 	results = list(/datum/reagent/fermi/breast_enlarger = 8)
-	required_reagents = list(/datum/reagent/medicine/salglu_solution = 2, /datum/reagent/consumable/milk = 1, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/silicon = 5)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/silicon = 3, /datum/reagent/drug/aphrodisiac = 3)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -217,7 +216,7 @@
 	name = "Incubus draft"
 	id = /datum/reagent/fermi/penis_enlarger
 	results = list(/datum/reagent/fermi/penis_enlarger = 8)
-	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/carbon = 5, /datum/reagent/medicine/salglu_solution = 2)
+	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/carbon = 2, /datum/reagent/drug/aphrodisiac = 2, /datum/reagent/medicine/salglu_solution = 1)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -384,7 +383,7 @@
 	name = "Furranium"
 	id = /datum/reagent/fermi/furranium
 	results = list(/datum/reagent/fermi/furranium = 5)
-	required_reagents = list(/datum/reagent/pax/catnip = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 2)
+	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/moonsugar = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 1)
 	mix_message = "You think you can hear a howl come from the beaker."
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -404,6 +403,10 @@
 
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
+
+/datum/chemical_reaction/fermi/furranium/organic
+	id = "furranium_organic"
+	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 1)
 
 //Nano-b-gone
 /datum/chemical_reaction/fermi/nanite_b_gone//done test

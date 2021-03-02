@@ -424,7 +424,7 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
-	possible_methods = list(ACTIVATE_MOB_BUMP, ACTIVATE_SPEECH)
+	possible_methods = list(ACTIVATE_TOUCH)  //Because We love AOE transformations!  
 	activation_sound = 'sound/items/bikehorn.ogg'
 
 /obj/machinery/anomalous_crystal/honk/ActivationReaction(mob/user)

@@ -9,7 +9,7 @@
 	item_state = "arg"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/m556	//Uses the m90gl's magazine, just like the NT-ARG
-	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/rifleshot.ogg'
 	can_suppress = 0
 	burst_size = 6	//in line with XCOMEU stats. This can fire 5 bursts from a full magazine.
 	fire_delay = 1
@@ -85,23 +85,20 @@
 
 ///projectiles///
 
-/obj/item/projectile/bullet/cflechetteap	//shreds armor
+/obj/item/projectile/bullet/cflechetteap	//shreds armor but no wounds
 	name = "flechette (armor piercing)"
-	damage = 8
-	armour_penetration = 80
+	damage = 15
+	armour_penetration = 100
+	wound_bonus = -100
 
-/obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
+/obj/item/projectile/bullet/cflechettes		//causes wounds fast but is heavily countered by armor
 	name = "flechette (serrated)"
 	damage = 15
 	dismemberment = 10
-	armour_penetration = -80
-
-/obj/item/projectile/bullet/cflechettes/on_hit(atom/target, blocked = FALSE)
-	if((blocked != 100) && iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.bleed(10)
-	return ..()
-
+	wound_bonus = 15
+	sharpness = SHARP_EDGED
+	wound_falloff_tile = 0
+	
 ///ammo casings (CASELESS AMMO CASINGS WOOOOOOOO)///
 
 /obj/item/ammo_casing/caseless/flechetteap
@@ -148,7 +145,7 @@
 	slot_flags = 0
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_type = /obj/item/ammo_box/magazine/flechette
-	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/rifleshot.ogg'
 	can_suppress = 0
 	burst_size = 5
 	fire_delay = 1
@@ -168,15 +165,19 @@
 
 ///unique variant///
 
-/obj/item/projectile/bullet/cflechetteshredder
+/obj/item/projectile/bullet/cflechetteshredder	//you only get this with a 30TC bundle,5 magazines, as such this should be the superior ammotype
 	name = "flechette (shredder)"
-	damage = 5
-	dismemberment = 40
+	damage = 10
+	dismemberment = 15
+	wound_bonus = 20
+	armour_penetration = 100
+	sharpness = SHARP_EDGED
+	wound_falloff_tile = 0
 
 /obj/item/ammo_casing/caseless/flechetteshredder
 	name = "flechette (shredder)"
 	desc = "A serrated flechette made of a special alloy that forms a monofilament edge."
-	projectile_type = /obj/item/projectile/bullet/cflechettes
+	projectile_type = /obj/item/projectile/bullet/cflechetteshredder
 
 /obj/item/ammo_box/magazine/flechette/shredder
 	name = "flechette magazine (shredder)"
@@ -185,7 +186,7 @@
 
 /obj/item/gun/ballistic/automatic/flechette/shredder
 	name = "\improper CX Shredder"
-	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofillament flechettes."
+	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofilament flechettes."
 	w_class = WEIGHT_CLASS_SMALL
 	spread = 15
 	recoil = 0.1

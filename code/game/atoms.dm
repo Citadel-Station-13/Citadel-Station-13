@@ -99,6 +99,9 @@
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
 
+	///Reference to atom being orbited
+	var/atom/orbit_target
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -982,7 +985,7 @@
 	return
 
 /atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
-	if(!istype(I, /obj/item/multitool))
+	if(!I.tool_behaviour == TOOL_MULTITOOL)
 		if(user && !silent)
 			to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
 		return FALSE

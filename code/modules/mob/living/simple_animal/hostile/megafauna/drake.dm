@@ -398,6 +398,14 @@ Difficulty: Medium
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/transformed //ash drake balanced around player control
+	name = "transformed ash drake"
+	desc = "A sentient being transformed into an ash drake"
+	mob_size = MOB_SIZE_HUMAN //prevents crusher vulnerability
+	move_force = MOVE_FORCE_NORMAL //stops them from destroying and unanchoring shit by walking into it
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //no we dont want sentient megafauna be able to delete the entire station in a minute flat
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //200 health but not locked to standard movespeed, needs armor befitting of a dragon
+
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
 
@@ -413,7 +421,8 @@ Difficulty: Medium
 			if(L in hit_list || L == source)
 				continue
 			hit_list += L
-			L.adjustFireLoss(20)
+			L.adjustFireLoss(5)
+			L.adjust_fire_stacks(6)
 			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
 
 		// deals damage to mechs
