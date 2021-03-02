@@ -289,7 +289,7 @@
 			var/datum/db_query/query_irv_get_votes = SSdbcore.NewQuery({"
 				SELECT optionid FROM [format_table_name("poll_vote")]
 				WHERE pollid = :pollid AND ckey = :ckey AND deleted = 0
-			"}, list("pollid" = poll_id, "ckey" = ckey))
+			"}, list("pollid" = pollid, "ckey" = ckey))
 			if(!query_irv_get_votes.warn_execute())
 				qdel(query_irv_get_votes)
 				return
@@ -505,7 +505,9 @@
 		"datetime" = "NOW()",
 		"ip" = "INET_ATON(?)",
 	)
-
+	var/admin_rank = "Player"
+	if(!QDELETED(client) && client.holder)
+		admin_rank = client.holder.rank.name
 	var/sql_votes = list()
 	for(var/o in votelist)
 		var/voteid = text2num(o)
@@ -690,6 +692,9 @@
 	// 	break
 	// vote_count++
 	// var/datum/poll_option/option = locate(h) in poll.options
+	var/admin_rank = "Player"
+	if(!QDELETED(client) && client?.holder)
+		admin_rank = client.holder.rank.name
 	sql_votes += list(list(
 		"pollid" = pollid,
 		"optionid" = optionid,
