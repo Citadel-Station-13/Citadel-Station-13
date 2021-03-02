@@ -456,8 +456,8 @@ Difficulty: Very Hard
 	observer_desc = "This crystal changes the area around it to match the theme of \"[terrain_theme]\"."
 
 	switch(terrain_theme)
-		if("lavaland")//Depressurizes the place... and free cult metal, I guess.
-			NewTerrainFloors = /turf/open/floor/grass/snow/basalt
+		if("lavaland")//Replaces turf with fake basalt... and free cult metal, I guess.
+			NewTerrainFloors = /turf/open/floor/grass/fakebasalt
 			NewTerrainWalls = /turf/closed/wall/mineral/cult
 			NewFlora = list(/mob/living/simple_animal/hostile/asteroid/goldgrub)
 			florachance = 1
