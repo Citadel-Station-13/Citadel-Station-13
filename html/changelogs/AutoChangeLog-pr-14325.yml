@@ -1,4 +1,0 @@
-author: "dzahlus"
-delete-after: True
-changes: 
-  - bugfix: "fixes toxinlovers dying from heretic stuff that should heal them instead"
