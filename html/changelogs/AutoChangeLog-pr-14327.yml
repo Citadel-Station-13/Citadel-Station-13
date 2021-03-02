@@ -1,0 +1,5 @@
+author: "qweq12yt"
+delete-after: True
+changes: 
+  - bugfix: "fixed infectious zombies not being able to attack if host was pacifist"
+  - rscadd: "adds a way for species to have blacklisted quirks, the removal, and restoration of said quirks upon species changes"
