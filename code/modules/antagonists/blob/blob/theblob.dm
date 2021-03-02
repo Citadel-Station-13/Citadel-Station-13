@@ -8,6 +8,7 @@
 	opacity = 0
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	pass_flags_self = PASSBLOB
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	max_integrity = 30

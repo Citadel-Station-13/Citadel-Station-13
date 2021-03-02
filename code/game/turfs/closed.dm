@@ -6,6 +6,7 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	pass_flags_self = PASSCLOSEDTURF
 
 /turf/closed/Initialize()
 	. = ..()
@@ -198,13 +199,13 @@
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
-	
+
 /turf/closed/indestructible/rock/glacierrock
 	name = "unaturally hard ice wall"
 	desc = "Ice, hardened over thousands of years, you're not breaking through this."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snow_rock"
-	
+
 /turf/closed/indestructible/rock/glacierrock/blue
 	name = "blue ice wall"
 	desc = "The incredible compressive forces that formed this sturdy ice wall gave it a blue color."

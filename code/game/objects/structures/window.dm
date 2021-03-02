@@ -36,6 +36,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	pass_flags_self = PASSGLASS
 	rad_flags = RAD_PROTECT_CONTENTS
 	flags_1 = ON_BORDER_1|DEFAULT_RICOCHET_1
 	flags_ricochet =  RICOCHET_HARD

@@ -267,6 +267,7 @@
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
 	max_integrity = 20
+	pass_flags_self = PASSGLASS
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE

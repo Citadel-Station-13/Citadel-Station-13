@@ -73,9 +73,9 @@
 	else
 		return 1
 
-/obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+/obj/structure/windoor_assembly/CheckExit(atom/movable/mover, turf/target)
+	if(mover.pass_flags & pass_flags_self)
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else

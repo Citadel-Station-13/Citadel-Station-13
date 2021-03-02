@@ -6,6 +6,7 @@
 	var/climb_time = 20
 	var/climb_stun = 20
 	var/climbable = FALSE
+	pass_flags_self = PASSSTRUCTURE
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
 	layer = BELOW_OBJ_LAYER
@@ -114,4 +115,4 @@
 				return  "<span class='warning'>It's falling apart!</span>"
 
 /obj/structure/rust_heretic_act()
-	take_damage(500, BRUTE, "melee", 1) 
+	take_damage(500, BRUTE, "melee", 1)
