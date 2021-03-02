@@ -80,6 +80,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/inherent_traits = list()
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
+	var/list/blacklisted_quirks = list() // Quirks that will be removed upon gaining this species, to be defined by species
+	var/list/removed_quirks = list() // Quirks that got removed due to being blacklisted, and will be restored when on_species_loss() is called
+
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
@@ -342,6 +345,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
+	//lets remove those conflicting quirks
+	remove_blacklisted_quirks(C)
+
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
@@ -395,6 +401,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
+	// lets restore the quirks that got removed when gaining this species
+	restore_quirks(C)
+
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	if(mutant_bodyparts["meat_type"])
@@ -423,6 +432,26 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			B.change_bodypart_status(initial(B.status), FALSE, TRUE)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+
+// shamelessly inspired by antag_datum.remove_blacklisted_quirks()
+/datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
+	var/mob/living/L = C.mind?.current
+	if(istype(L))
+		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
+		SSquirks.filter_quirks(my_quirks, blacklisted_quirks)
+		for(var/q in L.roundstart_quirks)
+			var/datum/quirk/Q = q
+			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
+				L.remove_quirk(Q.type)
+				removed_quirks += Q.type
+
+// restore any quirks that we removed
+/datum/species/proc/restore_quirks(mob/living/carbon/C)
+	var/mob/living/L = C.mind?.current
+	if(istype(L))
+		for(var/q in removed_quirks)
+			L.add_quirk(q)
+
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
