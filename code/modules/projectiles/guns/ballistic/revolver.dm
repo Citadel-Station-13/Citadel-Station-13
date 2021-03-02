@@ -393,7 +393,7 @@
 	desc = "Modular Weapon System-01, does fit on your hip."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "mws"
-	fire_sound = 'sound/weapons/pulse2.ogg' //if you hear this sound something went wrong!
+	fire_sound = 'sound/weapons/MWSfire.ogg' //i spent 1 hour making a cool sound but byond just compresses it to shit so have this instead >:(
 	mag_type = /obj/item/ammo_box/magazine/mws_mag
 	spawnwithmagazine = FALSE
 	recoil = 0
