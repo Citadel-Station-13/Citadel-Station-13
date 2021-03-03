@@ -44,8 +44,9 @@
 
 ///Get raw numerical achievement value from the database
 /datum/award/proc/get_raw_value(key)
-	var/datum/DBQuery/Q = SSdbcore.NewQuery(
-		"SELECT value FROM [format_table_name("achievements")] WHERE ckey = [key] AND achievement_key = [database_id]"
+	var/datum/db_query/Q = SSdbcore.NewQuery(
+		"SELECT value FROM [format_table_name("achievements")] WHERE ckey = :ckey AND achievement_key = :achievement_key",
+		list("ckey" = key, "achievement_key" = database_id)
 	)
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)
@@ -98,8 +99,9 @@
 	.["achievement_type"] = "score"
 
 /datum/award/score/proc/LoadHighScores()
-	var/datum/DBQuery/Q = SSdbcore.NewQuery(
-		"SELECT ckey,value FROM [format_table_name("achievements")] WHERE achievement_key = [database_id] ORDER BY value DESC LIMIT 50"
+	var/datum/db_query/Q = SSdbcore.NewQuery(
+		"SELECT ckey,value FROM [format_table_name("achievements")] WHERE achievement_key = :achievement_key ORDER BY value DESC LIMIT 50",
+		list("achievement_key" = database_id)
 	)
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)

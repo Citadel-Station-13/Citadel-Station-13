@@ -15,7 +15,7 @@
 *.py text eol=lf
 *.scss text eol=lf
 *.sh text eol=lf
-# *.sql text eol=lf
+*.sql text eol=lf
 *.svg text eol=lf
 *.ts text eol=lf
 *.tsx text eol=lf

@@ -642,10 +642,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if (!server_url)
 		CRASH("Invalid cross comms config: [server_name]")
 	world.Export("[server_url]?[list2params(message)]")
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 
 /proc/ircadminwho()
 	var/list/message = list("Admins: ")
