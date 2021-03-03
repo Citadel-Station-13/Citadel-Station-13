@@ -1,5 +1,0 @@
-author: "MarinaGryphon"
-delete-after: True
-changes: 
-  - bugfix: "The AOOC mute pref is now properly respected."
-  - bugfix: "Muting adminhelp sounds no longer mutes AOOC."

@@ -1,6 +1,0 @@
-author: "qweq12yt"
-delete-after: True
-changes: 
-  - bugfix: "Now pacifists won't be able to use flamethrowers"
-  - bugfix: "Kinetic Accelerator now properly reloads a charge to it's chamber instead of nulling the variable forever"
-  - bugfix: "Now pacifists won't be able to use Kinetic Accelerators if a non-pacifist shoots it first"

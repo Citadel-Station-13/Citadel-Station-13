@@ -1,5 +1,0 @@
-author: "dzahlus"
-delete-after: True
-changes: 
-  - rscadd: "Added new subtype to lesser ash drake balanced around player control"
-  - balance: "rebalanced dragon transformation to a 1 minute cooldown as well as using the new subtype of megafauna"
