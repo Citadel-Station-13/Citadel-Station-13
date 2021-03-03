@@ -78,7 +78,7 @@
 	H.apply_damage(150, BRUTE, where_we_snappin_boys)
 	var/obj/item/bodypart/cracka = H.get_bodypart(where_we_snappin_boys)
 	if(cracka)
-		var//datum/wound/blunt/critical/cracka_lackin = new
+		var/datum/wound/blunt/critical/cracka_lackin = new
 		cracka_lackin.apply_wound(cracka)
 	H.adjustBruteLoss(rand(5,20) + (max(0, H.health))) //Make absolutely sure they end up in crit, so that they can succumb if they wish.
 
