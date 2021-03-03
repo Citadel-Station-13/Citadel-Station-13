@@ -339,7 +339,9 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_reskin = null
+	unique_reskin = list("Default" = "ishotgun",
+						"Cobbled" = "old_ishotgun"
+						)
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
