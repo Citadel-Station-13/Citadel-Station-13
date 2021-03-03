@@ -497,17 +497,17 @@
 	// var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
 		to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
-
-	if (!vote_valid_check(pollid, holder, POLLTYPE_IRV))
+	var/admin_rank = "Player"
+	if(!QDELETED(client) && client.holder)
+		admin_rank = client.holder.rank.name
+	if (!vote_valid_check(pollid, client?.holder, POLLTYPE_IRV))
 		return 0
 
 	var/list/special_columns = list(
 		"datetime" = "NOW()",
 		"ip" = "INET_ATON(?)",
 	)
-	var/admin_rank = "Player"
-	if(!QDELETED(client) && client.holder)
-		admin_rank = client.holder.rank.name
+
 	var/sql_votes = list()
 	for(var/o in votelist)
 		var/voteid = text2num(o)
