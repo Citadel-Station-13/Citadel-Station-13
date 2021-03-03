@@ -179,7 +179,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 
-	browse_messages(null, usr.ckey, null, TRUE, override = TRUE)
+	browse_messages(null, usr.ckey, null, TRUE)
 
 /client/proc/self_playtime()
 	set name = "View tracked playtime"

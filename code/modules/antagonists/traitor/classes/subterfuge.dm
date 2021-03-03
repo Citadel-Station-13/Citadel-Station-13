@@ -12,11 +12,10 @@
 		mode = SSticker.mode
 		assassin_prob = max(0,mode.threat_level-40)
 	if(prob(assassin_prob))
-		if(prob(assassin_prob))
-			var/datum/objective/assassinate/once/kill_objective = new
-			kill_objective.owner = T.owner
-			kill_objective.find_target()
-			T.add_objective(kill_objective)
+		var/datum/objective/assassinate/once/kill_objective = new
+		kill_objective.owner = T.owner
+		kill_objective.find_target()
+		T.add_objective(kill_objective)
 	else
 		var/list/weights = list()
 		weights["sabo"] = length(subtypesof(/datum/sabotage_objective))

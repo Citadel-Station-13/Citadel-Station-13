@@ -97,6 +97,7 @@
 			if(myseed.mutatelist.len > 0)
 				myseed.instability = (myseed.instability/2)
 		mutatespecie()
+		return BULLET_ACT_HIT
 	else
 		return ..()
 
