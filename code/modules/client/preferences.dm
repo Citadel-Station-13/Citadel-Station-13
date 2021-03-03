@@ -1355,9 +1355,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["jobbancheck"])
-		var/job = sanitizeSQL(href_list["jobbancheck"])
-		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/datum/DBQuery/query_get_jobban = SSdbcore.NewQuery("SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey) FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
+		var/job = href_list["jobbancheck"]
+		var/datum/db_query/query_get_jobban = SSdbcore.NewQuery({"
+			SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey)
+			FROM [format_table_name("ban")] WHERE ckey = :ckey AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = :job
+			"}, list("ckey" = user.ckey, "job" = job))
 		if(!query_get_jobban.warn_execute())
 			qdel(query_get_jobban)
 			return
@@ -1372,7 +1374,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
-			to_chat(user, text)
+			to_chat(user, text, confidential = TRUE)
 		qdel(query_get_jobban)
 		return
 
