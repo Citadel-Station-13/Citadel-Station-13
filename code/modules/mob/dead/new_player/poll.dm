@@ -492,7 +492,7 @@
 		return
 	if(!vote_rig_check())
 		return
-	if(!pollid || !optionid)
+	if(!pollid)
 		return
 	// var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
@@ -515,7 +515,7 @@
 			continue
 		sql_votes += list(list(
 			"pollid" = pollid,
-			"optionid" = voteid
+			"optionid" = voteid,
 			"ckey" = ckey,
 			"ip" = client.address,
 			"adminrank" = admin_rank
