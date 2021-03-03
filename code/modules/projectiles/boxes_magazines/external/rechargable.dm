@@ -120,4 +120,4 @@
 	name = "'MWS' microbattery - TASER"
 	type_color = "#e5ff00"
 	type_name = "<span class='stun'>TASE</span>"
-	projectile_type = /obj/item/projectile/energy/electrode
+	projectile_type = /obj/item/projectile/energy/electrode/security
