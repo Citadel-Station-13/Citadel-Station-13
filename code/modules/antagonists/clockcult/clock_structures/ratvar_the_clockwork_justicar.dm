@@ -170,7 +170,7 @@
 	if(QDELETED(src))
 		priority_announce("Energy signal no longer detected.","Central Command Higher Dimensional Affairs")
 		return
-	sound_to_playing_players(volume = 70, sound('sound/magic/clockwork/ark_activation_sequence.ogg')) //if this isn't lessened in volume it peaks for some reason
+	sound_to_playing_players('sound/machines/clockcult/ratvar_scream.ogg', 80) //if this isn't lessened in volume it peaks for some reason
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/clockcult_ending_helper), 300)
 
 /proc/clockcult_ending_helper()
