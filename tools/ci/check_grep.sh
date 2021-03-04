@@ -22,15 +22,15 @@ if grep -P 'pixel_[^xy]' _maps/**/*.dmm;	then
     echo "ERROR: incorrect pixel offset variables detected in maps, please remove them."
     st=1
 fi;
-echo "Checking for cable varedits"
-if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
-    echo "ERROR: vareditted cables detected, please remove them."
-    st=1
-fi;
-if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
-    echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
-    st=1
-fi;
+# echo "Checking for cable varedits"
+# if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
+#     echo "ERROR: vareditted cables detected, please remove them."
+#     st=1
+# fi;
+# if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
+#     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
+#     st=1
+# fi;
 echo "Checking for stacked cables"
 if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
     echo "found multiple cables on the same tile, please remove them."
