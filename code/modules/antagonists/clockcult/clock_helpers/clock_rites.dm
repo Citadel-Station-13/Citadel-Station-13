@@ -201,7 +201,7 @@
 	name = "Rite of the Vessel" //The name of the rite
 	desc = "This rite is used to summon a soul vessel, a special posibrain that makes whoever has their brain put into it loyal to the Justiciar.,\
 	 When put into a cyborg shell, the created cyborg will automatically be a servant of Ratvar."
-	list/required_ingredients = list(/obj/item/stack/cable_coil, /obj/item/stock_parts/cell/, /obj/item/organ/cyberimp)
+	required_ingredients = list(/obj/item/stack/cable_coil, /obj/item/stock_parts/cell/, /obj/item/organ/cyberimp)
 	power_cost = 2500 //These things are pretty strong, I won't lie
 	requires_full_power = TRUE
 	cast_time = 50
@@ -220,7 +220,7 @@
 /datum/clockwork_rite/cyborg_transform
 	name = "Rite of the Divine Form"
 	desc = "This rite is used to ascend into a cyborg, gaining unique scripture and a loadout that depends on which module is chosen. Consult the wiki for details on each cyborg module's loadout. Mutually exclusive to Enhanced Form."
-	list/required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stack/cable_coil, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
+	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stack/cable_coil, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
 	power_cost = 20000
 	requires_human = TRUE
 	requires_full_power = FALSE
@@ -240,7 +240,7 @@
 /datum/clockwork_rite/golem_transform
 	name = "Rite of the Enhanced Form"
 	desc = "This rite is used to shed one's flesh to become a clockwork automaton, becoming immune to many environmental hazards as well as being more resilient to incoming damage. Mutually exclusive to Divine Form."
-	list/required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
+	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
 	power_cost = 20000
 	requires_human = TRUE
 	requires_full_power = FALSE
