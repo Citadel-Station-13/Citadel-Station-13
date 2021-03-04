@@ -273,7 +273,7 @@ a.popt {
 
 
 .italic,
-.italics  {
+.italics {
   font-style: italic;
 }
 
@@ -356,7 +356,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain {
 }
 
 .deadsay {
@@ -442,10 +442,6 @@ h1.alert, h2.alert {
   color: #000000;
 }
 
-.emote {
-  // font-style: italic;
-}
-
 .userdanger {
   color: #ff0000;
   font-weight: bold;
@@ -495,6 +491,11 @@ h1.alert, h2.alert {
 .boldannounce {
   color: #ff0000;
   font-weight: bold;
+}
+
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .greenannounce {
@@ -889,6 +890,11 @@ h1.alert, h2.alert {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #800000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
   font-size: 125%; /* 160% default, changed so command can scream less */
@@ -927,7 +933,7 @@ h1.alert, h2.alert {
 
 .clown {
   color: #FF69Bf;
-  font-size: 125%; /* 160% default, changed so "command" can scream less */
+  font-size: 125%;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
 }

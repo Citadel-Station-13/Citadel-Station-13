@@ -338,7 +338,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain {
 }
 
 .deadsay {
@@ -417,10 +417,6 @@ em {
   color: #d82020;
 }
 
-.emote {
-  // font-style: italic;
-}
-
 .userdanger {
   color: #c51e1e;
   font-weight: bold;
@@ -455,6 +451,11 @@ em {
 .boldannounce {
   color: #c51e1e;
   font-weight: bold;
+}
+
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .greenannounce {
@@ -541,6 +542,7 @@ em {
   color: #059223;
 }
 
+/* hornichems */
 .userlove {
   color: #ff42a6;
   font-style: italic;
@@ -848,6 +850,11 @@ em {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #FF0000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
   font-size: 125%;
@@ -902,6 +909,7 @@ em {
   font-style: italic;
 }
 
+/*jacq */
 .spooky {
   color: #FF9100;
 }
