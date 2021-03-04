@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
 	var/emergencyNoRecall = FALSE
+	var/adminEmergencyNoRecall = FALSE
 	var/list/hostileEnvironments = list() //Things blocking escape shuttle from leaving
 	var/list/tradeBlockade = list() //Things blocking cargo from leaving.
 	var/supplyBlocked = FALSE
@@ -136,7 +137,7 @@ SUBSYSTEM_DEF(shuttle)
 				break
 
 /datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
-	if(emergencyNoEscape || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
+	if(emergencyNoEscape || adminEmergencyNoRecall || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
 		return
 
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
@@ -181,38 +182,26 @@ SUBSYSTEM_DEF(shuttle)
 			return S
 	WARNING("couldn't find dock with id: [id]")
 
-/datum/controller/subsystem/shuttle/proc/canEvac(mob/user, silent=FALSE)
+/// Check if we can call the evac shuttle.
+/// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
+/datum/controller/subsystem/shuttle/proc/canEvac(mob/user)
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
-		if(!silent)
-			to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
-		return FALSE
+		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before attempting to call."
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			if(!silent)
-				to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
-			return FALSE
+			return "The emergency shuttle may not be called while returning to CentCom."
 		if(SHUTTLE_CALL)
-			if(!silent)
-				to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
-			return FALSE
+			return "The emergency shuttle is already on its way."
 		if(SHUTTLE_DOCKED)
-			if(!silent)
-				to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
-			return FALSE
+			return "The emergency shuttle is already here."
 		if(SHUTTLE_IGNITING)
-			if(!silent)
-				to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
-			return FALSE
+			return "The emergency shuttle is firing its engines to leave."
 		if(SHUTTLE_ESCAPE)
-			if(!silent)
-				to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
-			return FALSE
+			return "The emergency shuttle is moving away to a safe distance."
 		if(SHUTTLE_STRANDED)
-			if(!silent)
-				to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
-			return FALSE
+			return "The emergency shuttle has been disabled by CentCom."
 
 	return TRUE
 
@@ -230,7 +219,9 @@ SUBSYSTEM_DEF(shuttle)
 			Good luck.")
 		emergency = backup_shuttle
 
-	if(!canEvac(user))
+	var/can_evac_or_fail_reason = SSshuttle.canEvac(user)
+	if(can_evac_or_fail_reason != TRUE)
+		to_chat(user, "<span class='alert'>[can_evac_or_fail_reason]</span>")
 		return
 
 	call_reason = trim(html_encode(call_reason))
@@ -259,10 +250,11 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/A = get_area(user)
 
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
-	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user)
+	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user) //, message_type=DEADCHAT_ANNOUNCEMENT)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
+		SSticker.emergency_reason = call_reason
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
@@ -297,7 +289,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_shuttle("[key_name(user)] has recalled the shuttle.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user)
+		deadchat_broadcast(" has recalled the shuttle from <span class='name'>[get_area_name(user, TRUE)]</span>.", "<span class='name'>[user.real_name]</span>", user) //, message_type=DEADCHAT_ANNOUNCEMENT)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
@@ -323,7 +315,7 @@ SUBSYSTEM_DEF(shuttle)
 	if (!SSticker.IsRoundInProgress())
 		return
 
-	var/callShuttle = 1
+	var/callShuttle = TRUE
 
 	for(var/thing in GLOB.shuttle_caller_list)
 		if(isAI(thing))
@@ -339,7 +331,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		var/turf/T = get_turf(thing)
 		if(T && is_station_level(T.z))
-			callShuttle = 0
+			callShuttle = FALSE
 			break
 
 	if(callShuttle)
@@ -415,7 +407,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
-	return 0	//dock successful
+	return 0 //dock successful
 
 
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
