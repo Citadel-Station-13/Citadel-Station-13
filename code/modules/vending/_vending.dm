@@ -686,6 +686,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = list()
 	.["onstation"] = onstation
 	.["department"] = payment_department
+	.["jobDiscount"] = VENDING_DISCOUNT
 	.["product_records"] = list()
 	for (var/datum/data/vending_product/R in product_records)
 		var/list/data = list(
@@ -712,7 +713,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_premium_price || extra_price, //may cause breakage. please note
+			price = R.custom_premium_price || extra_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
@@ -721,21 +722,20 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/machinery/vending/ui_data(mob/user)
 	. = list()
-	var/mob/living/carbon/human/H
 	var/obj/item/card/id/C
-	if(ishuman(user))
-		H = user
-		C = H.get_idcard(TRUE)
-		if(C?.registered_account)
-			.["user"] = list()
-			.["user"]["name"] = C.registered_account.account_holder
-			.["user"]["cash"] = C.registered_account.account_balance
-			if(C.registered_account.account_job)
-				.["user"]["job"] = C.registered_account.account_job.title
-				.["user"]["department"] = C.registered_account.account_job.paycheck_department
-			else
-				.["user"]["job"] = "No Job"
-				.["user"]["department"] = "No Department"
+	if(isliving(user))
+		var/mob/living/L = user
+		C = L.get_idcard(TRUE)
+	if(C?.registered_account)
+		.["user"] = list()
+		.["user"]["name"] = C.registered_account.account_holder
+		.["user"]["cash"] = C.registered_account.account_balance
+		if(C.registered_account.account_job)
+			.["user"]["job"] = C.registered_account.account_job.title
+			.["user"]["department"] = C.registered_account.account_job.paycheck_department
+		else
+			.["user"]["job"] = "No Job"
+			.["user"]["department"] = "No Department"
 	.["stock"] = list()
 	for (var/datum/data/vending_product/R in product_records + coin_records + hidden_records)
 		.["stock"][R.name] = R.amount
