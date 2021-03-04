@@ -3167,7 +3167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^2.0.12, dompurify@npm:^2.2.6":
+"dompurify@npm:^2.2.6":
   version: 2.2.6
   resolution: "dompurify@npm:2.2.6"
   checksum: dfc77c2c603d84d4385a419acbda3f14777bf97f7a33a1de43d8a4f264171d12c916eda923715bc0199bcece20d3d6d3de730f3470d178c8ffdf25ba7ca18aee
@@ -4305,14 +4305,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inferno-vnode-flags@npm:7.4.8, inferno-vnode-flags@npm:^7.4.2":
+"inferno-vnode-flags@npm:7.4.8, inferno-vnode-flags@npm:^7.4.8":
   version: 7.4.8
   resolution: "inferno-vnode-flags@npm:7.4.8"
   checksum: 9dec51a6f60abb55bbe0cfb395908ccdafdae816576356bfd1b306769f14086c2ddd6b5351d18365c0b9d64dcc5925d1f66395a8f16271825cdccd2a9fdb1315
   languageName: node
   linkType: hard
 
-"inferno@npm:^7.4.2, inferno@npm:^7.4.8":
+"inferno@npm:^7.4.8":
   version: 7.4.8
   resolution: "inferno@npm:7.4.8"
   dependencies:
@@ -5579,12 +5579,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^1.1.1":
-  version: 1.2.9
-  resolution: "marked@npm:1.2.9"
+"marked@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "marked@npm:2.0.1"
   bin:
     marked: bin/marked
-  checksum: d6cce03ea4a069e31d8e3c6ef99a2aee62aa6b309462a380c1f57caaec6aad0d9d62f1195e45230b838a301484a7a94d2bc70ba07bfddb003f8685710708874d
+  checksum: dd6f468a96ddfd6efbfdaa2f0fa61899b2ce1f8dac0a93c13d847d0fca6872d1f32362d7fe097932aeabc1dfbd83e33bb009a159860f60551d4c6adbdc5a0faf
   languageName: node
   linkType: hard
 
@@ -7635,10 +7635,10 @@ __metadata:
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
     common: "workspace:*"
-    dompurify: ^2.0.12
-    inferno: ^7.4.2
-    inferno-vnode-flags: ^7.4.2
-    marked: ^1.1.1
+    dompurify: ^2.2.6
+    inferno: ^7.4.8
+    inferno-vnode-flags: ^7.4.8
+    marked: ^2.0.0
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
   languageName: unknown
