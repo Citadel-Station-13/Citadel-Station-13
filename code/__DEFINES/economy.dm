@@ -13,7 +13,7 @@
 #define MAX_GRANT_SECMEDSRV 3000
 
 //What should vending machines charge when you buy something in-department.
-#define VENDING_DISCOUNT 1 // 0.2 (20%)
+#define VENDING_DISCOUNT 0 // price * discount so 0 = 0
 
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"
