@@ -350,4 +350,140 @@
 	if(..())
 		name = "[initial(name)] ([target])"
 
+
+
+// Same code at the bluespace cumjar I mean pet carrier but wont break when thrown allowing re-use.
+/obj/item/pet_carrier/monsterball
+	name = "monster ball"
+	desc = "An elaborate bluespace ball able to hold and release any monsters or catboys placed inside when thrown."
+	open = FALSE //starts closed so it looks better on menus
+	icon_state = "monsterball"
+	item_state = "monsterball"
+	lefthand_file = ""
+	righthand_file = ""
+	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
+	load_time = 40 //loading things into a jar takes longer than a regular pet carrier
+	entrance_name = "lid"
+	w_class = WEIGHT_CLASS_SMALL //it's a small ball
+	throw_speed = 3
+	throw_range = 7
+	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
+	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
+	has_lock_sprites = FALSE //monsterball doesn't show the regular lock overlay
+	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 4000, /datum/material/diamond = 4000)
+	escape_time = 200 //equal to the time of a bluespace bodybag
+	alternate_escape_time = 100
+
+	///gas supply for simplemobs so they don't die
+	var/datum/gas_mixture/occupant_gas_supply
+	///level until the reagent gets INGEST ed instead of TOUCH
+	var/sipping_level = 150
+	///prob50 level of sipping
+	var/sipping_probably = 99
+	///chem transfer rate / second
+	var/transfer_rate = 5
+
+/obj/item/pet_carrier/monsterball/Initialize()
+	. = ..()
+	create_reagents(300, OPENCONTAINER, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
+
+/obj/item/pet_carrier/monsterball/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/pet_carrier/monsterball/attack_self(mob/living/user)
+	..()
+	if(reagents)
+		if(open)
+			reagents.reagents_holder_flags = OPENCONTAINER
+			playsound(user, 'sound/misc/loadingBleep.ogg', 50, TRUE)
+		else
+			reagents.reagents_holder_flags = NONE
+			playsound(user, 'sound/misc/servochange.ogg', 50, TRUE)
+
+/obj/item/pet_carrier/monsterball/update_icon_state()
+	if(open)
+		icon_state = "monsterball_open"
+	else
+		icon_state = "monsterball"
+
+/obj/item/pet_carrier/monsterball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(occupants.len)
+		loc.visible_message("<span class='warning'>I choose you,[occupants[1]]!</span>")
+
+	if(reagents?.total_volume && ismob(hit_atom) && hit_atom.reagents)
+		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
+		var/mob/M = hit_atom
+		var/R = reagents.log_list()
+		hit_atom.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
+						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		var/turf/TT = get_turf(hit_atom)
+		var/throwerstring
+		if(thrownby)
+			log_combat(thrownby, M, "splashed", R)
+			var/turf/AT = get_turf(thrownby)
+			throwerstring = " THROWN BY [key_name(thrownby)] at [AT] (AREACOORD(AT)]"
+		log_reagent("SPLASH: [src] mob throw_impact() onto [key_name(hit_atom)] at [TT] ([AREACOORD(TT)])[throwerstring] - [R]")
+		reagents.reaction(hit_atom, TOUCH)
+		reagents.clear_reagents()
+
+	if(iscatperson(occupants[1]))
+		var/mob/living/L = occupants[1]
+		// here's a big L for you
+		L.emote("nya")
+
+	playsound(src, 'sound/misc/loadingBleep.ogg', 50, TRUE)
+	remove_occupant(occupants[1], get_turf(loc))
+
+/obj/item/pet_carrier/monsterball/add_occupant(mob/living/occupant) //update the gas supply as required, this acts like magical internals
+	. = ..()
+	if(!occupant_gas_supply)
+		occupant_gas_supply = new
+
+	if(isanimal(occupant))
+		var/mob/living/simple_animal/animal = occupant
+		occupant_gas_supply[/datum/gas/oxygen] = 0.0064 //make sure it has some gas in so it isn't depressurized
+		occupant_gas_supply.set_temperature(animal.minbodytemp) //simple animals only care about temperature/pressure when their turf isnt a location
+
+	if(ishuman(occupant)) //humans require resistance to cold/heat and living in no air while inside, and lose this when outside
+		START_PROCESSING(SSobj, src)
+		ADD_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
+		ADD_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
+		ADD_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
+		ADD_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
+		ADD_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
+
+/obj/item/pet_carrier/monsterball/remove_occupant(mob/living/occupant)
+	. = ..()
+	if(ishuman(occupant))
+		STOP_PROCESSING(SSobj, src)
+		REMOVE_TRAIT(occupant, TRAIT_RESISTCOLD, "bluespace_container_cold_resist")
+		REMOVE_TRAIT(occupant, TRAIT_RESISTHEAT, "bluespace_container_heat_resist")
+		REMOVE_TRAIT(occupant, TRAIT_NOBREATH, "bluespace_container_no_breath")
+		REMOVE_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
+		REMOVE_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
+	name = initial(name)
+
+/obj/item/pet_carrier/monsterball/return_air()
+	if(!occupant_gas_supply)
+		occupant_gas_supply = new
+	return occupant_gas_supply
+
+/obj/item/pet_carrier/monsterball/process()
+	if(!reagents)
+		return
+	for(var/mob/living/L in occupants)
+		if(!ishuman(L))
+			continue
+		if((reagents.total_volume >= sipping_level) || ((reagents.total_volume >= sipping_probably) && prob(50))) //sipp
+			reagents.reaction(L, INGEST) //consume
+			reagents.trans_to(L, transfer_rate)
+		else
+			reagents.reaction(L, TOUCH, show_message = FALSE)
+
+/obj/item/pet_carrier/monsterball/load_occupant(mob/living/user, mob/living/target)
+	if(..())
+		name = "[initial(name)] ([target])"
+
 #undef pet_carrier_full

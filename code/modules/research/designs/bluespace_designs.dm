@@ -115,3 +115,13 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 600)
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/monsterball
+	name = "monster ball"
+	desc = "An elaborate bluespace ball able to hold and release any monsters or catboys placed inside when thrown."
+	id = "monsterball"
+	build_type = PROTOLATHE
+	build_path = /obj/item/pet_carrier/monsterball
+	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 4000, /datum/material/diamond = 4000)
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
