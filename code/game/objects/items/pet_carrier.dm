@@ -431,7 +431,7 @@
 	if(iscatperson(occupants[1]))
 		var/mob/living/L = occupants[1]
 		// here's a big L for you
-		L.emote("nya")
+		L.emote("meow")
 
 	playsound(src, 'sound/misc/loadingBleep.ogg', 50, TRUE)
 	remove_occupant(occupants[1], get_turf(loc))
