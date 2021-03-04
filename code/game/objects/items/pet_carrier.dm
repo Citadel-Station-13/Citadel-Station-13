@@ -353,12 +353,12 @@
 
 
 // Same code at the bluespace cumjar I mean pet carrier but wont break when thrown allowing re-use.
-/obj/item/pet_carrier/monsterball
-	name = "monster ball"
-	desc = "An elaborate bluespace ball able to hold and release any monsters or catboys placed inside when thrown."
+/obj/item/pet_carrier/bcball
+	name = "bluespace capture ball"
+	desc = "An elaborate bluespace containment device able to hold and release any monsters or catboys placed inside when thrown."
 	open = FALSE //starts closed so it looks better on menus
-	icon_state = "monsterball"
-	item_state = "monsterball"
+	icon_state = "bcball"
+	item_state = "bcball"
 	lefthand_file = ""
 	righthand_file = ""
 	max_occupant_weight = MOB_SIZE_HUMAN //can fit people, like a bluespace bodybag!
@@ -369,7 +369,7 @@
 	throw_range = 7
 	max_occupants = 1 //far less than a regular carrier or bluespace bodybag, because it can be thrown to release the contents
 	allows_hostiles = TRUE //can fit hostile creatures, with the move resist restrictions in place, this means they still cannot take things like legions/goliaths/etc regardless
-	has_lock_sprites = FALSE //monsterball doesn't show the regular lock overlay
+	has_lock_sprites = FALSE //bcball doesn't show the regular lock overlay
 	custom_materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 4000, /datum/material/diamond = 4000)
 	escape_time = 200 //equal to the time of a bluespace bodybag
 	alternate_escape_time = 100
@@ -383,15 +383,15 @@
 	///chem transfer rate / second
 	var/transfer_rate = 5
 
-/obj/item/pet_carrier/monsterball/Initialize()
+/obj/item/pet_carrier/bcball/Initialize()
 	. = ..()
 	create_reagents(300, OPENCONTAINER, DEFAULT_REAGENTS_VALUE) //equivalent of bsbeakers
 
-/obj/item/pet_carrier/monsterball/Destroy()
+/obj/item/pet_carrier/bcball/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/pet_carrier/monsterball/attack_self(mob/living/user)
+/obj/item/pet_carrier/bcball/attack_self(mob/living/user)
 	..()
 	if(reagents)
 		if(open)
@@ -401,13 +401,13 @@
 			reagents.reagents_holder_flags = NONE
 			playsound(user, 'sound/misc/servochange.ogg', 50, TRUE)
 
-/obj/item/pet_carrier/monsterball/update_icon_state()
+/obj/item/pet_carrier/bcball/update_icon_state()
 	if(open)
-		icon_state = "monsterball_open"
+		icon_state = "bcball_open"
 	else
-		icon_state = "monsterball"
+		icon_state = "bcball"
 
-/obj/item/pet_carrier/monsterball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/pet_carrier/bcball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(occupants.len)
 		loc.visible_message("<span class='warning'>I choose you,[occupants[1]]!</span>")
@@ -436,7 +436,7 @@
 	playsound(src, 'sound/misc/loadingBleep.ogg', 50, TRUE)
 	remove_occupant(occupants[1], get_turf(loc))
 
-/obj/item/pet_carrier/monsterball/add_occupant(mob/living/occupant) //update the gas supply as required, this acts like magical internals
+/obj/item/pet_carrier/bcball/add_occupant(mob/living/occupant) //update the gas supply as required, this acts like magical internals
 	. = ..()
 	if(!occupant_gas_supply)
 		occupant_gas_supply = new
@@ -454,7 +454,7 @@
 		ADD_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
 		ADD_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 
-/obj/item/pet_carrier/monsterball/remove_occupant(mob/living/occupant)
+/obj/item/pet_carrier/bcball/remove_occupant(mob/living/occupant)
 	. = ..()
 	if(ishuman(occupant))
 		STOP_PROCESSING(SSobj, src)
@@ -465,12 +465,12 @@
 		REMOVE_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 	name = initial(name)
 
-/obj/item/pet_carrier/monsterball/return_air()
+/obj/item/pet_carrier/bcball/return_air()
 	if(!occupant_gas_supply)
 		occupant_gas_supply = new
 	return occupant_gas_supply
 
-/obj/item/pet_carrier/monsterball/process()
+/obj/item/pet_carrier/bcball/process()
 	if(!reagents)
 		return
 	for(var/mob/living/L in occupants)
@@ -482,7 +482,7 @@
 		else
 			reagents.reaction(L, TOUCH, show_message = FALSE)
 
-/obj/item/pet_carrier/monsterball/load_occupant(mob/living/user, mob/living/target)
+/obj/item/pet_carrier/bcball/load_occupant(mob/living/user, mob/living/target)
 	if(..())
 		name = "[initial(name)] ([target])"
 
