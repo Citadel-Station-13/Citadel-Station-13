@@ -369,8 +369,8 @@
 	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
 	if ((air.get_moles(/datum/gas/oxygen) - heat_efficency < 0 )|| (air.get_moles(/datum/gas/nitrogen) - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	air.adjust_moles(/datum/gas/oxygen, heat_efficency)
-	air.adjust_moles(/datum/gas/nitrogen, heat_efficency)
+	air.adjust_moles(/datum/gas/oxygen, -heat_efficency)
+	air.adjust_moles(/datum/gas/nitrogen, -heat_efficency)
 	air.adjust_moles(/datum/gas/nitryl, heat_efficency*2)
 
 	if(energy_used > 0)
