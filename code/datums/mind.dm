@@ -554,7 +554,6 @@ GLOBAL_LIST(objective_player_choices)
 		/datum/objective/martyr,
 		/datum/objective/steal,
 		/datum/objective/download,
-		/datum/objective/blackmail_implant //SKYRAT ADDITION
 		)
 
 	for(var/t in allowed_types)
@@ -582,7 +581,6 @@ GLOBAL_LIST(objective_choices)
 		/datum/objective/download,
 		/datum/objective/nuclear,
 		/datum/objective/absorb,
-		/datum/objective/blackmail_implant //SKYRAT ADDITION
 		)
 
 	for(var/t in allowed_types)
