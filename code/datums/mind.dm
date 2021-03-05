@@ -30,6 +30,7 @@
 */
 //ambition port start
 #define AMBITION_COOLDOWN_TIME (5 SECONDS)
+#define OBJECTIVES_COOLDOWN_TIME (10 MINUTES)
 //ambition port end
 
 
@@ -198,7 +199,7 @@
 	. = LAZYLEN(antag_datums)
 	LAZYADD(antag_datums, instanced_datum)
 	if(!.)
-		current.verbs += /mob/proc/edit_ambitions
+			current.verbs += /mob/proc/edit_objectives_and_ambitions
 //ambitions port end
 
 /datum/mind/proc/remove_antag_datum(datum_type)
@@ -220,8 +221,8 @@
 	. = LAZYLEN(antag_datums)
 	LAZYREMOVE(antag_datums, instanced_datum)
 	if(. && !LAZYLEN(antag_datums))
-		current.verbs -= /mob/proc/edit_ambitions
 		ambitions = null
+		current.verbs += /mob/proc/edit_objectives_and_ambitions
 //ambitions port end
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
@@ -438,18 +439,56 @@
 	return output.Join()
 
 
-/datum/mind/proc/show_editable_ambitions()
-	var/list/output = list("<b>[current.real_name]'s Ambitions:</b><br><ul>")
+/datum/mind/proc/show_editable_objectives_and_ambitions()
+	var/is_admin = check_rights(R_ADMIN, FALSE)
+	var/self_mind = usr == current
+	if(!is_admin && !self_mind)
+		return ""
+	var/list/output = list()
+	for(var/a in antag_datums)
+		var/datum/antagonist/antag_datum = a
+		output += "<i><b>Objectives</b></i>:"
+		if(is_admin)
+			output += " <a href='?src=[REF(antag_datum.owner)];obj_add=[REF(antag_datum)];ambition_panel=1'>Add Objective</a>"
+		output += "<ul>"
+		if(!length(antag_datum.objectives))
+			output += "<li><i><b>NONE</b></i>"
+		else
+			for(var/count in 1 to length(antag_datum.objectives))
+				var/datum/objective/objective = antag_datum.objectives[count]
+				output += "<li><B>[count]</B>: [objective.explanation_text]"
+				if(self_mind)
+					output += " <a href='?src=[REF(antag_datum.owner)];req_obj_delete=[REF(objective)]'>Request Remove</a> <a href='?src=[REF(antag_datum.owner)];req_obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Request incompletion" : "Request completion"]</font></a><br>"
+				if(is_admin)
+					output += " <a href='?src=[REF(antag_datum.owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(antag_datum.owner)];obj_panel_delete=[REF(objective)]'>Remove</a> <a href='?src=[REF(antag_datum.owner)];obj_panel_complete_toggle=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
+		output += "</ul>"
+		if(is_admin)
+			output += "<a href='?src=[REF(antag_datum.owner)];obj_announce=1;ambition_panel=1'>Announce objectives</a><br>"
+		output += "<br><i><b>Requested Objectives</b></i>:"
+		if(self_mind)
+			output += " <a href='?src=[REF(antag_datum.owner)];req_obj_add=1;target_antag=[REF(antag_datum)]'>Request objective</a>"
+		output += "<ul>"
+		if(!length(antag_datum.requested_objectives))
+			output += "<li><i><b>NONE</b></i>"
+		else
+			for(var/uid in antag_datum.requested_objectives)
+				var/list/objectives_info = antag_datum.requested_objectives[uid]
+				var/datum/objective/type_cast_objective = objectives_info["type"]
+				var/objective_text = objectives_info["text"]
+				output += "<li><B>Request #[uid]</B>: [initial(type_cast_objective.name)] - [objective_text]"
+				if(is_admin)
+					output += " <a href='?src=[REF(antag_datum.owner)];req_obj_accept=[REF(antag_datum)];req_obj_id=[uid]'>Accept</a> <a href='?src=[REF(antag_datum.owner)];req_obj_edit=[REF(antag_datum)];req_obj_id=[uid]'>Edit</a> <a href='?src=[REF(antag_datum.owner)];req_obj_deny=[REF(antag_datum)];req_obj_id=[uid]'>Deny</a>"
+		output += "</ul><br>"
+	output += "<b>[current.real_name]'s Ambitions:</b>"
+	if(LAZYLEN(ambitions) < CONFIG_GET(number/max_ambitions))
+		output += " <a href='?src=[REF(src)];add_ambition=1'>Add Ambition</a>"
+	output += "<ul>"
 	if(!LAZYLEN(ambitions))
 		output += "<li><i><b>NONE</b></i>"
-		if(LAZYLEN(antag_datums))
-			output +="<li>(<a href='?src=[REF(src)];add_ambition=1'>Add Ambition</a>)"
 	else
 		for(var/count in 1 to LAZYLEN(ambitions))
 			output += "<li><B>Ambition #[count]</B> (<a href='?src=[REF(src)];edit_ambition=[count]'>Edit</a>) (<a href='?src=[REF(src)];remove_ambition=[count]'>Remove</a>):<br>[ambitions[count]]"
-		if(LAZYLEN(ambitions) < 5)
-			output += "<li>(<a href='?src=[REF(src)];add_ambition=1'>Add Ambition</a>)"
-	output += "<li>(<a href='?src=[REF(src)];refresh_ambitions=1'>Refresh</a>)</ul>"
+	output += "</ul><br>(<a href='?src=[REF(src)];refresh_obj_amb=1'>Refresh</a>)"
 	return output.Join()
 
 
@@ -460,24 +499,53 @@
 	mind.do_edit_ambitions()
 
 
-/datum/mind/proc/do_edit_ambitions()
-	var/datum/browser/popup = new(usr, "ambitions", "Ambitions")
-	popup.set_content(show_editable_ambitions())
+/datum/mind/proc/do_edit_objectives_ambitions()
+	var/datum/browser/popup = new(usr, "objectives and ambitions", "Objectives and Ambitions")
+	popup.set_content(show_editable_objectives_and_ambitions())
 	popup.open()
+
+GLOBAL_VAR_INIT(requested_objective_uid, 0)
+GLOBAL_LIST(objective_choices)
+
+/proc/populate_objective_choices()
+	GLOB.objective_choices = list()
+	var/list/allowed_types = list(
+		/datum/objective/custom,
+		/datum/objective/assassinate,
+		/datum/objective/assassinate/once,
+		/datum/objective/maroon,
+		/datum/objective/debrain,
+		/datum/objective/protect,
+		/datum/objective/destroy,
+		/datum/objective/hijack,
+		/datum/objective/escape,
+		/datum/objective/survive,
+		/datum/objective/martyr,
+		/datum/objective/steal,
+		/datum/objective/download,
+		/datum/objective/nuclear,
+		/datum/objective/absorb,
+		/datum/objective/blackmail_implant //SKYRAT ADDITION
+		)
+
+	for(var/t in allowed_types)
+		var/datum/objective/type_cast = t
+		GLOB.objective_choices[initial(type_cast.name)] = t
 //ambition port end
 
 /datum/mind/Topic(href, href_list)
 //ambition port start
-	if (href_list["refresh_ambitions"])
-		do_edit_ambitions()
+	if (href_list["refresh_obj_amb"])
+		do_edit_objectives_ambitions()
+
 		return
 
 	else if (href_list["add_ambition"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, FALSE))
 			if(usr != current)
 				return
 			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
+				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 0.1] seconds between changes.</span>")
 				return
 		if(!isliving(current))
 			return
@@ -486,16 +554,16 @@
 		var/max_ambitions = CONFIG_GET(number/max_ambitions)
 		if(LAZYLEN(ambitions) >= max_ambitions)
 			to_chat(usr, "<span class='warning'>There's a limit of [max_ambitions] ambitions. Edit or remove some to accomodate for your new additions.</span>")
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		var/new_ambition = stripped_multiline_input(usr, "Write new ambition", "Ambition", "", MAX_AMBITION_LEN)
 		if(isnull(new_ambition))
 			return
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, FALSE))
 			if(usr != current)
 				return
 			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
+				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 0.1] seconds between changes.</span>")
 				return
 		if(!isliving(current))
 			to_chat(usr, "<span class='warning'>The mind holder is no longer a living creature.</span>")
@@ -505,7 +573,7 @@
 			return
 		if(LAZYLEN(ambitions) >= max_ambitions)
 			to_chat(usr, "<span class='warning'>There's a limit of [max_ambitions] ambitions. Edit or remove some to accomodate for your new additions.</span>")
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		COOLDOWN_START(src, COOLDOWN_AMBITION, AMBITION_COOLDOWN_TIME)
 		LAZYADD(ambitions, new_ambition)
@@ -514,15 +582,15 @@
 		else
 			log_game("[key_name(usr)] has created [key_name(current)]'s ambition of index [LAZYLEN(ambitions)].\nNEW AMBITION:\n[new_ambition]")
 			message_admins("[ADMIN_TPMONTY(usr)] has created [ADMIN_TPMONTY(current)]'s ambition of index [LAZYLEN(ambitions)].")
-		do_edit_ambitions()
+		do_edit_objectives_ambitions()
 		return
 
 	else if (href_list["edit_ambition"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, FALSE))
 			if(usr != current)
 				return
 			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
+				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 0.1] seconds between changes.</span>")
 				return
 		if(!isliving(current))
 			return
@@ -539,11 +607,11 @@
 		var/new_ambition = stripped_multiline_input(usr, "Write new ambition", "Ambition", ambitions[ambition_index], MAX_AMBITION_LEN)
 		if(isnull(new_ambition))
 			return
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, FALSE))
 			if(usr != current)
 				return
 			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
+				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 0.1] seconds between changes.</span>")
 				return
 		if(!isliving(current))
 			to_chat(usr, "<span class='warning'>The mind holder is no longer a living creature.</span>")
@@ -553,11 +621,11 @@
 			return
 		if(ambition_index > LAZYLEN(ambitions))
 			to_chat(usr, "<span class='warning'>The ambition we were editing was deleted before we finished. Aborting.</span>")
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		if(old_ambition != ambitions[ambition_index])
 			to_chat(usr, "<span class='warning'>The ambition has changed since we started editing it. Aborting to prevent data loss.</span>")
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		COOLDOWN_START(src, COOLDOWN_AMBITION, AMBITION_COOLDOWN_TIME)
 		ambitions[ambition_index] = new_ambition
@@ -566,15 +634,15 @@
 		else
 			log_game("[key_name(usr)] has edited [key_name(current)]'s ambition of index [ambition_index].\nOLD AMBITION:\n[old_ambition]\nNEW AMBITION:\n[new_ambition]")
 			message_admins("[ADMIN_TPMONTY(usr)] has edited [ADMIN_TPMONTY(current)]'s ambition of index [ambition_index].")
-		do_edit_ambitions()
+		do_edit_objectives_ambitions()
 		return
 
 	else if (href_list["remove_ambition"])
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, FALSE))
 			if(usr != current)
 				return
 			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
+				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 0.1] seconds between changes.</span>")
 				return
 		if(!isliving(current))
 			return
@@ -582,7 +650,7 @@
 			return
 		var/ambition_index = text2num(href_list["remove_ambition"])
 		if(ambition_index > LAZYLEN(ambitions))
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		if(!isnum(ambition_index) || ambition_index < 0 || ambition_index % 1)
 			log_admin_private("[key_name(usr)] attempted to remove an ambition with and invalid ambition_index ([ambition_index]) at [AREACOORD(usr.loc)].")
@@ -591,11 +659,11 @@
 		var/old_ambition = ambitions[ambition_index]
 		if(alert(usr, "Are you sure you want to delete this ambition?", "Delete ambition", "Yes", "No") != "Yes")
 			return
-		if(!check_rights(R_ADMIN))
+		if(!check_rights(R_ADMIN, FALSE))
 			if(usr != current)
 				return
 			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
+				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 0.1] seconds between changes.</span>")
 				return
 		if(!isliving(current))
 			to_chat(usr, "<span class='warning'>The mind holder is no longer a living creature. The ambition we were deleting should no longer exist already.</span>")
@@ -605,11 +673,11 @@
 			return
 		if(ambition_index > LAZYLEN(ambitions))
 			to_chat(usr, "<span class='warning'>The ambition we were deleting was deleted before we finished. No need to continue.</span>")
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		if(old_ambition != ambitions[ambition_index])
 			to_chat(usr, "<span class='warning'>The ambition has changed since we started considering its deletion. Aborting to prevent conflicts.</span>")
-			do_edit_ambitions()
+			do_edit_objectives_ambitions()
 			return
 		COOLDOWN_START(src, COOLDOWN_AMBITION, AMBITION_COOLDOWN_TIME)
 		LAZYCUT(ambitions, ambition_index, ambition_index + 1)
@@ -618,7 +686,113 @@
 		else
 			log_game("[key_name(usr)] has deleted [key_name(current)]'s ambition of index [ambition_index].\nDELETED AMBITION:\n[old_ambition]")
 			message_admins("[ADMIN_TPMONTY(usr)] has deleted [ADMIN_TPMONTY(current)]'s ambition of index [ambition_index].")
-		do_edit_ambitions()
+				do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["req_obj_add"])
+		if(usr != current)
+			return
+		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
+			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
+			return
+		var/datum/antagonist/target_antag = locate(href_list["target_antag"]) in antag_datums
+		if(!istype(target_antag))
+			to_chat(usr, "<span class='warning'>No antagonist found for this objective.</span>")
+			do_edit_objectives_ambitions()
+			return
+		if(!GLOB.objective_choices)
+			populate_objective_choices()
+		var/choe = input("Select desired objective type:", "Objective type") as null|anything in GLOB.objective_choices
+		var/selected_type = GLOB.objective_choices[choe]
+		if(!selected_type)
+			return
+		var/new_objective = stripped_multiline_input(usr,\
+			selected_type == /datum/objective/custom\
+			? "Write the custom objective you'd like to request the admins to grant you.\
+			Remember they can edit or deny your request. There's a 10 minutes cooldown between requests, so try to think it through before sending it. Cancelling does not trigger the cooldown."\
+			: "Justify your request for a new objective to the admins. Add the required clarifations, if you have a specific targets in mind or the likes.\
+			Remember they can edit or deny your request. There's a 10 minutes cooldown between requests, so try to think it through before sending it. Cancelling does not trigger the cooldown.",\
+			"New Objective", max_length = MAX_MESSAGE_LEN)
+		if(isnull(new_objective))
+			return
+		if(usr != current)
+			return
+		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
+			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
+			return
+		if(QDELETED(target_antag))
+			return
+		COOLDOWN_START(src, COOLDOWN_OBJECTIVES, OBJECTIVES_COOLDOWN_TIME)
+		var/uid = "[GLOB.requested_objective_uid++]"
+		LAZYADD(target_antag.requested_objectives, uid)
+		target_antag.requested_objectives[uid] = list("type" = selected_type, "text" = new_objective)
+		log_admin("[key_name(usr)] has requested a [choe] objective: [new_objective]")
+		message_admins("[ADMIN_TPMONTY(usr)] has requested a [choe] objective. (<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)")
+		to_chat(usr, "<span class='notice'>The admins have been notified of your request!</span>")
+		do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["req_obj_delete"])
+		if(usr != current)
+			return
+		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
+			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
+			return
+		var/datum/objective/objective_to_delete = locate(href_list["req_obj_delete"])
+		if(!istype(objective_to_delete) || QDELETED(objective_to_delete))
+			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
+			do_edit_objectives_ambitions()
+			return
+		var/justifation = stripped_multiline_input(usr,
+			"Justify your request for a deleting this objective to the admins.\
+			There's a 10 minutes cooldown between requests, so try to think it through before sending it. Cancelling does not trigger the cooldown.",
+			"Objective Deletion", max_length = MAX_MESSAGE_LEN)
+		if(isnull(justifation))
+			return
+		if(usr != current)
+			return
+		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
+			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
+			return
+		if(QDELETED(objective_to_delete))
+			do_edit_objectives_ambitions()
+			return
+		COOLDOWN_START(src, COOLDOWN_OBJECTIVES, OBJECTIVES_COOLDOWN_TIME)
+		log_admin("[key_name(usr)] has requested the deletion of the following objective: [objective_to_delete.explanation_text].\nTheir justifation is as follows: [justifation]")
+		message_admins("[ADMIN_TPMONTY(usr)] has requested the deletion of the following objective: [objective_to_delete.explanation_text].\nTheir justifation is as follows: [justifation]\n(<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)")
+		to_chat(usr, "<span class='notice'>The admins have been notified of your request!</span>")
+		do_edit_objectives_ambitions()
+		return
+			else if (href_list["req_obj_completed"])
+		if(usr != current)
+			return
+		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
+			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
+			return
+		var/datum/objective/objective_to_complete = locate(href_list["req_obj_completed"])
+		if(!istype(objective_to_complete) || QDELETED(objective_to_complete))
+			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
+			do_edit_objectives_ambitions()
+			return
+		var/justifation = stripped_multiline_input(usr,
+			"Justify your request for the [objective_to_complete.completed ? "completion" : "incompletion"] of this objective to the admins.\
+			There's a 10 minutes cooldown between requests, so try to think it through before sending it. Cancelling does not trigger the cooldown.",
+			"Objective [objective_to_complete.completed ? "Completion" : "Incompletion"]", max_length = MAX_MESSAGE_LEN)
+		if(isnull(justifation))
+			return
+		if(usr != current)
+			return
+		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
+			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
+			return
+		if(QDELETED(objective_to_complete))
+			do_edit_objectives_ambitions()
+			return
+		COOLDOWN_START(src, COOLDOWN_OBJECTIVES, OBJECTIVES_COOLDOWN_TIME)
+		log_admin("[key_name(usr)] has requested the [objective_to_complete.completed ? "completion" : "incompletion"] of the following objective: [objective_to_complete.explanation_text].\nTheir justifation is as follows: [justifation]")
+		message_admins("[ADMIN_TPMONTY(usr)] has requested the [objective_to_complete.completed ? "completion" : "incompletion"] of the following objective: [objective_to_complete.explanation_text].\nTheir justifation is as follows: [justifation]\n(<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)")
+		to_chat(usr, "<span class='notice'>The admins have been notified of your request!</span>")
+		do_edit_objectives_ambitions()
 		return
 	if(!check_rights(R_ADMIN))
 		return
@@ -626,12 +800,236 @@
 	var/self_antagging = usr == current
 
 	if(href_list["edit_ambitions_panel"])
-		do_edit_ambitions()
+		do_edit_objectives_ambitions()
 		return
+
 	else if(href_list["refresh_antag_panel"])
 		traitor_panel()
 		return
+
+	else if (href_list["req_obj_edit"])
+		var/datum/antagonist/antag_datum = locate(href_list["req_obj_edit"])
+		if(QDELETED(antag_datum))
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			return
+		if(antag_datum.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
+			return
+		var/uid = href_list["req_obj_id"]
+		var/list/requested_objective = LAZYACCESS(antag_datum.requested_objectives, uid)
+		if(!requested_objective)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+			return
+
+		switch(alert(usr, "Do you want to edit the requested objective type or text?", "Edit requested objective", "Type", "Text", "Cancel"))
+			if("Type")
+				if(!check_rights(R_ADMIN))
+					return
+				if(QDELETED(antag_datum))
+					to_chat(usr, "<span class='warning'>No antag found.</span>")
+					do_edit_objectives_ambitions()
+					return
+				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+					do_edit_objectives_ambitions()
+					return
+				var/datum/objective/type_cast = requested_objective["type"]
+				var/selected_type = input("Select new requested objective type:", "Requested Objective type", initial(type_cast.name)) as null|anything in GLOB.objective_choices
+				selected_type = GLOB.objective_choices[selected_type]
+				if(!selected_type)
+					return
+				if(!check_rights(R_ADMIN))
+					return
+				if(QDELETED(antag_datum))
+					to_chat(usr, "<span class='warning'>No antag found.</span>")
+					do_edit_objectives_ambitions()
+					return
+				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+					do_edit_objectives_ambitions()
+					return
+				log_admin("[key_name(usr)] has edited the requested objective type for [current], of UID [uid], from [requested_objective["type"]] to [selected_type]")
+				message_admins("[key_name_admin(usr)] has edited the requested objective type for [current], of UID [uid], from [requested_objective["type"]] to [selected_type]")
+				requested_objective["type"] = selected_type
+			if("Text")
+				if(!check_rights(R_ADMIN))
+					return
+				if(QDELETED(antag_datum))
+					to_chat(usr, "<span class='warning'>No antag found.</span>")
+					do_edit_objectives_ambitions()
+					return
+				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+					do_edit_objectives_ambitions()
+					return
+				var/new_text = stripped_multiline_input(usr, "Input new requested objective text", "Requested Objective Text", requested_objective["text"], MAX_MESSAGE_LEN)
+				if (isnull(new_text))
+					return
+				if(!check_rights(R_ADMIN))
+					return
+				if(QDELETED(antag_datum))
+					to_chat(usr, "<span class='warning'>No antag found.</span>")
+					do_edit_objectives_ambitions()
+					return
+				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+					do_edit_objectives_ambitions()
+					return
+				log_admin("[key_name(usr)] has edited the requested objective text for [current], of UID [uid], from [requested_objective["text"]] to [new_text]")
+				message_admins("[key_name_admin(usr)] has edited the requested objective text for [current], of UID [uid], from [requested_objective["text"]] to [new_text]")
+				requested_objective["text"] = new_text
+		do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["req_obj_accept"])
+		var/datum/antagonist/antag_datum = locate(href_list["req_obj_accept"])
+		if(QDELETED(antag_datum))
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			return
+		if(antag_datum.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
+			return
+		var/uid = href_list["req_obj_id"]
+		var/list/requested_objective = LAZYACCESS(antag_datum.requested_objectives, uid)
+		if(!requested_objective)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+			return
+		if(alert(usr, "Are you sure you want to approve this objective?", "Approve objective", "Yes", "No") != "Yes")
+			return
+		if(!check_rights(R_ADMIN))
+			return
+		if(QDELETED(antag_datum))
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			do_edit_objectives_ambitions()
+			return
+		if(!LAZYACCESS(antag_datum.requested_objectives, uid))
+			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+			do_edit_objectives_ambitions()
+			return
+		var/objective_path = requested_objective["type"]
+		var/datum/objective/new_objective = new objective_path
+		new_objective.owner = src
+		if(istype(new_objective, /datum/objective/custom))
+			new_objective.explanation_text = requested_objective["text"]
+		else
+			new_objective.admin_edit(usr)
+		antag_datum.objectives += new_objective
+		LAZYREMOVE(antag_datum.requested_objectives, uid)
+		message_admins("[key_name_admin(usr)] approved a requested objective from [current]: [new_objective.explanation_text]")
+		log_admin("[key_name(usr)] approved a requested objective from [current]: [new_objective.explanation_text]")
+		to_chat(current, "<span class='boldnotice'>Your objective request has been approved.</span>")
+		do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["req_obj_deny"])
+		var/datum/antagonist/antag_datum = locate(href_list["req_obj_deny"])
+		if(QDELETED(antag_datum))
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			return
+		if(antag_datum.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
+			return
+		var/uid = href_list["req_obj_id"]
+		var/list/requested_objective = LAZYACCESS(antag_datum.requested_objectives, uid)
+		if(!requested_objective)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+			return
+		var/justifation = stripped_multiline_input(usr, "Justify why you are denying this objective request.", "Deny", memory, MAX_MESSAGE_LEN)
+		if(isnull(justifation))
+			return
+		if(!check_rights(R_ADMIN))
+			return
+		if(QDELETED(antag_datum))
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			do_edit_objectives_ambitions()
+			return
+		if(!LAZYACCESS(antag_datum.requested_objectives, uid))
+			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+			do_edit_objectives_ambitions()
+			return
+		var/datum/objective/type_cast = requested_objective["type"]
+		var/objective_name = initial(type_cast.name)
+		message_admins("[key_name_admin(usr)] denied a requested [objective_name] objective from [current]: [requested_objective["text"]]")
+		log_admin("[key_name(usr)] denied a requested [objective_name] objective from [current]: [requested_objective["text"]]")
+		to_chat(current, "<span class='boldwarning'>Your objective request has been denied for the following reason: [justifation]</span>")
+		LAZYREMOVE(antag_datum.requested_objectives, uid)
+		do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["obj_panel_complete_toggle"])
+		var/datum/objective/objective_to_toggle = locate(href_list["obj_panel_complete_toggle"])
+		if(!istype(objective_to_toggle) || QDELETED(objective_to_toggle))
+			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
+			do_edit_objectives_ambitions()
+			return
+		if(objective_to_toggle.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid objective reference.</span>")
+			return
+		objective_to_toggle.completed = !objective_to_toggle.completed
+		message_admins("[key_name_admin(usr)] toggled the win state for [current]'s objective: [objective_to_toggle.explanation_text]")
+		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective_to_toggle.explanation_text]")
+		if(alert(usr, "Would you like to alert the player of the change?", "Deny objective", "Yes", "No") == "Yes")
+			to_chat(current, "[objective_to_toggle.completed ? "<span class='boldnotice'>" : "<span class='boldwarning'>"]Your objective status has changed!</span>")
+		do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["obj_panel_delete"])
+		var/datum/objective/objective_to_delete = locate(href_list["obj_panel_delete"])
+		if(!istype(objective_to_delete) || QDELETED(objective_to_delete))
+			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
+			do_edit_objectives_ambitions()
+			return
+		if(objective_to_delete.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid objective reference.</span>")
+			return
+		if(alert(usr, "Are you sure you want to delete this objective?", "Delete objective", "Yes", "No") != "Yes")
+			return
+		if(!check_rights(R_ADMIN))
+			return
+		if(QDELETED(objective_to_delete))
+			return
+		message_admins("[key_name_admin(usr)] removed an objective from [current]: [objective_to_delete.explanation_text]")
+		log_admin("[key_name(usr)] removed an objective from [current]: [objective_to_delete.explanation_text]")
+		qdel(objective_to_delete)
+		do_edit_objectives_ambitions()
+		return
+
+	else if (href_list["obj_panel_edit"])
+		var/datum/objective/objective_to_edit = locate(href_list["obj_panel_edit"])
+		if(!istype(objective_to_edit) || QDELETED(objective_to_edit))
+			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
+			do_edit_objectives_ambitions()
+			return
+		if(objective_to_edit.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid objective reference.</span>")
+			return
+		var/explanation_before = objective_to_edit.explanation_text
+		objective_to_edit.admin_edit(usr)
+		if(QDELETED(objective_to_edit))
+			return
+		message_admins("[key_name_admin(usr)] edited an objective from [current]:\
+		Before: [explanation_before]\
+		After: [objective_to_edit.explanation_text]")
+		log_admin("[key_name(usr)] edited an objective from [current]:\
+		Before: [explanation_before]\
+		After: [objective_to_edit.explanation_text]")
+		do_edit_objectives_ambitions()
+		return
+
 //ambition port end
+
 	if(href_list["add_antag"])
 		add_antag_wrapper(text2path(href_list["add_antag"]),usr)
 	if(href_list["remove_antag"])
@@ -691,38 +1089,16 @@
 						else
 							target_antag = target
 
-		var/static/list/choices
-		if(!choices)
-			choices = list()
+//ambition port start
+		if(!GLOB.objective_choices)
+			populate_objective_choices()
 
-			var/list/allowed_types = list(
-				/datum/objective/assassinate,
-				/datum/objective/assassinate/once,
-				/datum/objective/maroon,
-				/datum/objective/debrain,
-				/datum/objective/protect,
-				/datum/objective/destroy,
-				/datum/objective/hijack,
-				/datum/objective/escape,
-				/datum/objective/survive,
-				/datum/objective/martyr,
-				/datum/objective/steal,
-				/datum/objective/download,
-				/datum/objective/nuclear,
-				/datum/objective/absorb,
-				/datum/objective/custom
-			)
+		if(old_objective && GLOB.objective_choices[old_objective.name])
+			def_value = old_objective.name
 
-			for(var/T in allowed_types)
-				var/datum/objective/X = T
-				choices[initial(X.name)] = T
-
-		if(old_objective)
-			if(old_objective.name in choices)
-				def_value = old_objective.name
-
-		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in choices
-		selected_type = choices[selected_type]
+		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in GLOB.objective_choices
+		selected_type = GLOB.objective_choices[selected_type]
+//ambition port end
 		if (!selected_type)
 			return
 
@@ -749,6 +1125,11 @@
 				target_antag.objectives.Insert(objective_pos, new_objective)
 			message_admins("[key_name_admin(usr)] edited [current]'s objective to [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] edited [current]'s objective to [new_objective.explanation_text]")
+//ambition port start
+		if(href_list["ambition_panel"])
+			do_edit_objectives_ambitions()
+			return
+//ambition port end
 
 	else if(href_list["traitor_class"])
 		var/static/list/choices
@@ -834,6 +1215,12 @@
 
 	else if (href_list["obj_announce"])
 		announce_objectives()
+//ambition port start
+		if(href_list["ambition_panel"])
+			do_edit_objectives_ambitions()
+			return
+//ambition port end
+
 
 	//Something in here might have changed your mob
 	if(self_antagging && (!usr || !usr.client) && current.client)

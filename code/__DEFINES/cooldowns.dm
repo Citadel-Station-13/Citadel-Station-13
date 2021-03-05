@@ -28,7 +28,7 @@
 //INDEXES
 #define COOLDOWN_EMPLOYMENT_CABINET	"employment cabinet"
 #define COOLDOWN_AMBITION "ambition"
-
+#define COOLDOWN_OBJECTIVES "objectives"
 
 //TIMER COOLDOWN MACROS
 
