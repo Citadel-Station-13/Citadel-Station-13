@@ -27,7 +27,9 @@
 
 //INDEXES
 #define COOLDOWN_EMPLOYMENT_CABINET	"employment cabinet"
-
+#define COOLDOWN_AMBITION	"ambition"
+#define COOLDOWN_OBJECTIVES	"objectives"
+#define COOLDOWN_OBJ_ADMIN_PING	"obj_admin_ping"
 
 //TIMER COOLDOWN MACROS
 
@@ -62,6 +64,8 @@
 #define COOLDOWN_DECLARE(cd_index) var/##cd_index = 0
 
 #define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + cd_time)
+
+#define COOLDOWN_CHECK(cd_source, cd_index) (cd_source.cd_index < world.time)
 
 //Returns true if the cooldown has run its course, false otherwise
 #define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index < world.time)

@@ -49,6 +49,11 @@
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
+//ambition start
+	///Lazy associative list of currently active cooldowns.
+	var/list/cooldowns
+//ambition end
+
 	/*
 	* Lazy associative list of currently active cooldowns.
 	*
@@ -230,6 +235,39 @@
 		qdel(D)
 	else
 		return returned
+
+//ambition start
+/**
+  * Callback called by a timer to end an associative-list-indexed cooldown.
+  *
+  * Arguments:
+  * * source - datum storing the cooldown
+  * * index - string index storing the cooldown on the cooldowns associative list
+  *
+  * This sends a signal reporting the cooldown end.
+  */
+/proc/end_cooldown(datum/source, index)
+	if(QDELETED(source))
+		return
+	SEND_SIGNAL(source, COMSIG_CD_STOP(index))
+	TIMER_COOLDOWN_END(source, index)
+
+
+/**
+  * Proc used by stoppable timers to end a cooldown before the time has ran out.
+  *
+  * Arguments:
+  * * source - datum storing the cooldown
+  * * index - string index storing the cooldown on the cooldowns associative list
+  *
+  * This sends a signal reporting the cooldown end, passing the time left as an argument.
+  */
+/proc/reset_cooldown(datum/source, index)
+	if(QDELETED(source))
+		return
+	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
+	TIMER_COOLDOWN_END(source, index)
+//ambition end
 
 /**
   * Callback called by a timer to end an associative-list-indexed cooldown.
