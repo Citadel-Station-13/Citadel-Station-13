@@ -42,11 +42,6 @@
 	var/matter_amount = 0
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
-	//do this first, lazily inflate the value
-	if(LAZYLEN(custom_materials))
-		for(var/i in custom_materials)
-			custom_materials[i] *= amount
-
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -58,6 +53,9 @@
 	if(LAZYLEN(mats_per_unit))
 		set_mats_per_unit(mats_per_unit, 1)
 	else if(LAZYLEN(custom_materials))
+		// DO NOT REMOVE! we have to inflate the values first
+		for(var/i in custom_materials)
+			custom_materials[i] *= amount
 		set_mats_per_unit(custom_materials, amount ? 1/amount : 1)
 
 	. = ..()
