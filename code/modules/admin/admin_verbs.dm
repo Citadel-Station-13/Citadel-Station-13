@@ -443,14 +443,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 // 	holder.ban_panel()
 // 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Banning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-// /client/proc/unban_panel()
-// 	set name = "Unbanning Panel"
-// 	set category = "Admin"
-// 	if(!check_rights(R_BAN))
-// 		return
-// 	holder.unban_panel()
-// 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unbanning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/game_panel()
 	set name = "Game Panel"
 	set category = "Admin.Game"

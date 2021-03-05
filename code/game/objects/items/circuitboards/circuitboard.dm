@@ -80,10 +80,10 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
-			M.component_parts += new comp_path(M, comp_amt)
+			M.component_parts += new comp_path(null, comp_amt)
 		else
 			for(var/i in 1 to comp_amt)
-				M.component_parts += new comp_path(M)
+				M.component_parts += new comp_path(null)
 
 	M.RefreshParts()
 

@@ -12,7 +12,7 @@
 	name = "Boss Killer"
 	desc = "You've come a long ways from asking how to switch hands."
 	database_id = "Boss Killer"
-	icon = "firstboss"
+	// icon = "firstboss"
 
 /datum/award/achievement/boss/blood_miner_kill
 	name = "Blood-Drunk Miner Killer"
@@ -117,14 +117,14 @@
 	database_id = BOSS_MEDAL_WENDIGO_CRUSHER
 
 //should be removed soon
-/datum/award/achievement/boss/king_goat_kill
-	name = "King Goat Killer"
-	desc = "The king is dead, long live the king!"
-	database_id = BOSS_MEDAL_KINGGOAT
-	icon = "goatboss"
+// /datum/award/achievement/boss/king_goat_kill
+// 	name = "King Goat Killer"
+// 	desc = "The king is dead, long live the king!"
+// 	database_id = BOSS_MEDAL_KINGGOAT
+// 	icon = "goatboss"
 
-/datum/award/achievement/boss/king_goat_crusher
-	name = "King Goat Crusher"
-	desc = "The king is dead, long live the king!"
-	database_id = BOSS_MEDAL_KINGGOAT_CRUSHER
-	icon = "goatboss"
+// /datum/award/achievement/boss/king_goat_crusher
+// 	name = "King Goat Crusher"
+// 	desc = "The king is dead, long live the king!"
+// 	database_id = BOSS_MEDAL_KINGGOAT_CRUSHER
+// 	icon = "goatboss"
