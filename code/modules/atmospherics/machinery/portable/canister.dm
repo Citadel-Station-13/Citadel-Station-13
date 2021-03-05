@@ -194,7 +194,6 @@
 	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
 	prototype = TRUE
 
-
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen
 	name = "prototype canister"
 	desc = "A prototype canister for a prototype bike, what could go wrong?"
@@ -209,7 +208,6 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-
 	update_icon()
 
 

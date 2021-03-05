@@ -42,6 +42,11 @@
 	var/matter_amount = 0
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
+	//do this first, lazily inflate the value
+	if(LAZYLEN(custom_materials))
+		for(var/i in custom_materials)
+			custom_materials[i] *= amount
+
 	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
@@ -88,7 +93,13 @@
 /** Updates the custom materials list of this stack.
  */
 /obj/item/stack/proc/update_custom_materials()
-	set_custom_materials(mats_per_unit, amount)
+	set_custom_materials(mats_per_unit, amount, is_update=TRUE)
+
+/**
+ * Override to make things like metalgen accurately set custom materials
+ */
+/obj/item/stack/set_custom_materials(list/materials, multiplier=1, is_update=FALSE)
+	return is_update ? ..() : set_mats_per_unit(materials, multiplier / (amount || 1))
 
 /obj/item/stack/on_grind()
 	. = ..()
@@ -297,50 +308,55 @@
 		return TRUE
 	return ..()
 
-/obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
-	if (get_amount() < R.req_amount*multiplier)
-		if (R.req_amount*multiplier>1)
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
+/obj/item/stack/proc/building_checks(datum/stack_recipe/recipe, multiplier)
+	if (get_amount() < recipe.req_amount*multiplier)
+		if (recipe.req_amount*multiplier>1)
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!</span>")
 		else
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>")
 		return FALSE
-	var/turf/T = get_turf(usr)
+	var/turf/dest_turf = get_turf(usr)
 
-	var/obj/D = R.result_type
-	if(R.window_checks && !valid_window_location(T, initial(D.dir) == FULLTILE_WINDOW_DIR ? FULLTILE_WINDOW_DIR : usr.dir))
-		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
-		return FALSE
-	if(R.one_per_turf && (locate(R.result_type) in T))
-		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-		return FALSE
-	if(R.on_floor)
-		if(!isfloorturf(T))
-			to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
+	// If we're making a window, we have some special snowflake window checks to do.
+	if(ispath(recipe.result_type, /obj/structure/window))
+		var/obj/structure/window/result_path = recipe.result_type
+		if(!valid_window_location(dest_turf, usr.dir, is_fulltile = initial(result_path.fulltile)))
+			to_chat(usr, "<span class='warning'>The [recipe.title] won't fit here!</span>")
 			return FALSE
-		for(var/obj/AM in T)
-			if(istype(AM,/obj/structure/grille))
+
+	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
+		to_chat(usr, "<span class='warning'>There is another [recipe.title] here!</span>")
+		return FALSE
+
+	if(recipe.on_floor)
+		if(!isfloorturf(dest_turf))
+			to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>")
+			return FALSE
+
+		for(var/obj/object in dest_turf)
+			if(istype(object, /obj/structure/grille))
 				continue
-			if(istype(AM,/obj/structure/table))
+			if(istype(object, /obj/structure/table))
 				continue
-			if(istype(AM,/obj/structure/window))
-				var/obj/structure/window/W = AM
-				if(!W.fulltile)
+			if(istype(object, /obj/structure/window))
+				var/obj/structure/window/window_structure = object
+				if(!window_structure.fulltile)
 					continue
-			if(AM.density)
-				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
+			if(object.density)
+				to_chat(usr, "<span class='warning'>There is \a [object.name] here. You cant make \a [recipe.title] here!</span>")
 				return FALSE
-	if(R.placement_checks)
-		switch(R.placement_checks)
+	if(recipe.placement_checks)
+		switch(recipe.placement_checks)
 			if(STACK_CHECK_CARDINALS)
 				var/turf/step
 				for(var/direction in GLOB.cardinals)
-					step = get_step(T, direction)
-					if(locate(R.result_type) in step)
-						to_chat(usr, "<span class='warning'>\The [R.title] must not be built directly adjacent to another!</span>")
+					step = get_step(dest_turf, direction)
+					if(locate(recipe.result_type) in step)
+						to_chat(usr, "<span class='warning'>\The [recipe.title] must not be built directly adjacent to another!</span>")
 						return FALSE
 			if(STACK_CHECK_ADJACENT)
-				if(locate(R.result_type) in range(1, T))
-					to_chat(usr, "<span class='warning'>\The [R.title] must be constructed at least one tile away from others of its type!</span>")
+				if(locate(recipe.result_type) in range(1, dest_turf))
+					to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed at least one tile away from others of its type!</span>")
 					return FALSE
 	return TRUE
 
@@ -513,15 +529,12 @@
 	var/time = 0
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
-	var/window_checks = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
 	var/trait_booster = null
 	var/trait_modifier = 1
 
 /datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
-
-
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -530,7 +543,6 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
-	src.window_checks = window_checks
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster

@@ -1214,6 +1214,10 @@
 			filter_data -= name
 	update_filters()
 
+/atom/proc/clear_filters()
+	filter_data = null
+	filters = null
+
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
@@ -1222,7 +1226,7 @@
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
-			custom_material.on_removed(src, material_flags) //Remove the current materials
+			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null
