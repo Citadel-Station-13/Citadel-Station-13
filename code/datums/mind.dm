@@ -28,10 +28,6 @@
 		yourself.
 
 */
-//ambition port start
-#define AMBITION_COOLDOWN_TIME (5 SECONDS)
-//ambition port end
-
 
 /datum/mind
 	var/key
@@ -71,11 +67,6 @@
 
 	/// Our skill holder.
 	var/datum/skill_holder/skill_holder
-
-//ambition port start
-	/// Lazy list for antagonists to set goals they wish to achieve, to be shown at the round-end report.
-	var/list/ambitions
-//ambition port end
 
 	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
@@ -182,24 +173,13 @@
 		qdel(A)
 		return
 	A.owner = src
-//ambitions port start
-	do_add_antag_datum(A)
-//ambitions port end
-
+	LAZYADD(antag_datums, A)
 	A.create_team(team)
 	var/datum/team/antag_team = A.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
 	A.on_gain()
 	return A
-
-//ambitions port start
-/datum/mind/proc/do_add_antag_datum(instanced_datum)
-	. = LAZYLEN(antag_datums)
-	LAZYADD(antag_datums, instanced_datum)
-	if(!.)
-		current.verbs += /mob/proc/edit_ambitions
-//ambitions port end
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
@@ -214,15 +194,6 @@
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
 		A.on_removal()
-
-//ambitions port start
-/datum/mind/proc/do_remove_antag_datum(instanced_datum)
-	. = LAZYLEN(antag_datums)
-	LAZYREMOVE(antag_datums, instanced_datum)
-	if(. && !LAZYLEN(antag_datums))
-		current.verbs -= /mob/proc/edit_ambitions
-		ambitions = null
-//ambitions port end
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
@@ -403,10 +374,10 @@
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
-//ambitions port start
-/datum/mind/proc/show_memory()
-	var/list/output = list("<B>[current.real_name]'s Memories:</B><br>")
-//ambitions port end
+/datum/mind/proc/show_memory(mob/recipient, window=1)
+	if(!recipient)
+		recipient = current
+	var/output = "<B>[current.real_name]'s Memories:</B><br>"
 	output += memory
 
 
@@ -427,211 +398,17 @@
 					output += "<li>Conspirator: [M.name]</li>"
 				output += "</ul>"
 
-//ambition port start
-	if(LAZYLEN(ambitions))
-		for(var/count in 1 to LAZYLEN(ambitions))
-			output += "<br><B>Ambition #[count]</B>: [ambitions[count]]"
-
-	if(!memory && !length(all_objectives) && !LAZYLEN(ambitions))
-		output += "<ul><li><I><B>NONE</B></I></ul>"
-
-	return output.Join()
-
-
-/datum/mind/proc/show_editable_ambitions()
-	var/list/output = list("<b>[current.real_name]'s Ambitions:</b><br><ul>")
-	if(!LAZYLEN(ambitions))
-		output += "<li><i><b>NONE</b></i>"
-		if(LAZYLEN(antag_datums))
-			output +="<li>(<a href='?src=[REF(src)];add_ambition=1'>Add Ambition</a>)"
-	else
-		for(var/count in 1 to LAZYLEN(ambitions))
-			output += "<li><B>Ambition #[count]</B> (<a href='?src=[REF(src)];edit_ambition=[count]'>Edit</a>) (<a href='?src=[REF(src)];remove_ambition=[count]'>Remove</a>):<br>[ambitions[count]]"
-		if(LAZYLEN(ambitions) < 5)
-			output += "<li>(<a href='?src=[REF(src)];add_ambition=1'>Add Ambition</a>)"
-	output += "<li>(<a href='?src=[REF(src)];refresh_ambitions=1'>Refresh</a>)</ul>"
-	return output.Join()
-
-
-/mob/proc/edit_ambitions()
-	set name = "Ambitions"
-	set category = "IC"
-	set desc = "View and edit your character's ambitions."
-	mind.do_edit_ambitions()
-
-
-/datum/mind/proc/do_edit_ambitions()
-	var/datum/browser/popup = new(usr, "ambitions", "Ambitions")
-	popup.set_content(show_editable_ambitions())
-	popup.open()
-//ambition port end
+	if(window)
+		recipient << browse(output,"window=memory")
+	else if(all_objectives.len || memory)
+		to_chat(recipient, "<i>[output]</i>")
 
 /datum/mind/Topic(href, href_list)
-//ambition port start
-	if (href_list["refresh_ambitions"])
-		do_edit_ambitions()
-		return
-
-	else if (href_list["add_ambition"])
-		if(!check_rights(R_ADMIN))
-			if(usr != current)
-				return
-			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
-				return
-		if(!isliving(current))
-			return
-		if(!antag_datums)
-			return
-		var/max_ambitions = CONFIG_GET(number/max_ambitions)
-		if(LAZYLEN(ambitions) >= max_ambitions)
-			to_chat(usr, "<span class='warning'>There's a limit of [max_ambitions] ambitions. Edit or remove some to accomodate for your new additions.</span>")
-			do_edit_ambitions()
-			return
-		var/new_ambition = stripped_multiline_input(usr, "Write new ambition", "Ambition", "", MAX_AMBITION_LEN)
-		if(isnull(new_ambition))
-			return
-		if(!check_rights(R_ADMIN))
-			if(usr != current)
-				return
-			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
-				return
-		if(!isliving(current))
-			to_chat(usr, "<span class='warning'>The mind holder is no longer a living creature.</span>")
-			return
-		if(!antag_datums)
-			to_chat(usr, "<span class='warning'>The mind holder is no longer an antagonist.</span>")
-			return
-		if(LAZYLEN(ambitions) >= max_ambitions)
-			to_chat(usr, "<span class='warning'>There's a limit of [max_ambitions] ambitions. Edit or remove some to accomodate for your new additions.</span>")
-			do_edit_ambitions()
-			return
-		COOLDOWN_START(src, COOLDOWN_AMBITION, AMBITION_COOLDOWN_TIME)
-		LAZYADD(ambitions, new_ambition)
-		if(usr == current)
-			log_game("[key_name(usr)] has created their ambition of index [LAZYLEN(ambitions)].\nNEW AMBITION:\n[new_ambition]")
-		else
-			log_game("[key_name(usr)] has created [key_name(current)]'s ambition of index [LAZYLEN(ambitions)].\nNEW AMBITION:\n[new_ambition]")
-			message_admins("[ADMIN_TPMONTY(usr)] has created [ADMIN_TPMONTY(current)]'s ambition of index [LAZYLEN(ambitions)].")
-		do_edit_ambitions()
-		return
-
-	else if (href_list["edit_ambition"])
-		if(!check_rights(R_ADMIN))
-			if(usr != current)
-				return
-			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
-				return
-		if(!isliving(current))
-			return
-		if(!antag_datums)
-			return
-		var/ambition_index = text2num(href_list["edit_ambition"])
-		if(!isnum(ambition_index) || ambition_index < 0 || ambition_index % 1)
-			log_admin_private("[key_name(usr)] attempted to edit their ambitions with and invalid ambition_index ([ambition_index]) at [AREACOORD(usr.loc)].")
-			message_admins("[ADMIN_TPMONTY(usr)] attempted to edit their ambitions with and invalid ambition_index ([ambition_index]). Possible HREF exploit.")
-			return
-		if(ambition_index > LAZYLEN(ambitions))
-			return
-		var/old_ambition = ambitions[ambition_index]
-		var/new_ambition = stripped_multiline_input(usr, "Write new ambition", "Ambition", ambitions[ambition_index], MAX_AMBITION_LEN)
-		if(isnull(new_ambition))
-			return
-		if(!check_rights(R_ADMIN))
-			if(usr != current)
-				return
-			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
-				return
-		if(!isliving(current))
-			to_chat(usr, "<span class='warning'>The mind holder is no longer a living creature.</span>")
-			return
-		if(!antag_datums)
-			to_chat(usr, "<span class='warning'>The mind holder is no longer an antagonist.</span>")
-			return
-		if(ambition_index > LAZYLEN(ambitions))
-			to_chat(usr, "<span class='warning'>The ambition we were editing was deleted before we finished. Aborting.</span>")
-			do_edit_ambitions()
-			return
-		if(old_ambition != ambitions[ambition_index])
-			to_chat(usr, "<span class='warning'>The ambition has changed since we started editing it. Aborting to prevent data loss.</span>")
-			do_edit_ambitions()
-			return
-		COOLDOWN_START(src, COOLDOWN_AMBITION, AMBITION_COOLDOWN_TIME)
-		ambitions[ambition_index] = new_ambition
-		if(usr == current)
-			log_game("[key_name(usr)] has edited their ambition of index [ambition_index].\nOLD AMBITION:\n[old_ambition]\nNEW AMBITION:\n[new_ambition]")
-		else
-			log_game("[key_name(usr)] has edited [key_name(current)]'s ambition of index [ambition_index].\nOLD AMBITION:\n[old_ambition]\nNEW AMBITION:\n[new_ambition]")
-			message_admins("[ADMIN_TPMONTY(usr)] has edited [ADMIN_TPMONTY(current)]'s ambition of index [ambition_index].")
-		do_edit_ambitions()
-		return
-
-	else if (href_list["remove_ambition"])
-		if(!check_rights(R_ADMIN))
-			if(usr != current)
-				return
-			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
-				return
-		if(!isliving(current))
-			return
-		if(!antag_datums)
-			return
-		var/ambition_index = text2num(href_list["remove_ambition"])
-		if(ambition_index > LAZYLEN(ambitions))
-			do_edit_ambitions()
-			return
-		if(!isnum(ambition_index) || ambition_index < 0 || ambition_index % 1)
-			log_admin_private("[key_name(usr)] attempted to remove an ambition with and invalid ambition_index ([ambition_index]) at [AREACOORD(usr.loc)].")
-			message_admins("[ADMIN_TPMONTY(usr)] attempted to remove an ambition with and invalid ambition_index ([ambition_index]). Possible HREF exploit.")
-			return
-		var/old_ambition = ambitions[ambition_index]
-		if(alert(usr, "Are you sure you want to delete this ambition?", "Delete ambition", "Yes", "No") != "Yes")
-			return
-		if(!check_rights(R_ADMIN))
-			if(usr != current)
-				return
-			if(COOLDOWN_CHECK(src, COOLDOWN_AMBITION))
-				to_chat(usr, "<span class='warning'>You must wait [AMBITION_COOLDOWN_TIME * 10] seconds between changes.</span>")
-				return
-		if(!isliving(current))
-			to_chat(usr, "<span class='warning'>The mind holder is no longer a living creature. The ambition we were deleting should no longer exist already.</span>")
-			return
-		if(!antag_datums)
-			to_chat(usr, "<span class='warning'>The mind holder is no longer an antagonist. The ambition we were deleting should no longer exist already.</span>")
-			return
-		if(ambition_index > LAZYLEN(ambitions))
-			to_chat(usr, "<span class='warning'>The ambition we were deleting was deleted before we finished. No need to continue.</span>")
-			do_edit_ambitions()
-			return
-		if(old_ambition != ambitions[ambition_index])
-			to_chat(usr, "<span class='warning'>The ambition has changed since we started considering its deletion. Aborting to prevent conflicts.</span>")
-			do_edit_ambitions()
-			return
-		COOLDOWN_START(src, COOLDOWN_AMBITION, AMBITION_COOLDOWN_TIME)
-		LAZYCUT(ambitions, ambition_index, ambition_index + 1)
-		if(usr == current)
-			log_game("[key_name(usr)] has deleted their ambition of index [ambition_index].\nDELETED AMBITION:\n[old_ambition]")
-		else
-			log_game("[key_name(usr)] has deleted [key_name(current)]'s ambition of index [ambition_index].\nDELETED AMBITION:\n[old_ambition]")
-			message_admins("[ADMIN_TPMONTY(usr)] has deleted [ADMIN_TPMONTY(current)]'s ambition of index [ambition_index].")
-		do_edit_ambitions()
-		return
 	if(!check_rights(R_ADMIN))
 		return
 
 	var/self_antagging = usr == current
 
-	if(href_list["edit_ambitions_panel"])
-		do_edit_ambitions()
-		return
-	else if(href_list["refresh_antag_panel"])
-		traitor_panel()
-		return
-//ambition port end
 	if(href_list["add_antag"])
 		add_antag_wrapper(text2path(href_list["add_antag"]),usr)
 	if(href_list["remove_antag"])
@@ -1037,7 +814,3 @@
 	..()
 	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""
-
-//ambition port start
-#undef AMBITION_COOLDOWN_TIME
-//ambition port end

@@ -35,9 +35,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
-//ambition port start
-	owner?.do_remove_antag_datum(src)
-//ambition port end
+	if(owner)
+		LAZYREMOVE(owner.antag_datums, src)
 	owner = null
 	return ..()
 
@@ -134,9 +133,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	clear_antag_moodies()
 	if(owner)
-//ambition port start
-		owner.do_remove_antag_datum(src)
-//ambition port end
+		LAZYREMOVE(owner.antag_datums, src)
 		for(var/A in skill_modifiers)
 			owner.remove_skill_modifier(GET_SKILL_MOD_ID(A, type))
 		if(!silent && owner.current)

@@ -97,14 +97,10 @@ GLOBAL_VAR(antag_prototypes)
 		alert("This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
 		return
 
-//ambition port start
-	var/list/out = list(
-		"<B>[name]</B>[(current && (current.real_name!=name))?" (as [current.real_name])":""]<br>\
-		Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>\
-		Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>\
-		Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
-		)
-//ambition port end
+	var/out = "<B>[name]</B>[(current && (current.real_name!=name))?" (as [current.real_name])":""]<br>"
+	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
+	out += "Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
+	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
 
 	var/special_statuses = get_special_statuses()
 	if(length(special_statuses))
@@ -195,16 +191,6 @@ GLOBAL_VAR(antag_prototypes)
 	//Uplink
 	if(ishuman(current))
 		var/uplink_info = "<i><b>Uplink</b></i>:"
-//ambition port start
-	//Ambitions
-	out += "<b>[current.real_name]'s Ambitions:</b> <a href='?src=[REF(src)];edit_ambitions_panel=1'>Edit Ambitions</a><br><ul>"
-	if(!LAZYLEN(ambitions))
-		out += "<li><i><b>NONE</b></i><li>"
-	else
-		for(var/count in 1 to LAZYLEN(ambitions))
-			out += "<li><B>Ambition #[count]</B>:<br>[ambitions[count]]"
-	out += "</ul>"
-
 		var/datum/component/uplink/U = find_syndicate_uplink()
 		if(U)
 			uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
@@ -218,16 +204,14 @@ GLOBAL_VAR(antag_prototypes)
 
 		out += uplink_info + "<br>"
 	//Common Memory
-	out += "<br><span>Common Memory:</span>"
-	out += memory
-	out += "<a href='?src=[REF(src)];memory_edit=1'>Edit Memory</a><br>"
+	var/common_memory = "<span>Common Memory:</span>"
+	common_memory += memory
+	common_memory += "<a href='?src=[REF(src)];memory_edit=1'>Edit Memory</a>"
+	out += common_memory + "<br>"
 	//Other stuff
 	out += get_common_admin_commands()
-	out += "<br><a href='?src=[REF(src)];refresh_antag_panel=1'>Refresh</a>"
 
 	var/datum/browser/panel = new(usr, "traitorpanel", "", 600, 600)
-		panel.set_content(out.Join())
-//ambition port end
 	panel.set_content(out)
 	panel.open()
 	return

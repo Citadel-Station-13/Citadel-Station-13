@@ -27,7 +27,6 @@
 
 //INDEXES
 #define COOLDOWN_EMPLOYMENT_CABINET	"employment cabinet"
-#define COOLDOWN_AMBITION "ambition"
 
 
 //TIMER COOLDOWN MACROS
@@ -40,12 +39,6 @@
 #define TIMER_COOLDOWN_CHECK(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)
 
 #define TIMER_COOLDOWN_END(cd_source, cd_index) LAZYREMOVE(cd_source.cooldowns, cd_index)
-
-#define COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, /proc/end_cooldown, cd_source, cd_index), cd_time))
-
-#define COOLDOWN_CHECK(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)
-
-#define COOLDOWN_END(cd_source, cd_index) LAZYREMOVE(cd_source.cooldowns, cd_index)
 
 /*
  * Stoppable timer cooldowns.
