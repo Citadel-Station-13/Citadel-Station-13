@@ -81,8 +81,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = "[name] [source.name]"
 
-	if(beauty_modifier)
-		addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, beauty_modifier * amount)), 0)
+	// if(beauty_modifier) returnign in hardsync2 if i ever port ebeauty cmp
+	// 	addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, beauty_modifier * amount)), 0)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -151,8 +151,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
 
-	if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
-		addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, -beauty_modifier * amount)), 0)
+	// if(beauty_modifier) //component/beauty/InheritComponent() will handle the removal.
+	// 	addtimer(CALLBACK(source, /datum.proc/_AddElement, list(/datum/element/beauty, -beauty_modifier * amount)), 0)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
