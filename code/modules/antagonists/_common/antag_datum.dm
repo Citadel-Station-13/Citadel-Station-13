@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/threat = 0 // Amount of threat this antag poses, for dynamic mode
 //ambition port start
 	/// Lazy list for antagonists to request the admins objectives.
-	var/list/requested_objectives
+	var/list/requested_objective_changes
 //ambition port end
 
 	var/show_to_ghosts = FALSE // Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
@@ -302,3 +302,44 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
+
+///Sends a message to the admins notifying them of a change request. Is a bit more insistent if there's pending requests.
+/datum/antagonist/proc/notify_admins_of_request(notification_message)
+	if(LAZYLEN(requested_objective_changes) > 1) //Not the first unprocessed request, be a bit more insistent.
+		for(var/a in GLOB.admins)
+			var/client/admin_client = a
+			if(admin_client.prefs.toggles & SOUND_ADMINHELP)
+				SEND_SOUND(admin_client, sound('sound/effects/adminhelp.ogg'))
+			window_flash(admin_client)
+	message_admins(notification_message)
+
+
+///Clears change requests from deleted objectives to avoid broken references.
+/datum/antagonist/proc/clean_request_from_del_objective(datum/objective/source, force)
+	var/objective_reference = REF(source)
+	for(var/uid in requested_objective_changes)
+		var/list/change_request = requested_objective_changes[uid]
+		if(change_request["target"] != objective_reference)
+			continue
+		LAZYREMOVE(requested_objective_changes, uid)
+
+
+/datum/antagonist/proc/add_objective_change(uid, list/additions)
+	LAZYADD(requested_objective_changes, uid)
+	var/datum/objective/request_target = additions["target"]
+	if(!ispath(request_target))
+		request_target = locate(request_target) in objectives
+		if(istype(request_target))
+			RegisterSignal(request_target, COMSIG_PARENT_QDELETING, .proc/clean_request_from_del_objective)
+	requested_objective_changes[uid] = additions
+
+
+/datum/antagonist/proc/remove_objective_change(uid)
+	if(!LAZYACCESS(requested_objective_changes, uid))
+		return
+	var/datum/objective/request_target = requested_objective_changes[uid]["target"]
+	if(!ispath(request_target))
+		request_target = locate(request_target) in objectives
+		if(istype(request_target))
+			UnregisterSignal(request_target, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(requested_objective_changes, uid)

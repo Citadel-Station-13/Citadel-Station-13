@@ -454,21 +454,45 @@
 		if(!length(antag_datum.objectives))
 			output += "<li><i><b>NONE</b></i>"
 		else
-			for(var/count in 1 to length(antag_datum.objectives))
-				var/datum/objective/objective = antag_datum.objectives[count]
-				output += "<li><B>[count]</B>: [objective.explanation_text]"
-				if(self_mind)
-					output += " <a href='?src=[REF(antag_datum.owner)];req_obj_delete=[REF(objective)]'>Request Remove</a> <a href='?src=[REF(antag_datum.owner)];req_obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Request incompletion" : "Request completion"]</font></a><br>"
-				if(is_admin)
-					output += " <a href='?src=[REF(antag_datum.owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(antag_datum.owner)];obj_panel_delete=[REF(objective)]'>Remove</a> <a href='?src=[REF(antag_datum.owner)];obj_panel_complete_toggle=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
+			for(var/uid in antag_datum.requested_objective_changes)
+				var/list/objectives_info = antag_datum.requested_objective_changes[uid]
+				var/obj_request = objectives_info["request"]
+				switch(obj_request)
+					if(REQUEST_NEW_OBJECTIVE)
+						var/datum/objective/type_cast_objective = objectives_info["target"]
+						var/objective_text = objectives_info["text"]
+						output += "<li><B>Request #[uid]</B>: ADD [initial(type_cast_objective.name)] - [objective_text]"
+						if(is_admin)
+							output += " <a href='?src=[REF(antag_datum.owner)];req_obj_accept=[REF(antag_datum)];req_obj_id=[uid]'>Accept</a> <a href='?src=[REF(antag_datum.owner)];req_obj_edit=[REF(antag_datum)];req_obj_id=[uid]'>Edit</a> <a href='?src=[REF(antag_datum.owner)];req_obj_deny=[REF(antag_datum)];req_obj_id=[uid]'>Deny</a>"
+					if(REQUEST_DEL_OBJECTIVE)
+						var/datum/objective/objective_ref = locate(objectives_info["target"]) in antag_datum.objectives
+						if(QDELETED(objective_ref))
+							stack_trace("Objective request found with deleted reference. UID: [uid] | Antag: [antag_datum] | Mind: [src] | User: [usr]")
+							antag_datum.remove_objective_change(uid)
+							continue
+						output += "<li><B>Request #[uid]</B>: DEL [objective_ref.name] - [objective_ref.explanation_text] - [objectives_info["text"]]"
+						if(is_admin)
+							output += " <a href='?src=[REF(antag_datum.owner)];req_obj_accept=[REF(antag_datum)];req_obj_id=[uid]'>Accept</a> <a href='?src=[REF(antag_datum.owner)];req_obj_deny=[REF(antag_datum)];req_obj_id=[uid]'>Deny</a>"
+					if(REQUEST_WIN_OBJECTIVE, REQUEST_LOSE_OBJECTIVE)
+						var/datum/objective/objective_ref = locate(objectives_info["target"]) in antag_datum.objectives
+						if(QDELETED(objective_ref))
+							stack_trace("Objective request found with deleted reference. UID: [uid] | Antag: [antag_datum] | Mind: [src] | User: [usr]")
+							antag_datum.remove_objective_change(uid)
+							continue
+						output += "<li><B>Request #[uid]</B>: [obj_request == REQUEST_WIN_OBJECTIVE ? "WIN" : "LOSE"] [objective_ref.name] - [objective_ref.explanation_text] - [objectives_info["text"]]"
+						if(is_admin)
+							output += " <a href='?src=[REF(antag_datum.owner)];req_obj_accept=[REF(antag_datum)];req_obj_id=[uid]'>Accept</a> <a href='?src=[REF(antag_datum.owner)];req_obj_deny=[REF(antag_datum)];req_obj_id=[uid]'>Deny</a>"
+					else
+						stack_trace("Objective request found with no request index. UID: [uid] | Antag: [antag_datum] | Mind: [src] | User: [usr]")
+						continue
 		output += "</ul>"
 		if(is_admin)
 			output += "<a href='?src=[REF(antag_datum.owner)];obj_announce=1;ambition_panel=1'>Announce objectives</a><br>"
-		output += "<br><i><b>Requested Objectives</b></i>:"
+		output += "<br><i><b>Requested Objective Changes</b></i>:"
 		if(self_mind)
 			output += " <a href='?src=[REF(antag_datum.owner)];req_obj_add=1;target_antag=[REF(antag_datum)]'>Request objective</a>"
 		output += "<ul>"
-		if(!length(antag_datum.requested_objectives))
+		if(!length(antag_datum.requested_objective_changes))
 			output += "<li><i><b>NONE</b></i>"
 		else
 			for(var/uid in antag_datum.requested_objectives)
@@ -493,7 +517,7 @@
 
 
 /mob/proc/edit_ambitions()
-	set name = "Ambitions"
+	set name = "Objectives and Ambitions"
 	set category = "IC"
 	set desc = "View and edit your character's ambitions."
 	mind.do_edit_ambitions()
@@ -505,6 +529,28 @@
 	popup.open()
 
 GLOBAL_VAR_INIT(requested_objective_uid, 0)
+
+
+GLOBAL_LIST(objective_player_choices)
+
+/proc/populate_objective_player_choices()
+	GLOB.objective_player_choices = list()
+	var/list/allowed_types = list(
+		/datum/objective/custom,
+		/datum/objective/assassinate/once,
+		/datum/objective/protect,
+		/datum/objective/escape,
+		/datum/objective/survive,
+		/datum/objective/martyr,
+		/datum/objective/steal,
+		/datum/objective/download,
+		)
+
+	for(var/t in allowed_types)
+		var/datum/objective/type_cast = t
+		GLOB.objective_player_choices[initial(type_cast.name)] = t
+
+
 GLOBAL_LIST(objective_choices)
 
 /proc/populate_objective_choices()
@@ -696,14 +742,14 @@ GLOBAL_LIST(objective_choices)
 			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
 			return
 		var/datum/antagonist/target_antag = locate(href_list["target_antag"]) in antag_datums
-		if(!istype(target_antag))
+		if(QDELETED(target_antag))
 			to_chat(usr, "<span class='warning'>No antagonist found for this objective.</span>")
 			do_edit_objectives_ambitions()
 			return
-		if(!GLOB.objective_choices)
-			populate_objective_choices()
-		var/choe = input("Select desired objective type:", "Objective type") as null|anything in GLOB.objective_choices
-		var/selected_type = GLOB.objective_choices[choe]
+		if(!GLOB.objective_player_choices)
+			populate_objective_player_choices()
+		var/choice = input("Select desired objective type:", "Objective type") as null|anything in GLOB.objective_player_choices
+		var/selected_type = GLOB.objective_player_choices[choice]
 		if(!selected_type)
 			return
 		var/new_objective = stripped_multiline_input(usr,\
@@ -724,11 +770,10 @@ GLOBAL_LIST(objective_choices)
 			return
 		COOLDOWN_START(src, COOLDOWN_OBJECTIVES, OBJECTIVES_COOLDOWN_TIME)
 		var/uid = "[GLOB.requested_objective_uid++]"
-		LAZYADD(target_antag.requested_objectives, uid)
-		target_antag.requested_objectives[uid] = list("type" = selected_type, "text" = new_objective)
-		log_admin("[key_name(usr)] has requested a [choe] objective: [new_objective]")
-		message_admins("[ADMIN_TPMONTY(usr)] has requested a [choe] objective. (<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)")
-		to_chat(usr, "<span class='notice'>The admins have been notified of your request!</span>")
+		target_antag.add_objective_change(uid, list("request" = REQUEST_NEW_OBJECTIVE, "target" = selected_type, "text" = new_objective))
+		log_admin("Objectives request [uid] - [key_name(usr)] has requested a [choice] objective: [new_objective]")
+		target_antag.notify_admins_of_request("<span class='adminhelp'>[ADMIN_TPMONTY(usr)] has requested a [choice] objective. (<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)</span>")
+		to_chat(usr
 		do_edit_objectives_ambitions()
 		return
 
@@ -738,12 +783,18 @@ GLOBAL_LIST(objective_choices)
 		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
 			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
 			return
-		var/datum/objective/objective_to_delete = locate(href_list["req_obj_delete"])
+		var/datum/antagonist/target_antag = locate(href_list["target_antag"]) in antag_datums
+		if(QDELETED(target_antag))
+			to_chat(usr, "<span class='warning'>No antagonist found for this objective.</span>")
+			do_edit_objectives_ambitions()
+			return
+		var/objective_reference = href_list["req_obj_delete"]
+		var/datum/objective/objective_to_delete = locate(objective_reference) in target_antag.objectives
 		if(!istype(objective_to_delete) || QDELETED(objective_to_delete))
 			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
 			do_edit_objectives_ambitions()
 			return
-		var/justifation = stripped_multiline_input(usr,
+		var/justification = stripped_multiline_input(usr,
 			"Justify your request for a deleting this objective to the admins.\
 			There's a 10 minutes cooldown between requests, so try to think it through before sending it. Cancelling does not trigger the cooldown.",
 			"Objective Deletion", max_length = MAX_MESSAGE_LEN)
@@ -754,13 +805,21 @@ GLOBAL_LIST(objective_choices)
 		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
 			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
 			return
-		if(QDELETED(objective_to_delete))
+		if(QDELETED(objective_to_delete) || QDELETED(target_antag))
 			do_edit_objectives_ambitions()
 			return
+		for(var/index in target_antag.requested_objective_changes)
+			var/list/change_request = target_antag.requested_objective_changes[index]
+			if(change_request["target"] != objective_reference)
+				continue
+			to_chat(usr, "<span class='warning'>There is already a change request tied to this objective waiting to be processed. Ahelp or wait for it to be resolved before adding a new one.</span>")
+			return
 		COOLDOWN_START(src, COOLDOWN_OBJECTIVES, OBJECTIVES_COOLDOWN_TIME)
-		log_admin("[key_name(usr)] has requested the deletion of the following objective: [objective_to_delete.explanation_text].\nTheir justifation is as follows: [justifation]")
-		message_admins("[ADMIN_TPMONTY(usr)] has requested the deletion of the following objective: [objective_to_delete.explanation_text].\nTheir justifation is as follows: [justifation]\n(<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)")
-		to_chat(usr, "<span class='notice'>The admins have been notified of your request!</span>")
+		var/uid = "[GLOB.requested_objective_uid++]"
+		target_antag.add_objective_change(uid, list("request" = REQUEST_DEL_OBJECTIVE, "target" = objective_reference, "text" = justification))
+		log_admin("Objectives request [uid] - [key_name(usr)] has requested the deletion of the following objective: [objective_to_delete.explanation_text].\nTheir justification is as follows: [justification]")
+		target_antag.notify_admins_of_request("<span class='adminhelp'>[ADMIN_TPMONTY(usr)] has requested the deletion of an objective: (<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)</span>")
+		to_chat(usr, "<span class='boldnotice'>The admins have been notified of your request!</span>")
 		do_edit_objectives_ambitions()
 		return
 			else if (href_list["req_obj_completed"])
@@ -769,29 +828,43 @@ GLOBAL_LIST(objective_choices)
 		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
 			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
 			return
-		var/datum/objective/objective_to_complete = locate(href_list["req_obj_completed"])
+		var/datum/antagonist/target_antag = locate(href_list["target_antag"]) in antag_datums
+		if(QDELETED(target_antag))
+			to_chat(usr, "<span class='warning'>No antagonist found for this objective.</span>")
+			do_edit_objectives_ambitions()
+			return
+		var/objective_reference = href_list["req_obj_completed"]
+		var/datum/objective/objective_to_complete = locate(objective_reference) in target_antag.objectives
 		if(!istype(objective_to_complete) || QDELETED(objective_to_complete))
 			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
 			do_edit_objectives_ambitions()
 			return
-		var/justifation = stripped_multiline_input(usr,
-			"Justify your request for the [objective_to_complete.completed ? "completion" : "incompletion"] of this objective to the admins.\
+		var/justification = stripped_multiline_input(usr,
+			"Justify to the admins your request to mark this objective as [objective_to_complete.completed ? "incomplete" : "completed"].\
 			There's a 10 minutes cooldown between requests, so try to think it through before sending it. Cancelling does not trigger the cooldown.",
-			"Objective [objective_to_complete.completed ? "Completion" : "Incompletion"]", max_length = MAX_MESSAGE_LEN)
-		if(isnull(justifation))
+			"Objective [objective_to_complete.completed ? "Incompletion" : "Completion"]", max_length = MAX_MESSAGE_LEN)
+		if(isnull(justification))
 			return
 		if(usr != current)
 			return
 		if(COOLDOWN_CHECK(src, COOLDOWN_OBJECTIVES))
 			to_chat(usr, "<span class='warning'>You must wait [round(OBJECTIVES_COOLDOWN_TIME / 600, 0.1)] minutes between requests.</span>")
 			return
-		if(QDELETED(objective_to_complete))
+		if(QDELETED(objective_to_complete) || QDELETED(target_antag))
 			do_edit_objectives_ambitions()
 			return
+		for(var/index in target_antag.requested_objective_changes)
+			var/list/change_request = target_antag.requested_objective_changes[index]
+			if(change_request["target"] != objective_reference)
+				continue
+			to_chat(usr, "<span class='warning'>There is already a change request tied to this objective waiting to be processed. Ahelp or wait for it to be resolved before adding a new one.</span>")
+			return
 		COOLDOWN_START(src, COOLDOWN_OBJECTIVES, OBJECTIVES_COOLDOWN_TIME)
-		log_admin("[key_name(usr)] has requested the [objective_to_complete.completed ? "completion" : "incompletion"] of the following objective: [objective_to_complete.explanation_text].\nTheir justifation is as follows: [justifation]")
-		message_admins("[ADMIN_TPMONTY(usr)] has requested the [objective_to_complete.completed ? "completion" : "incompletion"] of the following objective: [objective_to_complete.explanation_text].\nTheir justifation is as follows: [justifation]\n(<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)")
-		to_chat(usr, "<span class='notice'>The admins have been notified of your request!</span>")
+		var/uid = "[GLOB.requested_objective_uid++]"
+		target_antag.add_objective_change(uid, list("request" = (objective_to_complete.completed ? REQUEST_LOSE_OBJECTIVE : REQUEST_WIN_OBJECTIVE), "target" = objective_reference, "text" = justification))
+		log_admin("Objectives request [uid] - [key_name(usr)] has requested the [objective_to_complete.completed ? "incompletion" : "completion"] of the following objective: [objective_to_complete.explanation_text].\nTheir justification is as follows: [justification]")
+		target_antag.notify_admins_of_request("<span class='adminhelp'>[ADMIN_TPMONTY(usr)] has requested the [objective_to_complete.completed ? "incompletion" : "completion"] of an objective: (<a href='?_src_=holder;[HrefToken(TRUE)];ObjectiveRequest=[REF(src)]'>RPLY</a>)</span>")
+		to_chat(usr, "<span class='boldnotice'>The admins have been notified of your request!</span>")
 		do_edit_objectives_ambitions()
 		return
 	if(!check_rights(R_ADMIN))
@@ -808,7 +881,7 @@ GLOBAL_LIST(objective_choices)
 		return
 
 	else if (href_list["req_obj_edit"])
-		var/datum/antagonist/antag_datum = locate(href_list["req_obj_edit"])
+		var/datum/antagonist/antag_datum = locate(href_list["req_obj_edit"]) in antag_datums
 		if(QDELETED(antag_datum))
 			do_edit_objectives_ambitions()
 			to_chat(usr, "<span class='warning'>No antag found.</span>")
@@ -818,12 +891,15 @@ GLOBAL_LIST(objective_choices)
 			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
 			return
 		var/uid = href_list["req_obj_id"]
-		var/list/requested_objective = LAZYACCESS(antag_datum.requested_objectives, uid)
-		if(!requested_objective)
+		var/list/requested_obj_change = LAZYACCESS(antag_datum.requested_objective_changes, uid)
+		if(!requested_obj_change)
 			do_edit_objectives_ambitions()
 			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
 			return
-
+			if(requested_obj_change["request"] != REQUEST_NEW_OBJECTIVE)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>This is not an editable request. How did you even got here?</span>")
+			return
 		switch(alert(usr, "Do you want to edit the requested objective type or text?", "Edit requested objective", "Type", "Text", "Cancel"))
 			if("Type")
 				if(!check_rights(R_ADMIN))
@@ -832,11 +908,11 @@ GLOBAL_LIST(objective_choices)
 					to_chat(usr, "<span class='warning'>No antag found.</span>")
 					do_edit_objectives_ambitions()
 					return
-				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
-					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+				if(!LAZYACCESS(antag_datum.requested_objective_changes, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 					do_edit_objectives_ambitions()
 					return
-				var/datum/objective/type_cast = requested_objective["type"]
+				var/datum/objective/type_cast = requested_obj_change["target"]
 				var/selected_type = input("Select new requested objective type:", "Requested Objective type", initial(type_cast.name)) as null|anything in GLOB.objective_choices
 				selected_type = GLOB.objective_choices[selected_type]
 				if(!selected_type)
@@ -847,13 +923,13 @@ GLOBAL_LIST(objective_choices)
 					to_chat(usr, "<span class='warning'>No antag found.</span>")
 					do_edit_objectives_ambitions()
 					return
-				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
-					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+				if(!LAZYACCESS(antag_datum.requested_objective_changes, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 					do_edit_objectives_ambitions()
 					return
-				log_admin("[key_name(usr)] has edited the requested objective type for [current], of UID [uid], from [requested_objective["type"]] to [selected_type]")
-				message_admins("[key_name_admin(usr)] has edited the requested objective type for [current], of UID [uid], from [requested_objective["type"]] to [selected_type]")
-				requested_objective["type"] = selected_type
+				log_admin("[key_name(usr)] has edited the requested objective type for [current], of UID [uid], from [requested_obj_change["target"]] to [selected_type]")
+				message_admins("[key_name_admin(usr)] has edited the requested objective type for [current], of UID [uid], from [requested_obj_change["target"]] to [selected_type]")
+				requested_obj_change["target"] = selected_type
 			if("Text")
 				if(!check_rights(R_ADMIN))
 					return
@@ -861,11 +937,11 @@ GLOBAL_LIST(objective_choices)
 					to_chat(usr, "<span class='warning'>No antag found.</span>")
 					do_edit_objectives_ambitions()
 					return
-				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
-					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+				if(!LAZYACCESS(antag_datum.requested_objective_changes, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 					do_edit_objectives_ambitions()
 					return
-				var/new_text = stripped_multiline_input(usr, "Input new requested objective text", "Requested Objective Text", requested_objective["text"], MAX_MESSAGE_LEN)
+				var/new_text = stripped_multiline_input(usr, "Input new requested objective text", "Requested Objective Text", requested_obj_change["text"], MAX_MESSAGE_LEN)
 				if (isnull(new_text))
 					return
 				if(!check_rights(R_ADMIN))
@@ -874,18 +950,18 @@ GLOBAL_LIST(objective_choices)
 					to_chat(usr, "<span class='warning'>No antag found.</span>")
 					do_edit_objectives_ambitions()
 					return
-				if(!LAZYACCESS(antag_datum.requested_objectives, uid))
-					to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+				if(!LAZYACCESS(antag_datum.requested_objective_changes, uid))
+					to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 					do_edit_objectives_ambitions()
 					return
-				log_admin("[key_name(usr)] has edited the requested objective text for [current], of UID [uid], from [requested_objective["text"]] to [new_text]")
-				message_admins("[key_name_admin(usr)] has edited the requested objective text for [current], of UID [uid], from [requested_objective["text"]] to [new_text]")
-				requested_objective["text"] = new_text
+				log_admin("[key_name(usr)] has edited the requested objective text for [current], of UID [uid], from [requested_obj_change["text"]] to [new_text]")
+				message_admins("[key_name_admin(usr)] has edited the requested objective text for [current], of UID [uid], from [requested_obj_change["text"]] to [new_text]")
+				requested_obj_change["text"] = new_text
 		do_edit_objectives_ambitions()
 		return
 
 	else if (href_list["req_obj_accept"])
-		var/datum/antagonist/antag_datum = locate(href_list["req_obj_accept"])
+		var/datum/antagonist/antag_datum = locate(href_list["req_obj_accept"]) in antag_datums
 		if(QDELETED(antag_datum))
 			do_edit_objectives_ambitions()
 			to_chat(usr, "<span class='warning'>No antag found.</span>")
@@ -895,12 +971,29 @@ GLOBAL_LIST(objective_choices)
 			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
 			return
 		var/uid = href_list["req_obj_id"]
-		var/list/requested_objective = LAZYACCESS(antag_datum.requested_objectives, uid)
-		if(!requested_objective)
+		var/list/requested_obj_change = LAZYACCESS(antag_datum.requested_objective_changes, uid)
+		if(!requested_obj_change)
 			do_edit_objectives_ambitions()
 			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
 			return
-		if(alert(usr, "Are you sure you want to approve this objective?", "Approve objective", "Yes", "No") != "Yes")
+
+		var/datum/objective/request_target
+		var/request_type = requested_obj_change["request"]
+		switch(request_type)
+			if(REQUEST_NEW_OBJECTIVE)
+				request_target = requested_obj_change["target"]
+				if(!ispath(request_target, /datum/objective))
+					to_chat(usr, "<span class='warning'>Invalid requested objective target path.</span>")
+					return
+			if(REQUEST_DEL_OBJECTIVE, REQUEST_WIN_OBJECTIVE, REQUEST_LOSE_OBJECTIVE)
+				request_target = locate(requested_obj_change["target"]) in antag_datum.objectives
+				if(QDELETED(request_target))
+					to_chat(usr, "<span class='warning'>Invalid requested objective target reference.</span>")
+					return
+			else
+				to_chat(usr, "<span class='warning'>Invalid request type.</span>")
+				return
+		if(alert(usr, "Are you sure you want to approve this objective change?", "Approve objective change", "Yes", "No") != "Yes")
 			return
 		if(!check_rights(R_ADMIN))
 			return
@@ -908,27 +1001,53 @@ GLOBAL_LIST(objective_choices)
 			to_chat(usr, "<span class='warning'>No antag found.</span>")
 			do_edit_objectives_ambitions()
 			return
-		if(!LAZYACCESS(antag_datum.requested_objectives, uid))
-			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+		if(!LAZYACCESS(antag_datum.requested_objective_changes, uid))
+			to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 			do_edit_objectives_ambitions()
 			return
-		var/objective_path = requested_objective["type"]
-		var/datum/objective/new_objective = new objective_path
-		new_objective.owner = src
-		if(istype(new_objective, /datum/objective/custom))
-			new_objective.explanation_text = requested_objective["text"]
-		else
-			new_objective.admin_edit(usr)
-		antag_datum.objectives += new_objective
-		LAZYREMOVE(antag_datum.requested_objectives, uid)
-		message_admins("[key_name_admin(usr)] approved a requested objective from [current]: [new_objective.explanation_text]")
-		log_admin("[key_name(usr)] approved a requested objective from [current]: [new_objective.explanation_text]")
-		to_chat(current, "<span class='boldnotice'>Your objective request has been approved.</span>")
+		switch(request_type) //Last checks
+			if(REQUEST_NEW_OBJECTIVE)
+				if(!ispath(request_target, /datum/objective))
+					stack_trace("Invalid target on objective change request: [request_target]")
+					do_edit_objectives_ambitions()
+					return
+			if(REQUEST_DEL_OBJECTIVE, REQUEST_WIN_OBJECTIVE, REQUEST_LOSE_OBJECTIVE)
+				if(QDELETED(request_target))
+					to_chat(usr, "<span class='warning'>Invalid requested objective target reference.</span>")
+					return
+			else
+				to_chat(usr, "<span class='warning'>Invalid request type.</span>")
+				return
+		antag_datum.remove_objective_change(uid)
+		switch(request_type) //All is clear, let get things done.
+			if(REQUEST_NEW_OBJECTIVE)
+				request_target = new request_target()
+				request_target.owner = src
+				if(istype(request_target, /datum/objective/custom))
+					request_target.explanation_text = requested_obj_change["text"]
+				else
+					request_target.admin_edit(usr)
+				antag_datum.objectives += request_target
+				message_admins("[key_name_admin(usr)] approved a requested objective from [current]: [request_target.explanation_text]")
+				log_admin("[key_name(usr)] approved a requested objective from [current]: [request_target.explanation_text]")
+			if(REQUEST_DEL_OBJECTIVE)
+				message_admins("[key_name_admin(usr)] approved the request to delete an objective from [current]: [request_target.explanation_text]")
+				log_admin("[key_name(usr)] approved the request to delete an objective from [current]: [request_target.explanation_text]")
+				qdel(request_target)
+			if(REQUEST_WIN_OBJECTIVE)
+				message_admins("[key_name_admin(usr)] approved the victory request for an objective from [current]: [request_target.explanation_text]")
+				log_admin("[key_name(usr)] approved the victory request for an objective from [current]: [request_target.explanation_text]")
+				request_target.completed = TRUE
+			if(REQUEST_LOSE_OBJECTIVE)
+				message_admins("[key_name_admin(usr)] approved the defeat request for an objective from [current]: [request_target.explanation_text]")
+				log_admin("[key_name(usr)] approved the defeat request for an objective from [current]: [request_target.explanation_text]")
+				request_target.completed = FALSE
+		to_chat(current, "<span class='boldnotice'>Your objective change request has been approved.</span>")
 		do_edit_objectives_ambitions()
 		return
 
 	else if (href_list["req_obj_deny"])
-		var/datum/antagonist/antag_datum = locate(href_list["req_obj_deny"])
+		var/datum/antagonist/antag_datum = locate(href_list["req_obj_deny"]) in antag_datums
 		if(QDELETED(antag_datum))
 			do_edit_objectives_ambitions()
 			to_chat(usr, "<span class='warning'>No antag found.</span>")
@@ -938,13 +1057,13 @@ GLOBAL_LIST(objective_choices)
 			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
 			return
 		var/uid = href_list["req_obj_id"]
-		var/list/requested_objective = LAZYACCESS(antag_datum.requested_objectives, uid)
-		if(!requested_objective)
+		var/list/requested_obj_change = LAZYACCESS(antag_datum.requested_objective_changes, uid)
+		if(!requested_obj_change)
 			do_edit_objectives_ambitions()
-			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+			to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 			return
-		var/justifation = stripped_multiline_input(usr, "Justify why you are denying this objective request.", "Deny", memory, MAX_MESSAGE_LEN)
-		if(isnull(justifation))
+		var/justification = stripped_multiline_input(usr, "Justify why you are denying this objective request change.", "Deny", memory, MAX_MESSAGE_LEN)
+		if(isnull(justification))
 			return
 		if(!check_rights(R_ADMIN))
 			return
@@ -952,22 +1071,31 @@ GLOBAL_LIST(objective_choices)
 			to_chat(usr, "<span class='warning'>No antag found.</span>")
 			do_edit_objectives_ambitions()
 			return
-		if(!LAZYACCESS(antag_datum.requested_objectives, uid))
-			to_chat(usr, "<span class='warning'>Invalid requested objective reference.</span>")
+		if(!LAZYACCESS(antag_datum.requested_objective_changes, uid))
+			to_chat(usr, "<span class='warning'>Invalid requested objective change reference.</span>")
 			do_edit_objectives_ambitions()
 			return
-		var/datum/objective/type_cast = requested_objective["type"]
+		var/datum/objective/type_cast = requested_obj_change["target"]
 		var/objective_name = initial(type_cast.name)
-		message_admins("[key_name_admin(usr)] denied a requested [objective_name] objective from [current]: [requested_objective["text"]]")
-		log_admin("[key_name(usr)] denied a requested [objective_name] objective from [current]: [requested_objective["text"]]")
-		to_chat(current, "<span class='boldwarning'>Your objective request has been denied for the following reason: [justifation]</span>")
-		LAZYREMOVE(antag_datum.requested_objectives, uid)
+		message_admins("[key_name_admin(usr)] denied a requested [objective_name] objective from [current]: [requested_obj_change["text"]]")
+		log_admin("[key_name(usr)] denied a requested [objective_name] objective from [current]: [requested_obj_change["text"]]")
+		to_chat(current, "<span class='boldwarning'>Your objective request has been denied for the following reason: [justification]</span>")
+		antag_datum.remove_objective_change(uid)
 		do_edit_objectives_ambitions()
 		return
 
 	else if (href_list["obj_panel_complete_toggle"])
-		var/datum/objective/objective_to_toggle = locate(href_list["obj_panel_complete_toggle"])
-		if(!istype(objective_to_toggle) || QDELETED(objective_to_toggle))
+		var/datum/antagonist/antag_datum = locate(href_list["target_antag"]) in antag_datums
+		if(QDELETED(antag_datum))
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			return
+		if(antag_datum.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
+			return
+		var/datum/objective/objective_to_toggle = locate(href_list["obj_panel_complete_toggle"]) in antag_datum.objectives
+		if(QDELETED(objective_to_toggle))
 			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
 			do_edit_objectives_ambitions()
 			return
@@ -984,8 +1112,17 @@ GLOBAL_LIST(objective_choices)
 		return
 
 	else if (href_list["obj_panel_delete"])
-		var/datum/objective/objective_to_delete = locate(href_list["obj_panel_delete"])
-		if(!istype(objective_to_delete) || QDELETED(objective_to_delete))
+		var/datum/antagonist/antag_datum = locate(href_list["target_antag"]) in antag_datums
+		if(QDELETED(antag_datum))
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			return
+		if(antag_datum.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
+			return
+		var/datum/objective/objective_to_delete = locate(href_list["obj_panel_delete"]) in antag_datum.objectives
+		if(QDELETED(objective_to_delete))
 			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
 			do_edit_objectives_ambitions()
 			return
@@ -1006,8 +1143,17 @@ GLOBAL_LIST(objective_choices)
 		return
 
 	else if (href_list["obj_panel_edit"])
-		var/datum/objective/objective_to_edit = locate(href_list["obj_panel_edit"])
-		if(!istype(objective_to_edit) || QDELETED(objective_to_edit))
+		var/datum/antagonist/antag_datum = locate(href_list["target_antag"]) in antag_datums
+		if(QDELETED(antag_datum))
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>No antag found.</span>")
+			return
+		if(antag_datum.owner != src)
+			do_edit_objectives_ambitions()
+			to_chat(usr, "<span class='warning'>Invalid antag reference.</span>")
+			return
+		var/datum/objective/objective_to_edit = locate(href_list["obj_panel_edit"]) in antag_datum.objectives
+		if(QDELETED(objective_to_edit))
 			to_chat(usr, "<span class='warning'>No objective found. Perhaps it was already deleted?</span>")
 			do_edit_objectives_ambitions()
 			return
@@ -1219,7 +1365,7 @@ GLOBAL_LIST(objective_choices)
 		if(href_list["ambition_panel"])
 			do_edit_objectives_ambitions()
 			return
-//ambition port end
+//ambition port
 
 
 	//Something in here might have changed your mob
