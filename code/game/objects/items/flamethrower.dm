@@ -180,6 +180,11 @@
 
 //Called from turf.dm turf/dblclick
 /obj/item/flamethrower/proc/flame_turf(turflist)
+	var/mob/living/carbon/human/user = loc
+	// no fun for pacifists
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='warning'>You don't want to put others in danger!</span>")
+		return
 	if(!lit || operating)
 		return
 	operating = TRUE

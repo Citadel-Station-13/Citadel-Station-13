@@ -80,6 +80,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/list/inherent_traits = list()
 	var/inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
+	var/list/blacklisted_quirks = list() // Quirks that will be removed upon gaining this species, to be defined by species
+	var/list/removed_quirks = list() // Quirks that got removed due to being blacklisted, and will be restored when on_species_loss() is called
+
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
@@ -342,6 +345,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	for(var/X in inherent_traits)
 		ADD_TRAIT(C, X, SPECIES_TRAIT)
 
+	//lets remove those conflicting quirks
+	remove_blacklisted_quirks(C)
+
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
@@ -395,6 +401,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
+	// lets restore the quirks that got removed when gaining this species
+	restore_quirks(C)
+
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	if(mutant_bodyparts["meat_type"])
@@ -423,6 +432,26 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			B.change_bodypart_status(initial(B.status), FALSE, TRUE)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
+
+// shamelessly inspired by antag_datum.remove_blacklisted_quirks()
+/datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
+	var/mob/living/L = C.mind?.current
+	if(istype(L))
+		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
+		SSquirks.filter_quirks(my_quirks, blacklisted_quirks)
+		for(var/q in L.roundstart_quirks)
+			var/datum/quirk/Q = q
+			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
+				L.remove_quirk(Q.type)
+				removed_quirks += Q.type
+
+// restore any quirks that we removed
+/datum/species/proc/restore_quirks(mob/living/carbon/C)
+	var/mob/living/L = C.mind?.current
+	if(istype(L))
+		for(var/q in removed_quirks)
+			L.add_quirk(q)
+
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -1454,9 +1483,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
-		if(HAS_TRAIT(user, TRAIT_MAULER)) // maulers get 15 armorpierce because if you're going to punch someone you might as well do a good job of it
-			armor_block = target.run_armor_check(affecting, "melee", armour_penetration = 15) // lot of good that sec jumpsuit did you
-
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
@@ -1473,9 +1499,8 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			target.apply_damage(damage*1.5, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			target.apply_damage(damage*0.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "kicked")
-		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.1x raw damage + 1.3x stam damage, and have some armor pierce
-			target.apply_damage(damage*1.1, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
-			target.apply_damage(damage*1.3, STAMINA, affecting, armor_block)
+		else if(HAS_TRAIT(user, TRAIT_MAULER)) // mauler punches deal 1.2x raw damage but nstam
+			target.apply_damage(damage*1.2, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
 			log_combat(user, target, "punched (mauler)")
 		else //other attacks deal full raw damage + 2x in stamina damage
 			target.apply_damage(damage, attack_type, affecting, armor_block, wound_bonus = punchwoundbonus)
