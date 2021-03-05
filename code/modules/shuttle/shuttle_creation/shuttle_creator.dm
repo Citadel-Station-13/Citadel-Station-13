@@ -228,15 +228,14 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 			curT.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
 			port.shuttle_areas[cur_area] = TRUE
 
-	port.linkup(new_shuttle, stationary_port)
+	port.register() // register does the same thing on the old linkup
+	port.linkup(stationary_port)
 
 	port.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	port.initiate_docking(stationary_port)
 
 	port.mode = SHUTTLE_IDLE
 	port.timer = 0
-
-	port.register()
 
 	icon_state = "rsd_empty"
 
