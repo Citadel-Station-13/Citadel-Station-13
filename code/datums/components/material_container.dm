@@ -182,7 +182,7 @@
 /datum/component/material_container/proc/can_hold_material(datum/material/mat)
 	if(mat in allowed_typecache)
 		return TRUE
-	if(istype(mat) && (((mat.id in allowed_typecache) ||mat.type in allowed_materials)))
+	if(istype(mat) && ((mat.id in allowed_typecache) || (mat.type in allowed_materials)))
 		allowed_materials += mat // This could get messy with passing lists by ref... but if you're doing that the list expansion is probably being taken care of elsewhere anyway...
 		return TRUE
 	// if(insertion_check?.Invoke(mat))
