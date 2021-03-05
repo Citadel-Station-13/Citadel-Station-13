@@ -423,6 +423,18 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/unban_panel()
+	set name = "Unbanning Panel"
+	set category = "Admin"
+	if(!check_rights(R_BAN))
+		return
+	if(holder)
+		if(CONFIG_GET(flag/ban_legacy_system))
+			holder.unbanpanel()
+		else
+			holder.DB_ban_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unban Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 // /client/proc/ban_panel()
 // 	set name = "Banning Panel"
 // 	set category = "Admin"
