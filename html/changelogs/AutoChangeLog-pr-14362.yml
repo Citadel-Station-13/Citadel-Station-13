@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - tweak: "Minesweeper can no longer be made to lag the server on purpose"
