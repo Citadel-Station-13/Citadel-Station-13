@@ -49,6 +49,11 @@
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
+//ambition port start
+	///Lazy associative list of currently active cooldowns.
+	var/list/cooldowns
+//ambition port end
+
 	/*
 	* Lazy associative list of currently active cooldowns.
 	*
@@ -261,3 +266,11 @@
 		return
 	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
 	TIMER_COOLDOWN_END(source, index)
+
+//ambition port start
+///Callback called by a timer to end an associative-list-indexed cooldown.
+/proc/end_cooldown(datum/source, index)
+	if(QDELETED(source))
+		return
+	COOLDOWN_END(source, index)
+//ambition port end
