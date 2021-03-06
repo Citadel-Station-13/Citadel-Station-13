@@ -70,6 +70,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		return
 
 	. = ..()
+	moveToNullspace() // thorw ourselves in nullspace
 
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]
