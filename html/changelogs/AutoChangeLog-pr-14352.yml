@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - balance: "exiting a bluespace jar through any means, hardstuns you for 5 seconds"
