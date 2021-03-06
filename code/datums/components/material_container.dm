@@ -83,6 +83,8 @@
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
+
+	//handle stacks specially
 	if(istype(I, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
 		var/obj/item/stack/S = I
@@ -91,10 +93,18 @@
 			return
 		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
 			return
+		var/amt = insert_stack(S, requested_amount)
+		if(S.singular_name)
+			to_chat(user, "<span class='notice'>You insert [amt] [S.singular_name]\s into [parent].</span>")
+		else
+			to_chat(user, "<span class='notice'>You insert [amt] into [parent].</span>")
+		return
+
 	if(!user.temporarilyRemoveItemFromInventory(I))
 		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
 		return
-	var/inserted = insert_item(I, stack_amt = requested_amount)
+
+	var/inserted = insert_item(I)
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 		qdel(I)
@@ -103,8 +113,46 @@
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
+//Inserts a number of sheets from a stack, returns the amount of sheets used.
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
+	if(isnull(amt))
+		amt = S.amount
+
+	if(amt <= 0)
+		return FALSE
+
+	if(amt > S.amount)
+		amt = S.amount
+
+	var/material_amt = get_item_material_amount(S)
+	if(!material_amt)
+		return FALSE
+
+	//get max number of sheets we have room to add
+	var/mat_per_sheet = material_amt/S.amount
+	amt = min(amt, round((max_amount - total_amount) / (mat_per_sheet)))
+	if(!amt)
+		return FALSE
+
+	//add the mats
+	for(var/MAT in materials)
+		materials[MAT] += S.mats_per_unit[MAT] * amt * multiplier
+		total_amount += S.mats_per_unit[MAT] * amt * multiplier
+
+	//update last_inserted_id with mat making up majority of the stack
+	var/primary_mat
+	var/max_mat_value = 0
+	for(var/MAT in materials)
+		if(S.mats_per_unit[MAT] > max_mat_value)
+			max_mat_value = S.mats_per_unit[MAT]
+			primary_mat = MAT
+	last_inserted_id = primary_mat
+
+	S.use(amt)
+	return amt
+
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
+/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1)
 	if(QDELETED(I))
 		return FALSE
 
@@ -124,6 +172,7 @@
 		materials[MAT] += I.custom_materials[MAT] * multiplier
 		total_amount += I.custom_materials[MAT] * multiplier
 		if(I.custom_materials[MAT] > max_mat_value)
+			max_mat_value = I.custom_materials[MAT]
 			primary_mat = MAT
 	return primary_mat
 
@@ -135,6 +184,7 @@
 		var/total_amount_saved = total_amount
 		if(mat)
 			materials[mat] += amt
+			total_amount += amt
 		else
 			for(var/i in materials)
 				materials[i] += amt
