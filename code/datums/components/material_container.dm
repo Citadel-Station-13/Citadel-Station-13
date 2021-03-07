@@ -117,8 +117,6 @@
 			after_insert.Invoke(I, last_inserted_id, inserted)
 		if(remote && remote.after_insert)
 			remote.after_insert.Invoke(I, last_inserted_id, inserted)
-	//else if(I == active_held)
-	//	user.put_in_active_hand(I)
 
 //Inserts a number of sheets from a stack, returns the amount of sheets used.
 /datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
