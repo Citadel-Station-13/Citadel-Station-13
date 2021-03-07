@@ -79,39 +79,46 @@
 	user_insert(I, user)
 
 /// Proc used for when player inserts materials
-/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user, datum/component/remote_materials/remote = null)
 	set waitfor = FALSE
-	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
+	var/inserted = 0
 
 	//handle stacks specially
-	if(istype(I, /obj/item/stack) && precise_insertion)
-		var/atom/current_parent = parent
+	if(istype(I, /obj/item/stack))
+		var/atom/current_parent = remote ? remote.parent : parent //is the user using a remote materials component?
 		var/obj/item/stack/S = I
-		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+
+		//try to get ammount to use
+		var/requested_amount
+		if(precise_insertion)
+			requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+		else
+			requested_amount= S.amount
+
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || user.get_active_held_item() != active_held)
 			return
-		var/amt = insert_stack(S, requested_amount)
-		if(S.singular_name)
-			to_chat(user, "<span class='notice'>You insert [amt] [S.singular_name]\s into [parent].</span>")
-		else
-			to_chat(user, "<span class='notice'>You insert [amt] into [parent].</span>")
-		return
+		//are we still in range after the user input?
+		if((remote ? remote.parent : parent) != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE)
+			return
+		inserted = insert_stack(S, requested_amount)
+	else
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
+			return
+		inserted = insert_item(I)
+		qdel(I)
 
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
-		return
-
-	var/inserted = insert_item(I)
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
-		qdel(I)
 		if(after_insert)
 			after_insert.Invoke(I, last_inserted_id, inserted)
-	else if(I == active_held)
-		user.put_in_active_hand(I)
+		if(remote && remote.after_insert)
+			remote.after_insert.Invoke(I, last_inserted_id, inserted)
+	//else if(I == active_held)
+	//	user.put_in_active_hand(I)
 
 //Inserts a number of sheets from a stack, returns the amount of sheets used.
 /datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
@@ -134,10 +141,12 @@
 	if(!amt)
 		return FALSE
 
-	//add the mats
+	//add the mats and keep track of how much was added
+	var/starting_total = total_amount
 	for(var/MAT in materials)
 		materials[MAT] += S.mats_per_unit[MAT] * amt * multiplier
 		total_amount += S.mats_per_unit[MAT] * amt * multiplier
+	var/total_added = total_amount - starting_total
 
 	//update last_inserted_id with mat making up majority of the stack
 	var/primary_mat
@@ -149,7 +158,7 @@
 	last_inserted_id = primary_mat
 
 	S.use(amt)
-	return amt
+	return total_added
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1)
