@@ -99,6 +99,10 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_automatic_enabled = TRUE
 	/// Directions that you can autoblock in
 	var/block_automatic_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
+	/// Effectiveness multiplier for automated block
+	var/block_automatic_mitigation_multiplier = 0.33
+	/// Stamina cost multiplier for automated block
+	var/block_automatic_stamina_multiplier = 1
 
 	/////////// PARRYING ////////////
 	/// Prioriry for [mob/do_run_block()] while we're being used to parry.

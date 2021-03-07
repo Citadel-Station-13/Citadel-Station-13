@@ -234,7 +234,7 @@
 	var/stage = get_parry_stage()
 	if(stage != PARRY_ACTIVE)
 		// If they're not currently parrying, attempt auto parry
-		if((stage == NOT_PARRYING) && allow_auto)
+		if((stage == NOT_PARRYING) && allow_auto && !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
 			return attempt_auto_parry()
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_parry_data()
