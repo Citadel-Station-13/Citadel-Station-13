@@ -517,7 +517,7 @@
 	if(is_servant_of_ratvar(src))
 		return
 	if (is_eligible_servant(src))
-		(add_servant_of_ratvar(src))
+		add_servant_of_ratvar(src)
 		to_chat(src, "<span class='heavy_brass'>Ratvar's influence invades your mind, praise the Justiciar!</span>")
 	else
 		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
