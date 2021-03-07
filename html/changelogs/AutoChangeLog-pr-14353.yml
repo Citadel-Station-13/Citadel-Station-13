@@ -1,8 +1,0 @@
-author: "dzahlus"
-delete-after: True
-changes: 
-  - rscadd: "Added taser microbattery for MWS-01"
-  - tweak: "tweaked MWS-01 beacondrop to have more batteries"
-  - balance: "rebalanced MWS-01 disabler battery to fire 10 shots"
-  - soundadd: "added unique sound to the MWS-01"
-  - spellcheck: "fixed Modula Weapons System to \"Modular Weapon System\""
