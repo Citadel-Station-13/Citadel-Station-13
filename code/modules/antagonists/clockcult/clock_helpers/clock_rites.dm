@@ -232,7 +232,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the new frame's eyes glowing in a brilliant yellow!")
+	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the new frame's eyes glowing in a brilliant yellow!</span>")
 	var/mob/living/silicon/robot/R = target.Robotize()
 	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R)
 	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
