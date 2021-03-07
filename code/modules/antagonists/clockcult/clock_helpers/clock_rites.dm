@@ -253,7 +253,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the humanoid shape's eye glowing with an inner flame!")
+	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the humanoid shape's eye glowing with an inner flame!</span>")
 	to_chat(target, "<span class='bold alloy'>The rite's power warps your body into a clockwork form! You are now immune to many hazards, and your body is more robust against damage!</span>")
 	target.set_species(/datum/species/golem/clockwork/no_scrap)
 	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
