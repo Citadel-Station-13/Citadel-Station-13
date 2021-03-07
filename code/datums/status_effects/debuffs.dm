@@ -127,18 +127,18 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
-/datum/status_effect/no_combat_mode
+/datum/status_effect
 	id = "no_combat_mode"
 	alert_type = null
 	status_type = STATUS_EFFECT_REPLACE
 	blocks_combatmode = TRUE
 
-/datum/status_effect/no_combat_mode/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
 
-/datum/status_effect/no_combat_mode/robotic_emp
+/datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
 
 /datum/status_effect/mesmerize
@@ -148,13 +148,11 @@
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	ADD_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
-	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)

@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/block_stamina_buffer_ratio = 1
 
 	/// Stamina dealt directly via UseStaminaBuffer() per SECOND of block.
-	var/block_stamina_cost_per_second = 1.5
+	var/block_stamina_cost_per_second = 1
 	/// Prevent stamina buffer regeneration while block?
 	var/block_no_stambuffer_regeneration = TRUE
 	/// Prevent stamina regeneration while block?
@@ -93,6 +93,13 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Sounds for blocking
 	var/list/block_sounds = list('sound/block_parry/block_metal1.ogg' = 1, 'sound/block_parry/block_metal1.ogg' = 1)
 
+	// Autoblock
+	// Other than for overrides, this mostly just reads from the above vars
+	/// Can this item automatically block?
+	var/block_automatic_enabled = TRUE
+	/// Directions that you can autoblock in
+	var/block_automatic_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
+
 	/////////// PARRYING ////////////
 	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
 	//  None - Parry is always highest priority!
@@ -106,7 +113,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/parry_flags = PARRY_DEFAULT_HANDLE_FEEDBACK | PARRY_LOCK_ATTACKING
 
 	/// Parry windup duration in deciseconds. 0 to this is windup, afterwards is main stage.
-	var/parry_time_windup = 2
+	var/parry_time_windup = 0
 	/// Parry spindown duration in deciseconds. main stage end to this is the spindown stage, afterwards the parry fully ends.
 	var/parry_time_spindown = 3
 	/// Main parry window in deciseconds. This is between [parry_time_windup] and [parry_time_spindown]
@@ -166,6 +173,30 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/perfect_parry_block_return_list
 	var/imperfect_parry_block_return_list
 	var/failed_parry_block_return_list
+
+	// Auto parry
+	// Anything not specified like cooldowns/clickdelay respecting is pulled from above.
+	/// Can this data automatically parry
+	var/parry_automatic_enabled = TRUE
+	/// Hard autoparry cooldown
+	var/autoparry_cooldown_absolute = 3 SECONDS
+	/// Autoparry : Simulate a parry sequence starting at a certain tick, or simply simulate a single attack parry?
+	var/autoparry_sequence_simulation = FALSE
+	// Single attack simulation:
+	/// Parry cooldown to inflict on single-attack autoparry
+	var/autoparry_single_parry_cooldown = 3 SECONDS
+	/// Clickdelay to inflict on single-attack autoparry
+	var/autoparry_single_click_cooldown = 0
+	/// Single attack autoparry - efficiency
+	var/autoparry_single_efficiency = 60
+	/// Single attack autoparry - efficiency overrides by attack type, see above
+	var/list/autoparry_single_efficiency_override
+	// Parry sequence simulation:
+	/// Decisecond of sequence to start on. -1 to start to 0th tick of active parry window.
+	var/autoparry_sequence_start_time = -1
+	/// Efficiency multiplier
+	var/autoparry_sequence_efficiency_multiplier = 0.8
+	// Clickdelay/cooldown settings not included, as well as whether or not to lock attack/sprinting/etc. They will be pulled from the above.
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.

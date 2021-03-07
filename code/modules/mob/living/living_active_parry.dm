@@ -230,9 +230,12 @@
 	return world.time - parry_start_time
 
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
-/mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
+/mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), allow_auto = TRUE)
 	var/stage = get_parry_stage()
 	if(stage != PARRY_ACTIVE)
+		// If they're not currently parrying, attempt auto parry
+		if((stage == NOT_PARRYING) && allow_auto)
+			return attempt_auto_parry()
 		return BLOCK_NONE
 	var/datum/block_parry_data/data = get_parry_data()
 	if(attack_type && (!(attack_type & data.parry_attack_types) || (attack_type & ATTACK_TYPE_PARRY_COUNTERATTACK)))		// if this attack is from a parry do not parry it lest we infinite loop.

@@ -37,6 +37,8 @@
 			var/results
 			if(I == active_block_item)
 				results = I.active_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list, attack_direction)
+			else if(I.can_passive_block())
+				results = I.passive_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list, attack_direction)
 			else
 				results = I.run_block(src, object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, final_block_chance, return_list)
 			. |= results
