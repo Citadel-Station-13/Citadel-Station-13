@@ -358,7 +358,7 @@
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
 		/datum/gas/nitrous_oxide = 5,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*400
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*25
 	)
 
 /datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
@@ -369,8 +369,8 @@
 	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
 	if ((air.get_moles(/datum/gas/oxygen) - heat_efficency < 0 )|| (air.get_moles(/datum/gas/nitrogen) - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	air.adjust_moles(/datum/gas/oxygen, heat_efficency)
-	air.adjust_moles(/datum/gas/nitrogen, heat_efficency)
+	air.adjust_moles(/datum/gas/oxygen, -heat_efficency)
+	air.adjust_moles(/datum/gas/nitrogen, -heat_efficency)
 	air.adjust_moles(/datum/gas/nitryl, heat_efficency*2)
 
 	if(energy_used > 0)
@@ -499,7 +499,7 @@
 	min_requirements = list(
 		/datum/gas/nitrogen = 10,
 		/datum/gas/tritium = 5,
-		"TEMP" = 5000000)
+		"ENER" = NOBLIUM_FORMATION_ENERGY)
 
 /datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
 	var/old_heat_capacity = air.heat_capacity()
