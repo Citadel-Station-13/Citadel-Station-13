@@ -213,7 +213,7 @@
 	if(!.)
 		return FALSE
 	var/obj/item/mmi/posibrain/soul_vessel/SV = new /obj/item/mmi/posibrain/soul_vessel(T)
-	SV.visible_message("<span class='warning'>[SV] materalizes out of thin air!")
+	SV.visible_message("<span class='warning'>[SV] materalizes out of thin air!</span>")
 	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
 
 
