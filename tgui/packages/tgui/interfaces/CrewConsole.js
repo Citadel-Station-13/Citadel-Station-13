@@ -77,9 +77,10 @@ export const CrewConsole = () => {
 
 const CrewTable = (props, context) => {
   const { act, data } = useBackend(context);
-  const sensors = sortBy(
-    s => s.ijob
-  )(data.sensors ?? []);
+  // const sensors = sortBy(
+  //   s => s.ijob
+  // )(data.sensors ?? []);
+  const sensors = data.sensors || [];
   return (
     <Table>
       <Table.Row>
