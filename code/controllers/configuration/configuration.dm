@@ -425,6 +425,7 @@ Example config:
 	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
 	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/desired_chaos_level = 9 - SSpersistence.get_recent_chaos()
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
@@ -449,6 +450,10 @@ Example config:
 					adjustment += repeated_mode_adjust[recent_round]
 					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
 				final_weight *= ((100-adjustment)/100)
+			if(Get(/datum/config_entry/flag/weigh_by_recent_chaos))
+				var/chaos_level = M.get_chaos()
+				var/exponent = Get(/datum/config_entry/number/chaos_exponent)
+				final_weight /= (abs(chaos_level - desired_chaos_level) + 1) ** exponent
 			runnable_modes[M] = final_weight
 	return runnable_modes
 

@@ -2,6 +2,7 @@
 	name = "meteor"
 	config_tag = "meteor"
 	false_report_weight = 1
+	chaos = 9
 	var/meteordelay = 2000
 	var/nometeors = 0
 	var/rampupdelta = 5
