@@ -64,8 +64,9 @@ Difficulty: Medium
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
 	var/swoop_cooldown = 0
-	medal_type = BOSS_MEDAL_DRAKE
-	score_type = DRAKE_SCORE
+	achievement_type = /datum/award/achievement/boss/drake_kill
+	crusher_achievement_type = /datum/award/achievement/boss/drake_crusher
+	score_achievement_type = /datum/award/score/drake_score
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()

@@ -178,12 +178,12 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 		to_chat(user, "<span class='warning'>Invalid shuttle, restarting bluespace systems...</span>")
 		return FALSE
 
-	var/datum/map_template/shuttle/new_shuttle = new /datum/map_template/shuttle()
+	// var/datum/map_template/shuttle/new_shuttle = new /datum/map_template/shuttle()
 
 	var/obj/docking_port/mobile/port = new /obj/docking_port/mobile(get_turf(target))
 	var/obj/docking_port/stationary/stationary_port = new /obj/docking_port/stationary(get_turf(target))
 	port.callTime = 50
-	port.dir = 1	//Point away from space.
+	port.dir = NORTH	//Point away from space.
 	port.id = "custom_[GLOB.custom_shuttle_count]"
 	linkedShuttleId = port.id
 	port.ignitionTime = 25
@@ -228,15 +228,14 @@ GLOBAL_LIST_EMPTY(custom_shuttle_machines)		//Machines that require updating (He
 			curT.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
 			port.shuttle_areas[cur_area] = TRUE
 
-	port.linkup(new_shuttle, stationary_port)
+	port.register() // register does the same thing on the old linkup
+	port.linkup(stationary_port)
 
 	port.movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	port.initiate_docking(stationary_port)
 
 	port.mode = SHUTTLE_IDLE
 	port.timer = 0
-
-	port.register()
 
 	icon_state = "rsd_empty"
 

@@ -872,20 +872,18 @@
 /turf/closed/mineral/strong/gets_drilled(mob/user)
 	if(!ishuman(user))
 		return // see attackby
-	/*
 	var/mob/living/carbon/human/H = user
-	if(!(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
-		return
-	*/
+	// if(!(H.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER))
+	// 	return
 	drop_ores()
-//	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
+	H.client.give_award(/datum/award/achievement/skill/legendary_miner, H)
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-//	H.mind.adjust_experience(/datum/skill/mining, 100) //yay!
+	// H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))
