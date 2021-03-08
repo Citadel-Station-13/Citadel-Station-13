@@ -84,6 +84,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/respawn_character,
 	/client/proc/admin_cmd_respawn_return_to_lobby,		//CIT
 	/client/proc/admin_cmd_remove_ghost_respawn_timer,	//CIT
+	/client/proc/addbunkerbypass,		//CIT
+	/client/proc/revokebunkerbypass,	//CIT
 	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -138,8 +140,6 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
-	/client/proc/addbunkerbypass,		//CIT
-	/client/proc/revokebunkerbypass,	//CIT
 	// /client/proc/toggle_interviews,
 	/client/proc/toggle_hub,
 	/client/proc/toggle_cdn

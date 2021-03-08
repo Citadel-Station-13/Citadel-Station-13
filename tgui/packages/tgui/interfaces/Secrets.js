@@ -131,7 +131,7 @@ const HelpfulTab = (props, context) => {
             icon="robot"
             lineHeight={lineHeightNormal}
             fluid
-            content="List laws"
+            content="List law changes"
             onClick={() => act("list_lawchanges")} />
         </Flex.Item>
       </Flex>

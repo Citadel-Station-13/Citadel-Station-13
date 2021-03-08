@@ -263,28 +263,28 @@
 	credit_cost = 10000
 	// can_be_bought = FALSE
 
-/datum/map_template/shuttle/emergency/arena
-	suffix = "arena"
-	name = "The Arena"
-	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
-	admin_notes = "RIP AND TEAR."
-	credit_cost = 10000
-	/// Whether the arena z-level has been created
-	var/arena_loaded = FALSE
+// /datum/map_template/shuttle/emergency/arena
+// 	suffix = "arena"
+// 	name = "The Arena"
+// 	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
+// 	admin_notes = "RIP AND TEAR."
+// 	credit_cost = 10000
+// 	/// Whether the arena z-level has been created
+// 	var/arena_loaded = FALSE
 
-/datum/map_template/shuttle/emergency/arena/prerequisites_met()
-	return SSshuttle.shuttle_purchase_requirements_met["bubblegum"]
+// /datum/map_template/shuttle/emergency/arena/prerequisites_met()
+// 	return SSshuttle.shuttle_purchase_requirements_met["bubblegum"]
 
-/datum/map_template/shuttle/emergency/arena/post_load(obj/docking_port/mobile/M)
-	. = ..()
-	if(!arena_loaded)
-		arena_loaded = TRUE
-		var/datum/map_template/arena/arena_template = new()
-		arena_template.load_new_z()
+// /datum/map_template/shuttle/emergency/arena/post_load(obj/docking_port/mobile/M)
+// 	. = ..()
+// 	if(!arena_loaded)
+// 		arena_loaded = TRUE
+// 		var/datum/map_template/arena/arena_template = new()
+// 		arena_template.load_new_z()
 
-/datum/map_template/arena
-	name = "The Arena"
-	mappath = "_maps/templates/the_arena.dmm"
+// /datum/map_template/arena
+// 	name = "The Arena"
+// 	mappath = "_maps/templates/the_arena.dmm"
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
