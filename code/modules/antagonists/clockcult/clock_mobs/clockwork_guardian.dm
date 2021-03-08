@@ -1,14 +1,14 @@
 //Clockwork guardian: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
 /mob/living/simple_animal/hostile/clockwork/guardian
 	name = "clockwork guardian"
-	desc = "A stalwart apparition of a soldier, blazing with magenta flames. It's armed with a gladius and shield and stands ready by its master."
-	icon_state = "clockwork_marauder"
+	desc = "A slow, armored clockwork machine, blazing with magenta flames. It's armed with a gladius and shield, and stands ready by its master."
+	icon_state = "clockwork_guardian"
 	health = 300
 	maxHealth = 300
 	speed = 1
 	obj_damage = 40
-	melee_damage_lower = 12
-	melee_damage_upper = 12
+	melee_damage_lower = 20//ranged attacks are the way to go for fighting these
+	melee_damage_upper = 20
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'

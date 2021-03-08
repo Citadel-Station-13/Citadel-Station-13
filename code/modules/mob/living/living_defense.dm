@@ -514,7 +514,7 @@
 /mob/living/ratvar_act()
 	if(status_flags & GODMODE)
 		return
-	if(is_servant_of_ratvar(src))
+	if(stat != DEAD && !is_servant_of_ratvar(src))
 		return
 	if (is_eligible_servant(src))
 		add_servant_of_ratvar(src)
@@ -525,8 +525,10 @@
 		adjustFireLoss(35)
 		IgniteMob()
 	if(iscultist(src))
-		to_chat(src, "<span class='ratvar'>\"[text2ratvar("DIE, BLOODSLAVE!")]\"</span>")
-		dust()
+		to_chat(src, "<span class='userdanger'>You resist Ratvar's influence... but not all of it! <i>Run!</i></span>")
+		adjustFireLoss(35)
+		if(src && reagents)
+			reagents.add_reagent(/datum/reagent/fuel/holyoil, 5)
 		return FALSE
 
 

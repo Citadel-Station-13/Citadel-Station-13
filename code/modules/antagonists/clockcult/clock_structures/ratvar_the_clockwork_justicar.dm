@@ -158,12 +158,11 @@
 	sleep(50)
 	priority_announce("Massive energy surge detected. Closest matching threat: Incoming supernova. All crew are advised to evacuate NAN lightyears away from blast zone","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 	sleep(300)
-	priority_announce("Gravitational anomalies detected on the station. Th$%e %o a& ad$&%al d%&-BZZZZZT.","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce1.ogg')
+	priority_announce("Gravitational anomalies detected on the station. [Gibberish("There is no additional dat", 100)]-BZZZZZT.","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce1.ogg')
 	sleep(80)
 	sound_to_playing_players(sound('sound/magic/clockwork/ratvar_announce2.ogg'))
 	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!\"</font></span>")
 	sleep(50)
-	set_security_level("delta")
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.lockdown = TRUE
 	sleep(250)
@@ -182,5 +181,5 @@
 			var/mob/living/L = M
 			L.fire_stacks = INFINITY
 			L.IgniteMob()
-		sleep(50)
+	sleep(50)
 	SSticker.force_ending = 1

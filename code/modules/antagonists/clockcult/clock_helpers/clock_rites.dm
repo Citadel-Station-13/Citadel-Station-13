@@ -232,9 +232,11 @@
 	. = ..()
 	if(!.)
 		return FALSE
+	if(isclockworkgolem(target))
+		return FALSE
 	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the new frame's eyes glowing in a brilliant yellow!</span>")
 	var/mob/living/silicon/robot/R = target.Robotize()
-	R.cell = new /obj/item/stock_parts/cell/upgraded/plus(R)
+	R.cell = new /obj/item/stock_parts/cell/super(R)//takes one to use the rite to begin with
 	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
 
 /datum/clockwork_rite/golem_transform

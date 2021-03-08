@@ -18,7 +18,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 1
+	sort_priority = 2
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
@@ -72,7 +72,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 2
+	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
 	requires_full_power = TRUE
@@ -112,7 +112,7 @@
 	usage_tip = "Guardians are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 5
+	sort_priority = 6
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
 	for(var/mob/living/simple_animal/hostile/clockwork/guardian/M in GLOB.all_clockwork_mobs)
@@ -171,7 +171,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a clockwork marauder, used for frontline combat."
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
@@ -223,7 +223,7 @@
 	object_path = /obj/mecha/combat/neovgre
 	tier = SCRIPTURE_APPLICATION
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 7
+	sort_priority = 8
 	creator_message = "<span class='brass'>Neovgre, the Anima Bulwark towers over you... your enemies reckoning has come.</span>"
 
 /datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()
