@@ -38,9 +38,6 @@
 /obj/screen/plane_master/proc/shadow(_size, _offset = 0, _x = 0, _y = 0, _color = "#04080FAA")
 	filters += filter(type = "drop_shadow", x = _x, y = _y, color = _color, size = _size, offset = _offset)
 
-/obj/screen/plane_master/proc/clear_filters()
-	filters = list()
-
 ///Contains just the floor
 /obj/screen/plane_master/floor
 	name = "floor plane master"
