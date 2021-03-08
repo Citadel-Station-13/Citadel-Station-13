@@ -1,0 +1,4 @@
+author: "LetterN"
+delete-after: True
+changes: 
+  - refactor: "tg hardsync, mostly contains tgui"
