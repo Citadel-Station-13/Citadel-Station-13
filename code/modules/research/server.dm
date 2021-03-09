@@ -3,6 +3,9 @@
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
+	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
+	circuit = /obj/item/circuitboard/machine/rdserver
+
 	var/datum/techweb/stored_research
 	var/heat_health = 100
 	//Code for point mining here.
@@ -15,14 +18,11 @@
 	var/temp_tolerance_low = 0
 	var/temp_tolerance_high = T20C
 	var/temp_penalty_coefficient = 0.5	//1 = -1 points per degree above high tolerance. 0.5 = -0.5 points per degree above high tolerance.
-	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
 /obj/machinery/rnd/server/Initialize()
 	. = ..()
 	SSresearch.servers |= src
 	stored_research = SSresearch.science_tech
-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
-	B.apply_default_parts(src)
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
