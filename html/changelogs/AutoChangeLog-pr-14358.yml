@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "The femur breaker now actually breaks legs by applying a compound fracture."
