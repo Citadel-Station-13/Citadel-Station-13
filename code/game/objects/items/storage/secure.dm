@@ -164,11 +164,15 @@
 /obj/item/storage/secure/briefcase/hos/mws_pack_hos/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/mws(src)
 	new /obj/item/ammo_box/magazine/mws_mag(src)
+	new /obj/item/ammo_box/magazine/mws_mag(src)
 	new /obj/item/ammo_casing/mws_batt/lethal(src)
 	new /obj/item/ammo_casing/mws_batt/lethal(src)
+	new /obj/item/ammo_casing/mws_batt/lethal(src)
+	new /obj/item/ammo_casing/mws_batt/stun(src)
 	new /obj/item/ammo_casing/mws_batt/stun(src)
 	new /obj/item/ammo_casing/mws_batt/stun(src)
 	new /obj/item/ammo_casing/mws_batt/ion(src)
+	new /obj/item/ammo_casing/mws_batt/taser(src)
 
 /obj/item/storage/secure/briefcase/hos/multiphase_box
 	name = "\improper X-01 Multiphase energy gun box"

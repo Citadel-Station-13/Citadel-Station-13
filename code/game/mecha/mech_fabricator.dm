@@ -676,4 +676,3 @@
 
 /obj/machinery/mecha_part_fabricator/offstation
 	link_on_init = FALSE
-	circuit = /obj/item/circuitboard/machine/mechfab/offstation

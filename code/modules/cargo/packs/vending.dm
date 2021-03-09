@@ -79,7 +79,7 @@
 	desc = "A fun way to spend the shift. Contains unmentionable desires."
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/item/vending_refill/kink, /obj/item/circuitboard/machine/kinkmate)
+	contains = list(/obj/item/vending_refill/kink)
 	crate_name = "Kinkmate construction kit"
 
 /datum/supply_pack/vending/medical

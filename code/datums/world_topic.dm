@@ -106,8 +106,8 @@
 
 /datum/world_topic/comms_console/Run(list/input, addr)
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.overrideCooldown()
+	for(var/obj/machinery/computer/communications/console in GLOB.machines)
+		console.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
