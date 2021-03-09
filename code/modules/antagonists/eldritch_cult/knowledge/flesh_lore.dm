@@ -76,7 +76,7 @@
 
 /datum/eldritch_knowledge/flesh_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!ishuman(target))
+	if(!ishuman(target) || target == user)
 		return
 
 	if(iscarbon(target))
