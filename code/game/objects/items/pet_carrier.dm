@@ -328,6 +328,9 @@
 		REMOVE_TRAIT(occupant, TRAIT_RESISTHIGHPRESSURE, "bluespace_container_resist_high_pressure")
 		REMOVE_TRAIT(occupant, TRAIT_RESISTLOWPRESSURE, "bluespace_container_resist_low_pressure")
 	name = initial(name)
+	if(iscarbon(occupant))
+		to_chat(occupant, "You pop out of the [src], slightly dazed!")
+		occupant.Stun(5 SECONDS)
 
 /obj/item/pet_carrier/bluespace/return_air()
 	if(!occupant_gas_supply)

@@ -21,8 +21,8 @@
 
 /obj/item/paperplane/Initialize(mapload, obj/item/paper/newPaper)
 	. = ..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
+	pixel_x = initial(pixel_x) + rand(-9, 9)
+	pixel_y = initial(pixel_y) + rand(-8, 8)
 	if(newPaper)
 		internalPaper = newPaper
 		flags_1 = newPaper.flags_1
@@ -65,17 +65,18 @@
 /obj/item/paperplane/update_overlays()
 	. = ..()
 	var/list/stamped = internalPaper.stamped
-	if(stamped)
-		for(var/S in stamped)
-			. += "paperplane_[S]"
+	if(!LAZYLEN(stamped))
+		return
+	for(var/S in stamped)
+		. += "paperplane_[S]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
-	var/obj/item/paper/internal_paper_tmp = internalPaper
-	internal_paper_tmp.forceMove(loc)
-	internalPaper = null
-	qdel(src)
-	user.put_in_hands(internal_paper_tmp)
+	// We don't have to qdel the paperplane here; it shall be done once the internal paper object is moved out of src anyway.
+	if(user.Adjacent(internalPaper))
+		user.put_in_hands(internalPaper)
+	else
+		internalPaper.forceMove(loc)
 
 /obj/item/paperplane/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(burn_paper_product_attackby_check(P, user))
@@ -84,7 +85,7 @@
 		to_chat(user, "<span class='warning'>You should unfold [src] before changing it!</span>")
 		return
 
-	else if(istype(P, /obj/item/stamp)) 	//we don't randomize stamps on a paperplane
+	else if(istype(P, /obj/item/stamp)) //we don't randomize stamps on a paperplane
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 		add_fingerprint(user)
@@ -121,8 +122,8 @@
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to fold it into a paper plane.</span>"
 
-/obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+/obj/item/paper/AltClick(mob/living/user, obj/item/I)
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user), FALSE)) //, TRUE))
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src
@@ -137,5 +138,6 @@
 	if(origami_action?.active)
 		plane_type = /obj/item/paperplane/origami
 
-	I = new plane_type(user, src)
-	user.put_in_hands(I)
+	I = new plane_type(loc, src)
+	if(user.Adjacent(I))
+		user.put_in_hands(I)

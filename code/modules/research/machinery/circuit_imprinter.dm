@@ -22,12 +22,3 @@
 /obj/machinery/rnd/production/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
 	..()
-
-/obj/machinery/rnd/production/circuit_imprinter/calculate_efficiency()
-	. = ..()
-	var/obj/item/circuitboard/machine/circuit_imprinter/C = circuit
-	offstation_security_levels = C.offstation_security_levels
-
-/obj/machinery/rnd/production/circuit_imprinter/offstation
-	offstation_security_levels = FALSE
-	circuit = /obj/item/circuitboard/machine/circuit_imprinter/offstation
