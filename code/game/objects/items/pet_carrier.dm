@@ -410,7 +410,7 @@
 /obj/item/pet_carrier/bcball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(occupants.len)
-		loc.visible_message("<span class='warning'>I choose you,[occupants[1]]!</span>")
+		loc.visible_message("<span class='warning'>I choose you, [occupants[1]]!</span>")
 
 	if(reagents?.total_volume && ismob(hit_atom) && hit_atom.reagents)
 		reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
