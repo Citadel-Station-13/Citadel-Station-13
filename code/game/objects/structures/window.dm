@@ -584,6 +584,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 /obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
 
+/obj/structure/window/plasma/reinforced/BlockSuperconductivity()
+	return TRUE
+
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	icon_state = "twindow"

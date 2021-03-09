@@ -531,7 +531,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
@@ -823,7 +823,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/random
 	color = "#ffffff"
 
-/obj/item/stack/cable_coil/random/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/random/Initialize(mapload, new_amount, merge = TRUE, param_color = null)
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)
@@ -835,12 +835,13 @@ By design, d1 is the smallest direction and d2 is the highest
 	amount = null
 	icon_state = "coil2"
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
+/obj/item/stack/cable_coil/cut/Initialize(mapload, new_amount, merge = TRUE)
+	// do random amount calls BEFORE we add the mats or else the code eats shit and dies
 	if(!amount)
 		amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
+	. = ..()
 	update_icon()
 
 /obj/item/stack/cable_coil/cut/red
@@ -869,7 +870,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/cut/random
 	color = "#ffffff"
 
-/obj/item/stack/cable_coil/cut/random/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/cut/random/Initialize(mapload, new_amount, merge = TRUE, param_color = null)
 	. = ..()
 	var/list/cable_colors = GLOB.cable_colors
 	color = pick(cable_colors)

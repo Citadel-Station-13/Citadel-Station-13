@@ -193,6 +193,7 @@
 	H.physiology.burn_mod *= 0.5
 	var/datum/antagonist/heretic/ascension = H.mind.has_antag_datum(/datum/antagonist/heretic)
 	ascension.ascended = TRUE
+	H.client?.give_award(/datum/award/achievement/misc/ash_ascension, H)
 	for(var/X in trait_list)
 		ADD_TRAIT(user,X,MAGIC_TRAIT)
 	return ..()

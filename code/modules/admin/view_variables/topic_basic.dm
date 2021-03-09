@@ -47,7 +47,7 @@
 				usr.client.debug_variables(src)
 				return
 
-		#ifdef REFERENCE_TRACKING //people with debug can only access this putnam!
+		#ifdef REFERENCE_TRACKING
 		if(href_list[VV_HK_VIEW_REFERENCES])
 			var/datum/D = locate(href_list[VV_HK_TARGET])
 			if(!D)
