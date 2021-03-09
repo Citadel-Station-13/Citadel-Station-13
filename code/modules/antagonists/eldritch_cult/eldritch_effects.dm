@@ -28,8 +28,8 @@
 
 /obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I,/obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
+	if(istype(I, /obj/item/storage/book/bible) || istype(I, /obj/item/nullrod))
+		user.say("BEGONE FOUL MAGICKS!!", forced = "bible")
 		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
 		qdel(src)
 

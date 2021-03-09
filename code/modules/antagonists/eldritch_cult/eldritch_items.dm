@@ -212,7 +212,6 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
-	item_flags = EXAMINE_SKIP
 	// slightly worse than normal cult robes
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
@@ -281,7 +280,7 @@
 
 		if(DT_PROB(30,delta_time))
 			human_in_range.emote(pick("giggle","laugh"))
-			human_in_range.adjustStaminaLoss(8)
+			human_in_range.adjustStaminaLoss(6)
 
 		if(DT_PROB(25,delta_time))
 			human_in_range.Dizzy(5)
