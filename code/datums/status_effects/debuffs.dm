@@ -117,6 +117,12 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+/datum/status_effect/grouped/stasis
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	var/last_dead_time
+
 /datum/status_effect/no_combat_mode
 	id = "no_combat_mode"
 	alert_type = null
@@ -498,6 +504,16 @@
 			I.take_damage(100)
 	return ..()
 
+/datum/status_effect/eldritch/void
+	id = "void_mark"
+	effect_sprite = "emark4"
+
+/datum/status_effect/eldritch/void/on_effect()
+	var/turf/open/turfie = get_turf(owner)
+	turfie.TakeTemperature(-40)
+	owner.adjust_bodytemperature(-20)
+	return ..()
+
 /datum/status_effect/corrosion_curse
 	id = "corrosion_curse"
 	status_type = STATUS_EFFECT_REPLACE
@@ -506,7 +522,7 @@
 
 /datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
 	. = ..()
-	to_chat(owner, "<span class='danger'>Your feel your body starting to break apart...</span>")
+	to_chat(owner, "<span class='danger'>You feel your body starting to break apart...</span>")
 
 /datum/status_effect/corrosion_curse/tick()
 	. = ..()
@@ -577,7 +593,7 @@
 
 /datum/status_effect/amok/on_apply(mob/living/afflicted)
 	. = ..()
-	to_chat(owner, "<span class='boldwarning'>Your feel filled with a rage that is not your own!</span>")
+	to_chat(owner, "<span class='boldwarning'>You feel filled with a rage that is not your own!</span>")
 
 /datum/status_effect/amok/tick()
 	. = ..()

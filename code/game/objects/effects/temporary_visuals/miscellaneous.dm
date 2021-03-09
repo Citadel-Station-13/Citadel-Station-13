@@ -243,6 +243,11 @@
 	icon_state = "shieldsparkles"
 	duration = 5
 
+/obj/effect/temp_visual/voidpush
+	name = "eldritch energy"
+	icon_state = "emark4"
+	duration = 5
+
 /obj/effect/temp_visual/telekinesis
 	name = "telekinetic force"
 	icon_state = "empdisable"
