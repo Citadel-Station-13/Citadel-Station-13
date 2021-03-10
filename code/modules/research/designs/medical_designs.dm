@@ -62,6 +62,24 @@
 	build_path = /obj/item/reagent_containers/glass/beaker/meta
 	category = list("Medical Designs")
 
+/datum/design/bs_hypovial_small
+	name = "Bluespace Hypovial"
+	id = "bs_hypovial"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/iron = 1500, /datum/material/plasma = 1000, /datum/material/diamond = 100, /datum/material/bluespace = 100)
+	build_path = /obj/item/reagent_containers/glass/bottle/vial/small/bluespace
+	category = list("Medical Designs")
+
+/datum/design/bs_hypovial_large
+	name = "Bluespace Large Hypovial"
+	id = "bs_large_hypovial"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(/datum/material/iron = 3000, /datum/material/plasma = 2500, /datum/material/diamond = 200, /datum/material/bluespace = 250)
+	build_path = /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
+	category = list("Medical Designs")
+
 /datum/design/bluespacesyringe
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
@@ -94,7 +112,7 @@
 
 /datum/design/medicinalsmartdart
 	name = "Medicinal Smartdart"
-	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using its smart nanofilter technology, only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
 	id = "medicinalsmartdart"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 100, /datum/material/plastic = 100, /datum/material/iron = 100)
@@ -192,6 +210,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/hypospraykit
+	name = "Empty Hypospray Kit"
+	desc = "A plastic medical kit for storing hyposprays and hypospray accessories."
+	id = "hypokit"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 5000)
+	build_path = /obj/item/storage/hypospraykit // let's not summon new hyposprays thanks
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/blood_bag
 	name = "Empty Blood Bag"
 	desc = "A small sterilized plastic bag for blood."
@@ -203,7 +231,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bsblood_bag
-	name = "Blue Space Empty Blood Bag"
+	name = "Empty Bluespace Blood Bag"
 	desc = "A large sterilized plastic bag for blood."
 	id = "bsblood_bag"
 	build_path = /obj/item/reagent_containers/blood/bluespace
