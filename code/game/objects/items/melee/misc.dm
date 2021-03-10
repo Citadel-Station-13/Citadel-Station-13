@@ -258,7 +258,7 @@
 	var/softstun_ds = 0
 	var/stam_dmg = 30
 	var/cooldown_check = 0 // Used internally, you don't want to modify
-	var/cooldown = 13 // Default wait time until can stun again.
+	var/cooldown = 20 // Default wait time until can stun again.
 	var/stun_time_silicon = 60 // How long it stuns silicons for - 6 seconds.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
@@ -398,6 +398,7 @@
 	off_icon_state = "telebaton_0"
 	on_item_state = "nullrod"
 	force_on = 10
+	cooldown = 20
 	force_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
 	total_mass = TOTAL_MASS_NORMAL_ITEM
