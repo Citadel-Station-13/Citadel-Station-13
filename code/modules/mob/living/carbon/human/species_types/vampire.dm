@@ -53,7 +53,7 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	if(C.blood_volume < 0.75)
+	if(C.blood_volume > 0.75)
 		C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
 	else
 		C.dust(FALSE, TRUE)
