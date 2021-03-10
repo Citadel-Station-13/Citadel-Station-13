@@ -152,7 +152,7 @@
 		targets += caller
 	var/targ_len = length(targets)
 	var/smash_len = length(smashes)
-	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
+	var/number = max(targ_len * (6-(targ_len-1)) - smash_len,1)
 
 	for(var/i in 0 to number)
 		var/turf/chosen_location = get_safe_random_station_turf()

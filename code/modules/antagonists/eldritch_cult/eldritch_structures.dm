@@ -167,7 +167,7 @@
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/carbon_victim = L
-	carbon_victim.adjustStaminaLoss(80)
+	carbon_victim.adjustStaminaLoss(60)
 	carbon_victim.silent += 10
 	carbon_victim.confused += 5
 	carbon_victim.Jitter(10)
