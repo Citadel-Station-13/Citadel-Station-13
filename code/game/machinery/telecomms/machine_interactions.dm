@@ -243,9 +243,10 @@
 
 // Check if the user can use it.
 /obj/machinery/telecomms/proc/canInteract(mob/user)
-	var/get = user.get_active_held_item()
-	var/obj/item/I = get
-	if(!issilicon(user))
+	var/obj/item/I = user.get_active_held_item()
+	if(!I)
+		return FALSE
+	if(!issiliconoradminghost(user))
 		if(I.tool_behaviour == TOOL_MULTITOOL)
 			return TRUE
 	if(hasSiliconAccessInArea(user))
