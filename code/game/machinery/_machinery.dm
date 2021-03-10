@@ -361,11 +361,11 @@ Class Procs:
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		on_deconstruction()
-		if(component_parts && component_parts.len)
+		if(LAZYLEN(component_parts))
 			spawn_frame(disassembled)
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
-			component_parts.Cut()
+			LAZYCLEARLIST(component_parts)
 	qdel(src)
 
 /obj/machinery/proc/spawn_frame(disassembled)
@@ -544,8 +544,8 @@ Class Procs:
 	if (AM == occupant)
 		SEND_SIGNAL(src, COMSIG_MACHINE_EJECT_OCCUPANT, occupant)
 		occupant = null
-	if(AM == circuit)
-		LAZYREMOVE(component_parts, AM)
+	if(AM == circuit && circuit.loc != src)
+		component_parts -= AM //TODO: make the cmp part functions use lazyX
 		circuit = null
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
