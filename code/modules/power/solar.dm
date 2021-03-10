@@ -245,12 +245,10 @@
 			to_chat(user, "<span class='warning'>You need to secure the assembly before you can add glass.</span>")
 			return
 		var/obj/item/stack/sheet/S = W
-		var/obj/item/stack/sheet/G = S.change_stack(null, 2)
-		if(G)
-			glass_type = G
-			G.moveToNullspace()
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
+		if(S.use(2))
+			glass_type = W.type
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
 			else
@@ -258,7 +256,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need two sheets of glass to put them into a solar panel!</span>")
 			return
-		return 1
+		return TRUE
 
 	if(!tracker)
 		if(istype(W, /obj/item/electronics/tracker))

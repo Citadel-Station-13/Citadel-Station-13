@@ -33,14 +33,14 @@
 
 /datum/station_goal/dna_vault/get_report()
 	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
-	 We need you to construct a DNA Vault aboard your station.
+		We need you to construct a DNA Vault aboard your station.
 
-	 The DNA Vault needs to contain samples of:
-	 [animal_count] unique animal data
-	 [plant_count] unique non-standard plant data
-	 [human_count] unique sapient humanoid DNA data
+		The DNA Vault needs to contain samples of:
+		[animal_count] unique animal data
+		[plant_count] unique non-standard plant data
+		[human_count] unique sapient humanoid DNA data
 
-	 Base vault parts are available for shipping via cargo."}
+		Base vault parts are available for shipping via cargo."}
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -87,7 +87,7 @@
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
-			to_chat(user, "<span class='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
+			to_chat(user, "<span class='alert'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
 			to_chat(user, "<span class='notice'>Plant data already present in local storage.</span>")
@@ -101,10 +101,10 @@
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
-				to_chat(user, "<span class='warning'>No compatible DNA detected</span>")
+				to_chat(user, "<span class='alert'>No compatible DNA detected.</span>")
 				return
 		if(animals[target.type])
-			to_chat(user, "<span class='notice'>Animal data already present in local storage.</span>")
+			to_chat(user, "<span class='alert'>Animal data already present in local storage.</span>")
 			return
 		animals[target.type] = 1
 		to_chat(user, "<span class='notice'>Animal data added to local storage.</span>")
@@ -173,7 +173,6 @@
 		qdel(filler)
 	. = ..()
 
-
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -204,15 +203,17 @@
 	data["choiceB"] = ""
 	if(user && completed)
 		var/list/L = power_lottery[user]
-		if(L && L.len)
+		if(L?.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
 			data["choiceB"] = L[2]
 	return data
 
 /obj/machinery/dna_vault/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	switch(action)
 		if("gene")
 			upgrade(usr,params["choice"])
@@ -243,8 +244,6 @@
 		to_chat(user, "<span class='notice'>[uploaded] new datapoints uploaded.</span>")
 	else
 		return ..()
-
-
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
 	if(!(upgrade_type in power_lottery[H]))

@@ -415,7 +415,7 @@ Example config:
 			while(recent_round)
 				adjustment += repeated_mode_adjust[recent_round]
 				recent_round = SSpersistence.saved_modes.Find(name,recent_round+1,0)
-			probability *= ((100-adjustment)/100)
+			probability *= max(0,((100-adjustment)/100))
 		runnable_storytellers[S] = probability
 	return runnable_storytellers
 
@@ -449,7 +449,7 @@ Example config:
 				while(recent_round)
 					adjustment += repeated_mode_adjust[recent_round]
 					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
-				final_weight *= ((100-adjustment)/100)
+				final_weight *= max(0,((100-adjustment)/100))
 			if(Get(/datum/config_entry/flag/weigh_by_recent_chaos))
 				var/chaos_level = M.get_chaos()
 				var/exponent = Get(/datum/config_entry/number/chaos_exponent)

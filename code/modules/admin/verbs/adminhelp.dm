@@ -643,7 +643,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		CRASH("Invalid cross comms config: [server_name]")
 	world.Export("[server_url]?[list2params(message)]")
 
-
 /proc/ircadminwho()
 	var/list/message = list("Admins: ")
 	var/list/admin_keys = list()
