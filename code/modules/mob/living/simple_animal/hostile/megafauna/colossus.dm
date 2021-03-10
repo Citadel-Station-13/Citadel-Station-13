@@ -43,9 +43,10 @@ Difficulty: Very Hard
 	move_to_delay = 10
 	ranged = 1
 	pixel_x = -32
-	del_on_death = 1
-	medal_type = BOSS_MEDAL_COLOSSUS
-	score_type = COLOSSUS_SCORE
+	del_on_death = TRUE
+	achievement_type = /datum/award/achievement/boss/colossus_kill
+	crusher_achievement_type = /datum/award/achievement/boss/colossus_crusher
+	score_achievement_type = /datum/award/score/colussus_score
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
