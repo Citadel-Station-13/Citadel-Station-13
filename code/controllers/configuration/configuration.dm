@@ -453,7 +453,14 @@ Example config:
 			if(Get(/datum/config_entry/flag/weigh_by_recent_chaos))
 				var/chaos_level = M.get_chaos()
 				var/exponent = Get(/datum/config_entry/number/chaos_exponent)
-				final_weight /= (abs(chaos_level - desired_chaos_level) + 1) ** exponent
+				var/delta = chaos_level - desired_chaos_level
+				if(desired_chaos_level > 5)
+					delta = abs(min(delta, 0))
+				else if(desired_chaos_level < 5)
+					delta = max(delta, 0)
+				else
+					delta = abs(delta)
+				final_weight /= (delta + 1) ** exponent
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
