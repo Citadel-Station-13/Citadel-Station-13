@@ -53,10 +53,11 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
-	if(C.blood_volume <= (BLOOD_VOLUME_SURVIVE*C.blood_ratio))
-		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
-		C.dust()
+	if(C.blood_volume < 0.75)
+		C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
+	else
+		C.dust(FALSE, TRUE)
+
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
 		to_chat(C, "<span class='danger'>You don't belong here!</span>")
