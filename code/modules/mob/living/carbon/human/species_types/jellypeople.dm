@@ -27,6 +27,7 @@
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_JELLY
+	ass_image = 'icons/ass/assslime.png'
 
 /obj/item/organ/brain/jelly
 	name = "slime nucleus"

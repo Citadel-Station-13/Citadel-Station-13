@@ -356,7 +356,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain {
 }
 
 .deadsay {
@@ -493,6 +493,11 @@ h1.alert, h2.alert {
   font-weight: bold;
 }
 
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .greenannounce {
   color: #00ff00;
   font-weight: bold;
@@ -511,6 +516,11 @@ h1.alert, h2.alert {
 }
 
 .tinynotice {
+  color: #000099;
+  font-size: 85%;
+}
+
+.tinynoticeital {
   color: #000099;
   font-style: italic;
   font-size: 85%;
@@ -586,40 +596,40 @@ h1.alert, h2.alert {
 }
 
 .cult {
-  color: #960000;
+  color: #973e3b;
 }
 
 .cultitalic {
-  color: #960000;
+  color: #973e3b;
   font-style: italic;
 }
 
 .cultbold {
-  color: #960000;
+  color: #973e3b;
   font-style: italic;
   font-weight: bold;
 }
 
 .cultboldtalic {
-  color: #960000;
+  color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
 .cultlarge {
-  color: #960000;
+  color: #973e3b;
   font-weight: bold;
   font-size: 185%;
 }
 
 .narsie {
-  color: #960000;
+  color: #973e3b;
   font-weight: bold;
   font-size: 925%;
 }
 
 .narsiesmall {
-  color: #960000;
+  color: #973e3b;
   font-weight: bold;
   font-size: 370%;
 }
@@ -678,6 +688,7 @@ h1.alert, h2.alert {
   font-size: 185%;
 }
 
+/* compatability */
 .umbra {
   color: #5000A0;
 }
@@ -879,9 +890,14 @@ h1.alert, h2.alert {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #800000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
-  font-size: 125%;
+  font-size: 125%; /* 160% default, changed so command can scream less */
 }
 
 .small {
@@ -933,7 +949,7 @@ h1.alert, h2.alert {
   font-style: italic;
 }
 
-.spooky {
+.spooky { /* cit specific, used by jacq */
   color: #FF9100;
 }
 
@@ -966,7 +982,7 @@ h1.alert, h2.alert {
   }
 }
 
-.velvet	{
+.velvet	{ /* cit specific, used by MKU */
   color: #660015;
   font-weight: bold;
   animation: velvet 5000ms infinite;

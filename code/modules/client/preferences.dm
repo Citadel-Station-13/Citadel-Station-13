@@ -62,9 +62,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
+
+	///Runechat preference. If true, certain messages will be displayed on the map, not ust on the chat area. Boolean.
 	var/chat_on_map = TRUE
+	///Limit preference on the size of the message. Requires chat_on_map to have effect.
 	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
+	///Whether non-mob messages will be displayed, such as machine vendor announcements. Requires chat_on_map to have effect. Boolean.
 	var/see_chat_non_mob = TRUE
+	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
+	var/see_rc_emotes = TRUE
 
 	/// Custom Keybindings
 	var/list/key_bindings = list()
@@ -162,13 +168,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = FALSE
 	///Should we be in the widescreen mode set by the config?
 	var/widescreenpref = TRUE
-
 	///What size should pixels be displayed as? 0 is strech to fit
 	var/pixel_size = 0
 	///What scaling method should we use?
 	var/scaling_method = "normal"
-
 	var/uplink_spawn_loc = UPLINK_PDA
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
+	var/playtime_reward_cloak = FALSE
 
 	var/hud_toggle_flash = TRUE
 	var/hud_toggle_color = "#ffffff"
@@ -211,8 +217,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
 
+	///This var stores the amount of points the owner will get for making it out alive.
+	var/hardcore_survival_score = 0
+
+	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
+	var/hearted
+	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
+	var/hearted_until
 	/// If we have persistent scars enabled
 	var/persistent_scars = TRUE
+	///If we want to broadcast deadchat connect/disconnect messages
+	var/broadcast_login_logout = TRUE
 	/// We have 5 slots for persistent scars, if enabled we pick a random one to load (empty by default) and scars at the end of the shift if we survived as our original person
 	var/list/scars_list = list("1" = "", "2" = "", "3" = "", "4" = "", "5" = "")
 	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
@@ -1611,7 +1626,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									for(var/modified_limb in modified_limbs)
 										if(modified_limbs[modified_limb][1] == LOADOUT_LIMB_PROSTHETIC && modified_limb != limb_type)
 											number_of_prosthetics += 1
-									if(number_of_prosthetics > MAXIMUM_LOADOUT_PROSTHETICS)
+									if(number_of_prosthetics == MAXIMUM_LOADOUT_PROSTHETICS)
 										to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
 									else
 										//save the actual prosthetic data

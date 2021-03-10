@@ -1,0 +1,10 @@
+author: "Sneakyrat"
+delete-after: True
+changes: 
+  - bugfix: "Fixes precise insertion ui(when it asks you how many sheets you want to put in the mat container) so you can actually choose how much to put in and it will still work if your stack is bigger than the remaining space"
+  - bugfix: "Fixes precise insertion not working for remote mat containers"
+  - bugfix: "Fixes Protolathe/mechfab insert material animations not working"
+  - bugfix: "Fixes the material insertion animation for protolathes occurring on the circuit printer"
+  - bugfix: "Fixes the material insertion animation not actually playing when it was started"
+  - bugfix: "Fixes the material insertion animation for iron not being made"
+  - bugfix: "Fixes the material insertion animation sometimes not picking the right material for sheets that have multiple different materials in them"

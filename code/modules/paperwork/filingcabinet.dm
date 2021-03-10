@@ -1,9 +1,9 @@
 /* Filing cabinets!
  * Contains:
- *		Filing Cabinets
- *		Security Record Cabinets
- *		Medical Record Cabinets
- *		Employment Contract Cabinets
+ * Filing Cabinets
+ * Security Record Cabinets
+ * Medical Record Cabinets
+ * Employment Contract Cabinets
  */
 
 
@@ -27,7 +27,7 @@
 	desc = "A small cabinet with drawers. This one has wheels!"
 	anchored = FALSE
 
-/obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
+/obj/structure/filingcabinet/filingcabinet //not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
 
@@ -45,12 +45,12 @@
 			I.forceMove(loc)
 	qdel(src)
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
 	if(P.tool_behaviour == TOOL_WRENCH && user.a_intent != INTENT_HELP)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
-			anchored = !anchored
+			set_anchored(!anchored)
 	else if(P.w_class < WEIGHT_CLASS_NORMAL)
 		if(!user.transferItemToLoc(P, src))
 			return
@@ -79,13 +79,15 @@
 	dat += "</table></center>"
 	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
+
 /obj/structure/filingcabinet/attack_tk(mob/user)
 	if(anchored)
-		attack_self_tk(user)
-	else
-		..()
+		return attack_self_tk(user)
+	return ..()
+
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
+	// . = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
@@ -96,8 +98,9 @@
 			return
 	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
+
 /obj/structure/filingcabinet/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+	if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr), FALSE)) //, !iscyborg(usr)))
 		return
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
@@ -114,7 +117,7 @@
  * Security Record Cabinets
  */
 /obj/structure/filingcabinet/security
-	var/virgin = 1
+	var/virgin = TRUE
 
 /obj/structure/filingcabinet/security/proc/populate()
 	if(virgin)
@@ -132,22 +135,23 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "paper - '[G.fields["name"]]'"
-			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
+			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
-/obj/structure/filingcabinet/security/on_attack_hand()
+/obj/structure/filingcabinet/security/on_attack_hand(mob/user, list/modifiers)
 	populate()
-	. = ..()
+	return ..()
 
 /obj/structure/filingcabinet/security/attack_tk()
 	populate()
-	..()
+	return ..()
 
 /*
  * Medical Record Cabinets
  */
 /obj/structure/filingcabinet/medical
-	var/virgin = 1
+	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
+	var/virgin = TRUE
 
 /obj/structure/filingcabinet/medical/proc/populate()
 	if(virgin)
@@ -165,17 +169,17 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "paper - '[G.fields["name"]]'"
-			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
+			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/filingcabinet/medical/on_attack_hand()
+/obj/structure/filingcabinet/medical/on_attack_hand(mob/user, list/modifiers)
 	populate()
-	. = ..()
+	return ..()
 
 /obj/structure/filingcabinet/medical/attack_tk()
 	populate()
-	..()
+	return ..()
 
 /*
  * Employment contract Cabinets
@@ -185,6 +189,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
 	icon_state = "employmentcabinet"
+	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
 	var/virgin = TRUE
 
 /obj/structure/filingcabinet/employment/Initialize()
@@ -219,3 +224,4 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		fillCurrent()
 		virgin = FALSE
 	return ..()
+

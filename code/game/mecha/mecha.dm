@@ -133,7 +133,6 @@
 	icon_state += "-open"
 	add_radio()
 	add_cabin()
-	add_airtank()
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -149,6 +148,11 @@
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/mecha/LateInitialize()
+	. = ..()
+	add_airtank()
 
 /obj/mecha/get_cell()
 	return cell

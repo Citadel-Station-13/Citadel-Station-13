@@ -22,7 +22,7 @@
 	target_trait = ZTRAIT_STATION
 
 	immunity_type = "rad"
-	
+
 	var/radiation_intensity = 100
 
 /datum/weather/rad_storm/telegraph()
