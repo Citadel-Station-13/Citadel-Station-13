@@ -16,3 +16,7 @@
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
+	eyeblur = 5
+	slur = 0
+	knockdown = 0
+	stamina = 30

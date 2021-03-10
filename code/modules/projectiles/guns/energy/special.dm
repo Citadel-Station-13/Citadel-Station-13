@@ -110,6 +110,7 @@
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
+	overheat_time = 40
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	weapon_weight = WEAPON_HEAVY
