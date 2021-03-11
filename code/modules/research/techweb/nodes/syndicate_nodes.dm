@@ -25,6 +25,14 @@
 	prereq_ids = list("ballistic_weapons","syndicate_basic","explosive_weapons")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000) //This gives sec lethal mags/clips for guns from traitors, space, or anything in between.
 
+/datum/techweb_node/illegal_cyber_implants
+	id = "illegal_cyber_implants"
+	display_name = "Illegal Cybernetic Implants"
+	description = "Nuclear Operative grade level eye implants."
+	prereq_ids = list("combat_cyber_implants","syndicate_basic")
+	design_ids = list("ci-xray")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+
 //Helpers for debugging/balancing the techweb in its entirety!
 
 /proc/total_techweb_points()

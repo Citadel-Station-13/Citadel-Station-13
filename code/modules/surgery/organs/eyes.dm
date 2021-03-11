@@ -184,9 +184,7 @@
 	left_eye_color = "FC0"
 	right_eye_color = "FC0"
 	sight_flags = SEE_MOBS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protect = -1
-	see_in_dark = 8
 
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"

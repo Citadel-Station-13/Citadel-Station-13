@@ -39,10 +39,10 @@
 	name = "Thermal Vision"
 	desc = "The user of this genome can visually percieve the unique human thermal signature."
 	quality = POSITIVE
-	difficulty = 18
+	difficulty = 28
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	time_coeff = 2
-	instability = 25
+	instability = 71
 	var/visionflag = TRAIT_THERMAL_VISION
 
 /datum/mutation/human/thermal/on_acquiring(mob/living/carbon/human/owner)
