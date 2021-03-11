@@ -830,7 +830,7 @@
 			continue
 		living_mob.adjustBruteLoss(40)
 
-	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE)
+	do_teleport(user,targeted_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'
@@ -868,7 +868,7 @@
 			continue
 		living_mob.adjustBruteLoss(30)
 
-	playsound(user,'sound/magic/voidblink.ogg',100)
+	playsound(user,'sound/magic/voidpull.ogg',75)
 	new /obj/effect/temp_visual/voidin(user.drop_location())
 	for(var/mob/living/livies in view(7,user)-user)
 
@@ -902,9 +902,12 @@
 	var/turf/targeted_turf = get_turf(target)
 	var/turf/user_turf = get_turf(user)
 
+	new /obj/effect/temp_visual/voidswap(user.drop_location())
+	new /obj/effect/temp_visual/voidswap(targeted_turf)
+
 	if(isliving(target))
-		do_teleport(user,targeted_turf,0,TRUE,no_effects = TRUE)
-		do_teleport(target,user_turf,0,TRUE,no_effects = TRUE)
+		do_teleport(user,targeted_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
+		do_teleport(target,user_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 
 
 /obj/effect/proc_holder/spell/pointed/boogie_woogie/can_target(atom/target, mob/user, silent)
