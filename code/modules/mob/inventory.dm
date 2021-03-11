@@ -334,7 +334,9 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
-		I.dropped(src, silent)
+		on_item_dropped(I)
+		if(I.dropped(src) == ITEM_RELOCATED_BY_DROPPED)
+			return FALSE
 	return TRUE
 
 //This is a SAFE proc. Use this instead of equip_to_slot()!
