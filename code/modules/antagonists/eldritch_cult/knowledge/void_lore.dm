@@ -12,7 +12,7 @@
 /datum/eldritch_knowledge/base_void/recipe_snowflake_check(list/atoms, loc)
 	. = ..()
 	var/turf/open/turfie = loc
-	if(turfie.GetTemperature() > T0C)
+	if(turfie.GetTemperature() > T20C)
 		return FALSE
 
 /datum/eldritch_knowledge/void_grasp
