@@ -3,6 +3,7 @@
  */
 /datum/controller/subsystem/persistence
 	var/list/saved_modes = list(1,2,3)
+	var/list/saved_chaos = list(5,5,5)
 	var/list/saved_dynamic_rules = list(list(),list(),list())
 	var/list/saved_storytellers = list("foo","bar","baz")
 	var/list/average_dynamic_threat = 50
@@ -31,6 +32,14 @@
 	var/json_file = file("data/RecentModes.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_modes
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+	saved_chaos[3] = saved_chaos[2]
+	saved_chaos[2] = saved_chaos[1]
+	saved_chaos[1] = SSticker.mode.get_chaos()
+	json_file = file("data/RecentChaos.json")
+	file_data = list()
+	file_data["data"] = saved_chaos
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
@@ -105,3 +114,9 @@
 	if(!json)
 		return
 	saved_maps = json["maps"]
+
+/datum/controller/subsystem/persistence/proc/get_recent_chaos()
+	var/sum = 0
+	for(var/n in saved_chaos)
+		sum += n
+	return sum/length(saved_chaos)

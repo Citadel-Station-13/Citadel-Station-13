@@ -22,7 +22,7 @@
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC 1
 
 // signals from globally accessible objects
-/// from SSsun when the sun changes position : (azimuth)
+/// from SSsun when the sun changes position : (primary_sun, suns)
 #define COMSIG_SUN_MOVED "sun_moved"
 //////////////////////////////////////////////////////////////////
 
