@@ -1,12 +1,12 @@
 /datum/eldritch_knowledge/base_flesh
 	name = "Principle of Hunger"
-	desc = "Inducts you into the Path of Flesh. Allows you to transmute a pool of blood with an eldritch blade into a Blade of Flesh."
+	desc = "Inducts you into the Path of Flesh. Allows you to transmute a pool of blood with a spear into a Blade of Flesh."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
 	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_grasp)
-	required_atoms = list(/obj/item/melee/sickly_blade,/obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/spear,/obj/effect/decal/cleanable/blood)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
-	cost = 1
+	cost = 0
 	route = PATH_FLESH
 
 /datum/eldritch_knowledge/flesh_ghoul

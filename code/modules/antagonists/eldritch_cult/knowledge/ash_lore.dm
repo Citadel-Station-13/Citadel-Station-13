@@ -1,12 +1,12 @@
 /datum/eldritch_knowledge/base_ash
 	name = "Nightwatcher's Secret"
-	desc = "Inducts you into the Path of Ash. Allows you to transmute a match with an eldritch blade into an ashen blade."
+	desc = "Inducts you into the Path of Ash. Allows you to transmute a match with a spear into an ashen blade."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
-	required_atoms = list(/obj/item/melee/sickly_blade,/obj/item/match)
+	required_atoms = list(/obj/item/spear,/obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	cost = 1
+	cost = 0
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/spell/ashen_shift

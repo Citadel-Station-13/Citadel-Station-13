@@ -317,15 +317,6 @@
 	result_atoms = list(/obj/item/forbidden_book)
 	route = "Start"
 
-/datum/eldritch_knowledge/eldritch_blade
-	name = "Eldritch Blade"
-	desc = "Allows you to create a sickly, eldritch blade by transmuting a spear atop a transmutation rune."
-	gain_text = "The first step starts with sacrifice."
-	cost = 0
-	required_atoms = list(/obj/item/spear)
-	result_atoms = list(/obj/item/melee/sickly_blade)
-	route = "Start"
-
 /datum/eldritch_knowledge/spell/silence
 	name = "Silence"
 	desc = "Allows you to use the power of the Mansus to force an individual's tongue to be held down for up to twenty seconds. They'll notice quickly, however."
