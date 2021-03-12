@@ -17,8 +17,8 @@
 
 /datum/uplink_item/dangerous/tshotgun
 	name = "Concealable Combat Chotgun"
-	desc = "Teleports in a 3+1 shells, 12 gauge shotgun made by Precision Dynamics. Can fit in your bag without any modification and does not require manual pumping. \
-			Comes loaded with three rounds of buckshot, pump to chamber a shell before using!"
+	desc = "A 3+1 shells, 12 gauge shotgun made by Precision Dynamics. Can fit in your bag, belt or back without any modification and does not require manual pumping. \
+			Comes loaded with three rounds of buckshot, rack the slide to chamber a shell before using!"
 	item = /obj/item/gun/ballistic/shotgun/automatic/combat/traitor
 	cost = 10
 	player_minimum = 15
