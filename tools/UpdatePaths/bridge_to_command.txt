@@ -1,0 +1,17 @@
+/area/bridge : /area/command/bridge
+/area/bridge/meeting_room : /area/command/meeting_room
+/area/bridge/meeting_room/council : /area/command/meeting_room/council
+/area/bridge/showroom/corporate : /area/command/corporate_showroom
+/area/service/heads/captain : /area/command/heads_quarters/captain
+/area/service/heads/captain/private : /area/command/heads_quarters/captain/private
+/area/service/heads/chief : /area/command/heads_quarters/ce
+/area/service/heads/chief/private : /area/command/heads_quarters/ce/private
+/area/service/heads/cmo : /area/command/heads_quarters/cmo
+/area/service/heads/cmo/private : /area/command/heads_quarters/cmo/private
+/area/service/heads/hop : /area/command/heads_quarters/hop
+/area/service/heads/hop/private : /area/command/heads_quarters/hop/private
+/area/service/heads/hos : /area/command/heads_quarters/hos
+/area/service/heads/hos/private : /area/command/heads_quarters/hos/private
+/area/service/heads/hor : /area/command/heads_quarters/rd
+/area/crew_quarters/heads/hor/private : /area/command/heads_quarters/rd/private
+

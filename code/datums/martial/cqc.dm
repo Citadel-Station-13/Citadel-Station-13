@@ -175,7 +175,7 @@
 		return TRUE
 	if(CHECK_MOBILITY(D, MOBILITY_MOVE) || !restraining)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-		if(damage >= stunthreshold)	
+		if(damage >= stunthreshold)
 			I = D.get_active_held_item()
 			D.visible_message("<span class='warning'>[A] strikes [D]'s jaw with their hand!</span>", \
 							"<span class='userdanger'>[A] strikes your jaw, disorienting you!</span>")
@@ -222,9 +222,10 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
+	var/list/valid_areas = list(/area/service/kitchen)
 
 ///Prevents use if the cook is not in the kitchen.
-/datum/martial_art/cqc/under_siege/can_use(mob/living/carbon/human/H) //this is used to make chef CQC only work in kitchen
-	if(!istype(get_area(H), /area/crew_quarters/kitchen))
+/datum/martial_art/cqc/under_siege/can_use(mob/living/owner) //this is used to make chef CQC only work in kitchen
+	if(!is_type_in_list(get_area(owner), valid_areas))
 		return FALSE
 	return ..()
