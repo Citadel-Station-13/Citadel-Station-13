@@ -87,10 +87,10 @@
 	saved_modes = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadRecentChaos()
-	json_file = file("data/RecentChaos.json")
+	var/json_file = file("data/RecentChaos.json")
 	if(!fexists(json_file))
 		return
-	json = json_decode(file2text(json_file))
+	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
 	saved_chaos = json["data"]
