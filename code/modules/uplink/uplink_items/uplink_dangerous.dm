@@ -15,6 +15,16 @@
 	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/dangerous/tshotgun
+	name = "Concealable Combat Chotgun"
+	desc = "Teleports in a 3+1 shells, 12 gauge shotgun made by Precision Dynamics. Can fit in your bag without any modification and does not require manual pumping. \
+			Comes loaded with three rounds of buckshot, pump to chamber a shell before using!"
+	item = /obj/item/gun/ballistic/shotgun/automatic/combat/traitor
+	cost = 10
+	player_minimum = 15
+	surplus = 70
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver Kit"
 	desc = "A sleek box containing a brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers, and an extra speedloader."

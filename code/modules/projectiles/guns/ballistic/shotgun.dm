@@ -237,6 +237,17 @@
 						"Slick" = "cshotgun_slick"
 						)
 
+///////////TRAITOR SHOTGUN/////////////
+/obj/item/gun/ballistic/shotgun/automatic/combat/traitor
+	name = "PD SSG-12"
+	desc = "A Precision Dynamics Short Shotgun chambered in 12 gauge. Easily concealable, 3+1 shots."
+	icon_state = "riotshotgun-sawn"
+	fire_delay = 8 //about as long as it takes for a normal pump shotgun to fire despite the autopump
+	w_class = WEIGHT_CLASS_NORMAL
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal/traitor
+	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_BELT
+	unique_reskin = null
+
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "warden's combat shotgun"
 	desc = "A modified version of the semi automatic combat shotgun with a collapsible stock. For close encounters."
