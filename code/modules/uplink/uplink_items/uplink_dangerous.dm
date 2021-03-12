@@ -16,7 +16,7 @@
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/tshotgun
-	name = "Concealable Combat Chotgun"
+	name = "Concealable Combat Shotgun"
 	desc = "A 3+1 shells, 12 gauge shotgun made by Precision Dynamics. Can fit in your bag, belt or back without any modification and does not require manual pumping. \
 			Comes loaded with three rounds of buckshot, rack the slide to chamber a shell before using!"
 	item = /obj/item/gun/ballistic/shotgun/automatic/combat/traitor
