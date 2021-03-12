@@ -511,8 +511,24 @@
 /datum/status_effect/eldritch/void/on_effect()
 	var/turf/open/turfie = get_turf(owner)
 	turfie.TakeTemperature(-40)
-	owner.adjust_bodytemperature(-20)
+	owner.adjust_bodytemperature(-60)
 	return ..()
+
+/datum/status_effect/domain
+	id = "domain"
+	alert_type = null
+	var/movespeed_mod = /datum/movespeed_modifier/status_effect/domain
+
+/datum/status_effect/domain/on_creation(mob/living/new_owner, set_duration)
+	if(isliving(owner))
+		var/mob/living/carbon/C = owner
+		C.add_movespeed_modifier(movespeed_mod)
+
+/datum/status_effect/electrode/on_remove()
+	if(isliving(owner))
+		var/mob/living/carbon/C = owner
+		C.remove_movespeed_modifier(movespeed_mod)
+	. = ..()
 
 /datum/status_effect/corrosion_curse
 	id = "corrosion_curse"

@@ -127,8 +127,6 @@
 
 /datum/eldritch_knowledge/void_blade_upgrade/on_ranged_attack_eldritch_blade(atom/target, mob/user, click_parameters)
 	. = ..()
-	if(!ishuman(target) || !iscarbon(user))
-		return
 	var/mob/living/carbon/carbon_human = user
 	var/mob/living/carbon/human/human_target = target
 	var/datum/status_effect/eldritch/effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh) || human_target.has_status_effect(/datum/status_effect/eldritch/void)
@@ -137,7 +135,7 @@
 	var/dir = angle2dir(dir2angle(get_dir(user,human_target))+180)
 	carbon_human.forceMove(get_step(human_target,dir))
 	var/obj/item/melee/sickly_blade/blade = carbon_human.get_active_held_item()
-	blade.melee_attack_chain(carbon_human,human_target)
+	blade.melee_attack_chain(carbon_human,human_target,attackchain_flags = ATTACK_IGNORE_CLICKDELAY)
 
 /datum/eldritch_knowledge/spell/voidpull
 	name = "Void Pull"
@@ -154,15 +152,15 @@
 	desc = "With the clap of your hands, you can swap your position with someone within your vision."
 	cost = 2
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/boogie_woogie
-	next_knowledge = list(/datum/eldritch_knowledge/spell/infinity)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/domain_expansion)
 	route = PATH_VOID
 
-/datum/eldritch_knowledge/spell/infinity
-	name = "Void's Push"
-	gain_text = "With the snap of my fingers, they do as I please."
-	desc = "With the snap of your fingers, send your enemies away."
+/datum/eldritch_knowledge/spell/domain_expansion
+	name = "Infinite Void"
+	gain_text = "This world will be my stage, and nothing will be out of my reach."
+	desc = "Gain the ability to mark a 7x7 area as your domain after a short delay. Creatures in your domain are slowed and branded with a void mark, allowing you to quickly teleport to them and slash them, further inhibiting their ability to move."
 	cost = 2
-	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch
+	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/domain_expansion
 	next_knowledge = list(/datum/eldritch_knowledge/final/void_final)
 	route = PATH_VOID
 
@@ -180,6 +178,7 @@
 
 /datum/eldritch_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	var/mob/living/carbon/human/H = user
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch)
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
 	ADD_TRAIT(H, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)

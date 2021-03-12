@@ -250,7 +250,8 @@
 		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
 		var/datum/wound/slash/critical/crit_wound = new
 		crit_wound.apply_wound(bodypart)
-		target.adjustFireLoss(20)
+		crit_wound.apply_wound(bodypart)
+		target.adjustBruteLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
 
 /obj/effect/proc_holder/spell/pointed/cleave/can_target(atom/target, mob/user, silent)
@@ -897,7 +898,7 @@
 /obj/effect/proc_holder/spell/pointed/boogie_woogie/cast(list/targets, mob/user)
 	. = ..()
 	var/target = targets[1]
-	playsound(user, 'sound/magic/voidclap.ogg', 75, TRUE)
+	user.emote("clap1")
 	playsound(user, 'sound/magic/voidblink.ogg', 75, TRUE)
 	var/turf/targeted_turf = get_turf(target)
 	var/turf/user_turf = get_turf(user)
@@ -936,3 +937,31 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/eldritch/cast(list/targets,mob/user = usr)
 	user.emote("snap")
 	..(targets, user, 60)
+
+/obj/effect/proc_holder/spell/aoe_turf/domain_expansion
+	name = "Infinite Void"
+	desc = "Create a domain that will slow down and mark all opponents with a void mark."
+	charge_max = 1200
+	clothes_req = FALSE
+	invocation = "RYO'IKI TEN'KAI"
+	invocation_type = "none"
+	range = 0
+	action_icon_state = "time"
+	action_background_icon_state = "bg_ecult"
+	var/timestop_range = 7
+	var/timestop_duration = 200
+	var/static/mutable_appearance/halo
+	var/sound/Snd // shamelessly ripped from lightning.
+
+/obj/effect/proc_holder/spell/aoe_turf/domain_expansion/cast(list/targets, mob/user = usr)
+	user.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/domain)
+	Snd = new/sound('sound/magic/clockwork/ratvar_attack.ogg',channel = 7)
+	halo = halo || mutable_appearance('icons/effects/effects.dmi', "shield-flash", EFFECTS_LAYER)
+	user.add_overlay(halo)
+	playsound(get_turf(user), Snd, 50, 0)
+	if(do_mob(user,user,50,1))
+		playsound(user, 'sound/magic/domain.ogg', 125, TRUE)
+		user.say("DOM'ENO ISPLET'IMAS")
+		user.emote("clap1")
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/domain)
+		new /obj/effect/domain_expansion(get_turf(user), timestop_range, timestop_duration, list(user))
