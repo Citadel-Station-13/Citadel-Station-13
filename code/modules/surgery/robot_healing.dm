@@ -14,8 +14,8 @@
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0 //You can do this on anyone, but it won't really be useful on people without augments.
 	ignore_clothes = TRUE
-	var/antispam = FALSE
 	var/healing_step_type
+	var/antispam = FALSE
 
 /datum/surgery/robot_healing/basic
 	name = "Repair Robotic Limbs (Basic)"
@@ -33,7 +33,7 @@
 /datum/surgery/robot_healing/upgraded/femto
 	name = "Repair Robotic Limbs (Exp.)"
 	requires_tech = TRUE
-	replaced_by = /datum/surgery/robot_healing/upgraded/femto
+	replaced_by = null // as good as it gets
 	healing_step_type = /datum/surgery_step/robot_heal/upgraded/femto
 	desc = "A surgical procedure that provides experimental repairs and maintenance to a patient's robotic limbs. Heals considerably more when the patient is severely injured."
 
@@ -55,22 +55,17 @@
 	var/healsburn = FALSE
 	var/brutehealing = 0
 	var/burnhealing = 0
-	var/missinghpbonus = 0 //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
+	var/missinghpbonus = 0 //heals an extra point of damage per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
 
 /datum/surgery_step/robot_heal/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER && !tool.tool_use_check(user, 1))
 		return FALSE
 	return TRUE
 
-/datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
-	var/possible = FALSE
+/datum/surgery/robot_healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool) // hey delta? why is the check for this all the way down here
 	for(var/obj/item/bodypart/B in target.bodyparts)
 		if(B.is_robotic_limb())
-			possible = TRUE
-			break
-	if(!possible)
-		return FALSE
-	return TRUE
+			return ..()
 
 /datum/surgery_step/robot_heal/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/woundtype
