@@ -41,10 +41,10 @@
 		control = null
 
 ///Tell the controller to turn the solar panels
-/obj/machinery/power/tracker/proc/sun_update(datum/source, azimuth)
-	setDir(angle2dir(azimuth))
+/obj/machinery/power/tracker/proc/sun_update(datum/source, datum/sun/primary_sun, list/datum/sun/suns)
+	setDir(angle2dir(primary_sun.azimuth))
 	if(control && control.track == SOLAR_TRACK_AUTO)
-		control.set_panels(azimuth)
+		control.set_panels(primary_sun.azimuth)
 
 /obj/machinery/power/tracker/proc/Make(obj/item/solar_assembly/S)
 	if(!S)

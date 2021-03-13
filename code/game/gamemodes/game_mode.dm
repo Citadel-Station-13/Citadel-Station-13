@@ -17,6 +17,7 @@
 	var/config_tag = null
 	var/votable = 1
 	var/probability = 0
+	var/chaos = 5 // 0-9, used for weighting round-to-round
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
@@ -623,3 +624,10 @@
 /// Mode specific info for ghost game_info
 /datum/game_mode/proc/ghost_info()
 	return
+
+/datum/game_mode/proc/get_chaos()
+	var/chaos_levels = CONFIG_GET(keyed_list/chaos_level)
+	if(config_tag in chaos_levels)
+		return chaos_levels[config_tag]
+	else
+		return chaos
