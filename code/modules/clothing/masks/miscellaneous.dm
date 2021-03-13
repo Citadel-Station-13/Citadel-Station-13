@@ -78,10 +78,13 @@
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 /obj/item/clothing/mask/joy
-	name = "joy mask"
-	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
+	name = "Emotional Mask"
+	desc = "Express your happiness or hide your sorrows with this modular cutout."
 	icon_state = "joy"
 	mutantrace_variation = STYLE_MUZZLE
+	unique_reskin = list("Joy" = "joy",
+						"Flushed" = "flushed"
+						)
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
