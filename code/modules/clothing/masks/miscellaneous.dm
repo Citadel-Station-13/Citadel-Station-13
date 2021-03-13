@@ -83,7 +83,9 @@
 	icon_state = "joy"
 	mutantrace_variation = STYLE_MUZZLE
 	unique_reskin = list("Joy" = "joy",
-						"Flushed" = "flushed"
+						"Flushed" = "flushed",
+						"Pensive" = "pensive",
+						"Angry" = "angry"
 						)
 
 /obj/item/clothing/mask/pig
