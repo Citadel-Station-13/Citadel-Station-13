@@ -1,6 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - rscadd: "Re-adds the Clown Car to the clown uplink"
-  - balance: "15 >16 TC cost"
-  - balance: "bonks on external airlocks"

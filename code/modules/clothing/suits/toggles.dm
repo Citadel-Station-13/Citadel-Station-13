@@ -58,6 +58,12 @@
 	RemoveHood()
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
+	if(!hood)
+		to_chat(loc, "<span class='warning'>[src] seems to be missing its hood..</span>")
+		return
+	if(atom_colours)
+		hood.atom_colours = atom_colours.Copy()
+		hood.update_atom_colour()
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
@@ -104,6 +110,9 @@
 	suit_toggle(user)
 	return TRUE
 
+/obj/item/clothing/suit/toggle/proc/on_toggle(mob/user) // override this, not suit_toggle, which does checks
+	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+
 /obj/item/clothing/suit/toggle/ui_action_click()
 	suit_toggle()
 
@@ -113,7 +122,7 @@
 	if(!can_use(usr))
 		return 0
 
-	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+	on_toggle(usr)
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = FALSE
@@ -191,7 +200,11 @@
 	if(!helmettype)
 		return
 	if(!helmet)
+		to_chat(H, "<span class='warning'>[src] seems to be missing its helmet..</span>")
 		return
+	if(atom_colours)
+		helmet.atom_colours = atom_colours.Copy()
+		helmet.update_atom_colour()
 	if(!suittoggled)
 		if(ishuman(src.loc))
 			if(H.wear_suit != src)

@@ -36,15 +36,15 @@
 	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
 		qdel(src)
 
-/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
-	handle_vehicle_offsets()
+/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force)
+	handle_vehicle_offsets(M.buckled?.dir)
 
-/datum/component/riding/proc/handle_vehicle_layer()
+/datum/component/riding/proc/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent
 	var/static/list/defaults = list(TEXT_NORTH = OBJ_LAYER, TEXT_SOUTH = ABOVE_MOB_LAYER, TEXT_EAST = ABOVE_MOB_LAYER, TEXT_WEST = ABOVE_MOB_LAYER)
-	. = defaults["[AM.dir]"]
-	if(directional_vehicle_layers["[AM.dir]"])
-		. = directional_vehicle_layers["[AM.dir]"]
+	. = defaults["[dir]"]
+	if(directional_vehicle_layers["[dir]"])
+		. = directional_vehicle_layers["[dir]"]
 	if(isnull(.))	//you can set it to null to not change it.
 		. = AM.layer
 	AM.layer = .
@@ -52,12 +52,17 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-/datum/component/riding/proc/vehicle_moved(datum/source)
+/datum/component/riding/proc/vehicle_moved(datum/source, oldLoc, dir)
+	SIGNAL_HANDLER
+
 	var/atom/movable/AM = parent
+	if (isnull(dir))
+		dir = AM.dir
+	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay), FALSE)
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
-	handle_vehicle_offsets()
-	handle_vehicle_layer()
+	handle_vehicle_offsets(dir)
+	handle_vehicle_layer(dir)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
@@ -74,9 +79,9 @@
 /datum/component/riding/proc/additional_offset_checks()
 	return TRUE
 
-/datum/component/riding/proc/handle_vehicle_offsets()
+/datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
-	var/AM_dir = "[AM.dir]"
+	var/AM_dir = "[dir]"
 	var/passindex = 0
 	if(AM.has_buckled_mobs())
 		for(var/m in AM.buckled_mobs)
@@ -177,8 +182,8 @@
 		else
 			last_move_diagonal = FALSE
 
-		handle_vehicle_offsets()
-		handle_vehicle_layer()
+		handle_vehicle_offsets(direction)
+		handle_vehicle_layer(direction)
 	else
 		to_chat(user, "<span class='notice'>You'll need the keys in one of your hands to [drive_verb] [AM].</span>")
 

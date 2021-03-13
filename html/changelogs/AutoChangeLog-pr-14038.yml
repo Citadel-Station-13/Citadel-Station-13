@@ -1,9 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "The nature interaction shuttle with the monkeys now has tiny fans on the airlocks in, because that's apparently a feature that was missing."
-  - rscadd: "More bags have been added to department vendors."
-  - balance: "Every roundstart species (and also ash walkers) now has flesh and bone that can be wounded."
-  - balance: "Recipes for sutures, regen mesh, and sterilized gauze have been adjusted to be easier, mostly."
-  - balance: "Sterilized gauze is better at absorbing blood and being a splint."
-  - bugfix: "Energy sabres now have an off inhand."

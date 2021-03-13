@@ -21,7 +21,7 @@
 	. = ..()
 	SSshuttle.beacons |= src
 
-obj/machinery/spaceship_navigation_beacon/emp_act()
+/obj/machinery/spaceship_navigation_beacon/emp_act()
 	locked = TRUE
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
@@ -39,7 +39,9 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	. = ..()
 	update_icon()
 
-/obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/I)
+	if(!I.tool_behaviour == TOOL_MULTITOOL)
+		return
 	if(panel_open)
 		var/new_name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text]"
 		if(new_name && Adjacent(user))

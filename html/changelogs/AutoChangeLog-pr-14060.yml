@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscdel: "Apparently, shrink rays were buyable again, despite a PR having been made a while ago specifically for removing shrink rays. They're gone again."

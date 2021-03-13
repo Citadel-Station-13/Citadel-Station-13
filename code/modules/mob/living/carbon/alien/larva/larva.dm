@@ -11,6 +11,8 @@
 	maxHealth = 25
 	health = 25
 
+	can_ventcrawl = TRUE
+
 	var/amount_grown = 0
 	var/max_grown = 100
 	var/time_of_birth

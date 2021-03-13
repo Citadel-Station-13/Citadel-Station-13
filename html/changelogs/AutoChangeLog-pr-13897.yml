@@ -1,5 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - bugfix: "Allows Energy Bola to be caught"
-  - balance: "This also allows them to be dropped/picked up."

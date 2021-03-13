@@ -14,6 +14,10 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/icemoon/surface/outdoors)
+"l" = (
+/obj/item/tcg_card/special/morph,
+/turf/open/floor/plating/beach/sand,
+/area/icemoon/surface/outdoors)
 "I" = (
 /turf/closed/indestructible/fakeglass,
 /area/icemoon/surface/outdoors)
@@ -72,7 +76,7 @@ L
 c
 c
 c
-U
+l
 U
 a
 b

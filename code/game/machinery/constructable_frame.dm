@@ -21,6 +21,11 @@
 			circuit = null
 	qdel(src)
 
+//callback proc used on stacks use_tool to stop unnecessary amounts being wasted from spam clicking.
+/obj/structure/frame/proc/check_state(target_state)
+	if(state == target_state)
+		return TRUE
+	return FALSE
 
 /obj/structure/frame/machine
 	name = "machine frame"
@@ -84,34 +89,32 @@
 				if(!P.tool_start_check(user, amount=5))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
-				if(P.use_tool(src, user, 20, volume=50, amount=5))
+				if(P.use_tool(src, user, 20, volume=50, amount=5, extra_checks = CALLBACK(src, .proc/check_state, 1)))
 					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 					state = 2
 					icon_state = "box_1"
 
 				return
-			if(istype(P, /obj/item/screwdriver) && !anchored)
+			if(P.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(P.use_tool(src, user, 40, volume=50))
-					if(state == 1)
-						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
-						var/obj/item/stack/sheet/metal/M = new (loc, 5)
-						M.add_fingerprint(user)
-						qdel(src)
+				if(P.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/check_state, 1)))
+					to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
+					var/obj/item/stack/sheet/metal/M = new (loc, 5)
+					M.add_fingerprint(user)
+					qdel(src)
 				return
-			if(istype(P, /obj/item/wrench))
+			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume=75))
-					if(state == 1)
-						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
-						setAnchored(!anchored)
+				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, .proc/check_state, 1)))
+					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+					setAnchored(!anchored)
 				return
 
 		if(2)
-			if(istype(P, /obj/item/wrench))
+			if(P.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume=75))
+				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, .proc/check_state, 2)))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					setAnchored(!anchored)
 				return
@@ -140,7 +143,7 @@
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
 
-			if(istype(P, /obj/item/wirecutters))
+			if(P.tool_behaviour == TOOL_WIRECUTTER)
 				P.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -149,7 +152,7 @@
 				return
 
 		if(3)
-			if(istype(P, /obj/item/crowbar))
+			if(P.tool_behaviour == TOOL_CROWBAR)
 				P.play_tool_sound(src)
 				state = 2
 				circuit.forceMove(drop_location())
@@ -167,14 +170,14 @@
 				icon_state = "box_1"
 				return
 
-			if(istype(P, /obj/item/wrench) && !circuit.needs_anchored)
+			if(P.tool_behaviour == TOOL_WRENCH && !circuit.needs_anchored)
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume=75))
+				if(P.use_tool(src, user, 40, volume=75, extra_checks = CALLBACK(src, .proc/check_state, 3)))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					setAnchored(!anchored)
 				return
 
-			if(istype(P, /obj/item/screwdriver))
+			if(P.tool_behaviour == TOOL_SCREWDRIVER)
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)

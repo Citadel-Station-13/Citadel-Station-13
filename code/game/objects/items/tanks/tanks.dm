@@ -1,10 +1,12 @@
 /obj/item/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
+	icon_state = "generic"
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
+	// worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
 	hitsound = 'sound/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
@@ -18,6 +20,8 @@
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
 	var/volume = 70
+	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
+	var/tank_holder_icon_state = "holder_generic"
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -73,12 +77,26 @@
 /obj/item/tank/proc/populate_gas()
 	return
 
+/obj/item/tank/DoRevenantThrowEffects(atom/target)
+	if(air_contents)
+		var/turf/open/location = get_turf(src)
+		if(istype(location))
+			location.assume_air(air_contents)
+			air_contents.clear()
+			SSair.add_to_active(location)
+			visible_message("<span class='warning'[src] leaks gas!")
+
 /obj/item/tank/Destroy()
 	if(air_contents)
-		qdel(air_contents)
+		QDEL_NULL(air_contents)
 
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
+
+// /obj/item/tank/ComponentInitialize()
+// 	. = ..()
+// 	if(tank_holder_icon_state)
+// 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
@@ -86,7 +104,7 @@
 	if(istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 	if(!in_range(src, user) && !isobserver(user))
-		if (icon == src)
+		if(icon == src)
 			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
 		return
 
@@ -131,14 +149,14 @@
 		if(T)
 			T.assume_air(air_contents)
 			air_update_turf()
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+		playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	qdel(src)
 
 /obj/item/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
-	if (!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
+	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
+	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
 			if(prob(50))
@@ -150,12 +168,10 @@
 		H.spawn_gibs()
 		H.spill_organs()
 		H.spread_bodyparts()
-
-	return (BRUTELOSS)
-
-/obj/item/tank/attack_ghost(mob/dead/observer/O)
-	. = ..()
-	atmosanalyzer_scan(air_contents, O, src, FALSE)
+		return MANUAL_SUICIDE
+	else
+		to_chat(user, "<span class='warning'>There isn't enough pressure in [src] to commit suicide with...</span>")
+	return SHAME
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -173,27 +189,30 @@
 		ui = new(user, src, "Tank", name)
 		ui.open()
 
+/obj/item/tank/ui_static_data(mob/user)
+	. = list (
+		"defaultReleasePressure" = round(TANK_DEFAULT_RELEASE_PRESSURE),
+		"minReleasePressure" = round(TANK_MIN_RELEASE_PRESSURE),
+		"maxReleasePressure" = round(TANK_MAX_RELEASE_PRESSURE),
+		"leakPressure" = round(TANK_LEAK_PRESSURE),
+		"fragmentPressure" = round(TANK_FRAGMENT_PRESSURE)
+	)
+
 /obj/item/tank/ui_data(mob/user)
-	var/list/data = list()
-	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
-	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
-	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
-	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
+	. = list(
+		"tankPressure" = round(air_contents.return_pressure()),
+		"releasePressure" = round(distribute_pressure)
+	)
 
 	var/mob/living/carbon/C = user
 	if(!istype(C))
 		C = loc.loc
-	if(!istype(C))
-		return data
-
-	if(C.internal == src)
-		data["connected"] = TRUE
-
-	return data
+	if(istype(C) && C.internal == src)
+		.["connected"] = TRUE
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("pressure")
@@ -219,6 +238,9 @@
 /obj/item/tank/return_air()
 	return air_contents
 
+// /obj/item/tank/return_analyzable_air()
+// 	return air_contents
+
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
 	air_contents.merge(giver)
 
@@ -230,10 +252,9 @@
 		return null
 
 	var/tank_pressure = air_contents.return_pressure()
-	if(tank_pressure < distribute_pressure)
-		distribute_pressure = tank_pressure
+	var/actual_distribute_pressure = clamp(tank_pressure, 0, distribute_pressure)
 
-	var/moles_needed = distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.return_temperature())
+	var/moles_needed = actual_distribute_pressure*volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.return_temperature())
 
 	return remove_air(moles_needed)
 
@@ -258,7 +279,7 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		air_contents.react(src)
-		//Citadel Edit: removing extra react for "balance"
+
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)
@@ -276,7 +297,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+			playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 			qdel(src)
 		else
 			integrity--

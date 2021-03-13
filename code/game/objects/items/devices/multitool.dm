@@ -26,10 +26,9 @@
 	throw_range = 7
 	throw_speed = 3
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
-	var/obj/machinery/buffer // simple machine buffer for device linkage
+	buffer = null // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
-	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
 
 /obj/item/multitool/chaplain
@@ -72,7 +71,7 @@
 	if(selected_io)
 		icon_state += "_red"
 
-/obj/item/multitool/proc/wire(var/datum/integrated_io/io, mob/user)
+/obj/item/proc/wire(var/datum/integrated_io/io, mob/user)
 	if(!io.holder.assembly)
 		to_chat(user, "<span class='warning'>\The [io.holder] needs to be secured inside an assembly first.</span>")
 		return
@@ -101,7 +100,7 @@
 	update_icon()
 
 
-/obj/item/multitool/proc/unwire(var/datum/integrated_io/io1, var/datum/integrated_io/io2, mob/user)
+/obj/item/proc/unwire(var/datum/integrated_io/io1, var/datum/integrated_io/io2, mob/user)
 	if(!io1.linked.len || !io2.linked.len)
 		to_chat(user, "<span class='warning'>There is nothing connected to the data channel.</span>")
 		return
@@ -256,6 +255,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+	show_wires = TRUE
 
 /obj/item/multitool/advanced
 	name = "advanced multitool"
@@ -263,6 +263,7 @@
 	icon = 'icons/obj/advancedtools.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.2
+	show_wires = TRUE
 
 /obj/item/multitool/advanced/brass
 	name = "clockwork multitool"

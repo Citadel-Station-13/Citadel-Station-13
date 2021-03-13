@@ -57,6 +57,9 @@
 	else
 		item_state = "[initial(item_state)]"
 
+/obj/item/weldingtool/DoRevenantThrowEffects(atom/target)
+	attack_self()
+
 /obj/item/weldingtool/update_overlays()
 	. = ..()
 	if(change_icons)
@@ -100,7 +103,7 @@
 	return (FIRELOSS)
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
@@ -208,12 +211,14 @@
 //Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)
 	if(!status)
-		to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>[src] can't be turned on while unsecured!</span>")
 		return
 	welding = !welding
 	if(welding)
 		if(get_fuel() >= 1)
-			to_chat(user, "<span class='notice'>You switch [src] on.</span>")
+			if(user)
+				to_chat(user, "<span class='notice'>You switch [src] on.</span>")
 			playsound(loc, acti_sound, 50, 1)
 			force = 15
 			damtype = "fire"

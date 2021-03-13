@@ -297,22 +297,20 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(istype(W, /obj/item/multitool))
-		var/obj/item/multitool/P = W
-
-		if(istype(P.buffer, /obj/machinery/computer/cloning))
-			if(get_area(P.buffer) != get_area(src))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(istype(W.buffer, /obj/machinery/computer/cloning))
+			if(get_area(W.buffer) != get_area(src))
 				to_chat(user, "<font color = #666633>-% Cannot link machines across power zones. Buffer cleared %-</font color>")
-				P.buffer = null
+				W.buffer = null
 				return
-			to_chat(user, "<font color = #666633>-% Successfully linked [P.buffer] with [src] %-</font color>")
-			var/obj/machinery/computer/cloning/comp = P.buffer
+			to_chat(user, "<font color = #666633>-% Successfully linked [W.buffer] with [src] %-</font color>")
+			var/obj/machinery/computer/cloning/comp = W.buffer
 			if(connected)
 				connected.DetachCloner(src)
 			comp.AttachCloner(src)
 		else
-			P.buffer = src
-			to_chat(user, "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>")
+			W.buffer = src
+			to_chat(user, "<font color = #666633>-% Successfully stored [REF(W.buffer)] [W.buffer] in buffer %-</font color>")
 		return
 
 	var/mob/living/mob_occupant = occupant
