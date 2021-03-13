@@ -81,6 +81,8 @@
 	name = "Emotional Mask"
 	desc = "Express your happiness or hide your sorrows with this modular cutout."
 	icon_state = "joy"
+	clothing_flags = ALLOWINTERNALS
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	mutantrace_variation = STYLE_MUZZLE
 	unique_reskin = list("Joy" = "joy",
 						"Flushed" = "flushed",
