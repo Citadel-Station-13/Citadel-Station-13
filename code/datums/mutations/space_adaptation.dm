@@ -17,7 +17,7 @@
 	return visual_indicators[type][1]
 
 /datum/mutation/human/space_adaptation/on_acquiring(mob/living/carbon/human/owner)
-	if(HAS_TRAIT(owner, TRAIT_THERMAL_VISION))
+	if(owner.has_dna() && owner.dna.check_mutation(THERMAL))
 		to_chat(owner, "<span class='warning'>You feel your eyes twitch for a moment, before returning to normal. It seems your eyes cannot adapt while your body can survive in space!")
 		return
 	if(..())
