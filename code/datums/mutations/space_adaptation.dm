@@ -7,7 +7,6 @@
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 	time_coeff = 5
 	instability = 30
-	stabilizer_coeff = -1
 
 /datum/mutation/human/space_adaptation/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -18,6 +17,9 @@
 	return visual_indicators[type][1]
 
 /datum/mutation/human/space_adaptation/on_acquiring(mob/living/carbon/human/owner)
+	if(HAS_TRAIT(owner, TRAIT_THERMAL_VISION))
+		to_chat(owner, "<span class='warning'>You feel your eyes twitch for a moment, before returning to normal. It seems your eyes cannot adapt while your body can survive in space!")
+		return
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_RESISTCOLD, "cold_resistance")

@@ -42,11 +42,13 @@
 	difficulty = 28
 	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
 	time_coeff = 2
-	instability = 71
-	stabilizer_coeff = -1
+	instability = 40
 	var/visionflag = TRAIT_THERMAL_VISION
 
 /datum/mutation/human/thermal/on_acquiring(mob/living/carbon/human/owner)
+	if(owner.has_dna() && owner.dna.check_mutation(SPACEMUT))
+		to_chat(owner, "<span class='warning'>You feel your skin warm up for a moment, before returning to normal. It seems your skin cannot adapt while your eyes can see heat!")
+		return
 	if(..())
 		return
 
