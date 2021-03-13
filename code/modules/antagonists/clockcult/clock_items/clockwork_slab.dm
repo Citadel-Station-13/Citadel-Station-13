@@ -21,8 +21,10 @@
 	var/recollecting = TRUE //if we're looking at fancy recollection. tutorial enabled by default
 	var/recollection_category = "Default"
 
-	var/list/quickbound = list(/datum/clockwork_scripture/spatial_gateway, \
-	/datum/clockwork_scripture/ranged_ability/kindle, /datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
+	var/list/quickbound = list(
+		/datum/clockwork_scripture/spatial_gateway,
+		/datum/clockwork_scripture/ranged_ability/kindle,
+		/datum/clockwork_scripture/ranged_ability/hateful_manacles) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 
 	var/obj/structure/destructible/clockwork/trap/linking //If we're linking traps together, which ones we're doing
@@ -203,10 +205,10 @@
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 		return FALSE
 	var/initial_tier = initial(scripture.tier)
-	if(initial_tier == SCRIPTURE_PERIPHERAL)
+	if(initial_tier == SCRIPTURE_PERIPHERAL && !issilicon(user))	//Silicons use peripheral scripture & cannot open the slab.
 		to_chat(user, "<span class='warning'>Nice try using href exploits</span>")
 		return
-	if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
+	if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier] &&!issilicon(user))	//silicons can't choose their spells, so lets allow them to always cast their assigned ones.
 		to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 		return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
@@ -326,6 +328,7 @@
 		"requirement" = "Unlock powerful equipment and structures by converting five servants or if [DisplayPower(JUDGEMENT_UNLOCK_THRESHOLD)] of power is reached..",
 		"ready" = SSticker.scripture_states[SCRIPTURE_JUDGEMENT]
 	)
+	// no need to learn shit, ratvar is free
 	.["recollection_categories"] = list()
 	if(GLOB.ratvar_awakens)
 		return
@@ -340,19 +343,25 @@
 	)
 	.["rec_section"] = get_recollection(recollection_category)
 	generate_all_scripture()
-	//needs a new place to live, preferably when clockcult unlocks/downgrades a tier. Smart enough to earlyreturn.
+	//needs a new place to live, preferably when clockcult unlocks/downgrades a tier.
+	//comsig maybe?
 
 /obj/item/clockwork/slab/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
 	switch(action)
 		if("toggle")
 			recollecting = !recollecting
+			. = TRUE
 		if("recite")
 			INVOKE_ASYNC(src, .proc/recite_scripture, text2path(params["script"]), usr, FALSE)
+			. = TRUE
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["script"]) //we need a path and not a string
 			if(!ispath(path, /datum/clockwork_scripture) || !initial(path.quickbind) || initial(path.tier) == SCRIPTURE_PERIPHERAL) //fuck you href bus
 				to_chat(usr, "<span class='warning'>Nice try using href exploits</span>")
-				return
+				return FALSE
 			var/found_index = quickbound.Find(path)
 			if(found_index) //hey, we already HAVE this bound
 				if(LAZYLEN(quickbound) == found_index) //if it's the last scripture, remove it instead of leaving a null
@@ -361,6 +370,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
+				// todo: async this due to ((input)) but its fine for now
 				var/target_index = input("Position of [initial(path.name)], 1 to [maximum_quickbound]?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index <= maximum_quickbound && !..())
 					var/datum/clockwork_scripture/S
@@ -368,10 +378,11 @@
 						S = quickbound[target_index]
 					if(S != path)
 						quickbind_to_slot(path, target_index)
+			. = TRUE
 		if("rec_category")
 			recollection_category = params["category"]
 			update_static_data()
-	return TRUE
+			. = TRUE
 
 /obj/item/clockwork/slab/proc/quickbind_to_slot(datum/clockwork_scripture/scripture, index) //takes a typepath(typecast for initial()) and binds it to a slot
 	if(!ispath(scripture) || !scripture || (scripture in quickbound))

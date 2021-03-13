@@ -347,9 +347,9 @@
 						last_hearcheck = world.time
 						for(var/mob/H in hearing_mobs)
 							if(!istype(H.loc, /obj/item/dogborg/sleeper))
-								H.playsound_local(source, null, 45, falloff = 0, S = pred_death)
+								H.playsound_local(source, null, 45, S = pred_death)
 							else if(H in contents)
-								H.playsound_local(source, null, 65, falloff = 0, S = prey_death)
+								H.playsound_local(source, null, 65, S = prey_death)
 					for(var/belly in T.vore_organs)
 						var/obj/belly/B = belly
 						for(var/atom/movable/thing in B)
@@ -391,9 +391,9 @@
 			last_hearcheck = world.time
 			for(var/mob/H in hearing_mobs)
 				if(!istype(H.loc, /obj/item/dogborg/sleeper))
-					H.playsound_local(source, null, 45, falloff = 0, S = pred_digest)
+					H.playsound_local(source, null, 45, S = pred_digest)
 				else if(H in contents)
-					H.playsound_local(source, null, 65, falloff = 0, S = prey_digest)
+					H.playsound_local(source, null, 65, S = prey_digest)
 
 	update_gut(hound)
 

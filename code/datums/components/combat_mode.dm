@@ -125,7 +125,7 @@
 ///Changes the user direction to (try) keep match the pointer.
 /datum/component/combat_mode/proc/on_move(atom/movable/source, dir, atom/oldloc, forced)
 	var/mob/living/L = source
-	if(mode_flags & COMBAT_MODE_ACTIVE && L.client && lastmousedir && lastmousedir != dir)
+	if((mode_flags & COMBAT_MODE_ACTIVE) && L.client)
 		L.setDir(lastmousedir, ismousemovement = TRUE)
 
 /// Added movement delay if moving backward.

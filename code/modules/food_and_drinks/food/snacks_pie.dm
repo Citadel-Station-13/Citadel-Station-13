@@ -54,7 +54,7 @@
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)
 		if(!H.is_mouth_covered())
-			reagents.trans_to(H,15) //Cream pie combat
+			reagents.trans_to(H, 15, log = "creampie hit") //Cream pie combat
 		if(!H.creamed) // one layer at a time
 			H.add_overlay(creamoverlay)
 			H.creamed = TRUE

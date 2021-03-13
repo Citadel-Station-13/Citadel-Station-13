@@ -2,6 +2,7 @@
 	name = "traitor+changeling"
 	config_tag = "traitorchan"
 	false_report_weight = 10
+	chaos = 6
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
 	required_players = 25

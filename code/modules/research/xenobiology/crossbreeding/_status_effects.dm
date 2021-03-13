@@ -236,7 +236,7 @@
 	duration = -1
 	alert_type = null
 
-datum/status_effect/rebreathing/tick()
+/datum/status_effect/rebreathing/tick()
 	owner.adjustOxyLoss(-6, 0) //Just a bit more than normal breathing.
 
 ///////////////////////////////////////////////////////
@@ -469,6 +469,10 @@ datum/status_effect/rebreathing/tick()
 		qdel(src)
 	return ..()
 
+/datum/status_effect/stabilized/Destroy()
+	linked_extract = null
+	return ..()
+
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
 
@@ -524,7 +528,7 @@ datum/status_effect/rebreathing/tick()
 	ADD_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
-datum/status_effect/stabilized/blue/on_remove()
+/datum/status_effect/stabilized/blue/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NOSLIPWATER, "slimestatus")
 	return ..()
 
@@ -884,6 +888,8 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
 		explosion(get_turf(owner),1,2,4,flame_range = 5)
+		qdel(linked_extract)
+		return
 	return ..()
 
 /datum/status_effect/stabilized/black

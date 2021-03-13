@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscdel: "removes two debug messages left in from my prior eye customization pr"

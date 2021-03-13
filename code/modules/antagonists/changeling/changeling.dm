@@ -213,7 +213,7 @@
 	if(canrespec)
 		to_chat(owner.current, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
 		reset_powers()
-		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5, soundenvwet = 0)
+		playsound(get_turf(owner.current), 'sound/effects/lingreadapt.ogg', 75, TRUE, 5)
 		canrespec = 0
 		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 		return 1
@@ -433,30 +433,21 @@
 		destroy_objective.find_target()
 		objectives += destroy_objective
 	else
-		if(prob(70))
-			var/datum/objective/assassinate/once/kill_objective = new
-			kill_objective.owner = owner
-			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
-			else
-				kill_objective.find_target()
-			objectives += kill_objective
+		var/datum/objective/assassinate/once/kill_objective = new
+		kill_objective.owner = owner
+		if(team_mode) //No backstabbing while in a team
+			kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
-			else
-				maroon_objective.find_target()
-			objectives += maroon_objective
+			kill_objective.find_target()
+		objectives += kill_objective
 
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = owner
-				identity_theft.target = maroon_objective.target
-				identity_theft.update_explanation_text()
-				objectives += identity_theft
-				escape_objective_possible = FALSE
+		if(!(locate(/datum/objective/escape) in objectives) && escape_objective_possible && prob(50))
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = owner
+			identity_theft.target = kill_objective.target
+			identity_theft.update_explanation_text()
+			objectives += identity_theft
+			escape_objective_possible = FALSE
 
 	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 		if(prob(50))

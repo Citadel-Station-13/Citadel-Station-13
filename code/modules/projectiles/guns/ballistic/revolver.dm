@@ -3,6 +3,7 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	fire_sound = "sound/weapons/revolvershot.ogg"
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/revolver/Initialize()
@@ -338,7 +339,9 @@
 	slot_flags = null
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
 	sawn_desc = "I'm just here for the gasoline."
-	unique_reskin = null
+	unique_reskin = list("Default" = "ishotgun",
+						"Cobbled" = "old_ishotgun"
+						)
 	var/slung = FALSE
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
@@ -373,7 +376,6 @@
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
 
-
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = 0
 
@@ -390,16 +392,12 @@
 // ---------- Code originally from VoreStation ----------
 /obj/item/gun/ballistic/revolver/mws
 	name = "MWS-01 'Big Iron'"
-	desc = "Modular Weapons System"
-
+	desc = "Modular Weapon System-01, does fit on your hip."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "mws"
-
-	fire_sound = 'sound/weapons/Taser.ogg'
-
+	fire_sound = 'sound/weapons/MWSfire.ogg' //i spent 1 hour making a cool sound but byond just compresses it to shit so have this instead >:(
 	mag_type = /obj/item/ammo_box/magazine/mws_mag
 	spawnwithmagazine = FALSE
-
 	recoil = 0
 
 	var/charge_sections = 6

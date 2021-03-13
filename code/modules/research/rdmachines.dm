@@ -94,13 +94,13 @@
 	..()
 
 /obj/machinery/rnd/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
-	var/stack_name
+	var/mat_name
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
-		stack_name = "bluespace"
+		mat_name = "bluespace"
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
-		var/obj/item/stack/S = item_inserted
-		stack_name = S.name
+		var/datum/material/M = id_inserted
+		mat_name = M.name
 		use_power(min(1000, (amount_inserted / 100)))
-	add_overlay("protolathe_[stack_name]")
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
+	add_overlay("protolathe_[mat_name]")
+	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[mat_name]"), 10)

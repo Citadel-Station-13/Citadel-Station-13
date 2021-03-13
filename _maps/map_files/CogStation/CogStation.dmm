@@ -6004,11 +6004,11 @@
 	c_tag = "Security Checkpoint";
 	pixel_x = 22
 	},
-/obj/machinery/newscaster/security_unit{
-	pixel_y = 32
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint)
@@ -32290,10 +32290,6 @@
 	dir = 8;
 	light_color = "#e8eaff"
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bsl" = (
@@ -33603,6 +33599,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-20";
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -38936,10 +38936,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-20";
-	pixel_y = 3
-	},
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bGN" = (
@@ -42888,7 +42885,7 @@
 /area/science/xenobiology)
 "bPd" = (
 /obj/structure/table/reinforced,
-/obj/item/book/random/triple,
+/obj/item/book/random,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bPe" = (
@@ -52867,7 +52864,7 @@
 	dir = 4;
 	pixel_x = -28
 	},
-/obj/item/kirbyplants/random,
+/obj/machinery/gear_painter,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "cjB" = (
@@ -71183,6 +71180,13 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"pMW" = (
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "pZq" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
@@ -71256,6 +71260,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/router/aux)
+"stP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "sAm" = (
 /obj/structure/plasticflaps,
 /obj/machinery/door/poddoor{
@@ -114255,7 +114266,7 @@ ckq
 bgf
 beB
 cxC
-bgq
+stP
 cjA
 biy
 bjN
@@ -121374,7 +121385,7 @@ amV
 aqI
 aqB
 aGO
-auy
+pMW
 aqB
 aqI
 amV

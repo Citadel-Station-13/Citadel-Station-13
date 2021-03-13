@@ -537,4 +537,15 @@
 	path = /obj/item/clothing/suit/custom/exo
 	ckeywhitelist = list("jesterz7")
 
+/datum/gear/donator/choker
+	name = "NT Choker"
+	slot = SLOT_NECK
+	path = /obj/item/clothing/neck/petcollar/donorchoker
+	ckeywhitelist = list("trigillass")
+
+/datum/gear/donator/strangemask
+	name = "Strange Metal Mask"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/mask/breath/mmask
+	ckeywhitelist = list("sneka")
 

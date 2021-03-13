@@ -78,7 +78,7 @@
 		columns = 0
 		mine_placed = 0
 	if(href_list["Easy"])
-		playsound(loc, startup_sound, 50, 0, extrarange = -3, falloff = 10)
+		playsound(loc, startup_sound, 50, FALSE, extrarange = -3)
 		flag_text = "OFF"
 		game_status = MINESWEEPER_GAME_PLAYING
 		reset_board = TRUE
@@ -87,7 +87,7 @@
 		columns = 10
 		mine_limit = 10
 	if(href_list["Intermediate"])
-		playsound(loc, startup_sound, 50, 0, extrarange = -3, falloff = 10)
+		playsound(loc, startup_sound, 50, FALSE, extrarange = -3)
 		flag_text = "OFF"
 		game_status = MINESWEEPER_GAME_PLAYING
 		reset_board = TRUE
@@ -96,7 +96,7 @@
 		columns = 17
 		mine_limit = 40
 	if(href_list["Hard"])
-		playsound(loc, startup_sound, 50, 0, extrarange = -3, falloff = 10)
+		playsound(loc, startup_sound, 50, FALSE, extrarange = -3)
 		flag_text = "OFF"
 		game_status = MINESWEEPER_GAME_PLAYING
 		reset_board = TRUE
@@ -110,9 +110,9 @@
 			game_status = MINESWEEPER_GAME_PLAYING
 			reset_board = TRUE
 			difficulty = "Custom"
-			playsound(loc, startup_sound, 50, 0, extrarange = -3, falloff = 10)
+			playsound(loc, startup_sound, 50, FALSE, extrarange = -3)
 	if(href_list["Flag"])
-		playsound(loc, 'sound/arcade/minesweeper_boardpress.ogg', 50, 0, extrarange = -3, falloff = 10)
+		playsound(loc, 'sound/arcade/minesweeper_boardpress.ogg', 50, FALSE, extrarange = -3)
 		if(!flagging)
 			flagging = TRUE
 			flag_text = "ON"
@@ -122,10 +122,10 @@
 
 	if(game_status == MINESWEEPER_GAME_MAIN_MENU)
 		if(CHECK_BITFIELD(obj_flags, EMAGGED))
-			playsound(loc, 'sound/arcade/minesweeper_emag2.ogg', 50, 0, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/minesweeper_emag2.ogg', 50, FALSE, extrarange = -3)
 			web += "<font size='2'>Explode in the game, explode in real life!<br>What difficulty do you want to play?<br><br><br><br><b><a href='byond://?src=[REF(src)];Easy=1'><font color='#cc66ff'>Easy (9x9 board, 10 mines)</font></a><br><a href='byond://?src=[REF(src)];Intermediate=1'><font color='#cc66ff'>Intermediate (16x16 board, 40 mines)</font></a><br><a href='byond://?src=[REF(src)];Hard=1'><font color='#cc66ff'>Hard (16x30 board, 99 mines)</font></a><br><a href='byond://?src=[REF(src)];Custom=1'><font color='#cc66ff'>Custom</font>"
 		else
-			playsound(loc, 'sound/arcade/minesweeper_startup.ogg', 50, 0, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/minesweeper_startup.ogg', 50, FALSE, extrarange = -3)
 			web += web_difficulty_menu
 
 	if(game_status == MINESWEEPER_GAME_PLAYING)
@@ -152,7 +152,7 @@
 							if(table[y1][x1] < 10 && table[y1][x1] >= 0)	//Check that it's not already revealed, and stop flag removal if we're out of flag mode
 								table[y1][x1] += 10
 								if(table[y1][x1] != 10)
-									playsound(loc, 'sound/arcade/minesweeper_boardpress.ogg', 50, 0, extrarange = -3, falloff = 10)
+									playsound(loc, 'sound/arcade/minesweeper_boardpress.ogg', 50, FALSE, extrarange = -3)
 								else
 									if(game_status != MINESWEEPER_GAME_LOST && game_status != MINESWEEPER_GAME_WON)
 										game_status = MINESWEEPER_GAME_LOST
@@ -164,14 +164,14 @@
 										if(mine_sound)
 											switch(rand(1,3))	//Play every time a mine is hit
 												if(1)
-													playsound(loc, 'sound/arcade/minesweeper_explosion1.ogg', 50, 0, extrarange = -3, falloff = 10)
+													playsound(loc, 'sound/arcade/minesweeper_explosion1.ogg', 50, FALSE, extrarange = -3)
 												if(2)
-													playsound(loc, 'sound/arcade/minesweeper_explosion2.ogg', 50, 0, extrarange = -3, falloff = 10)
+													playsound(loc, 'sound/arcade/minesweeper_explosion2.ogg', 50, FALSE, extrarange = -3)
 												if(3)
-													playsound(loc, 'sound/arcade/minesweeper_explosion3.ogg', 50, 0, extrarange = -3, falloff = 10)
+													playsound(loc, 'sound/arcade/minesweeper_explosion3.ogg', 50, FALSE, extrarange = -3)
 											mine_sound = FALSE
 						else
-							playsound(loc, 'sound/arcade/minesweeper_boardpress.ogg', 50, 0, extrarange = -3, falloff = 10)
+							playsound(loc, 'sound/arcade/minesweeper_boardpress.ogg', 50, FALSE, extrarange = -3)
 							if(table[y1][x1] >= 0)	//Check that it's not already flagged
 								table[y1][x1] -= 10
 							else if(table[y1][x1] < 0)	//If flagged, remove the flag
@@ -182,7 +182,7 @@
 						game_status = MINESWEEPER_GAME_PLAYING
 					if(table[y1][x1] >= 10)	//If revealed, become unrevealed!
 						if(mine_sound)
-							playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
+							playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, FALSE, extrarange = -3)
 							mine_sound = FALSE
 						table[y1][x1] -= 10
 				if(table[y1][x1] > 10 && !reset_board)
@@ -243,10 +243,10 @@
 	if(safe_squares_revealed >= win_condition && game_status == MINESWEEPER_GAME_PLAYING)
 		game_status = MINESWEEPER_GAME_WON
 		if(rows < 10 || columns < 10)	//If less than easy difficulty
-			playsound(loc, 'sound/arcade/minesweeper_winfail.ogg', 50, 0, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/minesweeper_winfail.ogg', 50, FALSE, extrarange = -3)
 			say("You cleared the board of all mines, but you picked too small of a board! Try again with at least a 9x9 board!")
 		else
-			playsound(loc, 'sound/arcade/minesweeper_win.ogg', 50, 0, extrarange = -3, falloff = 10)
+			playsound(loc, 'sound/arcade/minesweeper_win.ogg', 50, FALSE, extrarange = -3)
 			say("You cleared the board of all mines! Congratulations!")
 			if(CHECK_BITFIELD(obj_flags, EMAGGED))
 				var/itemname
@@ -268,7 +268,7 @@
 				visible_message("<span class='notice'>[src] dispenses [itemname]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 				DISABLE_BITFIELD(obj_flags, EMAGGED)
 			else
-				var/dope_prizes = (area >= 480) ? list(ARCADE_WEIGHT_RARE) : (area >= 256) ? list(ARCADE_WEIGHT_RARE, ARCADE_WEIGHT_TRICK) : null
+				var/dope_prizes = (area >= 480) ? 6 : (area >= 256) ? 4 : 2
 				prizevend(user, dope_prizes)
 
 	if(game_status == MINESWEEPER_GAME_WON)
@@ -299,32 +299,32 @@
 	ENABLE_BITFIELD(obj_flags, EMAGGED)
 	if(game_status == MINESWEEPER_GAME_MAIN_MENU)
 		to_chat(user, "<span class='warning'>An ominous tune plays from the arcade's speakers!</span>")
-		playsound(user, 'sound/arcade/minesweeper_emag1.ogg', 100, 0, extrarange = 3, falloff = 10)
+		playsound(user, 'sound/arcade/minesweeper_emag1.ogg', 100, FALSE, extrarange = 3)
 	else	//Can't let you do that, star fox!
 		to_chat(user, "<span class='warning'>The machine buzzes and sparks... the game has been reset!</span>")
-		playsound(user, 'sound/machines/buzz-sigh.ogg', 100, 0, extrarange = 3, falloff = 10)	//Loud buzz
+		playsound(user, 'sound/machines/buzz-sigh.ogg', 100, FALSE, extrarange = 3)	//Loud buzz
 		game_status = MINESWEEPER_GAME_MAIN_MENU
 	return TRUE
 
 /obj/machinery/computer/arcade/minesweeper/proc/custom_generation(mob/user)
-	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)	//Entered into the menu so ping sound
+	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, FALSE, extrarange = -3)	//Entered into the menu so ping sound
 	var/new_rows = input(user, "How many rows do you want? (Minimum: 4, Maximum: 30)", "Minesweeper Rows") as null|num
 	if(!new_rows || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return FALSE
-	new_rows = clamp(new_rows + 1, 4, 30)
-	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
+	new_rows = clamp(new_rows + 1, 4, 20)
+	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, FALSE, extrarange = -3)
 	var/new_columns = input(user, "How many columns do you want? (Minimum: 4, Maximum: 50)", "Minesweeper Squares") as null|num
 	if(!new_columns || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return FALSE
-	new_columns = clamp(new_columns + 1, 4, 50)
-	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
+	new_columns = clamp(new_columns + 1, 4, 30)
+	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, FALSE, extrarange = -3)
 	var/grid_area = (new_rows - 1) * (new_columns - 1)
 	var/lower_limit = round(grid_area*0.156)
 	var/upper_limit = round(grid_area*0.85)
 	var/new_mine_limit = input(user, "How many mines do you want? (Minimum: [lower_limit], Maximum: [upper_limit])", "Minesweeper Mines") as null|num
 	if(!new_mine_limit || !user.canUseTopic(src, !hasSiliconAccessInArea(user)))
 		return FALSE
-	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, 0, extrarange = -3, falloff = 10)
+	playsound(loc, 'sound/arcade/minesweeper_menuselect.ogg', 50, FALSE, extrarange = -3)
 	rows = new_rows
 	columns = new_columns
 	mine_limit = clamp(new_mine_limit, lower_limit, upper_limit)
