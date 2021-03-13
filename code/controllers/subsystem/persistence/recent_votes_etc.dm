@@ -21,6 +21,7 @@
 /datum/controller/subsystem/persistence/LoadServerPersistence()
 	. = ..()
 	LoadRecentModes()
+	LoadRecentChaos()
 	LoadRecentStorytellers()
 	LoadRecentRulesets()
 	LoadRecentMaps()
@@ -84,6 +85,15 @@
 	if(!json)
 		return
 	saved_modes = json["data"]
+
+/datum/controller/subsystem/persistence/proc/LoadRecentChaos()
+	var/json_file = file("data/RecentChaos.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_chaos = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadRecentRulesets()
 	var/json_file = file("data/RecentRulesets.json")
