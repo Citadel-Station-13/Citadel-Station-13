@@ -84,11 +84,35 @@
 	clothing_flags = ALLOWINTERNALS
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	mutantrace_variation = STYLE_MUZZLE
-	unique_reskin = list("Joy" = "joy",
-						"Flushed" = "flushed",
-						"Pensive" = "pensive",
-						"Angry" = "angry"
-						)
+	actions_types = list(/datum/action/item_action/adjust)
+	var/list/joymask_designs = list()
+
+
+/obj/item/clothing/mask/joy/Initialize(mapload)
+	. = ..()
+	joymask_designs = list(
+		"Joy" = image(icon = src.icon, icon_state = "joy"),
+		"Flushed" = image(icon = src.icon, icon_state = "flushed"),
+		"Pensive" = image(icon = src.icon, icon_state = "pensive"),
+		"Angry" = image(icon = src.icon, icon_state = "angry"),
+		)
+
+/obj/item/clothing/mask/joy/ui_action_click(mob/user)
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/static/list/options = list("Joy" = "joy", "Flushed" = "flushed", "Pensive" = "pensive","Angry" ="angry")
+
+	var/choice = show_radial_menu(user, src, joymask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+		to_chat(user, "<span class='notice'>Your Joy mask now has a [choice] Emotion!</span>")
+		return 1
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
