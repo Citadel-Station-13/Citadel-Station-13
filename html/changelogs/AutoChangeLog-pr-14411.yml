@@ -1,0 +1,4 @@
+author: "kiwedespars"
+delete-after: True
+changes: 
+  - rscadd: "adds a cute new plushie"
