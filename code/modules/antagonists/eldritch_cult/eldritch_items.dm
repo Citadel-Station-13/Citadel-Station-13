@@ -46,7 +46,7 @@
 
 /datum/action/innate/heretic_shatter
 	name = "Shattering Offer"
-	desc = "By breaking your blade, you will be granted salvation from a dire situation. (Teleports you to a random safe turf on your current z level, but destroys your blade.)"
+	desc = "After a brief delay, you will be granted salvation from a dire situation at the cost of your blade. (Teleports you to a random safe turf on your current z level after a windup, but destroys your blade.)"
 	background_icon_state = "bg_ecult"
 	button_icon_state = "shatter"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -67,10 +67,11 @@
 		return FALSE
 
 /datum/action/innate/heretic_shatter/Activate()
-	var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
-	do_teleport(holder,safe_turf,forceMove = TRUE)
-	to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
-	qdel(sword)
+	if(do_after(holder,20, target = holder))
+		var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
+		do_teleport(holder,safe_turf,forceMove = TRUE)
+		to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
+		qdel(sword)
 
 /obj/item/melee/sickly_blade
 	name = "sickly blade"
