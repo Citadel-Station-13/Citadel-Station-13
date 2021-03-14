@@ -95,12 +95,17 @@
 	. = ..()
 	linked_action = new(src)
 
-/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	if(!(IS_HERETIC(user) || !IS_HERETIC_MONSTER(user)))
+/obj/item/melee/sickly_blade/attack(mob/living/target, mob/living/user)
+	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
 		to_chat(user,"<span class='danger'>You feel a pulse of alien intellect lash out at your mind!</span>")
-		var/mob/living/carbon/human/human_user = user
-		human_user.AdjustParalyzed(5 SECONDS)
-		return FALSE
+		user.DefaultCombatKnockdown(100)
+		user.dropItemToGround(src, TRUE)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		else
+			user.adjustBruteLoss(rand(force/2,force))
+		return
 	return ..()
 
 /obj/item/melee/sickly_blade/pickup(mob/user)
