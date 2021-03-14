@@ -960,6 +960,7 @@
 	user.add_overlay(halo)
 	playsound(get_turf(user), Snd, 50, 0)
 	if(do_mob(user,user,50,1))
+		user.cut_overlay(halo)
 		user.emote("clap1")
 		user.say("DOM'ENO ISPLET'IMAS")
 		playsound(user, 'sound/magic/domain.ogg', 125, TRUE)
