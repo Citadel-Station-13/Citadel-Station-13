@@ -17,7 +17,7 @@
 	announceWhen = rand(4, 60)
 	supernova = new
 	SSsun.suns += supernova
-	if(prob(50))
+	if(prob(20))
 		power = rand(5,100) / 100
 	else
 		power = rand(5,5000) / 100
@@ -35,7 +35,7 @@
 /datum/round_event/supernova/start()
 	supernova.power_mod = 0.00000002 * power
 	var/explosion_size = rand(1000000000, 999999999)
-	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), world.maxx / 2)
+	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), round(world.maxx * 0.45))
 	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
 		A.sense_explosion(epicenter, explosion_size/2, explosion_size, 0, 107000000 / power, explosion_size/2, explosion_size, 0)
@@ -52,7 +52,7 @@
 			supernova.power_mod = min(supernova.power_mod*1.2, power)
 		if(endWhen-10 to endWhen)
 			supernova.power_mod /= 4
-	if(prob(round(supernova.power_mod / 2)) && storm_count < 3 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
+	if(prob(round(supernova.power_mod / 2)) && storm_count < 4 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
 		SSweather.run_weather(/datum/weather/rad_storm/supernova)
 		storm_count++
 
