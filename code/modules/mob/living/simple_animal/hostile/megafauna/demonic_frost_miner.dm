@@ -31,6 +31,9 @@ Difficulty: Extremely Hard
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
+	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
+	score_achievement_type = /datum/award/score/demonic_miner_score
 	deathmessage = "falls to the ground, decaying into plasma particles."
 	deathsound = "bodyfall"
 	attack_action_types = list(/datum/action/innate/megafauna_attack/frost_orbs,

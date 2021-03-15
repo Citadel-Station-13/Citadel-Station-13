@@ -67,17 +67,19 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
+#define isskeleton(A) (is_species(A, /datum/species/skeleton))
+#define ismoth(A) (is_species(A, /datum/species/moth))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define iscatperson(A) (ishumanbasic(A) && istype(A.dna.species, /datum/species/human/felinid))
-#define isdwarf(A) (is_species(A, /datum/species/dwarf))
+#define isethereal(A) (is_species(A, /datum/species/ethereal))
+#define isvampire(A) (is_species(A,/datum/species/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+
 #define isangel(A) (is_species(A, /datum/species/angel))
-#define isvampire(A) (is_species(A, /datum/species/vampire))
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
-#define isskeleton(A) (is_species(A, /datum/species/skeleton))
 #define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
-#define isethereal(A) (is_species(A, /datum/species/ethereal))
+#define isdwarf(A) (is_species(A, /datum/species/dwarf))
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))
@@ -143,6 +145,10 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
+// #define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
+
+// #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
+
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
@@ -154,6 +160,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -184,6 +191,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isstack(A) (istype(A, /obj/item/stack))
+
 #define isgrenade(A) (istype(A, /obj/item/grenade))
 
 #define islandmine(A) (istype(A, /obj/effect/mine))
@@ -205,6 +214,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isorgan(A) (istype(A, /obj/item/organ))
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
+
+#define iscash(A) (istype(A, /obj/item/coin) || istype(A, /obj/item/stack/spacecash) || istype(A, /obj/item/holochip))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
