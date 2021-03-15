@@ -33,7 +33,7 @@
 
 
 /datum/round_event/supernova/start()
-	supernova.power_mod = 0.00000002 * power
+	supernova.power_mod = 0.001 * power
 	var/explosion_size = rand(1000000000, 999999999)
 	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), round(world.maxx * 0.45))
 	for(var/array in GLOB.doppler_arrays)
@@ -46,7 +46,7 @@
 		sucker_light.give_home_power()
 
 /datum/round_event/supernova/tick()
-	var/midpoint = (endWhen-startWhen)/2
+	var/midpoint = round((endWhen-startWhen)/2)
 	switch(activeFor)
 		if(startWhen to midpoint)
 			supernova.power_mod = min(supernova.power_mod*1.2, power)
@@ -62,6 +62,6 @@
 
 /datum/weather/rad_storm/supernova
 	weather_duration_lower = 50
-	weather_duration_lower = 100
+	weather_duration_upper = 100
 	telegraph_duration = 100
 	radiation_intensity = 50
