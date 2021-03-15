@@ -6,7 +6,7 @@
 	item_state = "teleprod"
 	slot_flags = null
 
-/obj/item/melee/baton/cattleprod/teleprod/baton_stun(mob/living/L, mob/living/carbon/user)//handles making things teleport when hit
+/obj/item/melee/baton/cattleprod/teleprod/baton_stun(mob/living/L, mob/living/carbon/user, shoving = FALSE)//handles making things teleport when hit
 	. = ..()
 	if(!. || L.anchored)
 		return

@@ -343,7 +343,7 @@
 	sparkler = new (src)
 	sparkler.activate_cooldown = 7 //Helps visualize the knockdown
 
-/obj/item/melee/baton/cattleprod/baton_stun()
+/obj/item/melee/baton/cattleprod/baton_stun(mob/living/L, mob/living/carbon/user, shoving = FALSE)
 	sparkler?.activate()
 	. = ..()
 
@@ -370,8 +370,8 @@
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(turned_on)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance))//if they are a carbon and they didn't catch it
-			baton_stun(hit_atom)
+		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance) && thrownby)//if they are a carbon and they didn't catch it
+			baton_stun(hit_atom, thrownby, shoving = TRUE)
 		if(thrownby && !caught)
 			sleep(1)
 			if(!QDELETED(src))
