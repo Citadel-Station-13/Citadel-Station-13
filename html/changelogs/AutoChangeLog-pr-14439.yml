@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - balance: "Made hyper-nob's point values way lower (25/20 for science/cargo instead of 1000/1000)"
+  - balance: "Made nitryl's cargo sell value less (10 instead of 30)"
