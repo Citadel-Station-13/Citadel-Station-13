@@ -88,9 +88,9 @@
 	mix_message = "The mixture boils off a yellow, smelly vapor..."//Sulfur burns off, leaving the camphor
 
 /datum/chemical_reaction/anaphroplus
-	name = "pentacamphor"
+	name = "hexacamphor"
 	id = /datum/reagent/drug/anaphrodisiacplus
 	results = list(/datum/reagent/drug/anaphrodisiacplus = 1)
-	required_reagents = list(/datum/reagent/drug/aphrodisiac = 5, /datum/reagent/acetone = 1)
-	required_temp = 300
+	required_reagents = list(/datum/reagent/drug/anaphrodisiac = 6, /datum/reagent/acetone = 1)
+	required_temp = 400
 	mix_message = "The mixture thickens and heats up slighty..."

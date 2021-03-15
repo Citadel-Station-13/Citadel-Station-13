@@ -169,7 +169,8 @@
 	var/mob/living/carbon/human/H = user
 	H.physiology.brute_mod *= 0.5
 	H.physiology.burn_mod *= 0.5
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for Rustbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
+	H.client?.give_award(/datum/award/achievement/misc/rust_ascension, H)
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
 	new /datum/rust_spread(loc)
 	var/datum/antagonist/heretic/ascension = H.mind.has_antag_datum(/datum/antagonist/heretic)
 	ascension.ascended = TRUE

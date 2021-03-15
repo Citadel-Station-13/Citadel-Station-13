@@ -331,6 +331,7 @@
 		return
 	. = anchored
 	anchored = anchorvalue
+	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	// SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

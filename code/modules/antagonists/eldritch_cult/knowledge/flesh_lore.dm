@@ -232,7 +232,7 @@
 			log_game("[key_name_admin(ghost_candidate)] has taken control of ([key_name_admin(summoned)]).")
 			summoned.ghostize(FALSE)
 			summoned.key = ghost_candidate.key
-			summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+			summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster) //no you will NOT get the achivement you ghost.
 			var/datum/antagonist/heretic_monster/monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
 			var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 			monster.set_owner(master)
@@ -243,11 +243,14 @@
 			user.SetImmobilized(0)
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/announcer/classic/spanomalies.ogg')
 			log_game("[user.real_name] ascended as [summoned.real_name]")
-			var/mob/living/carbon/carbon_user = user
-			var/datum/antagonist/heretic/ascension = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+			if(!ishuman(user))
+				return
+			var/mob/living/carbon/human/H = user
+			H.client?.give_award(/datum/award/achievement/misc/flesh_ascension, H)
+			var/datum/antagonist/heretic/ascension = user.mind.has_antag_datum(/datum/antagonist/heretic)
 			ascension.ascended = TRUE
-			carbon_user.mind.transfer_to(summoned, TRUE)
-			carbon_user.gib()
+			user.mind.transfer_to(summoned, TRUE)
+			user.gib()
 
 	return ..()
 

@@ -97,6 +97,9 @@
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 
+	if(force && M == user && user.client)
+		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
+
 	user.do_attack_animation(M)
 	M.attacked_by(src, user, attackchain_flags, damage_multiplier)
 

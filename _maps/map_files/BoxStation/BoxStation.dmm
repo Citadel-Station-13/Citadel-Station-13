@@ -30845,6 +30845,7 @@
 /area/science)
 "bvF" = (
 /obj/machinery/requests_console{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
 	pixel_x = -30
