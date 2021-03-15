@@ -360,7 +360,7 @@
 /obj/item/pet_carrier/bluespace/single_use/remove_occupant(mob/living/occupant)
 	. = ..()
 
-	if(!QDELETING(src))
+	if(!QDELETED(src))
 		playsound(src, "shatter", 70, 1)
 		qdel(src)
 
