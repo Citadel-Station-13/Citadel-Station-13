@@ -220,7 +220,7 @@
 /datum/clockwork_rite/cyborg_transform
 	name = "Rite of the Divine Form"
 	desc = "This rite is used to ascend into a cyborg, gaining unique scripture and a loadout that depends on which module is chosen. Consult the wiki for details on each cyborg module's loadout. Mutually exclusive to Enhanced Form."
-	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stack/cable_coil, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
+	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stack/cable_coil, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
 	power_cost = 20000
 	requires_human = TRUE
 	requires_full_power = FALSE
@@ -242,7 +242,7 @@
 /datum/clockwork_rite/golem_transform
 	name = "Rite of the Enhanced Form"
 	desc = "This rite is used to shed one's flesh to become a clockwork automaton, becoming immune to many environmental hazards as well as being more resilient to incoming damage. Mutually exclusive to Divine Form."
-	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/l_leg/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
+	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
 	power_cost = 20000
 	requires_human = TRUE
 	requires_full_power = FALSE
