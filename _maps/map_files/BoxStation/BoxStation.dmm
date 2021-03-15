@@ -20702,7 +20702,7 @@
 /area/command/bridge)
 "aWW" = (
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/command";
+	areastring = "/area/command/bridge";
 	name = "Bridge APC";
 	pixel_y = -24
 	},

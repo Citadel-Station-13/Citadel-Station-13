@@ -34277,7 +34277,7 @@
 /area/command/heads_quarters/hop)
 "bop" = (
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/command";
+	areastring = "/area/command/bridge";
 	dir = 8;
 	name = "Bridge APC";
 	pixel_x = -25

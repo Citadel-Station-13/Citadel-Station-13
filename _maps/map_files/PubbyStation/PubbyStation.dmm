@@ -11090,7 +11090,7 @@
 "azo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/command";
+	areastring = "/area/command/bridge";
 	dir = 4;
 	name = "Bridge APC";
 	pixel_x = 24

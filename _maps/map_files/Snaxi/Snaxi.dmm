@@ -19613,7 +19613,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/command";
+	areastring = "/area/command/bridge";
 	dir = 1;
 	name = "Bridge APC";
 	pixel_y = 23

@@ -14551,7 +14551,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/command";
+	areastring = "/area/command/bridge";
 	name = "Bridge APC";
 	pixel_y = -24
 	},

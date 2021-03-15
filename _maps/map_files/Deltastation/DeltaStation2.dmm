@@ -48939,7 +48939,7 @@
 "bGY" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	areastring = "/area/command";
+	areastring = "/area/command/bridge";
 	name = "Bridge APC";
 	pixel_y = -26
 	},
