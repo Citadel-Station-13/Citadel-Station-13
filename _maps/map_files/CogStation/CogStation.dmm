@@ -14551,7 +14551,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	name = "Bridge APC";
 	pixel_y = -24
 	},
@@ -25583,7 +25583,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	dir = 8;
 	name = "Research Director's Office APC";
 	pixel_x = -25
@@ -36028,7 +36028,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 1;
 	name = "Chief Medical Officer's Office APC";
 	pixel_y = 23
@@ -36238,7 +36238,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/captain";
+	areastring = "/area/command/heads_quarters/captain";
 	dir = 4;
 	name = "Captain's Quarters APC";
 	pixel_x = 24
@@ -59843,7 +59843,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	dir = 4;
 	name = "Chief Engineer's Office APC";
 	pixel_x = 24

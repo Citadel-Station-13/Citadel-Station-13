@@ -11090,7 +11090,7 @@
 "azo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	dir = 4;
 	name = "Bridge APC";
 	pixel_x = 24
@@ -35623,7 +35623,7 @@
 /area/command/heads_quarters/cmo)
 "bDx" = (
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 4;
 	name = "CMO's Office APC";
 	pixel_x = 24

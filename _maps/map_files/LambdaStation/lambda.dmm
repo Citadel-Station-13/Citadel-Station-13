@@ -13486,7 +13486,7 @@
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/cartridge/detective,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hos";
+	areastring = "/area/command/heads_quarters/hos";
 	dir = 1;
 	name = "Head of Security's Office APC";
 	pixel_y = 23
@@ -15490,7 +15490,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	name = "RD Office APC";
 	pixel_y = -27
 	},
@@ -15986,7 +15986,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hos/private";
+	areastring = "/area/command/heads_quarters/hos/private";
 	dir = 4;
 	name = "Head of Security's Private Quarters APC";
 	pixel_x = 24
@@ -23517,7 +23517,7 @@
 /area/science/explab)
 "aQJ" = (
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/hor/private";
+	areastring = "/area/command/heads_quarters/rd/private";
 	name = "Research Director's Quarters APC";
 	pixel_y = -24
 	},
@@ -24839,7 +24839,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/captain";
+	areastring = "/area/command/heads_quarters/captain";
 	dir = 8;
 	name = "Captain's Office APC";
 	pixel_x = -25
@@ -29516,7 +29516,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge/meeting_room";
+	areastring = "/area/command/meeting_room";
 	dir = 8;
 	name = "Council Chambers APC";
 	pixel_x = -25
@@ -29549,7 +29549,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/captain/private";
+	areastring = "/area/command/heads_quarters/captain/private";
 	name = "Captain's Quarters APC";
 	pixel_y = -24
 	},
@@ -29580,7 +29580,7 @@
 /area/command/heads_quarters/captain/private)
 "beO" = (
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/hop/private";
+	areastring = "/area/command/heads_quarters/hop/private";
 	dir = 4;
 	name = "Head of Personnel's Quarters APC";
 	pixel_x = 24
@@ -32917,7 +32917,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 8;
 	name = "Chief Medical Officer's Office APC";
 	pixel_x = -25
@@ -36212,7 +36212,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hop";
+	areastring = "/area/command/heads_quarters/hop";
 	name = "Head of Personnel APC";
 	pixel_y = -24
 	},
@@ -36284,7 +36284,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	dir = 4;
 	name = "Bridge APC";
 	pixel_x = 24
@@ -40167,7 +40167,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/bridge/showroom/corporate";
+	areastring = "/area/command/corporate_showroom";
 	dir = 4;
 	name = "Nanotrasen Corporate Showroom APC";
 	pixel_x = 24
@@ -43460,7 +43460,7 @@
 	dir = 10
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/cmo/private";
+	areastring = "/area/command/heads_quarters/cmo/private";
 	dir = 4;
 	name = "Chief Medical Officer's Quarters APC";
 	pixel_x = 24
@@ -44185,7 +44185,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	dir = 4;
 	name = "Chief Engineer's APC";
 	pixel_x = 24
@@ -45711,7 +45711,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/chief/private";
+	areastring = "/area/command/heads_quarters/ce/private";
 	name = "Chief Engineer's Quarters APC";
 	pixel_y = -24
 	},

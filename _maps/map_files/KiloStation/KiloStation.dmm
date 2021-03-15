@@ -6592,7 +6592,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hos";
+	areastring = "/area/command/heads_quarters/hos";
 	dir = 1;
 	name = "Head of Security's Office APC";
 	pixel_y = 23
@@ -9326,7 +9326,7 @@
 "apN" = (
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hop";
+	areastring = "/area/command/heads_quarters/hop";
 	dir = 1;
 	name = "Head of Personnel's Office APC";
 	pixel_y = 23
@@ -14158,7 +14158,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/recharger,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	dir = 4;
 	name = "Chief Engineer's Office APC";
 	pixel_x = 24
@@ -22370,7 +22370,7 @@
 /obj/item/hand_labeler,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 1;
 	name = "CMO's Office APC";
 	pixel_y = 23
@@ -35601,7 +35601,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	dir = 1;
 	name = "RD Office APC";
 	pixel_y = 23
@@ -42305,7 +42305,7 @@
 	},
 /obj/item/kirbyplants,
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	dir = 8;
 	name = "Bridge APC";
 	pixel_x = -25
@@ -46271,7 +46271,7 @@
 /obj/structure/table/wood,
 /obj/machinery/recharger,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/captain";
+	areastring = "/area/command/heads_quarters/captain";
 	dir = 4;
 	name = "Captain's Office APC";
 	pixel_x = 24

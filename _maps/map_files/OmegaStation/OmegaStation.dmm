@@ -713,7 +713,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	name = "Bridge APC";
 	pixel_y = -26
 	},
@@ -3019,7 +3019,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/service/heads/hop";
+	areastring = "/area/command/heads_quarters/hop";
 	dir = 1;
 	name = "Head of Personnel Quarter's APC";
 	pixel_y = 23
@@ -3754,7 +3754,7 @@
 /area/maintenance/fore)
 "afS" = (
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/service/heads/hos";
+	areastring = "/area/command/heads_quarters/hos";
 	dir = 1;
 	name = "Head of Security's Office APC";
 	pixel_y = 23
@@ -4331,7 +4331,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/captain/private";
+	areastring = "/area/command/heads_quarters/captain/private";
 	dir = 8;
 	name = "Captain's Quarters APC";
 	pixel_x = -25;
@@ -9049,7 +9049,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	dir = 4;
 	name = "Chief Engineer's Office APC";
 	pixel_x = 24
@@ -26316,7 +26316,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 1;
 	name = "CMO's Office APC";
 	pixel_y = 23
@@ -34996,7 +34996,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	dir = 1;
 	name = "RD Office APC";
 	pixel_y = 23

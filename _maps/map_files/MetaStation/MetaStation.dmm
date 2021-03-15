@@ -11210,7 +11210,7 @@
 "auX" = (
 /obj/machinery/photocopier,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hos";
+	areastring = "/area/command/heads_quarters/hos";
 	dir = 4;
 	name = "Head of Security's Office APC";
 	pixel_x = 24
@@ -25733,7 +25733,7 @@
 "aYr" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	dir = 4;
 	name = "CE Office APC";
 	pixel_x = 24
@@ -34277,7 +34277,7 @@
 /area/command/heads_quarters/hop)
 "bop" = (
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	dir = 8;
 	name = "Bridge APC";
 	pixel_x = -25
@@ -35568,7 +35568,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/captain/private";
+	areastring = "/area/command/heads_quarters/captain/private";
 	dir = 8;
 	name = "Captain's Quarters APC";
 	pixel_x = -25
@@ -37065,7 +37065,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hop";
+	areastring = "/area/command/heads_quarters/hop";
 	dir = 1;
 	name = "Head of Personnel APC";
 	pixel_y = 23
@@ -46766,7 +46766,7 @@
 /area/command/corporate_showroom)
 "bOF" = (
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/bridge/showroom/corporate";
+	areastring = "/area/command/corporate_showroom";
 	dir = 4;
 	name = "Nanotrasen Corporate Showroom APC";
 	pixel_x = 24
@@ -59771,7 +59771,7 @@
 /area/command/heads_quarters/cmo)
 "coS" = (
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 4;
 	name = "CMO's Office APC";
 	pixel_x = 24
@@ -64075,7 +64075,7 @@
 /area/science/research)
 "cwP" = (
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	name = "RD Office APC";
 	pixel_y = -27
 	},
@@ -82337,6 +82337,9 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ohu" = (
+/turf/open/space/basic,
+/area/command/heads_quarters/captain)
 "oms" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
@@ -121905,7 +121908,7 @@ oRp
 oRp
 aaa
 aai
-aaa
+ohu
 aaa
 aaa
 aaa
@@ -130476,7 +130479,7 @@ aaf
 aaf
 aaa
 aaa
-aaa
+ohu
 aaa
 aaa
 aaa

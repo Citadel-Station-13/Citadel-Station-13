@@ -40610,7 +40610,7 @@
 "buT" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hos";
+	areastring = "/area/command/heads_quarters/hos";
 	name = "Head of Security's Office APC";
 	pixel_y = -26
 	},
@@ -48939,7 +48939,7 @@
 "bGY" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	name = "Bridge APC";
 	pixel_y = -26
 	},
@@ -51333,7 +51333,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/bridge/meeting_room/council";
+	areastring = "/area/command/meeting_room/council";
 	dir = 1;
 	name = "Council Chambers APC";
 	pixel_y = 23
@@ -55340,7 +55340,7 @@
 /area/command/heads_quarters/captain)
 "bQV" = (
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/captain";
+	areastring = "/area/command/heads_quarters/captain";
 	name = "Captain's Office APC";
 	pixel_y = -24
 	},
@@ -60738,7 +60738,7 @@
 "bYu" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	name = "Chief Engineer's APC";
 	pixel_y = -26
 	},
@@ -64350,7 +64350,7 @@
 /area/command/heads_quarters/hop)
 "cer" = (
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hop";
+	areastring = "/area/command/heads_quarters/hop";
 	dir = 4;
 	name = "HoP Office APC";
 	pixel_x = 24
@@ -65669,7 +65669,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/highcap/ten_k{
-	areastring = "/area/service/heads/captain/private";
+	areastring = "/area/command/heads_quarters/captain/private";
 	name = "Captain's Quarters APC";
 	pixel_y = -24
 	},
@@ -78968,7 +78968,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/bridge/showroom/corporate";
+	areastring = "/area/command/corporate_showroom";
 	dir = 8;
 	name = "Corporate Lounge APC";
 	pixel_x = -25
@@ -102498,7 +102498,7 @@
 /area/science/mixing)
 "drX" = (
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	dir = 8;
 	name = "Research Director's Office APC";
 	pixel_x = -25
@@ -107128,7 +107128,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/service/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 4;
 	name = "Chief Medical Officer's Office APC";
 	pixel_x = 24

@@ -974,7 +974,7 @@
 /area/command/heads_quarters/hos)
 "acs" = (
 /obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/hos";
+	areastring = "/area/command/heads_quarters/hos";
 	dir = 8;
 	name = "Head of Security's Office APC";
 	pixel_x = -25
@@ -20702,7 +20702,7 @@
 /area/command/bridge)
 "aWW" = (
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/bridge";
+	areastring = "/area/command";
 	name = "Bridge APC";
 	pixel_y = -24
 	},
@@ -22486,7 +22486,7 @@
 /area/cargo/warehouse)
 "bbu" = (
 /obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/captain";
+	areastring = "/area/command/heads_quarters/captain";
 	dir = 1;
 	name = "Captain's Office APC";
 	pixel_y = 23
@@ -26309,7 +26309,7 @@
 /area/maintenance/central)
 "bkX" = (
 /obj/machinery/power/apc{
-	areastring = "/area/bridge/meeting_room";
+	areastring = "/area/command/meeting_room";
 	dir = 4;
 	name = "Conference Room APC";
 	pixel_x = 24
@@ -33767,7 +33767,7 @@
 /area/maintenance/port/aft)
 "bCf" = (
 /obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/hor";
+	areastring = "/area/command/heads_quarters/rd";
 	dir = 8;
 	name = "RD Office APC";
 	pixel_x = -25
@@ -37578,9 +37578,9 @@
 /area/medical/medbay/central)
 "bKS" = (
 /obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/cmo";
+	areastring = "/area/command/heads_quarters/cmo";
 	dir = 1;
-	name = "CM Office APC";
+	name = "CMO Office APC";
 	pixel_y = 23
 	},
 /obj/structure/cable{
@@ -43755,7 +43755,7 @@
 "cbp" = (
 /obj/structure/closet/secure_closet/engineering_chief,
 /obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/crew_quarters/heads/chief";
+	areastring = "/area/command/heads_quarters/ce";
 	dir = 4;
 	name = "CE Office APC";
 	pixel_x = 24
@@ -45793,7 +45793,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/command/heads_quarters/ce)
+/area/command)
 "cgQ" = (
 /obj/machinery/camera{
 	c_tag = "Engineering East";
@@ -51521,7 +51521,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/crew_quarters/heads/hop";
+	areastring = "/area/command/heads_quarters/hop";
 	name = "Head of Personnel APC";
 	pixel_y = -24
 	},
