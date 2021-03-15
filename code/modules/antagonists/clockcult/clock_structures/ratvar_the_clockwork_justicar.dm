@@ -160,7 +160,7 @@
 	sleep(300)
 	priority_announce("Gravitational anomalies detected on the station. [Gibberish("There is no additional dat", 100)]-BZZZZZT.","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce1.ogg')
 	sleep(80)
-	sound_to_playing_players(sound('sound/magic/clockwork/ratvar_announce2.ogg'))
+	sound_to_playing_players(sound('sound/magic/clockwork/ratvar_announce2.ogg', 70))
 	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!\"</font></span>")
 	sleep(50)
 	SSshuttle.registerHostileEnvironment(src)
@@ -169,7 +169,7 @@
 	if(QDELETED(src))
 		priority_announce("Energy signal no longer detected.","Central Command Higher Dimensional Affairs")
 		return
-	sound_to_playing_players('sound/machines/clockcult/ratvar_scream.ogg', 80) //if this isn't lessened in volume it peaks for some reason
+	sound_to_playing_players('sound/magic/clockwork/ark_activation_sequence.ogg', 80) //if this isn't lessened in volume it peaks for some reason
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/clockcult_ending_helper), 300)
 
 /proc/clockcult_ending_helper()
