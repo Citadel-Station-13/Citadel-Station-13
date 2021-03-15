@@ -514,7 +514,7 @@
 /mob/living/ratvar_act()
 	if(status_flags & GODMODE)
 		return
-	if(stat != DEAD && !is_servant_of_ratvar(src))
+	if(stat == DEAD || is_servant_of_ratvar(src))
 		return
 	if (is_eligible_servant(src))
 		add_servant_of_ratvar(src)
