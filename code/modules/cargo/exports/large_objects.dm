@@ -171,7 +171,7 @@
 	var/worth = 10
 	worth += C.air_contents.get_moles(/datum/gas/bz)*3
 	worth += C.air_contents.get_moles(/datum/gas/stimulum)*25
-	worth += C.air_contents.get_moles(/datum/gas/hypernoblium)*1000
+	worth += C.air_contents.get_moles(/datum/gas/hypernoblium)*20
 	worth += C.air_contents.get_moles(/datum/gas/miasma)*2
 	worth += C.air_contents.get_moles(/datum/gas/tritium)*7
 	worth += C.air_contents.get_moles(/datum/gas/pluoxium)*6
