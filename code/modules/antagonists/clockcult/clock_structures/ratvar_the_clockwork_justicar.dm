@@ -160,7 +160,7 @@
 	sleep(300)
 	priority_announce("Gravitational anomalies detected on the station. [Gibberish("There is no additional dat", 100)]-BZZZZZT.","Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/ratvar_announce1.ogg')
 	sleep(80)
-	sound_to_playing_players(sound('sound/magic/clockwork/ratvar_announce2.ogg', 70))
+	sound_to_playing_players('sound/magic/clockwork/ratvar_announce2.ogg', 70)
 	send_to_playing_players("<span class='heavy_brass'><font size=5>\"COME, ALL THOSE FAITHFUL! WITNESS THE RAYS OF JUSTICE CAST UPON THE HERETICS!\"</font></span>")
 	sleep(50)
 	SSshuttle.registerHostileEnvironment(src)
