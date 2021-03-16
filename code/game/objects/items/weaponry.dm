@@ -715,6 +715,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+/obj/item/cane/Initialize()
+	. = ..()
+	AddElement(/datum/element/sword_point) // real shitcode time
+
 /obj/item/staff
 	name = "wizard staff"
 	desc = "Apparently a staff used by the wizard."
