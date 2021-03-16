@@ -809,22 +809,22 @@
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing/brute_upgrade
-	name = "Tend Wounds (Brute) Upgrade"
+	name = "Tend Wounds (Brute) Upgrade I"
 	surgery = /datum/surgery/healing/brute/upgraded
 	id = "surgery_heal_brute_upgrade"
 
 /datum/design/surgery/healing/brute_upgrade_2
-	name = "Tend Wounds (Brute) Upgrade"
+	name = "Tend Wounds (Brute) Upgrade II"
 	surgery = /datum/surgery/healing/brute/upgraded/femto
 	id = "surgery_heal_brute_upgrade_femto"
 
 /datum/design/surgery/healing/burn_upgrade
-	name = "Tend Wounds (Burn) Upgrade"
+	name = "Tend Wounds (Burn) Upgrade I"
 	surgery = /datum/surgery/healing/burn/upgraded
 	id = "surgery_heal_burn_upgrade"
 
 /datum/design/surgery/healing/burn_upgrade_2
-	name = "Tend Wounds (Burn) Upgrade"
+	name = "Tend Wounds (Burn) Upgrade II"
 	surgery = /datum/surgery/healing/brute/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
@@ -835,15 +835,25 @@
 	id = "surgery_heal_combo"
 
 /datum/design/surgery/healing/combo_upgrade
-	name = "Tend Wounds (Mixture) Upgrade"
+	name = "Tend Wounds (Mixture) Upgrade I"
 	surgery = /datum/surgery/healing/combo/upgraded
 	id = "surgery_heal_combo_upgrade"
 
 /datum/design/surgery/healing/combo_upgrade_2
-	name = "Tend Wounds (Mixture) Upgrade"
+	name = "Tend Wounds (Mixture) Upgrade II"
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
+
+/datum/design/surgery/healing/robot_upgrade
+	name = "Repair Robotic Limbs Upgrade"
+	surgery = /datum/surgery/robot_healing/upgraded
+	id = "surgery_heal_robo_upgrade"
+
+/datum/design/surgery/healing/robot_upgrade_2
+	name = "Repair Robotic Limbs Upgrade II"
+	surgery = /datum/surgery/robot_healing/upgraded/femto
+	id = "surgery_heal_robo_upgrade_femto"
 
 /datum/design/surgery/surgery_toxinhealing
 	name = "Body Rejuvenation"

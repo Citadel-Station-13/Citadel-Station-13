@@ -7,6 +7,13 @@
 /datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
+/datum/config_entry/keyed_list/chaos_level
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/chaos_level/ValidateListEntry(key_name)
+	return key_name in config.modes
+
 /datum/config_entry/keyed_list/max_pop
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
@@ -595,4 +602,9 @@
 
 /// Dirtyness multiplier for making turfs dirty
 /datum/config_entry/number/turf_dirty_multiplier
+	config_entry_value = 1
+
+/datum/config_entry/flag/weigh_by_recent_chaos
+
+/datum/config_entry/number/chaos_exponent
 	config_entry_value = 1

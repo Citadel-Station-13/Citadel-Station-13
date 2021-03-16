@@ -586,7 +586,7 @@
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
 
-/obj/item/clothing/neck/petcollar/choker
+/obj/item/clothing/neck/petcollar/donorchoker
 	name = "NT Choker"
 	desc = "NT property since January 21st,  2562."
 	icon = 'icons/obj/custom.dmi'
@@ -601,3 +601,12 @@
 	item_state = "mmask"
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	icon_state = "mmask"
+
+/obj/item/clothing/suit/smaiden
+	name = "shrine maiden"
+	desc = "Seems questionably tight for religious purposes."
+	icon_state = "smaiden"
+	item_state = "smaiden"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE
