@@ -23,5 +23,6 @@
 
 // just to keep consistent with the derringer being on revolver.dm
 /obj/item/ammo_box/magazine/internal/cylinder/derringer
-	caliber = list("38")
+	caliber = "357"
+	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 2

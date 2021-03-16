@@ -495,24 +495,33 @@
 		charge_bar.pixel_x = i
 		. += charge_bar
 
-// the derringer is neither a pistol or revolver, but for code sake, it fits here
+
+//////////////////////
+// Derringer pistol //
+//////////////////////
+
+// the derringer is neither a pistol or revolver, but for code sanity it will be here
+// two point blank shots will take them to nearly 0% if no armor, naturally suppresed, small size and doesn't show in mob sprite
 /obj/item/gun/ballistic/revolver/derringer
 	name = "derringer pistol"
-	desc = "A favorite among progressive dentists and vengeful action heroes. Hides neatly inside your sleeves! Uses .38-special rounds."
+	desc = "A favorite among dentists and vengeful heroes. Hides neatly inside your sleeves! Uses .357 rounds."
 	fire_sound = "sound/weapons/derringer.ogg"
 	icon_state = "pistol" // placeholder
-	item_state = null 	// not visible in sprite, we want it jango style (not having it show on mob examine would be good as well)
-	suppressed = TRUE	// this gotta be good for SOMETHING
+
+	// not visible in sprite, we want it to be like in jango
+	// not having it show on examining would be good and 'if (wearing clothes)' would desirable
+	item_state = null
+
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/derringer
+	suppressed = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+	projectile_damage_multiplier =
 
 // you can't spin a derringer!
 /obj/item/gun/ballistic/revolver/derringer/do_spin()
 	return
 
-// the little reference
-/obj/item/gun/ballistic/revolver/derringer/shoot_live_shot(mob/living/user, pointblank, mob/pbtarget, message, stam_cost)
+// how to make it impossible to use speedloaders?
+/*/obj/item/gun/ballistic/revolver/derringer/attackby(obj/item/A, mob/user, params)
 	. = ..()
-	if(pointblank)
-		user.visible_message("<span class='notice'>[user] extends their hand in [pbtarget]'s direction.</span>", null, null, DEFAULT_MESSAGE_RANGE)
-
+*/
