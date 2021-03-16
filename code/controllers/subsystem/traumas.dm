@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(traumas)
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
 						"aliens", "strangers", "birds", "falling", "anime", "mimes", "cats", "syndicate",
-						"eye"
+						"eye", "sus"
 						)
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
@@ -39,7 +39,8 @@ SUBSYSTEM_DEF(traumas)
 						"mimes" = strings(PHOBIA_FILE, "mimes"),
 						"cats" = strings(PHOBIA_FILE, "cats"),
 						"syndicate"= strings(PHOBIA_FILE, "syndicate"),
-						"eye" = strings(PHOBIA_FILE, "eye")
+						"eye" = strings(PHOBIA_FILE, "eye"),
+						"sus" = strings(PHOBIA_FILE, "amogus"),
 						)
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),

@@ -341,5 +341,31 @@
 		"neet",
 		"ora",
 		"~"
-	]
+	],
+
+	"amogus": [
+		"red",
+		"blue",
+		"green",
+		"lime",
+		"orange",
+		"yellow",
+		"purple",
+		"brown",
+		"black",
+		"pink",
+		"cyan",
+		"white",
+		"emergency meeting",
+		"sus",
+		"vented",
+		"imposter",
+		"crewmate",
+		"electrical",
+		"reactor",
+		"where",
+		"task",
+		"id",
+		"voted"
+	],
 }
