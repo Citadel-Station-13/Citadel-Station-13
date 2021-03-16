@@ -20,14 +20,7 @@
 	if(ninjacost(0,N_ADRENALINE))
 		return
 	var/mob/living/carbon/human/ninja = affecting
-	ninja.SetUnconscious(0)
-	ninja.SetStun(0)
-	ninja.SetKnockdown(0)
-	ninja.SetImmobilized(0)
-	ninja.SetParalyzed(0)
-	ninja.adjustStaminaLoss(-200)
-	ninja.stuttering = 0
-	ninja.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
+	ninja.do_adrenaline(150, TRUE, 0, 0, TRUE, list(/datum/reagent/medicine/epinephrine = 3, /datum/reagent/medicine/regen_jelly = 10, /datum/reagent/medicine/stimulants = 2), "<span class='boldnotice'>You feel a sudden surge of energy!</span>")
 	ninja.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"), forced = "ninjaboost")
 	a_boost = FALSE
 	to_chat(ninja, "<span class='notice'>You have used the adrenaline boost.</span>")
