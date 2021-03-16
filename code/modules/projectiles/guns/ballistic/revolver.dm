@@ -494,3 +494,25 @@
 		var/mutable_appearance/charge_bar = mutable_appearance(icon,  "[initial(icon_state)]_charge", color = batt_color)
 		charge_bar.pixel_x = i
 		. += charge_bar
+
+// the derringer is neither a pistol or revolver, but for code sake, it fits here
+/obj/item/gun/ballistic/revolver/derringer
+	name = "derringer pistol"
+	desc = "A favorite among progressive dentists and vengeful action heroes. Hides neatly inside your sleeves! Uses .38-special rounds."
+	fire_sound = "sound/weapons/derringer.ogg"
+	icon_state = "pistol" // placeholder
+	item_state = null 	// not visible in sprite, we want it jango style (not having it show on mob examine would be good as well)
+	suppressed = TRUE	// this gotta be good for SOMETHING
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/derringer
+	w_class = WEIGHT_CLASS_SMALL
+
+// you can't spin a derringer!
+/obj/item/gun/ballistic/revolver/derringer/do_spin()
+	return
+
+// the little reference
+/obj/item/gun/ballistic/revolver/derringer/shoot_live_shot(mob/living/user, pointblank, mob/pbtarget, message, stam_cost)
+	. = ..()
+	if(pointblank)
+		user.visible_message("<span class='notice'>[user] extends their hand in [pbtarget]'s direction.</span>", null, null, DEFAULT_MESSAGE_RANGE)
+

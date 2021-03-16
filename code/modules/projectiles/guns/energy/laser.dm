@@ -246,3 +246,42 @@
 		chambered.BB.damage *= 5
 
 	process_fire(target, user, TRUE, params)
+
+// wind-up laser for your hilarious antics
+/obj/item/gun/energy/laser/windupgun
+	name = "wind-up rifle"
+	cell_type = /obj/item/stock_parts/cell/empty
+	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	desc = "A rifle using not so state-of-the-art mechanism of self charging. Music Box included"
+	icon_state = "laser"
+	item_state = "laser"
+	can_charge = FALSE     // it is wind-up after all
+	dead_cell = TRUE
+	shaded_charge = FALSE	// we don't want to see charge ammount, or do we?
+	var/music_box_state = -1	// part of the song to play
+	var/music_part = ""			// and the path for said part
+
+/obj/item/gun/energy/laser/windupgun/proc/set_music_state()
+	music_box_state = (music_box_state + 1) % 4
+	switch (music_box_state)
+		if (0)
+			music_part = "sound/weapons/wind_up_1.ogg"
+		if (1)
+			music_part = "sound/weapons/wind_up_2.ogg"
+		if (2)
+			music_part = "sound/weapons/wind_up_1.ogg"
+		if (3)
+			music_part = "sound/weapons/wind_up_3.ogg"
+
+/obj/item/gun/energy/laser/windupgun/attack_self(mob/living/user)
+	to_chat(user, "You begin turning the key...")
+	set_music_state()
+	playsound(user, music_part, 15, FALSE, ignore_walls = FALSE)
+	var/done = FALSE
+	if(do_after(user, 40, target = user))
+		cell.give(cell.maxcharge)
+		done = TRUE
+	if(done)
+		to_chat(user, "You fully wind up the laser gun!")
+	else
+		to_chat(user, "You need to stay still while winding it!")

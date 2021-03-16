@@ -20,3 +20,8 @@
 /obj/item/ammo_box/magazine/internal/rus357/Initialize()
 	stored_ammo += new ammo_type(src)
 	. = ..()
+
+// just to keep consistent with the derringer being on revolver.dm
+/obj/item/ammo_box/magazine/internal/cylinder/derringer
+	caliber = list("38")
+	max_ammo = 2
