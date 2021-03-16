@@ -3,7 +3,7 @@
 	id = SPECIES_VAMPIRE
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD,HAS_FLESH,HAS_BONE)
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH,TRAIT_NOMARROW)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	exotic_bloodtype = "U"
@@ -53,8 +53,8 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	if(C.blood_volume > 0.75)
-		C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
+	if(C.blood_volume > 0.5)
+		C.blood_volume -= 0.5 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
 	else
 		C.dust(FALSE, TRUE)
 
