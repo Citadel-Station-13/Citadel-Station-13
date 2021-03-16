@@ -42885,7 +42885,7 @@
 /area/science/xenobiology)
 "bPd" = (
 /obj/structure/table/reinforced,
-/obj/item/book/random/triple,
+/obj/item/book/random,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bPe" = (

@@ -44,7 +44,8 @@
 		icon_state = "colormate"
 
 /obj/machinery/gear_painter/Destroy()
-	inserted.forceMove(drop_location())
+	if(inserted) //please i beg you do not drop nulls
+		inserted.forceMove(drop_location())
 	return ..()
 
 /obj/machinery/gear_painter/attackby(obj/item/I, mob/living/user)

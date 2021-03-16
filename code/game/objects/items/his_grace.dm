@@ -12,7 +12,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	icon = 'icons/obj/items_and_weapons.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
 	total_mass = TOTAL_MASS_NORMAL_ITEM // average toolbox
 	attack_verb = list("robusted")
@@ -70,19 +70,19 @@
 	else
 		. += "<span class='his_grace'>[src] is latched closed.</span>"
 
-/obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
+/obj/item/his_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
 		user.forceMove(get_turf(src))
 		user.visible_message("<span class='warning'>[user] scrambles out of [src]!</span>", "<span class='notice'>You climb out of [src]!</span>")
 
-/obj/item/his_grace/process()
+/obj/item/his_grace/process(delta_time)
 	if(!bloodthirst)
 		drowse()
 		return
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
-		adjust_bloodthirst(1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) //Maybe adjust this?
+		adjust_bloodthirst((1 + FLOOR(LAZYLEN(contents) * 0.5, 1)) * delta_time) //Maybe adjust this?
 	else
-		adjust_bloodthirst(1) //don't cool off rapidly once we're at the point where His Grace consumes all.
+		adjust_bloodthirst(1 * delta_time) //don't cool off rapidly once we're at the point where His Grace consumes all.
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	if(istype(master) && (src in master.held_items))
 		switch(bloodthirst)
@@ -94,7 +94,7 @@
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.DefaultCombatKnockdown(60)
 				master.adjustBruteLoss(master.maxHealth)
-				playsound(master, 'sound/effects/splat.ogg', 100, 0)
+				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else
 				master.apply_status_effect(STATUS_EFFECT_HISGRACE)
 		return
@@ -115,8 +115,8 @@
 		if(!L.stat)
 			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			playsound(L, 'sound/weapons/smash.ogg', 50, 1)
-			playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
+			playsound(L, 'sound/weapons/smash.ogg', 50, TRUE)
+			playsound(L, 'sound/misc/desceration-01.ogg', 50, TRUE)
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -137,6 +137,8 @@
 	move_gracefully()
 
 /obj/item/his_grace/proc/move_gracefully()
+	SIGNAL_HANDLER
+
 	if(!awakened)
 		return
 	var/static/list/transforms
@@ -161,7 +163,7 @@
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping shut.</span>")
-	playsound(loc, 'sound/weapons/batonextend.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
 	desc = initial(desc)
 	icon_state = initial(icon_state)
@@ -178,8 +180,8 @@
 	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
-	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
+	playsound(meal, 'sound/misc/desceration-02.ogg', 75, TRUE)
+	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
@@ -253,3 +255,4 @@
 	if(istype(master))
 		master.visible_message("<span class='his_grace big bold'>Gods will be watching.</span>")
 		name = "[master]'s mythical toolbox of three powers"
+		master.client?.give_award(/datum/award/achievement/misc/ascension, master)

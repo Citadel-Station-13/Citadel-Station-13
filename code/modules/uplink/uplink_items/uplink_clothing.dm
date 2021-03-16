@@ -98,6 +98,7 @@
 	item = /obj/item/clothing/gloves/tackler/combat/insulated
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 2
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/syndicate_eyepatch
 	name = "Mechanical Eyepatch"

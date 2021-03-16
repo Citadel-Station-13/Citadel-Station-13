@@ -7,6 +7,7 @@
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_CHUNKYFINGERS,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutanttongue = /obj/item/organ/tongue/abductor
 	species_category = SPECIES_CATEGORY_ALIEN
+	ass_image = 'icons/ass/assgrey.png'
 
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

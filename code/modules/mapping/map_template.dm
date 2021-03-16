@@ -196,6 +196,9 @@
 			deleted_atoms++
 	log_world("Annihilated [deleted_atoms] objects.")
 
+/datum/map_template/proc/post_load()
+	return
+
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
 /proc/load_new_z_level(file, name, orientation, list/ztraits)

@@ -3,6 +3,7 @@
 	name = "overthrow"
 	config_tag = "overthrow"
 	antag_flag = ROLE_OVERTHROW
+	chaos = 5
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 	required_players = 20 // the core idea is of a swift, bloodless coup, so it shouldn't be as chaotic as revs.

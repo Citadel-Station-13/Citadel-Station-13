@@ -381,6 +381,14 @@
 	. = ..()
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
+/obj/item/tcgcard_deck/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/tcg)
+	STR.storage_flags = STORAGE_FLAGS_LEGACY_DEFAULT
+	STR.max_volume = DEFAULT_VOLUME_TINY * 30
+	STR.max_w_class = DEFAULT_VOLUME_TINY
+	STR.max_items = 30
+
 /obj/item/tcgcard_deck/update_icon_state()
 	. = ..()
 	if(flipped)
@@ -548,6 +556,7 @@
 	desc = "A TCG-branded card binder, specifically for your infinite collection of TCG cards!"
 	icon = 'icons/obj/tcg/misc.dmi'
 	icon_state = "binder"
+	w_class = WEIGHT_CLASS_SMALL
 
 	var/list/cards = list()
 	var/list/decks = list()
@@ -796,7 +805,13 @@
 	var/list/card_types = list()
 	for(var/obj/item/tcg_card/card in binder.cards)
 		//if(!card.illegal) //Uncomment if you want to block syndie cards from saving
-		card_types[card.datum_type] = card.illegal
+		if(!(card.datum_type in card_types))
+			card_types[card.datum_type] = card.illegal
+		else
+			if(islist(card_types[card.datum_type]))
+				card_types[card.datum_type] += card.illegal
+			else
+				card_types[card.datum_type] = list(card_types[card.datum_type], card.illegal)
 
 	client.prefs.tcg_decks = binder.decks
 	client.prefs.tcg_cards = card_types

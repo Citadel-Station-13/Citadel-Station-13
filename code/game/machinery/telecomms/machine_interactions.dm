@@ -243,13 +243,14 @@
 
 // Check if the user can use it.
 /obj/machinery/telecomms/proc/canInteract(mob/user)
-	var/get = user.get_active_held_item()
-	var/obj/item/I = get
-	if(I.tool_behaviour == TOOL_MULTITOOL)
-		return TRUE
+	var/obj/item/I = user.get_active_held_item()
+	if(!issilicon(user) && I)
+		if(I.tool_behaviour == TOOL_MULTITOOL)
+			return TRUE
 	if(hasSiliconAccessInArea(user))
 		return TRUE
 	return FALSE
+
 // Check if the user is nearby and has a multitool.
 /obj/machinery/telecomms/proc/canAccess(mob/user)
 	if((canInteract(user) && in_range(user, src)) || hasSiliconAccessInArea(user))
@@ -262,14 +263,13 @@
 		return null
 	var/obj/item/P = user.get_active_held_item()
 	// Is the ref not a null? and is it the actual type?
-	if(P.tool_behaviour == TOOL_MULTITOOL)
-		return P
-	else if(isAI(user))
+	if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		var/get = user.get_active_held_item()
-		var/obj/item/I = get
-		if(I.tool_behaviour == TOOL_MULTITOOL)
-			I = user.get_active_held_item()
+	else if(iscyborg(user) && !in_range(user, src))
+		return null
+	if(!P)
+		return null
+	else if(P.tool_behaviour == TOOL_MULTITOOL)
+		return P
 	return P

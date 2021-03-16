@@ -1040,6 +1040,12 @@
 	icon_state = "wbreakpoly"
 	item_state = "wbreakpoly"
 
+/obj/item/clothing/suit/toggle/wbreakpoly/on_toggle(mob/user)
+	if(suittoggled)
+		to_chat(usr, "<span class='notice'>You zip up [src].</span>")
+	else
+		to_chat(usr, "<span class='notice'>You unzip [src].</span>")
+
 /obj/item/clothing/suit/toggle/wbreakpoly/polychromic/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/polychromic, list("#464F65", "#916035", "#474747"), 3)
