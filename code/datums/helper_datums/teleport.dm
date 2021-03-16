@@ -85,7 +85,8 @@
 		var/mob/M = teleatom
 		M.cancel_camera()
 
-	var/static/list/bread_cache = typecacheof(/obj/item/reagent_containers/food/snacks/store/bread)
+var/static/list/bread_cache = typecacheof(list(/obj/item/reagent_containers/food/snacks/store/bread, 
+/obj/item/reagent_containers/food/snacks/baguette))
 	var/list/breadlist = typecache_filter_list(teleatom.GetAllContents(), bread_cache)
 	if(breadlist.len && (channel == TELEPORT_CHANNEL_BLUESPACE || channel == TELEPORT_CHANNEL_QUANTUM))
 		for(var/obj/item/reagent_containers/food/snacks/store/bread/bread in breadlist)
