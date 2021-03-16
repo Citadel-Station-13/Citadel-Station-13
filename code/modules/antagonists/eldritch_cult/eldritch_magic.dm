@@ -949,7 +949,7 @@
 	action_icon_state = "time"
 	action_background_icon_state = "bg_ecult"
 	var/timestop_range = 7
-	var/timestop_duration = 300
+	var/timestop_duration = 200
 	var/static/mutable_appearance/halo
 	var/sound/Snd // shamelessly ripped from lightning.
 
