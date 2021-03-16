@@ -105,8 +105,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/language = "Random"				//bonus language
-	var/choselanguage = "Random"		//language appearance
 	var/underwear = "Nude"				//underwear type
 	var/undie_color = "FFFFFF"
 	var/undershirt = "Nude"				//undershirt type
@@ -130,6 +128,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/custom_speech_verb = "default" //if your say_mod is to be something other than your races
 	var/custom_tongue = "default" //if your tongue is to be something other than your races
+	var/additional_language = "None" //additional language your character has
 	var/modified_limbs = list() //prosthetic/amputated limbs
 	var/chosen_limb_id //body sprite selected to load for the users limbs, null means default, is sanitized when loaded
 
@@ -277,10 +276,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Character Speech</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>Content Preferences</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=5' [current_tab == 5 ? "class='linkOn'" : ""]>Keybindings</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=5' [current_tab == 5 ? "class='linkOn'" : ""]>Content Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=6' [current_tab == 6 ? "class='linkOn'" : ""]>Keybindings</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -328,7 +328,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender;task=input'>[gender == MALE ? "Male" : (gender == FEMALE ? "Female" : (gender == PLURAL ? "Non-binary" : "Object"))]</a><BR>"
 			dat += "<b>Age:</b> <a style='display:block;width:30px' href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
-			dat += "<b>Language:</b> <a href='?_src_=prefs;preference=language;task=input'>[choselanguage]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
 			var/old_group
@@ -484,13 +483,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "</td>"
 				else if(use_skintones || mutant_colors)
 					dat += "</td>"
-
-			dat += APPEARANCE_CATEGORY_COLUMN
-			dat += "<h2>Speech preferences</h2>"
-			dat += "<b>Custom Speech Verb:</b><BR>"
-			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=speech_verb;task=input'>[custom_speech_verb]</a><BR>"
-			dat += "<b>Custom Tongue:</b><BR>"
-			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=tongue;task=input'>[custom_tongue]</a><BR>"
 
 			if(HAIR in pref_species.species_traits)
 
@@ -678,6 +670,36 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</td>"
 			dat += "</tr></table>"
 
+		if(3)
+			if(path)
+				var/savefile/S = new /savefile(path)
+				if(S)
+					dat += "<center>"
+					var/name
+					var/unspaced_slots = 0
+					for(var/i=1, i<=max_save_slots, i++)
+						unspaced_slots++
+						if(unspaced_slots > 4)
+							dat += "<br>"
+							unspaced_slots = 0
+						S.cd = "/character[i]"
+						S["real_name"] >> name
+						if(!name)
+							name = "Character[i]"
+						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
+					dat += "</center>"
+
+			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<h2>Speech preferences</h2>"
+			dat += "<b>Custom Speech Verb:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=speech_verb;task=input'>[custom_speech_verb]</a><BR>"
+			dat += "<b>Custom Tongue:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=tongue;task=input'>[custom_tongue]</a><BR>"
+			dat += "<b>Additional Language</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=language;task=input'>[additional_language]</a><BR>"
+			dat += "</td>"
+			dat += "</tr></table>"
+
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
@@ -846,7 +868,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br>"
 
-		if(3)
+		if(4)
 			//calculate your gear points from the chosen item
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
@@ -965,7 +987,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
 
 					dat += "</table>"
-		if(4) // Content preferences
+		if(5) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Fetish content prefs</h2>"
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
@@ -989,7 +1011,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Automatic Wagging:</b> <a href='?_src_=prefs;preference=auto_wag'>[(cit_toggles & NO_AUTO_WAG) ? "Disabled" : "Enabled"]</a><br>"
 			dat += "</tr></table>"
 			dat += "<br>"
-		if(5) // Custom keybindings
+		if(6) // Custom keybindings
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Input"]</a><br>"
 			dat += "Keybindings mode controls how the game behaves with tab and map/input focus.<br>If it is on <b>Hotkeys</b>, the game will always attempt to force you to map focus, meaning keypresses are sent \
 			directly to the map instead of the input. You will still be able to use the command bar, but you need to tab to do it every time you click on the game map.<br>\
@@ -2339,28 +2361,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["body_model"] = chosengender
 					gender = chosengender
 
-				if("language")
-					choselanguage = input(user, "Select a language.", "Language", language) as null|anything in list("Beachtongue","Draconic","Dwarven",
-				 																									"Chimpanzee","Space Sign Language","Random")
-					if(!choselanguage)
-						return
-					switch(choselanguage)
-						if("Rachidian")
-							language = /datum/language/arachnid
-						if("Beachtongue")
-							language = /datum/language/beachbum
-						if("Draconic")
-							language = /datum/language/draconic
-						if("Dwarven")
-							language = /datum/language/dwarf
-						if("Chimpanzee")
-							language = /datum/language/monkey
-						if("Space Sign Language")
-							language = /datum/language/signlanguage
-						if("Random")
-							language = pick(list("Rachidian", "Beachtongue","Draconic","Dwarven",
-												 "Chimpanzee","Space Sign Language"))
-
 				if("body_size")
 					var/new_body_size = input(user, "Choose your desired sprite size: (90-125%)\nWarning: This may make your character look distorted. Additionally, any size under 100% takes a 10% maximum health penalty", "Character Preference", features["body_size"]*100) as num|null
 					if(new_body_size)
@@ -2370,10 +2370,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/selected_custom_tongue = input(user, "Choose your desired tongue (none means your species tongue)", "Character Preference") as null|anything in GLOB.roundstart_tongues
 					if(selected_custom_tongue)
 						custom_tongue = selected_custom_tongue
+
 				if("speech_verb")
 					var/selected_custom_speech_verb = input(user, "Choose your desired speech verb (none means your species speech verb)", "Character Preference") as null|anything in GLOB.speech_verbs
 					if(selected_custom_speech_verb)
 						custom_speech_verb = selected_custom_speech_verb
+
+				if("language")
+					var/selected_language = input(user, "Choose your desired additional language", "Character Preference") as null|anything in GLOB.roundstart_languages
+					if(selected_language)
+						additional_language = selected_language
 
 				if("bodysprite")
 					var/selected_body_sprite = input(user, "Choose your desired body sprite", "Character Preference") as null|anything in pref_species.allowed_limb_ids
@@ -2909,6 +2915,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			new_custom_tongue.Insert(character)
 	if(custom_speech_verb != "default")
 		character.dna.species.say_mod = custom_speech_verb
+	if(additional_language && additional_language != "None")
+		var/language_entry = GLOB.roundstart_languages[additional_language]
+		if(language_entry)
+			character.grant_language(language_entry, TRUE, TRUE)
 
 	//limb stuff, only done when initially spawning in
 	if(initial_spawn)
