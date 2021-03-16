@@ -74,8 +74,8 @@
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		icon_state = "book_open"
-		flick("book_opening", src)
+		icon_state = "codex_open"
+		flick("codex_opening", src)
 		ui = new(user, src, "ForbiddenLore", name)
 		ui.open()
 
