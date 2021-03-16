@@ -67,7 +67,7 @@
 		return FALSE
 
 /datum/action/innate/heretic_shatter/Activate()
-	if(do_after(holder,20, target = holder))
+	if(do_after(holder,10, target = holder))
 		var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
 		do_teleport(holder,safe_turf,forceMove = TRUE)
 		to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")

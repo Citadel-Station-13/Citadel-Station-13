@@ -906,7 +906,7 @@
 	new /obj/effect/temp_visual/voidswap(user.drop_location())
 	new /obj/effect/temp_visual/voidswap(targeted_turf)
 
-	if(isliving(target))
+	if(isliving(target) || iscontainer(target))
 		do_teleport(user,targeted_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 		do_teleport(target,user_turf,0,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 
@@ -915,7 +915,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!istype(target,/mob/living))
+	if(!isliving(target) && !iscontainer(target))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You are unable to swap with the [target]!</span>")
 		return FALSE
@@ -949,12 +949,11 @@
 	action_icon_state = "time"
 	action_background_icon_state = "bg_ecult"
 	var/timestop_range = 7
-	var/timestop_duration = 200
+	var/timestop_duration = 300
 	var/static/mutable_appearance/halo
 	var/sound/Snd // shamelessly ripped from lightning.
 
 /obj/effect/proc_holder/spell/aoe_turf/domain_expansion/cast(list/targets, mob/user = usr)
-	user.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/domain)
 	Snd = new/sound('sound/magic/clockwork/ratvar_attack.ogg',channel = 7)
 	halo = halo || mutable_appearance('icons/effects/effects.dmi', "at_shield2", EFFECTS_LAYER)
 	user.add_overlay(halo)
@@ -962,7 +961,6 @@
 	if(do_mob(user,user,50,1))
 		user.cut_overlay(halo)
 		user.emote("clap1")
-		user.say("DOM'ENO ISPLET'IMAS")
+		user.say("DOM'ENO ISPLETIMAS")
 		playsound(user, 'sound/magic/domain.ogg', 125, TRUE)
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/domain)
 		new /obj/effect/domain_expansion(get_turf(user), timestop_range, timestop_duration, list(user))

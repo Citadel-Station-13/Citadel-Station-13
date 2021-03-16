@@ -12,7 +12,7 @@
 /datum/eldritch_knowledge/base_void/recipe_snowflake_check(list/atoms, loc)
 	. = ..()
 	var/turf/open/turfie = loc
-	if(turfie.GetTemperature() > T20C)
+	if(turfie.GetTemperature() > T0C)
 		return FALSE
 
 /datum/eldritch_knowledge/void_grasp
@@ -31,7 +31,7 @@
 	var/turf/open/turfie = get_turf(carbon_target)
 	turfie.TakeTemperature(-20)
 	carbon_target.adjust_bodytemperature(-40)
-	carbon_target.silent += 4
+	carbon_target.silent = clamp(carbon_target.silent + 4, 0, 20)
 	return TRUE
 
 /datum/eldritch_knowledge/void_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
@@ -43,7 +43,7 @@
 	if(!E)
 		return
 	E.on_effect()
-	H.silent += 3
+	H.silent = clamp(H.silent + 3, 0, 20)
 
 /datum/eldritch_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -202,7 +202,7 @@
 	for(var/mob/living/carbon/livies in spiral_range(7,user)-user)
 		if(IS_HERETIC_MONSTER(livies) || IS_HERETIC(livies))
 			return
-		livies.silent += 1
+		livies.silent = clamp(livies.silent + 1, 0, 5)
 		livies.adjust_bodytemperature(-20)
 
 	var/turf/turfie = get_turf(user)

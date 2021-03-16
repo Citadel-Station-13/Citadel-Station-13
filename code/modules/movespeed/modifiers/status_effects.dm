@@ -22,7 +22,7 @@
 	priority = 50
 
 /datum/movespeed_modifier/status_effect/domain
-	multiplicative_slowdown = 1.5
+	multiplicative_slowdown = 3
 
 /datum/movespeed_modifier/status_effect/tased/no_combat_mode
 	multiplicative_slowdown = 8

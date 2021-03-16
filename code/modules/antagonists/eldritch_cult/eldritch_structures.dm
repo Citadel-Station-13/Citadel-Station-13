@@ -153,7 +153,8 @@
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/carbon_victim = L
-	carbon_victim.Paralyze(5 SECONDS)
+	carbon_victim.DefaultCombatKnockdown(50)
+	carbon_victim.drop_all_held_items()
 	carbon_victim.apply_damage(20,BRUTE,BODY_ZONE_R_LEG)
 	carbon_victim.apply_damage(20,BRUTE,BODY_ZONE_L_LEG)
 	playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
