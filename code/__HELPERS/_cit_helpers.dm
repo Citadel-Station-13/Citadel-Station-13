@@ -126,6 +126,11 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 
 /mob/living/carbon/proc/is_zone_exposed(zone, list/L)
 	var/part = zone2body_parts_covered_precise(zone)
+	switch(zone)
+		if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+			zone == "feet"
+		if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+			zone == "hands"
 	if(part)
 		return is_part_exposed(part, L, (zone in exposed_zones ? exposed_zones[zone] : NONE))
 	else // only happens if the zone is the face -- eyes/mouth/"face"
@@ -149,7 +154,8 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		if(!(NO_UNDERWEAR in dna.species.species_traits))
 			var/datum/sprite_accessory/underwear/top/T = hidden_undershirt ? null : GLOB.undershirt_list[undershirt]
 			var/datum/sprite_accessory/underwear/bottom/B = hidden_underwear ? null : GLOB.underwear_list[underwear]
-			if((T && CHECK_BITFIELD(T.body_parts_covered, part)) || (B && CHECK_BITFIELD(B.body_parts_covered, part)))
+			var/datum/sprite_accessory/underwear/socks/S = hidden_socks ? null : GLOB.socks_list[socks]
+			if((CHECK_BITFIELD(T?.body_parts_covered, part)) || (CHECK_BITFIELD(B?.body_parts_covered, part)) || CHECK_BITFIELD(S?.body_parts_covered, part)))
 				return FALSE
 	return ..()
 
