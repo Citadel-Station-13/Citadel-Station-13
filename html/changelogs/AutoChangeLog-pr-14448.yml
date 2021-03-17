@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Combat mode right click and right click verb give's are now actualyl targeted"
