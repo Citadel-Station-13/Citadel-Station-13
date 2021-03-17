@@ -189,5 +189,5 @@
 	name = "disabling blast"
 	icon_state = "disablerslug"
 	color = null
-	stamina = 16
+	stamina = 15
 	range = 6
