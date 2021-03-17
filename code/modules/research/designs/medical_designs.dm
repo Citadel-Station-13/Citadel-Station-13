@@ -62,24 +62,6 @@
 	build_path = /obj/item/reagent_containers/glass/beaker/meta
 	category = list("Medical Designs")
 
-/datum/design/bs_hypovial_small
-	name = "Bluespace Hypovial"
-	id = "bs_hypovial"
-	build_type = PROTOLATHE
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(/datum/material/iron = 1500, /datum/material/plasma = 1000, /datum/material/diamond = 100, /datum/material/bluespace = 100)
-	build_path = /obj/item/reagent_containers/glass/bottle/vial/small/bluespace
-	category = list("Medical Designs")
-
-/datum/design/bs_hypovial_large
-	name = "Bluespace Large Hypovial"
-	id = "bs_large_hypovial"
-	build_type = PROTOLATHE
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	materials = list(/datum/material/iron = 3000, /datum/material/plasma = 2500, /datum/material/diamond = 200, /datum/material/bluespace = 250)
-	build_path = /obj/item/reagent_containers/glass/bottle/vial/large/bluespace
-	category = list("Medical Designs")
-
 /datum/design/bluespacesyringe
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
