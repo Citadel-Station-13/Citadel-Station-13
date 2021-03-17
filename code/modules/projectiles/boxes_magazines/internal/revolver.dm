@@ -23,6 +23,13 @@
 
 // just to keep consistent with the derringer being on revolver.dm
 /obj/item/ammo_box/magazine/internal/cylinder/derringer
-	caliber = "357"
-	ammo_type = /obj/item/ammo_casing/a357
+	name = "derringer receiver"
+	caliber = list("38")
+	ammo_type = /obj/item/ammo_casing/c38/lethal	// lets have it start loaded
 	max_ammo = 2
+
+// lets not let it reload with speedloadrs, it makes no sense! but maybe later lets allow it?
+/obj/item/ammo_box/magazine/internal/cylinder/derringer/attackby(obj/item/A, mob/user, params, silent, replace_spent)
+	if(istype(A, /obj/item/ammo_box/))
+		return
+	. = ..()

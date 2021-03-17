@@ -247,7 +247,7 @@
 
 	process_fire(target, user, TRUE, params)
 
-// wind-up laser for your hilarious antics
+// part of contraband assortments
 /obj/item/gun/energy/laser/windupgun
 	name = "wind-up rifle"
 	cell_type = /obj/item/stock_parts/cell/crap/empty	// can't be so good right?
@@ -274,17 +274,14 @@
 			music_part = "sound/weapons/wind_up_3.ogg"
 
 /obj/item/gun/energy/laser/windupgun/attack_self(mob/living/user)
-	if(!(cell.charge > 0))
+	if(cell.charge < cell.maxcharge)
 		to_chat(user, "<span class='notice'>You begin turning the key...</span>")
-		set_music_state()
-		playsound(user, music_part, 20, FALSE, ignore_walls = FALSE)
-		var/done = FALSE
-		if(do_after(user, 35, target = user))
-			cell.give(cell.maxcharge)
-			done = TRUE
-		if(done)
-			to_chat(user, "<span class='notice'>You fully wind up the laser gun!</span>")
+		if(do_after(user, 20, target = user))
+			set_music_state()
+			playsound(user, music_part, 20, FALSE, ignore_walls = FALSE)
+			cell.give(100)	// equivalent of one shot
+			to_chat(user, "<span class='notice'>[src.cell.charge / 100] shot\s loaded.</span>")
 		else
-			to_chat(user, "<span class='notice'>You need to stay still while winding it!</span>")
+			to_chat(user, "<span class='warning'>You need to stay still to do this!</span>")
 	else
-		to_chat(user, "<span class='notice'>You must fully unload it first!</span>")
+		to_chat(user, "<span class='notice'>It's already fully charged!</span>")
