@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes: 
+  - rscadd: "Hypospray vials are now printable from the medical techshift start."
+  - rscadd: "Empty hypospray kits are now printable behind biological technology.
+tweak: Quantum electromag (T4 lasers) are now behind Advanced Bluespace like the rest of T4."
