@@ -14,6 +14,7 @@
 	shape = DEF_COCK_SHAPE
 	size = 2 //arbitrary value derived from length and diameter for sprites.
 	layer_index = PENIS_LAYER_INDEX
+	flavor_text_key = "cock_flavor_text"
 	var/length = 6 //inches
 
 	var/prev_length = 6 //really should be renamed to prev_length

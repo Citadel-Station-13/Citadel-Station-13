@@ -2,6 +2,7 @@
 	color = "#fcccb3"
 	w_class = WEIGHT_CLASS_SMALL
 	organ_flags = ORGAN_NO_DISMEMBERMENT|ORGAN_EDIBLE
+	var/flavor_text_key
 	var/shape
 	var/sensitivity = 1 // wow if this were ever used that'd be cool but it's not but i'm keeping it for my unshit code
 	var/genital_flags //see citadel_defines.dm
@@ -158,7 +159,7 @@
 		update()
 		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 		if(!CHECK_BITFIELD(genital_flags, GENITAL_HIDDEN))
-			owner.AddElement(_name = capitalize(name), _save_key = name, _examine_more = TRUE, _show_if_unknown = TRUE, _zone = zone)
+			owner.AddElement(/datum/element/flavor_text/carbon, _name = capitalize(name), _save_key = flavor_text_key, _examine_more = TRUE, _show_if_unknown = TRUE, _zone = zone)
 
 /obj/item/organ/genital/Remove(special = FALSE)
 	. = ..()
@@ -169,7 +170,7 @@
 			var/mob/living/carbon/human/H = .
 			H.update_genitals()
 		if(!CHECK_BITFIELD(genital_flags, GENITAL_HIDDEN))
-			owner.RemoveElement(_name = capitalize(name), _save_key = name, _examine_more = TRUE, _show_if_unknown = TRUE, _zone = zone)
+			owner.RemoveElement(_name = capitalize(name), _save_key = flavor_text_key, _examine_more = TRUE, _show_if_unknown = TRUE, _zone = zone)
 		UnregisterSignal(C, COMSIG_MOB_DEATH)
 
 //proc to give a player their genitals and stuff when they log in

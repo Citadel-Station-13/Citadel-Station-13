@@ -636,6 +636,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								tauric_shape = TRUE
 					dat += "<b>Penis Shape:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]][tauric_shape ? " (Taur)" : ""]</a>"
 					dat += "<b>Penis Length:</b> <a style='display:block;width:120px' href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a>"
+					dat += "<a href='?_src_=prefs;preference=cock_flavor_text;task=input'><b>Set Examine Text</b></a><br>"
+					if(length(features["cock_flavor_text"]) <= 40)
+						if(!length(features["cock_flavor_text"]))
+							dat += "\[...\]"
+						else
+							dat += "[features["cock_flavor_text"]]"
+					else
+						dat += "[TextPreview(features["cock_flavor_text"])]...<BR>"
 					dat += "<b>Penis Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=cock_visibility;task=input'>[features["cock_visibility"]]</a>"
 					dat += "<b>Has Testicles:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a>"
 					if(features["has_balls"])
@@ -651,6 +659,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a style='display:block;width:50px' href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a>"
 				if(features["has_vag"])
 					dat += "<b>Vagina Type:</b> <a style='display:block;width:100px' href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a>"
+					dat += "<a href='?_src_=prefs;preference=vag_flavor_text;task=input'><b>Set Examine Text</b></a><br>"
+					if(length(features["vag_flavor_text"]) <= 40)
+						if(!length(features["vag_flavor_text"]))
+							dat += "\[...\]"
+						else
+							dat += "[features["vag_flavor_text"]]"
+					else
+						dat += "[TextPreview(features["vag_flavor_text"])]...<BR>"
 					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
 						dat += "<b>Vagina Color:</b></a><BR>"
 						dat += "<span style='border: 1px solid #161616; background-color: [SKINTONE2HEX(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<br>"
@@ -672,6 +688,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "<span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><br>"
 					dat += "<b>Cup Size:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a>"
 					dat += "<b>Breasts Shape:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a>"
+					dat += "<a href='?_src_=prefs;preference=breasts_flavor_text;task=input'><b>Set Examine Text</b></a><br>"
+					if(length(features["breasts_flavor_text"]) <= 40)
+						if(!length(features["breasts_flavor_text"]))
+							dat += "\[...\]"
+						else
+							dat += "[features["breasts_flavor_text"]]"
+					else
+						dat += "[TextPreview(features["breasts_flavor_text"])]...<BR>"
 					dat += "<b>Breasts Visibility:</b><a style='display:block;width:100px' href='?_src_=prefs;preference=breasts_visibility;task=input'>[features["breasts_visibility"]]</a>"
 					dat += "<b>Lactates:</b><a style='display:block;width:50px' href='?_src_=prefs;preference=breasts_producing'>[features["breasts_producing"] == TRUE ? "Yes" : "No"]</a>"
 				dat += "</td>"
@@ -1558,12 +1582,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						medical_records = rec
 
 				if("flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Flavor Text", html_decode(features["flavor_text"]), MAX_FLAVOR_LEN, TRUE)
+					var/msg = stripped_multiline_input(usr, "Set the flavor text in your 'examine' verb.", "Flavor Text", html_decode(features["flavor_text"]), MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
 						features["flavor_text"] = msg
 
 				if("silicon_flavor_text")
-					var/msg = stripped_multiline_input(usr, "Set the silicon flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!", "Silicon Flavor Text", html_decode(features["silicon_flavor_text"]), MAX_FLAVOR_LEN, TRUE)
+					var/msg = stripped_multiline_input(usr, "Set the silicon flavor text in your 'examine' verb.", "Silicon Flavor Text", html_decode(features["silicon_flavor_text"]), MAX_FLAVOR_LEN, TRUE)
 					if(!isnull(msg))
 						features["silicon_flavor_text"] = msg
 
@@ -2165,6 +2189,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["cock_taur"] = TRUE
 						features["cock_shape"] = new_shape
 
+				if("cock_flavor_text")
+					var/msg = stripped_multiline_input(usr, "Set the flavor text for your penis.", "Flavor Text", html_decode(features["cock_flavor_text"]), MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["cock_flavor_text"] = msg
+
 				if("cock_visibility")
 					var/n_vis = input(user, "Penis Visibility", "Character Preference") as null|anything in CONFIG_GET(keyed_list/safe_visibility_toggles)
 					if(n_vis)
@@ -2197,6 +2226,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_shape)
 						features["breasts_shape"] = new_shape
 
+				if("breasts_flavor_text")
+					var/msg = stripped_multiline_input(usr, "Set the flavor text for your breasts.", "Flavor Text", html_decode(features["breasts_flavor_text"]), MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["breasts_flavor_text"] = msg
+
 				if("breasts_color")
 					var/new_breasts_color = input(user, "Breast Color:", "Character Preference","#"+features["breasts_color"]) as color|null
 					if(new_breasts_color)
@@ -2218,6 +2252,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_shape = input(user, "Vagina Type", "Character Preference") as null|anything in GLOB.vagina_shapes_list
 					if(new_shape)
 						features["vag_shape"] = new_shape
+
+				if("vag_flavor_text")
+					var/msg = stripped_multiline_input(usr, "Set the flavor text for your vagina.", "Flavor Text", html_decode(features["vag_flavor_text"]), MAX_FLAVOR_LEN, TRUE)
+					if(!isnull(msg))
+						features["vag_flavor_text"] = msg
 
 				if("vag_color")
 					var/new_vagcolor = input(user, "Vagina color:", "Character Preference","#"+features["vag_color"]) as color|null
