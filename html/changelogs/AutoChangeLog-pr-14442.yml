@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Tactitool Skirtleneck."
+  - rscadd: "Adds the tactitool skirtleneck to the loadout."
