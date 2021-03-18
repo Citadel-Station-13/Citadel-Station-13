@@ -125,6 +125,8 @@
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
+		QDEL_NULL(cellular_emporium)
+		QDEL_NULL(emporium_action)
 		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
 			if(p.always_keep)
 				continue
@@ -139,6 +141,7 @@
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
 		remove_changeling_powers()
+	create_actions()
 	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -225,7 +228,8 @@
 /datum/antagonist/changeling/proc/regenerate()
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
-		emporium_action.Grant(the_ling)
+		if(emporium_action)
+			emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
