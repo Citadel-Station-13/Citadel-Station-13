@@ -24,6 +24,14 @@
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "bluespace_crystal", "xenobio_slimeadv")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
+/datum/techweb_node/emp_super
+	id = "emp_super"
+	display_name = "Quantum Electromagnetic Technology"
+	description = "Even better electromagnetic technology."
+	prereq_ids = list("emp_adv", "adv_bluespace") // why should the rest of T4 be locked but not this node? grmblgrmbl
+	design_ids = list("quadultra_micro_laser")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+
 /datum/techweb_node/bluespace_power
 	id = "bluespace_power"
 	display_name = "Bluespace Power Technology"
@@ -37,7 +45,7 @@
 	display_name = "Bluespace Pockets"
 	description = "Studies into the mysterious alternate dimension known as bluespace and how to place items in the threads of reality."
 	prereq_ids = list("adv_power", "adv_bluespace", "adv_biotech", "adv_plasma")
-	design_ids = list( "bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag", "duffelbag_holding")
+	design_ids = list("bluespacebodybag","bag_holding", "bluespace_pod", "borg_upgrade_trashofholding", "blutrash", "satchel_holding", "bsblood_bag", "duffelbag_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5500)
 
 /datum/techweb_node/bluespace_portal

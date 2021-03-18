@@ -284,6 +284,17 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles", "caws", "gekkers", "clucks"))
 GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc, "xeno tongue" = /obj/item/organ/tongue/alien))
 
+/proc/get_roundstart_languages()
+	var/list/languages = subtypesof(/datum/language)
+	var/list/roundstart_languages = list("None") //default option for the list
+	for(var/some_language in languages)
+		var/datum/language/language = some_language
+		if(initial(language.chooseable_roundstart))
+			roundstart_languages[initial(language.name)] = some_language
+	return roundstart_languages
+
+GLOBAL_LIST_INIT(roundstart_languages, get_roundstart_languages())
+
 //SPECIES BODYPART LISTS
 //locked parts are those that your picked species requires to have
 //unlocked parts are those that anyone can choose on customisation regardless

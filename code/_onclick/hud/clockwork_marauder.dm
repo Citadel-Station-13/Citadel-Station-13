@@ -3,7 +3,7 @@
 	var/obj/screen/blockchance
 	var/obj/screen/counterchance
 
-/datum/hud/marauder/New(mob/living/simple_animal/hostile/clockwork/marauder/guardian/owner)
+/datum/hud/marauder/New(mob/living/simple_animal/hostile/clockwork/guardian/owner)
 	..()
 	var/obj/screen/using
 
@@ -24,7 +24,7 @@
 	hosthealth = null
 	return ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/guardian/create_mob_hud()
+/mob/living/simple_animal/hostile/clockwork/guardian/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/marauder(src, ui_style2icon(client.prefs.UI_style))
 
@@ -37,8 +37,8 @@
 	desc = "Emerge or Return."
 
 /obj/screen/marauder/emerge/Click()
-	if(istype(usr, /mob/living/simple_animal/hostile/clockwork/marauder/guardian))
-		var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/G = usr
+	if(istype(usr, /mob/living/simple_animal/hostile/clockwork/guardian))
+		var/mob/living/simple_animal/hostile/clockwork/guardian/G = usr
 		if(G.is_in_host())
 			G.try_emerge()
 		else
