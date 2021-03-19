@@ -30,7 +30,7 @@
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Right click attack while in combat mode to knockdown, but only once per [cooldown_duration / 10] seconds.</span>"
-	. += "<span class='notice'>This knockdown will also put them off balance for  [status_duration / 2] seconds, allowing you to shove a weapon out of their hand with a right click in Disarm intent.</span>"
+	. += "<span class='notice'>This knockdown will also put them off balance for  [status_duration / 20] seconds, allowing you to shove a weapon out of their hand with a right click in Disarm intent.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
