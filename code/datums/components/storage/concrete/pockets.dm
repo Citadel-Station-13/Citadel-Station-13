@@ -97,3 +97,11 @@
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/reagent_containers/glass/bottle,
 								/obj/item/ammo_box/a762))
+
+/datum/component/storage/concrete/pockets/void_cloak
+	quickdraw = TRUE
+	max_items = 3
+
+/datum/component/storage/concrete/pockets/void_cloak/Initialize()
+	. = ..()
+	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
