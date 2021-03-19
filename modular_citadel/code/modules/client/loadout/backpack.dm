@@ -9,18 +9,9 @@
 	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 
 /datum/gear/backpack/tennis
-	name = "Tri-color Polychromic Tennis Ball"
-	path = /obj/item/toy/fluff/tennis_poly/tri
-	cost = 3
-
-/datum/gear/backpack/tennis
-	name = "Squeakable Tri-color Polychromic Tennis Ball"
-	path = /obj/item/toy/fluff/tennis_poly/tri/squeak
-	cost = 6
-
-/datum/gear/backpack/tennis
 	name = "Polychromic Tennis Ball"
 	path = /obj/item/toy/fluff/tennis_poly
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
 
 /datum/gear/backpack/tennis/red
 	name = "Red Tennis Ball"
@@ -45,6 +36,16 @@
 /datum/gear/backpack/tennis/purple
 	name = "Purple Tennis Ball"
 	path = /obj/item/toy/fluff/tennis_poly/purple
+
+/datum/gear/backpack/tennis/tri
+	name = "Tri-color Polychromic Tennis Ball"
+	path = /obj/item/toy/fluff/tennis_poly/tri
+	cost = 3
+
+/datum/gear/backpack/tennis/tri/squeak
+	name = "Squeakable Tri-color Polychromic Tennis Ball"
+	path = /obj/item/toy/fluff/tennis_poly/tri/squeak
+	cost = 6
 
 /datum/gear/backpack/bone
 	name = "Polychromic Bone"
@@ -74,6 +75,11 @@
 /datum/gear/backpack/bone/purple
 	name = "Purple Polychromic Bone"
 	path = /obj/item/toy/fluff/bone_poly/purple
+
+/datum/gear/backpack/bone/squeak
+	name = "Squeakable Polychromic Bone"
+	path = /obj/item/toy/fluff/bone_poly/squeak
+	cost = 6
 
 /datum/gear/backpack/frisbee
 	name = "Polychromic Frisbee"
