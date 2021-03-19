@@ -30,6 +30,7 @@
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Right click attack while in combat mode to knockdown, but only once per [cooldown_duration / 10] seconds.</span>"
+	. += "<span class='notice'>This knockdown will also put them off balance for  [status_duration / 2] seconds, allowing you to shove a weapon out of their hand with a right click in Disarm intent.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
@@ -221,6 +222,7 @@
 	if(shoving && COOLDOWN_FINISHED(src, shove_cooldown) && !HAS_TRAIT(L, TRAIT_IWASBATONED)) //Rightclicking applies a knockdown, but only once every couple of seconds, based on the cooldown_duration var. If they were recently knocked down, they can't be knocked down again by a baton.
 		L.DefaultCombatKnockdown(50, override_stamdmg = 0)
 		L.apply_status_effect(STATUS_EFFECT_TASED_WEAK, status_duration) //Even if they shove themselves up, they're still slowed.
+		L.apply_status_effect(STATUS_EFFECT_OFF_BALANCE, status_duration * 0.5) //They're very likely to drop items if shoved briefly after a knockdown.
 		shoved = TRUE
 		COOLDOWN_START(src, shove_cooldown, cooldown_duration)
 	else //If we cannot/don't knock down the target, we apply a stagger, which keeps them from just running off
