@@ -549,3 +549,8 @@
 	path = /obj/item/clothing/mask/breath/mmask
 	ckeywhitelist = list("sneka")
 
+/datum/gear/donator/smaiden
+	name = "Shrine Maiden"
+	slot = SLOT_WEAR_SUIT
+	path = /obj/item/clothing/suit/smaiden
+	ckeywhitelist = list("ultimarifox")

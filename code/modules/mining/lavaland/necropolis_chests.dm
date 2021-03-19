@@ -928,7 +928,10 @@
 			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
-	ghost_check()
+	force = 0
+	var/ghost_counter = ghost_check()
+
+	force = clamp((ghost_counter * 4), 0, 75)
 
 /obj/item/melee/ghost_sword/proc/recursive_orbit_collect(atom/A, list/L)
 	for(var/i in A.orbiters?.orbiters)
