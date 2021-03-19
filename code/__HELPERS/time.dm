@@ -75,10 +75,10 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 /proc/daysSince(realtimev)
 	return round((world.realtime - realtimev) / (24 HOURS))
 
-/proc/worldtime2text()
-	return gameTimestamp("hh:mm:ss", world.time)
+/proc/worldtime2text(offset_timezone = TRUE)
+	return gameTimestamp("hh:mm:ss", world.time, offset_timezone)
 
-/proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
+/proc/gameTimestamp(format = "hh:mm:ss", wtime=null, offset_timezone = TRUE)
 	if(!wtime)
 		wtime = world.time
-	return time2text(wtime - GLOB.timezoneOffset, format)
+	return time2text(wtime - (offset_timezone? GLOB.timezoneOffset : 0), format)
