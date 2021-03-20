@@ -681,7 +681,7 @@ as performing this in action() will cause the upgrade to end up in the borg inst
 	action_icon_state = "Chevron_State_0"
 
 	var/currentState = 0
-	var/maxReduction = 1
+	var/maxReduction = 0.5
 
 
 /obj/effect/proc_holder/silicon/cyborg/vtecControl/Trigger(mob/living/silicon/robot/user)
