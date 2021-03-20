@@ -1,0 +1,6 @@
+author: "GrayRachnid"
+delete-after: True
+changes: 
+  - config: "the in_character_filter.txt is now usable"
+  - admin: "headmins should edit the in_character_filter.txt"
+  - server: "someone with box access should delete racism with the in_character_filter.txt"
