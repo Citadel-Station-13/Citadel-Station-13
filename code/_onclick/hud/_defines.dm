@@ -158,11 +158,12 @@
 
 //Ghosts
 
-#define ui_ghost_jumptomob "SOUTH:6,CENTER-2:24"
-#define ui_ghost_orbit "SOUTH:6,CENTER-1:24"
-#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24"
-#define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
-#define ui_ghost_spawners "SOUTH: 6, CENTER+2:24"
+#define ui_ghost_respawn "SOUTH:6,CENTER-[num2text(2+(CONFIG_GET(flag/respawns_enabled) ? 0.5 : 0))]:24"
+#define ui_ghost_jumptomob "SOUTH:6,CENTER-[num2text(1+(CONFIG_GET(flag/respawns_enabled) ? 0.5 : 0))]:24"
+#define ui_ghost_orbit "SOUTH:6,CENTER-[num2text((CONFIG_GET(flag/respawns_enabled) ? 0.5 : 0))]:24"
+#define ui_ghost_reenter_corpse "SOUTH:6,CENTER:24+[num2text((CONFIG_GET(flag/respawns_enabled) ? 0.5 : 0))]"
+#define ui_ghost_teleport "SOUTH:6,CENTER+[num2text(1+(CONFIG_GET(flag/respawns_enabled) ? 0.5 : 0))]:24"
+#define ui_ghost_spawners "SOUTH: 6, CENTER+[num2text(2+(CONFIG_GET(flag/respawns_enabled) ? 0.5 : 0))]:24"
 
 
 //UI position overrides for 1:1 screen layout. (default is 7:5)

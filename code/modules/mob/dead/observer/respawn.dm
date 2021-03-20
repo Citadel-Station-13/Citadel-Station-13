@@ -108,35 +108,42 @@
 	return TRUE
 
 /**
+ * Checks if user is eligible to respawn
+ */
+/mob/dead/observer/proc/can_respawn()
+	if(!CONFIG_GET(flag/respawns_enabled))
+		to_chat(src, "<span class='warning'>Respawns are disabled in configuration.</span>")
+		return FALSE
+
+	if(client.prefs.dnr_triggered)
+		to_chat(src, "<span class='danger'>You cannot respawn as you have enabled DNR.</span>")
+		return FALSE
+
+	var/roundstart_timeleft = (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time
+	if(roundstart_timeleft > 0)
+		to_chat(src, "<span class='warning'>It's been too short of a time since the round started! Please wait [CEILING(roundstart_timeleft / 600, 0.1)] more minutes.</span>")
+		return FALSE
+
+	var/list/banned_modes = CONFIG_GET(keyed_list/respawn_chaos_gamemodes)
+	if(SSticker.mode && banned_modes[lowertext(SSticker.mode.config_tag)])
+		to_chat(src, "<span class='warning'>The current mode tag, [SSticker.mode.config_tag], is not eligible for respawn.</span>")
+		return FALSE
+
+	var/timeleft = time_left_to_respawn()
+	if(timeleft)
+		to_chat(src, "<span class='warning'>It's been too short of a time since you died/observed! Please wait [round(timeleft / 600, 0.1)] more minutes.</span>")
+		return FALSE
+
+	return TRUE
+
+/**
  * Attempts to respawn.
  */
 /mob/dead/observer/verb/respawn()
 	set name = "Respawn"
 	set category = "OOC"
-
-	if(!CONFIG_GET(flag/respawns_enabled))
-		to_chat(src, "<span class='warning'>Respawns are disabled in configuration.</span>")
-		return
-
-	if(client.prefs.dnr_triggered)
-		to_chat(src, "<span class='danger'>You cannot respawn as you have enabled DNR.</span>")
-		return
-
-	var/roundstart_timeleft = (SSticker.round_start_time + (CONFIG_GET(number/respawn_minimum_delay_roundstart) * 600)) - world.time
-	if(roundstart_timeleft > 0)
-		to_chat(src, "<span class='warning'>It's been too short of a time since the round started! Please wait [CEILING(roundstart_timeleft / 600, 0.1)] more minutes.</span>")
-		return
-
-	var/list/banned_modes = CONFIG_GET(keyed_list/respawn_chaos_gamemodes)
-	if(SSticker.mode && banned_modes[lowertext(SSticker.mode.config_tag)])
-		to_chat(src, "<span class='warning'>The current mode tag, [SSticker.mode.config_tag], is not eligible for respawn.</span>")
-		return
-
-	var/timeleft = time_left_to_respawn()
-	if(timeleft)
-		to_chat(src, "<span class='warning'>It's been too short of a time since you died/observed! Please wait [round(timeleft / 600, 0.1)] more minutes.</span>")
-		return
-	do_respawn(TRUE)
+	if(can_respawn())
+		do_respawn(TRUE)
 
 /**
  * Gets time left until we can respawn. Returns 0 if we can respawn now.
@@ -165,7 +172,7 @@
 
 /**
  * Actual proc that removes us and puts us back on lobby
- * 
+ *
  * Returns the new mob.
  */
 /mob/dead/observer/proc/transfer_to_lobby()

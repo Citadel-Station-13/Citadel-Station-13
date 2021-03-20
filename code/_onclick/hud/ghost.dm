@@ -4,6 +4,18 @@
 /obj/screen/ghost/MouseEntered()
 	flick(icon_state + "_anim", src)
 
+/obj/screen/ghost/respawn
+	name = "Respawn"
+	icon_state = "respawn"
+
+/obj/screen/ghost/respawn/Click()
+	var/mob/dead/observer/G = usr
+	if(!G.can_respawn())
+		return
+	var/confirmation = alert(G, "Do you wish to respawn? You cannot respawn as a head of staff or security member.", "Respawn", "Yes", "No")
+	if(confirmation == "Yes")
+		G.do_respawn(TRUE)
+
 /obj/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
@@ -47,6 +59,12 @@
 /datum/hud/ghost/New(mob/owner)
 	..()
 	var/obj/screen/using
+
+	if(CONFIG_GET(flag/respawns_enabled))
+		using = new /obj/screen/ghost/respawn()
+		using.screen_loc = ui_ghost_respawn
+		using.hud = src
+		static_inventory += using
 
 	using = new /obj/screen/ghost/jumptomob()
 	using.screen_loc = ui_ghost_jumptomob
