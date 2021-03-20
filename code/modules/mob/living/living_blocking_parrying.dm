@@ -98,15 +98,15 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Can this item automatically block?
 	var/block_automatic_enabled = TRUE
 #warn have autoblock items warn user on pickup
-	/// Directions that you can autoblock in
-	var/block_automatic_directions = BLOCK_DIR_NORTH | BLOCK_DIR_NORTHEAST | BLOCK_DIR_NORTHWEST
+	/// Directions that you can autoblock in. Null to default to normal directions.
+	var/block_automatic_directions = null
 	/// Effectiveness multiplier for automated block. Only applies to efficiency, absorption and limits stay the same!
 	var/block_automatic_mitigation_multiplier = 0.33
 	/// Stamina cost multiplier for automated block
 	var/block_automatic_stamina_multiplier = 1
 
 	/////////// PARRYING ////////////
-	/// Prioriry for [mob/do_run_block()] while we're being used to parry.
+	/// Priority for [mob/do_run_block()] while we're being used to parry.
 	//  None - Parry is always highest priority!
 	/// Parry doesn't work if you aren't able to otherwise attack due to clickdelay
 	var/parry_respect_clickdelay = TRUE
@@ -178,12 +178,13 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	var/perfect_parry_block_return_list
 	var/imperfect_parry_block_return_list
 	var/failed_parry_block_return_list
+	/// Allow multiple counterattacks per parry sequence. Bad idea.
+	var/parry_allow_repeated_counterattacks = FALSE
 
 	// Auto parry
 	// Anything not specified like cooldowns/clickdelay respecting is pulled from above.
 	/// Can this data automatically parry? This is off by default because this is something that requires thought to balance.
 	var/parry_automatic_enabled = FALSE
-#warn implement autoparry in items
 #warn have autoparry items warn user on pickup
 	/// Hard autoparry cooldown
 	var/autoparry_cooldown_absolute = 3 SECONDS
@@ -195,15 +196,16 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Clickdelay to inflict on single-attack autoparry
 	var/autoparry_single_click_cooldown = 0
 	/// Single attack autoparry - efficiency
-	var/autoparry_single_efficiency = 60
+	var/autoparry_single_efficiency = 75
 	/// Single attack autoparry - efficiency overrides by attack type, see above
 	var/list/autoparry_single_efficiency_override
 	// Parry sequence simulation:
 	/// Decisecond of sequence to start on. -1 to start to 0th tick of active parry window.
 	var/autoparry_sequence_start_time = -1
-	/// Efficiency multiplier
-	var/autoparry_sequence_efficiency_multiplier = 0.8
 	// Clickdelay/cooldown settings not included, as well as whether or not to lock attack/sprinting/etc. They will be pulled from the above.
+
+	/// ADVANCED - Autoparry requirement for time since last moused over for a specific object
+	var/autoparry_mouse_delay_maximum = 0.5
 
 /**
   * Quirky proc to get average of flags in list that are in attack_type because why is attack_type a flag.
@@ -346,6 +348,7 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 		RENDER_VARIABLE_SIMPLE(parry_cooldown, "Deciseconds it has to be since the last time a parry sequence <b>ended</b> for you before you can parry again.")
 		RENDER_VARIABLE_SIMPLE(parry_failed_stagger_duration, "Deciseconds you are staggered for at the of the parry sequence if you do not successfully parry anything.")
 		RENDER_VARIABLE_SIMPLE(parry_failed_clickcd_duration, "Deciseconds you are put on attack cooldown at the end of the parry sequence if you do not successfully parry anything.")
+		dat += ""
 		dat += "</div></table>"
 	return dat.Join("")
 #undef RENDER_VARIABLE_SIMPLE

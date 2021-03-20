@@ -151,7 +151,9 @@
 	parry_efficiency_considered_successful = 65		// VERY generous
 	parry_efficiency_perfect = 100
 	parry_failed_stagger_duration = 4 SECONDS
+	parry_failed_cooldown_duration = 2 SECONDS
 	parry_cooldown = 0.5 SECONDS
+	parry_flags = NONE
 
 /mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
 	amount *= physiology? physiology.stamina_buffer_mod : 1

@@ -52,6 +52,8 @@
 	var/parry_end_time_last = 0
 	/// Successful parries within the current parry cycle. It's a list of efficiency percentages.
 	var/list/successful_parries
+	/// Current parry counterattacks. Makes sure we can only counterattack someone once per parry.
+	var/list/successful_parry_counterattacks
 
 	var/confused = 0	//Makes the mob move in random directions.
 

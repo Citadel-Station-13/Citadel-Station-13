@@ -14,18 +14,57 @@
 /**
   * Initiates a parrying sequence.
   */
-/mob/living/proc/initiate_parry_sequence()
+/mob/living/proc/initiate_parry_sequence(silent = FALSE, list/override_method_data)
 	if(parrying)
-		return		// already parrying
+		return FALSE		// already parrying
 	if(!(mobility_flags & MOBILITY_USE))
-		to_chat(src, "<span class='warning'>You can't move your arms!</span>")
-		return
+		if(!silent)
+			to_chat(src, "<span class='warning'>You can't move your arms!</span>")
+		return FALSE
 	if(!(combat_flags & COMBAT_FLAG_PARRY_CAPABLE))
-		to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
-		return
+		if(!silent)
+			to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
+		return FALSE
 	if(!(mobility_flags & MOBILITY_STAND))
-		to_chat(src, "<span class='warning'>You aren't able to parry without solid footing!</span>")
-		return
+		if(!silent)
+			to_chat(src, "<span class='warning'>You aren't able to parry without solid footing!</span>")
+		return FALSE
+	var/datum/block_parry_data/data
+	var/list/determined = override_method_data || determine_parry_method(FALSE, FALSE)
+	if(!islist(determined))
+		return FALSE
+	var/method = determined[1]
+	data = return_block_parry_datum(determined[2])
+	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
+	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
+	// can always implement it later, whatever.
+	if((data.parry_respect_clickdelay && !CheckActionCooldown()) || ((parry_end_time_last + data.parry_cooldown) > world.time))
+		if(!silent)
+			to_chat(src, "<span class='warning'>You are not ready to parry (again)!</span>")
+		return FALSE
+	// Point of no return, make sure everything is set.
+	parrying = method
+	if(method == ITEM_PARRY)
+		active_parry_item = using_item
+	if(!UseStaminaBuffer(data.parry_stamina_cost, TRUE))
+		return FALSE
+	parry_start_time = world.time
+	successful_parries = list()
+	successful_parry_counterattacks = list()
+	addtimer(CALLBACK(src, .proc/end_parry_sequence), full_parry_duration)
+	if(data.parry_flags & PARRY_LOCK_ATTACKING)
+		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_PARRY_TRAIT)
+	if(data.parry_flags & PARRY_LOCK_SPRINTING)
+		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_PARRY_TRAIT)
+	handle_parry_starting_effects(data)
+	return TRUE
+
+/**
+ * Massive snowflake proc for getting something to parry with.
+ *
+ * @return list of [method, data, tool], where method is the parry method define, data is the block_parry_data var that must be run through return_block_parry_data, and tool is the concept/object/martial art/etc used.
+ */
+/mob/living/proc/determine_parry_method(silent = TRUE, autoparry = FALSE)
 	// Prioritize item, then martial art, then unarmed.
 	// yanderedev else if time
 	var/obj/item/using_item = get_active_held_item()
@@ -55,7 +94,8 @@
 	var/list/other_items = list()
 	var/list/override = list()
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ACTIVE_PARRY_START, method, tool, other_items, override) & COMPONENT_PREVENT_PARRY_START)
-		to_chat(src, "<span class='warning'>Something is preventing you from parrying!</span>")
+		if(!silent)
+			to_chat(src, "<span class='warning'>Something is preventing you from parrying!</span>")
 		return
 	if(length(override))
 		var/datum/thing = override[1]
@@ -72,30 +112,10 @@
 		method = ITEM_PARRY
 		data = using_item.block_parry_data
 	if(!method)
-		to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
+		if(!silent)
+			to_chat(src, "<span class='warning'>You have nothing to parry with!</span>")
 		return FALSE
-	data = return_block_parry_datum(data)
-	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
-	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
-	// can always implement it later, whatever.
-	if((data.parry_respect_clickdelay && !CheckActionCooldown()) || ((parry_end_time_last + data.parry_cooldown) > world.time))
-		to_chat(src, "<span class='warning'>You are not ready to parry (again)!</span>")
-		return FALSE
-	// Point of no return, make sure everything is set.
-	parrying = method
-	if(method == ITEM_PARRY)
-		active_parry_item = using_item
-	if(!UseStaminaBuffer(data.parry_stamina_cost, TRUE))
-		return FALSE
-	parry_start_time = world.time
-	successful_parries = list()
-	addtimer(CALLBACK(src, .proc/end_parry_sequence), full_parry_duration)
-	if(data.parry_flags & PARRY_LOCK_ATTACKING)
-		ADD_TRAIT(src, TRAIT_MOBILITY_NOUSE, ACTIVE_PARRY_TRAIT)
-	if(data.parry_flags & PARRY_LOCK_SPRINTING)
-		ADD_TRAIT(src, TRAIT_SPRINT_LOCKED, ACTIVE_PARRY_TRAIT)
-	handle_parry_starting_effects(data)
-	return TRUE
+	return list(method, data, tool)
 
 /**
   * Tries to find a backup parry item.
@@ -141,6 +161,7 @@
 	parry_start_time = 0
 	parry_end_time_last = world.time + (successful? 0 : data.parry_failed_cooldown_duration)
 	successful_parries = null
+	successful_parry_counterattacks = null
 
 /**
   * Handles starting effects for parrying.
@@ -199,6 +220,35 @@
   * Called when an attack is parried and block_parra_data indicates to use a proc to handle counterattack.
   */
 /datum/martial_art/proc/active_parry_reflex_counter(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list, parry_efficiency, list/effect_text)
+
+/**
+ * Attempts to automatically parry an attacker.
+ */
+/mob/living/proc/attempt_auto_parry()
+	// determine how we'll parry
+	var/list/determined = determine_parry_method(TRUE, TRUE)
+	if(!islist(determined))
+		return FALSE
+	var/method = determined[1]
+	var/datum/block_parry_data/data = return_block_parry_datum(determined[2])
+	if(!data.parry_automatic_enabled)
+		return FALSE
+	// before doing anything, check if the user moused over them properly
+
+	// if that works, try to start parry
+	// first, check cooldowns
+
+	// now, depending on if we're doing a single simulation or a full sequence
+	if(data.autoparry_sequence_simulation)
+		// for full sequence simulation
+		initiate_parry_sequence(TRUE, determined)
+		if(data.autoparry_sequence_start_time == -1)
+			parry_start_time = world.time - data.parry_time_windup
+		else
+			parry_start_time = world.time - data.autoparry_sequence_start_time
+	else
+		// for single attack block
+
 
 /**
   * Gets the stage of our parry sequence we're currently in.
@@ -279,7 +329,7 @@
 				pacifist_counter_check = (!active_parry_item.force || active_parry_item.damtype == STAMINA)
 			else
 				pacifist_counter_check = FALSE //Both martial and unarmed counter attacks generally are harmful, so no need to have the same line twice.
-	if(efficiency >= data.parry_efficiency_to_counterattack && pacifist_counter_check && !return_list[BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK])
+	if(efficiency >= data.parry_efficiency_to_counterattack && pacifist_counter_check && !return_list[BLOCK_RETURN_FORCE_NO_PARRY_COUNTERATTACK] && (!(attacker in successful_parry_counterattacks) && !data.parry_allow_repeated_counterattacks))
 		effect_text = run_parry_countereffects(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency)
 	if(data.parry_flags & PARRY_DEFAULT_HANDLE_FEEDBACK)
 		handle_parry_feedback(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list, efficiency, effect_text)
@@ -303,6 +353,7 @@
 	var/mob/living/L = attacker
 	var/datum/block_parry_data/data = get_parry_data()
 	var/list/effect_text = list()
+	successful_parry_counterattacks |= attacker
 	// Always proc so items can override behavior easily
 	switch(parrying)
 		if(ITEM_PARRY)

@@ -211,7 +211,7 @@
 
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take some additional burn //nothing can burn with so much snowflake code around
-			burn *= 1.5
+			burn *= 1.75
 
 	/*
 	// START WOUND HANDLING

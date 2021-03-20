@@ -268,7 +268,7 @@
   */
 /obj/item/proc/blockable_directions(passive = FALSE)
 	var/datum/block_parry_data/data = get_block_parry_data()
-	return passive? data.block_automatic_directions : data.can_block_directions
+	return (!isnull(data.block_automatic_directions) && passive)? data.block_automatic_directions : data.can_block_directions
 
 /**
   * Checks if we can block from a specific direction from our direction.

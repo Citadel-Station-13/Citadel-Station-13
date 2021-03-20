@@ -183,3 +183,7 @@
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay
 
+	/// Should go in persistent round player data sometime. This tracks what items have already warned the user on pickup that they can block/parry.
+	var/list/block_parry_hinted = list()
+	/// moused over objects, currently capped at 7. this is awful, and should be replaced with a component to track it using signals for parrying at some point.
+	var/list/moused_over_objects = list()

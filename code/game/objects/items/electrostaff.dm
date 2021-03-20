@@ -61,7 +61,6 @@
 		TEXT_ATTACK_TYPE_PROJECTILE = 1		// extremely harsh window for projectiles
 	)
 	// not extremely punishing to fail, but no spamming the parry.
-	parry_cooldown = 1.5 SECONDS
 	parry_failed_stagger_duration = 1.5 SECONDS
 	parry_failed_clickcd_duration = 1 SECONDS
 
