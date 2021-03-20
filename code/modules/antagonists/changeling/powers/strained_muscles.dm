@@ -4,7 +4,7 @@
 /obj/effect/proc_holder/changeling/strained_muscles
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
-	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
+	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Our chemical generation is drastically slowed while this is active. Cannot be used in lesser form."
 	chemical_cost = 0 // slows chemregen while active
 	dna_cost = 1
 	req_human = 1
