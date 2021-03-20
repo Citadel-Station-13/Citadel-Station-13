@@ -149,7 +149,7 @@
 	if(isnull(absorption))
 		absorption = data.block_damage_absorption
 	if(isnull(efficiency))
-		efficiency = data.block_damage_multiplier * (passive? data.block_automatic_mitigation_multiplier : 1)
+		efficiency = data.block_damage_multiplier * (passive? (1 / data.block_automatic_mitigation_multiplier) : 1)
 	if(isnull(limit))
 		limit = data.block_damage_limit
 	// now we calculate damage to reduce.
