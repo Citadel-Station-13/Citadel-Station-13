@@ -472,7 +472,7 @@
 			build_path = /obj/machinery/holopad
 			secure = FALSE
 		else
-			build_path = /obj/machinery/holopad //secure
+			build_path = /obj/machinery/holopad/secure //secure
 			secure = TRUE
 		to_chat(user, "<span class='notice'>You [secure? "en" : "dis"]able the security on the [src]</span>")
 	. = ..()
