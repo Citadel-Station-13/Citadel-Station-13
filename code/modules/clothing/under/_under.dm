@@ -51,7 +51,7 @@
 
 /obj/item/clothing/under/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
 	..()
-	if(sensormaxintegrity == 0 || has_sensor == NO_SENSORS) return //sensors are invincible if max integrity is 0
+	if(sensormaxintegrity == 0 || has_sensor == NO_SENSORS || sensordamage >= sensormaxintegrity) return //sensors are invincible if max integrity is 0
 	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration, FALSE) * 10 // only deal 10% of the damage to the general integrity damage, then multiply it by 10 so we know how much to deal to limb
 	sensordamage += damage_dealt
 	var/integ = has_sensor
