@@ -1,0 +1,5 @@
+author: "GrayRachnid"
+delete-after: True
+changes: 
+  - bugfix: "fixed the holopad autocall bug"
+  - bugfix: "properly incorporated the secure holopad that was commented out in the code."

@@ -1,7 +1,0 @@
-author: "LetterN"
-delete-after: True
-changes: 
-  - bugfix: "Borg light icons not turning off"
-  - bugfix: "Double ai icon select + Fixes ai core not having icons"
-  - bugfix: "Missing air tank icon"
-  - bugfix: "Computer boards being dumb and  nullspacing/qdeling itself"

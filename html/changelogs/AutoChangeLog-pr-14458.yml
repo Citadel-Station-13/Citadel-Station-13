@@ -1,0 +1,5 @@
+author: "GrayRachnid"
+delete-after: True
+changes: 
+  - balance: "buffed particle defender disabler shots from 13->15 stamina (15*6=90)"
+  - balance: "buffed particle defender laser ammo to 4 shots"

@@ -37,11 +37,11 @@
 			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
 			return
 	if(IsAvailable())
-		transforming = TRUE
 		UpdateButtonIcon()
 		var/mutcolor = owner.get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOBFORM_COLOR) || ("#" + H.dna.features["mcolor"])
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
+				transforming = TRUE
 				is_puddle = TRUE //so we know which transformation to use when its used
 				ADD_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
 				owner.cut_overlays() //we dont show our normal sprite, we show a puddle sprite
