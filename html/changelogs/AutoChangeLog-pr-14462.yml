@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Bluespace beaker filling icons for that narrow band between 90 and 80% full now actually exist."
