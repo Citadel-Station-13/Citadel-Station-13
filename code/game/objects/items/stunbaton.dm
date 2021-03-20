@@ -205,7 +205,7 @@
 	if(!disarming)
 		if(knockdown && !countered)
 			L.DefaultCombatKnockdown(50, override_stamdmg = 0, knocktofloor = !countered)		//knockdown
-		L.adjustStaminaLoss(stunpwr)
+		L.apply_damage(stunpwr, STAMINA, BODY_ZONE_CHEST)
 	else if(!countered)
 		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
 

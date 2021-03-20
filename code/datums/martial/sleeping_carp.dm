@@ -181,14 +181,14 @@
 	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
-	H.physiology.brute_mod = initial(H.physiology.brute_mod)
-	H.physiology.burn_mod = initial(H.physiology.burn_mod)
-	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)
-	H.physiology.stun_mod = initial(H.physiology.stun_mod)
-	H.physiology.pressure_mod = initial(H.physiology.pressure_mod) //no more carpies
-	H.physiology.cold_mod = initial(H.physiology.cold_mod)
-	H.physiology.heat_mod = initial(H.physiology.heat_mod)
-	H.physiology.stamina_buffer_mod = initial(H.physiology.stamina_buffer_mod)
+	H.physiology.brute_mod *= (1/0.4) //brute is really not gonna cut it
+	H.physiology.burn_mod *= (1/0.7) //burn is distinctly more useful against them than brute but they're still resistant
+	H.physiology.stamina_mod *= (1/0.4) //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
+	H.physiology.stun_mod *= (1/0.3) //for those rare stuns
+	H.physiology.pressure_mod *= (1/0.3) //go hang out with carp
+	H.physiology.cold_mod *= (1/0.3) //cold mods are different to burn mods, they do stack however
+	H.physiology.heat_mod *= (1/2) //this is mostly so sleeping carp has a viable weakness. Cooking them alive. Setting them on fire and heating them will be their biggest weakness. The reason for this is....filet jokes.
+	H.physiology.stamina_buffer_mod *= (1/0.75) //to help with some stamina
 	H.faction -= "carp" //:(
 
 /mob/living/carbon/human/proc/sleeping_carp_help()
