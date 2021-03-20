@@ -84,11 +84,11 @@ falloff_distance - Distance at which falloff begins. Sound is at peak volume (in
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, get_dist(M, turf_sounrce) <= distance_multiplier_min_range? 1 : distance_multiplier, envwet, envdry)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, get_dist(M, turf_source) <= distance_multiplier_min_range? 1 : distance_multiplier, envwet, envdry)
 	for(var/P in SSmobs.dead_players_by_zlevel[source_z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, get_dist(M, turf_sounrce) <= distance_multiplier_min_range? 1 : distance_multiplier, envwet, envdry)
+			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, get_dist(M, turf_source) <= distance_multiplier_min_range? 1 : distance_multiplier, envwet, envdry)
 
 /*! playsound
 
