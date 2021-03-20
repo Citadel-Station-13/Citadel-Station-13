@@ -24223,6 +24223,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bgb" = (
