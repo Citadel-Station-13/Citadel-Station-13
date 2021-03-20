@@ -15,6 +15,7 @@
 	action_background_icon_state = "bg_ling"
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	active = !active
 	if(active)
 		to_chat(user, "<span class='notice'>Our muscles tense and strengthen.</span>")
