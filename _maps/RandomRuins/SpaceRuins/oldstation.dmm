@@ -149,8 +149,8 @@
 /area/ruin/space/has_grav/ancientstation/hivebot)
 "aF" = (
 /obj/structure/shuttle/engine/large{
-	icon_state = "large_engine";
-	dir = 4
+	dir = 4;
+	icon_state = "large_engine"
 	},
 /turf/closed/wall,
 /area/ruin/space/has_grav/ancientstation/hivebot)

@@ -169,7 +169,6 @@
 /***************************COMBO***************************/
 /datum/surgery/healing/combo
 
-
 /datum/surgery/healing/combo
 	name = "Tend Wounds (Mixture, Basic)"
 	replaced_by = /datum/surgery/healing/combo/upgraded

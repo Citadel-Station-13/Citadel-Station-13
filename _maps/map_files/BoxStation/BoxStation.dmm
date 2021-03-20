@@ -24223,6 +24223,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bgb" = (
@@ -30845,6 +30846,7 @@
 /area/science)
 "bvF" = (
 /obj/machinery/requests_console{
+	announcementConsole = 1;
 	department = "Cargo Bay";
 	departmentType = 2;
 	pixel_x = -30

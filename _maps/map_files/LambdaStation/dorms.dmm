@@ -2425,8 +2425,8 @@
 "go" = (
 /obj/machinery/camera/autoname,
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -2572,8 +2572,8 @@
 "gO" = (
 /obj/machinery/space_heater,
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -5604,8 +5604,8 @@
 /area/maintenance/solars/starboard)
 "oy" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 4
+	dir = 4;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -7068,8 +7068,8 @@
 /area/service/hydroponics)
 "sn" = (
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -7093,8 +7093,8 @@
 /area/asteroid/nearstation)
 "sr" = (
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -12147,8 +12147,8 @@
 /area/hallway/secondary/service)
 "Fw" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/plating,
 /area/maintenance/central)
@@ -13673,8 +13673,8 @@
 /area/service/janitor)
 "IY" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -14021,8 +14021,8 @@
 /area/commons/vacant_room/commissary)
 "JT" = (
 /obj/docking_port/stationary/public_mining_dock{
-	icon_state = "pinonfar";
-	dir = 2
+	dir = 2;
+	icon_state = "pinonfar"
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
@@ -14440,8 +14440,8 @@
 /area/service/kitchen)
 "KX" = (
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -14486,8 +14486,8 @@
 /area/hallway/secondary/service)
 "Le" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 5
+	dir = 5;
+	icon_state = "railing"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -14510,8 +14510,8 @@
 /area/commons/fitness/recreation)
 "Lg" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/hallway/secondary/construction";
@@ -15509,8 +15509,8 @@
 /area/maintenance/department/crew_quarters/dorms)
 "NG" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 9
+	dir = 9;
+	icon_state = "railing"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -16758,8 +16758,8 @@
 /area/commons/fitness/recreation)
 "QT" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 8
+	dir = 8;
+	icon_state = "railing"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -16931,8 +16931,8 @@
 /area/command/gateway)
 "Rx" = (
 /obj/structure/railing/corner{
-	icon_state = "railing_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "railing_corner"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)
@@ -16964,8 +16964,8 @@
 /area/command/gateway)
 "RA" = (
 /obj/structure/railing{
-	icon_state = "railing";
-	dir = 4
+	dir = 4;
+	icon_state = "railing"
 	},
 /turf/open/floor/grass,
 /area/service/hydroponics/garden/monastery)

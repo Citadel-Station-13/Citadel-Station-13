@@ -362,8 +362,8 @@
 "bO" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -372,8 +372,8 @@
 /area/awaymission/wildwest/gov)
 "bQ" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -387,8 +387,8 @@
 /area/awaymission/wildwest/gov)
 "bR" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -400,16 +400,16 @@
 /area/awaymission/wildwest/gov)
 "bS" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -417,8 +417,8 @@
 /area/awaymission/wildwest/gov)
 "bT" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -440,24 +440,24 @@
 /area/awaymission/wildwest/mines)
 "bW" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "bX" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -475,12 +475,12 @@
 /area/awaymission/wildwest/gov)
 "ca" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
@@ -503,12 +503,12 @@
 /area/awaymission/wildwest/mines)
 "ce" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plating/ironsand{
@@ -517,12 +517,12 @@
 /area/awaymission/wildwest/gov)
 "cf" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plating/ironsand{
@@ -593,8 +593,8 @@
 "ct" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -708,12 +708,12 @@
 /area/awaymission/wildwest/gov)
 "cQ" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -731,12 +731,12 @@
 /area/awaymission/wildwest/gov)
 "cS" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -802,12 +802,12 @@
 /area/awaymission/wildwest/mines)
 "dc" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
@@ -839,17 +839,17 @@
 /area/awaymission/wildwest/gov)
 "dg" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -1049,13 +1049,13 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -1066,8 +1066,8 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plating/ironsand{
@@ -1079,13 +1079,13 @@
 	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -1148,23 +1148,23 @@
 /area/awaymission/wildwest/mines)
 "ed" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "ee" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
 "ef" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1173,8 +1173,8 @@
 /area/space/nearstation)
 "eg" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
@@ -1190,12 +1190,12 @@
 /area/awaymission/wildwest/gov)
 "ei" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -1234,8 +1234,8 @@
 /area/awaymission/wildwest/mines)
 "er" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand12"
@@ -1267,8 +1267,8 @@
 /area/awaymission/wildwest/mines)
 "ex" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand7"
@@ -1356,8 +1356,8 @@
 /area/awaymission/wildwest/mines)
 "eN" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand14"
@@ -1366,12 +1366,12 @@
 "eO" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,
@@ -1379,16 +1379,16 @@
 "eP" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eQ" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -1398,12 +1398,12 @@
 /area/awaymission/wildwest/refine)
 "eR" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -1543,12 +1543,12 @@
 /area/awaymission/wildwest/mines)
 "fj" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,
@@ -1579,12 +1579,12 @@
 /area/awaymission/wildwest/mines)
 "fo" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,
@@ -1664,8 +1664,8 @@
 /area/space/nearstation)
 "fz" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
@@ -1674,12 +1674,12 @@
 /area/space/nearstation)
 "fA" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plasteel,
@@ -1744,19 +1744,19 @@
 /area/awaymission/wildwest/mines)
 "fJ" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fK" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
@@ -1768,15 +1768,15 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fN" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/lattice,
 /turf/open/space,
@@ -1822,8 +1822,8 @@
 /area/awaymission/wildwest/mines)
 "fU" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
@@ -1839,17 +1839,17 @@
 /area/awaymission/wildwest/gov)
 "fX" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
@@ -1879,8 +1879,8 @@
 /area/awaymission/wildwest/gov)
 "gc" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
@@ -2001,24 +2001,24 @@
 "gz" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "gA" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,
@@ -2026,33 +2026,33 @@
 "gB" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "gC" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 1
+	dir = 1;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "gD" = (
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
@@ -2071,12 +2071,12 @@
 "gG" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 4
+	dir = 4;
+	icon_state = "fwindow"
 	},
 /obj/structure/window/reinforced{
-	icon_state = "fwindow";
-	dir = 8
+	dir = 8;
+	icon_state = "fwindow"
 	},
 /obj/structure/grille,
 /turf/open/floor/plasteel,

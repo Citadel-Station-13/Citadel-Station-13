@@ -604,8 +604,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_model"]				>> features["body_model"]
 	S["body_size"]				>> features["body_size"]
 	S["age"]					>> age
-	S["language"]				>> language
-	S["choselanguage"]			>> choselanguage
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
 	S["eye_type"]				>> eye_type
@@ -626,6 +624,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uplink_loc"]				>> uplink_spawn_loc
 	S["custom_speech_verb"]		>> custom_speech_verb
 	S["custom_tongue"]			>> custom_tongue
+	S["additional_language"]	>> additional_language
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -881,6 +880,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	custom_speech_verb				= sanitize_inlist(custom_speech_verb, GLOB.speech_verbs, "default")
 	custom_tongue					= sanitize_inlist(custom_tongue, GLOB.roundstart_tongues, "default")
+	additional_language				= sanitize_inlist(additional_language, GLOB.roundstart_languages, "None")
 
 	security_records				= copytext(security_records, 1, MAX_FLAVOR_LEN)
 	medical_records					= copytext(medical_records, 1, MAX_FLAVOR_LEN)
@@ -964,8 +964,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["body_model"]				, features["body_model"])
 	WRITE_FILE(S["body_size"]				, features["body_size"])
 	WRITE_FILE(S["age"]						, age)
-	WRITE_FILE(S["language"]				, language)
-	WRITE_FILE(S["choselanguage"]			, choselanguage)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
 	WRITE_FILE(S["eye_type"]				, eye_type)
@@ -987,6 +985,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["species"]					, pref_species.id)
 	WRITE_FILE(S["custom_speech_verb"]		, custom_speech_verb)
 	WRITE_FILE(S["custom_tongue"]			, custom_tongue)
+	WRITE_FILE(S["additional_language"]		, additional_language)
 
 	// records
 	WRITE_FILE(S["security_records"]		, security_records)

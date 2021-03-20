@@ -22,3 +22,6 @@
 /obj/machinery/rnd/production/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
 	..()
+
+/obj/machinery/rnd/production/circuit_imprinter/AfterMaterialInsert() //doesnt use have an animation like lathes do
+	return

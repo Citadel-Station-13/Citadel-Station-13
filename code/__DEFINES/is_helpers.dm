@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
+#define isclockworkgolem(A) (is_species(A, /datum/species/golem/clockwork/no_scrap))
 #define islizard(A) (is_species(A, /datum/species/lizard))
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/pod))
@@ -224,6 +225,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isgun(A) (istype(A, /obj/item/gun))
 
 #define isfood(A) (istype(A, /obj/item/reagent_containers/food/snacks))
+
+#define iscontainer(A) (istype(A, /obj/structure/reagent_dispensers))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))

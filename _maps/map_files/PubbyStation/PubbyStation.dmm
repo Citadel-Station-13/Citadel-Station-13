@@ -37478,11 +37478,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bHb" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/synthflesh,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
+/obj/machinery/limbgrower,
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
 "bHc" = (
@@ -38110,6 +38109,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bIq" = (

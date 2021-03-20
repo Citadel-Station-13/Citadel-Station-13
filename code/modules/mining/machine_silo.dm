@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
+/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I, remote = null)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if(user.a_intent != INTENT_HELP)
@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return
 	// assumes unlimited space...
 	var/amount = I.amount
-	materials.user_insert(I, user)
+	materials.user_insert(I, user, remote)
 	silo_log(M, "deposited", amount, "sheets", item_mats)
 	return TRUE
 
