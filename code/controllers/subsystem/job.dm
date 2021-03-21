@@ -494,7 +494,7 @@ SUBSYSTEM_DEF(job)
 	if(ishuman(H))
 		if(length(H.client?.prefs?.tcg_cards))
 			tcg_cards = H.client.prefs.tcg_cards
-		else if(N?.client?.prefs?.tcg_cards))
+		else if(length(N?.client?.prefs?.tcg_cards))
 			tcg_cards = N.client.prefs.tcg_cards
 	if(tcg_cards)
 		var/obj/item/tcgcard_binder/binder = new(get_turf(H))
