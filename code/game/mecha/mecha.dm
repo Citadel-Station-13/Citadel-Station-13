@@ -132,7 +132,6 @@
 	events = new
 	icon_state += "-open"
 	add_radio()
-	add_cabin()
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -153,6 +152,7 @@
 /obj/mecha/LateInitialize()
 	. = ..()
 	add_airtank()
+	add_cabin()
 
 /obj/mecha/get_cell()
 	return cell
@@ -255,9 +255,8 @@
 	cell = new /obj/item/stock_parts/cell/high/plus(src)
 
 /obj/mecha/proc/add_cabin()
-	cabin_air = new
+	cabin_air = new(200)
 	cabin_air.set_temperature(T20C)
-	cabin_air.set_volume(200)
 	cabin_air.set_moles(/datum/gas/oxygen,O2STANDARD*cabin_air.return_volume()/(R_IDEAL_GAS_EQUATION*cabin_air.return_temperature()))
 	cabin_air.set_moles(/datum/gas/nitrogen,N2STANDARD*cabin_air.return_volume()/(R_IDEAL_GAS_EQUATION*cabin_air.return_temperature()))
 	return cabin_air

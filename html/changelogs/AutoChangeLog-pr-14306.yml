@@ -1,5 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Supernova event"
-  - refactor: "Bloodsucker day/night cycle now processes on a subsystem instead of using while and sleep (!!)"

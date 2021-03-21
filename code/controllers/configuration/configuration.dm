@@ -22,7 +22,7 @@
 	var/motd
 	// var/policy
 
-	// var/static/regex/ic_filter_regex
+	var/static/regex/ic_filter_regex
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -53,7 +53,7 @@
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	// LoadPolicy()
-	// LoadChatFilter()
+	LoadChatFilter()
 
 	if (Master)
 		Master.OnConfigLoad()
@@ -425,6 +425,7 @@ Example config:
 	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
 	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
 	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
+	var/desired_chaos_level = 9 - SSpersistence.get_recent_chaos()
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
@@ -449,6 +450,17 @@ Example config:
 					adjustment += repeated_mode_adjust[recent_round]
 					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
 				final_weight *= max(0,((100-adjustment)/100))
+			if(Get(/datum/config_entry/flag/weigh_by_recent_chaos))
+				var/chaos_level = M.get_chaos()
+				var/exponent = Get(/datum/config_entry/number/chaos_exponent)
+				var/delta = chaos_level - desired_chaos_level
+				if(desired_chaos_level > 5)
+					delta = abs(min(delta, 0))
+				else if(desired_chaos_level < 5)
+					delta = max(delta, 0)
+				else
+					delta = abs(delta)
+				final_weight /= (delta + 1) ** exponent
 			runnable_modes[M] = final_weight
 	return runnable_modes
 
@@ -474,7 +486,7 @@ Example config:
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
-/*
+
 /datum/controller/configuration/proc/LoadChatFilter()
 	var/list/in_character_filter = list()
 	if(!fexists("[directory]/in_character_filter.txt"))
@@ -487,7 +499,7 @@ Example config:
 			continue
 		in_character_filter += REGEX_QUOTE(line)
 	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
-*/
+
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)

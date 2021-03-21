@@ -3,9 +3,9 @@
 /turf/open/space/basic,
 /area/space)
 "aab" = (
-/obj/machinery/holopad,
 /obj/effect/landmark/start/cyborg,
 /mob/living/simple_animal/bot/secbot/pingsky,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aac" = (
@@ -999,7 +999,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/white,
 /area/ai_monitored/turret_protected/ai)
 "acs" = (
@@ -11793,7 +11793,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "aBn" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "aBo" = (
@@ -12592,7 +12592,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aCR" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "aCS" = (
@@ -12995,7 +12995,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aDM" = (
-/obj/machinery/holopad,
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload Center";
 	dir = 1;
@@ -13008,6 +13007,7 @@
 	name = "Station Intercom (AI Private)";
 	pixel_y = -28
 	},
+/obj/machinery/holopad/secure,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aDN" = (
@@ -37478,11 +37478,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bHb" = (
-/obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/synthflesh,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
+/obj/machinery/limbgrower,
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
 "bHc" = (
@@ -38110,6 +38109,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bIq" = (
