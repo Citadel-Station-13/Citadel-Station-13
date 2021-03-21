@@ -1,4 +1,0 @@
-author: "The-Sun-In-Splendour"
-delete-after: True
-changes: 
-  - bugfix: "You cannot revive yourself (as a changeling) if you've been absorbed anymore"
