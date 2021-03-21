@@ -15,6 +15,7 @@
 				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
 					reaction_key = req_gas
 		reaction.major_gas = reaction_key
+		message_admins("\ref[reaction]")
 		. += reaction
 	sortTim(., /proc/cmp_gas_reaction)
 

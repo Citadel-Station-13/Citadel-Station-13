@@ -30,23 +30,10 @@
 	var/pressure_delta = abs(external_pressure - internal_pressure)
 
 	if(pressure_delta > 0.5)
-		if(external_pressure < internal_pressure)
-			var/air_temperature = (external.return_temperature() > 0) ? external.return_temperature() : internal.return_temperature()
-			var/transfer_moles = (pressure_delta * external.return_volume()) / (air_temperature * R_IDEAL_GAS_EQUATION)
-			var/datum/gas_mixture/removed = internal.remove(transfer_moles)
-			external.merge(removed)
-		else
-			var/air_temperature = (internal.return_temperature() > 0) ? internal.return_temperature() : external.return_temperature()
-			var/transfer_moles = (pressure_delta * internal.return_volume()) / (air_temperature * R_IDEAL_GAS_EQUATION)
-			transfer_moles = min(transfer_moles, external.total_moles() * internal.return_volume() / external.return_volume())
-			var/datum/gas_mixture/removed = external.remove(transfer_moles)
-			if(isnull(removed))
-				return
-			internal.merge(removed)
-
+		equalize_all_gases_in_list(list(internal,external))
 		active = TRUE
 
-	active = internal.temperature_share(external, OPEN_HEAT_TRANSFER_COEFFICIENT) ? TRUE : active
+	active = internal.temperature_share(external, OPEN_HEAT_TRANSFER_COEFFICIENT) || active
 
 	if(active)
 		air_update_turf()

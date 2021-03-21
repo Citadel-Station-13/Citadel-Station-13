@@ -182,10 +182,21 @@
 /obj/item/clothing/head/mob_holder/remove_air(amount)
 	var/atom/location = loc
 	if(!loc)
-		return //null
+		return null
 	var/turf/T = get_turf(loc)
 	while(location != T)
 		location = location.loc
 		if(ismob(location))
 			return location.loc.remove_air(amount)
 	return location.remove_air(amount)
+
+/obj/item/clothing/head/mob_holder/remove_air_ratio(ratio)
+	var/atom/location = loc
+	if(!loc)
+		return null
+	var/turf/T = get_turf(loc)
+	while(location != T)
+		location = location.loc
+		if(ismob(location))
+			return location.loc.remove_air_ratio(ratio)
+	return location.remove_air_ratio(ratio)

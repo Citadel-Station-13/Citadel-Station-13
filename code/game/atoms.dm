@@ -376,6 +376,9 @@
 /atom/proc/remove_air(amount)
 	return null
 
+/atom/proc/remove_air_ratio(ratio)
+	return null
+
 /atom/proc/return_air()
 	if(loc)
 		return loc.return_air()
