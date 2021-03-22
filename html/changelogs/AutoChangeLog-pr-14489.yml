@@ -1,0 +1,4 @@
+author: "LetterN"
+delete-after: True
+changes: 
+  - bugfix: "NIRM departamental purchases now work. Have fun spending the entire R&D Budget!"
