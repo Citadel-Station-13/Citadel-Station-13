@@ -20,7 +20,6 @@
 	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
 
-	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -42,7 +41,6 @@
 	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
 
-	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -64,7 +62,6 @@
 	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
 
-	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -86,7 +83,6 @@
 	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
 
-	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -107,7 +103,6 @@
 	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
 
-	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -169,7 +164,6 @@
 	icon_state = "borg_head"
 	status = BODYPART_ROBOTIC
 
-	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -247,7 +241,6 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	max_damage = 25
 	max_stamina_damage = 25
-	wound_resistance = -20
 	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
 	threshhold_passed_mindamage = 15
 
@@ -257,7 +250,6 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	max_damage = 25
 	max_stamina_damage = 25
-	wound_resistance = -20
 	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
 	threshhold_passed_mindamage = 15
 
@@ -267,7 +259,6 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	max_damage = 25
 	max_stamina_damage = 25
-	wound_resistance = -20
 	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
 	threshhold_passed_mindamage = 15
 
@@ -277,7 +268,6 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	max_damage = 25
 	max_stamina_damage = 25
-	wound_resistance = -20
 	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
 	threshhold_passed_mindamage = 15
 
@@ -289,7 +279,6 @@
 	max_stamina_damage = 70
 	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
 	stam_damage_coeff = 0.5
-	wound_resistance = 25
 	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
 	threshhold_passed_mindamage = 40
 
@@ -300,7 +289,6 @@
 	max_stamina_damage = 70
 	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
 	stam_damage_coeff = 0.5
-	wound_resistance = 25
 	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
 	threshhold_passed_mindamage = 40
 
@@ -311,7 +299,6 @@
 	max_stamina_damage = 70
 	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
 	stam_damage_coeff = 0.5
-	wound_resistance = 25
 	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
 	threshhold_passed_mindamage = 40
 
@@ -322,21 +309,18 @@
 	max_stamina_damage = 70
 	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
 	stam_damage_coeff = 0.5
-	wound_resistance = 25
 	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
 	threshhold_passed_mindamage = 40
 
 /obj/item/bodypart/chest/robot/upgraded
 	name = "reinforced prosthetic torso"
 	desc = "A robotic torso, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
-	wound_resistance = 25
 	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
 	threshhold_passed_mindamage = 40
 
 /obj/item/bodypart/head/robot/upgraded
 	name = "reinforced prosthetic head"
 	desc = "A robotic braincase, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
-	wound_resistance = 25
 	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
 	threshhold_passed_mindamage = 40
 
