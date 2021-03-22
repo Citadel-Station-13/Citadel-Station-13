@@ -34,9 +34,6 @@
 	var/max_damage = 0
 	var/stam_heal_tick = 0		//per Life(). Defaults to 0 due to citadel changes
 
-	var/brute_reduction = 0 //Subtracted to brute damage taken
-	var/burn_reduction = 0	//Subtracted to burn damage taken
-
 	//Coloring and proper item icon update
 	var/skin_tone = ""
 	var/body_gender = ""
@@ -197,8 +194,6 @@
 	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
 	stamina = round(max((stamina * dmg_mlt) * incoming_stam_mult, 0),DAMAGE_PRECISION)
-	brute = max(0, brute - brute_reduction)
-	burn = max(0, burn - burn_reduction)
 	//No stamina scaling.. for now..
 
 	if(!brute && !burn && !stamina)

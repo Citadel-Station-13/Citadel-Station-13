@@ -20,8 +20,7 @@
 	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
 
-	brute_reduction = 2
-	burn_reduction = 1
+	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -43,8 +42,7 @@
 	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
 
-	brute_reduction = 2
-	burn_reduction = 1
+	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -66,8 +64,7 @@
 	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
 
-	brute_reduction = 2
-	burn_reduction = 1
+	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -89,8 +86,7 @@
 	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
 
-	brute_reduction = 2
-	burn_reduction = 1
+	wound_resistance = 10
 	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
@@ -111,9 +107,8 @@
 	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
 
-	brute_reduction = 2
-	burn_reduction = 1
-	easy_heal_threshhold = 40 //Resistant against damage, but high mindamage once the threshhold is passed
+	wound_resistance = 10
+	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
 	threshhold_passed_mindamage = 25
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
@@ -174,10 +169,9 @@
 	icon_state = "borg_head"
 	status = BODYPART_ROBOTIC
 
-	brute_reduction = 5
-	burn_reduction = 4
-	easy_heal_threshhold = 40 //Resistant against damage, but high mindamage once the threshhold is passed
-	threshhold_passed_mindamage = 20
+	wound_resistance = 10
+	easy_heal_threshhold = 35 //Resistant against damage, but high mindamage once the threshhold is passed
+	threshhold_passed_mindamage = 25
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -251,82 +245,100 @@
 	name = "surplus prosthetic left arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
-	max_damage = 20
-	easy_heal_threshhold = 15 //Weak. Low threshhold, but also relatively low mindamage
-	threshhold_passed_mindamage = 10
+	max_damage = 25
+	max_stamina_damage = 25
+	wound_resistance = -20
+	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
+	threshhold_passed_mindamage = 15
 
 /obj/item/bodypart/r_arm/robot/surplus
 	name = "surplus prosthetic right arm"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
-	max_damage = 20
-	easy_heal_threshhold = 15 //Weak. Low threshhold, but also relatively low mindamage
-	threshhold_passed_mindamage = 10
+	max_damage = 25
+	max_stamina_damage = 25
+	wound_resistance = -20
+	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
+	threshhold_passed_mindamage = 15
 
 /obj/item/bodypart/l_leg/robot/surplus
 	name = "surplus prosthetic left leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
-	max_damage = 20
-	easy_heal_threshhold = 15 //Weak. Low threshhold, but also relatively low mindamage
-	threshhold_passed_mindamage = 10
+	max_damage = 25
+	max_stamina_damage = 25
+	wound_resistance = -20
+	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
+	threshhold_passed_mindamage = 15
 
 /obj/item/bodypart/r_leg/robot/surplus
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 0
-	burn_reduction = 0
-	max_damage = 20
-	easy_heal_threshhold = 15 //Weak. Low threshhold, but also relatively low mindamage
-	threshhold_passed_mindamage = 10
+	max_damage = 25
+	max_stamina_damage = 25
+	wound_resistance = -20
+	easy_heal_threshhold = 15 //Weak. Low threshhold, requiring specialized repair once damaged
+	threshhold_passed_mindamage = 15
 
-// Upgraded Surplus lims - Better then robotic limbs
-/obj/item/bodypart/l_arm/robot/surplus_upgraded
-	name = "reinforced surplus prosthetic left arm"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of parts with more fallbacks against internal damage."
-	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 3
-	burn_reduction = 2
-	max_damage = 55
-	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
-	threshhold_passed_mindamage = 5
+// Upgraded Prosthesics - Harder to hurt, harder to fix
+/obj/item/bodypart/l_arm/robot/upgraded
+	name = "reinforced prosthetic left arm"
+	desc = "A robotic limb, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
+	max_damage = 70
+	max_stamina_damage = 70
+	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
+	stam_damage_coeff = 0.5
+	wound_resistance = 25
+	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
+	threshhold_passed_mindamage = 40
 
-/obj/item/bodypart/r_arm/robot/surplus_upgraded
-	name = "reinforced surplus prosthetic right arm"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of parts with more fallbacks against internal damage."
-	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 3
-	burn_reduction = 2
-	max_damage = 55
-	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
-	threshhold_passed_mindamage = 5
+/obj/item/bodypart/r_arm/robot/upgraded
+	name = "reinforced prosthetic right arm"
+	desc = "A robotic limb, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
+	max_damage = 70
+	max_stamina_damage = 70
+	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
+	stam_damage_coeff = 0.5
+	wound_resistance = 25
+	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
+	threshhold_passed_mindamage = 40
 
-/obj/item/bodypart/l_leg/robot/surplus_upgraded
-	name = "reinforced surplus prosthetic left leg"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of parts with more fallbacks against internal damage."
-	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 3
-	burn_reduction = 2
-	max_damage = 55
-	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
-	threshhold_passed_mindamage = 5
+/obj/item/bodypart/l_leg/robot/upgraded
+	name = "reinforced prosthetic left leg"
+	desc = "A robotic limb, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
+	max_damage = 70
+	max_stamina_damage = 70
+	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
+	stam_damage_coeff = 0.5
+	wound_resistance = 25
+	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
+	threshhold_passed_mindamage = 40
 
-/obj/item/bodypart/r_leg/robot/surplus_upgraded
-	name = "reinforced surplus prosthetic right leg"
-	desc = "A skeletal, robotic limb. This one is reinforced to provide better protection, and is made of parts with more fallbacks against internal damage."
-	icon = 'icons/mob/augmentation/surplus_augments.dmi'
-	brute_reduction = 3
-	burn_reduction = 2
-	max_damage = 55
-	easy_heal_threshhold = 20 //Lower threshhold than true robotic limbs, but very low mindamage too.
-	threshhold_passed_mindamage = 5
+/obj/item/bodypart/r_leg/robot/upgraded
+	name = "reinforced prosthetic right leg"
+	desc = "A robotic limb, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
+	max_damage = 70
+	max_stamina_damage = 70
+	body_damage_coeff = 0.5 //keeps core damage contribution cap roughly equivalent despite higher actual health
+	stam_damage_coeff = 0.5
+	wound_resistance = 25
+	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
+	threshhold_passed_mindamage = 40
+
+/obj/item/bodypart/chest/robot/upgraded
+	name = "reinforced prosthetic torso"
+	desc = "A robotic torso, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
+	wound_resistance = 25
+	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
+	threshhold_passed_mindamage = 40
+
+/obj/item/bodypart/head/robot/upgraded
+	name = "reinforced prosthetic head"
+	desc = "A robotic braincase, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
+	wound_resistance = 25
+	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
+	threshhold_passed_mindamage = 40
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

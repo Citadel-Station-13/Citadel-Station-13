@@ -51,13 +51,13 @@
 	prereq_ids = list("biotech")
 	design_ids = list("basic_l_arm", "basic_r_arm", "basic_r_leg", "basic_l_leg")
 
-/datum/techweb_node/advance_limbs
-	id = "advance_limbs"
+/datum/techweb_node/upgraded_limbs
+	id = "upgraded_limbs"
 	display_name = "Upgraded Prosthetics"
 	description = "Reinforced prosthetics for the impaired."
-	prereq_ids = list("adv_biotech", "surplus_limbs")
-	design_ids = list("adv_l_arm", "adv_r_arm", "adv_r_leg", "adv_l_leg")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1250)
+	prereq_ids = list("adv_biotech", "surplus_limbs", "cyber_implants")
+	design_ids = list("upgraded_l_arm", "upgraded_r_arm", "upgraded_r_leg", "upgraded_l_leg", "upgraded_torso", "upgraded_head")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/subdermal_implants
 	id = "subdermal_implants"

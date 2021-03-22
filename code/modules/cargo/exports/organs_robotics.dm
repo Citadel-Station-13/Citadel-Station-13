@@ -136,10 +136,10 @@
 	unit_name = "robotic limb replacement"
 	export_types = list(/obj/item/bodypart/l_arm/robot/surplus, /obj/item/bodypart/r_arm/robot/surplus, /obj/item/bodypart/l_leg/robot/surplus, /obj/item/bodypart/r_leg/robot/surplus)
 
-/datum/export/robotics/surplus_upgraded
+/datum/export/robotics/upgraded
 	cost = 80
 	unit_name = "upgraded robotic limb replacement"
-	export_types = list(/obj/item/bodypart/l_arm/robot/surplus_upgraded, /obj/item/bodypart/r_arm/robot/surplus_upgraded, /obj/item/bodypart/l_leg/robot/surplus_upgraded, /obj/item/bodypart/r_leg/robot/surplus_upgraded)
+	export_types = list(/obj/item/bodypart/l_arm/robot/upgraded, /obj/item/bodypart/r_arm/robot/upgraded, /obj/item/bodypart/l_leg/robot/upgraded, /obj/item/bodypart/r_leg/robot/upgraded, /obj/item/bodypart/chest/robot/upgraded, /obj/item/bodypart/head/robot/upgraded)
 
 /datum/export/robotics/surgery_gear_basic
 	cost = 50

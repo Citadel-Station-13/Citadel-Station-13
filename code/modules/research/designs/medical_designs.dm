@@ -985,50 +985,71 @@
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/adv_r_leg
-	name = "Advanced prosthetic right leg"
-	desc = "A renforced prosthetic right leg."
-	id = "adv_r_leg"
+/datum/design/upgraded_r_leg
+	name = "Upgraded prosthetic right leg"
+	desc = "A reinforced prosthetic right leg."
+	id = "upgraded_r_leg"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3500, /datum/material/gold = 500, /datum/material/titanium = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/r_leg/robot/surplus_upgraded
+	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 1000, /datum/material/titanium = 5000)
+	construction_time = 160
+	build_path = /obj/item/bodypart/r_leg/robot/upgraded
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/adv_l_leg
-	name = "Advanced prosthetic left leg"
-	desc = "A renforced prosthetic left leg."
-	id = "adv_l_leg"
+/datum/design/upgraded_l_leg
+	name = "Upgraded prosthetic left leg"
+	desc = "A reinforced prosthetic left leg."
+	id = "upgraded_l_leg"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3500, /datum/material/gold = 500, /datum/material/titanium = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/l_leg/robot/surplus_upgraded
+	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 1000, /datum/material/titanium = 5000)
+	construction_time = 160
+	build_path = /obj/item/bodypart/l_leg/robot/upgraded
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/adv_l_arm
-	name = "Advanced prosthetic left arm"
-	desc = "A renforced prosthetic left arm."
-	id = "adv_l_arm"
+/datum/design/upgraded_l_arm
+	name = "Upgraded prosthetic left arm"
+	desc = "A reinforced prosthetic left arm."
+	id = "upgraded_l_arm"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3500, /datum/material/gold = 500, /datum/material/titanium = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/l_arm/robot/surplus_upgraded
+	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 1000, /datum/material/titanium = 5000)
+	construction_time = 160
+	build_path = /obj/item/bodypart/l_arm/robot/upgraded
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/adv_r_arm
-	name = "Advanced prosthetic right arm"
-	desc = "A renforced prosthetic right arm."
-	id = "adv_r_arm"
+	name = "Upgraded prosthetic right arm"
+	desc = "A reinforced prosthetic right arm."
+	id = "upgraded_r_arm"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3500, /datum/material/gold = 500, /datum/material/titanium = 800)
-	construction_time = 40
-	build_path = /obj/item/bodypart/r_arm/robot/surplus_upgraded
+	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 1000, /datum/material/titanium = 5000)
+	construction_time = 160
+	build_path = /obj/item/bodypart/r_arm/robot/upgraded
 	category = list("Misc","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/upgraded_torso
+	name = "Upgraded prosthetic torso"
+	desc = "A reinforced prosthetic torso."
+	id = "upgraded_torso"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 40000, /datum/material/plasma = 1000, /datum/material/titanium = 20000)
+	construction_time = 160
+	build_path = /obj/item/bodypart/chest/robot/upgraded
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/upgraded_head
+	name = "Upgraded prosthetic head"
+	desc = "A reinforced prosthetic head."
+	id = "upgraded_head"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 5000, /datum/material/plasma = 1000, /datum/material/titanium = 2500)
+	construction_time = 160
+	build_path = /obj/item/bodypart/head/robot/upgraded
+	category = list("Misc","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////////////////////////
 ////////////     Plumbing      //////////
