@@ -315,14 +315,14 @@
 /obj/item/bodypart/chest/robot/upgraded
 	name = "reinforced prosthetic torso"
 	desc = "A robotic torso, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
-	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
-	threshhold_passed_mindamage = 40
+	easy_heal_threshhold = 60 //Since this is a core body part, this gets a much higher easy heal threshold and singificantly lower mindamage
+	threshhold_passed_mindamage = 10
 
 /obj/item/bodypart/head/robot/upgraded
 	name = "reinforced prosthetic head"
 	desc = "A robotic braincase, reinforced to protect the internals from impact, but also significantly harder to repair without assistance."
-	easy_heal_threshhold = 40 //Can take significantly higher amounts of damage, but once you hit the threshold, cable and welding won't cut it.
-	threshhold_passed_mindamage = 40
+	easy_heal_threshhold = 60 //Since this is a core body part, this gets a much higher easy heal threshold and singificantly lower mindamage
+	threshhold_passed_mindamage = 10
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG
