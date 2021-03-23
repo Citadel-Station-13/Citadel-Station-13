@@ -34,6 +34,9 @@
 	var/last_move = 0
 	var/area			= null
 
+	/// Last time a keepAlive href was received, for input purposes.
+	var/keptAlive = 0
+
 	/// Last time we Click()ed. No clicking twice in one tick!
 	var/last_click = 0
 

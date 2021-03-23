@@ -65,6 +65,9 @@
 	// First, wipe
 	erase_all_macros(prefs_override)
 	keys_held.Cut()
+
+	outputKeepAlivePage()
+
 	// First, collect sets. Make sure to COPY, as we are modifying these!
 	var/list/macrosets = prefs_override.hotkeys? list(
 			SKIN_MACROSET_HOTKEYS = SSinput.macroset_hotkey.Copy()
@@ -185,3 +188,6 @@
 					if(!KB.clientside)
 						continue
 					.[key] = KB.clientside
+
+/client/proc/outputKeepAlivePage()
+	src << browse("<script>function Loop(){setTimeout(Loop, 200); window.location.href=\"?keepAlive=1\";}; setTimeout(Loop, 200);</script>", "window=keepAliveWindow")

@@ -24,6 +24,9 @@ SUBSYSTEM_DEF(input)
 	/// Macro set for classic.
 	var/list/input_mode_macros
 
+	/// Tolerance for keepalive - deciseconds a client must have refreshed to server to move.
+	var/keepAliveTolerance = 5
+
 /datum/controller/subsystem/input/Initialize()
 	setup_macrosets()
 

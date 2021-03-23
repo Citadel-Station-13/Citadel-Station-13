@@ -50,21 +50,34 @@ menu "menu"
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 0,0
+		pos = 418,0
 		size = 640x440
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		icon = 'icons\\ss13_64.png'
 		macro = "default"
 		menu = "menu"
+		outer-size = 662x551
+		inner-size = 640x465
+	elem "keepAliveWindow"
+		type = BROWSER
+		pos = 1,1
+		size = 1x1
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = ""
 	elem "split"
 		type = CHILD
 		pos = 3,0
 		size = 637x440
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "splitter"
 		left = "mapwindow"
 		right = "infowindow"
@@ -75,6 +88,7 @@ window "mainwindow"
 		size = 200x200
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = ""
 	elem "tooltip"
@@ -83,6 +97,7 @@ window "mainwindow"
 		size = 999x999
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = ""
 
