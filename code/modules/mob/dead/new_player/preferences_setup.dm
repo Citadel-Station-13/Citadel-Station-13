@@ -46,7 +46,7 @@
 	mannequin.add_overlay(mutable_appearance('modular_citadel/icons/ui/backgrounds.dmi', bgstate, layer = SPACE_LAYER))
 	copy_to(mannequin, initial_spawn = TRUE)
 
-	if(current_tab == 3)
+	if(current_tab == 4)
 		//give it its loadout if not on the appearance tab
 		SSjob.equip_loadout(parent.mob, mannequin, FALSE, bypass_prereqs = TRUE, can_drop = FALSE)
 	else
