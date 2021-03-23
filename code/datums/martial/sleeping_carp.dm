@@ -25,27 +25,25 @@
 		return TRUE
 	return FALSE
 
-///Gnashing Teeth: Harm Harm, high force punch on every second harm punch, has a chance to crit for near triple damage
+///Gnashing Teeth: Harm Harm, high force punch on every second harm punch, which can both wound and dismember
 /datum/martial_art/the_sleeping_carp/proc/strongPunch(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
-	///this is the critical hit damage added to the attack if it rolls, it starts at 0 because it'll be changed when rolled
-	var/crit_damage = 0
 	var/damage = damage_roll(A,D)
+	var/wound_unarmed_bonus = A.dna.species.punchstunthreshold
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
-	if(prob(10))
-		crit_damage += (damage*2 + 15)
-		playsound(get_turf(D), 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		D.visible_message("<span class='warning'>[D] staggers as the blow strikes them with inhuman force!</span>", "<span class='userdanger'>You are struck with incredible precision by [A]!</span>")
-		log_combat(A, D, "critcal strong punched (Sleeping Carp)")//log it here because a critical can swing for 40 force and it's important for the sake of how hard they hit
+
+	if(atk_verb == "precisely kick" || atk_verb == "viciously slam")
+		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 75, TRUE, -1)
 	else
-		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-		log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
-	D.apply_damage((damage + 15) + crit_damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
+		A.do_attack_animation(D, ATTACK_EFFECT_CLAW)
+		playsound(get_turf(D), 'sound/weapons/rapierhit.ogg', 75, TRUE, -1)
+	log_combat(A, D, "strong punched (Sleeping Carp)")
+	D.apply_damage(damage + 15, BRUTE, affecting, wound_bonus = wound_unarmed_bonus * 0.5, bare_wound_bonus = wound_unarmed_bonus, sharpness = SHARP_EDGED)
 	return TRUE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -57,7 +55,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
 	D.throw_at(throw_target, 7, 14, A)
-	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_bonus = CANT_WOUND)
+	D.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return TRUE
 
@@ -95,13 +93,17 @@
 	if(check_streak(A,D))
 		return TRUE
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	D.apply_damage(damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
-	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
+	if(atk_verb == "kick" || atk_verb == "slam")
+		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
+		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
+	else
+		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+		playsound(get_turf(D), 'sound/effects/hit_punch.ogg', 50, 1, -1)
 	if(CHECK_MOBILITY(D, MOBILITY_STAND) && damage >= stunthreshold)
 		to_chat(D, "<span class='danger'>You stumble and fall!</span>")
 		D.DefaultCombatKnockdown(10, override_hardstun = 0.01, override_stamdmg = damage)
@@ -153,42 +155,20 @@
 	parry_failed_stagger_duration = 4 SECONDS
 	parry_cooldown = 0.5 SECONDS
 
-/mob/living/carbon/human/UseStaminaBuffer(amount, warn = FALSE, considered_action = TRUE)
-	amount *= physiology? physiology.stamina_buffer_mod : 1
-	return ..()
-
 /datum/martial_art/the_sleeping_carp/teach(mob/living/carbon/human/H, make_temporary = FALSE)
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
-	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
-	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
-	H.physiology.stamina_mod *= 0.4 //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
-	H.physiology.stun_mod *= 0.3 //for those rare stuns
-	H.physiology.pressure_mod *= 0.3 //go hang out with carp
-	H.physiology.cold_mod *= 0.3 //cold mods are different to burn mods, they do stack however
-	H.physiology.heat_mod *= 2 //this is mostly so sleeping carp has a viable weakness. Cooking them alive. Setting them on fire and heating them will be their biggest weakness. The reason for this is....filet jokes.
-	H.physiology.stamina_buffer_mod *= 0.75 //to help with some stamina
 	H.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/carbon/human/H)
 	. = ..()
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	REMOVE_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
-	H.physiology.brute_mod = initial(H.physiology.brute_mod)
-	H.physiology.burn_mod = initial(H.physiology.burn_mod)
-	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)
-	H.physiology.stun_mod = initial(H.physiology.stun_mod)
-	H.physiology.pressure_mod = initial(H.physiology.pressure_mod) //no more carpies
-	H.physiology.cold_mod = initial(H.physiology.cold_mod)
-	H.physiology.heat_mod = initial(H.physiology.heat_mod)
-	H.physiology.stamina_buffer_mod = initial(H.physiology.stamina_buffer_mod)
 	H.faction -= "carp" //:(
 
 /mob/living/carbon/human/proc/sleeping_carp_help()
@@ -196,12 +176,14 @@
 	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
 
-	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>")
-
-	to_chat(usr, "<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second punch, with a chance for even more damage!")
-	to_chat(usr, "<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch people brutally across rooms, and away from you.")
-	to_chat(usr, "<span class='notice'>Keelhaul</span>: Harm Grab. Kick opponents to the floor. Against prone targets, deal additional stamina damage and disarm them.")
-	to_chat(usr, "<span class='notice'>In addition, your body has become incredibly resilient to most forms of attack. Weapons cannot readily pierce your hardened skin, and you are highly resistant to stuns and knockdowns, and can block all projectiles in Throw Mode. However, you are not invincible, and sustained damage will take it's toll. Avoid heat at all costs!</span>")
+	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
+	<span class='notice'>Gnashing Teeth</span>: Harm Harm. Deal additional damage every second (consecutive) punch!\n\
+	<span class='notice'>Crashing Wave Kick</span>: Harm Disarm. Launch your opponent away from you with incredible force!\n\
+	<span class='notice'>Keelhaul</span>: Harm Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.\n\
+	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them!\n\
+	<span class='notice'>Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons.\n\
+	<span class='notice'>You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and appropriate medical supplies when possible for use during downtime.\n\
+	<span class='notice'>In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
 /obj/item/staff/bostaff
 	name = "bo staff"

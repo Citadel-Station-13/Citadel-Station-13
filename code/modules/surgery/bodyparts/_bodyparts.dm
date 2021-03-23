@@ -358,10 +358,15 @@
   */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
 	// actually roll wounds if applicable
+
 	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
 		damage *= 1.5
+
 	else
 		damage = min(damage, WOUND_MAX_CONSIDERED_DAMAGE)
+
+	if(HAS_TRAIT(owner, TRAIT_HARDLY_WOUNDED))
+		damage *=0.85
 
 	var/base_roll = rand(max(damage/1.5,25), round(damage ** CONFIG_GET(number/wound_exponent))) + (get_damage()*CONFIG_GET(number/wound_damage_multiplier))
 	var/injury_roll = base_roll
