@@ -59,5 +59,5 @@
 /obj/item/ammo_box/magazine/internal/shot/levergun
 	name = "levergun internal magazine"
 	ammo_type = /obj/item/ammo_casing/c38 // they're rubber by default, i guess
-	caliber = ".38"
+	caliber = "38"
 	max_ammo = 7
