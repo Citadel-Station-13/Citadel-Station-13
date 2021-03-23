@@ -30,7 +30,7 @@
 	///this var is so that the strong punch is always aiming for the body part the user is targeting and not trying to apply to the chest before deviating
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
 	var/atk_verb = pick("precisely kick", "brutally chop", "cleanly hit", "viciously slam")
-	var/damage = damage_roll(A,D)
+	var/damage = (damage_roll(A,D) + 15)
 	var/wound_unarmed_bonus = A.dna.species.punchstunthreshold
 	D.visible_message("<span class='danger'>[A] [atk_verb]s [D]!</span>", \
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
@@ -43,7 +43,8 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_CLAW)
 		playsound(get_turf(D), 'sound/weapons/rapierhit.ogg', 75, TRUE, -1)
 	log_combat(A, D, "strong punched (Sleeping Carp)")
-	D.apply_damage(damage + 15, BRUTE, affecting, wound_bonus = wound_unarmed_bonus * 0.5, bare_wound_bonus = wound_unarmed_bonus, sharpness = SHARP_EDGED)
+	D.apply_damage(damage, BRUTE, affecting, wound_bonus = wound_unarmed_bonus * 0.5, bare_wound_bonus = wound_unarmed_bonus, sharpness = SHARP_EDGED)
+	D.apply_damage(damage, STAMINA, affecting, wound_bonus = CANT_WOUND)
 	return TRUE
 
 ///Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
@@ -98,6 +99,7 @@
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	D.apply_damage(damage, BRUTE, affecting, wound_bonus = CANT_WOUND)
+	D.apply_damage(damage*1.5, STAMINA, affecting, wound_bonus = CANT_WOUND)
 	if(atk_verb == "kick" || atk_verb == "slam")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
