@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 	var/secure = FALSE
 	/// If we are currently calling another holopad
 	var/calling = FALSE
-/*
+
 /obj/machinery/holopad/secure
 	name = "secure holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 	var/obj/item/circuitboard/machine/holopad/board = circuit
 	board.secure = TRUE
 	board.build_path = /obj/machinery/holopad/secure
-*/
+
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
@@ -372,7 +372,7 @@ GLOBAL_LIST_EMPTY(network_holopads)
 			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
 				HC.Answer(src)
 				break
-			if(!secure) //HC.head_call && 
+			if(HC.head_call && !secure)
 				HC.Answer(src)
 				break
 			if(outgoing_call)

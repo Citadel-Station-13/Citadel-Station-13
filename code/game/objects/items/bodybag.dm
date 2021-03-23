@@ -16,6 +16,9 @@
 		if(isopenturf(target))
 			deploy_bodybag(user, target)
 
+/obj/item/bodybag/canReachInto(atom/user, atom/target, list/next, view_only, obj/item/tool)
+	return (user in src)
+
 /obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
 	R.open(user)

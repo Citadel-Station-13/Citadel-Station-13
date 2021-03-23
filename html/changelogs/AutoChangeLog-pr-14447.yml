@@ -1,0 +1,5 @@
+author: "LetterN"
+delete-after: True
+changes: 
+  - bugfix: "fixed laptops pickability"
+  - bugfix: "fixed closets being unweldable"

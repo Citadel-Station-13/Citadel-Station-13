@@ -1237,7 +1237,7 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	if(W && user.a_intent == INTENT_HELP && W.can_give())
-		user.give()
+		user.give(src)
 		return TRUE
 
 /mob/living/carbon/verb/give_verb()
@@ -1253,4 +1253,4 @@
 	var/obj/item/I = usr.get_active_held_item()
 	var/mob/living/carbon/C = usr
 	if(I.can_give())
-		C.give()
+		C.give(src)
