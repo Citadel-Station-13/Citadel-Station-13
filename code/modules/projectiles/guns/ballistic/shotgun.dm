@@ -335,3 +335,12 @@
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 	var/toggled = FALSE
+
+// hey you kids like
+// LEVER GUNS?
+
+/obj/item/gun/ballistic/shotgun/leveraction
+	name = "lever-action rifle"
+	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
+	the reported potential versatility of .38 Special is worth paying attention to."
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/levergun
