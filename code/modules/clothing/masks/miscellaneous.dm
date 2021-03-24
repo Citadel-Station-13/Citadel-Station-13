@@ -82,7 +82,6 @@
 	desc = "Express your happiness or hide your sorrows with this modular cutout."
 	icon_state = "joy"
 	clothing_flags = ALLOWINTERNALS
-	resistance_flags = FIRE_PROOF //let us have this i beg you, it's a medium size breathmask :(
 	mutantrace_variation = STYLE_MUZZLE
 	actions_types = list(/datum/action/item_action/adjust)
 	var/list/joymask_designs = list()
