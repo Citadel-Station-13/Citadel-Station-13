@@ -222,9 +222,12 @@
 	if(shoving && COOLDOWN_FINISHED(src, shove_cooldown) && !HAS_TRAIT(L, TRAIT_IWASBATONED)) //Rightclicking applies a knockdown, but only once every couple of seconds, based on the cooldown_duration var. If they were recently knocked down, they can't be knocked down again by a baton.
 		L.DefaultCombatKnockdown(50, override_stamdmg = 0)
 		L.apply_status_effect(STATUS_EFFECT_TASED_WEAK, status_duration) //Even if they shove themselves up, they're still slowed.
-		L.apply_status_effect(STATUS_EFFECT_OFF_BALANCE, status_duration * 0.5) //They're very likely to drop items if shoved briefly after a knockdown.
+		L.apply_status_effect(STATUS_EFFECT_OFF_BALANCE, status_duration) //They're very likely to drop items if shoved briefly after a knockdown.
 		shoved = TRUE
 		COOLDOWN_START(src, shove_cooldown, cooldown_duration)
+		ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT) //Prevents swapping to a new baton to avoid the cooldown by just acquiring more batons
+		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), cooldown_duration)
+		playsound(loc, 'sound/weapons/zapbang.ogg', 50, 1, -1)
 	else //If we cannot/don't knock down the target, we apply a stagger, which keeps them from just running off
 		L.apply_status_effect(STATUS_EFFECT_STAGGERED, status_duration)
 
@@ -239,9 +242,6 @@
 		log_combat(user, L, shoved ? "stunned and attempted knockdown" : "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
-
-	ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT) //Prevents swapping to a new baton to avoid the cooldown by just acquiring more batons
-	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), cooldown_duration)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -337,7 +337,7 @@
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	cooldown_duration = 7 SECONDS //It's a little on the weak side
-	status_duration = 2 //Slows someone for a tiny bit
+	status_duration = 3 //Slows someone for a tiny bit
 	var/obj/item/assembly/igniter/sparkler
 
 /obj/item/melee/baton/cattleprod/Initialize()
