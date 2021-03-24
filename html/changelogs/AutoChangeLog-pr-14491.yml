@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "The NOGUNS trait now takes precedence over the triggerguard checks."
