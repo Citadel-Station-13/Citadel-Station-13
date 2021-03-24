@@ -22,7 +22,7 @@
 	var/motd
 	// var/policy
 
-	// var/static/regex/ic_filter_regex
+	var/static/regex/ic_filter_regex
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -53,7 +53,7 @@
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	// LoadPolicy()
-	// LoadChatFilter()
+	LoadChatFilter()
 
 	if (Master)
 		Master.OnConfigLoad()
@@ -486,7 +486,7 @@ Example config:
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
-/*
+
 /datum/controller/configuration/proc/LoadChatFilter()
 	var/list/in_character_filter = list()
 	if(!fexists("[directory]/in_character_filter.txt"))
@@ -499,7 +499,7 @@ Example config:
 			continue
 		in_character_filter += REGEX_QUOTE(line)
 	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
-*/
+
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)

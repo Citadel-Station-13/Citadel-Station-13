@@ -202,8 +202,9 @@
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
-/obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
-	. = ..()
+/obj/machinery/portable_atmospherics/canister/New(loc, datum/gas_mixture/existing_mixture)
+	..()
+
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
 	else
@@ -221,10 +222,8 @@
 			air_contents.set_temperature(starter_temp)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	var/oh_two = /datum/gas/oxygen
-	var/dihydrogen = /datum/gas/nitrogen //how to piss of chemists
-	air_contents.set_moles(oh_two, (O2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
-	air_contents.set_moles(dihydrogen, (N2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
+	air_contents.set_moles(/datum/gas/oxygen, (O2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
+	air_contents.set_moles(/datum/gas/nitrogen, (N2STANDARD * maximum_pressure * filled) * air_contents.return_volume() / (R_IDEAL_GAS_EQUATION * air_contents.return_temperature()))
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
 	if(stat & BROKEN)
