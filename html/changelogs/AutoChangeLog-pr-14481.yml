@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "The nightmare's light eater can now destroy messes that emit light, like glowing goo or ectoplasmic puddles."

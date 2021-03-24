@@ -1,6 +1,0 @@
-author: "qweq12yt"
-delete-after: True
-changes: 
-  - rscadd: "added the black market uplink"
-  - imageadd: "added blackmarket.dmi"
-  - bugfix: "increased the black market interface's width, now the delivery options will show properly when the LTSRBT is built"
