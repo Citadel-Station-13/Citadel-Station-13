@@ -35253,10 +35253,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-"cvl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/library)
 "cvr" = (
 /obj/structure/cable/white,
 /obj/effect/spawner/structure/window/reinforced,
@@ -71194,7 +71190,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "eiN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -74964,7 +74960,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "fyR" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -75823,7 +75819,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "fOk" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -76551,7 +76547,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "gaU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
@@ -76881,7 +76877,7 @@
 	dir = 6
 	},
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "giP" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 6
@@ -87115,7 +87111,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "jHl" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "ceblast";
@@ -92408,7 +92404,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "lxa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -92620,7 +92616,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "lzV" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/bot,
@@ -94338,7 +94334,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "mhD" = (
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -95755,7 +95751,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "mJN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/grimy,
@@ -95986,7 +95982,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "mMW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -96595,7 +96591,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "mYq" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -101740,7 +101736,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "oND" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/turf_decal/delivery,
@@ -105268,7 +105264,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "qdP" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/firealarm{
@@ -106391,7 +106387,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "qAV" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -107539,7 +107535,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "qVf" = (
 /obj/machinery/door/window{
 	dir = 8;
@@ -107671,7 +107667,7 @@
 "qXC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "qXG" = (
 /obj/machinery/computer/card/minor/ce{
 	dir = 4
@@ -109803,7 +109799,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "rQd" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
@@ -111585,7 +111581,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "sAr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -112008,7 +112004,7 @@
 /area/service/abandoned_gambling_den)
 "sHn" = (
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "sHq" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/disposalpipe/segment{
@@ -115509,7 +115505,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "tRP" = (
 /obj/structure/table,
 /obj/item/storage/briefcase,
@@ -122899,7 +122895,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "wvP" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/light/small{
@@ -123710,7 +123706,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/vacant_room/commissary)
+/area/commons/vacant_room/commissary)
 "wJf" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -160585,7 +160581,7 @@ grW
 grW
 grW
 iDh
-cvl
+pBd
 pBd
 qXC
 mhz
