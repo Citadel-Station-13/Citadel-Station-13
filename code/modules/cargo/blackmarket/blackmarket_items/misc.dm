@@ -10,6 +10,15 @@
 	stock_max = 6
 	availability_prob = 80
 
+/datum/blackmarket_item/misc/clear_pda
+	name = "Clear PDA"
+	desc = "Show off your style with this limited edition clear PDA!."
+	item = /obj/item/pda/clear
+	price_min = 250
+	price_max = 600
+	stock_max = 4
+	availability_prob = 50
+
 /datum/blackmarket_item/misc/shoulder_holster
 	name = "Shoulder holster"
 	desc = "Yeehaw, hardboiled friends! This holster is the first step in your dream of becoming a detective and being allowed to shoot real guns!"
@@ -61,3 +70,4 @@
 	stock_min = 3
 	stock_max = 6
 	availability_prob = 100
+

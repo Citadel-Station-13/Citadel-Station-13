@@ -66,7 +66,6 @@
 	price_min = 100
 	price_max = 200
 	availability_prob = 100
-
 	// add new drinks here
 	var/list/counter = list(
 		/datum/reagent/consumable/ethanol/gintonic,
