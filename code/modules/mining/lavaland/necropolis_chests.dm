@@ -36,7 +36,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/magic/PopulateContents()
-	var/loot = rand(1,10)
+	var/loot = rand(1,9)
 	switch(loot)
 		if(1)
 			new /obj/item/soulstone/anybody(src)
@@ -57,10 +57,6 @@
 			new /obj/item/immortality_talisman(src)
 		if(9)
 			new /obj/item/gun/magic/wand/book/healing(src)
-		if(10)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
 
 /obj/structure/closet/crate/necropolis/tendril/weapon_armor/PopulateContents()
 	var/loot = rand(1,11)
@@ -132,7 +128,7 @@
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 
 /obj/structure/closet/crate/necropolis/tendril/all/PopulateContents()
-	var/loot = rand(1,29)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -196,10 +192,6 @@
 			new /obj/item/immortality_talisman(src)
 		if(28)
 			new /obj/item/gun/magic/wand/book/healing(src)
-		if(29)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
