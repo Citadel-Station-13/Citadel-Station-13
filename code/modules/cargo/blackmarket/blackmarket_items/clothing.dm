@@ -65,6 +65,9 @@
 	stock_max = 7
 	availability_prob = 100
 
+/* commented out until someone wants to port the actual boots
+ * i am unsure they are in accordance with server design ideals
+
 /datum/blackmarket_item/clothing/rocket_boots
 	name = "Rocket Boots"
 	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grevious harm to or with a body."
@@ -73,3 +76,5 @@
 	price_max = 3000
 	stock_max = 1
 	availability_prob = 30
+
+*/
