@@ -70,8 +70,6 @@ effective or pretty fucking useless.
 
 /obj/item/healthanalyzer/rad_laser
 	var/irradiate = TRUE
-	var/stealth = FALSE
-	var/used = FALSE // is it cooling down?
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
