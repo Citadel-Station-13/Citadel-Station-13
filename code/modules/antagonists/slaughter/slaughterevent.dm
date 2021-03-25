@@ -9,6 +9,7 @@
 
 /datum/round_event_control/slaughter/canSpawnEvent()
 	var/t = /datum/round_event_control/slaughter
+	weight = initial(t.weight)
 	var/list/allowed_turf_typecache = typecacheof(/turf/open) - typecacheof(/turf/open/space)
 	var/list/allowed_z_cache = list()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
