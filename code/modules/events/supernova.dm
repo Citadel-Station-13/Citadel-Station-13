@@ -47,7 +47,7 @@
 
 /datum/round_event/supernova/tick()
 	var/midpoint = round((endWhen-startWhen)/2)
-	if(activeFor < midPoint)
+	if(activeFor < midpoint)
 		supernova.power_mod = min(supernova.power_mod*1.2, power)
 	if(activeFor > endWhen-10)
 		supernova.power_mod /= 4
