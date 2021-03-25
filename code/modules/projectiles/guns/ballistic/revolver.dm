@@ -494,24 +494,3 @@
 		var/mutable_appearance/charge_bar = mutable_appearance(icon,  "[initial(icon_state)]_charge", color = batt_color)
 		charge_bar.pixel_x = i
 		. += charge_bar
-
-
-// the derringer is neither a pistol or revolver, but for code sanity it will be here
-// the idea is for it to not show on your sprite, be silent, but also not deal much damage
-// also
-/obj/item/gun/ballistic/revolver/derringer
-	name = "derringer pistol"
-	desc = "A favorite among dentists and vengeful heroes. Hides neatly inside your sleeves! Uses .38 rounds."
-	fire_sound = "sound/weapons/derringer.ogg"
-	icon_state = "pistol" // placeholder
-
-	// not visible in sprite, we want it to be like in jango
-	// not having it show on examining would be good and 'if (wearing clothes)' would desirable
-	item_state = null
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/derringer
-	suppressed = TRUE	// it needs to be good at something
-	w_class = WEIGHT_CLASS_SMALL
-
-// you can't spin a derringer!
-/obj/item/gun/ballistic/revolver/derringer/do_spin()
-	return
