@@ -63,7 +63,7 @@
 
 /datum/blackmarket_item/misc/internals_box
 	name = "Internals Box"
-	desc = "The same one Nanotrase gives you before starting the shift. Totally not stolen from a dead space-man floating in space."
+	desc = "The same one Nanotrasen gives you before starting the shift. Totally not stolen from a dead space-man floating in space."
 	item = /obj/item/storage/box/survival
 	price_min = 250
 	price_max = 350
