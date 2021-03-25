@@ -501,14 +501,13 @@
 // also
 /obj/item/gun/ballistic/revolver/derringer
 	name = "derringer pistol"
-	desc = "A favorite among dentists and vengeful heroes. Hides neatly inside your sleeves! Uses .357 rounds."
+	desc = "A favorite among dentists and vengeful heroes. Hides neatly inside your sleeves! Uses .38 rounds."
 	fire_sound = "sound/weapons/derringer.ogg"
 	icon_state = "pistol" // placeholder
 
 	// not visible in sprite, we want it to be like in jango
 	// not having it show on examining would be good and 'if (wearing clothes)' would desirable
 	item_state = null
-
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/derringer
 	suppressed = TRUE	// it needs to be good at something
 	w_class = WEIGHT_CLASS_SMALL

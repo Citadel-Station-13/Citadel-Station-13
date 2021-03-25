@@ -41,7 +41,7 @@
 	price_max = 360
 	stock_min = 2
 	stock_max = 5
-	availability_prob = 50
+	availability_prob = 80
 
 /datum/blackmarket_item/misc/smugglers_satchel
 	name = "Smuggler's Satchel"

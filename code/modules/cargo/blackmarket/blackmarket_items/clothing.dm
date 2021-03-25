@@ -51,5 +51,16 @@
 	item = /obj/item/clothing/head/chameleon/broken
 	price_min = 100
 	price_max = 200
-	stock_max = 2
-	availability_prob = 70
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 80
+
+/datum/blackmarket_item/clothing/earmuffs
+	name = "Earmuffs"
+	desc = "Protect your precious ears from security's flashbangs with this handy device."
+	item = /obj/item/clothing/ears/earmuffs
+	price_min = 100
+	price_max = 200
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 80

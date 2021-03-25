@@ -39,3 +39,12 @@
 	price_max = 400
 	stock_max = 2
 	availability_prob = 50
+
+/datum/blackmarket_item/weapon/derringer
+	name = "Derringer Pistol"
+	desc = "Tiny two-round pistol chambered in .38. Rubber bullets included."
+	item = /obj/item/gun/ballistic/revolver/derringer
+	price_min = 1500
+	price_max = 2000
+	stock_max = 2
+	availability_prob = 35
