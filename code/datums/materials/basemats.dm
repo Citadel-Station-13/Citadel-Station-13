@@ -80,11 +80,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	qdel(source.GetComponent(/datum/component/radioactive))
 
 
-///Adds firestacks on hit (Still needs support to turn into gas on destruction)
+///Adds firestacks on hit
 /datum/material/plasma
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+    strength_modifier = 0.8
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	value_per_unit = 0.1
@@ -96,11 +97,6 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
-
-/datum/material/plasma/on_removed(atom/source, material_flags)
-	. = ..()
-	source.RemoveElement(/datum/element/firestacker, amount=1)
-	qdel(source.GetComponent(/datum/component/explodable))
 
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
