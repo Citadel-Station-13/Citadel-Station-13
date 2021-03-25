@@ -1,6 +1,6 @@
 /obj/item/blackmarket_uplink
 	name = "Black Market Uplink"
-	desc = "A cobbled together mishmash of a subspace amplifier, a radio, and an analyzer bound together with some cables.  Somehow, this pinnacle of hodge-podge engineering is able to access the black market.  Such a sordid place has a variable inventory in limited stock at inflated prices...but at least you won't have to dirty your hands making the items yourself once you have this device.  Remember, no refunds, and once you buy the item it's up to you to be able to retrieve it from the drop-off point." 
+	desc = "A mishmash of a subspace amplifier, a radio, and an analyzer.  Somehow able to access the black market, with a variable inventory in limited stock at inflated prices. No refunds, customer responsible for pick-ups." 
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	// UI variables.
