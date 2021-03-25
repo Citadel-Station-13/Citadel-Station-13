@@ -70,8 +70,9 @@
 	item = /obj/item/clothing/glasses/science
 	price_min = 200
 	price_max = 300
-	stock_max = 5
-	availability_prob = 80
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 100
 
 /datum/blackmarket_item/tool/meson_goggles
 	name = "Meson Goggles"
@@ -79,5 +80,6 @@
 	item = /obj/item/clothing/glasses/meson
 	price_min = 200
 	price_max = 300
-	stock_max = 5
-	availability_prob = 80
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 100

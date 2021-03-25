@@ -51,3 +51,13 @@
 	price_max = 1000
 	stock_max = 2
 	availability_prob = 30
+
+/datum/blackmarket_item/misc/internals_box
+	name = "Internals Box"
+	desc = "The same one Nanotrase gives you before starting the shift. Totally not stolen from a dead space-man floating in space."
+	item = /obj/item/storage/box/survival
+	price_min = 250
+	price_max = 350
+	stock_min = 3
+	stock_max = 6
+	availability_prob = 100

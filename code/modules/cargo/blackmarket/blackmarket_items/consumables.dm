@@ -14,10 +14,10 @@
 	name = "Box of Donk Pockets"
 	desc = "A well packaged box containing the favourite snack of every spacefarer."
 	item = /obj/item/storage/box/donkpockets
-	stock_min = 2
-	stock_max = 5
-	price_min = 325
-	price_max = 400
+	stock_min = 5
+	stock_max = 10
+	price_min = 250
+	price_max = 350
 	availability_prob = 100
 
 /datum/blackmarket_item/consumable/suspicious_pills
@@ -63,8 +63,8 @@
 	item = /obj/item/reagent_containers/food/drinks/drinkingglass
 	stock_min = 10
 	stock_max = 15
-	price_min = 50
-	price_max = 130
+	price_min = 100
+	price_max = 200
 	availability_prob = 100
 
 	// add new drinks here
