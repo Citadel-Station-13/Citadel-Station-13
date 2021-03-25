@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20), \
 	new/datum/stack_recipe("Scientist Statue", /obj/structure/statue/plasma/scientist, 5, one_per_turf = 1, on_floor = 1), \
-//	new/datum/stack_recipe("plasma ingot", /obj/item/ingot/plasma, 6, time = 100), \ no
+	new/datum/stack_recipe("plasma ingot", /obj/item/ingot/plasma, 6, time = 100), \
 	))
 
 /obj/item/stack/sheet/mineral/plasma/get_main_recipes()
