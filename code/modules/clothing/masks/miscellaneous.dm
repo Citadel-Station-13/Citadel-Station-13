@@ -84,7 +84,7 @@
 	clothing_flags = ALLOWINTERNALS
 	mutantrace_variation = STYLE_MUZZLE
 	actions_types = list(/datum/action/item_action/adjust)
-	var/list/joymask_designs = list()
+	var/static/list/joymask_designs = list()
 
 
 /obj/item/clothing/mask/joy/Initialize(mapload)
