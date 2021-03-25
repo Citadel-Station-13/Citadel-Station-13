@@ -18,7 +18,7 @@
 			continue
 		if(!C.can_bloodcrawl_in())
 			continue
-		if(!IsValidDebrisLocation(C.loc, allowed_turf_typecache, allowed_z_cache, C.type, FALSE))
+		if(!SSpersistence.IsValidDebrisLocation(C.loc, allowed_turf_typecache, allowed_z_cache, C.type, FALSE))
 			continue
 		weight += 0.05
 	return ..()
