@@ -98,6 +98,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		source.AddElement(/datum/element/firestacker, amount=1)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
+/datum/material/plasma/on_removed(atom/source, material_flags)
+	. = ..()
+	source.RemoveElement(/datum/element/firestacker, amount=1)
+	qdel(source.GetComponent(/datum/component/explodable))
+
 ///Can cause bluespace effects on use. (Teleportation) (Not yet implemented)
 /datum/material/bluespace
 	name = "bluespace crystal"
