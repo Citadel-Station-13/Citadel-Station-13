@@ -351,6 +351,73 @@
 	playsound(owner, 'sound/effects/bang.ogg', 50)
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 
+/obj/item/shield/riot/flash
+	name = "strobe shield"
+	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
+	icon_state = "flashshield"
+	item_state = "flashshield"
+	var/obj/item/assembly/flash/handheld/embedded_flash
+
+/obj/item/shield/riot/flash/Initialize()
+	. = ..()
+	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
+	. =  embedded_flash.attack(M, user)
+	update_icon()
+
+/obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
+	. = embedded_flash.attack_self(user)
+	update_icon()
+
+/obj/item/shield/riot/flash/on_shield_block(mob/living/owner, atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, final_block_chance, list/block_return)
+	. = ..()
+	if (. && !embedded_flash.crit_fail)
+		embedded_flash.activate()
+		update_icon()
+
+
+/obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/assembly/flash/handheld))
+		var/obj/item/assembly/flash/handheld/flash = W
+		if(flash.crit_fail)
+			to_chat(user, "<span class='warning'>No sense replacing it with a broken bulb!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You begin to replace the bulb...</span>")
+			if(do_after(user, 20, target = user))
+				if(flash.crit_fail || !flash || QDELETED(flash))
+					return
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				qdel(embedded_flash)
+				embedded_flash = flash
+				flash.forceMove(src)
+				update_icon()
+				return
+	..()
+
+/obj/item/shield/riot/flash/emp_act(severity)
+	. = ..()
+	embedded_flash.emp_act(severity)
+	update_icon()
+
+/obj/item/shield/riot/flash/update_icon_state()
+	if(!embedded_flash || embedded_flash.crit_fail)
+		icon_state = "riot"
+		item_state = "riot"
+	else
+		icon_state = "flashshield"
+		item_state = "flashshield"
+
+/obj/item/shield/riot/flash/examine(mob/user)
+	. = ..()
+	if (embedded_flash?.crit_fail)
+		. += "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>"
+
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
