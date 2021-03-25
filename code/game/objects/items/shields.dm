@@ -308,6 +308,8 @@
 	name = "kinetic resistant shield"
 	desc = "A polymer and ceramic shield designed to absorb ballistic projectiles and kinetic force. It doesn't do very well into energy attacks, especially from weapons that inflict burns."
 	armor = list("melee" = 30, "bullet" = 80, "laser" = 0, "energy" = 0, "bomb" = -40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	icon_state = "riot_bullet"
+	item_state = "riot_bullet"
 	shield_flags = SHIELD_FLAGS_DEFAULT | SHIELD_KINETIC_STRONG | SHIELD_ENERGY_WEAK
 	max_integrity = 300
 
@@ -447,7 +449,7 @@
 	if(obj_integrity == 0)
 		if(ismob(loc))
 			var/mob/living/L = loc
-			playsound(src, 'sound/effects/zap.ogg', 100)
+			playsound(src, "sparks", 100, TRUE)
 			L.visible_message("<span class='boldwarning'>[src] overloads from the damage sustained!</span>")
 			L.dropItemToGround(src)			//implant component catch hook will grab it.
 
