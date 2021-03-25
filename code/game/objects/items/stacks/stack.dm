@@ -459,8 +459,8 @@
 
 /obj/item/stack/AltClick(mob/living/user)
 	. = ..()
-	if(isturf(loc)) // to prevent people that are alt clicking a tile to see its content from getting undesidered pop ups
-		return
+	// if(isturf(loc)) // to prevent people that are alt clicking a tile to see its content from getting undesidered pop ups
+	// 	return
 	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, TRUE, FALSE) || zero_amount()) //, !iscyborg(user)
 		return
 	//get amount from user

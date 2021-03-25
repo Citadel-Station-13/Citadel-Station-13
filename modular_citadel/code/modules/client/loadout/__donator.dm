@@ -254,13 +254,13 @@
 /datum/gear/donator/toriball
 	name = "Rainbow Tennis Ball"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/rainbow
+	path = /obj/item/toy/fluff/tennis_poly/tri/squeak/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/donator/izzyball
 	name = "Katlin's Ball"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/rainbow/izzy
+	path = /obj/item/toy/fluff/tennis_poly/tri/squeak/izzy
 	ckeywhitelist = list("izzyinbox")
 
 /datum/gear/donator/cloak

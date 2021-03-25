@@ -323,6 +323,7 @@
 #define ABDUCTOR_ANTAGONIST "abductor-antagonist"
 #define MADE_UNCLONEABLE "made-uncloneable"
 #define TIMESTOP_TRAIT "timestop"
+#define DOMAIN_TRAIT "domain"
 #define NUKEOP_TRAIT "nuke-op"
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
