@@ -55,11 +55,11 @@
 	stock_max = 5
 	price_min = 80
 	price_max = 170
-	availability_prob = 90
+	availability_prob = 70
 
 /datum/blackmarket_item/consumable/stray_drink
 	name = "A random drink"
-	desc = "A surprise drink direcly from the counter. No refunds on spilling."
+	desc = "A surprise drink direcly from the counter. No refunds if the glass breaks."	// it will always break if it's launched at the station
 	item = /obj/item/reagent_containers/food/drinks/drinkingglass
 	stock_min = 10
 	stock_max = 15

@@ -69,7 +69,7 @@
 	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy-to-read format."
 	item = /obj/item/clothing/glasses/science
 	price_min = 200
-	price_max = 250
+	price_max = 300
 	stock_max = 5
 	availability_prob = 80
 
@@ -78,6 +78,6 @@
 	desc = "These let you see through walls and inspect other structures."
 	item = /obj/item/clothing/glasses/meson
 	price_min = 200
-	price_max = 250
+	price_max = 300
 	stock_max = 5
 	availability_prob = 80

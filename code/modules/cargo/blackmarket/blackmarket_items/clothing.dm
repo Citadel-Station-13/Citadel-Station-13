@@ -53,7 +53,7 @@
 	price_max = 200
 	stock_min = 3
 	stock_max = 7
-	availability_prob = 80
+	availability_prob = 100
 
 /datum/blackmarket_item/clothing/earmuffs
 	name = "Earmuffs"
@@ -63,4 +63,4 @@
 	price_max = 200
 	stock_min = 3
 	stock_max = 7
-	availability_prob = 80
+	availability_prob = 100

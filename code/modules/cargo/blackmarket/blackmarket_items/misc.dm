@@ -37,11 +37,11 @@
 	name = "Strange Seeds"
 	desc = "An Exotic Variety of seed that can contain anything from glow to acid."
 	item = /obj/item/seeds/random
-	price_min = 320
-	price_max = 360
+	price_min = 250
+	price_max = 350
 	stock_min = 2
 	stock_max = 5
-	availability_prob = 80
+	availability_prob = 100
 
 /datum/blackmarket_item/misc/smugglers_satchel
 	name = "Smuggler's Satchel"
