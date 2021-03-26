@@ -1,9 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - balance: "Clothing no longer drops when shredded. It just becomes useless."
-  - balance: "Suit sensors are guaranteed to short out when the clothes become shredded, not damaged now."
-  - balance: "Uniform limb integrity increased from 30 to 120."
-  - balance: "Suit sensor damage has been added. The more damaged your suit sensors get, the less features that will be available from these suit sensors. It takes two e-sword hits to ruin your tracking beacon for instance.
-tweak: Examine text on uniforms is now more clear about needing cable coil to repair your suit sensors."
-  - bugfix: "Fixed prisoner uniform sprite paths"

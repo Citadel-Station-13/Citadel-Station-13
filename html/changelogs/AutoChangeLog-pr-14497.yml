@@ -1,5 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - rscadd: "Lever-action rifles, chambered in .38, are now sitting in the code. They might be buyable from Cargo or the Black Market soon. Watch this space."
-  - rscadd: "Sawed-off shotguns now look like shotguns, but short, when inhand, instead of \"generic gun\"."
