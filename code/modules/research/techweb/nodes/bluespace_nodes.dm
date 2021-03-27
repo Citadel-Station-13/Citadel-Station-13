@@ -69,7 +69,7 @@
 	display_name = "Unregulated Bluespace Research"
 	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
 	prereq_ids = list("bluespace_warping", "syndicate_basic")
-	design_ids = list("desynchronizer")
+	design_ids = list("desynchronizer", "launchpadremote")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /////////////////////////shuttle tech/////////////////////////

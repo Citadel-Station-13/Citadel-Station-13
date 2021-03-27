@@ -86,6 +86,16 @@
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/launchpadremote
+	name = "Launchpad Remote"
+	desc = "A device that can control linked bluespace launchpads from a long distance."
+	id = "launchpadremote"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/silver = 1500, /datum/material/gold = 1000)
+	build_path = /obj/item/launchpad_remote/sci
+	category = list("Bluespace Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."

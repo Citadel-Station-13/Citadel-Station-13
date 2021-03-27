@@ -272,6 +272,15 @@
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 
+/obj/item/launchpad_remote/sci
+	name = "launchpad remote"
+	desc = "A remote for bluespace launchpads. Nice and compact, at least."
+	icon_state = "gangtool-purple"
+	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	icon = 'icons/obj/device.dmi'
+
 /obj/item/launchpad_remote/Initialize(mapload, pad) //remote spawns linked to the briefcase pad
 	. = ..()
 	src.pad = pad
