@@ -99,6 +99,9 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
+	/// does this limb have replacement capability, despite probably not being robotic?
+	// see code\modules\surgery\limb_augmentation.dm, or code\game\machinery\limbgrower.dm
+	var/forcereplace = FALSE
 
 /obj/item/bodypart/examine(mob/user)
 	. = ..()
