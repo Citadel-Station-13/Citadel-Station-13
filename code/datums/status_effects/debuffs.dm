@@ -108,7 +108,8 @@
 
 /datum/status_effect/off_balance/on_remove()
 	var/active_item = owner.get_active_held_item()
-	owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
+	if(active_item)
+		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
 	return ..()
 
 /obj/screen/alert/status_effect/asleep
