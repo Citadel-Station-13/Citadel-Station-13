@@ -24,6 +24,10 @@
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (primary_sun, suns)
 #define COMSIG_SUN_MOVED "sun_moved"
+
+/// from SSactivity for things that add threat but aren't "global" (e.g. phylacteries)
+#define COMSIG_THREAT_CALC "threat_calculation"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
