@@ -51,6 +51,11 @@
 		return FALSE
 	return ACCESS_CAPTAIN in authorize_access
 
+/obj/machinery/computer/communications/proc/authenticated_as_non_silicon_command(mob/user)
+	if (issilicon(user))
+		return FALSE
+	return ACCESS_HEADS in authorize_access	//Should always be the case if authorized as it usually needs head access to log in, buut lets be sure.
+
 /// Are we a silicon, OR we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_silicon_or_captain(mob/user)
 	if (issilicon(user))
@@ -160,7 +165,7 @@
 				return
 			make_announcement(usr)
 		if ("messageAssociates")
-			if (!authenticated_as_non_silicon_captain(usr))
+			if (!authenticated_as_non_silicon_command(usr))
 				return
 			if (!COOLDOWN_FINISHED(src, important_action_cooldown))
 				return
@@ -361,9 +366,9 @@
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac(user, TRUE)
 
 				if (authenticated_as_non_silicon_captain(user))
-					data["canMessageAssociates"] = TRUE
 					data["canRequestNuke"] = TRUE
-
+				if (authenticated_as_non_silicon_command(user))
+					data["canMessageAssociates"] = TRUE
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE
 
