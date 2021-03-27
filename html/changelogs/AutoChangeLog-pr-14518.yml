@@ -1,0 +1,9 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "Replaces the useless bullet and laser shields with new Kinetic and Ablative shields, which do as they advertise."
+  - rscadd: "Replaces the shield implants shield with a hardlight shield that can take large amounts of brute damage, but disintegrates when shot with disablers."
+  - bugfix: "Fixes Fake Roman Shields being able to be used as normal riot shields."
+  - bugfix: "Fixes nonlethal/non-physical damage types destroying shields. (stamina, toxins, oxygen, clone, brain)"
+  - bugfix: "Fixes tower shields not doing anything, while also giving them intergrity to match their advertised durability."
+  - bugfix: "Uses additional flags to determine what kind effects work well and what works poorly against various shields."
