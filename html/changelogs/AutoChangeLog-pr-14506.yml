@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - bugfix: "fixes character preview not updating when selecting the loadout tab"
