@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscadd: "Slaughter demon event now increases weight based on how much blood there is."
