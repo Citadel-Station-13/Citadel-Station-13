@@ -17,7 +17,7 @@
 
 /datum/blackmarket_item/New()
 	if(isnull(price))
-		price = round(rand(price_min, price_max), 10)
+		price = round(rand(price_min, price_max), 5)
 	if(isnull(stock))
 		stock = rand(stock_min, stock_max)
 
