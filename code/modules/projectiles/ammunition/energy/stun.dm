@@ -30,3 +30,6 @@
 
 /obj/item/ammo_casing/energy/disabler/secborg
 	e_cost = 50
+
+/obj/item/ammo_casing/energy/disabler/hos
+	e_cost = 25 // if the big iron can get a silly amount of disablers, why can't i?
