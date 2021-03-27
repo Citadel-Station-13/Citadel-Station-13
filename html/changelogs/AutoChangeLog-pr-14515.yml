@@ -1,0 +1,4 @@
+author: "CuteMoff"
+delete-after: True
+changes: 
+  - balance: "Changed Strength Modifier from the default (1.0) too .7"

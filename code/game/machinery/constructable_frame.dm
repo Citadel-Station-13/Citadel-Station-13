@@ -208,6 +208,8 @@
 						new_machine.component_parts = list()
 
 						circuit.forceMove(new_machine)
+						// TODO: make sleepers not shit out parts PROPERLY THIS TIME.
+						new_machine.circuit.moveToNullspace()
 						new_machine.component_parts += circuit
 						new_machine.circuit = circuit
 
