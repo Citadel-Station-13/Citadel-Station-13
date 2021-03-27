@@ -1,0 +1,4 @@
+author: "Shadow-Quill"
+delete-after: True
+changes: 
+  - imageadd: "Added small versions of the walk icon for all hud styles, except Retro."
