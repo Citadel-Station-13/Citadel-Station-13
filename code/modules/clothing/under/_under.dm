@@ -34,7 +34,7 @@
 		. += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
+	if((sensordamage || (has_sensor < HAS_SENSORS && has_sensor != NO_SENSORS)) && istype(I, /obj/item/stack/cable_coil))
 		if(damaged_clothes == CLOTHING_SHREDDED)
 			to_chat(user,"<span class='warning'>[src] is too damaged to have its suit sensors repaired! Repair it first.</span>")
 			return 0
