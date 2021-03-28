@@ -1,5 +1,0 @@
-author: "dzahlus"
-delete-after: True
-changes: 
-  - rscadd: "Added radial menu to joy mask for alt reskins"
-  - imageadd: "added pensive, angry and flushed sprites to joy mask"
