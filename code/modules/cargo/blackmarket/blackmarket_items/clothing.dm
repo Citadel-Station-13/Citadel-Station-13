@@ -51,5 +51,30 @@
 	item = /obj/item/clothing/head/chameleon/broken
 	price_min = 100
 	price_max = 200
-	stock_max = 2
-	availability_prob = 70
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 100
+
+/datum/blackmarket_item/clothing/earmuffs
+	name = "Earmuffs"
+	desc = "Protect your precious ears from security's flashbangs with this handy device."
+	item = /obj/item/clothing/ears/earmuffs
+	price_min = 100
+	price_max = 200
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 100
+
+/* commented out until someone wants to port the actual boots
+ * i am unsure they are in accordance with server design ideals
+
+/datum/blackmarket_item/clothing/rocket_boots
+	name = "Rocket Boots"
+	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grevious harm to or with a body."
+	item = /obj/item/clothing/shoes/bhop/rocket
+	price_min = 1500
+	price_max = 3000
+	stock_max = 1
+	availability_prob = 30
+
+*/
