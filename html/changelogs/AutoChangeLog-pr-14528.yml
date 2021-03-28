@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Fixed being unable to fix suit sensors if damaged at all unless destroyed completely"
