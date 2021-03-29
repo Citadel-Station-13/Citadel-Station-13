@@ -328,9 +328,15 @@
 	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	M.DelayNextAction()
-	if((mob_biotypes & MOB_EPIC) && (M.mob_biotypes & MOB_WEAK_AGAINST_EPIC))
-		M.death()
-		return 0
+	if((M.mob_biotypes & MOB_EPIC) && (mob_biotypes & MOB_WEAK_AGAINST_EPIC)) // uh oh! cleave time!
+		var/turf/attacker_turf = get_turf(M)
+		var/dir_to_target = get_dir(attacker_turf, get_turf(src))
+		var/static/list/cleave_angles = list(0, -45, 45) //so that the animation animates towards the target clicked and not towards a side target
+		for(var/i in cleave_angles)
+			var/turf/T = get_step(attacker_turf, turn(dir_to_target, i))
+			for(var/mob/living/L in T)
+				if(M.Adjacent(L) && L.density && L != src)
+					attack_animal(M, L)
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>",
 			"<span class='notice'>You [M.friendly_verb_simple] [src]!</span>", target = src,
