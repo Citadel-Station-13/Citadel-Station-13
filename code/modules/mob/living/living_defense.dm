@@ -328,6 +328,9 @@
 	if(!M.CheckActionCooldown(CLICK_CD_MELEE))
 		return
 	M.DelayNextAction()
+	if((mob_biotypes & MOB_EPIC) && (M.mob_biotypes & MOB_WEAK_AGAINST_EPIC))
+		M.death()
+		return 0
 	if(M.melee_damage_upper == 0)
 		M.visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>",
 			"<span class='notice'>You [M.friendly_verb_simple] [src]!</span>", target = src,
