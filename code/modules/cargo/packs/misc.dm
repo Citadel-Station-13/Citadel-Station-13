@@ -370,7 +370,7 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/misc/carpet
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "Classic Carpet Single-Pack"
 	desc = "Plasteel floor tiles getting on your nerves? This 50 units stack of extra soft carpet will tie any room together."
 	cost = 200
