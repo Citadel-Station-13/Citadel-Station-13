@@ -21,6 +21,7 @@ Buildable meters
 	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
+	var/disposable = TRUE
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
