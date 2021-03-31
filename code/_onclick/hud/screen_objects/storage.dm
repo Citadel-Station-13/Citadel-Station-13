@@ -133,6 +133,8 @@
 		holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 		holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER + 0.1
 		holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		holder.appearance_flags &= ~RESET_TRANSFORM
+		makeItemInactive()
 	vis_contents += holder
 	left.pixel_x = -((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) - VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	right.pixel_x = ((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) + VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
