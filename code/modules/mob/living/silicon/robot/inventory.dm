@@ -119,12 +119,14 @@
 	if(istype(item_module, /obj/item/gun/energy/disabler/cyborg) || istype(item_module, /obj/item/gun/energy/e_gun/advtaser/cyborg))
 		disabler = FALSE
 		update_icons() //PUT THE GUN AWAY
+	/*
 	if(istype(item_module, /obj/item/dogborg/sleeper))
 		sleeper_g = FALSE
 		sleeper_r = FALSE
 		update_icons()
 		var/obj/item/dogborg/sleeper/S = item_module
 		S.go_out() //this should stop edgecase deletions
+	*/
 	//END CITADEL EDIT
 
 	if(client)

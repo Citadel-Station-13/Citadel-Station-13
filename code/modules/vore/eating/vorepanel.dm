@@ -1,3 +1,5 @@
+/*
+
 //
 // Vore management panel for players
 //
@@ -743,3 +745,5 @@
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return TRUE
+
+*/

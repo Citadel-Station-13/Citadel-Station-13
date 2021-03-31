@@ -190,12 +190,13 @@
 	if(user == anchored || !isturf(user.loc))
 		return FALSE
 
-	//normal vore check.
+	/*normal vore check.
 	if(user.pulling && user.grab_state == GRAB_AGGRESSIVE && user.voremode)
 		if(ismob(user.pulling))
 			var/mob/P = user.pulling
 			user.vore_attack(user, P, src) // User, Pulled, Predator target (which can be user, pulling, or src)
 			return
+	*/
 
 	if(user == src) //we want to be able to self click if we're voracious
 		return FALSE
@@ -235,8 +236,8 @@
 				return 0
 			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != INTENT_GRAB)
 				return 0
-			if(user.voremode && user.grab_state == GRAB_AGGRESSIVE)
-				return 0
+			//if(user.voremode && user.grab_state == GRAB_AGGRESSIVE)
+			//	return 0
 		user.setGrabState(user.grab_state + 1)
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)

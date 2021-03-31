@@ -1,3 +1,5 @@
+/*
+
 #define BREASTS_ICON_MIN_SIZE 1
 #define BREASTS_ICON_MAX_SIZE 6
 
@@ -126,3 +128,5 @@
 
 #undef BREASTS_ICON_MIN_SIZE
 #undef BREASTS_ICON_MAX_SIZE
+
+*/

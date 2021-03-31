@@ -1,3 +1,4 @@
+/* ERP Removal - Bye
 /obj/screen/voretoggle
 	name = "toggle vore mode"
 	icon = 'modular_citadel/icons/ui/screen_midnight.dmi'
@@ -20,3 +21,4 @@
 		icon_state = "nom"
 	else
 		icon_state = "nom_off"
+*/

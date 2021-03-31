@@ -1,3 +1,5 @@
+/*
+
 //Please make sure to:
 //return FALSE: You are not going away, stop asking me to digest.
 //return non-negative integer: Amount of nutrition/charge gained (scaled to nutrition, other end can multiply for charge scale).
@@ -100,3 +102,5 @@
 /obj/item/mmi/digital/posibrain/digest_act(var/atom/movable/item_storage = null)
 	//Replace this with a VORE setting so all types of posibrains can/can't be digested on a whim
 	return FALSE
+
+*/

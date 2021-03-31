@@ -10,7 +10,6 @@
 
 GLOBAL_LIST_INIT(gift_item_blacklist, typecacheof(list(
 	/obj/effect,
-	/obj/belly,
 	/obj/mafia_game_board,
 	/obj/docking_port,
 	/obj/shapeshift_holder,

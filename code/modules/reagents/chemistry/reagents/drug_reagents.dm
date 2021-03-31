@@ -574,11 +574,13 @@
 //aphrodisiac & anaphrodisiac
 
 /datum/reagent/drug/aphrodisiac
-	name = "Crocin"
-	description = "Naturally found in the crocus and gardenia flowers, this drug acts as a natural and safe aphrodisiac."
-	taste_description = "strawberries"
-	color = "#FFADFF"//PINK, rgb(255, 173, 255)
+	name = "Cement"
+	description = "Tasty."
+	taste_description = "powdered concrete"
+	color = "#8b8b8b"//PINK, rgb(255, 173, 255)
 	can_synth = FALSE
+
+/*
 
 /datum/reagent/drug/aphrodisiac/on_mob_life(mob/living/M)
 	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
@@ -595,16 +597,18 @@
 				to_chat(M, "<span class='userlove'>[G.arousal_verb]!</span>")
 	..()
 
+*/
+
 /datum/reagent/drug/aphrodisiacplus
-	name = "Hexacrocin"
-	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
-					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a \
-					permanent increase in libido (commonly referred to as 'bimbofication')."
-	taste_description = "liquid desire"
-	color = "#FF2BFF"//dark pink
+	name = "Concrete"
+	description = "Crunchy."
+	taste_description = "solid cement"
+	color = "#555555"//dark pink
 	addiction_threshold = 20
 	overdose_threshold = 20
 	can_synth = FALSE
+
+/*
 
 /datum/reagent/drug/aphrodisiacplus/on_mob_life(mob/living/M)
 	if(M && M.client?.prefs.arousable && !(M.client?.prefs.cit_toggles & NO_APHRO))
@@ -652,6 +656,8 @@
 				ADD_TRAIT(M,TRAIT_PERMABONER,APHRO_TRAIT)
 	..()
 
+*/
+
 /datum/reagent/drug/anaphrodisiac
 	name = "Camphor"
 	description = "Naturally found in some species of evergreen trees, camphor is a waxy substance. When injested by most animals, it acts as an anaphrodisiac\
@@ -662,6 +668,8 @@
 	reagent_state = SOLID
 	can_synth = FALSE
 
+/*
+
 /datum/reagent/drug/anaphrodisiac/on_mob_life(mob/living/M)
 	if(M && M.client?.prefs.arousable && prob(16))
 		if(ishuman(M))
@@ -671,6 +679,8 @@
 				to_chat(M, "<span class='notice'>You no longer feel aroused.")
 	..()
 
+*/
+
 /datum/reagent/drug/anaphrodisiacplus
 	name = "Hexacamphor"
 	description = "Chemically condensed camphor. Causes an extreme reduction in libido and a permanent one if overdosed. Non-addictive."
@@ -679,6 +689,8 @@
 	reagent_state = SOLID
 	overdose_threshold = 20
 	can_synth = FALSE
+
+/*
 
 /datum/reagent/drug/anaphrodisiacplus/on_mob_life(mob/living/M)
 	if(M && M.client?.prefs.arousable)
@@ -696,3 +708,5 @@
 		to_chat(M, "<span class='userlove'>You feel like you'll never feel aroused again...</span>")
 		ADD_TRAIT(M,TRAIT_NEVERBONER,APHRO_TRAIT)
 	..()
+
+*/

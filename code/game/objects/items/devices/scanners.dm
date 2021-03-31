@@ -274,9 +274,10 @@ GENETICS SCANNER
 					if(H.hallucinating())
 						temp_message += " <span class='info'>Subject is hallucinating.</span>"
 
-					//MKUltra
+					/*MKUltra
 					if(H.has_status_effect(/datum/status_effect/chem/enthrall))
 						temp_message += " <span class='info'>Subject has abnormal brain fuctions.</span>"
+					*/
 
 					//Astrogen shenanigans
 					if(H.reagents.has_reagent(/datum/reagent/fermi/astral))

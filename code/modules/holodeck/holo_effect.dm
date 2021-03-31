@@ -79,9 +79,9 @@
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & mob.vars)
 		mob.vars[v] = null
 	ENABLE_BITFIELD(mob.flags_1, HOLOGRAM_1)
-	if(isliving(mob))
+	/*if(isliving(mob))
 		var/mob/living/L = mob
-		L.vore_flags = 0
+		L.vore_flags = 0 */
 	return mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(var/obj/machinery/computer/holodeck/HC)

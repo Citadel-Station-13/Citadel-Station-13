@@ -63,7 +63,7 @@
 	user.visible_message(message = message, self_message = message, vision_distance = 1, omni = TRUE)
 
 ///////////////// SUBTLE 2: NO GHOST BOOGALOO
-
+/*
 /datum/emote/living/subtler
 	key = "subtler"
 	key_third_person = "subtler"
@@ -175,6 +175,7 @@
 	for(var/i in show_to)
 		var/mob/M = i
 		M.show_message(message)
+*/
 
 ///////////////// VERB CODE
 /mob/living/verb/subtle()
@@ -185,6 +186,7 @@
 		return
 	usr.emote("subtle")
 
+/*
 ///////////////// VERB CODE 2
 /mob/living/verb/subtler()
 	set name = "Subtler Anti-Ghost"
@@ -202,3 +204,4 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	usr.emote("subtler_table")
+*/

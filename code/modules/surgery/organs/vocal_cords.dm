@@ -600,6 +600,8 @@
 ///////ENTHRAL VELVET CHORDS//////////
 //////////////////////////////////////
 
+/*
+
 //Heavily modified voice of god code
 /obj/item/organ/vocal_cords/velvet
 	name = "Velvet chords"
@@ -1421,7 +1423,7 @@
 	//SSblackbox.record_feedback("tally", "Velvet_voice", 1, log_message) If this is on, it fills the thing up and OOFs the server
 
 	return
-
+*/
 
 #undef COOLDOWN_STUN
 #undef COOLDOWN_DAMAGE

@@ -1,3 +1,4 @@
+/*
 /datum/sprite_accessory
 	var/alt_aroused = FALSE //CIT CODE if this is TRUE, then the genitals will use an alternate icon_state when aroused.
 	var/taur_icon //leave null if the genital doesn't have a taur counterpart.
@@ -119,3 +120,4 @@
 /datum/sprite_accessory/breasts/sextuple
 	icon_state = "sextuple"
 	name = "Sextuple"
+*/

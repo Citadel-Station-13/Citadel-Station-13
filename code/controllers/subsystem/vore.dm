@@ -1,3 +1,4 @@
+/*
 #define SSBELLIES_PROCESSED 1
 #define SSBELLIES_IGNORED 2
 
@@ -39,3 +40,4 @@ SUBSYSTEM_DEF(bellies)
 
 		if (MC_TICK_CHECK)
 			return
+*/

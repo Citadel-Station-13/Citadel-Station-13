@@ -1,3 +1,4 @@
+/*
 /obj/machinery/vending/barkbox
 	name = "Bark Box"
 	desc = "For all your pet needs!"
@@ -34,3 +35,4 @@
 /obj/item/vending_refill/barkbox
 	machine_name 	= "Bark Box"
 	icon_state 		= "refill_barkbox"
+*/

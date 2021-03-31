@@ -76,12 +76,12 @@
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
-	if(istype(loc, /obj/item/dogborg/sleeper))
-		return
+//	if(istype(loc, /obj/item/dogborg/sleeper))
+//		return
 	if(ismob(loc))
 		return
-	if(isbelly(loc))
-		return
+//	if(isbelly(loc))
+//		return
 
 	var/datum/gas_mixture/environment
 	if(loc)

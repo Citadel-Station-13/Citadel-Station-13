@@ -1,3 +1,5 @@
+/*
+
 //CARBON MOBS
 /mob/living/carbon/alien
 	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
@@ -78,3 +80,5 @@
 /mob/living/simple_animal/hostile/carp
 	vore_flags = DEVOURABLE | DIGESTABLE | FEEDING
 	vore_default_mode = DM_DIGEST
+
+*/

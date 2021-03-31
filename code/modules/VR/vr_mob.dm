@@ -28,7 +28,7 @@
 	shirt_color = H ? H.shirt_color : random_color()
 	underwear = H ? H.underwear : random_underwear(M.gender)
 	undie_color = H ? H.undie_color : random_color()
-	give_genitals(TRUE)
+//	give_genitals(TRUE)
 	if(outfit)
 		var/datum/outfit/O = new outfit()
 		O.equip(src)

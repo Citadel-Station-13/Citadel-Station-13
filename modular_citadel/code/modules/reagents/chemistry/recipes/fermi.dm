@@ -172,6 +172,7 @@
 	my_atom.reagents.clear_reagents()
 	my_atom.visible_message("<span class='warning'>An horrifying tumoural mass forms in [my_atom]!</span>")
 
+/*
 /datum/chemical_reaction/fermi/breast_enlarger
 	name = "Sucubus milk"
 	id = /datum/reagent/fermi/breast_enlarger
@@ -251,6 +252,8 @@
 		holder.remove_reagent(type, cached_volume)
 		holder.add_reagent(/datum/reagent/fermi/PEsmaller, cached_volume)
 
+*/
+
 /*
 /datum/chemical_reaction/fermi/astral
 	name = "Astrogen"
@@ -275,6 +278,7 @@
 	PurityMin 				= 0.25
 */
 
+/*
 /datum/chemical_reaction/fermi/enthrall //check this
 	name = "MKUltra"
 	id = /datum/reagent/fermi/enthrall
@@ -345,6 +349,8 @@
 /datum/chemical_reaction/fermi/enthrall/FermiExplode(datum/reagents/R0, var/atom/my_atom, volume, temp, pH)
 	R0.clear_reagents()
 	..()
+
+*/
 
 /datum/chemical_reaction/fermi/hatmium // done
 	name = "Hat growth serum"

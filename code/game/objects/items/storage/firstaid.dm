@@ -389,6 +389,8 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mutarad(src)
 
+/*
+
 /obj/item/storage/pill_bottle/penis_enlargement
 	name = "penis enlargement pills"
 	desc = "You want penis enlargement pills?"
@@ -404,6 +406,8 @@
 /obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/breast_enlargement(src)
+
+*/
 
 /obj/item/storage/pill_bottle/neurine
 	name = "bottle of neurine pills"
@@ -536,6 +540,8 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/small/dexalin(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/dexalin(src)
 
+/*
+
 /obj/item/storage/hypospraykit/enlarge
 	name = "organomegaly trauma hypospray kit"
 	icon_state = "enlarge-mini"
@@ -551,6 +557,8 @@
 	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
 	new /obj/item/reagent_containers/glass/bottle/vial/small/penisreduction(src)
+
+*/
 
 /obj/item/storage/hypospraykit/brute
 	name = "brute trauma hypospray kit"

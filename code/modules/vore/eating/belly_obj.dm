@@ -1,3 +1,5 @@
+/*
+
 #define VORE_SOUND_FALLOFF 0.1
 #define VORE_SOUND_RANGE 3
 
@@ -732,3 +734,5 @@
 		for(var/I in emote_lists[K])
 			dupe.emote_lists[K] += I
 	return dupe
+
+*/

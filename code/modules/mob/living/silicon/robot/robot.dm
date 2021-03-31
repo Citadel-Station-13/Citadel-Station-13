@@ -496,6 +496,7 @@
 	else
 		return ..()
 
+/*
 /mob/living/silicon/robot/crowbar_act(mob/living/user, obj/item/I) //TODO: make fucking everything up there in that attackby() proc use the proper tool_act() procs. But honestly, who has time for that? 'cause I know for sure that you, the person reading this, sure as hell doesn't.
 	var/validbreakout = FALSE
 	for(var/obj/item/dogborg/sleeper/S in held_items)
@@ -508,6 +509,7 @@
 	if(validbreakout)
 		return TRUE
 	return ..()
+*/
 
 /mob/living/silicon/robot/verb/unlock_own_cover()
 	set category = "Robot Commands"

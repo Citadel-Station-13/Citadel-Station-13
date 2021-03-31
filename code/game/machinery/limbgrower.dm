@@ -153,8 +153,8 @@
 		var/buildpath = being_built.build_path
 		if(ispath(buildpath, /obj/item/bodypart))	//This feels like spaghetti code, but i need to initiliaze a limb somehow
 			build_limb(buildpath)
-		else if(ispath(buildpath, /obj/item/organ/genital)) //genitals are uhh... customizable
-			build_genital(buildpath)
+		//else if(ispath(buildpath, /obj/item/organ/genital)) //genitals are uhh... customizable
+		//	build_genital(buildpath)
 		else
 			//Just build whatever it is
 			new buildpath(loc)
@@ -189,6 +189,7 @@
 		BP.name = "\improper synthetic [lowertext(selected.name)] [limb.name]"
 		BP.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]."
 
+/*
 /obj/machinery/limbgrower/proc/build_genital(buildpath)
 	//i needed to create a way to customize gene tools using dna
 	var/list/features = dna_disk?.fields["features"]
@@ -228,6 +229,7 @@
 				new buildpath(loc)
 	else
 		new buildpath(loc)
+*/
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0

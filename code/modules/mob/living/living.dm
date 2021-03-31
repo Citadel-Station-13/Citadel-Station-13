@@ -415,6 +415,7 @@
 /mob/living/verb/succumb()
 	set name = "Succumb"
 	set category = "IC"
+	/*
 	if(src.has_status_effect(/datum/status_effect/chem/enthrall))
 		var/datum/status_effect/chem/enthrall/E = src.has_status_effect(/datum/status_effect/chem/enthrall)
 		if(E.phase < 3)
@@ -425,6 +426,7 @@
 			else
 				E.enthrallTally += 20
 				to_chat(src, "<span class='notice'>You give into [E.master]'s influence.</span>")
+	*/
 	if (InCritical())
 		log_message("Has succumbed to death while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -1292,7 +1294,7 @@
 	return ..() && CHECK_MOBILITY(src, MOBILITY_MOVE)
 
 /mob/living/proc/set_gender(ngender = NEUTER, silent = FALSE, update_icon = TRUE, forced = FALSE)
-	if(forced || (!ckey || client?.prefs.cit_toggles & (ngender == FEMALE ? FORCED_FEM : FORCED_MASC)))
+	if(forced)
 		gender = ngender
 		return TRUE
 	return FALSE

@@ -448,7 +448,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Lewd Supplies ///////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-
+/*
 /datum/supply_pack/misc/lewd
 	name = "Lewd Crate" // OwO
 	desc = "Pssst, want to have a good time with your sluts? Well I got what you want! Maid clothing, dildos, collars and more!"
@@ -469,7 +469,7 @@
 					/obj/item/storage/pill_bottle/penis_enlargement)
 	crate_name = "lewd kit"
 	crate_type = /obj/structure/closet/crate
-
+*/
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 
 /datum/supply_pack/misc/syndicate

@@ -112,7 +112,7 @@
 	if(!isnull(effects_exam))
 		. += effects_exam
 
-	//CIT CHANGES START HERE - adds genital details to examine text
+	/* CIT CHANGES START HERE - adds genital details to examine text
 	if(LAZYLEN(internal_organs) && CHECK_BITFIELD(user.client?.prefs.cit_toggles, GENITAL_EXAMINE))
 		for(var/obj/item/organ/genital/dicc in internal_organs)
 			if(istype(dicc) && dicc.is_exposed())
@@ -121,7 +121,7 @@
 		var/cursed_stuff = attempt_vr(src,"examine_bellies",args) //vore Code
 		if(cursed_stuff)
 			. += cursed_stuff
-//END OF CIT CHANGES
+	END OF CIT CHANGES */
 
 	//Jitters
 	switch(jitteriness)
@@ -346,12 +346,12 @@
 			if (HAS_TRAIT(src, TRAIT_DEAF))
 				msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
 
-	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
+/*	var/obj/item/organ/vocal_cords/Vc = user.getorganslot(ORGAN_SLOT_VOICE)
 	if(Vc)
 		if(istype(Vc, /obj/item/organ/vocal_cords/velvet))
 			if(client.prefs.cit_toggles & HYPNO)
 				msg += "<span class='velvet'><i>You feel your chords resonate looking at them.</i></span>\n"
-
+*/
 
 	if(!appears_dead)
 		if(stat == UNCONSCIOUS)

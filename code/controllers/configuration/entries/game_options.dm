@@ -522,10 +522,10 @@
 	config_entry_value = 20
 	min_val = 0
 
-/datum/config_entry/keyed_list/safe_visibility_toggles
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_FLAG
-	config_entry_value = list(GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER) //refer to cit_helpers for all toggles.
+///datum/config_entry/keyed_list/safe_visibility_toggles
+//	key_mode = KEY_MODE_TEXT
+//	value_mode = VALUE_MODE_FLAG
+//	config_entry_value = list(GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER) //refer to cit_helpers for all toggles.
 
 //Body size configs, the feature will be disabled if both min and max have the same value.
 /datum/config_entry/number/body_size_min

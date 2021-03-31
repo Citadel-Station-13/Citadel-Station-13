@@ -1,3 +1,4 @@
+/*
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 /obj/belly/proc/process_belly(var/times_fired,var/wait) //Passed by controller
 	if((times_fired < next_process) || !length(contents))
@@ -255,3 +256,4 @@
 			owner.updateVRPanel()
 
 	return SSBELLIES_PROCESSED
+*/

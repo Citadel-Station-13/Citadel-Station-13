@@ -1,3 +1,5 @@
+/*
+
 // Dogborg Sleeper units
 
 /obj/item/dogborg/sleeper
@@ -78,8 +80,8 @@
 	if(!iscarbon(target))
 		return
 	var/voracious = TRUE
-	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
-		voracious = FALSE
+//	if(!target.client || !(target.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+//		voracious = FALSE
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src].</span>")
 		return
@@ -119,8 +121,8 @@
 	if(user.a_intent == INTENT_HELP)
 		return
 	var/voracious = TRUE
-	if(!user.client || !(user.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
-		voracious = FALSE
+//	if(!user.client || !(user.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+//		voracious = FALSE
 	user.visible_message("<span class='notice'>You see [voracious ? "[user] struggling against the expanded material of [hound]'s gut!" : "and hear [user] pounding against something inside of [hound]'s [src.name]!"]</span>", \
 		"<span class='notice'>[voracious ? "You start struggling inside of [src]'s tight, flexible confines," : "You start pounding against the metallic walls of [src],"] trying to trigger the release... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a [voracious ? "couple of thumps" : "loud banging noise"] coming from within [hound].</span>")
@@ -132,6 +134,7 @@
 /obj/item/dogborg/sleeper/proc/go_out(atom/movable/target, mob/living/silicon/robot/hound)
 	var/voracious = hound ? TRUE : FALSE
 	var/list/targets = target && hound ? list(target) : contents
+	/*
 	if(hound)
 		if(!hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 			voracious = FALSE
@@ -139,6 +142,7 @@
 			for(var/mob/M in targets)
 				if(!M.client || !(M.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 					voracious = FALSE
+	*/
 	if(length(targets))
 		if(hound)
 			hound.visible_message("<span class='warning'>[voracious ? "[hound] empties out [hound.p_their()] contents via [hound.p_their()] release port." : "[hound]'s underside slides open with an audible clunk before [hound.p_their()] [src] flips over, carelessly dumping its contents onto the ground below [hound.p_them()] before closing right back up again."]</span>", \
@@ -259,10 +263,11 @@
 				patient_laststat = patient.stat
 			prociconupdate = TRUE
 
-		if(!patient.client || !(patient.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+/*		if(!patient.client || !(patient.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 			hound.sleeper_nv = TRUE
 		else
 			hound.sleeper_nv = FALSE
+*/
 		if(hound.sleeper_nv != currentenvy)
 			prociconupdate = TRUE
 
@@ -284,10 +289,11 @@
 				hound.sleeper_g = 1
 				patient_laststat = patient.stat
 
-			if(!patient.client || !(patient.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
+/*			if(!patient.client || !(patient.client.prefs.cit_toggles & MEDIHOUND_SLEEPER) || !hound.client || !(hound.client.prefs.cit_toggles & MEDIHOUND_SLEEPER))
 				hound.sleeper_nv = TRUE
 			else
 				hound.sleeper_nv = FALSE
+*/
 
 			//Update icon and return new patient
 			hound.update_icons()
@@ -450,3 +456,5 @@
 /obj/item/dogborg/sleeper/K9/flavour
 	name = "Recreational Sleeper"
 	desc = "A mounted, underslung sleeper, intended for holding willing occupants for leisurely purposes."
+
+*/

@@ -1,3 +1,4 @@
+/*
 #define VORACIOUS_CHANCE 40
 #define VORE_SWALLOW_TIME 50
 
@@ -136,3 +137,5 @@
 	if(!CHECK_BITFIELD(T.vore_flags,DEVOURABLE))
 		return
 	return vore_attack(src,T,src)
+
+*/

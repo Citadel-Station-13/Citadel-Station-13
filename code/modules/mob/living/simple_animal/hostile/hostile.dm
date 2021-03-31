@@ -217,8 +217,9 @@
 
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
-	if(isbelly(the_target.loc)) //Target's inside a gut, forget about it too
+	/*if(isbelly(the_target.loc)) //Target's inside a gut, forget about it too
 		return FALSE
+	*/
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target

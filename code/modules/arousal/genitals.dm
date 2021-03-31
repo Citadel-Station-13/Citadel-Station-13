@@ -1,3 +1,4 @@
+/* ERP Removal
 /obj/item/organ/genital
 	color = "#fcccb3"
 	w_class = WEIGHT_CLASS_SMALL
@@ -354,3 +355,5 @@
 		else if (willyCheck == FALSE)
 			dna.features["cock_color"] = dna.features["breasts_color"]
 	return TRUE
+
+*/

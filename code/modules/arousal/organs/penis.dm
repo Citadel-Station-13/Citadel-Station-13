@@ -1,3 +1,5 @@
+/*
+
 /obj/item/organ/genital/penis
 	name = "penis"
 	desc = "A male reproductive organ."
@@ -97,3 +99,5 @@
 	shape = D.features["cock_shape"]
 	prev_length = length
 	toggle_visibility(D.features["cock_visibility"], FALSE)
+
+*/

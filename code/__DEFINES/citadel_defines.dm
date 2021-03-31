@@ -5,6 +5,8 @@
 //Filters
 #define CIT_FILTER_STAMINACRIT filter(type="drop_shadow", x=0, y=0, size=-3, color="#04080F")
 
+/* ERP Removal
+
 //organ defines
 #define VAGINA_LAYER_INDEX		1
 #define TESTICLES_LAYER_INDEX	2
@@ -26,7 +28,6 @@
 #define GENITAL_UNDIES_HIDDEN	(1<<9)
 #define UPDATE_OWNER_APPEARANCE	(1<<10)
 #define GENITAL_CAN_TAUR		(1<<11)
-
 
 #define DEF_VAGINA_SHAPE	"Human"
 
@@ -68,6 +69,8 @@
 #define GEN_VISIBLE_NO_UNDIES "Hidden by underwear"
 #define GEN_VISIBLE_NEVER "Always hidden"
 
+ERP Removal end */
+
 //Individual logging define
 #define INDIVIDUAL_LOOC_LOG "LOOC log"
 
@@ -76,7 +79,7 @@
 #define ADMIN_REJECT(client) "(<a href='?_src_=holder;rejectadminhelp=\ref[client]'>REJT</a>)"//Rejects an adminhelp for being unclear or otherwise unhelpful. resets their adminhelp timer
 
 //Citadel istypes
-#define isgenital(A) (istype(A, /obj/item/organ/genital))
+// #define isgenital(A) (istype(A, /obj/item/organ/genital)) // ERP Removal
 
 #define CITADEL_MENTOR_OOC_COLOUR "#224724"
 
@@ -84,6 +87,8 @@
 #define XENOBIO_UPGRADE_MONKEYS				1
 #define XENOBIO_UPGRADE_SLIMEBASIC			2
 #define XENOBIO_UPGRADE_SLIMEADV			4
+
+/* ERP Removal
 
 //Citadel toggles because bitflag memes
 #define MEDIHOUND_SLEEPER	(1<<0)
@@ -98,13 +103,17 @@
 #define NO_APHRO			(1<<9)
 #define NO_ASS_SLAP			(1<<10)
 #define BIMBOFICATION		(1<<11)
+*/
 #define NO_AUTO_WAG			(1<<12)
+/*
 #define GENITAL_EXAMINE		(1<<13)
 #define VORE_EXAMINE		(1<<14)
 #define TOGGLES_CITADEL 0
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4
+
+*/
 
 //icon states for the default eyes and for a state for no eye
 #define DEFAULT_EYES_TYPE			"normal"
