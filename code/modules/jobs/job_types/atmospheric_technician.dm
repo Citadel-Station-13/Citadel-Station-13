@@ -41,7 +41,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
 	box = /obj/item/storage/box/engineer
 	pda_slot = SLOT_L_STORE
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1, /obj/item/claymore/april_fools=1,)
 
 	head = /obj/item/clothing/head/helmet/knight
 	suit = /obj/item/clothing/suit/armor/riot/knight

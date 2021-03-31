@@ -35,7 +35,8 @@
 	backpack_contents = list(
 		/obj/item/choice_beacon/hero = 1,
 		/obj/item/soapstone = 1,
-		/obj/item/barcodescanner = 1
+		/obj/item/barcodescanner = 1,
+		/obj/item/claymore/april_fools = 1,
 	)
 
 	head = /obj/item/clothing/head/helmet/knight

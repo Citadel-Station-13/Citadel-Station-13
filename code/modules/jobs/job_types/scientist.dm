@@ -36,4 +36,5 @@
 
 	head = /obj/item/clothing/head/helmet/knight
 	suit = /obj/item/clothing/suit/armor/riot/knight
+	backpack_contents = list(/obj/item/claymore/april_fools=1,)
 

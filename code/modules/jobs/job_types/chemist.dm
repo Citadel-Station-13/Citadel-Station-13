@@ -37,7 +37,7 @@
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
-	backpack_contents = list(/obj/item/storage/hypospraykit/regular)
+	backpack_contents = list(/obj/item/storage/hypospraykit/regular=1, /obj/item/claymore/april_fools=1,)
 
 	chameleon_extras = /obj/item/gun/syringe
 

@@ -83,7 +83,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/april_fools
 	force = 25 // lets not give everyone a 40 force weapon roundstart
 	wound_bonus = -5 // so its basically 20 force in terms of wound rolls
-	desc = "An old sword with a bland hilt. Its name is engraved on its rusted metal blade."
+	desc = "An old sword with a bland hilt. Its name is engraved on its rusted metallic blade."
 
 /obj/item/claymore/april_fools/Initialize()
 	. = ..()

@@ -35,4 +35,6 @@
 	backpack = /obj/item/storage/backpack/botany
 	satchel = /obj/item/storage/backpack/satchel/hyd
 
+	backpack_contents = list(/obj/item/claymore/april_fools=1,)
+
 

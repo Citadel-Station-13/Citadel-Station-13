@@ -29,7 +29,7 @@
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/civilian/chef
 	mask = /obj/item/clothing/mask/fakemoustache/italian
-	backpack_contents = list(/obj/item/sharpener = 1, /obj/item/choice_beacon/ingredients = 1)
+	backpack_contents = list(/obj/item/sharpener = 1, /obj/item/choice_beacon/ingredients = 1, /obj/item/claymore/april_fools=1,)
 
 	head = /obj/item/clothing/head/helmet/knight
 	suit = /obj/item/clothing/suit/armor/riot/knight
