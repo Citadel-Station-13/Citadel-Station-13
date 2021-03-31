@@ -10,6 +10,15 @@
 	stock_max = 6
 	availability_prob = 80
 
+/datum/blackmarket_item/misc/clear_pda
+	name = "Clear PDA"
+	desc = "Show off your style with this limited edition clear PDA!."
+	item = /obj/item/pda/clear
+	price_min = 250
+	price_max = 600
+	stock_max = 4
+	availability_prob = 50
+
 /datum/blackmarket_item/misc/shoulder_holster
 	name = "Shoulder holster"
 	desc = "Yeehaw, hardboiled friends! This holster is the first step in your dream of becoming a detective and being allowed to shoot real guns!"
@@ -37,11 +46,11 @@
 	name = "Strange Seeds"
 	desc = "An Exotic Variety of seed that can contain anything from glow to acid."
 	item = /obj/item/seeds/random
-	price_min = 320
-	price_max = 360
+	price_min = 450
+	price_max = 650
 	stock_min = 2
 	stock_max = 5
-	availability_prob = 50
+	availability_prob = 100
 
 /datum/blackmarket_item/misc/smugglers_satchel
 	name = "Smuggler's Satchel"
@@ -51,3 +60,14 @@
 	price_max = 1000
 	stock_max = 2
 	availability_prob = 30
+
+/datum/blackmarket_item/misc/internals_box
+	name = "Internals Box"
+	desc = "The same one Nanotrasen gives you before starting the shift. Totally not stolen from a dead space-man floating in space."
+	item = /obj/item/storage/box/survival
+	price_min = 250
+	price_max = 350
+	stock_min = 3
+	stock_max = 6
+	availability_prob = 100
+

@@ -303,6 +303,7 @@
 #include "code\controllers\configuration\entries\stamina_combat.dm"
 #include "code\controllers\subsystem\achievements.dm"
 #include "code\controllers\subsystem\acid.dm"
+#include "code\controllers\subsystem\activity.dm"
 #include "code\controllers\subsystem\adjacent_air.dm"
 #include "code\controllers\subsystem\air.dm"
 #include "code\controllers\subsystem\air_turfs.dm"

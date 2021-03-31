@@ -173,8 +173,18 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 #define BROKEN_SENSORS -1
 #define NO_SENSORS 0
-#define HAS_SENSORS 1
-#define LOCKED_SENSORS 2
+#define DAMAGED_SENSORS_LIVING 1
+#define DAMAGED_SENSORS_VITALS 2
+#define HAS_SENSORS 3
+
+//suit sensor flags: sensor_flag defines
+#define SENSOR_RANDOM (1<<0)
+#define SENSOR_LOCKED (1<<1)
+
+//suit sensor integrity percentage threshold defines
+#define SENSOR_INTEGRITY_COORDS 0.2
+#define SENSOR_INTEGRITY_VITALS 0.6
+#define SENSOR_INTEGRITY_BINARY 1
 
 //Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		(0)

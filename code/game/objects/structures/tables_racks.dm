@@ -93,6 +93,9 @@
 				user.stop_pulling()
 	return ..()
 
+/obj/structure/table/attack_robot(mob/user)
+	on_attack_hand(user)
+
 /obj/structure/table/attack_tk()
 	return FALSE
 

@@ -78,10 +78,40 @@
 	speech_args[SPEECH_MESSAGE] = trim(message)
 
 /obj/item/clothing/mask/joy
-	name = "joy mask"
-	desc = "Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout."
+	name = "Emotional Mask"
+	desc = "Express your happiness or hide your sorrows with this modular cutout."
 	icon_state = "joy"
+	clothing_flags = ALLOWINTERNALS
 	mutantrace_variation = STYLE_MUZZLE
+	actions_types = list(/datum/action/item_action/adjust)
+	var/static/list/joymask_designs = list()
+
+
+/obj/item/clothing/mask/joy/Initialize(mapload)
+	. = ..()
+	joymask_designs = list(
+		"Joy" = image(icon = src.icon, icon_state = "joy"),
+		"Flushed" = image(icon = src.icon, icon_state = "flushed"),
+		"Pensive" = image(icon = src.icon, icon_state = "pensive"),
+		"Angry" = image(icon = src.icon, icon_state = "angry"),
+		)
+
+/obj/item/clothing/mask/joy/ui_action_click(mob/user)
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/static/list/options = list("Joy" = "joy", "Flushed" = "flushed", "Pensive" = "pensive","Angry" ="angry")
+
+	var/choice = show_radial_menu(user, src, joymask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+		to_chat(user, "<span class='notice'>Your Joy mask now has a [choice] Emotion!</span>")
+		return 1
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"

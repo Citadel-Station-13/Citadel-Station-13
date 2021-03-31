@@ -28,14 +28,23 @@
 	item = /obj/item/spear/bonespear
 	price_min = 200
 	price_max = 300
-	stock_max = 3
-	availability_prob = 60
+	stock_max = 0
+	availability_prob = 0
 
 /datum/blackmarket_item/weapon/emp_grenade
 	name = "EMP Grenade"
 	desc = "Use this grenade for SHOCKING results!"
 	item = /obj/item/grenade/empgrenade
-	price_min = 100
-	price_max = 400
+	price_min = 300
+	price_max = 600
 	stock_max = 2
-	availability_prob = 50
+	availability_prob = 20
+
+/datum/blackmarket_item/weapon/smoke_grenade
+	name = "Smoke Grenade"
+	desc = "Used for obcuring a large area with thick smoke."
+	item = /obj/item/grenade/smokebomb
+	price_min = 100
+	price_max = 300
+	stock_max = 3
+	availability_prob = 40
