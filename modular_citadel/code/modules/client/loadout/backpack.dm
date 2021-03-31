@@ -110,10 +110,10 @@
 	name = "Purple Polychromic Frisbee"
 	path = /obj/item/toy/fluff/frisbee_poly/purple
 
-/datum/gear/backpack/dildo
+/*/datum/gear/backpack/dildo
 	name = "Customizable dildo"
 	path = /obj/item/dildo/custom
-	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS
+	subcategory = LOADOUT_SUBCATEGORY_BACKPACK_TOYS*/
 
 /datum/gear/backpack/toykatana
 	name = "Toy Katana"

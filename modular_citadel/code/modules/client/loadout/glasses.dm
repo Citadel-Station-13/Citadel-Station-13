@@ -2,9 +2,9 @@
 	category = LOADOUT_CATEGORY_GLASSES
 	slot = SLOT_GLASSES
 
-/datum/gear/glasses/blindfold
+/*/datum/gear/glasses/blindfold
 	name = "Blindfold"
-	path = /obj/item/clothing/glasses/sunglasses/blindfold
+	path = /obj/item/clothing/glasses/sunglasses/blindfold*/
 
 /datum/gear/glasses/cold
 	name = "Cold goggles"

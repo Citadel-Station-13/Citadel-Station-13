@@ -44,7 +44,7 @@
 	name = "Assistant's formal uniform"
 	path = /obj/item/clothing/under/misc/assistantformal
 
-/datum/gear/uniform/maidcostume
+/*/datum/gear/uniform/maidcostume
 	name = "Maid costume"
 	path = /obj/item/clothing/under/costume/maid
 
@@ -52,7 +52,7 @@
 	name = "Polychromic maid costume"
 	path = /obj/item/clothing/under/rank/civilian/janitor/maid/polychromic
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
-	loadout_initial_colors = list("#FFFFFF", "#000000")
+	loadout_initial_colors = list("#FFFFFF", "#000000")*/
 
 /datum/gear/uniform/mailmanuniform
 	name = "Mailman's jumpsuit"
@@ -79,7 +79,7 @@
 	name = "Plaid skirt"
 	path = /obj/item/clothing/under/dress/skirt/plaid
 
-/datum/gear/uniform/schoolgirlblue
+/*/datum/gear/uniform/schoolgirlblue
 	name = "Blue Schoolgirl Uniform"
 	path = /obj/item/clothing/under/costume/schoolgirl
 
@@ -93,7 +93,7 @@
 
 /datum/gear/uniform/schoolgirlorange
 	name = "Orange Schoolgirl Uniform"
-	path = /obj/item/clothing/under/costume/schoolgirl/orange
+	path = /obj/item/clothing/under/costume/schoolgirl/orange*/
 
 /datum/gear/uniform/dress
 	name = "Striped Dress"
@@ -228,9 +228,9 @@
 	name =  "Navy Commando Sweater"
 	path = /obj/item/clothing/under/sweater/blue
 
-/datum/gear/uniform/sweater/keyhole
+/*/datum/gear/uniform/sweater/keyhole
 	name =  "Keyhole Sweater"
-	path = /obj/item/clothing/under/misc/keyholesweater
+	path = /obj/item/clothing/under/misc/keyholesweater*/
 
 /datum/gear/uniform/tealturtle
 	name = "Teal Turtleneck"
@@ -615,9 +615,9 @@
 	restricted_desc = "Service and Civilian, barring Clown, Mime and Lawyer"
 
 //Memes
-/datum/gear/uniform/gear_harnesses
+/*/datum/gear/uniform/gear_harnesses
 	name = "Gear Harness"
-	path = /obj/item/clothing/under/misc/gear_harness
+	path = /obj/item/clothing/under/misc/gear_harness*/
 
 //Christmas
 /*Commenting out Until next Christmas or made automatic
@@ -646,12 +646,13 @@
 	category = SLOT_W_UNIFORM
 	path = /obj/item/clothing/under/misc/stripper
 	cost = 3
-*/
+
 
 /datum/gear/uniform/greenstripper
 	name = "Green stripper outfit"
 	path = /obj/item/clothing/under/misc/stripper/green
 	cost = 3
+*/
 
 /datum/gear/uniform/qipao
 	name = "Qipao, Black"

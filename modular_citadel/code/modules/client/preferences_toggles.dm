@@ -1,4 +1,4 @@
-TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleeatingnoise)()
+/*TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleeatingnoise)()
 	set name = "Toggle Eating Noises"
 	set category = "Preferences"
 	set desc = "Hear Eating noises"
@@ -33,4 +33,4 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglehoundsleeper)()
 		to_chat(usr, "Medihound sleepers will no longer be voracious when you're involved.")
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle MediHound Sleeper", "[usr.client.prefs.cit_toggles & MEDIHOUND_SLEEPER ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/togglehoundsleeper/Get_checked(client/C)
-	return C.prefs.cit_toggles & MEDIHOUND_SLEEPER
+	return C.prefs.cit_toggles & MEDIHOUND_SLEEPER*/

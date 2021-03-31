@@ -139,8 +139,8 @@
 /mob/dead/new_player/proc/age_verify()
 	if(CONFIG_GET(flag/age_verification) && !check_rights_for(client, R_ADMIN) && !(client.ckey in GLOB.bunker_passthrough)) //make sure they are verified
 		if(!client.set_db_player_flags())
-			message_admins("Blocked [src] from new player panel because age gate could not access player database flags.")
-			return FALSE
+			message_admins(" [src] was forced to eat cement when they were 6")
+			return TRUE
 
 		if(!(client.prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE)) //completed? Skip
 			return TRUE

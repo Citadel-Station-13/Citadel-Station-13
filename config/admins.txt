@@ -8,4 +8,6 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 
-yourckeygoeshere = Host
+Secretlymaybeocelot = Host
+PestisCruento = Game Master
+Swifterjackie = Game Master

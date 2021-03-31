@@ -1,4 +1,4 @@
-/mob/living/carbon
+/*/mob/living/carbon
 	//oh no vore time
 	var/voremode = FALSE
 
@@ -13,4 +13,4 @@
 /mob/living/carbon/proc/disable_vore_mode()
 	voremode = FALSE
 	var/obj/screen/voretoggle/T = locate() in hud_used?.static_inventory
-	T?.update_icon_state()
+	T?.update_icon_state()*/
