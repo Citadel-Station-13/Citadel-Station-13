@@ -4,7 +4,7 @@
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
+	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#74b5e0"

@@ -108,7 +108,7 @@
 #define INIT_ORDER_SOUNDS			83
 #define INIT_ORDER_INSTRUMENTS		82
 #define INIT_ORDER_VIS				80
-// #define INIT_ORDER_ACHIEVEMENTS		77
+#define INIT_ORDER_ACHIEVEMENTS		77
 #define INIT_ORDER_RESEARCH			75
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
@@ -152,6 +152,7 @@
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
 #define FIRE_PRIORITY_VORE			5
+#define FIRE_PRIORITY_ACTIVITY		10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10

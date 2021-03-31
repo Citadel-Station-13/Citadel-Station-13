@@ -190,6 +190,12 @@
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
+/obj/item/clothing/neck/petcollar/ribbon
+	name = "ribbon pet collar"
+	icon_state = "ribboncollar"
+	poly_states = 2
+	poly_colors = list("#454545", "#292929")
+
 /obj/item/clothing/neck/petcollar/leather
 	name = "leather pet collar"
 	icon_state = "leathercollar"
@@ -224,6 +230,12 @@
 		to_chat(user, "<span class='warning'>The collar is locked! You'll need unlock the collar before you can take it off!</span>")
 		return
 	..()
+
+/obj/item/clothing/neck/petcollar/locked/ribbon
+	name = "ribbon pet collar"
+	icon_state = "ribboncollar"
+	poly_states = 2
+	poly_colors = list("#454545", "#292929")
 
 /obj/item/clothing/neck/petcollar/locked/leather
 	name = "leather pet collar"

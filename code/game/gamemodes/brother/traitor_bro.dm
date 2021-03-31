@@ -6,6 +6,7 @@
 	name = "traitor+brothers"
 	config_tag = "traitorbro"
 	required_players = 25
+	chaos = 5
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Quartermaster")
 

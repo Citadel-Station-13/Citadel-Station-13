@@ -188,8 +188,10 @@
 
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (panel_open)
+/obj/machinery/mineral/ore_redemption/multitool_act(mob/living/user, obj/item/I)
+	if(!I.tool_behaviour == TOOL_MULTITOOL)
+		return
+	if(panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")

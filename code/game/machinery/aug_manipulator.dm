@@ -8,7 +8,19 @@
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
 	var/initial_icon_state
-	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
+	var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', 
+											"engineer" = 'icons/mob/augmentation/augments_engineer.dmi', 
+											"security" = 'icons/mob/augmentation/augments_security.dmi', 
+											"mining" = 'icons/mob/augmentation/augments_mining.dmi', 
+											"Talon" = 'icons/mob/augmentation/cosmetic_prosthetic/talon.dmi', 
+											"Nanotrasen" = 'icons/mob/augmentation/cosmetic_prosthetic/nanotrasen.dmi', 
+											"Hephaesthus" = 'icons/mob/augmentation/cosmetic_prosthetic/hephaestus.dmi', 
+											"Bishop" = 'icons/mob/augmentation/cosmetic_prosthetic/bishop.dmi', 
+											"Xion" = 'icons/mob/augmentation/cosmetic_prosthetic/xion.dmi',
+											"Grayson" = 'icons/mob/augmentation/cosmetic_prosthetic/grayson.dmi',
+											"Cybersolutions" = 'icons/mob/augmentation/cosmetic_prosthetic/cybersolutions.dmi',
+											"Ward" = 'icons/mob/augmentation/cosmetic_prosthetic/ward.dmi'
+											)
 
 /obj/machinery/aug_manipulator/examine(mob/user)
 	. = ..()
@@ -73,7 +85,7 @@
 			O.add_fingerprint(user)
 			update_icon()
 
-	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return

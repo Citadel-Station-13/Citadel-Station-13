@@ -336,16 +336,6 @@
 "yf" = (
 /turf/open/space/basic,
 /area/space/nearstation)
-"zw" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 50
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 10
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "zS" = (
 /turf/open/space/basic,
 /area/space)
@@ -712,12 +702,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"WB" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1164,15 +1148,15 @@ zS
 MP
 dw
 lG
-WB
+eP
 Jq
-WB
+eP
 UD
 Cx
 UD
-WB
+eP
 Jq
-WB
+eP
 UD
 MP
 tw
@@ -1276,15 +1260,15 @@ zS
 MP
 Cb
 AC
-WB
+eP
 mW
-WB
+eP
 Kl
 Cx
 Kl
-WB
+eP
 mW
-WB
+eP
 Kl
 MP
 tw
@@ -1505,11 +1489,11 @@ Ok
 CH
 GI
 Ok
-zw
-zw
-zw
-zw
-zw
+gF
+gF
+gF
+gF
+gF
 MP
 tw
 yf

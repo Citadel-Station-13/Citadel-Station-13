@@ -13,12 +13,13 @@
 #define BLOCK_Z_OUT_UP			(1<<10) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN			(1<<11) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP			(1<<12) // Should this object block z uprise from below?
-#define SHOVABLE_ONTO			(1<<13)	//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
+#define SHOVABLE_ONTO			(1<<13)//called on turf.shove_act() to consider whether an object should have a niche effect (defined in their own shove_act()) when someone is pushed onto it, or do a sanity CanPass() check.
+#define EXAMINE_SKIP			(1<<14) /// Makes the Examine proc not read out this item.
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE	0 // We have no damage on the clothing
-#define CLOTHING_DAMAGED	1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped
-#define CLOTHING_SHREDDED	2 // The clothing is useless and cannot be equipped unless repaired first
+#define CLOTHING_DAMAGED	1 // There's some damage on the clothing but it still has at least one functioning bodypart
+#define CLOTHING_SHREDDED	2 // The clothing is near useless and has their sensors broken
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

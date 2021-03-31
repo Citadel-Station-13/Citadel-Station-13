@@ -829,7 +829,7 @@
 				if(HAS_TRAIT(L, TRAIT_MASO))
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
-						H.adjust_arousal(3*power_multiplier,maso = TRUE)
+						H.adjust_arousal(3*power_multiplier,"velvet speech", maso = TRUE)
 					descmessage += "And yet, it feels so good..!</span>" //I don't really understand masco, is this the right sort of thing they like?
 					E.enthrallTally += power_multiplier
 					E.resistanceTally -= power_multiplier

@@ -20,6 +20,10 @@
 	},
 /turf/open/floor/mineral/diamond,
 /area/icemoon/surface/outdoors)
+"f" = (
+/obj/item/tcg_card/special/xenomaid,
+/turf/open/floor/mineral/diamond,
+/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -65,7 +69,7 @@ a
 a
 a
 b
-c
+f
 c
 c
 b

@@ -23,6 +23,9 @@
 	if(!(combat_flags & COMBAT_FLAG_PARRY_CAPABLE))
 		to_chat(src, "<span class='warning'>You are not something that can parry attacks.</span>")
 		return
+	if(!(mobility_flags & MOBILITY_STAND))
+		to_chat(src, "<span class='warning'>You aren't able to parry without solid footing!</span>")
+		return
 	// Prioritize item, then martial art, then unarmed.
 	// yanderedev else if time
 	var/obj/item/using_item = get_active_held_item()

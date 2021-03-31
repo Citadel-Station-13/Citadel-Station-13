@@ -168,8 +168,10 @@
 
 /datum/gear/suit/urbanjacket
 	name = "Urban Jacket"
-	path = /obj/item/clothing/suit/jacket/urbanjacket
+	path = /obj/item/clothing/suit/jacket/urbanjacket/polychromic
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#3B4B2E", "#CBBDAF", "#444444")
 
 /datum/gear/suit/ianshirt
 	name = "Ian Shirt"

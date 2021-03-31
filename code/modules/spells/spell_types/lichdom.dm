@@ -93,12 +93,14 @@
 	active_phylacteries++
 	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
+	RegisterSignal(SSactivity, COMSIG_THREAT_CALC, .proc/get_threat)
 	set_light(lon_range)
 	if(initial(SSticker.mode.round_ends_with_antag_death))
 		SSticker.mode.round_ends_with_antag_death = FALSE
 
 /obj/item/phylactery/Destroy(force=FALSE)
 	STOP_PROCESSING(SSobj, src)
+	UnregisterSignal(SSactivity, COMSIG_THREAT_CALC)
 	active_phylacteries--
 	GLOB.poi_list -= src
 	if(!active_phylacteries)
@@ -112,6 +114,12 @@
 
 	if(!mind.current || (mind.current && mind.current.stat == DEAD))
 		addtimer(CALLBACK(src, .proc/rise), respawn_time, TIMER_UNIQUE)
+
+/obj/item/phylactery/proc/get_threat(list/threat_list)
+	if(mind?.current?.stat == DEAD)
+		if(!("phylactery" in threat_list))
+			threat_list["phylactery"] = 0
+		threat_list["phylactery"] += 25
 
 /obj/item/phylactery/proc/rise()
 	if(mind.current && mind.current.stat != DEAD)

@@ -435,6 +435,20 @@
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/nugget))
 
+/obj/item/storage/fancy/treat_box
+	name = "treat box"
+	desc = "A cardboard box used for holding dog treats."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "treatbox"
+	icon_type = "treat"
+	spawn_type = /obj/item/reagent_containers/food/snacks/dogtreat
+
+/obj/item/storage/fancy/treat_box/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/dogtreat))
+
 /obj/item/storage/fancy/cracker_pack
 	name = "cracker pack"
 	desc = "A pack of delicious crackers. Keep away from parrots!"

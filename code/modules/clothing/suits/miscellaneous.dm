@@ -487,12 +487,16 @@
 	item_state = "militaryjacket"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
 
-/obj/item/clothing/suit/jacket/urbanjacket
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic
 	name = "urban jacket"
 	desc = "A canvas jacket styled with a fur neck piece, stylish."
 	icon_state = "urbanjacket"
 	item_state = "urbanjacket"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/gun/ballistic/automatic/pistol, /obj/item/gun/ballistic/revolver, /obj/item/radio)
+
+/obj/item/clothing/suit/jacket/urbanjacket/polychromic/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#3D4C31", "#CBBDAF", "#3B3B3B"), 3)
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
@@ -562,6 +566,26 @@
 	body_parts_covered = CHEST|GROIN
 	attack_verb = list("warned", "cautioned", "smashed")
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/suit/petharness
+	name = "pet harness"
+	desc = "For your pet! Or not! Has a little clip on the back."
+	icon_state = "petharness"
+	item_state = "petharness"
+	body_parts_covered = NONE
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+	allowed = /obj/item/toy/fluff
+
+/obj/item/clothing/suit/petharness/mesh
+	name = "mesh pet harness"
+	desc = "For your pet! Or not! Has some mesh to cover up your more sensitive bits and a little clip on the back."
+	icon_state = "petharness_mesh"
+	item_state = "petharness_mesh"
+	body_parts_covered = CHEST
+
+/obj/item/clothing/suit/petharness/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/polychromic, list("#0056D9", "#959595"), 2, _flags = POLYCHROMIC_ACTION)
 
 // WINTER COATS
 
@@ -1035,6 +1059,12 @@
 	desc = "Perfect for windy days."
 	icon_state = "wbreakpoly"
 	item_state = "wbreakpoly"
+
+/obj/item/clothing/suit/toggle/wbreakpoly/on_toggle(mob/user)
+	if(suittoggled)
+		to_chat(usr, "<span class='notice'>You zip up [src].</span>")
+	else
+		to_chat(usr, "<span class='notice'>You unzip [src].</span>")
 
 /obj/item/clothing/suit/toggle/wbreakpoly/polychromic/ComponentInitialize()
 	. = ..()

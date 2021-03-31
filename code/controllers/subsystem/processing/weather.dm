@@ -70,3 +70,8 @@ PROCESSING_SUBSYSTEM_DEF(weather)
 			A = W
 			break
 	return A
+
+/datum/controller/subsystem/processing/weather/proc/get_weather_by_type(datum/weather/weather_datum_type)
+	for(var/V in processing)
+		if(istype(V,weather_datum_type))
+			return V
