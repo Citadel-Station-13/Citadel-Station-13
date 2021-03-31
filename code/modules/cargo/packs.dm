@@ -15,6 +15,7 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
+	// this might be all in all unnecessary with current code if some changes are made
 	var/goody = PACK_GOODY_NONE //Small items can be grouped into a single crate.They also come in a closet/lockbox instead of a full crate, so the 700 min doesn't apply
 	var/can_private_buy = TRUE //Can it be purchased privately by each crewmember?
 
