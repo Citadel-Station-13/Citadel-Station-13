@@ -49,6 +49,9 @@
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
+	head = /obj/item/clothing/head/helmet/knight
+	suit = /obj/item/clothing/suit/armor/riot/knight
+
 /datum/outfit/job/miner/asteroid
 	name = "Shaft Miner (Asteroid)"
 	uniform = /obj/item/clothing/under/rank/cargo/miner

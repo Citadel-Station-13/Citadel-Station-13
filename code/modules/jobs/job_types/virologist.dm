@@ -34,7 +34,8 @@
 	uniform = /obj/item/clothing/under/rank/medical/virologist
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
+	suit =  /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
+	head = /obj/item/clothing/head/plaguedoctorhat
 	suit_store =  /obj/item/flashlight/pen
 
 	backpack = /obj/item/storage/backpack/virology

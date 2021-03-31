@@ -30,7 +30,6 @@
 	ears = /obj/item/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/medical/doctor
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/flashlight/pen
 
@@ -41,3 +40,6 @@
 	backpack_contents = list(/obj/item/storage/hypospraykit/regular)
 
 	chameleon_extras = /obj/item/gun/syringe
+
+	head = /obj/item/clothing/head/helmet/knight
+	suit = /obj/item/clothing/suit/armor/riot/knight

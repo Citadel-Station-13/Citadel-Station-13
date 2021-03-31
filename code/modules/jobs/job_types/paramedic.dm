@@ -32,8 +32,6 @@
 	uniform = /obj/item/clothing/under/rank/medical/paramedic
 	mask = /obj/item/clothing/mask/cigarette
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/soft/emt
-	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
 	belt = /obj/item/storage/belt/medical
 	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/flashlight/pen/paramedic
@@ -48,3 +46,6 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
+
+	head = /obj/item/clothing/head/helmet/knight
+	suit = /obj/item/clothing/suit/armor/riot/knight

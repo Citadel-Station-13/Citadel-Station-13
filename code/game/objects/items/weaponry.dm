@@ -80,6 +80,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
 
+/obj/item/claymore/april_fools
+	force = 25 // lets not give everyone a 40 force weapon roundstart
+	wound_bonus = -5 // so its basically 20 force in terms of wound rolls
+	desc = "An old sword with a bland hilt. Its name is engraved on its rusted metal blade."
+
+/obj/item/claymore/april_fools/Initialize()
+	. = ..()
+	// a line that should be broken up but who cares its a one off april fools pr why are you judging this
+	name = "[pick("oath", "heart", "tree","clown","truth","hero","evil","terror","wind", "water", "earth", "fire", "cake", "april" , "fool", "guard", "paper", "light", "lizard", "slime")][pick("breaker", "lover", "storm", "quake", "blight", "eater", "break", "king", "queen", "blade", "sword", "sweeper", "killer", "sleep", "reader")]"
+
 /obj/item/claymore/purified
 	name = "purified longsword"
 	desc = "A hastily-purified longsword. While not as holy as it could be, it's still a formidable weapon against those who would rather see you dead."
@@ -417,7 +427,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A misnomer of sorts, this is effectively a blunt katana made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
 	icon_state = "bokken_steel"
 	item_state = "bokken_steel"
-	force = 12 
+	force = 12
 	stamina_damage_increment = 3
 
 /obj/item/melee/bokken/waki
@@ -427,7 +437,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "wakibokken"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 6 
+	force = 6
 	stamina_damage_increment = 4
 	block_parry_data = /datum/block_parry_data/bokken/waki
 	default_parry_data = /datum/block_parry_data/bokken/waki
@@ -442,7 +452,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	parry_time_perfect_leeway = 1
 	parry_imperfect_falloff_percent = 7.5
 	parry_efficiency_to_counterattack = 120
-	parry_efficiency_considered_successful = 65	
+	parry_efficiency_considered_successful = 65
 	parry_efficiency_perfect = 120
 	parry_efficiency_perfect_override = list(
 		TEXT_ATTACK_TYPE_PROJECTILE = 30,
@@ -455,10 +465,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /datum/block_parry_data/bokken/waki/quick_parry //For the parry spammer in you
 	parry_stamina_cost = 2 // Slam that parry button
 	parry_time_active = 2.5
-	parry_time_perfect = 1 
+	parry_time_perfect = 1
 	parry_time_perfect_leeway = 1
 	parry_failed_stagger_duration = 1 SECONDS
-	parry_failed_clickcd_duration = 1 SECONDS 
+	parry_failed_clickcd_duration = 1 SECONDS
 
 /datum/block_parry_data/bokken/waki/quick_parry/proj
 	parry_efficiency_perfect_override = list()
@@ -468,7 +478,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A misnomer of sorts, this is effectively a blunt wakizashi made from steelwood, a dense organic wood derived from steelcaps. Why steelwood? Druids can use it. Duh."
 	icon_state = "wakibokken_steel"
 	item_state = "wakibokken_steel"
-	force = 8 
+	force = 8
 	stamina_damage_increment = 2
 
 /obj/item/melee/bokken/debug

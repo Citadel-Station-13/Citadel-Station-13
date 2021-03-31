@@ -47,3 +47,6 @@
 
 	chameleon_extras = /obj/item/stamp/qm
 
+	head = /obj/item/clothing/head/helmet/knight
+	suit = /obj/item/clothing/suit/armor/riot/knight
+

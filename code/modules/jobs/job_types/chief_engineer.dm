@@ -47,7 +47,6 @@
 	ears = /obj/item/radio/headset/heads/ce
 	uniform = /obj/item/clothing/under/rank/engineering/chief_engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced=1)
 
@@ -58,6 +57,9 @@
 	pda_slot = SLOT_L_STORE
 	chameleon_extras = /obj/item/stamp/ce
 
+	head = /obj/item/clothing/head/helmet/knight
+	suit = /obj/item/clothing/suit/armor/riot/knight
+
 /datum/outfit/job/ce/rig
 	name = "Chief Engineer (Hardsuit)"
 
@@ -67,5 +69,4 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	glasses = /obj/item/clothing/glasses/meson/engine
 	gloves = /obj/item/clothing/gloves/color/yellow
-	head = null
 	internals_slot = SLOT_S_STORE
