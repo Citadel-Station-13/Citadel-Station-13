@@ -186,7 +186,7 @@
   * Shows our UI to a mob.
   */
 /datum/component/storage/proc/ui_show(mob/M, set_screen_size = TRUE)
-	if(!M.client)
+	if(!M.client || isobserver(M))
 		return FALSE
 	var/list/cview = getviewsize(M.client.view)
 	// in tiles
