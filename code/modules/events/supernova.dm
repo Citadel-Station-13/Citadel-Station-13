@@ -17,7 +17,7 @@
 	announceWhen = rand(4, 60)
 	supernova = new
 	SSsun.suns += supernova
-	if(prob(50))
+	if(prob(20))
 		power = rand(5,100) / 100
 	else
 		power = rand(5,5000) / 100
@@ -25,7 +25,7 @@
 	supernova.power_mod = 0
 
 /datum/round_event/supernova/announce()
-	var/message = "Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux. [power > 4 ? "Short burts of radiation may be possible, so please prepare accordingly." : ""]"
+	var/message = "Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux. [power > 1 ? "Short burts of radiation may be possible, so please prepare accordingly." : ""]"
 	if(prob(power * 25))
 		priority_announce(message)
 	else
@@ -33,9 +33,9 @@
 
 
 /datum/round_event/supernova/start()
-	supernova.power_mod = 0.00000002 * power
+	supernova.power_mod = 0.001 * power
 	var/explosion_size = rand(1000000000, 999999999)
-	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), world.maxx / 2)
+	var/turf/epicenter = get_turf_in_angle(supernova.azimuth, SSmapping.get_station_center(), round(world.maxx * 0.45))
 	for(var/array in GLOB.doppler_arrays)
 		var/obj/machinery/doppler_array/A = array
 		A.sense_explosion(epicenter, explosion_size/2, explosion_size, 0, 107000000 / power, explosion_size/2, explosion_size, 0)
@@ -46,13 +46,12 @@
 		sucker_light.give_home_power()
 
 /datum/round_event/supernova/tick()
-	var/midpoint = (endWhen-startWhen)/2
-	switch(activeFor)
-		if(startWhen to midpoint)
-			supernova.power_mod = min(supernova.power_mod*1.2, power)
-		if(endWhen-10 to endWhen)
-			supernova.power_mod /= 4
-	if(prob(round(supernova.power_mod / 2)) && storm_count < 3 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
+	var/midpoint = round((endWhen-startWhen)/2)
+	if(activeFor < midpoint)
+		supernova.power_mod = min(supernova.power_mod*1.2, power)
+	if(activeFor > endWhen-10)
+		supernova.power_mod /= 4
+	if(prob(round(supernova.power_mod)) && prob(5) && storm_count < 5 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
 		SSweather.run_weather(/datum/weather/rad_storm/supernova)
 		storm_count++
 
@@ -62,6 +61,8 @@
 
 /datum/weather/rad_storm/supernova
 	weather_duration_lower = 50
-	weather_duration_lower = 100
-	telegraph_duration = 100
-	radiation_intensity = 50
+	weather_duration_upper = 100
+	telegraph_duration = 200
+	radiation_intensity = 1000
+	weather_sound = null
+	telegraph_message = "<span class='userdanger'>The air begins to grow very warm!</span>"

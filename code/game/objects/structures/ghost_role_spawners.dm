@@ -662,6 +662,72 @@
 		to_chat(M,"<span class='notice'>You're once again longer hearing deadchat.</span>")
 
 
+/datum/action/disguise
+	name = "Disguise"
+	button_icon_state = "ling_transform"
+	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	background_icon_state = "bg_mime"
+	var/currently_disguised = FALSE
+	var/static/list/mob_blacklist = typecacheof(list(
+		/mob/living/simple_animal/pet,
+		/mob/living/simple_animal/hostile/retaliate/goose,
+		/mob/living/simple_animal/hostile/poison,
+		/mob/living/simple_animal/hostile/retaliate/goat,
+		/mob/living/simple_animal/cow,
+		/mob/living/simple_animal/chick,
+		/mob/living/simple_animal/chicken,
+		/mob/living/simple_animal/kiwi,
+		/mob/living/simple_animal/babyKiwi,
+		/mob/living/simple_animal/deer,
+		/mob/living/simple_animal/parrot,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/cockroach,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/mouse,
+		/mob/living/simple_animal/sloth,
+		/mob/living/simple_animal/opossum,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/asteroid/polarbear,
+		/mob/living/simple_animal/hostile/asteroid/wolf,
+		/mob/living/carbon/monkey,
+		/mob/living/simple_animal/hostile/gorilla,
+		/mob/living/carbon/alien/larva,
+		/mob/living/simple_animal/hostile/retaliate/frog
+	))
+
+
+/datum/action/disguise/Trigger()
+	var/mob/living/carbon/human/H = owner
+	if(!currently_disguised)
+		var/user_object_type = input(H, "Disguising as OBJECT or MOB?") as null|anything in list("OBJECT", "MOB")
+		if(user_object_type)
+			var/search_term = stripped_input(H, "Enter the search term")
+			if(search_term)
+				var/list_to_search
+				if(user_object_type == "MOB")
+					list_to_search = subtypesof(/mob) - mob_blacklist
+				else
+					list_to_search = subtypesof(/obj)
+				var/list/filtered_results = list()
+				for(var/some_search_item in list_to_search)
+					if(findtext("[some_search_item]", search_term))
+						filtered_results += some_search_item
+				if(!length(filtered_results))
+					to_chat(H, "Nothing matched your search query!")
+				else
+					var/disguise_selection = input("Select item to disguise as") as null|anything in filtered_results
+					if(disguise_selection)
+						var/atom/disguise_item = disguise_selection
+						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
+						I.override = TRUE
+						I.layer = ABOVE_MOB_LAYER
+						H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "ghost_cafe_disguise", I)
+						currently_disguised = TRUE
+	else
+		H.remove_alt_appearance("ghost_cafe_disguise")
+		currently_disguised = FALSE
+
 /obj/effect/mob_spawn/human/ghostcafe/special(mob/living/carbon/human/new_spawn)
 	if(new_spawn.client)
 		new_spawn.client.prefs.copy_to(new_spawn)
@@ -676,10 +742,11 @@
 		ADD_TRAIT(new_spawn, TRAIT_SIXTHSENSE, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn, TRAIT_EXEMPT_HEALTH_EVENTS, GHOSTROLE_TRAIT)
 		ADD_TRAIT(new_spawn, TRAIT_NO_MIDROUND_ANTAG, GHOSTROLE_TRAIT) //The mob can't be made into a random antag, they are still eligible for ghost roles popups.
-		ADD_TRAIT(new_spawn, TRAIT_PACIFISM, GHOSTROLE_TRAIT)
 		to_chat(new_spawn,"<span class='boldwarning'>Ghosting is free!</span>")
 		var/datum/action/toggle_dead_chat_mob/D = new(new_spawn)
 		D.Grant(new_spawn)
+		var/datum/action/disguise/disguise_action = new(new_spawn)
+		disguise_action.Grant(new_spawn)
 
 /datum/outfit/ghostcafe
 	name = "ID, jumpsuit and shoes"

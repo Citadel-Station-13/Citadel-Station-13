@@ -409,7 +409,10 @@
 		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
 	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(1))
+	var/mob/dead/observer/G = mob_occupant.get_ghost(TRUE)
+	if(G)
+		G.voluntary_ghosted = TRUE
+	else
 		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE, cryo = TRUE)
 
 	QDEL_NULL(occupant)

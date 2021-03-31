@@ -36,7 +36,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/magic/PopulateContents()
-	var/loot = rand(1,10)
+	var/loot = rand(1,9)
 	switch(loot)
 		if(1)
 			new /obj/item/soulstone/anybody(src)
@@ -57,10 +57,6 @@
 			new /obj/item/immortality_talisman(src)
 		if(9)
 			new /obj/item/gun/magic/wand/book/healing(src)
-		if(10)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
 
 /obj/structure/closet/crate/necropolis/tendril/weapon_armor/PopulateContents()
 	var/loot = rand(1,11)
@@ -132,7 +128,7 @@
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 
 /obj/structure/closet/crate/necropolis/tendril/all/PopulateContents()
-	var/loot = rand(1,29)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -196,10 +192,6 @@
 			new /obj/item/immortality_talisman(src)
 		if(28)
 			new /obj/item/gun/magic/wand/book/healing(src)
-		if(29)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -928,7 +920,10 @@
 			ghost.ManualFollow(src)
 
 /obj/item/melee/ghost_sword/process()
-	ghost_check()
+	force = 0
+	var/ghost_counter = ghost_check()
+
+	force = clamp((ghost_counter * 4), 0, 75)
 
 /obj/item/melee/ghost_sword/proc/recursive_orbit_collect(atom/A, list/L)
 	for(var/i in A.orbiters?.orbiters)
@@ -1282,8 +1277,8 @@
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
 				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
-				C.damage = 30
-				C.monster_damage_boost = FALSE
+				C.damage = 15
+				C.monster_damage_boost = TRUE
 				log_combat(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -1399,10 +1394,10 @@
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))
 			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //blasts produced will not hurt allies
-			B.damage = 30
+			B.damage = 15
 		for(var/t in RANGE_TURFS(1, source))
 			var/obj/effect/temp_visual/hierophant/blast/B = new /obj/effect/temp_visual/hierophant/blast(t, user, TRUE) //but absolutely will hurt enemies
-			B.damage = 30
+			B.damage = 15
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user) //regardless, take all mobs near us along
 		sleep(6) //at this point the blasts detonate
@@ -1463,8 +1458,8 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = 30
-		B.monster_damage_boost = FALSE
+		B.damage = 15
+		B.monster_damage_boost = TRUE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1476,7 +1471,7 @@
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
-		B.damage = 15 //keeps monster damage boost due to lower damage
+		B.damage = 15 //keeps monster damage boost due to lower damage (now added to all damage due to reduction to 15, 30dmg 50AP isn't cool)
 
 
 //Just some minor stuff
