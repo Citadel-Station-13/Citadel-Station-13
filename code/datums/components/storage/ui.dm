@@ -145,7 +145,7 @@
 			addrow = TRUE
 
 		// now that we have pixels_to_use, place our thing and add it to the returned list.
-		B.screen_loc = = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
+		B.screen_loc = "[screen_start_x]:[round(current_pixel + (pixels_to_use * 0.5) + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING), 1)],[screen_start_y+row-1]:[screen_pixel_y]"
 		// add the used pixels to pixel after we place the object
 		current_pixel += pixels_to_use + (first? 0 : VOLUMETRIC_STORAGE_ITEM_PADDING)
 		first = FALSE		//apply padding to everything after this
@@ -193,7 +193,7 @@
 	var/maxallowedscreensize = cview[1]-8
 	// we got screen size, register signal
 	RegisterSignal(M, COMSIG_MOB_CLIENT_LOGOUT, .proc/on_logout, override = TRUE)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_logoutt, override = TRUE)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/on_logout, override = TRUE)
 	if(M.active_storage != src)
 		if(M.active_storage)
 			M.active_storage.ui_hide(M)

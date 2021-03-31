@@ -116,22 +116,13 @@
 /datum/component/storage/Destroy()
 	close_all()
 	wipe_ui_objects()
-	QDEL_NULL(ui_boxes)
-	QDEL_NULL(ui_close)
-	QDEL_NULL(ui_continuous)
-	QDEL_NULL(ui_left)
-	// DO NOT USE QDEL_LIST_ASSOC.
-	if(ui_item_blocks)
-		for(var/i in ui_item_blocks)
-			qdel(ui_item_blocks[i])		//qdel the screen object not the item
-		ui_item_blocks.Cut()
 	LAZYCLEARLIST(is_using)
 	return ..()
 
 /datum/component/storage/proc/wipe_ui_objects()
 	for(var/i in ui_by_mob)
 		var/mob/M = i
-		var/list/objects = ui_by_mob(i)
+		var/list/objects = ui_by_mob[i]
 		QDEL_LIST(objects)
 
 /datum/component/storage/PreTransfer()
