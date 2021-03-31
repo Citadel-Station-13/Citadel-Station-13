@@ -1001,8 +1001,6 @@
 			H.dna.features["body_markings"] = "Dark Tiger Body"
 			H.dna.features["legs"] = "Digitigrade"
 			H.dna.features["taur_body"] = "None"
-			H.hair_style = "Bald"
-			H.facial_hair_style = "Shaved"
 			H.left_eye_color = "fee5a3"
 			H.right_eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
