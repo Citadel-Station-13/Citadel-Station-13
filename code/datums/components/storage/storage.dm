@@ -339,13 +339,6 @@
 	return master._removal_reset(thing)
 
 /datum/component/storage/proc/_remove_and_refresh(datum/source, atom/movable/thing)
-	if(LAZYACCESS(ui_item_blocks, thing))
-		var/obj/screen/storage/volumetric_box/center/C = ui_item_blocks[thing]
-		for(var/i in can_see_contents())		//runtimes result if mobs can access post deletion.
-			var/mob/M = i
-			M.client?.screen -= C.on_screen_objects()
-		ui_item_blocks -= thing
-		qdel(C)
 	_removal_reset(thing)		// THIS NEEDS TO HAPPEN AFTER SO LAYERING DOESN'T BREAK!
 	refresh_mob_views()
 

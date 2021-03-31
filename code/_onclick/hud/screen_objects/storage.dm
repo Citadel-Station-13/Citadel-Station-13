@@ -85,21 +85,16 @@
 	makeItemInactive()
 
 /obj/screen/storage/volumetric_box/proc/makeItemInactive()
-	if(!our_item)
-		return
-	layer = VOLUMETRIC_STORAGE_ITEM_LAYER
-	plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+	return
 
 /obj/screen/storage/volumetric_box/proc/makeItemActive()
-	if(!our_item)
-		return
-	layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
-	plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
+	return
 
 /obj/screen/storage/volumetric_box/center
 	icon_state = "stored_continue"
 	var/obj/screen/storage/volumetric_edge/stored_left/left
 	var/obj/screen/storage/volumetric_edge/stored_right/right
+	var/obj/screen/storage/item_holder/holder
 	var/pixel_size
 
 /obj/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
@@ -112,6 +107,8 @@
 	QDEL_NULL(left)
 	QDEL_NULL(right)
 	vis_contents.Cut()
+	if(holder)
+		QDEL_NULL(holder)
 	return ..()
 
 /obj/screen/storage/volumetric_box/center/proc/on_screen_objects()
@@ -129,20 +126,28 @@
 	var/multiplier = (pixels - (VOLUMETRIC_STORAGE_BOX_BORDER_SIZE * 2)) / VOLUMETRIC_STORAGE_BOX_ICON_SIZE
 	transform = matrix(multiplier, 0, 0, 0, 1, 0)
 	if(our_item)
-		var/matrix/old = our_item.transform
-		our_item.transform = matrix(1 / multiplier, 0, 0, 0, 1, 0)
-		var/oldplane = our_item.plane
-		var/oldlayer = our_item.layer
-		our_item.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
-		our_item.layer = VOLUMETRIC_STORAGE_ITEM_LAYER + 0.1
-		add_overlay(our_item)
-		our_item.plane = oldplane
-		our_item.layer = oldlayer
-		our_item.transform = old
+		if(holder)
+			qdel(holder)
+		holder = new(null, src, our_item)
+		holder.transform = matrix(1 / multiplier, 0, 0, 0, 1, 0)
+		holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+		holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
 	left.pixel_x = -((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) - VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	right.pixel_x = ((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) + VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	add_overlay(left)
 	add_overlay(right)
+
+/obj/screen/storage/volumetric_box/center/makeItemInactive()
+	if(!holder)
+		return
+	holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
+	holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+
+/obj/screen/storage/volumetric_box/center/makeItemActive()
+	if(!holder)
+		return
+	holder.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
+	holder.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
 
 /obj/screen/storage/volumetric_edge
 	layer = VOLUMETRIC_STORAGE_ITEM_LAYER
