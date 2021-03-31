@@ -121,9 +121,9 @@
 
 /datum/component/storage/proc/wipe_ui_objects()
 	for(var/i in ui_by_mob)
-		var/mob/M = i
 		var/list/objects = ui_by_mob[i]
 		QDEL_LIST(objects)
+	ui_by_mob.Cut()
 
 /datum/component/storage/PreTransfer()
 	update_actions()

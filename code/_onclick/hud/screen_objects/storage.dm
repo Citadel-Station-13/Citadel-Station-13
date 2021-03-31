@@ -100,7 +100,6 @@
 /obj/screen/storage/volumetric_box/center/Initialize(mapload, new_master, our_item)
 	left = new(null, src, our_item)
 	right = new(null, src, our_item)
-	vis_contents += our_item
 	return ..()
 
 /obj/screen/storage/volumetric_box/center/Destroy()
@@ -122,6 +121,7 @@
 		return
 	pixel_size = pixels
 	cut_overlays()
+	vis_contents.Cut()
 	//our icon size is 32 pixels.
 	var/multiplier = (pixels - (VOLUMETRIC_STORAGE_BOX_BORDER_SIZE * 2)) / VOLUMETRIC_STORAGE_BOX_ICON_SIZE
 	transform = matrix(multiplier, 0, 0, 0, 1, 0)
@@ -131,7 +131,9 @@
 		holder = new(null, src, our_item)
 		holder.transform = matrix(1 / multiplier, 0, 0, 0, 1, 0)
 		holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
-		holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
+		holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER + 0.1
+		holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	vis_contents += holder
 	left.pixel_x = -((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) - VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	right.pixel_x = ((pixels - VOLUMETRIC_STORAGE_BOX_ICON_SIZE) * 0.5) + VOLUMETRIC_STORAGE_BOX_BORDER_SIZE
 	add_overlay(left)
@@ -140,14 +142,14 @@
 /obj/screen/storage/volumetric_box/center/makeItemInactive()
 	if(!holder)
 		return
-	holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
-	holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+	holder.our_item.layer = VOLUMETRIC_STORAGE_ITEM_LAYER + 0.1
+	holder.our_item.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 /obj/screen/storage/volumetric_box/center/makeItemActive()
 	if(!holder)
 		return
-	holder.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
-	holder.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
+	holder.our_item.layer = VOLUMETRIC_STORAGE_ACTIVE_ITEM_LAYER		//make sure we display infront of the others!
+	holder.our_item.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
 
 /obj/screen/storage/volumetric_edge
 	layer = VOLUMETRIC_STORAGE_ITEM_LAYER
