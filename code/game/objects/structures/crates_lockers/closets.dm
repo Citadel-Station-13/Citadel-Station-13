@@ -275,16 +275,15 @@
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/living/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
-		if(istype(W, /obj/item/weldingtool))
-			if(W.tool_behaviour == TOOL_WELDER)
-				// eigen check
-				if(eigen_teleport)
-					to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to deconstruct!</span>")
-					return
+		if(W.tool_behaviour == cutting_tool)
+			// eigen check
+			if(eigen_teleport)
+				to_chat(user, "<span class='notice'>The unstable nature of \the [src] makes it impossible to deconstruct!</span>")
+				return
 
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
-
 				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 				if(W.use_tool(src, user, 40, volume=50))
 					if(!opened)
@@ -294,12 +293,26 @@
 									"<span class='hear'>You hear welding.</span>")
 					deconstruct(TRUE)
 				return
-			else // for example cardboard box is cut with wirecutters
+			else if(W.tool_behaviour == TOOL_WIRECUTTER)
+				W.use_tool(src, user, 40, volume=50)
 				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
 				return
+			W.use_tool(src, user, 40, volume=50)
+			user.visible_message("<span class='notice'>[user] deconstructed \the [src].</span>", \
+									"<span class='notice'>You deconstructed \the [src] with \the [W].</span>")
+			deconstruct(TRUE) //Honestly by this point, if all checks were right and this is the cutting tool, just cut it
+			return
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+			return
+	else if(!opened && user.a_intent == INTENT_HELP && !W.tool_behaviour)
+		var/item_is_id = W.GetID()
+		if(!item_is_id)
+			open(user)
+			return
+		if(item_is_id || !toggle(user))
+			togglelock(user)
 			return
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		// eigen check
@@ -328,12 +341,6 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='hear'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
-		var/item_is_id = W.GetID()
-		if(!item_is_id)
-			return FALSE
-		if(item_is_id || !toggle(user))
-			togglelock(user)
 	// cit addons
 	else if(istype(W, /obj/item/electronics/airlock))
 		handle_lock_addition(user, W)
