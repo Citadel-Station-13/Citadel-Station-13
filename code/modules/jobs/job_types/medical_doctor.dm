@@ -1,12 +1,12 @@
 /datum/job/doctor
-	title = "Medical Doctor"
+	title = "Surgeon"
 	flag = DOCTOR
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 3
-	supervisors = "the chief medical officer"
+	supervisors = "the head surgeon"
 	selection_color = "#74b5e0"
 
 	outfit = /datum/outfit/job/doctor

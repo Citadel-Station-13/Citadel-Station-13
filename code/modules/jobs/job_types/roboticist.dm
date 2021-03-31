@@ -1,12 +1,12 @@
 /datum/job/roboticist
-	title = "Roboticist"
+	title = "Artificer"
 	flag = ROBOTICIST
 	department_head = list("Research Director")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the research director"
+	supervisors = "the head scholar"
 	selection_color = "#9574cd"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW

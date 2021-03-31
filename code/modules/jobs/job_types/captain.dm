@@ -1,5 +1,5 @@
 /datum/job/captain
-	title = "Captain"
+	title = "Commander"
 	flag = CAPTAIN
 //	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY //:eyes:
 	department_head = list("CentCom")

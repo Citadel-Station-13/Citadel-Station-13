@@ -1,5 +1,5 @@
 /datum/job/cmo
-	title = "Chief Medical Officer"
+	title = "Head Surgeon"
 	flag = CMO_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
@@ -8,7 +8,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = "the commander"
 	selection_color = "#509ed1"
 	req_admin_notify = 1
 	minimal_player_age = 10

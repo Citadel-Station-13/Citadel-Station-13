@@ -1,12 +1,12 @@
 /datum/job/paramedic
-	title = "Paramedic"
+	title = "Field Surgeon"
 	flag = PARAMEDIC
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	supervisors = "the head surgeon"
 	selection_color = "#74b5e0"
 
 	outfit = /datum/outfit/job/paramedic

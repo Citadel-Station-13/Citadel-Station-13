@@ -1,5 +1,5 @@
 /datum/job/rd
-	title = "Research Director"
+	title = "Head Scholar"
 	flag = RD_JF
 //	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
@@ -8,7 +8,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the captain"
+	supervisors = "the commander"
 	selection_color = "#7544cc"
 	req_admin_notify = 1
 	minimal_player_age = 10

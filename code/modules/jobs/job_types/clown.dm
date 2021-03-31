@@ -1,12 +1,12 @@
 /datum/job/clown
-	title = "Clown"
+	title = "Jester"
 	flag = CLOWN
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the head worksman"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/clown
