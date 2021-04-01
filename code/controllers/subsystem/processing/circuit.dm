@@ -50,7 +50,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/electronic_assembly/simple,
 		/obj/item/electronic_assembly/hook,
 		/obj/item/electronic_assembly/pda,
-		 /obj/item/electronic_assembly/dildo,
+		// /obj/item/electronic_assembly/dildo,
 		/obj/item/electronic_assembly/small/default,
 		/obj/item/electronic_assembly/small/cylinder,
 		/obj/item/electronic_assembly/small/scanner,
