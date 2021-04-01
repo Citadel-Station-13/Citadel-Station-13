@@ -48,21 +48,21 @@
 			var/new_undies = input(H, "Select your underwear", "Changing") as null|anything in GLOB.underwear_list
 			if(new_undies)
 				H.underwear = new_undies
-				H.saved_underwear = new_undies
+//				H.saved_underwear = new_undies
 				var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[new_undies]
 				dye_undie = B?.has_color
 		if("Undershirt")
 			var/new_undershirt = input(H, "Select your undershirt", "Changing") as null|anything in GLOB.undershirt_list
 			if(new_undershirt)
 				H.undershirt = new_undershirt
-				H.saved_undershirt = new_undershirt
+//				H.saved_undershirt = new_undershirt
 				var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[new_undershirt]
 				dye_shirt = T?.has_color
 		if("Socks")
 			var/new_socks = input(H, "Select your socks", "Changing") as null|anything in GLOB.socks_list
 			if(new_socks)
 				H.socks = new_socks
-				H.saved_socks = new_socks
+//				H.saved_socks = new_socks
 				var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[new_socks]
 				dye_socks = S?.has_color
 	if(dye_undie || choice == "Underwear Color")

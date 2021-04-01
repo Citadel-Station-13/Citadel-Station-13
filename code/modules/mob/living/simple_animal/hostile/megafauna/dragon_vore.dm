@@ -1,3 +1,4 @@
+/*
 /mob/living/simple_animal/hostile/megafauna/dragon
 	vore_active = TRUE
 	isPredator = TRUE
@@ -49,3 +50,5 @@
 	digest_burn = 2
 	swallow_time = 100  // costs extra time to eat directly to here
 	escapechance = 0
+
+*/

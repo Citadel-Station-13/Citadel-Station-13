@@ -1,3 +1,5 @@
+/*
+
 // -------------- Sickshot -------------
 /obj/item/gun/energy/sickshot
 	name = "\improper MPA6 \'Sickshot\'"
@@ -30,3 +32,5 @@
 				H.visible_message("<span class='danger'>[H] contracts strangely, spewing out contents on the floor!</span>", \
  						"<span class='userdanger'>You spew out everything inside you on the floor!</span>")
 		return BULLET_ACT_HIT
+
+*/

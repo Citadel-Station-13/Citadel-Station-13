@@ -1,3 +1,5 @@
+/*
+
 /obj/item/organ/genital/womb
 	name = "womb"
 	desc = "A female reproductive organ."
@@ -8,3 +10,5 @@
 	genital_flags = GENITAL_INTERNAL|GENITAL_FUID_PRODUCTION
 	fluid_id = /datum/reagent/consumable/semen/femcum
 	linked_organ_slot = ORGAN_SLOT_VAGINA
+
+*/

@@ -67,8 +67,10 @@ There are several things that need to be remembered:
 		remove_overlay(BODY_LAYER)
 		dna.species.handle_body(src)
 		..()
+		/*
 		if(update_genitals)
 			update_genitals()
+		*/
 
 /mob/living/carbon/human/update_fire()
 	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")

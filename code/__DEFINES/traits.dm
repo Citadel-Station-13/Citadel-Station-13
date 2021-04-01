@@ -189,10 +189,10 @@
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
-#define TRAIT_PERMABONER		"permanent_arousal"
-#define TRAIT_NEVERBONER		"never_aroused"
-#define TRAIT_NYMPHO			"nymphomaniac"
-#define TRAIT_MASO              "masochism"
+// #define TRAIT_PERMABONER		"permanent_arousal" // ERP Removal
+// #define TRAIT_NEVERBONER		"never_aroused" // ERP Removal
+// #define TRAIT_NYMPHO			"nymphomaniac" // ERP Removal
+// #define TRAIT_MASO              "masochism" // ERP Removal
 #define	TRAIT_HIGH_BLOOD        "high_blood"
 #define TRAIT_PARA              "paraplegic"
 #define TRAIT_EMPATH			"empath"

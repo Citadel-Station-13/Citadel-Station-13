@@ -28,9 +28,9 @@
 	H.left_eye_color = random_eye_color
 	H.right_eye_color = random_eye_color
 	H.dna.blood_type = random_blood_type()
-	H.saved_underwear = H.underwear
-	H.saved_undershirt = H.undershirt
-	H.saved_socks = H.socks
+//	H.saved_underwear = H.underwear
+//	H.saved_undershirt = H.undershirt
+//	H.saved_socks = H.socks
 
 	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.
 	H.dna.features["mcolor"] = sanitize_hexcolor(random_short_color(), 6)

@@ -82,6 +82,7 @@
 	contains = list(/obj/item/vending_refill/kink)
 	crate_name = "Kinkmate construction kit"
 
+/*
 /datum/supply_pack/vending/barkbox
 	name = "Bark Box Supply Crate"
 	desc = "Running of out things to keep your pets happy?"
@@ -89,6 +90,7 @@
 	contraband = TRUE
 	contains = list(/obj/item/vending_refill/barkbox)
 	crate_name = "bark box supply crate"
+*/
 
 /datum/supply_pack/vending/medical
 	name = "Medical Vending Crate"

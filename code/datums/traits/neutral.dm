@@ -97,6 +97,7 @@
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
 
+/* ERP Removal
 /datum/quirk/maso
 	name = "Masochism"
 	desc = "You are aroused by pain."
@@ -120,6 +121,7 @@
 /datum/quirk/libido/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.arousal_rate = initial(H.arousal_rate)
+*/
 
 /datum/quirk/alcohol_intolerance
 	name = "Alcohol Intolerance"

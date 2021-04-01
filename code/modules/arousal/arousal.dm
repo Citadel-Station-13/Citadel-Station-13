@@ -1,3 +1,4 @@
+/*
 /mob/living
 	var/mb_cd_length = 5 SECONDS						//5 second cooldown for masturbating because fuck spam.
 	var/mb_cd_timer = 0									//The timer itself
@@ -287,3 +288,5 @@
 	set name = "Climax"
 	set desc = "Lets you choose a couple ways to ejaculate."
 	mob_climax()
+
+*/

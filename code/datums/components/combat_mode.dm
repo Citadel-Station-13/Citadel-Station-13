@@ -155,10 +155,11 @@
 	enable_combat_mode(source, silent, FALSE, visible, HAS_TRAIT(source, TRAIT_COMBAT_MODE_LOCKED), TRUE)
 	if(source.client)
 		source.client.show_popup_menus = FALSE
-	if(iscarbon(source)) //I dislike this typecheck. It probably should be removed once that spoiled apple is componentized too.
+/*	if(iscarbon(source)) //I dislike this typecheck. It probably should be removed once that spoiled apple is componentized too.
 		var/mob/living/carbon/C = source
 		if(C.voremode)
 			C.disable_vore_mode()
+*/
 	return TRUE
 
 /// Disables intentionally being in combat mode. Please try to use the COMSIG_COMBAT_MODE_CHECK signal for feedback when possible.

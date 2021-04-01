@@ -260,9 +260,10 @@
 
 /obj/item/hypospray/mkii/tricord
 	start_vial = /obj/item/reagent_containers/glass/bottle/vial/small/tricord
-
+/*
 /obj/item/hypospray/mkii/enlarge
 	spawnwithvial = FALSE
+*/
 
 /obj/item/hypospray/mkii/CMO
 	name = "hypospray mk.II deluxe"

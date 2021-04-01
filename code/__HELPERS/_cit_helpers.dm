@@ -53,15 +53,17 @@ GLOBAL_LIST_EMPTY(ipc_screens_list)
 GLOBAL_LIST_EMPTY(ipc_antennas_list)
 
 	//Genitals and Arousal Lists
-GLOBAL_LIST_EMPTY(genitals_list)
-GLOBAL_LIST_EMPTY(cock_shapes_list)
-GLOBAL_LIST_EMPTY(balls_shapes_list)
-GLOBAL_LIST_EMPTY(breasts_shapes_list)
-GLOBAL_LIST_EMPTY(vagina_shapes_list)
+//GLOBAL_LIST_EMPTY(genitals_list)
+//GLOBAL_LIST_EMPTY(cock_shapes_list)
+//GLOBAL_LIST_EMPTY(balls_shapes_list)
+//GLOBAL_LIST_EMPTY(breasts_shapes_list)
+//GLOBAL_LIST_EMPTY(vagina_shapes_list)
 //longcat memes.
-GLOBAL_LIST_INIT(dick_nouns, list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett", "Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior"))
+//GLOBAL_LIST_INIT(dick_nouns, list("phallus", "willy", "dick", "prick", "member", "tool", "gentleman's organ", "cock", "wang", "knob", "dong", "joystick", "pecker", "johnson", "weenie", "tadger", "schlong", "thirsty ferret", "One eyed trouser trout", "Ding dong", "ankle spanker", "Pork sword", "engine cranker", "Harry hot dog", "Davy Crockett", "Kidney cracker", "Heat seeking moisture missile", "Giggle stick", "love whistle", "Tube steak", "Uncle Dick", "Purple helmet warrior"))
 
-GLOBAL_LIST_INIT(genitals_visibility_toggles, list(GEN_VISIBLE_ALWAYS, GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER))
+//GLOBAL_LIST_INIT(genitals_visibility_toggles, list(GEN_VISIBLE_ALWAYS, GEN_VISIBLE_NO_CLOTHES, GEN_VISIBLE_NO_UNDIES, GEN_VISIBLE_NEVER))
+
+/*
 
 GLOBAL_LIST_INIT(dildo_shapes, list(
 		"Human"		= "human",
@@ -87,6 +89,8 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 		"Purple"	= "#e300ff"//purple
 		))
 
+*/
+
 GLOBAL_LIST_INIT(meat_types, list(
 	"Mammalian" = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/mammal,
 	"Aquatic" = /obj/item/reagent_containers/food/snacks/carpmeat/aquatic,
@@ -101,6 +105,8 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 		set category = "Admin"
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
+
+/*
 
 /mob/living/carbon/proc/has_penis()
 	var/obj/item/organ/genital/G = getorganslot(ORGAN_SLOT_PENIS)
@@ -161,3 +167,5 @@ GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
 			H.give_genital(/obj/item/organ/genital/vagina)
 			H.give_genital(/obj/item/organ/genital/womb)
 			H.give_genital(/obj/item/organ/genital/breasts)
+
+*/

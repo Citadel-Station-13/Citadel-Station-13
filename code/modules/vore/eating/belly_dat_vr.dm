@@ -1,3 +1,5 @@
+/* god I didn't want to look at this
+
 // THIS IS NOW MERELY LEGACY, because memes. hopefully it won't be dumb.
 
 //
@@ -160,3 +162,5 @@
 // // // // // // // // // // // //
 //       See top of file!        //
 // // // // // // // // // // // //
+
+*/

@@ -105,5 +105,5 @@
 	for(var/s in sharedSoullinks)
 		var/datum/soullink/S = s
 		S.sharerDies(gibbed)
-	release_vore_contents(silent = TRUE)
+//	release_vore_contents(silent = TRUE)
 	return TRUE

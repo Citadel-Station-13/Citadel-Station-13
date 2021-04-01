@@ -1,3 +1,4 @@
+/*
 ///////////////////// Mob Living /////////////////////
 /mob/living
 	var/vore_flags = 0
@@ -386,3 +387,5 @@
 			return TRUE
 
 	return FALSE
+
+*/

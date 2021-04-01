@@ -1,3 +1,5 @@
+/*
+
 //////////
 //DILDOS//
 //////////
@@ -159,3 +161,4 @@
 		user.adjust_blurriness(8)
 	return MANUAL_SUICIDE
 
+*/

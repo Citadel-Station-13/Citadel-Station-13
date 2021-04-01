@@ -123,6 +123,8 @@
 		implant = pick(boxed)
 		new implant(src)
 
+/*
+
 /obj/item/autosurgeon/penis
 	desc = "A single use autosurgeon that contains a penis. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
@@ -147,3 +149,5 @@
 	desc = "A single use autosurgeon that contains a womb. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
 	starting_organ = /obj/item/organ/genital/womb
+
+*/

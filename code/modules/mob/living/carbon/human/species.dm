@@ -486,8 +486,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(NOGENITALS in H.dna.species.species_traits)
+/*		if(NOGENITALS in H.dna.species.species_traits)
 			H.give_genitals(TRUE) //call the clean up proc to delete anything on the mob then return.
+*/
 		if(mutant_bodyparts["meat_type"]) //I can't believe it's come to the meat
 			H.type_of_meat = GLOB.meat_types[H.dna.features["meat_type"]]
 
@@ -777,10 +778,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		var/datum/sprite_accessory/taur/TA
 		if(mutant_bodyparts["taur"] && H.dna.features["taur"])
 			TA = GLOB.taur_list[H.dna.features["taur"]]
-		if(!(TA?.hide_legs) && H.socks && !H.hidden_socks && H.get_num_legs(FALSE) >= 2)
+
+		if(!(TA?.hide_legs) && H.socks /*&& !H.hidden_socks*/ && H.get_num_legs(FALSE) >= 2)
+/*
 			if(H.saved_socks)
 				H.socks = H.saved_socks
 				H.saved_socks = ""
+*/
 			var/datum/sprite_accessory/underwear/socks/S = GLOB.socks_list[H.socks]
 			if(S)
 				var/digilegs = ((DIGITIGRADE in species_traits) && S.has_digitigrade) ? "_d" : ""
@@ -789,10 +793,13 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					MA.color = "#[H.socks_color]"
 				standing += MA
 
-		if(H.underwear && !H.hidden_underwear)
+		if(H.underwear/* && !H.hidden_underwear*/)
+/*
 			if(H.saved_underwear)
 				H.underwear = H.saved_underwear
 				H.saved_underwear = ""
+*/
+
 			var/datum/sprite_accessory/underwear/bottom/B = GLOB.underwear_list[H.underwear]
 			if(B)
 				var/digilegs = ((DIGITIGRADE in species_traits) && B.has_digitigrade) ? "_d" : ""
@@ -801,10 +808,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					MA.color = "#[H.undie_color]"
 				standing += MA
 
-		if(H.undershirt && !H.hidden_undershirt)
+		if(H.undershirt/* && !H.hidden_undershirt*/)
+/*
 			if(H.saved_undershirt)
 				H.undershirt = H.saved_undershirt
 				H.saved_undershirt = ""
+*/
 			var/datum/sprite_accessory/underwear/top/T = GLOB.undershirt_list[H.undershirt]
 			if(T)
 				var/state = "[T.icon_state][((DIGITIGRADE in species_traits) && T.has_digitigrade) ? "_d" : ""]"
@@ -1672,9 +1681,10 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 	var/target_on_help = target.a_intent == INTENT_HELP
 	var/target_aiming_for_mouth = target.zone_selected == "mouth"
 	var/target_restrained = target.restrained()
-	var/same_dir = (target.dir & user.dir)
+/*	var/same_dir = (target.dir & user.dir)
 	var/aim_for_groin  = user.zone_selected == "groin"
 	var/target_aiming_for_groin = target.zone_selected == "groin"
+*/
 
 	if(target.check_martial_melee_block()) //END EDIT
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>", target = user, \
@@ -1693,7 +1703,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='danger'>\The [user] slaps [user == target ? "[user.p_them()]self" : "\the [target]"] in the face!</span>",\
 			"<span class='notice'>[user] slaps you in the face! </span>",\
 			"You hear a slap.", target = user, target_message = "<span class='notice'>You slap [user == target ? "yourself" : "\the [target]"] in the face! </span>")
-		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
+/*		user.do_attack_animation(target, ATTACK_EFFECT_FACE_SLAP)
 		if (!HAS_TRAIT(target, TRAIT_PERMABONER))
 			stop_wagging_tail(target)
 		return FALSE
@@ -1714,7 +1724,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			"<span class='danger'>\The [user] slaps [user == target ? "[user.p_their()] own" : "\the [target]'s"] ass!</span>",\
 			"<span class='notice'>[user] slaps your ass! </span>",\
 			"You hear a slap.", target = user, target_message = "<span class='notice'>You slap [user == target ? "your own" : "\the [target]'s"] ass! </span>")
-
+*/
 		return FALSE
 
 	else
@@ -2087,8 +2097,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 			if(BP)
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
 					H.update_damage_overlays()
-					if(HAS_TRAIT(H, TRAIT_MASO) && prob(damage_amount))
+/*					if(HAS_TRAIT(H, TRAIT_MASO) && prob(damage_amount))
 						H.mob_climax(forced_climax=TRUE, cause = "masochism")
+*/
 
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)

@@ -1,10 +1,11 @@
 /obj/machinery/vending/kink
-	name = "KinkMate"
-	desc = "A vending machine for all your unmentionable desires."
-	icon_state = "kink"
-	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
-	vend_reply = "Have fun, you shameless pervert!"
-	products = list(
+	name = "Water Dispenser"
+	desc = "Dispenses bottles of water."
+	icon_state = "pwr_game"
+	product_slogans = "Water.;It's water.;Hydrate yourself."
+	vend_reply = "Winners don't do sex."
+	products = list(/obj/item/reagent_containers/glass/beaker/waterbottle = 10)
+/*	products = list(
 				/obj/item/clothing/head/maid = 5,
 				/obj/item/clothing/under/costume/maid = 5,
 				/obj/item/clothing/under/rank/civilian/janitor/maid = 5,
@@ -54,8 +55,8 @@
 	refill_canister = /obj/item/vending_refill/kink
 	default_price = PRICE_CHEAP
 	extra_price = PRICE_BELOW_NORMAL
-	payment_department = NO_FREEBIES
+	payment_department = NO_FREEBIES */
 
 /obj/item/vending_refill/kink
-	machine_name 	= "KinkMate"
+	machine_name 	= "Water Vendor"
 	icon_state 		= "refill_kink"
