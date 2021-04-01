@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(command_positions, list(
 	"Commander",
 	"Head Worksman",
-	"Head Guard",
+	"Watch Captain",
 	"Head Artisan",
 	"Head Scholar",
 	"Head Chirurgeon",
@@ -46,10 +46,10 @@ GLOBAL_LIST_INIT(civilian_positions, list(
 	"Peasant"))
 
 GLOBAL_LIST_INIT(security_positions, list(
-	"Head Guard",
+	"Watch Captain",
 	"Jailer",
 	"Inquisitor",
-	"Guard"))
+	"Watchman"))
 
 
 GLOBAL_LIST_INIT(nonhuman_positions, list(

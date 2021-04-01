@@ -1,5 +1,5 @@
 /datum/job/hos
-	title = "Head Guard"
+	title = "Watch Captain"
 	flag = HOS
 //	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")

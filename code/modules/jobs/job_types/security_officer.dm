@@ -1,5 +1,5 @@
 /datum/job/officer
-	title = "Guard"
+	title = "Watchman"
 	flag = OFFICER
 //	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
