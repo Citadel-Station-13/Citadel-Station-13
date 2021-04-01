@@ -39,7 +39,7 @@
 
 	head = /obj/item/clothing/head/helmet/knight
 	suit = /obj/item/clothing/suit/armor/riot/knight
-	bakcpack_contents = list(/obj/item/claymore/april_fools=1)
+	backpack_contents = list(/obj/item/claymore/april_fools=1)
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE, client/preference_source)

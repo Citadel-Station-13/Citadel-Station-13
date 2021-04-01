@@ -6,7 +6,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head worksman
+	supervisors = "the head worksman"
 	selection_color = "#dddddd"
 
 	outfit = /datum/outfit/job/mime
