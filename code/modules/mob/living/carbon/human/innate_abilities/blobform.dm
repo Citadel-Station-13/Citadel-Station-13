@@ -76,6 +76,7 @@
 				puddle_overlay.color = mutcolor
 				tracked_overlay = puddle_overlay
 				owner.add_overlay(puddle_overlay)
+				owner.update_antag_overlays()
 
 				transforming = FALSE
 				UpdateButtonIcon()
