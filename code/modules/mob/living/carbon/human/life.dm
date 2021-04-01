@@ -33,7 +33,7 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 	//makes sure admins are adminning instead of having fun grrr
-	if(ckey in list("silicons", "cygnusb", "putnam", "r3dtaile", "deltafire", "r0-adic", "xantholne", "trojancoyote", "dzahlus", "nicodeimos", "bhijn", "bluewildrose", "roguesteampunker")) // Don't know if nico is still an admin, don't have an admin list anywhere so feel free to add if there's people missing
+	if(ckey in list("silicons", "cygnusb", "putnam", "r3dtaile", "deltafire", "r0-adic", "xantholne", "trojancoyote", "dzahlus", "nicodeimos", "deathride58", "bluewildrose", "roguesteampunker")) // Don't know if nico is still an admin, don't have an admin list anywhere so feel free to add if there's people missing
 		to_chat(src, "<span class='reallybig hypnophrase'>Oooh you wanna admin instead of having fun ooooh.</span>")
 		send_to_playing_players("<span class='boldwarning'>An admin has attempted to play instead of adminning, and has been disciplined.</span>")
 		dust()
