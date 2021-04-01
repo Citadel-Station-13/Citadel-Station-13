@@ -371,21 +371,3 @@
 	id = /datum/reagent/medicine/system_cleaner
 	results = list(/datum/reagent/medicine/system_cleaner = 4)
 	required_reagents = list(/datum/reagent/iron = 2, /datum/reagent/oil = 2, /datum/reagent/medicine/calomel = 2, /datum/reagent/acetone = 2)
-
-/datum/chemical_reaction/liquid_solder
-	name = "Liquid Solder"
-	id = /datum/reagent/medicine/liquid_solder
-	results = list(/datum/reagent/medicine/liquid_solder = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/copper = 1, /datum/reagent/silver = 1)
-
-/datum/chemical_reaction/nanite_slurry
-	name = "Nanite Slurry"
-	id = /datum/reagent/medicine/nanite_slurry
-	results = list(/datum/reagent/medicine/nanite_slurry = 4)
-	required_reagents = list(/datum/reagent/foaming_agent = 1, /datum/reagent/fuel = 2, /datum/reagent/iron = 1)
-
-/datum/chemical_reaction/smartwire_slurry
-	name = "Smartwire Slurry"
-	id = /datum/reagent/medicine/smartwire_slurry
-	results = list(/datum/reagent/medicine/smartwire_slurry = 4)
-	required_reagents = list(/datum/reagent/foaming_agent = 1, /datum/reagent/copper = 2, /datum/reagent/silver = 1)
