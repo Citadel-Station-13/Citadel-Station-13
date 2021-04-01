@@ -1,60 +1,60 @@
 GLOBAL_LIST_INIT(command_positions, list(
-	"Captain",
-	"Head of Personnel",
-	"Head of Security",
-	"Chief Engineer",
-	"Research Director",
-	"Chief Medical Officer",
+	"Commander",
+	"Head Worksman",
+	"Head Guard",
+	"Head Artisan",
+	"Head Scholar",
+	"Head Chirurgeon",
 	"Quartermaster"))
 
 GLOBAL_LIST_INIT(engineering_positions, list(
-	"Chief Engineer",
-	"Station Engineer",
-	"Atmospheric Technician"))
+	"Head Artisan",
+	"Artisan",
+	"Chimney Sweep"))
 
 
 GLOBAL_LIST_INIT(medical_positions, list(
-	"Chief Medical Officer",
-	"Medical Doctor",
-	"Geneticist",
-	"Virologist",
-	"Paramedic",
-	"Chemist"))
+	"Head Chirurgeon",
+	"Chirurgeon",
+	"Witch Doctor",
+	"Plague Doctor",
+	"Field Chirurgeon",
+	"Alchemist"))
 
 
 GLOBAL_LIST_INIT(science_positions, list(
-	"Research Director",
-	"Scientist",
-	"Roboticist"))
+	"Head Scholar",
+	"Scholar",
+	"Artificer"))
 
 GLOBAL_LIST_INIT(supply_positions, list(
 	"Quartermaster",
-	"Cargo Technician",
-	"Shaft Miner"))
+	"Trader",
+	"Miner"))
 
 GLOBAL_LIST_INIT(civilian_positions, list(
-	"Head of Personnel",
-	"Bartender",
-	"Botanist",
-	"Cook",
-	"Janitor",
-	"Curator",
+	"Head Worksman",
+	"Brewer",
+	"Farmer",
+	"Baker",
+	"Custodian",
+	"Lore Keeper",
 	"Lawyer",
-	"Chaplain",
-	"Clown",
-	"Mime",
-	"Assistant"))
+	"Priest",
+	"Jester",
+	"Mute",
+	"Peasant"))
 
 GLOBAL_LIST_INIT(security_positions, list(
-	"Head of Security",
-	"Warden",
-	"Detective",
-	"Security Officer"))
+	"Head Guard",
+	"Jailer",
+	"Inquisitor",
+	"Guard"))
 
 
 GLOBAL_LIST_INIT(nonhuman_positions, list(
-	"AI",
-	"Cyborg",
+	"Head Construct",
+	"Construct",
 	ROLE_PAI))
 
 GLOBAL_LIST_INIT(exp_jobsmap, list(
