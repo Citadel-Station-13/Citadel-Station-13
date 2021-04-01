@@ -61,7 +61,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 // START LANDMARKS FOLLOW. Don't change the names unless
 // you are refactoring shitty landmark code.
 /obj/effect/landmark/start/assistant
-	name = "Assistant"
+	name = "Peasant"
 	icon_state = "Assistant"
 
 /obj/effect/landmark/start/assistant/override
@@ -69,23 +69,23 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/janitor
-	name = "Janitor"
+	name = "Custodian"
 	icon_state = "Janitor"
 
 /obj/effect/landmark/start/cargo_technician
-	name = "Cargo Technician"
+	name = "Trader"
 	icon_state = "Cargo Technician"
 
 /obj/effect/landmark/start/bartender
-	name = "Bartender"
+	name = "Brewer"
 	icon_state = "Bartender"
 
 /obj/effect/landmark/start/clown
-	name = "Clown"
+	name = "Jester"
 	icon_state = "Clown"
 
 /obj/effect/landmark/start/mime
-	name = "Mime"
+	name = "Mute"
 	icon_state = "Mime"
 
 /obj/effect/landmark/start/quartermaster
@@ -93,51 +93,51 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Quartermaster"
 
 /obj/effect/landmark/start/atmospheric_technician
-	name = "Atmospheric Technician"
+	name = "Chimney Sweep"
 	icon_state = "Atmospheric Technician"
 
 /obj/effect/landmark/start/cook
 	name = "Cook"
-	icon_state = "Cook"
+	icon_state = "Baker"
 
 /obj/effect/landmark/start/shaft_miner
-	name = "Shaft Miner"
+	name = "Miner"
 	icon_state = "Shaft Miner"
 
 /obj/effect/landmark/start/security_officer
-	name = "Security Officer"
+	name = "Guard"
 	icon_state = "Security Officer"
 
 /obj/effect/landmark/start/botanist
-	name = "Botanist"
+	name = "Farmer"
 	icon_state = "Botanist"
 
 /obj/effect/landmark/start/head_of_security
-	name = "Head of Security"
+	name = "Head Guard"
 	icon_state = "Head of Security"
 
 /obj/effect/landmark/start/captain
-	name = "Captain"
+	name = "Commander"
 	icon_state = "Captain"
 
 /obj/effect/landmark/start/detective
-	name = "Detective"
+	name = "Inquisitor"
 	icon_state = "Detective"
 
 /obj/effect/landmark/start/warden
-	name = "Warden"
+	name = "Jailer"
 	icon_state = "Warden"
 
 /obj/effect/landmark/start/chief_engineer
-	name = "Chief Engineer"
+	name = "Head Artisan"
 	icon_state = "Chief Engineer"
 
 /obj/effect/landmark/start/head_of_personnel
-	name = "Head of Personnel"
+	name = "Head Worksman"
 	icon_state = "Head of Personnel"
 
 /obj/effect/landmark/start/librarian
-	name = "Curator"
+	name = "Lore Keeper"
 	icon_state = "Curator"
 
 /obj/effect/landmark/start/lawyer
@@ -145,55 +145,55 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "Lawyer"
 
 /obj/effect/landmark/start/station_engineer
-	name = "Station Engineer"
+	name = "Artisan"
 	icon_state = "Station Engineer"
 
 /obj/effect/landmark/start/medical_doctor
-	name = "Medical Doctor"
+	name = "Chirurgeon"
 	icon_state = "Medical Doctor"
 
 /obj/effect/landmark/start/paramedic
-	name = "Paramedic"
+	name = "Field Chirurgeon"
 	icon_state = "Paramedic"
 
 /obj/effect/landmark/start/scientist
-	name = "Scientist"
+	name = "Scholar"
 	icon_state = "Scientist"
 
 /obj/effect/landmark/start/chemist
-	name = "Chemist"
+	name = "Alchemist"
 	icon_state = "Chemist"
 
 /obj/effect/landmark/start/roboticist
-	name = "Roboticist"
+	name = "Artificer"
 	icon_state = "Roboticist"
 
 /obj/effect/landmark/start/research_director
-	name = "Research Director"
+	name = "Head Scholar"
 	icon_state = "Research Director"
 
 /obj/effect/landmark/start/geneticist
-	name = "Geneticist"
+	name = "Witch Doctor"
 	icon_state = "Geneticist"
 
 /obj/effect/landmark/start/chief_medical_officer
-	name = "Chief Medical Officer"
+	name = "Head Chirurgeon"
 	icon_state = "Chief Medical Officer"
 
 /obj/effect/landmark/start/virologist
-	name = "Virologist"
+	name = "Plague Doctor"
 	icon_state = "Virologist"
 
 /obj/effect/landmark/start/chaplain
-	name = "Chaplain"
+	name = "Priest"
 	icon_state = "Chaplain"
 
 /obj/effect/landmark/start/cyborg
-	name = "Cyborg"
+	name = "Construct"
 	icon_state = "Cyborg"
 
 /obj/effect/landmark/start/ai
-	name = "AI"
+	name = "Head Construct"
 	icon_state = "AI"
 	delete_after_roundstart = FALSE
 	var/primary_ai = TRUE
