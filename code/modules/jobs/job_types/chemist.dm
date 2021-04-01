@@ -6,7 +6,7 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the head surgeon"
+	supervisors = "the head chirurgeon"
 	selection_color = "#74b5e0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
