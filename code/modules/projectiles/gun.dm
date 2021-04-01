@@ -104,12 +104,6 @@
 	if(zoomable)
 		azoom = new (src)
 
-	// april fools change, guns with above 0 force (ignores toys) AND are not bows, get swapped for a random melee weapon instead
-	if(force > 0 && !istype(src, /obj/item/gun/ballistic/bow))
-		var/obj/item/claymore/april_fools/weapon = new()
-		weapon.forceMove(get_turf(src))
-		qdel(src)
-
 /obj/item/gun/Destroy()
 	if(pin)
 		QDEL_NULL(pin)
