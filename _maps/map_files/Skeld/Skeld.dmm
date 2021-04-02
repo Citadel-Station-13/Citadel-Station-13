@@ -11,6 +11,13 @@
 /obj/item/ingot/iron,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
+"aba" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/security/detectives_office)
 "abg" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -956,11 +963,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/aisat)
-"aAh" = (
-/obj/machinery/light,
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/port/central)
 "aAr" = (
 /obj/structure/urinal{
 	pixel_x = -1;
@@ -1203,6 +1205,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/command)
+"aHq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/item/flamethrower,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/department/engine/atmos)
 "aHB" = (
 /obj/machinery/door/airlock/external{
 	name = "Departure Lounge Airlock"
@@ -1343,13 +1353,6 @@
 "aKt" = (
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
-"aKB" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/obj/item/clothing/head/caphat/beret/white{
-	armor = list()
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/bridge)
 "aKZ" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/tile/red{
@@ -1772,21 +1775,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/hydroponics/garden)
-"aTf" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/brig)
 "aTj" = (
 /obj/structure/target_stake,
 /turf/open/floor/engine,
@@ -2066,6 +2054,18 @@
 /area/security{
 	name = "Bluespace Artillery"
 	})
+"aYL" = (
+/obj/structure/rack,
+/obj/item/grenade/chem_grenade/glitter,
+/obj/item/grenade/chem_grenade/glitter,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "aYP" = (
 /obj/machinery/power/apc/auto_name/west,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -2184,6 +2184,14 @@
 	},
 /turf/open/floor/carpet/blackred,
 /area/crew_quarters/heads/captain/private)
+"baQ" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/port/central)
 "baW" = (
 /obj/structure/table,
 /obj/item/stack/sheet/rglass{
@@ -2525,6 +2533,14 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
+"bhB" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/storage/tech)
 "bhS" = (
 /turf/open/floor/plasteel,
 /area/science/test_area)
@@ -2617,6 +2633,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"bjG" = (
+/obj/item/megaphone/clown,
+/obj/item/storage/backpack/duffelbag/clown/cream_pie,
+/obj/item/stamp/clown,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "bjH" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/purple,
@@ -4222,12 +4245,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hydroponics/garden)
-"cbh" = (
-/obj/item/slime_cookie/pink{
-	name = "To the crew with love"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "cbs" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -4449,14 +4466,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/supermatter)
-"cjq" = (
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice,
-/obj/item/gun/energy/laser/practice,
-/turf/open/floor/plasteel/white,
-/area/science/misc_lab/range)
 "cjt" = (
 /mob/living/simple_animal/pet/penguin/emperor,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -4989,10 +4998,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"cBt" = (
-/obj/item/toy/figure/clown,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "cBR" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -5142,6 +5147,15 @@
 	dir = 4
 	},
 /area/science/misc_lab)
+"cFT" = (
+/obj/item/clothing/shoes/wheelys,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
 "cFX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 8
@@ -6132,6 +6146,16 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/red,
 /turf/open/floor/plasteel/dark,
 /area/engine/supermatter)
+"dfE" = (
+/obj/machinery/light,
+/obj/item/poster/random_contraband,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/central)
 "dfT" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel,
@@ -6443,13 +6467,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
-"dnd" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "dng" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -6932,6 +6949,22 @@
 /obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"dxc" = (
+/obj/item/instrument/violin,
+/obj/item/instrument/trumpet,
+/obj/item/instrument/trombone,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/recorder,
+/obj/item/instrument/harmonica,
+/obj/item/instrument/guitar,
+/obj/item/instrument/glockenspiel,
+/obj/item/instrument/bikehorn,
+/obj/item/instrument/eguitar,
+/obj/item/instrument/banjo,
+/obj/item/instrument/accordion,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "dxj" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -7299,20 +7332,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/qm)
-"dGE" = (
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/item/stack/sheet/animalhide/corgi,
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/turf/open/floor/plating,
-/area/maintenance/department/bridge)
 "dGS" = (
 /obj/effect/turf_decal/vg_decals/department/cargo,
 /turf/closed/wall,
@@ -7555,10 +7574,6 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/wood/wood_tiled,
 /area/crew_quarters/heads/hos/private)
-"dOv" = (
-/obj/structure/closet,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "dOF" = (
 /obj/machinery/vending/wallmed{
 	pixel_x = -28
@@ -8033,10 +8048,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plating,
 /area/storage/atmos)
-"ebV" = (
-/obj/item/toy/gun/m41,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "ebY" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
@@ -8286,6 +8297,10 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
+"ekw" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "ekx" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "Engineering";
@@ -8674,6 +8689,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
+"ewv" = (
+/obj/item/toy/figure/clown,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "ewO" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -8787,11 +8807,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"ezO" = (
-/obj/structure/closet,
-/obj/machinery/light,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ezP" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1,
@@ -10186,6 +10201,21 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"fln" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "flH" = (
 /obj/machinery/power/apc/auto_name/north,
 /obj/machinery/light{
@@ -10194,6 +10224,18 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port/aft)
+"fmg" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/item/clothing/head/caphat/beret/white{
+	armor = list()
+	},
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/bridge)
 "fmh" = (
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/door/window/eastright{
@@ -11413,6 +11455,16 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
+"fNE" = (
+/obj/structure/rack,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "fNJ" = (
 /obj/structure/chair/greyscale{
 	dir = 1
@@ -11938,6 +11990,12 @@
 	dir = 4
 	},
 /area/science/research)
+"gaD" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/port)
 "gaL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
 	dir = 8
@@ -12477,6 +12535,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
+"gnJ" = (
+/obj/item/toy/gun/m41,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "gnQ" = (
 /obj/machinery/atmospherics/pipe/manifold/green/visible,
 /turf/open/floor/engine,
@@ -12521,6 +12588,14 @@
 /obj/effect/spawner/lootdrop/techstorage/RnD_secure,
 /turf/open/floor/plating,
 /area/storage/tech)
+"gog" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "goE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
@@ -12820,14 +12895,6 @@
 /obj/item/clothing/accessory/armband/cargo,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
-"gvz" = (
-/obj/structure/rack,
-/obj/item/grenade/chem_grenade/glitter,
-/obj/item/grenade/chem_grenade/glitter,
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "gvD" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_x = 32
@@ -12891,6 +12958,14 @@
 	},
 /turf/open/floor/wood,
 /area/library)
+"gxU" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "gyn" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
@@ -13155,12 +13230,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
-"gGR" = (
-/obj/structure/rack,
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "gHs" = (
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
@@ -13534,12 +13603,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
-"gOt" = (
-/obj/structure/rack,
-/obj/item/grenade/chem_grenade/glitter,
-/obj/item/grenade/chem_grenade/glitter,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "gOB" = (
 /turf/closed/wall/r_wall/syndicate,
 /area/security{
@@ -13714,20 +13777,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
-"gTm" = (
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "gTp" = (
 /obj/machinery/holopad,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"gTH" = (
-/obj/item/clothing/shoes/wheelys,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "gTI" = (
 /obj/item/radio/intercom{
 	broadcasting = 1;
@@ -14126,9 +14180,23 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
+"hda" = (
+/obj/structure/rack,
+/obj/item/clothing/head/halo,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 "hdn" = (
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"hdJ" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/effect/mine/sound/bwoink,
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "hdO" = (
 /obj/machinery/newscaster{
 	pixel_x = 32
@@ -15923,14 +15991,6 @@
 /area/hydroponics/garden{
 	name = "Snow Biodome"
 	})
-"hXn" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/dorms)
 "hXu" = (
 /obj/machinery/light{
 	dir = 1
@@ -16141,10 +16201,6 @@
 "ibb" = (
 /turf/open/floor/engine,
 /area/maintenance/bar)
-"ibd" = (
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/storage/tech)
 "ibu" = (
 /turf/closed/wall,
 /area/crew_quarters/cryopod)
@@ -16307,21 +16363,6 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/freezer,
 /area/medical/cryo)
-"iek" = (
-/obj/item/instrument/violin,
-/obj/item/instrument/trumpet,
-/obj/item/instrument/trombone,
-/obj/item/instrument/saxophone,
-/obj/item/instrument/recorder,
-/obj/item/instrument/harmonica,
-/obj/item/instrument/guitar,
-/obj/item/instrument/glockenspiel,
-/obj/item/instrument/bikehorn,
-/obj/item/instrument/eguitar,
-/obj/item/instrument/banjo,
-/obj/item/instrument/accordion,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "iet" = (
 /obj/machinery/computer/shuttle/mining/common{
 	dir = 4
@@ -16470,10 +16511,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"ihR" = (
-/obj/item/soap,
-/turf/open/floor/plating,
-/area/maintenance/department/science)
 "iie" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
@@ -16535,6 +16572,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"ijS" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "ijX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -16800,12 +16845,6 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
-"irF" = (
-/obj/item/coin/bananium,
-/obj/item/clothing/head/jester,
-/obj/item/clothing/shoes/clown_shoes/jester,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "irS" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1,
@@ -16850,6 +16889,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/server/compcore)
+"isR" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/port)
 "isS" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
 	dir = 4
@@ -17537,11 +17585,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"iPU" = (
-/obj/structure/rack,
-/obj/item/latexballon,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "iPY" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/closed/wall/r_wall,
@@ -18315,11 +18358,6 @@
 "jiz" = (
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
-"jiG" = (
-/obj/structure/rack,
-/obj/machinery/light,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "jiS" = (
 /obj/structure/chair/greyscale{
 	dir = 1
@@ -19272,11 +19310,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/aft)
-"jJi" = (
-/obj/structure/rack,
-/obj/item/clothing/head/halo,
-/turf/open/floor/plating,
-/area/maintenance/department/medical/morgue)
 "jJA" = (
 /obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/plasteel,
@@ -19799,11 +19832,71 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit)
+"jZE" = (
+/obj/item/clothing/mask/cigarette/rollie/trippy{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
+	pixel_x = 2;
+	pixel_y = 16
+	},
+/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
+	pixel_x = 10;
+	pixel_y = 14
+	},
+/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = -8
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/clothing/mask/vape{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/vape{
+	pixel_y = -6
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance{
+	name = "Maintenance Shop"
+	})
 "jZJ" = (
 /obj/machinery/light,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
+"jZP" = (
+/obj/item/boombox,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "jZT" = (
 /obj/machinery/light{
 	dir = 4
@@ -19857,6 +19950,16 @@
 	},
 /turf/open/floor/wood,
 /area/hallway/primary/port/fore)
+"kba" = (
+/obj/structure/rack,
+/obj/item/grenade/chem_grenade/glitter,
+/obj/item/grenade/chem_grenade/glitter,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "kbc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -19957,9 +20060,13 @@
 /area/security{
 	name = "Bluespace Artillery"
 	})
-"kef" = (
+"kdT" = (
 /obj/structure/rack,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "kej" = (
@@ -20382,6 +20489,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/circuit,
 /area/science/robotics)
+"koK" = (
+/obj/structure/closet,
+/obj/machinery/light,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "koZ" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/dark,
@@ -20552,10 +20668,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/misc_lab/range)
-"ktR" = (
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "ktY" = (
 /obj/structure/bookcase/random/adult,
 /obj/item/radio/intercom{
@@ -21115,6 +21227,14 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
+"kIy" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "kJg" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
@@ -21270,10 +21390,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"kNl" = (
-/obj/item/melee/flyswatter,
-/turf/open/floor/plating,
-/area/maintenance/central)
 "kNm" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
@@ -21557,10 +21673,25 @@
 /obj/item/toy/figure/assistant,
 /turf/open/transparent/glass/reinforced,
 /area/crew_quarters/cafeteria/lunchroom)
+"kUD" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
 "kUJ" = (
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"kUP" = (
+/obj/item/slime_cookie/pink{
+	name = "To the crew with love"
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "kVh" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/chapel_floor,
@@ -22049,15 +22180,6 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/space/basic,
 /area/maintenance/department/science)
-"lhS" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/turf/open/floor/plasteel/dark,
-/area/hallway/primary/port)
 "lhV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
@@ -23042,6 +23164,15 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"lHW" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/item/poster/random_contraband,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
 "lIb" = (
 /obj/machinery/atmospherics/pipe/simple/brown/visible,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow,
@@ -23340,6 +23471,15 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"lQs" = (
+/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/practice,
+/obj/item/gun/energy/laser/practice,
+/obj/structure/rack,
+/turf/open/floor/plasteel/white,
+/area/science/misc_lab/range)
 "lQG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -23822,6 +23962,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
+"mcY" = (
+/obj/item/bedsheet/cosmos,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/bridge)
 "mdl" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 8
@@ -24396,6 +24545,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"msc" = (
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 30
+	},
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/security/detectives_office)
 "msY" = (
 /obj/structure/table/wood/bar,
 /turf/open/floor/wood,
@@ -24901,13 +25057,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness)
-"mGi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/obj/item/flamethrower,
-/turf/open/floor/plating,
-/area/maintenance/department/engine/atmos)
 "mGl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -25251,11 +25400,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"mOI" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/obj/effect/mine/sound/bwoink,
-/turf/closed/wall,
-/area/maintenance/department/science)
 "mOW" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -25862,12 +26006,6 @@
 	dir = 4
 	},
 /area/science/xenobiology)
-"nfD" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/turf/open/floor/plasteel/chapel{
-	dir = 4
-	},
-/area/medical/morgue)
 "nfG" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -26383,13 +26521,6 @@
 	},
 /turf/open/floor/plasteel/chapel_floor,
 /area/chapel/main)
-"nuq" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
-/turf/open/floor/carpet/black,
-/area/security/detectives_office)
 "nuJ" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -26603,6 +26734,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/fore)
+"nyb" = (
+/obj/item/storage/backpack/snail,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "nyE" = (
 /obj/machinery/atmospherics/miner/water_vapor,
 /obj/machinery/portable_atmospherics/canister/water_vapor,
@@ -27568,11 +27708,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
-"nVt" = (
-/obj/item/clothing/head/soft/rainbow,
-/obj/item/clothing/under/color/rainbow,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "nVA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1
@@ -28365,10 +28500,6 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"ook" = (
-/obj/item/hot_potato/harmless/toy,
-/turf/open/floor/plating,
-/area/maintenance/department/science)
 "oop" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -28522,18 +28653,6 @@
 /obj/item/soap/nanotrasen,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/dorms)
-"orb" = (
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/obj/item/stack/sheet/animalhide/monkey,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "ord" = (
 /obj/docking_port/stationary{
 	dwidth = 2;
@@ -28685,10 +28804,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"out" = (
-/obj/item/storage/backpack/snail,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ouu" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid,
@@ -29015,17 +29130,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
-"ozB" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 9
-	},
-/obj/structure/chair/wood,
-/turf/open/floor/wood,
-/area/security/detectives_office)
 "ozE" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden/layer1{
@@ -29301,13 +29405,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/transit_tube)
-"oDW" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/dorms)
 "oEj" = (
 /obj/machinery/light{
 	dir = 1
@@ -29334,6 +29431,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/supermatter)
+"oEt" = (
+/obj/structure/rack,
+/obj/item/dualsaber/toy,
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "oEv" = (
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -29741,6 +29849,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"oPh" = (
+/obj/item/hot_potato/harmless/toy,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "oPC" = (
 /obj/machinery/vending/wallmed{
 	pixel_x = -32
@@ -29874,6 +29991,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"oRW" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "oSf" = (
 /obj/machinery/camera{
 	c_tag = "MiniSat Exterior Port";
@@ -31680,12 +31804,6 @@
 "pRo" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
-"pRq" = (
-/obj/item/megaphone/clown,
-/obj/item/storage/backpack/duffelbag/clown/cream_pie,
-/obj/item/stamp/clown,
-/turf/open/floor/plating,
-/area/maintenance/department/security/brig)
 "pRr" = (
 /obj/structure/bonfire/dense,
 /obj/structure/fans/tiny,
@@ -31775,6 +31893,15 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
+"pTK" = (
+/obj/structure/rack,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "pTO" = (
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
@@ -32888,6 +33015,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"qxD" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "qxE" = (
 /obj/machinery/button/door{
 	id = "holoprivacy";
@@ -32932,6 +33067,17 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
+"qyk" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 9
+	},
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/security/detectives_office)
 "qyo" = (
 /obj/structure/closet/secure_closet/detective,
 /turf/open/floor/wood,
@@ -33073,11 +33219,6 @@
 /obj/effect/spawner/lootdrop/techstorage/engineering,
 /turf/open/floor/plating,
 /area/storage/tech)
-"qBN" = (
-/obj/structure/rack,
-/obj/item/clothing/under/syndicate/tacticool,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "qBR" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
@@ -33098,10 +33239,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"qCG" = (
-/obj/structure/rack,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "qCV" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/structure/girder,
@@ -33337,12 +33474,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard/aft)
-"qIe" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/kindleKicks,
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "qIn" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -33629,12 +33760,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"qOH" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/turf/open/floor/plasteel/dark,
-/area/hallway/primary/port)
 "qOM" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
 	dir = 4
@@ -33878,6 +34003,16 @@
 /area/library{
 	name = "Art Gallery"
 	})
+"qVF" = (
+/obj/item/clothing/head/soft/rainbow,
+/obj/item/clothing/under/color/rainbow,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "qVS" = (
 /obj/machinery/computer/sat_control,
 /obj/effect/turf_decal/tile/yellow{
@@ -34052,6 +34187,16 @@
 /obj/item/beacon,
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"raP" = (
+/obj/item/poster/random_contraband,
+/obj/item/poster/random_contraband,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
 "raW" = (
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
@@ -34375,6 +34520,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
+"rkH" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "rkJ" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1,
@@ -34831,12 +34984,28 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard/fore)
+"rxG" = (
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "rze" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"rzf" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "rzt" = (
 /obj/machinery/atmospherics/pipe/simple/brown/visible,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -35046,10 +35215,6 @@
 /area/hydroponics/garden{
 	name = "Aviary"
 	})
-"rFI" = (
-/obj/structure/bookcase/random/fiction,
-/turf/open/floor/wood,
-/area/security/detectives_office)
 "rGs" = (
 /obj/structure/table,
 /obj/item/assembly/prox_sensor,
@@ -35983,6 +36148,19 @@
 	dir = 9
 	},
 /area/medical/virology)
+"sbL" = (
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/item/stack/sheet/animalhide/monkey,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "scb" = (
 /obj/item/beacon,
 /turf/open/floor/plasteel,
@@ -37003,10 +37181,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
-"sBs" = (
-/obj/item/megaphone/clown,
-/turf/open/floor/plating,
-/area/maintenance/department/science)
 "sBA" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -37400,6 +37574,15 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/surgery)
+"sKO" = (
+/obj/item/melee/flyswatter,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
 "sKP" = (
 /obj/machinery/light{
 	dir = 8
@@ -37895,6 +38078,13 @@
 /obj/structure/bookcase,
 /turf/open/floor/carpet/red,
 /area/library)
+"sXZ" = (
+/obj/item/coin/bananium,
+/obj/item/clothing/head/jester,
+/obj/item/clothing/shoes/clown_shoes/jester,
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/security/brig)
 "sYJ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
@@ -38274,6 +38464,15 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/cafeteria,
 /area/security/prison)
+"tkw" = (
+/obj/structure/rack,
+/obj/item/extendohand,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "tky" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/dark,
@@ -38651,12 +38850,6 @@
 /area/maintenance{
 	name = "Maintenance Shop"
 	})
-"tqa" = (
-/obj/item/paint/anycolor,
-/obj/item/paint/anycolor,
-/obj/item/paint/anycolor,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "tqj" = (
 /obj/machinery/light,
 /turf/open/floor/circuit,
@@ -38737,6 +38930,25 @@
 	},
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
+"trb" = (
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/item/stack/sheet/animalhide/corgi,
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/bridge)
 "trE" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden/layer1{
 	dir = 4
@@ -39027,6 +39239,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
+"tyx" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/port/central)
 "tyy" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
 	dir = 6
@@ -39036,6 +39256,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/gateway)
+"tyL" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
 "tyT" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced{
@@ -39208,6 +39436,15 @@
 "tCF" = (
 /turf/open/floor/wood,
 /area/security/detectives_office)
+"tCG" = (
+/obj/structure/rack,
+/obj/item/latexballon,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "tCK" = (
 /obj/structure/table,
 /obj/item/radio,
@@ -39860,6 +40097,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/wood/wood_tiled,
 /area/crew_quarters/dorms)
+"tSO" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "tTg" = (
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
@@ -39972,6 +40217,10 @@
 /obj/machinery/air_sensor/atmos/mix_tank,
 /turf/open/floor/engine,
 /area/engine/atmos)
+"tVX" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/security/detectives_office)
 "tWh" = (
 /obj/machinery/door/airlock/glass_large,
 /obj/machinery/door/firedoor,
@@ -41137,6 +41386,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/aft)
+"uCL" = (
+/obj/item/paint/anycolor,
+/obj/item/paint/anycolor,
+/obj/item/paint/anycolor,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "uCR" = (
 /obj/machinery/suit_storage_unit/atmos,
 /obj/machinery/newscaster{
@@ -41701,14 +41961,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/transit_tube)
-"uQH" = (
-/obj/item/bedsheet/cosmos,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/bridge)
 "uRk" = (
 /obj/machinery/light{
 	dir = 4
@@ -41959,6 +42211,15 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
+"uXs" = (
+/obj/item/megaphone/clown,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "uXF" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod 1"
@@ -42474,13 +42735,6 @@
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
-"vgU" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30
-	},
-/obj/structure/dresser,
-/turf/open/floor/wood,
-/area/security/detectives_office)
 "vhD" = (
 /obj/machinery/jukebox{
 	req_one_access = 0
@@ -42624,60 +42878,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
-"vkN" = (
-/obj/item/clothing/mask/cigarette/rollie/trippy{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
-	pixel_x = 2;
-	pixel_y = 16
-	},
-/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
-	pixel_x = 10;
-	pixel_y = 14
-	},
-/obj/item/clothing/mask/cigarette/rollie/mindbreaker{
-	pixel_x = 12;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_x = -2;
-	pixel_y = 12
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_x = 8;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_x = -8
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/clothing/mask/cigarette/rollie/cannabis{
-	pixel_x = 10;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/vape{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/vape{
-	pixel_y = -6
-	},
-/turf/open/floor/plating,
-/area/maintenance{
-	name = "Maintenance Shop"
-	})
 "vkW" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/techstorage/rnd,
@@ -45204,6 +45404,16 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/dorms)
+"wxz" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/kindleKicks,
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "wxA" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -45784,11 +45994,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness)
-"wNy" = (
-/obj/structure/rack,
-/obj/item/extendohand,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "wNA" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
@@ -46261,10 +46466,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/freezer,
 /area/medical/cryo)
-"wYi" = (
-/obj/item/boombox,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "wYm" = (
 /turf/closed/wall,
 /area/medical/genetics/cloning)
@@ -46281,13 +46482,6 @@
 /obj/item/stack/sheet/pizza/fifty,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"wYI" = (
-/obj/structure/rack,
-/obj/item/dualsaber/toy,
-/obj/item/poster/random_contraband,
-/obj/item/poster/random_contraband,
-/turf/open/floor/plating,
-/area/maintenance/department/science)
 "wYW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer1,
 /turf/open/floor/plasteel/dark,
@@ -47136,6 +47330,15 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
+"xty" = (
+/obj/structure/rack,
+/obj/machinery/light,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
 "xtF" = (
 /obj/machinery/light{
 	dir = 1
@@ -47637,6 +47840,15 @@
 "xHG" = (
 /turf/open/space,
 /area/space)
+"xHI" = (
+/obj/item/soap,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 3;
+	name = "3maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science)
 "xHO" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -48780,6 +48992,16 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port/fore)
+"yhH" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/machinery/light_switch{
+	pixel_x = 24;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 4
+	},
+/area/medical/morgue)
 "yhR" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1{
@@ -96620,10 +96842,10 @@ gTO
 gTO
 gTO
 gTO
-gTO
-gTO
+rkH
+rkH
 vaY
-gTO
+rkH
 gTO
 gTO
 gTO
@@ -97433,7 +97655,7 @@ vaY
 vaY
 vaY
 gZv
-gTO
+tSO
 vaY
 orJ
 orJ
@@ -99845,7 +100067,7 @@ vaY
 orJ
 iGR
 gZv
-gTO
+tSO
 vaY
 jZA
 byX
@@ -100233,7 +100455,7 @@ orJ
 vaY
 iwf
 gTO
-gTO
+tSO
 vaY
 orJ
 orJ
@@ -100609,7 +100831,7 @@ dKM
 dKM
 pDt
 giJ
-gTO
+tSO
 gTO
 gTO
 gTO
@@ -101027,7 +101249,7 @@ gZv
 hOK
 gTO
 iwf
-out
+nyb
 aAU
 vaY
 orJ
@@ -102182,7 +102404,7 @@ dMq
 dcV
 wum
 bDI
-mGi
+aHq
 iMK
 iMK
 rXE
@@ -103375,7 +103597,7 @@ jcO
 jcO
 jcO
 jQT
-lhS
+isR
 jlm
 pDI
 jcO
@@ -103393,7 +103615,7 @@ jcO
 jcO
 qsy
 cEO
-lhS
+isR
 jcO
 jcO
 jcO
@@ -103412,7 +103634,7 @@ nOD
 tDM
 fZP
 jlm
-qOH
+gaD
 tDM
 nbO
 dri
@@ -103870,7 +104092,7 @@ hCs
 sgn
 gTO
 gZv
-ezO
+koK
 vaY
 orJ
 orJ
@@ -104272,7 +104494,7 @@ nkU
 sgn
 gTO
 gZv
-dOv
+rxG
 vaY
 orJ
 orJ
@@ -104674,7 +104896,7 @@ hCs
 sgn
 gTO
 gZv
-dOv
+rxG
 vaY
 orJ
 orJ
@@ -105026,9 +105248,9 @@ lpI
 oZM
 dAA
 nbW
-ozB
+qyk
 hzW
-nuq
+aba
 cGb
 vLm
 gZv
@@ -105478,7 +105700,7 @@ hCs
 sgn
 gTO
 gZv
-gGR
+fNE
 vaY
 orJ
 orJ
@@ -105791,7 +106013,7 @@ tsZ
 fVr
 fVr
 fVr
-irF
+sXZ
 tVP
 sri
 iQi
@@ -105880,7 +106102,7 @@ hCs
 sgn
 gTO
 gZv
-wNy
+tkw
 vaY
 orJ
 orJ
@@ -106192,8 +106414,8 @@ vKU
 xMu
 fVr
 rTK
-cBt
-pRq
+ewv
+bjG
 tVP
 jyf
 uNx
@@ -106232,8 +106454,8 @@ hOB
 dri
 aBl
 uLk
-vgU
-rFI
+msc
+tVX
 qyo
 biq
 ihr
@@ -106282,7 +106504,7 @@ lZW
 sgn
 gTO
 gZv
-iPU
+tCG
 vaY
 orJ
 orJ
@@ -106987,7 +107209,7 @@ smi
 pOC
 gob
 pOC
-ibd
+bhB
 oww
 roy
 xMu
@@ -107034,7 +107256,7 @@ oVo
 whW
 hOB
 xTN
-gTO
+tSO
 vaY
 iwf
 iwf
@@ -107481,7 +107703,7 @@ hOh
 cam
 otA
 rbz
-wYI
+oEt
 pSJ
 pSJ
 pSJ
@@ -108603,7 +108825,7 @@ tOM
 vKU
 xMu
 fVr
-nVt
+qVF
 dRA
 dRA
 kAg
@@ -109087,7 +109309,7 @@ kQy
 jDv
 nvP
 cam
-ook
+oPh
 otA
 otA
 rbz
@@ -109895,7 +110117,7 @@ iqJ
 otA
 otA
 rbz
-otA
+ijS
 qBR
 pSJ
 kwO
@@ -110199,7 +110421,7 @@ kTA
 sdh
 gNs
 dZe
-tqa
+uCL
 myQ
 myQ
 dZe
@@ -110232,7 +110454,7 @@ sOK
 ehY
 ehY
 pDi
-aTf
+fln
 hSn
 ltN
 fGb
@@ -110297,7 +110519,7 @@ mLo
 eQJ
 otA
 rbz
-otA
+ijS
 qBR
 pSJ
 xcL
@@ -110613,7 +110835,7 @@ tOM
 vKU
 sPE
 fVr
-dnd
+gog
 dRA
 dRA
 pxH
@@ -111101,7 +111323,7 @@ wPS
 otA
 otA
 rbz
-otA
+ijS
 qBR
 pSJ
 rKx
@@ -111419,7 +111641,7 @@ xMu
 fVr
 dRA
 jbX
-iek
+dxc
 pxH
 aTF
 wJU
@@ -112303,7 +112525,7 @@ kQy
 jDv
 nBd
 cam
-sBs
+uXs
 otA
 otA
 rbz
@@ -117136,7 +117358,7 @@ otA
 pSJ
 otA
 otA
-otA
+ijS
 rbz
 orJ
 orJ
@@ -120251,7 +120473,7 @@ orJ
 dZe
 hkc
 myQ
-ebV
+gnJ
 dZe
 myQ
 myQ
@@ -120262,7 +120484,7 @@ vKU
 xMu
 qSX
 odo
-vkN
+jZE
 qSX
 dtN
 dOc
@@ -121091,7 +121313,7 @@ orJ
 orJ
 orJ
 kjs
-hGY
+tyx
 hGY
 hGY
 hGY
@@ -121150,7 +121372,7 @@ yhb
 yiz
 biP
 ooj
-cjq
+lQs
 yhb
 pSJ
 otA
@@ -121471,7 +121693,7 @@ hGY
 wgP
 uiz
 hGY
-vQi
+baQ
 uiz
 orJ
 orJ
@@ -121493,7 +121715,7 @@ cWH
 cWH
 cWH
 kjs
-hGY
+tyx
 hGY
 hGY
 hGY
@@ -121895,7 +122117,7 @@ hGY
 hGY
 hGY
 uiz
-hGY
+tyx
 hGY
 hGY
 hGY
@@ -121926,13 +122148,13 @@ otA
 otA
 otA
 otA
-ihR
+xHI
 rbz
+ijS
 otA
 otA
 otA
-otA
-pSJ
+hdJ
 pSJ
 pSJ
 pSJ
@@ -122334,7 +122556,7 @@ qCV
 pSJ
 pSJ
 pSJ
-mOI
+reO
 rbz
 rbz
 qBR
@@ -122677,11 +122899,11 @@ aTP
 aTP
 hGY
 hGY
-aAh
+dfE
 uiz
 uiz
 uiz
-hGY
+tyx
 uiz
 hGY
 hGY
@@ -122754,13 +122976,13 @@ rbz
 otA
 otA
 otA
-rKx
+qxD
 abg
 sci
 otA
 otA
 rbz
-otA
+ijS
 iEX
 baI
 jjx
@@ -123495,8 +123717,8 @@ hGY
 hGY
 hGY
 uiz
-hGY
-hGY
+vQi
+vQi
 vSR
 xvS
 xvS
@@ -124294,7 +124516,7 @@ uiz
 hGY
 hGY
 uiz
-xvS
+gxU
 xvS
 xvS
 xvS
@@ -125104,9 +125326,9 @@ afk
 afk
 xvS
 xvS
-xvS
+oRW
 tnf
-qCG
+rzf
 xBO
 sUw
 vCS
@@ -125517,7 +125739,7 @@ aHJ
 xBO
 xvS
 xvS
-xvS
+gxU
 vSR
 kcB
 xSi
@@ -125919,7 +126141,7 @@ cor
 xBO
 xvS
 xvS
-xvS
+gxU
 vSR
 crg
 rdD
@@ -126725,7 +126947,7 @@ xvS
 xvS
 xvS
 xvS
-gOt
+kba
 vSR
 vZi
 kQr
@@ -127127,7 +127349,7 @@ xvS
 xvS
 xvS
 xvS
-gvz
+aYL
 vSR
 hOB
 kQr
@@ -128327,7 +128549,7 @@ aJj
 xvS
 aRF
 vSR
-qIe
+wxz
 xvS
 qlq
 vSR
@@ -130314,7 +130536,7 @@ iZL
 xvS
 xvS
 vSR
-orb
+sbL
 uLr
 xsV
 pKF
@@ -130335,8 +130557,8 @@ csf
 xvS
 tmr
 vSR
-kef
-qBN
+kdT
+pTK
 vSR
 ckT
 gPS
@@ -131521,7 +131743,7 @@ tnf
 xvS
 xvS
 xvS
-xvS
+gxU
 eHF
 eHF
 eHF
@@ -131542,7 +131764,7 @@ aVw
 aVw
 xvS
 xvS
-xvS
+oRW
 vSR
 xvS
 kNQ
@@ -131936,7 +132158,7 @@ rOV
 dwO
 jMj
 wYm
-jJi
+hda
 aVw
 mKE
 mKE
@@ -133150,7 +133372,7 @@ xdw
 dSF
 vSR
 xvS
-xvS
+oRW
 vSR
 xvS
 xvS
@@ -133530,7 +133752,7 @@ bzJ
 iNA
 uTo
 fdV
-xvS
+rzf
 xvS
 eHF
 dzJ
@@ -134739,9 +134961,9 @@ fdV
 xvS
 xvS
 xvS
-xvS
+gxU
 vSR
-xvS
+gxU
 xvS
 xvS
 xvS
@@ -134753,16 +134975,16 @@ tmr
 aVw
 aVw
 ilk
-nfD
+yhH
 xdw
 dSF
 cUy
+rKQ
+rKQ
 rGR
 rGR
-rGR
-rGR
-ktR
-jiG
+kUD
+xty
 cUy
 rGR
 lEN
@@ -137971,7 +138193,7 @@ qAt
 fDu
 dQl
 cUy
-rKQ
+kIy
 aAR
 yik
 kDb
@@ -138354,7 +138576,7 @@ mFz
 fFo
 hQz
 fdV
-kNl
+sKO
 rGR
 fDu
 qAt
@@ -138373,7 +138595,7 @@ qAt
 fDu
 dQl
 cUy
-gTm
+raP
 aAR
 yik
 kDb
@@ -138756,7 +138978,7 @@ mYv
 kAM
 tcW
 fdV
-rGR
+ekw
 rGR
 fDu
 qAt
@@ -138775,7 +138997,7 @@ qAt
 fDu
 dQl
 cUy
-rKQ
+kIy
 aAR
 yik
 kDb
@@ -139158,7 +139380,7 @@ qDL
 rXo
 fXA
 fdV
-gTH
+cFT
 rGR
 fDu
 qAt
@@ -140346,7 +140568,7 @@ orJ
 orJ
 orJ
 cbs
-wYi
+jZP
 bEm
 jBs
 jaA
@@ -140749,7 +140971,7 @@ orJ
 orJ
 jqD
 bFx
-cbh
+kUP
 bEm
 byI
 nvW
@@ -152420,7 +152642,7 @@ orJ
 orJ
 orJ
 xWe
-uQH
+mcY
 rNi
 rNi
 rNi
@@ -152450,7 +152672,7 @@ qSP
 qSP
 ibB
 vVw
-hXn
+lHW
 uXm
 uXm
 kyh
@@ -152826,9 +153048,9 @@ rNi
 rcs
 rcs
 rcs
-aKB
+fmg
 edX
-dGE
+trb
 lvk
 aSi
 tfP
@@ -157680,7 +157902,7 @@ xNx
 xNx
 xNx
 xNx
-oDW
+tyL
 ocz
 xNx
 orJ
