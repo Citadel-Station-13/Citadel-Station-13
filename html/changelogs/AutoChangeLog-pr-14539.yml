@@ -1,0 +1,5 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - rscdel: "\"Destroy all nanotrasen cloning machines\" objective is gone"
+  - code_imp: "Removed all the commented-out sabotage objectives (we can just get them from history)"
