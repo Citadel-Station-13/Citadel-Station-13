@@ -1772,6 +1772,21 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/hydroponics/garden)
+"aTf" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "aTj" = (
 /obj/structure/target_stake,
 /turf/open/floor/engine,
@@ -16095,16 +16110,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard/aft)
-"hZR" = (
-/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 9
-	},
-/turf/open/floor/wood,
-/area/security/detectives_office)
 "hZU" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -22044,6 +22049,15 @@
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /turf/open/space/basic,
 /area/maintenance/department/science)
+"lhS" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/port)
 "lhV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
@@ -26369,6 +26383,13 @@
 	},
 /turf/open/floor/plasteel/chapel_floor,
 /area/chapel/main)
+"nuq" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/security/detectives_office)
 "nuJ" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -28994,6 +29015,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
+"ozB" = (
+/obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 9
+	},
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/security/detectives_office)
 "ozE" = (
 /obj/effect/mapping_helpers/network_builder/power_cable/yellow/auto,
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden/layer1{
@@ -33597,6 +33629,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"qOH" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/port)
 "qOM" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden/layer1{
 	dir = 4
@@ -35008,6 +35046,10 @@
 /area/hydroponics/garden{
 	name = "Aviary"
 	})
+"rFI" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/security/detectives_office)
 "rGs" = (
 /obj/structure/table,
 /obj/item/assembly/prox_sensor,
@@ -40860,18 +40902,6 @@
 	},
 /turf/open/floor/wood/wood_tiled,
 /area/crew_quarters/heads/hor/private)
-"uxK" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/brig)
 "uxS" = (
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/science/research)
@@ -42137,12 +42167,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"vbD" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30
-	},
-/turf/open/floor/wood,
-/area/security/detectives_office)
 "vbK" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -42450,6 +42474,13 @@
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
+"vgU" = (
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = 30
+	},
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/security/detectives_office)
 "vhD" = (
 /obj/machinery/jukebox{
 	req_one_access = 0
@@ -103344,7 +103375,7 @@ jcO
 jcO
 jcO
 jQT
-fZP
+lhS
 jlm
 pDI
 jcO
@@ -103362,7 +103393,7 @@ jcO
 jcO
 qsy
 cEO
-fZP
+lhS
 jcO
 jcO
 jcO
@@ -103381,7 +103412,7 @@ nOD
 tDM
 fZP
 jlm
-jcO
+qOH
 tDM
 nbO
 dri
@@ -104995,9 +105026,9 @@ lpI
 oZM
 dAA
 nbW
-hZR
+ozB
 hzW
-cGb
+nuq
 cGb
 vLm
 gZv
@@ -106201,8 +106232,8 @@ hOB
 dri
 aBl
 uLk
-vbD
-tCF
+vgU
+rFI
 qyo
 biq
 ihr
@@ -110201,7 +110232,7 @@ sOK
 ehY
 ehY
 pDi
-uxK
+aTf
 hSn
 ltN
 fGb
