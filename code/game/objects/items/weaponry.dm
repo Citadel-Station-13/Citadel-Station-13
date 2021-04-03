@@ -1047,7 +1047,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
 		item_state = null //no sprite for concealment even when in hand
-		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
 		throwforce = throwforce_off
