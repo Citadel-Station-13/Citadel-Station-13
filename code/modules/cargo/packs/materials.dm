@@ -69,18 +69,6 @@
 	cost = 600
 	contains = list(/obj/item/rcd_ammo/large)
 
-/datum/supply_pack/materials/rawlumber
-	name = "50 Towercap Logs"
-	desc = "Raw logs from towercaps. Contains fifty logs."
-	cost = 1000
-	contains = list(/obj/item/grown/log)
-	crate_name = "lumber crate"
-
-/datum/supply_pack/materials/rawlumber/generate()
-	. = ..()
-	for(var/i in 1 to 49)
-		new /obj/item/grown/log(.)
-
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Canisters //////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
