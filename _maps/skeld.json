@@ -6,7 +6,7 @@
 	    "emergency": "emergency_meta",
 	    "ferry": "ferry_fancy",
 	    "cargo": "cargo_meta",
-	    "whiteship": "whiteship_delta"
+	    "whiteship": "whiteship_delta",
 	    "mining": "mining_delta"
     }
 }
