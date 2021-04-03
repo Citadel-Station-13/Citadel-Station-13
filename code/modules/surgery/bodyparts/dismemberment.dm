@@ -49,12 +49,12 @@
 	throw_at(target_turf, throw_range, throw_speed)
 	return TRUE
 
-/obj/item/bodypart/head/dismember()
+/obj/item/bodypart/head/dismember(dam_type = BRUTE, silent=TRUE, harmless=FALSE)
 	if(HAS_TRAIT(owner, TRAIT_NODECAP))
 		return FALSE
 	..()
 
-/obj/item/bodypart/chest/dismember()
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, harmless=FALSE)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/C = owner
