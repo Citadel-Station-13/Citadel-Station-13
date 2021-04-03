@@ -37,6 +37,7 @@
 
 	/// SET THIS TO TRUE IF YOU OVERRIDE altafterattack() or ANY right click action! If this is FALSE, the gun will show in examine its default right click behavior, which is to switch modes.
 	var/right_click_overridden = FALSE
+	var/right_click_override_desc = ""
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -79,8 +80,11 @@
 
 /obj/item/gun/energy/examine(mob/user)
 	. = ..()
-	if(!right_click_overridden)
+	if(right_click_overridden)
+		. += right_click_override_desc
+	else
 		. += "<span class='notice'>Right click in combat mode to switch modes.</span>"
+
 
 /obj/item/gun/energy/process()
 	if(selfcharge && cell?.charge < cell.maxcharge)

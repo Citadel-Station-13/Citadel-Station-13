@@ -18,10 +18,12 @@
 
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
-	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams. <span class='boldnotice'>Right click in combat mode to fire a taser shot with a cooldown.</span>"
+	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode/security = FALSE)
 	ammo_x_offset = 2
+	right_click_overridden = TRUE
+	right_click_override_desc = "<span class='boldnotice'>Right click in combat mode to fire a taser shot with a cooldown.</span>"
 	// Not enough guns have altfire systems like this yet for this to be a universal framework.
 	var/last_altfire = 0
 	var/altfire_delay = CLICK_CD_RANGE
