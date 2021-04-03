@@ -24,6 +24,10 @@
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (primary_sun, suns)
 #define COMSIG_SUN_MOVED "sun_moved"
+
+/// from SSactivity for things that add threat but aren't "global" (e.g. phylacteries)
+#define COMSIG_THREAT_CALC "threat_calculation"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
@@ -461,6 +465,9 @@
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
 #define COMSIG_MODIFY_SANITY "modify_sanity" //Called when you want to increase or decrease sanity from anywhere in the code.
+
+///Mask of Madness
+#define COMSIG_VOID_MASK_ACT "void_mask_act"
 
 //NTnet
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))

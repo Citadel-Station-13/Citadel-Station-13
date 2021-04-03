@@ -435,8 +435,8 @@
 /area/engine/atmos)
 "bm" = (
 /obj/machinery/atmospherics/components/binary/valve/on{
-	icon_state = "mvalve_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "mvalve_map-2"
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -1502,8 +1502,8 @@
 /area/engine/storage)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map-2";
-	dir = 8
+	dir = 8;
+	icon_state = "connector_map-2"
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
@@ -1514,8 +1514,8 @@
 /area/hallway/secondary/service)
 "hi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	icon_state = "inje_map-2";
-	dir = 4
+	dir = 4;
+	icon_state = "inje_map-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1555,8 +1555,8 @@
 /area/hallway/secondary/service)
 "jA" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 8
+	dir = 8;
+	icon_state = "warningline_white"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -1567,8 +1567,8 @@
 /area/construction)
 "jV" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 6
+	dir = 6;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1637,8 +1637,8 @@
 /area/engine/storage)
 "qR" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 9
+	dir = 9;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1659,15 +1659,15 @@
 /area/construction)
 "sE" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 4
+	dir = 4;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "td" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 8
+	dir = 8;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1704,8 +1704,8 @@
 /area/construction)
 "xB" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1720,8 +1720,8 @@
 /area/construction)
 "zZ" = (
 /obj/structure/disposalpipe/trunk{
-	icon_state = "pipe-t";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe-t"
 	},
 /obj/machinery/disposal/bin,
 /turf/open/floor/plating,
@@ -1788,12 +1788,12 @@
 /area/construction)
 "EH" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 1
+	dir = 1;
+	icon_state = "warningline_white"
 	},
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 4
+	dir = 4;
+	icon_state = "warningline_white"
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
@@ -1804,8 +1804,8 @@
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/hidden{
-	icon_state = "pipe11-2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1896,8 +1896,8 @@
 /area/engine/storage)
 "Qo" = (
 /obj/structure/disposalpipe/trunk/multiz/down{
-	icon_state = "pipe-down";
-	dir = 1
+	dir = 1;
+	icon_state = "pipe-down"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
@@ -1966,8 +1966,8 @@
 /area/construction)
 "ZQ" = (
 /obj/effect/turf_decal/stripes/white/line{
-	icon_state = "warningline_white";
-	dir = 5
+	dir = 5;
+	icon_state = "warningline_white"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,

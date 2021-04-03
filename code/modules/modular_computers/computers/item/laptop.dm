@@ -25,6 +25,7 @@
 
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
+	. += "<span class='notice'>Drag it in your hand to pick it up.</span>"
 	if(screen_on)
 		. += "<span class='notice'>Alt-click to close it.</span>"
 
@@ -76,6 +77,9 @@
 		M.put_in_hand(src, H.held_index)
 
 /obj/item/modular_computer/laptop/on_attack_hand(mob/user)
+	. = ..()
+	if(!.)
+		return
 	if(screen_on && isturf(loc))
 		return attack_self(user)
 

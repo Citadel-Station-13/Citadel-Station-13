@@ -469,7 +469,7 @@
 //hijacking the minature first aids for hypospray boxes. <3
 /obj/item/storage/hypospraykit
 	name = "hypospray kit"
-	desc = "It's a kit containing a hypospray and specific treatment chemical-filled vials."
+	desc = "It's a kit designed for containing a hypospray and specific treatment chemical-filled vials."
 	icon_state = "firstaid-mini"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
