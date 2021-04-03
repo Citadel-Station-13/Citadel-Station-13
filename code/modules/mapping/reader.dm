@@ -410,7 +410,7 @@
 		if (!instance)
 			instance = GLOB.areas_by_type[atype]
 			if (!instance)
-				instance = new atype(null)
+				instance = new atype(crds)
 			areaCache[atype] = instance
 		if(crds)
 			instance.contents.Add(crds)

@@ -8405,6 +8405,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
+<<<<<<< HEAD
+=======
+"eeP" = (
+/obj/effect/overlay/coconut,
+/obj/effect/overlay/coconut{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner,
+/area/hallway/secondary/entry)
+>>>>>>> skeld
 "efy" = (
 /obj/structure/tank_dispenser,
 /obj/machinery/light{
