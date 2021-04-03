@@ -160,7 +160,7 @@
 
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
-	desc = "You cant tear your sight from who is in front of you... their gaze is simply too enthralling.."
+	desc = "You can't tear your sight from who is in front of you... their gaze is simply too enthralling.."
 	icon = 'icons/mob/actions/bloodsucker.dmi'
 	icon_state = "power_mez"
 
