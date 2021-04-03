@@ -89,7 +89,7 @@
 	export_types = list(/obj/item/stack/sheet/mineral/plastitanium)
 
 /datum/export/stack/wood
-	cost = 15
+	cost = 8
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 
