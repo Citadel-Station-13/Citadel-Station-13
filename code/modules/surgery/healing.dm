@@ -21,6 +21,12 @@
 					healing_step_type, //hehe cheeky
 					/datum/surgery_step/close)
 
+/datum/surgery/healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
+	for(var/obj/item/bodypart/B in target.bodyparts)
+		if(B.is_organic_limb(TRUE))
+			return ..()
+
+
 /datum/surgery_step/heal
 	name = "repair body"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 65, /obj/item/pen = 55)
