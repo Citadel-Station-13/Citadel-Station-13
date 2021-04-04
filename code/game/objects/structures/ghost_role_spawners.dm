@@ -722,6 +722,8 @@
 						var/image/I = image(icon = initial(disguise_item.icon), icon_state = initial(disguise_item.icon_state), loc = H)
 						I.override = TRUE
 						I.layer = ABOVE_MOB_LAYER
+						I.pixel_x -= initial(disguise_item.pixel_x)
+						I.pixel_y -= initial(disguise_item.pixel_y)
 						H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "ghost_cafe_disguise", I)
 						currently_disguised = TRUE
 	else
