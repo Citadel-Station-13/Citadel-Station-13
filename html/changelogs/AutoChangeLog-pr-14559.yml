@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - admin: "Admins get to hear the prayer ding again unless they have prayer sounds turned off."
