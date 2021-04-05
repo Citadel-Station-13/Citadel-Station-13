@@ -1,0 +1,4 @@
+author: "Putnam3145"
+delete-after: True
+changes: 
+  - bugfix: "forced climax doesn't do a climax-with"
