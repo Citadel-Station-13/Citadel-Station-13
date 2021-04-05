@@ -55,10 +55,10 @@
 	cost = 150 // five times their export
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 
-/datum/supply_pack/materials/wood50
+/datum/supply_pack/materials/wood20
 	goody = PACK_GOODY_PUBLIC
-	name = "50 Wood Planks"
-	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with fifty wooden planks!"
+	name = "20 Wood Planks"
+	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with twenty wooden planks!"
 	cost = 400 // 6-7 planks shy from having equal import/export prices
 	contains = list(/obj/item/stack/sheet/mineral/wood/twenty)
 
