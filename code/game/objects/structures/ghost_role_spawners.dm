@@ -642,6 +642,7 @@
 
 /obj/effect/mob_spawn/human/pirate/corpse/Destroy()
 	return ..()
+
 /obj/effect/mob_spawn/human/pirate/corpse/captain
 	rank = "Captain"
 	mob_name = "Dead Space Pirate Captain"
