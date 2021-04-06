@@ -306,10 +306,12 @@
 			return
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
-	else if(!opened && user.a_intent == INTENT_HELP && !W.tool_behaviour)
+	else if(!opened && user.a_intent == INTENT_HELP)
 		var/item_is_id = W.GetID()
 		if(!item_is_id)
-			open(user)
+			if(!open(user))
+				togglelock(user)
+				return
 			return
 		if(item_is_id || !toggle(user))
 			togglelock(user)
