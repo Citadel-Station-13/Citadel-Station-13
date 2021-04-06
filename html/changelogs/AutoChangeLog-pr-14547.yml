@@ -1,9 +1,0 @@
-author: "SandPoot"
-delete-after: True
-changes: 
-  - bugfix: "Reverts locker/crate behavior for attacking it with an item while closed (use any intent other than help to bash it)."
-  - bugfix: "Laptop interactions are no longer weird and now you can drag it to yourself to pick it up.
-tweak: Ctrl+Shift-Click to toggle laptops open/closed.
-tweak: More examine info for laptops."
-  - bugfix: "Lockers/Crates can now be deconstructed the right way respecting the cutting_tool (even if it's not one of the default interactions)."
-  - rscdel: "Dragging the laptop into itself shouldn't do anything anymore (kind of pointless and hard to do)."
