@@ -554,3 +554,9 @@
 	slot = SLOT_WEAR_SUIT
 	path = /obj/item/clothing/suit/smaiden
 	ckeywhitelist = list("ultimarifox")
+
+/datum/gear/donator/donksoftgun
+	name = "Totally a Real Gun"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/gun/ballistic/automatic/toy/pistol/custom
+	ckeywhitelist = list("azeric")
