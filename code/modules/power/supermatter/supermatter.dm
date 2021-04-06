@@ -390,7 +390,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			speaking = "[DisplayTimeText(i, TRUE)] remain before causality stabilization."
 		else
 			speaking = "[i*0.1]..."
-		radio.talk_into(src, speaking, common_channel)
+		radio.talk_into(src, speaking, common_channel, list(SPAN_COMMAND))	// IT GOT WORSE, LOUD TIME
 		sleep(10)
 
 	explode()
@@ -715,7 +715,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 			//Oh shit it's bad, time to freak out
 			if(damage > emergency_point)
-				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel)
+				// it's bad, LETS YELL
+				radio.talk_into(src, "[emergency_alert] Integrity: [get_integrity()]%", common_channel, list(SPAN_YELL))
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", INVESTIGATE_SUPERMATTER)
