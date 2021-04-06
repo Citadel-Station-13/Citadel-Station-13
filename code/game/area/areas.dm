@@ -13,6 +13,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
+	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA
+
 	var/fire = null
 	///Whether there is an atmos alarm in this area
 	var/atmosalm = FALSE
@@ -60,7 +62,7 @@
 
 
 	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
-	// var/datum/map_generator/map_generator
+	var/datum/map_generator/map_generator
 
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
@@ -70,12 +72,8 @@
 	/// Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 	var/map_name
 
-	/// If it's valid territory for gangs/cults to summon
-	var/valid_territory = TRUE
 	/// malf ais can hack this
 	var/valid_malf_hack = TRUE
-	/// if blobs can spawn there and if it counts towards their score.
-	var/blob_allowed = TRUE
 	/// whether servants can warp into this area from Reebe
 	var/clockwork_warp_allowed = TRUE
 	/// Message to display when the clockwork warp fails
@@ -107,14 +105,10 @@
 	var/static_light = 0
 	var/static_environ
 
-	/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE
 	/// Hides area from player Teleport function.
 	var/hidden = FALSE
 	/// Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 	var/safe = FALSE
-	/// If false, loading multiple maps with this area type will create multiple instances.
-	var/unique = TRUE
 
 	var/no_air = null
 
@@ -157,7 +151,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /proc/process_teleport_locs()
 	for(var/V in GLOB.sortedAreas)
 		var/area/AR = V
-		if(istype(AR, /area/shuttle) || AR.noteleport)
+		if(istype(AR, /area/shuttle) || (AR.area_flags & NOTELEPORT))
 			continue
 		if(GLOB.teleportlocs[AR.name])
 			continue
@@ -177,7 +171,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (unique)
+	if (area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 
 	if(!minimap_color) // goes in New() because otherwise it doesn't fucking work
@@ -228,7 +222,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	reg_in_areas_in_z()
 
 	//so far I'm only implementing it on mapped unique areas, it's easier this way.
-	if(unique && sub_areas)
+	if((area_flags & UNIQUE_AREA) && sub_areas)
 		if(type in sub_areas)
 			WARNING("\"[src]\" typepath found inside its own sub-areas list, please make sure it doesn't share its parent type initial sub-areas value.")
 			sub_areas = null
@@ -261,21 +255,20 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		power_change()		// all machines set to current power level, also updates icon
 	update_beauty()
 
-/// Soon &trade;
 /area/proc/RunGeneration()
-	// if(map_generator)
-	// 	map_generator = new map_generator()
-	// 	var/list/turfs = list()
-	// 	for(var/turf/T in contents)
-	// 		turfs += T
-	// 	map_generator.generate_terrain(turfs)
+	if(map_generator)
+		map_generator = new map_generator()
+		var/list/turfs = list()
+		for(var/turf/T in contents)
+			turfs += T
+		map_generator.generate_terrain(turfs)
 
 /area/proc/test_gen()
-	// if(map_generator)
-	// 	var/list/turfs = list()
-	// 	for(var/turf/T in contents)
-	// 		turfs += T
-	// 	map_generator.generate_terrain(turfs)
+	if(map_generator)
+		var/list/turfs = list()
+		for(var/turf/T in contents)
+			turfs += T
+		map_generator.generate_terrain(turfs)
 
 /**
  * Register this area as belonging to a z level
@@ -327,6 +320,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
  */
 /area/proc/poweralert(state, obj/source)
+	if (area_flags & NO_ALERTS)
+		return
 	if (state != poweralm)
 		poweralm = state
 		if(istype(source))	//Only report power alarms on the z-level where the source is located.
@@ -358,6 +353,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					p.triggerAlarm("Power", src, cameras, source)
 
 /area/proc/atmosalert(danger_level, obj/source)
+	if (area_flags & NO_ALERTS)
+		return
 	if(danger_level != atmosalm)
 		if (danger_level==2)
 
@@ -420,19 +417,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (!fire)
 		set_fire_alarm_effects(TRUE)
 		ModifyFiredoors(FALSE)
-
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.triggerAlarm("Fire", src, cameras, source)
+	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
+		for (var/item in GLOB.alert_consoles)
+			var/obj/machinery/computer/station_alert/a = item
+			a.triggerAlarm("Fire", src, cameras, source)
+		for (var/item in GLOB.silicon_mobs)
+			var/mob/living/silicon/aiPlayer = item
+			aiPlayer.triggerAlarm("Fire", src, cameras, source)
+		for (var/item in GLOB.drones_list)
+			var/mob/living/simple_animal/drone/D = item
+			D.triggerAlarm("Fire", src, cameras, source)
+		for(var/item in GLOB.alarmdisplay)
+			var/datum/computer_file/program/alarm_monitor/p = item
+			p.triggerAlarm("Fire", src, cameras, source)
 
 	START_PROCESSING(SSobj, src)
 
@@ -441,18 +438,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		set_fire_alarm_effects(FALSE)
 		ModifyFiredoors(TRUE)
 
-	for (var/item in GLOB.silicon_mobs)
-		var/mob/living/silicon/aiPlayer = item
-		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.alert_consoles)
-		var/obj/machinery/computer/station_alert/a = item
-		a.cancelAlarm("Fire", src, source)
-	for (var/item in GLOB.drones_list)
-		var/mob/living/simple_animal/drone/D = item
-		D.cancelAlarm("Fire", src, source)
-	for(var/item in GLOB.alarmdisplay)
-		var/datum/computer_file/program/alarm_monitor/p = item
-		p.cancelAlarm("Fire", src, source)
+	if (!(area_flags & NO_ALERTS)) //Check here instead at the start of the proc so that fire alarms can still work locally even in areas that don't send alerts
+		for (var/item in GLOB.silicon_mobs)
+			var/mob/living/silicon/aiPlayer = item
+			aiPlayer.cancelAlarm("Fire", src, source)
+		for (var/item in GLOB.alert_consoles)
+			var/obj/machinery/computer/station_alert/a = item
+			a.cancelAlarm("Fire", src, source)
+		for (var/item in GLOB.drones_list)
+			var/mob/living/simple_animal/drone/D = item
+			D.cancelAlarm("Fire", src, source)
+		for(var/item in GLOB.alarmdisplay)
+			var/datum/computer_file/program/alarm_monitor/p = item
+			p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
 
@@ -467,7 +465,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		DOOR.lock()
 
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered) //no burglar alarms in space/asteroid
+	if (area_flags & NO_ALERTS)
 		return
 
 	//Trigger alarm effect
@@ -675,9 +673,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_light = FALSE
 	power_environ = FALSE
 	always_unpowered = FALSE
-	valid_territory = FALSE
 	valid_malf_hack = FALSE
-	blob_allowed = FALSE
+	area_flags &= ~VALID_TERRITORY
+	area_flags &= ~BLOBS_ALLOWED
 	addSorted()
 
 /area/proc/update_areasize()
