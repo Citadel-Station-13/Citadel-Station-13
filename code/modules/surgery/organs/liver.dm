@@ -77,6 +77,11 @@
 	C.action_cooldown_mod *= value
 	cachedmoveCalc = value
 
+/obj/item/organ/liver/slime
+	name = "filtratum" //this is the name that Fermi came up with when testmerging that one thing that never got finished on Citadel - if Fermi ever updates this, this probably will have a lot more functionality.
+	icon_state = "liver-s"
+	desc = "An organelle resembling a liver for slimepeople."
+
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.

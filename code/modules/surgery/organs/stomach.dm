@@ -78,6 +78,11 @@
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
 
+/obj/item/organ/stomach/slime
+	name = "macrolysosome"
+	icon_state = "stomach-s"
+	desc = "A slimeperson organelle resembling a stomach. It breaks down, or digests macromolecules. Or just food."
+
 /obj/item/organ/stomach/fly
 	name = "insectoid stomach"
 	icon_state = "stomach-x" //xenomorph liver? It's just a black liver so it fits.
