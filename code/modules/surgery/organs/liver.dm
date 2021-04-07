@@ -78,7 +78,7 @@
 	cachedmoveCalc = value
 
 /obj/item/organ/liver/slime
-	name = "filtratum" //this is the name that Fermi came up with when testmerging that one thing that never got finished on Citadel - if Fermi ever updates this, this probably will have a lot more functionality.
+	name = "viscoplasm" //this is the name that Fermis came up with when working on that organ PR that never got finished - if Fermis ever updates this, this probably will have a lot more functionality.
 	icon_state = "liver-s"
 	desc = "An organelle resembling a liver for slimepeople."
 

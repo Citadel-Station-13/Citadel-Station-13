@@ -591,8 +591,8 @@
 
 /obj/item/organ/lungs/slime
 	name = "vacuole"
-	desc = "A large organelle designed to store oxygen and other important gasses."
 	icon_state = "lungs-s"
+	desc = "A large organelle designed to store oxygen and other important gasses."
 
 	safe_toxins_max = 0 //We breathe this to gain POWER.
 

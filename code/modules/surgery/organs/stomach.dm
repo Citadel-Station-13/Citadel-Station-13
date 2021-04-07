@@ -79,9 +79,9 @@
 	..()
 
 /obj/item/organ/stomach/slime
-	name = "macrolysosome"
+	name = "macrolysosome" //an original cell has multiple lysosomes, but in this case a slimeperson only really has one... a big one? probably give it "macro" in the name.
 	icon_state = "stomach-s"
-	desc = "A slimeperson organelle resembling a stomach. It breaks down, or digests macromolecules. Or just food."
+	desc = "A slimeperson organelle resembling a stomach. It breaks down, or digests macromolecules. Or food and drinks."
 
 /obj/item/organ/stomach/fly
 	name = "insectoid stomach"
