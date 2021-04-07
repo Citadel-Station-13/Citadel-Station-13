@@ -40,6 +40,7 @@
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/sword_point)
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
