@@ -17,7 +17,8 @@
 	return ..()
 
 /datum/round_event/ghost_role/chimp/spawn_role()
-	// get that candidate!	perhaps in the future lets add more than just one monkey
+	// get that candidate!
+	// perhaps in the future lets add more than just one monkey
 	var/list/candidates = get_candidates(ROLE_MONKEY, null, ROLE_MONKEY)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
@@ -41,7 +42,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Monkey"
 	player_mind.special_role = "Monkey"
-	player_mind.add_antag_datum(/datum/antagonist/monkey)
+	player_mind.add_antag_datum(/datum/antagonist/monkey/leader)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Monkey by an event.")
 	log_game("[key_name(S)] was spawned as a Monkey by an event.")
 	spawned_mobs += S
