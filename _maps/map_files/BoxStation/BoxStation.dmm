@@ -10444,7 +10444,7 @@
 /area/maintenance/port/fore)
 "avV" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/burger/ghost,
+/obj/item/ectoplasm,
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "avW" = (
