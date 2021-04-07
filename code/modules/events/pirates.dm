@@ -21,7 +21,6 @@
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat_msg
 	var/payoff = 0
-	var/payoff_min = 20000
 	var/paid_off = FALSE
 	var/pirate_type
 	var/ship_template
@@ -45,7 +44,7 @@
 	threat_msg = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
-		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
+		payoff = FLOOR(D.account_balance * 0.80, 1000)
 	switch(pirate_type)
 		if(PIRATES_ROGUES)
 			ship_template = /datum/map_template/shuttle/pirate/default
