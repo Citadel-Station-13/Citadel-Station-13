@@ -1,5 +1,3 @@
-// shamelessly inspired by the ninja event
-
 /datum/round_event_control/chimp
 	name = "Random Chimp Event"
 	typepath = /datum/round_event/ghost_role/chimp
@@ -19,43 +17,33 @@
 	return ..()
 
 /datum/round_event/ghost_role/chimp/spawn_role()
-	//selecting a spawn_loc
-	if(!spawn_loc)
-		var/list/spawn_locs = list()
-		for(var/obj/effect/landmark/xeno_spawn/L in GLOB.landmarks_list)
-			if(isturf(L.loc))
-				spawn_locs += L.loc
-		if(!spawn_locs.len)
-			return kill()
-		spawn_loc = pick(spawn_locs)
-	if(!spawn_loc)
-		return MAP_ERROR
-
-	//selecting a candidate player
+	// get that candidate!	perhaps in the future lets add more than just one monkey
 	var/list/candidates = get_candidates(ROLE_MONKEY, null, ROLE_MONKEY)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
+	var/mob/dead/selected = pick(candidates)
 
-	var/mob/dead/selected_candidate = pick_n_take(candidates)
-	var/key = selected_candidate.key
+	// mind setup
+	var/datum/mind/player_mind = new /datum/mind(selected.key)
+	player_mind.active = TRUE
 
-	//Prepare monkey player mind
-	var/datum/mind/Mind = new /datum/mind(key)
-	Mind.assigned_role = ROLE_MONKEY
-	Mind.special_role = ROLE_MONKEY
-	Mind.active = 1
+	// spawn location
+	var/list/spawn_locs = list()
+	for(var/X in GLOB.xeno_spawn)
+		var/turf/T = X
+		spawn_locs += T
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
 
-	//spawn the monkey and assign the candidate
-	var/mob/living/carbon/monkey = new(spawn_loc)
-	Mind.transfer_to(monkey)
-	var/datum/antagonist/monkey/monkeydatum = new
-	Mind.add_antag_datum(monkeydatum)
+	// time to spawn our monkee
+	var/mob/living/carbon/monkey/S = new ((pick(spawn_locs)))
+	player_mind.transfer_to(S)
+	player_mind.assigned_role = "Monkey"
+	player_mind.special_role = "Monkey"
+	player_mind.add_antag_datum(/datum/antagonist/monkey)
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Monkey by an event.")
+	log_game("[key_name(S)] was spawned as a Monkey by an event.")
+	spawned_mobs += S
 
-	if(monkey.mind != Mind)			//something has gone wrong!
-		stack_trace("Monkey created with incorrect mind")
-
-	spawned_mobs += monkey
-	message_admins("[ADMIN_LOOKUPFLW(monkey)] has been made into a monkey by an event.")
-	log_game("[key_name(monkey)] was spawned as a monkey by an event.")
-	success_spawn = TRUE
 	return SUCCESSFUL_SPAWN
