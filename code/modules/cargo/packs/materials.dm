@@ -55,10 +55,10 @@
 	cost = 150 // five times their export
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 
-/datum/supply_pack/materials/wood50
+/datum/supply_pack/materials/wood20
 	goody = PACK_GOODY_PUBLIC
-	name = "50 Wood Planks"
-	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with fifty wooden planks!"
+	name = "20 Wood Planks"
+	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with twenty wooden planks!"
 	cost = 400 // 6-7 planks shy from having equal import/export prices
 	contains = list(/obj/item/stack/sheet/mineral/wood/twenty)
 
@@ -68,18 +68,6 @@
 	desc = "A single large compressed RCD matter pack, to help with any holes or projects people might be working on."
 	cost = 600
 	contains = list(/obj/item/rcd_ammo/large)
-
-/datum/supply_pack/materials/rawlumber
-	name = "50 Towercap Logs"
-	desc = "Raw logs from towercaps. Contains fifty logs."
-	cost = 1000
-	contains = list(/obj/item/grown/log)
-	crate_name = "lumber crate"
-
-/datum/supply_pack/materials/rawlumber/generate()
-	. = ..()
-	for(var/i in 1 to 49)
-		new /obj/item/grown/log(.)
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Canisters //////////////////////////////////////

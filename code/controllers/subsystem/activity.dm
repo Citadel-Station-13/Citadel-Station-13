@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(activity)
 	if(!("explosions" in deferred_threats))
 		deferred_threats["explosions"] = 0
 	var/area/A = get_area(epicenter)
-	if(is_station_level(epicenter.z) && A.blob_allowed && !istype(A, /area/asteroid))
+	if(is_station_level(epicenter.z) && (A.area_flags & BLOBS_ALLOWED) && !istype(A, /area/asteroid))
 		deferred_threats["explosions"] += devastation_range**2 + heavy_impact_range**2 / 4 + light_impact_range**2 / 8 // 75 for a maxcap
 
 /datum/controller/subsystem/activity/proc/on_death(mob/M, gibbed)
