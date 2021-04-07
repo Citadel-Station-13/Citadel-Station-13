@@ -136,7 +136,7 @@ Difficulty: Hard
 	if(.)
 		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!charging)
 		..()
 
@@ -185,7 +185,7 @@ Difficulty: Hard
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3, var/chargepast = 2)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(atom/chargeat = target, delay = 3, chargepast = 2)
 	if(!chargeat)
 		return
 	var/chargeturf = get_turf(chargeat)
@@ -457,7 +457,7 @@ Difficulty: Hard
 	..()
 	toggle_ai(AI_OFF)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge(atom/chargeat = target, delay = 3, chargepast = 2)
 	..()
 	qdel(src)
 
