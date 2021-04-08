@@ -449,6 +449,10 @@
 // /datum/mutation signals
 #define COMSIG_HUMAN_MUTATION_LOSS "human_mutation_loss"		//from datum/mutation/human/on_losing(): (datum/mutation/human/lost_mutation)
 
+///from base of mob/living/death(): (gibbed)
+// Sent before any of the other death code has run, mob is still alive.
+#define COMSIG_LIVING_PREDEATH "living_predeath"
+
 /*******Component Specific Signals*******/
 //Janitor
 #define COMSIG_TURF_IS_WET "check_turf_wet"							//(): Returns bitflags of wet values.
