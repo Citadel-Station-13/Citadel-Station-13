@@ -4,7 +4,7 @@
 		return TRUE
 
 //Dismember a limb
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
+/obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE, harmless=FALSE)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/C = owner
@@ -14,24 +14,28 @@
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
-	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
-	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
+	if(!harmless)
+		var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
+		affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	if(!silent)
 		C.visible_message("<span class='danger'><B>[C]'s [name] is violently dismembered!</B></span>")
-	C.emote("scream")
-	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
+	if(!harmless)
+		C.emote("scream")
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
+	else C.emote("pain")
 	drop_limb()
 	C.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment
 
-	C.bleed(40)
+	if(!harmless) C.bleed(40)
 
 	if(QDELETED(src)) //Could have dropped into lava/explosion/chasm/whatever
 		return TRUE
-	if(dam_type == BURN)
-		burn()
-		return TRUE
-	add_mob_blood(C)
-	C.bleed(rand(20, 40))
+	if(!harmless)
+		if(dam_type == BURN)
+			burn()
+			return TRUE
+		add_mob_blood(C)
+		C.bleed(rand(20, 40))
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -45,12 +49,12 @@
 	throw_at(target_turf, throw_range, throw_speed)
 	return TRUE
 
-/obj/item/bodypart/head/dismember()
+/obj/item/bodypart/head/dismember(dam_type = BRUTE, silent=TRUE, harmless=FALSE)
 	if(HAS_TRAIT(owner, TRAIT_NODECAP))
 		return FALSE
 	..()
 
-/obj/item/bodypart/chest/dismember()
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE, silent=TRUE, harmless=FALSE)
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/C = owner
