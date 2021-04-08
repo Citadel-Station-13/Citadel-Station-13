@@ -156,28 +156,28 @@
 /datum/team/monkey/proc/infected_monkeys_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
-		if(M.HasDisease(D))
+		if(M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode()))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_monkeys_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
-		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
+		if((M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode())) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_humans_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
-		if(M.HasDisease(D) && (M.onCentCom() || M.onSyndieBase()))
+		if((M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode())) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_humans_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
-		if(M.HasDisease(D))
+		if((M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode())))
 			return TRUE
 	return FALSE
 
