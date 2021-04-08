@@ -145,7 +145,7 @@
 	. = ..()
 
 /datum/disease/transformation/jungle_fever/monkeymode
-	//visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC	// now visible, so Monkey Leader can be found, and it's blood used for curing others
+	//visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC	// now visible, so Monkey Leader can be found, and it's blood used for curing others (whenever i can implement that)
 	disease_flags = CAN_CARRY //no vaccines! no cure!
 	cure_text = "Incurable strain."	// another thing to tip out players
 	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
