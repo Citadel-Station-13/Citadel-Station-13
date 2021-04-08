@@ -92,17 +92,17 @@
 
 /datum/disease/transformation/jungle_fever
 	name = "Jungle Fever"
-	cure_text = "Blood from Patient-Zero."
-	cures = list(/datum/reagent/blood)	// not just any blood. check has_cure()
+	cure_text = "Banana Juice and Holy Water"
+	cures = list(/datum/reagent/consumable/banana, /datum/reagent/water/holywater)
 	spread_text = "Monkey Bites"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
 	permeability_mod = 1
-	cure_chance = 1
+	cure_chance = 100	// inject cure = cured, no fuzz or buzz
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE	// now curable, for balance
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = DISEASE_SEVERITY_BIOHAZARD
-	stage_prob = 4
+	stage_prob = 8	// a little bit faster infection
 	visibility_flags = 0
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/monkey
@@ -139,31 +139,22 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/jungle_fever/cure()
+	if(is_monkey(affected_mob.mind))
+		affected_mob.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)	// keep it simple
 	remove_monkey(affected_mob.mind)
-	..()
-
-// could easily just override this whole method instead of this, eh fuck it this is safer
-/datum/disease/transformation/jungle_fever/has_cure()
 	. = ..()
-	if(.)
-		var/datum/reagent/blood/B = affected_mob.reagents.has_reagent(/datum/reagent/blood)
-		if(istype(B.data["viruses"], /datum/disease/transformation/jungle_fever/monkeymode))	// i hope this works, if it doesn't, change to ispath()
-			return TRUE
-		else	// blood is not affected by monkeymode variant
-			return FALSE
-
 
 /datum/disease/transformation/jungle_fever/monkeymode
 	//visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC	// now visible, so Monkey Leader can be found, and it's blood used for curing others
 	disease_flags = CAN_CARRY //no vaccines! no cure!
-	cure_text = "Death."
-	cures = list(/datum/reagent/medicine/adminordrazine)	// for badmins only
+	cure_text = "Incurable strain."	// another thing to tip out players
 	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
-	agent = "Kongey Vibrion R-909"	// yeah the agent is different to make sure people notice this is the actual patient zero
+	agent = "Kongey Vibrion R-909"	// the agent is different to make sure people notice this is another strain
+	stage = 5	// start at stage 5, you already monkee
 
 /datum/disease/transformation/jungle_fever/monkeymode/infect(mob/living/infectee, make_copy)
 	if(infectee.mind?.assigned_role == "Monkey Leader")	// give only the leader this strain
-		. = ..()										// will only work if this is spawned through the midround or roundstart event
+		. = ..()										// will only work if this is spawned through the midround event
 	else	// give any other infected the regular curable strain
 		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() // our base strain
 		infectee.diseases += D
@@ -173,6 +164,8 @@
 		infectee.med_hud_set_status()
 		var/turf/source_turf = get_turf(infectee)
 		log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+/datum/d
 
 /datum/disease/transformation/robot
 
