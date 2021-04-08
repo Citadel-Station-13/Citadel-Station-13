@@ -2,17 +2,19 @@
 	name = "Random Chimp Event"
 	typepath = /datum/round_event/ghost_role/chimp
 	max_occurrences = 1
-	earliest_start = 40 MINUTES
+	earliest_start = 35 MINUTES
 	gamemode_blacklist = list("dynamic")
 	min_players = 25
+	weight = 8
 
 /datum/round_event/ghost_role/chimp
 	role_name = "monkey"
 	minimum_required = 1
 	var/spawn_loc
+	var/success_spawn
 
 /datum/round_event/ghost_role/chimp/kill()
-	if(!success_spawn && control)
+	if(!success_spawn && control)	// just to be sure, if we kill this event without spawning, lets reset the occurrences
 		control.occurrences--
 	return ..()
 
@@ -47,4 +49,5 @@
 	log_game("[key_name(S)] was spawned as a Monkey by an event.")
 	spawned_mobs += S
 
+	success_spawn = TRUE
 	return SUCCESSFUL_SPAWN

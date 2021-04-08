@@ -92,14 +92,14 @@
 
 /datum/disease/transformation/jungle_fever
 	name = "Jungle Fever"
-	cure_text = "Death."
-	cures = list(/datum/reagent/medicine/adminordrazine)
+	cure_text = "Blood from Patient-Zero."
+	cures = list(/datum/reagent/blood)	// not just any blood. check has_cure()
 	spread_text = "Monkey Bites"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
 	permeability_mod = 1
 	cure_chance = 1
-	disease_flags = CAN_CARRY|CAN_RESIST
+	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE	// now curable, for balance
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	stage_prob = 4
@@ -142,9 +142,24 @@
 	remove_monkey(affected_mob.mind)
 	..()
 
+// could easily just override this whole method instead of this, eh fuck it this is safer
+/datum/disease/transformation/jungle_fever/has_cure()
+	. = ..()
+	if(.)
+		var/datum/reagent/blood/B = affected_mob.reagents.has_reagent(/datum/reagent/blood)
+		if(istype(B.data["viruses"], /datum/disease/transformation/jungle_fever/monkeymode))	// i hope this works, if it doesn't, change to ispath()
+			return TRUE
+		else	// blood is not affected by monkeymode variant
+			return FALSE
+
+
 /datum/disease/transformation/jungle_fever/monkeymode
-	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
+	//visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC	// now visible, so Monkey Leader can be found, and it's blood used for curing others
 	disease_flags = CAN_CARRY //no vaccines! no cure!
+	cure_text = "Death."
+	cures = list(/datum/reagent/medicine/adminordrazine)	// for badmins only
+	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
+	agent = "Kongey Vibrion R-909"	// yeah the agent is different to make sure people notice this is the actual patient zero
 
 /datum/disease/transformation/jungle_fever/monkeymode/after_add()
 	if(affected_mob && !is_monkey_leader(affected_mob.mind))

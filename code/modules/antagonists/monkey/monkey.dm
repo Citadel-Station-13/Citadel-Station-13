@@ -12,6 +12,7 @@
 	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
+	var/strain = /datum/disease/transformation/jungle_fever		// regular curable disease for infected monkeys
 
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
@@ -24,7 +25,7 @@
 	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
 
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
+	var/datum/disease/D = new strain
 	if(!owner.current.HasDisease(D))
 		owner.current.ForceContractDisease(D)
 	else
@@ -32,7 +33,7 @@
 
 /datum/antagonist/monkey/greet()
 	to_chat(owner, "<b>You are a monkey now!</b>")
-	to_chat(owner, "<b>Bite humans to infect them, follow the orders of the monkey leaders, and help fellow monkeys!</b>")
+	to_chat(owner, "<b>Bite humans to infect them, follow the orders of the monkey leader, and help fellow monkeys!</b>")
 	to_chat(owner, "<b>Ensure at least one infected monkey escapes on the Emergency Shuttle!</b>")
 	to_chat(owner, "<b><i>As an intelligent monkey, you know how to use technology and how to ventcrawl while wearing things.</i></b>")
 	to_chat(owner, "<b>You can use :k to talk to fellow monkeys!</b>")
@@ -85,6 +86,7 @@
 	name = "Monkey Leader"
 	threat = 5
 	monkey_only = FALSE
+	strain = /datum/disease/transformation/jungle_fever/monkeymode	// monkeymode for leader, incurable, and it's blood will be the cure for the other infected
 
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/human/H = new_owner.current
