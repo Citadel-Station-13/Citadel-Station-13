@@ -32,9 +32,19 @@
 
 	// spawn location
 	var/list/spawn_locs = list()
+	/*
 	for(var/X in GLOB.xeno_spawn)
 		var/turf/T = X
 		spawn_locs += T
+	*/
+
+	// lets pick a vent
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
+		var/turf/T = get_turf(temp_vent)
+		var/area/A = T.loc
+		if(T && is_station_level(T.z) && !temp_vent.welded && !A.safe)
+			spawn_locs += temp_vent
+
 	if(!spawn_locs.len)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR

@@ -160,7 +160,10 @@
 	cures = list(/datum/reagent/medicine/adminordrazine)	// for badmins only
 	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	agent = "Kongey Vibrion R-909"	// yeah the agent is different to make sure people notice this is the actual patient zero
-	copy_type = /datum/disease/transformation/jungle_fever
+
+/datum/disease/transformation/jungle_fever/monkeymode/Copy()	// now this is a cheaty way of doing this
+	var/datum/disease/D = new parent_type()
+	return D
 
 /datum/disease/transformation/robot
 
