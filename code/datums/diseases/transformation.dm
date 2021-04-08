@@ -161,9 +161,18 @@
 	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	agent = "Kongey Vibrion R-909"	// yeah the agent is different to make sure people notice this is the actual patient zero
 
-/datum/disease/transformation/jungle_fever/monkeymode/Copy()	// now this is a cheaty way of doing this
-	var/datum/disease/D = new parent_type()
-	return D
+/datum/disease/transformation/jungle_fever/monkeymode/infect(mob/living/infectee, make_copy)
+	if(infectee.mind?.assigned_role == "Monkey Leader")	// give only the leader this strain
+		. = ..()										// will only work if this is spawned through the midround or roundstart event
+	else	// give any other infected the regular curable strain
+		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() // our base strain
+		infectee.diseases += D
+		D.affected_mob = infectee
+		SSdisease.active_diseases += D
+		D.after_add()
+		infectee.med_hud_set_status()
+		var/turf/source_turf = get_turf(infectee)
+		log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
 /datum/disease/transformation/robot
 

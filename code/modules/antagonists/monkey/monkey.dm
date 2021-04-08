@@ -22,9 +22,8 @@
 
 /datum/antagonist/monkey/on_gain()
 	. = ..()
-	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
-
+	SSticker.mode.ape_infectees += owner
 	var/datum/disease/D = new strain
 	if(!owner.current.HasDisease(D))
 		owner.current.ForceContractDisease(D)
@@ -107,10 +106,10 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
+	owner.special_role = "Monkey Leader"
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
 	SSticker.mode.ape_leaders += owner
-	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
 	SSticker.mode.ape_leaders -= owner
@@ -122,10 +121,9 @@
 /datum/antagonist/monkey/leader/greet()
 	to_chat(owner, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
 	to_chat(owner, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
-	to_chat(owner, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
+	to_chat(owner, "<b>Bite humans to infect them, and boss your fellow monkeys around as you are now the Monkey Leader!</b>")
 	to_chat(owner, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
 	to_chat(owner, "<b>Your mission will be deemed a success if any of the live infected monkeys reach CentCom.</b>")
-	to_chat(owner, "<b>As an initial infectee, you will be considered a 'leader' by your fellow monkeys.</b>")
 	to_chat(owner, "<b>You can use :k to talk to fellow monkeys!</b>")
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/monkey.ogg'))
 
