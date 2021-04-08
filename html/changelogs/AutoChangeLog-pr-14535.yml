@@ -1,0 +1,7 @@
+author: "brokenOculus"
+delete-after: True
+changes: 
+  - rscadd: "Added Telescopic Baseball Bat"
+  - rscadd: "Added Telescopic Baseball Bat to Stealthy uplink items"
+  - rscadd: "Added sprites for Telescopic Baseball Bat"
+  - rscadd: "Added Telescopic Baseball Bat to Baseball kit under uplink bundles"
