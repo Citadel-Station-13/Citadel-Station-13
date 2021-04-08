@@ -2,7 +2,6 @@
 	name = "Survivalist"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
-	blacklisted_quirks = list(/datum/quirk/nonviolent) // mutes are allowed
 	threat = 1
 	var/greet_message = ""
 

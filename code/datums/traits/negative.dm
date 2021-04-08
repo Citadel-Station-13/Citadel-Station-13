@@ -6,7 +6,6 @@
 	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
-	antag_removal_text = "Your antagonistic nature has removed your blood deficiency."
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
 /datum/quirk/blooddeficiency/on_process()
@@ -173,7 +172,11 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
-	antag_removal_text = "Your antagonistic nature has caused you to renounce your pacifism."
+
+/datum/quirk/nonviolent/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
+		qdel(src)
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -348,8 +351,12 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = "<span class='danger'>You find yourself unable to speak!</span>"
 	lose_text = "<span class='notice'>You feel a growing strength in your vocal chords.</span>"
 	medical_record_text = "Functionally mute, patient is unable to use their voice in any capacity."
-	antag_removal_text = "Your antagonistic nature has caused your voice to be heard."
 	var/datum/brain_trauma/severe/mute/mute
+
+/datum/quirk/mute/on_process()
+	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused your voice to be heard.</span>")
+		qdel(src)
 
 /datum/quirk/mute/add()
 	var/mob/living/carbon/human/H = quirk_holder
