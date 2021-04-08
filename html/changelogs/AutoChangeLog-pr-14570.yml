@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - rscadd: "Sylvan and Mushroom languages are now tongueless, and Encoded Audio Language is now learnable."

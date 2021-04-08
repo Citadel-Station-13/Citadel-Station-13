@@ -330,7 +330,7 @@
 	name = "Hollow Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen, but it looks kinda hollow."
 	color = "#88878777"
-	taste_description = "emptyiness"
+	taste_description = "emptiness"
 
 
 /datum/reagent/water/holywater

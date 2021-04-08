@@ -1240,7 +1240,7 @@ GLOBAL_LIST_EMPTY(possible_sabotages)
 	var/payout_bonus = 0
 	var/area/dropoff = null
 	var/static/list/blacklisted_areas = typecacheof(list(/area/ai_monitored/turret_protected,
-														/area/solar/,
+														/area/solars/,
 														/area/ruin/,	//thank you station space ruins
 														/area/science/test_area/,
 														/area/shuttle/))

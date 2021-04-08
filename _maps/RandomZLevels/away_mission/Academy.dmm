@@ -51,7 +51,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/carpet,
@@ -1291,7 +1291,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel/grimy,
@@ -2542,7 +2542,7 @@
 	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /turf/open/floor/plasteel,
@@ -3562,7 +3562,7 @@
 "kh" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 32;
+	pixel_y = 23;
 	req_access = null
 	},
 /obj/structure/cable{
@@ -3855,7 +3855,7 @@
 "lp" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 32
+	pixel_y = 23
 	},
 /obj/structure/cable{
 	icon_state = "0-8"

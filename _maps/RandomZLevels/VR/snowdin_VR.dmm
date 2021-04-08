@@ -651,7 +651,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Dorms APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -814,7 +814,7 @@
 	dir = 1;
 	name = "Kitchen APC";
 	pixel_x = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -1863,7 +1863,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Gateway APC";
-	pixel_y = -24;
+	pixel_y = -23;
 	req_access = 150
 	},
 /obj/structure/cable/yellow{
@@ -1880,7 +1880,7 @@
 	dir = 1;
 	name = "Research Center APC";
 	pixel_x = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -1909,7 +1909,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Mess Hall APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -2514,7 +2514,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Outpost Hallway APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -3057,7 +3057,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Garage APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -4835,7 +4835,7 @@
 	dir = 1;
 	name = "Custodials APC";
 	pixel_x = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -6262,7 +6262,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Engineering APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -6567,7 +6567,7 @@
 	dir = 1;
 	name = "Security Outpost APC";
 	pixel_x = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -6764,7 +6764,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Hydroponics APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -8297,7 +8297,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Main Outpost APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
@@ -8987,7 +8987,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Main Outpost APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -10004,7 +10004,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Main Outpost APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
@@ -11761,7 +11761,7 @@
 	dir = 1;
 	name = "Recon Post APC";
 	pixel_x = 1;
-	pixel_y = 25
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -14142,7 +14142,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Robotics APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -14652,7 +14652,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Main Outpost APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -14666,7 +14666,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mechbay APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -15419,7 +15419,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Post APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"

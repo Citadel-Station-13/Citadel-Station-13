@@ -1,0 +1,7 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Slime puddles will now show mutation visual indicators & cult indicators after exiting slime puddle form"
+  - bugfix: "Slime puddle transformation animations are now resized to fit the slimeperson's current size, making it visually more consistent"
+  - spellcheck: "Typo correction in some mutation descriptions and other things"
+  - code_imp: "Cult/clockcult layers moved from LAYER_MUTATION to LAYER_ANTAG, new update section for them specifically now"

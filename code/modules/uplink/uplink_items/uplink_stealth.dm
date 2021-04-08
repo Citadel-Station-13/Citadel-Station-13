@@ -7,6 +7,12 @@
 	When adding new entries to the file, please keep them sorted by category.
 */
 
+/datum/uplink_item/stealthy_weapons/telescopicbat
+	name = "Telescopic Baseball Bat"
+	desc = "A robust telescopic baseball bat that hits like a truck and can be consealed when collapsed."
+	item = /obj/item/melee/baseball_bat/telescopic
+	cost = 2
+
 /datum/uplink_item/stealthy_weapons/combatglovesplus
 	name = "Combat Gloves Plus"
 	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
