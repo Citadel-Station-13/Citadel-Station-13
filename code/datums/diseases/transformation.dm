@@ -161,10 +161,11 @@
 	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	agent = "Kongey Vibrion R-909"	// yeah the agent is different to make sure people notice this is the actual patient zero
 
+/*// not needed anymore
 /datum/disease/transformation/jungle_fever/monkeymode/after_add()
 	if(affected_mob && !is_monkey_leader(affected_mob.mind))
 		visibility_flags = NONE
-
+*/
 
 
 /datum/disease/transformation/robot
