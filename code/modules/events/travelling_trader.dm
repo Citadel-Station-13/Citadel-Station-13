@@ -25,14 +25,14 @@
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(1, spawn_location)
 	smoke.start()
-	trader.visible_message("<b>[src]</b> suddenly appears in a puff of smoke!")
+	trader.visible_message("<b>[trader]</b> suddenly appears in a puff of smoke!")
 
 /datum/round_event/travelling_trader/announce(fake)
 	priority_announce("A mysterious figure has been detected on sensors at [get_area(spawn_location)]", "Mysterious Figure")
 
 /datum/round_event/travelling_trader/end()
-	if(trader)
-		trader.visible_message("The <b>[src]</b> has given up on waiting!")
+	if(trader) // the /datum/round_event/travelling_trader has given up on waiting!
+		trader.visible_message("The <b>[trader]</b> has given up on waiting!")
 		qdel(trader)
 
 //the actual trader mob
@@ -99,7 +99,7 @@
 	new reward(get_turf(src))
 
 /mob/living/carbon/human/dummy/travelling_trader/Initialize()
-	..()
+	. = ..() // return a hint you fuck
 	add_atom_colour("#570d6b", FIXED_COLOUR_PRIORITY) //make them purple (otherworldly!)
 	set_light(1, -0.7, "#AAD84B")
 	ADD_TRAIT(src,TRAIT_PIERCEIMMUNE, "trader_pierce_immune") //don't let people take their blood
@@ -188,19 +188,19 @@
 		/mob/living/simple_animal/hostile/netherworld/blankbody = 1,
 		/mob/living/simple_animal/hostile/retaliate/goose = 1)
 
-mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
+	. = ..()
 	acceptance_speech = pick(list("This lifeform shall make for a great stew, thank you.", "This lifeform shall be of a true use to our cause, thank you.", "The lifeform is adequate. Goodbye.", "This lifeform shall make a great addition to my collection."))
-	..()
 
-/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(var/obj/item/supplied_item) //item is likely to be in contents of whats supplied
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/check_item(obj/item/supplied_item) //item is likely to be in contents of whats supplied
 	for(var/atom/something in supplied_item.contents)
 		if(istype(something, requested_item))
 			qdel(something) //typically things holding mobs release the mob when the container is deleted, so delete the mob first here
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(var/mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
-	var/obj/item/pet_carrier/bluespace/jar = new(get_turf(src))
+/mob/living/carbon/human/dummy/travelling_trader/animal_hunter/give_reward(mob/giver) //the reward is actually given in a jar, because releasing it onto the station might be a bad idea
+	var/obj/item/pet_carrier/bluespace/single_use/jar = new(get_turf(src))
 	var/chosen_animal = pickweight(possible_rewards)
 	var/mob/living/new_animal = new chosen_animal(jar)
 	if(giver && giver.tag)
@@ -223,6 +223,7 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/obj/structure/reagent_dispensers/keg/quintuple_sec = 3)
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/Initialize() //pick a subtype of ethanol that isn't found in the default set of the booze dispensers reagents
+	. = ..() // RETURN A HINT.
 	requested_item = pick(subtypesof(/datum/reagent/consumable/ethanol) - list(/datum/reagent/consumable/ethanol/beer,
 		/datum/reagent/consumable/ethanol/kahlua,
 		/datum/reagent/consumable/ethanol/whiskey,
@@ -242,7 +243,6 @@ mob/living/carbon/human/dummy/travelling_trader/animal_hunter/Initialize()
 		/datum/reagent/consumable/ethanol/triple_sec,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/applejack))
-	..()
 
 /mob/living/carbon/human/dummy/travelling_trader/bartender/check_item(var/obj/item/supplied_item) //you need to check its reagents
 	if(istype(supplied_item, /obj/item/reagent_containers))

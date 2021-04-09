@@ -573,13 +573,17 @@
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/regenerative_core
+	var/heal_amount = 25
 
 /datum/status_effect/regenerative_core/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
-	owner.adjustBruteLoss(-25)
+
+	if(HAS_TRAIT(owner, TRAIT_ROBOTIC_ORGANISM))	//Robots can heal from cores, but only get 1/5th of the healing. They can use this to get past the damage threshhold however, and then regularely heal from there.
+		heal_amount *= 0.2
+	owner.adjustBruteLoss(-heal_amount, only_organic = FALSE)
 	if(!AmBloodsucker(owner))	//use your coffin you lazy bastard
-		owner.adjustFireLoss(-25)
+		owner.adjustFireLoss(-heal_amount, only_organic = FALSE)
 	owner.remove_CC()
 	owner.bodytemperature = BODYTEMP_NORMAL
 	return TRUE
@@ -647,3 +651,215 @@
 			if(D.severity == DISEASE_SEVERITY_POSITIVE)
 				continue
 			D.cure()
+
+/datum/status_effect/mantra // available to wizards and admins alone, currently
+	id = "Mantra"
+	examine_text = "<span class='notice'>Their aura is filled with yellow energy!</span>"
+	alert_type = null
+	var/damageboost = 10
+	var/woundboost = 5
+	var/prev_hair_color
+	var/powerup
+	var/powerdown
+
+/datum/status_effect/mantra/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/H = owner
+		playsound(H, 'sound/magic/powerup.ogg', 50, 1)
+		H.add_filter("mantra_glow", 2, list("type" = "outline", "color" = "#edfa347a", "size" = 2))
+		prev_hair_color = H.hair_color
+		H.hair_color = "ffe11e"
+		H.update_hair()
+		ADD_TRAIT(H, TRAIT_PUGILIST, "Mantra")
+		ADD_TRAIT(H, TRAIT_NOSOFTCRIT, "Mantra")
+		ADD_TRAIT(H, TRAIT_STUNIMMUNE, "Mantra")
+		ADD_TRAIT(H, TRAIT_PUSHIMMUNE, "Mantra")
+		ADD_TRAIT(H, TRAIT_NOGUNS, "Mantra")
+		H.dna.species.punchdamagehigh += damageboost
+		H.dna.species.punchdamagelow += damageboost
+		H.dna.species.punchwoundbonus += woundboost
+		H.physiology.brute_mod *= 0.9 // slightly resilient against lethal damage, but...
+		H.physiology.burn_mod *= 0.9
+		H.physiology.stamina_mod *= 0.5 // very resistant to non-lethal damage, because they're already draining stamina every second
+		to_chat(H, "<span class='notice'>Your inner mantra coalesces around you, granting you incredible strength and durability - but at what cost?</span>")
+
+/datum/status_effect/mantra/tick()
+	. = ..()
+	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
+		owner.remove_status_effect(STATUS_EFFECT_MANTRA)
+		return
+	if(owner.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+		owner.remove_status_effect(STATUS_EFFECT_MANTRA)
+		return
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/C = owner
+		C.adjustBruteLoss(-1) // slightly resilient against lethal damage
+		C.adjustFireLoss(-1)
+		C.adjustStaminaLoss(3) // in testing i personally found that 2/sec was too minimal and 4/sec was too much
+	/*if(SEND_SIGNAL(owner, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) // turning on combat mode flares up your aura
+
+	else*/
+
+/datum/status_effect/mantra/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/M = owner
+		playsound(M, 'sound/magic/powerdown.ogg', 50, 1)
+		M.remove_filter("mantra_glow")
+		M.hair_color = prev_hair_color
+		M.update_hair()
+		REMOVE_TRAIT(M, TRAIT_PUGILIST, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_STUNIMMUNE, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_PUSHIMMUNE, "Mantra")
+		REMOVE_TRAIT(M, TRAIT_NOGUNS, "Mantra")
+		M.dna.species.punchdamagehigh -= damageboost
+		M.dna.species.punchdamagelow -= damageboost
+		M.dna.species.punchwoundbonus -= woundboost
+		M.physiology.brute_mod /= 0.9
+		M.physiology.burn_mod /= 0.9
+		M.physiology.stamina_mod /= 0.5
+		to_chat(M, "<span class='notice'>Your inner mantra collapses, for now.</span>")
+
+/datum/status_effect/asura // mfw miner gear
+	id = "Asura"
+	examine_text = "<span class='notice'>Their aura is filled with red-hot rage!</span>"
+	alert_type = null
+	var/damageboost = 10
+	var/woundboost = 5
+
+/datum/status_effect/asura/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/H = owner
+		playsound(H, 'sound/magic/powerup.ogg', 50, 1)
+		H.add_filter("asura_glow", 2, list("type" = "outline", "color" = "#fc21217a", "size" = 2))
+		ADD_TRAIT(H, TRAIT_PUGILIST, "Asura")
+		H.dna.species.punchdamagehigh += damageboost
+		H.dna.species.punchdamagelow += damageboost
+		H.dna.species.punchwoundbonus += woundboost
+		to_chat(H, "<span class='notice'>Your anger unleashes in a crimson blaze around you and corrosive power fills your muscles.</span>")
+
+/datum/status_effect/asura/tick()
+	. = ..()
+	if(owner.health < HEALTH_THRESHOLD_CRIT)
+		owner.remove_status_effect(STATUS_EFFECT_ASURA)
+		return
+	if(owner.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
+		owner.remove_status_effect(STATUS_EFFECT_ASURA)
+		return
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/C = owner
+		C.adjustBruteLoss(1) // drains 1 hp per second. You're gonna need some Senzu Cores.
+		C.adjustStaminaLoss(-2) // angry man punch a lot
+	/*if(SEND_SIGNAL(owner, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)) // turning on combat mode flares up your aura
+
+	else*/
+
+/datum/status_effect/asura/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/M = owner
+		playsound(M, 'sound/magic/powerdown.ogg', 50, 1)
+		M.remove_filter("asura_glow")
+		REMOVE_TRAIT(M, TRAIT_PUGILIST, "Asura")
+		M.dna.species.punchdamagehigh -= damageboost
+		M.dna.species.punchdamagelow -= damageboost
+		M.dna.species.punchwoundbonus -= woundboost
+		to_chat(M, "<span class='notice'>You calm yourself, and your unnatural strength dissipates.</span>")
+
+/datum/status_effect/crucible_soul
+	id = "Blessing of Crucible Soul"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 15 SECONDS
+	examine_text = "<span class='notice'>They don't seem to be all here.</span>"
+	alert_type = /obj/screen/alert/status_effect/crucible_soul
+	var/turf/location
+
+/datum/status_effect/crucible_soul/on_apply()
+	. = ..()
+	to_chat(owner,"<span class='notice'>You phase through reality, nothing is out of bounds!</span>")
+	owner.alpha = 180
+	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSTABLE | PASSMOB
+	location = get_turf(owner)
+
+/datum/status_effect/crucible_soul/on_remove()
+	to_chat(owner,"<span class='notice'>You regain your physicality, returning you to your original location...</span>")
+	owner.alpha = initial(owner.alpha)
+	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSTABLE | PASSMOB)
+	owner.forceMove(location)
+	location = null
+	return ..()
+
+/datum/status_effect/duskndawn
+	id = "Blessing of Dusk and Dawn"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 60 SECONDS
+	alert_type =/obj/screen/alert/status_effect/duskndawn
+
+/datum/status_effect/duskndawn/on_apply()
+	. = ..()
+	ADD_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	owner.update_sight()
+
+/datum/status_effect/duskndawn/on_remove()
+	REMOVE_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	owner.update_sight()
+	return ..()
+
+/datum/status_effect/marshal
+	id = "Blessing of Wounded Soldier"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 60 SECONDS
+	tick_interval = 1 SECONDS
+	alert_type = /obj/screen/alert/status_effect/marshal
+
+/datum/status_effect/marshal/on_apply()
+	. = ..()
+	ADD_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+
+/datum/status_effect/marshal/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+
+/datum/status_effect/marshal/tick()
+	. = ..()
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbie = owner
+
+	for(var/BP in carbie.bodyparts)
+		var/obj/item/bodypart/part = BP
+		for(var/W in part.wounds)
+			var/datum/wound/wound = W
+			var/heal_amt = 0
+
+			switch(wound.severity)
+				if(WOUND_SEVERITY_MODERATE)
+					heal_amt = 1
+				if(WOUND_SEVERITY_SEVERE)
+					heal_amt = 3
+				if(WOUND_SEVERITY_CRITICAL)
+					heal_amt = 6
+			if(wound.wound_type == WOUND_BURN)
+				carbie.adjustFireLoss(-heal_amt)
+			else
+				carbie.adjustBruteLoss(-heal_amt)
+				carbie.blood_volume += carbie.blood_volume >= BLOOD_VOLUME_NORMAL ? 0 : heal_amt*3
+
+
+/obj/screen/alert/status_effect/crucible_soul
+	name = "Blessing of Crucible Soul"
+	desc = "You phased through the reality, you are halfway to your final destination..."
+	icon_state = "crucible"
+
+/obj/screen/alert/status_effect/duskndawn
+	name = "Blessing of Dusk and Dawn"
+	desc = "Many things hide beyond the horizon, with Owl's help i managed to slip past sun's guard and moon's watch."
+	icon_state = "duskndawn"
+
+/obj/screen/alert/status_effect/marshal
+	name = "Blessing of Wounded Soldier"
+	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
+	icon_state = "wounded_soldier"

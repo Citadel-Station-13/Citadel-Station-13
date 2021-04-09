@@ -7,6 +7,13 @@
 /datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
 	return key_name in config.modes
 
+/datum/config_entry/keyed_list/chaos_level
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/chaos_level/ValidateListEntry(key_name)
+	return key_name in config.modes
+
 /datum/config_entry/keyed_list/max_pop
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
@@ -290,6 +297,17 @@
 	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
 	M.sync()
 
+/datum/config_entry/flag/sprint_enabled
+	config_entry_value = TRUE
+
+/datum/config_entry/flag/sprint_enabled/ValidateAndSet(str_val)
+	. = ..()
+	for(var/datum/hud/human/H)
+		H.assert_move_intent_ui()
+	if(!config_entry_value)		// disabled
+		for(var/mob/living/L in world)
+			L.disable_intentional_sprint_mode()
+
 /datum/config_entry/number/movedelay/sprint_speed_increase
 	config_entry_value = 1
 
@@ -484,6 +502,8 @@
 
 /datum/config_entry/flag/modetier_voting
 
+/datum/config_entry/flag/must_be_readied_to_vote_gamemode
+
 /datum/config_entry/number/dropped_modes
 	config_entry_value = 3
 
@@ -566,3 +586,25 @@
 	config_entry_value = 0.333
 	min_val = 0
 	integer = FALSE
+
+/// Amount of dirtyness tiles need to spawn dirt.
+/datum/config_entry/number/turf_dirt_threshold
+	config_entry_value = 100
+	min_val = 1
+	integer = TRUE
+
+/// Alpha dirt starts at
+/datum/config_entry/number/dirt_alpha_starting
+	config_entry_value = 127
+	max_val = 255
+	min_val = 0
+	integer = TRUE
+
+/// Dirtyness multiplier for making turfs dirty
+/datum/config_entry/number/turf_dirty_multiplier
+	config_entry_value = 1
+
+/datum/config_entry/flag/weigh_by_recent_chaos
+
+/datum/config_entry/number/chaos_exponent
+	config_entry_value = 1

@@ -1,5 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - tweak: "Medibots now ignore people they cannot help due to their biology."
-  - bugfix: "get_damaged_bodyparts() is no longer broken."

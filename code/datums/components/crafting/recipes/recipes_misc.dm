@@ -45,8 +45,8 @@
 /datum/crafting_recipe/bloodsucker/blackcoffin
 	name = "Black Coffin"
 	result = /obj/structure/closet/crate/coffin/blackcoffin
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/screwdriver)
+	tools = list(TOOL_WELDER,
+				TOOL_SCREWDRIVER)
 	reqs = list(/obj/item/stack/sheet/cloth = 1,
 				/obj/item/stack/sheet/mineral/wood = 5,
 				/obj/item/stack/sheet/metal = 1)
@@ -72,8 +72,8 @@
 /datum/crafting_recipe/bloodsucker/metalcoffin
 	name = "Metal Coffin"
 	result =/obj/structure/closet/crate/coffin/metalcoffin
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/screwdriver)
+	tools = list(TOOL_WELDER,
+				TOOL_SCREWDRIVER)
 	reqs = list(/obj/item/stack/sheet/metal = 5)
 	time = 100
 	subcategory = CAT_FURNITURE
@@ -84,9 +84,9 @@
 	name = "Persuasion Rack"
 	//desc = "For converting crewmembers into loyal Vassals."
 	result = /obj/structure/bloodsucker/vassalrack
-	tools = list(/obj/item/weldingtool,
-				 	//obj/item/screwdriver,
-					/obj/item/wrench
+	tools = list(TOOL_WELDER,
+				 	//TOOL_SCREWDRIVER,
+					TOOL_WRENCH
 					 )
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 3,
 				/obj/item/stack/sheet/metal = 2,
@@ -108,8 +108,8 @@
 	name = "Candelabrum"
 	//desc = "For converting crewmembers into loyal Vassals."
 	result = /obj/structure/bloodsucker/candelabrum
-	tools = list(/obj/item/weldingtool,
-				 /obj/item/wrench
+	tools = list(TOOL_WELDER,
+				 TOOL_WRENCH
 				)
 	reqs = list(/obj/item/stack/sheet/metal = 3,
 				/obj/item/stack/rods = 1,
@@ -172,11 +172,11 @@
 ///////////////////
 
 /datum/crafting_recipe/upgraded_gauze
-	name = "Improved Gauze"
+	name = "Sterilized Gauze"
 	result = /obj/item/stack/medical/gauze/adv/one
 	time = 1
 	reqs = list(/obj/item/stack/medical/gauze = 1,
-				/datum/reagent/space_cleaner/sterilizine = 10)
+				/datum/reagent/space_cleaner/sterilizine = 5)
 	category = CAT_MISC
 	subcategory = CAT_TOOL
 
@@ -184,7 +184,7 @@
 	name = "Suture Pack"
 	result = /obj/item/stack/medical/suture/five
 	time = 1
-	reqs = list(/obj/item/stack/medical/gauze = 1,
+	reqs = list(/obj/item/stack/medical/gauze/adv = 1,
 				/datum/reagent/medicine/styptic_powder = 10)
 	category = CAT_MISC
 	subcategory = CAT_TOOL
@@ -193,7 +193,7 @@
 	name = "Regenerative Mesh"
 	result = /obj/item/stack/medical/mesh/five
 	time = 1
-	reqs = list(/obj/item/stack/medical/gauze = 1,
+	reqs = list(/obj/item/stack/medical/gauze/adv = 1,
 				/datum/reagent/medicine/silver_sulfadiazine = 10)
 	category = CAT_MISC
 	subcategory = CAT_TOOL
@@ -334,6 +334,18 @@
 				/obj/item/stack/cable_coil = 1)
 	time = 5
 	subcategory = CAT_TOOL
+	category = CAT_MISC
+
+/datum/crafting_recipe/blackmarket_uplink
+	name = "Black Market Uplink"
+	result = /obj/item/blackmarket_uplink
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stock_parts/subspace/amplifier = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/radio = 1,
+		/obj/item/analyzer = 1)
+	subcategory = CAT_MISCELLANEOUS
 	category = CAT_MISC
 
 /datum/crafting_recipe/heretic/codex

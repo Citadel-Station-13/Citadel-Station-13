@@ -76,9 +76,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-	//Logs all hrefs, except chat pings
-	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
+		if(CONFIG_GET(flag/emergency_tgui_logging))
+			log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+		return
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	//byond bug ID:2256651
 	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
@@ -103,10 +109,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(href_list["statpanel_item_target"])
 		handle_statpanel_click(href_list)
-		return
-
-	// Tgui Topic middleware
-	if(tgui_Topic(href_list))
 		return
 
 	// Admin PM
@@ -147,6 +149,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/proc/handle_statpanel_click(list/href_list)
 	var/atom/target = locate(href_list["statpanel_item_target"])
+	if(!target)
+		return
 	Click(target, target.loc, null, "[href_list["statpanel_item_shiftclick"]?"shift=1;":null][href_list["statpanel_item_ctrlclick"]?"ctrl=1;":null]&alt=[href_list["statpanel_item_altclick"]?"alt=1;":null]", FALSE, "statpanel")
 
 /client/proc/is_content_unlocked()
@@ -415,7 +419,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if (nnpa >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (CONFIG_GET(flag/irc_first_connection_alert))
-				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
+				send2tgs_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
 	else if (isnum(cached_player_age) && cached_player_age < nnpa)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
 	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= 0)
@@ -423,7 +427,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(account_age >= 0 && account_age < nnpa)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (CONFIG_GET(flag/irc_first_connection_alert))
-			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
+			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 	validate_key_in_db()
@@ -496,7 +500,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.directory -= ckey
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)
@@ -519,7 +523,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				"Forever alone :("\
 			)
 
-			send2irc("Server", "[cheesy_message] (No admins online)")
+			send2adminchat("Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
@@ -534,14 +538,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	if(!SSdbcore.Connect())
 		return
-	var/sql_ckey = sanitizeSQL(src.ckey)
-	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
-	query_get_related_ip.Execute()
+	var/datum/db_query/query_get_related_ip = SSdbcore.NewQuery(
+		"SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON(:address) AND ckey != :ckey",
+		list("address" = address, "ckey" = ckey)
+	)
+	if(!query_get_related_ip.Execute())
+		qdel(query_get_related_ip)
+		return
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
 	qdel(query_get_related_ip)
-	var/datum/DBQuery/query_get_related_cid = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	var/datum/db_query/query_get_related_cid = SSdbcore.NewQuery(
+		"SELECT ckey FROM [format_table_name("player")] WHERE computerid = :computerid AND ckey != :ckey",
+		list("computerid" = computer_id, "ckey" = ckey)
+	)
 	if(!query_get_related_cid.Execute())
 		qdel(query_get_related_cid)
 		return
@@ -555,45 +566,40 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		if (!GLOB.deadmins[ckey] && check_randomizer(connectiontopic))
 			return
-	var/sql_ip = sanitizeSQL(address)
-	var/sql_computerid = sanitizeSQL(computer_id)
-	var/sql_admin_rank = sanitizeSQL(admin_rank)
 	var/new_player
-	var/datum/DBQuery/query_client_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_client_in_db = SSdbcore.NewQuery(
+		"SELECT 1 FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!query_client_in_db.Execute())
 		qdel(query_client_in_db)
 		return
-	if(!query_client_in_db.NextRow()) //new user detected
-		if(!holder && !GLOB.deadmins[ckey])
-			if(CONFIG_GET(flag/panic_bunker) && !(ckey in GLOB.bunker_passthrough))
-				log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
-				message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-				to_chat(src, "<span class='notice'>You must first join the Discord to verify your account before joining this server.<br>To do so, read the rules and post a request in the #station-access-requests channel under the \"Main server\" category in the Discord server linked here: <a href='https://discord.gg/E6SQuhz'>https://discord.gg/E6SQuhz</a><br>If you have already done so, wait a few minutes then try again; sometimes the server needs to fully load before you can join.</span>") //CIT CHANGE - makes the panic bunker disconnect message point to the discord
-				var/list/connectiontopic_a = params2list(connectiontopic)
-				var/list/panic_addr = CONFIG_GET(string/panic_server_address)
-				if(panic_addr && !connectiontopic_a["redirect"])
-					var/panic_name = CONFIG_GET(string/panic_server_name)
-					to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
-					winset(src, null, "command=.options")
-					src << link("[panic_addr]?redirect=1")
-				qdel(query_client_in_db)
-				qdel(src)
-				return
 
-			new_player = 1
-			account_join_date = sanitizeSQL(findJoinDate())
-			var/sql_key = sanitizeSQL(key)
-			var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', '[sql_key]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
-			if(!query_add_player.Execute())
-				qdel(query_client_in_db)
-				qdel(query_add_player)
-				return
-			qdel(query_add_player)
-			if(!account_join_date)
-				account_join_date = "Error"
-				account_age = -1
-			else if(ckey in GLOB.bunker_passthrough)
-				GLOB.bunker_passthrough -= ckey
+	//If we aren't an admin, and the flag is set
+	if(CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey] && !(ckey in GLOB.bunker_passthrough))
+		var/living_recs = CONFIG_GET(number/panic_bunker_living)
+		//Relies on pref existing, but this proc is only called after that occurs, so we're fine.
+		var/minutes = get_exp_living(pure_numeric = TRUE)
+		if(minutes <= living_recs) // && !CONFIG_GET(flag/panic_bunker_interview)
+			var/reject_message = "Failed Login: [key] - Account attempting to connect during panic bunker, but they do not have the required living time [minutes]/[living_recs]"
+			log_access(reject_message)
+			message_admins("<span class='adminnotice'>[reject_message]</span>")
+			var/message = CONFIG_GET(string/panic_bunker_message)
+			message = replacetext(message, "%minutes%", living_recs)
+			to_chat(src, message)
+			var/list/connectiontopic_a = params2list(connectiontopic)
+			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
+			if(panic_addr && !connectiontopic_a["redirect"])
+				var/panic_name = CONFIG_GET(string/panic_server_name)
+				to_chat(src, "<span class='notice'>Sending you to [panic_name ? panic_name : panic_addr].</span>")
+				winset(src, null, "command=.options")
+				src << link("[panic_addr]?redirect=1")
+			qdel(query_client_in_db)
+			qdel(src)
+			return
+
+	if(!query_client_in_db.NextRow())
+		new_player = 1
 		if(CONFIG_GET(flag/age_verification)) //setup age verification
 			if(!set_db_player_flags())
 				message_admins(usr, "<span class='danger'>ERROR: Unable to read player flags from database. Please check logs.</span>")
@@ -605,9 +611,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 						update_flag_db(DB_FLAG_AGE_CONFIRMATION_COMPLETE, TRUE)
 					else
 						update_flag_db(DB_FLAG_AGE_CONFIRMATION_INCOMPLETE, TRUE)
-
+		account_join_date = findJoinDate()
+		var/datum/db_query/query_add_player = SSdbcore.NewQuery({"
+			INSERT INTO [format_table_name("player")] (`ckey`, `byond_key`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`)
+			VALUES (:ckey, :key, Now(), :round_id, Now(), :round_id, INET_ATON(:ip), :computerid, :adminrank, :account_join_date)
+		"}, list("ckey" = ckey, "key" = key, "round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "adminrank" = admin_rank, "account_join_date" = account_join_date || null))
+		if(!query_add_player.Execute())
+			qdel(query_client_in_db)
+			qdel(query_add_player)
+			return
+		qdel(query_add_player)
+		if(!account_join_date)
+			account_join_date = "Error"
+			account_age = -1
 	qdel(query_client_in_db)
-	var/datum/DBQuery/query_get_client_age = SSdbcore.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_get_client_age = SSdbcore.NewQuery(
+		"SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!query_get_client_age.Execute())
 		qdel(query_get_client_age)
 		return
@@ -618,11 +639,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			account_join_date = query_get_client_age.item[3]
 			account_age = text2num(query_get_client_age.item[4])
 			if(!account_age)
-				account_join_date = sanitizeSQL(findJoinDate())
+				account_join_date = findJoinDate()
 				if(!account_join_date)
 					account_age = -1
 				else
-					var/datum/DBQuery/query_datediff = SSdbcore.NewQuery("SELECT DATEDIFF(Now(),'[account_join_date]')")
+					var/datum/db_query/query_datediff = SSdbcore.NewQuery(
+						"SELECT DATEDIFF(Now(), :account_join_date)",
+						list("account_join_date" = account_join_date)
+					)
 					if(!query_datediff.Execute())
 						qdel(query_datediff)
 						return
@@ -631,18 +655,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					qdel(query_datediff)
 	qdel(query_get_client_age)
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
+		var/datum/db_query/query_log_player = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = :round_id, ip = INET_ATON(:ip), computerid = :computerid, lastadminrank = :admin_rank, accountjoindate = :account_join_date WHERE ckey = :ckey",
+			list("round_id" = GLOB.round_id, "ip" = address, "computerid" = computer_id, "admin_rank" = admin_rank, "account_join_date" = account_join_date || null, "ckey" = ckey)
+		)
 		if(!query_log_player.Execute())
 			qdel(query_log_player)
 			return
 		qdel(query_log_player)
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/db_query/query_log_connection = SSdbcore.NewQuery({"
+		INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`)
+		VALUES(null,Now(),INET_ATON(:internet_address),:port,:round_id,:ckey,INET_ATON(:ip),:computerid)
+	"}, list("internet_address" = world.internet_address || "0", "port" = world.port, "round_id" = GLOB.round_id, "ckey" = ckey, "ip" = address, "computerid" = computer_id))
 	query_log_connection.Execute()
 	qdel(query_log_connection)
 
-	// SSserver_maint.UpdateHubStatus()
+	SSserver_maint.UpdateHubStatus()
 
 	if(new_player)
 		player_age = -1
@@ -662,9 +692,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			CRASH("Age check regex failed for [src.ckey]")
 
 /client/proc/validate_key_in_db()
-	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_key
-	var/datum/DBQuery/query_check_byond_key = SSdbcore.NewQuery("SELECT byond_key FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_check_byond_key = SSdbcore.NewQuery(
+		"SELECT byond_key FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!query_check_byond_key.Execute())
 		qdel(query_check_byond_key)
 		return
@@ -680,8 +712,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(F)
 			var/regex/R = regex("\\tkey = \"(.+)\"")
 			if(R.Find(F))
-				var/web_key = sanitizeSQL(R.group[1])
-				var/datum/DBQuery/query_update_byond_key = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET byond_key = '[web_key]' WHERE ckey = '[sql_ckey]'")
+				var/web_key = R.group[1]
+				var/datum/db_query/query_update_byond_key = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("player")] SET byond_key = :byond_key WHERE ckey = :ckey",
+					list("byond_key" = web_key, "ckey" = ckey)
+				)
 				query_update_byond_key.Execute()
 				qdel(query_update_byond_key)
 			else
@@ -698,8 +733,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/static/tokens = list()
 	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
-	var/sql_ckey = sanitizeSQL(ckey)
-	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	var/datum/db_query/query_cidcheck = SSdbcore.NewQuery(
+		"SELECT computerid FROM [format_table_name("player")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	query_cidcheck.Execute()
 
 	var/lastcid
@@ -718,7 +755,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
 
-			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
 			qdel(src)
@@ -732,7 +769,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
+				send2tgs_adminless_only("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
 				cidcheck_failedckeys[ckey] = TRUE
 				note_randomizer_user()
 
@@ -743,7 +780,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
+				send2tgs_adminless_only("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
@@ -774,10 +811,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
 
 /client/proc/add_system_note(system_ckey, message)
-	var/sql_system_ckey = sanitizeSQL(system_ckey)
-	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND expire_timestamp > NOW()")
+	var/datum/db_query/query_get_notes = SSdbcore.NewQuery(
+		"SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = :targetckey AND adminckey = :adminckey AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)",
+		list("targetckey" = ckey, "adminckey" = system_ckey)
+	)
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -786,7 +824,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND expire_timestamp > NOW() ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SSdbcore.NewQuery(
+		"SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = :targetckey AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC LIMIT 1",
+		list("targetckey" = ckey)
+	)
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -966,7 +1007,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/mob/living/M = mob
 		M.update_damage_hud()
 	if (prefs.auto_fit_viewport)
-		fit_viewport()
+		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
 	SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_CHANGE_VIEW, src, old_view, actualview)
 
 /client/proc/generate_clickcatcher()
@@ -1007,6 +1048,25 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/can_have_part(part_name)
 	return prefs.pref_species.mutant_bodyparts[part_name] || (part_name in GLOB.unlocked_mutant_parts)
 
+///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
+/client/proc/give_award(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.unlock(achievement_type, user, value)
+
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/get_award_status(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.get_achievement_status(achievement_type)
+
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/award_heart(heart_reason)
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
+	if(!src)
+		return
+	prefs.hearted_until = world.realtime + (24 HOURS)
+	prefs.hearted = TRUE
+	if(!src)
+		return
+	prefs.save_preferences()
+
 /// compiles a full list of verbs and sends it to the browser
 /client/proc/init_verbs()
 	if(IsAdminAdvancedProcCall())
@@ -1024,3 +1084,29 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		verb_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
+
+//increment progress for an unlockable loadout item
+/client/proc/increment_progress(key, amount)
+	if(prefs)
+		var/savefile/S = new /savefile(prefs.path)
+		var/list/unlockable_loadout_data = prefs.unlockable_loadout_data
+		if(!length(unlockable_loadout_data))
+			unlockable_loadout_data = list()
+			unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+		else
+			if(unlockable_loadout_data[key])
+				unlockable_loadout_data[key] += amount
+			else
+				unlockable_loadout_data[key] = amount
+			WRITE_FILE(S["unlockable_loadout"], safe_json_encode(unlockable_loadout_data))
+			prefs.unlockable_loadout_data = unlockable_loadout_data
+			return TRUE
+	return FALSE
+
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.ui_interact(mob)

@@ -181,18 +181,18 @@
 		if(T.light_range && !isspaceturf(T)) //no fairy grass or light tile can escape the fury of the darkness.
 			to_chat(user, "<span class='notice'>You scrape away [T] with your [name] and snuff out its lights.</span>")
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	else if(is_cleanable(AM))
+		var/obj/effect/E = AM
+		if(E.light_range && E.light_power)
+			disintegrate(E)
 	else if(isliving(AM))
 		var/mob/living/L = AM
 		if(isethereal(AM))
 			AM.emp_act(50)
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
-			if(borg.lamp_intensity)
-				borg.update_headlamp(TRUE, INFINITY)
-				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
-			for(var/obj/item/assembly/flash/cyborg/F in borg.held_items)
-				if(!F.crit_fail)
-					F.burn_out()
+			if(borg.lamp_enabled)
+				borg.smash_headlamp()
 		else
 			for(var/obj/item/O in AM)
 				if(O.light_range && O.light_power)
@@ -203,6 +203,15 @@
 		var/obj/item/I = AM
 		if(I.light_range && I.light_power)
 			disintegrate(I)
+	else if (isstructure(AM))
+		var/obj/structure/S = AM
+		if(istype(S, /obj/structure/glowshroom) || istype(S, /obj/structure/marker_beacon))
+			qdel(S)
+			visible_message("<span class='danger'>[S] is disintegrated by [src]!</span>")
+	else if(AM.light_range && AM.light_power  && !(istype(AM, /obj/machinery/power/apc) || istype(AM, /obj/machinery/airalarm)))
+		var/obj/target_object = AM
+		target_object.take_damage(force * 5, BRUTE, "melee", 0)
+
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
 	if(istype(O, /obj/item/pda))

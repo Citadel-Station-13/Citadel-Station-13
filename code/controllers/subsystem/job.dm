@@ -490,6 +490,30 @@ SUBSYSTEM_DEF(job)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
+	var/list/tcg_cards
+	if(ishuman(H))
+		if(length(H.client?.prefs?.tcg_cards))
+			tcg_cards = H.client.prefs.tcg_cards
+		else if(length(N?.client?.prefs?.tcg_cards))
+			tcg_cards = N.client.prefs.tcg_cards
+	if(tcg_cards)
+		var/obj/item/tcgcard_binder/binder = new(get_turf(H))
+		H.equip_to_slot_if_possible(binder, SLOT_IN_BACKPACK, disable_warning = TRUE, bypass_equip_delay_self = TRUE)
+		for(var/card_type in N.client.prefs.tcg_cards)
+			if(card_type)
+				if(islist(H.client.prefs.tcg_cards[card_type]))
+					for(var/duplicate in N.client.prefs.tcg_cards[card_type])
+						var/obj/item/tcg_card/card = new(get_turf(H), card_type, duplicate)
+						card.forceMove(binder)
+						binder.cards.Add(card)
+				else
+					var/obj/item/tcg_card/card = new(get_turf(H), card_type, N.client.prefs.tcg_cards[card_type])
+					card.forceMove(binder)
+					binder.cards.Add(card)
+		binder.check_for_exodia()
+		if(length(N.client.prefs.tcg_decks))
+			binder.decks = N.client.prefs.tcg_decks
+
 	return H
 /*
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
@@ -691,19 +715,29 @@ SUBSYSTEM_DEF(job)
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
-			if(I && length(i[LOADOUT_COLOR])) //handle loadout colors
-			 	//handle polychromic items
-				if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
-					var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
-					if(polychromic && istype(polychromic))
-						var/list/polychromic_entry = polychromic.colors_by_atom[I]
-						if(polychromic_entry)
-							polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
-							I.update_icon()
-				else
-					//handle non-polychromic items (they only have one color)
-					I.add_atom_colour(i[LOADOUT_COLOR][1], FIXED_COLOUR_PRIORITY)
-					I.update_icon()
+			if(I)
+				if(length(i[LOADOUT_COLOR])) //handle loadout colors
+				 	//handle polychromic items
+					if((G.loadout_flags & LOADOUT_CAN_COLOR_POLYCHROMIC) && length(G.loadout_initial_colors))
+						var/datum/element/polychromic/polychromic = I.comp_lookup["item_worn_overlays"] //stupid way to do it but GetElement does not work for this
+						if(polychromic && istype(polychromic))
+							var/list/polychromic_entry = polychromic.colors_by_atom[I]
+							if(polychromic_entry)
+								if(polychromic.suits_with_helmet_typecache[I.type]) //is this one of those toggleable hood/helmet things?
+									polychromic.connect_helmet(I,i[LOADOUT_COLOR])
+								polychromic.colors_by_atom[I] = i[LOADOUT_COLOR]
+								I.update_icon()
+					else
+						//handle non-polychromic items (they only have one color)
+						I.add_atom_colour(i[LOADOUT_COLOR][1], FIXED_COLOUR_PRIORITY)
+						I.update_icon()
+				//when inputting the data it's already sanitized
+				if(i[LOADOUT_CUSTOM_NAME])
+					var/custom_name = i[LOADOUT_CUSTOM_NAME]
+					I.name = custom_name
+				if(i[LOADOUT_CUSTOM_DESCRIPTION])
+					var/custom_description = i[LOADOUT_CUSTOM_DESCRIPTION]
+					I.desc = custom_description
 			if(!M.equip_to_slot_if_possible(I, G.slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M

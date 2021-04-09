@@ -33,6 +33,14 @@ GLOBAL_LIST_EMPTY(explosions)
 		EX_PREPROCESS_EXIT_CHECK\
 	}
 
+#define CREAK_DELAY 5 SECONDS //Time taken for the creak to play after explosion, if applicable.
+#define FAR_UPPER 60 //Upper limit for the far_volume, distance, clamped.
+#define FAR_LOWER 40 //lower limit for the far_volume, distance, clamped.
+#define PROB_SOUND 75 //The probability modifier for a sound to be an echo, or a far sound. (0-100)
+#define SHAKE_CLAMP 2.5 //The limit for how much the camera can shake for out of view booms.
+#define FREQ_UPPER 40 //The upper limit for the randomly selected frequency.
+#define FREQ_LOWER 25 //The lower of the above.
+
 /datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 	set waitfor = FALSE
 
@@ -89,7 +97,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
 		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
-	
+
 	deadchat_broadcast("<span class='deadsay bold'>An explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) has occured at ([get_area(epicenter)])</span>", turf_target = get_turf(epicenter))
 
 	var/x0 = epicenter.x
@@ -115,13 +123,14 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/sound/creaking_explosion_sound = sound(get_sfx("explosion_creaking"))
 		var/sound/hull_creaking_sound = sound(get_sfx("hull_creaking"))
 		var/sound/explosion_echo_sound = sound('sound/effects/explosion_distant.ogg')
-		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION) 
+		var/on_station = SSmapping.level_trait(epicenter.z, ZTRAIT_STATION)
 		var/creaking_explosion = FALSE
 
 		if(prob(devastation_range*30+heavy_impact_range*5) && on_station) // Huge explosions are near guaranteed to make the station creak and whine, smaller ones might.
 			creaking_explosion = TRUE // prob over 100 always returns true
 
-		for(var/mob/M in GLOB.player_list)
+		for(var/MN in GLOB.player_list)
+			var/mob/M = MN
 			// Double check for client
 			var/turf/M_turf = get_turf(M)
 			if(M_turf && M_turf.z == z0)
@@ -131,15 +140,15 @@ GLOBAL_LIST_EMPTY(explosions)
 					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
+					M.playsound_local(epicenter, null, 100, 1, frequency, S = explosion_sound)
 					if(baseshakeamount > 0)
 						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 				else if(dist <= far_dist)
-					var/far_volume = clamp(far_dist/2, 40, 60) // Volume is based on explosion size and dist
+					var/far_volume = clamp(far_dist/2, FAR_LOWER, FAR_UPPER) // Volume is based on explosion size and dist
 					if(creaking_explosion)
 						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = creaking_explosion_sound, distance_multiplier = 0)
-					else if(prob(75))
+					else if(prob(PROB_SOUND)) // Sound variety during meteor storm/tesloose/other bad event
 						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = far_explosion_sound, distance_multiplier = 0) // Far sound
 					else
 						M.playsound_local(epicenter, null, far_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0) // Echo sound
@@ -147,18 +156,18 @@ GLOBAL_LIST_EMPTY(explosions)
 					if(baseshakeamount > 0 || devastation_range)
 						if(!baseshakeamount) // Devastating explosions rock the station and ground
 							baseshakeamount = devastation_range*3
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
-				
-				else if(M.can_hear() && !isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
+				else if(!isspaceturf(get_turf(M)) && heavy_impact_range) // Big enough explosions echo throughout the hull
 					var/echo_volume = 40
 					if(devastation_range)
 						baseshakeamount = devastation_range
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, SHAKE_CLAMP))
 						echo_volume = 60
 					M.playsound_local(epicenter, null, echo_volume, 1, frequency, S = explosion_echo_sound, distance_multiplier = 0)
 
 				if(creaking_explosion) // 5 seconds after the bang, the station begins to creak
-					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(25, 40), 1, frequency, null, null, FALSE, hull_creaking_sound, null, null, null, null, 0), 5 SECONDS)
+					addtimer(CALLBACK(M, /mob/proc/playsound_local, epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), 1, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
+
 			EX_PREPROCESS_CHECK_TICK
 
 	//postpone processing for a bit
@@ -230,8 +239,13 @@ GLOBAL_LIST_EMPTY(explosions)
 				atoms += A
 			for(var/i in atoms)
 				var/atom/A = i
-				if(!QDELETED(A))
-					A.ex_act(dist)
+				if(QDELETED(A))
+					continue
+				A.ex_act(dist, null, src)
+				if(QDELETED(A) || !ismovable(A))
+					continue
+				var/atom/movable/AM = A
+				LAZYADD(AM.acted_explosions, explosion_id)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
@@ -303,6 +317,8 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
 
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION,epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes to explosion code using this please so we can compare
 	if(GLOB.Debug2)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
@@ -315,6 +331,14 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	++stopped
 	qdel(src)
+
+#undef CREAK_DELAY
+#undef FAR_UPPER
+#undef FAR_LOWER
+#undef PROB_SOUND
+#undef SHAKE_CLAMP
+#undef FREQ_UPPER
+#undef FREQ_LOWER
 
 #undef EX_PREPROCESS_EXIT_CHECK
 #undef EX_PREPROCESS_CHECK_TICK

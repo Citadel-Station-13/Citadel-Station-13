@@ -55,6 +55,9 @@
 //donator items
 #define LOADOUT_CATEGORY_DONATOR	"Donator"
 
+//unlockable items
+#define LOADOUT_CATEGORY_UNLOCKABLE	"Unlockable"
+
 //how many prosthetics can we have
 #define MAXIMUM_LOADOUT_PROSTHETICS	2
 
@@ -69,11 +72,22 @@
 #define LOADOUT_LIMBS		 		list(LOADOUT_LIMB_NORMAL,LOADOUT_LIMB_PROSTHETIC,LOADOUT_LIMB_AMPUTATED) //you can amputate your legs/arms though
 
 //loadout saving/loading specific defines
-#define MAXIMUM_LOADOUT_SAVES	5
-#define LOADOUT_ITEM			"loadout_item"
-#define LOADOUT_COLOR			"loadout_color"
+#define MAXIMUM_LOADOUT_SAVES		5
+#define LOADOUT_ITEM				"loadout_item"
+#define LOADOUT_COLOR				"loadout_color"
+#define LOADOUT_CUSTOM_NAME			"loadout_custom_name"
+#define LOADOUT_CUSTOM_DESCRIPTION	"loadout_custom_description"
 
 //loadout item flags
 #define LOADOUT_CAN_NAME					(1<<0) //renaming items
 #define LOADOUT_CAN_DESCRIPTION				(1<<1) //adding a custom description to items
 #define LOADOUT_CAN_COLOR_POLYCHROMIC		(1<<2)
+
+//the names of the customization tabs
+#define SETTINGS_TAB			0
+#define GAME_PREFERENCES_TAB	1
+#define APPEARANCE_TAB			2
+#define SPEECH_TAB				3
+#define LOADOUT_TAB				4
+#define CONTENT_PREFERENCES_TAB	5
+#define KEYBINDINGS_TAB			6

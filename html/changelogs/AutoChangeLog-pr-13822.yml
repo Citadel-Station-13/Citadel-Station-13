@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Bloodcult stunhands now work against clockies like they were supposed to instead of hardstunning."

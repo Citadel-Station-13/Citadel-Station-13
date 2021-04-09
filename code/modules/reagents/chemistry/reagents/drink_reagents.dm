@@ -504,6 +504,14 @@
 	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 	value = REAGENT_VALUE_COMMON
 
+/datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	return ..()
+
+/datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/meth)
+	return ..()
+
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
 	M.Jitter(20)
 	M.set_drugginess(30)
@@ -608,7 +616,7 @@
 	name = "Buzz Fuzz"
 	description = "~A Hive of Flavour!~ NOTICE: Addicting."
 	nutriment_factor = 0
-	addiction_threshold = 26 //A can and a sip
+	addiction_threshold = 31 //A can and a sip
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "carbonated honey and pollen"
 	glass_icon_state = "buzz_fuzz"
@@ -625,8 +633,9 @@
 			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
 
 /datum/reagent/consumable/buzz_fuzz/on_mob_life(mob/living/carbon/M)
-	M.reagents.add_reagent(/datum/reagent/consumable/sugar,1)
-	if(prob(5))
+	if(prob(33))
+		M.reagents.add_reagent(/datum/reagent/consumable/sugar,1)
+	if(prob(1))
 		M.reagents.add_reagent(/datum/reagent/consumable/honey,1)
 	..()
 

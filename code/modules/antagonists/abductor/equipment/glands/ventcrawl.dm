@@ -9,4 +9,4 @@
 
 /obj/item/organ/heart/gland/ventcrawling/activate()
 	to_chat(owner, "<span class='notice'>You feel very stretchy.</span>")
-	owner.ventcrawler = VENTCRAWLER_ALWAYS
+	owner.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)

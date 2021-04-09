@@ -18,6 +18,7 @@
 /obj/item/paicard/Initialize()
 	SSpai.pai_card_list += src
 	add_overlay("pai-off")
+	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 	return ..()
 
 /obj/item/paicard/Destroy()
@@ -121,7 +122,10 @@
 /obj/item/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
 	src.add_overlay("pai-null")
-
+	var/list/policies = CONFIG_GET(keyed_list/policyconfig)
+	var/policy = policies[POLICYCONFIG_PAI]
+	if(policy)
+		to_chat(personality, policy)
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 

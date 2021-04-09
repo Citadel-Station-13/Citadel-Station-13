@@ -16,7 +16,7 @@
 
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
-	result = /obj/item/assembly/flash/shield
+	result = /obj/item/shield/riot/flash
 	reqs = list(/obj/item/wallframe/flasher = 1,
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)
@@ -68,6 +68,52 @@
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1,
 				/obj/item/stack/ore/bluespace_crystal = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/bokken
+	name = "Training Bokken"
+	result = /obj/item/melee/bokken
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/bokken_blade = 1,
+				/obj/item/bokken_hilt = 1,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 60
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/bokken_steelwood
+	name = "Training Steelwood Bokken"
+	result = /obj/item/melee/bokken/steelwood
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/bokken_steelblade = 1,
+				/obj/item/bokken_hilt = 1,
+				/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 60
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/wakibokken
+	name = "Training Wakizashi Bokken"
+	result = /obj/item/melee/bokken/waki
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/wakibokken_blade = 1,
+				/obj/item/bokken_hilt = 1,
+				/obj/item/stack/sheet/cloth = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_MELEE
+
+/datum/crafting_recipe/wakibokken_steelwood
+	name = "Training Wakizashi Steelwood Bokken"
+	result = /obj/item/melee/bokken/waki/steelwood
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/wakibokken_steelblade = 1,
+				/obj/item/bokken_hilt = 1,
+				/obj/item/stack/sheet/cloth = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_MELEE
@@ -248,33 +294,18 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/ishotgun 
+/datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
 	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/pipe = 2, // putting a large amount of meaningless timegates by forcing people to turn base resources into upgraded resources kinda sucks
-				/obj/item/weaponcrafting/improvised_parts/shotgun_receiver = 1,
-				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
-				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
+	reqs = list(/obj/item/pipe = 1,
+				/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/weaponcrafting/stock = 1,
 				/obj/item/stack/packageWrap = 5)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/irifle // larger and less versatile gun, but a bit easier to make
-	name = "Improvised Rifle (7.62mm)"
-	result = /obj/item/gun/ballistic/shotgun/boltaction/improvised
-	reqs = list(/obj/item/pipe = 2, // above
-				/obj/item/weaponcrafting/improvised_parts/rifle_receiver = 1,
-				/obj/item/weaponcrafting/improvised_parts/trigger_assembly = 1,
-				/obj/item/weaponcrafting/improvised_parts/wooden_body = 1,
-				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/packageWrap = 5)
-	tools = list(TOOL_SCREWDRIVER)
-	time = 100
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
+//the Improvised Rifle will not be missed. Rest in Pieces 2019-2021
 
 //////////////////
 ///AMMO CRAFTING//
@@ -403,34 +434,50 @@
 // PARTS CRAFTING //
 ////////////////////
 
-// RECEIVERS
+// BOKKEN CRAFTING
 
-/datum/crafting_recipe/rifle_receiver
-	name = "Improvised Rifle Receiver"
-	result = /obj/item/weaponcrafting/improvised_parts/rifle_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 15)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
-	time = 25
-	category = CAT_WEAPONRY
-	subcategory = CAT_PARTS
-
-/datum/crafting_recipe/shotgun_receiver
-	name = "Improvised Shotgun Receiver"
-	result = /obj/item/weaponcrafting/improvised_parts/shotgun_receiver
-	reqs = list(/obj/item/stack/sheet/metal = 10) // shotgun does less damage than the rifle and can't 1shot but is more portable
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+/datum/crafting_recipe/bokken_blade
+	name = "Training Bokken Blade"
+	result = /obj/item/bokken_blade
+	tools = list(/obj/item/hatchet)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5)
 	time = 20
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS
 
-// MISC
+/datum/crafting_recipe/wakibokken_blade
+	name = "Training Wakizashi Bokken Blade"
+	result = /obj/item/wakibokken_blade
+	tools = list(/obj/item/hatchet)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 2)
+	time = 20
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
 
-/datum/crafting_recipe/trigger_assembly
-	name = "Trigger Assembly"
-	result = /obj/item/weaponcrafting/improvised_parts/trigger_assembly
-	reqs = list(/obj/item/stack/sheet/metal = 3,
-				/obj/item/assembly/igniter = 1)
-	tools = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+/datum/crafting_recipe/bokken_steelblade
+	name = "Training Ironwood Bokken Blade"
+	result = /obj/item/bokken_steelblade
+	tools = list(/obj/item/hatchet, TOOL_WELDER)
+	reqs = list(/obj/item/grown/log/steel = 2)
+	time = 20
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
+
+/datum/crafting_recipe/wakibokken_steelblade
+	name = "Training Wakizashi Ironwood Bokken Blade"
+	result = /obj/item/wakibokken_steelblade
+	tools = list(/obj/item/hatchet, TOOL_WELDER)
+	reqs = list(/obj/item/grown/log/steel = 1)
+	time = 20
+	category = CAT_WEAPONRY
+	subcategory = CAT_PARTS
+
+/datum/crafting_recipe/bokken_hilt
+	name = "Training Bokken hilt"
+	result = /obj/item/bokken_hilt
+	tools = list(/obj/item/hatchet)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,
+				/obj/item/stack/sheet/cloth = 2)
 	time = 20
 	category = CAT_WEAPONRY
 	subcategory = CAT_PARTS

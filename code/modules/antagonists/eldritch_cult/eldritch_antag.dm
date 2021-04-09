@@ -10,6 +10,8 @@
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
+	var/list/sac_targetted = list()		//Which targets did living hearts give them, but they did not sac?
+	var/list/actually_sacced = list()	//Which targets did they actually sac?
 	var/ascended = FALSE
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
@@ -23,20 +25,20 @@
 	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='cult'>The book whispers, the forbidden knowledge walks once again!<br>\
-	Your book allows you to research abilities, but be careful, you cannot undo what has been done.<br>\
-	You gain charges by either collecting influences or sacrificing people tracked by the living heart<br> \
+	to_chat(owner, "<span class='cult'>The book whispers softly, its forbidden knowledge walks this plane once again!<br>\
+	Your book allows you to research abilities. Read it very carefully, for you cannot undo what has been done!<br>\
+	You gain charges by either collecting influences or sacrificing people tracked by the living heart.<br> \
 	You can find a basic guide at : https://tgstation13.org/wiki/Heresy_101 </span>")
 
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
 	owner.teach_crafting_recipe(/datum/crafting_recipe/heretic/codex)
+	owner.special_role = ROLE_HERETIC
 	if(ishuman(current))
 		forge_primary_objectives()
 		gain_knowledge(/datum/eldritch_knowledge/spell/basic)
 		gain_knowledge(/datum/eldritch_knowledge/living_heart)
 		gain_knowledge(/datum/eldritch_knowledge/codex_cicatrix)
-		gain_knowledge(/datum/eldritch_knowledge/eldritch_blade)
 	current.log_message("has been converted to the cult of the forgotten ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing,src)
@@ -49,12 +51,14 @@
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_lose(owner.current)
-
+	owner.special_role = null
 	if(!silent)
 		to_chat(owner.current, "<span class='userdanger'>Your mind begins to flare as the otherwordly knowledge escapes your grasp!</span>")
 		owner.current.log_message("has renounced the cult of the old ones!", LOG_ATTACK, color="#960000")
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
+
+	on_death()
 
 	return ..()
 
@@ -87,15 +91,25 @@
 
 /datum/antagonist/heretic/process()
 
+	if(owner.current.stat == DEAD)
+		return
+
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
 		EK.on_life(owner.current)
+
+///What happens to the heretic once he dies, used to remove any custom perks
+/datum/antagonist/heretic/proc/on_death()
+
+	for(var/X in researched_knowledge)
+		var/datum/eldritch_knowledge/EK = researched_knowledge[X]
+		EK.on_death(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
 	for(var/i in 1 to 2)
-		var/pck = pick("assasinate","protect")
+		var/pck = pick("assasinate")
 		switch(pck)
 			if("assasinate")
 				var/datum/objective/assassinate/once/A = new
@@ -104,13 +118,6 @@
 				A.find_target(owners,protection)
 				assasination += A.target
 				objectives += A
-			if("protect")
-				var/datum/objective/protect/P = new
-				P.owner = owner
-				var/list/owners = P.get_owners()
-				P.find_target(owners,assasination)
-				protection += P.target
-				objectives += P
 
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.owner = owner
@@ -123,7 +130,7 @@
 	if(mob_override)
 		current = mob_override
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
-	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
+	handle_clown_mutation(current, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
@@ -158,7 +165,7 @@
 				cultiewin = FALSE
 			count++
 	if(ascended)
-		parts += "<span class='greentext big'>HERETIC HAS ASCENDED!</span>"
+		parts += "<span class='greentext big'>THE HERETIC ASCENDED!</span>"
 	else
 		if(cultiewin)
 			parts += "<span class='greentext'>The heretic was successful!</span>"
@@ -173,6 +180,17 @@
 		var/datum/eldritch_knowledge/EK = knowledge[X]
 		knowledge_message += "[EK.name]"
 	parts += knowledge_message.Join(", ")
+
+	parts += "<b>Targets assigned by living hearts, but not sacrificed:</b>"
+	if(!sac_targetted.len)
+		parts += "None."
+	else
+		parts += sac_targetted.Join(",")
+	parts += "<b>Sacrifices performed:</b>"
+	if(!actually_sacced.len)
+		parts += "<span class='redtext'>None!</span>"
+	else
+		parts += actually_sacced.Join(",")
 
 	return parts.Join("<br>")
 ////////////////
@@ -211,6 +229,23 @@
 		. += EK.cost
 	if(ascended)
 		. += 20
+
+/datum/antagonist/heretic/antag_panel()
+	var/list/parts = list()
+	parts += ..()
+	parts += "<b>Targets currently assigned by living hearts (Can give a false negative if they stole someone elses living heart):</b>"
+	if(!sac_targetted.len)
+		parts += "None."
+	else
+		parts += sac_targetted.Join(",")
+	parts += "<b>Targets actually sacrificed:</b>"
+	if(!actually_sacced.len)
+		parts += "None."
+	else
+		parts += actually_sacced.Join(",")
+
+	return (parts.Join("<br>") + "<br>")
+
 
 ////////////////
 // Objectives //

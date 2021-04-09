@@ -61,7 +61,7 @@
 #define BODYPART_NANITES   4
 
 #define HYBRID_BODYPART_DAMAGE_THRESHHOLD 25 //How much damage has to be suffered until the damage threshhold counts as passed
-#define HYBRID_BODYPART_THESHHOLD_MINDAMAGE 15 //Which damage value this limb cannot be healed out of via easy nonsurgical means if the threshhold has been passed, state resets if damage value goes below mindamage.
+#define HYBRID_BODYPART_THESHHOLD_MINDAMAGE 10 //Which damage value this limb cannot be healed out of via easy nonsurgical means if the threshhold has been passed, state resets if damage value goes below mindamage.
 
 #define BODYPART_NOT_DISABLED 0
 #define BODYPART_DISABLED_DAMAGE 1
@@ -340,3 +340,6 @@
 #define EXAMINE_MORE_TIME	1 SECONDS
 
 #define SILENCE_RANGED_MESSAGE	(1<<0)
+
+///Define for spawning megafauna instead of a mob for cave gen
+#define SPAWN_MEGAFAUNA "bluh bluh huge boss"

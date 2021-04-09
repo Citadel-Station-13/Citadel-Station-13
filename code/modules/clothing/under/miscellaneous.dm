@@ -23,16 +23,15 @@
 	name = "prison jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner"
-	item_state = "o_suit"
-	has_sensor = LOCKED_SENSORS
+	item_state = "prisoner"
 	sensor_mode = SENSOR_COORDS
-	random_sensor = FALSE
+	sensor_flags = SENSOR_LOCKED
 
 /obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "prisoner_skirt"
-	item_state = "o_suit"
+	item_state = "prisoner_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -166,17 +165,20 @@
 /obj/item/clothing/under/misc/gear_harness
 	name = "gear harness"
 	desc = "A simple, inconspicuous harness replacement for a jumpsuit."
+	limb_integrity = 180
 	icon_state = "gear_harness"
 	item_state = "gear_harness"
 	can_adjust = TRUE
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/under/misc/gear_harness/toggle_jumpsuit_adjust()
-	adjusted = !adjusted
-	if(adjusted)
-		body_parts_covered = NONE
-	else
+	if(!body_parts_covered)
+		to_chat(usr, "<span class='notice'>Your gear harness is now covering your chest and groin.</span>")
 		body_parts_covered = CHEST|GROIN
+	else
+		to_chat(usr, "<span class='notice'>Your gear harness is no longer covering anything.</span>")
+		body_parts_covered = NONE
+	return TRUE
 
 /obj/item/clothing/under/misc/durathread
 	name = "durathread jumpsuit"

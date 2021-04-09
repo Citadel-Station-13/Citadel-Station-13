@@ -1,4 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - tweak: "text formatting now uses one character instead of two around the text to emphasize."

@@ -471,11 +471,10 @@
 	if(paused || !isturf(loc))
 		return
 
-	var/ds = (SSprojectiles.flags & SS_TICKER)? (wait * world.tick_lag) : wait
-	var/required_pixels = (pixels_per_second * ds * 0.1) + pixels_tick_leftover
+	var/required_pixels = (pixels_per_second * wait) + pixels_tick_leftover
 	if(required_pixels >= pixel_increment_amount)
 		pixels_tick_leftover = MODULUS(required_pixels, pixel_increment_amount)
-		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, ds, SSprojectiles.global_projectile_speed_multiplier)
+		pixel_move(FLOOR(required_pixels / pixel_increment_amount, 1), FALSE, wait, SSprojectiles.global_projectile_speed_multiplier)
 	else
 		pixels_tick_leftover = required_pixels
 
@@ -517,7 +516,7 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_increment_amount)
 	fired = TRUE
 	if(hitscan)
-		process_hitscan()
+		INVOKE_ASYNC(src, .proc/process_hitscan)
 		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		START_PROCESSING(SSprojectiles, src)
@@ -603,7 +602,7 @@
   * Trajectory multiplier directly modifies the factor of pixel_increment_amount to go per time.
   * It's complicated, so probably just don't mess with this unless you know what you're doing.
   */
-/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, deciseconds_equivalent = world.tick_lag, trajectory_multiplier = 1, allow_animation = TRUE)
+/obj/item/projectile/proc/pixel_move(times, hitscanning = FALSE, seconds_equivalent = world.tick_lag * 0.1, trajectory_multiplier = 1, allow_animation = TRUE)
 	if(!loc || !trajectory)
 		return
 	if(!nondirectional_sprite && !hitscanning)
@@ -620,7 +619,7 @@
 		if(homing_target)
 			// No datum/points, too expensive.
 			var/angle = closer_angle_difference(Angle, get_projectile_angle(src, homing_target))
-			var/max_turn = homing_turn_speed * deciseconds_equivalent * 0.1
+			var/max_turn = homing_turn_speed * seconds_equivalent
 			setAngle(Angle + clamp(angle, -max_turn, max_turn))
 		// HOMING END
 		trajectory.increment(trajectory_multiplier)

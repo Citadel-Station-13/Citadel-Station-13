@@ -226,7 +226,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
-	else if (istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(check_completion())
 			Interact(user)
 		else
@@ -326,6 +326,9 @@
 	else if(istype(W, /obj/item/borg/upgrade/ai))
 		var/obj/item/borg/upgrade/ai/M = W
 		if(check_completion())
+			if(!chest.cell)
+				to_chat(user, "<span class='warning'>The endoskeleton still needs a power cell!</span>")
+				return
 			if(!isturf(loc))
 				to_chat(user, "<span class='warning'>You cannot install[M], the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
@@ -345,7 +348,6 @@
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
-
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
@@ -380,7 +382,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!istype(item_in_hand, /obj/item/multitool))
+	if(!item_in_hand.tool_behaviour == TOOL_MULTITOOL)
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 
@@ -392,6 +394,7 @@
 			created_name = new_name
 		else
 			created_name = ""
+		log_game("[key_name(usr)] renamed [src] ([REF(src)]) to [created_name].")
 
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)

@@ -6,7 +6,6 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-
 	var/transfer_rate = MAX_TRANSFER_RATE
 	var/filter_type = null
 	var/frequency = 0

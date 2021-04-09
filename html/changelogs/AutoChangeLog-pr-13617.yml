@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - rscadd: "loadout now has save slot support and colour choosing/saving for polychromic items"

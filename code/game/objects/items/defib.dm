@@ -120,7 +120,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_power()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -721,24 +721,24 @@
 
 /obj/item/disk/medical/defib_heal
 	name = "Defibrillator Healing Disk"
-	desc = "An upgrade which increases the healing power of the defibrillator"
+	desc = "An upgrade which increases the healing power of the defibrillator."
 	icon_state = "heal_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_shock
 	name = "Defibrillator Anti-Shock Disk"
-	desc = "A safety upgrade that guarantees only the patient will get shocked"
+	desc = "A safety upgrade that guarantees only the patient will get shocked."
 	icon_state = "zap_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 6000, /datum/material/silver = 6000)
 
 /obj/item/disk/medical/defib_decay
 	name = "Defibrillator Body-Decay Extender Disk"
-	desc = "An upgrade allowing the defibrillator to work on more decayed bodies"
+	desc = "An upgrade allowing the defibrillator to work on bodies that have decayed further."
 	icon_state = "body_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 18000, /datum/material/gold = 16000, /datum/material/silver = 6000, /datum/material/titanium = 2000)
 
 /obj/item/disk/medical/defib_speed
 	name = "Defibrillator Fast Charge Disk"
-	desc = "An upgrade to the defibrillator capacitors, which let it charge faster"
+	desc = "An upgrade to the defibrillator capacitors, which lets it charge faster."
 	icon_state = "fast_disk"
 	custom_materials = list(/datum/material/iron=16000, /datum/material/glass = 8000, /datum/material/gold = 26000, /datum/material/silver = 26000)

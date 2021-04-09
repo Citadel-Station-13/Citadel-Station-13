@@ -99,6 +99,9 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
+	/// does this limb have replacement capability, despite probably not being robotic?
+	// see code\modules\surgery\limb_augmentation.dm, or code\game\machinery\limbgrower.dm
+	var/forcereplace = FALSE
 
 /obj/item/bodypart/examine(mob/user)
 	. = ..()
@@ -240,7 +243,13 @@
 				wounding_dmg *= (easy_dismember ? 1 : 0.75)
 			if((mangled_state & BODYPART_MANGLED_BONE) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
 				return
-		// note that there's no handling for BIO_JUST_FLESH since we don't have any that are that right now (slimepeople maybe someday)
+		// if we're flesh only, all blunt attacks become weakened slashes in terms of wound damage
+		if(BIO_JUST_FLESH)
+			if(wounding_type == WOUND_BLUNT)
+				wounding_type = WOUND_SLASH
+				wounding_dmg *= (easy_dismember ? 1 : 0.3)
+			if((mangled_state & BODYPART_MANGLED_FLESH) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+				return
 		// standard humanoids
 		if(BIO_FLESH_BONE)
 			// if we've already mangled the skin (critical slash or piercing wound), then the bone is exposed, and we can damage it with sharp weapons at a reduced rate
@@ -297,6 +306,7 @@
 			owner.update_stamina()
 	consider_processing()
 	update_disabled()
+	update_threshhold_state()
 	return update_bodypart_damage_state()
 
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
@@ -394,11 +404,10 @@
 			var/datum/wound/new_wound
 			if(replaced_wound)
 				new_wound = replaced_wound.replace_wound(possible_wound)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			else
 				new_wound = new possible_wound
 				new_wound.apply_wound(src)
-				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
+			log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 			return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
@@ -476,6 +485,7 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
+	update_threshhold_state()
 	return update_bodypart_damage_state()
 
 //Returns total damage.

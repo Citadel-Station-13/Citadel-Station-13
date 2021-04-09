@@ -139,6 +139,7 @@
 
 /obj/vehicle/sealed/car/clowncar/twitch_plays
 	key_type = null
+	explode_on_death = FALSE
 
 /obj/vehicle/sealed/car/clowncar/twitch_plays/Initialize()
 	. = ..()

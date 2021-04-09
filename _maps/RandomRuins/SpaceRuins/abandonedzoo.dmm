@@ -351,7 +351,7 @@
 	equipment = 0;
 	lighting = 0;
 	name = "Worn-out APC";
-	pixel_x = -24
+	pixel_x = -25
 	},
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -567,6 +567,7 @@
 "bm" = (
 /obj/structure/closet/wardrobe/science_white,
 /obj/structure/disposalpipe/segment,
+/obj/item/tcg_card/special/space_carp,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},

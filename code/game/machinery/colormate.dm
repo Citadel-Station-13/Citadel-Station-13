@@ -6,10 +6,12 @@
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/colormate
-	var/obj/item/inserted
+	var/atom/movable/inserted
 	var/activecolor = "#FFFFFF"
 	var/list/color_matrix_last
 	var/matrix_mode = FALSE
+	/// Allow holder'd mobs
+	var/allow_mobs = TRUE
 	/// Minimum lightness for normal mode
 	var/minimum_normal_lightness = 50
 	/// Minimum lightness for matrix mode, tested using 4 test colors of full red, green, blue, white.
@@ -42,7 +44,8 @@
 		icon_state = "colormate"
 
 /obj/machinery/gear_painter/Destroy()
-	inserted.forceMove(drop_location())
+	if(inserted) //please i beg you do not drop nulls
+		inserted.forceMove(drop_location())
 	return ..()
 
 /obj/machinery/gear_painter/attackby(obj/item/I, mob/living/user)
@@ -57,10 +60,21 @@
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
+	if(allow_mobs && istype(I, /obj/item/clothing/head/mob_holder))
+		var/obj/item/clothing/head/mob_holder/H = I
+		var/mob/victim = H.held_mob
+		if(!user.transferItemToLoc(I, src))
+			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+			return
+		if(!QDELETED(H))
+			H.release()
+		insert_mob(victim, user)
 
 	if(is_type_in_list(I, allowed_types) && is_operational())
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+			return
+		if(QDELETED(I))
 			return
 		user.visible_message("<span class='notice'>[user] inserts [I] into [src]'s receptable.</span>")
 
@@ -69,8 +83,21 @@
 	else
 		return ..()
 
+/obj/machinery/gear_painter/proc/insert_mob(mob/victim, mob/user)
+	if(inserted)
+		return
+	if(user)
+		visible_message("<span class='warning'>[user] stuffs [victim] into [src]!</span>")
+	inserted = victim
+	inserted.forceMove(src)
+
 /obj/machinery/gear_painter/AllowDrop()
 	return FALSE
+
+/obj/machinery/gear_painter/handle_atom_del(atom/movable/AM)
+	if(AM == inserted)
+		inserted = null
+	return ..()
 
 /obj/machinery/gear_painter/AltClick(mob/user)
 	. = ..()
@@ -106,15 +133,15 @@
 			dat += "<input type='hidden' name='matrix_paint' value='1'"
 			dat += "<br><br>"
 			dat += MATRIX_FIELD("rr", color_matrix_last[1])
-			dat += MATRIX_FIELD("rg", color_matrix_last[2])
-			dat += MATRIX_FIELD("rb", color_matrix_last[3])
-			dat += "<br><br>"
 			dat += MATRIX_FIELD("gr", color_matrix_last[4])
-			dat += MATRIX_FIELD("gg", color_matrix_last[5])
-			dat += MATRIX_FIELD("gb", color_matrix_last[6])
-			dat += "<br><br>"
 			dat += MATRIX_FIELD("br", color_matrix_last[7])
+			dat += "<br><br>"
+			dat += MATRIX_FIELD("rg", color_matrix_last[2])
+			dat += MATRIX_FIELD("gg", color_matrix_last[5])
 			dat += MATRIX_FIELD("bg", color_matrix_last[8])
+			dat += "<br><br>"
+			dat += MATRIX_FIELD("rb", color_matrix_last[3])
+			dat += MATRIX_FIELD("gb", color_matrix_last[6])
 			dat += MATRIX_FIELD("bb", color_matrix_last[9])
 			dat += "<br><br>"
 			dat += MATRIX_FIELD("cr", color_matrix_last[10])

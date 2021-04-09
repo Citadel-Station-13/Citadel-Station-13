@@ -200,7 +200,7 @@
 		if(option == "Random")
 			iconstates[option] = image(icon = src.icon, icon_state = "ai-random")
 			continue
-		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
+		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option, radial_preview = TRUE))
 
 	view_core()
 	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)
@@ -911,10 +911,10 @@
 
 	if(!istype(apc) || QDELETED(apc) || apc.stat & BROKEN)
 		to_chat(src, "<span class='danger'>Hack aborted. The designated APC no longer exists on the power network.</span>")
-		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
 	else if(apc.aidisabled)
 		to_chat(src, "<span class='danger'>Hack aborted. \The [apc] is no longer responding to our systems.</span>")
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 	else
 		malf_picker.processing_time += 10
 
@@ -923,7 +923,7 @@
 		apc.locked = TRUE
 		apc.coverlocked = TRUE
 
-		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 		to_chat(src, "Hack complete. \The [apc] is now under your exclusive control.")
 		apc.update_icon()
 
@@ -1039,3 +1039,6 @@
 	if(current && eyeobj)
 		return eyeobj.emote(act, m_type, message, intentional, forced = TRUE)
 	return ..()
+
+/mob/living/silicon/ai/zMove(dir, feedback = FALSE)
+	. = eyeobj.zMove(dir, feedback)

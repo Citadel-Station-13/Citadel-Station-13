@@ -4,12 +4,10 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
+	var/freq = 1
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
 		return
-	var/freq = input(usr, "What frequency would you like the sound to play at?",, 1) as null|num
-	if(!freq)
-		freq = 1
 	vol = clamp(vol, 1, 100)
 
 	var/sound/admin_sound = new()
@@ -18,14 +16,14 @@
 	admin_sound.channel = CHANNEL_ADMIN
 	admin_sound.frequency = freq
 	admin_sound.wait = 1
-	admin_sound.repeat = 0
+	admin_sound.repeat = FALSE
 	admin_sound.status = SOUND_STREAM
 	admin_sound.volume = vol
 
 	var/res = alert(usr, "Show the title of this song to the players?",, "Yes","No", "Cancel")
 	switch(res)
 		if("Yes")
-			to_chat(world, "<span class='boldannounce'>An admin played: [S]</span>")
+			to_chat(world, "<span class='boldannounce'>An admin played: [S]</span>", confidential = TRUE)
 		if("Cancel")
 			return
 
@@ -49,7 +47,7 @@
 
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
-	playsound(get_turf(src.mob), S, 50, 0, 0)
+	playsound(get_turf(src.mob), S, 50, FALSE, FALSE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/play_web_sound()

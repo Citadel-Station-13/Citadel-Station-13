@@ -134,6 +134,7 @@ Credit where due:
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
+	chaos = 8
 	required_players = 24 //Fixing this directly for now since apparently config machine for forcing modes broke.
 	required_enemies = 3
 	recommended_enemies = 5

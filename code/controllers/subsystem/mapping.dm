@@ -34,6 +34,9 @@ SUBSYSTEM_DEF(mapping)
 	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
 
+	///All possible biomes in assoc list as type || instance
+	var/list/biomes = list()
+
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
@@ -41,6 +44,8 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
+	/// Lookup for zlevel to station z. text = num.
+	var/list/z_to_station_z_index
 
 	var/stat_map_name = "Loading..."
 
@@ -77,10 +82,12 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	GLOB.year_integer += config.year_offset
 	GLOB.announcertype = (config.announcertype == "standard" ? (prob(1) ? "medibot" : "classic") : config.announcertype)
+	initialize_biomes()
 	loadWorld()
 	repopulate_sorted_areas()
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	preloadTemplates()
+
 #ifndef LOWMEMORYMODE
 	// Create space ruin levels
 	while (space_levels_so_far < config.space_ruin_levels)
@@ -90,15 +97,16 @@ SUBSYSTEM_DEF(mapping)
 	for (var/i in 1 to config.space_empty_levels)
 		++space_levels_so_far
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
-	// and the transit level
-	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel()
-	// Pick a random VR level.
+
+	// Load the virtual reality hub
 	if(CONFIG_GET(flag/roundstart_vr))
+		to_chat(world, "<span class='boldannounce'>Loading virtual reality...</span>")
 		createRandomZlevel(VIRT_REALITY_NAME, list(ZTRAIT_AWAY = TRUE, ZTRAIT_VR = TRUE), GLOB.potential_vr_levels)
+		to_chat(world, "<span class='boldannounce'>Virtual reality loaded.</span>")
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -113,7 +121,7 @@ SUBSYSTEM_DEF(mapping)
 		// needs to be whitelisted for underground too so place_below ruins work
 		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), ice_ruins_templates)
 		for (var/ice_z in ice_ruins)
-			spawn_rivers(ice_z, 4, /turf/open/transparent/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
@@ -131,8 +139,13 @@ SUBSYSTEM_DEF(mapping)
 	if (station_ruins.len)
 		seedRuins(station_ruins, (SSmapping.config.station_ruin_budget < 0) ? CONFIG_GET(number/station_space_budget) : SSmapping.config.station_ruin_budget, list(/area/space/station_ruins), station_ruins_templates)
 	SSmapping.seedStation()
+
 	loading_ruins = FALSE
 #endif
+	// Run map generation after ruin generation to prevent issues
+	run_map_generation()
+	// Add the transit level
+	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 	repopulate_sorted_areas()
 	// Set up Z-level transitions.
 	setup_map_transitions()
@@ -259,6 +272,16 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
 	return parsed_maps
 
+/datum/controller/subsystem/mapping/proc/setup_station_z_index()
+	z_to_station_z_index = list()
+	var/sz = 1
+	var/cz = station_start
+	if(islist(config.map_file))
+		for(var/map in config.map_file)
+			z_to_station_z_index["[cz++]"] = sz++
+	else
+		z_to_station_z_index["[station_start]"] = 1
+
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
@@ -271,8 +294,12 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION, FALSE, config.orientation)
 
+	setup_station_z_index()
+
 	if(SSdbcore.Connect())
-		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
+		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
+			UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id
+		"}, list("map_name" = config.map_name, "round_id" = GLOB.round_id))
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
@@ -304,7 +331,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/area/A in world)
 		if (is_type_in_typecache(A, station_areas_blacklist))
 			continue
-		if (!A.contents.len || !A.unique)
+		if (!A.contents.len || !(A.area_flags & UNIQUE_AREA))
 			continue
 		var/turf/picked = A.contents[1]
 		if (is_station_level(picked.z))
@@ -312,6 +339,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	if(!GLOB.the_station_areas.len)
 		log_world("ERROR: Station areas list failed to generate!")
+
+/datum/controller/subsystem/mapping/proc/run_map_generation()
+	for(var/area/A in world)
+		A.RunGeneration()
 
 /datum/controller/subsystem/mapping/proc/maprotate()
 	var/players = GLOB.clients.len
@@ -567,6 +598,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing)
+
+///Initialize all biomes, assoc as type || instance
+/datum/controller/subsystem/mapping/proc/initialize_biomes()
+	for(var/biome_path in subtypesof(/datum/biome))
+		var/datum/biome/biome_instance = new biome_path()
+		biomes[biome_path] += biome_instance
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
 	for(var/B in areas)

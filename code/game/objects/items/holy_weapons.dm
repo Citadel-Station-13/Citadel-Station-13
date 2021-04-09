@@ -771,7 +771,10 @@
 
 /obj/item/nullrod/tribal_knife/process()
 	slowdown = rand(-2, 2)
-
+	if(iscarbon(loc))
+		var/mob/living/carbon/wielder = loc
+		if(wielder.is_holding(src))
+			wielder.update_equipment_speed_mods()
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"
@@ -803,6 +806,7 @@
 	force = 4
 	throwforce = 0
 	attack_verb = list("whipped", "repented", "lashed", "flagellated")
+	slot_flags = ITEM_SLOT_BELT
 	var/praying = FALSE
 	var/deity_name = "Coderbus" //This is the default, hopefully won't actually appear if the religion subsystem is running properly
 

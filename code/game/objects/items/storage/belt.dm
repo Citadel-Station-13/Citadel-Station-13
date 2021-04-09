@@ -802,7 +802,8 @@
 		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
 
 /obj/item/storage/belt/sabre/PopulateContents()
-	new starting_sword(src)
+	if(starting_sword)
+		new starting_sword(src)
 
 /obj/item/storage/belt/sabre/rapier
 	name = "rapier sheath"
@@ -856,7 +857,7 @@
 	icon_state = "2sheath"
 	item_state = "katana" //this'll do.
 	w_class = WEIGHT_CLASS_BULKY
-	fitting_swords = list(/obj/item/melee/smith/wakizashi, /obj/item/melee/smith/twohand/katana, /obj/item/melee/bokken)
+	fitting_swords = list(/obj/item/melee/smith/wakizashi, /obj/item/melee/smith/twohand/katana, /obj/item/melee/bokken, /obj/item/katana)
 	starting_sword = null
 
 /obj/item/storage/belt/sabre/twin/ComponentInitialize()
@@ -864,6 +865,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_BULKY + WEIGHT_CLASS_NORMAL //katana and waki.
+	STR.max_combined_w_class = 7
 
 /obj/item/melee/smith/twohand/katana/on_exit_storage(datum/component/storage/S)
 	var/obj/item/storage/belt/sabre/twin/B = S.parent
