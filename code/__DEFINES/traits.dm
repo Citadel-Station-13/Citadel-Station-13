@@ -283,6 +283,7 @@
 #define SHOES_TRAIT "shoes" //inherited from your sweet kicks
 #define GLOVE_TRAIT "glove" //inherited by your cool gloves
 #define BOOK_TRAIT "granter (book)" // knowledge is power
+#define TURF_TRAIT "turf"
 
 // unique trait sources, still defines
 #define STATUE_TRAIT "statue"
@@ -330,6 +331,8 @@
 #define DEATHSQUAD_TRAIT "deathsquad"
 #define SLIMEPUDDLE_TRAIT "slimepuddle"
 #define CORRUPTED_SYSTEM "corrupted-system"
+///Turf trait for when a turf is transparent
+#define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.

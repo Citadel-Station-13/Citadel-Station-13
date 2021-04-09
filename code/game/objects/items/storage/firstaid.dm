@@ -394,15 +394,15 @@
 	desc = "You want penis enlargement pills?"
 
 /obj/item/storage/pill_bottle/penis_enlargement/PopulateContents()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/pill/penis_enlargement(src)
 
 /obj/item/storage/pill_bottle/breast_enlargement
 	name = "breast enlargement pills"
-	desc = "Made by Fermichem - They have a woman with breasts larger than she is on them. The warming states not to take more than 10u at a time."
+	desc = "Made by Fermichem - The bottle shows a woman with breasts larger than she is on them. The warning states to not take more than 10 units at a time."
 
 /obj/item/storage/pill_bottle/breast_enlargement/PopulateContents()
-	for(var/i in 1 to 7)
+	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/pill/breast_enlargement(src)
 
 /obj/item/storage/pill_bottle/neurine

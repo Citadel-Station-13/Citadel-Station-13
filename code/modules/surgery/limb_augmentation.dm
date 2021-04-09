@@ -10,7 +10,7 @@
 	if(istype(tool, /obj/item/organ_storage) && istype(tool.contents[1], /obj/item/bodypart))
 		tool = tool.contents[1]
 	var/obj/item/bodypart/aug = tool
-	if(!aug.is_robotic_limb())
+	if(!aug.is_robotic_limb() && !aug.forcereplace) // forcereplace used here to allow for replacing limbs with synthflesh variants
 		to_chat(user, "<span class='warning'>That's not an augment, silly!</span>")
 		return -1
 	if(aug.body_zone != target_zone)
@@ -18,9 +18,14 @@
 		return -1
 	L = surgery.operated_bodypart
 	if(L)
-		display_results(user, target, "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
-			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].",
-			"[user] begins to augment [target]'s [parse_zone(user.zone_selected)].")
+		if(aug.is_robotic_limb())
+			display_results(user, target, "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>",
+				"[user] begins to augment [target]'s [parse_zone(user.zone_selected)] with [aug].",
+				"[user] begins to augment [target]'s [parse_zone(user.zone_selected)].")
+		else
+			display_results(user, target, "<span class ='notice'>You begin to replace [target]'s [parse_zone(user.zone_selected)]...</span>",
+				"[user] begins to replace [target]'s [parse_zone(user.zone_selected)] with [aug].",
+				"[user] begins to replace [target]'s [parse_zone(user.zone_selected)].")
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
@@ -47,10 +52,15 @@
 			tool = tool.contents[1]
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
 			tool.replace_limb(target, TRUE)
-		display_results(user, target, "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>",
-			"[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!",
-			"[user] successfully augments [target]'s [parse_zone(target_zone)]!")
-		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
+		if(tool.is_robotic_limb())
+			display_results(user, target, "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>",
+				"[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!",
+				"[user] successfully augments [target]'s [parse_zone(target_zone)]!")
+		else
+			display_results(user, target, "<span class='notice'>You successfully replace [target]'s [parse_zone(target_zone)].</span>",
+				"[user] successfully replaces [target]'s [parse_zone(target_zone)] with [tool]!",
+				"[user] successfully replaces [target]'s [parse_zone(target_zone)]!")
+		log_combat(user, target, "augmented", addition="by giving them a new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
 	return TRUE

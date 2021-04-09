@@ -56,7 +56,7 @@
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
-	if(mapload)
+	if(mapload && prob(66)) // 2/3 instead of 1/3 (default)
 		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)

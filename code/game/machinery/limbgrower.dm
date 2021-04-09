@@ -178,6 +178,7 @@
 	limb.update_icon_dropped()
 	limb.name = "\improper synthetic [lowertext(selected.name)] [limb.name]"
 	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]."
+	limb.forcereplace = TRUE
 	for(var/obj/item/bodypart/BP in limb)
 		BP.base_bp_icon = selected.icon_limbs || DEFAULT_BODYPART_ICON_ORGANIC
 		BP.species_id = selected.limbs_id
