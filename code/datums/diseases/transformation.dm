@@ -104,6 +104,7 @@
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	stage_prob = 8	// a little bit faster infection
 	visibility_flags = 0
+	form = "Unique Organism"
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/monkey
 	bantype = ROLE_MONKEY
@@ -118,9 +119,9 @@
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
+	. = ..()
 	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
-	if(ishuman(affected_mob))
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 		M.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 
@@ -140,9 +141,8 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/jungle_fever/cure()
+	affected_mob.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)	// keep it simple_animal
 	remove_monkey(affected_mob.mind)
-	if(istype(affected_mob, /mob/living/carbon/monkey))
-		affected_mob.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)	// keep it simple
 	. = ..()
 
 /datum/disease/transformation/jungle_fever/monkeymode
@@ -165,6 +165,12 @@
 		infectee.med_hud_set_status()
 		var/turf/source_turf = get_turf(infectee)
 		log_virus("[key_name(infectee)] was infected by virus: [D.admin_details()] at [loc_name(source_turf)]")
+
+// for admins if they just want to cure the leader for any reason
+// under normal circunstances this will never be called
+/datum/disease/transformation/jungle_fever/monkeymode/cure()
+	remove_monkey_leader(affected_mob.mind)
+	. = ..()
 
 /datum/disease/transformation/robot
 
