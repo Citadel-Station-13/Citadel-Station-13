@@ -164,7 +164,7 @@
 		D.after_add()
 		infectee.med_hud_set_status()
 		var/turf/source_turf = get_turf(infectee)
-		log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+		log_virus("[key_name(infectee)] was infected by virus: [D.admin_details()] at [loc_name(source_turf)]")
 
 /datum/disease/transformation/robot
 
