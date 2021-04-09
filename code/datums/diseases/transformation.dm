@@ -107,7 +107,8 @@
 	agent = "Kongey Vibrion M-909"
 	new_form = /mob/living/carbon/monkey
 	bantype = ROLE_MONKEY
-
+	infectable_biotypes = MOB_HUMANOID	// no organic check, everyone can be monkee
+	// don't look at me, xenos work with robots, so why not
 
 	stage1	= list()
 	stage2	= list()
@@ -139,9 +140,9 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/jungle_fever/cure()
-	if(is_monkey(affected_mob.mind))
-		affected_mob.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)	// keep it simple
 	remove_monkey(affected_mob.mind)
+	if(istype(affected_mob, /mob/living/carbon/monkey))
+		affected_mob.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)	// keep it simple
 	. = ..()
 
 /datum/disease/transformation/jungle_fever/monkeymode
@@ -164,8 +165,6 @@
 		infectee.med_hud_set_status()
 		var/turf/source_turf = get_turf(infectee)
 		log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
-
-/datum/d
 
 /datum/disease/transformation/robot
 

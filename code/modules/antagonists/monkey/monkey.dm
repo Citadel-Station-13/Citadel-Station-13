@@ -101,6 +101,7 @@
 			else
 				return
 	new_owner.assigned_role = "Monkey Leader"
+	new_owner.special_role = "Monkey Leader"
 	new_owner.add_antag_datum(src)
 	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
