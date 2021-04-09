@@ -152,8 +152,6 @@
 
 		// set various things
 		B.set_pixel_size(pixels_to_use)
-		B.layer = VOLUMETRIC_STORAGE_BOX_LAYER
-		B.plane = VOLUMETRIC_STORAGE_BOX_PLANE
 		B.name = I.name
 
 		// finally add our things.

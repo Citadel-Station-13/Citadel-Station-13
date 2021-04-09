@@ -51,8 +51,8 @@
 
 /obj/screen/storage/volumetric_box
 	icon_state = "stored_continue"
-	layer = VOLUMETRIC_STORAGE_ITEM_LAYER
-	plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+	layer = VOLUMETRIC_STORAGE_BOX_LAYER
+	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 	var/obj/item/our_item
 
 /obj/screen/storage/volumetric_box/Initialize(mapload, new_master, obj/item/our_item)
@@ -130,8 +130,6 @@
 			qdel(holder)
 		holder = new(null, src, our_item)
 		holder.transform = matrix(1 / multiplier, 0, 0, 0, 1, 0)
-		holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
-		holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER + 0.1
 		holder.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		holder.appearance_flags &= ~RESET_TRANSFORM
 		makeItemInactive()
@@ -144,8 +142,8 @@
 /obj/screen/storage/volumetric_box/center/makeItemInactive()
 	if(!holder)
 		return
-	holder.our_item.layer = VOLUMETRIC_STORAGE_ITEM_LAYER + 0.1
-	holder.our_item.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+	holder.layer = VOLUMETRIC_STORAGE_ITEM_LAYER
+	holder.plane = VOLUMETRIC_STORAGE_ITEM_PLANE
 
 /obj/screen/storage/volumetric_box/center/makeItemActive()
 	if(!holder)
@@ -154,8 +152,8 @@
 	holder.our_item.plane = VOLUMETRIC_STORAGE_ACTIVE_ITEM_PLANE
 
 /obj/screen/storage/volumetric_edge
-	layer = VOLUMETRIC_STORAGE_ITEM_LAYER
-	plane = VOLUMETRIC_STORAGE_ITEM_PLANE
+	layer = VOLUMETRIC_STORAGE_BOX_LAYER
+	plane = VOLUMETRIC_STORAGE_BOX_PLANE
 
 /obj/screen/storage/volumetric_edge/Initialize(mapload, master, our_item)
 	src.master = master
@@ -183,7 +181,7 @@
 
 /obj/screen/storage/item_holder
 	var/obj/item/our_item
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	vis_flags = NONE
 
 /obj/screen/storage/item_holder/Initialize(mapload, new_master, obj/item/I)
 	. = ..()
