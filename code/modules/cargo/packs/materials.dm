@@ -56,7 +56,7 @@
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 
 /datum/supply_pack/materials/wood20
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "20 Wood Planks"
 	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with twenty wooden planks!"
 	cost = 400 // 6-7 planks shy from having equal import/export prices
