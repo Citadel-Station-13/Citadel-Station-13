@@ -61,7 +61,6 @@
 		D.agent = "Kongey Vibrion R-909"	// the agent is different to make sure people notice this is another strain
 		D.cure_text = "Incurable strain."	// another thing to tip out players, if everything fails
 		D.desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
-		D.do_disease_transformation()		// do the transformation to ensure the datum is added and is monkeyfied if all above fails
 
 	// logging = good
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Monkey by an event.")

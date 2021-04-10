@@ -79,19 +79,37 @@
 	name = "Monkey Leader"
 	monkey_only = FALSE
 
+// admin intervention NEEDS to add the disease as well
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/human/H = new_owner.current
+
 	if(istype(H))
+
+		// prepare disease
+		var/datum/disease/transformation/D = new /datum/disease/transformation/jungle_fever()
+		if(D)
+			D.disease_flags = CAN_CARRY		// no cure for patient zero
+			D.agent = "Kongey Vibrion R-909"	// the agent is different to make sure people notice this is another strain
+			D.cure_text = "Incurable strain."	// another thing to tip out players, if everything fails
+			D.desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
+
 		switch(alert(admin, "Monkeyize?", "Monkeyize", "Yes", "No"))
 			if("Yes")
 				if(admin == H)
 					admin = H.monkeyize()
 				else
 					H.monkeyize()
+
+				D.stage = 5			// it starts as monkey so no need to advance stages
+				D.stage_prob = 0	// same as above
+
 			if("No")
-				//nothing
+				// nothing to edit, disease will progress as normal
 			else
-				return
+				return	// do these vars above get garbage collected? -qweq
+
+		H.ForceContractDisease(D, FALSE)
+
 	new_owner.add_antag_datum(src)
 	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
