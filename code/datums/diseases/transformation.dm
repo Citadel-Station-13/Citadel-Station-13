@@ -18,7 +18,7 @@
 	var/new_form = /mob/living/carbon/human
 	var/bantype
 
-/datum/disease/transformation/Copy()
+/datum/disease/transformation/Copy(default_values = FALSE)
 	var/datum/disease/transformation/D = ..()
 	D.stage1 = stage1?.Copy()
 	D.stage2 = stage2?.Copy()
@@ -98,11 +98,11 @@
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
 	permeability_mod = 1
-	cure_chance = 100	// inject cure = cured, no fuzz or buzz
-	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE	// now curable, for balance
+	cure_chance = 100	// inject cure = cured, no fuss or buzz
+	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	desc = "Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
 	severity = DISEASE_SEVERITY_BIOHAZARD
-	stage_prob = 8	// a little bit faster infection
+	stage_prob = 8
 	visibility_flags = 0
 	form = "Unique Organism"
 	agent = "Kongey Vibrion M-909"
@@ -119,12 +119,15 @@
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
-	. = ..()
 	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
-		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-		M.AddElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
+	if(ishuman(affected_mob))
+		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
 
+// lets never pass ANY values that the disease gained during lifetime to the next victim
+// exists to ensure copies are ALWAYS curable, and always with this name (due to Monkey antag)
+/datum/disease/transformation/jungle_fever/Copy(default_values = TRUE)
+	. = ..()
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
@@ -141,35 +144,8 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/jungle_fever/cure()
+	remove_monkey(affected_mob.mind)	// mind this order, or you will have a bad time
 	affected_mob.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)	// keep it simple_animal
-	remove_monkey(affected_mob.mind)
-	. = ..()
-
-/datum/disease/transformation/jungle_fever/monkeymode
-	//visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC	// now visible, so Monkey Leader can be found, and it's blood used for curing others (whenever i can implement that)
-	disease_flags = CAN_CARRY //no vaccines! no cure!
-	cure_text = "Incurable strain."	// another thing to tip out players
-	desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
-	agent = "Kongey Vibrion R-909"	// the agent is different to make sure people notice this is another strain
-	stage = 5	// start at stage 5, you already monkee
-
-/datum/disease/transformation/jungle_fever/monkeymode/infect(mob/living/infectee, make_copy)
-	if(infectee.mind?.assigned_role == "Monkey Leader")	// give only the leader this strain
-		. = ..()										// will only work if this is spawned through the midround event
-	else	// give any other infected the regular curable strain
-		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() // our base strain
-		infectee.diseases += D
-		D.affected_mob = infectee
-		SSdisease.active_diseases += D
-		D.after_add()
-		infectee.med_hud_set_status()
-		var/turf/source_turf = get_turf(infectee)
-		log_virus("[key_name(infectee)] was infected by virus: [D.admin_details()] at [loc_name(source_turf)]")
-
-// for admins if they just want to cure the leader for any reason
-// under normal circunstances this will never be called
-/datum/disease/transformation/jungle_fever/monkeymode/cure()
-	remove_monkey_leader(affected_mob.mind)
 	. = ..()
 
 /datum/disease/transformation/robot

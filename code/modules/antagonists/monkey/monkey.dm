@@ -12,7 +12,6 @@
 	show_to_ghosts = TRUE
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
-	var/strain = /datum/disease/transformation/jungle_fever		// regular curable disease for infected monkeys
 
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
@@ -24,11 +23,6 @@
 	. = ..()
 	owner.special_role = "Infected Monkey"
 	SSticker.mode.ape_infectees += owner
-	var/datum/disease/D = new strain
-	if(!owner.current.HasDisease(D))
-		owner.current.ForceContractDisease(D)
-	else
-		QDEL_NULL(D)
 
 /datum/antagonist/monkey/greet()
 	to_chat(owner, "<b>You are a monkey now!</b>")
@@ -40,7 +34,6 @@
 
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
-	owner.assigned_role = null
 	SSticker.mode.ape_infectees -= owner
 
 	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
@@ -84,9 +77,7 @@
 
 /datum/antagonist/monkey/leader
 	name = "Monkey Leader"
-	threat = 5
 	monkey_only = FALSE
-	strain = /datum/disease/transformation/jungle_fever/monkeymode	// monkeymode for leader, incurable, and it's blood will be the cure for the other infected
 
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/human/H = new_owner.current
@@ -101,20 +92,18 @@
 				//nothing
 			else
 				return
-	new_owner.assigned_role = "Monkey Leader"
-	new_owner.special_role = "Monkey Leader"
 	new_owner.add_antag_datum(src)
 	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	owner.assigned_role = "Monkey Leader"
 	owner.special_role = "Monkey Leader"
 	var/obj/item/organ/heart/freedom/F = new
 	F.Insert(owner.current, drop_if_replaced = FALSE)
 	SSticker.mode.ape_leaders += owner
 
+// will rarely be called, if ever
 /datum/antagonist/monkey/leader/on_removal()
 	SSticker.mode.ape_leaders -= owner
 	var/obj/item/organ/heart/H = new
@@ -157,28 +146,28 @@
 /datum/team/monkey/proc/infected_monkeys_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
-		if(M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode()))
+		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_monkeys_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/monkey/M in GLOB.alive_mob_list)
-		if((M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode())) && (M.onCentCom() || M.onSyndieBase()))
+		if((M.HasDisease(D)) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_humans_escaped()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
-		if((M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode())) && (M.onCentCom() || M.onSyndieBase()))
+		if((M.HasDisease(D)) && (M.onCentCom() || M.onSyndieBase()))
 			return TRUE
 	return FALSE
 
 /datum/team/monkey/proc/infected_humans_alive()
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
 	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
-		if((M.HasDisease(D) || M.HasDisease(new /datum/disease/transformation/jungle_fever/monkeymode())))
+		if(M.HasDisease(D))
 			return TRUE
 	return FALSE
 

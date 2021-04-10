@@ -14,7 +14,7 @@
 	var/success_spawn
 
 /datum/round_event/ghost_role/chimp/kill()
-	if(!success_spawn && control)	// just to be sure, if we kill this event without spawning, lets reset the occurrences
+	if(!success_spawn && control)	// just to be sure, if we kill this event without spawning, lets not consider it
 		control.occurrences--
 	return ..()
 
@@ -30,10 +30,8 @@
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 
-	// spawn location
-	var/list/spawn_locs = list()
-
 	// lets pick a vent
+	var/list/spawn_locs = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		var/turf/T = get_turf(temp_vent)
 		var/area/A = T.loc
@@ -47,13 +45,28 @@
 	// time to spawn our monkee
 	var/mob/living/carbon/monkey/S = new ((pick(spawn_locs)))
 	player_mind.transfer_to(S)
-	player_mind.assigned_role = "Monkey Leader"
-	player_mind.special_role = "Monkey Leader"
-	player_mind.add_antag_datum(/datum/antagonist/monkey/leader)
 
+	// give the datum already
+	add_monkey_leader(S.mind)
+
+	// give it the disease
+	var/datum/disease/transformation/D = new /datum/disease/transformation/jungle_fever()
+	S.ForceContractDisease(D, FALSE)
+
+	//tweak stats and fluff
+	if(D)
+		D.disease_flags = CAN_CARRY		// no cure for patient zero
+		D.stage = 5						// it starts as monkey so no need to advance stages
+		D.stage_prob = 0 					// same as above
+		D.agent = "Kongey Vibrion R-909"	// the agent is different to make sure people notice this is another strain
+		D.cure_text = "Incurable strain."	// another thing to tip out players, if everything fails
+		D.desc = "The root of the simean revolution. Monkeys with this disease will bite humans, causing humans to mutate into a monkey."
+		D.do_disease_transformation()		// do the transformation to ensure the datum is added and is monkeyfied if all above fails
+
+	// logging = good
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Monkey by an event.")
 	log_game("[key_name(S)] was spawned as a Monkey by an event.")
-	spawned_mobs += S
 
+	spawned_mobs += S
 	success_spawn = TRUE
 	return SUCCESSFUL_SPAWN
