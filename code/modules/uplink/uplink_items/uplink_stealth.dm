@@ -54,7 +54,7 @@ datum/uplink_item/stealthy_weapons/derringerpack
 datum/uplink_item/stalthy_weapons/derringerpack_nukie
 	name = "Antique Derringer"
 	desc = "An easy to conceal, yet extremely deadly handgun, capable of firing .45-70 Govt rounds. Comes in a unique pack of cigarettes with additional munitions."
-	item = /obj/storage/fancy/cigarettes/derringer/midworld
+	item = /obj/item/storage/fancy/cigarettes/derringer/midworld
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 10
 	surplus = 2
