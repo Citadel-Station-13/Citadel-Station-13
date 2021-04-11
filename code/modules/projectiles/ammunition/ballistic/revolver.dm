@@ -79,4 +79,5 @@
 /obj/item/ammo_casing/g4570
 	name= ".45-70 Govt bullet casing"
 	desc = "An exceedingly rare .45-70 Govt bullet casing."
+	caliber = "45-70g"
 	projectile_type = /obj/item/projectile/bullet/g4570
