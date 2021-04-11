@@ -1,5 +1,5 @@
 /obj/item/gun/ballistic/derringer
-	name = ".38 Derringer"
+	name = "\improper .38 Derringer"
 	desc = "A easily consealable derringer. Uses .38 ammo"
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "derringer"
@@ -21,9 +21,17 @@
 	return boolets
 
 /obj/item/gun/ballistic/derringer/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
-		chamber_round()
+	. = ..()
+	if(.)
+		return
+	var/num_loaded = magazine.attackby(A, user, params, 1)
+	if(num_loaded)
+		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
+		A.update_icon()
+		update_icon()
+		chamber_round(0)
+
 
 obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
 	var/num_unloaded = 0
