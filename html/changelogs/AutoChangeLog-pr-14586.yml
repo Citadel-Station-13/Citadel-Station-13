@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - bugfix: "Fixed drones nullspacing things they try to place on tables and in closets"
