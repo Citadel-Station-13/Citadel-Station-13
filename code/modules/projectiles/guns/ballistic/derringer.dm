@@ -20,6 +20,11 @@
 		boolets += magazine.ammo_count(countempties)
 	return boolets
 
+/obj/item/gun/ballistic/derringer/attackby(obj/item/A, mob/user, params)
+	..()
+	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
+		chamber_round()
+
 obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	while (get_ammo() > 0)
