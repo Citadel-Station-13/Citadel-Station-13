@@ -4,7 +4,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "derringer"
 	mag_type = /obj/item/ammo_box/magazine/internal/derr38
-	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
+	fire_sound = 'sound/weapons/revolvershot.ogg'
 	casing_ejector = FALSE
 	w_class = WEIGHT_CLASS_TINY
 
