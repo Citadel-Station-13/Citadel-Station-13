@@ -67,5 +67,6 @@ obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
 /obj/item/gun/ballistic/derringer/nukeop
 	name = "\improper Gunslinger's Derringer"
 	desc = "Sandalwood grip, wellkempt blue-grey steel barrels, and a crash like thunder itself. Uses the exceedingly rare 45-70 Govt. ammo"
-	icon_state = "derringer_syndie"
+	icon_state = "derringer"
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer/g4570
+	fire_sound = 'sound/weapons/gunshotshotgunshot.ogg'

@@ -367,7 +367,7 @@
 /obj/item/storage/fancy/cigarettes/derringer/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	var/obj/item/W = (locate(/obj/item/ammo_casing/a357) in contents) || (locate(/obj/item/clothing/mask/cigarette) in contents) //Easy access smokes and bullets
+	var/obj/item/W = (locate(/obj/item/ammo_casing/a357) in contents) || (locate(/obj/item/clothing/mask/cigarette) in contents) || locate(/obj/item/ammo_casing/g4570) //Easy access smokes and bullets
 	if(W && contents.len > 0)
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
@@ -393,7 +393,7 @@
 
 //For operatives, bound in a ka-tet.
 /obj/item/storage/fancy/cigarettes/derringer/midworld
-	name = "\improper Midworld's Green Bend"
+	name = "\improper Midworld's Lime Bend"
 	desc = "The wheel of Ka turns, Gunslinger."
 	icon_state = "slime"
 	spawn_type = /obj/item/gun/ballistic/derringer/nukeop

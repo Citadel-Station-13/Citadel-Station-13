@@ -51,7 +51,7 @@ datum/uplink_item/stealthy_weapons/derringerpack
 		item = /obj/item/storage/fancy/cigarettes/derringer/gold
 	..()
 
-datum/uplink_item/stalthy_weapons/derringerpack_nukie
+/datum/uplink_item/stalthy_weapons/derringerpack_nukie
 	name = "Antique Derringer"
 	desc = "An easy to conceal, yet extremely deadly handgun, capable of firing .45-70 Govt rounds. Comes in a unique pack of cigarettes with additional munitions."
 	item = /obj/item/storage/fancy/cigarettes/derringer/midworld

@@ -25,6 +25,6 @@
 /obj/item/ammo_box/magazine/internal/derringer/g4570
 	name = "\improper derringer muzzle"
 	ammo_type = /obj/item/ammo_casing/g4570
-	caliber = "45-70"
+	caliber = "g4570"
 	max_ammo = 2
 	multiload = FALSE
