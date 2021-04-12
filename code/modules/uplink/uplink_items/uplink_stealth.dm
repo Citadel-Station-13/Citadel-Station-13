@@ -39,7 +39,7 @@
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
 
-datum/uplink_item/stealthy_weapons/derringerpack
+/datum/uplink_item/stealthy_weapons/derringerpack
 	name = "Compact Derringer"
 	desc = "An easily concealable handgun capable of firing .357 rounds. Comes in an inconspicuious packet of cigarettes with additional munitions."
 	item = /obj/item/storage/fancy/cigarettes/derringer
