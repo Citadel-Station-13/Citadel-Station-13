@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - config: "makes AGE_VERIFICATION option off by default"

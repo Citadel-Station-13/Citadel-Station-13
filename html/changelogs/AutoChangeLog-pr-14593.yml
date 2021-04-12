@@ -1,4 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "Fixed phantom mob-holder items. You can now grab Ian from your backpack without any issues."
