@@ -63,6 +63,7 @@ obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
 	desc = "The golden sheen is somewhat counterintuitive as a stealth weapon, but it looks cool. Uses .357 ammo"
 	icon_state = "derringer_gold"
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer/a357
+	fire_sound = 'sound/weapons/resonator_blast.ogg'
 
 /obj/item/gun/ballistic/derringer/nukeop
 	name = "\improper Gunslinger's Derringer"
