@@ -22,16 +22,17 @@ export const CloningConsole = (props, context) => {
     <Window width="400" height="600" resizable>
       <Window.Content scrollable>
         {useRecords ? (
-        <Section
-          title="Autoclone"
-          buttons={
-          <Button
-            content={autoprocess ? "Enabled" : "Disabled"}
-            color={autoprocess ? "green" : "default"}
-            icon={autoprocess ? "toggle-on" : "toggle-off"}
-            disabled={!hasAutoprocess}
-            onClick={() => act('toggle_autoprocess')}
-            />}
+          <Section
+            title="Autoclone"
+            buttons={
+            <Button
+              content={autoprocess ? "Enabled" : "Disabled"}
+              color={autoprocess ? "green" : "default"}
+              icon={autoprocess ? "toggle-on" : "toggle-off"}
+              disabled={!hasAutoprocess}
+              onClick={() => act('toggle_autoprocess')}
+              />
+            }
           />
         ) : ( null ) }
         <Section>
