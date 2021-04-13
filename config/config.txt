@@ -382,7 +382,7 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 #PANIC_SERVER_NAME [Put the name here]
 
 ##Automated age verification, comment this out to not ask new users if they are 18+
-AGE_VERIFICATION
+#AGE_VERIFICATION
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
