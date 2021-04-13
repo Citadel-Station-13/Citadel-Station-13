@@ -209,8 +209,7 @@
 	L.apply_effect(EFFECT_STUTTER, stamforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		L.lastattacker = user.real_name
-		L.lastattackerckey = user.ckey
+		L.set_last_attacker(user)
 		L.visible_message("<span class='danger'>[user] has [disarming? "disarmed" : "stunned"] [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has [disarming? "disarmed" : "stunned"] you with [src]!</span>")
 		log_combat(user, L, disarming? "disarmed" : "stunned")
