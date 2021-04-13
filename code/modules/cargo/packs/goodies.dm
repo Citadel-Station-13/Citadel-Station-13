@@ -81,3 +81,21 @@
 	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
 	cost = 500
 	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+
+/datum/supply_pack/goody/esoteric_arms
+	name = "Esoteric Armory Shipment"
+	desc = "Well.. you're an agent of taste, I can tell that much. For the right price.. we could see our way clear to send you one of our more... unique weapons."
+	hidden = TRUE
+	cost = 10000
+	contains = list(/obj/item/gun/ballistic/shotgun/leveraction,
+					/obj/item/storage/fancy/cigarettes/derringer/gold,
+					/obj/item/gun/ballistic/revolver/nagant,
+					/obj/item/gun/ballistic/automatic/pistol/APS,
+					/obj/item/gun/ballistic/revolver/golden)
+
+/datum/supply_pack/goody/esoteric_arms/fill(/obj/item/storage/lockbox/order/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
