@@ -5,7 +5,7 @@
 	icon_state = "mfan_assembly"
 	max_integrity = 150
 	use_power = NO_POWER_USE
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = 0
 	active_power_usage = 0
 	layer = ABOVE_NORMAL_TURF_LAYER

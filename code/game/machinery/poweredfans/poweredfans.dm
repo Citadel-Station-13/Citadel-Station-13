@@ -4,7 +4,7 @@
 	name = "micro powered fan"
 	desc = "A handmade fan, releasing a thin gust of air."
 	use_power = ACTIVE_POWER_USE
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = 5
 	active_power_usage = 10
 	max_integrity = 150
@@ -53,4 +53,4 @@
 		CanAtmosPass = ATMOS_PASS_YES
 		air_update_turf(1)
 	update_icon_state()
-	
+

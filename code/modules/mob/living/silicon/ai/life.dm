@@ -36,8 +36,8 @@
 
 	if(!lacks_power())
 		var/area/home = get_area(src)
-		if(home.powered(EQUIP))
-			home.use_power(1000, EQUIP)
+		if(home.powered(AREA_USAGE_EQUIP))
+			home.use_power(1000, AREA_USAGE_EQUIP)
 
 		if(aiRestorePowerRoutine >= POWER_RESTORATION_SEARCH_APC)
 			ai_restore_power()
@@ -53,11 +53,11 @@
 		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
-			return !T || !A || ((!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || ((!A.powered(AREA_USAGE_EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 		if(POWER_REQ_CLOCKCULT)
 			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, SIGIL_ACCESS_RANGE))
 				return FALSE
-			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.powered(EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.powered(AREA_USAGE_EQUIP) || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -100,7 +100,7 @@
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
-	if(AIarea && AIarea.powered(EQUIP))
+	if(AIarea && AIarea.powered(AREA_USAGE_EQUIP))
 		if(!isspaceturf(T))
 			ai_restore_power()
 			return
@@ -134,7 +134,7 @@
 					to_chat(src, "Lost connection with the APC!")
 			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 			return
-		if(AIarea.powered(EQUIP))
+		if(AIarea.powered(AREA_USAGE_EQUIP))
 			if(!isspaceturf(T))
 				ai_restore_power()
 				return

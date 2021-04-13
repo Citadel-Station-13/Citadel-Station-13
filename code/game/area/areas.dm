@@ -516,33 +516,35 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/space/update_icon_state()
 	icon_state = null
 
-/*
-#define EQUIP 1
-#define LIGHT 2
-#define ENVIRON 3
-*/
-
-/area/proc/powered(chan)		// return true if the area has power to given channel
+/**
+ * Returns int 1 or 0 if the area has power for the given channel
+ *
+ * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
+ * per channel power_equip, power_light, power_environ
+ */
+/area/proc/powered(chan) // return true if the area has power to given channel
 
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
-		if(EQUIP)
+		if(AREA_USAGE_EQUIP)
 			return power_equip
-		if(LIGHT)
+		if(AREA_USAGE_LIGHT)
 			return power_light
-		if(ENVIRON)
+		if(AREA_USAGE_ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
+/**
+ * Space is not powered ever, so this returns false
+ */
 /area/space/powered(chan) //Nope.avi
-	return 0
+	return FALSE
 
 // called when power status changes
-
 /area/proc/power_change()
 	for(var/obj/machinery/M in src)	// for each machine in the area
 		M.power_change()				// reverify power status (to update icons etc.)
@@ -557,19 +559,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/usage(chan)
 	switch(chan)
-		if(LIGHT)
+		if(AREA_USAGE_LIGHT)
 			. += used_light
-		if(EQUIP)
+		if(AREA_USAGE_EQUIP)
 			. += used_equip
-		if(ENVIRON)
+		if(AREA_USAGE_ENVIRON)
 			. += used_environ
 		if(TOTAL)
 			. += used_light + used_equip + used_environ
-		if(STATIC_EQUIP)
+		if(AREA_USAGE_STATIC_EQUIP)
 			. += static_equip
-		if(STATIC_LIGHT)
+		if(AREA_USAGE_STATIC_LIGHT)
 			. += static_light
-		if(STATIC_ENVIRON)
+		if(AREA_USAGE_STATIC_ENVIRON)
 			. += static_environ
 	if(sub_areas)
 		for(var/i in sub_areas)
@@ -578,31 +580,33 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
-		if(STATIC_EQUIP)
+		if(AREA_USAGE_STATIC_EQUIP)
 			static_equip += value
-		if(STATIC_LIGHT)
+		if(AREA_USAGE_STATIC_LIGHT)
 			static_light += value
-		if(STATIC_ENVIRON)
+		if(AREA_USAGE_STATIC_ENVIRON)
 			static_environ += value
 
+/**
+ * Clear all power usage in area
+ *
+ * Clears all power used for equipment, light and environment channels
+ */
 /area/proc/clear_usage()
-	used_equip = 0
-	used_light = 0
-	used_environ = 0
+	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+		power_usage[i] = 0
 	if(sub_areas)
 		for(var/i in sub_areas)
 			var/area/A = i
 			A.clear_usage()
 
+/**
+ * Add a power value amount to the stored used_x variables
+ */
 /area/proc/use_power(amount, chan)
-
 	switch(chan)
-		if(EQUIP)
-			used_equip += amount
-		if(LIGHT)
-			used_light += amount
-		if(ENVIRON)
-			used_environ += amount
+		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+			power_usage[chan] += amount
 
 
 /**

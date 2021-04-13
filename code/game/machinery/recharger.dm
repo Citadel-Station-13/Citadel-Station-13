@@ -80,7 +80,7 @@
 
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
-			if(!a || !a.powered(EQUIP))
+			if(!a || !a.powered(AREA_USAGE_EQUIP))
 				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
 				return 1
 
