@@ -21,7 +21,7 @@
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat_msg
 	var/payoff = 0
-	var/payoff_min = 20000
+	var/payoff_min = 1000
 	var/paid_off = FALSE
 	var/pirate_type
 	var/ship_template
