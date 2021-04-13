@@ -239,8 +239,7 @@
 	hidden = TRUE
 	cost = 10000
 	can_private_buy = TRUE
-	crate_type = /obj/structure/closet/crate
-	crate_name = "crate"
+	crate_name = "dusty crate"
 	var/num_contained = 1
 	contains = list(/obj/item/gun/ballistic/shotgun/leveraction,
 					/obj/item/storage/fancy/cigarettes/derringer/gold,
@@ -248,7 +247,7 @@
 					/obj/item/gun/ballistic/automatic/pistol/APS,
 					/obj/item/gun/ballistic/revolver/golden)
 
-/datum/supply_pack/security/armory/esoteric_arms/fill(/obj/structure/closet/crate/C)
+/datum/supply_pack/security/armory/esoteric_arms/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
