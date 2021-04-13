@@ -375,7 +375,7 @@
 	updatemodules(TRUE)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "CloningConsole", name)
+		ui = new(user, src, "CloningConsole", "Cloning System Control")
 		ui.open()
 
 /obj/machinery/computer/cloning/proc/finish_scan(mob/living/L, prev_locked)
