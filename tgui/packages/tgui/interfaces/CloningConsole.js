@@ -111,14 +111,14 @@ export const CloningConsole = (props, context) => {
                             Health Implant Data<br />
 
                             <small>
-                            Oxygen Deprivation Damage:<br />
-                            <ProgressBar color="blue" value={record["damages"]["oxy"] / 100} />
-                            Fire Damage:<br />
-                            <ProgressBar color="orange" value={record["damages"]["burn"] / 100} />
-                            Toxin Damage:<br />
-                            <ProgressBar color="green" value={record["damages"]["tox"] / 100} />
-                            Brute Damage:<br />
-                            <ProgressBar color="red" value={record["damages"]["brute"] / 100} />
+                              Oxygen Deprivation Damage:<br />
+                              <ProgressBar color="blue" value={record["damages"]["oxy"] / 100} />
+                              Fire Damage:<br />
+                              <ProgressBar color="orange" value={record["damages"]["burn"] / 100} />
+                              Toxin Damage:<br />
+                              <ProgressBar color="green" value={record["damages"]["tox"] / 100} />
+                              Brute Damage:<br />
+                              <ProgressBar color="red" value={record["damages"]["brute"] / 100} />
                             </small><br />
                             Unique Identifier:<br />
                             {record["UI"]}<br />
@@ -137,34 +137,34 @@ export const CloningConsole = (props, context) => {
                 title="Disk"
                 buttons={
                   <Box>
-                  <Button
-                    content="Load"
-                    icon="download"
-                    disabled={!diskData["name"]}
-                    onClick={() => act('load')}
-                    />
-                  <Button
-                    content="Eject Disk"
-                    icon="eject"
-                    disabled={diskData.length === 0}
-                    onClick={() => act('eject')}
-                    />
-                  </Box>
-                    }
-                >
+                    <Button
+                      content="Load"
+                      icon="download"
+                      disabled={!diskData["name"]}
+                      onClick={() => act('load')}
+                      />
+                    <Button
+                      content="Eject Disk"
+                      icon="eject"
+                      disabled={diskData.length === 0}
+                      onClick={() => act('eject')}
+                      />
+                    </Box>
+                      }
+                  >
                 {diskData.length !== 0 ? (
-                <Collapsible title={diskData["name"] ? diskData["name"] : "Empty Disk"}>
-                  {diskData["id"] ? (
-                  <Box style={{
-                      'word-break': 'break-all',
-                    }}>
-                    ID: {diskData["id"]}<br />
-                    UI: {diskData["UI"]}<br />
-                    UE: {diskData["UE"]}<br />
-                    Blood Type: {diskData["blood_type"]}<br />
-                  </Box>
-                  ) : ("No Data")}
-                </Collapsible>
+                  <Collapsible title={diskData["name"] ? diskData["name"] : "Empty Disk"}>
+                    {diskData["id"] ? (
+                    <Box style={{
+                        'word-break': 'break-all',
+                      }}>
+                      ID: {diskData["id"]}<br />
+                      UI: {diskData["UI"]}<br />
+                      UE: {diskData["UE"]}<br />
+                      Blood Type: {diskData["blood_type"]}<br />
+                    </Box>
+                    ) : ("No Data")}
+                  </Collapsible>
                 ) : ("No Disk")}
               </Section>
             </Section>
