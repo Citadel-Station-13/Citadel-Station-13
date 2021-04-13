@@ -271,7 +271,7 @@
 	var/force_on // Damage when on - not stunning
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
-	var/sword_poit = TRUE
+	var/sword_point = TRUE
 
 	wound_bonus = 15
 
