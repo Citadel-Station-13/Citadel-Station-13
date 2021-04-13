@@ -25,13 +25,13 @@ export const CloningConsole = (props, context) => {
           <Section
             title="Autoclone"
             buttons={
-            <Button
-              content={autoprocess ? "Enabled" : "Disabled"}
-              color={autoprocess ? "green" : "default"}
-              icon={autoprocess ? "toggle-on" : "toggle-off"}
-              disabled={!hasAutoprocess}
-              onClick={() => act('toggle_autoprocess')}
-            />
+              <Button
+                content={autoprocess ? "Enabled" : "Disabled"}
+                color={autoprocess ? "green" : "default"}
+                icon={autoprocess ? "toggle-on" : "toggle-off"}
+                disabled={!hasAutoprocess}
+                onClick={() => act('toggle_autoprocess')}
+              />
             }
           />
         ) : (null) }
@@ -98,7 +98,7 @@ export const CloningConsole = (props, context) => {
                               onClick={() => act('delrecord', {
                                 target: record["id"],
                               })}
-                             />
+                            />
                             <Button
                               content="Save to Disk"
                               icon="upload"
@@ -156,8 +156,8 @@ export const CloningConsole = (props, context) => {
                   <Collapsible title={diskData["name"] ? diskData["name"] : "Empty Disk"}>
                     {diskData["id"] ? (
                       <Box style={{
-                          'word-break': 'break-all',
-                        }}>
+                        'word-break': 'break-all',
+                      }}>
                         ID: {diskData["id"]}<br />
                         UI: {diskData["UI"]}<br />
                         UE: {diskData["UE"]}<br />
