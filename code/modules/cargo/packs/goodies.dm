@@ -87,6 +87,7 @@
 	desc = "Well.. you're an agent of taste, I can tell that much. For the right price.. we could see our way clear to send you one of our more... unique weapons."
 	hidden = TRUE
 	cost = 10000
+	var/num_contained = 1
 	contains = list(/obj/item/gun/ballistic/shotgun/leveraction,
 					/obj/item/storage/fancy/cigarettes/derringer/gold,
 					/obj/item/gun/ballistic/revolver/nagant,
