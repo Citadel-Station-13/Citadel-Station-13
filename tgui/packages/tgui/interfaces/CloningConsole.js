@@ -31,7 +31,7 @@ export const CloningConsole = (props, context) => {
               icon={autoprocess ? "toggle-on" : "toggle-off"}
               disabled={!hasAutoprocess}
               onClick={() => act('toggle_autoprocess')}
-              />
+            />
             }
           />
         ) : (null) }
@@ -44,32 +44,32 @@ export const CloningConsole = (props, context) => {
             </Box>
           </Section>
           {!lacksMachine.length ? (
-          <Section title="Scanner Functions">
-            <Box backgroundColor="#40638a" p="1px">
-              <Box backgroundColor="black" color="white" p="5px">
-                {scanTemp}
-              </Box>
-            </Box><br />
-            <Button
-              content={useRecords ? "Start Scan" : "Clone"}
-              icon={useRecords ? "search" : "power-off"}
-              disabled={!hasOccupant}
-              onClick={() => act('scan')}
+            <Section title="Scanner Functions">
+              <Box backgroundColor="#40638a" p="1px">
+                <Box backgroundColor="black" color="white" p="5px">
+                  {scanTemp}
+                </Box>
+              </Box><br />
+              <Button
+                content={useRecords ? "Start Scan" : "Clone"}
+                icon={useRecords ? "search" : "power-off"}
+                disabled={!hasOccupant}
+                onClick={() => act('scan')}
               />
-            <Button
-              content={scannerLocked ? "Unlock Scanner" : "Lock Scanner"}
-              icon={scannerLocked ? "lock" : "lock-open"}
-              disabled={!hasOccupant && !scannerLocked}
-              onClick={() => act('toggle_lock')}
+              <Button
+                content={scannerLocked ? "Unlock Scanner" : "Lock Scanner"}
+                icon={scannerLocked ? "lock" : "lock-open"}
+                disabled={!hasOccupant && !scannerLocked}
+                onClick={() => act('toggle_lock')}
               />
-          </Section>
+            </Section>
           ) : (
             <Section title="Modules">
-            {lacksMachine.map(machine => (
-              <Box key={machine} color="red">
-                {machine}<br />
-              </Box>
-            ))}
+              {lacksMachine.map(machine => (
+                <Box key={machine} color="red">
+                  {machine}<br />
+                </Box>
+              ))}
             </Section>
           )}
           {useRecords ? (
@@ -79,7 +79,7 @@ export const CloningConsole = (props, context) => {
                   <Collapsible title={recordsLength}>
                     <h2>Current Records: </h2>
                     {records.map(record => (
-                      <Section backgroundColor="#191919" color="white">
+                      <Section backgroundColor="#191919" color="white" key={record}>
                         <Collapsible title={record["name"]}>
                           <div key={record["name"]} style={{
                             'word-break': 'break-all',
@@ -91,23 +91,23 @@ export const CloningConsole = (props, context) => {
                               onClick={() => act('clone', {
                                 target: record["id"],
                               })}
-                              />
+                            />
                             <Button
                               content="Delete Record"
                               icon="user-slash"
                               onClick={() => act('delrecord', {
-                                target: record["id"]
+                                target: record["id"],
                               })}
-                              />
+                             />
                             <Button
                               content="Save to Disk"
                               icon="upload"
                               disabled={diskData.length === 0}
                               onClick={() => act('save', {
-                                target: record["id"]
+                                target: record["id"],
                               })}
-                              />
-                              <br />
+                            />
+                            <br />
                             Health Implant Data<br />
 
                             <small>
@@ -142,27 +142,27 @@ export const CloningConsole = (props, context) => {
                       icon="download"
                       disabled={!diskData["name"]}
                       onClick={() => act('load')}
-                      />
+                    />
                     <Button
                       content="Eject Disk"
                       icon="eject"
                       disabled={diskData.length === 0}
                       onClick={() => act('eject')}
-                      />
-                    </Box>
-                      }
-                  >
+                    />
+                  </Box>
+                }
+              >
                 {diskData.length !== 0 ? (
                   <Collapsible title={diskData["name"] ? diskData["name"] : "Empty Disk"}>
                     {diskData["id"] ? (
-                    <Box style={{
-                        'word-break': 'break-all',
-                      }}>
-                      ID: {diskData["id"]}<br />
-                      UI: {diskData["UI"]}<br />
-                      UE: {diskData["UE"]}<br />
-                      Blood Type: {diskData["blood_type"]}<br />
-                    </Box>
+                      <Box style={{
+                          'word-break': 'break-all',
+                        }}>
+                        ID: {diskData["id"]}<br />
+                        UI: {diskData["UI"]}<br />
+                        UE: {diskData["UE"]}<br />
+                        Blood Type: {diskData["blood_type"]}<br />
+                      </Box>
                     ) : ("No Data")}
                   </Collapsible>
                 ) : ("No Disk")}
