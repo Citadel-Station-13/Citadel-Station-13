@@ -12,6 +12,7 @@
 	casing_ejector = FALSE
 	var/recentpump = 0 // to prevent spammage
 	weapon_weight = WEAPON_HEAVY
+	sawn_item_state = "sawnshotgun"
 
 /obj/item/gun/ballistic/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()
@@ -335,3 +336,34 @@
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 	var/toggled = FALSE
+
+// hey you kids like
+// LEVER GUNS?
+
+/obj/item/gun/ballistic/shotgun/leveraction
+	name = "lever-action rifle"
+	desc = "While lever-actions have been horribly out of date for hundreds of years now, \
+	the reported potential versatility of .38 Special is worth paying attention to."
+	fire_sound = "sound/weapons/revolvershot.ogg"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/levergun
+	icon_state = "levercarabine"
+	item_state = "leveraction"
+	sawn_item_state = "maresleg"
+
+/obj/item/gun/ballistic/shotgun/leveraction/attackby(obj/item/A, mob/user, params)
+	..()
+	if(A.tool_behaviour == TOOL_SAW || istype(A, /obj/item/gun/energy/plasmacutter))
+		sawoff(user)
+	if(istype(A, /obj/item/melee/transforming/energy))
+		var/obj/item/melee/transforming/energy/W = A
+		if(W.active)
+			sawoff(user)
+
+/obj/item/gun/ballistic/shotgun/leveraction/on_sawoff(mob/user)
+	magazine.max_ammo-- // sawing off drops from 7+1 to 6+1
+
+/obj/item/gun/ballistic/shotgun/leveraction/update_icon_state()
+	if(current_skin)
+		icon_state = "[unique_reskin[current_skin]][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"
+	else
+		icon_state = "[initial(icon_state)][sawn_off ? "-sawn" : ""][chambered ? "" : "-e"]"

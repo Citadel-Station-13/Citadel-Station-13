@@ -17,20 +17,16 @@
 
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+
 	power_change()
-	if(!QDELETED(C))
-		qdel(circuit)
-		circuit = C
-		C.moveToNullspace()
 
 /obj/machinery/computer/Destroy()
-	QDEL_NULL(circuit)
-	return ..()
+	. = ..()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
@@ -87,25 +83,32 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/machinery/computer/obj_break(damage_flag)
-	if(circuit && !(flags_1 & NODECONSTRUCT_1)) //no circuit, no breaking
-		if(!(stat & BROKEN))
-			playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-			stat |= BROKEN
-			update_icon()
-			set_light(0)
+	if(!circuit) //no circuit, no breaking
+		return
+	. = ..()
+	if(. && !(stat & BROKEN))
+		stat |= BROKEN
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		set_light(0)
+		update_icon()
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
-		if(prob(severity/1.8))
-			obj_break("energy")
+		switch(severity)
+			if(1)
+				if(prob(50))
+					obj_break("energy")
+			if(2)
+				if(prob(10))
+					obj_break("energy")
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
@@ -114,12 +117,14 @@
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.setDir(dir)
 			A.circuit = circuit
-			A.setAnchored(TRUE)
+			// Circuit removal code is handled in /obj/machinery/Exited()
+			circuit.forceMove(A)
+			A.set_anchored(TRUE)
 			if(stat & BROKEN)
 				if(user)
 					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
-					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 				new /obj/item/shard(drop_location())
 				new /obj/item/shard(drop_location())
 				A.state = 3
@@ -129,8 +134,11 @@
 					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
-			circuit = null
 		for(var/obj/C in src)
 			C.forceMove(loc)
-
 	qdel(src)
+
+/obj/machinery/computer/AltClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, !issilicon(user)) || !(stat & (NOPOWER|BROKEN)))
+		return

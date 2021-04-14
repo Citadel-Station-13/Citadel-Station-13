@@ -94,7 +94,7 @@
 
 /datum/design/medicinalsmartdart
 	name = "Medicinal Smartdart"
-	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using its smart nanofilter technology, only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
 	id = "medicinalsmartdart"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 100, /datum/material/plastic = 100, /datum/material/iron = 100)
@@ -192,6 +192,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/hypospraykit
+	name = "Empty Hypospray Kit"
+	desc = "A plastic medical kit for storing hyposprays and hypospray accessories."
+	id = "hypokit"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 5000)
+	build_path = /obj/item/storage/hypospraykit // let's not summon new hyposprays thanks
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/blood_bag
 	name = "Empty Blood Bag"
 	desc = "A small sterilized plastic bag for blood."
@@ -203,7 +213,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bsblood_bag
-	name = "Blue Space Empty Blood Bag"
+	name = "Empty Bluespace Blood Bag"
 	desc = "A large sterilized plastic bag for blood."
 	id = "bsblood_bag"
 	build_path = /obj/item/reagent_containers/blood/bluespace

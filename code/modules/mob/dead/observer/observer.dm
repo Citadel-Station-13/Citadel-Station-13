@@ -905,6 +905,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			mob_eye.observers |= src
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
+			mob_eye.investigate_log("was observed by [src] as a ghost.", INVESTIGATE_GHOST)
 
 /mob/dead/observer/verb/register_pai_candidate()
 	set category = "Ghost"

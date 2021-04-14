@@ -16,7 +16,7 @@
 		errors |= MANIFEST_ERROR_ITEM
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
-	return stamped && stamped.len && !is_denied()
+	return stamped?.len && !is_denied()
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_denied()
 	return stamped && ("stamp-deny" in stamped)
@@ -49,6 +49,7 @@
 	P.info += "<h2>[station_name()] Supply Requisition</h2>"
 	P.info += "<hr/>"
 	P.info += "Order #[id]<br/>"
+	P.info += "Time of Order: [STATION_TIME_TIMESTAMP("hh:mm:ss", world.time)]<br/>"
 	P.info += "Item: [pack.name]<br/>"
 	P.info += "Access Restrictions: [get_access_desc(pack.access)]<br/>"
 	P.info += "Requested by: [orderer]<br/>"
@@ -68,10 +69,10 @@
 	P.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
-	if(id && !(id == "Cargo"))
+	if(owner && !(owner == "Cargo"))
 		P.info += "Direct purchase from [owner]<br/>"
 		P.name += " - Purchased by [owner]"
-	P.info += "Order #[id]<br/>"
+	P.info += "Order[packname?"":"s"]: [id]<br/>"
 	P.info += "Destination: [station_name]<br/>"
 	if(packname)
 		P.info += "Item: [packname]<br/>"
@@ -82,8 +83,11 @@
 		var/obj/structure/closet/C = container
 		ignore_this += C.lockerelectronics
 	for(var/atom/movable/AM in container.contents - ignore_this)
-		if((P.errors & MANIFEST_ERROR_CONTENTS) && prob(50))
-			continue
+		if((P.errors & MANIFEST_ERROR_CONTENTS))
+			if(prob(50))
+				P.info += "<li>[AM.name]</li>"
+			else
+				continue
 		P.info += "<li>[AM.name]</li>"
 	P.info += "</ul>"
 	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
@@ -94,7 +98,7 @@
 			/obj/structure/closet/crate/large,
 			/obj/structure/closet/secure_closet/goodies
 		))
-		if(blacklisted_error[container.type])
+		if(is_type_in_list(container, blacklisted_error))
 			P.errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lost = max(round(container.contents.len / 10), 1)
@@ -108,15 +112,23 @@
 		var/obj/structure/closet/crate/C = container
 		C.manifest = P
 		C.update_icon()
+	else
+		// manifest goes in if it's not a crate
+		container.contents += P
 
 	return P
 
 /datum/supply_order/proc/generate(atom/A)
+	var/account_holder
+	if(paying_account)
+		account_holder = paying_account.account_holder
+	else
+		account_holder = "Cargo"
 	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
-	generateManifest(C, paying_account, pack)
+	generateManifest(C, account_holder, pack)
 	return C
 
-/datum/supply_order/proc/generateCombo(var/miscbox, var/misc_own, var/misc_contents)
+/datum/supply_order/proc/generateCombo(miscbox, misc_own, misc_contents)
 	for (var/I in misc_contents)
 		new I(miscbox)
 	generateManifest(miscbox, misc_own, "")
