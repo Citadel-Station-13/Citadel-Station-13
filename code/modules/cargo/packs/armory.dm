@@ -233,6 +233,18 @@
 	cost = 1500
 	contains = list(/obj/item/gun/energy/laser/hellgun)
 
+/datum/supply_pack/security/armory/derringerclassic
+	name = "Holdout Crate"
+	crate_name = "dented crate"
+	desc = "Hey kid.. c'mere. Boss says we need to offload these, to any buyer, no questions asked. You pay us, we give you three of these guns, no strings attached. Locks are to ensure they get to PAYING customers."
+	cost = 2000
+	contraband = TRUE
+	can_private_buy = TRUE
+	contains = list(/obj/item/storage/fancy/cigarettes/derringer/smuggled,
+					/obj/item/storage/fancy/cigarettes/derringer/smuggled,
+					/obj/item/storage/fancy/cigarettes/derringer/smuggled,
+					/obj/item/storage/wallet)
+
 /datum/supply_pack/security/armory/esoteric_arms
 	name = "Esoteric Armory Shipment"
 	desc = "Well.. you're an agent of taste, I can tell that much. For the right price.. we could see our way clear to send you one of our more... unique weapons."

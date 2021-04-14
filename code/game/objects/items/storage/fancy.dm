@@ -406,6 +406,20 @@
 	new /obj/item/ammo_casing/g4570(src)
 	new /obj/item/clothing/mask/cigarette/xeno(src)
 
+//For Cargomen, looking for a good deal on arms, with no quarrels as to where they're from.
+/obj/item/storage/fancy/cigarettes/derringer/smuggled
+	name = "\improper Shady Jim's Super Slims packet"
+	desc = "If you get caught with this, we don't know you, capiche?"
+	icon_state = "shadyjim"
+	spawn_type = /obj/item/ballistic/derringer
+
+/obj/item/storage/fancy/cigarettes/derringer/smuggled/PopulateContents()
+	new spawn_type(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/ammo_casing/c38/lethal(src)
+	new /obj/item/clothing/mask/cigarette/shadyjims (src)
 /////////////
 //CIGAR BOX//
 /////////////
