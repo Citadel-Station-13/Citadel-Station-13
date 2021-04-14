@@ -54,13 +54,13 @@ obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
 
 /obj/item/gun/ballistic/derringer/traitor
 	name = "\improper .357 Syndicate Derringer"
-	desc = "An easily concealable derriger, if not for the bright red and black. Uses .357 OR .38 ammo"
+	desc = "An easily concealable derriger, if not for the bright red and black. Uses .357 ammo"
 	icon_state = "derringer_syndie"
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer/a357
 
 /obj/item/gun/ballistic/derringer/gold
 	name = "\improper Golden Derringer"
-	desc = "The golden sheen is somewhat counterintuitive as a stealth weapon, but it looks cool. Uses .357 OR .38 ammo"
+	desc = "The golden sheen is somewhat counterintuitive as a stealth weapon, but it looks cool. Uses .357 ammo"
 	icon_state = "derringer_gold"
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer/a357
 	fire_sound = 'sound/weapons/resonator_blast.ogg'
