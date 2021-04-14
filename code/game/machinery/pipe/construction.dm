@@ -127,7 +127,9 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	setDir(turn(dir,-90))
 
-/obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/item/pipe/wrench_act(mob/living/user, obj/item/W)
+	if(!W.tool_behaviour == TOOL_WRENCH)
+		return
 	if(!isturf(loc))
 		return TRUE
 
@@ -196,8 +198,9 @@ Buildable meters
 	w_class = WEIGHT_CLASS_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
-
+/obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/W)
+	if(!W.tool_behaviour == TOOL_WRENCH)
+		return
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)
 		if(P.piping_layer == piping_layer)

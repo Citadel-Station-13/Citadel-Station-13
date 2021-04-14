@@ -66,6 +66,14 @@
 	return TRUE
 
 /**
+  * A proc that handles the code when the mob dies
+  *
+  * This proc is primarily used to end any soundloops when the heretic dies
+  */
+/datum/eldritch_knowledge/proc/on_death(mob/user)
+	return
+
+/**
   * What happens once the recipe is succesfully finished
   *
   * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
@@ -100,13 +108,20 @@
 /datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	return FALSE
 
-
 /**
   * Sickly blade act
   *
   * Gives addtional effects to sickly blade weapon
   */
 /datum/eldritch_knowledge/proc/on_eldritch_blade(target,user,proximity_flag,click_parameters)
+	return
+
+/**
+  * Sickly blade distant act
+  *
+  * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
+  */
+/datum/eldritch_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
 	return
 
 //////////////
@@ -150,7 +165,7 @@
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(compiled_list.len == 0)
-		to_chat(user, "<span class='warning'>The items don't posses required fingerprints.</span>")
+		to_chat(user, "<span class='warning'>These items don't possess the required fingerprints or DNA.</span>")
 		return FALSE
 
 	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
@@ -222,9 +237,9 @@
 
 /datum/eldritch_knowledge/spell/basic
 	name = "Break of Dawn"
-	desc = "Starts your journey in the mansus. Allows you to select a target using a living heart on a transmutation rune."
-	gain_text = "Gates of Mansus open up to your mind."
-	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/spell/silence)
+	desc = "Starts your journey in the Mansus. Allows you to select a target using a living heart on a transmutation rune."
+	gain_text = "Another day at a meaningless job. You feel a shimmer around you, as a realization of something strange in your backpack unfolds. You look at it, unknowingly opening a new chapter in your life."
+	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/base_void)
 	cost = 0
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	required_atoms = list(/obj/item/living_heart)
@@ -279,7 +294,7 @@
 				var/datum/mind/targeted =  A.find_target(blacklist = target_blacklist)//easy way, i dont feel like copy pasting that entire block of code
 				if(!targeted)
 					break
-				targets[targeted.current.real_name] = targeted.current
+				targets["[targeted.current.real_name] the [targeted.assigned_role]"] = targeted.current
 			LH.target = targets[input(user,"Choose your next target","Target") in targets]
 
 			if(!LH.target && targets.len)
@@ -301,7 +316,6 @@
 				var/datum/antagonist/heretic/EC = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 				LH.sac_targetter = EC
 				EC.sac_targetted.Add(LH.target.real_name)
-
 			else
 				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 
@@ -311,28 +325,20 @@
 /datum/eldritch_knowledge/living_heart
 	name = "Living Heart"
 	desc = "Allows you to create additional living hearts, using a heart, a pool of blood and a poppy. Living hearts when used on a transmutation rune will grant you a person to hunt and sacrifice on the rune. Every sacrifice gives you an additional charge in the book."
-	gain_text = "Disconnected, yet it still beats."
+	gain_text = "The Gates of Mansus open up to your mind."
 	cost = 0
 	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/reagent_containers/food/snacks/grown/poppy)
+	next_knowledge = list(/datum/eldritch_knowledge/spell/silence)
 	result_atoms = list(/obj/item/living_heart)
 	route = "Start"
 
 /datum/eldritch_knowledge/codex_cicatrix
 	name = "Codex Cicatrix"
 	desc = "Allows you to create a spare Codex Cicatrix if you have lost one, using a bible, human skin, a pen and a pair of eyes."
-	gain_text = "Their hands are at your throat, yet you see them not."
+	gain_text = "Their hand is at your throat, yet you see Them not."
 	cost = 0
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
 	result_atoms = list(/obj/item/forbidden_book)
-	route = "Start"
-
-/datum/eldritch_knowledge/eldritch_blade
-	name = "Eldritch Blade"
-	desc = "Allows you to create a sickly, eldritch blade by transmuting a glass shard and a metal rod atop a transmutation rune."
-	gain_text = "The first step starts with sacrifice."
-	cost = 0
-	required_atoms = list(/obj/item/shard,/obj/item/stack/rods)
-	result_atoms = list(/obj/item/melee/sickly_blade)
 	route = "Start"
 
 /datum/eldritch_knowledge/spell/silence

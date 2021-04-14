@@ -23,11 +23,5 @@
 	linked_console.linked_imprinter = null
 	..()
 
-/obj/machinery/rnd/production/circuit_imprinter/calculate_efficiency()
-	. = ..()
-	var/obj/item/circuitboard/machine/circuit_imprinter/C = circuit
-	offstation_security_levels = C.offstation_security_levels
-
-/obj/machinery/rnd/production/circuit_imprinter/offstation
-	offstation_security_levels = FALSE
-	circuit = /obj/item/circuitboard/machine/circuit_imprinter/offstation
+/obj/machinery/rnd/production/circuit_imprinter/AfterMaterialInsert() //doesnt use have an animation like lathes do
+	return

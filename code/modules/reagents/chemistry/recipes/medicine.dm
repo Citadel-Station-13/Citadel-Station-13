@@ -116,7 +116,10 @@
 		holder.remove_reagent(id, added_volume*temp_ratio)
 	if(St.purity < 1)
 		St.volume *= St.purity
+		added_volume *= St.purity
 		St.purity = 1
+	if(!N)
+		return
 	var/amount = clamp(0.002, 0, N.volume)
 	N.volume -= amount
 	St.data["grown_volume"] = St.data["grown_volume"] + added_volume
@@ -332,7 +335,7 @@
 	required_reagents = list( /datum/reagent/medicine/mannitol = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)
 
 /datum/chemical_reaction/medsuture
-	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+	required_reagents = list(/datum/reagent/cellulose = 5, /datum/reagent/toxin/formaldehyde = 5, /datum/reagent/medicine/polypyr = 5) //This might be a bit much, reagent cost should be reviewed after implementation.
 
 /datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -340,7 +343,7 @@
 		new /obj/item/stack/medical/suture/medicated(location)
 
 /datum/chemical_reaction/medmesh
-	required_reagents = list(/datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+	required_reagents = list(/datum/reagent/cellulose = 5, /datum/reagent/consumable/aloejuice = 5, /datum/reagent/space_cleaner/sterilizine = 5)
 
 /datum/chemical_reaction/medmesh/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)

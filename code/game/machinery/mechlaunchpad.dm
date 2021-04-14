@@ -37,13 +37,14 @@
 		return TRUE
 
 /obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/tool)
+	if(!tool.tool_behaviour == TOOL_MULTITOOL)
+		return
 	if(!panel_open)
 		return
 	if(!multitool_check_buffer(user, tool))
 		return
-	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
-	to_chat(user, "<span class='notice'>You save the data in the [multitool.name]'s buffer.</span>")
+	tool.buffer = src
+	to_chat(user, "<span class='notice'>You save the data in the [tool.name]'s buffer.</span>")
 	return TRUE
 
 /**

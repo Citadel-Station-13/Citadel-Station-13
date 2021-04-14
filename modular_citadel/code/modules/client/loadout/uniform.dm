@@ -32,6 +32,10 @@
 	name = "Tan suit"
 	path = /obj/item/clothing/under/suit/tan
 
+/datum/gear/uniform/suit/charismatic_suit
+	name = "Charismatic suit"
+	path = /obj/item/clothing/under/suit/charismatic_suit
+
 /datum/gear/uniform/suit/white
 	name = "White suit"
 	path = /obj/item/clothing/under/suit/white
@@ -166,6 +170,13 @@
 	name = "Tan Pants"
 	path = /obj/item/clothing/under/pants/tan
 
+/datum/gear/uniform/pants/polypants
+	name = "Polychromic Pants"
+	path = /obj/item/clothing/under/pants/polypants/polychromic
+	cost = 2
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#75634F", "#3D3D3D", "#575757")
+
 /datum/gear/uniform/pants/track
 	name = "Track Pants"
 	path = /obj/item/clothing/under/pants/track
@@ -187,6 +198,10 @@
 /datum/gear/uniform/turtleneck
 	name = "Tactitool Turtleneck"
 	path = /obj/item/clothing/under/syndicate/cosmetic
+
+/datum/gear/uniform/skirtleneck
+	name = "Tactitool Skirtleneck"
+	path = /obj/item/clothing/under/syndicate/cosmetic/skirt
 
 /datum/gear/uniform/sweater
 	name = "Cream Commando Sweater"
@@ -224,6 +239,22 @@
 /datum/gear/uniform/greyturtle
 	name = "Grey Turtleneck"
 	path = /obj/item/clothing/under/suit/turtle/grey
+
+/datum/gear/uniform/purpleturtle
+	name = "Purple Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/purple
+
+/datum/gear/uniform/orangeturtle
+	name = "Orange Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/orange
+
+/datum/gear/uniform/blueturtle
+	name = "Blue Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/blue
+
+/datum/gear/uniform/redturtle
+	name = "Red Turtleneck"
+	path = /obj/item/clothing/under/suit/turtle/red
 
 /datum/gear/uniform/polyjump
 	name = "Polychromic Jumpsuit"

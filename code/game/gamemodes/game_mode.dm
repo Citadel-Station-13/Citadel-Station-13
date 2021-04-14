@@ -17,6 +17,7 @@
 	var/config_tag = null
 	var/votable = 1
 	var/probability = 0
+	var/chaos = 5 // 0-9, used for weighting round-to-round
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
@@ -81,30 +82,43 @@
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
-	//finalize_monster_hunters() Disabled for now
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	if(prob(20)) //CIT CHANGE - adds a 20% chance for the security level to be the opposite of what it normally is
+	if(prob(20)) //cit-change
 		flipseclevel = TRUE
+
+	// if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
+	// 	var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
+	// 	if(delay)
+	// 		delay = (delay SECONDS)
+	// 	else
+	// 		delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
+	// 	addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
+
 	if(SSdbcore.Connect())
-		var/sql
+		var/list/to_set = list()
+		var/arguments = list()
 		if(SSticker.mode)
-			sql += "game_mode = '[SSticker.mode]'"
+			to_set += "game_mode = :game_mode"
+			arguments["game_mode"] = SSticker.mode
 		if(GLOB.revdata.originmastercommit)
-			if(sql)
-				sql += ", "
-			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
-		if(sql)
-			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
+			to_set += "commit_hash = :commit_hash"
+			arguments["commit_hash"] = GLOB.revdata.originmastercommit
+		if(to_set.len)
+			arguments["round_id"] = GLOB.round_id
+			var/datum/db_query/query_round_game_mode = SSdbcore.NewQuery(
+				"UPDATE [format_table_name("round")] SET [to_set.Join(", ")] WHERE id = :round_id",
+				arguments
+			)
 			query_round_game_mode.Execute()
 			qdel(query_round_game_mode)
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
 	gamemode_ready = TRUE
-	return 1
+	return TRUE
 
 
 ///Handles late-join antag assignments
@@ -406,7 +420,7 @@
 
 	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-			if(role in player.client.prefs.be_special)
+			if((role in player.client.prefs.be_special) && !(ROLE_NO_ANTAGONISM in player.client.prefs.be_special))
 				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player) && !jobban_isbanned(player, role) && !QDELETED(player)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
@@ -610,3 +624,10 @@
 /// Mode specific info for ghost game_info
 /datum/game_mode/proc/ghost_info()
 	return
+
+/datum/game_mode/proc/get_chaos()
+	var/chaos_levels = CONFIG_GET(keyed_list/chaos_level)
+	if(config_tag in chaos_levels)
+		return chaos_levels[config_tag]
+	else
+		return chaos

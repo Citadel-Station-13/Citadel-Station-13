@@ -15,7 +15,7 @@
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
-#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYFIND(L, V) (L ? L.Find(V) : 0)
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)
@@ -66,7 +66,7 @@
 	} while(FALSE)
 
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "")
 	var/total = length(input)
 	switch(total)
 		if (0)
@@ -85,6 +85,34 @@
 				output += "[input[index]][comma_text]"
 				index++
 
+			return "[output][and_text][input[index]]"
+
+/**
+ * English_list but associative supporting. Higher overhead.
+ */
+/proc/english_list_assoc(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "")
+	var/total = length(input)
+	switch(total)
+		if (0)
+			return "[nothing_text]"
+		if (1)
+			var/assoc = input[input[1]] == null? "" : " = [input[input[1]]]"
+			return "[input[1]][assoc]"
+		if (2)
+			var/assoc = input[input[1]] == null? "" : " = [input[input[1]]]"
+			var/assoc2 = input[input[2]] == null? "" : " = [input[input[2]]]"
+			return "[input[1]][assoc][and_text][input[2]][assoc2]"
+		else
+			var/output = ""
+			var/index = 1
+			var/assoc
+			while (index < total)
+				if (index == total - 1)
+					comma_text = final_comma_text
+				assoc = input[input[index]] == null? "" : " = [input[input[index]]]"
+				output += "[input[index]][assoc][comma_text]"
+				++index
+			assoc = input[input[index]] == null? "" : " = [input[input[index]]]"
 			return "[output][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
@@ -586,7 +614,7 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-#if DM_VERSION > 513
+#if DM_VERSION > 514
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
 #error otherwise, update the version and bug lummox

@@ -153,7 +153,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	name = "Light Sensitivity"
 	desc = "Bright lights irritate you. Your eyes start to water, your skin feels itchy against the photon radiation, and your hair gets dry and frizzy. Maybe it's a medical condition. If only Nanotrasen was more considerate of your needs..."
 	value = -1
-	gain_text = "<span class='danger'>The safty of light feels off...</span>"
+	gain_text = "<span class='danger'>Bright lights seem irritating.</span>"
 	lose_text = "<span class='notice'>Enlightening.</span>"
 	medical_record_text = "Despite my warnings, the patient refuses turn on the lights, only to end up rolling down a full flight of stairs and into the cellar."
 
@@ -184,6 +184,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
+	on_spawn_immediate = FALSE
 
 /datum/quirk/paraplegic/add()
 	var/datum/brain_trauma/severe/paralysis/paraplegic/T = new()

@@ -69,7 +69,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/talk_into(mob/living/M, message, channel, list/spans,datum/language/language)
 	if (!listening)
 		return ITALICS | REDUCE_RANGE
-	return ..()
+	if (language != /datum/language/signlanguage)
+		return ..()
 
 /obj/item/radio/headset/can_receive(freq, level, AIuser)
 	if(ishuman(src.loc))
@@ -277,7 +278,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			to_chat(user,"<span class='notice'>You upgrade [src].</span>")
 			bowmanize()
 			qdel(W)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(keyslot || keyslot2)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

@@ -42,6 +42,8 @@
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction.Copy()
+		if(!A == /mob/living/simple_animal/hostile/poison/bees/toxin)
+			A.my_creator = type
 		ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
@@ -88,6 +90,7 @@
 	density = FALSE
 	del_on_death = 1
 	var/swarming = FALSE
+	var/my_creator = null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize()
 	. = ..()
@@ -205,17 +208,27 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
-		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
-	else
-		L = new(H.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = check_infest_type(H)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/check_infest_type(mob/living/carbon/human/human)
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
+	var/list/blacklisted_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf)
+	if(HAS_TRAIT(human, TRAIT_DWARF)) //dwarf legions aren't just fluff!
+		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(human.loc)
+	else if(my_creator)
+		if(my_creator in blacklisted_types)
+			L = new(human.loc)
+		else
+			L = new my_creator(human.loc)
+	else
+		L = new(human.loc)
+	return L
 
 //Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
