@@ -33,7 +33,7 @@
 		chamber_round(0)
 
 
-obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
+/obj/item/gun/ballistic/derringer/attack_self(mob/living/user)
 	var/num_unloaded = 0
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
