@@ -411,7 +411,7 @@
 	name = "\improper Shady Jim's Super Slims packet"
 	desc = "If you get caught with this, we don't know you, capiche?"
 	icon_state = "shadyjim"
-	spawn_type = /obj/item/ballistic/derringer
+	spawn_type = /obj/item/gun/ballistic/derringer
 
 /obj/item/storage/fancy/cigarettes/derringer/smuggled/PopulateContents()
 	new spawn_type(src)
