@@ -94,6 +94,9 @@ var/static/list/bread_cache = typecacheof(list(/obj/item/reagent_containers/food
 	else if(istype(teleatom, /obj/item/reagent_containers/food/snacks/store/bread))
 		var/obj/item/reagent_containers/food/snacks/store/bread/bread = teleatom
 		bread.bread_teleport()
+	else if(istype(teleatom, /obj/item/reagent_containers/food/snacks/baguette))
+		var/obj/item/reagent_containers/food/snacks/store/bread/bread = teleatom
+		bread.bread_teleport()
 
 	return TRUE
 
