@@ -88,6 +88,10 @@
 		return
 	strength -= strength / hl3_release_date
 
+/datum/component/radioactive/permanent/Initialize(_strength, _source, _half_life, _can_contaminate)
+	. = ..()
+	hl3_release_date = 0
+
 #undef RAD_AMOUNT_LOW
 #undef RAD_AMOUNT_MEDIUM
 #undef RAD_AMOUNT_HIGH
