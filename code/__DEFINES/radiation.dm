@@ -47,21 +47,22 @@ Ask ninjanomnom if they're around
 // contamination_chance = 		[doesn't matter, will always contaminate]
 // contamination_strength = 	strength * RAD_CONTAMINATION_STR_COEFFICIENT
 // contamination_threshold =	1 / (RAD_CONTAMINATION_BUDGET_SIZE * RAD_CONTAMINATION_STR_COEFFICIENT)
-#define RAD_CONTAMINATION_BUDGET_SIZE 0.2			// Mob and non-mob budgets each gets a share from the radiation as large as this;
+#define RAD_CONTAMINATION_BUDGET_SIZE 0.275			// Mob and non-mob budgets each gets a share from the radiation as large as this;
 													// So this means 10% of the rads is "absorbed" by non-mobs (if there is a non-mob),
 													// and another 10% of the rads is "absorbed" by mobs (if there is a mob)
-#define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
+#define RAD_DISTANCE_COEFFICIENT 0.75					// Lower means further rad spread
 
-#define RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER 2	// Radiation components have additional penalty at distance coefficient
+#define RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER 1	// Radiation components have additional penalty at distance coefficient
 														// This is to reduce radiation by contaminated objects, mostly
 
-#define RAD_HALF_LIFE 60							// The half-life of contaminated objects
+#define RAD_HALF_LIFE 90							// The half-life of contaminated objects
 
 #define RAD_WAVE_MINIMUM 10							// Radiation waves with less than this amount of power stop spreading
 													// WARNING: Reducing can make rads subsytem more expensive
 #define RAD_COMPONENT_MINIMUM 1						// To ensure slow contamination
 													// WARNING: Reducing can make rads subsytem more expensive
-#define RAD_CONTAMINATION_STR_COEFFICIENT (1 / RAD_HALF_LIFE / 8 * RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER ** 2)
+// #define RAD_CONTAMINATION_STR_COEFFICIENT (1 / RAD_HALF_LIFE / 8 * RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER ** 2)
+#define RAD_CONTAMINATION_STR_COEFFICIENT (1 / (RAD_HALF_LIFE / 2))
 													// Higher means higher strength scaling contamination strength
 													// This number represents perservation of radiation
 													// Set to control the most typical situation: clutters around typical radiation sources

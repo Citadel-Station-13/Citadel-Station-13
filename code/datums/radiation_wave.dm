@@ -245,7 +245,7 @@
 			/obj/singularity
 			))
 		// Insulating objects won't get contaminated
-		if(!is_contaminating || blacklisted[thing.type] || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+		if(!is_contaminating || (thing.rad_flags & RAD_NO_CONTAMINATE) || blacklisted[thing.type] || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
 			continue
 		if(ismob(thing))
 			moblist += thing
