@@ -66,7 +66,7 @@
 	SScommunications.send_message(threat_msg,unique = TRUE)
 
 /datum/round_event/pirates/proc/answered()
-	if(threat_msg && threat_msg.answered == 1)
+	if(threat_msg?.answered == 1)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(D.adjust_money(-payoff))
@@ -75,6 +75,8 @@
 				return
 			else
 				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+	else if(threat_msg?.answered == 2)
+		priority_announce("You won't pay? Fine then, we'll take those credits by force!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 	else
