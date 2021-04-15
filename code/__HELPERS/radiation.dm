@@ -44,14 +44,15 @@
 			last_huge_pulse = world.time
 			log = TRUE
 
-	var/list/things = get_rad_contents(source) //copypasta because I don't want to put special code in waves to handle their origin
-	for(var/k in 1 to things.len)
-		var/atom/thing = things[k]
-		if(!thing)
-			continue
-		thing.rad_act(intensity)
+	if(intensity >= RAD_WAVE_MINIMUM) // Don't bother to spawn rad waves if they're just going to immediately go out
+		new /datum/radiation_wave(source, intensity, range_modifier, can_contaminate)
 
-	if(log)
-		var/turf/_source_T = get_turf(source)
-		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [loc_name(_source_T)][spawn_waves ? "" : " (contained by [nested_loc.name])"]")
+		var/static/last_huge_pulse = 0
+		if(intensity > 3000 && world.time > last_huge_pulse + 200)
+			last_huge_pulse = world.time
+			log = TRUE
+		if(log)
+			var/turf/_source_T = isturf(source) ? source : get_turf(source)
+			log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [loc_name(_source_T)] ")
+
 	return TRUE

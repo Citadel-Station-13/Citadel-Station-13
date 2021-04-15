@@ -26,7 +26,7 @@
 	else
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 
-	if(strength > RAD_MINIMUM_CONTAMINATION)
+	if(strength * (RAD_CONTAMINATION_STR_COEFFICIENT * RAD_CONTAMINATION_BUDGET_SIZE) > RAD_COMPONENT_MINIMUM)
 		SSradiation.warn(src)
 
 	//Let's make er glow
@@ -44,16 +44,15 @@
 	return ..()
 
 /datum/component/radioactive/process()
-	if(!prob(50))
-		return
+	if(strength >= RAD_WAVE_MINIMUM)
+		radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT * RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER, FALSE, can_contaminate)
 	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
 
 	if(!hl3_release_date)
 		return
 	strength -= strength / hl3_release_date
-	if(strength <= RAD_BACKGROUND_RADIATION)
-		return PROCESS_KILL
-
+	if(strength < RAD_COMPONENT_MINIMUM)
+		qdel(src)
 
 /datum/component/radioactive/proc/glow_loop(atom/movable/master)
 	var/filter = master.get_filter("rad_glow")
@@ -68,9 +67,9 @@
 		return
 	if(C)
 		var/datum/component/radioactive/other = C
-		strength = max(strength, other.strength)
+		strength += other.strength
 	else
-		strength = max(strength, _strength)
+		strength += arguments[1]
 
 /datum/component/radioactive/proc/rad_examine(datum/source, mob/user, list/examine_list)
 	var/atom/master = parent

@@ -45,11 +45,26 @@ Ask ninjanomnom if they're around
 #define RAD_FULL_INSULATION 0						// Unused
 
 // WARNING: The deines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
-// contamination_chance = 		(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1))
-// contamination_strength = 	(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
-#define RAD_MINIMUM_CONTAMINATION 300				// How strong does a radiation wave have to be to contaminate objects
-#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.005	// Higher means higher strength scaling contamination chance
-#define RAD_CONTAMINATION_STR_COEFFICIENT 0.99		// Higher means higher strength scaling contamination strength
+// contamination_chance = 		[doesn't matter, will always contaminate]
+// contamination_strength = 	strength * RAD_CONTAMINATION_STR_COEFFICIENT
+// contamination_threshold =	1 / (RAD_CONTAMINATION_BUDGET_SIZE * RAD_CONTAMINATION_STR_COEFFICIENT)
+#define RAD_CONTAMINATION_BUDGET_SIZE 0.2			// Mob and non-mob budgets each gets a share from the radiation as large as this;
+													// So this means 10% of the rads is "absorbed" by non-mobs (if there is a n
+
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 
-#define RAD_HALF_LIFE 90							// The half-life of contaminated objects
+#define RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER 2	// Radiation components have additional penalty at distance coefficient
+														// This is to reduce radiation by contaminated objects, mostly
+
+#define RAD_HALF_LIFE 60							// The half-life of contaminated objects
+
+#define RAD_WAVE_MINIMUM 10							// Radiation waves with less than this amount of power stop spreading
+													// WARNING: Reducing can make rads subsytem more expensive
+#define RAD_COMPONENT_MINIMUM 1						// To ensure slow contamination
+													// WARNING: Reducing can make rads subsytem more expensive
+#define RAD_CONTAMINATION_STR_COEFFICIENT (1 / RAD_HALF_LIFE / 8 * RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER ** 2)
+													// Higher means higher strength scaling contamination strength
+													// This number represents perservation of radiation
+													// Set to control the most typical situation: clutters around typical radiation sources
+													// This define is long and ugly because of the amount of math involved
+													// and to free this define from mathematical errors of future define number tweakers
