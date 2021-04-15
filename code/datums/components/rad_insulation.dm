@@ -1,4 +1,4 @@
-a/datum/component/rad_insulation
+/datum/component/rad_insulation
 	var/amount					// Multiplier for radiation strength passing through
 
 /datum/component/rad_insulation/Initialize(_amount=RAD_MEDIUM_INSULATION, protects=TRUE, contamination_proof=TRUE)

@@ -4,30 +4,25 @@ Changes here can have widespread effects: make sure you test well.
 Ask ninjanomnom if they're around
 */
 
-#define RAD_BACKGROUND_RADIATION 9 					// How much radiation is harmless to a mob, this is also when radiation waves stop spreading
-													// WARNING: Lowering this value significantly increases SSradiation load
+#define RAD_BACKGROUND_RADIATION 9 					// How much radiation is harmless to a mob
 
 // apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
 #define RAD_MOB_COEFFICIENT 0.20					// Radiation applied is multiplied by this
 #define RAD_MOB_SKIN_PROTECTION ((1/RAD_MOB_COEFFICIENT)+RAD_BACKGROUND_RADIATION)
 
 #define RAD_LOSS_PER_TICK 0.5
-#define RAD_TOX_COEFFICIENT 0.05					// Toxin damage per tick coefficient
+#define RAD_TOX_COEFFICIENT 0.08					// Toxin damage per tick coefficient
 #define RAD_OVERDOSE_REDUCTION 0.000001				// Coefficient to the reduction in applied rads once the thing, usualy mob, has too much radiation
 													// WARNING: This number is highly sensitive to change, graph is first for best results
 #define RAD_BURN_THRESHOLD 1000						// Applied radiation must be over this to burn
 
 #define RAD_MOB_SAFE 500							// How much stored radiation in a mob with no ill effects
-#define RAD_DEFAULT_ROBOT_SAFE 250					// Like above, except for robotic carbons. Far more susceptible to corruption from radiation.
-#define RAD_UPGRADED_ROBOT_SAFE 750					// If the robot has been upgraded via an implant, their radiation threshold is raised to be somewhat above that of organics.
+#define RAD_DEFAULT_ROBOT_SAFE 250                                     // Like above, except for robotic carbons. Far more susceptible to corruption from radiation.
+#define RAD_UPGRADED_ROBOT_SAFE 750                                    // If the robot has been upgraded via an implant, their radiation threshold is raised to be somewhat above that of organics.
 
 #define RAD_MOB_HAIRLOSS 800						// How much stored radiation to check for hair loss
 
 #define RAD_MOB_MUTATE 1250							// How much stored radiation to check for mutation
-
-#define RAD_MONKEY_GORILLIZE 1650					// How much stored radiation to check for Harambe time.
-#define RAD_MOB_GORILLIZE_FACTOR 100
-#define RAD_MONKEY_GORILLIZE_EXPONENT 0.5
 
 #define RAD_MOB_VOMIT 2000							// The amount of radiation to check for vomitting
 #define RAD_MOB_VOMIT_PROB 1						// Chance per tick of vomitting
@@ -44,13 +39,13 @@ Ask ninjanomnom if they're around
 #define RAD_EXTREME_INSULATION 0.5					// What rad collectors have
 #define RAD_FULL_INSULATION 0						// Unused
 
-// WARNING: The deines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
+// WARNING: The defines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
 // contamination_chance = 		[doesn't matter, will always contaminate]
 // contamination_strength = 	strength * RAD_CONTAMINATION_STR_COEFFICIENT
 // contamination_threshold =	1 / (RAD_CONTAMINATION_BUDGET_SIZE * RAD_CONTAMINATION_STR_COEFFICIENT)
 #define RAD_CONTAMINATION_BUDGET_SIZE 0.2			// Mob and non-mob budgets each gets a share from the radiation as large as this;
-													// So this means 10% of the rads is "absorbed" by non-mobs (if there is a n
-
+													// So this means 10% of the rads is "absorbed" by non-mobs (if there is a non-mob),
+													// and another 10% of the rads is "absorbed" by mobs (if there is a mob)
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 
 #define RAD_DISTANCE_COEFFICIENT_COMPONENT_MULTIPLIER 2	// Radiation components have additional penalty at distance coefficient
