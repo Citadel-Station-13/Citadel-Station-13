@@ -1,7 +1,0 @@
-author: "BlueWildrose"
-delete-after: True
-changes: 
-  - bugfix: "(TGport-Timberpoes) You can once again pay off the pirate event from the communications console without it silently failing for no obvious reason."
-  - bugfix: "Fixed being unable to delete messages from the communication consoles message list save for the one on the bottom."
-  - bugfix: "The data siphon that the space pirates have will no longer go invisible when it begins siphoning."
-  - bugfix: "If the space pirate's \"offer\" has been rejected, there is now announcement feedback for if this does happen."
