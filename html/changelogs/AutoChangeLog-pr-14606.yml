@@ -1,0 +1,8 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "Adds a fancy TGUI interface for the cloning computer."
+  - rscdel: "Destroys the old cloning interface.
+tweak: Alt-Click now removes disks from the cloning computer."
+  - refactor: "Replaced way too much code for the cloning computer."
+  - refactor: "Cloning scan's implant now outputs a list if desired."
