@@ -1,0 +1,8 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - balance: "(TGport-Kriskog) Reduced blight cost to 75, more in line with its underwhelming nature.
+tweak: (TGport-Kriskog) Revenants now only use stolen essence to unlock new spells. No more counting corpses or waiting for regen before draining.
+tweak: (TGport-Kriskog) Spell unlock costs adjusted accordingly, defile upped from 0 to a cost of 10.
+tweak: (TGport-Kriskog) Drain targets in soft-crit will be stunned, to prevent them crawling away."
+  - bugfix: "(TGport-ShizCalev) Fixed revenant's light overload ability not blowing lights in a square if there was another broken/burnt out/empty light in it."
