@@ -650,7 +650,7 @@
 	post_noise = FALSE
 
 	var/stun_delay = 0 // how long it takes for you to be able to stun someone with the spraycan again
-	var/last_stun_time = 0
+	var/last_stun_time = -90
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
