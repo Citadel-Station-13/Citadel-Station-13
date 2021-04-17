@@ -1,0 +1,4 @@
+author: "DeltaFire15"
+delete-after: True
+changes: 
+  - bugfix: "Organic healing surgeries no longer show up for people without any organic bodyparts."
