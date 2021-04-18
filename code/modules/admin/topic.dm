@@ -872,9 +872,9 @@
 
 		//Heretic
 		if(jobban_isbanned(M, ROLE_HERETIC) || isbanned_dept)
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=heretic;jobban4=[REF(M)]'><font color=red>Changeling</font></a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=heretic;jobban4=[REF(M)]'><font color=red>Heretic</font></a></td>"
 		else
-			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=heretic;jobban4=[REF(M)]'>Changeling</a></td>"
+			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=heretic;jobban4=[REF(M)]'>Heretic</a></td>"
 
 		//Nuke Operative
 		if(jobban_isbanned(M, ROLE_OPERATIVE) || isbanned_dept)
