@@ -361,6 +361,7 @@
 
 /obj/item/gun/ballistic/shotgun/leveraction/on_sawoff(mob/user)
 	magazine.max_ammo-- // sawing off drops from 7+1 to 6+1
+	weapon_weight = WEAPON_MEDIUM // but what kind of mares leg isnt one-handed
 
 /obj/item/gun/ballistic/shotgun/leveraction/update_icon_state()
 	if(current_skin)
