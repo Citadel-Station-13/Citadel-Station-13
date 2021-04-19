@@ -22,7 +22,7 @@
 	var/motd
 	// var/policy
 
-	// var/static/regex/ic_filter_regex
+	var/static/regex/ic_filter_regex
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -53,7 +53,7 @@
 	loadmaplist(CONFIG_MAPS_FILE)
 	LoadMOTD()
 	// LoadPolicy()
-	// LoadChatFilter()
+	LoadChatFilter()
 
 	if (Master)
 		Master.OnConfigLoad()
@@ -404,9 +404,9 @@ Example config:
 		if(!Get(/datum/config_entry/flag/no_storyteller_threat_removal))
 			var/min_chaos = (probabilities in storyteller_min_chaos) ? storyteller_min_chaos[config_tag] : initial(S.min_chaos)
 			var/max_chaos = (probabilities in storyteller_max_chaos) ? storyteller_max_chaos[config_tag] : initial(S.max_chaos)
-			if(SSpersistence.average_dynamic_threat < min_chaos)
+			if(SSpersistence.average_threat + 50 < min_chaos)
 				continue
-			if(SSpersistence.average_dynamic_threat > max_chaos)
+			if(SSpersistence.average_threat + 50 > max_chaos)
 				continue
 		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
 			var/name = initial(S.name)
@@ -486,7 +486,7 @@ Example config:
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
-/*
+
 /datum/controller/configuration/proc/LoadChatFilter()
 	var/list/in_character_filter = list()
 	if(!fexists("[directory]/in_character_filter.txt"))
@@ -499,7 +499,7 @@ Example config:
 			continue
 		in_character_filter += REGEX_QUOTE(line)
 	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
-*/
+
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)

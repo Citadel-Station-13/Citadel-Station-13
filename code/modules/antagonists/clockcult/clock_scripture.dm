@@ -5,7 +5,7 @@ Pieces of scripture require certain follower counts, contruction value, and acti
 Drivers: Unlocked by default
 Scripts: 35k power or one convert
 Applications: 50k or three converts
-Judgement 5 converts
+Judgement 80k power or nine converts
 */
 
 /datum/clockwork_scripture

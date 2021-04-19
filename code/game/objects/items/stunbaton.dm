@@ -235,10 +235,9 @@
 	L.apply_effect(EFFECT_STUTTER, stamina_loss_amount)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		L.lastattacker = user.real_name
-		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has [shoved ? "knocked to the floor" : "stunned"] [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has [shoved ? "knocked you to the floor" : "stunned you"] with [src]!</span>")
+		L.set_last_attacker(user)
+		L.visible_message("<span class='danger'>[user] has [shoved ? "brutally stunned" : "stunned"] [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has [shoved ? "brutally stunnned" : "stunned"] you with [src]!</span>")
 		log_combat(user, L, shoved ? "stunned and attempted knockdown" : "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
