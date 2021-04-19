@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "Weight per blood is .03 now instead of .05"
