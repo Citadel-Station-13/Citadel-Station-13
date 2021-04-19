@@ -98,8 +98,8 @@
 		failed = TRUE
 
 /obj/item/organ/heart/slime
-	name = "slime heart"
-	desc = "It seems we've gotten to the slimy core of the matter."
+	name = "mitochondria"
+	desc = "The powerhouse of the cell. Or in this case, the hearty organelle of a slimeperson."
 	icon_state = "heart-s-on"
 	icon_base = "heart-s"
 
