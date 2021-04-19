@@ -278,6 +278,19 @@
 	visible_message("[src] finishes cooking!")
 	new /obj/item/reagent_containers/food/snacks/meat/steak/goliath(loc)
 	qdel(src)
+	
+/obj/item/reagent_containers/food/snacks/meat/slab/dragon
+	name = "ash drake meat"
+	desc = "Meat from an ash drake. It's probably not a good idea to eat this raw."
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin = 5, /datum/reagent/consumable/cooking_oil = 3)
+	icon_state = "goliathmeat"
+	tastes = list("meat" = 1)
+	foodtype = RAW | MEAT | TOXIC
+
+/obj/item/reagent_containers/food/snacks/meat/slab/dragon/burn()
+	visible_message("[src] finishes cooking!")
+	new /obj/item/reagent_containers/food/snacks/meat/steak/dragon(loc)
+	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/meatwheat
 	name = "meatwheat clump"
@@ -394,6 +407,16 @@
 	icon_state = "goliathsteak"
 	trash = null
 	tastes = list("meat" = 1, "rock" = 1)
+	foodtype = MEAT
+	
+/obj/item/reagent_containers/food/snacks/meat/steak/dragon
+	name = "dragon steak"
+	desc = "Spicy."
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+	icon_state = "goliathsteak"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 3)
+	trash = null
+	tastes = list("meat" = 1, "fire" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/meat/steak/gondola
