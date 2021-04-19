@@ -623,19 +623,21 @@
 		if(user.mind.has_antag_datum(/datum/antagonist/pirate))
 			to_chat(user,"<span class='warning'>Why would you want to do that to your shipmate? That'd kill them.</span>")
 			return
-		user.visible_message("<span class='warning'>[user] start to pry open the [src]...</span>",
-				"<span class='notice'>You start to pry open the [src]...</span>",
+		user.visible_message("<span class='warning'>[user] start to pry open [src]...</span>",
+				"<span class='notice'>You start to pry open [src]...</span>",
 				"<span class='italics'>You hear prying...</span>")
 		W.play_tool_sound(src)
 		if(do_after(user, 100*W.toolspeed, target = src))
-			user.visible_message("<span class='warning'>[user] pries open the [src], disrupting the sleep of the pirate within and killing them.</span>",
-				"<span class='notice'>You pry open the [src], disrupting the sleep of the pirate within and killing them.</span>",
+			user.visible_message("<span class='warning'>[user] pries open [src], disrupting the sleep of the pirate within and killing them.</span>",
+				"<span class='notice'>You pry open [src], disrupting the sleep of the pirate within and killing them.</span>",
 				"<span class='italics'>You hear prying, followed by the death rattling of bones.</span>")
 			log_game("[key_name(user)] has successfully pried open [src] and disabled a space pirate spawner.")
 			W.play_tool_sound(src)
 			playsound(src.loc, 'modular_citadel/sound/voice/scream_skeleton.ogg', 50, 1, 4, 1.2)
-			if(rank == "Captain") new /obj/effect/mob_spawn/human/pirate/corpse/captain(get_turf(src))
-			else new /obj/effect/mob_spawn/human/pirate/corpse(get_turf(src))
+			if(rank == "Captain") 
+				new /obj/effect/mob_spawn/human/pirate/corpse/captain(get_turf(src))
+			else 
+				new /obj/effect/mob_spawn/human/pirate/corpse(get_turf(src))
 			qdel(src)
 	else
 		..()
