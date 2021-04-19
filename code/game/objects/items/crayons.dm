@@ -650,7 +650,7 @@
 	post_noise = FALSE
 
 	var/stun_delay = 0 // how long it takes for you to be able to stun someone with the spraycan again
-	var/last_stun_time = -90
+	var/last_stun_time = 0
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
@@ -775,7 +775,7 @@
 	name = "cyborg spraycan"
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
-	stun_delay = 90 // 3 seconds longer than the knockdown time
+	stun_delay = 50 // 3 seconds longer than the knockdown time
 
 /obj/item/toy/crayon/spraycan/borg/draw_on(atom/target,mob/user,proximity, params)
 	var/diff = ..()
