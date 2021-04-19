@@ -1,0 +1,4 @@
+author: "BlueWildrose"
+delete-after: True
+changes: 
+  - rscadd: "Space pirate sleepers can now be crowbared to be destroyed."
