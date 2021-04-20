@@ -1,8 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - rscadd: "Donk co traitor class (assassin-heavy)"
-  - rscadd: "Waffle co traitor class (freeform)"
-  - rscadd: "Admin-only activity tracking system only attached to antags for now
-tweak: Objective rerolling can now be done twice"
-  - bugfix: "Sabotage objectives won't give \"free objective\" anymore"

@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes: 
-  - bugfix: "Plastitanium glass now properly applies the *2 bonus for integrity and efficiency when used as a solar panel."
