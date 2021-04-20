@@ -159,7 +159,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/peashooter
 	name = "Peashooter"
-	desc = "Born from a desire to pelt people with peas, this gun came from a peashooter bush. It only accepts sliced peas."
+	desc = "Born from a desire to pelt people with peas, this gun came from a peashooter bush. It only accepts peapods."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "peashooter"
 	item_state = "pistol"
