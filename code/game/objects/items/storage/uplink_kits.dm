@@ -62,7 +62,7 @@
 			new /obj/item/clothing/glasses/phantomthief/syndicate(src)
 			new /obj/item/reagent_containers/syringe/stimulants(src)
 
-		if("baseball") // 42~ tc
+		if("baseball") // 44~ tc
 			new /obj/item/melee/baseball_bat/ablative/syndi(src) //Lets say 12 tc, lesser sleeping carp
 			new /obj/item/clothing/glasses/sunglasses/garb(src) //Lets say 2 tc
 			new /obj/item/card/emag(src) //6 tc
@@ -72,6 +72,7 @@
 			new /obj/item/clothing/under/syndicate/baseball(src) //3tc
 			new /obj/item/clothing/head/soft/baseball(src) //Lets say 4 tc
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants/baseball(src) //lets say 5tc
+			new /obj/item/melee/baseball_bat/telescopic(src) // 2 tc
 
 		if("implant") // 67+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/implanter/freedom(src)
@@ -154,18 +155,18 @@
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
-			
+
 		if("ancient") //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
-		
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle //So the subtype works
-		
+
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
-	new /obj/item/card/emag(src) 
-	new /obj/item/pen/sleepy(src) 
+	new /obj/item/card/emag(src)
+	new /obj/item/pen/sleepy(src)
 	new /obj/item/reagent_containers/pill/cyanide(src)
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
-	new /obj/item/gun/ballistic/revolver(src) 
+	new /obj/item/gun/ballistic/revolver(src)
 	new /obj/item/implanter/freedom(src)
 	new /obj/item/stack/telecrystal(src) //The failsafe/self destruct isn't an item we can physically include in the kit, but 1 TC is technically enough to buy the equivalent.
 
@@ -545,3 +546,21 @@
 	. = ..()
 	new /obj/item/cardpack/syndicate(src)
 	new /obj/item/cardpack/syndicate(src)
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle
+	name = "deathrattle implant box"
+	desc = "Contains eight linked deathrattle implants."
+
+/obj/item/storage/box/syndie_kit/imp_deathrattle/PopulateContents()
+	new /obj/item/implanter(src)
+
+	var/datum/deathrattle_group/group = new
+
+	var/implants = list()
+	for(var/j in 1 to 8)
+		var/obj/item/implantcase/deathrattle/case = new (src)
+		implants += case.imp
+
+	for(var/i in implants)
+		group.register(i)
+	desc += " The implants are registered to the \"[group.name]\" group."

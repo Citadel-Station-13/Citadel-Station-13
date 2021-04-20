@@ -1,6 +1,6 @@
 //Revenants: based off of wraiths from Goon
 //"Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
-//Don't hear deadchat and are NOT normal ghosts
+//Can hear deadchat, but are NOT normal ghosts and do NOT have x-ray vision
 //Admin-spawn or random event
 
 #define INVISIBILITY_REVENANT 50
@@ -63,6 +63,7 @@
 	var/essence_regenerating = TRUE //If the revenant regenerates essence or not
 	var/essence_regen_amount = 5 //How much essence regenerates
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
+	var/essence_excess = 0 //How much stolen essence available for unlocks
 	var/revealed = FALSE //If the revenant can take damage from normal sources.
 	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
 	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
@@ -76,6 +77,7 @@
 
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -138,6 +140,7 @@
 	. = ..()
 	. += "Current essence: [essence]/[essence_regen_cap]E"
 	. += "Stolen essence: [essence_accumulated]E"
+	. += "Unused stolen essence: [essence_excess]E)"
 	. += "Stolen perfect souls: [perfectsouls]"
 
 /mob/living/simple_animal/revenant/update_health_hud()
@@ -304,16 +307,24 @@
 		return FALSE
 	return TRUE
 
+/mob/living/simple_animal/revenant/proc/unlock(essence_cost)
+	if(essence_excess < essence_cost)
+		return FALSE
+	essence_excess -= essence_cost
+	update_action_buttons_icon()
+	return TRUE
+
 /mob/living/simple_animal/revenant/proc/change_essence_amount(essence_amt, silent = FALSE, source = null)
 	if(!src)
 		return
-	if(essence + essence_amt <= 0)
+	if(essence + essence_amt < 0)
 		return
 	essence = max(0, essence+essence_amt)
-	update_action_buttons_icon()
 	update_health_hud()
 	if(essence_amt > 0)
 		essence_accumulated = max(0, essence_accumulated+essence_amt)
+		essence_excess = max(0, essence_excess+essence_amt)
+	update_action_buttons_icon()
 	if(!silent)
 		if(essence_amt > 0)
 			to_chat(src, "<span class='revennotice'>Gained [essence_amt]E[source ? " from [source]":""].</span>")

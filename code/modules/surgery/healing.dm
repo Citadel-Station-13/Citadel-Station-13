@@ -23,7 +23,7 @@
 
 /datum/surgery/healing/can_start(mob/user, mob/living/carbon/target, obj/item/tool)
 	for(var/obj/item/bodypart/B in target.bodyparts)
-		if(B.is_organic_limb(TRUE))
+		if(B.is_organic_limb(FALSE))
 			return ..()
 
 

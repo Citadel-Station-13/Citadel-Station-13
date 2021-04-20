@@ -412,6 +412,24 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 				counter++
 	return counter >= 8
 
+/datum/objective/freedom
+	name = "freedom"
+	explanation_text = "Don't get captured by nanotrasen."
+	team_explanation_text = "Have all members of your team free of nanotrasen custody."
+
+/datum/objective/freedom/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/m in owners)
+		var/datum/mind/M = m
+		if(!considered_alive(M))
+			return FALSE
+		if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+			return FALSE
+		var/turf/location = get_turf(M.current)
+		if(!location || istype(location, /turf/open/floor/plasteel/shuttle/red) || istype(location, /turf/open/floor/mineral/plastitanium/red/brig)) // Fails if they are in the shuttle brig
+			return FALSE
+	return TRUE
+
 /datum/objective/escape
 	name = "escape"
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
