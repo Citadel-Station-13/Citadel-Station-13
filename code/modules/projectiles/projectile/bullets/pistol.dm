@@ -54,7 +54,8 @@
 //Ballistic Pea (Peashooter)//
 /obj/item/projectile/bullet/pea
 	name = "ballistic pea"
-	damage = 1
+	icon_state = "energy"
+	nodamage = TRUE
 	stamina = 15
 	armour_penetration = -50
 	hitsound = 'sound/misc/splort.ogg'
