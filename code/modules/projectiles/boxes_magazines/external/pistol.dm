@@ -66,3 +66,10 @@
 	caliber = ".50"
 	max_ammo = 7
 	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/peaclip
+	name = "pea cartridge"
+	icon_state = "peaclip"
+	ammo_type = /obj/item/ammo_casing/pea
+	caliber = "PEA"
+	max_ammo = 15
