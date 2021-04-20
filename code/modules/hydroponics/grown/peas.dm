@@ -124,6 +124,7 @@
 	reagents_add = list (/datum/reagent/phosphorus = 0.05)
 	rarity = 30 // It's a tree that lets you shoot peas at people, takes a while to manifest, too.
 
+
 /obj/item/reagent_containers/food/snacks/grown/shell/peashooter
 	seed = /obj/item/seeds/peas/shoot
 	name = "Peashooter"
@@ -133,4 +134,5 @@
 	bitesize_mod = 2
 	foodtype = VEGETABLES
 	tastes = list("burning" = 1, "questionable decisions" = 1)
-	distill_regeant = /datum/reagent/consumable/ethanol/gunfire
+	wine_power = 90
+	wine_flavor = "peas set on fire."

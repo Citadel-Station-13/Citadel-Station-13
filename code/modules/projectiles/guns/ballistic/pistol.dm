@@ -157,15 +157,15 @@
 
 ///Peashooter///
 
-/obj/item/ballistic/automatic/pistol/peashooter
+/obj/item/gun/ballistic/automatic/pistol/peashooter
 	name = "Peashooter"
 	desc = "Born from a desire to pelt people with peas, this gun came from a peashooter bush. It only accepts sliced peas."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "peashooter"
 	item_state = "pistol"
 	mag_type = /obj/item/ammo_box/magazine/peaclip
-	fire_delay = 2
 	burst_size = 3
+	fire_delay = 3
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	fire_sound = 'sound/effects/zzzt.ogg'
 	casing_ejector = FALSE

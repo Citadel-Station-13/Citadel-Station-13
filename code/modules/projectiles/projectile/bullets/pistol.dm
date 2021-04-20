@@ -56,5 +56,5 @@
 	name = "ballistic pea"
 	damage = 1
 	stamina = 15
-	armor_penetration = -50
+	armour_penetration = -50
 	hitsound = 'sound/misc/splort.ogg'
