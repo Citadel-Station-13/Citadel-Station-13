@@ -80,7 +80,7 @@
 
 /datum/supply_pack/security/russianclothing
 	name = "Russian Surplus Clothing"
-	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproff armor, a few union suits and some warm hats!"
+	desc = "An old russian crate full of surplus armor that they used to use! Has two sets of bulletproof armor, a few union suits and some warm hats!"
 	contraband = TRUE
 	cost = 5750 // Its basicly sec suits, good boots/gloves
 	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
@@ -98,13 +98,11 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian clothing"
-	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/security/russian_partisan
 	name = "Russian Partisan Gear"
 	desc = "An old russian partisan equipment crate, comes with a full russian outfit, a loaded surplus rifle and a second magazine."
 	contraband = TRUE
-	access = FALSE
 	cost = 6500
 	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
@@ -114,7 +112,6 @@
 					/obj/item/clothing/gloves/tackler/combat/insulated,
 					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian gear"
-	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/security/russian_partisan/fill(obj/structure/closet/crate/C)
 	..()
