@@ -3,6 +3,7 @@
 	desc = "A easily concealable derringer. Uses .38 ammo"
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "derringer"
+	flags_1 = CONDUCT_1
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer
 	fire_delay = 5
 	obj_flags = UNIQUE_RENAME
