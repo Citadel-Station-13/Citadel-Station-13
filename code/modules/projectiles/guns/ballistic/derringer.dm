@@ -4,6 +4,7 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "derringer"
 	mag_type = /obj/item/ammo_box/magazine/internal/derringer
+	fire_delay = 5
 	obj_flags = UNIQUE_RENAME
 	fire_sound = 'sound/weapons/revolvershot.ogg'
 	casing_ejector = FALSE
@@ -23,7 +24,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+		to_chat(user, "<span class='notice'>You load [num_loaded] bullet\s into \the [src].</span>")
 		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
