@@ -106,7 +106,7 @@
 	cost = 6500
 	contains = list(/obj/item/clothing/suit/armor/navyblue/russian,
 					/obj/item/clothing/shoes/combat,
-					/obj/item/clothing/head/ushanka,
+					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/gloves/tackler/combat/insulated,
