@@ -1496,10 +1496,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = rgb(167, 36, 36)
 	boozepwr = 20
 	quality = DRINK_FANTASTIC
-	taste_description = "death, lizards and bubblegum"
+	taste_description = "death, ash and lizards"
 	glass_icon_state = "pinotmort"
 	glass_name = "Pinot Mort"
-	glass_desc = "The taste of lavaland in a small cup. A drink best served hot. You feel like you might regret drinking this."
+	glass_desc = "The taste of Lavaland served in a legion skull. You feel like you might regret drinking this."
 	value = REAGENT_VALUE_UNCOMMON
 
 /datum/reagent/consumable/ethanol/pinotmort/on_mob_life(mob/living/carbon/M)
