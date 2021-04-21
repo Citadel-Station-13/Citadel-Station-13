@@ -607,7 +607,7 @@
 /datum/chemical_reaction/pinotmort
 	name = "Pinot Mort"
 	id = /datum/reagent/consumable/ethanol/pinotmort
-	results = list(/datum/reagent/consumable/ethanol/pinotmort = 3)
+	results = list(/datum/reagent/consumable/ethanol/pinotmort = 4)
 	required_reagents = list(/datum/reagent/ash = 2, /datum/reagent/consumable/ethanol/lizardwine = 1, /datum/reagent/consumable/vitfro = 1)
 	mix_message = "You hear an undescribable scream as it mixes... You're not sure how to feel about this."
 	mix_sound = 'sound/effects/tendril_destroyed.ogg'
