@@ -239,7 +239,7 @@
 	access = FALSE
 	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	contains = list(/obj/item/ammo_box/c38/dumdum)
-	crate_name = ".38 match crate"
+	crate_name = ".38 dumdum crate"
 
 /datum/supply_pack/security/match
 	name = ".38 Match Grade Speedloader"
