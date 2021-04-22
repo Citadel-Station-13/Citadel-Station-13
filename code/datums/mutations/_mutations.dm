@@ -35,7 +35,6 @@
 	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
-	var/mutadone_proof = FALSE
 
 	//Chromosome stuff - set to -1 to prevent people from changing it. Example: It'd be a waste to decrease cooldown on mutism
 	var/stabilizer_coeff = 1 //genetic stability coeff
@@ -164,7 +163,6 @@
 	synchronizer_coeff = HM.synchronizer_coeff
 	power_coeff = HM.power_coeff
 	energy_coeff = HM.energy_coeff
-	mutadone_proof = HM.mutadone_proof
 	can_chromosome = HM.can_chromosome
 	valid_chrom_list = HM.valid_chrom_list
 
@@ -173,7 +171,6 @@
 	synchronizer_coeff = initial(synchronizer_coeff)
 	power_coeff = initial(power_coeff)
 	energy_coeff = initial(energy_coeff)
-	mutadone_proof = initial(mutadone_proof)
 	can_chromosome = initial(can_chromosome)
 	chromosome_name = null
 
