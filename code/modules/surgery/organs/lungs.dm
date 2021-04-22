@@ -571,11 +571,11 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 4 //You could literally be breathing the thinnest amount of oxygen and be fine
 	safe_oxygen_max = 250 //Or be in an enriched oxygen room for that matter
-	safe_toxins_max = 50
-	safe_co2_max = 50
-	SA_para_min = 50
-	SA_sleep_min = 100
-	BZ_trip_balls_min = 50
+	safe_toxins_max = 30
+	safe_co2_max = 30
+	SA_para_min = 30
+	SA_sleep_min = 50
+	BZ_trip_balls_min = 30
 	emp_vulnerability = 20
 
 	cold_level_1_threshold = 200
