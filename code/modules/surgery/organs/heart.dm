@@ -206,7 +206,7 @@
 	var/dose_available = FALSE
 	var/rid = /datum/reagent/medicine/epinephrine
 	var/ramount = 10
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
 
 /obj/item/organ/heart/cybernetic/tier2
 	name = "cybernetic heart"
@@ -214,7 +214,7 @@
 	icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	dose_available = TRUE
-	emp_vulnerability = 40
+	emp_vulnerability = 2
 
 /obj/item/organ/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
@@ -224,7 +224,7 @@
 	dose_available = TRUE
 	rid = /datum/reagent/medicine/atropine
 	ramount = 5
-	emp_vulnerability = 20
+	emp_vulnerability = 3
 
 /obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
@@ -239,7 +239,7 @@
 		owner.Dizzy(10)
 		owner.losebreath += 10
 		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 		Stop()
 		owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \

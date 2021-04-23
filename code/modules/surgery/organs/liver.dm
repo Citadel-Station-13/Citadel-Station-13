@@ -106,7 +106,7 @@
 	toxLethality = 1.1 * LIVER_DEFAULT_TOX_LETHALITY
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
 
 /obj/item/organ/liver/cybernetic/tier2
 	name = "cybernetic liver"
@@ -115,7 +115,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 2 * LIVER_DEFAULT_TOX_TOLERANCE //6 units of toxin purging
 	toxLethality = 0.8 * LIVER_DEFAULT_TOX_LETHALITY //20% less damage than a normal liver
-	emp_vulnerability = 40
+	emp_vulnerability = 2
 
 /obj/item/organ/liver/cybernetic/tier3
 	name = "upgraded cybernetic liver"
@@ -125,7 +125,7 @@
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 5 * LIVER_DEFAULT_TOX_TOLERANCE //15 units of toxin purging
 	toxLethality = 0.4 * LIVER_DEFAULT_TOX_LETHALITY //60% less damage than a normal liver
-	emp_vulnerability = 20
+	emp_vulnerability = 3
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
 	. = ..()
@@ -134,5 +134,5 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.adjustToxLoss(10)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

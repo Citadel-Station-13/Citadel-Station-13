@@ -553,7 +553,7 @@
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
-	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
 
 /obj/item/organ/lungs/cybernetic/tier2
 	name = "cybernetic lungs"
@@ -562,7 +562,7 @@
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	safe_oxygen_min = 13
 	safe_oxygen_max = 100
-	emp_vulnerability = 40
+	emp_vulnerability = 2
 
 /obj/item/organ/lungs/cybernetic/tier3
 	name = "upgraded cybernetic lungs"
@@ -576,7 +576,7 @@
 	SA_para_min = 30
 	SA_sleep_min = 50
 	BZ_trip_balls_min = 30
-	emp_vulnerability = 20
+	emp_vulnerability = 3
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
@@ -590,7 +590,7 @@
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
 		owner.losebreath += 20
 		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 
 /obj/item/organ/lungs/ashwalker
