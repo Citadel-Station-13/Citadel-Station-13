@@ -28,9 +28,9 @@
 	var/brightness_on = 7
 	var/wielded = FALSE // track wielded status on item
 	/// Damage penalty factor to detonation damage to non simple mobs
-	var/human_damage_nerf = 1/3
+	var/human_damage_nerf = 0.25
 	/// Damage penalty factor to backstab bonus damage to non simple mobs
-	var/human_backstab_nerf = 1/3
+	var/human_backstab_nerf = 0.25
 
 /obj/item/kinetic_crusher/cyborg //probably give this a unique sprite later
 	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
