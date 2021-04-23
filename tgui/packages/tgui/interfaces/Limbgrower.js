@@ -36,14 +36,14 @@ export const Limbgrower = (props, context) => {
             icon="eject"
             onClick={() => act('eject_disk')}
             disabled={!disk['disk']}
-            />
+          />
         }>
           {disk['name'] ? (
             <div>
               Containing data for {disk['name']},<br />
-              Attempting to create genitalia will use the disk's data.
+              Attempting to create genitalia will use the disk&apos;s data.
             </div>
-            ) : disk['disk'] ? "No data." : "No disk."}
+          ) : disk['disk'] ? "No data." : "No disk."}
         </Section>
         <Section title="Reagents">
           <Box mb={1}>
