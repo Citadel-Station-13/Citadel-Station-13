@@ -52,11 +52,12 @@
 	QDEL_LIST(trophies)
 	return ..()
 
-/obj/item/kinetic_crusher/emag_act()
+/obj/item/kinetic_crusher/emag_act(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	to_chat(user, "<span class='warning'>You override the safeties on [src]. It can now be used on anything.</span>")
 
 /obj/item/kinetic_crusher/proc/can_mark(mob/living/victim)
 	if(obj_flags & EMAGGED)
