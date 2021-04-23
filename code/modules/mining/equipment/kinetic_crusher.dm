@@ -27,6 +27,10 @@
 	var/light_on = FALSE
 	var/brightness_on = 7
 	var/wielded = FALSE // track wielded status on item
+	/// Damage penalty factor to detonation damage to non simple mobs
+	var/human_damage_nerf = 1/3
+	/// Damage penalty factor to backstab bonus damage to non simple mobs
+	var/human_backstab_nerf = 1/3
 
 /obj/item/kinetic_crusher/cyborg //probably give this a unique sprite later
 	desc = "An integrated version of the standard kinetic crusher with a grinded down axe head to dissuade mis-use against crewmen. Deals damage equal to the standard crusher against creatures, however."
@@ -47,6 +51,17 @@
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
 	return ..()
+
+/obj/item/kinetic_crusher/emag_act()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+
+/obj/item/kinetic_crusher/proc/can_mark(mob/living/victim)
+	if(obj_flags & EMAGGED)
+		return TRUE
+	return victim.mob_size >= MOB_SIZE_LARGE
 
 /// triggered on wield of two handed item
 /obj/item/kinetic_crusher/proc/on_wield(obj/item/source, mob/user)
@@ -134,6 +149,8 @@
 			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = "bomb")
+			var/detonation_damage = src.detonation_damage * (isanimal(L)? 1 : human_damage_nerf)
+			var/backstab_bonus = src.backstab_bonus * (isanimal(L)? 1 : human_backstab_nerf)
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				if(!QDELETED(C))
 					C.total_damage += detonation_damage + backstab_bonus //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item

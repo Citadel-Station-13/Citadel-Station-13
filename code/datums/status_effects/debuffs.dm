@@ -393,7 +393,7 @@
 
 /datum/status_effect/crusher_mark/on_apply()
 	. = ..()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
+	if(hammer_synced? hammer_synced.can_mark(owner) : (owner.mob_size >= MOB_SIZE_LARGE))
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
