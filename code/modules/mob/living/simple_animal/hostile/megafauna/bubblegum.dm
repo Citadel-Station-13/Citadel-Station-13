@@ -23,7 +23,7 @@ Difficulty: Hard
 */
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum
-	name = "bubblegum"
+	name = "Bubblegum"
 	desc = "In what passes for a hierarchy among slaughter demons, this one is king."
 	health = 2500
 	maxHealth = 2500
