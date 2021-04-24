@@ -90,7 +90,7 @@
 /datum/design/m10apbox
 	name = "ammo box (10mm Armour Piercing)"
 	desc = "A box of ammo containing 20 rounds designed to penetrate armor, at the cost of raw damage."
-	id = "10apbox"
+	id = "m10apbox"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 6000)
 	build_path = /obj/item/ammo_box/c10mm/ap
@@ -100,7 +100,7 @@
 /datum/design/m10firebox
 	name = "ammo box (10mm Incendiary)"
 	desc = "A box of ammo containing 20 rounds designed to set people ablaze, at the cost of raw damage."
-	id = "10firebox"
+	id = "m10firebox"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 30000, /datum/material/plasma = 6000)
 	build_path = /obj/item/ammo_box/c10mm/fire
@@ -110,7 +110,7 @@
 /datum/design/m10hpbox
 	name = "ammo box (10mm Hollowpoint)"
 	desc = "A box of ammo containing 20 rounds designed to tear through unarmored opponents, while being completely ineffective against armor."
-	id = "10hpbox"
+	id = "m10hpbox"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 30000, /datum/material/glass = 6000)
 	build_path = /obj/item/ammo_box/c10mm/hp
