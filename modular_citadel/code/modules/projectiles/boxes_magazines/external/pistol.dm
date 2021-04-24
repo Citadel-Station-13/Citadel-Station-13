@@ -92,7 +92,7 @@
 	desc = "A box of ammo containing 20 rounds designed to penetrate armor, at the cost of raw damage."
 	id = "10apbox"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
+	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 6000)
 	build_path = /obj/item/ammo_box/c10mm/ap
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -102,7 +102,7 @@
 	desc = "A box of ammo containing 20 rounds designed to set people ablaze, at the cost of raw damage."
 	id = "10apbox"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
+	materials = list(/datum/material/iron = 30000, /datum/material/plasma = 6000)
 	build_path = /obj/item/ammo_box/c10mm/fire
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -112,7 +112,7 @@
 	desc = "A box of ammo containing 20 rounds designed to tear through unarmored opponents, while being completely ineffective against armor."
 	id = "10apbox"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
+	materials = list(/datum/material/iron = 30000, /datum/material/glass = 6000)
 	build_path = /obj/item/ammo_box/c10mm/hp
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
