@@ -690,7 +690,6 @@
 			for(var/list/marking in H.dna.features["mam_body_markings"])
 				// marking is a list containing bodypart type, bodymarking name, and then the colour (colour won't be used in v1)
 				if(marking[1] == body_part)
-					message_admins("MATCH FOUND FOR [marking[1]] ON PART [body_part] ON USER [C]")
 					var/datum/sprite_accessory/Smark
 					Smark = GLOB.mam_body_markings_list[marking[2]]
 					var/body_markings_icon = default_body_markings_icon
@@ -701,6 +700,7 @@
 						marking_value = Smark?.icon_state || lowertext(H.dna.features["mam_body_markings"])
 					else
 						marking_value = "plain"
+					message_admins("MATCH FOUND FOR [marking[1]] ON PART [body_part] ON USER [C], VALUE IS [body_markings_icon] AND [marking_value]")
 					body_markings_list += list(list(body_markings_icon, marking_value))
 
 			markings_color = list(colorlist)
