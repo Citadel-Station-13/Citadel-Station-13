@@ -775,7 +775,7 @@
 	name = "cyborg spraycan"
 	desc = "A metallic container containing shiny synthesised paint."
 	charges = -1
-	stun_delay = 50 // 3 seconds longer than the knockdown time
+	stun_delay = 50
 
 /obj/item/toy/crayon/spraycan/borg/draw_on(atom/target,mob/user,proximity, params)
 	var/diff = ..()
