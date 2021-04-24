@@ -1967,7 +1967,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
 							marking_list += list(part, new_body_markings)
 						features["body_markings"] = marking_list
-						if(new_body_markings != "None")
+						if(new_body_markings != list())
 							features["mam_body_markings"] = list()
 
 				if("legs")
@@ -2101,13 +2101,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								snowflake_markings_list[S.name] = path
 					var/new_mam_body_markings
 					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in snowflake_markings_list
-					if(new_mam_body_markings)
-						features["mam_body_markings"] = new_mam_body_markings
-						if(new_mam_body_markings != "None")
-							features["body_markings"] = list()
-						else if(new_mam_body_markings == "None")
-							features["mam_body_markings"] = list()
-							features["body_markings"] = list()
+					if(new_mam_body_markings != "None")
+						var/marking_list = list()
+						for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
+							marking_list += list(part, new_mam_body_markings)
+						features["mam_body_markings"] = marking_list
+					else if(new_mam_body_markings == "None")
+						features["mam_body_markings"] = list()
+						features["body_markings"] = list()
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
