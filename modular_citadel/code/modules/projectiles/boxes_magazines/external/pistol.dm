@@ -5,7 +5,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/plasma = 5000, /datum/material/iron = 7500)
 	build_path = /obj/item/ammo_box/magazine/m10mm/fire
-	category = list("Weapons")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/m10mm
@@ -84,5 +84,35 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
 	build_path = /obj/item/ammo_box/a357/ap
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/m10apbox
+	name = "ammo box (10mm Armour Piercing)"
+	desc = "A box of ammo containing 20 rounds designed to penetrate armor, at the cost of raw damage."
+	id = "10apbox"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
+	build_path = /obj/item/ammo_box/c10mm/ap
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/m10firebox
+	name = "ammo box (10mm Incendiary)"
+	desc = "A box of ammo containing 20 rounds designed to set people ablaze, at the cost of raw damage."
+	id = "10apbox"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
+	build_path = /obj/item/ammo_box/c10mm/fire
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/m10hpbox
+	name = "ammo box (10mm Hollowpoint)"
+	desc = "A box of ammo containing 20 rounds designed to tear through unarmored opponents, while being completely ineffective against armor."
+	id = "10apbox"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 30000, /datum/material/titanium = 5000)
+	build_path = /obj/item/ammo_box/c10mm/hp
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
