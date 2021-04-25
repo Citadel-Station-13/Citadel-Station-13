@@ -30,7 +30,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 //Human Overlays Indexes/////////
 //LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
-#define MUTATIONS_LAYER			33		//mutations. Tk headglows, cold resistance glow, etc
+#define MUTATIONS_LAYER			34		//mutations. Tk headglows, cold resistance glow, etc
+#define ANTAG_LAYER 			33		//stuff for things like cultism indicators (clock cult glow, cultist red halos, whatever else new that comes up)
 #define GENITALS_BEHIND_LAYER	32		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
 #define BODY_BEHIND_LAYER		31		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			30		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
@@ -63,7 +64,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			33		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			34		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -158,7 +159,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_COLOR_SLIME			"#00ff90"
 #define BLOOD_COLOR_LIZARD			"#db004D"
 #define BLOOD_COLOR_UNIVERSAL		"#db3300"
-#define BLOOD_COLOR_BUG				"#a37c0f"
+#define BLOOD_COLOR_BUG				"#ffc933"
 #define BLOOD_COLOR_PLANT			"#3d610e"
 
 
@@ -173,8 +174,18 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 #define BROKEN_SENSORS -1
 #define NO_SENSORS 0
-#define HAS_SENSORS 1
-#define LOCKED_SENSORS 2
+#define DAMAGED_SENSORS_LIVING 1
+#define DAMAGED_SENSORS_VITALS 2
+#define HAS_SENSORS 3
+
+//suit sensor flags: sensor_flag defines
+#define SENSOR_RANDOM (1<<0)
+#define SENSOR_LOCKED (1<<1)
+
+//suit sensor integrity percentage threshold defines
+#define SENSOR_INTEGRITY_COORDS 0.2
+#define SENSOR_INTEGRITY_VITALS 0.6
+#define SENSOR_INTEGRITY_BINARY 1
 
 //Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		(0)
@@ -435,8 +446,13 @@ GLOBAL_LIST_INIT(pda_reskins, list(PDA_SKIN_CLASSIC = 'icons/obj/pda.dmi', PDA_S
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
 #define ION_FILE "ion_laws.json"
-#define REDPILL_FILE "redpill.json"
 #define PIRATE_NAMES_FILE "pirates.json"
+#define REDPILL_FILE "redpill.json"
+#define ARCADE_FILE "arcade.json"
+// #define BOOMER_FILE "boomer.json"
+// #define LOCATIONS_FILE "locations.json"
+// #define WANTED_FILE "wanted_message.json"
+// #define VISTA_FILE "steve.json"
 #define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
 #define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
 #define SCAR_LOC_FILE "wounds/scar_loc.json"

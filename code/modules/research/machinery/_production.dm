@@ -3,7 +3,6 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
 	var/consoleless_interface = TRUE			//Whether it can be used without a console.
-	var/offstation_security_levels = TRUE
 	var/print_cost_coeff = 1				//Materials needed * coeff = actual.
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
@@ -19,7 +18,11 @@
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
 
+	var/offstation_security_levels
+
 /obj/machinery/rnd/production/Initialize(mapload)
+	if(mapload && offstation_security_levels)
+		log_mapping("Depricated var named \"offstation_security_levels\" at ([x], [y], [z])!")
 	. = ..()
 	create_reagents(0, OPENCONTAINER)
 	matching_designs = list()
@@ -27,7 +30,7 @@
 	stored_research = new
 	host_research = SSresearch.science_tech
 	update_research()
-	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
+	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, _after_insert=CALLBACK(src, .proc/AfterMaterialInsert))
 	RefreshParts()
 
 /obj/machinery/rnd/production/Destroy()

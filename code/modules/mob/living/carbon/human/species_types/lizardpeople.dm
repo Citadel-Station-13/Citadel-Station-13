@@ -30,6 +30,8 @@
 	wagging_type = "waggingtail_lizard"
 	species_category = SPECIES_CATEGORY_LIZARD
 
+	ass_image = 'icons/ass/asslizard.png'
+
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
@@ -60,9 +62,12 @@
 	if((C.dna.features["spines"] != "None" ) && (C.dna.features["tail_lizard"] == "None")) //tbh, it's kinda ugly for them not to have a tail yet have floating spines
 		C.dna.features["tail_lizard"] = "Smooth"
 		C.update_body()
-	if(C.dna.features["legs"] != "digitigrade")
-		C.dna.features["legs"] = "digitigrade"
+	if(C.dna.features["legs"] != "Digitigrade")
+		C.dna.features["legs"] = "Digitigrade"
 		for(var/obj/item/bodypart/leggie in C.bodyparts)
 			if(leggie.body_zone == BODY_ZONE_L_LEG || leggie.body_zone == BODY_ZONE_R_LEG)
 				leggie.update_limb(FALSE, C)
+	if(C.dna.features["mam_snouts"] != "Sharp")
+		C.dna.features["mam_snouts"] = "Sharp"
+		C.update_body()
 	return ..()

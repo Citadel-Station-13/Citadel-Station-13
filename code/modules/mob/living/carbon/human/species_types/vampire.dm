@@ -3,7 +3,7 @@
 	id = SPECIES_VAMPIRE
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD,HAS_FLESH,HAS_BONE)
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH,TRAIT_NOMARROW)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "tail_human" = "None", "ears" = "None", "deco_wings" = "None")
 	exotic_bloodtype = "U"
@@ -53,12 +53,13 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 0.75 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
-	if(C.blood_volume <= (BLOOD_VOLUME_SURVIVE*C.blood_ratio))
-		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
-		C.dust()
+	if(C.blood_volume > 0.5)
+		C.blood_volume -= 0.5 //Will take roughly 19.5 minutes to die from standard blood volume, roughly 83 minutes to die from max blood volume.
+	else
+		C.dust(FALSE, TRUE)
+
 	var/area/A = get_area(C)
-	if(istype(A, /area/chapel))
+	if(istype(A, /area/service/chapel) && C.mind?.assigned_role != "Chaplain")
 		to_chat(C, "<span class='danger'>You don't belong here!</span>")
 		C.adjustFireLoss(5)
 		C.adjust_fire_stacks(6)
@@ -125,7 +126,7 @@
 	. = ..()
 	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
 	if(darkheart)
-		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
+		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
 
 
 /obj/item/organ/heart/vampire
@@ -169,7 +170,7 @@
 	if(istype(H, /mob/living/simple_animal))
 		var/mob/living/simple_animal/SA = H
 		if((human_caster.blood_volume <= (BLOOD_VOLUME_BAD*human_caster.blood_ratio)) || (ventcrawl_nude_only && length(human_caster.get_equipped_items(include_pockets = TRUE))))
-			SA.ventcrawler = FALSE
+			SA.RemoveElement(/datum/element/ventcrawling, given_tier = VENTCRAWLER_ALWAYS)
 	if(transfer_name)
 		H.name = human_caster.name
 

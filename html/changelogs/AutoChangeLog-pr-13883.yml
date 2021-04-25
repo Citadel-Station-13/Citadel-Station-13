@@ -1,5 +1,0 @@
-author: "silicons"
-delete-after: True
-changes: 
-  - rscadd: "set-pose has been added"
-  - tweak: "temporary flavor text renamed to set pose, fully visible in examine"

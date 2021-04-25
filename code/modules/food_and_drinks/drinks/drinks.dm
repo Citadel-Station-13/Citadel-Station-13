@@ -17,10 +17,7 @@
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	if (gulp_size < 5)
-		gulp_size = 5
-	else
-		gulp_size = max(round(reagents.total_volume / 5), 5)
+	gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
@@ -495,7 +492,9 @@
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
-		qdel(src)
+		M.dropItemToGround(src)
+		M.put_in_active_hand(crushed_can)
+		return qdel(src)
 	..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)

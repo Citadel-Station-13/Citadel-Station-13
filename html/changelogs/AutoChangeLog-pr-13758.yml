@@ -1,5 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - tweak: "custom holoforms are now accessible through an action instead of through verbs"
-  - tweak: "AI holoforms can now emote"

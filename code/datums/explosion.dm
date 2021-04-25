@@ -239,8 +239,13 @@ GLOBAL_LIST_EMPTY(explosions)
 				atoms += A
 			for(var/i in atoms)
 				var/atom/A = i
-				if(!QDELETED(A))
-					A.ex_act(dist)
+				if(QDELETED(A))
+					continue
+				A.ex_act(dist, null, src)
+				if(QDELETED(A) || !ismovable(A))
+					continue
+				var/atom/movable/AM = A
+				LAZYADD(AM.acted_explosions, explosion_id)
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
@@ -311,6 +316,8 @@ GLOBAL_LIST_EMPTY(explosions)
 	exploded_this_tick.Cut()
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION,epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
 	//You need to press the DebugGame verb to see these now....they were getting annoying and we've collected a fair bit of data. Just -test- changes to explosion code using this please so we can compare
 	if(GLOB.Debug2)

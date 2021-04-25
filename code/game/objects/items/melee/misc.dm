@@ -3,9 +3,8 @@
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target.check_martial_melee_block())
-		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
+		target.visible_message("<span class='danger'>[target.name] blocks your attack!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(40)
 		return TRUE
 
 /obj/item/melee/chainofcommand
@@ -272,11 +271,14 @@
 	var/force_on // Damage when on - not stunning
 	var/force_off // Damage when off - not stunning
 	var/weight_class_on // What is the new size class when turned on
+	var/sword_point = TRUE
 
 	wound_bonus = 15
 
 /obj/item/melee/classic_baton/Initialize()
 	. = ..()
+	if(sword_point)
+		AddElement(/datum/element/sword_point)
 
 // Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
@@ -403,6 +405,8 @@
 	weight_class_on = WEIGHT_CLASS_BULKY
 	total_mass = TOTAL_MASS_NORMAL_ITEM
 	bare_wound_bonus = 5
+	sword_point = FALSE
+	var/silent = FALSE
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -432,6 +436,9 @@
 		w_class = weight_class_on
 		force = force_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
+		AddElement(/datum/element/sword_point)
+		if(!silent)
+			user?.visible_message("<span class='warning'>[user] extends [src] with a flick of their wrist!</span>")
 	else
 		to_chat(user, desc["local_off"])
 		icon_state = off_icon_state
@@ -440,6 +447,9 @@
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
 		attack_verb = list("hit", "poked")
+		RemoveElement(/datum/element/sword_point)
+		if(!silent)
+			user?.visible_message("<span class='warning'>[user] collapses [src] back down!</span>")
 	playsound(src.loc, on_sound, 50, 1)
 	add_fingerprint(user)
 
@@ -466,6 +476,7 @@
 	force_on = 16
 	force_off = 5
 	weight_class_on = WEIGHT_CLASS_NORMAL
+	silent = TRUE
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()
 	return "<span class='danger'>The baton is still charging!</span>"

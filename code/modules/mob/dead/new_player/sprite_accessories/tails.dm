@@ -514,6 +514,20 @@
 	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
 	matrixed_sections = MATRIX_RED_GREEN
 
+/datum/sprite_accessory/tails/human/triple_kitsune
+	name = "Triple Kitsune Tails"
+	icon_state = "3sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/tails_animated/human/triple_kitsune
+	name = "Triple Kitsune Tails"
+	icon_state = "3sune"
+	color_src = MATRIXED
+	icon = 'modular_citadel/icons/mob/mam_tails.dmi'
+	matrixed_sections = MATRIX_RED_GREEN
+
 /datum/sprite_accessory/tails/human/tentacle
 	name = "Tentacle"
 	icon_state = "tentacle"
@@ -757,7 +771,7 @@
 	icon_state = "husky"
 	matrixed_sections = MATRIX_RED_GREEN
 
-datum/sprite_accessory/tails/mam_tails/insect
+/datum/sprite_accessory/tails/mam_tails/insect
 	name = "Insect"
 	icon_state = "insect"
 	matrixed_sections = MATRIX_RED
@@ -963,6 +977,16 @@ datum/sprite_accessory/tails/mam_tails/insect
 /datum/sprite_accessory/tails_animated/mam_tails_animated/tamamo_kitsune
 	name = "Tamamo Kitsune Tails"
 	icon_state = "9sune"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/tails/mam_tails/triple_kitsune
+	name = "Triple Kitsune Tails"
+	icon_state = "3sune"
+	matrixed_sections = MATRIX_RED_GREEN
+
+/datum/sprite_accessory/tails_animated/mam_tails_animated/triple_kitsune
+	name = "Triple Kitsune Tails"
+	icon_state = "3sune"
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/tails/mam_tails/tentacle

@@ -37,6 +37,7 @@
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6 // they're very slow
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
+	blacklisted_quirks = list(/datum/quirk/nonviolent)
 	var/heal_rate = 1
 	var/regen_cooldown = 0
 

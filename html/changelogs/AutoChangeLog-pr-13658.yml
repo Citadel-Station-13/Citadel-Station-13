@@ -1,6 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "Scripture no longer sometimes eats part of its invocation."
-  - balance: "APCs and silicons are now more susceptible to powerdrains (by the power_drain() proc, which is rare)"
-  - balance: "Void Volt has been modified from a chant to a singular pulse."

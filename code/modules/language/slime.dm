@@ -10,3 +10,4 @@
 	default_priority = 70
 
 	icon_state = "slime"
+	chooseable_roundstart = TRUE

@@ -165,14 +165,16 @@
 /datum/clockwork_rite/treat_wounds/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
 	if(!target)
 		return FALSE
-	if(!target.all_wounds.len)
+	if(!target.all_wounds || !target.all_wounds.len)
 		to_chat(invoker, "<span class='inathneq_small'>This one does not require mending.</span>")
 		return FALSE
 	.= ..()
 	if(!.)
 		return FALSE
 	target.adjustToxLoss(10 * target.all_wounds.len)
-	QDEL_LIST(target.all_wounds)
+	for(var/i in target.all_wounds)
+		var/datum/wound/mended = i
+		mended.remove_wound()
 	to_chat(target, "<span class='warning'>You feel your wounds heal, but are overcome with deep nausea.</span>")
 	new /obj/effect/temp_visual/ratvar/sigil/vitality(T)
 
@@ -192,6 +194,70 @@
 		return FALSE
 	var/obj/item/organ/cyberimp/arm/clockwork/claw/CL = new /obj/item/organ/cyberimp/arm/clockwork/claw(T)
 	CL.visible_message("<span class='warning'>[CL] materialises out of thin air!")
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
+
+//summons a soul vessel, which is the clockwork cult version of a soul shard. It acts like a posibrain and, as long as the target has a brain, a soul shard.
+/datum/clockwork_rite/soul_vessel
+	name = "Rite of the Vessel" //The name of the rite
+	desc = "This rite is used to summon a soul vessel, a special posibrain that makes whoever has their brain put into it loyal to the Justiciar.,\
+	 When put into a cyborg shell, the created cyborg will automatically be a servant of Ratvar."
+	required_ingredients = list(/obj/item/stack/cable_coil, /obj/item/stock_parts/cell/, /obj/item/organ/cyberimp)
+	power_cost = 2500 //These things are pretty strong, I won't lie
+	requires_full_power = TRUE
+	cast_time = 50
+	limit = INFINITE
+	rite_cast_sound = 'sound/magic/summon_guns.ogg'
+
+/datum/clockwork_rite/soul_vessel/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/mmi/posibrain/soul_vessel/SV = new /obj/item/mmi/posibrain/soul_vessel(T)
+	SV.visible_message("<span class='warning'>[SV] materalizes out of thin air!</span>")
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
+
+
+/datum/clockwork_rite/cyborg_transform
+	name = "Rite of the Divine Form"
+	desc = "This rite is used to ascend into a cyborg, gaining unique scripture and a loadout that depends on which module is chosen. Consult the wiki for details on each cyborg module's loadout. Mutually exclusive to Enhanced Form."
+	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stack/cable_coil, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
+	power_cost = 20000
+	requires_human = TRUE
+	requires_full_power = FALSE
+	cast_time = 100
+	limit = INFINITE
+	rite_cast_sound = 'sound/magic/disable_tech.ogg'
+
+/datum/clockwork_rite/cyborg_transform/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(isclockworkgolem(target))
+		return FALSE
+	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the new frame's eyes glowing in a brilliant yellow!</span>")
+	var/mob/living/silicon/robot/R = target.Robotize()
+	R.cell = new /obj/item/stock_parts/cell/super(R)//takes one to use the rite to begin with
+	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
+
+/datum/clockwork_rite/golem_transform
+	name = "Rite of the Enhanced Form"
+	desc = "This rite is used to shed one's flesh to become a clockwork automaton, becoming immune to many environmental hazards as well as being more resilient to incoming damage. Mutually exclusive to Divine Form."
+	required_ingredients = list(/obj/item/mmi/posibrain, /obj/item/stock_parts/cell/super, /obj/item/bodypart/l_arm/robot, /obj/item/bodypart/r_arm/robot, /obj/item/bodypart/chest/robot, /obj/item/bodypart/head/robot, /obj/item/bodypart/r_leg/robot, /obj/item/bodypart/l_leg/robot)
+	power_cost = 20000
+	requires_human = TRUE
+	requires_full_power = FALSE
+	cast_time = 100
+	limit = INFINITE
+	rite_cast_sound = 'sound/magic/disable_tech.ogg'
+
+
+/datum/clockwork_rite/golem_transform/cast(var/mob/living/invoker, var/turf/T, var/mob/living/carbon/human/target)
+	. = ..()
+	if(!.)
+		return FALSE
+	target.visible_message("<span class='warning'>The robotic parts magnetize to [target], the humanoid shape's eye glowing with an inner flame!</span>")
+	to_chat(target, "<span class='bold alloy'>The rite's power warps your body into a clockwork form! You are now immune to many hazards, and your body is more robust against damage!</span>")
+	target.set_species(/datum/species/golem/clockwork/no_scrap)
 	new /obj/effect/temp_visual/ratvar/sigil/transmission(T,2)
 
 #undef INFINITE

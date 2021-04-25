@@ -1,6 +1,0 @@
-author: "MrJWhit"
-delete-after: True
-changes: 
-  - tweak: "Removed the wires connecting the AI from the rest of the station on cogstation."
-  - tweak: "Fixes experimenter on cogstation."
-  - tweak: "Less pipes in the overall area in toxins on cogstation"

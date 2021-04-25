@@ -190,6 +190,12 @@
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
+/obj/item/clothing/neck/petcollar/ribbon
+	name = "ribbon pet collar"
+	icon_state = "ribboncollar"
+	poly_states = 2
+	poly_colors = list("#454545", "#292929")
+
 /obj/item/clothing/neck/petcollar/leather
 	name = "leather pet collar"
 	icon_state = "leathercollar"
@@ -225,6 +231,12 @@
 		return
 	..()
 
+/obj/item/clothing/neck/petcollar/locked/ribbon
+	name = "ribbon pet collar"
+	icon_state = "ribboncollar"
+	poly_states = 2
+	poly_colors = list("#454545", "#292929")
+
 /obj/item/clothing/neck/petcollar/locked/leather
 	name = "leather pet collar"
 	icon_state = "leathercollar"
@@ -236,6 +248,12 @@
 	desc = "Quite fashionable... if you're somebody who's just read their first BDSM-themed erotica novel."
 	icon_state = "choker"
 	poly_colors = list("#222222")
+
+/obj/item/clothing/neck/necklace/cowbell
+	name = "cowbell collar"
+	desc = "Who would wear this? Take this off, you aren't a cow, you're just an awful degenerate."
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "cowbell"
 
 /obj/item/key/collar
 	name = "Collar Key"
@@ -289,7 +307,7 @@
 //VERY SUPER BADASS NECKERCHIEFS//
 //////////////////////////////////
 
-obj/item/clothing/neck/neckerchief
+/obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
 	w_class = WEIGHT_CLASS_TINY
 	var/sourceBandanaType

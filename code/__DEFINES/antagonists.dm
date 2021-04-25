@@ -69,6 +69,9 @@
 #define LINGBLOOD_EXPLOSION_THRESHOLD (LINGBLOOD_DETECTION_THRESHOLD * LINGBLOOD_EXPLOSION_MULT) //Hey, important to note here: the explosion threshold is explicitly more than, rather than more than or equal to. This stops a single loud ability from triggering the explosion threshold.
 
 ///Heretics --
+GLOBAL_LIST_EMPTY(living_heart_cache)	//A list of all living hearts in existance, for us to iterate through.
+
+
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 
@@ -77,6 +80,7 @@
 #define PATH_ASH "Ash"
 #define PATH_RUST "Rust"
 #define PATH_FLESH "Flesh"
+#define PATH_VOID "Void"
 
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300

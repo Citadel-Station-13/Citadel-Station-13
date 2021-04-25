@@ -64,7 +64,6 @@
 	friendly_verb_simple = "groom"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
-	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -83,6 +82,8 @@
 
 	//Headset for Poly to yell at engineers :)
 	var/obj/item/radio/headset/ears = null
+	/// spawns with headset
+	var/spawns_with_headset = FALSE
 
 	//The thing the parrot is currently interested in. This gets used for items the parrot wants to pick up, mobs it wants to steal from,
 	//mobs it wants to attack or mobs that have attacked it
@@ -105,13 +106,14 @@
 
 /mob/living/simple_animal/parrot/Initialize()
 	. = ..()
-	if(!ears)
-		var/headset = pick(/obj/item/radio/headset/headset_sec, \
-						/obj/item/radio/headset/headset_eng, \
-						/obj/item/radio/headset/headset_med, \
-						/obj/item/radio/headset/headset_sci, \
-						/obj/item/radio/headset/headset_cargo)
-		ears = new headset(src)
+	if(spawns_with_headset)
+		if(!ears)
+			var/headset = pick(/obj/item/radio/headset/headset_sec, \
+							/obj/item/radio/headset/headset_eng, \
+							/obj/item/radio/headset/headset_med, \
+							/obj/item/radio/headset/headset_sci, \
+							/obj/item/radio/headset/headset_cargo)
+			ears = new headset(src)
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
@@ -881,6 +883,7 @@
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
 	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
+	spawns_with_headset = TRUE
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
 	var/longest_survival = 0

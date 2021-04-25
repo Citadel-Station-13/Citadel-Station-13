@@ -58,14 +58,6 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 	var/threat_level = 0
 	/// The current antag threat. Recalculated every time a ruletype starts or ends.
 	var/threat = 0
-	/// Threat average over the course of the round, for endgame logs.
-	var/threat_average = 0
-	/// Number of times threat average has been calculated, for calculating above.
-	var/threat_average_weight = 0
-	/// Last time a threat average sample was taken. Used for weighting the rolling average.
-	var/last_threat_sample_time = 0
-	/// Maximum threat recorded so far, for cross-round chaos adjustment.
-	var/max_threat = 0
 	/// Things that cause a rolling threat adjustment to be displayed at roundend.
 	var/list/threat_tallies = list()
 	/// Running information about the threat. Can store text or datum entries.
@@ -745,17 +737,7 @@ GLOBAL_VAR_INIT(dynamic_forced_storyteller, null)
 					continue
 			if(!M.voluntary_ghosted)
 				current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
-	threat = storyteller.calculate_threat() + added_threat
-	max_threat = max(max_threat,threat)
-	if(threat_average_weight)
-		var/cur_sample_weight = world.time - last_threat_sample_time
-		threat_average = ((threat_average * threat_average_weight) + (threat * cur_sample_weight)) / (threat_average_weight + cur_sample_weight)
-		threat_average_weight += cur_sample_weight
-		last_threat_sample_time  = world.time
-	else
-		threat_average = threat
-		threat_average_weight++
-		last_threat_sample_time = world.time
+	threat = (SSactivity.current_threat * 0.6 + SSactivity.get_max_threat() * 0.2 + SSactivity.get_average_threat() * 0.2) + added_threat
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)

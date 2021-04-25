@@ -1,5 +1,0 @@
-author: "Trilbyspaceclone"
-delete-after: True
-changes: 
-  - balance: "Brass welders are 50% faster at refueling"
-  - code_imp: "redoes self fueling welders in the code to be less speggie"

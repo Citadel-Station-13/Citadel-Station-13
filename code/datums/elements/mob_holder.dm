@@ -141,7 +141,7 @@
 
 /obj/item/clothing/head/mob_holder/dropped(mob/user)
 	. = ..()
-	if(held_mob && isturf(loc))//don't release on soft-drops
+	if(held_mob && !ismob(loc) && !istype(loc,/obj/item/storage))//don't release on soft-drops
 		release()
 
 /obj/item/clothing/head/mob_holder/proc/release()

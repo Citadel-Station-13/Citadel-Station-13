@@ -1,4 +1,4 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/gib(no_brain, no_organs, no_bodyparts, datum/explosion/was_explosion)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
@@ -6,22 +6,22 @@
 	if(!prev_lying)
 		gib_animation()
 
-	spill_organs(no_brain, no_organs, no_bodyparts)
+	spill_organs(no_brain, no_organs, no_bodyparts, was_explosion)
 
 	if(!no_bodyparts)
-		spread_bodyparts(no_brain, no_organs)
+		spread_bodyparts(no_brain, no_organs, was_explosion)
 
 	for(var/X in implants)
 		var/obj/item/implant/I = X
 		qdel(I)
 
-	spawn_gibs(no_bodyparts)
+	spawn_gibs(no_bodyparts, null, was_explosion)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
 	return
 
-/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override)
+/mob/living/proc/spawn_gibs(with_bodyparts, atom/loc_override, datum/explosion/was_explosion)
 	var/location = loc_override ? loc_override.drop_location() : drop_location()
 	if(mob_biotypes & MOB_ROBOTIC)
 		new /obj/effect/gibspawner/robot(location, src, get_static_viruses())
@@ -31,7 +31,7 @@
 /mob/living/proc/spill_organs()
 	return
 
-/mob/living/proc/spread_bodyparts()
+/mob/living/proc/spread_bodyparts(no_brain, no_organs, datum/explosion/was_explosion)
 	return
 
 /mob/living/dust(just_ash, drop_items, force)
@@ -55,6 +55,8 @@
 
 
 /mob/living/death(gibbed)
+	SEND_SIGNAL(src, COMSIG_LIVING_PREDEATH, gibbed)
+
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
@@ -87,7 +89,7 @@
 		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
 	stop_pulling()
 
-	var/signal = SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
+	var/signal = SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed) | SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
 
 	var/turf/T = get_turf(src)
 	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf) && !(signal & COMPONENT_BLOCK_DEATH_BROADCAST))
