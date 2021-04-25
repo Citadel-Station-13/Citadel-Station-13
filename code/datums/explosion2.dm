@@ -263,7 +263,7 @@
 	var/list/turf/diagonal_powers = list()
 	var/list/turf/diagonal_powers_max = list()
 
-	to_chat(world, "DEBUG: cycle start edges [english_list_assoc(edges)]")
+	// to_chat(world, "DEBUG: cycle start edges [english_list_assoc(edges)]")
 
 	// Process cardinals:
 	// Explode all cardinals and expand in directions, gathering all cardinals it should go to.
@@ -313,9 +313,12 @@
 		DIAGONAL_MARK_NOCHECK(ndir, cdir, edir); \
 	};
 
+	// this only works because right now, WEX_DIR_X is the same as a byond dir
+	// and we know we're only passing in one dir at a time.
+	// if this ever stops being the case, and explosions break when you touch this, now you know why.
 #define DIAGONAL_MARK_NOCHECK(ndir, cdir, edir) \
-	DIAGONAL_SUBSTEP(turn(ndir, 90), cdir, edir); \
-	DIAGONAL_SUBSTEP(turn(ndir, -90), cdir, edir);
+	DIAGONAL_SUBSTEP(turn(ndir, 90), turn(cdir, 90), edir); \
+	DIAGONAL_SUBSTEP(turn(ndir, -90), turn(cdir, -90), edir);
 
 	// mark
 #define MARK(ndir, cdir, edir) \
@@ -328,7 +331,7 @@
 		CARDINAL_MARK(EAST, WEX_DIR_EAST, dir)
 		CARDINAL_MARK(WEST, WEX_DIR_WEST, dir)
 
-	to_chat(world, "DEBUG: cycle mid edges_next [english_list_assoc(edges_next)]")
+	// to_chat(world, "DEBUG: cycle mid edges_next [english_list_assoc(edges_next)]")
 
 	// Sweep after cardinals for diagonals
 	for(var/i in edges)
@@ -341,7 +344,7 @@
 		DIAGONAL_MARK(EAST, WEX_DIR_EAST, dir)
 		DIAGONAL_MARK(WEST, WEX_DIR_WEST, dir)
 
-	to_chat(world, "DEBUG: cycle mid diagonals [english_list_assoc(diagonals)]")
+	// to_chat(world, "DEBUG: cycle mid diagonals [english_list_assoc(diagonals)]")
 
 	// Process diagonals:
 	for(var/i in diagonals)
@@ -356,7 +359,7 @@
 		CARDINAL_MARK(EAST, WEX_DIR_EAST, dir)
 		CARDINAL_MARK(WEST, WEX_DIR_WEST, dir)
 
-	to_chat(world, "DEBUG: cycle end edges_next [english_list_assoc(edges_next)]")
+	// to_chat(world, "DEBUG: cycle end edges_next [english_list_assoc(edges_next)]")
 
 	// flush lists
 	src.exploded_last = edges + diagonals
