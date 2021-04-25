@@ -1067,7 +1067,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 		COMPILE_OVERLAYS(body)
 		for(var/D in showDirs)
-			var/icon/partial = getFlatIcon(body, defdir=D, no_anim)
+			var/icon/partial = getFlatIcon(body, defdir = D, no_anim = no_anim)
 			out_icon.Insert(partial,dir=D)
 
 		humanoid_icon_cache[icon_id] = out_icon
