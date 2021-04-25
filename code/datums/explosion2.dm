@@ -234,8 +234,21 @@
 	var/blocked
 	var/dir
 	// insanity define to explode a turf with a certain amount of power, direction, and set returned.
-#define WEX_ACT(_T, _P, _D) returned=max(0,_T.wave_explode(_P, src, _D));blocked=_P-returned;if(!block_resistance){if(blocked>EXPLOSION_POWER_NO_RESIST_THRESHOLD){returned=0}}else if(blocked){returned=_P-(blocked/block_resistance)};\
-	returned=round((returned*power_falloff_factor)-power_falloff_constant,EXPLOSION_POWER_QUANTIZATION_ACCURACY);if(prob(fire_probability)){new /obj/effect/hotspot(_T)};
+#define WEX_ACT(_T, _P, _D)  \
+	returned = max(0, _T.wave_explode(_P, src, _D)); \
+	blocked = _P - returned; \
+	if(!block_resistance) { \
+		if(blocked > EXPLOSION_POWER_NO_RESIST_THRESHOLD) { \
+			returned = 0; \
+		} \
+	} \
+	else if(blocked) { \
+		returned = _P - (blocked / block_resistance); \
+	}; \
+	returned = round((returned * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY); \
+	if(prob(fire_probability)) { \
+		new /obj/effect/hotspot(_T); \
+	};
 
 	// Cache hot lists
 	var/list/turf/edges = src.edges
@@ -260,10 +273,10 @@
 		if(returned < power_considered_dead)
 			continue
 	// diagonal power calc when multiple things hit one diagonal
-#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) (maximum? (min(maximum * 2, existing + adding)) : adding)
+#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) (maximum? (min(maximum, existing + adding)) : adding)
 	// insanity define to mark the next set of cardinals.
 #define CARDINAL_MARK(ndir, cdir, edir) \
-	expanding=get_step(T,ndir); \
+	expanding = get_step(T,ndir); \
 	if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
 		powers_next[expanding] = max(powers_next[expanding], returned); \
 		edges_next[expanding] = (cdir | edges_next[expanding]); \
@@ -306,9 +319,9 @@
 
 
 	// flush lists
-	exploded_last = edges + diagonals
-	edges = edges_next
-	powers = powers_next
+	src.exploded_last = edges + diagonals
+	src.edges = edges_next
+	src.powers = powers_next
 
 #undef SHOULD_SUSPEND
 

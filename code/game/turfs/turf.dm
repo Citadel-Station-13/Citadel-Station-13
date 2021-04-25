@@ -478,6 +478,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		A = i
 		if(!QDELETED(A) && A.level >= affecting_level)
 			.  = A.wave_explode(., explosion, dir)
+	maptext = .
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

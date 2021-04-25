@@ -136,11 +136,14 @@
 					ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 				if(prob(33))
 					new /obj/item/stack/sheet/metal(src)
+				return
 			if(2)
 				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
+				return
 			if(3)
 				if(prob(80))
 					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+					return
 				else
 					break_tile()
 				hotspot_expose(1000,CELL_VOLUME)
