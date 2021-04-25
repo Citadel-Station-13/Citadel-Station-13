@@ -108,7 +108,7 @@
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		if(HM.class in classes)
+		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
 			force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
