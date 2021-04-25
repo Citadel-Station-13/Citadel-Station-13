@@ -126,9 +126,9 @@
 	var/list/mob/mob_potential_shake = list()
 	var/list/mob/closest_to = list()
 	for(var/i in 1 to _starting.len)
-		edges[_starting] = WEX_ALLDIRS
-		powers[_starting] = power_initial
 		var/turf/starting = _starting[i]
+		edges[starting] = WEX_ALLDIRS
+		powers[starting] = power_initial
 		var/x0 = starting.x
 		var/y0 = starting.y
 		var/z0 = starting.z
@@ -234,7 +234,7 @@
 	var/blocked
 	var/dir
 	// insanity define to explode a turf with a certain amount of power, direction, and set returned.
-#define WEX_ACT(_T, _P, _D) returned=max(0,T.wave_explode(_P, src, _D));blocked=_P-returned;if(!block_resistance){if(blocked>EXPLOSION_POWER_NO_RESIST_THRESHOLD){returned=0}}else if(blocked){returned=_P-(blocked/block_resistance)};\
+#define WEX_ACT(_T, _P, _D) returned=max(0,_T.wave_explode(_P, src, _D));blocked=_P-returned;if(!block_resistance){if(blocked>EXPLOSION_POWER_NO_RESIST_THRESHOLD){returned=0}}else if(blocked){returned=_P-(blocked/block_resistance)};\
 	returned=round((returned*power_falloff_factor)-power_falloff_constant,EXPLOSION_POWER_QUANTIZATION_ACCURACY);if(prob(fire_probability)){new /obj/effect/hotspot(_T)};
 
 	// Cache hot lists
