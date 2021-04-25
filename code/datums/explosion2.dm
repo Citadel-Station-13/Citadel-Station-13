@@ -141,10 +141,6 @@
 		// 3/7/14 will calculate to 80 + 35
 
 		if(!silent)
-			var/frequency = get_rand_frequency()
-			var/sound/explosion_sound = sound(get_sfx("explosion"))
-			var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
-
 			for(var/mob/M in GLOB.player_list)
 				// Double check for client
 				var/turf/M_turf = get_turf(M)
@@ -166,25 +162,31 @@
 			for(var/mob/living/L in viewers(flash_range, starting))
 				to_flash |= L
 
-	var/far_dist = sqrt(power_initial) * 7.5
+	if(!silent)
+		var/frequency = get_rand_frequency()
+		var/sound/explosion_sound = sound(get_sfx("explosion"))
+		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
 
-	for(var/mob/M in mob_potential_shake)
-		var/dist = mob_potential_shake[M]
-		var/baseshakeamount
-		if(sqrt(power_initial) - dist > 0)
-			baseshakeamount = sqrt((sqrt(power_initial) - dist)*0.1)
-		// If inside the blast radius + world.view - 2
-		if(dist <= round(2 * sqrt(power_initial) + world.view - 2, 1))
-			M.playsound_local(closest_to[M], null, 100, 1, frequency, max_distance = 5, S = explosion_sound)
-			if(baseshakeamount > 0)
-				shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
-		// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
-		else if(dist <= far_dist)
-			var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
-			far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-			M.playsound_local(closest_to[M], null, far_volume, 1, frequency, max_distance = 5, S = far_explosion_sound)
-			if(baseshakeamount > 0)
-				shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+		var/far_dist = sqrt(power_initial) * 7.5
+
+		for(var/mob/M in mob_potential_shake)
+			var/dist = mob_potential_shake[M]
+			var/baseshakeamount
+			if(sqrt(power_initial) - dist > 0)
+				baseshakeamount = sqrt((sqrt(power_initial) - dist)*0.1)
+			// If inside the blast radius + world.view - 2
+			if(dist <= round(2 * sqrt(power_initial) + world.view - 2, 1))
+				M.playsound_local(closest_to[M], null, 100, 1, frequency, max_distance = 5, S = explosion_sound)
+				if(baseshakeamount > 0)
+					shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
+			// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
+			else if(dist <= far_dist)
+				var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+				far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
+				M.playsound_local(closest_to[M], null, far_volume, 1, frequency, max_distance = 5, S = far_explosion_sound)
+				if(baseshakeamount > 0)
+					shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+
 	for(var/i in 1 to to_flash.len)
 		var/mob/living/L = to_flash[i]
 		L.flash_act()
@@ -208,7 +210,7 @@
 	running = FALSE
 	qdel(src)
 
-#define SHOULD_SUSEPND ((cycle_start + cycle_speed) > world.time)
+#define SHOULD_SUSPEND ((cycle_start + cycle_speed) > world.time)
 
 /**
   * Called by SSexplosions to propagate this.
@@ -258,15 +260,32 @@
 		if(returned < power_considered_dead)
 			continue
 	// diagonal power calc when multiple things hit one diagonal
-#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) (maximum? (min(maximum * 2, existing + adding)) : (adding))
+#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) (maximum? (min(maximum * 2, existing + adding)) : adding)
 	// insanity define to mark the next set of cardinals.
-#define CARDINAL_MARK(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding]){powers_next[expanding]=max(powers_next[expanding],returned);edges_next[expanding]=cdir|edges_next[expanding]}
+#define CARDINAL_MARK(ndir, cdir, edir) \
+	expanding=get_step(T,ndir); \
+	if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
+		powers_next[expanding] = max(powers_next[expanding], returned); \
+		edges_next[expanding] = (cdir | edges_next[expanding]); \
+	};
 	// insanity define to do diagonal marking as 2 substeps
-#define DIAGONAL_SUBSTEP(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding])(diagonal_powers[expanding]=CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding],returned,diagonals_powers_max[expanding]);diagonals_powers_max[expanding]=max(diagonals_powers_max[expanding],returnedk);diagonals=cdir|diagonals[expanding])
+#define DIAGONAL_SUBSTEP(ndir, cdir, edir) \
+	expanding = get_step(T,ndir); \
+	if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
+	diagonal_powers[expanding] = CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding], returned, diagonal_powers_max[expanding]); \
+	diagonal_powers_max[expanding] = max(diagonal_powers_max[expanding], returned); \
+	diagonals[expanding] = (cdir | diagonals[expanding]); \
+	};
 	// insanity define to mark the diagonals that would otherwise be missed
-#define DIAGONAL_MARK(ndir, cdir, edir) DIAGONAL_SUBSTEP(turn(ndir, 90), cdir, edir) ; DIAGONAL_SUBSTEP(turn(ndir, -90), cdir, edir)
+#define DIAGONAL_MARK(ndir, cdir, edir) \
+	DIAGONAL_SUBSTEP(turn(ndir, 90), cdir, edir); \
+	DIAGONAL_SUBSTEP(turn(ndir, -90), cdir, edir);
 	// mark
-#define MARK(ndir, cdir, edir) if(edir & cdir){ CARDINAL_MARK(ndir, cdir, edir) ; DIAGONAL_MARK(ndir, cdir, edir)};
+#define MARK(ndir, cdir, edir) \
+	if(edir & cdir) { \
+		CARDINAL_MARK(ndir, cdir, edir); \
+		DIAGONAL_MARK(ndir, cdir, edir); \
+	};
 		MARK(NORTH, WEX_DIR_NORTH, dir)
 		MARK(SOUTH, WEX_DIR_SOUTH, dir)
 		MARK(EAST, WEX_DIR_EAST, dir)
