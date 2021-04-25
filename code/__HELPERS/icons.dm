@@ -1051,7 +1051,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null, no_anim = FALSE)
 	var/static/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
@@ -1065,10 +1065,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+		COMPILE_OVERLAYS(body)
 		for(var/D in showDirs)
-			body.setDir(D)
-			COMPILE_OVERLAYS(body)
-			var/icon/partial = getFlatIcon(body)
+			var/icon/partial = getFlatIcon(body, defdir = D, no_anim = no_anim)
 			out_icon.Insert(partial,dir=D)
 
 		humanoid_icon_cache[icon_id] = out_icon
