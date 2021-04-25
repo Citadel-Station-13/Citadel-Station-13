@@ -197,7 +197,7 @@
 		cycle = 1
 	SSexplosions.active_wave_explosions += src
 	running = TRUE
-	cycle_start = world.time
+	cycle_start = world.time - cycle_speed
 	tick()
 
 /datum/wave_explosion/proc/stop(delete = TRUE)
@@ -258,9 +258,12 @@
 	// prepare expansions
 	var/list/turf/edges_next = list()
 	var/list/turf/powers_next = list()
+	var/list/turf/powers_returned = list()
 	var/list/turf/diagonals = list()
 	var/list/turf/diagonal_powers = list()
 	var/list/turf/diagonal_powers_max = list()
+
+	to_chat(world, "DEBUG: cycle start edges [english_list_assoc(edges)]")
 
 	// Process cardinals:
 	// Explode all cardinals and expand in directions, gathering all cardinals it should go to.
@@ -272,37 +275,73 @@
 		WEX_ACT(T, power, dir)
 		if(returned < power_considered_dead)
 			continue
+		powers_returned[T] = returned
 	// diagonal power calc when multiple things hit one diagonal
-#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) (maximum? (min(maximum, existing + adding)) : adding)
+#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) min(maximum, existing + adding)
+	// diagonal hitting cardinal expansion
+#define CALCULATE_DIAGONAL_CROSS_POWER(existing, adding) max(existing, adding)
 	// insanity define to mark the next set of cardinals.
 #define CARDINAL_MARK(ndir, cdir, edir) \
+	if(edir & cdir) { \
+		CARDINAL_MARK_NOCHECK(ndir, cdir, edir); \
+	};
+
+#define CARDINAL_MARK_NOCHECK(ndir, cdir, edir) \
 	expanding = get_step(T,ndir); \
 	if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
 		powers_next[expanding] = max(powers_next[expanding], returned); \
 		edges_next[expanding] = (cdir | edges_next[expanding]); \
 	};
+
 	// insanity define to do diagonal marking as 2 substeps
 #define DIAGONAL_SUBSTEP(ndir, cdir, edir) \
 	expanding = get_step(T,ndir); \
 	if(expanding && !exploded_last[expanding] && !edges[expanding]) { \
-	diagonal_powers[expanding] = CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding], returned, diagonal_powers_max[expanding]); \
-	diagonal_powers_max[expanding] = max(diagonal_powers_max[expanding], returned); \
-	diagonals[expanding] = (cdir | diagonals[expanding]); \
+		if(!edges_next[expanding]) { \
+			diagonal_powers_max[expanding] = max(diagonal_powers_max[expanding], returned, powers[T]); \
+			diagonal_powers[expanding] = CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding], returned, diagonal_powers_max[expanding]); \
+			diagonals[expanding] = (cdir | diagonals[expanding]); \
+		}; \
+		else { \
+			powers_next[expanding] = CALCULATE_DIAGONAL_CROSS_POWER(powers_next[expanding], returned); \
+		}; \
 	};
+
 	// insanity define to mark the diagonals that would otherwise be missed
 #define DIAGONAL_MARK(ndir, cdir, edir) \
+	if(edir & cdir) { \
+		DIAGONAL_MARK_NOCHECK(ndir, cdir, edir); \
+	};
+
+#define DIAGONAL_MARK_NOCHECK(ndir, cdir, edir) \
 	DIAGONAL_SUBSTEP(turn(ndir, 90), cdir, edir); \
 	DIAGONAL_SUBSTEP(turn(ndir, -90), cdir, edir);
+
 	// mark
 #define MARK(ndir, cdir, edir) \
 	if(edir & cdir) { \
-		CARDINAL_MARK(ndir, cdir, edir); \
-		DIAGONAL_MARK(ndir, cdir, edir); \
+		CARDINAL_MARK_NOCHECK(ndir, cdir, edir); \
+		DIAGONAL_MARK_NOCHECK(ndir, cdir, edir); \
 	};
-		MARK(NORTH, WEX_DIR_NORTH, dir)
-		MARK(SOUTH, WEX_DIR_SOUTH, dir)
-		MARK(EAST, WEX_DIR_EAST, dir)
-		MARK(WEST, WEX_DIR_WEST, dir)
+		CARDINAL_MARK(NORTH, WEX_DIR_NORTH, dir)
+		CARDINAL_MARK(SOUTH, WEX_DIR_SOUTH, dir)
+		CARDINAL_MARK(EAST, WEX_DIR_EAST, dir)
+		CARDINAL_MARK(WEST, WEX_DIR_WEST, dir)
+
+	to_chat(world, "DEBUG: cycle mid edges_next [english_list_assoc(edges_next)]")
+
+	// Sweep after cardinals for diagonals
+	for(var/i in edges)
+		T = i
+		power = powers[T]
+		dir = edges[T]
+		returned = powers_returned[T]
+		DIAGONAL_MARK(NORTH, WEX_DIR_NORTH, dir)
+		DIAGONAL_MARK(SOUTH, WEX_DIR_SOUTH, dir)
+		DIAGONAL_MARK(EAST, WEX_DIR_EAST, dir)
+		DIAGONAL_MARK(WEST, WEX_DIR_WEST, dir)
+
+	to_chat(world, "DEBUG: cycle mid diagonals [english_list_assoc(diagonals)]")
 
 	// Process diagonals:
 	for(var/i in diagonals)
@@ -317,11 +356,14 @@
 		CARDINAL_MARK(EAST, WEX_DIR_EAST, dir)
 		CARDINAL_MARK(WEST, WEX_DIR_WEST, dir)
 
+	to_chat(world, "DEBUG: cycle end edges_next [english_list_assoc(edges_next)]")
 
 	// flush lists
 	src.exploded_last = edges + diagonals
 	src.edges = edges_next
 	src.powers = powers_next
+	cycle++
+	cycle_start = world.time
 
 #undef SHOULD_SUSPEND
 

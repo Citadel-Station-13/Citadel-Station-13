@@ -1,9 +1,9 @@
 // THIS IS INSANITY
 // These are how wave explosions track when there's not only one direction to keep track of (diagonals, etc)
-#define WEX_DIR_NORTH	(1<<0)
-#define WEX_DIR_SOUTH	(1<<1)
-#define WEX_DIR_EAST	(1<<2)
-#define WEX_DIR_WEST	(1<<3)
+#define WEX_DIR_NORTH	NORTH
+#define WEX_DIR_SOUTH	SOUTH
+#define WEX_DIR_EAST	EAST
+#define WEX_DIR_WEST	WEST
 #define WEX_ALLDIRS		(WEX_DIR_NORTH | WEX_DIR_SOUTH | WEX_DIR_EAST | WEX_DIR_WEST)
 
 /// Default explosion power to consider an explosion over
