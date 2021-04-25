@@ -175,6 +175,14 @@
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 
+/datum/uplink_item/role_restricted/crusher_override
+	name = "Kinetic Crusher Override Mod"
+	desc = "A modification kit that allows a kinetic crusher to work on all living things, regardless of size."
+	item = /obj/item/crusher_trophy/safety_bypass
+	cost = 6	// honestly if you're using this you're probably powergaming megafauna anyways so slightly more than pressuremod
+	limited_stock = 1	// let's not have someone pass this out to their buddies for free
+	restricted_roles = list("Shaft Miner")
+
 /datum/uplink_item/role_restricted/kitchen_gun
 	name = "Kitchen Gun (TM)"
 	desc = "A revolutionary .45 caliber cleaning solution! Say goodbye to daily stains and dirty surfaces with Kitchen Gun (TM)! \
@@ -257,4 +265,4 @@
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
 	restricted_roles = list("Station Engineer")
-	
+

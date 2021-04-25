@@ -1,3 +1,6 @@
+#define NO_CHANGE 1
+#define PREVENT_MARK 2
+#define FORCE_MARK 3
 /*********************Mining Hammer****************/
 /obj/item/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
@@ -52,17 +55,15 @@
 	QDEL_LIST(trophies)
 	return ..()
 
-/obj/item/kinetic_crusher/emag_act(mob/user)
-	. = ..()
-	if(obj_flags & EMAGGED)
-		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>You override the safeties on [src]. It can now be used on anything.</span>")
-
 /obj/item/kinetic_crusher/proc/can_mark(mob/living/victim)
-	if(obj_flags & EMAGGED)
-		return TRUE
-	return victim.mob_size >= MOB_SIZE_LARGE
+	. = victim.mob_size >= MOB_SIZE_LARGE
+	for(var/i in trophies)
+		var/obj/item/crusher_trophy/T = i
+		var/returned = T.attempt_mark(victim)
+		if(returned == PREVENT_MARK)
+			return FALSE
+		else if(returned == FORCE_MARK)
+			return TRUE
 
 /// triggered on wield of two handed item
 /obj/item/kinetic_crusher/proc/on_wield(obj/item/source, mob/user)
@@ -533,3 +534,18 @@
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75
+
+// antag
+/obj/item/crusher_trophy/safety_bypass
+	name = "crusher safety override"
+	desc = "A set of modifications that allow a kinetic crusher to work on all living organisms, removing their size checks."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "modkit"
+	denied_type = /obj/item/crusher_trophy/safety_bypass
+
+// stealth
+/obj/item/crusher_trophy/effect_desc()
+	return
+
+/obj/item/crusher_trophy/attempt_mark(mob/living/victim)
+	return FORCE_MARK
