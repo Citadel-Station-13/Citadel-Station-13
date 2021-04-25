@@ -485,11 +485,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/firereset(obj/source)
 	var/should_reset_alarms = fire
 	if(source)
-		// if(istype(source, /obj/machinery/firealarm))
-		// 	var/obj/machinery/firealarm/alarm = source
-		// 	if(alarm.triggered)
-		// 		alarm.triggered = FALSE
-		// 		triggered_firealarms -= 1
+		if(istype(source, /obj/machinery/firealarm))
+			var/obj/machinery/firealarm/alarm = source
+			if(alarm.triggered)
+				alarm.triggered = FALSE
+				triggered_firealarms -= 1
 		if(triggered_firealarms > 0)
 			should_reset_alarms = FALSE
 		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
@@ -520,8 +520,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	LAZYREMOVE(cameras, cam)
 	// for (var/mob/living/silicon/aiPlayer as anything in GLOB.silicon_mobs)
 	// 	aiPlayer.freeCamera(src, cam)
-	// for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
-	// 	comp.freeCamera(src, cam)
+	for (var/obj/machinery/computer/station_alert/comp as anything in GLOB.alert_consoles)
+		comp.freeCamera(src, cam)
 	// for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
 	// 	drone_on.freeCamera(src, cam)
 	// for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
@@ -597,7 +597,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	for(var/alarm in firealarms)
 		var/obj/machinery/firealarm/F = alarm
 		F.update_fire_light(fire)
-		// F.triggered = FALSE
+		F.triggered = FALSE
 	for(var/obj/machinery/light/L in get_sub_areas_contents(src))
 		L.update()
 

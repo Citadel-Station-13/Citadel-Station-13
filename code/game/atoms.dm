@@ -523,7 +523,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
-	// updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
+	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
 	if(updates & UPDATE_NAME)
 		. |= update_name(updates)
 	if(updates & UPDATE_DESC)
@@ -533,13 +533,13 @@
 
 /// Updates the name of the atom
 /atom/proc/update_name(updates=ALL)
-	// SHOULD_CALL_PARENT(TRUE)
-	// return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_NAME, updates)
 
 /// Updates the description of the atom
 /atom/proc/update_desc(updates=ALL)
-	// SHOULD_CALL_PARENT(TRUE)
-	// return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_DESC, updates)
 
 /// Updates the icon of the atom
 /atom/proc/update_icon(updates=ALL)
@@ -577,15 +577,15 @@
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
 	// SHOULD_CALL_PARENT(TRUE)
-	// return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
+	return SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON_STATE)
 
 /atom/proc/update_greyscale()
-	// SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	// var/list/raw_rgb = splittext(greyscale_colors, "#")
 	// for(var/i in 2 to length(raw_rgb))
 	// 	. += "#[raw_rgb[i]]"
-	// SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_GREYSCALE, .)
 
 /// Updates the overlays of the atom
 /atom/proc/update_overlays()
@@ -593,30 +593,59 @@
 	. = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
-/atom/proc/relaymove(mob/living/user)
-	if(!istype(user))
-		return				//why are you buckling nonliving mobs to atoms?
+/**
+ * An atom we are buckled or is contained within us has tried to move
+ *
+ * Default behaviour is to send a warning that the user can't move while buckled as long
+ * as the [buckle_message_cooldown][/atom/var/buckle_message_cooldown] has expired (50 ticks)
+ */
+/atom/proc/relaymove(mob/living/user, direction)
 	if(user.buckle_message_cooldown <= world.time)
 		user.buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
+	return
 
+/// Handle what happens when your contents are exploded by a bomb
 /atom/proc/contents_explosion(severity, target)
 	return //For handling the effects of explosions on contents that would not normally be effected
 
-/atom/proc/ex_act(severity, target, datum/explosion/E)
+/**
+ * React to being hit by an explosion
+ *
+ * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
+ */
+/atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
+/**
+ * React to a hit by a blob objecd
+ *
+ * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
+ */
 /atom/proc/blob_act(obj/structure/blob/B)
-	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
-	return
+	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
+	// if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
+	// 	return FALSE
+	return TRUE
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
+/**
+ * React to being hit by a thrown object
+ *
+ * Default behaviour is to call [hitby_react][/atom/proc/hitby_react] on ourselves after 2 seconds if we are dense
+ * and under normal gravity.
+ *
+ * Im not sure why this the case, maybe to prevent lots of hitby's if the thrown object is
+ * deleted shortly after hitting something (during explosions or other massive events that
+ * throw lots of items around - singularity being a notable example)
+ */
 /atom/proc/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	// SEND_SIGNAL(src, COMSIG_ATOM_HITBY, AM, skipcatch, hitpush, blocked, throwingdatum)
 	if(density && !has_gravity(AM)) //thrown stuff bounces off dense stuff in no grav, unless the thrown stuff ends up inside what it hit(embedding, bola, etc...).
 		addtimer(CALLBACK(src, .proc/hitby_react, AM), 2)
 

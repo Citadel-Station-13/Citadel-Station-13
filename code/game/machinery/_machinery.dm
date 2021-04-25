@@ -128,9 +128,6 @@
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	var/speed_process = FALSE // Process as fast as possible?
-	var/init_process = TRUE //Stop processing from starting on init
-
 /obj/machinery/Initialize()
 	if(!armor)
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
@@ -143,11 +140,6 @@
 
 	if(processing_flags & START_PROCESSING_ON_INIT)
 		begin_processing()
-
-	if(!speed_process && init_process)
-		START_PROCESSING(SSmachines, src)
-	else
-		START_PROCESSING(SSfastprocess, src)
 
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)

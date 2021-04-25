@@ -150,9 +150,10 @@
 /obj/item/organ/genital/proc/update_size()
 	return
 
-/obj/item/organ/genital/proc/update_appearance()
+/obj/item/organ/genital/update_icon()
 	if(!owner || owner.stat == DEAD)
 		aroused_state = FALSE
+	. = ..()
 
 /obj/item/organ/genital/proc/generate_fluid(datum/reagents/R)
 	var/amount = clamp((fluid_rate * ((world.time - last_orgasmed) / (10 SECONDS)) * fluid_mult),0,fluid_max_volume)

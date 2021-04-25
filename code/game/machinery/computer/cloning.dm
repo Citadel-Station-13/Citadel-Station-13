@@ -45,7 +45,7 @@
 		var/obj/machinery/clonepod/pod = P
 		if(pod.occupant && pod.get_clone_mind == CLONEPOD_GET_MIND && pod.clonemind == mind)
 			return null
-		if(pod.is_operational() && !(pod.occupant || pod.mess))
+		if(pod.is_operational && !(pod.occupant || pod.mess))
 			return pod
 
 /obj/machinery/computer/cloning/proc/HasEfficientPod()
@@ -53,7 +53,7 @@
 		return
 	for(var/P in pods)
 		var/obj/machinery/clonepod/pod = P
-		if(pod.is_operational() && pod.efficiency > 5)
+		if(pod.is_operational && pod.efficiency > 5)
 			return TRUE
 
 /obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
@@ -63,7 +63,7 @@
 		var/obj/machinery/clonepod/pod = P
 		if(pod.occupant && pod.clonemind == mind)
 			return pod
-		else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
+		else if(!. && pod.is_operational && !(pod.occupant || pod.mess) && pod.efficiency > 5)
 			. = pod
 
 /obj/machinery/computer/cloning/process()
@@ -102,7 +102,7 @@
 		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, direction))
 
 		// If found and operational, return the scanner
-		if (!isnull(scannerf) && scannerf.is_operational())
+		if (!isnull(scannerf) && scannerf.is_operational)
 			return scannerf
 
 	// If no scanner was found, it will return null
@@ -112,7 +112,7 @@
 	var/obj/machinery/clonepod/podf
 	for(var/direction in GLOB.cardinals)
 		podf = locate(clonepod_type, get_step(src, direction))
-		if(podf?.is_operational())
+		if(podf?.is_operational)
 			AttachCloner(podf)
 
 /obj/machinery/computer/cloning/proc/AttachCloner(obj/machinery/clonepod/pod)
@@ -299,7 +299,7 @@
 		src.updateUsrDialog()
 		. = TRUE
 
-	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
+	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational)
 		scantemp = ""
 
 		loading = TRUE
@@ -312,7 +312,7 @@
 		. = TRUE
 
 		//No locking an open scanner.
-	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
+	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational)
 		if ((!scanner.locked) && (scanner.occupant))
 			scanner.locked = TRUE
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
