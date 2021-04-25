@@ -547,5 +547,5 @@
 /obj/item/crusher_trophy/effect_desc()
 	return
 
-/obj/item/crusher_trophy/attempt_mark(mob/living/victim)
+/obj/item/crusher_trophy/proc/attempt_mark(mob/living/victim)
 	return FORCE_MARK
