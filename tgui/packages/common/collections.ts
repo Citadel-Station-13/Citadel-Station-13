@@ -177,8 +177,9 @@ export const sort = sortBy();
  * Returns a range of numbers from start to end, exclusively.
  * For example, range(0, 5) will return [0, 1, 2, 3, 4].
  */
-export const range = (start: number, end: number): number[] =>
-  new Array(end - start).fill(null).map((_, index) => index + start);
+export const range = (start: number, end: number): number[] => {
+  return new Array(end - start).fill(null).map((_, index) => index + start);
+};
 
 /**
  * A fast implementation of reduce.
