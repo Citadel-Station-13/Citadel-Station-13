@@ -798,6 +798,7 @@
 		should_draw_gender = FALSE
 
 	if(is_organic_limb())
+		message_admins("UPDATING ORGANIC LIMB FOR [owner] AT [src]")
 		limb.icon = base_bp_icon || 'icons/mob/human_parts.dmi'
 		if(should_draw_gender)
 			limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
@@ -876,7 +877,7 @@
 						else
 							. += image(marking_list[1], "[marking_list[2]]_[body_zone]", -MARKING_LAYER, image_dir)
 					else
-						. += image(marking[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+						. += image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 		return
 /*
 	if(color_src) //TODO - add color matrix support for base species limbs (or dont because color matrixes suck)

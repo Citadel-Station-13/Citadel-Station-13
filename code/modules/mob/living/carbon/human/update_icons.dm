@@ -729,11 +729,8 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 				. += "-[BP.digitigrade_type]"
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
-		if(BP.body_markings)
-			. += "-[BP.body_markings]"
-			if(length(BP.markings_color) && length(BP.markings_color[1]))
-				for(var/color in BP.markings_color[1])
-					. += "-[color]"
+		if(BP.body_markings_list)
+			. += "-[safe_json_encode(BP.body_markings_list)]"
 		if(BP.icon)
 			. += "-[BP.icon]"
 		else
