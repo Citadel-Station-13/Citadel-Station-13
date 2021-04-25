@@ -777,7 +777,6 @@
 */
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/list/aux = list()
-	var/image/marking
 	var/list/auxmarking = list()
 
 	. += limb
