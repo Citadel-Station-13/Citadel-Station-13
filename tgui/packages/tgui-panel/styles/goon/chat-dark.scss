@@ -287,16 +287,6 @@ em {
   font-weight: bold;
 }
 
-.looc {
-  color: #6699CC;
-  font-weight: bold;
-}
-
-.antagooc {
-  color: #b8002e;
-  font-weight: bold;
-}
-
 .adminobserverooc {
   color: #0099cc;
   font-weight: bold;
@@ -312,25 +302,8 @@ em {
   font-weight: bold;
 }
 
-/* @adminobserver compatability*/
-.adminobserver {
-  color: #996600;
-  font-weight: bold;
-}
-
 .admin {
   color: #5975da;
-  font-weight: bold;
-}
-
-/* cit-specific mentorsay*/
-.mentorsay {
-  color: #E236D8;
-  font-weight: bold;
-}
-
-.mentorsay_admin {
-  color: #8A2BE2;
   font-weight: bold;
 }
 
@@ -407,6 +380,14 @@ em {
 
 .blueteamradio {
   color: #3434fd;
+}
+
+.greenteamradio {
+  color: #34fd34;
+}
+
+.yellowteamradio {
+  color: #fdfd34;
 }
 
 .yell {
@@ -542,20 +523,6 @@ em {
   color: #059223;
 }
 
-/* hornichems */
-.userlove {
-  color: #ff42a6;
-  font-style: italic;
-  font-weight: bold;
-  text-shadow: 0 0 6px #82365e;
-}
-
-.love {
-  color: #ff4591;
-  font-style: italic;
-  text-shadow: 0 0 6px #994449;
-}
-
 .cult {
   color: #973e3b;
 }
@@ -649,153 +616,10 @@ em {
   font-size: 185%;
 }
 
-.umbra {
-  color: #5000A0;
-}
-
-.umbra_emphasis {
-  color: #5000A0;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.umbra_large {
-  color: #5000A0;
-  font-weight: bold;
-  font-style: italic;
-  font-size: 3;
-}
-
 .deconversion_message {
   color: #a947ff;
   font-size: 185%;
   font-style: italic;
-}
-
-/* coggers dosen't exist on tg :( */
-/* from decon_msg: font-size: 185% == font-size 3*/
-.brass {
-  color: #BE8700;
-}
-
-.heavy_brass {
-  color: #BE8700;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.large_brass {
-  color: #BE8700;
-  font-size: 185%;
- }
-
-.big_brass {
-  color: #BE8700;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.ratvar {
-  color: #BE8700;
-  font-size: 6;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.alloy {
-  color: #42474D;
-}
-
-.heavy_alloy {
-  color: #42474D;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nezbere_large {
-  color: #42474D;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nezbere {
-  color: #42474D;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nezbere_small {
-  color: #42474D;
-}
-
-.sevtug_large {
-  color: #AF0AAF;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.sevtug	{
-  color: #AF0AAF;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.sevtug_small {
-  color: #AF0AAF;
-}
-
-.inathneq_large {
-  color: #1E8CE1;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.inathneq	{
-  color: #1E8CE1;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.inathneq_small {
-  color: #1E8CE1;
-}
-
-.nzcrentr_large {
-  color: #DAAA18;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nzcrentr {
-  color: #DAAA18;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nzcrentr_small {
-  color: #DAAA18;
-}
-
-.neovgre_large {
-  color: #6E001A;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.neovgre {
-  color: #6E001A;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.neovgre_small {
-  color: #6E001A;
 }
 
 .ghostalert {
@@ -857,7 +681,7 @@ em {
 
 .command_headset {
   font-weight: bold;
-  font-size: 125%;
+  font-size: 160%;
 }
 
 .small {
@@ -886,14 +710,9 @@ em {
   font-size: 185%;
 }
 
-.yellowtext	{
-  color: #FFCC00;
-  font-size: 185%;
-}
-
 .clown {
   color: #ff70c1;
-  font-size: 125%;
+  font-size: 160%;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
 }
@@ -907,11 +726,6 @@ em {
   color: #15D512;
   font-family: "Courier New", cursive, sans-serif;
   font-style: italic;
-}
-
-/*jacq */
-.spooky {
-  color: #FF9100;
 }
 
 .hypnophrase {
@@ -943,31 +757,6 @@ em {
   }
 }
 
-.velvet	{
-  color: #660015;
-  font-weight: bold;
-  animation: velvet 5000ms infinite;
-  animation-direction: alternate;
-}
-
-@keyframes velvet {
-	0% {
-    color: #400020;
-  }
-	40% {
-    color: #FF0000;
-  }
-	50% {
-    color: #FF8888;
-  }
-	60% {
-    color: #FF0000;
-  }
-	100% {
-    color: #400020;
-  }
-}
-
 .phobia {
   color: #dd0000;
   font-weight: bold;
@@ -991,6 +780,10 @@ em {
 .icon {
   height: 1em;
   width: auto;
+}
+
+.bigicon {
+  font-size: 2.5em;
 }
 
 .memo {

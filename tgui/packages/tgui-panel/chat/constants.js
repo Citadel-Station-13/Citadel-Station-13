@@ -58,13 +58,13 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_RADIO,
     name: 'Radio',
     description: 'All departments of radio messages',
-    selector: '.alert, .minorannounce, .syndradio, .airadio, .entradio, .centcomradio, .aiprivradio, .comradio, .secradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .newscaster',
+    selector: '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .newscaster',
   },
   {
     type: MESSAGE_TYPE_INFO,
     name: 'Info',
     description: 'Non-urgent messages from the game and items',
-    selector: '.notice:not(.pm), .adminnotice, .info, .sinister, .cult, .infoplain',
+    selector: '.notice:not(.pm), .adminnotice, .info, .sinister, .cult, .infoplain, .announce',
   },
   {
     type: MESSAGE_TYPE_WARNING,
@@ -83,18 +83,6 @@ export const MESSAGE_TYPES = [
     name: 'OOC',
     description: 'The bluewall of global OOC messages',
     selector: '.ooc, .adminooc',
-  },
-  {
-    type: 'looc',
-    name: 'LOOC',
-    description: 'Local OOC Chat. Less of a bluewall',
-    selector: '.filter_looc, .looc',
-  },
-  {
-    type: 'antagooc',
-    name: 'AOOC',
-    description: 'Antag OOC Chat.',
-    selector: '.filter_aooc, .antagooc',
   },
   {
     type: MESSAGE_TYPE_ADMINPM,

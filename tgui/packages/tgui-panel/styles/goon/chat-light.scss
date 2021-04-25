@@ -11,7 +11,7 @@ html, body {
 }
 
 body {
-  background: #E0E0E0; /*CIT CHANGE - darkens chatbox a lil*/
+  background: #fff;
   font-family: Verdana, sans-serif;
   font-size: 13px;
   line-height: 1.2;
@@ -305,16 +305,6 @@ em {
   font-weight: bold;
 }
 
-.looc {
-  color: #6699CC;
-  font-weight: bold;
-}
-
-.antagooc {
-  color: #b8002e;
-  font-weight: bold;
-}
-
 .adminobserverooc {
   color: #0099cc;
   font-weight: bold;
@@ -330,25 +320,8 @@ em {
   font-weight: bold;
 }
 
-/* @adminobserver compatability*/
-.adminobserver {
-  color: #996600;
-  font-weight: bold;
-}
-
 .admin {
   color: #4473ff;
-  font-weight: bold;
-}
-
-/* cit-specific mentorsay*/
-.mentorsay {
-  color: #E236D8;
-  font-weight: bold;
-}
-
-.mentorsay_admin {
-  color: #8A2BE2;
   font-weight: bold;
 }
 
@@ -428,6 +401,14 @@ em {
 
 .blueteamradio {
   color: #0000ff;
+}
+
+.greenteamradio {
+  color: #00ff00;
+}
+
+.yellowteamradio {
+  color: #d1ba22;
 }
 
 .yell {
@@ -582,19 +563,6 @@ h1.alert, h2.alert {
   color: #14a833;
 }
 
-.userlove {
-  color: #FF1493;
-  font-style: italic;
-  font-weight: bold;
-  text-shadow: 0 0 6px #ff6dbc;
-}
-
-.love {
-  color: #ff006a;
-  font-style: italic;
-  text-shadow: 0 0 6px #ff6d6d;
-}
-
 .cult {
   color: #973e3b;
 }
@@ -688,154 +656,10 @@ h1.alert, h2.alert {
   font-size: 185%;
 }
 
-/* compatability */
-.umbra {
-  color: #5000A0;
-}
-
-.umbra_emphasis {
-  color: #5000A0;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.umbra_large {
-  color: #5000A0;
-  font-weight: bold;
-  font-style: italic;
-  font-size: 3;
-}
-
 .deconversion_message {
   color: #5000A0;
   font-size: 185%;
   font-style: italic;
-}
-
-/* coggers dosen't exist on tg :( */
-/* from decon_msg: font-size: 185% == font-size 3*/
-.brass {
-  color: #BE8700;
-}
-
-.heavy_brass {
-  color: #BE8700;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.large_brass {
-  color: #BE8700;
-  font-size: 185%;
- }
-
-.big_brass {
-  color: #BE8700;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.ratvar {
-  color: #BE8700;
-  font-size: 6;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.alloy {
-  color: #42474D;
-}
-
-.heavy_alloy {
-  color: #42474D;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nezbere_large {
-  color: #42474D;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nezbere {
-  color: #42474D;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nezbere_small {
-  color: #42474D;
-}
-
-.sevtug_large {
-  color: #AF0AAF;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.sevtug	{
-  color: #AF0AAF;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.sevtug_small {
-  color: #AF0AAF;
-}
-
-.inathneq_large {
-  color: #1E8CE1;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.inathneq	{
-  color: #1E8CE1;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.inathneq_small {
-  color: #1E8CE1;
-}
-
-.nzcrentr_large {
-  color: #DAAA18;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nzcrentr {
-  color: #DAAA18;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.nzcrentr_small {
-  color: #DAAA18;
-}
-
-.neovgre_large {
-  color: #6E001A;
-  font-size: 185%;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.neovgre {
-  color: #6E001A;
-  font-weight: bold;
-  font-style: italic;
-}
-
-.neovgre_small {
-  color: #6E001A;
 }
 
 .ghostalert {
@@ -897,7 +721,7 @@ h1.alert, h2.alert {
 
 .command_headset {
   font-weight: bold;
-  font-size: 125%; /* 160% default, changed so command can scream less */
+  font-size: 160%;
 }
 
 .small {
@@ -926,14 +750,9 @@ h1.alert, h2.alert {
   font-size: 185%;
 }
 
-.yellowtext	{
-  color: #FFCC00;
-  font-size: 185%;
-}
-
 .clown {
   color: #FF69Bf;
-  font-size: 125%;
+  font-size: 160%;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-weight: bold;
 }
@@ -947,10 +766,6 @@ h1.alert, h2.alert {
   color: #15D512;
   font-family: "Courier New", cursive, sans-serif;
   font-style: italic;
-}
-
-.spooky { /* cit specific, used by jacq */
-  color: #FF9100;
 }
 
 .hypnophrase {
@@ -982,31 +797,6 @@ h1.alert, h2.alert {
   }
 }
 
-.velvet	{ /* cit specific, used by MKU */
-  color: #660015;
-  font-weight: bold;
-  animation: velvet 5000ms infinite;
-  animation-direction: alternate;
-}
-
-@keyframes velvet {
-	0% {
-    color: #400020;
-  }
-	40% {
-    color: #FF0000;
-  }
-	50% {
-    color: #FF8888;
-  }
-	60% {
-    color: #FF0000;
-  }
-	100% {
-    color: #400020;
-  }
-}
-
 .phobia {
   color: #dd0000;
   font-weight: bold;
@@ -1030,6 +820,10 @@ h1.alert, h2.alert {
 .icon {
   height: 1em;
   width: auto;
+}
+
+.bigicon {
+  font-size: 2.5em;
 }
 
 .memo {
