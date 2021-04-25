@@ -173,6 +173,7 @@ export const sortBy = (...iterateeFns) => array => {
 
 export const sort = sortBy();
 
+<<<<<<< HEAD:tgui/packages/common/collections.ts
 /**
  * Returns a range of numbers from start to end, exclusively.
  * For example, range(0, 5) will return [0, 1, 2, 3, 4].
@@ -180,6 +181,8 @@ export const sort = sortBy();
 export const range = (start: number, end: number): number[] =>
   new Array(end - start).fill(null).map((_, index) => index + start);
 
+=======
+>>>>>>> citadel/master:tgui/packages/common/collections.js
 /**
  * A fast implementation of reduce.
  */
@@ -253,6 +256,8 @@ export const uniq = uniqBy();
 type Zip<T extends unknown[][]> = {
   [I in keyof T]: T[I] extends (infer U)[] ? U : never;
 }[];
+
+export const uniq = uniqBy();
 
 /**
  * Creates an array of grouped elements, the first of which contains
