@@ -273,6 +273,17 @@
 		MARK(WEST, WEX_DIR_WEST, dir)
 
 	// Process diagonals:
+	for(var/i in diagonals)
+		T = i
+		power = diagonal_powers[T]
+		dir = diagonals[T]
+		WEX_ACT(T, power, dir)
+		if(returned < power_considered_dead)
+			continue
+		CARDINAL_MARK(NORTH, WEX_DIR_NORTH, dir)
+		CARDINAL_MARK(SOUTH, WEX_DIR_SOUTH, dir)
+		CARDINAL_MARK(EAST, WEX_DIR_EAST, dir)
+		CARDINAL_MARK(WEST, WEX_DIR_WEST, dir)
 
 
 	// flush lists
