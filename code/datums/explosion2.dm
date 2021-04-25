@@ -124,9 +124,10 @@
 	var/list/mob/to_flash = list()
 	var/list/feedback = list()
 	var/list/mob/mob_potential_shake = list()
+	var/list/mob/closest_to = list()
 	for(var/i in 1 to _starting.len)
-		cardinal_expanding[_starting] = WEX_ALLDIRS
-		cycle_powers[_starting] = power_initial
+		edges[_starting] = WEX_ALLDIRS
+		powers[_starting] = power_initial
 		var/turf/starting = _starting[i]
 		var/x0 = starting.x
 		var/y0 = starting.y
@@ -149,10 +150,12 @@
 				var/turf/M_turf = get_turf(M)
 				if(M_turf && M_turf.z == z0)
 					var/dist = get_dist(M_turf, starting)
-					if(!isnull(mob_potential_shake[M]))
+					if(isnull(mob_potential_shake[M]))
 						mob_potential_shake[M] = dist
-					else
-						mob_potential_shake[M] = min(dist, mob_potential_shake[M])
+						closest_to[M] = starting
+					else if(mob_potential_shake[M] < dist)
+						mob_potential_shake[M] = dist
+						closest_to[M] = starting
 
 		for(var/array in GLOB.doppler_arrays)
 			var/obj/machinery/doppler_array/A = array
@@ -172,14 +175,14 @@
 			baseshakeamount = sqrt((sqrt(power_initial) - dist)*0.1)
 		// If inside the blast radius + world.view - 2
 		if(dist <= round(2 * sqrt(power_initial) + world.view - 2, 1))
-			M.playsound_local(starting, null, 100, 1, frequency, max_distance = 5, S = explosion_sound)
+			M.playsound_local(closest_to[M], null, 100, 1, frequency, max_distance = 5, S = explosion_sound)
 			if(baseshakeamount > 0)
 				shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
 		// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
 		else if(dist <= far_dist)
 			var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
 			far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-			M.playsound_local(starting, null, far_volume, 1, frequency, max_distance = 5, S = far_explosion_sound)
+			M.playsound_local(closest_to[M], null, far_volume, 1, frequency, max_distance = 5, S = far_explosion_sound)
 			if(baseshakeamount > 0)
 				shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
 	for(var/i in 1 to to_flash.len)
@@ -198,9 +201,9 @@
 /datum/wave_explosion/proc/stop(delete = TRUE)
 	SSexplosions.active_wave_explosions -= src
 	SSexplosions.currentrun -= src
-	exploding = list()
-	exploding_next = list()
-	exploding_last = list()
+	edges = null
+	powers = null
+	exploded_last = null
 	cycle = null
 	running = FALSE
 	qdel(src)
@@ -259,7 +262,7 @@
 	// insanity define to mark the next set of cardinals.
 #define CARDINAL_MARK(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding]){powers_next[expanding]=max(powers_next[expanding],returned);edges_next[expanding]=cdir|edges_next[expanding]}
 	// insanity define to do diagonal marking as 2 substeps
-#define DIAGONAL_SUBSTEP(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding])(diagonal_powers[expanding]=CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding],returned);diagonals_powers_max[expanding]=max(diagonals_powers_max[expanding],returnedk);diagonals=cdir|diagonals[expanding])
+#define DIAGONAL_SUBSTEP(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding])(diagonal_powers[expanding]=CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding],returned,diagonals_powers_max[expanding]);diagonals_powers_max[expanding]=max(diagonals_powers_max[expanding],returnedk);diagonals=cdir|diagonals[expanding])
 	// insanity define to mark the diagonals that would otherwise be missed
 #define DIAGONAL_MARK(ndir, cdir, edir) DIAGONAL_SUBSTEP(turn(ndir, 90), cdir, edir) ; DIAGONAL_SUBSTEP(turn(ndir, -90), cdir, edir)
 	// mark
