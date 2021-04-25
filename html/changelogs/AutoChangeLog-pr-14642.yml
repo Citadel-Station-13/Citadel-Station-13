@@ -1,0 +1,5 @@
+author: "Trigg, stylemistake and SandPoot"
+delete-after: True
+changes: 
+  - admin: "Admins just got a new TGUI Select Equipment menu
+tweak: Prevents the window from creating sprites for any animated version there might be. (this guarantees consistant sprite size/amount)"
