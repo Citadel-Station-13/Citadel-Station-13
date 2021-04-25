@@ -59,16 +59,29 @@
 	/// block = block / this, if 0 any block is absolute
 	var/block_resistance = 1
 
-	/// List of turfs mapped to their powers.
-	var/list/turf/exploding = list()
-	/// [exploding] but dirs rather than powers
-	var/list/turf/exploding_dirs = list()
-	/// [exploding] but for the next ring
-	var/list/turf/exploding_next = list()
-	/// [exploding_next] but dirs rather than powers
-	var/list/turf/exploding_next_dirs = list()
-	/// [exploding] but for the last ring
-	var/list/turf/exploding_last = list()
+	// Rewrite count: 2
+	// Each cycle is a "perfect ring".
+	// We run into the problem that diagonal hitboxes don't exist on 2d grid games.
+	// How we deal with this is this:
+	// The first half of each cycle explodes cardinal directions awaiting expansion first
+	// Diagonals get added to a potential diagonals list.
+	// The second half of each cycle checks the potential diagonals list. If something isn't on the exploded list,
+	// we know it's a valid diagonal and explode it.
+	// Then all exploded turfs are flushed to exploded_last and it continues.
+	// Direction bitflags use the WEX_DIR_X flags so we can keep track of more than one direction in a single field
+	// The insanity begins when I realized that doing cardinals are easy but diagonals require:
+	// - Tallying the explosive power that should go into it
+	// - Exploding it afterwards using the tallied power rather than passed power (so corners aren't far weaker unless there's one side of it blocked)
+	// Expanding the explosion power of the now exploded diagonal into the two dirs its cardinals are in
+	// If this is done using a perfect algorithm it should be relatively efficient and result in a near-perfect shockwave simulation.
+
+	/// The last ring that's been exploded. Any turfs in this will completely ignore the current cycle. Turf = TRUE
+	var/list/turf/exploded_last = list()
+	/// The "edges" + dirs that need to be processed this cycle. turf = dir flags
+	var/list/turf/edges = list()
+	/// The powers of the current turf edges. turf = power
+	var/list/turf/powers = list()
+
 	/// What cycle are we on?
 	var/cycle
 	/// When we started the current cycle
@@ -76,7 +89,7 @@
 	/// Time to wait between cycles
 	var/cycle_speed = 0
 	/// Current index for list
-	var/index = 0
+	var/index = 1
 
 /datum/wave_explosion/New(turf/initial, power, factor = EXPLOSION_DEFAULT_FALLOFF_MULTIPLY, constant = EXPLOSION_DEFAULT_FALLOFF_SUBTRACT, flash = 0, fire = 0, atom/source, speed = 0, silent = FALSE, autostart = TRUE, block_resistance = 1)
 	id = ++next_id
@@ -103,64 +116,84 @@
 		stop(FALSE)
 	return ..()
 
-/datum/wave_explosion/proc/start(turf/starting)
-	exploding[starting] = power_initial
+/datum/wave_explosion/proc/start(list/turf/_starting)
+	if(running)
+		CRASH("Attempted to start() a running wave explosion")
+	if(!islist(_starting))
+		_starting = list(_starting)
+	var/list/mob/to_flash = list()
+	var/list/feedback = list()
+	var/list/mob/mob_potential_shake = list()
+	for(var/i in 1 to _starting.len)
+		cardinal_expanding[_starting] = WEX_ALLDIRS
+		cycle_powers[_starting] = power_initial
+		var/turf/starting = _starting[i]
+		var/x0 = starting.x
+		var/y0 = starting.y
+		var/z0 = starting.z
+		var/area/areatype = get_area(starting)
+		feedback += list(list("power" = power_initial, factor = "factor", constant = "constant", flash = "flash", fire = "fire", speed = "speed", "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = TIME_STAMP("YYYY-MM-DD hh:mm:ss", 1)))
+		// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
+		// Stereo users will also hear the direction of the explosion!
 
-	var/x0 = starting.x
-	var/y0 = starting.y
-	var/z0 = starting.z
-	var/area/areatype = get_area(starting)
+		// Calculate far explosion sound range. Only allow the sound effect for heavy/devastating explosions.
+		// 3/7/14 will calculate to 80 + 35
 
-	SSblackbox.record_feedback("associative", "wave_explosion", 1, list("power" = power_initial, factor = "factor", constant = "constant", flash = "flash", fire = "fire", speed = "speed", "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = TIME_STAMP("YYYY-MM-DD hh:mm:ss", 1)))
+		if(!silent)
+			var/frequency = get_rand_frequency()
+			var/sound/explosion_sound = sound(get_sfx("explosion"))
+			var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
+
+			for(var/mob/M in GLOB.player_list)
+				// Double check for client
+				var/turf/M_turf = get_turf(M)
+				if(M_turf && M_turf.z == z0)
+					var/dist = get_dist(M_turf, starting)
+					if(!isnull(mob_potential_shake[M]))
+						mob_potential_shake[M] = dist
+					else
+						mob_potential_shake[M] = min(dist, mob_potential_shake[M])
+
+		for(var/array in GLOB.doppler_arrays)
+			var/obj/machinery/doppler_array/A = array
+			A.sense_wave_explosion(starting, power_initial, cycle_speed)
+
+		// Flash mobs
+		if(flash_range)
+			for(var/mob/living/L in viewers(flash_range, starting))
+				to_flash |= L
+
+	var/far_dist = sqrt(power_initial) * 7.5
+
+	for(var/mob/M in mob_potential_shake)
+		var/dist = mob_potential_shake[M]
+		var/baseshakeamount
+		if(sqrt(power_initial) - dist > 0)
+			baseshakeamount = sqrt((sqrt(power_initial) - dist)*0.1)
+		// If inside the blast radius + world.view - 2
+		if(dist <= round(2 * sqrt(power_initial) + world.view - 2, 1))
+			M.playsound_local(starting, null, 100, 1, frequency, max_distance = 5, S = explosion_sound)
+			if(baseshakeamount > 0)
+				shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
+		// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
+		else if(dist <= far_dist)
+			var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
+			far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
+			M.playsound_local(starting, null, far_volume, 1, frequency, max_distance = 5, S = far_explosion_sound)
+			if(baseshakeamount > 0)
+				shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
+	for(var/i in 1 to to_flash.len)
+		var/mob/living/L = to_flash[i]
+		L.flash_act()
+
+	SSblackbox.record_feedback("associative", "wave_explosion", 1, feedback)
+
 	if(!cycle)
 		cycle = 1
 	SSexplosions.active_wave_explosions += src
 	running = TRUE
 	cycle_start = world.time
 	tick()
-
-	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
-	// Stereo users will also hear the direction of the explosion!
-
-	// Calculate far explosion sound range. Only allow the sound effect for heavy/devastating explosions.
-	// 3/7/14 will calculate to 80 + 35
-
-	var/far_dist = sqrt(power_initial) * 7.5
-
-	if(!silent)
-		var/frequency = get_rand_frequency()
-		var/sound/explosion_sound = sound(get_sfx("explosion"))
-		var/sound/far_explosion_sound = sound('sound/effects/explosionfar.ogg')
-
-		for(var/mob/M in GLOB.player_list)
-			// Double check for client
-			var/turf/M_turf = get_turf(M)
-			if(M_turf && M_turf.z == z0)
-				var/dist = get_dist(M_turf, starting)
-				var/baseshakeamount
-				if(sqrt(power_initial) - dist > 0)
-					baseshakeamount = sqrt((sqrt(power_initial) - dist)*0.1)
-				// If inside the blast radius + world.view - 2
-				if(dist <= round(2 * sqrt(power_initial) + world.view - 2, 1))
-					M.playsound_local(starting, null, 100, 1, frequency, max_distance = 5, S = explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 25, clamp(baseshakeamount, 0, 10))
-				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
-				else if(dist <= far_dist)
-					var/far_volume = clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
-					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-					M.playsound_local(starting, null, far_volume, 1, frequency, max_distance = 5, S = far_explosion_sound)
-					if(baseshakeamount > 0)
-						shake_camera(M, 10, clamp(baseshakeamount*0.25, 0, 2.5))
-
-	for(var/array in GLOB.doppler_arrays)
-		var/obj/machinery/doppler_array/A = array
-		A.sense_wave_explosion(starting, power_initial, cycle_speed)
-
-	// Flash mobs
-	if(flash_range)
-		for(var/mob/living/L in viewers(flash_range, starting))
-			L.flash_act()
 
 /datum/wave_explosion/proc/stop(delete = TRUE)
 	SSexplosions.active_wave_explosions -= src
@@ -172,52 +205,83 @@
 	running = FALSE
 	qdel(src)
 
+#define SHOULD_SUSEPND ((cycle_start + cycle_speed) > world.time)
+
 /**
   * Called by SSexplosions to propagate this.
   * Return TRUE if postponed
   */
 /datum/wave_explosion/proc/tick()
-	if(++index > length(exploding))
-		if(!length(exploding_next))
-			finished = TRUE
-			stop(TRUE)
-			return TRUE
-		if((cycle_start + cycle_speed) > world.time)		// postpone
-			return TRUE
-		// shift everything down
-		exploding_last = exploding
-		exploding = exploding_next
-		exploding_dirs = exploding_next_dirs
-		exploding_next = list()
-		exploding_next_dirs = list()
-		cycle_start = world.time
-		cycle++
-		index = 1
-	var/turf/victim = exploding[index]
-	var/current_power = exploding[victim]
-	var/returned = max(0, victim.wave_explode(current_power, src, exploding_dirs[victim]))
-	var/blocked = current_power - returned
-	if(block_resistance <= 0)
-		if(blocked > EXPLOSION_POWER_NO_RESIST_THRESHOLD)
-			returned = 0
-	else if(blocked > 0)
-		returned = current_power - (blocked / block_resistance)
-	var/new_power = round((returned * power_falloff_factor) - power_falloff_constant, EXPLOSION_POWER_QUANTIZATION_ACCURACY)
-	if(new_power < power_considered_dead)
-		return
-	var/vx = victim.x
-	var/vy = victim.y
-	var/vz = victim.z
+	/// Each tick goes through one full cycle.
+	// This can be changed to a "continuous process" system where indexes are tracked if needed.
+	if(!src.edges.len)
+		// we're done
+		finished = TRUE
+		stop(TRUE)
+		return TRUE
+	if(SHOULD_SUSPEND)
+		return TRUE
+	// Set up variables
+	var/turf/T
 	var/turf/expanding
-#define RUN(xmod, ymod, dir) expanding=locate(vx+xmod,vy+ymod,vz);if(expanding){if(!exploding[expanding] && !exploding_last[expanding]){exploding_next[expanding]=max((exploding_next[expanding]+new_power)*0.5,new_power);exploding_next_dirs[expanding]=dir;}}
-	RUN(0,1,NORTH)
-	RUN(1,1,NORTHEAST)
-	RUN(1,0,EAST)
-	RUN(1,-1,SOUTHEAST)
-	RUN(0,-1,SOUTH)
-	RUN(-1,-1,SOUTHWEST)
-	RUN(-1,0,WEST)
-	RUN(-1,1,NORTHWEST)
-#undef RUN
-	if(prob(fire_probability))
-		new /obj/effect/hotspot(victim)
+	var/power
+	var/returned
+	var/blocked
+	var/dir
+	// insanity define to explode a turf with a certain amount of power, direction, and set returned.
+#define WEX_ACT(_T, _P, _D) returned=max(0,T.wave_explode(_P, src, _D));blocked=_P-returned;if(!block_resistance){if(blocked>EXPLOSION_POWER_NO_RESIST_THRESHOLD){returned=0}}else if(blocked){returned=_P-(blocked/block_resistance)};\
+	returned=round((returned*power_falloff_factor)-power_falloff_constant,EXPLOSION_POWER_QUANTIZATION_ACCURACY);if(prob(fire_probability)){new /obj/effect/hotspot(_T)};
+
+	// Cache hot lists
+	var/list/turf/edges = src.edges
+	var/list/turf/powers = src.powers
+	var/list/turf/exploded_last = src.exploded_last
+
+	// prepare expansions
+	var/list/turf/edges_next = list()
+	var/list/turf/powers_next = list()
+	var/list/turf/diagonals = list()
+	var/list/turf/diagonal_powers = list()
+	var/list/turf/diagonal_powers_max = list()
+
+	// Process cardinals:
+	// Explode all cardinals and expand in directions, gathering all cardinals it should go to.
+	// Power for when things meet in the middle should be the greatest of the two.
+	for(var/i in edges)
+		T = i
+		power = powers[T]
+		dir = edges[T]
+		WEX_ACT(T, power, dir)
+		if(returned < power_considered_dead)
+			continue
+	// diagonal power calc when multiple things hit one diagonal
+#define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) (maximum? (min(maximum * 2, existing + adding)) : (adding))
+	// insanity define to mark the next set of cardinals.
+#define CARDINAL_MARK(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding]){powers_next[expanding]=max(powers_next[expanding],returned);edges_next[expanding]=cdir|edges_next[expanding]}
+	// insanity define to do diagonal marking as 2 substeps
+#define DIAGONAL_SUBSTEP(ndir, cdir, edir) expanding=get_step(T,ndir);if(expanding && !exploded_last[expanding] && !edges[expanding])(diagonal_powers[expanding]=CALCULATE_DIAGONAL_POWER(diagonal_powers[expanding],returned);diagonals_powers_max[expanding]=max(diagonals_powers_max[expanding],returnedk);diagonals=cdir|diagonals[expanding])
+	// insanity define to mark the diagonals that would otherwise be missed
+#define DIAGONAL_MARK(ndir, cdir, edir) DIAGONAL_SUBSTEP(turn(ndir, 90), cdir, edir) ; DIAGONAL_SUBSTEP(turn(ndir, -90), cdir, edir)
+	// mark
+#define MARK(ndir, cdir, edir) if(edir & cdir){ CARDINAL_MARK(ndir, cdir, edir) ; DIAGONAL_MARK(ndir, cdir, edir)};
+		MARK(NORTH, WEX_DIR_NORTH, dir)
+		MARK(SOUTH, WEX_DIR_SOUTH, dir)
+		MARK(EAST, WEX_DIR_EAST, dir)
+		MARK(WEST, WEX_DIR_WEST, dir)
+
+	// Process diagonals:
+
+
+	// flush lists
+	exploded_last = edges + diagonals
+	edges = edges_next
+	powers = powers_next
+
+#undef SHOULD_SUSPEND
+
+#undef WEX_ACT
+
+#undef DIAGONAL_SUBSTEP
+#undef DIAGONAL_MARK
+#undef CARDINAL_MARK
+#undef MARK
