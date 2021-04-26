@@ -176,10 +176,11 @@
 /datum/design/syringe
 	name = "Syringe"
 	id = "syringe"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 10, /datum/material/glass = 20)
 	build_path = /obj/item/reagent_containers/syringe
-	category = list("initial", "Medical")
+	category = list("initial", "Medical","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/health_sensor
 	name = "Health Sensor"
@@ -205,4 +206,14 @@
 	materials = list(/datum/material/iron = 2500)
 	build_path = /obj/item/reagent_containers/glass/bottle/vial/large
 	category = list("initial","Medical","Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+
+/datum/design/hypospray/mkii
+	name = "Hypospray Mk. II"
+	id = "hypospray_mkii"
+	build_type = AUTOLATHE | PROTOLATHE | NO_PUBLIC_LATHE
+	materials = list(/datum/material/iron = 1600, /datum/material/glass = 1000)
+	build_path = /obj/item/hypospray/mkii
+	category = list("initial", "Medical","Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
