@@ -116,7 +116,7 @@ effective or pretty fucking useless.
 	interact(user)
 
 /obj/item/healthanalyzer/rad_laser/interact(mob/user)
-	var/knowledge = SEND_SIGNAL(COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, user) == ID_COMPONENT_KNOWLEDGE_FULL
+	var/knowledge = SEND_SIGNAL(src, COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, user) == ID_COMPONENT_KNOWLEDGE_FULL
 	if(knowledge)
 		ui_interact(user)
 
