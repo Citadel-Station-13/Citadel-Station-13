@@ -911,6 +911,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_ready = 0
 	var/homerun_able = 0
 	total_mass = 2.7 //a regular wooden major league baseball bat weighs somewhere between 2 to 3.4 pounds, according to google
+	var/on_sound
+	var/on = TRUE // Are we on or off
+	var/on_icon_state // What is our sprite when turned on
+	var/off_icon_state // What is our sprite when turned off
+	var/on_item_state // What is our in-hand sprite when turned on
+	var/force_on // Damage when on
+	var/force_off // Damage when off
+	var/throwforce_on // Damage when on
+	var/throwforce_off // Damage when off
+	var/weight_class_on // What is the new size class when turned on
 
 /obj/item/melee/baseball_bat/Initialize()
 	. = ..()
@@ -991,6 +1001,58 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A metal bat made by the syndicate for the major league team."
 	force = 18 //Spear damage...
 	throwforce = 30
+
+/obj/item/melee/baseball_bat/proc/get_on_description()
+	. = list()
+	.["local_on"] = "<span class ='warning'>You extend the bat.</span>"
+	.["local_off"] = "<span class ='notice'>You collapse the bat.</span>"
+	return .
+
+/obj/item/melee/baseball_bat/telescopic
+	name = "telescopic baseball bat"
+	desc = "A stealthy telescopic bat that can fit in a pocket when collapsed."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "baseball_bat_telescopic_0"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	item_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NONE
+	force = 5
+	throwforce = 10
+	on = FALSE
+	on_sound = 'sound/weapons/batonextend.ogg'
+	on_icon_state = "baseball_bat_telescopic_1"
+	off_icon_state = "baseball_bat_telescopic_0"
+	on_item_state = "baseball_bat_telescopic"
+	force_on = 15
+	force_off = 5
+	throwforce_on = 20
+	throwforce_off = 10
+	weight_class_on = WEIGHT_CLASS_HUGE
+	total_mass = TOTAL_MASS_NORMAL_ITEM
+
+/obj/item/melee/baseball_bat/telescopic/attack_self(mob/user)
+	on = !on
+	var/list/desc = get_on_description()
+	if(on)
+		to_chat(user, desc["local_on"])
+		icon_state = on_icon_state
+		item_state = on_item_state
+		w_class = weight_class_on
+		force = force_on
+		throwforce = throwforce_on
+		attack_verb = list("beat", "smacked")
+	else
+		to_chat(user, desc["local_off"])
+		icon_state = off_icon_state
+		item_state = null //no sprite for concealment even when in hand
+		w_class = WEIGHT_CLASS_SMALL
+		force = force_off
+		throwforce = throwforce_off
+		attack_verb = list("drubbed", "beaned")
+	playsound(src.loc, on_sound, 50, 1)
+	add_fingerprint(user)
 
 /obj/item/melee/flyswatter
 	name = "flyswatter"

@@ -1377,7 +1377,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Charlie Security APC";
-	pixel_x = -24;
+	pixel_x = -25;
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/red{
@@ -2166,7 +2166,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Delta Main Corridor APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	start_charge = 0
 	},
 /turf/open/floor/plating,
@@ -2446,7 +2446,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Charlie Hydroponics APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	start_charge = 0
 	},
 /obj/structure/cable{
@@ -2483,7 +2483,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Charlie Kitchen APC";
-	pixel_y = -24;
+	pixel_y = -23;
 	start_charge = 0
 	},
 /obj/structure/cable{
@@ -4164,7 +4164,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Delta Prototype Lab APC";
-	pixel_y = 24;
+	pixel_y = 23;
 	start_charge = 0
 	},
 /obj/structure/cable{

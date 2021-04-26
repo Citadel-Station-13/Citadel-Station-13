@@ -77,6 +77,11 @@
 	C.action_cooldown_mod *= value
 	cachedmoveCalc = value
 
+/obj/item/organ/liver/slime
+	name = "viscoplasm" //this is the name that Fermis came up with when working on that organ PR that never got finished - if Fermis ever updates this, this probably will have a lot more functionality.
+	icon_state = "liver-s"
+	desc = "An organelle resembling a liver for slimepeople."
+
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.

@@ -58,9 +58,7 @@
 		if(9)
 			new /obj/item/gun/magic/wand/book/healing(src)
 		if(10)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
+			new /obj/item/guardiancreator(src)
 
 /obj/structure/closet/crate/necropolis/tendril/weapon_armor/PopulateContents()
 	var/loot = rand(1,11)
@@ -197,9 +195,7 @@
 		if(28)
 			new /obj/item/gun/magic/wand/book/healing(src)
 		if(29)
-			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
-			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
+			new /obj/item/guardiancreator(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -989,7 +985,18 @@
 	switch(random)
 		if(1)
 			to_chat(user, "<span class='danger'>Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>")
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade")
+			H.dna.features["mcolor"] = "A02720"
+			H.dna.features["tail_lizard"] = "Dark Tiger"
+			H.dna.features["tail_human"] = "None"
+			H.dna.features["mam_snout"] = "Sharp"
+			H.dna.features["horns"] = "Curled"
+			H.dna.features["ears"] = "None"
+			H.dna.features["wings"] = "None"
+			H.dna.features["frills"] = "None"
+			H.dna.features["spines"] = "Long"
+			H.dna.features["body_markings"] = "Dark Tiger Body"
+			H.dna.features["legs"] = "Digitigrade"
+			H.dna.features["taur_body"] = "None"
 			H.left_eye_color = "fee5a3"
 			H.right_eye_color = "fee5a3"
 			H.set_species(/datum/species/lizard)
@@ -1102,14 +1109,12 @@
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/space/hostile_environment(src)
 	new /obj/item/clothing/head/helmet/space/hostile_environment(src)
-	var/loot = rand(1,3)
+	var/loot = rand(1,2)
 	switch(loot)
 		if(1)
 			new /obj/item/mayhem(src)
 		if(2)
 			new /obj/item/book/granter/spell/asura(src)
-		if(3)
-			new /obj/item/guardiancreator(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"

@@ -159,9 +159,6 @@
 #define SHOVE_STAGGER_DURATION 35
 /// how long they're off balance for
 #define SHOVE_OFFBALANCE_DURATION 30
-//Shove disarming item list
-GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
-	/obj/item/gun)))
 
 
 //Embedded objects

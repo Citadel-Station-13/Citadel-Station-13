@@ -59,7 +59,7 @@
 	name = "Thermite Bottle"
 	desc = "30 units of Thermite to assist in creating a quick access point or get away!"
 	item = /obj/item/reagent_containers/glass/bottle/thermite
-	price_min = 500
+	price_min = 750
 	price_max = 1500
 	stock_max = 3
 	availability_prob = 30
@@ -68,7 +68,18 @@
 	name = "Science Goggles"
 	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy-to-read format."
 	item = /obj/item/clothing/glasses/science
-	price_min = 150
-	price_max = 200
-	stock_max = 3
-	availability_prob = 50
+	price_min = 200
+	price_max = 300
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 100
+
+/datum/blackmarket_item/tool/meson_goggles
+	name = "Meson Goggles"
+	desc = "These let you see through walls and inspect other structures."
+	item = /obj/item/clothing/glasses/meson
+	price_min = 200
+	price_max = 300
+	stock_min = 3
+	stock_max = 7
+	availability_prob = 100

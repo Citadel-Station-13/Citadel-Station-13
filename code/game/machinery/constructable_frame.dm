@@ -217,6 +217,8 @@
 						new_machine.RefreshParts()
 
 						new_machine.on_construction()
+						// TODO: make sleepers not shit out parts PROPERLY THIS TIME.
+						new_machine.circuit.moveToNullspace()
 					qdel(src)
 				return
 
