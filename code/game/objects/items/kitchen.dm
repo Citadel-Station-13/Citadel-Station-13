@@ -262,7 +262,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	custom_price = PRICE_ALMOST_CHEAP
 
-/obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
+/obj/item/kitchen/unrollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins unflattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
