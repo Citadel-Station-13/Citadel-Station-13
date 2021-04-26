@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(min_spawns)
 	name = "Minimum Spawns" /// this hot steaming pile of garbage makes sure theres a minimum of tendrils scattered around
 	init_order = INIT_ORDER_DEFAULT
-	flags = SS_BACKGROUND | SS_NO_FIRE
+	flags = SS_NO_FIRE | SS_NO_INIT
 	wait = 2
 	var/where_we_droppin_boys_iterations = 0
 	var/snaxi_snowflake_check = FALSE

@@ -94,8 +94,7 @@
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	M.set_last_attacker(user)
 
 	if(force && M == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)

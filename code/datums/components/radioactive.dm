@@ -52,7 +52,7 @@
 		return
 	strength -= strength / hl3_release_date
 	if(strength <= RAD_BACKGROUND_RADIATION)
-		return PROCESS_KILL
+		qdel(src)
 
 
 /datum/component/radioactive/proc/glow_loop(atom/movable/master)

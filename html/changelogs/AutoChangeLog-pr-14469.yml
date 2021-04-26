@@ -1,4 +1,0 @@
-author: "timothyteakettle"
-delete-after: True
-changes: 
-  - bugfix: "using the puddle ability when stunned wont break it"

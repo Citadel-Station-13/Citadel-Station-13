@@ -361,7 +361,7 @@
 /obj/screen/mov_intent/update_icon_state()
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
-			icon_state = "walking"
+			icon_state = CONFIG_GET(flag/sprint_enabled)? "walking" : "walking_nosprint"
 		if(MOVE_INTENT_RUN)
 			icon_state = CONFIG_GET(flag/sprint_enabled)? "running" : "running_nosprint"
 

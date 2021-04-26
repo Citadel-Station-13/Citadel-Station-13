@@ -18,8 +18,8 @@
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE	0 // We have no damage on the clothing
-#define CLOTHING_DAMAGED	1 // There's some damage on the clothing but it still has at least one functioning bodypart and can be equipped
-#define CLOTHING_SHREDDED	2 // The clothing is useless and cannot be equipped unless repaired first
+#define CLOTHING_DAMAGED	1 // There's some damage on the clothing but it still has at least one functioning bodypart
+#define CLOTHING_SHREDDED	2 // The clothing is near useless and has their sensors broken
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

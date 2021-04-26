@@ -453,3 +453,8 @@
 /obj/item/reagent_containers/glass/bottle/ichor/green
 	name = "green potion"
 	list_reagents = list(/datum/reagent/green_ichor = 1)
+
+/obj/item/reagent_containers/glass/bottle/thermite
+	name = "thermite bottle"
+	list_reagents = list(/datum/reagent/thermite = 30)
+

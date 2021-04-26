@@ -29,9 +29,9 @@
 				/obj/item/clothing/under/misc/poly_tanktop/female = 3,
 				/obj/item/autosurgeon/penis = 3,
 				/obj/item/autosurgeon/testicles = 3,
-				/obj/item/storage/pill_bottle/penis_enlargement = 5,
-				/obj/item/storage/pill_bottle/breast_enlargement = 5,
-				/obj/item/reagent_containers/glass/bottle/crocin = 5,
+				/obj/item/storage/pill_bottle/penis_enlargement = 10,
+				/obj/item/storage/pill_bottle/breast_enlargement = 10,
+				/obj/item/reagent_containers/glass/bottle/crocin = 10,
 				/obj/item/reagent_containers/glass/bottle/camphor = 5,
 				/obj/item/storage/daki = 4
 				)
