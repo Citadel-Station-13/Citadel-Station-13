@@ -522,12 +522,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(marking_type)
 				dat += APPEARANCE_CATEGORY_COLUMN
 				dat += "<h3>[GLOB.all_mutant_parts[marking_type]]</h3>" // give it the appropriate title for the type of marking
+				dat += "<a>Add marking</a>"
 				// list out the current markings you have
 				if(length(features[marking_type]))
 					dat += "<table>"
 					for(var/list/marking_list in features[marking_type])
 						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
-						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a>&#708;</a> <a>&#709;</a></td></tr>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a>&#708;</a> <a>&#709;</a> <a>X</x></td></tr>"
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
