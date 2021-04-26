@@ -3,7 +3,7 @@
 	set desc = "Authorizes your account in the panic bunker of any servers connected to this function."
 	set category = "OOC"
 	
-	if(!(prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE))
+	if(prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE)
 		to_chat(src, "<span class='danger'>You are not age verified.</span>")
 		return
 		
