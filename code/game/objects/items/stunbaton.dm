@@ -19,7 +19,7 @@
 	var/stamina_loss_amount = 35
 	var/turned_on = FALSE
 	var/knockdown = TRUE
-	/// block percent needed to prevent knockdown/disarm - UNUSED RIGHT NOW
+	/// block percent needed to prevent knockdown/disarm
 	var/block_percent_to_counter = 50
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 750
@@ -221,12 +221,12 @@
 	if(user && !user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
 		return FALSE
 
-<<<<<<< HEAD
-	if(!disarming)
-		if(knockdown && !countered)
-			L.DefaultCombatKnockdown(50, override_stamdmg = 0, knocktofloor = !countered)		//knockdown
-		L.apply_damage(stunpwr, STAMINA, BODY_ZONE_CHEST)
-	else if(!countered)
+	if(shoving && COOLDOWN_FINISHED(src, shove_cooldown) && !HAS_TRAIT(L, TRAIT_IWASBATONED)) //Rightclicking applies a knockdown, but only once every couple of seconds, based on the cooldown_duration var. If they were recently knocked down, they can't be knocked down again by a baton.
+		L.DefaultCombatKnockdown(50, override_stamdmg = 0)
+		L.apply_status_effect(STATUS_EFFECT_TASED_WEAK, status_duration) //Even if they shove themselves up, they're still slowed.
+		L.apply_status_effect(STATUS_EFFECT_OFF_BALANCE, status_duration) //They're very likely to drop items if shoved briefly after a knockdown.
+		shoved = TRUE
+		COOLDOWN_START(src, shove_cooldown, cooldown_duration)
 		ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT) //Prevents swapping to a new baton to avoid the cooldown by just acquiring more batons
 		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), cooldown_duration)
 		playsound(loc, 'sound/weapons/zapbang.ogg', 50, 1, -1)
@@ -241,12 +241,12 @@
 		L.visible_message("<span class='danger'>[user] has [shoved ? "brutally stunned" : "stunned"] [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has [shoved ? "brutally stunnned" : "stunned"] you with [src]!</span>")
 		log_combat(user, L, shoved ? "stunned and attempted knockdown" : "stunned")
->>>>>>> citadel/master
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
+		H.forcesay(GLOB.hit_appends)
 
 
 	return TRUE
