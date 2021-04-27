@@ -86,7 +86,7 @@
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	last_spray = world.time
-	D.run(A)
+	D.run_puff(A)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	stream_mode = !stream_mode

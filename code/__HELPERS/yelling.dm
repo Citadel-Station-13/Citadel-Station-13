@@ -25,7 +25,7 @@
 	var/dir
 	var/returned
 #define RUN_YELL(_T, _P, _D) \
-	returned = max(powers[_T] - _T.get_yelling_resistance() - 1, 0); \
+	returned = max(_P - _T.get_yelling_resistance() - 1, 0); \
 	_T.maptext = "[returned]";
 
 	var/list/turf/edges_next = list()

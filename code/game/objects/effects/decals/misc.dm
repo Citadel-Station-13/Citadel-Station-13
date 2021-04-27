@@ -58,7 +58,7 @@
 	. = ..()
 	hit_thing(AM)
 
-/obj/effect/decal/chempuff/proc/run(atom/target)
+/obj/effect/decal/chempuff/proc/run_puff(atom/target)
 	set waitfor = FALSE
 	for(var/i in 1 to range)
 		range_left--
