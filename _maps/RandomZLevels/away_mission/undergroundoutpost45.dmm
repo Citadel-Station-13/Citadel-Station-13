@@ -8470,13 +8470,8 @@
 	name = "air out"
 	},
 /turf/open/floor/engine{
-<<<<<<< HEAD
-	name = "air floor";
-	initial_gas_mix = "n2=10580;o2=2644;TEMP=293.15"
-=======
 	initial_gas_mix = "n2=10580;o2=2644";
 	name = "air floor"
->>>>>>> citadel/master
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
