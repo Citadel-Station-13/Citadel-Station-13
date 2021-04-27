@@ -15,13 +15,17 @@
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE //only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE //Can only an admin spawn this crate?
+	// this might be all in all unnecessary with current code if some changes are made
 	var/goody = PACK_GOODY_NONE //Small items can be grouped into a single crate.They also come in a closet/lockbox instead of a full crate, so the 700 min doesn't apply
 	var/can_private_buy = TRUE //Can it be purchased privately by each crewmember?
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
-		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
+		if(ispath(crate_type, /obj/structure/closet/secure_closet/goodies))	// lets ensure private orders don't come in crates when the original one comes in lockers
+			C = new /obj/structure/closet/secure_closet/goodies/owned(A, paying_account)	// that would lead to infinite money exploits
+		else
+			C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
 		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
 	else
 		C = new crate_type(A)

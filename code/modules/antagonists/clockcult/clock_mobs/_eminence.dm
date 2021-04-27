@@ -37,7 +37,7 @@
 					lastWarning = world.time
 					to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
 				return
-			if(istype(get_area(T), /area/chapel))
+			if(istype(get_area(T), /area/service/chapel))
 				if((world.time - lastWarning) >= 30)
 					lastWarning = world.time
 					to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
@@ -251,7 +251,9 @@
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
 
+
 /*
+
 //Returns to the Ark - Commented out and replaced with obelisk_jump
 /datum/action/innate/eminence/ark_jump
 	name = "Return to Ark"
@@ -265,7 +267,7 @@
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else
-		to_chat(owner, "<span class='warning'>There is no Ark!</span>")
+		to_chat(owner, "<span class='warning '>There is no Ark!</span>")
 */
 
 //Warps to a chosen Obelisk

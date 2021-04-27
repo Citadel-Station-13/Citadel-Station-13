@@ -18,7 +18,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 1
+	sort_priority = 2
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Creates a Sigil of Transmission, which can drain and will store power for clockwork structures."
@@ -72,7 +72,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
-	sort_priority = 2
+	sort_priority = 5
 	quickbind = TRUE
 	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
 	requires_full_power = TRUE
@@ -101,7 +101,7 @@
 
 //Memory Allocation: Finds a willing ghost and makes them into a clockwork guardian for the invoker.
 /datum/clockwork_scripture/memory_allocation
-	descname = "Personal Guardian, A Peice Of Your Mind."
+	descname = "Personal Guardian housed in the brain."
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Guardian, a variant of Marauder that lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br>\
@@ -109,13 +109,13 @@
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
 	power_cost = 8000
-	usage_tip = "guardians are useful as personal bodyguards and frontline warriors."
+	usage_tip = "Guardians are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
-	sort_priority = 5
+	sort_priority = 6
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M in GLOB.all_clockwork_mobs)
+	for(var/mob/living/simple_animal/hostile/clockwork/guardian/M in GLOB.all_clockwork_mobs)
 		if(M.host == invoker)
 			to_chat(invoker, "<span class='warning'>You can only house one guardian at a time!</span>")
 			return FALSE
@@ -151,7 +151,7 @@
 		return FALSE
 	clockwork_say(invoker, text2ratvar("...sword and shield!"))
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
-	var/mob/living/simple_animal/hostile/clockwork/marauder/guardian/M = new(invoker)
+	var/mob/living/simple_animal/hostile/clockwork/guardian/M = new(invoker)
 	M.key = theghost.key
 	M.bind_to_host(invoker)
 	invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
@@ -171,7 +171,7 @@
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 6
+	sort_priority = 7
 	quickbind = TRUE
 	quickbind_desc = "Creates a clockwork marauder, used for frontline combat."
 	object_path = /obj/item/clockwork/construct_chassis/clockwork_marauder
@@ -223,7 +223,7 @@
 	object_path = /obj/mecha/combat/neovgre
 	tier = SCRIPTURE_APPLICATION
 	primary_component = BELLIGERENT_EYE
-	sort_priority = 7
+	sort_priority = 8
 	creator_message = "<span class='brass'>Neovgre, the Anima Bulwark towers over you... your enemies reckoning has come.</span>"
 
 /datum/clockwork_scripture/create_object/summon_arbiter/check_special_requirements()

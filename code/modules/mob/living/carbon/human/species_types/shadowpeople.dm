@@ -181,6 +181,10 @@
 		if(T.light_range && !isspaceturf(T)) //no fairy grass or light tile can escape the fury of the darkness.
 			to_chat(user, "<span class='notice'>You scrape away [T] with your [name] and snuff out its lights.</span>")
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	else if(is_cleanable(AM))
+		var/obj/effect/E = AM
+		if(E.light_range && E.light_power)
+			disintegrate(E)
 	else if(isliving(AM))
 		var/mob/living/L = AM
 		if(isethereal(AM))

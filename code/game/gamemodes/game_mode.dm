@@ -17,6 +17,7 @@
 	var/config_tag = null
 	var/votable = 1
 	var/probability = 0
+	var/chaos = 5 // 0-9, used for weighting round-to-round
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
@@ -419,7 +420,7 @@
 
 	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-			if(role in player.client.prefs.be_special)
+			if((role in player.client.prefs.be_special) && !(ROLE_NO_ANTAGONISM in player.client.prefs.be_special))
 				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player) && !jobban_isbanned(player, role) && !QDELETED(player)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
@@ -623,3 +624,10 @@
 /// Mode specific info for ghost game_info
 /datum/game_mode/proc/ghost_info()
 	return
+
+/datum/game_mode/proc/get_chaos()
+	var/chaos_levels = CONFIG_GET(keyed_list/chaos_level)
+	if(config_tag in chaos_levels)
+		return chaos_levels[config_tag]
+	else
+		return chaos

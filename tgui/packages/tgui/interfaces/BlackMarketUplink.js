@@ -15,7 +15,7 @@ export const BlackMarketUplink = (props, context) => {
   } = data;
   return (
     <Window
-      width={600}
+      width={800}
       height={480}
       theme="hackerman"
       resizable>

@@ -37,16 +37,17 @@
 			to_chat(owner, "There's something stuck to your hand, stopping you from transforming!")
 			return
 	if(IsAvailable())
-		transforming = TRUE
 		UpdateButtonIcon()
 		var/mutcolor = owner.get_ability_property(INNATE_ABILITY_SLIME_BLOBFORM, PROPERTY_BLOBFORM_COLOR) || ("#" + H.dna.features["mcolor"])
 		if(!is_puddle)
 			if(CHECK_MOBILITY(H, MOBILITY_USE)) //if we can use items, we can turn into a puddle
+				transforming = TRUE
 				is_puddle = TRUE //so we know which transformation to use when its used
 				ADD_TRAIT(H, TRAIT_HUMAN_NO_RENDER, SLIMEPUDDLE_TRAIT)
 				owner.cut_overlays() //we dont show our normal sprite, we show a puddle sprite
 				var/obj/effect/puddle_effect = new puddle_into_effect(get_turf(owner), owner.dir)
 				puddle_effect.color = mutcolor
+				puddle_effect.transform = H.transform //copy mob size for consistent meltdown appearance
 				H.Stun(in_transformation_duration, ignore_canstun = TRUE) //cant move while transforming
 
 				//series of traits that make up the puddle behaviour
@@ -75,6 +76,7 @@
 				puddle_overlay.color = mutcolor
 				tracked_overlay = puddle_overlay
 				owner.add_overlay(puddle_overlay)
+				owner.update_antag_overlays()
 
 				transforming = FALSE
 				UpdateButtonIcon()
@@ -89,6 +91,7 @@
 	H.cut_overlay(tracked_overlay)
 	var/obj/effect/puddle_effect = new puddle_from_effect(get_turf(owner), owner.dir)
 	puddle_effect.color = tracked_overlay.color
+	puddle_effect.transform = H.transform //copy mob size for consistent transform size
 	H.Stun(out_transformation_duration, ignore_canstun = TRUE)
 	sleep(out_transformation_duration)
 	REMOVE_TRAIT(H, TRAIT_PARALYSIS_L_ARM, SLIMEPUDDLE_TRAIT)
@@ -106,5 +109,6 @@
 	is_puddle = FALSE
 	if(squeak)
 		squeak.RemoveComponent()
+	H.regenerate_icons()
 	transforming = FALSE
 	UpdateButtonIcon()

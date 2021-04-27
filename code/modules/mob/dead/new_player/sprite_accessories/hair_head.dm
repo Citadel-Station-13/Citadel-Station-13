@@ -477,6 +477,10 @@
 	name = "Messy"
 	icon_state = "hair_messy"
 
+/datum/sprite_accessory/hair/messy2
+	name = "Messy2"
+	icon_state = "hair_messy2"
+
 /datum/sprite_accessory/hair/modern
 	name = "Modern"
 	icon_state = "hair_modern"

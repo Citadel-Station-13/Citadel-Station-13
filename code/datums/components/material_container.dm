@@ -112,32 +112,87 @@
 	user_insert(I, user) //, mat_container_flags)
 
 /// Proc used for when player inserts materials
-/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user)
+/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user, datum/component/remote_materials/remote = null)
 	set waitfor = FALSE
-	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(istype(I, /obj/item/stack) && precise_insertion)
-		var/atom/current_parent = parent
+	var/inserted = 0
+
+	//handle stacks specially
+	if(istype(I, /obj/item/stack))
+		var/atom/current_parent = remote ? remote.parent : parent //is the user using a remote materials component?
 		var/obj/item/stack/S = I
-		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+
+		//try to get ammount to use
+		var/requested_amount
+		if(precise_insertion)
+			requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+		else
+			requested_amount= S.amount
+
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
+		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || user.get_active_held_item() != active_held)
 			return
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
-		return
-	var/inserted = insert_item(I, stack_amt = requested_amount)//, breakdown_flags= mat_container_flags)
+		//are we still in range after the user input?
+		if((remote ? remote.parent : parent) != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE)
+			return
+		inserted = insert_stack(S, requested_amount)
+	else
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			to_chat(user, "<span class='warning'>[I] is stuck to you and cannot be placed into [parent].</span>")
+			return
+		inserted = insert_item(I)
+		qdel(I)
+
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
-		qdel(I)
 		if(after_insert)
 			after_insert.Invoke(I, last_inserted_id, inserted)
-	else if(I == active_held)
-		user.put_in_active_hand(I)
+		if(remote && remote.after_insert)
+			remote.after_insert.Invoke(I, last_inserted_id, inserted)
+
+//Inserts a number of sheets from a stack, returns the amount of sheets used.
+/datum/component/material_container/proc/insert_stack(obj/item/stack/S, amt, multiplier = 1)
+	if(isnull(amt))
+		amt = S.amount
+
+	if(amt <= 0)
+		return FALSE
+
+	if(amt > S.amount)
+		amt = S.amount
+
+	var/material_amt = get_item_material_amount(S)
+	if(!material_amt)
+		return FALSE
+
+	//get max number of sheets we have room to add
+	var/mat_per_sheet = material_amt/S.amount
+	amt = min(amt, round((max_amount - total_amount) / (mat_per_sheet)))
+	if(!amt)
+		return FALSE
+
+	//add the mats and keep track of how much was added
+	var/starting_total = total_amount
+	for(var/MAT in materials)
+		materials[MAT] += S.mats_per_unit[MAT] * amt * multiplier
+		total_amount += S.mats_per_unit[MAT] * amt * multiplier
+	var/total_added = total_amount - starting_total
+
+	//update last_inserted_id with mat making up majority of the stack
+	var/primary_mat
+	var/max_mat_value = 0
+	for(var/MAT in materials)
+		if(S.mats_per_unit[MAT] > max_mat_value)
+			max_mat_value = S.mats_per_unit[MAT]
+			primary_mat = MAT
+	last_inserted_id = primary_mat
+
+	S.use(amt)
+	return total_added
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, stack_amt)
+/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1)
 	if(QDELETED(I))
 		return FALSE
 
@@ -198,6 +253,7 @@
 		var/total_amount_saved = total_amount
 		if(mat)
 			materials[mat] += amt
+			total_amount += amt
 		else
 			for(var/i in materials)
 				materials[i] += amt

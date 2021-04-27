@@ -23,7 +23,7 @@
 	name = "Strobe Shield"
 	description = "One of our Emergency Response Agents thinks there's vampires in a local station. Send him something to help with his fear of the dark and protect him, too."
 	reward = 3000
-	wanted_types = list(/obj/item/assembly/flash/shield)
+	wanted_types = list(/obj/item/shield/riot/flash)
 
 /datum/bounty/item/security/sechuds
 	name = "Sec HUDs"
