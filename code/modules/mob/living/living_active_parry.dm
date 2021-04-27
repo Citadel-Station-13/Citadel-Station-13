@@ -46,7 +46,7 @@
 	// Point of no return, make sure everything is set.
 	parrying = method
 	if(method == ITEM_PARRY)
-		active_parry_item = using_item
+		active_parry_item = tool
 	if(!UseStaminaBuffer(data.parry_stamina_cost, TRUE))
 		return FALSE
 	parry_start_time = world.time

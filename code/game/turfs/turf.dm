@@ -594,3 +594,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF
+
+/turf/proc/get_yelling_resistance()
+	. = 0
+	// don't bother checking fulltile, we don't need accuracy
+	var/obj/structure/window/W = locate() in src
+	if(W)
+		. += 7
+	for(var/obj/machinery/door/D in src)
+		if(!D.density)
+			continue
+		. += D.opacity? 7 : 15
