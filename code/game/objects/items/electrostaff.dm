@@ -210,8 +210,7 @@
 	target.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		target.visible_message("<span class='danger'>[user] has shocked [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has shocked you with [src]!</span>")
 		log_combat(user, target, "stunned with an electrostaff")
@@ -237,8 +236,7 @@
 	target.adjustFireLoss(lethal_force)		//good against ointment spam
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		target.visible_message("<span class='danger'>[user] has seared [target] with [src]!</span>", \
 								"<span class='userdanger'>[user] has seared you with [src]!</span>")
 		log_combat(user, target, "burned with an electrostaff")

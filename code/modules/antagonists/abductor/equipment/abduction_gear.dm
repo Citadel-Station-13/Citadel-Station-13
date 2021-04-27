@@ -511,8 +511,7 @@
 
 /obj/item/abductor/baton/proc/StunAttack(mob/living/L,mob/living/user)
 
-	L.lastattacker = user.real_name
-	L.lastattackerckey = user.ckey
+	L.set_last_attacker(user)
 
 	L.adjustStaminaLoss(35) //because previously it took 5-6 hits to actually "incapacitate" someone for the purposes of the sleep inducement
 	L.DefaultCombatKnockdown(140)

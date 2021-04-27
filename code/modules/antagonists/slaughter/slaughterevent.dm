@@ -20,7 +20,7 @@
 			continue
 		if(!SSpersistence.IsValidDebrisLocation(C.loc, allowed_turf_typecache, allowed_z_cache, C.type, FALSE))
 			continue
-		weight += 0.05
+		weight += 0.03
 	return ..()
 
 /datum/round_event/ghost_role/slaughter

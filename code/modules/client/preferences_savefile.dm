@@ -385,6 +385,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["auto_ooc"]			>> auto_ooc
 	S["no_tetris_storage"]		>> no_tetris_storage
 
+	//favorite outfits
+	S["favorite_outfits"]	>> favorite_outfits
+
+	var/list/parsed_favs = list()
+	for(var/typetext in favorite_outfits)
+		var/datum/outfit/path = text2path(typetext)
+		if(ispath(path)) //whatever typepath fails this check probably doesn't exist anymore
+			parsed_favs += path
+	favorite_outfits = uniqueList(parsed_favs)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -434,6 +443,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
 	key_bindings 			= sanitize_islist(key_bindings, list())
 	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
+	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
@@ -535,6 +545,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_skin"], pda_skin)
 	WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["modless_key_bindings"], modless_key_bindings)
+	WRITE_FILE(S["favorite_outfits"], favorite_outfits)
 
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)

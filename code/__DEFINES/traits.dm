@@ -215,6 +215,7 @@
 #define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen" /// Prevents stamina buffer regeneration
 #define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen" /// Prevents stamina regeneration
 #define TRAIT_ARMOR_BROKEN		"armor_broken" //acts as if you are wearing no clothing when taking damage, does not affect non-clothing sources of protection
+#define TRAIT_IWASBATONED "iwasbatoned" //some dastardly fellow has struck you with a baton and thought to use another to strike you again, the rogue
 /// forces update_density to make us not dense
 #define TRAIT_LIVING_NO_DENSITY			"living_no_density"
 /// forces us to not render our overlays
