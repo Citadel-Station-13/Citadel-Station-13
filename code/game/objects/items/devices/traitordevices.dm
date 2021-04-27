@@ -85,7 +85,7 @@ effective or pretty fucking useless.
 /obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
 	if(!stealth || !irradiate)
 		return ..()
-	var/knowledge = SEND_SIGNAL(COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, user) == ID_COMPONENT_KNOWLEDGE_FULL
+	var/knowledge = SEND_SIGNAL(src, COMSIG_IDENTIFICATION_KNOWLEDGE_CHECK, user) == ID_COMPONENT_KNOWLEDGE_FULL
 	if(!irradiate)
 		return
 	if(!used)

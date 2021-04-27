@@ -95,9 +95,9 @@
 	if(mob)
 		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOUSEMOVE, object, location, control, params)
 		// god forgive me for i have sinned - used for autoparry. currently at 5 objects.
-		mousedOverObjects[object] = world.time
-		if(mousedOverObjects.len > 7)
-			mousedOverObjects.Cut(1, 2)
+		moused_over_objects[object] = world.time
+		if(moused_over_objects.len > 7)
+			moused_over_objects.Cut(1, 2)
 	..()
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)

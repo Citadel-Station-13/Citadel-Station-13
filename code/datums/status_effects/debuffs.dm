@@ -127,6 +127,13 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+
+/datum/status_effect/grouped/stasis
+	id = "stasis"
+	duration = -1
+	tick_interval = 10
+	var/last_dead_time
+
 /datum/status_effect/robotic_emp
 	id = "emp_no_combat_mode"
 

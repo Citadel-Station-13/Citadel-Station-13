@@ -97,7 +97,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	// Other than for overrides, this mostly just reads from the above vars
 	/// Can this item automatically block?
 	var/block_automatic_enabled = TRUE
-#warn have autoblock items warn user on pickup
 	/// Directions that you can autoblock in. Null to default to normal directions.
 	var/block_automatic_directions = null
 	/// Effectiveness multiplier for automated block. Only applies to efficiency, absorption and limits stay the same!
@@ -185,7 +184,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	// Anything not specified like cooldowns/clickdelay respecting is pulled from above.
 	/// Can this data automatically parry? This is off by default because this is something that requires thought to balance.
 	var/parry_automatic_enabled = FALSE
-#warn have autoparry items warn user on pickup
 	/// Hard autoparry cooldown
 	var/autoparry_cooldown_absolute = 3 SECONDS
 	/// Autoparry : Simulate a parry sequence starting at a certain tick, or simply simulate a single attack parry?

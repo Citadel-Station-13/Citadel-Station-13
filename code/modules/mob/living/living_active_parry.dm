@@ -35,6 +35,7 @@
 		return FALSE
 	var/method = determined[1]
 	data = return_block_parry_datum(determined[2])
+	var/datum/tool = determined[3]
 	var/full_parry_duration = data.parry_time_windup + data.parry_time_active + data.parry_time_spindown
 	// no system in place to "fallback" if out of the 3 the top priority one can't parry due to constraints but something else can.
 	// can always implement it later, whatever.
@@ -224,7 +225,7 @@
 /**
  * Attempts to automatically parry an attacker.
  */
-/mob/living/proc/attempt_auto_parry()
+/mob/living/proc/attempt_auto_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list())
 	// determine how we'll parry
 	var/list/determined = determine_parry_method(TRUE, TRUE)
 	if(!islist(determined))
@@ -234,6 +235,16 @@
 	if(!data.parry_automatic_enabled)
 		return FALSE
 	// before doing anything, check if the user moused over them properly
+	if(!client)
+		return FALSE
+	var/found = FALSE
+	for(var/i in client.moused_over_objects)
+		if(i == object)
+			if((client.moused_over_objects[i] + (data.autoparry_mouse_delay_maximum SECONDS)) >= world.time)
+				found = TRUE
+			break
+	if(!found)
+		return FALSE
 
 	// if that works, try to start parry
 	// first, check cooldowns
@@ -246,9 +257,11 @@
 			parry_start_time = world.time - data.parry_time_windup
 		else
 			parry_start_time = world.time - data.autoparry_sequence_start_time
+		return TRUE
 	else
 		// for single attack block
-
+		#warn single attack block
+		return FALSE
 
 /**
   * Gets the stage of our parry sequence we're currently in.
@@ -282,13 +295,17 @@
 /// same return values as normal blocking, called with absolute highest priority in the block "chain".
 /mob/living/proc/run_parry(atom/object, damage, attack_text, attack_type, armour_penetration, mob/attacker, def_zone, list/return_list = list(), allow_auto = TRUE)
 	var/stage = get_parry_stage()
+	if(attack_type & ATTACK_TYPE_PARRY_COUNTERATTACK)
+		return BLOCK_NONE		// don't infinite loop
 	if(stage != PARRY_ACTIVE)
 		// If they're not currently parrying, attempt auto parry
-		if((stage == NOT_PARRYING) && allow_auto && !SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE))
-			return attempt_auto_parry()
-		return BLOCK_NONE
+		if(stage == NOT_PARRYING)
+			if(!allow_auto || SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_INACTIVE) || !attempt_auto_parry(object, damage, attack_text, attack_type, armour_penetration, attacker, def_zone, return_list))
+				return BLOCK_NONE
+		else
+			return BLOCK_NONE
 	var/datum/block_parry_data/data = get_parry_data()
-	if(attack_type && (!(attack_type & data.parry_attack_types) || (attack_type & ATTACK_TYPE_PARRY_COUNTERATTACK)))		// if this attack is from a parry do not parry it lest we infinite loop.
+	if(attack_type && !(attack_type & data.parry_attack_types))
 		return BLOCK_NONE
 	var/efficiency = data.get_parry_efficiency(attack_type, get_parry_time())
 	switch(parrying)
