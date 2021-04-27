@@ -6,7 +6,7 @@
 	stop = TRUE
 	return ..()
 
-/datum/yelling_wavefill/proc/run(atom/source, dist = 50)
+/datum/yelling_wavefill/proc/run_wavefill(atom/source, dist = 50)
 	collected = list()
 	do_run(source, dist)
 	// gc
@@ -14,6 +14,7 @@
 		collected = null
 
 // blatantly copied from wave explosion code
+// check explosion2.dm for what this does and how it works.
 /datum/yelling_wavefill/proc/do_run(atom/source, dist)
 	var/list/edges = list(source = (NORTH|SOUTH|EAST|WEST))
 	var/list/powers = list(source = dist)
@@ -34,24 +35,8 @@
 	var/list/turf/diagonal_powers = list()
 	var/list/turf/diagonal_powers_max = list()
 
-	while(edges.len)
-		// process cardinals
-		for(var/i in edges)
-			T = i
-			power = powers[T]
-			dir = edges[T]
-			RUN_YELL(T, power, dir)
-			powers_returned[T] = returned
-			if(returned)
-				// get hearing atoms
-			else
-				continue
-
-	// diagonal power calc when multiple things hit one diagonal
 #define CALCULATE_DIAGONAL_POWER(existing, adding, maximum) min(maximum, existing + adding)
-	// diagonal hitting cardinal expansion
 #define CALCULATE_DIAGONAL_CROSS_POWER(existing, adding) max(existing, adding)
-	// insanity define to mark the next set of cardinals.
 #define CARDINAL_MARK(ndir, cdir, edir) \
 	if(edir & cdir) { \
 		expanding = get_step(T,ndir); \
@@ -79,6 +64,22 @@
 		DIAGONAL_SUBSTEP(turn(ndir, 90), turn(cdir, 90), edir); \
 		DIAGONAL_SUBSTEP(turn(ndir, -90), turn(cdir, -90), edir); \
 	};
+
+	while(edges.len)
+		// to_chat(world, "DEBUG: cycle start edges [english_list_assoc(edges)]")
+
+		// process cardinals
+		for(var/i in edges)
+			T = i
+			power = powers[T]
+			dir = edges[T]
+			RUN_YELL(T, power, dir)
+			powers_returned[T] = returned
+			if(returned)
+				// get hearing atoms
+			else
+				continue
+
 			CARDINAL_MARK(NORTH, NORTH, dir)
 			CARDINAL_MARK(SOUTH, SOUTH, dir)
 			CARDINAL_MARK(EAST, EAST, dir)
@@ -129,6 +130,6 @@
 
 /proc/yelling_wavefill(atom/source, dist = 50)
 	var/datum/yelling_wavefill/Y = new
-	Y.run(source, dist)
+	Y.run_wavefill(source, dist)
 	return Y.collected || list()
 

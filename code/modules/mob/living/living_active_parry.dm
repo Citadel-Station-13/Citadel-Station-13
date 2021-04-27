@@ -230,7 +230,6 @@
 	var/list/determined = determine_parry_method(TRUE, TRUE)
 	if(!islist(determined))
 		return FALSE
-	var/method = determined[1]
 	var/datum/block_parry_data/data = return_block_parry_datum(determined[2])
 	if(!data.parry_automatic_enabled)
 		return FALSE

@@ -76,6 +76,8 @@
 	var/wait_step = CEILING(spray_delay * INVERSE(range), world.tick_lag)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src), stream_mode, wait_step, range, stream_mode? 1 : range)
 	var/turf/T = get_turf(src)
+	if(!T)
+		return
 	log_reagent("SPRAY: [key_name(usr)] fired [src] ([REF(src)]) [COORD(T)] at [A] ([REF(A)]) [COORD(A)] (chempuff: [D.reagents.log_list()])")
 	D.create_reagents(amount_per_transfer_from_this, NONE, NO_REAGENTS_VALUE)
 	if(stream_mode)
@@ -83,9 +85,6 @@
 	else
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
 	last_spray = world.time
 	D.run(A)
 

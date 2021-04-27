@@ -90,7 +90,6 @@
 	update_icon()
 	user.update_inv_back()
 
-
 /obj/item/gun/energy/minigun
 	name = "laser gatling gun"
 	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
