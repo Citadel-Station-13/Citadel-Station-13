@@ -33,7 +33,7 @@ export const Panel = (props, context) => {
     }
   }
   return (
-    <Pane theme={settings.theme}>
+    <Pane theme={settings.theme === 'default' ? 'light' : settings.theme}>
       <Stack fill vertical>
         <Stack.Item>
           <Section fitted>
@@ -114,7 +114,7 @@ export const Panel = (props, context) => {
 const HoboPanel = (props, context) => {
   const settings = useSettings(context);
   return (
-    <Pane theme={settings.theme}>
+    <Pane theme={settings.theme === 'default' ? 'light' : settings.theme}>
       <Pane.Content scrollable>
         <Button
           style={{
