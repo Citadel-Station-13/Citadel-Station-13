@@ -810,22 +810,23 @@
 			limb.icon_state = "[species_id]_[body_zone]"
 
 		// Body markings
+		var/list/marking_list
 		if(length(body_markings_list))
-			message_admins("ADDING FUNNY IMAGES AT [owner] FOR [src]")
 			if(species_id == "husk")
-				. += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
+				marking_list += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[body_zone]", -MARKING_LAYER, image_dir)
 			else if(species_id == "husk" && use_digitigrade)
-				. += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+				marking_list += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 			else
 				for(var/list/marking_list in body_markings_list)
 					// marking stores icon and value for the specific bodypart
 					if(!use_digitigrade)
 						if(body_zone == BODY_ZONE_CHEST)
-							. += image(marking_list[1], "[marking_list[2]]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
+							marking_list += image(marking_list[1], "[marking_list[2]]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
 						else
-							. += image(marking_list[1], "[marking_list[2]]_[body_zone]", -MARKING_LAYER, image_dir)
+							marking_list += image(marking_list[1], "[marking_list[2]]_[body_zone]", -MARKING_LAYER, image_dir)
 					else
-						. += image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+						marking_list += image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+		. += marking_list
 
 		// Citadel End
 
@@ -878,7 +879,7 @@
 					else
 						. += image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
 		return
-/*
+
 	if(color_src) //TODO - add color matrix support for base species limbs (or dont because color matrixes suck)
 		var/draw_color = mutation_color || species_color
 		var/grayscale = FALSE
@@ -907,10 +908,10 @@
 
 			if(!isnull(body_markings))
 				if(species_id == "husk")
+
 					marking.color = "#141414"
 				else
 					marking.color = list(markings_color)
-*/
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
