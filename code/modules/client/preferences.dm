@@ -529,7 +529,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/markings = features[marking_type]
 					for(var/list/marking_list in markings)
 						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
-						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_list=[marking_list];marking_type=[marking_type]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_list=[marking_list];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_list=[marking_list];marking_type=[marking_type]'>X</a></td></tr>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[markings.Find(marking_list)];marking_type=[marking_type]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[markings.Find(marking_list)];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[markings.Find(marking_list)];marking_type=[marking_type]'>X</a></td></tr>"
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
@@ -2417,26 +2417,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("marking_down")
 					// move the specified marking down
-					var/index = href_list["marking_index"]
+					var/index = text2num(href_list["marking_index"])
 					var/marking_type = href_list["marking_type"]
-					if(index && marking_type && features[marking_type])
-						// placeholder
-						var/a
+					if(index && marking_type && features[marking_type] && index != length(features[marking_type]))
+						var/index_down = index + 1
+						var/markings = features[marking_type]
+						var/first_marking = markings[index]
+						var/second_marking = markings[index_down]
+						markings[index] = second_marking
+						markings[index_down] = first_marking
 
 				if("marking_up")
 					// move the specified marking up
-					var/index = href_list["marking_index"]
+					var/index = text2num(href_list["marking_index"])
 					var/marking_type = href_list["marking_type"]
-					if(index && marking_type && features[marking_type])
-						// placeholder
-						var/a
+					if(index && marking_type && features[marking_type] && index != 1)
+						var/index_up = index - 1
+						var/markings = features[marking_type]
+						var/first_marking = markings[index]
+						var/second_marking = markings[index_up]
+						markings[index] = second_marking
+						markings[index_up] = first_marking
 
 				if("marking_remove")
-					// remove the specified marking
-					var/marking_list = href_list["marking_list"]
+					// move the specified marking up
+					var/index = text2num(href_list["marking_index"])
 					var/marking_type = href_list["marking_type"]
-					if(marking_list && marking_type && features[marking_type])
-						features[marking_type] -= marking_list
+					if(index && marking_type && features[marking_type])
+						features[marking_type].Cut(index, index + 1)
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
