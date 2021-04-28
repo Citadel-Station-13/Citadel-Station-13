@@ -528,8 +528,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<table>"
 					var/list/markings = features[marking_type]
 					for(var/list/marking_list in markings)
+						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
 						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
-						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[markings.Find(marking_list)];marking_type=[marking_type]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[markings.Find(marking_list)];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[markings.Find(marking_list)];marking_type=[marking_type]'>X</a></td></tr>"
+						var/color_marking_dat = ""
+						var/datum/sprite_accessory/S = (actual_name == "mam_body_markings") ? GLOB.mam_body_markings_list[marking_list[2]] : GLOB.body_markings_list[marking_list[2]]
+						if(S && S.matrixed_sections && S.matrixed_sections != MATRIX_NONE)
+							// we know it has one matrixed section at minimum
+							color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
+							// if it has a second section, add it
+							if(S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_RED_GREEN)
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
+							// if it has a third section, add it
+							if(S.matrixed_sections == MATRIX_ALL)
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
+							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index]task=input'>Change</a><BR>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
