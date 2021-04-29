@@ -10,6 +10,7 @@ export const Limbgrower = (props, context) => {
     max_reagents,
     categories = [],
     busy,
+    disk = [],
   } = data;
   const [tab, setTab] = useSharedState(
     context, 'category', categories[0]?.name);
@@ -20,7 +21,7 @@ export const Limbgrower = (props, context) => {
   return (
     <Window
       title="Limb Grower"
-      width={400}
+      width={500}
       height={550}>
       {!!busy && (
         <Dimmer fontSize="32px">
@@ -29,6 +30,21 @@ export const Limbgrower = (props, context) => {
         </Dimmer>
       )}
       <Window.Content scrollable>
+        <Section title="Data Disk" buttons={
+          <Button
+            content="Eject Disk"
+            icon="eject"
+            onClick={() => act('eject_disk')}
+            disabled={!disk['disk']}
+          />
+        }>
+          {disk['name'] ? (
+            <div>
+              Containing data for {disk['name']},<br />
+              Attempting to create genitalia will use the disk&apos;s data.
+            </div>
+          ) : disk['disk'] ? "No data." : "No disk."}
+        </Section>
         <Section title="Reagents">
           <Box mb={1}>
             {total_reagents} / {max_reagents} reagent capacity used.
@@ -41,8 +57,8 @@ export const Limbgrower = (props, context) => {
                 buttons={(
                   <Button.Confirm
                     textAlign="center"
-                    width="120px"
                     content="Remove Reagent"
+                    icon="fill-drip"
                     color="bad"
                     onClick={() => act('empty_reagent', {
                       reagent_type: reagent.reagent_type,
@@ -73,7 +89,6 @@ export const Limbgrower = (props, context) => {
                 buttons={(
                   <Button
                     content="Make"
-                    color="good"
                     onClick={() => act('make_limb', {
                       design_id: design.id,
                       active_tab: design.parent_category,
