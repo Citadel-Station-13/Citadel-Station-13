@@ -1,0 +1,5 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - rscadd: "The decal painter now has visible previews for your tile painting funs."
+  - bugfix: "Fixes decal painter painting in the opposite direction."

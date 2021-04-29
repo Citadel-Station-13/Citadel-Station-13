@@ -172,17 +172,17 @@
 
 /datum/uplink_item/bundles_TC/reroll
 	name = "Renegotiate Contract"
-	desc = "Selecting this will inform your employers that you wish for new objectives. Can only be done once; no take-backs."
+	desc = "Selecting this will inform your employers that you wish for new objectives. Can only be done twice."
 	item = /obj/effect/gibspawner/generic
 	cost = 0
 	cant_discount = TRUE
 	restricted = TRUE
-	limited_stock = 1
+	limited_stock = 2
 
 /datum/uplink_item/bundles_TC/reroll/purchase(mob/user, datum/component/uplink/U)
 	var/datum/antagonist/traitor/T = user?.mind?.has_antag_datum(/datum/antagonist/traitor)
 	if(istype(T))
-		T.set_traitor_kind(/datum/traitor_class/human/subterfuge)
+		T.set_traitor_kind(get_random_traitor_kind(blacklist = list(/datum/traitor_class/human/freeform, /datum/traitor_class/human/hijack, /datum/traitor_class/human/martyr)))
 	else
 		to_chat(user,"Invalid user for contract renegotiation.")
 

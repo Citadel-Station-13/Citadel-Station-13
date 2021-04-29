@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "Fake blindfolds in the loadout. They don't obscure vision, for better or worse."

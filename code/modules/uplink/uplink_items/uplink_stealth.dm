@@ -45,6 +45,26 @@
 	item = /obj/item/toy/plush/carpplushie/dehy_carp
 	cost = 1
 
+/datum/uplink_item/stealthy_weapons/derringerpack
+	name = "Compact Derringer"
+	desc = "An easily concealable handgun capable of firing .357 rounds. Comes in an inconspicuious packet of cigarettes with additional munitions."
+	item = /obj/item/storage/fancy/cigarettes/derringer
+	cost = 8
+	surplus = 30
+
+/datum/uplink_item/stealthy_weapons/derringerpack/purchase(mob/user, datum/component/uplink/U)
+	if(prob(1)) //For the 1%
+		item = /obj/item/storage/fancy/cigarettes/derringer/gold
+	..()
+
+/datum/uplink_item/stalthy_weapons/derringerpack_nukie
+	name = "Antique Derringer"
+	desc = "An easy to conceal, yet extremely deadly handgun, capable of firing .45-70 Govt rounds. Comes in a unique pack of cigarettes with additional munitions."
+	item = /obj/item/storage/fancy/cigarettes/derringer/midworld
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 10
+	surplus = 2
+
 /datum/uplink_item/stealthy_weapons/edagger
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
