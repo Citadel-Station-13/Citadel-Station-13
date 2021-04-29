@@ -1,0 +1,4 @@
+author: "akada"
+delete-after: True
+changes: 
+  - imageadd: "Changes the space adaptation sprite to something less intrusive and more subtle."
