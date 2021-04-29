@@ -705,7 +705,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/commons/fitness/pool)
+/area/maintenance/department/crew_quarters/dorms)
 "abG" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -37287,7 +37287,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/mixing)
+/area/maintenance/department/science)
 "bGB" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -45944,14 +45944,8 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bZV" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/turf/closed/wall,
+/area/hallway/primary/fore)
 "bZY" = (
 /turf/closed/wall,
 /area/service/chapel/office)
@@ -61269,8 +61263,14 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "vtT" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
 /turf/open/floor/plating,
-/area/maintenance/solars/port)
+/area/maintenance/department/cargo)
 "vuP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -62187,7 +62187,7 @@
 "xuv" = (
 /obj/item/broken_bottle,
 /turf/open/floor/plating,
-/area/maintenance/solars/port)
+/area/maintenance/department/security/brig)
 "xvO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -79796,11 +79796,11 @@ atp
 aus
 aiu
 wxb
-axC
+aiu
 xuv
-azN
-vtT
-vtT
+aoe
+ajD
+ajD
 aiu
 apB
 aiu
@@ -82368,8 +82368,8 @@ apE
 avq
 apE
 ajM
-aiu
-aiu
+bZV
+bZV
 gSH
 xJy
 sJr
@@ -106263,7 +106263,7 @@ aaF
 aaF
 aaF
 abF
-aaF
+aiS
 aiS
 atn
 awC
@@ -107816,7 +107816,7 @@ aaa
 aaa
 aaa
 aEj
-bZV
+vtT
 aEj
 aaa
 aEj
