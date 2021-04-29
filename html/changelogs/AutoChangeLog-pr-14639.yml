@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - rscadd: "Basic cybernetic organs: they're worse than organic! Basic stomachs, hearts, lungs and livers! For when you hate someone enough to not bother harvesting organs from a monkeyhuman!"
+  - rscadd: "Cybernetic organs have been adjusted into three tiers: 1 (basic), 2 (standard, better than organic) and 3 (absolutely better than organic but expensive to print)"
+  - rscadd: "Cybernetic organs that are emp'd instead suffer different effects based on the severity of the emp. The bigger the emp, the worse the effect is."
+  - rscadd: "Rather than outright bricking, severely emp'd cyberorgans degrade over time very quickly, requiring replacement in the near future."
