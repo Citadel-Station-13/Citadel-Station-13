@@ -3392,6 +3392,10 @@
 /obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/effect/turf_decal/bot,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/office)
 "ais" = (
@@ -4890,6 +4894,10 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -107807,8 +107815,8 @@ aaa
 aaa
 aaa
 aaa
-aEl
-aFi
+aEj
+bZV
 aEj
 aaa
 aEj
@@ -108064,9 +108072,9 @@ aaa
 aaa
 aaa
 aaa
-aEj
-bZV
-aEj
+cdm
+cdm
+cdm
 aaa
 aaa
 aaa
@@ -108321,9 +108329,9 @@ aaa
 aaa
 aaa
 aaa
-ahi
-ahi
-ahi
+bBW
+bBW
+bBW
 aaa
 aaa
 aaa
