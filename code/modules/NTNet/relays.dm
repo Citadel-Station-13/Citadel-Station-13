@@ -108,11 +108,11 @@
 			dos_overload = 0
 			set_dos_failure(FALSE)
 			update_appearance()
-			SSnetworks.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
 			return TRUE
 		if("toggle")
 			set_enabled(!enabled)
-			SSnetworks.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
+			SSnetworks.station_network.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
 			update_appearance()
 			return TRUE
 

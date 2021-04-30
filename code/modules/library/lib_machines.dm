@@ -435,7 +435,7 @@
 		if(!GLOB.news_network)
 			alert("No news network found on station. Aborting.")
 		var/channelexists = 0
-		for(var/datum/news/feed_channel/FC in GLOB.news_network.network_channels)
+		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
 				channelexists = 1
 				break

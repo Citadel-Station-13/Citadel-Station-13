@@ -96,3 +96,4 @@
 
 /obj/item/computer_hardware/recharger/lambda/use_power(amount, charging=0)
 	return 1
+

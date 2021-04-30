@@ -409,10 +409,17 @@
 	#define COMPONENT_STOP_GENERIC_ATTACK 1
 
 
-// /machinery signals
+// /obj/machinery signals
 #define COMSIG_MACHINE_EJECT_OCCUPANT "eject_occupant"			//from base of obj/machinery/dropContents() (occupant)
 
+// /obj/machinery/power/supermatter_crystal signals
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM delam reaches the point of sounding alarms
+#define COMSIG_SUPERMATTER_DELAM_START_ALARM "sm_delam_start_alarm"
+/// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
+#define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
+
 // /obj/item signals
+
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
 #define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"				//from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"				//from base of obj/item/attack_self(): (/mob)
@@ -459,9 +466,33 @@
 #define COMSIG_GRENADE_PRIME "grenade_prime"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_ARMED "grenade_armed"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
 
+
+// /obj signals for economy
+///called when the payment component tries to charge an account.
+#define COMSIG_OBJ_ATTEMPT_CHARGE "obj_attempt_simple_charge"
+	#define COMPONENT_OBJ_CANCEL_CHARGE  (1<<0)
+///Called when a payment component changes value
+#define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
+
+// /obj/item signals for economy
+///called when an item is sold by the exports subsystem
+#define COMSIG_ITEM_SOLD "item_sold"
+///called when a wrapped up structure is opened by hand
+#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
+///called when a wrapped up item is opened by hand
+#define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
+	#define COMSIG_ITEM_SPLIT_VALUE  (1<<0)
+///called when getting the item's exact ratio for cargo's profit.
+#define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"
+///called when getting the item's exact ratio for cargo's profit, without selling the item.
+#define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"
+
 // /obj/item/clothing signals
-#define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
-#define COMSIG_SUIT_MADE_HELMET "suit_made_helmet"				//from base of obj/item/clothing/suit/MakeHelmet(): (helmet)
+
+///from [/mob/living/carbon/human/Move]: ()
+#define COMSIG_SHOES_STEP_ACTION "shoes_step_action"
+///from base of /obj/item/clothing/suit/space/proc/toggle_spacesuit(): (obj/item/clothing/suit/space/suit)
+#define COMSIG_SUIT_MADE_HELMET "suit_made_helmet"
 
 // /obj/item/implant signals
 #define COMSIG_IMPLANT_ACTIVATED "implant_activated"			//from base of /obj/item/implant/proc/activate(): ()
