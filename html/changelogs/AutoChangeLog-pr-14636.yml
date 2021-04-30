@@ -1,6 +1,0 @@
-author: "TheObserver-sys"
-delete-after: True
-changes: 
-  - bugfix: "Restores the access lock on crates that should have them, given the goods inside."
-  - bugfix: "Makes the 10MM Surplus Rifle a less awful thing to use."
-  - bugfix: "replaces unarmored things with their armored versions."
