@@ -197,45 +197,67 @@
 	colour = "red"
 
 /obj/item/organ/heart/cybernetic
-	name = "cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
+	name = "basic cybernetic heart"
+	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
 	icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
+
+	var/dose_available = FALSE
+	var/rid = /datum/reagent/medicine/epinephrine
+	var/ramount = 10
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
+
+/obj/item/organ/heart/cybernetic/tier2
+	name = "cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
+	icon_state = "heart-c-u"
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	dose_available = TRUE
+	emp_vulnerability = 2
+
+/obj/item/organ/heart/cybernetic/tier3
+	name = "upgraded cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
+	icon_state = "heart-c-u2"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	dose_available = TRUE
+	rid = /datum/reagent/medicine/atropine
+	ramount = 5
+	emp_vulnerability = 3
 
 /obj/item/organ/heart/cybernetic/emp_act(severity)
 	. = ..()
+
+	// If the owner doesn't need a heart, we don't need to do anything with it.
+	if(!owner.needs_heart())
+		return
+
 	if(. & EMP_PROTECT_SELF)
 		return
-	Stop()
-	addtimer(CALLBACK(src, .proc/Restart), 0.2*severity SECONDS)
-	damage += severity
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.Dizzy(10)
+		owner.losebreath += 10
+		COOLDOWN_START(src, severe_cooldown, 20 SECONDS)
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		Stop()
+		owner.visible_message("<span class='danger'>[owner] clutches at [owner.p_their()] chest as if [owner.p_their()] heart is stopping!</span>", \
+						"<span class='userdanger'>You feel a terrible pain in your chest, as if your heart has stopped!</span>")
+		addtimer(CALLBACK(src, .proc/Restart), 10 SECONDS)
 
-/obj/item/organ/heart/cybernetic/upgraded
-	name = "upgraded cybernetic heart"
-	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
-	icon_state = "heart-c-u"
-	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-
-	//I put it on upgraded for now.
-	var/dose_available = TRUE
-	var/rid = /datum/reagent/medicine/epinephrine
-	var/ramount = 10
-
-/obj/item/organ/heart/cybernetic/upgraded/on_life()
+/obj/item/organ/heart/cybernetic/on_life(delta_time, times_fired)
 	. = ..()
-	if(!.)
-		return
 	if(dose_available && owner.health <= owner.crit_threshold && !owner.reagents.has_reagent(rid))
-		owner.reagents.add_reagent(rid, ramount)
 		used_dose()
-	if(ramount < 10) //eats your nutrition to regen epinephrine
-		var/regen_amount = owner.nutrition/2000
-		owner.adjust_nutrition(-regen_amount)
-		ramount += regen_amount
 
-/obj/item/organ/heart/cybernetic/upgraded/proc/used_dose()
+/obj/item/organ/heart/cybernetic/proc/used_dose()
+	owner.reagents.add_reagent(rid, ramount)
+	dose_available = FALSE
+
+/obj/item/organ/heart/cybernetic/tier3/used_dose()
+	. = ..()
 	addtimer(VARSET_CALLBACK(src, dose_available, TRUE), 5 MINUTES)
-	ramount = 0
 
 /obj/item/organ/heart/ipc
 	name = "IPC heart"
