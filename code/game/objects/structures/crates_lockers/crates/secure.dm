@@ -56,6 +56,11 @@
 	name = "gear crate"
 	icon_state = "secgearcrate"
 
+/obj/structure/closet/crate/secure/soviet
+	desc = "A crate, purportedly from Space Russia."
+	name = "soviet crate"
+	icon_state = "sovietcrate"
+
 /obj/structure/closet/crate/secure/hydroponics
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"

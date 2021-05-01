@@ -98,6 +98,7 @@
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian clothing"
+	crate_type = /obj/structure/closet/crate/secure/soviet
 
 /datum/supply_pack/security/russian_partisan
 	name = "Russian Partisan Gear"
@@ -113,6 +114,7 @@
 					/obj/item/clothing/under/syndicate/rus_army,
 					/obj/item/clothing/mask/gas)
 	crate_name = "surplus russian gear"
+	crate_type = /obj/structure/closet/crate/secure/soviet
 
 /datum/supply_pack/security/russian_partisan/fill(obj/structure/closet/crate/C)
 	..()
