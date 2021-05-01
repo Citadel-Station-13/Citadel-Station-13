@@ -544,7 +544,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							// if it has a third section, add it
 							if(S.matrixed_sections == MATRIX_ALL)
 								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
-							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index]task=input'>Change</a><BR>"
+							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];;task=input'>Change</a><BR>"
 						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];matrixed_sections=[S.matrixed_sections]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
 					dat += "</table>"
 
