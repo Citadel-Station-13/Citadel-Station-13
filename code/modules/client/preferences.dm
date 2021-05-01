@@ -537,15 +537,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if(length(marking_list) == 2)
 								marking_list += list(list("#FFFFFF","#FFFFFF","#FFFFFF")) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
 							// we know it has one matrixed section at minimum
-							color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
+							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
 							// if it has a second section, add it
 							if(S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_RED_GREEN)
-								color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
 							// if it has a third section, add it
 							if(S.matrixed_sections == MATRIX_ALL)
-								color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
 							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index]task=input'>Change</a><BR>"
-						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];matrixed_sections=[S.matrixed_sections]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
@@ -2461,6 +2461,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/marking_type = href_list["marking_type"]
 					if(index && marking_type && features[marking_type])
 						features[marking_type].Cut(index, index + 1)
+
+				if("marking_color")
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type])
+						// work out the input options to show the user
+						var/list/options = list("Primary")
+						var/matrixed_sections = href_list["matrixed_sections"]
+						var/color_number = 1 // 1-3 which color are we editing
+						if(matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE)
+							options += "Secondary"
+						else if(matrixed_sections == MATRIX_ALL)
+							options += list("Secondary", "Tertiary")
+						var/color_option = input(user, "Select the colour you wish to edit") as null|anything in options
+						if(color_option)
+							if(color_option == "Secondary") color_number = 2
+							if(color_option == "Tertiary") color_number = 3
+							var/color_list = features[marking_type][index][3]
+							var/new_marking_color = input(user, "Choose your character's marking color:", "Character Preference","#"+color_list[color_number]) as color|null
+							if(new_marking_color)
+								var/temp_hsv = RGBtoHSV(new_marking_color)
+								if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
+									color_list[color_number] = sanitize_hexcolor(new_marking_color, 6)
+								else
+									to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
