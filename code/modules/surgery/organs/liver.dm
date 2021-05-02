@@ -77,6 +77,11 @@
 	C.action_cooldown_mod *= value
 	cachedmoveCalc = value
 
+/obj/item/organ/liver/slime
+	name = "viscoplasm" //this is the name that Fermis came up with when working on that organ PR that never got finished - if Fermis ever updates this, this probably will have a lot more functionality.
+	icon_state = "liver-s"
+	desc = "An organelle resembling a liver for slimepeople."
+
 /obj/item/organ/liver/fly
 	name = "insectoid liver"
 	icon_state = "liver-x" //xenomorph liver? It's just a black liver so it fits.
@@ -93,23 +98,41 @@
 	icon_state = "liver-c"
 
 /obj/item/organ/liver/cybernetic
-	name = "cybernetic liver"
+	name = "basic cybernetic liver"
 	icon_state = "liver-c"
-	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
 	organ_flags = ORGAN_SYNTHETIC
-	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 0.3 * LIVER_DEFAULT_TOX_TOLERANCE //little less than 1u of toxin purging
+	toxLethality = 1.1 * LIVER_DEFAULT_TOX_LETHALITY
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 
-/obj/item/organ/liver/cybernetic/upgraded
-	name = "upgraded cybernetic liver"
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
+
+/obj/item/organ/liver/cybernetic/tier2
+	name = "cybernetic liver"
 	icon_state = "liver-c-u"
-	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
+	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 2 * LIVER_DEFAULT_TOX_TOLERANCE //6 units of toxin purging
+	toxLethality = 0.8 * LIVER_DEFAULT_TOX_LETHALITY //20% less damage than a normal liver
+	emp_vulnerability = 2
+
+/obj/item/organ/liver/cybernetic/tier3
+	name = "upgraded cybernetic liver"
+	icon_state = "liver-c-u2"
+	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
-	toxTolerance = 15 //can shrug off up to 15u of toxins
-	toxLethality = 0.008 //20% less damage than a normal liver
+	toxTolerance = 5 * LIVER_DEFAULT_TOX_TOLERANCE //15 units of toxin purging
+	toxLethality = 0.4 * LIVER_DEFAULT_TOX_LETHALITY //60% less damage than a normal liver
+	emp_vulnerability = 3
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	damage += severity
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.adjustToxLoss(10)
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

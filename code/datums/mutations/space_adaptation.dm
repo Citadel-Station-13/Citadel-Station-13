@@ -11,7 +11,7 @@
 /datum/mutation/human/space_adaptation/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "space_adapt", -MUTATIONS_LAYER))
 
 /datum/mutation/human/space_adaptation/get_visual_indicator()
 	return visual_indicators[type][1]
