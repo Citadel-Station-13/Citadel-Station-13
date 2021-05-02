@@ -531,6 +531,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
 						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
 						var/color_marking_dat = ""
+						var/number_colors = 1
 						var/datum/sprite_accessory/S = (marking_type == "mam_body_markings") ? GLOB.mam_body_markings_list[marking_list[2]] : GLOB.body_markings_list[marking_list[2]]
 						if(S && S.matrixed_sections && S.matrixed_sections != MATRIX_NONE)
 							// if it has nothing initialize it to white
@@ -541,11 +542,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							// if it has a second section, add it
 							if(S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_RED_GREEN)
 								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
+								number_colors = 2
 							// if it has a third section, add it
 							if(S.matrixed_sections == MATRIX_ALL)
 								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
-							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];;task=input'>Change</a><BR>"
-						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];matrixed_sections=[S.matrixed_sections]'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
+								number_colors = 3
+							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];number_colors=[number_colors];task=input'>Change</a><BR>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
@@ -2468,12 +2471,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(index && marking_type && features[marking_type])
 						// work out the input options to show the user
 						var/list/options = list("Primary")
-						var/matrixed_sections = href_list["matrixed_sections"]
+						var/number_colors = href_list["number_colors"]
 						var/color_number = 1 // 1-3 which color are we editing
-						if(matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE)
+						if(number_colors >= 2)
 							options += "Secondary"
-						else if(matrixed_sections == MATRIX_ALL)
-							options += list("Secondary", "Tertiary")
+						if(number_colors == 3)
+							options += "Tertiary"
 						var/color_option = input(user, "Select the colour you wish to edit") as null|anything in options
 						if(color_option)
 							if(color_option == "Secondary") color_number = 2
@@ -2483,7 +2486,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if(new_marking_color)
 								var/temp_hsv = RGBtoHSV(new_marking_color)
 								if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
-									color_list[color_number] = sanitize_hexcolor(new_marking_color, 6)
+									color_list[color_number] = "#[sanitize_hexcolor(new_marking_color, 6)]"
 								else
 									to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 		else
