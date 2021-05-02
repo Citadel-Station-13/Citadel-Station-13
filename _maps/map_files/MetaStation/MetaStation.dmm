@@ -25521,6 +25521,9 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/item/paicard{
+	pixel_x = -8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cav" = (
@@ -74083,7 +74086,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/science/circuit)
+/area/maintenance/starboard/aft)
 "sFR" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -76385,7 +76388,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/service/library)
+/area/maintenance/port)
 "ubJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -80256,7 +80259,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/commons/vacant_room/office)
+/area/maintenance/port)
 "wxP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -97479,8 +97482,8 @@ dne
 aip
 dne
 dne
-dne
-dne
+aRA
+aRA
 dne
 baf
 bbK

@@ -705,7 +705,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/commons/fitness/pool)
+/area/maintenance/department/crew_quarters/dorms)
 "abG" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3392,6 +3392,10 @@
 /obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/effect/turf_decal/bot,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/office)
 "ais" = (
@@ -4890,6 +4894,10 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -37279,7 +37287,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/mixing)
+/area/maintenance/department/science)
 "bGB" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -45936,14 +45944,8 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bZV" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/turf/closed/wall,
+/area/hallway/primary/fore)
 "bZY" = (
 /turf/closed/wall,
 /area/service/chapel/office)
@@ -61261,8 +61263,14 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "vtT" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
 /turf/open/floor/plating,
-/area/maintenance/solars/port)
+/area/maintenance/department/cargo)
 "vuP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -62179,7 +62187,7 @@
 "xuv" = (
 /obj/item/broken_bottle,
 /turf/open/floor/plating,
-/area/maintenance/solars/port)
+/area/maintenance/department/security/brig)
 "xvO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -79788,11 +79796,11 @@ atp
 aus
 aiu
 wxb
-axC
+aiu
 xuv
-azN
-vtT
-vtT
+aoe
+ajD
+ajD
 aiu
 apB
 aiu
@@ -82360,8 +82368,8 @@ apE
 avq
 apE
 ajM
-aiu
-aiu
+bZV
+bZV
 gSH
 xJy
 sJr
@@ -106255,7 +106263,7 @@ aaF
 aaF
 aaF
 abF
-aaF
+aiS
 aiS
 atn
 awC
@@ -107807,8 +107815,8 @@ aaa
 aaa
 aaa
 aaa
-aEl
-aFi
+aEj
+vtT
 aEj
 aaa
 aEj
@@ -108064,9 +108072,9 @@ aaa
 aaa
 aaa
 aaa
-aEj
-bZV
-aEj
+cdm
+cdm
+cdm
 aaa
 aaa
 aaa
@@ -108321,9 +108329,9 @@ aaa
 aaa
 aaa
 aaa
-ahi
-ahi
-ahi
+bBW
+bBW
+bBW
 aaa
 aaa
 aaa
