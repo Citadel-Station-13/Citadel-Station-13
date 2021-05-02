@@ -761,7 +761,7 @@
 
 	var/image_dir = 0
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
-/*
+
 	if(dropped)
 		image_dir = SOUTH
 		if(dmg_overlay_type)
@@ -771,14 +771,16 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 		if(!isnull(body_markings) && is_organic_limb(FALSE))
-			if(!use_digitigrade)
-				if(body_zone == BODY_ZONE_CHEST)
-					. += image(body_markings_icon, "[body_markings]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
+			for(var/list/marking_list in body_markings_list)
+				// marking stores icon and value for the specific bodypart
+				if(!use_digitigrade)
+					if(body_zone == BODY_ZONE_CHEST)
+						. += image(marking_list[1], "[marking_list[2]]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir)
+					else
+						. += image(marking_list[1], "[marking_list[2]]_[body_zone]", -MARKING_LAYER, image_dir)
 				else
-					. += image(body_markings_icon, "[body_markings]_[body_zone]", -MARKING_LAYER, image_dir)
-			else
-				. += image(body_markings_icon, "[body_markings]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
-*/
+					. += image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir)
+
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/list/aux = list()
 	var/list/auxmarking = list()
@@ -825,13 +827,11 @@
 					if(!use_digitigrade)
 						if(body_zone == BODY_ZONE_CHEST)
 							markings_list.Add(image(marking_list[1], "[marking_list[2]]_[body_zone]_[icon_gender]", -MARKING_LAYER, image_dir))
-							message_admins("length is now [length(markings_list)]")
 						else
 							markings_list.Add(image(marking_list[1], "[marking_list[2]]_[body_zone]", -MARKING_LAYER, image_dir))
-							message_admins("length is now [length(markings_list)]")
 					else
 						markings_list.Add(image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir))
-						message_admins("length is now [length(markings_list)]")
+
 					if(color_src && length(marking_list) == 3)
 						message_admins("trying to color list of length [length(marking_list)] and also trying to access index [length(markings_list)] on a list of the same length")
 						markings_list[length(markings_list)].color = marking_list[3]

@@ -2471,7 +2471,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(index && marking_type && features[marking_type])
 						// work out the input options to show the user
 						var/list/options = list("Primary")
-						var/number_colors = href_list["number_colors"]
+						var/number_colors = text2num(href_list["number_colors"])
 						var/color_number = 1 // 1-3 which color are we editing
 						if(number_colors >= 2)
 							options += "Secondary"
