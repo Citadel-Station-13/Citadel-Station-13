@@ -144,7 +144,7 @@
 									/datum/material/titanium,
 									/datum/material/bluespace
 									)
-	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, TRUE, allowed_items=/obj/item/stack)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, TRUE, allowed_types=/obj/item/stack)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 	selected_material = SSmaterials.GetMaterialRef(/datum/material/iron)
 

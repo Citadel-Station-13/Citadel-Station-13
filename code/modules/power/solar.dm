@@ -69,7 +69,11 @@
 	// if(S.glass_type == /obj/item/stack/sheet/rglass) //if the panel is in reinforced glass
 	// 	max_integrity *= 2  //this need to be placed here, because panels already on the map don't have an assembly linked to
 	// 	obj_integrity = max_integrity
-	S.glass_type.on_solar_construction(src)
+
+	// pleas no catboy mafia :(
+	var/obj/item/stack/sheet/glass/tempG = new S.glass_type()
+	tempG.on_solar_construction(src)
+	qdel(tempG)
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)

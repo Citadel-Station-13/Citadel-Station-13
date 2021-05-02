@@ -72,7 +72,7 @@
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from unspecified server.")
 		hacked_download = FALSE
 
-	downloaded_file = PRG.clone()
+	downloaded_file = PRG.clone(hard_drive.holder)
 
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
