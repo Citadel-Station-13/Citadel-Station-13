@@ -217,7 +217,6 @@
 										return
 									to_chat(user, "<span class='notice'>You install [M] plating into the airlock assembly.</span>")
 									G.use(2)
-									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
 
 									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.

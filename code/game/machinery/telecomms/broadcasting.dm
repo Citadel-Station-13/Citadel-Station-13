@@ -183,7 +183,7 @@
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
-	var/list/message_mods = data["mods"]
+	// var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 	for(var/atom/movable/hearer in receive)
 		hearer.Hear(rendered, virt, language, message, frequency, spans)

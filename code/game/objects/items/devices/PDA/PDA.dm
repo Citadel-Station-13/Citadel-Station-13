@@ -88,7 +88,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-	var/overlays_x_offset = 0 //x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -585,8 +584,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/machines/terminal_success.ogg', 15, TRUE), 1.3 SECONDS)
 			if("Eject")//Ejects the cart, only done from hub.
 				eject_cart(U)
-				if(!silent)
-					playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
+				// if(!silent)
+				// 	playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
 
 //MENU FUNCTIONS===================================
 
@@ -803,7 +802,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	id = null
 	updateSelfDialog()
 	update_appearance()
-	playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
+	// playsound(src, 'sound/machines/terminal_eject.ogg', 50, TRUE)
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -1037,7 +1036,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>You remove [inserted_item] from [src].</span>")
 		inserted_item = null
 		update_appearance()
-		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/button.ogg', 50, TRUE)
 	else
 		to_chat(user, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
@@ -1164,7 +1163,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_appearance()
-			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/button.ogg', 50, TRUE)
 	else if(istype(C, /obj/item/photo))
 		var/obj/item/photo/P = C
 		picture = P.picture
@@ -1277,7 +1276,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(usr.stat == DEAD)
 		return //won't work if dead
-	var/mob/living/silicon/S = usr
 	if(!isnull(aiPDA))
 		//0
 		aiPDA.silent = !aiPDA.silent

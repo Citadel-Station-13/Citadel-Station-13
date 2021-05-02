@@ -553,7 +553,8 @@
 		. |= UPDATE_ICON_STATE
 
 	if(updates & UPDATE_GREYSCALE)
-		var/list/colors = update_greyscale()
+		update_greyscale()
+		// var/list/colors = update_greyscale()
 		// Updating the greyscale config in update_greyscale() is fine or we would check this earlier
 		// if(greyscale_config)
 		// 	icon = SSgreyscale.GetColoredIconByType(greyscale_config, colors)
@@ -625,9 +626,10 @@
  * default behaviour is to send the [COMSIG_ATOM_BLOB_ACT] signal
  */
 /atom/proc/blob_act(obj/structure/blob/B)
-	var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
+	// var/blob_act_result = SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	// if (blob_act_result & COMPONENT_CANCEL_BLOB_ACT)
 	// 	return FALSE
+	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	return TRUE
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)

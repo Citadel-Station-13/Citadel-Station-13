@@ -90,6 +90,7 @@
 				L -= I
 	return !cleared
 
+
 /obj/machinery/computer/station_alert/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -103,4 +104,4 @@
 	if(active_alarms)
 		. += "alert:2"
 	else
-		.area = "alert:0"
+		. += "alert:0"

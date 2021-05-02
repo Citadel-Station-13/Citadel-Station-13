@@ -188,7 +188,7 @@
 	. = ..()
 	if(.)
 		update()
-		RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
+		// RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/update_appearance)
 		if(genital_flags & GENITAL_THROUGH_CLOTHES)
 			owner.exposed_genitals += src
 

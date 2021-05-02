@@ -58,7 +58,6 @@
 	var/parallax_movedir = 0
 
 	var/list/ambientsounds = GENERIC
-	var/list/ambientsounds
 	flags_1 = CAN_BE_DIRTY_1
 
 	var/list/firedoors

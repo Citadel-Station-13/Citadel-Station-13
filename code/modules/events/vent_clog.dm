@@ -66,7 +66,6 @@
 	endWhen = rand(120, 180)
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent in GLOB.machines)
 		var/turf/T = get_turf(temp_vent)
-		var/area/A = T.loc
 		if(T && is_station_level(T.z) && !temp_vent.welded)
 			vents += temp_vent
 

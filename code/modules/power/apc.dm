@@ -320,15 +320,15 @@
 
 	addtimer(CALLBACK(src, .proc/update), 5)
 
-/obj/machinery/power/apc/ComponentInitialize()
-	. = ..()
-	// AddElement(/datum/element/atmos_sensitive)
+// /obj/machinery/power/apc/ComponentInitialize()
+// 	. = ..()
+// 	AddElement(/datum/element/atmos_sensitive)
 
-/obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > 2000)
+// /obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+// 	return (exposed_temperature > 2000)
 
-/obj/machinery/power/apc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	take_damage(min(exposed_temperature/100, 10), BURN)
+// /obj/machinery/power/apc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+// 	take_damage(min(exposed_temperature/100, 10), BURN)
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()

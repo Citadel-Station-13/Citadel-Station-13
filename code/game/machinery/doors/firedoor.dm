@@ -324,8 +324,8 @@
 	resistance_flags = 0 // not fireproof
 	heat_proof = FALSE
 
-/obj/machinery/door/firedoor/window/allow_hand_open()
-	return TRUE
+// /obj/machinery/door/firedoor/window/allow_hand_open()
+// 	return TRUE
 
 /obj/item/electronics/firelock
 	name = "firelock circuitry"

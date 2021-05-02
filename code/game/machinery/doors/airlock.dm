@@ -225,7 +225,7 @@
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
 
-/obj/machinery/door/airlock/proc/ntnet_receive(datum/netdata/data)
+/obj/machinery/door/airlock/ntnet_receive(datum/netdata/data)
 	// Check if the airlock is powered and can accept control packets.
 	if(!hasPower() || !canAIControl())
 		return

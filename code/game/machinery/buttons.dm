@@ -289,7 +289,7 @@
 	desc = "A remote control switch for a mechanical curtain."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/assembly/control/curtain
+	// device_type = /obj/item/assembly/control/curtain
 
 /obj/machinery/button/flasher/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -323,7 +323,7 @@
 	desc = "Go back. Go back. Go back. Can you operate the elevator."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/assembly/control/elevator
+	// device_type = /obj/item/assembly/control/elevator
 	req_access = list()
 	id = 1
 
@@ -337,7 +337,7 @@
 	desc = "A button for calling the tram. It has a speakerbox in it with some internals."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/assembly/control/tram
+	// device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
 // soon(c)
