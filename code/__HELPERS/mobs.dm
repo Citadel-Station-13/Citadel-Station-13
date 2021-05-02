@@ -320,6 +320,8 @@ GLOBAL_LIST_INIT(nonstandard_skin_tones, list("orange"))
 
 GLOBAL_LIST_EMPTY(species_list)
 
+GLOBAL_LIST_EMPTY(species_datums)
+
 /proc/age2agedescription(age)
 	switch(age)
 		if(0 to 1)

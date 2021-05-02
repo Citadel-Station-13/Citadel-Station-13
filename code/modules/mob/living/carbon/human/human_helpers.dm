@@ -176,3 +176,9 @@
 
 /mob/living/carbon/human/get_biological_state()
 	return dna.species.get_biological_state()
+
+///copies over clothing preferences like underwear to another human
+/mob/living/carbon/human/proc/copy_clothing_prefs(mob/living/carbon/human/destination)
+	destination.underwear = underwear
+	destination.undershirt = undershirt
+	destination.socks = socks
