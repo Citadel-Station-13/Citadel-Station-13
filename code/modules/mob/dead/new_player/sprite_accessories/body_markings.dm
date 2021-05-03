@@ -6,6 +6,7 @@
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	relevant_layers = list(BODY_ADJ_LAYER)
 	mutant_part_string = "body_markings"
+	var/list/covered_limbs = list(HEAD, CHEST, LEG_LEFT, LEG_RIGHT, ARM_LEFT, ARM_RIGHT)
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -50,6 +51,7 @@
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
 	matrixed_sections = MATRIX_ALL
+	var/list/covered_limbs = list(HEAD, CHEST, LEG_LEFT, LEG_RIGHT, ARM_LEFT, ARM_RIGHT)
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
