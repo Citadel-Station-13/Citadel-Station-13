@@ -38,7 +38,7 @@
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav)
 "L" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space)
 "R" = (
 /mob/living/simple_animal/crab{

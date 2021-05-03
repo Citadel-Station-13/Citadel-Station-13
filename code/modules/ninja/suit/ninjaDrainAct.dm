@@ -318,9 +318,14 @@
 		apply_effect(EFFECT_STUTTER, ninja_gloves.stunforce)
 		SEND_SIGNAL(src, COMSIG_LIVING_MINOR_SHOCK)
 
+<<<<<<< HEAD
 		lastattacker = ninja.real_name
 		lastattackerckey = ninja.ckey
 		log_combat(ninja, src, "stunned")
+=======
+		set_last_attacker(H)
+		log_combat(H, src, "stunned")
+>>>>>>> 6887e2d097b9ba361e455deccb57c6ac35c8fc79
 
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 

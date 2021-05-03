@@ -6,7 +6,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ac" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
@@ -23,10 +23,10 @@
 /area/ruin/space/has_grav/skelter)
 "af" = (
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ag" = (
 /turf/closed/wall/mineral/titanium,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ah" = (
 /turf/template_noop,
 /area/template_noop)
@@ -36,7 +36,7 @@
 "aj" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ak" = (
 /turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
@@ -54,7 +54,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Crew Quarters APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/skelter/crew)
@@ -149,13 +149,13 @@
 /area/ruin/space/has_grav/skelter/crew)
 "aA" = (
 /turf/open/floor/plating/airless,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aB" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aC" = (
 /obj/structure/bed,
 /obj/item/bedsheet/purple,
@@ -177,7 +177,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aF" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -185,7 +185,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Engine APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -335,7 +335,7 @@
 	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8;
@@ -367,7 +367,7 @@
 "aX" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "aY" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8;
@@ -413,7 +413,7 @@
 	name = "Cafeteria"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bd" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4;
@@ -438,10 +438,10 @@
 	icon_state = "chair"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bg" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bh" = (
 /obj/structure/fluff/railing{
 	dir = 1;
@@ -551,7 +551,7 @@
 	icon_state = "chair_toppled"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bu" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -565,7 +565,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bw" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4;
@@ -593,7 +593,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bA" = (
 /obj/item/chair{
 	dir = 1;
@@ -613,7 +613,7 @@
 	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "bC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/fluff/railing,
@@ -760,7 +760,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security Office APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
@@ -832,7 +832,7 @@
 "cd" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ce" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
@@ -872,7 +872,7 @@
 	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cj" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/suit/space/syndicate/orange,
@@ -904,7 +904,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "co" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4;
@@ -959,7 +959,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Navigation APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/skelter/nav)
@@ -988,7 +988,7 @@
 	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/mineral/titanium/purple,
@@ -1032,7 +1032,7 @@
 	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cF" = (
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/sec)
@@ -1075,7 +1075,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "cL" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
@@ -1322,7 +1322,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Fore Hallway APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/forehall)
@@ -1410,7 +1410,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Reactor Room APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/skelter/engine)
@@ -1454,7 +1454,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Aft Hallway APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -1497,7 +1497,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/mineral/titanium,
@@ -1512,7 +1512,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dH" = (
 /obj/machinery/clonepod,
 /obj/effect/turf_decal/stripes/line{
@@ -1569,7 +1569,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dR" = (
 /obj/structure/table/reinforced,
 /obj/structure/disposalpipe/segment,
@@ -1582,7 +1582,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/space/has_grav/skelter/admin)
@@ -1610,7 +1610,7 @@
 	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "dX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
@@ -1633,18 +1633,18 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ea" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "eb" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ec" = (
 /obj/structure/chair{
 	dir = 4
@@ -1653,7 +1653,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ed" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 8;
@@ -1699,7 +1699,7 @@
 "ei" = (
 /obj/effect/turf_decal/weather,
 /turf/open/floor/plating/airless,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ej" = (
 /obj/machinery/power/port_gen/pacman/super,
 /obj/structure/cable{
@@ -1726,7 +1726,7 @@
 	},
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "em" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5;
@@ -1748,7 +1748,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "eo" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -1767,7 +1767,7 @@
 "ep" = (
 /obj/item/chair,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "eq" = (
 /obj/structure/chair{
 	dir = 8;
@@ -1778,7 +1778,7 @@
 	icon_state = "pipe11-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "er" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -1786,7 +1786,7 @@
 	icon_state = "manifold-2"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "es" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -1911,7 +1911,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Administration APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/skelter/admin)
@@ -2112,7 +2112,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "fb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2138,7 +2138,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Med Bay APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
@@ -2536,7 +2536,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "fY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
@@ -2678,7 +2678,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Storage APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/skelter/storage)
@@ -2771,7 +2771,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Starboard Engine APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
 	icon_state = "sepia"
@@ -2917,7 +2917,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Shield Room APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/skelter/shields)
@@ -3475,7 +3475,7 @@
 	icon_state = "tube"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "id" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -3489,7 +3489,7 @@
 	icon_state = "tube-broken"
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ie" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/dark,
@@ -3500,7 +3500,7 @@
 "ig" = (
 /obj/machinery/light/broken,
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "ih" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/mineral/titanium/interior,
@@ -3699,7 +3699,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Electrical APC";
-	pixel_x = 26
+	pixel_x = 24
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/skelter/engine/powerstorage)
@@ -3709,7 +3709,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
-/area/crew_quarters/cafeteria)
+/area/service/cafeteria)
 "iE" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/blue,
@@ -4063,7 +4063,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Communications APC";
-	pixel_y = 24
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/space/has_grav/skelter/comms)

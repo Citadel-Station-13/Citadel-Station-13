@@ -68,6 +68,7 @@
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
+		GLOB.species_datums[S.id] = S
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))

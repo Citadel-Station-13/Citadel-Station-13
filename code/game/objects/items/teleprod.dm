@@ -6,7 +6,7 @@
 	item_state = "teleprod"
 	slot_flags = null
 
-/obj/item/melee/baton/cattleprod/teleprod/baton_stun(mob/living/L, mob/living/carbon/user)//handles making things teleport when hit
+/obj/item/melee/baton/cattleprod/teleprod/baton_stun(mob/living/L, mob/living/carbon/user, shoving = FALSE)//handles making things teleport when hit
 	. = ..()
 	if(!. || L.anchored)
 		return
@@ -16,7 +16,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.DefaultCombatKnockdown(stamforce * 6)
+	user.DefaultCombatKnockdown(stamina_loss_amount * 6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))
 		deductcharge(hitcost)

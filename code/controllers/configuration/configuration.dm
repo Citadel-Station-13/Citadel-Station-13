@@ -404,9 +404,9 @@ Example config:
 		if(!Get(/datum/config_entry/flag/no_storyteller_threat_removal))
 			var/min_chaos = (probabilities in storyteller_min_chaos) ? storyteller_min_chaos[config_tag] : initial(S.min_chaos)
 			var/max_chaos = (probabilities in storyteller_max_chaos) ? storyteller_max_chaos[config_tag] : initial(S.max_chaos)
-			if(SSpersistence.average_dynamic_threat < min_chaos)
+			if(SSpersistence.average_threat + 50 < min_chaos)
 				continue
-			if(SSpersistence.average_dynamic_threat > max_chaos)
+			if(SSpersistence.average_threat + 50 > max_chaos)
 				continue
 		if(SSpersistence.saved_storytellers.len == repeated_mode_adjust.len)
 			var/name = initial(S.name)

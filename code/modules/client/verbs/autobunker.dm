@@ -3,6 +3,10 @@
 	set desc = "Authorizes your account in the panic bunker of any servers connected to this function."
 	set category = "OOC"
 	
+	if(prefs.db_flags & DB_FLAG_AGE_CONFIRMATION_INCOMPLETE)
+		to_chat(src, "<span class='danger'>You are not age verified.</span>")
+		return
+		
 	if(autobunker_last_try + 5 SECONDS > world.time)
 		to_chat(src, "<span class='danger'>Function on cooldown, try again in 5 seconds.</span>")
 		return

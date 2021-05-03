@@ -108,7 +108,7 @@
 
 /datum/status_effect/off_balance/on_remove()
 	var/active_item = owner.get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+	if(active_item)
 		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
 	return ..()
 
@@ -160,7 +160,7 @@
 
 /obj/screen/alert/status_effect/mesmerized
 	name = "Mesmerized"
-	desc = "You cant tear your sight from who is in front of you... their gaze is simply too enthralling.."
+	desc = "You can't tear your sight from who is in front of you... their gaze is simply too enthralling.."
 	icon = 'icons/mob/actions/bloodsucker.dmi'
 	icon_state = "power_mez"
 
