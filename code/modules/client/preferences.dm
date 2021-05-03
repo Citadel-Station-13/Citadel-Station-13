@@ -524,7 +524,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(marking_type)
 				dat += APPEARANCE_CATEGORY_COLUMN
 				dat += "<h3>[GLOB.all_mutant_parts[marking_type]]</h3>" // give it the appropriate title for the type of marking
-				dat += "<a>Add marking</a>"
+				dat += "<a href='?_src_=prefs;preference=marking_add;marking_type=[marking_type];task=input;>Add marking</a>"
 				// list out the current markings you have
 				if(length(features[marking_type]))
 					dat += "<table>"
@@ -2002,17 +2002,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_spines)
 						features["spines"] = new_spines
 
-				if("body_markings")
-					var/new_body_markings
-					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in GLOB.body_markings_list
-					if(new_body_markings)
-						var/marking_list = list()
-						for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
-							marking_list += list(list(part, new_body_markings))
-						features["body_markings"] = marking_list
-						if(new_body_markings != list())
-							features["mam_body_markings"] = list()
-
 				if("legs")
 					var/new_legs
 					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in GLOB.legs_list
@@ -2131,27 +2120,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in snowflake_ears_list
 					if(new_ears)
 						features["mam_ears"] = new_ears
-
-				if("mam_body_markings")
-					var/list/snowflake_markings_list = list()
-					for(var/path in GLOB.mam_body_markings_list)
-						var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
-						if(istype(instance, /datum/sprite_accessory))
-							var/datum/sprite_accessory/S = instance
-							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
-								continue
-							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
-								snowflake_markings_list[S.name] = path
-					var/new_mam_body_markings
-					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in snowflake_markings_list
-					if(new_mam_body_markings != "None")
-						var/marking_list = list()
-						for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
-							marking_list += list(list(part, new_mam_body_markings))
-						features["mam_body_markings"] = marking_list
-					else if(new_mam_body_markings == "None")
-						features["mam_body_markings"] = list()
-						features["body_markings"] = list()
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
@@ -2466,6 +2434,35 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/marking_type = href_list["marking_type"]
 					if(index && marking_type && features[marking_type])
 						features[marking_type].Cut(index, index + 1)
+
+				if("marking_add")
+					// add a marking
+					var/marking_type = href_list["marking_type"]
+					if(marking_type && features[marking_type])
+						var/selected_limb = input(user, "Choose the limb to apply to.", "Character Preference") as null|anything in list("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg")
+						if(selected_limb)
+							var/list/marking_list = GLOB.mam_body_markings_list
+							if(marking_type == "body_markings") marking_list = GLOB.body_markings_list
+							var/list/snowflake_markings_list = list()
+							for(var/path in marking_list)
+								var/datum/sprite_accessory/S = marking_list[path]
+								if(istype(S))
+									// gross copypasta here because mam markings arent a subtype of regular markings despite one containing the other ???
+									if(istype(S, /datum/sprite_accessory/body_markings))
+										var/datum/sprite_accessory/body_markings/marking = S
+										if(!(GLOB.bodypart_names[selected_limb] in marking.covered_limbs))
+											continue
+									if(istype(S, /datum/sprite_accessory/mam_body_markings))
+										var/datum/sprite_accessory/mam_body_markings/marking = S
+										if(!(GLOB.bodypart_names[selected_limb] in marking.covered_limbs))
+											continue
+
+									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+										snowflake_markings_list[S.name] = path
+
+							var/selected_marking = input(user, "Select the marking to apply to the limb.") as null|anything in snowflake_markings_list
+							if(selected_marking)
+								features[marking_type] += list(list(selected_limb, selected_marking))
 
 				if("marking_color")
 					var/index = text2num(href_list["marking_index"])
