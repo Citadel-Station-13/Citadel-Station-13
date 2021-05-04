@@ -283,7 +283,7 @@
 	desc = "Allows a creature to voluntary discard a random appendage."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your joints feel loose.</span>"
-	instability = 30
+	instability = 20
 	power = /obj/effect/proc_holder/spell/self/self_amputation
 
 	energy_coeff = 1
@@ -316,7 +316,7 @@
 		return
 
 	var/obj/item/bodypart/BP = pick(parts)
-	BP.dismember()
+	BP.dismember(harmless=TRUE)
 
 //spider webs
 /datum/mutation/human/webbing

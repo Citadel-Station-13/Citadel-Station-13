@@ -13,6 +13,7 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
 
+	var/base_build_path = /obj/machinery/smartfridge ///What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.
 	var/max_n_of_items = 1500
 	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
@@ -43,7 +44,7 @@
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(!stat)
 		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
-		if(visible_contents)
+		if (visible_contents)
 			switch(contents.len)
 				if(0)
 					icon_state = "[initial(icon_state)]"
@@ -111,10 +112,10 @@
 			if(loaded)
 				if(contents.len >= max_n_of_items)
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-									 "<span class='notice'>You fill \the [src] with \the [O].</span>")
+						"<span class='notice'>You fill \the [src] with \the [O].</span>")
 				else
 					user.visible_message("<span class='notice'>[user] loads \the [src] with \the [O].</span>", \
-										 "<span class='notice'>You load \the [src] with \the [O].</span>")
+						"<span class='notice'>You load \the [src] with \the [O].</span>")
 				if(O.contents.len > 0)
 					to_chat(user, "<span class='warning'>Some items are refused.</span>")
 				if (visible_contents)
@@ -172,6 +173,10 @@
 
 	var/listofitems = list()
 	for (var/I in src)
+		// We do not vend our own components.
+		if(I in component_parts)
+			continue
+
 		var/atom/movable/O = I
 		if (!QDELETED(O))
 			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
@@ -212,6 +217,8 @@
 			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
+						if(O in component_parts)
+							CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 						dispense(O, usr)
 						break
 				if (visible_contents)
@@ -222,6 +229,8 @@
 				if(desired <= 0)
 					break
 				if(O.name == params["name"])
+					if(O in component_parts)
+						CRASH("Attempted removal of [O] component_part from vending machine via vending interface.")
 					dispense(O, usr)
 					desired--
 			if (visible_contents)
@@ -242,13 +251,21 @@
 	idle_power_usage = 5
 	active_power_usage = 200
 	visible_contents = FALSE
+	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
 	. = ..()
-	if(component_parts && component_parts.len)
-		component_parts.Cut()
+
+	// Cache the old_parts first, we'll delete it after we've changed component_parts to a new list.
+	// This stops handle_atom_del being called on every part when not necessary.
+	var/list/old_parts = component_parts.Copy()
+
 	component_parts = null
+	circuit = null
+
+	QDEL_LIST(old_parts)
+	RefreshParts()
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
@@ -259,7 +276,9 @@
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 /obj/machinery/smartfridge/drying_rack/spawn_frame()
 
-/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
+/obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/C, ignore_panel = 1)
+	if(!C.tool_behaviour == TOOL_CROWBAR)
+		return
 	..()
 
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
@@ -280,25 +299,18 @@
 			return TRUE
 	return FALSE
 
-// /obj/machinery/smartfridge/drying_rack/powered() do we have this? no.
-// 	if(!anchored)
-// 		return FALSE
-// 	return ..()
+/obj/machinery/smartfridge/drying_rack/powered()
+	if(!anchored)
+		return FALSE
+	return ..()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
-	if(powered() && anchored)
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
+	. = ..()
+	if(!powered())
 		toggle_drying(TRUE)
-	update_icon()
-
-	// . = ..()
-	// if(!powered())
-	// 	toggle_drying(TRUE)
 
 /obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
-	..()
+	. = ..()
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/update_overlays()
@@ -363,6 +375,7 @@
 /obj/machinery/smartfridge/drinks
 	name = "drink showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
+	base_build_path = /obj/machinery/smartfridge/drinks
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT) || !O.reagents || !O.reagents.reagent_list.len)
@@ -375,6 +388,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/food
 	desc = "A refrigerated storage unit for food."
+	base_build_path = /obj/machinery/smartfridge/food
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/O)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/))
@@ -387,6 +401,7 @@
 /obj/machinery/smartfridge/extract
 	name = "smart slime extract storage"
 	desc = "A refrigerated storage unit for slime extracts."
+	base_build_path = /obj/machinery/smartfridge/extract
 
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O, /obj/item/slime_extract))
@@ -405,6 +420,7 @@
 	name = "smart organ storage"
 	desc = "A refrigerated storage unit for organ storage."
 	max_n_of_items = 20	//vastly lower to prevent processing too long
+	base_build_path = /obj/machinery/smartfridge/organ
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
@@ -429,14 +445,14 @@
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
-		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1))
+		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)
 
-/obj/machinery/smartfridge/organ/process()
+/obj/machinery/smartfridge/organ/process(delta_time)
 	for(var/organ in contents)
 		var/obj/item/organ/O = organ
 		if(!istype(O))
 			return
-		O.applyOrganDamage(-repair_rate)
+		O.applyOrganDamage(-repair_rate * delta_time)
 
 /obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
@@ -444,7 +460,9 @@
 		var/obj/item/organ/O = AM
 		O.organ_flags &= ~ORGAN_FROZEN
 
-/obj/machinery/smartfridge/organ/preloaded //cit specific??????
+//cit specific??????
+/obj/machinery/smartfridge/organ/preloaded
+	base_build_path = /obj/machinery/smartfridge/organ/preloaded
 	initial_contents = list(
 		/obj/item/reagent_containers/medspray/synthtissue = 1,
 		/obj/item/reagent_containers/medspray/sterilizine = 1)
@@ -461,6 +479,7 @@
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
+	base_build_path = /obj/machinery/smartfridge/chemistry
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	var/static/list/chemfridge_typecache = typecacheof(list(
@@ -502,6 +521,7 @@
 /obj/machinery/smartfridge/chemistry/virology
 	name = "smart virus storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
+	base_build_path = /obj/machinery/smartfridge/chemistry/virology
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(
@@ -523,6 +543,7 @@
 	icon_state = "disktoaster"
 	pass_flags = PASSTABLE
 	visible_contents = FALSE
+	base_build_path = /obj/machinery/smartfridge/disks
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

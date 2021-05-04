@@ -94,7 +94,7 @@
 
 /datum/design/medicinalsmartdart
 	name = "Medicinal Smartdart"
-	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using it's smart nanofilter technology only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
+	desc = "A non-harmful dart that can administer medication from a range. Once it hits a patient using its smart nanofilter technology, only medicines contained within the dart are administered to the patient. Additonally, due to capillary action, injection of chemicals past the overdose limit is prevented."
 	id = "medicinalsmartdart"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass = 100, /datum/material/plastic = 100, /datum/material/iron = 100)
@@ -192,6 +192,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/hypospraykit
+	name = "Empty Hypospray Kit"
+	desc = "A plastic medical kit for storing hyposprays and hypospray accessories."
+	id = "hypokit"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 5000)
+	build_path = /obj/item/storage/hypospraykit // let's not summon new hyposprays thanks
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/blood_bag
 	name = "Empty Blood Bag"
 	desc = "A small sterilized plastic bag for blood."
@@ -203,7 +213,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/bsblood_bag
-	name = "Blue Space Empty Blood Bag"
+	name = "Empty Bluespace Blood Bag"
 	desc = "A large sterilized plastic bag for blood."
 	id = "bsblood_bag"
 	build_path = /obj/item/reagent_containers/blood/bluespace
@@ -634,65 +644,108 @@
 //Cybernetic organs
 
 /datum/design/cybernetic_liver
-	name = "Cybernetic Liver"
-	desc = "A cybernetic liver"
+	name = "Basic Cybernetic Liver"
+	desc = "A basic cybernetic liver."
 	id = "cybernetic_liver"
 	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/liver/cybernetic
-	category = list("Misc","Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_heart
-	name = "Cybernetic Heart"
-	desc = "A cybernetic heart"
-	id = "cybernetic_heart"
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
-	build_path = /obj/item/organ/heart/cybernetic
-	category = list("Misc","Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-
-/datum/design/cybernetic_heart_u
-	name = "Upgraded Cybernetic Heart"
-	desc = "An upgraded cybernetic heart"
-	id = "cybernetic_heart_u"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 50
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
-	build_path = /obj/item/organ/heart/cybernetic/upgraded
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cybernetic_liver_u
-	name = "Upgraded Cybernetic Liver"
-	desc = "An upgraded cybernetic liver"
-	id = "cybernetic_liver_u"
-	build_type = PROTOLATHE | MECHFAB
+/datum/design/cybernetic_liver/tier2
+	name = "Cybernetic Liver"
+	desc = "A cybernetic liver."
+	id = "cybernetic_liver_tier2"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
-	build_path = /obj/item/organ/liver/cybernetic/upgraded
-	category = list("Misc","Medical Designs")
+	build_path = /obj/item/organ/liver/cybernetic/tier2
+
+/datum/design/cybernetic_liver/tier3
+	name = "Upgraded Cybernetic Liver"
+	desc = "An upgraded cybernetic liver."
+	id = "cybernetic_liver_tier3"
+	construction_time = 50
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond = 2000)
+	build_path = /obj/item/organ/liver/cybernetic/tier3
+
+/datum/design/cybernetic_heart
+	name = "Basic Cybernetic Heart"
+	desc = "A basic cybernetic heart."
+	id = "cybernetic_heart"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/heart/cybernetic
+	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_heart/tier2
+	name = "Cybernetic Heart"
+	desc = "A cybernetic heart."
+	id = "cybernetic_heart_tier2"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/heart/cybernetic/tier2
+
+/datum/design/cybernetic_heart/tier3
+	name = "Upgraded Cybernetic Heart"
+	desc = "An upgraded cybernetic heart."
+	id = "cybernetic_heart_tier3"
+	construction_time = 50
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond = 2000)
+	build_path = /obj/item/organ/heart/cybernetic/tier3
 
 /datum/design/cybernetic_lungs
-	name = "Cybernetic Lungs"
-	desc = "A pair of cybernetic lungs."
+	name = "Basic Cybernetic Lungs"
+	desc = "A basic pair of cybernetic lungs."
 	id = "cybernetic_lungs"
 	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/lungs/cybernetic
-	category = list("Misc","Medical Designs")
+	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cybernetic_lungs_u
+/datum/design/cybernetic_lungs/tier2
+	name = "Cybernetic Lungs"
+	desc = "A pair of cybernetic lungs."
+	id = "cybernetic_lungs_tier2"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/lungs/cybernetic/tier2
+
+/datum/design/cybernetic_lungs/tier3
 	name = "Upgraded Cybernetic Lungs"
 	desc = "A pair of upgraded cybernetic lungs."
-	id = "cybernetic_lungs_u"
+	id = "cybernetic_lungs_tier3"
+	construction_time = 50
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond = 2000)
+	build_path = /obj/item/organ/lungs/cybernetic/tier3
+
+/datum/design/cybernetic_stomach
+	name = "Basic Cybernetic Stomach"
+	desc = "A basic cybernetic stomach."
+	id = "cybernetic_stomach"
 	build_type = PROTOLATHE | MECHFAB
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
-	build_path = /obj/item/organ/lungs/cybernetic/upgraded
-	category = list("Misc","Medical Designs")
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/stomach/cybernetic
+	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_stomach/tier2
+	name = "Cybernetic Stomach"
+	desc = "A cybernetic stomach."
+	id = "cybernetic_stomach_tier2"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/stomach/cybernetic/tier2
+
+/datum/design/cybernetic_stomach/tier3
+	name = "Upgraded Cybernetic Stomach"
+	desc = "An upgraded cybernetic stomach."
+	id = "cybernetic_stomach_tier3"
+	construction_time = 50
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 600, /datum/material/gold = 600, /datum/material/plasma = 1000, /datum/material/diamond = 2000)
+	build_path = /obj/item/organ/stomach/cybernetic/tier3
 
 /datum/design/cybernetic_tongue
 	name = "Cybernetic tongue"
@@ -701,7 +754,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/organ/tongue/cybernetic
-	category = list("Misc","Medical Designs")
+	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/cybernetic_ears
@@ -809,22 +862,22 @@
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing/brute_upgrade
-	name = "Tend Wounds (Brute) Upgrade"
+	name = "Tend Wounds (Brute) Upgrade I"
 	surgery = /datum/surgery/healing/brute/upgraded
 	id = "surgery_heal_brute_upgrade"
 
 /datum/design/surgery/healing/brute_upgrade_2
-	name = "Tend Wounds (Brute) Upgrade"
+	name = "Tend Wounds (Brute) Upgrade II"
 	surgery = /datum/surgery/healing/brute/upgraded/femto
 	id = "surgery_heal_brute_upgrade_femto"
 
 /datum/design/surgery/healing/burn_upgrade
-	name = "Tend Wounds (Burn) Upgrade"
+	name = "Tend Wounds (Burn) Upgrade I"
 	surgery = /datum/surgery/healing/burn/upgraded
 	id = "surgery_heal_burn_upgrade"
 
 /datum/design/surgery/healing/burn_upgrade_2
-	name = "Tend Wounds (Burn) Upgrade"
+	name = "Tend Wounds (Burn) Upgrade II"
 	surgery = /datum/surgery/healing/brute/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
@@ -835,15 +888,25 @@
 	id = "surgery_heal_combo"
 
 /datum/design/surgery/healing/combo_upgrade
-	name = "Tend Wounds (Mixture) Upgrade"
+	name = "Tend Wounds (Mixture) Upgrade I"
 	surgery = /datum/surgery/healing/combo/upgraded
 	id = "surgery_heal_combo_upgrade"
 
 /datum/design/surgery/healing/combo_upgrade_2
-	name = "Tend Wounds (Mixture) Upgrade"
+	name = "Tend Wounds (Mixture) Upgrade II"
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
+
+/datum/design/surgery/healing/robot_upgrade
+	name = "Repair Robotic Limbs Upgrade"
+	surgery = /datum/surgery/robot_healing/upgraded
+	id = "surgery_heal_robo_upgrade"
+
+/datum/design/surgery/healing/robot_upgrade_2
+	name = "Repair Robotic Limbs Upgrade II"
+	surgery = /datum/surgery/robot_healing/upgraded/femto
+	id = "surgery_heal_robo_upgrade_femto"
 
 /datum/design/surgery/surgery_toxinhealing
 	name = "Body Rejuvenation"

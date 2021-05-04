@@ -16,17 +16,21 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	attack_speed = CLICK_CD_MELEE
 
-	var/stamforce = 35
+	var/stamina_loss_amount = 35
 	var/turned_on = FALSE
 	var/knockdown = TRUE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 750
 	var/throw_hit_chance = 35
 	var/preload_cell_type //if not empty the baton starts with this type of cell
+	var/cooldown_duration = 5 SECONDS //How long our baton rightclick goes on cooldown for after applying a knockdown
+	var/status_duration = 5 SECONDS //how long our status effects last for otherwise
+	COOLDOWN_DECLARE(shove_cooldown)
 
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Right click attack while in combat mode to disarm instead of stun.</span>"
+	. += "<span class='notice'>Right click attack while in combat mode to knockdown, but only once per [cooldown_duration / 10] seconds.</span>"
+	. += "<span class='notice'>This knockdown will also put them off balance for  [status_duration / 20] seconds, allowing you to shove a weapon out of their hand with a right click in Disarm intent.</span>"
 
 /obj/item/melee/baton/get_cell()
 	. = cell
@@ -53,8 +57,8 @@
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(turned_on && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_stun(hit_atom)
+	if(turned_on && prob(throw_hit_chance) && iscarbon(hit_atom) && thrownby)
+		baton_stun(hit_atom, thrownby, shoving = TRUE)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high/plus
@@ -73,6 +77,16 @@
 	if(turned_on && (!copper_top || !copper_top.charge || (chargecheck && copper_top.charge < (hitcost * STUNBATON_CHARGE_LENIENCY))))
 		//we're below minimum, turn off
 		switch_status(FALSE)
+
+///Check for our cell to determine how much penetration our weapon does.
+/obj/item/melee/baton/proc/get_cell_zap_pen()
+	var/obj/item/stock_parts/cell/copper_top = get_cell()
+	if(copper_top)
+		var/chargepower = copper_top.maxcharge
+		var/zap_penetration = (chargepower/1000) //This is our effective penetration. Every 1000 max charge, we get 1 pen power. A high capacity cell is equal to 10 armor pen, as an example.
+		return zap_penetration
+	else
+		return 0
 
 /obj/item/melee/baton/proc/switch_status(new_status = FALSE, silent = FALSE)
 	if(turned_on != new_status)
@@ -101,6 +115,7 @@
 	var/obj/item/stock_parts/cell/copper_top = get_cell()
 	if(copper_top)
 		. += "<span class='notice'>\The [src] is [round(copper_top.percent())]% charged.</span>"
+		. += "<span class='notice'>\The [src] currently can penetrate [round(copper_top.maxcharge/1000)]% of enemy armor thanks to it's loaded cell.</span>"
 	else
 		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
@@ -119,7 +134,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -150,10 +165,10 @@
 /obj/item/melee/baton/alt_pre_attack(atom/A, mob/living/user, params)
 	if(!user.CheckActionCooldown(CLICK_CD_MELEE))
 		return
-	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-disarming.
+	. = common_baton_melee(A, user, TRUE)		//return true (attackchain interrupt) if this also returns true. no harm-shoving.
 
 //return TRUE to interrupt attack chain.
-/obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, disarming = FALSE)
+/obj/item/melee/baton/proc/common_baton_melee(mob/M, mob/living/user, shoving = FALSE)
 	if(iscyborg(M) || !isliving(M))		//can't baton cyborgs
 		return FALSE
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -167,21 +182,26 @@
 		if(check_martial_counter(L, user))
 			return TRUE
 	if(turned_on)
-		if(baton_stun(M, user, disarming))
+		if(baton_stun(M, user, shoving))
 			user.do_attack_animation(M)
 	else if(user.a_intent != INTENT_HARM)			//they'll try to bash in the last proc.
 		M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 						"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
-	return disarming || (user.a_intent != INTENT_HARM)
+	return shoving || (user.a_intent != INTENT_HARM)
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/living/user, disarming = FALSE)
+/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/living/user, shoving = FALSE)
 	var/list/return_list = list()
 	if(L.mob_run_block(src, 0, "[user]'s [name]", ATTACK_TYPE_MELEE, 0, user, null, return_list) & BLOCK_SUCCESS) //No message; check_shields() handles that
 		playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 		return FALSE
-	var/stunpwr = stamforce
-	stunpwr = block_calculate_resultant_damage(stunpwr, return_list)
+	var/final_stamina_loss_amount = stamina_loss_amount //Our stunning power for the baton
+	var/shoved = FALSE //Did we succeed on knocking our target over?
+	var/zap_penetration = get_cell_zap_pen() //Find out what kind of cell we have, and calculating the resultant armor pen we get from it
+	var/zap_block = L.run_armor_check(BODY_ZONE_CHEST, "melee", null, null, zap_penetration) //armor check, including calculation for armor penetration, for our attack
+	final_stamina_loss_amount = block_calculate_resultant_damage(final_stamina_loss_amount, return_list)
+
 	var/obj/item/stock_parts/cell/our_cell = get_cell()
+
 	if(!our_cell)
 		switch_status(FALSE)
 		return FALSE
@@ -194,26 +214,31 @@
 			L.visible_message("<span class='warning'>[user] has prodded [L] with [src]. Luckily it was out of charge.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was out of charge.</span>")
 			return FALSE
-		stunpwr *= round(stuncharge/hitcost, 0.1)
+		final_stamina_loss_amount *= round(stuncharge/hitcost, 0.1)
 
 	if(user && !user.UseStaminaBuffer(getweight(user, STAM_COST_BATON_MOB_MULT), warn = TRUE))
 		return FALSE
 
-	if(!disarming)
-		if(knockdown)
-			L.DefaultCombatKnockdown(50, override_stamdmg = 0)		//knockdown
-		L.adjustStaminaLoss(stunpwr)
-	else
-		L.drop_all_held_items()					//no knockdown/stamina damage, instead disarm.
+	if(shoving && COOLDOWN_FINISHED(src, shove_cooldown) && !HAS_TRAIT(L, TRAIT_IWASBATONED)) //Rightclicking applies a knockdown, but only once every couple of seconds, based on the cooldown_duration var. If they were recently knocked down, they can't be knocked down again by a baton.
+		L.DefaultCombatKnockdown(50, override_stamdmg = 0)
+		L.apply_status_effect(STATUS_EFFECT_TASED_WEAK, status_duration) //Even if they shove themselves up, they're still slowed.
+		L.apply_status_effect(STATUS_EFFECT_OFF_BALANCE, status_duration) //They're very likely to drop items if shoved briefly after a knockdown.
+		shoved = TRUE
+		COOLDOWN_START(src, shove_cooldown, cooldown_duration)
+		ADD_TRAIT(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT) //Prevents swapping to a new baton to avoid the cooldown by just acquiring more batons
+		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, STATUS_EFFECT_TRAIT), cooldown_duration)
+		playsound(loc, 'sound/weapons/zapbang.ogg', 50, 1, -1)
+	else //If we cannot/don't knock down the target, we apply a stagger, which keeps them from just running off
+		L.apply_status_effect(STATUS_EFFECT_STAGGERED, status_duration)
 
-	L.apply_effect(EFFECT_STUTTER, stamforce)
+	L.apply_damage (final_stamina_loss_amount, STAMINA, BODY_ZONE_CHEST, zap_block)
+	L.apply_effect(EFFECT_STUTTER, stamina_loss_amount)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
-		L.lastattacker = user.real_name
-		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has [disarming? "disarmed" : "stunned"] [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has [disarming? "disarmed" : "stunned"] you with [src]!</span>")
-		log_combat(user, L, disarming? "disarmed" : "stunned")
+		L.set_last_attacker(user)
+		L.visible_message("<span class='danger'>[user] has [shoved ? "brutally stunned" : "stunned"] [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has [shoved ? "brutally stunnned" : "stunned"] you with [src]!</span>")
+		log_combat(user, L, shoved ? "stunned and attempted knockdown" : "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
@@ -228,7 +253,7 @@
 	user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 						"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 	SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-	user.DefaultCombatKnockdown(stamforce*6)
+	user.DefaultCombatKnockdown(stamina_loss_amount*6)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	deductcharge(hitcost)
 
@@ -306,18 +331,20 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stamforce = 25
+	stamina_loss_amount = 25
 	hitcost = 1000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
+	cooldown_duration = 7 SECONDS //It's a little on the weak side
+	status_duration = 3 //Slows someone for a tiny bit
 	var/obj/item/assembly/igniter/sparkler
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()
 	sparkler = new (src)
-	sparkler.activate_cooldown = 5
+	sparkler.activate_cooldown = 7 //Helps visualize the knockdown
 
-/obj/item/melee/baton/cattleprod/baton_stun()
+/obj/item/melee/baton/cattleprod/baton_stun(mob/living/L, mob/living/carbon/user, shoving = FALSE)
 	sparkler?.activate()
 	. = ..()
 
@@ -344,8 +371,8 @@
 /obj/item/melee/baton/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(turned_on)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance))//if they are a carbon and they didn't catch it
-			baton_stun(hit_atom)
+		if(ishuman(hit_atom) && !caught && prob(throw_hit_chance) && thrownby)//if they are a carbon and they didn't catch it
+			baton_stun(hit_atom, thrownby, shoving = TRUE)
 		if(thrownby && !caught)
 			sleep(1)
 			if(!QDELETED(src))

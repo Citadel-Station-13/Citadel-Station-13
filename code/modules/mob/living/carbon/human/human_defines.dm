@@ -75,6 +75,7 @@
 	var/lastpuke = 0
 	var/account_id
 	var/last_fire_update
+	var/hardcore_survival_score = 0
 
 /// Unarmed parry data for human
 /datum/block_parry_data/unarmed/human
@@ -95,9 +96,10 @@
 	parry_efficiency_considered_successful = 0.01
 	parry_efficiency_to_counterattack = 0.01
 	parry_max_attacks = 3
-	parry_cooldown = 30
-	parry_failed_stagger_duration = 0
-	parry_failed_clickcd_duration = 0.4
+	parry_cooldown = 3 SECONDS
+	parry_failed_cooldown_duration = 1.5 SECONDS
+	parry_failed_stagger_duration = 1 SECONDS
+	parry_failed_clickcd_duration = 0.4 SECONDS
 
 	parry_data = list(			// yeah it's snowflake
 		"UNARMED_PARRY_STAGGER" = 3 SECONDS,
@@ -135,14 +137,14 @@
 	parry_imperfect_falloff_percent = 20
 	parry_efficiency_perfect = 100
 	parry_efficiency_perfect_override = list(
-		ATTACK_TYPE_PROJECTILE_TEXT = 60,
+		TEXT_ATTACK_TYPE_PROJECTILE = 60,
 	)
 
 	parry_efficiency_considered_successful = 0.01
 	parry_efficiency_to_counterattack = 0.01
 	parry_max_attacks = INFINITY
 	parry_failed_cooldown_duration =  1.5 SECONDS
-	parry_failed_stagger_duration = 0
+	parry_failed_stagger_duration = 1 SECONDS
 	parry_cooldown = 0
 	parry_failed_clickcd_duration = 0.8
 

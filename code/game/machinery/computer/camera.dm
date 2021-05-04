@@ -1,3 +1,5 @@
+#define DEFAULT_MAP_SIZE 15
+
 /obj/machinery/computer/security
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
@@ -8,14 +10,18 @@
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
+	/// The turf where the camera was last updated.
+	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
 	var/map_name
-	var/const/default_map_size = 15
-	var/obj/screen/cam_screen
-	var/obj/screen/plane_master/lighting/cam_plane_master
+	var/obj/screen/map_view/cam_screen
+	/// All the plane masters that need to be applied.
+	var/list/cam_plane_masters
 	var/obj/screen/background/cam_background
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE //| INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize()
 	. = ..()
@@ -33,18 +39,20 @@
 	cam_screen.assigned_map = map_name
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_master = new
-	cam_plane_master.name = "plane_master"
-	cam_plane_master.assigned_map = map_name
-	cam_plane_master.del_on_map_removal = FALSE
-	cam_plane_master.screen_loc = "[map_name]:CENTER"
+	cam_plane_masters = list()
+	for(var/plane in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/instance = new plane()
+		instance.assigned_map = map_name
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "[map_name]:CENTER"
+		cam_plane_masters += instance
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
-	qdel(cam_plane_master)
+	QDEL_LIST(cam_plane_masters)
 	qdel(cam_background)
 	return ..()
 
@@ -56,9 +64,10 @@
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
-	// Show static if can't use the camera
-	if(!active_camera?.can_use())
-		show_camera_static()
+
+	// Update the camera, showing static if necessary and updating data if the location has moved.
+	update_active_camera_screen()
+
 	if(!ui)
 		var/user_ref = REF(user)
 		var/is_living = isliving(user)
@@ -72,7 +81,7 @@
 			use_power(active_power_usage)
 		// Register map objects
 		user.client.register_map_obj(cam_screen)
-		for(var/plane in cam_plane_master)
+		for(var/plane in cam_plane_masters)
 			user.client.register_map_obj(plane)
 		user.client.register_map_obj(cam_background)
 		// Open UI
@@ -100,6 +109,7 @@
 		data["cameras"] += list(list(
 			name = C.c_tag,
 		))
+
 	return data
 
 /obj/machinery/computer/security/ui_act(action, params)
@@ -110,30 +120,50 @@
 	if(action == "switch_camera")
 		var/c_tag = params["name"]
 		var/list/cameras = get_available_cameras()
-		var/obj/machinery/camera/C = cameras[c_tag]
-		active_camera = C
+		var/obj/machinery/camera/selected_camera = cameras[c_tag]
+		active_camera = selected_camera
 		playsound(src, get_sfx("terminal_type"), 25, FALSE)
 
-		// Show static if can't use the camera
-		if(!active_camera?.can_use())
-			show_camera_static()
+		if(!selected_camera)
 			return TRUE
 
-		var/list/visible_turfs = list()
-		for(var/turf/T in (C.isXRay() \
-				? range(C.view_range, C) \
-				: view(C.view_range, C)))
-			visible_turfs += T
-
-		var/list/bbox = get_bbox_of_atoms(visible_turfs)
-		var/size_x = bbox[3] - bbox[1] + 1
-		var/size_y = bbox[4] - bbox[2] + 1
-
-		cam_screen.vis_contents = visible_turfs
-		cam_background.icon_state = "clear"
-		cam_background.fill_rect(1, 1, size_x, size_y)
+		update_active_camera_screen()
 
 		return TRUE
+
+/obj/machinery/computer/security/proc/update_active_camera_screen()
+	// Show static if can't use the camera
+	if(!active_camera?.can_use())
+		show_camera_static()
+		return
+
+	var/list/visible_turfs = list()
+
+	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
+	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
+
+	// If we're not forcing an update for some reason and the cameras are in the same location,
+	// we don't need to update anything.
+	// Most security cameras will end here as they're not moving.
+	var/newturf = get_turf(cam_location)
+	if(last_camera_turf == newturf)
+		return
+
+	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
+	last_camera_turf = get_turf(cam_location)
+
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+
+	for(var/turf/visible_turf in visible_things)
+		visible_turfs += visible_turf
+
+	var/list/bbox = get_bbox_of_atoms(visible_turfs)
+	var/size_x = bbox[3] - bbox[1] + 1
+	var/size_y = bbox[4] - bbox[2] + 1
+
+	cam_screen.vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	var/user_ref = REF(user)
@@ -151,7 +181,7 @@
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
-	cam_background.fill_rect(1, 1, default_map_size, default_map_size)
+	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()
@@ -179,7 +209,7 @@
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."
 	icon_state = "television"
-	icon_keyboard = null
+	icon_keyboard = "no_keyboard"
 	icon_screen = "detective_tv"
 	pass_flags = PASSTABLE
 
@@ -211,7 +241,7 @@
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
-	desc = "A console with access to the mining, auxillary base and vault camera networks."
+	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
 	circuit = null
 
@@ -222,16 +252,11 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
 	circuit = null
 	light_power = 0
-
-/obj/machinery/computer/security/telescreen/Initialize()
-	. = ..()
-	var/turf/T = get_turf_pixel(src)
-	if(iswallturf(T))
-		plane = ABOVE_WALL_PLANE
 
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
@@ -246,11 +271,9 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	//interaction_flags_atom = NONE  // interact() is called by BigClick()
+	interaction_flags_atom = NONE  // interact() is called by BigClick()
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
-
-/* If someone would like to try to get this long-distance viewing thing working, be my guest. I tried everything I could possibly think of and it just refused to operate correctly.
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize()
 	. = ..()
@@ -258,9 +281,9 @@
 
 // Bypass clickchain to allow humans to use the telescreen from a distance
 /obj/machinery/computer/security/telescreen/entertainment/proc/BigClick()
-	interact(usr)
+	SIGNAL_HANDLER
 
-*/
+	INVOKE_ASYNC(src, /atom.proc/interact, usr)
 
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on)
 	if(on && icon_state == icon_state_off)
@@ -279,8 +302,8 @@
 	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
 
 /obj/machinery/computer/security/telescreen/circuitry
-	name = "circuitry telescreen"
-	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
+	name = "research telescreen"
+	desc = "A telescreen with access to the research division's camera network."
 	network = list("rd")
 
 /obj/machinery/computer/security/telescreen/ce
@@ -324,8 +347,8 @@
 	network = list("prison")
 
 /obj/machinery/computer/security/telescreen/auxbase
-	name = "auxillary base monitor"
-	desc = "A telescreen that connects to the auxillary base's camera."
+	name = "auxiliary base monitor"
+	desc = "A telescreen that connects to the auxiliary base's camera."
 	network = list("auxbase")
 
 /obj/machinery/computer/security/telescreen/minisat
@@ -346,3 +369,5 @@
 	for(var/i in network)
 		network -= i
 		network += "[idnum][i]"
+
+#undef DEFAULT_MAP_SIZE

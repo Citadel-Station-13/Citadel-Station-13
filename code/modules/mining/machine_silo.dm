@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
+/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I, remote = null)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if(user.a_intent != INTENT_HELP)
@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return
 	// assumes unlimited space...
 	var/amount = I.amount
-	materials.user_insert(I, user)
+	materials.user_insert(I, user, remote)
 	silo_log(M, "deposited", amount, "sheets", item_mats)
 	return TRUE
 
@@ -170,8 +170,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 
-/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (istype(I))
+/obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/I)
+	if(I.tool_behaviour == TOOL_MULTITOOL)
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
 		return TRUE

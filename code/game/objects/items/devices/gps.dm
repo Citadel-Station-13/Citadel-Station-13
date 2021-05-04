@@ -8,11 +8,12 @@
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
+	var/emp_proof = FALSE
 	var/starton = TRUE
 
 /obj/item/gps/Initialize()
 	. = ..()
-	AddComponent(/datum/component/gps/item, gpstag, starton)
+	AddComponent(/datum/component/gps/item, gpstag, emp_proof, starton)
 
 /obj/item/gps/science
 	icon_state = "gps-s"

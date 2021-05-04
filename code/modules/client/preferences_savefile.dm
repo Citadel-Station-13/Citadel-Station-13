@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	48
+#define SAVEFILE_VERSION_MAX	50
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -271,7 +271,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			loadout_data["SAVE_[i]"] = list()
 		for(var/some_gear_item in saved_loadout_paths)
 			if(!ispath(text2path(some_gear_item)))
-				message_admins("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
+				log_game("Failed to copy item [some_gear_item] to new loadout system when migrating from version [current_version] to 40, issue: item is not a path")
 				continue
 			var/datum/gear/gear_item = text2path(some_gear_item)
 			if(!(initial(gear_item.loadout_flags) & LOADOUT_CAN_COLOR_POLYCHROMIC))
@@ -287,6 +287,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 48) //unlockable loadout items but we need to clear bad data from a mistake
 		S["unlockable_loadout"] = list()
+
+	if(current_version < 50)
+		var/list/L
+		S["be_special"] >> L
+		if(islist(L))
+			L -= ROLE_SYNDICATE
+		S["be_special"] << L
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -378,6 +385,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["auto_ooc"]			>> auto_ooc
 	S["no_tetris_storage"]		>> no_tetris_storage
 
+	//favorite outfits
+	S["favorite_outfits"]	>> favorite_outfits
+
+	var/list/parsed_favs = list()
+	for(var/typetext in favorite_outfits)
+		var/datum/outfit/path = text2path(typetext)
+		if(ispath(path)) //whatever typepath fails this check probably doesn't exist anymore
+			parsed_favs += path
+	favorite_outfits = uniqueList(parsed_favs)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -427,6 +443,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
 	key_bindings 			= sanitize_islist(key_bindings, list())
 	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
+	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 
 	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
@@ -528,6 +545,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_skin"], pda_skin)
 	WRITE_FILE(S["key_bindings"], key_bindings)
 	WRITE_FILE(S["modless_key_bindings"], modless_key_bindings)
+	WRITE_FILE(S["favorite_outfits"], favorite_outfits)
 
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
@@ -604,8 +622,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["body_model"]				>> features["body_model"]
 	S["body_size"]				>> features["body_size"]
 	S["age"]					>> age
-	S["language"]				>> language
-	S["choselanguage"]			>> choselanguage
 	S["hair_color"]				>> hair_color
 	S["facial_hair_color"]		>> facial_hair_color
 	S["eye_type"]				>> eye_type
@@ -626,6 +642,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uplink_loc"]				>> uplink_spawn_loc
 	S["custom_speech_verb"]		>> custom_speech_verb
 	S["custom_tongue"]			>> custom_tongue
+	S["additional_language"]	>> additional_language
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -658,6 +675,21 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		modified_limbs = safe_json_decode(limbmodstr)
 	else
 		modified_limbs = list()
+
+	var/tcgcardstr
+	S["tcg_cards"] >> tcgcardstr
+	if(length(tcgcardstr))
+		tcg_cards = safe_json_decode(tcgcardstr)
+	else
+		tcg_cards = list()
+
+	var/tcgdeckstr
+	S["tcg_decks"] >> tcgdeckstr
+	if(length(tcgdeckstr))
+		tcg_decks = safe_json_decode(tcgdeckstr)
+	else
+		tcg_decks = list()
+
 	S["chosen_limb_id"]					>> chosen_limb_id
 	S["hide_ckey"]						>> hide_ckey //saved per-character
 
@@ -866,6 +898,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	custom_speech_verb				= sanitize_inlist(custom_speech_verb, GLOB.speech_verbs, "default")
 	custom_tongue					= sanitize_inlist(custom_tongue, GLOB.roundstart_tongues, "default")
+	additional_language				= sanitize_inlist(additional_language, GLOB.roundstart_languages, "None")
 
 	security_records				= copytext(security_records, 1, MAX_FLAVOR_LEN)
 	medical_records					= copytext(medical_records, 1, MAX_FLAVOR_LEN)
@@ -949,8 +982,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["body_model"]				, features["body_model"])
 	WRITE_FILE(S["body_size"]				, features["body_size"])
 	WRITE_FILE(S["age"]						, age)
-	WRITE_FILE(S["language"]				, language)
-	WRITE_FILE(S["choselanguage"]			, choselanguage)
 	WRITE_FILE(S["hair_color"]				, hair_color)
 	WRITE_FILE(S["facial_hair_color"]		, facial_hair_color)
 	WRITE_FILE(S["eye_type"]				, eye_type)
@@ -972,6 +1003,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["species"]					, pref_species.id)
 	WRITE_FILE(S["custom_speech_verb"]		, custom_speech_verb)
 	WRITE_FILE(S["custom_tongue"]			, custom_tongue)
+	WRITE_FILE(S["additional_language"]		, additional_language)
 
 	// records
 	WRITE_FILE(S["security_records"]		, security_records)
@@ -1094,6 +1126,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["loadout"] << safe_json_encode(loadout_data)
 	else
 		S["loadout"] << safe_json_encode(list())
+
+	if(length(tcg_cards))
+		S["tcg_cards"] << safe_json_encode(tcg_cards)
+	else
+		S["tcg_cards"] << safe_json_encode(list())
+
+	if(length(tcg_decks))
+		S["tcg_decks"] << safe_json_encode(tcg_decks)
+	else
+		S["tcg_decks"] << safe_json_encode(list())
 
 	cit_character_pref_save(S)
 
