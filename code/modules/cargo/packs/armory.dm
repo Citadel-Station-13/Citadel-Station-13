@@ -176,6 +176,7 @@
 					/obj/effect/spawner/bundle/crate/surplusrifle,
 					/obj/item/storage/toolbox/ammo/surplus)
 	crate_name = "surplus military crate"
+	crate_type = /obj/structure/closet/crate/secure/soviet
 
 /datum/supply_pack/security/armory/russian/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 5)
