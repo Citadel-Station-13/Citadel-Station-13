@@ -1,0 +1,5 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "Nightmare Shadow Jaunt threshold up to 0.4"
+  - balance: "Vendor and Engraved message light down to 0.3"
