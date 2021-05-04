@@ -48,3 +48,12 @@
 	price_max = 300
 	stock_max = 3
 	availability_prob = 40
+
+/datum/blackmarket_item/weapon/derringer
+	name = ".38 Derringer"
+	desc = "Compact safety! Now at a premium!"
+	item = /obj/item/gun/ballistic/derringer
+	price_min = 500
+	price_max = 1500
+	stock_max = 3
+	availability_prob = 30

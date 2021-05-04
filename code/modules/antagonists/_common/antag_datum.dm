@@ -111,6 +111,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			var/datum/skill_modifier/job/M = GLOB.skill_modifiers[GET_SKILL_MOD_ID(A, type)]
 			if(istype(M))
 				M.name = "[name] Training"
+	owner.AddComponent(/datum/component/activity)
 	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
@@ -141,6 +142,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	// we don't remove the activity component on purpose--no real point to it
 	qdel(src)
 
 /datum/antagonist/proc/greet()

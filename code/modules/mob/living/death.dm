@@ -55,6 +55,8 @@
 
 
 /mob/living/death(gibbed)
+	SEND_SIGNAL(src, COMSIG_LIVING_PREDEATH, gibbed)
+
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time

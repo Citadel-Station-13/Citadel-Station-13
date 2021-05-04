@@ -1620,8 +1620,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE, null, \
 					user, "<span class='danger'>You [atk_verb]ed [target]!</span>")
 
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.set_last_attacker(user)
 		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
@@ -2039,8 +2038,6 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 				user, "<span class='danger'>You shove [target.name]!</span>")
 		target.Stagger(SHOVE_STAGGER_DURATION)
 		var/obj/item/target_held_item = target.get_active_held_item()
-		if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
-			target_held_item = null
 		if(!target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
 				if(!HAS_TRAIT(target_held_item, TRAIT_NODROP))
@@ -2058,7 +2055,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = SHARP_NONE)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
+	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness) // make sure putting wound_bonus here doesn't screw up other signals or uses for this signal
 	var/hit_percent = (100-(blocked+armor))/100
 	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
 	if(!forced && hit_percent <= 0)
