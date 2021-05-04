@@ -2448,11 +2448,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									// gross copypasta here because mam markings arent a subtype of regular markings despite one containing the other ???
 									if(istype(S, /datum/sprite_accessory/body_markings))
 										var/datum/sprite_accessory/body_markings/marking = S
-										if(!(text2num(GLOB.bodypart_names[selected_limb]) in marking.covered_limbs))
+										if(!(GLOB.bodypart_names[num2text(selected_limb)] in marking.covered_limbs))
 											continue
 									if(istype(S, /datum/sprite_accessory/mam_body_markings))
 										var/datum/sprite_accessory/mam_body_markings/marking = S
-										if(!(text2num(GLOB.bodypart_names[selected_limb]) in marking.covered_limbs))
+										if(!(GLOB.bodypart_names[num2text(selected_limb)] in marking.covered_limbs))
 											continue
 
 									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
