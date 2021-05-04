@@ -524,7 +524,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(marking_type)
 				dat += APPEARANCE_CATEGORY_COLUMN
 				dat += "<h3>[GLOB.all_mutant_parts[marking_type]]</h3>" // give it the appropriate title for the type of marking
-				dat += "<a href='?_src_=prefs;preference=marking_add;marking_type=[marking_type];task=input;>Add marking</a>"
+				dat += "<a href='?_src_=prefs;preference=marking_add;marking_type=[marking_type];task=input'>Add marking</a>"
 				// list out the current markings you have
 				if(length(features[marking_type]))
 					dat += "<table>"
@@ -554,10 +554,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
-				// these are sorted out separately due to the rp marking system being funky
-				// NOTE TO SELF: UNCOMMENT THIS ONCE YOU'RE DONE DEBUGGING
-				//if(istype(accessory, /datum/sprite_accessory/mam_body_markings) || istype(accessory, /datum/sprite_accessory/body_markings))
-				//	continue
+				if(istype(accessory, /datum/sprite_accessory/mam_body_markings) || istype(accessory, /datum/sprite_accessory/body_markings))
+					continue
 				if(parent.can_have_part(mutant_part))
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
@@ -2450,11 +2448,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									// gross copypasta here because mam markings arent a subtype of regular markings despite one containing the other ???
 									if(istype(S, /datum/sprite_accessory/body_markings))
 										var/datum/sprite_accessory/body_markings/marking = S
-										if(!(GLOB.bodypart_names[selected_limb] in marking.covered_limbs))
+										if(!(text2num(GLOB.bodypart_names[selected_limb]) in marking.covered_limbs))
 											continue
 									if(istype(S, /datum/sprite_accessory/mam_body_markings))
 										var/datum/sprite_accessory/mam_body_markings/marking = S
-										if(!(GLOB.bodypart_names[selected_limb] in marking.covered_limbs))
+										if(!(text2num(GLOB.bodypart_names[selected_limb]) in marking.covered_limbs))
 											continue
 
 									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
