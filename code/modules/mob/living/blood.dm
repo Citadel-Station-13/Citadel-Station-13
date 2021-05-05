@@ -99,14 +99,22 @@
 			bleed(temp_bleed)
 
 //Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/proc/bleed(amt)
-	if(blood_volume)
+/mob/living/carbon/proc/bleed(amt, force)
+	var/bled = FALSE //Have we bled amnt?
+	if(blood_volume > amnt)
 		blood_volume = max(blood_volume - amt, 0)
-		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
-			if(amt >= 10)
-				add_splatter_floor(src.loc)
-			else
-				add_splatter_floor(src.loc, 1)
+		bled = TRUE
+	if(integrating_blood > amnt)
+		integrating_blood = max(integrating_blood - amt, 0)
+		bled = TRUE
+	if(!bled && !force) //If we are already cycling back through, don't do this again
+		bleed(amt, TRUE) //we cycle back through to try to bleed SOMETHING, not neccesarily the required amount
+		return
+	if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+		if(amt >= 10)
+			add_splatter_floor(src.loc)
+		else
+			add_splatter_floor(src.loc, TRUE)
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
@@ -119,6 +127,7 @@
 
 /mob/living/proc/restore_blood()
 	blood_volume = initial(blood_volume)
+	integrating_blood = 0
 
 /mob/living/carbon/restore_blood()
 	blood_volume = (BLOOD_VOLUME_NORMAL * blood_ratio)
@@ -381,6 +390,9 @@
 		var/mob/living/carbon/human/H = src
 		H.handle_blood()
 
-/mob/living/proc/AddIntegrationBlood(value)
-	if(blood_volume + integrating_blood < BLOOD_VOLUME_NORMAL)
+/mob/living/proc/AddIntegrationBlood(value, force)
+	var/species_maxblood = BLOOD_VOLUME_NORMAL
+	if(isslimeperson(src) || isvampire(src))
+		species_maxblood = BLOOD_VOLUME_MAXIMUM
+	if(blood_volume + integrating_blood < species_maxblood || force)
 		integrating_blood += value
