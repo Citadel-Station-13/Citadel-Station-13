@@ -39,12 +39,13 @@
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+		integrating_blood --
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			var/nutrition_ratio = 0
 			if(integrating_blood) //Do we have blood to normalize in our system?
-				integrating_blood --
 				blood_volume ++
+					//vomit(blood = TRUE) //Too much, just too much
 			if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
 				switch(nutrition)
 					if(0 to NUTRITION_LEVEL_STARVING)
@@ -64,9 +65,14 @@
 		else
 			if(integrating_blood)
 				integrating_blood --
+				if(integrating_blood > BLOOD_VOLUME_NORMAL) //Let's not allow too much
+					integrating_blood = BLOOD_VOLUME_NORMAL
+				if(integrating_blood > blood_volume)
+					integrating_blood = BLOOD_VOLUME_NORMAL - 
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
-		switch(blood_volume)
+		var/blood_effect_volume = blood_volume + integrating_blood
+		switch(blood_effect_volume)
 			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 				if(prob(10))
 					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")

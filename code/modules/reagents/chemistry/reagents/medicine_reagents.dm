@@ -405,13 +405,10 @@
 	if((HAS_TRAIT(M, TRAIT_NOMARROW)))
 		return
 	if(last_added)
-		M.blood_volume -= last_added
+		M.integrating_blood -= min(M.integrating_blood, last_added)
 		last_added = 0
 	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
-		var/amount_to_add = min(M.blood_volume, volume*5)
-		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
-		last_added = new_blood_level - M.blood_volume
-		M.integrating_blood += extra_regen
+		last_added = volume * 5
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
