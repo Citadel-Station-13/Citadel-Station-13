@@ -691,12 +691,12 @@
 				if(H.blood_volume < (BLOOD_VOLUME_SAFE*H.blood_ratio))
 					var/restore_blood = (BLOOD_VOLUME_SAFE*H.blood_ratio) - H.blood_volume
 					if(uses*2 < restore_blood)
-						H.blood_volume += uses*2
+						H.integrating_blood += uses*2
 						to_chat(user,"<span class='danger'>You use the last of your blood rites to restore what blood you could!</span>")
 						uses = 0
 						return ..()
 					else
-						H.blood_volume = (BLOOD_VOLUME_SAFE*H.blood_ratio)
+						H.integrating_blood = (BLOOD_VOLUME_SAFE*H.blood_ratio)
 						uses -= round(restore_blood/2)
 						to_chat(user,"<span class='warning'>Your blood rites have restored [H == user ? "your" : "[H.p_their()]"] blood to safe levels!</span>")
 				var/overall_damage = H.getBruteLoss() + H.getFireLoss() + H.getToxLoss() + H.getOxyLoss()
