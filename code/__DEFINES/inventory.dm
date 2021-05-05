@@ -47,6 +47,9 @@
 /// Legcuff slot (bolas, beartraps)
 #define ITEM_SLOT_LEGCUFFED (1<<19)
 
+/// @depricated THIS IS A BANAID FIX
+#define ITEM_SLOT_POCKET (ITEM_SLOT_LPOCKET | ITEM_SLOT_RPOCKET)
+
 //SLOTS
 #define SLOT_BACK			1
 #define SLOT_WEAR_MASK		2
@@ -69,6 +72,7 @@
 #define SLOT_IN_BACKPACK	18
 #define SLOT_LEGCUFFED		19
 #define SLOT_GENERC_DEXTROUS_STORAGE	20
+
 
 
 #define SLOTS_AMT			20 // Keep this up to date!
@@ -101,14 +105,18 @@
 			. = ITEM_SLOT_OCLOTHING
 		if(SLOT_W_UNIFORM)
 			. = ITEM_SLOT_ICLOTHING
-		if(SLOT_L_STORE, SLOT_R_STORE)
-			. = ITEM_SLOT_POCKET
+		if(SLOT_L_STORE)
+			. = ITEM_SLOT_LPOCKET
+		if(SLOT_R_STORE)
+			. = ITEM_SLOT_RPOCKET
 		if(SLOT_HANDS)
 			. = ITEM_SLOT_HANDS
 		if(SLOT_IN_BACKPACK)
 			. = ITEM_SLOT_BACKPACK
 		if(SLOT_S_STORE)
 			. = ITEM_SLOT_SUITSTORE
+		if(SLOT_LEGCUFFED)
+			. = ITEM_SLOT_LEGCUFFED
 
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
