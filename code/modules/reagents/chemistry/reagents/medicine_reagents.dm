@@ -411,7 +411,7 @@
 		var/amount_to_add = min(M.blood_volume, volume*5)
 		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
 		last_added = new_blood_level - M.blood_volume
-		M.integrating_blood = new_blood_level + extra_regen
+		M.integrating_blood += extra_regen
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
