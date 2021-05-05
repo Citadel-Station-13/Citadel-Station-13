@@ -530,22 +530,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/list/reverse_markings = reverseList(markings)
 					for(var/list/marking_list in reverse_markings)
 						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
-						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
+						var/limb_value = marking_list[1]
+						var/actual_name = GLOB.bodypart_names[num2text(limb_value)] // get the actual name from the bitflag representing the part the marking is applied to
 						var/color_marking_dat = ""
 						var/number_colors = 1
-						var/datum/sprite_accessory/S = GLOB.mam_body_markings_list[marking_list[2]]
-						if(S && S.matrixed_sections && S.matrixed_sections != MATRIX_NONE)
+						var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[marking_list[2]]
+						var/matrixed_sections = S.covered_limbs[limb_value]
+						if(S && matrixed_sections)
 							// if it has nothing initialize it to white
 							if(length(marking_list) == 2)
 								marking_list += list(list("#FFFFFF","#FFFFFF","#FFFFFF")) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
 							// we know it has one matrixed section at minimum
 							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
 							// if it has a second section, add it
-							if(S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_RED_GREEN || S.matrixed_sections == MATRIX_ALL)
+							if(matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)
 								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
 								number_colors = 2
 							// if it has a third section, add it
-							if(S.matrixed_sections == MATRIX_ALL)
+							if(matrixed_sections == MATRIX_ALL)
 								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
 								number_colors = 3
 							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];number_colors=[number_colors];task=input'>Change</a><BR>"
