@@ -138,3 +138,13 @@
 	embedding = list(embed_chance=90, fall_chance=2, jostle_chance=5, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
 	wound_falloff_tile = -1
 	embed_falloff_tile = -5
+
+//.45-70 GOVT (Gunslinger's Derringer)
+//0bserver here. For all that is holy, do me a flavor, and do NOT allow people easy access to this ammo. This is meant for extremely lucky traitors, and nuclear operatives.
+
+/obj/item/projectile/bullet/g4570
+	name = ".45-70 Govt bullet"
+	damage = 60
+	armour_penetration = 40
+	wound_bonus = -80
+

@@ -59,6 +59,12 @@
 	has_sensor = TRUE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0, "wound" = 5)
 
+/obj/item/clothing/under/syndicate/cosmetic/skirt
+	name = "tactitool skirtleneck"
+	icon_state = "tactifool_skirt"
+	fitted = FEMALE_UNIFORM_TOP
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
+
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
 	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."

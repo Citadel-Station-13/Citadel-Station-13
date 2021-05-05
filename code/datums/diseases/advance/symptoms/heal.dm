@@ -384,7 +384,7 @@
 	var/temp_rate = 1
 	threshold_desc = list(
 		"Transmission 6" = "Additionally increases temperature adjustment rate and heals those who love toxins",
-		"Resistance 7" = "Increases healing speed.",
+		"Stage Speed 7" = "Increases healing speed.",
 	)
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	if(!..())

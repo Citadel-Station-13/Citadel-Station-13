@@ -43,7 +43,7 @@
 /turf/open/floor/grass,
 /area/ruin/space)
 "S" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/space)
 "V" = (
 /obj/item/bong/coconut,

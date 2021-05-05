@@ -24,7 +24,8 @@
 
 /datum/clockwork_scripture/create_object/stargazer/check_special_requirements()
 	var/area/A = get_area(invoker)
-	if(A.outdoors || A.map_name == "Space" || !A.blob_allowed)
+	var/turf/T = get_turf(invoker)
+	if(!is_station_level(invoker.z) || isspaceturf(T) || !(A.area_flags & VALID_TERRITORY))
 		to_chat(invoker, "<span class='danger'>Stargazers can't be built off-station.</span>")
 		return
 	return ..()
