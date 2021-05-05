@@ -443,7 +443,7 @@ Difficulty: Hard
 		charge(chargeat, delay, chargepast)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
-	name = "bubblegum's hallucination"
+	name = "Bubblegum's hallucination"
 	desc = "Is that really just a hallucination?"
 	health = 1
 	maxHealth = 1
