@@ -39,13 +39,13 @@
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		integrating_blood --
+		if(integrating_blood)
+			integrating_blood --
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			var/nutrition_ratio = 0
 			if(integrating_blood) //Do we have blood to normalize in our system?
 				blood_volume ++
-					//vomit(blood = TRUE) //Too much, just too much
 			if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
 				switch(nutrition)
 					if(0 to NUTRITION_LEVEL_STARVING)
@@ -62,13 +62,7 @@
 					nutrition_ratio *= 1.25
 				adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
 				blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
-		else
-			if(integrating_blood)
-				integrating_blood --
-				if(integrating_blood > BLOOD_VOLUME_NORMAL) //Let's not allow too much
-					integrating_blood = BLOOD_VOLUME_NORMAL
-				if(integrating_blood > blood_volume)
-					integrating_blood = BLOOD_VOLUME_NORMAL - 
+
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
 		var/blood_effect_volume = blood_volume + integrating_blood
@@ -386,3 +380,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.handle_blood()
+
+/mob/living/proc/AddIntegrationBlood(value)
+	if(blood_volume + integrating_blood < BLOOD_VOLUME_NORMAL)
+		integrating_blood += value

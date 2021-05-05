@@ -409,6 +409,7 @@
 		last_added = 0
 	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
 		last_added = volume * 5
+		M.AddIntegrationBlood(last_added)
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
@@ -1271,7 +1272,7 @@
 	M.adjustCloneLoss(-3*REM, FALSE)
 	M.adjustStaminaLoss(-25*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.integrating_blood += 40 // blood fall out man bad
+		M.AddIntegrationBlood(40) // blood fall out man bad
 	..()
 	. = 1
 
@@ -1292,7 +1293,7 @@
 	M.adjustCloneLoss(-1.25*REM, FALSE)
 	M.adjustStaminaLoss(-4*REM,FALSE)
 	if(M.blood_volume < (BLOOD_VOLUME_NORMAL*M.blood_ratio))
-		M.integrating_blood += 3
+		M.AddIntegrationBlood(3)
 	..()
 	. = 1
 

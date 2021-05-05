@@ -107,7 +107,7 @@
 /datum/nanite_program/blood_restoring/active_effect()
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
-		C.integrating_blood += 2
+		C.AddIntegrationBlood(2)
 
 /datum/nanite_program/repairing
 	name = "Mechanical Repair"
