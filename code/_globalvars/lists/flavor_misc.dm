@@ -55,7 +55,6 @@ GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"frills" = GLOB.frills_list,
 	"horns" = GLOB.horns_list,
 	"ears" = GLOB.ears_list,
-	"body_markings" = GLOB.body_markings_list,
 	"wings" = GLOB.wings_list,
 	"wingsopen" = GLOB.wings_open_list,
 	"deco_wings" = GLOB.deco_wings_list,

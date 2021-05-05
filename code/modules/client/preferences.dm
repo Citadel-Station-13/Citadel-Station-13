@@ -529,7 +529,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(length(features[marking_type]))
 					dat += "<table>"
 					var/list/markings = features[marking_type]
-					for(var/list/marking_list in markings)
+					var/list/reverse_markings = reverseList(markings)
+					for(var/list/marking_list in reverse_markings)
 						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
 						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
 						var/color_marking_dat = ""
@@ -2446,11 +2447,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							for(var/path in marking_list)
 								var/datum/sprite_accessory/S = marking_list[path]
 								if(istype(S))
-									// gross copypasta here because mam markings arent a subtype of regular markings despite one containing the other ???
-									if(istype(S, /datum/sprite_accessory/body_markings))
-										var/datum/sprite_accessory/body_markings/marking = S
-										if(!(limb_value in marking.covered_limbs))
-											continue
 									if(istype(S, /datum/sprite_accessory/mam_body_markings))
 										var/datum/sprite_accessory/mam_body_markings/marking = S
 										if(!(limb_value in marking.covered_limbs))

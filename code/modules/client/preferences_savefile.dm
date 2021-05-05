@@ -295,11 +295,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			L -= ROLE_SYNDICATE
 		S["be_special"] << L
 
-	if(current_version < 51) // rp markings means markings are now stored as a list
+	if(current_version < 51) // rp markings means markings are now stored as a list, lizard markings now mam like the rest
 		var/marking_type
 		var/species_id = S["species"]
 		var/datum/species/actual_species = GLOB.species_datums[species_id]
-		if(actual_species.mutant_bodyparts["body_markings"] && S["feature_lizard_body_markings"]) marking_type = "feature_lizard_body_markings"
+
+		// convert lizard markings to lizard markings
+		if(species_id == SPECIES_LIZARD && S["feature_lizard_body_markings"])
+			S["feature_mam_body_markings"] = S["feature_lizard_body_markings"]
+
+		// convert mam body marking data to the new rp marking data
 		if(actual_species.mutant_bodyparts["mam_body_markings"] && S["feature_mam_body_markings"]) marking_type = "feature_mam_body_markings"
 
 		if(marking_type)
@@ -670,7 +675,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_horns"]			>> features["horns"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
-	features["body_markings"] = safe_json_decode(S["feature_lizard_body_markings"])
 	S["feature_lizard_legs"]			>> features["legs"]
 	S["feature_human_tail"]				>> features["tail_human"]
 	S["feature_human_ears"]				>> features["ears"]
@@ -1037,7 +1041,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_human_ears"]				, features["ears"])
 	WRITE_FILE(S["feature_lizard_frills"]			, features["frills"])
 	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
-	WRITE_FILE(S["feature_lizard_body_markings"]	, safe_json_encode(features["body_markings"]))
 	WRITE_FILE(S["feature_lizard_legs"]				, features["legs"])
 	WRITE_FILE(S["feature_deco_wings"]				, features["deco_wings"])
 	WRITE_FILE(S["feature_horns_color"]				, features["horns_color"])

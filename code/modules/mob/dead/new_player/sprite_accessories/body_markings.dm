@@ -1,41 +1,4 @@
 /******************************************
-************* Lizard Markings *************
-*******************************************/
-
-/datum/sprite_accessory/body_markings
-	icon = 'icons/mob/mutant_bodyparts.dmi'
-	relevant_layers = list(BODY_ADJ_LAYER)
-	mutant_part_string = "body_markings"
-	var/list/covered_limbs = list(HEAD, CHEST, LEG_LEFT, LEG_RIGHT, ARM_LEFT, ARM_RIGHT)
-
-/datum/sprite_accessory/body_markings/none
-	name = "None"
-	icon_state = "none"
-	relevant_layers = null
-
-/datum/sprite_accessory/body_markings/dtiger
-	name = "Dark Tiger Body"
-	icon_state = "dtiger"
-	gender_specific = 1
-
-/datum/sprite_accessory/body_markings/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	color_src = MATRIXED
-	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
-	matrixed_sections = MATRIX_ALL
-
-/datum/sprite_accessory/body_markings/ltiger
-	name = "Light Tiger Body"
-	icon_state = "ltiger"
-	gender_specific = 1
-
-/datum/sprite_accessory/body_markings/lbelly
-	name = "Light Belly"
-	icon_state = "lbelly"
-	gender_specific = 1
-
-/******************************************
 ************ Furry Markings ***************
 *******************************************/
 
@@ -226,6 +189,25 @@
 	name = "Xeno"
 	icon_state = "xeno"
 	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+
+// sticking old lizard markings here for now
+/datum/sprite_accessory/mam_body_markings/dtiger
+	name = "Dark Tiger Body"
+	icon_state = "dtiger"
+
+/datum/sprite_accessory/mam_body_markings/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	icon = 'modular_citadel/icons/mob/markings_notmammals.dmi'
+	matrixed_sections = MATRIX_ALL
+
+/datum/sprite_accessory/mam_body_markings/ltiger
+	name = "Light Tiger Body"
+	icon_state = "ltiger"
+
+/datum/sprite_accessory/mam_body_markings/lbelly
+	name = "Light Belly"
+	icon_state = "lbelly"
 
 /******************************************
 ************* Insect Markings *************
