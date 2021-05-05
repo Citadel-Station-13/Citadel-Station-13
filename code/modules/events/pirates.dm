@@ -206,6 +206,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = LIGHT_COLOR_RED
+	req_access = list(ACCESS_SYNDICATE)
 	possible_destinations = "pirateship_away;pirateship_home;pirateship_custom"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
@@ -214,7 +215,7 @@
 	shuttleId = "pirateship"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
-	x_offset = 9
+	x_offset = 7
 	y_offset = 0
 	see_hidden = FALSE
 
