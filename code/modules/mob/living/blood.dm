@@ -101,10 +101,10 @@
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt, force)
 	var/bled = FALSE //Have we bled amnt?
-	if(blood_volume > amnt)
+	if(blood_volume > amt || force && blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
 		bled = TRUE
-	if(integrating_blood > amnt)
+	if(integrating_blood > amt || force && integrating_blood)
 		integrating_blood = max(integrating_blood - amt, 0)
 		bled = TRUE
 	if(!bled && !force) //If we are already cycling back through, don't do this again
