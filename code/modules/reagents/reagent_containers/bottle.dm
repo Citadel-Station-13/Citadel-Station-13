@@ -56,7 +56,7 @@
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
-	desc = "A small bottle. Contains bicardine - used to treat minor poisoning."
+	desc = "A small bottle. Contains anti-toxin - used to treat minor poisoning."
 	list_reagents = list(/datum/reagent/medicine/antitoxin = 30)
 
 /obj/item/reagent_containers/glass/bottle/dexalin
