@@ -13,7 +13,7 @@
 	gender_specific = 0
 	icon = 'modular_citadel/icons/mob/mam_markings.dmi'
 	recommended_species = list("mammal", "xeno", "slimeperson", "podweak")
-	matrixed_sections = MATRIX_ALL
+	matrixed_sections = MATRIX_ALL // this value is used if there is no value in covered_limbs, don't rely on it, it's a backup value
 	var/list/covered_limbs = list(HEAD, CHEST, LEG_LEFT, LEG_RIGHT, ARM_LEFT, ARM_RIGHT)
 
 /datum/sprite_accessory/mam_body_markings/none
