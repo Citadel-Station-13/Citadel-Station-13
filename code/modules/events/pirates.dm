@@ -215,8 +215,8 @@
 	shuttleId = "pirateship"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
-	x_offset = 7
-	y_offset = 0
+	x_offset = 11
+	y_offset = 1
 	see_hidden = FALSE
 
 /obj/docking_port/mobile/pirate
