@@ -542,7 +542,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							// we know it has one matrixed section at minimum
 							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
 							// if it has a second section, add it
-							if(S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_RED_GREEN)
+							if(S.matrixed_sections == MATRIX_RED_BLUE || S.matrixed_sections == MATRIX_GREEN_BLUE || S.matrixed_sections == MATRIX_RED_GREEN || S.matrixed_sections == MATRIX_ALL)
 								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
 								number_colors = 2
 							// if it has a third section, add it
@@ -554,7 +554,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</table>"
 
 			for(var/mutant_part in GLOB.all_mutant_parts)
-				if(istype(accessory, /datum/sprite_accessory/mam_body_markings) || istype(accessory, /datum/sprite_accessory/body_markings))
+				if(mutant_part == "body_markings" || mutant_part == "mam_body_markings")
 					continue
 				if(parent.can_have_part(mutant_part))
 					if(!mutant_category)
@@ -2439,6 +2439,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(marking_type && features[marking_type])
 						var/selected_limb = input(user, "Choose the limb to apply to.", "Character Preference") as null|anything in list("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg")
 						if(selected_limb)
+							var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
 							var/list/marking_list = GLOB.mam_body_markings_list
 							if(marking_type == "body_markings") marking_list = GLOB.body_markings_list
 							var/list/snowflake_markings_list = list()
@@ -2448,11 +2449,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									// gross copypasta here because mam markings arent a subtype of regular markings despite one containing the other ???
 									if(istype(S, /datum/sprite_accessory/body_markings))
 										var/datum/sprite_accessory/body_markings/marking = S
-										if(!(GLOB.bodypart_names[num2text(selected_limb)] in marking.covered_limbs))
+										if(!(limb_value in marking.covered_limbs))
 											continue
 									if(istype(S, /datum/sprite_accessory/mam_body_markings))
 										var/datum/sprite_accessory/mam_body_markings/marking = S
-										if(!(GLOB.bodypart_names[num2text(selected_limb)] in marking.covered_limbs))
+										if(!(limb_value in marking.covered_limbs))
 											continue
 
 									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
@@ -2460,7 +2461,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 							var/selected_marking = input(user, "Select the marking to apply to the limb.") as null|anything in snowflake_markings_list
 							if(selected_marking)
-								features[marking_type] += list(list(selected_limb, selected_marking))
+								features[marking_type] += list(list(limb_value, selected_marking))
 
 				if("marking_color")
 					var/index = text2num(href_list["marking_index"])
