@@ -407,7 +407,6 @@
 "aN" = (
 /obj/structure/table/optable,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/robot_debris{
 	layer = 2.81;
 	pixel_x = -2;
@@ -420,6 +419,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
 "aO" = (
@@ -438,18 +438,18 @@
 	pixel_y = -4
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
 "aP" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "aQ" = (
@@ -558,9 +558,9 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aW" = (
@@ -578,12 +578,12 @@
 	},
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/turf_decal/box,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aX" = (
@@ -774,36 +774,36 @@
 	pixel_x = -32;
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/stripes/white/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bl" = (
-/obj/effect/turf_decal/stripes/white/line{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bm" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/vomit/old,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bn" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bo" = (
@@ -946,29 +946,29 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "bC" = (
-/obj/effect/turf_decal/stripes/white/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bD" = (
-/obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bE" = (
-/obj/effect/turf_decal/stripes/white/corner,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bF" = (
@@ -976,6 +976,9 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bG" = (
@@ -1106,12 +1109,12 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "bS" = (
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/corner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/pirate)
 "bT" = (
@@ -1336,18 +1339,39 @@
 /obj/item/stack/sheet/mineral/plastitanium{
 	amount = 20
 	},
-/obj/item/stack/cable_coil/yellow,
-/obj/item/storage/backpack,
+/obj/item/stack/cable_coil/yellow{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil/yellow{
+	pixel_x = 2;
+	pixel_y = -2
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
 "cm" = (
 /obj/structure/table/reinforced,
 /obj/item/pickaxe,
-/obj/item/flashlight/seclite,
-/obj/item/extinguisher/mini,
-/obj/item/storage/backpack,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/pickaxe{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/extinguisher/mini{
+	pixel_x = 4
+	},
+/obj/item/extinguisher/mini{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = -10
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/pirate)
 "cn" = (
@@ -1381,6 +1405,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "cp" = (
@@ -1391,12 +1416,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "cr" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/airalarm/all_access{
 	pixel_y = 24
 	},
@@ -1404,13 +1429,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
 	dir = 1
-	},
-/turf/open/floor/wood,
-/area/shuttle/pirate)
-"cs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -1425,9 +1443,9 @@
 /obj/machinery/shower{
 	dir = 1
 	},
-/obj/effect/turf_decal/box,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "cu" = (
@@ -1489,6 +1507,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/box/red,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "cA" = (
@@ -1496,13 +1515,13 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "cB" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/item/bedsheet/pirate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -1514,9 +1533,6 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 24
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -1882,12 +1898,33 @@
 /turf/closed/wall/r_wall/syndicate/pirate,
 /area/template_noop)
 "dp" = (
-/obj/structure/shuttle/engine/propulsion/right,
-/turf/closed/wall/r_wall/syndicate/pirate/nodiagonal,
+/obj/machinery/porta_turret/syndicate/energy/pirate{
+	faction = list("pirate");
+	icon_state = "standard_lethal"
+	},
+/turf/closed/wall/r_wall/syndicate/pirate,
 /area/shuttle/pirate)
 "dq" = (
 /obj/structure/shuttle/engine/propulsion/left,
-/turf/closed/wall/r_wall/syndicate/pirate/nodiagonal,
+/turf/open/space/basic,
+/area/shuttle/pirate)
+"sP" = (
+/obj/structure/shuttle/engine/propulsion/right,
+/turf/open/space/basic,
+/area/shuttle/pirate)
+"vO" = (
+/turf/open/space/basic,
+/area/template_noop)
+"BD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/pirate)
+"Oh" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/space/basic,
 /area/shuttle/pirate)
 
 (1,1,1) = {"
@@ -2049,7 +2086,7 @@ cJ
 cT
 aj
 aj
-di
+vO
 "}
 (8,1,1) = {"
 af
@@ -2071,7 +2108,7 @@ cD
 cK
 cU
 cD
-cF
+aj
 dp
 "}
 (9,1,1) = {"
@@ -2118,7 +2155,7 @@ cQ
 cW
 dd
 cF
-dp
+sP
 "}
 (11,1,1) = {"
 af
@@ -2141,7 +2178,7 @@ cO
 cX
 de
 cF
-dq
+Oh
 "}
 (12,1,1) = {"
 af
@@ -2164,7 +2201,7 @@ cP
 cY
 df
 cF
-dp
+sP
 "}
 (13,1,1) = {"
 af
@@ -2315,10 +2352,10 @@ az
 aP
 aP
 bn
-bF
+BD
 bT
 aj
-cs
+cf
 cC
 cF
 ck
