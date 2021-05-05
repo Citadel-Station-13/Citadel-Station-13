@@ -175,7 +175,6 @@
 		"ears"				= "None",
 		"frills"			= pick(GLOB.frills_list),
 		"spines"			= pick(GLOB.spines_list),
-		"body_markings"		= pick(GLOB.body_markings_list),
 		"legs"				= pick("Plantigrade","Digitigrade"),
 		"caps"				= pick(GLOB.caps_list),
 		"insect_wings"		= pick(GLOB.insect_wings_list),
