@@ -317,11 +317,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(S["feature_mcolor2"]) color_list[2] = S["feature_mcolor2"]
 			if(S["feature_mcolor3"]) color_list[3] = S["feature_mcolor3"]
 
-			var/marking_list = list()
+			var/list/marking_list = list()
 			for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
 				marking_list += list(list(part, old_marking_value, color_list.Copy()))
 			message_admins("saved data of length [length(marking_list)]")
 			S[marking_type] = safe_json_encode(marking_list)
+			message_admins("final json code is:  [S[marking_type]]")
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
