@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		. = "Exit gateway unpowered."
 
 /datum/gateway_destination/gateway/get_target_turf()
-	return get_step(target_gateway.portal,SOUTH)
+	return get_step(target_gateway, SOUTH)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
