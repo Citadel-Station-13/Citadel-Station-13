@@ -122,9 +122,6 @@ Notes:
 		if(user.client && user.client.tooltips)
 			user.client.tooltips.hide()
 
-/atom/movable
-	var/tooltips = FALSE
-
 /atom/movable/proc/get_tooltip_data()
 	return
 
