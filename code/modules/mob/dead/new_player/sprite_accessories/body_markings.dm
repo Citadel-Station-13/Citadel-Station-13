@@ -296,9 +296,9 @@
 	icon_state = "snow"
 	color_src = HAIR
 
-/datum/sprite_accessory/insect_fluff/death"Head"
-	name = "Deaths"Head""
-	icon_state = "death"Head""
+/datum/sprite_accessory/insect_fluff/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
 
 /datum/sprite_accessory/insect_fluff/featherymoth
 	name = "Feathery Moth"
