@@ -122,6 +122,15 @@ Notes:
 		if(user.client && user.client.tooltips)
 			user.client.tooltips.hide()
 
+/**
+ * # `get_tooltip_data()`
+ *
+ * If set, will return a list for the tooltip (that will also be put together in a `Join()`)
+ * However, if returning `null`, falls back to default behavior, which is `examine(src)`, and it will definitely include
+ * images since it is the default behavior
+ *
+ * Though no tooltips will be created for atoms that have `tooltips = FALSE`
+*/
 /atom/movable/proc/get_tooltip_data()
 	return
 
