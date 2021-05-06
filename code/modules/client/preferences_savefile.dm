@@ -283,7 +283,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				qdel(temporary_gear_item)
 			//it's double packed into a list because += will union the two lists contents
 
-		S["loadout"] = safe_json_encode(loadout_data)
+		S["loadout"] = loadout_data
 
 	if(current_version < 48) //unlockable loadout items but we need to clear bad data from a mistake
 		S["unlockable_loadout"] = list()
