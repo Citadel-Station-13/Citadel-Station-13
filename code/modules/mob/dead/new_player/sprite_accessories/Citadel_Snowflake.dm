@@ -12,6 +12,7 @@
 	name = "DataShark"
 	icon_state = "datashark"
 	ckeys_allowed = list("rubyflamewing")
+	covered_limbs = list(HEAD = MATRIX_RED_GREEN, CHEST = MATRIX_GREEN, LEG_LEFT = MATRIX_GREEN, LEG_RIGHT = MATRIX_GREEN, ARM_LEFT = MATRIX_GREEN, ARM_RIGHT = MATRIX_GREEN)
 
 //Sabresune
 /datum/sprite_accessory/ears/mam_ears/sabresune
@@ -39,6 +40,7 @@
 	name = "Sabresune"
 	icon_state = "sabresune"
 	ckeys_allowed = list("poojawa")
+	covered_limbs = list(HEAD = MATRIX_RED_GREEN, CHEST = MATRIX_RED_GREEN, LEG_LEFT = MATRIX_RED_GREEN, LEG_RIGHT = MATRIX_RED_GREEN, ARM_LEFT = MATRIX_RED_GREEN, ARM_RIGHT = MATRIX_RED_GREEN)
 
 //Lunasune
 /datum/sprite_accessory/ears/mam_ears/lunasune
