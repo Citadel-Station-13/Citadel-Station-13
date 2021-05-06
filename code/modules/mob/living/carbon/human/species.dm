@@ -2046,7 +2046,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 					append_message += ", loosening their grip on [target_held_item]"
 				else
 					append_message += ", but couldn't loose their grip on [target_held_item]"
-		else if(target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
+		if(target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
 				if(shove_blocked)
 					if (targetatrest || target.buckled)
@@ -2055,6 +2055,12 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 						target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 							"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
 						append_message += ", causing them to drop [target_held_item]"
+		else if(target.has_status_effect(STATUS_EFFECT_BATON_BASH))
+			if(target_held_item)
+				if(target.dropItemToGround(target_held_item))
+					target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
+						"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+					append_message += ", causing them to drop [target_held_item]"
 		target.ShoveOffBalance(SHOVE_OFFBALANCE_DURATION)
 		log_combat(user, target, "shoved", append_message)
 

@@ -122,6 +122,9 @@
 /// shoves inflict this to indicate the next shove while this is in effect should disarm guns
 #define STATUS_EFFECT_OFF_BALANCE /datum/status_effect/off_balance
 
+//special status effect for stunbaton right clicks
+#define STATUS_EFFECT_BATON_BASH /datum/status_effect/off_balance/baton_bash
+
 /////////////
 // NEUTRAL //
 /////////////
