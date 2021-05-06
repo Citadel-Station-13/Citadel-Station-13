@@ -302,7 +302,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		// convert lizard markings to lizard markings
 		if(species_id == SPECIES_LIZARD && S["feature_lizard_body_markings"])
-			S["feature_mam_body_markings"] = S["feature_lizard_body_markings"]
+			features["mam_body_markings"] = features["body_markings"]
 
 		// convert mam body marking data to the new rp marking data
 		if(actual_species.mutant_bodyparts["mam_body_markings"] && S["feature_mam_body_markings"]) marking_type = "feature_mam_body_markings"
