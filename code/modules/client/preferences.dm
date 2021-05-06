@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/color_marking_dat = ""
 						var/number_colors = 1
 						var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[marking_list[2]]
-						var/matrixed_sections = S.covered_limbs[limb_value]
+						var/matrixed_sections = S.covered_limbs[actual_name]
 						if(S && matrixed_sections)
 							// if it has nothing initialize it to white
 							if(length(marking_list) == 2)
@@ -2446,7 +2446,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								if(istype(S))
 									if(istype(S, /datum/sprite_accessory/mam_body_markings))
 										var/datum/sprite_accessory/mam_body_markings/marking = S
-										if(!(limb_value in marking.covered_limbs))
+										if(!(selected_limb in marking.covered_limbs))
 											continue
 
 									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
