@@ -311,13 +311,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			var/old_marking_value = S[marking_type]
 			var/list/color_list = list("#FFFFFF","#FFFFFF","#FFFFFF")
 
-			if(S["feature_mcolor"]) color_list[1] = S["feature_mcolor"]
-			if(S["feature_mcolor2"]) color_list[2] = S["feature_mcolor2"]
-			if(S["feature_mcolor3"]) color_list[3] = S["feature_mcolor3"]
+			if(S["feature_mcolor"]) color_list[1] = S["feature_mcolor"] else color_list[1] = "#FFFFFF"
+			if(S["feature_mcolor2"]) color_list[2] = S["feature_mcolor2"] else color_list[2] = "#FFFFFF"
+			if(S["feature_mcolor3"]) color_list[3] = S["feature_mcolor3"] else color_list[3] = "#FFFFFF"
 
 			var/marking_list = list()
 			for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
-				marking_list += list(list(part, old_marking_value, color_list.Copy()))
+				var/list/copied_color_list = color_list.Copy()
+				var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[old_marking_value]
+				if(length(S.covered_limbs) && S.covered_limbs[part])
+					var/matrixed_sections = S.covered_limbs[part]
+					// just trust me this is fine
+					switch(matrixed_sections)
+						if(MATRIX_GREEN)
+							color_list[1] = color_list[2]
+						if(MATRIX_BLUE)
+							color_list[1] = color_list[3]
+						if(MATRIX_RED_BLUE)
+							color_list[2] = color_list[3]
+						if(MATRIX_GREEN_BLUE)
+							color_list[1] = color_list[2]
+							color_list[2] = color_list[3]
+				marking_list += list(list(part, old_marking_value, copied_color_list))
 
 			S[marking_type] = safe_json_encode(marking_list)
 
