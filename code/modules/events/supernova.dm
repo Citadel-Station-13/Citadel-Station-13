@@ -27,7 +27,7 @@
 /datum/round_event/supernova/announce()
 	var/message = "Our tachyon-doppler array has detected a supernova in your vicinity. Peak flux from the supernova estimated to be [round(power,0.1)] times current solar flux. [power > 1 ? "Short burts of radiation may be possible, so please prepare accordingly." : ""]"
 	if(prob(power * 25))
-		priority_announce(message)
+		priority_announce(message, sender_override = "Nanotrasen Meteorology Division")
 	else
 		print_command_report(message)
 
@@ -51,13 +51,15 @@
 		supernova.power_mod = min(supernova.power_mod*1.2, power)
 	if(activeFor > endWhen-10)
 		supernova.power_mod /= 4
-	if(prob(round(supernova.power_mod)) && prob(5) && storm_count < 5 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
+	if(prob(round(supernova.power_mod)) && prob(3) && storm_count < 5 && !SSweather.get_weather_by_type(/datum/weather/rad_storm))
 		SSweather.run_weather(/datum/weather/rad_storm/supernova)
 		storm_count++
 
 /datum/round_event/supernova/end()
 	SSsun.suns -= supernova
 	qdel(supernova)
+	priority_announce("The supernova's flux is now negligible. Radiation storms have ceased. Have a pleasant shift, [station_name()], and thank you for bearing with nature.",
+	sender_override = "Nanotrasen Meteorology Division")
 
 /datum/weather/rad_storm/supernova
 	weather_duration_lower = 50
