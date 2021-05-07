@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Synthblood bottles now have the proper color and probably won't poison you anymore"
