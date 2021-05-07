@@ -318,7 +318,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			var/list/marking_list = list()
 			for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
 				marking_list += list(list(part, old_marking_value, color_list.Copy()))
-			features["mam_body_markings"] = safe_json_encode(marking_list)
+			features["mam_body_markings"] = marking_list
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
