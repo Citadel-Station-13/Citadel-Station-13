@@ -311,9 +311,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			var/old_marking_value = S[marking_type]
 			var/list/color_list = list("#FFFFFF","#FFFFFF","#FFFFFF")
 
-			if(S["feature_mcolor"]) color_list[1] = S["feature_mcolor"]
-			if(S["feature_mcolor2"]) color_list[2] = S["feature_mcolor2"]
-			if(S["feature_mcolor3"]) color_list[3] = S["feature_mcolor3"]
+			if(S["feature_mcolor"]) color_list[1] = "#" + S["feature_mcolor"]
+			if(S["feature_mcolor2"]) color_list[2] = "#" + S["feature_mcolor2"]
+			if(S["feature_mcolor3"]) color_list[3] = "#" + S["feature_mcolor3"]
 
 			var/list/marking_list = list()
 			for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
