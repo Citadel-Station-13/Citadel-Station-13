@@ -283,7 +283,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				qdel(temporary_gear_item)
 			//it's double packed into a list because += will union the two lists contents
 
-		S["loadout"] = safe_json_encode(loadout_data)
+		S["loadout"] = loadout_data
 
 	if(current_version < 48) //unlockable loadout items but we need to clear bad data from a mistake
 		S["unlockable_loadout"] = list()
@@ -302,7 +302,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		// convert lizard markings to lizard markings
 		if(species_id == SPECIES_LIZARD && S["feature_lizard_body_markings"])
-			S["feature_mam_body_markings"] = S["feature_lizard_body_markings"]
+			features["mam_body_markings"] = features["body_markings"]
 
 		// convert mam body marking data to the new rp marking data
 		if(actual_species.mutant_bodyparts["mam_body_markings"] && S["feature_mam_body_markings"]) marking_type = "feature_mam_body_markings"
@@ -311,11 +311,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			var/old_marking_value = S[marking_type]
 			var/list/color_list = list("#FFFFFF","#FFFFFF","#FFFFFF")
 
-			if(S["feature_mcolor"]) color_list[1] = S["feature_mcolor"] else color_list[1] = "#FFFFFF"
-			if(S["feature_mcolor2"]) color_list[2] = S["feature_mcolor2"] else color_list[2] = "#FFFFFF"
-			if(S["feature_mcolor3"]) color_list[3] = S["feature_mcolor3"] else color_list[3] = "#FFFFFF"
+			if(S["feature_mcolor"]) color_list[1] = "#" + S["feature_mcolor"]
+			if(S["feature_mcolor2"]) color_list[2] = "#" + S["feature_mcolor2"]
+			if(S["feature_mcolor3"]) color_list[3] = "#" + S["feature_mcolor3"]
 
-			var/marking_list = list()
+			var/list/marking_list = list()
 			for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
 				var/list/copied_color_list = color_list.Copy()
 				var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[old_marking_value]
@@ -332,9 +332,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						if(MATRIX_GREEN_BLUE)
 							color_list[1] = color_list[2]
 							color_list[2] = color_list[3]
-				marking_list += list(list(part, old_marking_value, copied_color_list))
-
-			S[marking_type] = safe_json_encode(marking_list)
+				marking_list += list(list(part, old_marking_value, color_list.Copy()))
+			features["mam_body_markings"] = marking_list
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

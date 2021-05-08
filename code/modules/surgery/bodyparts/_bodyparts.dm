@@ -833,7 +833,6 @@
 						markings_list.Add(image(marking_list[1], "[marking_list[2]]_[digitigrade_type]_[use_digitigrade]_[body_zone]", -MARKING_LAYER, image_dir))
 
 					if(color_src && length(marking_list) == 3)
-						message_admins("trying to color list of length [length(marking_list)] and also trying to access index [length(markings_list)] on a list of the same length")
 						markings_list[length(markings_list)].color = marking_list[3]
 		. += markings_list
 
