@@ -328,15 +328,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					// just trust me this is fine
 					switch(matrixed_sections)
 						if(MATRIX_GREEN)
-							color_list[1] = color_list[2]
+							copied_color_list[1] = copied_color_list[2]
 						if(MATRIX_BLUE)
-							color_list[1] = color_list[3]
+							copied_color_list[1] = copied_color_list[3]
 						if(MATRIX_RED_BLUE)
-							color_list[2] = color_list[3]
+							copied_color_list[2] = copied_color_list[3]
 						if(MATRIX_GREEN_BLUE)
-							color_list[1] = color_list[2]
-							color_list[2] = color_list[3]
-				marking_list += list(list(part, old_marking_value, color_list.Copy()))
+							copied_color_list[1] = copied_color_list[2]
+							copied_color_list[2] = copied_color_list[3]
+				marking_list += list(list(part, old_marking_value, copied_color_list))
 			features["mam_body_markings"] = marking_list
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
