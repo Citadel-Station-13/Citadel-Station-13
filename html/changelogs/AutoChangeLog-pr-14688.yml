@@ -1,0 +1,6 @@
+author: "SandPoot"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Cyborg examines adding an extra weird line."
+  - code_imp: "Everything can be set to have tooltips, and even coded to have neat tooltips."
+  - rscadd: "Makes it so humans and borgs already have tooltips."
