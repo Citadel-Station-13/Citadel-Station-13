@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	51
+#define SAVEFILE_VERSION_MAX	52
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -295,7 +295,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			L -= ROLE_SYNDICATE
 		S["be_special"] << L
 
-	if(current_version < 51) // rp markings means markings are now stored as a list, lizard markings now mam like the rest
+	if(current_version < 51) //humans can have digi legs now, make sure they dont default to them or human players will murder me in my sleep
+		if(S["species"] == SPECIES_HUMAN)
+			features["legs"] = "Plantigrade"
+
+	if(current_version < 52) // rp markings means markings are now stored as a list, lizard markings now mam like the rest
 		var/marking_type
 		var/species_id = S["species"]
 		var/datum/species/actual_species = GLOB.species_datums[species_id]
