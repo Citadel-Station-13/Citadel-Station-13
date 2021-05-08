@@ -44,6 +44,26 @@
 	desc = "A small bottle. Contains epinephrine - used to stabilize patients."
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30)
 
+/obj/item/reagent_containers/glass/bottle/bicaridine
+	name = "bicaridine bottle"
+	desc = "A small bottle. Contains bicaridine - used to treat brute damage."
+	list_reagents = list(/datum/reagent/medicine/bicaridine = 30)
+
+/obj/item/reagent_containers/glass/bottle/kelotane
+	name = "kelotane bottle"
+	desc = "A small bottle. Contains kelotane - used to treat burn damage."
+	list_reagents = list(/datum/reagent/medicine/kelotane = 30)
+
+/obj/item/reagent_containers/glass/bottle/antitoxin
+	name = "anti-toxin bottle"
+	desc = "A small bottle. Contains anti-toxin - used to treat minor poisoning."
+	list_reagents = list(/datum/reagent/medicine/antitoxin = 30)
+
+/obj/item/reagent_containers/glass/bottle/dexalin
+	name = "dexalin bottle"
+	desc = "A small bottle. Contains dexalin - used to treat minor suffocation."
+	list_reagents = list(/datum/reagent/medicine/dexalin = 30)
+
 /obj/item/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
