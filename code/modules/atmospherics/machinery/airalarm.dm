@@ -56,6 +56,11 @@
 
 #define AALARM_REPORT_TIMEOUT 100
 
+#define AALARM_OVERLAY_OFF		"alarm_off"
+#define AALARM_OVERLAY_GREEN	"alarm_green"
+#define AALARM_OVERLAY_WARN		"alarm_amber"
+#define AALARM_OVERLAY_DANGER	"alarm_red"
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -643,36 +648,35 @@
 				icon_state = "alarm_b2"
 			if(0)
 				icon_state = "alarm_b1"
-		return ..()
 
 	if(machine_stat & NOPOWER)
 		icon_state = "alarm0"
-		return ..()
 
 	if(machine_stat & BROKEN)
 		icon_state = "alarmx"
-		return ..()
 
 	if(!panel_open)
 		icon_state = "alarm1"
-		return ..()
+
+	return ..()
+
+/obj/machinery/airalarm/update_overlays()
+	. = ..()
 
 	var/area/A = get_base_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
-			icon_state = "alarm_green"
+			. += "alarm_green"
 		if(1)
-			icon_state = "alarm_amber" //yes, alarm2 is yellow alarm
+			. += "alarm_amber" //yes, alarm2 is yellow alarm
 		if(2)
-			icon_state = "alarm_red"
+			. += "alarm_red"
 
-	if(icon_state != "alarm_off")
-		. += icon_state
+	if(. != "alarm_off")
 		set_light(1)
 	else
 		set_light(0)
 
-	return ..()
 
 /obj/machinery/airalarm/process()
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)

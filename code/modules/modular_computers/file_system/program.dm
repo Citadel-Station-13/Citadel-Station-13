@@ -54,7 +54,7 @@
 	. = ..()
 
 /datum/computer_file/program/clone(obj/item/modular_computer/comp)
-	var/datum/computer_file/program/temp = ..(obj/item/modular_computer/comp)
+	var/datum/computer_file/program/temp = ..(comp)
 	temp.required_access = required_access
 	temp.filedesc = filedesc
 	temp.program_icon_state = program_icon_state

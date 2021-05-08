@@ -523,8 +523,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		comp.freeCamera(src, cam)
 	// for (var/mob/living/simple_animal/drone/drone_on as anything in GLOB.drones_list)
 	// 	drone_on.freeCamera(src, cam)
-	// for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
-	// 	monitor.freeCamera(src, cam)
+	for(var/datum/computer_file/program/alarm_monitor/monitor as anything in GLOB.alarmdisplay)
+		monitor.freeCamera(src, cam)
 
 /**
  * If 100 ticks has elapsed, toggle all the firedoors closed again
@@ -597,7 +597,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/obj/machinery/firealarm/F = alarm
 		F.update_fire_light(fire)
 		F.triggered = FALSE
-	for(var/obj/machinery/light/L in get_sub_areas_contents(src))
+	for(var/obj/machinery/light/L in src)
 		L.update()
 
 /**

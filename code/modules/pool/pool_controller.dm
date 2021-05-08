@@ -17,7 +17,6 @@
 	idle_power_usage = 75
 	processing_flags = START_PROCESSING_ON_INIT
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
-	wires = /datum/wires/poolcontroller
 	/// How far it scans for pool objects
 	var/scan_range = 6
 	/// Is pool mist currently on?
@@ -68,7 +67,7 @@
 	. += "<span class='boldnotice'>Alt click to drain reagents.</span>"
 
 /obj/machinery/pool/controller/Initialize()
-	wires = new (src)
+	wires = new /datum/wires/poolcontroller(src)
 	. = ..()
 	create_reagents(1000)
 	if(noreact_reagents)

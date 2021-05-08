@@ -130,8 +130,19 @@
 	return TRUE
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED) && detecting && !machine_stat)
+	if(!detecting)
+		return ..()
+	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && (last_alarm+FIREALARM_COOLDOWN < world.time) && !(obj_flags & EMAGGED))
+		triggered = TRUE
+		myarea.triggered_firealarms += 1
+		update_appearance()
 		alarm()
+	else
+		triggered = FALSE
+		reset()
+		myarea.triggered_firealarms -= 1
+		update_appearance()
+
 	..()
 
 // /obj/machinery/firealarm/atmos_expose(datum/gas_mixture/air, exposed_temperature)

@@ -350,7 +350,7 @@
 	. = ..()
 
 	if(!mapload) //sync up nightshift lighting for player made lights
-		var/area/A = get_area(src)
+		var/area/A = get_base_area(src)
 		var/obj/machinery/power/apc/temp_apc = A.get_apc()
 		nightshift_enabled = temp_apc?.nightshift_lights
 
@@ -430,7 +430,7 @@
 		var/CO = bulb_colour
 		if(color)
 			CO = color
-		var/area/A = get_area(src)
+		var/area/A = get_base_area(src)
 		if (A?.fire)
 			CO = bulb_emergency_colour
 		else if (hijacked)

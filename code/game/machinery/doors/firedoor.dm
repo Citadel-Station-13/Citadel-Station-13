@@ -210,7 +210,7 @@
 
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)]_[density ? "closed" : "open"]"
+	icon_state = "door_[density ? "closed" : "open"]"
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()
