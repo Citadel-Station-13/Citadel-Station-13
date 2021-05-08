@@ -323,8 +323,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			for(var/part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT, CHEST, HEAD))
 				var/list/copied_color_list = color_list.Copy()
 				var/datum/sprite_accessory/mam_body_markings/mam_marking = GLOB.mam_body_markings_list[old_marking_value]
-				if(length(mam_marking.covered_limbs) && mam_marking.covered_limbs[part])
-					var/matrixed_sections = mam_marking.covered_limbs[part]
+				var/part_name = GLOB.bodypart_names[num2text(part)]
+				if(length(mam_marking.covered_limbs) && mam_marking.covered_limbs[part_name])
+					var/matrixed_sections = mam_marking.covered_limbs[part_name]
 					// just trust me this is fine
 					switch(matrixed_sections)
 						if(MATRIX_GREEN)
