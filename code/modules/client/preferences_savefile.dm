@@ -762,6 +762,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
+	// note safe json decode will runtime the first time it migrates but this is fine and it solves itself don't worry about it if you see it error
 	features["mam_body_markings"] = safe_json_decode(S["feature_mam_body_markings"])
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
