@@ -45,8 +45,19 @@
 
 /obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(dash_toggled && !Adjacent(target) && !target.density)
-		jaunt.Teleport(user, target)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/obj/item/clothing/suit/space/space_ninja/ninja_suit = H.wear_suit
+	if(!istype(ninja_suit))
+		to_chat(user, "<span class='warning'><b>ERROR</b>: garments incompatible with carbon material jaunt. Please suit up in compatible garments.</span>")
+		return
+	if(!dash_toggled || Adjacent(target) || target.density)
+		return
+	if(!ninja_suit.s_coold == 0)
+		to_chat(user, "<span class='warning'><b>ERROR</b>: suit is on cooldown.</span>")
+		return
+	jaunt.Teleport(user, target)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
