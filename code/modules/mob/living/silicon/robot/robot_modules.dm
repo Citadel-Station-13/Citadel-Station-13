@@ -1146,17 +1146,18 @@
 	name = "Wrapping Paper Storage"
 
 /obj/item/robot_module/syndicate/spider// used for space ninja and their cyborg hacking special objective
+	name = "Spider Assault"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/melee/transforming/energy/sword/cyborg,
-		/obj/item/gun/energy/printer,
-		/obj/item/crowbar/cyborg)
+		/obj/item/gun/energy/printer)
 
 	cyborg_base_icon = "spider_sec"
 
 /obj/item/robot_module/syndicate_medical/spider// ditto
+	name = "Spider Medical"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/extinguisher/mini,
@@ -1181,6 +1182,7 @@
 	cyborg_base_icon = "spider_medical"
 
 /obj/item/robot_module/saboteur/spider// ditto
+	name = "Spider Saboteur"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/borg/sight/thermal,

@@ -147,7 +147,7 @@
 		return
 	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
 	AI_notify_hack()
-	if(do_after(ninja, 200))
+	if(do_after(ninja, ninja_suit.s_longdelay, target = src) && ninja_gloves.candrain && src)
 		for(var/datum/data/record/rec in sortRecord(GLOB.data_core.general, sortBy, order))
 			for(var/datum/data/record/security_record in GLOB.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
@@ -168,7 +168,7 @@
 		return
 	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
 	AI_notify_hack()
-	if(do_after(ninja, 300))
+	if(do_after(ninja, ninja_suit.s_longdelay, target = src) && ninja_gloves.candrain && src)
 		var/announcement_pick = rand(0, 1)
 		switch(announcement_pick)
 			if(0)
@@ -202,7 +202,6 @@
 		var/datum/objective/door_jack/objective = locate() in ninja_antag.objectives
 		if(objective && objective.doors_required <= ninja_gloves.door_hack_counter)
 			objective.completed = TRUE
-		to_chat(ninja, "<span class='notice'>Malware uploaded to airlock access subroutines. Forcing open.</span>")
 
 //WIRE//
 /obj/structure/cable/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)

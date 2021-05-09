@@ -21,6 +21,7 @@
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	actions_types = list(/datum/action/item_action/toggle_glove)
+	var/datum/action/innate/doorjack/ninja/hack
 	///Whether or not we're currently draining something
 	var/draining = FALSE
 	///Whether or not we can currently drain something

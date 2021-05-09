@@ -46,6 +46,8 @@
 	var/s_acost = 20
 	///How fast the suit is at certain actions, like draining power from things
 	var/s_delay = 40
+	///How fast the suit is at certain riskier actions, like hacking communications consoles.
+	var/s_longdelay = 200
 	///Units of radium required to refill the adrenaline boost
 	var/a_transfer = 20//How much radium is required to refill the adrenaline boost.
 	///Whether or not the suit is currently in stealth mode.
