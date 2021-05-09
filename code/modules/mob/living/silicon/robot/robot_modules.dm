@@ -1152,7 +1152,8 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/crowbar/cyborg,
 		/obj/item/melee/transforming/energy/sword/cyborg,
-		/obj/item/gun/energy/printer)
+		/obj/item/gun/energy/printer,
+		/obj/item/pinpointer/spider_cyborg)
 
 	cyborg_base_icon = "spider_sec"
 
@@ -1177,7 +1178,8 @@
 		/obj/item/roller/robo,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam,
-		/obj/item/organ_storage)
+		/obj/item/organ_storage,
+		/obj/item/pinpointer/spider_cyborg)
 
 	cyborg_base_icon = "spider_medical"
 
@@ -1207,6 +1209,7 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/destTagger/borg,
 		/obj/item/stack/cable_coil/cyborg,
-		/obj/item/borg_chameleon)
+		/obj/item/borg_chameleon,
+		/obj/item/pinpointer/spider_cyborg)
 
 	cyborg_base_icon = "spider_engi"
