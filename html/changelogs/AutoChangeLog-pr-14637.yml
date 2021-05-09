@@ -1,5 +1,0 @@
-author: "TheObserver-sys"
-delete-after: True
-changes: 
-  - bugfix: "Fixes most of the weird handling bugs and improves cigarette case handling in general."
-  - rscadd: "The Gorlex Marauders have seen fit to allow you to purchase the .45-70 GOVT rare ammo, at a premium cost. Don't waste it."

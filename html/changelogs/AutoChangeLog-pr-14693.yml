@@ -1,5 +1,0 @@
-author: "dzahlus"
-delete-after: True
-changes: 
-  - soundadd: "added new malf AI spawn and doomsday sound"
-  - sounddel: "removed old malf AI spawn and doomsday sound"
