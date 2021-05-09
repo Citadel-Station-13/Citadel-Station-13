@@ -49,15 +49,15 @@
 		return
 	var/mob/living/carbon/human/H = user
 	var/obj/item/clothing/suit/space/space_ninja/ninja_suit = H.wear_suit
-	if(!istype(ninja_suit))
+	if(!istype(ninja_suit))// do you actually have a ninja suit on
 		to_chat(user, "<span class='warning'><b>ERROR</b>: garments incompatible with carbon material jaunt. Please suit up in compatible garments.</span>")
 		return
-	if(!dash_toggled || Adjacent(target) || target.density)
+	if(!dash_toggled || Adjacent(target) || target.density)// is where you are going not a wall
 		return
-	if(!ninja_suit.s_coold == 0)
+	if(!ninja_suit.s_coold == 0)// are you not currently on the ability cooldown
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit is on cooldown.</span>")
 		return
-	jaunt.Teleport(user, target)
+	jaunt.Teleport(user, target)// okay you can now go my good sir
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
