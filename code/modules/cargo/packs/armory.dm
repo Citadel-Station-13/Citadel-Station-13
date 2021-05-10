@@ -240,7 +240,6 @@
 	desc = "Hey kid.. c'mere. Boss says we need to offload these, to any buyer, no questions asked. You pay us, we give you three of these guns, no strings attached. Locks are to ensure they get to PAYING customers."
 	cost = 2000
 	contraband = TRUE
-	can_private_buy = TRUE
 	contains = list(/obj/item/storage/fancy/cigarettes/derringer/smuggled,
 					/obj/item/storage/fancy/cigarettes/derringer/smuggled,
 					/obj/item/storage/fancy/cigarettes/derringer/smuggled,
