@@ -848,7 +848,7 @@
 						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
 					else
 						for(var/marking_list in body_markings_list)
-							auxmarking += image(body_markings_list[1], "[body_markings_list[2]]_[I]", -aux_layer, image_dir)
+							auxmarking += image(marking_list[1], "[marking_list[2]]_[I]", -aux_layer, image_dir)
 			. += aux
 			. += auxmarking
 
@@ -868,7 +868,7 @@
 						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
 					else
 						for(var/marking_list in body_markings_list)
-							auxmarking += image(body_markings_list[1], "[body_markings_list[2]]_[I]", -aux_layer, image_dir)
+							auxmarking += image(marking_list[1], "[marking_list[2]]_[I]", -aux_layer, image_dir)
 			. += auxmarking
 			. += aux
 

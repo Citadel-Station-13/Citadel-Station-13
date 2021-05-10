@@ -528,7 +528,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<table>"
 					var/list/markings = features[marking_type]
 					if(!islist(markings))
-						# something went terribly wrong
+						// something went terribly wrong
 						markings = []
 					var/list/reverse_markings = reverseList(markings)
 					for(var/list/marking_list in reverse_markings)
