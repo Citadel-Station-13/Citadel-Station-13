@@ -2049,7 +2049,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		else if(target.has_status_effect(STATUS_EFFECT_OFF_BALANCE))
 			if(target_held_item)
 				if(shove_blocked)
-					if (targetatrest || target.buckled)
+					if (target.buckled)
 						return
 					else if(target.dropItemToGround(target_held_item))
 						target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
