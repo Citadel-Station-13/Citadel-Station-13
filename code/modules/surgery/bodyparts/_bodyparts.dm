@@ -843,12 +843,14 @@
 			for(var/I in aux_icons)
 				var/aux_layer = aux_icons[I]
 				aux += image(limb.icon, "[species_id]_[I]", -aux_layer, image_dir)
-				if(!isnull(marking_value))
-					if(species_id == "husk")
-						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
-					else
-						for(var/marking_list in body_markings_list)
-							auxmarking += image(marking_list[1], "[marking_list[2]]_[I]", -aux_layer, image_dir)
+				if(species_id == "husk")
+					auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
+				else
+					for(var/marking_list in body_markings_list)
+						var/image/aux_marking_image = image(marking_list[1], "[marking_list[2]]_[I]", -aux_layer, image_dir)
+						if(length(marking_list) == 3)
+							aux_marking_image.color = marking_list[3]
+						auxmarking += aux_marking_image
 			. += aux
 			. += auxmarking
 
@@ -863,12 +865,14 @@
 			for(var/I in aux_icons)
 				var/aux_layer = aux_icons[I]
 				aux += image(limb.icon, "[I]", -aux_layer, image_dir)
-				if(!isnull(marking_value))
-					if(species_id == "husk")
-						auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
-					else
-						for(var/marking_list in body_markings_list)
-							auxmarking += image(marking_list[1], "[marking_list[2]]_[I]", -aux_layer, image_dir)
+				if(species_id == "husk")
+					auxmarking += image('modular_citadel/icons/mob/markings_notmammals.dmi', "husk_[I]", -aux_layer, image_dir)
+				else
+					for(var/marking_list in body_markings_list)
+						var/image/aux_marking_image = image(marking_list[1], "[marking_list[2]]_[I]", -aux_layer, image_dir)
+						if(length(marking_list) == 3)
+							aux_marking_image.color = marking_list[3]
+						auxmarking += aux_marking_image
 			. += auxmarking
 			. += aux
 
@@ -907,13 +911,10 @@
 					if(grayscale)
 						I.icon_state += "_g"
 					I.color = draw_color
-				if(!isnull(marking_value))
-					for(var/a in auxmarking)
-						var/image/I = a
-						if(species_id == "husk")
-							I.color = "#141414"
-						else
-							I.color = list(markings_color)
+				for(var/a in auxmarking)
+					var/image/I = a
+					if(species_id == "husk")
+						I.color = "#141414"
 
 			if(!isnull(body_markings))
 				if(species_id == "husk")
