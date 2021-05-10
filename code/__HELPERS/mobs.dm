@@ -114,14 +114,6 @@
 			if(!S.ckeys_allowed)
 				snowflake_mam_tails_list[S.name] = mtpath
 	var/list/snowflake_markings_list = list()
-	for(var/mmpath in GLOB.mam_body_markings_list)
-		var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[mmpath]
-		if(istype(instance, /datum/sprite_accessory))
-			var/datum/sprite_accessory/S = instance
-			if(intendedspecies && S.recommended_species && !S.recommended_species.Find(intendedspecies))
-				continue
-			if(!S.ckeys_allowed)
-				snowflake_markings_list[S.name] = mmpath
 	var/list/snowflake_ears_list = list()
 	for(var/mepath in GLOB.mam_ears_list)
 		var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[mepath]
@@ -184,7 +176,7 @@
 		"arachnid_spinneret"	= pick(GLOB.arachnid_spinneret_list),
 		"arachnid_mandibles"	= pick(GLOB.arachnid_mandibles_list),
 		"taur"				= "None",
-		"mam_body_markings" = snowflake_markings_list.len ? pick(snowflake_markings_list) : "None",
+		"mam_body_markings" = list(),
 		"mam_ears" 			= snowflake_ears_list ? pick(snowflake_ears_list) : "None",
 		"mam_snouts"		= snowflake_mam_snouts_list ? pick(snowflake_mam_snouts_list) : "None",
 		"mam_tail"			= snowflake_mam_tails_list ? pick(snowflake_mam_tails_list) : "None",
