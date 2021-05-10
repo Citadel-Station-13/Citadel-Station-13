@@ -113,7 +113,6 @@
 				continue
 			if(!S.ckeys_allowed)
 				snowflake_mam_tails_list[S.name] = mtpath
-	var/list/snowflake_markings_list = list()
 	var/list/snowflake_ears_list = list()
 	for(var/mepath in GLOB.mam_ears_list)
 		var/datum/sprite_accessory/ears/mam_ears/instance = GLOB.mam_ears_list[mepath]
