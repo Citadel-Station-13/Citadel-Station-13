@@ -2487,6 +2487,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 										color_number = 2
 									if(MATRIX_BLUE)
 										color_number = 3
+									if(MATRIX_GREEN_BLUE)
+										color_number = 2
 							else if(color_number == 2)
 								switch(matrixed_sections)
 									if(MATRIX_RED_BLUE)
