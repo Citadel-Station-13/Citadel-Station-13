@@ -527,6 +527,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(length(features[marking_type]))
 					dat += "<table>"
 					var/list/markings = features[marking_type]
+					if(!islist(markings))
+						# something went terribly wrong
+						markings = []
 					var/list/reverse_markings = reverseList(markings)
 					for(var/list/marking_list in reverse_markings)
 						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
