@@ -35,7 +35,7 @@ const CrewList = (props, context) => {
       ) : (
         <Section height={10} fill scrollable>
           <LabeledList>
-            {frozen_crew.map((person) => (
+            {frozen_crew.map(person => (
               <LabeledList.Item key={person} label={person.name}>
                 {person.job}
               </LabeledList.Item>
@@ -51,12 +51,12 @@ const ItemList = (props, context) => {
   const { act, data } = useBackend(context);
   const { frozen_items } = data;
 
-  const replaceItemName = (item) => {
+  const replaceItemName = item => {
     let itemName = item.toString();
     if (itemName.startsWith('the')) {
       itemName = itemName.slice(4, itemName.length);
     }
-    return itemName.replace(/^\w/, (c) => c.toUpperCase());
+    return itemName.replace(/^\w/, c => c.toUpperCase());
   };
 
   return (
