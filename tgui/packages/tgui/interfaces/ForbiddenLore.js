@@ -21,7 +21,7 @@ export const ForbiddenLore = (props, context) => {
       <Window.Content scrollable>
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}
-          <br />
+          <br />,
           Completed Sacrifices : {total_sacs}
           {to_know!== null ? (
             to_know.map(knowledge => (
