@@ -161,7 +161,7 @@
 		else
 			//dot product of sun and panel -- Lambert's Cosine Law
 			. = cos(azimuth_current - sun_azimuth) * sun.power_mod
-			. = clamp(round(., 0.01), 0, 1)
+			. = clamp(round(., 0.01), 0, sun.power_mod)
 		sunfrac += . // has to be an adder because of multiple suns
 
 /obj/machinery/power/solar/process()

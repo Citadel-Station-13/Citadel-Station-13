@@ -1326,3 +1326,18 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		program.force_full_update()
+
+/mob/living/silicon/robot/get_tooltip_data()
+	var/t_He = p_they(TRUE)
+	var/t_is = p_are()
+	. = list()
+	var/borg_type = module ? module : "Default"
+//This isn't even used normally, but if that ever changes, just uncomment this
+/*	var/obj/item/borg_chameleon/chameleon = locate() in src
+	if(!chameleon)
+		chameleon = locate() in src.module
+	if(chameleon?.active)
+		borg_type = "Engineering"
+*/
+	. += "[t_He] [t_is] a [borg_type] unit"
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
