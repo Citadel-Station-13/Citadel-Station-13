@@ -125,3 +125,5 @@
 	var/sleeper_g
 	var/sleeper_r
 	var/sleeper_nv
+
+	tooltips = TRUE

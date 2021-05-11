@@ -248,6 +248,24 @@
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
+
+/obj/item/kitchen/unrollingpin
+	name = "unrolling pin"
+	desc = "For when you accidentally flattened something."
+	icon_state = "unrolling_pin"
+	force = 8
+	throwforce = 5
+	throw_speed = 3
+	throw_range = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	custom_price = PRICE_ALMOST_CHEAP
+
+/obj/item/kitchen/unrollingpin/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins unflattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /* Trays  moved to /obj/item/storage/bag */
 
 /obj/item/kitchen/knife/scimitar
