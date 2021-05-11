@@ -219,7 +219,7 @@
 /obj/effect/broken_illusion/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
-	addtimer(CALLBACK(src,.proc/remove_presence),30 SECONDS)
+	addtimer(CALLBACK(src,.proc/remove_presence),195 SECONDS)
 
 	var/image/I = image('icons/effects/eldritch.dmi',src,null,OBJ_LAYER)
 	I.override = TRUE
