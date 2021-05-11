@@ -79,6 +79,7 @@
 
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
+	tooltips = TRUE
 
 /// Unarmed parry data for human
 /datum/block_parry_data/unarmed/human

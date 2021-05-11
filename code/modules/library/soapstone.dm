@@ -152,7 +152,7 @@
 	var/newcolor = copytext_char(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
 	light_color = "#[newcolor]"
-	set_light(1)
+	set_light(0.3)
 
 /obj/structure/chisel_message/proc/pack()
 	var/list/data = list()

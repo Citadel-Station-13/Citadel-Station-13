@@ -44,7 +44,7 @@
 	return FALSE
 
 /turf/proc/ImmediateCalculateAdjacentTurfs()
-	var/canpass = CANATMOSPASS(src, src) 
+	var/canpass = CANATMOSPASS(src, src)
 	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
@@ -79,31 +79,27 @@
 	if (atmos_adjacent_turfs)
 		adjacent_turfs = atmos_adjacent_turfs.Copy()
 	else
-		adjacent_turfs = list()
+		return list()		// don't bother checking diagonals, diagonals are going to be cardinal checks anyways.
 
 	if (!alldir)
 		return adjacent_turfs
 
-	var/turf/curloc = src
-
-	for (var/direction in GLOB.diagonals_multiz)
-		var/matchingDirections = 0
-		var/turf/S = get_step_multiz(curloc, direction)
-		if(!S)
+	var/turf/other
+	var/turf/mid
+	for (var/d in GLOB.diagonals)
+		other = get_step(src, d)
+		if(!other)
 			continue
-
-		for (var/checkDirection in GLOB.cardinals_multiz)
-			var/turf/checkTurf = get_step(S, checkDirection)
-			if(!S.atmos_adjacent_turfs || !S.atmos_adjacent_turfs[checkTurf])
-				continue
-
-			if (adjacent_turfs[checkTurf])
-				matchingDirections++
-
-			if (matchingDirections >= 2)
-				adjacent_turfs += S
-				break
-
+		// NS step
+		mid = get_step(src, NSCOMPONENT(d))
+		if((mid in adjacent_turfs) && (get_step(mid, EWCOMPONENT(d)) in adjacent_turfs))
+			adjacent_turfs += other
+			continue
+		// EW step
+		mid = get_step(src, EWCOMPONENT(d))
+		if((mid in adjacent_turfs) && (get_step(mid, NSCOMPONENT(d)) in adjacent_turfs))
+			adjacent_turfs += other
+			continue
 	return adjacent_turfs
 
 /atom/proc/air_update_turf(command = 0)

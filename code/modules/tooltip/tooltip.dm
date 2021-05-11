@@ -122,4 +122,33 @@ Notes:
 		if(user.client && user.client.tooltips)
 			user.client.tooltips.hide()
 
+/**
+ * # `get_tooltip_data()`
+ *
+ * If set, will return a list for the tooltip (that will also be put together in a `Join()`)
+ * However, if returning `null`, falls back to default behavior, which is `examine(src)`, and it will definitely include
+ * images since it is the default behavior
+ *
+ * Though no tooltips will be created for atoms that have `tooltips = FALSE`
+*/
+/atom/movable/proc/get_tooltip_data()
+	return
 
+/atom/movable/MouseEntered(location, control, params)
+	. = ..()
+	if(tooltips)
+		if(!QDELETED(src))
+			var/list/examine_list = examine(src)
+			var/get_tooltip_data = get_tooltip_data()
+			if(length(get_tooltip_data))
+				examine_list = get_tooltip_data
+			var/examine_data = examine_list.Join("<br />")
+			openToolTip(usr, src, params, title = name, content = examine_data)
+
+/atom/movable/MouseExited(location, control, params)
+	. = ..()
+	closeToolTip(usr)
+
+/client/MouseDown(object, location, control, params)
+	closeToolTip(usr)
+	. = ..()
