@@ -142,7 +142,7 @@
 		// Can most things breathe?
 		if(trace_gases)
 			continue
-		if(A.get_moles(/datum/gas/oxygen) >= 16)
+		if(A.get_moles(/datum/gas/oxygen) < 16)
 			continue
 		if(A.get_moles(/datum/gas/plasma))
 			continue
