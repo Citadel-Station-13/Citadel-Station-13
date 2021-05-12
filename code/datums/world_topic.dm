@@ -169,7 +169,7 @@
 	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
-	.["round_id"] = "[GLOB.round_id]"
+	.["round_id"] = GLOB.round_id
 	.["players"] = GLOB.clients.len
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date
@@ -215,7 +215,7 @@
 /datum/world_topic/jsonstatus/Run(list/input, addr)
 	. = list()
 	.["mode"] = GLOB.master_mode
-	.["round_id"] = GLOB.round_id
+	.["round_id"] = "[GLOB.round_id]"
 	.["players"] = GLOB.clients.len
 	var/list/adm = get_admin_counts()
 	var/list/presentmins = adm["present"]
@@ -290,6 +290,6 @@
 	.["dd_build"] = world.byond_version
 	.["dm_version"] = DM_BUILD
 	.["dm_build"] = DM_VERSION
-	.["gameid"] = "[GLOB.round_id]""
+	.["gameid"] = "[GLOB.round_id]"
 	.["revision"] = revdata.commit
 	return list2params(.)
