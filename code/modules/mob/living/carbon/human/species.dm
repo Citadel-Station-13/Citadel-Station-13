@@ -569,11 +569,9 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 /datum/species/proc/remove_blacklisted_quirks(mob/living/carbon/C)
 	var/mob/living/L = C.mind?.current
 	if(istype(L))
-		var/list/my_quirks = L.client?.prefs.all_quirks.Copy()
-		SSquirks.filter_quirks(my_quirks, blacklisted_quirks)
 		for(var/q in L.roundstart_quirks)
 			var/datum/quirk/Q = q
-			if(!(SSquirks.quirk_name_by_path(Q.type) in my_quirks))
+			if(Q.type in blacklisted_quirks)
 				L.remove_quirk(Q.type)
 				removed_quirks += Q.type
 
