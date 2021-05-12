@@ -22,7 +22,7 @@ export const ForbiddenLore = (props, context) => {
         <Section title="Research Eldritch Knowledge">
           Charges left : {charges}
           <br />
-          Completed Sacrifices : {total_sacs};
+          Completed Sacrifices : {total_sacs}
           {to_know!== null ? (
             to_know.map(knowledge => (
               <Section
