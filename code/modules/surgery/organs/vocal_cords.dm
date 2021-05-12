@@ -1095,17 +1095,6 @@
 					H.emote("me", EMOTE_VISIBLE, "lets out a nya!")
 					E.cooldown += 1
 
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		for(var/mob/living/carbon/C in listeners)
-			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			switch(E.phase)
-				if(2 to INFINITY)
-					C.Sleeping(45 * power_multiplier)
-					E.cooldown += 10
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>Drowsiness suddenly overwhelms you as you fall asleep!</b></span>"), 5)
-					to_chat(user, "<span class='notice'><i>You send [C] to sleep.</i></span>")
-
 	//STRIP
 	else if((findtext(message, strip_words)))
 		for(var/V in listeners)
