@@ -1,0 +1,4 @@
+author: "silicons"
+delete-after: True
+changes: 
+  - code_imp: "A deterministic wave explosion system has been added. Use it with wave_explosion()."
