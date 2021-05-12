@@ -1,0 +1,5 @@
+author: "qweq12yt"
+delete-after: True
+changes: 
+  - bugfix: "Fixed sleeping disky spam (it still sleeps soundly, but every minute instead of every two seconds)"
+  - bugfix: "Fixed Hulks not breaking cuffs, zipties, restraints."
