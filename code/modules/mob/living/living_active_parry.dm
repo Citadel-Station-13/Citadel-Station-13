@@ -231,7 +231,7 @@
 	if(!islist(determined))
 		return FALSE
 	var/datum/block_parry_data/data = return_block_parry_datum(determined[2])
-	if(!data.parry_automatic_enabled)
+	if(!data.parry_automatic_enabled || (last_autoparry > (world.time + data.autoparry_cooldown_absolute)))
 		return FALSE
 	// before doing anything, check if the user moused over them properly
 	if(!client)
@@ -249,6 +249,7 @@
 	// first, check cooldowns
 
 	// now, depending on if we're doing a single simulation or a full sequence
+	last_autoparry = world.time
 	if(data.autoparry_sequence_simulation)
 		// for full sequence simulation
 		initiate_parry_sequence(TRUE, determined)

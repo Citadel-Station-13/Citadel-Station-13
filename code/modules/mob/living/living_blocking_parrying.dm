@@ -189,10 +189,6 @@ GLOBAL_LIST_EMPTY(block_parry_data)
 	/// Autoparry : Simulate a parry sequence starting at a certain tick, or simply simulate a single attack parry?
 	var/autoparry_sequence_simulation = FALSE
 	// Single attack simulation:
-	/// Parry cooldown to inflict on single-attack autoparry
-	var/autoparry_single_parry_cooldown = 3 SECONDS
-	/// Clickdelay to inflict on single-attack autoparry
-	var/autoparry_single_click_cooldown = 0
 	/// Single attack autoparry - efficiency
 	var/autoparry_single_efficiency = 75
 	/// Single attack autoparry - efficiency overrides by attack type, see above
