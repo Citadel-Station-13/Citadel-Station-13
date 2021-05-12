@@ -279,10 +279,10 @@
 	.["Misc"] = misc
 	return json_encode(.)
 
-/datum/world_topic/jsonrevision
-	keyword = "jsonrevision"
+/datum/world_topic/revision
+	keyword = "revision"
 
-/datum/world_topic/jsonrevision/Run(list/input, addr)
+/datum/world_topic/revision/Run(list/input, addr)
 	. = list()
 	var/datum/getrev/revdata = GLOB.revdata
 	.["data"] = revdata.date
@@ -292,4 +292,4 @@
 	.["dm_build"] = DM_VERSION
 	.["gameid"] = GLOB.round_id
 	.["revision"] = revdata.commit
-	return json_encode(.)
+	return list2params(.)
