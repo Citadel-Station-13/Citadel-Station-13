@@ -7,7 +7,7 @@ import { Window } from '../layouts';
 export const ForbiddenLore = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    charges, total_sacs
+    charges, total_sacs,
   } = data;
   const to_know = flow([
     sortBy(to_know => to_know.state !== "Research",
