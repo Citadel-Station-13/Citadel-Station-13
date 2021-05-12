@@ -1,7 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes: 
-  - bugfix: "find_safe_turf no longer always fails on safe oxygen levels(??)"
-  - bugfix: "Heretic bladeshatters now actually take the heretic's z into account as intended, instead of always being station z
-tweak: Message for failing the bladeshatter despite succeeding the do_after
-tweak: Improves bladeshatter a bit by making it safer codewise"
