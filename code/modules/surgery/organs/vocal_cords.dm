@@ -751,7 +751,6 @@
 	//phase 2
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/strip_words = regex("strip|derobe|nude|at ease|suit off")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
