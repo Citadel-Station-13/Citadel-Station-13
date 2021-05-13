@@ -279,17 +279,23 @@
 	.["Misc"] = misc
 	return json_encode(.)
 
-/datum/world_topic/revision
-	keyword = "revision"
+/datum/world_topic/jsonrevision/Run(list/input, addr)
+    var/datum/getrev/revdata = GLOB.revdata
+    var/list/data = list(
+        "date" = copytext(revdata.date, 1, 11),
+        "dd_version" = world.byond_version,
+        "dd_build" = world.byond_build,
+        "dm_version" = DM_VERSION,
+        "dm_build" = DM_BUILD,
+        "revision" = revdata.commit,
+        "testmerge_base_url" = "[CONFIG_GET(string/githuburl)]/pull/"
+    )
+    if (revdata.testmerge.len)
+        for (var/datum/tgs_revision_information/test_merge/TM in revdata.testmerge)
+            data["testmerges"] += list(list(
+                "id" = TM.number,
+                "desc" = TM.title,
+                "author" = TM.author
+            ))
 
-/datum/world_topic/revision/Run(list/input, addr)
-	. = list()
-	var/datum/getrev/revdata = GLOB.revdata
-	.["date"] = copytext(revdata.date, 1, 11)
-	.["dd_version"] = world.byond_build
-	.["dd_build"] = world.byond_version
-	.["dm_version"] = DM_BUILD
-	.["dm_build"] = DM_VERSION
-	.["gameid"] = "[GLOB.round_id]"
-	.["revision"] = revdata.commit
-	return list2params(.)
+    return json_encode(data)
