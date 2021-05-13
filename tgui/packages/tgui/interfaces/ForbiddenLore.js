@@ -41,7 +41,7 @@ export const ForbiddenLore = (props, context) => {
                       cost: knowledge.cost,
                     })} />
                   {' '}
-                  Cost : {knowledge.cost} 
+                  Cost : {knowledge.cost}  
                   | Sacrifices Required : {knowledge.sacs}
                 </Box >
                 <Box italic my={1}>
