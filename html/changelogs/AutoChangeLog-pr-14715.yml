@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "Removes VOG sleep command since it was an undocumented readd."
