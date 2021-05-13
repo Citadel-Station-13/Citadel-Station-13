@@ -39,8 +39,8 @@
 		return
 
 	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
-		if(integrating_blood)
-			integrating_blood --
+		if(integrating_blood > 0)
+			integrating_blood = max(integrating_blood - 1, 0)
 			//Blood regeneration if there is some space
 			if(blood_volume < BLOOD_VOLUME_NORMAL)
 				var/nutrition_ratio = 0
