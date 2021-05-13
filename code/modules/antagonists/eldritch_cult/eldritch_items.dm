@@ -207,6 +207,7 @@
 	// slightly worse than normal cult robes
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
+	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
 /obj/item/clothing/suit/hooded/cultrobes/void/ToggleHood()
 	if(!iscarbon(loc))
