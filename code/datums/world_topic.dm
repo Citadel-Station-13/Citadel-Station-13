@@ -285,7 +285,7 @@
 /datum/world_topic/revision/Run(list/input, addr)
 	. = list()
 	var/datum/getrev/revdata = GLOB.revdata
-	.["date"] = revdata.date
+	.["date"] = copytext(revdata.date, 1, 11)
 	.["dd_version"] = world.byond_build
 	.["dd_build"] = world.byond_version
 	.["dm_version"] = DM_BUILD
