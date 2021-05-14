@@ -1,6 +1,6 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
-	name = "Anthromorphic Lizard"
+	name = "Anthropomorphic Lizard"
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"

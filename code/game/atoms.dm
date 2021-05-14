@@ -36,13 +36,20 @@
 	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	/// Flags for explosions
+	var/explosion_flags = NONE
+	/// Amount to decrease wave explosions by
+	var/wave_explosion_block = 0
+	/// Amount to multiply wave explosions by
+	var/wave_explosion_multiply = 1
+
+							//its inherent color, the colored paint applied on it, special color effect etc...
 	/**
 	  * used to store the different colors on an atom
 	  *
 	  * its inherent color, the colored paint applied on it, special color effect etc...
 	  */
 	var/list/atom_colours
-
 
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
@@ -555,6 +562,34 @@
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
+
+/**
+  * Called when a wave explosion hits this atom. Do not override this.
+  *
+  * Returns explosion power to "allow through".
+  */
+/atom/proc/wave_explode(power, datum/wave_explosion/explosion, dir)
+	set waitfor = FALSE
+	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
+	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
+	if(isnull(.))
+		stack_trace("wave_ex_act on [type] failed to return a number. defaulting to no blocking.")
+		return power
+	if((explosion_flags & EXPLOSION_FLAG_DENSITY_DEPENDENT) && !density)
+		return power	// no block
+	else if((explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE) && !QDELETED(src))
+		return 0		// fully blocked
+
+/**
+  * Called when a wave explosion hits this atom.
+  *
+  * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
+  */
+/atom/proc/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	// SHOULD_NOT_SLEEP(TRUE)
+	return power * wave_explosion_multiply - wave_explosion_block
 
 /atom/proc/blob_act(obj/structure/blob/B)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)

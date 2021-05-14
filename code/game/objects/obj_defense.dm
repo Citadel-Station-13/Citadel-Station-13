@@ -71,6 +71,19 @@
 		if(3)
 			take_damage(rand(10, 90), BRUTE, "bomb", 0)
 
+/obj/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return power
+	. = ..()
+	if(explosion.source == src)
+		obj_integrity = 0
+		qdel(src)
+		return
+	take_damage(wave_explosion_damage(power, explosion), BRUTE, "bomb", 0)
+
+/obj/proc/wave_explosion_damage(power, datum/wave_explosion/explosion)
+	return (explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE)? EXPLOSION_POWER_STANDARD_SCALE_HARD_OBSTACLE_DAMAGE(power, explosion.hard_obstacle_mod) : EXPLOSION_POWER_STANDARD_SCALE_OBJECT_DAMAGE(power, explosion.object_damage_mod)
+
 /obj/bullet_act(obj/item/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, 1)

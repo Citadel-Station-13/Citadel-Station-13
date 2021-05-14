@@ -1490,6 +1490,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.stuttering = min(M.stuttering + 3, 3)
 	..()
 
+/datum/reagent/consumable/ethanol/pinotmort
+	name = "Pinot Mort"
+	description = "If you just can't get enough of lavaland."
+	color = rgb(167, 36, 36)
+	boozepwr = 20
+	quality = DRINK_FANTASTIC
+	taste_description = "death, ash and lizards"
+	glass_icon_state = "pinotmort"
+	glass_name = "Pinot Mort"
+	glass_desc = "The taste of Lavaland served in a legion skull. You feel like you might regret drinking this."
+	value = REAGENT_VALUE_UNCOMMON
+
+/datum/reagent/consumable/ethanol/pinotmort/on_mob_life(mob/living/carbon/M)
+	if((islizard(M) && M.mind.assigned_role == "Ash Walker") || ispodperson(M) && M.mind.assigned_role == "Lifebringer" || isgolem(M))
+		M.heal_bodypart_damage(1, 1)
+		M.adjustBruteLoss(-2,0)
+		. = 1
+	return ..()
+
 /datum/reagent/consumable/ethanol/triple_sec
 	name = "Triple Sec"
 	description = "A sweet and vibrant orange liqueur."

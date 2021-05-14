@@ -1083,6 +1083,17 @@
 	. = ..()
 	set_species(race)
 
+/mob/living/carbon/human/get_tooltip_data()
+	var/t_He = p_they(TRUE)
+	var/t_is = p_are()
+	. = list()
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+	if(skipface || get_visible_name() == "Unknown")
+		. += "You can't make out what species they are."
+	else
+		. += "[t_He] [t_is] a [dna.custom_species ? dna.custom_species : dna.species.name]"
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, usr, .)
+
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor
 

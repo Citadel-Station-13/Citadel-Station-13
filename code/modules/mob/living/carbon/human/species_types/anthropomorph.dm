@@ -1,5 +1,5 @@
 /datum/species/mammal
-	name = "Anthromorph"
+	name = "Anthropomorph"
 	id = SPECIES_MAMMAL
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,HORNCOLOR,WINGCOLOR,HAS_FLESH,HAS_BONE)
@@ -20,7 +20,7 @@
 	allowed_limb_ids = list("mammal","aquatic","avian")
 
 /datum/species/mammal/synthetic
-	name = "Synthetic Anthromorph"
+	name = "Synthetic Anthropomorph"
 	id = SPECIES_MAMMAL_SYNTHETIC
 
 	species_traits = list(MUTCOLORS,NOTRANSSTING,EYECOLOR,LIPS,HAIR,ROBOTIC_LIMBS,HAS_FLESH,HAS_BONE,WINGCOLOR,HORNCOLOR)
