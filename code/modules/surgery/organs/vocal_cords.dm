@@ -751,7 +751,6 @@
 	//phase 2
 	var/static/regex/awoo_words = regex("howl|awoo|bark")
 	var/static/regex/nya_words = regex("nya|meow|mewl")
-	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/strip_words = regex("strip|derobe|nude|at ease|suit off")
 	var/static/regex/walk_words = regex("slow down|walk")
 	var/static/regex/run_words = regex("run|speed up")
@@ -1095,17 +1094,6 @@
 					playsound(get_turf(H), pick('sound/effects/meow1.ogg', 'modular_citadel/sound/voice/nya.ogg'), 50, 1, -1) //I'm very tempted to write a Fermis clause that makes them merowr.ogg if it's me. But, I also don't think snowflakism is okay. I would've gotten away for it too, if it wern't for my morals.
 					H.emote("me", EMOTE_VISIBLE, "lets out a nya!")
 					E.cooldown += 1
-
-	//SLEEP
-	else if((findtext(message, sleep_words)))
-		for(var/mob/living/carbon/C in listeners)
-			var/datum/status_effect/chem/enthrall/E = C.has_status_effect(/datum/status_effect/chem/enthrall)
-			switch(E.phase)
-				if(2 to INFINITY)
-					C.Sleeping(45 * power_multiplier)
-					E.cooldown += 10
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, C, "<span class='notice'>Drowsiness suddenly overwhelms you as you fall asleep!</b></span>"), 5)
-					to_chat(user, "<span class='notice'><i>You send [C] to sleep.</i></span>")
 
 	//STRIP
 	else if((findtext(message, strip_words)))
