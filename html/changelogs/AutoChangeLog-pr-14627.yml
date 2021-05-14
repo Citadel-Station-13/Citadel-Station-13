@@ -1,0 +1,4 @@
+author: "timothyteakettle"
+delete-after: True
+changes: 
+  - balance: "borg spraycans have a five second delay before being able to knock someone down again"
