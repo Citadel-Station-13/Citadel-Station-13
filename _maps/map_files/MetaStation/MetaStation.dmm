@@ -21712,7 +21712,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=13.3-Engineering-Central";
+	codes_txt = "patrol;next_patrol=14-Starboard-Central";
 	location = "13.2-Tcommstore"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
