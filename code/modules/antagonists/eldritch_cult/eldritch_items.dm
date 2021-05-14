@@ -62,13 +62,24 @@
 
 /datum/action/innate/heretic_shatter/IsAvailable()
 	if(IS_HERETIC(holder) || IS_HERETIC_MONSTER(holder))
-		return TRUE
+		return ..()
 	else
 		return FALSE
 
 /datum/action/innate/heretic_shatter/Activate()
 	if(do_after(holder,10, target = holder))
-		var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
+		if(!sword || QDELETED(sword))
+			return
+		if(!IsAvailable())	//Never trust the user.
+			return
+		var/swordz = (get_turf(sword))?.z	//SHOULD usually have a turf but if it doesn't better be prepared.
+		if(!swordz)
+			to_chat(holder, "<span class='warning'>[sword] flickers but remains in place, as do you...</span>")
+			return
+		var/turf/safe_turf = find_safe_turf(zlevels = swordz, extended_safety_checks = TRUE)
+		if(!safe_turf)
+			to_chat(holder, "<span class='warning'>[sword] flickers but remains in place, as do you...</span>")
+			return
 		do_teleport(holder,safe_turf,forceMove = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 		to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
 		qdel(sword)
