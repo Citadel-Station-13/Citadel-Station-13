@@ -111785,9 +111785,6 @@
 /area/command/meeting_room/council)
 "sjF" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/machinery/button/door{
 	id = "ceblast";
 	name = "Lockdown Control";
