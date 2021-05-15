@@ -601,7 +601,7 @@
 	id = /datum/reagent/consumable/ethanol/cogchamp
 	results = list(/datum/reagent/consumable/ethanol/cogchamp = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol/screwdrivercocktail = 1)
-	mix_message = "You hear faint sounds of gears turning as it mixes."
+	mix_message = "You hear faint sounds of gears turning as the mixture gives off virulent plumes of steam."
 	mix_sound = 'sound/machines/clockcult/steam_whoosh.ogg'
 
 /datum/chemical_reaction/pinotmort
@@ -744,18 +744,21 @@
 	id = /datum/reagent/consumable/pwr_game
 	results = list(/datum/reagent/consumable/pwr_game = 5)
 	required_reagents = list(/datum/reagent/consumable/sodawater = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1, /datum/reagent/consumable/sodiumchloride = 1)
+	mix_message = "The mixture froths as it turns black, rousing a nauseating aroma of sweat and salt before settling to an eerie purple color.
 
 /datum/chemical_reaction/pinkmilk
 	name = "Strawberry Milk"
 	id = /datum/reagent/consumable/pinkmilk
 	results = list(/datum/reagent/consumable/pinkmilk = 2)
 	required_reagents = list(/datum/reagent/consumable/strawberryjuice = 1, /datum/reagent/consumable/milk = 1)
+	mix_message = "You feel a sweet aroma drift up your nose as the lactic mixture swirls. It reminds you of... a cafeteria."
 
 /datum/chemical_reaction/blank_paper
 	name = "Blank Paper"
 	id = /datum/reagent/consumable/ethanol/blank_paper
 	results = list(/datum/reagent/consumable/ethanol/blank_paper = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/silencer = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/nuka_cola = 1)
+	mix_message = "..."
 
 /datum/chemical_reaction/wizz_fizz
 	name = "Wizz Fizz"
@@ -785,18 +788,21 @@
 	id = /datum/reagent/consumable/ethanol/turbo
 	results = list(/datum/reagent/consumable/ethanol/turbo = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/nitrous_oxide = 1, /datum/reagent/consumable/ethanol/sugar_rush = 1, /datum/reagent/consumable/pwr_game = 1)
+	mix_message = "The mixture pops and fizzles, it's going to bl- oh, nevermind."
 
 /datum/chemical_reaction/old_timer
 	name = "Old Timer"
 	id = /datum/reagent/consumable/ethanol/old_timer
 	results = list(/datum/reagent/consumable/ethanol/old_timer = 6)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskeysoda = 3, /datum/reagent/consumable/parsnipjuice = 2, /datum/reagent/consumable/ethanol/alexander = 1)
+	mix_message = "You hear a faded record playing in the distance. Then, you hear nothing."
 
 /datum/chemical_reaction/rubberneck
 	name = "Rubberneck"
 	id = /datum/reagent/consumable/ethanol/rubberneck
 	results = list(/datum/reagent/consumable/ethanol/rubberneck = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 4, /datum/reagent/consumable/grey_bull = 5, /datum/reagent/consumable/astrotame = 1)
+	mix_message = "The mixture boils and bubbles as the faint scent of rubber and heart disease hits your nose."
 
 /datum/chemical_reaction/duplex
 	name = "Duplex"
@@ -809,6 +815,7 @@
 	id = /datum/reagent/consumable/ethanol/trappist
 	results = list(/datum/reagent/consumable/ethanol/trappist = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/ale = 2, /datum/reagent/water/holywater = 2, /datum/reagent/consumable/sugar = 1)
+	mix_message = "As the mixture froths, you swear you can hear a distant holy choir."
 
 /datum/chemical_reaction/cream_soda
 	name = "Cream Soda"
@@ -821,6 +828,7 @@
 	id = /datum/reagent/consumable/ethanol/blazaam
 	results = list(/datum/reagent/consumable/ethanol/blazaam = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/peachjuice = 1, /datum/reagent/bluespace = 1)
+	mix_message = "The mixture- hey, where'd all the liquid go? Oh, there it is."
 
 /datum/chemical_reaction/planet_cracker
 	name = "Planet Cracker"
@@ -861,6 +869,7 @@
 	id = /datum/reagent/consumable/ethanol/strawberry_daiquiri
 	results = list(/datum/reagent/consumable/ethanol/strawberry_daiquiri = 7)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/strawberryjuice = 2, /datum/reagent/consumable/ice = 1)
+	mix_message = "The mixture settles as a nostril-flaring waft of strawberry hits your nose."
 
 /datum/chemical_reaction/miami_vice
 	name = "Miami Vice"
@@ -879,18 +888,21 @@
 	id = /datum/reagent/consumable/ethanol/liz_fizz
 	results = list(/datum/reagent/consumable/ethanol/liz_fizz = 5)
 	required_reagents = list(/datum/reagent/consumable/triple_citrus = 3, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+	mix_message = "The smell of cream and lime hits your nose as everything feels very real for a split moment. You want to lick your eye."
 
 /datum/chemical_reaction/hotlime_miami
 	name = "Hotlime Miami"
 	id = /datum/reagent/consumable/ethanol/hotlime_miami
 	results = list(/datum/reagent/consumable/ethanol/hotlime_miami = 2)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/consumable/ethanol/pina_colada = 1)
+	mix_message = "You hear synthwave in the distance as the drink mixes; this makes you want to hit someone with a baseball bat."
 
 /datum/chemical_reaction/mauna_loa
 	name = "Mauna Loa"
 	id = /datum/reagent/consumable/ethanol/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+	mix_message = "The drink erupts as a plume of lava sprays all over the place! Oh, wait, it's just luke-warm liquor."
 
 /datum/chemical_reaction/commander_and_chief
 	name = "Commander and Chief"
@@ -906,6 +918,7 @@
 	id = /datum/reagent/consumable/tea/mush
 	results = list(/datum/reagent/consumable/tea/mush = 3)
 	required_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 3, /datum/reagent/consumable/tea = 3)
+	mix_message = "The liquid stirs with a mixture of psychedelic colors that makes stars peek from the corner of your vision."
 
 /datum/chemical_reaction/foresttea1
 	name = "Forest Tea"
@@ -967,7 +980,7 @@
 	id = /datum/reagent/consumable/catnip_tea
 	results = list(/datum/reagent/consumable/catnip_tea = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 5, /datum/reagent/pax/catnip = 2)
-
+	mix_message = "The mixture seems to purr aloud as it stirs together."
 
 ////////////////////////////////////////// Race Base Drinks //////////////////////////////////////
 
@@ -976,54 +989,64 @@
 	id = /datum/reagent/consumable/ethanol/species_drink/coldscales
 	results = list(/datum/reagent/consumable/ethanol/species_drink/coldscales = 3)
 	required_reagents = list(/datum/reagent/consumable/tea = 1, /datum/reagent/toxin/slimejelly = 1,  /datum/reagent/consumable/menthol = 1)
+	mix_message = "Bubbles erupt from the glass and spill all over the place as it mixes, before settling with the faint smell of a reptile enclosure."
 
 /datum/chemical_reaction/oil_drum
 	name = "Oil Drum"
 	id = /datum/reagent/consumable/ethanol/species_drink/oil_drum
 	results = list(/datum/reagent/consumable/ethanol/species_drink/oil_drum = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1,  /datum/reagent/oil = 1, /datum/reagent/consumable/ethanol/champagne = 12)
+	mix_message = "You can taste oil in your mouth as the newly-formed mixture floats to the top of the glass."
 
 /datum/chemical_reaction/nord_king
 	name = "Nord King"
 	id = /datum/reagent/consumable/ethanol/species_drink/nord_king
 	results = list(/datum/reagent/consumable/ethanol/species_drink/nord_king = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 5,  /datum/reagent/consumable/honey = 1, /datum/reagent/consumable/ethanol/red_mead = 10)
+	mix_message = "You can feel hair growing on places it shouldn't be as the smell of salt water and flame burns into your senses."
 
 /datum/chemical_reaction/velvet_kiss
 	name = "Velvet Kiss"
 	id = /datum/reagent/consumable/ethanol/species_drink/velvet_kiss
 	results = list(/datum/reagent/consumable/ethanol/species_drink/velvet_kiss = 15) //Limited races use this
 	required_reagents = list(/datum/reagent/blood = 5,  /datum/reagent/consumable/tea = 1, /datum/reagent/consumable/ethanol/wine = 10)
+	mix_message = "The taste of blood rolls off your tongue as the mixture oozes a crimson secretion."
 
 /datum/chemical_reaction/abduction_fruit
 	name = "Abduction Fruit"
 	id = /datum/reagent/consumable/ethanol/species_drink/abduction_fruit
 	results = list(/datum/reagent/consumable/ethanol/species_drink/abduction_fruit = 3)
 	required_reagents = list(/datum/reagent/consumable/limejuice = 10,  /datum/reagent/consumable/strawberryjuice = 5, /datum/reagent/consumable/watermelonjuice = 10)
+	mix_message = "The mixture forms with a green cloud of smoke, carrying with a smell of bovines and medicine."
 
 /datum/chemical_reaction/bug_zapper
 	name = "Bug Zapper"
 	id = /datum/reagent/consumable/ethanol/species_drink/bug_zapper
 	results = list(/datum/reagent/consumable/ethanol/species_drink/bug_zapper = 20) //Harder to make
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 10,  /datum/reagent/teslium = 1, /datum/reagent/copper = 10)
+	mix_message = "The mixture comes to life with a spark and a zap - shortly after, you can hear the faint buzzing of moths circling your head."
+	mix_sound = 'sound/weapons/taser.ogg'
 
 /datum/chemical_reaction/mush_crush
 	name = "Mush Crush"
 	id = /datum/reagent/consumable/ethanol/species_drink/mush_crush
 	results = list(/datum/reagent/consumable/ethanol/species_drink/mush_crush = 10)
 	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/ash = 5, /datum/reagent/toxin/coffeepowder = 10)
+	mix_message = "The mixture sputters and coughs as a mushroom suddenly emerges from the glass!"
 
 /datum/chemical_reaction/darkbrew
 	name = "Darkbrew"
 	id = /datum/reagent/consumable/ethanol/species_drink/darkbrew
 	results = list(/datum/reagent/consumable/ethanol/species_drink/darkbrew = 20)//Limited races use this
 	required_reagents = list(/datum/reagent/liquid_dark_matter = 5,  /datum/reagent/toxin/bungotoxin = 5, /datum/reagent/toxin/coffeepowder = 10)
+	mix_message = "As the glass turns into a shadowy pit, you can smell... nothing."
 
 /datum/chemical_reaction/hollow_bone
 	name = "Hollow Bone"
 	id = /datum/reagent/consumable/ethanol/species_drink/hollow_bone
 	results = list(/datum/reagent/consumable/ethanol/species_drink/hollow_bone = 10)
 	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 5,  /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/coconutmilk = 10)
+	mix_message = "Your bones feel week."
 
 /datum/chemical_reaction/frisky_kitty
 	name = "Frisky Kitty"
@@ -1031,6 +1054,7 @@
 	results = list(/datum/reagent/consumable/ethanol/species_drink/frisky_kitty = 2)
 	required_reagents = list(/datum/reagent/consumable/catnip_tea = 1,  /datum/reagent/consumable/milk = 1)
 	required_temp = 296 //Just above room temp (22.85'C)
+	mix_message = "The drink bubbles over the rim as it settles, and the smell of wet fur and felines makes it feel like you're in heat."
 
 /datum/chemical_reaction/jell_wyrm
 	name = "Jell Wyrm"
@@ -1038,6 +1062,7 @@
 	results = list(/datum/reagent/consumable/ethanol/species_drink/jell_wyrm = 2)
 	required_reagents = list(/datum/reagent/toxin/slimejelly = 1,  /datum/reagent/toxin/carpotoxin = 1, /datum/reagent/carbondioxide = 5)
 	required_temp = 333 // (59.85'C)
+	mix_message = "The smell of toxins scrunches your nose as your limbs grow limp and feel like jelly."
 
 /datum/chemical_reaction/laval_spit
 	name = "Laval Spit"
@@ -1045,3 +1070,4 @@
 	results = list(/datum/reagent/consumable/ethanol/species_drink/laval_spit = 20) //Limited use
 	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/consumable/ethanol/mauna_loa = 10, /datum/reagent/sulfur = 5)
 	required_temp = 900 // (626.85'C)
+	mix_message = "The room grows warm as burning rock rockets over the edge of the drink before settling."
