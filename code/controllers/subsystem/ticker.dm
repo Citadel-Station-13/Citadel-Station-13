@@ -714,7 +714,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/gondolabridge.ogg',
 		'sound/roundend/haveabeautifultime.ogg',
 		'sound/roundend/CitadelStationHasSeenBetterDays.ogg',
-		'sound/roundend/approachingbaystation'\
+		'sound/roundend/approachingbaystation.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
