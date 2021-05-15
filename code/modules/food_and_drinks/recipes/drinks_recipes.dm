@@ -29,6 +29,7 @@
 	id = /datum/reagent/consumable/nuka_cola
 	results = list(/datum/reagent/consumable/nuka_cola = 6)
 	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/consumable/space_cola = 6)
+	mix_message = "The bitter-sweet smell of radiation almost makes you wish for a space winter."
 
 /datum/chemical_reaction/moonshine
 	name = "Moonshine"
@@ -36,6 +37,7 @@
 	results = list(/datum/reagent/consumable/ethanol/moonshine = 10)
 	required_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
+	mix_message = "As the moisture in the glass settles, your entire face burns from the reaction's alcoholic virility."
 
 /datum/chemical_reaction/wine
 	name = "Wine"
@@ -112,6 +114,7 @@
 	id = /datum/reagent/consumable/ethanol/screwdrivercocktail
 	results = list(/datum/reagent/consumable/ethanol/screwdrivercocktail = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/orangejuice = 1)
+	mix_message = "The mixture billows a sweet scent of orange, promptly drowned out by a thick nose-scrunching cloud of potato liquor."
 
 /datum/chemical_reaction/bloody_mary
 	name = "Bloody Mary"
@@ -142,18 +145,21 @@
 	id = /datum/reagent/consumable/ethanol/toxins_special
 	results = list(/datum/reagent/consumable/ethanol/toxins_special = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vermouth = 1, /datum/reagent/toxin/plasma = 2)
+	mix_message = "The surface of the mixture sets ablaze as toxic gas erupts into a mystical cloud of fire, shortly settling to but a humble - albeit eternal blaze."
 
 /datum/chemical_reaction/beepsky_smash
 	name = "Beepksy Smash"
 	id = /datum/reagent/consumable/ethanol/beepsky_smash
 	results = list(/datum/reagent/consumable/ethanol/beepsky_smash = 5)
 	required_reagents = list(/datum/reagent/consumable/limejuice = 2, /datum/reagent/consumable/ethanol/quadruple_sec = 2, /datum/reagent/iron = 1)
+	mix_message = "You can hear the law nearby."
 
 /datum/chemical_reaction/doctor_delight
 	name = "The Doctor's Delight"
 	id = /datum/reagent/consumable/doctor_delight
 	results = list(/datum/reagent/consumable/doctor_delight = 5)
 	required_reagents = list(/datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/consumable/orangejuice = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/medicine/cryoxadone = 1)
+	mix_message = "<span class='warning'>The scent of medicine hits you like a truck!</span>"
 
 /datum/chemical_reaction/irish_cream
 	name = "Irish Cream"
@@ -166,6 +172,7 @@
 	id = /datum/reagent/consumable/ethanol/manly_dorf
 	results = list(/datum/reagent/consumable/ethanol/manly_dorf = 3)
 	required_reagents = list (/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/ale = 2)
+	mix_message = "You can feel the hair growing on your chest!"
 
 /datum/chemical_reaction/greenbeer
 	name = "Green Beer"
@@ -233,6 +240,7 @@
 	id = /datum/reagent/consumable/ethanol/hiveminderaser
 	results = list(/datum/reagent/consumable/ethanol/hiveminderaser = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 2, /datum/reagent/consumable/ethanol/thirteenloko = 1, /datum/reagent/consumable/grenadine = 1)
+	mix_message = "Your head throbs as the purple-colored mixture swirls with alien-like vigor!"
 
 /datum/chemical_reaction/manhattan
 	name = "Manhattan"
@@ -269,6 +277,8 @@
 	id = /datum/reagent/consumable/ethanol/singulo
 	results = list(/datum/reagent/consumable/ethanol/singulo = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/radium = 1, /datum/reagent/consumable/ethanol/wine = 5)
+	mix_message = "<span class='warning'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+	mix_sound = 'sound/effects/supermatter.ogg'
 
 /datum/chemical_reaction/alliescocktail
 	name = "Allies Cocktail"
@@ -448,6 +458,7 @@
 	results = list(/datum/reagent/consumable/ethanol/syndicatebomb = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/whiskey_cola = 1)
 	mix_message = "<span class='warning'>You can hear beeping coming from behind you.</span>"
+	mix_sound = 'sound/machines/nuke/angry_beep.ogg'
 
 /datum/chemical_reaction/erikasurprise
 	name = "Erika Surprise"
@@ -475,6 +486,7 @@
 	results = list(/datum/reagent/consumable/ethanol/bananahonk = 2)
 	required_reagents = list(/datum/reagent/consumable/laughter = 1, /datum/reagent/consumable/cream = 1)
 	mix_message = "The mixture honks. Honk!"
+	mix_sound = 'sound/items/bikehorn.ogg'
 
 /datum/chemical_reaction/silencer
 	name = "Silencer"
@@ -574,6 +586,7 @@
 	results = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/hooch = 1, /datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/ethanol/manly_dorf = 1, /datum/reagent/consumable/ethanol/syndicatebomb = 1)
 	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
+	mix_sound = 'sound/FermiChem/bufferadd.ogg'
 
 /datum/chemical_reaction/lemonade
 	name = "Lemonade"
@@ -863,6 +876,7 @@
 	results = list(/datum/reagent/consumable/ethanol/hellfire = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/ethanol/crevice_spike = 1)
 	mix_message = "The liquid begins to churn as it changes to an amber orange and catches on fire."
+	mix_sound = 'sound/FermiChem/bufferadd.ogg'
 
 /datum/chemical_reaction/sins_delight
 	name = "Sins Delight"
@@ -902,7 +916,7 @@
 	id = /datum/reagent/consumable/ethanol/hotlime_miami
 	results = list(/datum/reagent/consumable/ethanol/hotlime_miami = 2)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/consumable/ethanol/pina_colada = 1)
-	mix_message = "<span class='warning'>You can hear synthwave in the distance as the drink mixes as you can feel your blood boiling.</span>"
+	mix_message = "<span class='warning'>You can hear synthwave in the distance as you can feel your blood boiling with rage.</span>"
 
 /datum/chemical_reaction/mauna_loa
 	name = "Mauna Loa"
@@ -1054,6 +1068,7 @@
 	results = list(/datum/reagent/consumable/ethanol/species_drink/hollow_bone = 10)
 	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 5,  /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/coconutmilk = 10)
 	mix_message = "<span class='warning'>Your bones feel weak.</span>"
+	mix_sound = 'sound/effects/wounds/crack1.ogg'
 
 /datum/chemical_reaction/frisky_kitty
 	name = "Frisky Kitty"
