@@ -447,6 +447,7 @@
 	id = /datum/reagent/consumable/ethanol/syndicatebomb
 	results = list(/datum/reagent/consumable/ethanol/syndicatebomb = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/whiskey_cola = 1)
+	mix_message = "<span class='warning'>You can hear beeping coming from behind you.</span>"
 
 /datum/chemical_reaction/erikasurprise
 	name = "Erika Surprise"
@@ -459,24 +460,28 @@
 	id = /datum/reagent/consumable/ethanol/devilskiss
 	results = list(/datum/reagent/consumable/ethanol/devilskiss = 3)
 	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/rum = 1)
+	mix_message = "You can hear faint whispering in your ear and a burning on your cheeks as the mixture blends together into with a fiery swirl."
 
 /datum/chemical_reaction/hippiesdelight
 	name = "Hippies Delight"
 	id = /datum/reagent/consumable/ethanol/hippies_delight
 	results = list(/datum/reagent/consumable/ethanol/hippies_delight = 2)
 	required_reagents = list(/datum/reagent/drug/mushroomhallucinogen = 1, /datum/reagent/consumable/ethanol/gargle_blaster = 1)
+	mix_message = "You can like... Smell the flowers, man - as the drink mixes."
 
 /datum/chemical_reaction/bananahonk
 	name = "Banana Honk"
 	id = /datum/reagent/consumable/ethanol/bananahonk
 	results = list(/datum/reagent/consumable/ethanol/bananahonk = 2)
 	required_reagents = list(/datum/reagent/consumable/laughter = 1, /datum/reagent/consumable/cream = 1)
+	mix_message = "The mixture honks. Honk!"
 
 /datum/chemical_reaction/silencer
 	name = "Silencer"
 	id = /datum/reagent/consumable/ethanol/silencer
 	results = list(/datum/reagent/consumable/ethanol/silencer = 3)
 	required_reagents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/sugar = 1)
+	mix_message = "..."
 
 /datum/chemical_reaction/driestmartini
 	name = "Driest Martini"
@@ -519,12 +524,14 @@
 	id = /datum/reagent/consumable/gibbfloats
 	results = list(/datum/reagent/consumable/gibbfloats = 15)
 	required_reagents = list(/datum/reagent/consumable/dr_gibb = 5, /datum/reagent/consumable/ice = 5, /datum/reagent/consumable/cream = 5)
+	mix_message = "As the cream floats to the top of the glass, you can feel your cholesterol levels rising just looking at it."
 
 /datum/chemical_reaction/triple_citrus
 	name = "triple_citrus"
 	id = /datum/reagent/consumable/triple_citrus
 	results = list(/datum/reagent/consumable/triple_citrus = 5)
 	required_reagents = list(/datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/orangejuice = 1)
+	mix_message = "The glass's contents shift colors from a rainbow of fruity twinges before settling with a distinct flowery smell."
 
 /datum/chemical_reaction/grape_soda
 	name = "grape soda"
@@ -895,7 +902,7 @@
 	id = /datum/reagent/consumable/ethanol/hotlime_miami
 	results = list(/datum/reagent/consumable/ethanol/hotlime_miami = 2)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/consumable/ethanol/pina_colada = 1)
-	mix_message = "You hear synthwave in the distance as the drink mixes; this makes you want to hit someone with a baseball bat."
+	mix_message = "<span class='warning'>You can hear synthwave in the distance as the drink mixes as you can feel your blood boiling.</span>"
 
 /datum/chemical_reaction/mauna_loa
 	name = "Mauna Loa"
@@ -1046,7 +1053,7 @@
 	id = /datum/reagent/consumable/ethanol/species_drink/hollow_bone
 	results = list(/datum/reagent/consumable/ethanol/species_drink/hollow_bone = 10)
 	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 5,  /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/coconutmilk = 10)
-	mix_message = "Your bones feel weak."
+	mix_message = "<span class='warning'>Your bones feel weak.</span>"
 
 /datum/chemical_reaction/frisky_kitty
 	name = "Frisky Kitty"
