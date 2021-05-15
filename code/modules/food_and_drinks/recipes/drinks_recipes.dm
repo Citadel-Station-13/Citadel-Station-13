@@ -1046,7 +1046,7 @@
 	id = /datum/reagent/consumable/ethanol/species_drink/hollow_bone
 	results = list(/datum/reagent/consumable/ethanol/species_drink/hollow_bone = 10)
 	required_reagents = list(/datum/reagent/toxin/bonehurtingjuice = 5,  /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/coconutmilk = 10)
-	mix_message = "Your bones feel week."
+	mix_message = "Your bones feel weak."
 
 /datum/chemical_reaction/frisky_kitty
 	name = "Frisky Kitty"
