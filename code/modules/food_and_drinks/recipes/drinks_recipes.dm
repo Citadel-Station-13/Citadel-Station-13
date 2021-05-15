@@ -744,7 +744,7 @@
 	id = /datum/reagent/consumable/pwr_game
 	results = list(/datum/reagent/consumable/pwr_game = 5)
 	required_reagents = list(/datum/reagent/consumable/sodawater = 1, /datum/reagent/colorful_reagent/crayonpowder/black = 1, /datum/reagent/consumable/sodiumchloride = 1)
-	mix_message = "The mixture froths as it turns black, rousing a nauseating aroma of sweat and salt before settling to an eerie purple color.
+	mix_message = "The mixture froths as it turns black, rousing a nauseating aroma of sweat and salt before settling to an eerie purple color."
 
 /datum/chemical_reaction/pinkmilk
 	name = "Strawberry Milk"
