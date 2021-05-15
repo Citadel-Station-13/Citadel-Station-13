@@ -458,7 +458,7 @@
 	results = list(/datum/reagent/consumable/ethanol/syndicatebomb = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/ethanol/whiskey_cola = 1)
 	mix_message = "<span class='warning'>You can hear beeping coming from behind you.</span>"
-	mix_sound = 'sound/machines/nuke/angry_beep.ogg'
+	mix_sound = 'sound/items/timer.ogg'
 
 /datum/chemical_reaction/erikasurprise
 	name = "Erika Surprise"
@@ -493,13 +493,16 @@
 	id = /datum/reagent/consumable/ethanol/silencer
 	results = list(/datum/reagent/consumable/ethanol/silencer = 3)
 	required_reagents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/sugar = 1)
-	mix_message = "..."
+	mix_message = "As the drink mixes, you can hear nothing..."
+	mix_sound = null
 
 /datum/chemical_reaction/driestmartini
 	name = "Driest Martini"
 	id = /datum/reagent/consumable/ethanol/driestmartini
 	results = list(/datum/reagent/consumable/ethanol/driestmartini = 2)
 	required_reagents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/ethanol/gin = 1)
+	mix_message = "You feel like a prune beneath a sun as the mixture yanks the moisture from your tongue - yet, it's all so silent."
+	mix_sound = null
 
 /datum/chemical_reaction/thirteenloko
 	name = "Thirteen Loko"
@@ -778,7 +781,8 @@
 	id = /datum/reagent/consumable/ethanol/blank_paper
 	results = list(/datum/reagent/consumable/ethanol/blank_paper = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/silencer = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/nuka_cola = 1)
-	mix_message = "..."
+	mix_message = "As the drink mixes, you can hear nothing..."
+	mix_sound = null
 
 /datum/chemical_reaction/wizz_fizz
 	name = "Wizz Fizz"
@@ -816,6 +820,7 @@
 	results = list(/datum/reagent/consumable/ethanol/old_timer = 6)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskeysoda = 3, /datum/reagent/consumable/parsnipjuice = 2, /datum/reagent/consumable/ethanol/alexander = 1)
 	mix_message = "You hear a faded record playing in the distance. Then, you hear nothing."
+	mix_sound = null
 
 /datum/chemical_reaction/rubberneck
 	name = "Rubberneck"
@@ -849,6 +854,7 @@
 	results = list(/datum/reagent/consumable/ethanol/blazaam = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/peachjuice = 1, /datum/reagent/bluespace = 1)
 	mix_message = "The mixture- hey, where'd all the liquid go? Oh, there it is."
+	mix_sound = 'sound/magic/Teleport_app.ogg'
 
 /datum/chemical_reaction/planet_cracker
 	name = "Planet Cracker"
@@ -869,6 +875,7 @@
 	results = list(/datum/reagent/consumable/ethanol/gunfire = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/tea = 3)
 	mix_message = "A loud popping begins to fill the air as the drink is mixed."
+	mix_sound = 'sound/effects/wounds/sizzle1.ogg'
 
 /datum/chemical_reaction/hellfire
 	name = "Hellfire"
@@ -924,6 +931,7 @@
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
 	mix_message = "The drink erupts as a plume of lava sprays all over the place! Oh, wait, it's just luke-warm liquor."
+	mix_sound = 'sound/effects/wounds/sizzle2.ogg'
 
 /datum/chemical_reaction/commander_and_chief
 	name = "Commander and Chief"
@@ -1093,3 +1101,4 @@
 	required_reagents = list(/datum/reagent/iron = 5,  /datum/reagent/consumable/ethanol/mauna_loa = 10, /datum/reagent/sulfur = 5)
 	required_temp = 900 // (626.85'C)
 	mix_message = "The room grows warm as burning rock rockets over the edge of the drink before settling."
+	mix_sound = 'sound/effects/wounds/sizzle2.ogg'
