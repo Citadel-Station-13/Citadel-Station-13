@@ -531,8 +531,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
 						var/actual_name = GLOB.bodypart_names[num2text(marking_list[1])] // get the actual name from the bitflag representing the part the marking is applied to
 						var/color_marking_dat = ""
-						var/datum/sprite_accessory/S = (actual_name == "mam_body_markings") ? GLOB.mam_body_markings_list[marking_list[2]] : GLOB.body_markings_list[marking_list[2]]
+						var/datum/sprite_accessory/S = (marking_type == "mam_body_markings") ? GLOB.mam_body_markings_list[marking_list[2]] : GLOB.body_markings_list[marking_list[2]]
 						if(S && S.matrixed_sections && S.matrixed_sections != MATRIX_NONE)
+							// if it has nothing initialize it to white
+							if(length(marking_list) == 2)
+								marking_list += list(list("#FFFFFF","#FFFFFF","#FFFFFF")) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
 							// we know it has one matrixed section at minimum
 							color_marking_dat += "<span style='border: 1px solid #161616; background-color: #[marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
 							// if it has a second section, add it
