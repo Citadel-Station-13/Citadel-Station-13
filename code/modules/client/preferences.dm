@@ -542,16 +542,40 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(S && matrixed_sections)
 							// if it has nothing initialize it to white
 							if(length(marking_list) == 2)
-								marking_list += list(list("#FFFFFF","#FFFFFF","#FFFFFF")) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
+								var/first = "#FFFFFF"
+								var/second = "#FFFFFF"
+								var/third = "#FFFFFF"
+								if(features["mcolor"])
+									first = "#[features["mcolor"]]"
+								if(features["mcolor2"])
+									second = "#[features["mcolor2"]]"
+								if(features["mcolor3"])
+									third = "#[features["mcolor3"]]"
+								marking_list += list(list(first, second, third)) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
+							// index magic
+							var/primary_index = 1
+							var/secondary_index = 2
+							var/tertiary_index = 3
+							switch(matrixed_sections)
+								if(MATRIX_GREEN)
+									primary_index = 2
+								if(MATRIX_BLUE)
+									primary_index = 3
+								if(MATRIX_RED_BLUE)
+									secondary_index = 2
+								if(MATRIX_GREEN_BLUE)
+									primary_index = 2
+									secondary_index = 3
+
 							// we know it has one matrixed section at minimum
-							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][1]];'>&nbsp;&nbsp;&nbsp;</span>"
+							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][primary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
 							// if it has a second section, add it
 							if(matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)
-								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][2]];'>&nbsp;&nbsp;&nbsp;</span>"
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][secondary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
 								number_colors = 2
 							// if it has a third section, add it
 							if(matrixed_sections == MATRIX_ALL)
-								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][3]];'>&nbsp;&nbsp;&nbsp;</span>"
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][tertiary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
 								number_colors = 3
 							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];number_colors=[number_colors];task=input'>Change</a><BR>"
 						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
@@ -2487,8 +2511,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 										color_number = 2
 									if(MATRIX_BLUE)
 										color_number = 3
-									if(MATRIX_GREEN_BLUE)
-										color_number = 2
 							else if(color_number == 2)
 								switch(matrixed_sections)
 									if(MATRIX_RED_BLUE)
