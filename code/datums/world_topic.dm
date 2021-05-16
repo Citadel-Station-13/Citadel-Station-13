@@ -232,6 +232,9 @@
 /datum/world_topic/jsonplayers/Run(list/input, addr)
 	. = list()
 	for(var/client/C in GLOB.clients)
+		if(C.holder?.fakekey)
+			. += C.holder.fakekey
+			continue
 		. += C.key
 	return json_encode(.)
 
