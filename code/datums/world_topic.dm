@@ -207,14 +207,12 @@
 	if(!key_valid)
 		GLOB.topic_status_cache = .
 
-
-
 /datum/world_topic/jsonstatus
 	keyword = "jsonstatus"
 
 /datum/world_topic/jsonstatus/Run(list/input, addr)
 	. = list()
-	.["mode"] = GLOB.master_mode
+	.["mode"] = "hidden" // GLOB.master_mode - woops we don't want people to know if there's secret/extended :)
 	.["round_id"] = "[GLOB.round_id]"
 	.["players"] = GLOB.clients.len
 	var/list/adm = get_admin_counts()
