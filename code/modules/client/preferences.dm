@@ -2465,9 +2465,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					// add a marking
 					var/marking_type = href_list["marking_type"]
 					if(marking_type && features[marking_type])
-						var/selected_limb = input(user, "Choose the limb to apply to.", "Character Preference") as null|anything in list("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg")
+						var/selected_limb = input(user, "Choose the limb to apply to.", "Character Preference") as null|anything in list("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "All")
 						if(selected_limb)
-							var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
 							var/list/marking_list = GLOB.mam_body_markings_list
 							var/list/snowflake_markings_list = list()
 							for(var/path in marking_list)
@@ -2475,12 +2474,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								if(istype(S))
 									if(istype(S, /datum/sprite_accessory/mam_body_markings))
 										var/datum/sprite_accessory/mam_body_markings/marking = S
-										if(!(selected_limb in marking.covered_limbs))
+										if(!(selected_limb in marking.covered_limbs) && selected_limb != "All")
 											continue
 
 									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 										snowflake_markings_list[S.name] = path
 
+							var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
 							var/selected_marking = input(user, "Select the marking to apply to the limb.") as null|anything in snowflake_markings_list
 							if(selected_marking)
 								features[marking_type] += list(list(limb_value, selected_marking))
