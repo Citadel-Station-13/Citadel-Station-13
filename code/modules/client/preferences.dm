@@ -2486,7 +2486,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
 									features[marking_type] += list(list(limb_value, selected_marking))
 								else
-									var/datum/sprite_accessory/S = marking_list[selected_marking]
+									var/datum/sprite_accessory/mam_body_markings/S = marking_list[selected_marking]
 									for(var/limb in S.covered_limbs)
 										var/limb_value = text2num(GLOB.bodypart_values[limb])
 										features[marking_type] += list(list(limb_value, selected_marking))
