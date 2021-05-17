@@ -2480,10 +2480,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
 										snowflake_markings_list[S.name] = path
 
-							var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
 							var/selected_marking = input(user, "Select the marking to apply to the limb.") as null|anything in snowflake_markings_list
 							if(selected_marking)
-								features[marking_type] += list(list(limb_value, selected_marking))
+								if(selected_limb != "All")
+									var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
+									features[marking_type] += list(list(limb_value, selected_marking))
+								else
+									var/datum/sprite_accessory/S = marking_list[selected_marking]
+									for(var/limb in S.covered_limbs)
+										var/limb_value = text2num(GLOB.bodypart_values[limb])
+										features[marking_type] += list(list(limb_value, selected_marking))
 
 				if("marking_color")
 					var/index = text2num(href_list["marking_index"])
