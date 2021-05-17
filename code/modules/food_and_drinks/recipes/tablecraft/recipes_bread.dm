@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////BREAD////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/bread
-	name = "Meat Slab"
+	name = "Bread"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 5,
 	)
