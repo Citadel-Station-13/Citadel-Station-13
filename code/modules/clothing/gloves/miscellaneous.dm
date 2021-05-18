@@ -233,19 +233,20 @@
 	cold_protection = ARMS|HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 10, "energy" = 10, "bomb" = 55, "bio" = 15, "rad" = 15, "fire" = 80, "acid" = 50)
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	strip_mod = 1.5
+	strip_delay = 80
 	enhancement = 11 // slightly worse than changeling gauntlets but is also insulated
 	wound_enhancement = 11
+	silent = TRUE
 	inherited_trait = TRAIT_CHUNKYFINGERS // your fingers are fat because the gloves are
 	secondary_trait = TRAIT_MAULER // commit table slam
 
 /obj/item/clothing/gloves/fingerless/pugilist/mauler/equipped(mob/user, slot)
 	. = ..()
 	if(current_equipped_slot == SLOT_GLOVES)
-		to_chat(user, "<span class='warning'>You feel prickles around your wrist as strength courses through your veins! You're ready to kick some ass!</span>")
+		to_chat(user, "<span class='warning'>You feel prickles around your wrists as strength courses through your veins! You're ready to kick some ass!</span>")
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
