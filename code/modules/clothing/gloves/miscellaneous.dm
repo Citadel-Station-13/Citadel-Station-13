@@ -223,6 +223,30 @@
 	parry_cooldown = 0
 	parry_failed_clickcd_duration = 0
 
+/obj/item/clothing/gloves/fingerless/pugilist/mauler
+	name = "mauler gauntlets"
+	desc = "Plastitanium gauntlets coated in a thick nano-wave carbon material and implanted with nanite injectors that boost the wielder's strength six-fold."
+	icon_state = "mauler_gauntlets"
+	item_state = "mauler_gauntlets"
+	transfer_prints = FALSE
+	body_parts_covered = ARMS|HANDS
+	cold_protection = ARMS|HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_mod = 1.5
+	enhancement = 11 // slightly worse than changeling gauntlets but is also insulated
+	wound_enhancement = 11
+	inherited_trait = TRAIT_CHUNKYFINGERS // your fingers are fat because the gloves are
+	secondary_trait = TRAIT_MAULER // commit table slam
+
+/obj/item/clothing/gloves/fingerless/pugilist/mauler/equipped(mob/user, slot)
+	. = ..()
+	if(current_equipped_slot == SLOT_GLOVES)
+		to_chat(user, "<span class='warning'>You feel prickles around your wrist as strength courses through your veins! You're ready to kick some ass!</span>")
+
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."
