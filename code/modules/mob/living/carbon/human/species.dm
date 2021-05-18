@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(roundstart_race_names)
 		for(var/q in L.roundstart_quirks)
 			var/datum/quirk/Q = q
 			if(Q.type in blacklisted_quirks)
-				L.remove_quirk(Q.type)
+				qdel(Q)
 				removed_quirks += Q.type
 
 // restore any quirks that we removed

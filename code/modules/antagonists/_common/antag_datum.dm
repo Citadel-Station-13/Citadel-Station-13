@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			if(Q.type in blacklisted_quirks)
 				if(initial(Q.antag_removal_text))
 					to_chat(L, "<span class='boldannounce'>[initial(Q.antag_removal_text)]</span>")
-				L.remove_quirk(Q.type)
+				qdel(Q)
 
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
