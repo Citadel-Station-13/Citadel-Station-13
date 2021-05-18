@@ -277,6 +277,10 @@
 	name = "Cotton"
 	icon_state = "hair_cotton"
 
+/datum/sprite/accessory/hair/cottonalt
+	name = "Cotton (Alt)"
+	icon_state = "hair_cottonalt"
+
 /datum/sprite_accessory/hair/country
 	name = "Country"
 	icon_state = "hair_country"
@@ -426,7 +430,7 @@
 	icon_state = "hair_hajime"
 
 /datum/sprite_accessory/hair/hajimealt
-	name = "Hajime" (Alt)
+	name = "Hajime (Alt)"
 	icon_state = "hair_hajimealt"
 
 /datum/sprite_accessory/hair/halfbang
