@@ -277,7 +277,7 @@
 	name = "Cotton"
 	icon_state = "hair_cotton"
 
-/datum/sprite/accessory/hair/cottonalt
+/datum/sprite_accessory/hair/cottonalt
 	name = "Cotton (Alt)"
 	icon_state = "hair_cottonalt"
 
