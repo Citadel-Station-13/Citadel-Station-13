@@ -36,13 +36,11 @@
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE
 	deathsound = 'sound/creatures/space_dragon_roar.ogg'
 	icon = 'icons/mob/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
 	icon_dead = "spacedragon_dead"
-	health_doll_icon = "spacedragon"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
@@ -52,6 +50,7 @@
 	armour_penetration = 30
 	pixel_x = -16
 	turns_per_move = 5
+	movement_type = FLYING
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
@@ -61,7 +60,6 @@
 	maxbodytemp = 1500
 	faction = list("carp")
 	pressure_resistance = 200
-	is_flying_animal = TRUE
 	/// Current time since the the last rift was activated.  If set to -1, does not increment.
 	var/riftTimer = 0
 	/// Maximum amount of time which can pass without a rift before Space Dragon despawns.
@@ -92,7 +90,6 @@
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	rift = new
 	rift.Grant(src)
 
@@ -103,7 +100,7 @@
 		color_selection()
 	
 
-/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/space_dragon/Life()
 	. = ..()
 	tiredness = max(tiredness - 1, 0)
 	for(var/mob/living/consumed_mob in src)
@@ -159,11 +156,12 @@
 					adjustHealth(-L.maxHealth * 0.5)
 			return
 	. = ..()
-	if(istype(target, /obj/vehicle/sealed/mecha))
-		var/obj/vehicle/sealed/mecha/M = target
+	if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
-/mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)
+/mob/living/simple_animal/hostile/space_dragon/CtrlClickOn(atom/A)
+	. = ..()
 	if(using_special)
 		return
 	using_special = TRUE
@@ -322,7 +320,7 @@
 		L.adjustFireLoss(30)
 		to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
 	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
+	for(var/obj/mecha/M in T.contents)
 		if(M in hit_list)
 			continue
 		hit_list += M
@@ -623,7 +621,7 @@
 		carp_stored++
 		icon_state = "carp_rift_carpspawn"
 		if(light_color != LIGHT_COLOR_PURPLE)
-			set_light_color(LIGHT_COLOR_PURPLE)
+			light_color = LIGHT_COLOR_PURPLE
 			update_light()
 		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
 		last_carp_inc -= carp_interval
@@ -635,7 +633,7 @@
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
 		obj_integrity = INFINITY
 		icon_state = "carp_rift_charged"
-		set_light_color(LIGHT_COLOR_YELLOW)
+		light_color = LIGHT_COLOR_YELLOW
 		update_light()
 		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
 		resistance_flags = INDESTRUCTIBLE
@@ -652,7 +650,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Wildlife Observations", sound = 'sound/announcer/classic/spanomalies.ogg')
 
 /**
   * Used to create carp controlled by ghosts when the option is available.
@@ -681,7 +679,7 @@
 	carp_stored--
 	if(carp_stored <= 0 && charge_state < CHARGE_COMPLETED)
 		icon_state = "carp_rift"
-		set_light_color(LIGHT_COLOR_BLUE)
+		light_color = LIGHT_COLOR_BLUE
 		update_light()
 	return TRUE
 
