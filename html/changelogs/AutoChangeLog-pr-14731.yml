@@ -1,0 +1,6 @@
+author: "WanderingFox95"
+delete-after: True
+changes: 
+  - rscadd: "The E-Fink, a mending tool for food."
+  - soundadd: "A backwards bladeslice. (Yes, for the E-fink)"
+  - imageadd: "And Icons for the E-fink, of course."
