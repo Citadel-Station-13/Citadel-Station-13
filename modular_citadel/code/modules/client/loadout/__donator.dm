@@ -550,7 +550,7 @@
 	ckeywhitelist = list("sneka")
 
 /datum/gear/donator/smaiden
-	name = "Shrine Maiden"
+	name = "shrine maiden outfit"
 	slot = SLOT_W_UNIFORM
 	path = /obj/item/clothing/suit/smaiden
 	ckeywhitelist = list("ultimarifox")
