@@ -426,7 +426,7 @@
 	icon_state = "hair_hajime"
 
 /datum/sprite_accessory/hair/hajimealt
-	name = "Hajime (Alt)
+	name = "Hajime" (Alt)
 	icon_state = "hair_hajimealt"
 
 /datum/sprite_accessory/hair/halfbang
