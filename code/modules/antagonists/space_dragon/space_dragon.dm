@@ -65,6 +65,7 @@
 	// spawn our dragon
 	var/mob/living/simple_animal/hostile/space_dragon/S = new(pick(spawn_locs))
 	// gib or delete the old mob here
+	new_owner.current.gib()
 	// alternativelly, isntead of using the code above to pick a location, we can gib the mob, then spawn the dragon where it died for a goresome transformation
 
 	//mind transfer and role setup

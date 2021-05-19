@@ -51,6 +51,7 @@
 	pixel_x = -16
 	turns_per_move = 5
 	movement_type = FLYING
+	health_doll_icon = "spacedragon"
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
@@ -160,7 +161,7 @@
 		var/obj/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
 
-/mob/living/simple_animal/hostile/space_dragon/CtrlClickOn(atom/A)
+/mob/living/simple_animal/hostile/space_dragon/AltClickOn(atom/A)
 	. = ..()
 	if(using_special)
 		return
