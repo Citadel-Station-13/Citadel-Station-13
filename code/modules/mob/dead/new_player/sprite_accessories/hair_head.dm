@@ -29,6 +29,10 @@
 	name = "Afro 2"
 	icon_state = "hair_afro2"
 
+/datum/sprite_accessory/hair/afro2alt
+	name = "Afro 2 (Alt)"
+	icon_state = "hair_afro2alt"
+
 /datum/sprite_accessory/hair/afro_large
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
@@ -140,6 +144,10 @@
 /datum/sprite_accessory/hair/bobcutalt
 	name = "Bobcut (Alt)"
 	icon_state = "hair_bobcutalt"
+
+/datum/sprite_accessory/hair/bobcutalt2
+	name = "Bobcut (Alt) 2"
+	icon_state = "hair_bobcutalt2"
 
 /datum/sprite_accessory/hair/boddicker
 	name = "Boddicker"
@@ -541,6 +549,10 @@
 	name = "Long Over Eye"
 	icon_state = "hair_longovereye"
 
+/datum/sprite_accessory/hair/long_over_eyealt
+	name = "Long Over Eye (Alt)"
+	icon_state = "hair_longovereyealt"
+
 /datum/sprite_accessory/hair/longbangs
 	name = "Long Bangs"
 	icon_state = "hair_lbangs"
@@ -671,9 +683,17 @@
 	name = "Pompadour (Big)"
 	icon_state = "hair_bigpompadour"
 
+/datum/sprite_accessory/hair/bigpompadouralt
+	name = "Pompadour (Big) (Alt)"
+	icon_state = "hair_bigpompadouralt"
+
 /datum/sprite_accessory/hair/ponytail1
 	name = "Ponytail"
 	icon_state = "hair_ponytail"
+
+/datum/sprite_accessory/hair/ponytail1alt
+	name = "Ponytail (Alt)"
+	icon_state = "hair_ponytailalt"
 
 /datum/sprite_accessory/hair/ponytail2
 	name = "Ponytail 2"
@@ -683,13 +703,25 @@
 	name = "Ponytail 3"
 	icon_state = "hair_ponytail3"
 
+/datum/sprite_accessory/hair/ponytail3alt
+	name = "Ponytail 3 (Alt)"
+	icon_state = "hair_ponytail3alt"
+
 /datum/sprite_accessory/hair/ponytail4
 	name = "Ponytail 4"
 	icon_state = "hair_ponytail4"
 
+/datum/sprite_accessory/hair/ponytail4alt
+	name = "Ponytail 4 (Alt)"
+	icon_state = "hair_ponytail4alt"
+
 /datum/sprite_accessory/hair/ponytail5
 	name = "Ponytail 5"
 	icon_state = "hair_ponytail5"
+
+/datum/sprite_accessory/hair/ponytail6
+	name = "Ponytail 6"
+	icon_state = "hair_ponytail6"
 
 /datum/sprite_accessory/hair/highponytail
 	name = "Ponytail (High)"
@@ -714,6 +746,10 @@
 /datum/sprite_accessory/hair/sidetail4
 	name = "Ponytail (Side) 4"
 	icon_state = "hair_sidetail4"
+
+/datum/sprite_accessory/hair/sidetail5
+	name = "Ponytail (Side) 5"
+	icon_state = "hair_sidetail5"
 
 /datum/sprite_accessory/hair/sharptail
 	name = "Ponytail (Sharp)"
@@ -974,6 +1010,10 @@
 /datum/sprite_accessory/hair/longest
 	name = "Very Long Hair 2"
 	icon_state = "hair_longest"
+
+/datum/sprite_accessory/hair/longestalt
+	name = "Very Long Hair 2 (Alt)"
+	icon_state = "hair_longestalt"
 
 /datum/sprite_accessory/hair/longest2
 	name = "Very Long Over Eye"
