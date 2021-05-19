@@ -225,7 +225,7 @@
 
 /obj/item/clothing/gloves/fingerless/pugilist/mauler
 	name = "mauler gauntlets"
-	desc = "Plastitanium gauntlets coated in a thick nano-wave carbon material and implanted with nanite injectors that boost the wielder's strength six-fold."
+	desc = "Plastitanium gauntlets coated in a thick nano-weave carbon material and implanted with nanite injectors that boost the wielder's strength six-fold."
 	icon_state = "mauler_gauntlets"
 	item_state = "mauler_gauntlets"
 	transfer_prints = FALSE
