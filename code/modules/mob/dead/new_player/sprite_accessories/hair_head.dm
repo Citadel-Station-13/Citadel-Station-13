@@ -1050,3 +1050,7 @@
 /datum/sprite_accessory/hair/ziegler
 	name = "Ziegler"
 	icon_state = "hair_ziegler"
+
+/datum/sprite_accessory/hair/zone
+	name = "Zone"
+	icon_state = "hair_zone"
