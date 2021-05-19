@@ -49,3 +49,29 @@
 	parts += "<span class='header'>The [name] was assisted by:</span>"
 	parts += printplayerlist(carp)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+
+/datum/antagonist/space_dragon/admin_add(datum/mind/new_owner, mob/admin)
+	// pick the spawn loc
+	var/list/spawn_locs = list()
+	for(var/obj/effect/landmark/carpspawn/carp_spawn in GLOB.landmarks_list)
+		if(!isturf(carp_spawn.loc))
+			stack_trace("Carp spawn found not on a turf: [carp_spawn.type] on [isnull(carp_spawn.loc) ? "null" : carp_spawn.loc.type]")
+			continue
+		spawn_locs += carp_spawn.loc
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+
+	// spawn our dragon
+	var/mob/living/simple_animal/hostile/space_dragon/S = new(pick(spawn_locs))
+	// gib or delete the old mob here
+	// alternativelly, isntead of using the code above to pick a location, we can gib the mob, then spawn the dragon where it died for a goresome transformation
+
+	//mind transfer and role setup
+	new_owner.transfer_to(S)
+	new_owner.assigned_role = "Space Dragon"
+	new_owner.special_role = "Space Dragon"
+
+	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	. = ..()
+	return SUCCESSFUL_SPAWN
