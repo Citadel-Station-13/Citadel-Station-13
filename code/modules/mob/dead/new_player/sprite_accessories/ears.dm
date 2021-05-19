@@ -366,12 +366,12 @@
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/rabbit
-	name = "Rabbit (lop-eared)"
+	name = "Rabbit (Lop-eared)"
 	icon_state = "rabbit"
 	matrixed_sections = MATRIX_RED_GREEN
 
 /datum/sprite_accessory/ears/mam_ears/rabbitalt
-	name = "Rabbit (straight-eared)"
+	name = "Rabbit (Straight-eared)"
 	icon_state = "rabbitalt"
 	matrixed_sections = MATRIX_ALL
 
