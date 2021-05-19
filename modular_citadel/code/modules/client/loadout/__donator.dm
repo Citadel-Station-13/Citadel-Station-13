@@ -552,5 +552,5 @@
 /datum/gear/donator/smaiden
 	name = "shrine maiden outfit"
 	slot = SLOT_W_UNIFORM
-	path = /obj/item/clothing/suit/smaiden
+	path = /obj/item/clothing/under/smaiden
 	ckeywhitelist = list("ultimarifox")
