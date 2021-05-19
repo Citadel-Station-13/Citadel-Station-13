@@ -702,7 +702,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 45
+	overdose_threshold = 30
 	addiction_threshold = 30
 	pH = 12
 
@@ -773,7 +773,7 @@
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 30
+	overdose_threshold = 25
 	addiction_threshold = 25
 	pH = 8.96
 
