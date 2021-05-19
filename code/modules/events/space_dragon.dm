@@ -12,7 +12,6 @@
 
 /datum/round_event/ghost_role/space_dragon/announce(fake)
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
-
 	
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 	var/list/spawn_locs = list()
@@ -25,11 +24,11 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 	
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
+	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, null, ROLE_SPACE_DRAGON)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	
-	var/mob/dead/selected = pick(candidates)
+	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE

@@ -495,7 +495,7 @@
 		to_chat(S, "<span class='warning'>Your death has left you unable to summon rifts!</span>")
 		return
 	var/area/A = get_area(S)
-	if(!(A.area_flags & VALID_TERRITORY))
+	if(!(A.area_flags & (VALID_TERRITORY | BLOBS_ALLOWED)))
 		to_chat(S, "<span class='warning'>You can't summon a rift here!  Try summoning somewhere secure within the station!</span>")
 		return
 	for(var/obj/structure/carp_rift/rift in S.rift_list)
