@@ -1,0 +1,5 @@
+author: "qweq12yt"
+delete-after: True
+changes: 
+  - bugfix: "Fixed void cloak voiding itself into oblivion."
+  - bugfix: "You can now order emag shuttles again."
