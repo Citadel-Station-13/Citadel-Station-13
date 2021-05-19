@@ -542,6 +542,7 @@
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
+	update_health_hud()
 
 /mob/living/update_health_hud()
 	var/severity = 0
