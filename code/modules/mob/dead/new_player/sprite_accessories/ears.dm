@@ -162,14 +162,14 @@
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/rabbit
-	name = "Rabbit(lop-eared)"
+	name = "Rabbit (Lop-eared)"
 	icon_state = "rabbit"
 	color_src = MATRIXED
 	matrixed_sections = MATRIX_RED_GREEN
 	icon = 'modular_citadel/icons/mob/mam_ears.dmi'
 
 /datum/sprite_accessory/ears/human/rabbitalt
-	name = "Rabbit"
+	name = "Rabbit (Straight-eared)"
 	icon_state = "rabbitalt"
 	color_src = MATRIXED
 	matrixed_sections = MATRIX_ALL
