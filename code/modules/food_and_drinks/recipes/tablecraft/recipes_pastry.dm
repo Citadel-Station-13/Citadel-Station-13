@@ -194,6 +194,15 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
+/datum/crafting_recipe/food/piedough
+	name = "Pie Dough"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/rawpastrybase = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/piedough
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
 	reqs = list(

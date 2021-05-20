@@ -172,13 +172,15 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// bumper object, the thing that starts actual teleport
 	var/obj/effect/gateway_portal_bumper/portal
 	/// Visual object for handling the viscontents
-	var/obj/effect/gateway_portal_effect/portal_visuals
+	/// DISABLED DUE TO BYOND BUG CAUSING STACK OVERFLOWS OF ANY HUMAN INSTANTIATION NEAR AN ACTIVATED GATEWAY.
+	/// Probably due to it referencing each other through the gateway (there's a deep loop, maybe BYOND isn't catching something when it usually would)
+	// var/obj/effect/gateway_portal_effect/portal_visuals
 
 /obj/machinery/gateway/Initialize()
 	generate_destination()
 	update_icon()
-	portal_visuals = new
-	vis_contents += portal_visuals
+	// portal_visuals = new
+	// vis_contents += portal_visuals
 	return ..()
 
 /obj/machinery/gateway/proc/generate_destination()
@@ -195,7 +197,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(use_power == ACTIVE_POWER_USE)
 		use_power = IDLE_POWER_USE
 	update_icon()
-	portal_visuals.reset_visuals()
+	// portal_visuals.reset_visuals()
 
 /obj/machinery/gateway/process()
 	if((stat & (NOPOWER)) && use_power)
@@ -215,7 +217,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		return
 	target = D
 	target.activate(destination)
-	portal_visuals.setup_visuals(target)
+	// portal_visuals.setup_visuals(target)
 	generate_bumper()
 	use_power = ACTIVE_POWER_USE
 	update_icon()
