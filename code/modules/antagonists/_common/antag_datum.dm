@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			var/datum/skill_modifier/job/M = GLOB.skill_modifiers[GET_SKILL_MOD_ID(A, type)]
 			if(istype(M))
 				M.name = "[name] Training"
-	owner.AddComponent(/datum/component/activity)
+	owner.current.AddComponent(/datum/component/activity)
 	SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAG_ON_GAIN, src)
 
 /datum/antagonist/proc/is_banned(mob/M)
