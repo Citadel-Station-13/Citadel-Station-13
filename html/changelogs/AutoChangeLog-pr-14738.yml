@@ -1,4 +1,0 @@
-author: "Putnam3145"
-delete-after: True
-changes: 
-  - bugfix: "Fixed activity being attached to minds instead of mobs on antag attach."
