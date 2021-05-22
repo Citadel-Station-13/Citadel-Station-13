@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	if(extra_reinforced && anchored)
 		state = PRWINDOW_SECURE
 
-	if(reinf && anchored)
+	else if(reinf && anchored)
 		state = WINDOW_SCREWED_TO_FRAME
 	
 
