@@ -112,6 +112,8 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 ///from base of atom/Bumped(): (/atom/movable)
 // #define COMSIG_ATOM_BUMPED "atom_bumped"
+/// From base of atom/wave_ex_act(): (datum/wave_explosion/explosion, args) (CIT SPECIFIC)
+#define COMSIG_ATOM_WAVE_EX_ACT "atom_wave_ex_act"
 ///from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
 ///from base of atom/emp_act(): (severity)

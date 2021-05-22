@@ -7,6 +7,7 @@
 					/obj/item/storage/bag/tray = 8,
 					/obj/item/kitchen/fork = 6,
 					/obj/item/kitchen/knife = 6,
+					/obj/item/kitchen/efink = 2,
 					/obj/item/kitchen/rollingpin = 4,
 					/obj/item/kitchen/unrollingpin = 4,
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 8,

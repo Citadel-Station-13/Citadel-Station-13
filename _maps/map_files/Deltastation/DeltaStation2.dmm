@@ -65125,6 +65125,10 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel,
 /area/medical/virology)
 "dQh" = (

@@ -72,6 +72,8 @@
 	assemblytype = /obj/structure/door_assembly
 	normalspeed = 1
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_WALL
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WALL
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 	// smoothing_groups = list(SMOOTH_GROUP_AIRLOCK)
 

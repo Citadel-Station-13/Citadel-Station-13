@@ -172,6 +172,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// bumper object, the thing that starts actual teleport
 	var/obj/effect/gateway_portal_bumper/portal
 	/// Visual object for handling the viscontents
+	/// DISABLED DUE TO BYOND BUG CAUSING STACK OVERFLOWS OF ANY HUMAN INSTANTIATION NEAR AN ACTIVATED GATEWAY.
+	/// Probably due to it referencing each other through the gateway (there's a deep loop, maybe BYOND isn't catching something when it usually would)
 	var/obj/effect/gateway_portal_effect/portal_visuals
 
 /obj/machinery/gateway/Initialize()
@@ -214,7 +216,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		return
 	target = D
 	target.activate(destination)
-	portal_visuals.setup_visuals(target)
+	// portal_visuals.setup_visuals(target)
 	generate_bumper()
 	use_power = ACTIVE_POWER_USE
 	update_appearance()
@@ -356,6 +358,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 	animate(get_filter("portal_ripple"), time = 1.3 SECONDS, loop = -1, easing = LINEAR_EASING, radius = 32)
 
-	var/turf/center_turf = our_destination.get_target_turf()
+	// var/turf/center_turf = our_destination.get_target_turf() // this causes stack overflow, don't disable the entire thing you pepega
 
-	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
+	// vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))

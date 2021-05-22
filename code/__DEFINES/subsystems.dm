@@ -180,6 +180,7 @@
 #define FIRE_PRIORITY_PROJECTILES	200
 #define FIRE_PRIORITY_TICKER		200
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
+#define FIRE_PRIORITY_EXPLOSIONS	350
 #define FIRE_PRIORITY_STATPANEL		390
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_RUNECHAT		410
@@ -218,7 +219,6 @@
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	} while(FALSE)
-
 
 /**
 	Create a new timer and add it to the queue.

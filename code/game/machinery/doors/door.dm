@@ -18,6 +18,10 @@
 	ricochet_chance_mod = 0.8
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
+	wave_explosion_block = EXPLOSION_BLOCK_DENSE_FILLER
+	wave_explosion_multiply = EXPLOSION_DAMPEN_DENSE_FILLER
+
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE | EXPLOSION_FLAG_DENSITY_DEPENDENT
 
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
@@ -498,5 +502,9 @@
 	zap_flags &= ~ZAP_OBJ_DAMAGE
 	. = ..()
 
+/obj/machinery/door/wave_explosion_damage(power, datum/wave_explosion/explosion)
+	. = ..()
+	if(!density)
+		return . * EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR
 
 #undef DOOR_CLOSE_WAIT

@@ -16060,10 +16060,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=14-Starboard-Central";
-	location = "13.3-Engineering-Central"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -21712,7 +21708,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=13.3-Engineering-Central";
+	codes_txt = "patrol;next_patrol=14-Starboard-Central";
 	location = "13.2-Tcommstore"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,

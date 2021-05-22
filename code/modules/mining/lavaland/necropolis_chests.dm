@@ -994,7 +994,6 @@
 			H.dna.features["wings"] = "None"
 			H.dna.features["frills"] = "None"
 			H.dna.features["spines"] = "Long"
-			H.dna.features["body_markings"] = "Dark Tiger Body"
 			H.dna.features["legs"] = "Digitigrade"
 			H.dna.features["taur_body"] = "None"
 			H.left_eye_color = "fee5a3"
