@@ -1,0 +1,4 @@
+author: "keronshb"
+delete-after: True
+changes: 
+  - balance: "30 > 25 pop req for contractor kit"
