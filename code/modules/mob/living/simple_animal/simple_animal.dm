@@ -7,6 +7,7 @@
 	///How much blud it has for bloodsucking
 	blood_volume = 550
 	rad_flags = RAD_NO_CONTAMINATE
+	hud_type = /datum/hud/living/simple_animal
 
 	status_flags = CANPUSH
 

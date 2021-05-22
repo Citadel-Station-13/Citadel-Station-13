@@ -1,5 +1,0 @@
-author: "shellspeed1"
-delete-after: True
-changes: 
-  - rscadd: "Survival pods can now be designated as requiring power. Survival pods with this feature should include an APC when created and will run out of power rather quickly if no source is added. Perfect for true emergencies."
-  - rscadd: "An empty survival pod has been added to the mining vendor. This is an extremely barebones pod featuring only a gps, table, apc, and the standard fridge for some donk pockets."
