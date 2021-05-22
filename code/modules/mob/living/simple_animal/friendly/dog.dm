@@ -94,28 +94,175 @@
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
 	. = ..()
 	regenerate_icons()
+	AddElement(/datum/element/strippable, GLOB.strippable_corgi_items)
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize()
 		. = ..()
 		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 
+GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
+	/datum/strippable_item/corgi_head,
+	/datum/strippable_item/corgi_back,
+	/datum/strippable_item/corgi_collar,
+	/datum/strippable_item/corgi_id,
+)))
+
 /mob/living/simple_animal/pet/dog/corgi/death(gibbed)
 	..(gibbed)
 	regenerate_icons()
 
-/mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+
+/datum/strippable_item/corgi_head
+	key = STRIPPABLE_ITEM_HEAD
+
+/datum/strippable_item/corgi_head/get_item(atom/source)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
 		return
-	user.set_machine(src)
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'>Nothing"]</A>"
-	dat += "<br><B>Back:</B> <A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'>Nothing"]</A>"
-	dat += "<br><B>Collar:</B> <A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'>Nothing"]</A>"
+	return corgi_source.inventory_head
 
-	user << browse(dat, "window=mob[REF(src)];size=325x500")
-	onclose(user, "mob[REF(src)]")
+/datum/strippable_item/corgi_head/finish_equip(atom/source, obj/item/equipping, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	corgi_source.place_on_head(equipping, user)
+
+/datum/strippable_item/corgi_head/finish_unequip(atom/source, obj/item/equipping, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	user.put_in_hands(corgi_source.inventory_head)
+	corgi_source.inventory_head = null
+	corgi_source.update_corgi_fluff()
+	corgi_source.regenerate_icons()
+
+/datum/strippable_item/corgi_back
+	key = STRIPPABLE_ITEM_BACK
+
+/datum/strippable_item/corgi_back/get_item(atom/source)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	return corgi_source.inventory_back
+
+/datum/strippable_item/corgi_back/try_equip(atom/source, obj/item/equipping, mob/user)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	if (!ispath(equipping.dog_fashion, /datum/dog_fashion/back))
+		to_chat(user, "<span class='warning'>You set [equipping] on [source]'s back, but it falls off!</span>")
+		equipping.forceMove(source.drop_location())
+		if (prob(25))
+			step_rand(equipping)
+		dance_rotate(source, set_original_dir = TRUE)
+
+		return FALSE
+
+	return TRUE
+
+/datum/strippable_item/corgi_back/finish_equip(atom/source, obj/item/equipping, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	equipping.forceMove(corgi_source)
+	corgi_source.inventory_back = equipping
+	corgi_source.update_corgi_fluff()
+	corgi_source.regenerate_icons()
+
+/datum/strippable_item/corgi_back/finish_unequip(atom/source, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	user.put_in_hands(corgi_source.inventory_back)
+	corgi_source.inventory_back = null
+	corgi_source.update_corgi_fluff()
+	corgi_source.regenerate_icons()
+
+/datum/strippable_item/corgi_collar
+	key = STRIPPABLE_ITEM_CORGI_COLLAR
+
+/datum/strippable_item/corgi_collar/get_item(atom/source)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	return corgi_source.pcollar
+
+/datum/strippable_item/corgi_collar/try_equip(atom/source, obj/item/equipping, mob/user)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	if (!istype(equipping, /obj/item/clothing/neck/petcollar))
+		to_chat(user, "<span class='warning'>That's not a collar.</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/strippable_item/corgi_collar/finish_equip(atom/source, obj/item/equipping, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	corgi_source.add_collar(equipping, user)
+	corgi_source.update_corgi_fluff()
+
+/datum/strippable_item/corgi_collar/finish_unequip(atom/source, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	user.put_in_hands(corgi_source.pcollar)
+	corgi_source.pcollar = null
+	corgi_source.update_corgi_fluff()
+	corgi_source.regenerate_icons()
+
+/datum/strippable_item/corgi_id
+	key = STRIPPABLE_ITEM_ID
+
+/datum/strippable_item/corgi_id/get_item(atom/source)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	return corgi_source.access_card
+
+/datum/strippable_item/corgi_id/try_equip(atom/source, obj/item/equipping, mob/user)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	if (!istype(equipping, /obj/item/card/id))
+		to_chat(user, "<span class='warning'>You can't pin [equipping] to [source]!</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/strippable_item/corgi_id/finish_equip(atom/source, obj/item/equipping, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	equipping.forceMove(source)
+	corgi_source.access_card = equipping
+
+/datum/strippable_item/corgi_id/finish_unequip(atom/source, mob/user)
+	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
+	if (!istype(corgi_source))
+		return
+
+	user.put_in_hands(corgi_source.access_card)
+	corgi_source.access_card = null
+	corgi_source.update_corgi_fluff()
+	corgi_source.regenerate_icons()
 
 /mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
@@ -303,9 +450,7 @@
 		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
-		for(var/i in list(1,2,4,8,4,8,4,dir))
-			setDir(i)
-			sleep(1)
+		dance_rotate(src, set_original_dir=TRUE)
 
 	return valid
 

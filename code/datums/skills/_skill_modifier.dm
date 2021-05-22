@@ -78,6 +78,8 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 	GLOB.skill_modifiers -= identifier
 	return ..()
 
+/// DO NOT USE, BANAID FIX FOR SKILLS
+#define LAZYADDASSOC_OLD(L, K, V) if(!L) { L = list(); } L[K] += list(V);
 #define ADD_MOD_STEP(L, P, O, G) \
 	var/__L = L[P];\
 	if(!__L){\
@@ -86,7 +88,7 @@ GLOBAL_LIST_EMPTY(potential_mods_per_skill)
 		L[P] = GLOB.potential_mods_per_skill[P] & (__L + id)\
 	}\
 	if(M.modifier_flags & MODIFIER_SKILL_ORIGIN_DIFF){\
-		LAZYADDASSOC(O, id, "[P]" = G)\
+		LAZYADDASSOC_OLD(O, id, "[P]" = G)\
 	}
 
 /datum/mind/proc/add_skill_modifier(id)

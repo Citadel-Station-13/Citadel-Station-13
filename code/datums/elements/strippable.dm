@@ -87,7 +87,7 @@
 /// Returns TRUE/FALSE depending on if it is allowed.
 /datum/strippable_item/proc/start_equip(atom/source, obj/item/equipping, mob/user)
 	if (warn_dangerous_clothing && isclothing(source))
-		var/obj/item/clothing/clothing = source
+		// var/obj/item/clothing/clothing = source
 		// if(clothing.clothing_flags & DANGEROUS_OBJECT)
 		// 	source.visible_message(
 		// 		"<span class='danger'>[user] tries to put [equipping] on [source].</span>",

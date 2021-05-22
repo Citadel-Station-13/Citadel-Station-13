@@ -7,6 +7,7 @@ GLOBAL_VAR_INIT(tgs_initialized, FALSE)
 GLOBAL_VAR(topic_status_lastcache)
 GLOBAL_LIST(topic_status_cache)
 
+
 /**
  * World creation
  *
@@ -23,15 +24,15 @@ GLOBAL_LIST(topic_status_cache)
  * For clarity, this proc gets triggered later in the initialization pipeline, it is not the first thing to happen, as it might seem.
  *
  * Initialization Pipeline:
- *		Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
- *		Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
- *		world/New() (You are here)
- *		Once world/New() returns, client's can connect.
- *		1 second sleep
- *		Master Controller initialization.
- *		Subsystem initialization.
- *			Non-compiled-in maps are maploaded, all atoms are new()ed
- *			All atoms in both compiled and uncompiled maps are initialized()
+ * Global vars are new()'ed, (including config, glob, and the master controller will also new and preinit all subsystems when it gets new()ed)
+ * Compiled in maps are loaded (mainly centcom). all areas/turfs/objs/mobs(ATOMs) in these maps will be new()ed
+ * world/New() (You are here)
+ * Once world/New() returns, client's can connect.
+ * 1 second sleep
+ * Master Controller initialization.
+ * Subsystem initialization.
+ * Non-compiled-in maps are maploaded, all atoms are new()ed
+ * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
 	if (fexists(EXTOOLS))
@@ -48,11 +49,11 @@ GLOBAL_LIST(topic_status_cache)
 
 	world.Profile(PROFILE_START)
 
-	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
-
 	log_world("World loaded at [TIME_STAMP("hh:mm:ss", FALSE)]!")
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	GLOB.revdata = new
 
@@ -181,7 +182,8 @@ GLOBAL_LIST(topic_status_cache)
 	start_log(GLOB.world_crafting_log)
 	start_log(GLOB.click_log)
 
-	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
+	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
+	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)

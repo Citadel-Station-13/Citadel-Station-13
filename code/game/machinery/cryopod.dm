@@ -36,6 +36,10 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	GLOB.cryopod_computers -= src
 	..()
 
+/obj/item/circuitboard/cryopodcontrol
+	name = "Circuit board (Cryogenic Oversight Console)"
+	build_path = "/obj/machinery/computer/cryopod"
+
 // /obj/machinery/computer/cryopod/update_icon_state()
 // 	if(stat & (NOPOWER|BROKEN))
 // 		icon_state = "cellconsole"
@@ -123,7 +127,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 /obj/machinery/cryopod
 	name = "cryogenic freezer"
 	desc = "Suited for Cyborgs and Humanoids, the pod is a safe place for personnel affected by the Space Sleep Disorder to get some rest."
-	icon = 'icons/obj/machines/cryopod.dmi'
+	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "cryopod-open"
 	density = TRUE
 	anchored = TRUE
@@ -190,13 +194,13 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 	density = TRUE
 	name = initial(name)
 
-/obj/machinery/cryopod/container_resist_act(mob/living/user)
+/obj/machinery/cryopod/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
 /obj/machinery/cryopod/relaymove(mob/user)
-	container_resist_act(user)
+	container_resist(user)
 
 /obj/machinery/cryopod/process()
 	if(!occupant)
