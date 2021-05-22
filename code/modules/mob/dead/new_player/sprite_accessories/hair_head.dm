@@ -597,10 +597,6 @@
 	name = "Mohawk"
 	icon_state = "hair_d"
 
-/datum/sprite_accessory/hair/newyou
-	name = "New You"
-	icon_state = "hair_newyou"
-
 /datum/sprite_accessory/hair/reversemohawk
 	name = "Mohawk (Reverse)"
 	icon_state = "hair_reversemohawk"
@@ -616,6 +612,10 @@
 /datum/sprite_accessory/hair/mulder
 	name = "Mulder"
 	icon_state = "hair_mulder"
+
+/datum/sprite_accessory/hair/newyou
+	name = "New You"
+	icon_state = "hair_newyou"
 
 /datum/sprite_accessory/hair/nia
 	name = "Nia"
