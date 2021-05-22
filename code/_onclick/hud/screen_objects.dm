@@ -637,6 +637,11 @@
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
+/obj/screen/healthdoll/living
+	icon_state = "fullhealth0"
+	screen_loc = ui_living_healthdoll
+	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
+
 /obj/screen/mood
 	name = "mood"
 	icon_state = "mood5"
