@@ -8,6 +8,8 @@
 	initial_temperature = TCMB
 	thermal_conductivity = 0
 	heat_capacity = 700000
+	wave_explosion_multiply = EXPLOSION_DAMPEN_SPACE
+	wave_explosion_block = EXPLOSION_BLOCK_SPACE
 
 	var/destination_z
 	var/destination_x

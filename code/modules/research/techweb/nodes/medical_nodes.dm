@@ -67,20 +67,27 @@
 	design_ids = list("implanter", "implantcase", "implant_chem", "implant_tracking", "locator", "c38_trac")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/basic_cyber_organs
+	id = "basic_cyber_organs"
+	starting_node = TRUE
+	display_name = "Basic Cybernetic Organs"
+	description = "We have the techinology to force him to live a disgusting halflife."
+	design_ids = list("cybernetic_liver", "cybernetic_heart", "cybernetic_lungs", "cybernetic_stomach")
+
 /datum/techweb_node/cyber_organs
 	id = "cyber_organs"
 	display_name = "Cybernetic Organs"
 	description = "We have the technology to rebuild him."
-	prereq_ids = list("adv_biotech")
-	design_ids = list("cybernetic_ears", "cybernetic_heart", "cybernetic_liver", "cybernetic_lungs", "cybernetic_tongue")
+	prereq_ids = list("biotech")
+	design_ids = list("cybernetic_ears", "cybernetic_heart_tier2", "cybernetic_liver_tier2", "cybernetic_lungs_tier2", "cybernetic_stomach_tier2")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
 	display_name = "Upgraded Cybernetic Organs"
 	description = "We have the technology to upgrade him."
-	prereq_ids = list("cyber_organs")
-	design_ids = list("cybernetic_ears_u", "cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u", "ipc_stomach")
+	prereq_ids = list("adv_biotech", "cyber_organs")
+	design_ids = list("cybernetic_ears_u", "cybernetic_heart_tier3", "cybernetic_liver_tier3", "cybernetic_lungs_tier3", "cybernetic_stomach_tier3")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/cyber_implants

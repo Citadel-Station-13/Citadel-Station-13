@@ -1,6 +1,6 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
-	name = "Anthromorphic Lizard"
+	name = "Anthropomorphic Lizard"
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = "00FF00"
@@ -11,7 +11,7 @@
 	coldmod = 1.5
 	heatmod = 0.67
 	mutant_bodyparts = list("mcolor" = "0F0", "mcolor2" = "0F0", "mcolor3" = "0F0", "tail_lizard" = "Smooth", "mam_snouts" = "Round",
-							 "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
+							 "horns" = "None", "frills" = "None", "spines" = "None", "mam_body_markings" = list(),
 							  "legs" = "Digitigrade", "taur" = "None", "deco_wings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'

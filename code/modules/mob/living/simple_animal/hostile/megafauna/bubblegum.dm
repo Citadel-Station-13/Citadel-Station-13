@@ -134,7 +134,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
 	if(.)
-		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
+		SSshuttle.shuttle_purchase_requirements_met["bubblegum"] = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!charging)
@@ -443,7 +443,7 @@ Difficulty: Hard
 		charge(chargeat, delay, chargepast)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
-	name = "bubblegum's hallucination"
+	name = "Bubblegum's hallucination"
 	desc = "Is that really just a hallucination?"
 	health = 1
 	maxHealth = 1

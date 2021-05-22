@@ -47,6 +47,24 @@
 
 /////////////////////////////////MISC/////////////////////////////////////
 
+/datum/crafting_recipe/food/dough
+	name = "Dough"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/doughslice = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/flatdough
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/Pineapple
+	name = "Pineapple"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/pineappleslice = 3,
+	)
+	tools = list(/obj/item/kitchen/efink)
+	result = /obj/item/reagent_containers/food/snacks/grown/pineapple
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/beans
 	name = "Beans"
 	time = 40

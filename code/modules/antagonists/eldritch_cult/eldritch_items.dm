@@ -62,13 +62,24 @@
 
 /datum/action/innate/heretic_shatter/IsAvailable()
 	if(IS_HERETIC(holder) || IS_HERETIC_MONSTER(holder))
-		return TRUE
+		return ..()
 	else
 		return FALSE
 
 /datum/action/innate/heretic_shatter/Activate()
 	if(do_after(holder,10, target = holder))
-		var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
+		if(!sword || QDELETED(sword))
+			return
+		if(!IsAvailable())	//Never trust the user.
+			return
+		var/swordz = (get_turf(sword))?.z	//SHOULD usually have a turf but if it doesn't better be prepared.
+		if(!swordz)
+			to_chat(holder, "<span class='warning'>[sword] flickers but remains in place, as do you...</span>")
+			return
+		var/turf/safe_turf = find_safe_turf(zlevels = swordz, extended_safety_checks = TRUE)
+		if(!safe_turf)
+			to_chat(holder, "<span class='warning'>[sword] flickers but remains in place, as do you...</span>")
+			return
 		do_teleport(holder,safe_turf,forceMove = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
 		to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
 		qdel(sword)
@@ -218,8 +229,8 @@
 	flags_inv = NONE
 	flags_cover = NONE
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you lose comprehension of what you are seeing."
-	item_flags = EXAMINE_SKIP
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	obj_flags = NONE | EXAMINE_SKIP
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -242,9 +253,10 @@
 		//We need to account for the hood shenanigans, and that way we can make sure items always fit, even if one of the slots is used by the fucking hood.
 		if(suittoggled)
 			to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
-		else
+			obj_flags |= EXAMINE_SKIP
+		else if(obj_flags & EXAMINE_SKIP) // ensures that it won't toggle visibility if raising the hood failed
 			to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
-		item_flags = suittoggled ? EXAMINE_SKIP : ~EXAMINE_SKIP
+			obj_flags ^= EXAMINE_SKIP
 	else
 		to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
 
