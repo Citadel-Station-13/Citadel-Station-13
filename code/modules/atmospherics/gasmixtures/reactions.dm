@@ -88,6 +88,18 @@
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
 	)
 
+/proc/fire_expose(turf/open/location, datum/gas_mixture/air, temperature)
+	if(istype(location) && temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		location.hotspot_expose(temperature, CELL_VOLUME)
+		for(var/I in location)
+			var/atom/movable/item = I
+			item.temperature_expose(air, temperature, CELL_VOLUME)
+		location.temperature_expose(air, temperature, CELL_VOLUME)
+
+/proc/radiation_burn(turf/open/location, energy_released)
+	if(location && prob(10))
+		radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
+
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
 	var/energy_released = 0
 	var/old_heat_capacity = air.heat_capacity()
@@ -240,6 +252,20 @@
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
+
+/proc/fusion_ball(datum/holder, reaction_energy, instability)
+	var/turf/open/location
+	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/fusion_pipenet = holder
+		location = get_turf(pick(fusion_pipenet.members))
+	else
+		location = get_turf(holder)
+	if(location)
+		var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
+		if(prob(PERCENT(particle_chance)))
+			location.fire_nuclear_particle()
+		var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + FUSION_RAD_MAX,0)
+		radiation_pulse(location,rad_power)
 
 /datum/gas_reaction/fusion
 	exclude = FALSE
