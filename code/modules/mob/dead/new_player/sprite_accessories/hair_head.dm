@@ -489,6 +489,10 @@
 	name = "Hitop"
 	icon_state = "hair_hitop"
 
+/datum/sprite_accessory/hair/inari
+	name = "Inari"
+	icon_state = "hair_inari"
+
 /datum/sprite_accessory/hair/inkling
 	name = "Inkling"
 	icon_state = "hair_inkling"
