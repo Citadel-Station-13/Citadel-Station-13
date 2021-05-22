@@ -74460,9 +74460,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/command/bridge)
-"sKV" = (
-/turf/open/space/basic,
-/area/command/heads_quarters/captain)
 "sLs" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/field/generator,
@@ -122066,7 +122063,7 @@ oRp
 oRp
 aaa
 aai
-sKV
+aaa
 aaa
 aaa
 aaa
@@ -130637,7 +130634,7 @@ aaf
 aaf
 aaa
 aaa
-sKV
+aaa
 aaa
 aaa
 aaa
