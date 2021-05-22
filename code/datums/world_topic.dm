@@ -280,6 +280,9 @@
 	.["Misc"] = misc
 	return json_encode(.)
 
+/datum/world_topic/jsonrevision
+	keyword = "jsonrevision"
+
 /datum/world_topic/jsonrevision/Run(list/input, addr)
     var/datum/getrev/revdata = GLOB.revdata
     var/list/data = list(
