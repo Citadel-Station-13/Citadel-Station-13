@@ -1,5 +1,0 @@
-author: "keronshb"
-delete-after: True
-changes: 
-  - code_imp: "adds a special hud for simple mobs."
-  - imageadd: "a lot of >32x32 mobs now have icons for their health dolls"
