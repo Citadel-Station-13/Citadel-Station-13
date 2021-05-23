@@ -69,11 +69,11 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		switch(state)
 			if(PRWINDOW_SECURE)
 				if(extra_reinforced)
-					. += "It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out."
+					. += "It's been screwed in with one way screws, you'd need to <b>heat their solder cover</b> to have any chance of backing them out."
 				else
 					. += "It's been screwed in with solid screws, you'd need to <b>screw them</b> out to unsecure the window."
 			if(PRWINDOW_BOLTS_HEATED)
-				. += "The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now."
+				. += "The solder cover melts away, and you'll likely be able to <b>unscrew them</b> now."
 			if(PRWINDOW_BOLTS_OUT)
 				. += "The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in."
 			if(PRWINDOW_POPPED)
@@ -310,8 +310,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 					return
 		if(PRWINDOW_BOLTS_HEATED)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
-										"<span class='notice'>You dig into the heated screws hard and they start turning...</span>")
+				user.visible_message("<span class='notice'>[user] digs into the security screws and starts removing them...</span>",
+										"<span class='notice'>You dig into the screws hard and they start turning...</span>")
 				if(I.use_tool(src, user, 80, volume = 50))
 					state = PRWINDOW_BOLTS_OUT
 					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
