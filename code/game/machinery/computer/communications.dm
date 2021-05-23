@@ -79,10 +79,12 @@
 	if (obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	SSshuttle.shuttle_purchase_requirements_met |= "emagged"
 	if (authenticated)
 		authorize_access = get_all_accesses()
 	to_chat(user, "<span class='danger'>You scramble the communication routing circuits!</span>")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	SSshuttle.shuttle_purchase_requirements_met["emagged"] = TRUE
 	return
 
 /obj/machinery/computer/communications/ui_act(action, list/params)

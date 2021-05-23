@@ -551,8 +551,7 @@
 	///How many players joined the round.
 	var/total_players = GLOB.joined_player_list.len
 	var/list/typecache_bank = typecacheof(list(/datum/bank_account/department, /datum/bank_account/remote))
-	for(var/i in SSeconomy.generated_accounts)
-		var/datum/bank_account/current_acc = SSeconomy.generated_accounts[i]
+	for(var/datum/bank_account/current_acc in SSeconomy.generated_accounts)
 		if(typecache_bank[current_acc.type])
 			continue
 		station_vault += current_acc.account_balance

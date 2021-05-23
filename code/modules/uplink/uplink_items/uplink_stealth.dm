@@ -9,7 +9,7 @@
 
 /datum/uplink_item/stealthy_weapons/telescopicbat
 	name = "Telescopic Baseball Bat"
-	desc = "A robust telescopic baseball bat that hits like a truck and can be consealed when collapsed."
+	desc = "A robust telescopic baseball bat that hits like a truck and can be concealed when collapsed."
 	item = /obj/item/melee/baseball_bat/telescopic
 	cost = 2
 
@@ -49,7 +49,7 @@
 	name = "Compact Derringer"
 	desc = "An easily concealable handgun capable of firing .357 rounds. Comes in an inconspicuious packet of cigarettes with additional munitions."
 	item = /obj/item/storage/fancy/cigarettes/derringer
-	cost = 8
+	cost = 6
 	surplus = 30
 
 /datum/uplink_item/stealthy_weapons/derringerpack/purchase(mob/user, datum/component/uplink/U)
@@ -57,7 +57,7 @@
 		item = /obj/item/storage/fancy/cigarettes/derringer/gold
 	..()
 
-/datum/uplink_item/stalthy_weapons/derringerpack_nukie
+/datum/uplink_item/stealthy_weapons/derringerpack_nukie
 	name = "Antique Derringer"
 	desc = "An easy to conceal, yet extremely deadly handgun, capable of firing .45-70 Govt rounds. Comes in a unique pack of cigarettes with additional munitions."
 	item = /obj/item/storage/fancy/cigarettes/derringer/midworld

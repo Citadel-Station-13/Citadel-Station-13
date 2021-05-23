@@ -54,6 +54,8 @@
 	assemblytype = /obj/structure/door_assembly
 	normalspeed = 1
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_WALL
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WALL
 	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
