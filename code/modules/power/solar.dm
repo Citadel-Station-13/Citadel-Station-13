@@ -226,7 +226,11 @@
 /obj/item/solar_assembly/proc/give_glass(device_broken)
 	var/atom/Tsec = drop_location()
 	if(device_broken)
-		var/shard = glass_type ? glass_type.shard_type : /obj/item/shard
+		var/shard = /obj/item/shard
+		if(glass_type)
+			var/obj/item/stack/sheet/virtual_glass = new glass_type() // pain
+			shard = virtual_glass.shard_type
+			qdel(virtual_glass)
 		if(shard)
 			new shard(Tsec)
 			new shard(Tsec)

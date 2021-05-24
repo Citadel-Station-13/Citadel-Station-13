@@ -80,9 +80,14 @@
 		else
 			playsound(src, "shatter", 70, TRUE)
 			if(S)
-				var/shard = S?.glass_type ? S.glass_type.shard_type : /obj/item/shard
-				new shard(loc)
-				new shard(loc)
+				var/shard = /obj/item/shard
+				if(S)
+					var/obj/item/stack/sheet/virtual_glass = new S() // pain
+					shard = virtual_glass.shard_type
+					qdel(virtual_glass)
+				if(shard)
+					new shard(Tsec)
+					new shard(Tsec)
 	qdel(src)
 
 // Tracker Electronic
