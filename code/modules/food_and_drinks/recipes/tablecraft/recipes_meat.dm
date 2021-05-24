@@ -214,7 +214,7 @@
 	result = /obj/item/reagent_containers/food/snacks/salad/gumbo
 	subcategory = CAT_MEAT
 	
-	/datum/crafting_recipe/food/goliathcalamari
+/datum/crafting_recipe/food/goliathcalamari
 	name = "Goliath Calamari"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/meat/slab/goliath = 2,
