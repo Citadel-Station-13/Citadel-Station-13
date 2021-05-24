@@ -86,8 +86,8 @@
 					shard = virtual_glass.shard_type
 					qdel(virtual_glass)
 				if(shard)
-					new shard(Tsec)
-					new shard(Tsec)
+					new shard(loc)
+					new shard(loc)
 	qdel(src)
 
 // Tracker Electronic

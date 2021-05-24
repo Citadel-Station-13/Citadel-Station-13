@@ -1035,26 +1035,30 @@
 		return ..()
 
 
+
 /obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/living/user)
 	if(!operating && density)
-		if(seal)
-			to_chat(user, "<span class='warning'>[src] is blocked by a seal!</span>")
-			return
-
-		if(obj_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=0))
-				return
-			user.visible_message("<span class='notice'>[user] begins welding the airlock.</span>", \
-							"<span class='notice'>You begin repairing the airlock...</span>", \
-							"<span class='hear'>You hear welding.</span>")
-			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-				obj_integrity = max_integrity
-				set_machine_stat(machine_stat & ~BROKEN)
-				user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
-									"<span class='notice'>You finish repairing the airlock.</span>")
-				update_appearance()
+		if(user.a_intent != INTENT_HARM)
+			try_to_weld_secondary()
 		else
-			to_chat(user, "<span class='notice'>The airlock doesn't need repairing.</span>")
+			if(seal)
+				to_chat(user, "<span class='warning'>[src] is blocked by a seal!</span>")
+				return
+
+			if(obj_integrity < max_integrity)
+				if(!W.tool_start_check(user, amount=0))
+					return
+				user.visible_message("<span class='notice'>[user] begins welding the airlock.</span>", \
+								"<span class='notice'>You begin repairing the airlock...</span>", \
+								"<span class='hear'>You hear welding.</span>")
+				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+					obj_integrity = max_integrity
+					set_machine_stat(machine_stat & ~BROKEN)
+					user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
+										"<span class='notice'>You finish repairing the airlock.</span>")
+					update_appearance()
+			else
+				to_chat(user, "<span class='notice'>The airlock doesn't need repairing.</span>")
 
 /obj/machinery/door/airlock/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	if(!tool.tool_start_check(user, amount=0))

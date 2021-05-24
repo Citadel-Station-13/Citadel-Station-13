@@ -43,7 +43,7 @@
 		//This explosion will destroy the can, release its air.
 		var/turf/T = get_turf(src)
 		T.assume_air(air_contents)
-		T.air_update_turf(FALSE, FALSE)
+		T.air_update_turf(FALSE)
 
 	return ..()
 
@@ -100,6 +100,10 @@
 	pixel_x = 0
 	pixel_y = 0
 	update_appearance()
+	return TRUE
+
+/obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(air_contents, user, src)
 	return TRUE
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
