@@ -1009,9 +1009,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(light_on)
 		light_on = FALSE
 		set_light(0)
-	else if(light_range)
+	else
 		light_on = TRUE
-		set_light(light_range, light_power, light_color)
+		set_light(2.3)
 	update_appearance()
 	for(var/X in actions)
 		var/datum/action/A = X
