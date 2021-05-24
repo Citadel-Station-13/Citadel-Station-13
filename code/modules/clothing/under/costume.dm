@@ -362,4 +362,3 @@
 	icon_state = "SwagOutfit"
 	item_state = "SwagOutfit"
 	can_adjust = FALSE
-	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
