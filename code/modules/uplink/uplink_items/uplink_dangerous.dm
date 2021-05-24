@@ -228,6 +228,15 @@
 	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/maulergauntlets
+	name = "Mauler Gauntlets"
+	desc = "Mauler gauntlets are a pair of high-tech plastitanium gauntlets fused with illegal nanite auto-injectors designed \
+	to grant the wearer sextuple the strength of an average human being. Wearing these, you will punch harder, inflict more injuries \
+	with your fists, and be able to slam people through tables with immense force. \
+	Unfortunately, due to the size of the gloves you will be unable to wield firearms with them equipped."
+	item = /obj/item/clothing/gloves/fingerless/pugilist/mauler
+	cost = 8
+
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
 	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
