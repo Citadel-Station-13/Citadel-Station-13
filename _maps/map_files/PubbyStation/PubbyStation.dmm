@@ -24647,6 +24647,12 @@
 	},
 /turf/open/space,
 /area/solars/starboard)
+"beW" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/engineering/atmos)
 "beY" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals Central";
@@ -40355,8 +40361,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8;
+	name = "Unfiltered to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -40803,25 +40810,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
-"bOo" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engineering/atmos)
 "bOp" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump/on{
+/obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Unfiltered to Mix"
+	name = "Pure to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bOq" = (
-/obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -41396,10 +41397,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Pure to Mix"
-	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bPW" = (
@@ -41778,6 +41775,9 @@
 /area/engineering/atmos)
 "bQK" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "bQL" = (
@@ -55197,6 +55197,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "hEX" = (
@@ -56741,10 +56744,9 @@
 /turf/open/floor/plasteel/dark,
 /area/engineering/main)
 "kWG" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "kWQ" = (
@@ -57452,8 +57454,11 @@
 /turf/closed/wall,
 /area/maintenance/department/engine)
 "mAR" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
@@ -58864,9 +58869,7 @@
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "pEM" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Mix to Ports"
-	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "pFe" = (
@@ -60141,9 +60144,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "sIK" = (
@@ -61068,7 +61069,9 @@
 /turf/open/floor/engine,
 /area/engineering/main)
 "uST" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Mix to Ports"
+	},
 /turf/open/floor/plasteel,
 /area/engineering/atmos)
 "uUQ" = (
@@ -99688,9 +99691,9 @@ bJN
 bKS
 bMe
 bNh
-bOo
-kWG
-mAR
+pEM
+bOX
+bMf
 bMf
 bMf
 bMf
@@ -99947,7 +99950,7 @@ bWM
 bNi
 bQK
 bOZ
-bOn
+bMf
 bMf
 bMf
 bMf
@@ -100202,10 +100205,10 @@ bHw
 bKU
 bOr
 bPU
+kWG
 bRw
-bRw
-bOo
-mAR
+beW
+bMf
 bMf
 bMf
 bMf
@@ -100460,9 +100463,9 @@ bKV
 bOX
 eEd
 bQL
-bQL
-pEM
 uST
+pEM
+bMf
 qQu
 qQu
 bSU
@@ -100973,8 +100976,8 @@ bHw
 cqG
 bOX
 bOq
-bOq
-bVY
+mAR
+bPd
 bPW
 bPW
 bPW
