@@ -208,6 +208,8 @@
 		return
 	if(!M.IsVocal())
 		return
+	if(language == /datum/language/signlanguage)
+		return
 
 	if(use_command)
 		spans |= commandspan
@@ -331,7 +333,7 @@
 
 /obj/item/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		unscrewed = !unscrewed
 		if(unscrewed)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -382,7 +384,7 @@
 
 /obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

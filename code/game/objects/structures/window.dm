@@ -43,6 +43,10 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	attack_hand_speed = CLICK_CD_MELEE
 	attack_hand_is_action = TRUE
 
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE
+	wave_explosion_block = EXPLOSION_BLOCK_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_WINDOW
+
 	/// Electrochromatic status
 	var/electrochromatic_status = NOT_ELECTROCHROMATIC
 	/// Electrochromatic ID. Set the first character to ! to replace with a SSmapping generated pseudorandom obfuscated ID for mapping purposes.
@@ -110,6 +114,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/obj/structure/window/wave_explosion_damage(power, datum/wave_explosion/explosion)
+	return EXPLOSION_POWER_STANDARD_SCALE_WINDOW_DAMAGE(power, explosion.window_shatter_mod)
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
@@ -191,7 +198,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 	add_fingerprint(user)
 
-	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -224,7 +231,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 		qdel(K)
 
 	if(!(flags_1&NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			I.play_tool_sound(src, 75)
 			if(reinf)
 				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
@@ -245,7 +252,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 			return
 
 
-		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
+		else if(I.tool_behaviour == TOOL_CROWBAR && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
 			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
 			I.play_tool_sound(src, 75)
 			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
@@ -253,7 +260,7 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
 			return
 
-		else if(istype(I, /obj/item/wrench) && !anchored)
+		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
 			I.play_tool_sound(src, 75)
 			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
 			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
@@ -520,6 +527,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	max_integrity = 50
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_REINFORCED_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_REINFORCED_WINDOW
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
 	ricochet_chance_mod = 0.8
@@ -545,6 +554,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 150
 	explosion_block = 1
+	wave_explosion_block = EXPLOSION_BLOCK_BOROSILICATE_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_BOROSILICATE_WINDOW
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	cleanable_type = /obj/effect/decal/cleanable/glass/plasma
 	rad_insulation = RAD_NO_INSULATION
@@ -570,6 +581,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 500
 	explosion_block = 2
+	wave_explosion_block = EXPLOSION_BLOCK_EXTREME
+	wave_explosion_multiply = EXPLOSION_BLOCK_EXTREME
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/window/plasma/reinforced/spawner/east
@@ -583,6 +596,9 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 
 /obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
+
+/obj/structure/window/plasma/reinforced/BlockSuperconductivity()
+	return TRUE
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -739,6 +755,8 @@ GLOBAL_LIST_EMPTY(electrochromatic_window_lookup)
 	max_integrity = 80
 	armor = list("melee" = 60, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+	wave_explosion_block = EXPLOSION_BLOCK_BOROSILICATE_WINDOW
+	wave_explosion_multiply = EXPLOSION_DAMPEN_BOROSILICATE_WINDOW
 	decon_speed = 40
 	glass_type = /obj/item/stack/tile/brass
 	glass_amount = 1

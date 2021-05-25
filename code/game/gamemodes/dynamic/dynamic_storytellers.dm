@@ -45,27 +45,6 @@ Property weights are added to the config weight of the ruleset. They are:
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_first_midround_delay_min + GLOB.dynamic_first_midround_delay_max)
 	mode.midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_first_midround_delay_min, GLOB.dynamic_first_midround_delay_max)) + world.time
 
-/datum/dynamic_storyteller/proc/calculate_threat()
-	var/threat = 0
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(A?.owner?.current && A.owner.current.stat != DEAD)
-			threat += A.threat()
-	for(var/r in SSevents.running)
-		var/datum/round_event/R = r
-		threat += R.threat()
-	for(var/obj/item/phylactery/P in GLOB.poi_list)
-		threat += 25 // can't be giving them too much of a break
-	for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (M?.mind?.assigned_role && M.stat != DEAD)
-			var/datum/job/J = SSjob.GetJob(M.mind.assigned_role)
-			if(J)
-				if(length(M.mind.antag_datums))
-					threat += J.GetThreat()
-				else
-					threat -= J.GetThreat()
-	threat += (mode.current_players[CURRENT_DEAD_PLAYERS].len)*dead_player_weight
-	return round(threat,0.1)
-
 /datum/dynamic_storyteller/proc/do_process()
 	return
 
@@ -95,7 +74,7 @@ Property weights are added to the config weight of the ruleset. They are:
 			if(voters)
 				GLOB.dynamic_curve_centre += (mean/voters)
 		if(flags & USE_PREV_ROUND_WEIGHTS)
-			GLOB.dynamic_curve_centre += (50 - SSpersistence.average_dynamic_threat) / 10
+			GLOB.dynamic_curve_centre += (SSpersistence.average_threat) / 10
 		GLOB.dynamic_forced_threat_level = forced_threat_level
 
 /datum/dynamic_storyteller/proc/get_midround_cooldown()

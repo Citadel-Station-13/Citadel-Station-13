@@ -1,0 +1,4 @@
+author: "bunny232"
+delete-after: True
+changes: 
+  - bugfix: "Removed two random 'captain's office' tiles from space on meta station"

@@ -14,72 +14,60 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/materials/cardboard50
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "50 Cardboard Sheets"
 	desc = "Create a bunch of boxes."
 	cost = 300 //thrice their export value
 	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 
 /datum/supply_pack/materials/glass50
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "50 Glass Sheets"
 	desc = "Let some nice light in with fifty glass sheets!"
 	cost = 300 //double their export value
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 
 /datum/supply_pack/materials/metal50
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "50 Metal Sheets"
 	desc = "Any construction project begins with a good stack of fifty metal sheets!"
 	cost = 300 //double their export value
 	contains = list(/obj/item/stack/sheet/metal/fifty)
 
 /datum/supply_pack/materials/plasteel20
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "20 Plasteel Sheets"
 	desc = "Reinforce the station's integrity with twenty plasteel sheets!"
 	cost = 4000
 	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 
 /datum/supply_pack/materials/plastic50
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "50 Plastic Sheets"
 	desc = "Build a limitless amount of toys with fifty plastic sheets!"
 	cost = 200 // double their export
 	contains = list(/obj/item/stack/sheet/plastic/twenty)
 
 /datum/supply_pack/materials/sandstone30
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "30 Sandstone Blocks"
 	desc = "Neither sandy nor stoney, these thirty blocks will still get the job done."
 	cost = 150 // five times their export
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 
-/datum/supply_pack/materials/wood50
-	goody = PACK_GOODY_PUBLIC
-	name = "50 Wood Planks"
-	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with fifty wooden planks!"
+/datum/supply_pack/materials/wood20
+	crate_type = /obj/structure/closet/secure_closet/goodies
+	name = "20 Wood Planks"
+	desc = "Turn cargo's boring metal groundwork into beautiful panelled flooring and much more with twenty wooden planks!"
 	cost = 400 // 6-7 planks shy from having equal import/export prices
 	contains = list(/obj/item/stack/sheet/mineral/wood/twenty)
 
 /datum/supply_pack/materials/rcdammo
-	goody = PACK_GOODY_PUBLIC
+	crate_type = /obj/structure/closet/secure_closet/goodies
 	name = "Large RCD ammo Single-Pack"
 	desc = "A single large compressed RCD matter pack, to help with any holes or projects people might be working on."
 	cost = 600
 	contains = list(/obj/item/rcd_ammo/large)
-
-/datum/supply_pack/materials/rawlumber
-	name = "50 Towercap Logs"
-	desc = "Raw logs from towercaps. Contains fifty logs."
-	cost = 1000
-	contains = list(/obj/item/grown/log)
-	crate_name = "lumber crate"
-
-/datum/supply_pack/materials/rawlumber/generate()
-	. = ..()
-	for(var/i in 1 to 49)
-		new /obj/item/grown/log(.)
 
 //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Canisters //////////////////////////////////////

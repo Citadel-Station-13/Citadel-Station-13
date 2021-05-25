@@ -248,6 +248,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("rifle stock", /obj/item/weaponcrafting/stock, 10, time = 20), \
 	new/datum/stack_recipe("rolling pin", /obj/item/kitchen/rollingpin, 2, time = 30), \
+	new/datum/stack_recipe("unrolling pin", /obj/item/kitchen/unrollingpin, 2, time = 30), \
 	new/datum/stack_recipe("wooden bucket", /obj/item/reagent_containers/glass/bucket/wood, 2, time = 30), \
 	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 10),\
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/riot/buckler, 20, time = 40), \
@@ -466,6 +467,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5),					\
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox),									\
 	new/datum/stack_recipe("folder", /obj/item/folder),											\
+	new/datum/stack_recipe("cardboard card", /obj/item/cardboard_card, 1),						\
 	// holy fuck why are there so many boxes
 	new/datum/stack_recipe_list("fancy boxes", list ( \
 		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), 				\
@@ -591,7 +593,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
 	var/area/A = get_area(user)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return ..()

@@ -274,7 +274,7 @@
 
 /mob/living/on_attack_hand(mob/user, act_intent = user.a_intent, attackchain_flags)
 	..() //Ignoring parent return value here.
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_HAND, user, act_intent)
 	if((user != src) && act_intent != INTENT_HELP && (mob_run_block(user, 0, user.name, ATTACK_TYPE_UNARMED | ATTACK_TYPE_MELEE | ((attackchain_flags & ATTACK_IS_PARRY_COUNTERATTACK)? ATTACK_TYPE_PARRY_COUNTERATTACK : NONE), null, user, check_zone(user.zone_selected), null) & BLOCK_SUCCESS))
 		log_combat(user, src, "attempted to touch")
 		visible_message("<span class='warning'>[user] attempted to touch [src]!</span>",
@@ -438,6 +438,12 @@
 		return
 	..()
 
+/mob/living/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	if(power > EXPLOSION_POWER_NORMAL_MOB_GIB)
+		gib()
+	adjustBruteLoss(EXPLOSION_POWER_STANDARD_SCALE_MOB_DAMAGE(power, explosion.mob_damage_mod))
+	return power
+
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
 /mob/living/acid_act(acidpwr, acid_volume)
@@ -514,10 +520,21 @@
 /mob/living/ratvar_act()
 	if(status_flags & GODMODE)
 		return
-	if(stat != DEAD && !is_servant_of_ratvar(src))
+	if(stat == DEAD || is_servant_of_ratvar(src))
+		return
+	if(is_eligible_servant(src))
+		add_servant_of_ratvar(src)
+		to_chat(src, "<span class='heavy_brass'>Ratvar's influence invades your mind, praise the Justiciar!</span>")
+	else
 		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
 		adjust_fire_stacks(20)
+		adjustFireLoss(35)
 		IgniteMob()
+	if(iscultist(src))
+		to_chat(src, "<span class='userdanger'>You resist Ratvar's influence... but not all of it! <i>Run!</i></span>")
+		adjustFireLoss(35)
+		if(src && reagents)
+			reagents.add_reagent(/datum/reagent/fuel/holyoil, 5)
 		return FALSE
 
 
@@ -550,3 +567,9 @@
 
 /mob/living/proc/getFireLoss_nonProsthetic()
 	return getFireLoss()
+
+/mob/living/proc/set_last_attacker(mob/attacker)
+	lastattacker = attacker.real_name
+	lastattackerckey = attacker.ckey
+	SEND_SIGNAL(src, COMSIG_LIVING_ATTACKER_SET, attacker)
+	SEND_SIGNAL(attacker, COMSIG_LIVING_SET_AS_ATTACKER, src)

@@ -149,8 +149,6 @@
 	if(prob(50))
 		if(LAZYLEN(active_ais()) && prob(100/GLOB.joined_player_list.len))
 			add_objective(new/datum/objective/destroy, TRUE)
-		else if(prob(30))
-			add_objective(new/datum/objective/maroon, TRUE)
 		else
 			add_objective(new/datum/objective/assassinate, TRUE)
 	else

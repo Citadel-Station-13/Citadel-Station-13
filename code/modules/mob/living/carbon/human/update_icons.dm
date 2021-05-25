@@ -100,9 +100,28 @@ There are several things that need to be remembered:
 			update_mutations_overlay()
 			//damage overlays
 			update_damage_overlays()
+			//antagonism
+			update_antag_overlays()
 
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
+
+
+/mob/living/carbon/human/update_antag_overlays()
+	remove_overlay(ANTAG_LAYER)
+	var/datum/antagonist/cult/D = src?.mind?.has_antag_datum(/datum/antagonist/cult) //check for cultism
+	if(D && D.cult_team?.cult_ascendent == TRUE)
+		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
+		var/mutable_appearance/new_cult_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -ANTAG_LAYER)
+		overlays_standing[ANTAG_LAYER] = new_cult_overlay
+	var/datum/antagonist/clockcult/C = src?.mind?.has_antag_datum(/datum/antagonist/clockcult) //check for clockcultism - surely one can't be both cult and clockie, right?
+	if(C)
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		if(G && G.active && ishuman(src))
+			var/mutable_appearance/new_cult_overlay = mutable_appearance('icons/effects/genetics.dmi', "servitude", -ANTAG_LAYER)
+			overlays_standing[ANTAG_LAYER] = new_cult_overlay
+	apply_overlay(ANTAG_LAYER)
+
 
 /mob/living/carbon/human/update_inv_w_uniform()
 	if(!HAS_TRAIT(src, TRAIT_HUMAN_NO_RENDER))
@@ -710,11 +729,8 @@ use_mob_overlay_icon: if FALSE, it will always use the default_icon_file even if
 				. += "-[BP.digitigrade_type]"
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
-		if(BP.body_markings)
-			. += "-[BP.body_markings]"
-			if(length(BP.markings_color) && length(BP.markings_color[1]))
-				for(var/color in BP.markings_color[1])
-					. += "-[color]"
+		if(BP.body_markings_list)
+			. += "-[safe_json_encode(BP.body_markings_list)]"
 		if(BP.icon)
 			. += "-[BP.icon]"
 		else

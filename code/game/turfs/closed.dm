@@ -6,6 +6,8 @@
 	blocks_air = 1
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
+	wave_explosion_block = 10
+	wave_explosion_multiply = 0.75
 
 /turf/closed/Initialize()
 	. = ..()
@@ -28,6 +30,7 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+	wave_explosion_block = INFINITY
 
 /turf/closed/indestructible/rust_heretic_act()
 	return

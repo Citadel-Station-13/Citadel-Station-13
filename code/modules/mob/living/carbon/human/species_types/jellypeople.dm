@@ -7,6 +7,9 @@
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,WINGCOLOR,HAS_FLESH)
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutant_heart = /obj/item/organ/heart/slime
+	mutantstomach = /obj/item/organ/stomach/slime
+	mutantliver = /obj/item/organ/liver/slime
+	mutant_brain = /obj/item/organ/brain/slime
 	mutant_bodyparts = list("mcolor" = "FFFFFF", "mam_tail" = "None", "mam_ears" = "None", "mam_snouts" = "None", "taur" = "None", "deco_wings" = "None", "legs" = "Plantigrade")
 	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
@@ -22,16 +25,11 @@
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 	species_language_holder = /datum/language_holder/jelly
-	mutant_brain = /obj/item/organ/brain/jelly
 
 	tail_type = "mam_tail"
 	wagging_type = "mam_waggingtail"
 	species_category = SPECIES_CATEGORY_JELLY
-
-/obj/item/organ/brain/jelly
-	name = "slime nucleus"
-	desc = "A slimey membranous mass from a slime person"
-	icon_state = "brain-slime"
+	ass_image = 'icons/ass/assslime.png'
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	C.faction -= "slime"

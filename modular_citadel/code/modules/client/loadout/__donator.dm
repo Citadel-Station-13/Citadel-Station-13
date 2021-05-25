@@ -254,13 +254,13 @@
 /datum/gear/donator/toriball
 	name = "Rainbow Tennis Ball"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/rainbow
+	path = /obj/item/toy/fluff/tennis_poly/tri/squeak/rainbow
 	ckeywhitelist = list("annoymous35")
 
 /datum/gear/donator/izzyball
 	name = "Katlin's Ball"
 	slot = SLOT_IN_BACKPACK
-	path = /obj/item/toy/tennis/rainbow/izzy
+	path = /obj/item/toy/fluff/tennis_poly/tri/squeak/izzy
 	ckeywhitelist = list("izzyinbox")
 
 /datum/gear/donator/cloak
@@ -537,4 +537,20 @@
 	path = /obj/item/clothing/suit/custom/exo
 	ckeywhitelist = list("jesterz7")
 
+/datum/gear/donator/choker
+	name = "NT Choker"
+	slot = SLOT_NECK
+	path = /obj/item/clothing/neck/petcollar/donorchoker
+	ckeywhitelist = list("trigillass")
 
+/datum/gear/donator/strangemask
+	name = "Strange Metal Mask"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/mask/breath/mmask
+	ckeywhitelist = list("sneka")
+
+/datum/gear/donator/smaiden
+	name = "shrine maiden outfit"
+	slot = SLOT_W_UNIFORM
+	path = /obj/item/clothing/under/smaiden
+	ckeywhitelist = list("ultimarifox")

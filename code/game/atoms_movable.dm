@@ -55,6 +55,9 @@
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/emissive_blocker/em_block
 
+	/// Should we use tooltips, if the thing does not have the code implemented `get_tooltip_data()`, it will default to examine(src)
+	var/tooltips = FALSE
+
 
 /atom/movable/Initialize(mapload)
 	. = ..()
@@ -331,6 +334,7 @@
 		return
 	. = anchored
 	anchored = anchorvalue
+	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	// SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

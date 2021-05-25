@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tip_delay = 500 //tip delay in milliseconds
 
 	//Antag preferences
-	var/list/be_special = list()		//Special role selection
+	var/list/be_special = list()		//Special role selection. ROLE_SYNDICATE being missing means they will never be antag!
 	var/tmp/old_be_special = 0			//Bitflag version of be_special, used to update old savefiles and nothing more
 										//If it's 0, that's good, if it's anything but 0, the owner of this prefs file's antag choices were,
 										//autocorrected this round, not that you'd need to check that.
@@ -62,9 +62,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/UI_style = null
 	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
+
+	///Runechat preference. If true, certain messages will be displayed on the map, not ust on the chat area. Boolean.
 	var/chat_on_map = TRUE
+	///Limit preference on the size of the message. Requires chat_on_map to have effect.
 	var/max_chat_length = CHAT_MESSAGE_MAX_LENGTH
+	///Whether non-mob messages will be displayed, such as machine vendor announcements. Requires chat_on_map to have effect. Boolean.
 	var/see_chat_non_mob = TRUE
+	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
+	var/see_rc_emotes = TRUE
 
 	/// Custom Keybindings
 	var/list/key_bindings = list()
@@ -118,10 +124,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_type = DEFAULT_EYES_TYPE	//Eye type
 	var/split_eye_colors = FALSE
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF", "mcolor3" = "FFFFFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "horns_color" = "85615a", "ears" = "None", "wings" = "None", "wings_color" = "FFF", "frills" = "None", "deco_wings" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Plantigrade", "insect_wings" = "Plain", "insect_fluff" = "None", "insect_markings" = "None", "arachnid_legs" = "Plain", "arachnid_spinneret" = "Plain", "arachnid_mandibles" = "Plain", "mam_body_markings" = "Plain", "mam_ears" = "None", "mam_snouts" = "None", "mam_tail" = "None", "mam_tail_animated" = "None", "xenodorsal" = "Standard", "xenohead" = "Standard", "xenotail" = "Xenomorph Tail", "taur" = "None", "genitals_use_skintone" = FALSE, "has_cock" = FALSE, "cock_shape" = DEF_COCK_SHAPE, "cock_length" = COCK_SIZE_DEF, "cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF, "cock_color" = "ffffff", "cock_taur" = FALSE, "has_balls" = FALSE, "balls_color" = "ffffff", "balls_shape" = DEF_BALLS_SHAPE, "balls_size" = BALLS_SIZE_DEF, "balls_cum_rate" = CUM_RATE, "balls_cum_mult" = CUM_RATE_MULT, "balls_efficiency" = CUM_EFFICIENCY, "has_breasts" = FALSE, "breasts_color" = "ffffff", "breasts_size" = BREASTS_SIZE_DEF, "breasts_shape" = DEF_BREASTS_SHAPE, "breasts_producing" = FALSE, "has_vag" = FALSE, "vag_shape" = DEF_VAGINA_SHAPE, "vag_color" = "ffffff", "has_womb" = FALSE, "balls_visibility"	= GEN_VISIBLE_NO_UNDIES, "breasts_visibility"= GEN_VISIBLE_NO_UNDIES, "cock_visibility"	= GEN_VISIBLE_NO_UNDIES, "vag_visibility"	= GEN_VISIBLE_NO_UNDIES, "ipc_screen" = "Sunburst", "ipc_antenna" = "None", "flavor_text" = "", "silicon_flavor_text" = "", "ooc_notes" = "", "meat_type" = "Mammalian", "body_model" = MALE, "body_size" = RESIZE_DEFAULT_SIZE, "color_scheme" = OLD_CHARACTER_COLORING)
+	var/list/features = list("mcolor" = "FFFFFF", "mcolor2" = "FFFFFF", "mcolor3" = "FFFFFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "horns_color" = "85615a", "ears" = "None", "wings" = "None", "wings_color" = "FFF", "frills" = "None", "deco_wings" = "None", "spines" = "None", "legs" = "Plantigrade", "insect_wings" = "Plain", "insect_fluff" = "None", "insect_markings" = "None", "arachnid_legs" = "Plain", "arachnid_spinneret" = "Plain", "arachnid_mandibles" = "Plain", "mam_body_markings" = list(), "mam_ears" = "None", "mam_snouts" = "None", "mam_tail" = "None", "mam_tail_animated" = "None", "xenodorsal" = "Standard", "xenohead" = "Standard", "xenotail" = "Xenomorph Tail", "taur" = "None", "genitals_use_skintone" = FALSE, "has_cock" = FALSE, "cock_shape" = DEF_COCK_SHAPE, "cock_length" = COCK_SIZE_DEF, "cock_diameter_ratio" = COCK_DIAMETER_RATIO_DEF, "cock_color" = "ffffff", "cock_taur" = FALSE, "has_balls" = FALSE, "balls_color" = "ffffff", "balls_shape" = DEF_BALLS_SHAPE, "balls_size" = BALLS_SIZE_DEF, "balls_cum_rate" = CUM_RATE, "balls_cum_mult" = CUM_RATE_MULT, "balls_efficiency" = CUM_EFFICIENCY, "has_breasts" = FALSE, "breasts_color" = "ffffff", "breasts_size" = BREASTS_SIZE_DEF, "breasts_shape" = DEF_BREASTS_SHAPE, "breasts_producing" = FALSE, "has_vag" = FALSE, "vag_shape" = DEF_VAGINA_SHAPE, "vag_color" = "ffffff", "has_womb" = FALSE, "balls_visibility"	= GEN_VISIBLE_NO_UNDIES, "breasts_visibility"= GEN_VISIBLE_NO_UNDIES, "cock_visibility"	= GEN_VISIBLE_NO_UNDIES, "vag_visibility"	= GEN_VISIBLE_NO_UNDIES, "ipc_screen" = "Sunburst", "ipc_antenna" = "None", "flavor_text" = "", "silicon_flavor_text" = "", "ooc_notes" = "", "meat_type" = "Mammalian", "body_model" = MALE, "body_size" = RESIZE_DEFAULT_SIZE, "color_scheme" = OLD_CHARACTER_COLORING)
 
 	var/custom_speech_verb = "default" //if your say_mod is to be something other than your races
 	var/custom_tongue = "default" //if your tongue is to be something other than your races
+	var/additional_language = "None" //additional language your character has
 	var/modified_limbs = list() //prosthetic/amputated limbs
 	var/chosen_limb_id //body sprite selected to load for the users limbs, null means default, is sanitized when loaded
 
@@ -141,11 +148,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
 
-		// Want randomjob if preferences already filled - Donkie
+	// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
 	// 0 = character settings, 1 = game preferences
-	var/current_tab = 0
+	var/current_tab = SETTINGS_TAB
 
 	var/unlock_content = 0
 
@@ -160,13 +167,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/auto_fit_viewport = FALSE
 	///Should we be in the widescreen mode set by the config?
 	var/widescreenpref = TRUE
-
 	///What size should pixels be displayed as? 0 is strech to fit
 	var/pixel_size = 0
 	///What scaling method should we use?
 	var/scaling_method = "normal"
-
 	var/uplink_spawn_loc = UPLINK_PDA
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
+	var/playtime_reward_cloak = FALSE
 
 	var/hud_toggle_flash = TRUE
 	var/hud_toggle_color = "#ffffff"
@@ -209,14 +216,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/autostand = TRUE
 	var/auto_ooc = FALSE
 
+	///This var stores the amount of points the owner will get for making it out alive.
+	var/hardcore_survival_score = 0
+
+	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
+	var/hearted
+	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
+	var/hearted_until
 	/// If we have persistent scars enabled
 	var/persistent_scars = TRUE
+	///If we want to broadcast deadchat connect/disconnect messages
+	var/broadcast_login_logout = TRUE
+	///What outfit typepaths we've favorited in the SelectEquipment menu
+	var/list/favorite_outfits = list()
 	/// We have 5 slots for persistent scars, if enabled we pick a random one to load (empty by default) and scars at the end of the shift if we survived as our original person
 	var/list/scars_list = list("1" = "", "2" = "", "3" = "", "4" = "", "5" = "")
 	/// Which of the 5 persistent scar slots we randomly roll to load for this round, if enabled. Actually rolled in [/datum/preferences/proc/load_character(slot)]
 	var/scars_index = 1
 
 	var/hide_ckey = FALSE //pref for hiding if your ckey shows round-end or not
+
+	var/list/tcg_cards = list()
+	var/list/tcg_decks = list()
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -255,12 +276,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	update_preview_icon(current_tab)
 	var/list/dat = list("<center>")
 
-	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=4' [current_tab == 4 ? "class='linkOn'" : ""]>Content Preferences</a>"
-	dat += "<a href='?_src_=prefs;preference=tab;tab=5' [current_tab == 5 ? "class='linkOn'" : ""]>Keybindings</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[SETTINGS_TAB]' [current_tab == SETTINGS_TAB ? "class='linkOn'" : ""]>Character Settings</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[APPEARANCE_TAB]' [current_tab == APPEARANCE_TAB ? "class='linkOn'" : ""]>Character Appearance</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[SPEECH_TAB]' [current_tab == SPEECH_TAB ? "class='linkOn'" : ""]>Character Speech</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[LOADOUT_TAB]' [current_tab == LOADOUT_TAB ? "class='linkOn'" : ""]>Loadout</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[GAME_PREFERENCES_TAB]' [current_tab == GAME_PREFERENCES_TAB ? "class='linkOn'" : ""]>Game Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[CONTENT_PREFERENCES_TAB]' [current_tab == CONTENT_PREFERENCES_TAB ? "class='linkOn'" : ""]>Content Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=[KEYBINDINGS_TAB]' [current_tab == KEYBINDINGS_TAB ? "class='linkOn'" : ""]>Keybindings</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -270,7 +292,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "<HR>"
 
 	switch(current_tab)
-		if (0) // Character Settings#
+		if(SETTINGS_TAB) // Character Settings#
 			if(path)
 				var/savefile/S = new /savefile(path)
 				if(S)
@@ -346,7 +368,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</tr></table>"
 
 		//Character Appearance
-		if(2)
+		if(APPEARANCE_TAB)
 			if(path)
 				var/savefile/S = new /savefile(path)
 				if(S)
@@ -464,13 +486,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else if(use_skintones || mutant_colors)
 					dat += "</td>"
 
-			dat += APPEARANCE_CATEGORY_COLUMN
-			dat += "<h2>Speech preferences</h2>"
-			dat += "<b>Custom Speech Verb:</b><BR>"
-			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=speech_verb;task=input'>[custom_speech_verb]</a><BR>"
-			dat += "<b>Custom Tongue:</b><BR>"
-			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=tongue;task=input'>[custom_tongue]</a><BR>"
-
 			if(HAIR in pref_species.species_traits)
 
 				dat += APPEARANCE_CATEGORY_COLUMN
@@ -499,7 +514,76 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "</td>"
 				mutant_category = 0
 
+			// rp marking selection
+			// assume you can only have mam markings or regular markings or none, never both
+			var/marking_type
+			if(parent.can_have_part("mam_body_markings"))
+				marking_type = "mam_body_markings"
+			if(marking_type)
+				dat += APPEARANCE_CATEGORY_COLUMN
+				dat += "<h3>[GLOB.all_mutant_parts[marking_type]]</h3>" // give it the appropriate title for the type of marking
+				dat += "<a href='?_src_=prefs;preference=marking_add;marking_type=[marking_type];task=input'>Add marking</a>"
+				// list out the current markings you have
+				if(length(features[marking_type]))
+					dat += "<table>"
+					var/list/markings = features[marking_type]
+					if(!islist(markings))
+						// something went terribly wrong
+						markings = list()
+					var/list/reverse_markings = reverseList(markings)
+					for(var/list/marking_list in reverse_markings)
+						var/marking_index = markings.Find(marking_list) // consider changing loop to go through indexes over lists instead of using Find here
+						var/limb_value = marking_list[1]
+						var/actual_name = GLOB.bodypart_names[num2text(limb_value)] // get the actual name from the bitflag representing the part the marking is applied to
+						var/color_marking_dat = ""
+						var/number_colors = 1
+						var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[marking_list[2]]
+						var/matrixed_sections = S.covered_limbs[actual_name]
+						if(S && matrixed_sections)
+							// if it has nothing initialize it to white
+							if(length(marking_list) == 2)
+								var/first = "#FFFFFF"
+								var/second = "#FFFFFF"
+								var/third = "#FFFFFF"
+								if(features["mcolor"])
+									first = "#[features["mcolor"]]"
+								if(features["mcolor2"])
+									second = "#[features["mcolor2"]]"
+								if(features["mcolor3"])
+									third = "#[features["mcolor3"]]"
+								marking_list += list(list(first, second, third)) // just assume its 3 colours if it isnt it doesnt matter we just wont use the other values
+							// index magic
+							var/primary_index = 1
+							var/secondary_index = 2
+							var/tertiary_index = 3
+							switch(matrixed_sections)
+								if(MATRIX_GREEN)
+									primary_index = 2
+								if(MATRIX_BLUE)
+									primary_index = 3
+								if(MATRIX_RED_BLUE)
+									secondary_index = 2
+								if(MATRIX_GREEN_BLUE)
+									primary_index = 2
+									secondary_index = 3
+
+							// we know it has one matrixed section at minimum
+							color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][primary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
+							// if it has a second section, add it
+							if(matrixed_sections == MATRIX_RED_BLUE || matrixed_sections == MATRIX_GREEN_BLUE || matrixed_sections == MATRIX_RED_GREEN || matrixed_sections == MATRIX_ALL)
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][secondary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
+								number_colors = 2
+							// if it has a third section, add it
+							if(matrixed_sections == MATRIX_ALL)
+								color_marking_dat += "<span style='border: 1px solid #161616; background-color: [marking_list[3][tertiary_index]];'>&nbsp;&nbsp;&nbsp;</span>"
+								number_colors = 3
+							color_marking_dat += " <a href='?_src_=prefs;preference=marking_color;marking_index=[marking_index];marking_type=[marking_type];number_colors=[number_colors];task=input'>Change</a><BR>"
+						dat += "<tr><td>[marking_list[2]] - [actual_name]</td> <td><a href='?_src_=prefs;preference=marking_down;task=input;marking_index=[marking_index];marking_type=[marking_type];'>&#708;</a> <a href='?_src_=prefs;preference=marking_up;task=input;marking_index=[marking_index];marking_type=[marking_type]'>&#709;</a> <a href='?_src_=prefs;preference=marking_remove;task=input;marking_index=[marking_index];marking_type=[marking_type]'>X</a> [color_marking_dat]</td></tr>"
+					dat += "</table>"
+
 			for(var/mutant_part in GLOB.all_mutant_parts)
+				if(mutant_part == "mam_body_markings")
+					continue
 				if(parent.can_have_part(mutant_part))
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
@@ -518,8 +602,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								if(accessory)
 									if(accessory.color_src == MATRIXED || accessory.color_src == MUTCOLORS || accessory.color_src == MUTCOLORS2 || accessory.color_src == MUTCOLORS3) //mutcolors1-3 are deprecated now, please don't rely on these in the future
 										var/mutant_string = accessory.mutant_part_string
-										if(istype(accessory, /datum/sprite_accessory/mam_body_markings) || istype(accessory, /datum/sprite_accessory/body_markings))
-											continue
 										var/primary_feature = "[mutant_string]_primary"
 										var/secondary_feature = "[mutant_string]_secondary"
 										var/tertiary_feature = "[mutant_string]_tertiary"
@@ -657,7 +739,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</td>"
 			dat += "</tr></table>"
 
-		if (1) // Game Preferences
+		if(SPEECH_TAB)
+			if(path)
+				var/savefile/S = new /savefile(path)
+				if(S)
+					dat += "<center>"
+					var/name
+					var/unspaced_slots = 0
+					for(var/i=1, i<=max_save_slots, i++)
+						unspaced_slots++
+						if(unspaced_slots > 4)
+							dat += "<br>"
+							unspaced_slots = 0
+						S.cd = "/character[i]"
+						S["real_name"] >> name
+						if(!name)
+							name = "Character[i]"
+						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
+					dat += "</center>"
+
+			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<h2>Speech preferences</h2>"
+			dat += "<b>Custom Speech Verb:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=speech_verb;task=input'>[custom_speech_verb]</a><BR>"
+			dat += "<b>Custom Tongue:</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=tongue;task=input'>[custom_tongue]</a><BR>"
+			dat += "<b>Additional Language</b><BR>"
+			dat += "</b><a style='display:block;width:100px' href='?_src_=prefs;preference=language;task=input'>[additional_language]</a><BR>"
+			dat += "</td>"
+			dat += "</tr></table>"
+
+		if(GAME_PREFERENCES_TAB) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
@@ -808,6 +920,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 			for (var/i in GLOB.special_roles)
+				if(i == ROLE_NO_ANTAGONISM)
+					dat += "<b>DISABLE ALL ANTAGONISM</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "YES" : "NO"]</a><br>"
+					continue
 				if(jobban_isbanned(user, i))
 					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
 				else
@@ -825,7 +940,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<br>"
 
-		if(3)
+		if(LOADOUT_TAB)
 			//calculate your gear points from the chosen item
 			gear_points = CONFIG_GET(number/initial_gear_points)
 			var/list/chosen_gear = loadout_data["SAVE_[loadout_slot]"]
@@ -944,7 +1059,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							dat += "</td><td><font size=2><i>[loadout_item ? (loadout_item[LOADOUT_CUSTOM_DESCRIPTION] ? loadout_item[LOADOUT_CUSTOM_DESCRIPTION] : gear.description) : gear.description] Progress: [min(progress_made, unlockable.progress_required)]/[unlockable.progress_required]</i></font></td></tr>"
 
 					dat += "</table>"
-		if(4) // Content preferences
+		if(CONTENT_PREFERENCES_TAB) // Content preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>Fetish content prefs</h2>"
 			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
@@ -963,11 +1078,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Breast Enlargement:</b> <a href='?_src_=prefs;preference=breast_enlargement'>[(cit_toggles & BREAST_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Penis Enlargement:</b> <a href='?_src_=prefs;preference=penis_enlargement'>[(cit_toggles & PENIS_ENLARGEMENT) ? "Allowed" : "Disallowed"]</a><br>"
 			dat += "<b>Hypno:</b> <a href='?_src_=prefs;preference=never_hypno'>[(cit_toggles & NEVER_HYPNO) ? "Disallowed" : "Allowed"]</a><br>"
+			dat += "<b>Aphrodisiacs:</b> <a href='?_src_=prefs;preference=aphro'>[(cit_toggles & NO_APHRO) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<b>Ass Slapping:</b> <a href='?_src_=prefs;preference=ass_slap'>[(cit_toggles & NO_ASS_SLAP) ? "Disallowed" : "Allowed"]</a><br>"
 			dat += "<b>Automatic Wagging:</b> <a href='?_src_=prefs;preference=auto_wag'>[(cit_toggles & NO_AUTO_WAG) ? "Disabled" : "Enabled"]</a><br>"
 			dat += "</tr></table>"
 			dat += "<br>"
-		if(5) // Custom keybindings
+		if(KEYBINDINGS_TAB) // Custom keybindings
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Input"]</a><br>"
 			dat += "Keybindings mode controls how the game behaves with tab and map/input focus.<br>If it is on <b>Hotkeys</b>, the game will always attempt to force you to map focus, meaning keypresses are sent \
 			directly to the map instead of the input. You will still be able to use the command bar, but you need to tab to do it every time you click on the game map.<br>\
@@ -1348,9 +1464,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["jobbancheck"])
-		var/job = sanitizeSQL(href_list["jobbancheck"])
-		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/datum/DBQuery/query_get_jobban = SSdbcore.NewQuery("SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey) FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
+		var/job = href_list["jobbancheck"]
+		var/datum/db_query/query_get_jobban = SSdbcore.NewQuery({"
+			SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey)
+			FROM [format_table_name("ban")] WHERE ckey = :ckey AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = :job
+			"}, list("ckey" = user.ckey, "job" = job))
 		if(!query_get_jobban.warn_execute())
 			qdel(query_get_jobban)
 			return
@@ -1365,7 +1483,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
-			to_chat(user, text)
+			to_chat(user, text, confidential = TRUE)
 		qdel(query_get_jobban)
 		return
 
@@ -1602,7 +1720,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 									for(var/modified_limb in modified_limbs)
 										if(modified_limbs[modified_limb][1] == LOADOUT_LIMB_PROSTHETIC && modified_limb != limb_type)
 											number_of_prosthetics += 1
-									if(number_of_prosthetics > MAXIMUM_LOADOUT_PROSTHETICS)
+									if(number_of_prosthetics == MAXIMUM_LOADOUT_PROSTHETICS)
 										to_chat(user, "<span class='danger'>You can only have up to two prosthetic limbs!</span>")
 									else
 										//save the actual prosthetic data
@@ -1675,13 +1793,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						pref_species = new newtype()
 						//let's ensure that no weird shit happens on species swapping.
 						custom_species = null
-						if(!parent.can_have_part("body_markings"))
-							features["body_markings"] = "None"
 						if(!parent.can_have_part("mam_body_markings"))
-							features["mam_body_markings"] = "None"
+							features["mam_body_markings"] = list()
 						if(parent.can_have_part("mam_body_markings"))
 							if(features["mam_body_markings"] == "None")
-								features["mam_body_markings"] = "Plain"
+								features["mam_body_markings"] = list()
 						if(parent.can_have_part("tail_lizard"))
 							features["tail_lizard"] = "Smooth"
 						if(pref_species.id == "felinid")
@@ -1910,14 +2026,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_spines)
 						features["spines"] = new_spines
 
-				if("body_markings")
-					var/new_body_markings
-					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in GLOB.body_markings_list
-					if(new_body_markings)
-						features["body_markings"] = new_body_markings
-						if(new_body_markings != "None")
-							features["mam_body_markings"] = "None"
-
 				if("legs")
 					var/new_legs
 					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in GLOB.legs_list
@@ -2037,26 +2145,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_ears)
 						features["mam_ears"] = new_ears
 
-				if("mam_body_markings")
-					var/list/snowflake_markings_list = list()
-					for(var/path in GLOB.mam_body_markings_list)
-						var/datum/sprite_accessory/mam_body_markings/instance = GLOB.mam_body_markings_list[path]
-						if(istype(instance, /datum/sprite_accessory))
-							var/datum/sprite_accessory/S = instance
-							if(!show_mismatched_markings && S.recommended_species && !S.recommended_species.Find(pref_species.id))
-								continue
-							if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
-								snowflake_markings_list[S.name] = path
-					var/new_mam_body_markings
-					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in snowflake_markings_list
-					if(new_mam_body_markings)
-						features["mam_body_markings"] = new_mam_body_markings
-						if(new_mam_body_markings != "None")
-							features["body_markings"] = "None"
-						else if(new_mam_body_markings == "None")
-							features["mam_body_markings"] = "Plain"
-							features["body_markings"] = "None"
-
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
 					var/new_head
@@ -2082,7 +2170,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["xenodorsal"] = new_dors
 
 				//every single primary/secondary/tertiary colouring done at once
-				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary","xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","insect_markings_primary","insect_markings_secondary","insect_markings_tertiary","body_markings_primary","body_markings_secondary","body_markings_tertiary","insect_fluff_primary","insect_fluff_secondary","insect_fluff_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary","frills_secondary","frills_tertiary","ipc_antenna_primary","ipc_antenna_secondary","ipc_antenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiary","spines_primary","spines_secondary","spines_tertiary", "mam_body_markings_primary", "mam_body_markings_secondary", "mam_body_markings_tertiary")
+				if("xenodorsal_primary","xenodorsal_secondary","xenodorsal_tertiary","xhead_primary","xhead_secondary","xhead_tertiary","tail_primary","tail_secondary","tail_tertiary","insect_markings_primary","insect_markings_secondary","insect_markings_tertiary","insect_fluff_primary","insect_fluff_secondary","insect_fluff_tertiary","ears_primary","ears_secondary","ears_tertiary","frills_primary","frills_secondary","frills_tertiary","ipc_antenna_primary","ipc_antenna_secondary","ipc_antenna_tertiary","taur_primary","taur_secondary","taur_tertiary","snout_primary","snout_secondary","snout_tertiary","spines_primary","spines_secondary","spines_tertiary", "mam_body_markings_primary", "mam_body_markings_secondary", "mam_body_markings_tertiary")
 					var/the_feature = features[href_list["preference"]]
 					if(!the_feature)
 						features[href_list["preference"]] = "FFFFFF"
@@ -2324,15 +2412,126 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/selected_custom_tongue = input(user, "Choose your desired tongue (none means your species tongue)", "Character Preference") as null|anything in GLOB.roundstart_tongues
 					if(selected_custom_tongue)
 						custom_tongue = selected_custom_tongue
+
 				if("speech_verb")
 					var/selected_custom_speech_verb = input(user, "Choose your desired speech verb (none means your species speech verb)", "Character Preference") as null|anything in GLOB.speech_verbs
 					if(selected_custom_speech_verb)
 						custom_speech_verb = selected_custom_speech_verb
 
+				if("language")
+					var/selected_language = input(user, "Choose your desired additional language", "Character Preference") as null|anything in GLOB.roundstart_languages
+					if(selected_language)
+						additional_language = selected_language
+
 				if("bodysprite")
 					var/selected_body_sprite = input(user, "Choose your desired body sprite", "Character Preference") as null|anything in pref_species.allowed_limb_ids
 					if(selected_body_sprite)
 						chosen_limb_id = selected_body_sprite //this gets sanitized before loading
+
+				if("marking_down")
+					// move the specified marking down
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type] && index != length(features[marking_type]))
+						var/index_down = index + 1
+						var/markings = features[marking_type]
+						var/first_marking = markings[index]
+						var/second_marking = markings[index_down]
+						markings[index] = second_marking
+						markings[index_down] = first_marking
+
+				if("marking_up")
+					// move the specified marking up
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type] && index != 1)
+						var/index_up = index - 1
+						var/markings = features[marking_type]
+						var/first_marking = markings[index]
+						var/second_marking = markings[index_up]
+						markings[index] = second_marking
+						markings[index_up] = first_marking
+
+				if("marking_remove")
+					// move the specified marking up
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type])
+						// because linters are just absolutely awful:
+						var/list/L = features[marking_type]
+						L.Cut(index, index + 1)
+
+				if("marking_add")
+					// add a marking
+					var/marking_type = href_list["marking_type"]
+					if(marking_type && features[marking_type])
+						var/selected_limb = input(user, "Choose the limb to apply to.", "Character Preference") as null|anything in list("Head", "Chest", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "All")
+						if(selected_limb)
+							var/list/marking_list = GLOB.mam_body_markings_list
+							var/list/snowflake_markings_list = list()
+							for(var/path in marking_list)
+								var/datum/sprite_accessory/S = marking_list[path]
+								if(istype(S))
+									if(istype(S, /datum/sprite_accessory/mam_body_markings))
+										var/datum/sprite_accessory/mam_body_markings/marking = S
+										if(!(selected_limb in marking.covered_limbs) && selected_limb != "All")
+											continue
+
+									if((!S.ckeys_allowed) || (S.ckeys_allowed.Find(user.client.ckey)))
+										snowflake_markings_list[S.name] = path
+
+							var/selected_marking = input(user, "Select the marking to apply to the limb.") as null|anything in snowflake_markings_list
+							if(selected_marking)
+								if(selected_limb != "All")
+									var/limb_value = text2num(GLOB.bodypart_values[selected_limb])
+									features[marking_type] += list(list(limb_value, selected_marking))
+								else
+									var/datum/sprite_accessory/mam_body_markings/S = marking_list[selected_marking]
+									for(var/limb in S.covered_limbs)
+										var/limb_value = text2num(GLOB.bodypart_values[limb])
+										features[marking_type] += list(list(limb_value, selected_marking))
+
+				if("marking_color")
+					var/index = text2num(href_list["marking_index"])
+					var/marking_type = href_list["marking_type"]
+					if(index && marking_type && features[marking_type])
+						// work out the input options to show the user
+						var/list/options = list("Primary")
+						var/number_colors = text2num(href_list["number_colors"])
+						var/color_number = 1 // 1-3 which color are we editing
+						if(number_colors >= 2)
+							options += "Secondary"
+						if(number_colors == 3)
+							options += "Tertiary"
+						var/color_option = input(user, "Select the colour you wish to edit") as null|anything in options
+						if(color_option)
+							if(color_option == "Secondary") color_number = 2
+							if(color_option == "Tertiary") color_number = 3
+							// perform some magic on the color number
+							var/list/marking_list = features[marking_type][index]
+							var/datum/sprite_accessory/mam_body_markings/S = GLOB.mam_body_markings_list[marking_list[2]]
+							var/matrixed_sections = S.covered_limbs[GLOB.bodypart_names[num2text(marking_list[1])]]
+							if(color_number == 1)
+								switch(matrixed_sections)
+									if(MATRIX_GREEN)
+										color_number = 2
+									if(MATRIX_BLUE)
+										color_number = 3
+							else if(color_number == 2)
+								switch(matrixed_sections)
+									if(MATRIX_RED_BLUE)
+										color_number = 3
+									if(MATRIX_GREEN_BLUE)
+										color_number = 3
+
+							var/color_list = features[marking_type][index][3]
+							var/new_marking_color = input(user, "Choose your character's marking color:", "Character Preference","#"+color_list[color_number]) as color|null
+							if(new_marking_color)
+								var/temp_hsv = RGBtoHSV(new_marking_color)
+								if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV(MINIMUM_MUTANT_COLOR)[3]) // mutantcolors must be bright, but only if they affect the skin
+									color_list[color_number] = "#[sanitize_hexcolor(new_marking_color, 6)]"
+								else
+									to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 		else
 			switch(href_list["preference"])
 				//CITADEL PREFERENCES EDIT - I can't figure out how to modularize these, so they have to go here. :c -Pooj
@@ -2666,7 +2865,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						save_character()
 
 				if("tab")
-					if (href_list["tab"])
+					if(href_list["tab"])
 						current_tab = text2num(href_list["tab"])
 	if(href_list["preference"] == "gear")
 		if(href_list["clear_loadout"])
@@ -2863,6 +3062,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			new_custom_tongue.Insert(character)
 	if(custom_speech_verb != "default")
 		character.dna.species.say_mod = custom_speech_verb
+	if(additional_language && additional_language != "None")
+		var/language_entry = GLOB.roundstart_languages[additional_language]
+		if(language_entry)
+			character.grant_language(language_entry, TRUE, TRUE)
 
 	//limb stuff, only done when initially spawning in
 	if(initial_spawn)

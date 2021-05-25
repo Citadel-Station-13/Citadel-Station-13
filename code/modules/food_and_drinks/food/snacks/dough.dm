@@ -26,6 +26,17 @@
 	else
 		..()
 
+/obj/item/reagent_containers/food/snacks/flatdough/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/kitchen/unrollingpin))
+		if(isturf(loc))
+			new /obj/item/reagent_containers/food/snacks/dough(loc)
+			to_chat(user, "<span class='notice'>You unflatten [src].</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You need to put [src] on a surface to undo the rolling!</span>")
+	else
+		..()
+
 
 // sliceable into 3xdoughslices
 /obj/item/reagent_containers/food/snacks/flatdough
@@ -95,6 +106,17 @@
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need to put [src] on a surface to roll it out!</span>")
+	else
+		..()
+
+/obj/item/reagent_containers/food/snacks/piedough/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/kitchen/unrollingpin))
+		if(isturf(loc))
+			new /obj/item/reagent_containers/food/snacks/cakebatter(loc)
+			to_chat(user, "<span class='notice'>You unflatten [src].</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You need to put [src] on a surface to undo the rolling!</span>")
 	else
 		..()
 

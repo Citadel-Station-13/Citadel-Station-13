@@ -340,3 +340,6 @@
 #define EXAMINE_MORE_TIME	1 SECONDS
 
 #define SILENCE_RANGED_MESSAGE	(1<<0)
+
+///Define for spawning megafauna instead of a mob for cave gen
+#define SPAWN_MEGAFAUNA "bluh bluh huge boss"

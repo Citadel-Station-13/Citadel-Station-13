@@ -52,7 +52,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "diamond"
 	desc = "Highly pressurized carbon"
 	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
-	strength_modifier = 1.1
+	strength_modifier = 1.2
 	alpha = 132
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
@@ -85,6 +85,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
 	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
+	strength_modifier = 0.7
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	value_per_unit = 0.1

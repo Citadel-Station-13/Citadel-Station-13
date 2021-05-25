@@ -161,8 +161,10 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /// Handles the special case of editing the movement var
 /mob/vv_edit_var(var_name, var_value)
 	if(var_name == NAMEOF(src, control_object))
-		var/obj/O = var_name
-		if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
+		var/obj/O = var_value
+		if(!istype(O) && (var_value != null))
+			return FALSE
+		if(O.obj_flags & DANGEROUS_POSSESSION)
 			return FALSE
 	var/slowdown_edit = (var_name == NAMEOF(src, cached_multiplicative_slowdown))
 	var/diff

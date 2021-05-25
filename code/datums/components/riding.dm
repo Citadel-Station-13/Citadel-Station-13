@@ -37,7 +37,7 @@
 		qdel(src)
 
 /datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force)
-	handle_vehicle_offsets()
+	handle_vehicle_offsets(M.buckled?.dir)
 
 /datum/component/riding/proc/handle_vehicle_layer(dir)
 	var/atom/movable/AM = parent

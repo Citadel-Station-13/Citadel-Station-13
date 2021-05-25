@@ -296,6 +296,12 @@
 					AM.forceMove(src)
 			R.module.remove_module(I, TRUE)
 	else
+
+		if(ishuman(mob_occupant))
+			var/mob/living/carbon/human/H = mob_occupant
+			if(H.mind && H.client && H.client.prefs && H == H.mind.original_character)
+				H.SaveTCGCards()
+
 		var/list/gear = list()
 		if(iscarbon(mob_occupant))		// sorry simp-le-mobs deserve no mercy
 			var/mob/living/carbon/C = mob_occupant
@@ -403,7 +409,10 @@
 		visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
 	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(1))
+	var/mob/dead/observer/G = mob_occupant.get_ghost(TRUE)
+	if(G)
+		G.voluntary_ghosted = TRUE
+	else
 		mob_occupant.ghostize(FALSE, penalize = TRUE, voluntary = TRUE, cryo = TRUE)
 
 	QDEL_NULL(occupant)

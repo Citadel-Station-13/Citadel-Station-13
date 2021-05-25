@@ -104,6 +104,13 @@
 	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
 	loadout_initial_colors = list("#6A6964", "#C4B8A6", "#0000FF")
 
+/datum/gear/suit/coat/wbreakpoly
+	name = "Polychromic windbreaker"
+	path = /obj/item/clothing/suit/toggle/wbreakpoly/polychromic
+	cost = 4
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#464F65", "#916035", "#474747")
+
 /datum/gear/suit/coat/med
 	name = "Medical winter coat"
 	path = /obj/item/clothing/suit/hooded/wintercoat/medical
@@ -158,6 +165,13 @@
 	name = "Military Jacket"
 	path = /obj/item/clothing/suit/jacket/miljacket
 	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+
+/datum/gear/suit/urbanjacket
+	name = "Urban Jacket"
+	path = /obj/item/clothing/suit/jacket/urbanjacket/polychromic
+	subcategory = LOADOUT_SUBCATEGORY_SUIT_JACKETS
+	loadout_flags = LOADOUT_CAN_NAME | LOADOUT_CAN_DESCRIPTION | LOADOUT_CAN_COLOR_POLYCHROMIC
+	loadout_initial_colors = list("#3B4B2E", "#CBBDAF", "#444444")
 
 /datum/gear/suit/ianshirt
 	name = "Ian Shirt"

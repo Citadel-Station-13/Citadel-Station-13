@@ -547,32 +547,51 @@
 	maxHealth = INFINITY//I don't understand how plamamen work, so I'm not going to try t give them special lungs atm
 
 /obj/item/organ/lungs/cybernetic
-	name = "cybernetic lungs"
-	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
+	name = "basic cybernetic lungs"
+	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	icon_state = "lungs-c"
 	organ_flags = ORGAN_SYNTHETIC
-	maxHealth = 400
-	safe_oxygen_min = 13
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 
-/obj/item/organ/lungs/cybernetic/emp_act()
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	owner.losebreath = 20
-	owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 25)
+	var/emp_vulnerability = 1 //The value the severity of emps are divided by to determine the likelihood of permanent damage.
 
-/obj/item/organ/lungs/cybernetic/upgraded
-	name = "upgraded cybernetic lungs"
-	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon dioxide."
+/obj/item/organ/lungs/cybernetic/tier2
+	name = "cybernetic lungs"
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. Allows for greater intakes of oxygen than organic lungs, requiring slightly less pressure."
 	icon_state = "lungs-c-u"
-	safe_toxins_max = 20
-	safe_co2_max = 20
-	safe_oxygen_max = 250
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	safe_oxygen_min = 13
+	safe_oxygen_max = 100
+	emp_vulnerability = 2
+
+/obj/item/organ/lungs/cybernetic/tier3
+	name = "upgraded cybernetic lungs"
+	desc = "A more advanced version of the stock cybernetic lungs. Features the ability to filter out various airbourne toxins and carbon dioxide even at heavy levels."
+	icon_state = "lungs-c-u2"
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	safe_oxygen_min = 4 //You could literally be breathing the thinnest amount of oxygen and be fine
+	safe_oxygen_max = 250 //Or be in an enriched oxygen room for that matter
+	safe_toxins_max = 30
+	safe_co2_max = 30
+	SA_para_min = 30
+	SA_sleep_min = 50
+	BZ_trip_balls_min = 30
+	emp_vulnerability = 3
 
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
 	maxHealth = 550
+
+/obj/item/organ/lungs/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.losebreath += 20
+		COOLDOWN_START(src, severe_cooldown, 30 SECONDS)
+	if(prob(severity/emp_vulnerability)) //Chance of permanent effects
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
 
 /obj/item/organ/lungs/ashwalker
 	name = "ash lungs"
@@ -591,6 +610,7 @@
 
 /obj/item/organ/lungs/slime
 	name = "vacuole"
+	icon_state = "lungs-s"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
 	safe_toxins_max = 0 //We breathe this to gain POWER.

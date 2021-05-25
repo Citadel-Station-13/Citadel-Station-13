@@ -112,6 +112,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
+	//Special multitools
+	var/buffer = null
+	var/show_wires = FALSE
+	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
+	//Special crowbar
+	var/can_force_powered = FALSE
 
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
@@ -241,6 +247,14 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/turf/T = loc
 	loc = null
 	loc = T
+
+/obj/item/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	if(!anchored)
+		var/throw_dist = round(rand(3, max(3, 2.5 * sqrt(power))), 1)
+		throw_speed = EXPLOSION_THROW_SPEED
+		var/turf/target = get_ranged_target_turf(src, dir, throw_dist)
+		throw_at(target, throw_dist, EXPLOSION_THROW_SPEED)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()

@@ -16,6 +16,11 @@
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
+	wave_explosion_block = EXPLOSION_BLOCK_DENSE_FILLER
+	wave_explosion_multiply = EXPLOSION_DAMPEN_DENSE_FILLER
+
+	explosion_flags = EXPLOSION_FLAG_HARD_OBSTACLE | EXPLOSION_FLAG_DENSITY_DEPENDENT
+
 	var/secondsElectrified = 0
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/shockedby
@@ -173,7 +178,9 @@
 /obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
 	return get_dir(src, M) & unres_sides
 
-/obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
+/obj/machinery/door/proc/try_to_weld(obj/item/W, mob/user)
+	if(!W.tool_behaviour == TOOL_WELDER)
+		return
 	return
 
 /obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
@@ -410,3 +417,8 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/wave_explosion_damage(power, datum/wave_explosion/explosion)
+	. = ..()
+	if(!density)
+		return . * EXPLOSION_DAMAGE_OPEN_DOOR_FACTOR

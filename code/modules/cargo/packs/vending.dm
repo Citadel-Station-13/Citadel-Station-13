@@ -67,7 +67,7 @@
 
 /datum/supply_pack/vending/hydro
 	name = "Hydroponics Supply Crate"
-	desc = "Arnt you glad you dont have to do it the natural way? Contains a megaseed and nutrimax vending machine refill."
+	desc = "Aren't you glad you dont have to do it the natural way? Contains a megaseed and nutrimax vending machine refill."
 	cost = 5000
 	contains = list(/obj/item/vending_refill/hydroseeds,
 					/obj/item/vending_refill/hydronutrients)
@@ -79,8 +79,16 @@
 	desc = "A fun way to spend the shift. Contains unmentionable desires."
 	cost = 2000
 	contraband = TRUE
-	contains = list(/obj/item/vending_refill/kink, /obj/item/circuitboard/machine/kinkmate)
+	contains = list(/obj/item/vending_refill/kink)
 	crate_name = "Kinkmate construction kit"
+
+/datum/supply_pack/vending/barkbox
+	name = "Bark Box Supply Crate"
+	desc = "Running of out things to keep your pets happy?"
+	cost = 2000
+	contraband = TRUE
+	contains = list(/obj/item/vending_refill/barkbox)
+	crate_name = "bark box supply crate"
 
 /datum/supply_pack/vending/medical
 	name = "Medical Vending Crate"

@@ -370,7 +370,7 @@
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		to_chat(src, "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>")
-		if(do_after(src, breakouttime, 0, target = src))
+		if(do_after(src, breakouttime, 0, target = src, required_mobility_flags = MOBILITY_RESIST))
 			clear_cuffs(I, cuff_break)
 		else
 			to_chat(src, "<span class='warning'>You fail to break [I]!</span>")
@@ -434,6 +434,9 @@
 			legcuffed.forceMove(drop_location())
 			legcuffed = null
 			I.dropped(src)
+			if(istype(I, /obj/item/restraints/legcuffs))
+				var/obj/item/restraints/legcuffs/lgcf = I
+				lgcf.on_removed()
 			update_inv_legcuffed()
 			return
 		else
@@ -1234,7 +1237,7 @@
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	if(W && user.a_intent == INTENT_HELP && W.can_give())
-		user.give()
+		user.give(src)
 		return TRUE
 
 /mob/living/carbon/verb/give_verb()
@@ -1250,4 +1253,4 @@
 	var/obj/item/I = usr.get_active_held_item()
 	var/mob/living/carbon/C = usr
 	if(I.can_give())
-		C.give()
+		C.give(src)

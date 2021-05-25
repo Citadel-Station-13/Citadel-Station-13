@@ -56,10 +56,10 @@
 	detonate()
 
 /datum/component/explodable/proc/on_equip(datum/source, mob/equipper, slot)
-	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMGE,  .proc/explodable_attack_zone, TRUE)
+	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMAGE,  .proc/explodable_attack_zone, TRUE)
 
 /datum/component/explodable/proc/on_drop(datum/source, mob/user)
-	UnregisterSignal(user, COMSIG_MOB_APPLY_DAMGE)
+	UnregisterSignal(user, COMSIG_MOB_APPLY_DAMAGE)
 
 /// Checks if we're hitting the zone this component is covering
 /datum/component/explodable/proc/is_hitting_zone(def_zone)

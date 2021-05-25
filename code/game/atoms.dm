@@ -36,13 +36,20 @@
 	///Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	/// Flags for explosions
+	var/explosion_flags = NONE
+	/// Amount to decrease wave explosions by
+	var/wave_explosion_block = 0
+	/// Amount to multiply wave explosions by
+	var/wave_explosion_multiply = 1
+
+							//its inherent color, the colored paint applied on it, special color effect etc...
 	/**
 	  * used to store the different colors on an atom
 	  *
 	  * its inherent color, the colored paint applied on it, special color effect etc...
 	  */
 	var/list/atom_colours
-
 
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
@@ -98,6 +105,9 @@
 
 	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
 	var/list/targeted_by
+
+	///Reference to atom being orbited
+	var/atom/orbit_target
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -553,6 +563,34 @@
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
+/**
+  * Called when a wave explosion hits this atom. Do not override this.
+  *
+  * Returns explosion power to "allow through".
+  */
+/atom/proc/wave_explode(power, datum/wave_explosion/explosion, dir)
+	set waitfor = FALSE
+	// SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_WAVE_EX_ACT, args)
+	. = wave_ex_act(power, explosion, dir)		// this must happen first for stuff like destruction/damage to tick.
+	if(isnull(.))
+		stack_trace("wave_ex_act on [type] failed to return a number. defaulting to no blocking.")
+		return power
+	if((explosion_flags & EXPLOSION_FLAG_DENSITY_DEPENDENT) && !density)
+		return power	// no block
+	else if((explosion_flags & EXPLOSION_FLAG_HARD_OBSTACLE) && !QDELETED(src))
+		return 0		// fully blocked
+
+/**
+  * Called when a wave explosion hits this atom.
+  *
+  * Returns explosion power to "allow through". Standard handling and flag overrides in [wave_explode()].
+  */
+/atom/proc/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	// SHOULD_NOT_SLEEP(TRUE)
+	return power * wave_explosion_multiply - wave_explosion_block
+
 /atom/proc/blob_act(obj/structure/blob/B)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	return
@@ -882,6 +920,9 @@
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
+	// VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	// VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 
 /atom/vv_do_topic(list/href_list)
 	. = ..()
@@ -925,6 +966,9 @@
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		if(newname)
 			vv_auto_rename(newname)
+	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_filter_editor(src)
 
 /atom/vv_get_header()
 	. = ..()
@@ -983,7 +1027,7 @@
 	return
 
 /atom/proc/multitool_check_buffer(user, obj/item/I, silent = FALSE)
-	if(!istype(I, /obj/item/multitool))
+	if(!I.tool_behaviour == TOOL_MULTITOOL)
 		if(user && !silent)
 			to_chat(user, "<span class='warning'>[I] has no data buffer!</span>")
 		return FALSE
@@ -1145,7 +1189,6 @@
 
 	victim.log_message(message, LOG_ATTACK, color="blue")
 
-// Filter stuff
 /atom/proc/add_filter(name,priority,list/params)
 	LAZYINITLIST(filter_data)
 	var/list/p = params.Copy()
@@ -1161,26 +1204,64 @@
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		filters += filter(arglist(arguments))
+	UNSETEMPTY(filter_data)
+
+/atom/proc/transition_filter(name, time, list/new_params, easing, loop)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+
+	var/list/old_filter_data = filter_data[name]
+
+	var/list/params = old_filter_data.Copy()
+	for(var/thing in new_params)
+		params[thing] = new_params[thing]
+
+	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	for(var/param in params)
+		filter_data[name][param] = params[param]
+
+/atom/proc/change_filter_priority(name, new_priority)
+	if(!filter_data || !filter_data[name])
+		return
+
+	filter_data[name]["priority"] = new_priority
+	update_filters()
+
+/obj/item/update_filters()
+	. = ..()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
 
-/atom/proc/remove_filter(name)
-	if(filter_data && filter_data[name])
-		filter_data -= name
-		update_filters()
-		return TRUE
+/atom/proc/remove_filter(name_or_names)
+	if(!filter_data)
+		return
+
+	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
+
+	for(var/name in names)
+		if(filter_data[name])
+			filter_data -= name
+	update_filters()
+
+/atom/proc/clear_filters()
+	filter_data = null
+	filters = null
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
 ///Sets the custom materials for an item.
-/atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+/atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = SSmaterials.GetMaterialRef(i)
-			custom_material.on_removed(src, material_flags) //Remove the current materials
+			custom_material.on_removed(src, custom_materials[i], material_flags) //Remove the current materials
 
 	if(!length(materials))
 		custom_materials = null

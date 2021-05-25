@@ -351,15 +351,19 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "running"
 
+/obj/screen/mov_intent/Initialize(mapload)
+	. = ..()
+	update_icon()
+
 /obj/screen/mov_intent/Click()
 	toggle(usr)
 
 /obj/screen/mov_intent/update_icon_state()
 	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
-			icon_state = "walking"
+			icon_state = CONFIG_GET(flag/sprint_enabled)? "walking" : "walking_nosprint"
 		if(MOVE_INTENT_RUN)
-			icon_state = "running"
+			icon_state = CONFIG_GET(flag/sprint_enabled)? "running" : "running_nosprint"
 
 /obj/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
@@ -632,6 +636,11 @@
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+/obj/screen/healthdoll/living
+	icon_state = "fullhealth0"
+	screen_loc = ui_living_healthdoll
+	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
 /obj/screen/mood
 	name = "mood"

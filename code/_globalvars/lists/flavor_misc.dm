@@ -17,7 +17,6 @@ GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
 GLOBAL_LIST_EMPTY_TYPED(socks_list, /datum/sprite_accessory/underwear/socks)		//stores socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
-GLOBAL_LIST_EMPTY(body_markings_list)
 GLOBAL_LIST_EMPTY(tails_list_lizard)
 GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
 GLOBAL_LIST_EMPTY(snouts_list)
@@ -55,7 +54,6 @@ GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"frills" = GLOB.frills_list,
 	"horns" = GLOB.horns_list,
 	"ears" = GLOB.ears_list,
-	"body_markings" = GLOB.body_markings_list,
 	"wings" = GLOB.wings_list,
 	"wingsopen" = GLOB.wings_open_list,
 	"deco_wings" = GLOB.deco_wings_list,
@@ -126,6 +124,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Not Malf",
 	"Patriot",
 	"Pirate",
+	"Portrait",
 	"President",
 	"Rainbow",
 	"Clown",
@@ -152,13 +151,19 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Yes-Man"
 	))
 
-/proc/resolve_ai_icon(input)
+/proc/resolve_ai_icon(input, radial_preview = FALSE)
 	if(!input || !(input in GLOB.ai_core_display_screens))
 		return "ai"
-	else
-		if(input == "Random")
-			input = pick(GLOB.ai_core_display_screens - "Random")
+	if(radial_preview)
 		return "ai-[lowertext(input)]"
+
+	if(input == "Random")
+		input = pick(GLOB.ai_core_display_screens - "Random")
+	if(input == "Portrait")
+		var/datum/portrait_picker/tgui = new(usr)//create the datum
+		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+		return "ai-portrait" //just take this until they decide
+	return "ai-[lowertext(input)]"
 
 GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
@@ -277,11 +282,22 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 GLOBAL_LIST_INIT(speech_verbs, list("default","says","gibbers", "states", "chitters", "chimpers", "declares", "bellows", "buzzes" ,"beeps", "chirps", "clicks", "hisses" ,"poofs" , "puffs", "rattles", "mewls" ,"barks", "blorbles", "squeaks", "squawks", "flutters", "warbles", "caws", "gekkers", "clucks"))
 GLOBAL_LIST_INIT(roundstart_tongues, list("default","human tongue" = /obj/item/organ/tongue, "lizard tongue" = /obj/item/organ/tongue/lizard, "skeleton tongue" = /obj/item/organ/tongue/bone, "fly tongue" = /obj/item/organ/tongue/fly, "ipc tongue" = /obj/item/organ/tongue/robot/ipc, "xeno tongue" = /obj/item/organ/tongue/alien))
 
+/proc/get_roundstart_languages()
+	var/list/languages = subtypesof(/datum/language)
+	var/list/roundstart_languages = list("None") //default option for the list
+	for(var/some_language in languages)
+		var/datum/language/language = some_language
+		if(initial(language.chooseable_roundstart))
+			roundstart_languages[initial(language.name)] = some_language
+	return roundstart_languages
+
+GLOBAL_LIST_INIT(roundstart_languages, get_roundstart_languages())
+
 //SPECIES BODYPART LISTS
 //locked parts are those that your picked species requires to have
 //unlocked parts are those that anyone can choose on customisation regardless
 //parts not in unlocked, but in all, are thus locked
-GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "body_markings" = "Body Markings", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "arachnid_legs" = "Arachnid Legs", "arachnid_spinneret" = "Spinneret", "arachnid_mandibles" = "Mandibles", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
+GLOBAL_LIST_INIT(all_mutant_parts, list("tail_lizard" = "Tail", "mam_tail" = "Tail", "tail_human" = "Tail", "snout" = "Snout", "frills" = "Frills", "spines" = "Spines", "mam_body_markings" = "Species Markings" , "mam_ears" = "Ears", "ears" = "Ears", "mam_snouts" = "Snout", "legs" = "Legs", "deco_wings" = "Decorative Wings", "insect_wings" = "Insect Wings", "insect_fluff" = "Insect Fluff", "taur" = "Tauric Body", "insect_markings" = "Insect Markings", "wings" = "Wings", "arachnid_legs" = "Arachnid Legs", "arachnid_spinneret" = "Spinneret", "arachnid_mandibles" = "Mandibles", "xenohead" = "Caste Head", "xenotail" = "Tail", "xenodorsal" = "Dorsal Spines", "ipc_screen" = "Screen", "ipc_antenna" = "Antenna", "meat_type" = "Meat Type", "horns" = "Horns"))
 GLOBAL_LIST_INIT(unlocked_mutant_parts, list("horns", "insect_fluff"))
 
 //parts in either of the above two lists that require a second option that allows them to be coloured
@@ -332,3 +348,8 @@ GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow"
 
 //list of eye types, corresponding to a respective left and right icon state for the set of eyes
 GLOBAL_LIST_INIT(eye_types, list("normal", "insect", "moth", "double", "double2", "double3", "cyclops"))
+
+//list linking bodypart bitflags to their actual names
+GLOBAL_LIST_INIT(bodypart_names, list(num2text(HEAD) = "Head", num2text(CHEST) = "Chest", num2text(LEG_LEFT) = "Left Leg", num2text(LEG_RIGHT) = "Right Leg", num2text(ARM_LEFT) = "Left Arm", num2text(ARM_RIGHT) = "Right Arm"))
+// list linking bodypart names back to the bitflags
+GLOBAL_LIST_INIT(bodypart_values, list("Head" = num2text(HEAD), "Chest" = num2text(CHEST), "Left Leg" = num2text(LEG_LEFT), "Right Leg" = num2text(LEG_RIGHT), "Left Arm" = num2text(ARM_LEFT), "Right Arm" = num2text(ARM_RIGHT)))

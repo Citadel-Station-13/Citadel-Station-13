@@ -585,3 +585,28 @@
 	icon = 'icons/obj/custom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
 	mutantrace_variation = NONE
+
+/obj/item/clothing/neck/petcollar/donorchoker
+	name = "NT Choker"
+	desc = "NT property since January 21st,  2562."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "choker"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	item_state = "choker"
+
+/obj/item/clothing/mask/breath/mmask
+	name = "Strange Metal Mask"
+	desc = "An odd metal mask."
+	icon = 'icons/obj/custom.dmi'
+	item_state = "mmask"
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	icon_state = "mmask"
+
+/obj/item/clothing/under/smaiden
+	name = "shrine maiden outfit"
+	desc = "Seems questionably tight for religious purposes."
+	icon_state = "smaiden"
+	item_state = "smaiden"
+	icon = 'icons/obj/custom.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/custom_w.dmi'
+	mutantrace_variation = NONE

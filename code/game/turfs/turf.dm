@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	user.Move_Pulled(src)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
-	// SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
+	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_DEL, T, dir)
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 	SEND_SIGNAL(src, COMSIG_TURF_MULTIZ_NEW, T, dir)
@@ -461,6 +461,24 @@ GLOBAL_LIST_EMPTY(station_turfs)
 					continue
 			A.ex_act(severity, target)
 			CHECK_TICK
+
+/turf/wave_ex_act(power, datum/wave_explosion/explosion, dir)
+	. = ..()
+	var/affecting_level
+	if(is_shielded())
+		affecting_level = 3
+	else if(intact)
+		affecting_level = 2
+	else
+		affecting_level = 1
+	var/atom/A
+	for(var/i in contents)
+		if(. <= 0)
+			return 0
+		A = i
+		if(!QDELETED(A) && A.level >= affecting_level)
+			.  = A.wave_explode(., explosion, dir)
+	maptext = "[.]"
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
