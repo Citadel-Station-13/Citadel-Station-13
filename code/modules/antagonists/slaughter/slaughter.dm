@@ -84,6 +84,8 @@
 	if(slam_cooldown + slam_cooldown_time > world.time)
 		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
 		return
+	if(phased)
+		return
 
 	face_atom(A)
 	var/mob/living/victim = A
