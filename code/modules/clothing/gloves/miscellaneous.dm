@@ -39,7 +39,7 @@
 	if(slot == SLOT_GLOVES)
 		wornonce = TRUE
 		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
-			to_chat(user, "<span class='danger'>What purpose is there to don the weapons of pugilism if you're already well-practiced in martial arts?! Mixing arts is blasphemous</span>")
+			to_chat(user, "<span class='danger'>What purpose is there to don the weapons of pugilism if you're already well-practiced in martial arts? Mixing arts is blasphemous!</span>")
 			return
 		use_buffs(user, TRUE)
 
