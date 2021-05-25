@@ -37,14 +37,19 @@
 /obj/item/clothing/gloves/fingerless/pugilist/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_GLOVES)
-		use_buffs(user, TRUE)
 		wornonce = TRUE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			to_chat(user, "<span class='danger'>What purpose is there to don the weapons of pugilism if you're already well-practiced in martial arts?! Mixing arts is blasphemous</span>")
+			return
+		use_buffs(user, TRUE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/dropped(mob/user)
 	. = ..()
 	if(wornonce)
-		use_buffs(user, FALSE)
 		wornonce = FALSE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			return
+		use_buffs(user, FALSE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/proc/use_buffs(mob/user, buff)
 	if(buff) // tarukaja
@@ -247,14 +252,18 @@
 /obj/item/clothing/gloves/fingerless/pugilist/mauler/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_GLOVES)
-		use_mauls(user, TRUE)
 		wornonce = TRUE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			return
+		use_mauls(user, TRUE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/mauler/dropped(mob/user)
 	. = ..()
 	if(wornonce)
-		use_mauls(user, FALSE)
 		wornonce = FALSE
+		if((HAS_TRAIT(user, TRAIT_NOPUGILIST)))
+			return
+		use_mauls(user, FALSE)
 
 /obj/item/clothing/gloves/fingerless/pugilist/mauler/proc/use_mauls(mob/user, maul)
 	if(maul)
@@ -263,6 +272,7 @@
 			H.dna?.species?.attack_sound_override = 'sound/weapons/mauler_punch.ogg'
 			if(silent)
 				to_chat(H, "<span class='danger'>You feel prickles around your wrists as [src] cling to them - strength courses through your veins!</span>")
+
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"

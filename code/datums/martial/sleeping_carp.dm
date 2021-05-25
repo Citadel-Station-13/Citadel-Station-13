@@ -165,6 +165,7 @@
 	ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_NOPUGILIST, SLEEPING_CARP_TRAIT) // cqc doesn't get this as it's intended to be able to stack with northstar gloves
 	H.physiology.brute_mod *= 0.4 //brute is really not gonna cut it
 	H.physiology.burn_mod *= 0.7 //burn is distinctly more useful against them than brute but they're still resistant
 	H.physiology.stamina_mod *= 0.4 //You take less stamina damage overall, but you do not reduce the damage from stun batons as much
@@ -181,6 +182,7 @@
 	REMOVE_TRAIT(H, TRAIT_PIERCEIMMUNE, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_TASED_RESISTANCE, SLEEPING_CARP_TRAIT)
+	REMOVE_TRAIT(H, TRAIT_NOPUGILIST, SLEEPING_CARP_TRAIT)
 	H.physiology.brute_mod = initial(H.physiology.brute_mod)
 	H.physiology.burn_mod = initial(H.physiology.burn_mod)
 	H.physiology.stamina_mod = initial(H.physiology.stamina_mod)
