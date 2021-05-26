@@ -49,6 +49,7 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 		var/list/dummy = get_gases()
 		for(var/gas in dummy)
 			dummy[gas] = get_moles(gas)
+			dummy["CAP [gas]"] = partial_heat_capacity(gas)
 		dummy["TEMP"] = return_temperature()
 		dummy["PRESSURE"] = return_pressure()
 		dummy["HEAT CAPACITY"] = heat_capacity()
@@ -127,6 +128,8 @@ GLOBAL_LIST_INIT(auxtools_atmos_initialized,FALSE)
 	return L
 
 /datum/gas_mixture/proc/heat_capacity() //joules per kelvin
+
+/datum/gas_mixture/proc/partial_heat_capacity(gas_type)
 
 /datum/gas_mixture/proc/total_moles()
 
