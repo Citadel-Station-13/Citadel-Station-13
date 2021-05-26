@@ -108,6 +108,14 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/thread_running()
 	return FALSE
 
+/proc/fix_corrupted_atmos()
+
+/datum/admins/proc/fixcorruption()
+	set category = "Debug"
+	set desc="Fixes air that has weird NaNs (-1.#IND and such). Hopefully."
+	set name="Fix Air"
+	fix_corrupted_atmos()
+
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
 
