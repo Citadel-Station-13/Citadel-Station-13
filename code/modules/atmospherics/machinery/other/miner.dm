@@ -118,7 +118,7 @@
 		on_overlay.color = overlay_color
 		add_overlay(on_overlay)
 
-/obj/machinery/atmospherics/miner/process()
+/obj/machinery/atmospherics/miner/process_atmos()
 	update_power()
 	check_operation()
 	if(active && !broken)
