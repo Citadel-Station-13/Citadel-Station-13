@@ -37,7 +37,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-	
+
 /area/arrival
 	requires_power = FALSE
 
@@ -209,7 +209,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Generic Maintenance"
 	// ambience_index = AMBIENCE_MAINT
 	ambientsounds = MAINTENANCE
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | VALID_TERRITORY
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 	// airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
