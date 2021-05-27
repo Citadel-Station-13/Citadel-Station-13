@@ -350,13 +350,13 @@ GLOBAL_LIST_INIT(meteorsCat, list(/obj/effect/meteor/cat)) //for cat meteors
 		
 /obj/effect/meteor/cat
 	name = "space cat"
-	icon_state = "spacecat"
+	icon_state = "catmeteor"
 	desc = "Meow."
 	hits = 1
 	heavy = FALSE
 	meteorsound = 'sound/effects/meow1.ogg'
 	meteordrop = list(/mob/living/simple_animal/pet/cat/space)
-	threat = 2
+	threat = 0
 	dropamt = 1
 
 //////////////////////////
