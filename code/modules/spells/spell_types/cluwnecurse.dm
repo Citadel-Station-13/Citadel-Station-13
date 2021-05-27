@@ -5,7 +5,7 @@
 	charge_type = "recharge"
 	charge_max	= 600
 	charge_counter = 0
-	clothes_req = 1
+	clothes_req = SPELL_WIZARD_GARB
 	stat_allowed = 0
 	invocation = "CLU WO'NIS CA'TE'BEST'IS MAXIMUS!"
 	invocation_type = "shout"
@@ -13,7 +13,7 @@
 	cooldown_min = 75
 	selection_type = "range"
 	var/list/compatible_mobs = list(/mob/living/carbon/human)
-	action_icon = '/icons/mob/actions_spells.dmi'
+	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "cluwne"
 
 /obj/effect/proc_holder/spell/targeted/cluwnecurse/cast(list/targets, mob/user = usr)
