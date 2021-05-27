@@ -30,10 +30,6 @@
 	var/mob/living/carbon/human/H = target
 	H.cluwneify()
 
-/datum/spellbook_entry/cluwnecurse
-	name = "Cluwne Curse"
-	spell_type = /obj/effect/proc_holder/spell/targeted/cluwnecurse
-
 /datum/action/spell_action/New(Target)
 	..()
 	var/obj/effect/proc_holder/spell/S = Target
