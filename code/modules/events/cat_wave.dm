@@ -1,6 +1,6 @@
 /datum/round_event_control/meteor_wave/cat
 	name = "Meteor Wave: CATastrophic"
-	typepath = /datum/round_event/meteor_wave/meaty
+	typepath = /datum/round_event/meteor_wave/cat
 	weight = 2
 	max_occurrences = 1
 
