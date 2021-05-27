@@ -116,10 +116,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/admin_away,
+	/client/proc/spawn_floor_cluwne,
 	/client/proc/cmd_admin_toggle_fov,		//CIT CHANGE - FOV
 	/client/proc/roll_dices					//CIT CHANGE - Adds dice verb
-	/client/proc/healall,
-	/client/proc/spawn_floor_cluwne
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character))

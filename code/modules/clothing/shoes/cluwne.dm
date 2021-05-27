@@ -1,27 +1,26 @@
-/obj/item/clothing/shoes/bee/cluwne
+/obj/item/clothing/shoes/clown_shoes/cluwne
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
 	name = "clown shoes"
 	icon_state = "cluwne"
 	item_state = "cluwne"
-	item_color = "cluwne"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	item_flags = DROPDEL
-	slowdown = SHOES_SLOWDOWN+1
 	var/footstep = 1
-	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 
-/obj/item/clothing/shoes/bee/cluwne/Initialize()
+/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize()
 	.=..()
-	add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
+	ADD_TRAIT(src, CURSED_ITEM_TRAIT, CLOTHING_TRAIT)
 
-/obj/item/clothing/shoes/bee/cluwne/step_action()
+/obj/item/clothing/shoes/clown_shoes/cluwne/step_action()
 	if(footstep > 1)
 		playsound(src, "clownstep", 50, 1)
 		footstep = 0
 	else
 		footstep++
 
-/obj/item/clothing/shoes/bee/cluwne/equipped(mob/user, slot)
+/obj/item/clothing/shoes/clown_shoes/cluwne/equipped(mob/user, slot)
+	. = ..()
 	if(!ishuman(user))
 		return
 	if(slot == SLOT_SHOES)
