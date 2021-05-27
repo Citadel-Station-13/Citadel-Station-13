@@ -93,7 +93,7 @@ GLOBAL_VAR_INIT(floor_cluwnes, 0)
 		Acquire_Victim()
 
 	if(stage && !manifested)
-		On_Stage()
+		INVOKE_ASYNC(src, .proc/On_Stage)
 
 	if(stage == STAGE_ATTACK)
 		playsound(src, 'sound/misc/cluwne_breathing.ogg', 75, 1)
