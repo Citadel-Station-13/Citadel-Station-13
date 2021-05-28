@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes: 
+  - balance: "puglism damage can no longer stack with scarp"
